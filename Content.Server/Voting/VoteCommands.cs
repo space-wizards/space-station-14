@@ -38,7 +38,7 @@ namespace Content.Server.Voting
 
             if (shell.Player != null && !mgr.CanCallVote((IPlayerSession) shell.Player, type))
             {
-                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"{(shell.Player == null ? "F" : shell.Player.Name + "f")}ailed to start {type.ToString()} vote");
+                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"{shell.Player} failed to start {type.ToString()} vote");
                 shell.WriteError(Loc.GetString("cmd-createvote-cannot-call-vote-now"));
                 return;
             }
@@ -94,7 +94,10 @@ namespace Content.Server.Voting
 
             options.SetInitiatorOrServer((IPlayerSession?) shell.Player);
 
-            _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"{(shell.Player == null ? "I" : shell.Player.Name + " i")}nitiated a custom vote: {options.Title} - {string.Join("; ", options.Options.Select(x => x.text))}");
+            if (shell.Player != null)
+                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"{shell.Player} initiated a custom vote: {options.Title} - {string.Join("; ", options.Options.Select(x => x.text))}");
+            else
+                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Initiated a custom vote: {options.Title} - {string.Join("; ", options.Options.Select(x => x.text))}");
 
             var vote = mgr.CreateVote(options);
 
@@ -231,7 +234,10 @@ namespace Content.Server.Voting
                 return;
             }
 
-            _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"{(shell.Player == null ? "C" : shell.Player.Name + " c")}anceled vote: {vote.Title}");
+            if (shell.Player != null)
+                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"{shell.Player} canceled vote: {vote.Title}");
+            else
+                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Canceled vote: {vote.Title}");
             vote.Cancel();
         }
 

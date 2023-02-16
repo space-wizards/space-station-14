@@ -75,7 +75,7 @@ namespace Content.Server.Voting.Managers
             var sender = message.MsgChannel;
             var session = _playerManager.GetSessionByChannel(sender);
 
-            _adminLogger.Add(LogType.Vote, LogImpact.Low, $"{session.Name} opened vote menu");
+            _adminLogger.Add(LogType.Vote, LogImpact.Low, $"{session} opened vote menu");
         }
 
         private void AdminPermsChanged(AdminPermsChangedEventArgs obj)

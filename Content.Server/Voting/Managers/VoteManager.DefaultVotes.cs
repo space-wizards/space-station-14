@@ -23,7 +23,10 @@ namespace Content.Server.Voting.Managers
 
         public void CreateStandardVote(IPlayerSession? initiator, StandardVoteType voteType)
         {
-            _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"{(initiator == null ? "I" : initiator.Name + " i")}nitiated a {voteType.ToString()} vote");
+            if (initiator != null)
+                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"{initiator} initiated a {voteType.ToString()} vote");
+            else
+                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Initiated a {voteType.ToString()} vote");
 
             switch (voteType)
             {
