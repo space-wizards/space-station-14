@@ -219,6 +219,48 @@
     - MobBearSpace
 
 - type: entity
+  name: Space Carp Spawner
+  id: SpawnMobCarp
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: icon
+      sprite: Mobs/Aliens/Carps/space.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCarp
+
+- type: entity
+  name: Magicarp Spawner
+  id: SpawnMobCarpMagic
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: icon
+      sprite: Mobs/Aliens/Carps/magic.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCarpMagic
+
+- type: entity
+  name: Holocarp Spawner
+  id: SpawnMobCarpHolo
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: icon
+      sprite: Mobs/Aliens/Carps/holo.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCarpHolo
+
+- type: entity
   name: Hamster Hamlet Spawner
   id: SpawnMobHamsterHamlet
   parent: MarkerBase

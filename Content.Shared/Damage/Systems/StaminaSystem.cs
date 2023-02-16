@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.CombatMode;
@@ -139,10 +140,12 @@ public sealed class StaminaSystem : EntitySystem
 
     private void OnHit(EntityUid uid, StaminaDamageOnHitComponent component, MeleeHitEvent args)
     {
-        if (!args.IsHit)
+        if (!args.IsHit ||
+            !args.HitEntities.Any() ||
+            component.Damage <= 0f)
+        {
             return;
-
-        if (component.Damage <= 0f) return;
+        }
 
         var ev = new StaminaDamageOnHitAttemptEvent();
         RaiseLocalEvent(uid, ref ev);

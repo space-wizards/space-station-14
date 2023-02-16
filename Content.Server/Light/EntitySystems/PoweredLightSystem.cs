@@ -14,6 +14,7 @@ using Content.Shared.Database;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Light;
+using Content.Shared.Light.Component;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -39,6 +40,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
         public const string LightBulbContainer = "light_bulb";
@@ -270,7 +272,7 @@ namespace Content.Server.Light.EntitySystems
             {
                 SetLight(uid, false, light: light);
                 powerReceiver.Load = 0;
-                appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Empty);
+                _appearance.SetData(uid, PoweredLightVisuals.BulbState, PoweredLightState.Empty, appearance);
                 return;
             }
 
@@ -280,7 +282,7 @@ namespace Content.Server.Light.EntitySystems
                     if (powerReceiver.Powered && light.On)
                     {
                         SetLight(uid, true, lightBulb.Color, light, lightBulb.LightRadius, lightBulb.LightEnergy, lightBulb.LightSoftness);
-                        appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.On);
+                        _appearance.SetData(uid, PoweredLightVisuals.BulbState, PoweredLightState.On, appearance);
                         var time = _gameTiming.CurTime;
                         if (time > light.LastThunk + ThunkDelay)
                         {
@@ -291,16 +293,16 @@ namespace Content.Server.Light.EntitySystems
                     else
                     {
                         SetLight(uid, false, light: light);
-                        appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Off);
+                        _appearance.SetData(uid, PoweredLightVisuals.BulbState, PoweredLightState.Off, appearance);
                     }
                     break;
                 case LightBulbState.Broken:
                     SetLight(uid, false, light: light);
-                    appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Broken);
+                    _appearance.SetData(uid, PoweredLightVisuals.BulbState, PoweredLightState.Broken, appearance);
                     break;
                 case LightBulbState.Burned:
                     SetLight(uid, false, light: light);
-                    appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Burned);
+                    _appearance.SetData(uid, PoweredLightVisuals.BulbState, PoweredLightState.Burned, appearance);
                     break;
             }
 
@@ -335,10 +337,10 @@ namespace Content.Server.Light.EntitySystems
 
             light.LastGhostBlink = time;
 
-            ToggleBlinkingLight(light, true);
+            ToggleBlinkingLight(uid, light, true);
             light.Owner.SpawnTimer(light.GhostBlinkingTime, () =>
             {
-                ToggleBlinkingLight(light, false);
+                ToggleBlinkingLight(uid, light, false);
             });
 
             args.Handled = true;
@@ -349,7 +351,7 @@ namespace Content.Server.Light.EntitySystems
             UpdateLight(uid, component);
         }
 
-        public void ToggleBlinkingLight(PoweredLightComponent light, bool isNowBlinking)
+        public void ToggleBlinkingLight(EntityUid uid, PoweredLightComponent light, bool isNowBlinking)
         {
             if (light.IsBlinking == isNowBlinking)
                 return;
@@ -358,7 +360,8 @@ namespace Content.Server.Light.EntitySystems
 
             if (!EntityManager.TryGetComponent(light.Owner, out AppearanceComponent? appearance))
                 return;
-            appearance.SetData(PoweredLightVisuals.Blinking, isNowBlinking);
+
+            _appearance.SetData(uid, PoweredLightVisuals.Blinking, isNowBlinking, appearance);
         }
 
         private void OnSignalReceived(EntityUid uid, PoweredLightComponent component, SignalReceivedEvent args)
