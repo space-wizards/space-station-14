@@ -12,7 +12,6 @@ public sealed partial class SalvageSystem
 {
     private void InitializeRunner()
     {
-
     }
 
     // Runs the expedition

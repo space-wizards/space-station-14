@@ -18,6 +18,7 @@ using Content.Shared.Gravity;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.Loot;
+using Content.Shared.Procedural.Rewards;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Salvage;
@@ -71,7 +72,7 @@ public sealed partial class SalvageSystem
         // Finish mission
         if (TryComp<SalvageExpeditionDataComponent>(component.Station, out var data))
         {
-            FinishExpedition(data);
+            FinishExpedition(data, component);
         }
     }
 
@@ -125,11 +126,24 @@ public sealed partial class SalvageSystem
         }
     }
 
-    private void FinishExpedition(SalvageExpeditionDataComponent component)
+    private void FinishExpedition(SalvageExpeditionDataComponent component, SalvageExpeditionComponent expedition)
     {
         component.ActiveMission = 0;
-        component.NextOffer = _timing.CurTime + MissionCooldown;
+
+        // Payout already handled elsewhere.
+        if (expedition.Completed)
+        {
+            _sawmill.Debug($"Completed mission {expedition.Mission.Config} with seed {expedition.Mission.Seed}");
+            component.NextOffer = _timing.CurTime + MissionCooldown;
+        }
+        else
+        {
+            _sawmill.Debug($"Failed mission {expedition.Mission.Config} with seed {expedition.Mission.Seed}");
+            component.NextOffer = _timing.CurTime + MissionFailedCooldown;
+        }
+
         UpdateConsoles(component);
+
     }
 
     private void GenerateMissions(SalvageExpeditionDataComponent component)

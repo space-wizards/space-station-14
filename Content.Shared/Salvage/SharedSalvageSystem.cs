@@ -9,7 +9,8 @@ namespace Content.Shared.Salvage;
 
 public abstract class SharedSalvageSystem : EntitySystem
 {
-    public static readonly TimeSpan MissionCooldown = TimeSpan.FromSeconds(10);
+    public static readonly TimeSpan MissionCooldown = TimeSpan.FromMinutes(5);
+    public static readonly TimeSpan MissionFailedCooldown = TimeSpan.FromMinutes(10);
 
     public static string GetFaction(List<string> factions, int seed)
     {
