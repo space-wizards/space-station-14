@@ -175,15 +175,16 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      60: Dead
+      200: Dead
+  - type: MeleeWeapon
+    damage:
+      groups:
+        Brute: 8
   - type: Stamina
     excess: 200
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.0
     baseSprintSpeed : 5.5
-  - type: SlowOnDamage
-    speedModifierThresholds:
-      150: 0.7
   - type: Fixtures
     fixtures:
     - shape:
@@ -302,7 +303,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      75: Dead
+      50: Dead
   - type: Stamina
     excess: 250
   - type: MovementSpeedModifier
@@ -312,15 +313,12 @@
     hidden: true
     damage:
      groups:
-       Brute: 8
-  - type: SlowOnDamage
-    speedModifierThresholds:
-      200: 0.7
+       Brute: 3
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
-        radius: 0.45
+        radius: 0.35
       density: 235
       mask:
       - MobMask

@@ -137,9 +137,9 @@
   id: Xenos
   groups:
     - entries:
-        - id: MobXeno
-          amount: 3
-          maxAmount: 6
+        - id: MobXenoRunner
+          amount: 10
+          maxAmount: 15
         - id: MobXenoDrone
           amount: 1
   configs:
