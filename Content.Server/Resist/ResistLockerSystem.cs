@@ -1,12 +1,10 @@
-using Content.Shared.Movement;
 using Content.Server.Storage.Components;
 using Content.Server.DoAfter;
-using Content.Server.Lock;
-using Robust.Shared.Player;
 using Robust.Shared.Containers;
 using Content.Server.Popups;
 using Content.Shared.Movement.Events;
 using Content.Server.Storage.EntitySystems;
+using Content.Shared.Lock;
 using Content.Shared.Popups;
 
 namespace Content.Server.Resist;

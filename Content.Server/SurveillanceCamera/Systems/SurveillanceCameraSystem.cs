@@ -1,8 +1,6 @@
-using Content.Server.Administration.Managers;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.Ghost.Components;
 using Content.Server.Power.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DeviceNetwork;
@@ -20,6 +18,7 @@ public sealed class SurveillanceCameraSystem : EntitySystem
     [Dependency] private readonly ViewSubscriberSystem _viewSubscriberSystem = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     // Pings a surveillance camera subnet. All cameras will always respond
     // with a data message if they are on the same subnet.
@@ -371,10 +370,10 @@ public sealed class SurveillanceCameraSystem : EntitySystem
         }
     }
 
-    private void UpdateVisuals(EntityUid camera, SurveillanceCameraComponent? component = null, AppearanceComponent? appearance = null)
+    private void UpdateVisuals(EntityUid uid, SurveillanceCameraComponent? component = null, AppearanceComponent? appearance = null)
     {
         // Don't log missing, because otherwise tests fail.
-        if (!Resolve(camera, ref component, ref appearance, false))
+        if (!Resolve(uid, ref component, ref appearance, false))
         {
             return;
         }
@@ -391,7 +390,7 @@ public sealed class SurveillanceCameraSystem : EntitySystem
             key = SurveillanceCameraVisuals.InUse;
         }
 
-        appearance.SetData(SurveillanceCameraVisualsKey.Key, key);
+        _appearance.SetData(uid, SurveillanceCameraVisualsKey.Key, key, appearance);
     }
 }
 
