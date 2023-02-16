@@ -107,6 +107,7 @@ public sealed class MindSystem : EntitySystem
                     {
                         // This should be an error, if it didn't cause tests to start erroring when they delete a player.
                         Logger.WarningS("mind", $"Entity \"{ToPrettyString(uid)}\" for {mind.Mind?.CharacterName} was deleted, and no applicable spawn location is available.");
+                        mind.Mind?.TransferTo(null);
                         return;
                     }
 

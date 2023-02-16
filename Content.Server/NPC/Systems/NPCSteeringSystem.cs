@@ -206,16 +206,19 @@ namespace Content.Server.NPC.Systems
 
             var npcs = EntityQuery<ActiveNPCComponent, NPCSteeringComponent, InputMoverComponent, TransformComponent>()
                 .ToArray();
+
+            // Dependency issues across threads.
             var options = new ParallelOptions
             {
-                MaxDegreeOfParallelism = _parallel.ParallelProcessCount,
+                MaxDegreeOfParallelism = 1,
             };
+            var curTime = _timing.CurTime;
 
             Parallel.For(0, npcs.Length, options, i =>
             {
                 var (_, steering, mover, xform) = npcs[i];
 
-                Steer(steering, mover, xform, modifierQuery, bodyQuery, xformQuery, frameTime);
+                Steer(steering, mover, xform, modifierQuery, bodyQuery, xformQuery, frameTime, curTime);
             });
 
 
@@ -262,7 +265,8 @@ namespace Content.Server.NPC.Systems
             EntityQuery<MovementSpeedModifierComponent> modifierQuery,
             EntityQuery<PhysicsComponent> bodyQuery,
             EntityQuery<TransformComponent> xformQuery,
-            float frameTime)
+            float frameTime,
+            TimeSpan curTime)
         {
             if (Deleted(steering.Coordinates.EntityId))
             {
@@ -355,6 +359,18 @@ namespace Content.Server.NPC.Systems
                 resultDirection = new Angle(desiredDirection * InterestRadians).ToVec();
             }
 
+            // Don't steer too frequently to avoid twitchiness.
+            // This should also implicitly solve tie situations.
+            // I think doing this after all the ops above is best?
+            // Originally I had it way above but sometimes mobs would overshoot their tile targets.
+            if (steering.NextSteer > curTime)
+            {
+                SetDirection(mover, steering, steering.LastSteerDirection, false);
+                return;
+            }
+
+            steering.NextSteer = curTime + TimeSpan.FromSeconds(1f / NPCSteeringComponent.SteeringFrequency);
+            steering.LastSteerDirection = resultDirection;
             DebugTools.Assert(!float.IsNaN(resultDirection.X));
             SetDirection(mover, steering, resultDirection, false);
         }

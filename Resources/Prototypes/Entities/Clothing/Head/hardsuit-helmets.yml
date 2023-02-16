@@ -394,7 +394,7 @@
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetCBURN
   noSpawn: true
-  name: syndicate elite helmet
+  name: CBURN exosuit helmet
   description: A pressure resistant and fireproof hood worn by special cleanup units.
   components:
   - type: Sprite
