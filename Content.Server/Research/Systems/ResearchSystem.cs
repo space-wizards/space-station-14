@@ -29,12 +29,12 @@ namespace Content.Server.Research.Systems
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ResearchServerComponent? GetServerById(int id)
+        public EntityUid? GetServerById(int id)
         {
             foreach (var server in EntityQuery<ResearchServerComponent>())
             {
                 if (server.Id == id)
-                    return server;
+                    return server.Owner;
             }
 
             return null;

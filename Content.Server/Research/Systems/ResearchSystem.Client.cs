@@ -10,7 +10,7 @@ public sealed partial class ResearchSystem
 {
     private void InitializeClient()
     {
-        SubscribeLocalEvent<ResearchClientComponent, ComponentStartup>(OnClientStartup);
+        SubscribeLocalEvent<ResearchClientComponent, MapInitEvent>(OnClientMapInit);
         SubscribeLocalEvent<ResearchClientComponent, ComponentShutdown>(OnClientShutdown);
         SubscribeLocalEvent<ResearchClientComponent, BoundUIOpenedEvent>(OnClientUIOpen);
         SubscribeLocalEvent<ResearchClientComponent, ConsoleServerSyncMessage>(OnConsoleSync);
@@ -30,8 +30,8 @@ public sealed partial class ResearchSystem
         if (server == null)
             return;
 
-        UnregisterClient(uid, clientComponent: component);
-        RegisterClient(uid, server.Owner, component, server);
+        UnregisterClient(uid, component);
+        RegisterClient(uid, server.Value, component);
     }
 
     private void OnClientDeselected(EntityUid uid, ResearchClientComponent component, ResearchClientServerDeselectedMessage args)
@@ -66,7 +66,7 @@ public sealed partial class ResearchSystem
         UpdateClientInterface(uid, component);
     }
 
-    private void OnClientStartup(EntityUid uid, ResearchClientComponent component, ComponentStartup args)
+    private void OnClientMapInit(EntityUid uid, ResearchClientComponent component, MapInitEvent args)
     {
         var allServers = EntityQuery<ResearchServerComponent>(true).ToArray();
         if (allServers.Length > 0)
