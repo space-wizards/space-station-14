@@ -21,6 +21,7 @@ using Content.Shared.Procedural.Loot;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Salvage;
+using Content.Shared.Salvage.Expeditions;
 using Content.Shared.Salvage.Expeditions.Extraction;
 using Content.Shared.Salvage.Expeditions.Structure;
 using Content.Shared.Storage;
@@ -135,7 +136,7 @@ public sealed partial class SalvageSystem
     private void GenerateMissions(SalvageExpeditionDataComponent component)
     {
         component.Missions.Clear();
-        const int timeBlock = 15;
+        const int timeBlock = 30;
         var configs = _prototypeManager.EnumeratePrototypes<SalvageExpeditionPrototype>().ToArray();
 
         if (configs.Length == 0)
@@ -235,7 +236,7 @@ public sealed partial class SalvageSystem
 
             // Setup mission configs
             var biome = _entManager.EnsureComponent<BiomeComponent>(mapUid);
-            biome.BiomePrototype = GetBiome(config.Biomes, _mission.Seed);
+            biome.BiomePrototype = config.Biome;
             _prototypeManager.Index<BiomePrototype>(biome.BiomePrototype);
             _entManager.Dirty(biome);
 
@@ -271,8 +272,6 @@ public sealed partial class SalvageSystem
             var expedition = _entManager.AddComponent<SalvageExpeditionComponent>(mapUid);
             expedition.Station = Station;
             expedition.EndTime = _timing.CurTime + _mission.Duration;
-            expedition.Faction = config.Factions[random.Next(config.Factions.Count)];
-            expedition.Config = config.ID;
 
             var ftlUid = _entManager.SpawnEntity("FTLPoint", new EntityCoordinates(mapUid, Vector2.Zero));
             _entManager.GetComponent<MetaDataComponent>(ftlUid).EntityName = "Salvage XYZ";
@@ -414,7 +413,7 @@ public sealed partial class SalvageSystem
                 }
             }
 
-            await SetupMission(config.Expedition, dungeonOffset, dungeon, grid, random, seed.GetSeed());
+            await SetupMission(config, dungeonOffset, dungeon, grid, random, seed.GetSeed());
             return true;
         }
 
@@ -518,20 +517,20 @@ public sealed partial class SalvageSystem
 
         #region Mission Specific
 
-        private async Task SetupMission(ISalvageMission mission, Vector2i dungeonOffset, Dungeon dungeon, MapGridComponent grid, Random random, int seed)
+        private async Task SetupMission(SalvageExpeditionPrototype config, Vector2i dungeonOffset, Dungeon dungeon, MapGridComponent grid, Random random, int seed)
         {
             // TODO: Move this to the main method
-            switch (mission)
+            switch (config.Expedition)
             {
                 case SalvageStructure structure:
-                    await SetupMission(structure, dungeonOffset, dungeon, grid, random, seed);
+                    await SetupMission(config, structure, dungeonOffset, dungeon, grid, random, seed);
                     break;
                 default:
                     throw new NotImplementedException();
             }
         }
 
-        private async Task SetupMission(SalvageStructure structure, Vector2i dungeonOffset, Dungeon dungeon, MapGridComponent grid, Random random, int seed)
+        private async Task SetupMission(SalvageExpeditionPrototype config, SalvageStructure structure, Vector2i dungeonOffset, Dungeon dungeon, MapGridComponent grid, Random random, int seed)
         {
             // TODO: Uhh difficulty selection
             // TODO: Hardcoding
@@ -560,7 +559,7 @@ public sealed partial class SalvageSystem
                 }
             }
 
-            var shaggy = (SalvageStructureFaction) faction.Configs["CaveStructures"];
+            var shaggy = (SalvageStructureFaction) faction.Configs[config.ID];
 
             // Spawn the objectives
             for (var i = 0; i < structureCount; i++)

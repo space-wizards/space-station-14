@@ -1,7 +1,8 @@
+using Content.Shared.Dataset;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Procedural;
-using Content.Shared.Procedural.Rooms;
 using Content.Shared.Random;
+using Content.Shared.Salvage.Expeditions;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -14,8 +15,11 @@ public sealed class SalvageExpeditionPrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = default!;
 
-    [DataField("biomes", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<BiomePrototype>))]
-    public List<string> Biomes = new();
+    [DataField("nameProto", customTypeSerializer:typeof(PrototypeIdSerializer<DatasetPrototype>))]
+    public string NameProto = "names_borer";
+
+    [DataField("biome", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<BiomePrototype>))]
+    public string Biome = string.Empty;
 
     [DataField("desc")]
     public string Description = string.Empty;
@@ -40,7 +44,7 @@ public sealed class SalvageExpeditionPrototype : IPrototype
     /// <summary>
     /// Available factions for selection for this mission prototype.
     /// </summary>
-    [DataField("factions")]
+    [DataField("factions", customTypeSerializer:typeof(PrototypeIdListSerializer<SalvageFactionPrototype>))]
     public List<string> Factions = new();
 
     [DataField("dungeonConfig", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<DungeonConfigPrototype>))]

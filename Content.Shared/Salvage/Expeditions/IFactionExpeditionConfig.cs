@@ -1,4 +1,4 @@
-namespace Content.Server.Salvage.Expeditions;
+namespace Content.Shared.Salvage.Expeditions;
 
 
 public interface IFactionExpeditionConfig

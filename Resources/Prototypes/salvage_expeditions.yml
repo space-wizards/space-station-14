@@ -1,5 +1,6 @@
+# Dungeon configs
 - type: dungeonConfig
-  id: LowDesertDungeon
+  id: SandDungeon
   rooms:
     - !type:NoiseRoomGen
       tile: FloorAsteroidSand
@@ -8,6 +9,7 @@
     - !type:SimplePathGen
       tile: FloorAsteroidSand
       wall: WallRock
+
 
 # Loot configs
 - type: weightedRandom
@@ -74,23 +76,46 @@
       maxCluster: 5
       points: 10
 
+# Expedition rewards
+#- type: loot
+#  id: Cash
+
+
+#- type: salvageReward
+#  id: Cash
+
+
 # Expedition configs
 - type: salvageExpedition
-  id: CaveStructures
+  id: StructuresDesertCave
   desc: Caves
-  biomes:
-  - LowDesert
-  - Lava
+  biome: LowDesert
   light: "#E6CB8B"
   expedition: !type:SalvageStructure
   minDuration: 540
   maxDuration: 720
   factions:
     - Xenos
-  dungeonConfig: LowDesertDungeon
+  dungeonConfig: SandDungeon
   dungeonRadius: 40
   dungeonPosition: 70,0
   loot: CaveLoot
+
+- type: salvageExpedition
+  id: StructuresLavaCave
+  desc: Caves
+  biome: Lava
+  light: "#A34931"
+  expedition: !type:SalvageStructure
+  minDuration: 540
+  maxDuration: 720
+  factions:
+    - Xenos
+  dungeonConfig: SandDungeon
+  dungeonRadius: 40
+  dungeonPosition: 70,0
+  loot: CaveLoot
+
 
 # Factions
 - type: salvageFaction
@@ -103,7 +128,9 @@
         - id: MobXenoDrone
           amount: 1
   configs:
-    CaveStructures: !type:SalvageStructureFaction
+    StructuresDesertCave: !type:SalvageStructureFaction
+      spawn: XenoWardingTower
+    StructuresLavaCave: !type:SalvageStructureFaction
       spawn: XenoWardingTower
 
 
