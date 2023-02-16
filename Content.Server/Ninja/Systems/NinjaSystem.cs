@@ -21,6 +21,8 @@ using Content.Shared.Database;
 using Content.Shared.Doors.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Implants;
+using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Popups;
@@ -55,6 +57,7 @@ public sealed partial class NinjaSystem : GameRuleSystem
     [Dependency] private readonly PopupSystem _popups = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly SharedStealthSystem _stealth = default!;
+    [Dependency] private readonly SharedSubdermalImplantSystem _implants = default!;
     [Dependency] private readonly TagSystem _tags = default!;
 
     private readonly HashSet<SpaceNinjaComponent> _activeNinja = new();
@@ -419,20 +422,30 @@ public sealed partial class NinjaSystem : GameRuleSystem
     private void OnNinjaStartup(EntityUid uid, SpaceNinjaComponent comp, ComponentStartup args)
     {
         _activeNinja.Add(comp);
+
+		// inject starting implants
+		var coords = Transform(uid).Coordinates;
+        foreach (var id in comp.Implants)
+        {
+            var implant = Spawn(id, coords);
+
+            if (!TryComp<SubdermalImplantComponent>(implant, out var implantComp))
+                return;
+
+            _implants.ForceImplant(uid, implant, implantComp);
+        }
     }
 
     private void OnNinjaMindAdded(EntityUid uid, SpaceNinjaComponent comp, MindAddedMessage args)
     {
-        // Mind was added, shutdown the ghost role stuff so it won't get in the way
-//        if (EntityManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
-//            EntityManager.RemoveComponent<GhostTakeoverAvailableComponent>(uid);
-
         // TODO: put in yaml somehow
         if (TryComp<MindComponent>(uid, out var mind) && mind.Mind != null && mind.Mind.TryGetSession(out var session))
         {
             mind.Mind.AddRole(new TraitorRole(mind.Mind, _proto.Index<AntagPrototype>(comp.SpaceNinjaRoleId)));
-            AddObjective(mind.Mind, "DoorjackObjective");
-            AddObjective(mind.Mind, "DownloadObjective");
+            foreach (var objective in comp.Objectives)
+            {
+	            AddObjective(mind.Mind, objective);
+	        }
 
             _chatMan.DispatchServerMessage(session, Loc.GetString("ninja-role-greeting"));
         }

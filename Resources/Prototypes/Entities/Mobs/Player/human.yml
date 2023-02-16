@@ -60,7 +60,6 @@
     - type: RandomHumanoidAppearance
 
 # Space Ninja
-# TODO: give microbomb implant built-in instead of in pocket
 - type: entity
   noSpawn: true
   name: Space Ninja
@@ -77,6 +76,12 @@
     factions:
     - Syndicate
   - type: SpaceNinja
+    # TODO: move to job or something
+    objectives:
+    - DoorjackObjective
+    - DownloadObjective
+    # TODO: remove when job works
+    implants: [ MicroBombImplant ]
   - type: RandomMetadata
     nameSegments:
     - names_ninja_title
