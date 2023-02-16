@@ -1,7 +1,7 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 
-namespace Content.Server.Ninja.Components;
+namespace Content.Shared.Ninja.Components;
 
 [RegisterComponent]
 public sealed class SpaceNinjaSuitComponent : Component

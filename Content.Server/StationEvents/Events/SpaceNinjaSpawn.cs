@@ -6,9 +6,9 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 
-namespace Content.Server.Ninja.Systems;
+namespace Content.Server.StationEvents.Events;
 
-public sealed partial class NinjaSystem
+public sealed class SpaceNinjaSpawn : StationEventSystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -16,7 +16,7 @@ public sealed partial class NinjaSystem
 
     public override void Started()
     {
-        // TODO: spawn outside station
+        // TODO: spawn outside station with a direction
         var spawnLocations = EntityManager.EntityQuery<MapGridComponent, TransformComponent>().ToList();
 
         if (spawnLocations.Count == 0)

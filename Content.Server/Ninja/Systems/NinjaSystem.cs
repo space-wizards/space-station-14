@@ -26,12 +26,13 @@ using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Ninja.Components;
+using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Research.Components;
 using Content.Shared.Roles;
 using Content.Shared.Rounding;
-using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee.Events;
@@ -45,7 +46,7 @@ using System.Threading;
 
 namespace Content.Server.Ninja.Systems;
 
-public sealed partial class NinjaSystem : GameRuleSystem
+public sealed partial class NinjaSystem : SharedNinjaSystem
 {
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
@@ -58,7 +59,7 @@ public sealed partial class NinjaSystem : GameRuleSystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly PopupSystem _popups = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
-    [Dependency] private readonly SharedStealthSystem _stealth = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedSubdermalImplantSystem _implants = default!;
     [Dependency] private readonly TagSystem _tags = default!;
 
@@ -389,7 +390,10 @@ public sealed partial class NinjaSystem : GameRuleSystem
 
         // force uncloak
         comp.Cloaked = false;
-        RemComp<StealthComponent>(user);
+        SetCloaked(user, false);
+        RemCompDeferred<StealthComponent>(user);
+
+        // remove power indicator
         SetSuitPowerAlert(user);
     }
 
@@ -407,18 +411,6 @@ public sealed partial class NinjaSystem : GameRuleSystem
 
         comp.Cloaked = !comp.Cloaked;
         SetCloaked(args.Performer, comp.Cloaked);
-    }
-
-    private void SetCloaked(EntityUid user, bool cloaked)
-    {
-        if (TryComp<StealthComponent>(user, out var stealth))
-        {
-            // slightly visible, but doesn't change when moving so it's ok
-            var visibility = cloaked ? stealth.MinVisibility + 0.25f : stealth.MaxVisibility;
-            _stealth.SetVisibility(user, visibility, stealth);
-
-            _stealth.SetEnabled(user, cloaked, stealth);
-        }
     }
 
     private void OnNinjaStartup(EntityUid uid, SpaceNinjaComponent comp, ComponentStartup args)
@@ -442,12 +434,12 @@ public sealed partial class NinjaSystem : GameRuleSystem
         var warps = new List<EntityUid>();
         foreach (var warp in EntityManager.EntityQuery<WarpPointComponent>(true))
         {
-        	if (warp.Location != null)
-        		warps.Add(warp.Owner);
+            if (warp.Location != null)
+                warps.Add(warp.Owner);
         }
 
-		if (warps.Count > 0)
-	    	comp.SpiderChargeTarget = _random.Pick(warps);
+        if (warps.Count > 0)
+            comp.SpiderChargeTarget = _random.Pick(warps);
     }
 
     private void OnNinjaMindAdded(EntityUid uid, SpaceNinjaComponent comp, MindAddedMessage args)

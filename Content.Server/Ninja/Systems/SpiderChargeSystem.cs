@@ -14,35 +14,35 @@ public sealed class SpiderChargeSystem : EntitySystem
     {
         base.Initialize();
 
-		SubscribeLocalEvent<SpiderChargeComponent, BeforeRangedInteractEvent>(BeforePlant);
+        SubscribeLocalEvent<SpiderChargeComponent, BeforeRangedInteractEvent>(BeforePlant);
         SubscribeLocalEvent<SpiderChargeComponent, EntityStuckEvent>(OnStuck);
         SubscribeLocalEvent<SpiderChargeComponent, TriggerEvent>(OnExplode);
     }
 
-	private void BeforePlant(EntityUid uid, SpiderChargeComponent comp, BeforeRangedInteractEvent args)
-	{
-		var user = args.User;
+    private void BeforePlant(EntityUid uid, SpiderChargeComponent comp, BeforeRangedInteractEvent args)
+    {
+        var user = args.User;
 
-		if (!TryComp<SpaceNinjaComponent>(user, out var ninja))
-		{
-			_popups.PopupEntity(Loc.GetString("spider-charge-not-ninja"), user, user);
-			args.Handled = true;
-			return;
-		}
+        if (!TryComp<SpaceNinjaComponent>(user, out var ninja))
+        {
+            _popups.PopupEntity(Loc.GetString("spider-charge-not-ninja"), user, user);
+            args.Handled = true;
+            return;
+        }
 
-		// allow planting anywhere if there is no target, which should never happen
-		if (ninja.SpiderChargeTarget != null)
-		{
-			// assumes warp point still exists
-			var target = Transform(ninja.SpiderChargeTarget.Value).MapPosition;
-			if (!args.ClickLocation.ToMap(EntityManager).InRange(target, comp.Range))
-			{
-				_popups.PopupEntity(Loc.GetString("spider-charge-too-far"), user, user);
-				args.Handled = true;
-				return;
-			}
-		}
-	}
+        // allow planting anywhere if there is no target, which should never happen
+        if (ninja.SpiderChargeTarget != null)
+        {
+            // assumes warp point still exists
+            var target = Transform(ninja.SpiderChargeTarget.Value).MapPosition;
+            if (!args.ClickLocation.ToMap(EntityManager).InRange(target, comp.Range))
+            {
+                _popups.PopupEntity(Loc.GetString("spider-charge-too-far"), user, user);
+                args.Handled = true;
+                return;
+            }
+        }
+    }
 
     private void OnStuck(EntityUid uid, SpiderChargeComponent comp, EntityStuckEvent args)
     {
