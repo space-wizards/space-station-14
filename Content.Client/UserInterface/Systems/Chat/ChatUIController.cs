@@ -211,7 +211,7 @@ public sealed class ChatUIController : UIController
 
         if (setting)
         {
-            chatBox.SetSize = chatSize;
+            gameScreen.SetChatSize(chatSize);
             gameScreen.OnChatResized += StoreChatSize;
         }
         else

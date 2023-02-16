@@ -35,4 +35,9 @@ public sealed partial class DefaultGameScreen : BaseGameScreen
 
     public override ChatBox ChatBox => Chat;
     public override ScreenType ScreenType => ScreenType.Default;
+
+    public override void SetChatSize(Vector2 size)
+    {
+        Chat.SetSize = size;
+    }
 }

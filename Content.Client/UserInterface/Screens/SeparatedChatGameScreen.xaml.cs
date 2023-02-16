@@ -27,4 +27,9 @@ public sealed partial class SeparatedChatGameScreen : BaseGameScreen
 
     public override ChatBox ChatBox => GetWidget<ChatBox>()!;
     public override ScreenType ScreenType => ScreenType.Separated;
+
+    public override void SetChatSize(Vector2 size)
+    {
+        ScreenContainer.GetChild(1).SetSize = size;
+    }
 }

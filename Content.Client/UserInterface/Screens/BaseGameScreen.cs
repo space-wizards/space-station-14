@@ -11,4 +11,6 @@ public abstract class BaseGameScreen : UIScreen
     public abstract ChatBox ChatBox { get; }
 
     public abstract ScreenType ScreenType { get; }
+
+    public abstract void SetChatSize(Vector2 size);
 }
