@@ -3,7 +3,7 @@
   useDelay: 10
   icon: Interface/Actions/scream.png
   name: action-name-scream
-  description: AAAAAAAAAAAAAAAAAAAAAAAAA
+  description: action-description-scream
   serverEvent: !type:ScreamActionEvent
   checkCanInteract: false
 
@@ -87,6 +87,16 @@
   description: vending-machine-action-description
   useDelay: 30
   event: !type:VendingMachineSelfDispenseEvent
+
+- type: instantAction
+  id: ArtifactActivate
+  name: activate-artifact-action-name
+  description: activate-artifact-action-desc
+  icon:
+    sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
+    state: ano01
+  useDelay: 60
+  event: !type:ArtifactSelfActivateEvent
 
 - type: instantAction
   id: ToggleBlock

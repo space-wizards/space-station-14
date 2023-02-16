@@ -1,13 +1,10 @@
 using Content.Shared.Popups;
 using Content.Shared.Damage;
-using Content.Shared.MobState.Components;
 using Content.Server.DoAfter;
 using Content.Shared.Revenant;
 using Robust.Shared.Random;
-using Robust.Shared.Player;
 using Robust.Shared.Map;
 using Content.Shared.Tag;
-using Content.Shared.Maps;
 using Content.Server.Storage.Components;
 using Content.Server.Light.Components;
 using Content.Server.Ghost;
@@ -19,15 +16,15 @@ using Content.Server.Disease;
 using Content.Server.Disease.Components;
 using Content.Shared.Item;
 using Content.Shared.Bed.Sleep;
-using Content.Shared.MobState;
 using System.Linq;
-using Content.Server.Beam;
-using Content.Server.Emag;
-using Content.Server.Humanoid;
+using Content.Server.Maps;
 using Content.Server.Revenant.Components;
-using Content.Server.Store.Components;
+using Content.Shared.Emag.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Revenant.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Utility;
@@ -42,7 +39,9 @@ public sealed partial class RevenantSystem
     [Dependency] private readonly DiseaseSystem _disease = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
     [Dependency] private readonly GhostSystem _ghost = default!;
+    [Dependency] private readonly TileSystem _tile = default!;
 
     private void InitializeAbilities()
     {
@@ -70,7 +69,7 @@ public sealed partial class RevenantSystem
             return;
         }
 
-        if (!HasComp<MobStateComponent>(target) || !HasComp<HumanoidComponent>(target) || HasComp<RevenantComponent>(target))
+        if (!HasComp<MobStateComponent>(target) || !HasComp<HumanoidAppearanceComponent>(target) || HasComp<RevenantComponent>(target))
             return;
 
         args.Handled = true;
@@ -141,7 +140,7 @@ public sealed partial class RevenantSystem
             return;
         }
 
-        if (TryComp<MobStateComponent>(target, out var mobstate) && mobstate.CurrentState == DamageState.Alive && !HasComp<SleepingComponent>(target))
+        if (TryComp<MobStateComponent>(target, out var mobstate) && mobstate.CurrentState == MobState.Alive && !HasComp<SleepingComponent>(target))
         {
             _popup.PopupEntity(Loc.GetString("revenant-soul-too-powerful"), target, uid);
             return;
@@ -179,13 +178,10 @@ public sealed partial class RevenantSystem
 
         essence.Harvested = true;
         ChangeEssenceAmount(uid, essence.EssenceAmount, component);
-        if (TryComp<StoreComponent>(uid, out var store))
-        {
-            _store.TryAddCurrency(new Dictionary<string, FixedPoint2>()
-                { {component.StolenEssenceCurrencyPrototype, essence.EssenceAmount} }, store);
-        }
+        _store.TryAddCurrency(new Dictionary<string, FixedPoint2>
+            { {component.StolenEssenceCurrencyPrototype, essence.EssenceAmount} }, uid);
 
-        if (!TryComp<MobStateComponent>(args.Target, out var mobstate))
+        if (!HasComp<MobStateComponent>(args.Target))
             return;
 
         if (_mobState.IsAlive(args.Target) || _mobState.IsCritical(args.Target))
@@ -195,8 +191,8 @@ public sealed partial class RevenantSystem
         }
 
         //KILL THEMMMM
-        var damage = _mobState.GetEarliestDeadState(mobstate, 0)?.threshold;
-        if (damage == null)
+
+        if (!_mobThresholdSystem.TryGetThresholdForState(args.Target, MobState.Dead, out var damage))
             return;
         DamageSpecifier dspec = new();
         dspec.DamageDict.Add("Poison", damage.Value);
@@ -233,7 +229,7 @@ public sealed partial class RevenantSystem
         {
             if (!tiles.TryGetValue(i, out var value))
                 continue;
-            value.PryTile();
+            _tile.PryTile(value);
         }
 
         var lookup = _lookup.GetEntitiesInRange(uid, component.DefileRadius, LookupFlags.Approximate | LookupFlags.Static);
@@ -336,7 +332,7 @@ public sealed partial class RevenantSystem
 
         foreach (var ent in _lookup.GetEntitiesInRange(uid, component.MalfunctionRadius))
         {
-            _emag.DoEmag(ent, ent); //it emags itself. spooky.
+            _emag.DoEmagEffect(ent, ent); //it emags itself. spooky.
         }
     }
 }

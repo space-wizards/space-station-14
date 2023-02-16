@@ -34,7 +34,7 @@ public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneab
     /// <summary>
     ///     Name to show in UI.
     /// </summary>
-    [DataField("name", required: true)]
+    [DataField("name")]
     public string DisplayName = string.Empty;
 
     /// <summary>

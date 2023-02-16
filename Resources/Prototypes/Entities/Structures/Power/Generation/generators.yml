@@ -96,6 +96,9 @@
   - type: Fixtures
   - type: Transform
     anchored: true
+  - type: Physics
+    bodyType: Static
+    canCollide: false
   - type: Sprite
     drawdepth: WallMountedItems
     netsync: false
@@ -132,6 +135,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
+    canCollide: false
   - type: Fixtures
   - type: Transform
     anchored: true

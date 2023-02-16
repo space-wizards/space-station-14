@@ -77,7 +77,7 @@ namespace Content.Server.Chemistry.ReactionEffects
             if (args.Source == null)
                 return;
 
-            var splitSolution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(args.SolutionEntity, args.Source, args.Source.MaxVolume);
+            var splitSolution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(args.SolutionEntity, args.Source, args.Source.Volume);
             // We take the square root so it becomes harder to reach higher amount values
             var amount = (int) Math.Round(_rangeConstant + _rangeMultiplier*Math.Sqrt(args.Quantity.Float()));
             amount = Math.Min(amount, _maxRange);
@@ -90,7 +90,7 @@ namespace Content.Server.Chemistry.ReactionEffects
                 // Weird formulas here but basically when amount increases, solutionFraction gets closer to 0 in a reciprocal manner
                 // _reagentDilutionFactor defines how fast solutionFraction gets closer to 0
                 float solutionFraction = 1 / (_reagentDilutionFactor*(amount) + 1);
-                splitSolution.RemoveSolution(splitSolution.TotalVolume * (1 - solutionFraction));
+                splitSolution.RemoveSolution(splitSolution.Volume * (1 - solutionFraction));
             }
 
             var transform = args.EntityManager.GetComponent<TransformComponent>(args.SolutionEntity);

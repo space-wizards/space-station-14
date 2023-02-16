@@ -1,8 +1,8 @@
-using Content.Server.MobState;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN;
 using Content.Shared.CCVar;
-using Content.Shared.MobState;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
@@ -131,13 +131,13 @@ namespace Content.Server.NPC.Systems
             if (HasComp<ActorComponent>(uid))
                 return;
 
-            switch (args.CurrentMobState)
+            switch (args.NewMobState)
             {
-                case DamageState.Alive:
+                case MobState.Alive:
                     WakeNPC(uid, component);
                     break;
-                case DamageState.Critical:
-                case DamageState.Dead:
+                case MobState.Critical:
+                case MobState.Dead:
                     SleepNPC(uid, component);
                     break;
             }

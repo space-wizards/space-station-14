@@ -175,6 +175,8 @@
   - type: Tag
     tags:
     - Wooden
+  - type: StaticPrice
+    price: 75
 
 - type: entity
   name: ritual chair
@@ -218,7 +220,7 @@
     node: chairCursed
 
 - type: entity
-  parent: SeatBase
+  parent: [SeatBase, BaseFoldable]
   id: ChairFolding
   name: folding chair
   description: If you carry six of these you become the coolest kid at church.
@@ -228,14 +230,13 @@
     sprite: Structures/Furniture/folding_chair.rsi
     layers:
     - state: folding
-      map: ["enum.FoldableVisualLayers.Base"]
+      map: ["unfoldedLayer"]
+    - state: folding_folded
+      map: ["foldedLayer"]
+      visible: false
   - type: Item
     size: 50
-  - type: Foldable
   - type: Appearance
-    visuals:
-    - type: FoldableVisualizer
-      key: folding
   - type: MeleeWeapon
     damage:
       types:

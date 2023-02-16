@@ -2,8 +2,8 @@
 using Content.Shared.Disposal.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.Item;
-using Content.Shared.MobState.Components;
-using Content.Shared.MobState.EntitySystems;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Physics.Components;
@@ -16,7 +16,7 @@ namespace Content.Shared.Disposal
     public abstract class SharedDisposalUnitSystem : EntitySystem
     {
         [Dependency] protected readonly IGameTiming GameTiming = default!;
-        [Dependency] private readonly SharedMobStateSystem _mobState = default!;
+        [Dependency] private readonly MobStateSystem _mobState = default!;
 
         protected static TimeSpan ExitAttemptDelay = TimeSpan.FromSeconds(0.5);
 
@@ -27,7 +27,7 @@ namespace Content.Shared.Disposal
         {
             base.Initialize();
             SubscribeLocalEvent<SharedDisposalUnitComponent, PreventCollideEvent>(OnPreventCollide);
-            SubscribeLocalEvent<SharedDisposalUnitComponent, CanDragDropOnEvent>(OnCanDragDropOn);
+            SubscribeLocalEvent<SharedDisposalUnitComponent, CanDropTargetEvent>(OnCanDragDropOn);
         }
 
         private void OnPreventCollide(EntityUid uid, SharedDisposalUnitComponent component, ref PreventCollideEvent args)
@@ -48,9 +48,10 @@ namespace Content.Shared.Disposal
             }
         }
 
-        private void OnCanDragDropOn(EntityUid uid, SharedDisposalUnitComponent component, CanDragDropOnEvent args)
+        private void OnCanDragDropOn(EntityUid uid, SharedDisposalUnitComponent component, ref CanDropTargetEvent args)
         {
-            if (args.Handled) return;
+            if (args.Handled)
+                return;
 
             args.CanDrop = CanInsert(component, args.Dragged);
             args.Handled = true;

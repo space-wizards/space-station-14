@@ -1,11 +1,16 @@
+using Content.Client.Examine;
 using Content.Shared.CCVar;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Client.Graphics;
+using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Popups;
@@ -17,6 +22,7 @@ public sealed class PopupOverlay : Overlay
 {
     private readonly IConfigurationManager _configManager;
     private readonly IEntityManager _entManager;
+    private readonly IPlayerManager _playerMgr;
     private readonly IUserInterfaceManager _uiManager;
     private readonly PopupSystem _popup;
 
@@ -30,6 +36,7 @@ public sealed class PopupOverlay : Overlay
     public PopupOverlay(
         IConfigurationManager configManager,
         IEntityManager entManager,
+        IPlayerManager playerMgr,
         IPrototypeManager protoManager,
         IResourceCache cache,
         IUserInterfaceManager uiManager,
@@ -37,6 +44,7 @@ public sealed class PopupOverlay : Overlay
     {
         _configManager = configManager;
         _entManager = entManager;
+        _playerMgr = playerMgr;
         _uiManager = uiManager;
         _popup = popup;
 
@@ -70,6 +78,8 @@ public sealed class PopupOverlay : Overlay
             return;
 
         var matrix = args.ViewportControl!.GetWorldToScreenMatrix();
+        var viewPos = new MapCoordinates(args.WorldAABB.Center, args.MapId);
+        var ourEntity = _playerMgr.LocalPlayer?.ControlledEntity;
 
         foreach (var popup in _popup.WorldLabels)
         {
@@ -78,7 +88,11 @@ public sealed class PopupOverlay : Overlay
             if (mapPos.MapId != args.MapId)
                 continue;
 
-            if (!args.WorldAABB.Contains(mapPos.Position))
+            var distance = (mapPos.Position - args.WorldBounds.Center).Length;
+
+            // Should handle fade here too wyci.
+            if (!args.WorldAABB.Contains(mapPos.Position) || !ExamineSystemShared.InRangeUnOccluded(viewPos, mapPos, distance,
+                    e => e == popup.InitialPos.EntityId || e == ourEntity, entMan: _entManager))
                 continue;
 
             var pos = matrix.Transform(mapPos.Position);

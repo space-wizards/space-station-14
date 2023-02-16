@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Ghost.Components;
@@ -11,7 +10,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.MobState.EntitySystems;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Pointing;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
@@ -36,7 +35,7 @@ namespace Content.Server.Pointing.EntitySystems
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
-        [Dependency] private readonly SharedMobStateSystem _mobState = default!;
+        [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
@@ -110,7 +109,7 @@ namespace Content.Server.Pointing.EntitySystems
                 return false;
             }
 
-            if (_pointers.TryGetValue(session!, out var lastTime) &&
+            if (_pointers.TryGetValue(session, out var lastTime) &&
                 _gameTiming.CurTime < lastTime + PointDelay)
             {
                 return false;
@@ -219,7 +218,7 @@ namespace Content.Server.Pointing.EntitySystems
                 var name = Loc.GetString(tileDef.Name);
                 selfMessage = Loc.GetString("pointing-system-point-at-tile", ("tileName", name));
 
-                viewerMessage = Loc.GetString("pointing-system-other-point-at-tile", ("otherName", playerName), ("tileName", tileDef.Name));
+                viewerMessage = Loc.GetString("pointing-system-other-point-at-tile", ("otherName", playerName), ("tileName", name));
 
                 _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):user} pointed at {name} {(position == null ? mapCoords : position)}");
             }

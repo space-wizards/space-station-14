@@ -5,7 +5,7 @@ using Content.Server.NPC.Components;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 

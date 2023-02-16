@@ -4,6 +4,7 @@
   name: ammunition box (.60 anti-material)
   components:
   - type: BallisticAmmoProvider
+    mayTransfer: true
     capacity: 30
     proto: CartridgeAntiMaterial
   - type: Sprite

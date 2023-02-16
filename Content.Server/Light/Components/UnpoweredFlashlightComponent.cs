@@ -1,4 +1,5 @@
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Light;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Light.Components

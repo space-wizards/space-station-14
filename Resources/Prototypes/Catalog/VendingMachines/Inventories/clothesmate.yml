@@ -3,7 +3,8 @@
   startingInventory:
     ClothingBackpack: 5
     ClothingBackpackDuffel: 5
-    ClothingBackpackSatchel: 5
+    ClothingBackpackSatchel: 3
+    ClothingBackpackSatchelLeather: 2
     HatBandBlack: 2
     HatBandBlue: 2
     HatBandGreen: 2

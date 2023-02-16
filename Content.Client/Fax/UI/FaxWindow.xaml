@@ -1,5 +1,4 @@
 <DefaultWindow xmlns="https://spacestation14.io"
-               xmlns:viewport="clr-namespace:Content.Client.Viewport"
                Title="{Loc 'fax-machine-ui-window'}"
                MinWidth="250">
     <BoxContainer Orientation="Vertical" VerticalExpand="True">

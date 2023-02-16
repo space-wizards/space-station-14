@@ -1408,6 +1408,23 @@
 
 - type: entity
   parent: DrinkGlassBase
+  id: DrinkPoscaGlass
+  name: posca glass
+  description: Poor warriors' drink from a forgotten era.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: Posca
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/glass_light_yellow.rsi
+
+- type: entity
+  parent: DrinkGlassBase
   id: DrinkRedMeadGlass
   name: red mead glass
   description: A true Viking's beverage, though its color is strange.

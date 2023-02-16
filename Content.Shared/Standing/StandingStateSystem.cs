@@ -15,7 +15,6 @@ namespace Content.Shared.Standing
 {
     public sealed class StandingStateSystem : EntitySystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
@@ -97,7 +96,7 @@ namespace Content.Shared.Standing
                         continue;
 
                     standingState.ChangedFixtures.Add(key);
-                    _physics.SetCollisionMask(fixture, fixture.CollisionMask & ~StandingCollisionLayer);
+                    _physics.SetCollisionMask(uid, fixture, fixture.CollisionMask & ~StandingCollisionLayer, manager: fixtureComponent);
                 }
             }
 
@@ -149,7 +148,7 @@ namespace Content.Shared.Standing
                 foreach (var key in standingState.ChangedFixtures)
                 {
                     if (fixtureComponent.Fixtures.TryGetValue(key, out var fixture))
-                        _physics.SetCollisionMask(fixture, fixture.CollisionMask | StandingCollisionLayer);
+                        _physics.SetCollisionMask(uid, fixture, fixture.CollisionMask | StandingCollisionLayer, fixtureComponent);
                 }
             }
             standingState.ChangedFixtures.Clear();

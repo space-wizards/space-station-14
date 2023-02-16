@@ -7,6 +7,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -19,6 +20,7 @@ public sealed class ImmovableRodSystem : EntitySystem
 
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     public override void Update(float frameTime)
     {
@@ -29,6 +31,7 @@ public sealed class ImmovableRodSystem : EntitySystem
         {
             if (!rod.DestroyTiles)
                 continue;
+
             if (!_map.TryGetGrid(trans.GridUid, out var grid))
                 continue;
 
@@ -49,9 +52,9 @@ public sealed class ImmovableRodSystem : EntitySystem
     {
         if (EntityManager.TryGetComponent(uid, out PhysicsComponent? phys))
         {
-            phys.LinearDamping = 0f;
-            phys.Friction = 0f;
-            phys.BodyStatus = BodyStatus.InAir;
+            _physics.SetLinearDamping(phys, 0f);
+            _physics.SetFriction(phys, 0f);
+            _physics.SetBodyStatus(phys, BodyStatus.InAir);
 
             if (!component.RandomizeVelocity)
                 return;
@@ -63,7 +66,7 @@ public sealed class ImmovableRodSystem : EntitySystem
                 _ => xform.WorldRotation.RotateVec(component.DirectionOverride.ToVec()) * _random.NextFloat(component.MinSpeed, component.MaxSpeed)
             };
 
-            phys.ApplyLinearImpulse(vel);
+            _physics.ApplyLinearImpulse(uid, vel, body: phys);
             xform.LocalRotation = (vel - xform.WorldPosition).ToWorldAngle() + MathHelper.PiOver2;
         }
     }

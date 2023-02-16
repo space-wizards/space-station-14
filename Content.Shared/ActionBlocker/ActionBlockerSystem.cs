@@ -1,6 +1,7 @@
 using Content.Shared.Body.Events;
 using Content.Shared.DragDrop;
 using Content.Shared.Emoting;
+using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
@@ -115,7 +116,7 @@ namespace Content.Shared.ActionBlocker
 
         public bool CanDrop(EntityUid uid)
         {
-            var ev = new DropAttemptEvent(uid);
+            var ev = new DropAttemptEvent();
             RaiseLocalEvent(uid, ev);
 
             return !ev.Cancelled;
@@ -146,7 +147,8 @@ namespace Content.Shared.ActionBlocker
 
         public bool CanAttack(EntityUid uid, EntityUid? target = null)
         {
-            if (_container.IsEntityInContainer(uid))
+            _container.TryGetOuterContainer(uid, Transform(uid), out var outerContainer);
+            if (target != null &&  target != outerContainer?.Owner && _container.IsEntityInContainer(uid))
             {
                 var containerEv = new CanAttackFromContainerEvent(uid, target);
                 RaiseLocalEvent(uid, containerEv);

@@ -28,6 +28,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly ClothingSystem _clothing = default!;
         [Dependency] private readonly SharedItemSystem _items = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         private const float UpdateTimer = 3f;
 
@@ -54,7 +55,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
 
             smokable.State = state;
-            appearance.SetData(SmokingVisuals.Smoking, state);
+            _appearance.SetData(uid, SmokingVisuals.Smoking, state, appearance);
 
             var newState = state switch
             {
@@ -117,12 +118,12 @@ namespace Content.Server.Nutrition.EntitySystems
 
                 var inhaledSolution = _solutionContainerSystem.SplitSolution(uid, solution, smokable.InhaleAmount * _timer);
 
-                if (solution.TotalVolume == FixedPoint2.Zero)
+                if (solution.Volume == FixedPoint2.Zero)
                 {
                     RaiseLocalEvent(uid, new SmokableSolutionEmptyEvent(), true);
                 }
 
-                if (inhaledSolution.TotalVolume == FixedPoint2.Zero)
+                if (inhaledSolution.Volume == FixedPoint2.Zero)
                     continue;
 
                 // This is awful. I hate this so much.

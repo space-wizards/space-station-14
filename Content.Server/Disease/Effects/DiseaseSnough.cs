@@ -11,19 +11,18 @@ namespace Content.Server.Disease
     [UsedImplicitly]
     public sealed class DiseaseSnough : DiseaseEffect
     {
-        
         /// <summary>
         /// Message to play when snoughing
         /// </summary>
         [DataField("snoughMessage")]
         public string SnoughMessage = "disease-sneeze";
 
-        /// </summary>
-        /// Sound to play when snoughing
         /// <summary>
+        /// Sound to play when snoughing
+        /// </summary>
         [DataField("snoughSound")]
         public SoundSpecifier? SnoughSound;
-        
+
         /// <summary>
         /// Whether to spread the disease through the air
         /// </summary>

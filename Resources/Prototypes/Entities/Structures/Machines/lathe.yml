@@ -15,7 +15,7 @@
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
     - state: inserting
-      map: ["enum.LatheVisualLayers.IsInserting"]
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
@@ -74,14 +74,12 @@
       - Crowbar
       - Multitool
       - AirlockPainter
-      - MiniHoe
-      - Shovel
-      - Spade
       - CableStack
       - HandheldGPSBasic
       - TRayScanner
       - GasAnalyzer
       - UtilityBelt
+      - Pickaxe
   - type: StaticPrice
     price: 800
 
@@ -102,7 +100,7 @@
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
     - state: inserting
-      map: ["enum.LatheVisualLayers.IsInserting"]
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
@@ -171,11 +169,15 @@
       - MiningDrill
       - ConveyorBeltAssembly
       - AppraisalTool
+      - AnomalyScanner
       - RCD
       - RCDAmmo
       - HydroponicsToolScythe
       - HydroponicsToolHatchet
+      - Clippers
+      - MiniHoe
       - Shovel
+      - Spade
       - HandheldCrewMonitor
       - Scalpel
       - Retractor
@@ -203,6 +205,11 @@
       - HighPowerMicroLaserStockPart
       - NanoManipulatorStockPart
       - AdvancedScanningModuleStockPart
+      - SuperCapacitorStockPart
+      - SuperMatterBinStockPart
+      - UltraHighPowerMicroLaserStockPart
+      - PicoManipulatorStockPart
+      - PhasicScanningModuleStockPart
       - FirelockElectronics
       - DoorElectronics
       - APCElectronics
@@ -313,8 +320,12 @@
       - SeedExtractorMachineCircuitboard
       - AnalysisComputerCircuitboard
       - ExosuitFabricatorMachineCircuitboard
+      - AnomalyVesselCircuitboard
+      - APECircuitboard
       - ArtifactAnalyzerMachineCircuitboard
       - TraversalDistorterMachineCircuitboard
+      - BoozeDispenserMachineCircuitboard
+      - SodaDispenserMachineCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:
@@ -335,7 +346,7 @@
     - state: fab-idle
       map: ["enum.LatheVisualLayers.IsRunning"]
     - state: fab-load
-      map: ["enum.LatheVisualLayers.IsInserting"]
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
     - state: fab-o
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Machine
@@ -376,7 +387,7 @@
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
     - state: inserting
-      map: ["enum.LatheVisualLayers.IsInserting"]
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Machine
@@ -402,12 +413,20 @@
       - ShellShotgunFlare
       - ShellTranquilizer
       - CartridgeLightRifle
-      - CartridgeCaselessRifleRubber
+      - CartridgeRifle
       - CartridgeLightRifleRubber
       - CartridgeRifleRubber
       - TargetHuman
       - TargetSyndicate
       - TargetClown
+      - MagazineBoxPistol
+      - MagazineBoxPistolRubber
+      - MagazineBoxMagnum
+      - MagazineBoxMagnumRubber
+      - MagazineBoxRifle
+      - MagazineBoxRifleRubber
+      - MagazineBoxLightRifle
+      - MagazineBoxLightRifleRubber
   - type: MaterialStorage
     whitelist:
       tags:
@@ -432,7 +451,7 @@
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
     - state: inserting
-      map: ["enum.LatheVisualLayers.IsInserting"]
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Lathe
@@ -461,6 +480,14 @@
       - PillCanister
       - BodyBag
       - ChemistryEmptyBottle01
+      - Medkit
+      - MedkitBurn
+      - MedkitToxin
+      - MedkitO2
+      - MedkitBrute
+      - MedkitAdvanced
+      - MedkitRadiation
+      - MedkitCombat
   - type: Machine
     board: MedicalTechFabCircuitboard
 
@@ -579,17 +606,18 @@
           shader: unshaded
           map: ["enum.PowerDeviceVisualLayers.Powered"]
         - state: inserting
-          map: ["enum.LatheVisualLayers.IsInserting"]
+          map: ["enum.MaterialStorageVisualLayers.Inserting"]
         - state: panel
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
     - type: Machine
       board: OreProcessorMachineCircuitboard
     - type: MaterialStorage
+      dropOnDeconstruct: false #should drop ores instead of ingots/sheets
+      ignoreColor: true
       whitelist:
         tags:
           - Ore
     - type: Lathe
-      ignoreColor: true
       staticRecipes:
         - SheetSteel30
         - SheetGlass30

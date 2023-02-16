@@ -12,7 +12,7 @@
   - type: Body
     prototype: Slime
     requiredLegs: 2
-  - type: Humanoid
+  - type: HumanoidAppearance
     species: SlimePerson
   - type: Speech
     speechSounds: Slime
@@ -32,7 +32,7 @@
   - type: Barotrauma
     damage:
       types:
-        Blunt: 0.3 #per second, scales with pressure and other constants. Twice as much as humans.
+        Blunt: 0.45 #per second, scales with pressure and other constants. Slighty more than humans.
   - type: Reactive
     groups:
       Flammable: [ Touch ]
@@ -81,5 +81,5 @@
   noSpawn: true
   description: A dummy slime meant to be used in character setup.
   components:
-    - type: Humanoid
+    - type: HumanoidAppearance
       species: SlimePerson

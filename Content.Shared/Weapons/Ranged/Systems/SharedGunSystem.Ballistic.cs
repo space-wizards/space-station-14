@@ -26,6 +26,7 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<BallisticAmmoProviderComponent, ExaminedEvent>(OnBallisticExamine);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, GetVerbsEvent<Verb>>(OnBallisticVerb);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, InteractUsingEvent>(OnBallisticInteractUsing);
+        SubscribeLocalEvent<BallisticAmmoProviderComponent, AfterInteractEvent>(OnBallisticAfterInteract);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, UseInHandEvent>(OnBallisticUse);
     }
 
@@ -48,6 +49,81 @@ public abstract partial class SharedGunSystem
         args.Handled = true;
         UpdateBallisticAppearance(component);
         Dirty(component);
+    }
+
+    private void OnBallisticAfterInteract(EntityUid uid, BallisticAmmoProviderComponent component, AfterInteractEvent args)
+    {
+        if (args.Handled ||
+            !component.MayTransfer ||
+            !Timing.IsFirstTimePredicted ||
+            args.Target == null ||
+            args.Used == args.Target ||
+            Deleted(args.Target) ||
+            !TryComp(args.Target, out BallisticAmmoProviderComponent? targetComponent) ||
+            targetComponent.Whitelist == null)
+        {
+            return;
+        }
+
+        args.Handled = true;
+
+        if (targetComponent.Entities.Count + targetComponent.UnspawnedCount == targetComponent.Capacity)
+        {
+            Popup(
+                Loc.GetString("gun-ballistic-transfer-target-full",
+                    ("entity", args.Target)),
+                args.Target,
+                args.User);
+            return;
+        }
+
+        if (component.Entities.Count + component.UnspawnedCount == 0)
+        {
+            Popup(
+                Loc.GetString("gun-ballistic-transfer-empty",
+                    ("entity", args.Used)),
+                args.Used,
+                args.User);
+            return;
+        }
+
+        void SimulateInsertAmmo(EntityUid ammo, EntityUid ammoProvider, EntityCoordinates coordinates)
+        {
+            var evInsert = new InteractUsingEvent(args.User, ammo, ammoProvider, coordinates);
+            RaiseLocalEvent(ammoProvider, evInsert);
+        }
+
+        List<IShootable> ammo = new();
+        var evTakeAmmo = new TakeAmmoEvent(1, ammo, Transform(args.Used).Coordinates, args.User);
+        RaiseLocalEvent(args.Used, evTakeAmmo);
+
+        foreach (var shot in ammo)
+        {
+            if (shot is not AmmoComponent cast)
+                continue;
+
+            if (!targetComponent.Whitelist.IsValid(cast.Owner))
+            {
+                Popup(
+                    Loc.GetString("gun-ballistic-transfer-invalid",
+                        ("ammoEntity", cast.Owner),
+                        ("targetEntity", args.Target.Value)),
+                    args.Used,
+                    args.User);
+
+                // TODO: For better or worse, this will play a sound, but it's the
+                // more future-proof thing to do than copying the same code
+                // that OnBallisticInteractUsing has, sans sound.
+                SimulateInsertAmmo(cast.Owner, args.Used, Transform(args.Used).Coordinates);
+            }
+            else
+            {
+                SimulateInsertAmmo(cast.Owner, args.Target.Value, Transform(args.Target.Value).Coordinates);
+            }
+
+            if (cast.Owner.IsClientSide())
+                Del(cast.Owner);
+        }
     }
 
     private void OnBallisticVerb(EntityUid uid, BallisticAmmoProviderComponent component, GetVerbsEvent<Verb> args)

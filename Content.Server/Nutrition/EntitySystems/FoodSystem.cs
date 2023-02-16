@@ -4,7 +4,6 @@ using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
-using Content.Server.MobState;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Administration.Logs;
@@ -17,7 +16,8 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -163,8 +163,8 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
 
             var transferAmount = args.Food.TransferAmount != null
-                ? FixedPoint2.Min((FixedPoint2) args.Food.TransferAmount, args.FoodSolution.CurrentVolume)
-                : args.FoodSolution.CurrentVolume;
+                ? FixedPoint2.Min((FixedPoint2) args.Food.TransferAmount, args.FoodSolution.Volume)
+                : args.FoodSolution.Volume;
 
             var split = _solutionContainerSystem.SplitSolution((args.Food).Owner, args.FoodSolution, transferAmount);
 
@@ -202,7 +202,7 @@ namespace Content.Server.Nutrition.EntitySystems
                     args.User, args.User);
 
                 // log successful force feed
-                _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(uid):user} forced {ToPrettyString(args.User):target} to eat {ToPrettyString(args.Food.Owner):food}");
+                _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(args.User):user} forced {ToPrettyString(uid):target} to eat {ToPrettyString(args.Food.Owner):food}");
             }
             else
             {

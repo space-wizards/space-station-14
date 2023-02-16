@@ -42,8 +42,6 @@
       - WallLayer
       density: 1000
   - type: Occluder
-    sizeX: 32
-    sizeY: 32
   - type: Airtight
   - type: StaticPrice
     price: 75
@@ -590,9 +588,12 @@
   - type: Sprite
     netsync: false
     drawdepth: Walls
-    # TODO: Icon smoothing support
     sprite: Structures/Walls/shuttle_diagonal.rsi
     state: state0
+  - type: IconSmooth
+    mode: Diagonal
+    key: walls
+    base: state
   - type: Icon
     sprite: Structures/Walls/shuttle_diagonal.rsi
     state: state0

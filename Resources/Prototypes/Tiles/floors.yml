@@ -1093,23 +1093,22 @@
 
 # Terrain
 - type: tile
-  id: FloorSnow
-  name: tiles-snow
-  sprite: /Textures/Tiles/snow.png
-  baseTurfs:
-  - FloorDirt
+  id: FloorBasaslt
+  name: tiles-basalt-floor
+  sprite: /Textures/Tiles/Planet/basalt.png
   isSubfloor: true
   canCrowbar: false
   footstepSounds:
-    collection: FootstepSnow
-  friction: 0.20
-  itemDrop: FloorTileItemSnow
+    collection: FootstepAsteroid
+  friction: 0.30
   thermalConductivity: 0.04
   heatCapacity: 10000
+  weather: true
+
 
 - type: tile
   id: FloorGrass
-  name: tiles-grass-floor
+  name: tiles-planet-grass-floor
   sprite: /Textures/Tiles/grass.png
   baseTurfs:
   - FloorDirt
@@ -1121,6 +1120,7 @@
   itemDrop: FloorTileItemGrass
   thermalConductivity: 0.04
   heatCapacity: 10000
+  weather: true
 
 - type: tile
   id: FloorGrassJungle
@@ -1136,6 +1136,7 @@
   itemDrop: FloorTileItemGrassJungle
   thermalConductivity: 0.04
   heatCapacity: 10000
+  weather: true
 
 - type: tile
   id: FloorGrassDark
@@ -1152,6 +1153,7 @@
   friction: 0.30
   thermalConductivity: 0.04
   heatCapacity: 10000
+  weather: true
 
 - type: tile
   id: FloorGrassLight
@@ -1168,6 +1170,7 @@
   friction: 0.30
   thermalConductivity: 0.04
   heatCapacity: 10000
+  weather: true
 
 - type: tile
   id: FloorDirt
@@ -1184,6 +1187,7 @@
   friction: 0.30
   thermalConductivity: 0.04
   heatCapacity: 10000
+  weather: true
 
 # Asteroid
 - type: tile
@@ -1199,6 +1203,7 @@
   friction: 0.30
   thermalConductivity: 0.04
   heatCapacity: 10000
+  weather: true
 
 - type: tile
   id: FloorAsteroidTile
@@ -1213,6 +1218,7 @@
   friction: 0.30
   thermalConductivity: 0.04
   heatCapacity: 10000
+  weather: true
 
 - type: tile
   id: FloorAsteroidCoarseSand0
@@ -1229,6 +1235,7 @@
   friction: 0.30
   thermalConductivity: 0.04
   heatCapacity: 10000
+  weather: true
 
 - type: tileAlias
   id: FloorAsteroidCoarseSand1
@@ -1251,6 +1258,7 @@
   friction: 0.30
   thermalConductivity: 0.04
   heatCapacity: 10000
+  weather: true
 
 - type: tile
   id: FloorAsteroidIronsand1
@@ -1265,6 +1273,7 @@
   friction: 0.30
   thermalConductivity: 0.04
   heatCapacity: 10000
+  weather: true
 
 - type: tile
   id: FloorAsteroidIronsand2
@@ -1279,6 +1288,7 @@
   friction: 0.30
   thermalConductivity: 0.04
   heatCapacity: 10000
+  weather: true
 
 - type: tile
   id: FloorAsteroidIronsand3
@@ -1293,6 +1303,7 @@
   friction: 0.30
   thermalConductivity: 0.04
   heatCapacity: 10000
+  weather: true
 
 - type: tile
   id: FloorAsteroidIronsand4
@@ -1307,6 +1318,7 @@
   friction: 0.30
   thermalConductivity: 0.04
   heatCapacity: 10000
+  weather: true
 
 # Caves
 - type: tile
@@ -1338,6 +1350,22 @@
   footstepSounds:
     collection: FootstepAsteroid
   friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorFlesh
+  name: tiles-flesh-floor
+  sprite: /Textures/Tiles/meat.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurfs:
+  - Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: BarestepCarpet
+  friction: 0.20 #slippy
   thermalConductivity: 0.04
   heatCapacity: 10000
 

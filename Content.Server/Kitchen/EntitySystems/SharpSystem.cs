@@ -1,15 +1,15 @@
 ﻿using Content.Server.Body.Systems;
 using Content.Server.DoAfter;
 using Content.Server.Kitchen.Components;
-using Content.Server.MobState;
 using Content.Shared.Body.Components;
 using Content.Shared.Interaction;
-using Content.Shared.MobState.Components;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using Content.Shared.Destructible;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Robust.Server.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -34,7 +34,7 @@ public sealed class SharpSystem : EntitySystem
         SubscribeLocalEvent<SharpButcherDoafterComplete>(OnDoafterComplete);
         SubscribeLocalEvent<SharpButcherDoafterCancelled>(OnDoafterCancelled);
 
-        SubscribeLocalEvent<SharedButcherableComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
+        SubscribeLocalEvent<ButcherableComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
     }
 
     private void OnAfterInteract(EntityUid uid, SharpComponent component, AfterInteractEvent args)
@@ -47,7 +47,7 @@ public sealed class SharpSystem : EntitySystem
 
     private void TryStartButcherDoafter(EntityUid knife, EntityUid target, EntityUid user)
     {
-        if (!TryComp<SharedButcherableComponent>(target, out var butcher))
+        if (!TryComp<ButcherableComponent>(target, out var butcher))
             return;
 
         if (!TryComp<SharpComponent>(knife, out var sharp))
@@ -79,7 +79,7 @@ public sealed class SharpSystem : EntitySystem
 
     private void OnDoafterComplete(SharpButcherDoafterComplete ev)
     {
-        if (!TryComp<SharedButcherableComponent>(ev.Entity, out var butcher))
+        if (!TryComp<ButcherableComponent>(ev.Entity, out var butcher))
             return;
 
         if (!TryComp<SharpComponent>(ev.Sharp, out var sharp))
@@ -123,7 +123,7 @@ public sealed class SharpSystem : EntitySystem
         sharp.Butchering.Remove(ev.Entity);
     }
 
-    private void OnGetInteractionVerbs(EntityUid uid, SharedButcherableComponent component, GetVerbsEvent<InteractionVerb> args)
+    private void OnGetInteractionVerbs(EntityUid uid, ButcherableComponent component, GetVerbsEvent<InteractionVerb> args)
     {
         if (component.Type != ButcheringType.Knife || args.Hands == null)
             return;
