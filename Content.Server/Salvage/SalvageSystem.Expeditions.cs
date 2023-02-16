@@ -110,8 +110,14 @@ public sealed partial class SalvageSystem
         foreach (var comp in EntityQuery<SalvageExpeditionDataComponent>())
         {
             // Update offers
-            if (comp.Claimed || comp.NextOffer >= currentTime)
+            if (comp.NextOffer > currentTime)
                 continue;
+
+            // Were we on cooldown.
+            if (comp.Claimed)
+            {
+                comp.ActiveMission = 0;
+            }
 
             comp.NextOffer += MissionCooldown;
             GenerateMissions(comp);
@@ -129,8 +135,6 @@ public sealed partial class SalvageSystem
 
     private void FinishExpedition(SalvageExpeditionDataComponent component, SalvageExpeditionComponent expedition)
     {
-        component.ActiveMission = 0;
-
         // Payout already handled elsewhere.
         if (expedition.Completed)
         {

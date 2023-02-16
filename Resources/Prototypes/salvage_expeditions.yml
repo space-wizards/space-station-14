@@ -16,6 +16,7 @@
   id: CaveLoot
   weights:
     OreGold: 0.5
+    OreGoldSilver: 0.5
     OrePlasma: 0.25
     OreSilver: 0.5
     OreTin: 1.0
@@ -54,6 +55,21 @@
       minCluster: 5
       maxCluster: 8
       points: 6
+
+- type: salvageLoot
+  id: OreGoldSilver
+  desc: Veins of gold and silver ore
+  loots:
+    - !type:ClusterLoot
+      proto: WallRockSilver
+      minCluster: 5
+      maxCluster: 8
+      points: 3
+    - !type:ClusterLoot
+      proto: WallRockGold
+      minCluster: 5
+      maxCluster: 8
+      points: 3
 
 # - Low yield
 - type: salvageLoot
