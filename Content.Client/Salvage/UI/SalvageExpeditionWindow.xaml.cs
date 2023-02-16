@@ -201,12 +201,10 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
                 Text = $"Rewards:"
             });
 
-            // TODO: Noncomn
-            var reward = _prototype.Index<WeightedRandomPrototype>(config.Reward).Pick();
-            var salvageReward = _prototype.Index<SalvageRewardPrototype>(reward);
+            var salvageReward = SharedSalvageSystem.GetReward(_prototype.Index<WeightedRandomPrototype>(config.Reward), mission.Seed, _prototype);
             var rewardDesc = string.Empty;
 
-            switch (salvageReward.Reward)
+            switch (salvageReward)
             {
                 case BankReward bank:
                     rewardDesc = $"Bank payment of {bank.Amount}";
@@ -241,14 +239,11 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
             }
             else
             {
-                foreach (var loot in config.Loots)
+                foreach (var lootProto in SharedSalvageSystem.GetLoot(config.Loots, mission.Seed, _prototype))
                 {
-                    var weighted = _prototype.Index<WeightedRandomPrototype>(loot);
-                    var lootTable = weighted.Pick();
-
                     lBox.AddChild(new Label()
                     {
-                        Text = _prototype.Index<SalvageLootPrototype>(lootTable).Description,
+                        Text = lootProto.Description,
                         FontColorOverride = StyleNano.ConcerningOrangeFore,
                         HorizontalAlignment = HAlignment.Left,
                         Margin = new Thickness(0f, 0f, 0f, 5f),
