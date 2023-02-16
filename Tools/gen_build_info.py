@@ -21,9 +21,9 @@ SERVER_FILES = [
 
 VERSION = os.environ['CI_COMMIT_REF_NAME'] + "-" + os.environ['CI_COMMIT_SHA']
 FORK_ID = "workbench"
-BUILD_URL = f"https://ss14.arumoon.ru/builds/builds/{{FORK_VERSION}}/{FILE}"
-MANIFEST_URL = f"https://ss14.arumoon.ru/cdn/version/{{FORK_VERSION}}/manifest"
-MANIFEST_DOWNLOAD_URL = f"https://ss14.arumoon.ru/cdn/version/{{FORK_VERSION}}/download"
+BUILD_URL = f"https://ss14.lolicon.monster/builds/builds/{{FORK_VERSION}}/{FILE}"
+MANIFEST_URL = f"https://ss14.lolicon.monster/cdn/version/{{FORK_VERSION}}/manifest"
+MANIFEST_DOWNLOAD_URL = f"https://ss14.lolicon.monster/cdn/version/{{FORK_VERSION}}/download"
 
 def main() -> None:
     client_file = os.path.join("release", FILE)
