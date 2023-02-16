@@ -299,10 +299,10 @@
     name: nuclear operative encryption key
     description: An encryption key used by nuclear operatives to securely contact each other during operations.
     components:
-      - type: EncryptionKey
-        channels:
-          - Syndicate
-        defaultChannel: Syndicate
-      - type: Sprite
-        sprite: Objects/Devices/encryption_keys.rsi
-        state: syn_cypherkey
+    - type: EncryptionKey
+      channels:
+      - Syndicate
+      defaultChannel: Syndicate
+    - type: Sprite
+      sprite: Objects/Devices/encryption_keys.rsi
+      state: syn_cypherkey
