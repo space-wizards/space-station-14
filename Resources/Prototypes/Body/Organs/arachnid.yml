@@ -27,9 +27,9 @@
   components:
   - type: Stomach
     maxVolume: 50
-    updateInterval: 2
+    updateInterval: 1.5
   - type: Metabolizer
-    updateFrequency: 2
+    updateFrequency: 1.5
 
 - type: entity
   id: OrganArachnidHeart
@@ -42,7 +42,7 @@
     state: heart-on
   - type: Organ
   - type: Metabolizer
-    updateFrequency: 2
+    updateFrequency: 1.5
     maxReagents: 2
     metabolizerTypes: [Animal]
     groups:
@@ -61,7 +61,7 @@
     state: liver
   - type: Organ
   - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
-    updateFrequency: 2
+    updateFrequency: 1.5
     maxReagents: 1
     metabolizerTypes: [Animal]
     groups:
@@ -82,7 +82,7 @@
   - type: Organ
   # The kidneys just remove anything that doesn't currently have any metabolisms, as a stopgap.
   - type: Metabolizer
-    updateFrequency: 2
+    updateFrequency: 1.5
     maxReagents: 5
     metabolizerTypes: [Animal]
     removeEmpty: true

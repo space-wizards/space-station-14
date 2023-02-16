@@ -49,8 +49,8 @@
     soundHit:
       path: /Audio/Weapons/pierce.ogg
     angle: 30
-    animation: WeaponArcPunch
-    attackRate: 2
+    animation: WeaponArcClaw
+    attackRate: 1.5
     damage:
       types:
         Slash: 3
