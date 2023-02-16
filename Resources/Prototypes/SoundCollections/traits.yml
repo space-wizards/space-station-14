@@ -2,6 +2,11 @@
   id: Paracusia
   files:
   #- /Audio/Effects/adminhelp.ogg
+  #- /Audio/Machines/Nuke/nuke_alarm.ogg
+  #- /Audio/Announcements/war.ogg
+  #- /Audio/Misc/delta.ogg
+  #- /Audio/Misc/emergency_meeting.ogg
+  #- /Audio/Misc/epsilon.ogg
   - /Audio/Effects/countdown.ogg
   - /Audio/Effects/explosion1.ogg
   - /Audio/Effects/explosion2.ogg
@@ -16,11 +21,37 @@
   - /Audio/Effects/bodyfall2.ogg
   - /Audio/Effects/bodyfall3.ogg
   - /Audio/Effects/bodyfall4.ogg
+  - /Audio/Effects/demon_dies.ogg
+  - /Audio/Effects/demon_attack1.ogg
+  - /Audio/Effects/bang.ogg
+  - /Audio/Effects/clang.ogg
+  - /Audio/Effects/metalbreak.ogg
+  - /Audio/Effects/minibombcountdown.ogg
+  - /Audio/Effects/sadtrombone.ogg
+  - /Audio/Effects/sparks1.ogg
+  - /Audio/Effects/sparks2.ogg
+  - /Audio/Effects/sparks3.ogg
+  - /Audio/Effects/sparks4.ogg
+  - /Audio/Effects/radpulse1.ogg
+  - /Audio/Effects/radpulse5.ogg
+  - /Audio/Effects/radpulse9.ogg
   - /Audio/Effects/Chemistry/bubbles.ogg
+  - /Audio/Announcements/meteors.ogg
+  - /Audio/Announcements/outbreak7.ogg
+  - /Audio/Announcements/power_off.ogg
+  - /Audio/Announcements/shuttlecalled.ogg
+  - /Audio/Ambience/anomaly_drone.ogg
+  - /Audio/Ambience/Objects/gravity_gen_hum.ogg
   - /Audio/Machines/airlock_close.ogg
   - /Audio/Machines/airlock_deny.ogg
   - /Audio/Machines/airlock_open.ogg
   - /Audio/Machines/airlock_ext_open.ogg
+  - /Audio/Machines/anomaly_generator.ogg
+  - /Audio/Machines/phasein.ogg
+  - /Audio/Machines/vending_restock_start.ogg
+  - /Audio/Machines/vending_restock_done.ogg
+  - /Audio/Magic/disintegrate.ogg
+  - /Audio/Magic/staff_animation.ogg
   - /Audio/Weapons/ebladeon.ogg
   - /Audio/Weapons/smash.ogg
   - /Audio/Weapons/bladeslice.ogg
@@ -34,9 +65,14 @@
   - /Audio/Weapons/Guns/Gunshots/atreides.ogg
   - /Audio/Weapons/Guns/Gunshots/c-20r.ogg
   - /Audio/Weapons/Guns/Gunshots/pistol.ogg
+  - /Audio/Items/bikehorn.ogg
+  - /Audio/Items/Toys/weh.ogg
   - /Audio/Items/Toys/toysqueak1.ogg
   - /Audio/Items/Toys/toysqueak2.ogg
   - /Audio/Items/Toys/toysqueak3.ogg
+  - /Audio/Misc/bluealert.ogg
+  - /Audio/Misc/notice1.ogg
+  - /Audio/Misc/redalert.ogg
   - /Audio/Voice/Talk/lizard.ogg
   - /Audio/Voice/Talk/pai.ogg
   - /Audio/Voice/Talk/speak_1.ogg
@@ -46,4 +82,7 @@
   - /Audio/Voice/Human/malescream_6.ogg
   - /Audio/Voice/Human/femalescream_2.ogg
   - /Audio/Voice/Human/femalescream_4.ogg
+  - /Audio/Voice/Zombie/zombie-1.ogg
+  - /Audio/Voice/Zombie/zombie-2.ogg
+  - /Audio/Voice/Zombie/zombie-3.ogg
   - /Audio/Voice/Vox/shriek1.ogg
