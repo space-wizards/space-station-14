@@ -34,9 +34,6 @@
       <DependentUpon>StrippingWindow.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Traits\" />
-  </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
   <Import Project="..\RobustToolbox\MSBuild\Robust.Analyzers.targets" />
 </Project>
