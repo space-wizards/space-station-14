@@ -45214,8 +45214,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 15.969111
-      - 60.07428
+      - 15.087361
+      - 56.757217
       - 0
       - 0
       - 0
@@ -45244,8 +45244,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 17.389294
-      - 65.41687
+      - 16.429127
+      - 61.804813
       - 0
       - 0
       - 0
@@ -148645,4 +148645,12 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 15120
+  type: VendingMachineVendomat
+  components:
+  - flags: SessionSpecific
+    type: MetaData
+  - pos: -51.5,27.5
+    parent: 1
+    type: Transform
 ...
