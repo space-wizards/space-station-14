@@ -276,6 +276,9 @@
       ]
     },
     {
+      "name": "comm_icon"
+    },
+    {
       "name": "comm_logs",
       "directions": 4,
       "delays": [
