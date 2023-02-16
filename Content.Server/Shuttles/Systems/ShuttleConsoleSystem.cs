@@ -46,6 +46,19 @@ namespace Content.Server.Shuttles.Systems
 
             SubscribeLocalEvent<PilotComponent, MoveEvent>(HandlePilotMove);
             SubscribeLocalEvent<PilotComponent, ComponentGetState>(OnGetState);
+
+            SubscribeLocalEvent<FTLDestinationComponent, ComponentStartup>(OnFtlDestStartup);
+            SubscribeLocalEvent<FTLDestinationComponent, ComponentShutdown>(OnFtlDestShutdown);
+        }
+
+        private void OnFtlDestStartup(EntityUid uid, FTLDestinationComponent component, ComponentStartup args)
+        {
+            RefreshShuttleConsoles();
+        }
+
+        private void OnFtlDestShutdown(EntityUid uid, FTLDestinationComponent component, ComponentShutdown args)
+        {
+            RefreshShuttleConsoles();
         }
 
         private void OnDestinationMessage(EntityUid uid, ShuttleConsoleComponent component, ShuttleConsoleDestinationMessage args)

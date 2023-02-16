@@ -136,7 +136,7 @@
   id: Xenos
   groups:
     - entries:
-        - id: MobXenoBurrower
+        - id: MobXeno
           amount: 5
           maxAmount: 8
         - id: MobXenoDrone
