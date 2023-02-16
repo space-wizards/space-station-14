@@ -78,8 +78,11 @@
   - type: SpaceNinja
     # TODO: move to job or something
     objectives:
-    - DoorjackObjective
     - DownloadObjective
+    - DoorjackObjective
+    - SpiderChargeObjective
+    #- CallInThreatObjective
+    #- SurviveObjective
     # TODO: remove when job works
     implants: [ MicroBombImplant ]
   - type: RandomMetadata

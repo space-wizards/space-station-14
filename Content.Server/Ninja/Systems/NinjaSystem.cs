@@ -12,6 +12,7 @@ using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.PowerCell;
 using Content.Server.Traitor;
+using Content.Server.Warps;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
@@ -37,6 +38,7 @@ using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -423,8 +425,8 @@ public sealed partial class NinjaSystem : GameRuleSystem
     {
         _activeNinja.Add(comp);
 
-		// inject starting implants
-		var coords = Transform(uid).Coordinates;
+        // inject starting implants
+        var coords = Transform(uid).Coordinates;
         foreach (var id in comp.Implants)
         {
             var implant = Spawn(id, coords);
@@ -434,6 +436,18 @@ public sealed partial class NinjaSystem : GameRuleSystem
 
             _implants.ForceImplant(uid, implant, implantComp);
         }
+
+        // choose spider charge detonation point
+        // currently based on warp points, something better could be done
+        var warps = new List<EntityUid>();
+        foreach (var warp in EntityManager.EntityQuery<WarpPointComponent>(true))
+        {
+        	if (warp.Location != null)
+        		warps.Add(warp.Owner);
+        }
+
+		if (warps.Count > 0)
+	    	comp.SpiderChargeTarget = _random.Pick(warps);
     }
 
     private void OnNinjaMindAdded(EntityUid uid, SpaceNinjaComponent comp, MindAddedMessage args)
@@ -444,8 +458,8 @@ public sealed partial class NinjaSystem : GameRuleSystem
             mind.Mind.AddRole(new TraitorRole(mind.Mind, _proto.Index<AntagPrototype>(comp.SpaceNinjaRoleId)));
             foreach (var objective in comp.Objectives)
             {
-	            AddObjective(mind.Mind, objective);
-	        }
+                AddObjective(mind.Mind, objective);
+            }
 
             _chatMan.DispatchServerMessage(session, Loc.GetString("ninja-role-greeting"));
         }

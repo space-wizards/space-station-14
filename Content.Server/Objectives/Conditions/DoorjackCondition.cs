@@ -20,13 +20,11 @@ public sealed class DoorjackCondition : IObjectiveCondition
         };
     }
 
-    public string Title
-    {
-        get
-        {
-            return Loc.GetString("objective-condition-doorjack-title", ("count", _target));
-        }
-    }
+    public string Title => Loc.GetString("objective-condition-doorjack-title", ("count", _target));
+
+    public string Description => Loc.GetString("objective-condition-doorjack-description", ("count", _target));
+
+    public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Objects/Tools/emag.rsi"), "icon");
 
     public float Progress
     {
@@ -44,10 +42,6 @@ public sealed class DoorjackCondition : IObjectiveCondition
             return (float) ninja.DoorsJacked / (float) _target;
         }
     }
-
-    public string Description => Loc.GetString("objective-condition-doorjack-description");
-
-    public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Objects/Tools/emag.rsi"), "icon");
 
     public float Difficulty => 1.5f;
 

@@ -38,4 +38,12 @@ public sealed class SpaceNinjaComponent : Component
     /// Research nodes that have been downloaded, used for objective
     [ViewVariables]
     public HashSet<string> DownloadedNodes = new();
+
+	/// Warp point that the spider charge has to target
+	[ViewVariables]
+	public EntityUid? SpiderChargeTarget = null;
+
+    /// Whether the spider charge has been detonated on the target, used for objective
+    [ViewVariables]
+    public bool SpiderChargeDetonated = false;
 }

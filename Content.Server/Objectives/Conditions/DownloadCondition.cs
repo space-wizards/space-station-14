@@ -20,13 +20,11 @@ public sealed class DownloadCondition : IObjectiveCondition
         };
     }
 
-    public string Title
-    {
-        get
-        {
-            return Loc.GetString("objective-condition-download-title", ("count", _target));
-        }
-    }
+    public string Title => Loc.GetString("objective-condition-download-title", ("count", _target));
+
+    public string Description => Loc.GetString("objective-condition-download-description");
+
+    public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Structures/Machines/server.rsi"), "server");
 
     public float Progress
     {
@@ -44,10 +42,6 @@ public sealed class DownloadCondition : IObjectiveCondition
             return (float) ninja.DownloadedNodes.Count / (float) _target;
         }
     }
-
-    public string Description => Loc.GetString("objective-condition-download-description");
-
-    public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Structures/Machines/server.rsi"), "server");
 
     public float Difficulty => 2.5f;
 

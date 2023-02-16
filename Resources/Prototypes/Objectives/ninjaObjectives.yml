@@ -1,4 +1,12 @@
 - type: objective
+  id: DownloadObjective
+  issuer: spider clan
+  requirements:
+    - !type:TraitorRequirement {}
+  conditions:
+    - !type:DownloadCondition {}
+
+- type: objective
   id: DoorjackObjective
   issuer: spider clan
   requirements:
@@ -7,9 +15,9 @@
     - !type:DoorjackCondition {}
 
 - type: objective
-  id: DownloadObjective
+  id: SpiderChargeObjective
   issuer: spider clan
   requirements:
     - !type:TraitorRequirement {}
   conditions:
-    - !type:DownloadCondition {}
+    - !type:SpiderChargeCondition {}
