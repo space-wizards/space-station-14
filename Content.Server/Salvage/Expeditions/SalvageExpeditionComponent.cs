@@ -1,3 +1,4 @@
+using Content.Shared.Salvage;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Salvage.Expeditions;
@@ -8,6 +9,8 @@ namespace Content.Server.Salvage.Expeditions;
 [RegisterComponent]
 public sealed class SalvageExpeditionComponent : Component
 {
+    public SalvageMission Mission = default!;
+
     /// <summary>
     /// When the expeditions ends.
     /// </summary>
@@ -17,16 +20,8 @@ public sealed class SalvageExpeditionComponent : Component
     /// <summary>
     /// Station whose mission this is.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, DataField("station")]
     public EntityUid Station;
 
-    [ViewVariables] public SalvagePhase Phase = SalvagePhase.Generating;
-}
-
-public enum SalvagePhase : byte
-{
-    Generating,
-    Initializing,
-    Initialized,
-    Completed,
+    [ViewVariables] public bool Completed = false;
 }

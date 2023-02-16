@@ -60,11 +60,6 @@ public sealed class SalvageExpeditionDataComponent : Component
 
     [ViewVariables] public ushort ActiveMission;
 
-    /// <summary>
-    /// Has the mission been completed.
-    /// </summary>
-    public bool MissionCompleted;
-
     public ushort NextIndex = 1;
 }
 

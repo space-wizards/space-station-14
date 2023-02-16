@@ -1,4 +1,5 @@
 using Content.Server.Cargo.Components;
+using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Structure;
 using Content.Shared.Procedural.Rewards;
 using Content.Shared.Random;
@@ -18,9 +19,9 @@ public sealed partial class SalvageSystem
     private void UpdateRunner()
     {
         // Structure missions
-        foreach (var (structure, comp) in EntityQuery<SalvageStructureExpeditionComponent, SalvageExpeditionDataComponent>())
+        foreach (var (structure, comp) in EntityQuery<SalvageStructureExpeditionComponent, SalvageExpeditionComponent>())
         {
-            if (comp.MissionCompleted)
+            if (comp.Completed)
                 continue;
 
             for (var i = 0; i < structure.Structures.Count; i++)
@@ -35,23 +36,18 @@ public sealed partial class SalvageSystem
 
             if (structure.Structures.Count == 0)
             {
-                var mission = comp.Missions[comp.ActiveMission];
+                var mission = comp.Mission;
                 _sawmill.Debug($"Paying out salvage mission completion for {mission.Config} seed {mission.Seed}");
-                comp.MissionCompleted = true;
-                PayoutReward(comp);
+                comp.Completed = true;
+                PayoutReward(comp, mission);
             }
         }
     }
 
-    private void PayoutReward(SalvageExpeditionDataComponent component)
+    private void PayoutReward(SalvageExpeditionComponent component, SalvageMission mission)
     {
-        var station = _station.GetOwningStation(component.Owner);
+        var station = component.Station;
 
-        // TODO: Announce
-        if (station == null)
-            return;
-
-        var mission = component.Missions[component.ActiveMission];
         var reward =
             GetReward(
                 _prototypeManager.Index<WeightedRandomPrototype>(_prototypeManager

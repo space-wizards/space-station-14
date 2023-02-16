@@ -129,7 +129,6 @@ public sealed partial class SalvageSystem
     {
         component.ActiveMission = 0;
         component.NextOffer = _timing.CurTime + MissionCooldown;
-        component.MissionCompleted = false;
         UpdateConsoles(component);
     }
 
@@ -154,6 +153,7 @@ public sealed partial class SalvageSystem
                 Index = component.NextIndex,
                 Config = config.ID,
                 Seed = _random.Next(),
+                // TODO: Just use seed for this you goob.
                 Duration = TimeSpan.FromSeconds(Math.Round((_random.NextDouble() * (maxTime - minTime) + minTime) / timeBlock) * timeBlock),
             };
 
@@ -272,6 +272,7 @@ public sealed partial class SalvageSystem
             var expedition = _entManager.AddComponent<SalvageExpeditionComponent>(mapUid);
             expedition.Station = Station;
             expedition.EndTime = _timing.CurTime + _mission.Duration;
+            expedition.Mission = _mission;
 
             var ftlUid = _entManager.SpawnEntity("FTLPoint", new EntityCoordinates(mapUid, Vector2.Zero));
             _entManager.GetComponent<MetaDataComponent>(ftlUid).EntityName = "Salvage XYZ";
@@ -540,11 +541,12 @@ public sealed partial class SalvageSystem
 
         private async Task SetupMission(SalvageExpeditionPrototype config, SalvageStructure structure, Vector2i dungeonOffset, Dungeon dungeon, MapGridComponent grid, Random random, int seed)
         {
+            var structureComp = _entManager.GetComponent<SalvageStructureExpeditionComponent>(grid.Owner);
             // TODO: Uhh difficulty selection
             // TODO: Hardcoding
             var structureCount = GetStructureCount(structure, seed);
             var availableRooms = dungeon.Rooms.ToList();
-            var faction = _prototypeManager.Index<SalvageFactionPrototype>("Xenos");
+            var faction = _prototypeManager.Index<SalvageFactionPrototype>(GetFaction(config.Factions, seed));
             // TODO: DETERMINE DEEZ NUTS
             var robusty = IoCManager.Resolve<IRobustRandom>();
 
@@ -575,7 +577,8 @@ public sealed partial class SalvageSystem
                 var structureRoom = availableRooms[random.Next(availableRooms.Count)];
                 var spawnTile = structureRoom.Tiles.ElementAt(random.Next(structureRoom.Tiles.Count)) + dungeonOffset;
                 await SuspendIfOutOfTime();
-                _entManager.SpawnEntity(shaggy.Spawn, grid.GridTileToLocal(spawnTile));
+                var uid = _entManager.SpawnEntity(shaggy.Spawn, grid.GridTileToLocal(spawnTile));
+                structureComp.Structures.Add(uid);
             }
         }
 
