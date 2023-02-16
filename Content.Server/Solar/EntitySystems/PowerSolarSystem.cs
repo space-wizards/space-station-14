@@ -62,6 +62,7 @@ namespace Content.Server.Solar.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
+
             SubscribeLocalEvent<SolarPanelComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             RandomizeSun();
@@ -77,7 +78,7 @@ namespace Content.Server.Solar.EntitySystems
 
         public void RefreshAllPanels()
         {
-            foreach (var panel in EntityManager.EntityQuery<SolarPanelComponent>(true))
+            foreach (var panel in EntityQuery<SolarPanelComponent>(true))
             {
                 RefreshPanel(panel);
             }
@@ -113,12 +114,12 @@ namespace Content.Server.Solar.EntitySystems
             TargetPanelRotation = TargetPanelRotation.Reduced();
 
             TotalPanelPower = 0;
-            foreach (var (panel, xform) in EntityManager.EntityQuery<SolarPanelComponent, TransformComponent>())
+            foreach (var (panel, xform) in EntityQuery<SolarPanelComponent, TransformComponent>())
             {
                 if (panel.Running)
                 {
-                    Angle a = panel.StartAngle + panel.AngularVelocity * (_gameTiming.CurTime - panel.LastUpdate).TotalSeconds;
-                    panel.Angle = a.Reduced();
+                    Angle targetAngle = panel.StartAngle + panel.AngularVelocity * (_gameTiming.CurTime - panel.LastUpdate).TotalSeconds;
+                    panel.Angle = targetAngle.Reduced();
                     UpdatePanelCoverage(panel, xform);
                 }
                 TotalPanelPower += panel.MaxSupply * panel.Coverage;

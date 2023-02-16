@@ -38,7 +38,7 @@ namespace Content.Server.Solar.EntitySystems
                 }
             }
         }
- 
+
         private void OnUIMessage(EntityUid uid, SolarControlConsoleComponent component, SolarControlConsoleAdjustMessage msg)
         {
             bool updated = false;
@@ -47,6 +47,7 @@ namespace Content.Server.Solar.EntitySystems
                 _powerSolarSystem.TargetPanelRotation = msg.Rotation.Reduced();
                 updated = true;
             }
+
             if (double.IsFinite(msg.AngularVelocity))
             {
                 var degrees = msg.AngularVelocity.Degrees;
@@ -54,6 +55,7 @@ namespace Content.Server.Solar.EntitySystems
                 _powerSolarSystem.TargetPanelVelocity = Angle.FromDegrees(degrees);
                 updated = true;
             }
+
             if (updated)
             {
                 _powerSolarSystem.RefreshAllPanels();
