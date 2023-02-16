@@ -1,3 +1,4 @@
+using Content.Shared.Procedural.Rewards;
 using Content.Shared.Salvage.Expeditions.Structure;
 
 namespace Content.Shared.Salvage;

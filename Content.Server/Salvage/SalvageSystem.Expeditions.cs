@@ -276,7 +276,7 @@ public sealed partial class SalvageSystem
             var ftlUid = _entManager.SpawnEntity("FTLPoint", new EntityCoordinates(mapUid, Vector2.Zero));
             _entManager.GetComponent<MetaDataComponent>(ftlUid).EntityName = "Salvage XYZ";
 
-            switch (config.Expedition)
+            switch (config.Mission)
             {
                 case SalvageExtraction:
                     break;
@@ -334,9 +334,11 @@ public sealed partial class SalvageSystem
             _dungeon.SpawnDungeonTiles(dungeonOffset, dungeon, grid, random, reservedTiles);
 
             // Handle loot
-            var lootTable = _prototypeManager.Index<WeightedRandomPrototype>(config.Loot);
-
-            await SpawnDungeonLoot(dungeonOffset, dungeon, _prototypeManager.Index<LootPrototype>(lootTable.Pick(random)), grid, random, reservedTiles);
+            foreach (var loot in config.Loots)
+            {
+                var lootTable = _prototypeManager.Index<WeightedRandomPrototype>(loot);
+                await SpawnDungeonLoot(dungeonOffset, dungeon, _prototypeManager.Index<SalvageLootPrototype>(lootTable.Pick(random)), grid, random, reservedTiles);
+            }
 
             await SpawnDungeonWalls(dungeonOffset, dungeon, grid, reservedTiles);
 
@@ -422,12 +424,12 @@ public sealed partial class SalvageSystem
         private async Task SpawnDungeonLoot(
             Vector2i position,
             Dungeon dungeon,
-            LootPrototype lootPrototype,
+            SalvageLootPrototype salvageLootPrototype,
             MapGridComponent grid,
             Random random,
             List<Vector2i> reservedTiles)
         {
-            foreach (var rule in lootPrototype.Loots)
+            foreach (var rule in salvageLootPrototype.LootRules)
             {
                 switch (rule)
                 {
@@ -520,7 +522,7 @@ public sealed partial class SalvageSystem
         private async Task SetupMission(SalvageExpeditionPrototype config, Vector2i dungeonOffset, Dungeon dungeon, MapGridComponent grid, Random random, int seed)
         {
             // TODO: Move this to the main method
-            switch (config.Expedition)
+            switch (config.Mission)
             {
                 case SalvageStructure structure:
                     await SetupMission(config, structure, dungeonOffset, dungeon, grid, random, seed);

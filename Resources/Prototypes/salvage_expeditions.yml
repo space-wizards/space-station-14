@@ -24,7 +24,7 @@
 # Ore droprates already affect these so you should keep the vein counts consistent between them.
 # Just vary points / cluster size.
 # - High yield
-- type: loot
+- type: salvageLoot
   id: OreTin
   desc: Veins of steel
   loots:
@@ -35,7 +35,7 @@
       points: 1
 
 # - Medium yield
-- type: loot
+- type: salvageLoot
   id: OreGold
   desc: Veins of gold ore
   loots:
@@ -45,7 +45,7 @@
       maxCluster: 8
       points: 6
 
-- type: loot
+- type: salvageLoot
   id: OreSilver
   desc: Veins of silver ore
   loots:
@@ -56,7 +56,7 @@
       points: 6
 
 # - Low yield
-- type: loot
+- type: salvageLoot
   id: OrePlasma
   desc: Veins of plasma ore
   loots:
@@ -66,7 +66,7 @@
       maxCluster: 5
       points: 10
 
-- type: loot
+- type: salvageLoot
   id: OreUranium
   desc: Veins of uranium ore
   loots:
@@ -77,12 +77,23 @@
       points: 10
 
 # Expedition rewards
-#- type: loot
-#  id: Cash
+- type: salvageReward
+  id: SimpleSalvage
+  weights:
+    BasicBank: 1.0
+    HighBank: 0.1
 
+- type: salvageReward
+  id: BasicBank
+  reward:
+    !type:BankReward
+      amount: 5000
 
-#- type: salvageReward
-#  id: Cash
+- type: salvageReward
+  id: HighBank
+  reward:
+    !type:BankReward
+      amount: 10000
 
 
 # Expedition configs
@@ -99,7 +110,9 @@
   dungeonConfig: SandDungeon
   dungeonRadius: 40
   dungeonPosition: 70,0
-  loot: CaveLoot
+  reward: SimpleSalvage
+  loot:
+  - CaveLoot
 
 - type: salvageExpedition
   id: StructuresLavaCave
@@ -114,7 +127,9 @@
   dungeonConfig: SandDungeon
   dungeonRadius: 40
   dungeonPosition: 70,0
-  loot: CaveLoot
+  reward: SimpleSalvage
+  loot:
+    - CaveLoot
 
 
 # Factions

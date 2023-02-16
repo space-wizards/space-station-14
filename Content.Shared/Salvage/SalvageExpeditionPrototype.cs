@@ -1,6 +1,8 @@
 using Content.Shared.Dataset;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Procedural;
+using Content.Shared.Procedural.Loot;
+using Content.Shared.Procedural.Rewards;
 using Content.Shared.Random;
 using Content.Shared.Salvage.Expeditions;
 using Robust.Shared.Prototypes;
@@ -15,25 +17,36 @@ public sealed class SalvageExpeditionPrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = default!;
 
+    /// <summary>
+    /// Naming scheme for the FTL marker.
+    /// </summary>
     [DataField("nameProto", customTypeSerializer:typeof(PrototypeIdSerializer<DatasetPrototype>))]
     public string NameProto = "names_borer";
 
+    /// <summary>
+    /// Biome to generate the dungeon.
+    /// </summary>
     [DataField("biome", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<BiomePrototype>))]
     public string Biome = string.Empty;
 
+    /// <summary>
+    /// Player-friendly description for the console.
+    /// </summary>
     [DataField("desc")]
     public string Description = string.Empty;
 
     [DataField("difficultyRating")]
     public DifficultyRating DifficultyRating = DifficultyRating.Minor;
 
+    // TODO: Make these modifiers but also add difficulty modifiers.
     [DataField("light")]
     public Color Light = Color.Black;
 
     [DataField("temperature")]
     public float Temperature = 293.15f;
 
-    [DataField("expedition", required: true)] public ISalvageMission Expedition = default!;
+    [DataField("expedition", required: true)]
+    public ISalvageMission Mission = default!;
 
     [DataField("minDuration")]
     public TimeSpan MinDuration = TimeSpan.FromSeconds(9 * 60);
@@ -50,11 +63,15 @@ public sealed class SalvageExpeditionPrototype : IPrototype
     [DataField("dungeonConfig", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<DungeonConfigPrototype>))]
     public string DungeonConfigPrototype = string.Empty;
 
+    [DataField("reward", customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomPrototype>))]
+    public string Reward = string.Empty;
+
     /// <summary>
     /// Possible loot prototypes available for this expedition.
+    /// This spawns during the mission and is not tied to completion.
     /// </summary>
-    [DataField("loot", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomPrototype>))]
-    public string Loot = string.Empty;
+    [DataField("loot", customTypeSerializer: typeof(PrototypeIdListSerializer<WeightedRandomPrototype>))]
+    public List<string> Loots = new();
 
     [DataField("dungeonRadius")]
     public float DungeonRadius = 50f;

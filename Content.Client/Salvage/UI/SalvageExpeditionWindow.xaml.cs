@@ -3,6 +3,10 @@ using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Procedural;
+using Content.Shared.Procedural.Loot;
+using Content.Shared.Procedural.Rewards;
+using Content.Shared.Random;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Salvage;
 using Content.Shared.Salvage.Expeditions;
 using Content.Shared.Salvage.Expeditions.Structure;
@@ -56,7 +60,7 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
             var missionDesc = string.Empty;
             var missionDetails = string.Empty;
 
-            switch (config.Expedition)
+            switch (config.Mission)
             {
                 case SalvageStructure structure:
                     var structureConfig = (SalvageStructureFaction) factionConfig.Configs[mission.Config];
@@ -110,7 +114,7 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
                     throw new ArgumentOutOfRangeException();
             }
 
-            lBox.AddChild(new Label()
+            lBox.AddChild(new Label
             {
                 Text = config.DifficultyRating.ToString(),
                 FontColorOverride = difficultyColor,
@@ -119,12 +123,12 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
             });
 
             // Details
-            lBox.AddChild(new Label()
+            lBox.AddChild(new Label
             {
                 Text = $"Details:"
             });
 
-            lBox.AddChild(new Label()
+            lBox.AddChild(new Label
             {
                 Text = missionDetails,
                 FontColorOverride = StyleNano.NanoGold,
@@ -133,12 +137,12 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
             });
 
             // Details
-            lBox.AddChild(new Label()
+            lBox.AddChild(new Label
             {
                 Text = $"Hostiles:"
             });
 
-            lBox.AddChild(new Label()
+            lBox.AddChild(new Label
             {
                 Text = faction,
                 FontColorOverride = StyleNano.NanoGold,
@@ -147,12 +151,12 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
             });
 
             // Duration
-            lBox.AddChild(new Label()
+            lBox.AddChild(new Label
             {
                 Text = $"Duration:"
             });
 
-            lBox.AddChild(new Label()
+            lBox.AddChild(new Label
             {
                 Text = mission.Duration.ToString(),
                 FontColorOverride = StyleNano.NanoGold,
@@ -161,12 +165,12 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
             });
 
             // Biome
-            lBox.AddChild(new Label()
+            lBox.AddChild(new Label
             {
                 Text = "Biome:"
             });
 
-            lBox.AddChild(new Label()
+            lBox.AddChild(new Label
             {
                 Text = _prototype.Index<BiomePrototype>(config.Biome).Description,
                 FontColorOverride = StyleNano.NanoGold,
@@ -197,26 +201,60 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
                 Text = $"Rewards:"
             });
 
+            // TODO: Noncomn
+            var reward = _prototype.Index<WeightedRandomPrototype>(config.Reward).Pick();
+            var salvageReward = _prototype.Index<SalvageRewardPrototype>(reward);
+            var rewardDesc = string.Empty;
+
+            switch (salvageReward.Reward)
+            {
+                case BankReward bank:
+                    rewardDesc = $"Bank payment of {bank.Amount}";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
             lBox.AddChild(new Label()
             {
-                Text = "Blep",
+                Text = rewardDesc,
                 FontColorOverride = StyleNano.GoodGreenFore,
                 HorizontalAlignment = HAlignment.Left,
                 Margin = new Thickness(0f, 0f, 0f, 5f),
             });
+
 
             lBox.AddChild(new Label()
             {
                 Text = $"Secondary Rewards:"
             });
 
-            lBox.AddChild(new Label()
+            if (config.Loots.Count == 0)
             {
-                Text = "Mlem",
-                FontColorOverride = StyleNano.ConcerningOrangeFore,
-                HorizontalAlignment = HAlignment.Left,
-                Margin = new Thickness(0f, 0f, 0f, 5f),
-            });
+                lBox.AddChild(new Label()
+                {
+                    Text = "N/A",
+                    FontColorOverride = StyleNano.ConcerningOrangeFore,
+                    HorizontalAlignment = HAlignment.Left,
+                    Margin = new Thickness(0f, 0f, 0f, 5f),
+                });
+            }
+            else
+            {
+                foreach (var loot in config.Loots)
+                {
+                    var weighted = _prototype.Index<WeightedRandomPrototype>(loot);
+                    var lootTable = weighted.Pick();
+
+                    lBox.AddChild(new Label()
+                    {
+                        Text = _prototype.Index<SalvageLootPrototype>(lootTable).Description,
+                        FontColorOverride = StyleNano.ConcerningOrangeFore,
+                        HorizontalAlignment = HAlignment.Left,
+                        Margin = new Thickness(0f, 0f, 0f, 5f),
+                    });
+                }
+            }
 
             // Claim
             var claimButton = new Button()
