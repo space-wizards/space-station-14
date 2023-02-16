@@ -130,23 +130,6 @@
   loot:
   - CaveLoot
 
-- type: salvageExpedition
-  id: StructuresLavaCave
-  desc: Caves
-  biome: Lava
-  light: "#A34931"
-  expedition: !type:SalvageStructure
-  minDuration: 540
-  maxDuration: 720
-  factions:
-    - Xenos
-  dungeonConfig: SandDungeon
-  dungeonRadius: 40
-  dungeonPosition: 70,0
-  reward: SimpleSalvage
-  loot:
-    - CaveLoot
-
 
 # Factions
 - type: salvageFaction
@@ -163,8 +146,6 @@
           amount: 1
   configs:
     StructuresDesertCave: !type:SalvageStructureFaction
-      spawn: XenoWardingTower
-    StructuresLavaCave: !type:SalvageStructureFaction
       spawn: XenoWardingTower
 
 
