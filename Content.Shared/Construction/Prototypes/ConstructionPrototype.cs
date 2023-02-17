@@ -75,6 +75,12 @@ namespace Content.Shared.Construction.Prototypes
         [DataField("canRotate")]
         public bool CanRotate { get; } = true;
 
+        /// <summary>
+        ///     Construction to replace this construction with when the current one is 'flipped'
+        /// </summary>
+        [DataField("mirror", customTypeSerializer:typeof(PrototypeIdSerializer<ConstructionPrototype>))]
+        public string Mirror { get; } = string.Empty;
+
         public IReadOnlyList<IConstructionCondition> Conditions => _conditions;
     }
 
