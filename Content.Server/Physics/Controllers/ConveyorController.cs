@@ -1,313 +1,147 @@
-using Content.Server.Conveyor;
-using Content.Server.Gravity;
 using Content.Server.MachineLinking.Events;
 using Content.Server.MachineLinking.System;
 using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Server.Recycling;
 using Content.Server.Recycling.Components;
 using Content.Shared.Conveyor;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
-using Robust.Shared.Map;
+using Content.Shared.Physics.Controllers;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Dynamics;
-using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 
-namespace Content.Server.Physics.Controllers
+namespace Content.Server.Physics.Controllers;
+
+public sealed class ConveyorController : SharedConveyorController
 {
-    public sealed class ConveyorController : VirtualController
+    [Dependency] private readonly FixtureSystem _fixtures = default!;
+    [Dependency] private readonly RecyclerSystem _recycler = default!;
+    [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+    [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly EntityLookupSystem _lookup = default!;
-        [Dependency] private readonly FixtureSystem _fixtures = default!;
-        [Dependency] private readonly GravitySystem _gravity = default!;
-        [Dependency] private readonly RecyclerSystem _recycler = default!;
-        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
-        [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
-        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        UpdatesAfter.Add(typeof(MoverController));
+        SubscribeLocalEvent<ConveyorComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<ConveyorComponent, ComponentShutdown>(OnConveyorShutdown);
 
-        public const string ConveyorFixture = "conveyor";
 
-        public override void Initialize()
+        SubscribeLocalEvent<ConveyorComponent, SignalReceivedEvent>(OnSignalReceived);
+        SubscribeLocalEvent<ConveyorComponent, PowerChangedEvent>(OnPowerChanged);
+
+        base.Initialize();
+    }
+
+    private void OnInit(EntityUid uid, ConveyorComponent component, ComponentInit args)
+    {
+        _signalSystem.EnsureReceiverPorts(uid, component.ReversePort, component.ForwardPort, component.OffPort);
+
+        if (TryComp<PhysicsComponent>(uid, out var physics))
         {
-            UpdatesAfter.Add(typeof(MoverController));
-            SubscribeLocalEvent<ConveyorComponent, ComponentInit>(OnInit);
-            SubscribeLocalEvent<ConveyorComponent, ComponentShutdown>(OnConveyorShutdown);
-            SubscribeLocalEvent<ConveyorComponent, SignalReceivedEvent>(OnSignalReceived);
-            SubscribeLocalEvent<ConveyorComponent, PowerChangedEvent>(OnPowerChanged);
-            SubscribeLocalEvent<ConveyorComponent, StartCollideEvent>(OnConveyorStartCollide);
-            SubscribeLocalEvent<ConveyorComponent, EndCollideEvent>(OnConveyorEndCollide);
+            var shape = new PolygonShape();
+            shape.SetAsBox(0.55f, 0.55f);
 
-            base.Initialize();
+            _fixtures.TryCreateFixture(uid, shape, ConveyorFixture,
+                collisionLayer: (int) (CollisionGroup.LowImpassable | CollisionGroup.MidImpassable |
+                                       CollisionGroup.Impassable), hard: false, body: physics);
+
+        }
+    }
+
+    private void OnConveyorShutdown(EntityUid uid, ConveyorComponent component, ComponentShutdown args)
+    {
+        if (MetaData(uid).EntityLifeStage >= EntityLifeStage.Terminating)
+            return;
+
+        RemComp<ActiveConveyorComponent>(uid);
+
+        if (!TryComp<PhysicsComponent>(uid, out var physics))
+            return;
+
+        _fixtures.DestroyFixture(uid, ConveyorFixture, body: physics);
+    }
+
+    private void OnPowerChanged(EntityUid uid, ConveyorComponent component, ref PowerChangedEvent args)
+    {
+        component.Powered = args.Powered;
+        UpdateAppearance(uid, component);
+        Dirty(component);
+    }
+
+    private void UpdateAppearance(EntityUid uid, ConveyorComponent component)
+    {
+        _appearance.SetData(uid, ConveyorVisuals.State, component.Powered ? component.State : ConveyorState.Off);
+    }
+
+    private void OnSignalReceived(EntityUid uid, ConveyorComponent component, SignalReceivedEvent args)
+    {
+        if (args.Port == component.OffPort)
+            SetState(uid, ConveyorState.Off, component);
+
+        else if (args.Port == component.ForwardPort)
+        {
+            AwakenEntities(uid, component);
+            SetState(uid, ConveyorState.Forward, component);
         }
 
-        private void OnConveyorEndCollide(EntityUid uid, ConveyorComponent component, ref EndCollideEvent args)
+        else if (args.Port == component.ReversePort)
         {
-            component.Intersecting.Remove(args.OtherFixture.Body.Owner);
-
-            if (component.Intersecting.Count == 0)
-            {
-                RemComp<ActiveConveyorComponent>(uid);
-            }
+            AwakenEntities(uid, component);
+            SetState(uid, ConveyorState.Reverse, component);
         }
+    }
 
-        private void OnConveyorStartCollide(EntityUid uid, ConveyorComponent component, ref StartCollideEvent args)
+    private void SetState(EntityUid uid, ConveyorState state, ConveyorComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        component.State = state;
+
+        if (TryComp<PhysicsComponent>(uid, out var physics))
+            _broadphase.RegenerateContacts(physics);
+
+        if (TryComp<RecyclerComponent>(uid, out var recycler))
         {
-            var otherUid = args.OtherFixture.Body.Owner;
-
-            if (args.OtherFixture.Body.BodyType == BodyType.Static || component.State == ConveyorState.Off)
-                return;
-
-            component.Intersecting.Add(otherUid);
-            EnsureComp<ActiveConveyorComponent>(uid);
-        }
-
-        private void OnInit(EntityUid uid, ConveyorComponent component, ComponentInit args)
-        {
-            _signalSystem.EnsureReceiverPorts(uid, component.ReversePort, component.ForwardPort, component.OffPort);
-
-            if (TryComp<PhysicsComponent>(uid, out var body))
-            {
-                var shape = new PolygonShape();
-                shape.SetAsBox(0.55f, 0.55f);
-
-                _fixtures.TryCreateFixture(uid, shape, ConveyorFixture, hard: false,
-                    collisionLayer: (int) (CollisionGroup.LowImpassable | CollisionGroup.MidImpassable |
-                                           CollisionGroup.Impassable), body: body);
-            }
-        }
-
-        private void OnPowerChanged(EntityUid uid, ConveyorComponent component, ref PowerChangedEvent args)
-        {
-            UpdateAppearance(component);
-        }
-
-        private void UpdateAppearance(ConveyorComponent component)
-        {
-            var isPowered = this.IsPowered(component.Owner, EntityManager);
-            _appearance.SetData(component.Owner, ConveyorVisuals.State, isPowered ? component.State : ConveyorState.Off);
-        }
-
-        private void OnSignalReceived(EntityUid uid, ConveyorComponent component, SignalReceivedEvent args)
-        {
-            if (args.Port == component.OffPort)
-                SetState(uid, ConveyorState.Off, component);
-            else if (args.Port == component.ForwardPort)
-            {
-                AwakenEntities(component);
-                SetState(uid, ConveyorState.Forward, component);
-            }
-            else if (args.Port == component.ReversePort)
-            {
-                AwakenEntities(component);
-                SetState(uid, ConveyorState.Reverse, component);
-            }
-        }
-
-        private void SetState(EntityUid uid, ConveyorState state, ConveyorComponent? component = null)
-        {
-            if (!Resolve(uid, ref component))
-                return;
-
-            component.State = state;
-
-            if (TryComp<PhysicsComponent>(uid, out var physics))
-            {
-                _broadphase.RegenerateContacts(physics);
-            }
-
-            if (TryComp<RecyclerComponent>(component.Owner, out var recycler))
-            {
-                if (component.State != ConveyorState.Off)
-                    _recycler.EnableRecycler(recycler);
-                else
-                    _recycler.DisableRecycler(recycler);
-            }
-
-            UpdateAppearance(component);
-        }
-
-        /// <summary>
-        /// Awakens sleeping entities on the conveyor belt's tile when it's turned on.
-        /// Fixes an issue where non-hard/sleeping entities refuse to wake up + collide if a belt is turned off and on again.
-        /// </summary>
-        private void AwakenEntities(ConveyorComponent component)
-        {
-            var xformQuery = GetEntityQuery<TransformComponent>();
-            var bodyQuery = GetEntityQuery<PhysicsComponent>();
-
-            if (!xformQuery.TryGetComponent(component.Owner, out var xform))
-                return;
-
-            var beltTileRef = xform.Coordinates.GetTileRef(EntityManager, _mapManager);
-
-            if (beltTileRef != null)
-            {
-                var intersecting = _lookup.GetEntitiesIntersecting(beltTileRef.Value);
-
-                foreach (var entity in intersecting)
-                {
-                    if (!bodyQuery.TryGetComponent(entity, out var physics))
-                        continue;
-
-                    if (physics.BodyType != BodyType.Static)
-                        _physics.WakeBody(entity, body: physics);
-                }
-            }
-        }
-
-        public bool CanRun(ConveyorComponent component)
-        {
-            return component.State != ConveyorState.Off && this.IsPowered(component.Owner, EntityManager);
-        }
-
-        private void OnConveyorShutdown(EntityUid uid, ConveyorComponent component, ComponentShutdown args)
-        {
-            if (MetaData(uid).EntityLifeStage >= EntityLifeStage.Terminating)
-                return;
-
-            RemComp<ActiveConveyorComponent>(uid);
-
-            if (!TryComp<PhysicsComponent>(uid, out var body))
-                return;
-
-            _fixtures.DestroyFixture(uid, ConveyorFixture, body: body);
-        }
-
-        public override void UpdateBeforeSolve(bool prediction, float frameTime)
-        {
-            base.UpdateBeforeSolve(prediction, frameTime);
-
-            var conveyed = new HashSet<EntityUid>();
-            // Don't use it directly in EntityQuery because we may be able to save getcomponents.
-            var xformQuery = GetEntityQuery<TransformComponent>();
-            var bodyQuery = GetEntityQuery<PhysicsComponent>();
-
-            foreach (var (_, comp) in EntityQuery<ActiveConveyorComponent, ConveyorComponent>())
-            {
-                Convey(comp, xformQuery, bodyQuery, conveyed, frameTime);
-            }
-        }
-
-        private void Convey(ConveyorComponent comp, EntityQuery<TransformComponent> xformQuery, EntityQuery<PhysicsComponent> bodyQuery, HashSet<EntityUid> conveyed, float frameTime)
-        {
-            // Use an event for conveyors to know what needs to run
-            if (!CanRun(comp))
-            {
-                return;
-            }
-
-            var speed = comp.Speed;
-
-            if (speed <= 0f ||
-                !xformQuery.TryGetComponent(comp.Owner, out var xform) ||
-                xform.GridUid == null)
-                return;
-
-            var conveyorPos = xform.LocalPosition;
-            var conveyorRot = xform.LocalRotation;
-
-            conveyorRot += comp.Angle;
-
-            if (comp.State == ConveyorState.Reverse)
-            {
-                conveyorRot += MathF.PI;
-            }
-
-            var direction = conveyorRot.ToWorldVec();
-
-            foreach (var (entity, transform, body) in GetEntitiesToMove(comp, xform, xformQuery, bodyQuery))
-            {
-                if (!conveyed.Add(entity))
-                    continue;
-
-                var localPos = transform.LocalPosition;
-                var itemRelative = conveyorPos - localPos;
-
-                localPos += Convey(direction, speed, frameTime, itemRelative);
-                transform.LocalPosition = localPos;
-
-                // Force it awake for collisionwake reasons.
-                // TODO: Just use sleepallowed
-                _physics.SetAwake(entity, body, true);
-                _physics.SetSleepTime(body, 0f);
-            }
-        }
-
-        private static Vector2 Convey(Vector2 direction, float speed, float frameTime, Vector2 itemRelative)
-        {
-            if (speed == 0 || direction.Length == 0)
-                return Vector2.Zero;
-
-            /*
-             * Basic idea: if the item is not in the middle of the conveyor in the direction that the conveyor is running,
-             * move the item towards the middle. Otherwise, move the item along the direction. This lets conveyors pick up
-             * items that are not perfectly aligned in the middle, and also makes corner cuts work.
-             *
-             * We do this by computing the projection of 'itemRelative' on 'direction', yielding a vector 'p' in the direction
-             * of 'direction'. We also compute the rejection 'r'. If the magnitude of 'r' is not (near) zero, then the item
-             * is not on the centerline.
-             */
-
-            var p = direction * (Vector2.Dot(itemRelative, direction) / Vector2.Dot(direction, direction));
-            var r = itemRelative - p;
-
-            if (r.Length < 0.1)
-            {
-                var velocity = direction * speed;
-                return velocity * frameTime;
-            }
+            if (component.State != ConveyorState.Off)
+                _recycler.EnableRecycler(recycler);
             else
-            {
-                // Give a slight nudge in the direction of the conveyor to prevent
-                // to collidable objects (e.g. crates) on the locker from getting stuck
-                // pushing each other when rounding a corner.
-                var velocity = (r + direction*0.2f).Normalized * speed;
-                return velocity * frameTime;
-            }
+                _recycler.DisableRecycler(recycler);
         }
 
-        private IEnumerable<(EntityUid, TransformComponent, PhysicsComponent)> GetEntitiesToMove(
-            ConveyorComponent comp,
-            TransformComponent xform,
-            EntityQuery<TransformComponent> xformQuery,
-            EntityQuery<PhysicsComponent> bodyQuery)
+        UpdateAppearance(uid, component);
+        Dirty(component);
+    }
+
+    /// <summary>
+    /// Awakens sleeping entities on the conveyor belt's tile when it's turned on.
+    /// Fixes an issue where non-hard/sleeping entities refuse to wake up + collide if a belt is turned off and on again.
+    /// </summary>
+    private void AwakenEntities(EntityUid uid, ConveyorComponent component)
+    {
+        var xformQuery = GetEntityQuery<TransformComponent>();
+        var bodyQuery = GetEntityQuery<PhysicsComponent>();
+
+        if (!xformQuery.TryGetComponent(uid, out var xform))
+            return;
+
+        var beltTileRef = xform.Coordinates.GetTileRef(EntityManager, _mapManager);
+
+        if (beltTileRef != null)
         {
-            // Check if the thing's centre overlaps the grid tile.
-            var grid = _mapManager.GetGrid(xform.GridUid!.Value);
-            var tile = grid.GetTileRef(xform.Coordinates);
-            var conveyorBounds = _lookup.GetLocalBounds(tile, grid.TileSize);
+            var intersecting = _lookup.GetEntitiesIntersecting(beltTileRef.Value);
 
-            foreach (var entity in comp.Intersecting)
+            foreach (var entity in intersecting)
             {
-                if (!xformQuery.TryGetComponent(entity, out var entityXform) ||
-                    entityXform.ParentUid != grid.Owner)
-                {
-                    continue;
-                }
-
-                if (!bodyQuery.TryGetComponent(entity, out var physics) ||
-                    physics.BodyType == BodyType.Static ||
-                    physics.BodyStatus == BodyStatus.InAir ||
-                    _gravity.IsWeightless(entity, physics, entityXform))
-                {
-                    continue;
-                }
-
-                // Yes there's still going to be the occasional rounding issue where it stops getting conveyed
-                // When you fix the corner issue that will fix this anyway.
-                var gridAABB = new Box2(entityXform.LocalPosition - 0.1f, entityXform.LocalPosition + 0.1f);
-
-                if (!conveyorBounds.Intersects(gridAABB))
+                if (!bodyQuery.TryGetComponent(entity, out var physics))
                     continue;
 
-                yield return (entity, entityXform, physics);
+                if (physics.BodyType != BodyType.Static)
+                    _physics.WakeBody(entity, body: physics);
             }
         }
     }

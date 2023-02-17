@@ -45,7 +45,7 @@ public sealed class HeadsetSystem : EntitySystem
             && TryComp(component.Headset, out HeadsetComponent? headset)
             && headset.Channels.Contains(args.Channel.ID))
         {
-            _radio.SendRadioMessage(uid, args.Message, args.Channel);
+            _radio.SendRadioMessage(uid, args.Message, args.Channel, component.Headset);
             args.Channel = null; // prevent duplicate messages from other listeners.
         }
     }

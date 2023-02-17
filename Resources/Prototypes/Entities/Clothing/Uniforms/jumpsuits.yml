@@ -914,7 +914,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/ert_janitor.rsi
   - type: DiseaseProtection
     protection: 0.1
-    
+
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitERTLeader
@@ -961,3 +961,14 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.8
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitDameDane
+  name: dame dane outfit
+  description: Baka mitai...
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/damedaneoutfit.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/damedaneoutfit.rsi
