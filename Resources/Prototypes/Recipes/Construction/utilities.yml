@@ -242,6 +242,23 @@
   icon:
     sprite: Structures/Piping/disposal.rsi
     state: conpipe-j1
+  mirror: DisposalJunctionFlipped
+
+- type: construction
+  hide: true
+  name: disposal junction
+  description: A three-way junction. The arrow indicates where items exit.
+  id: DisposalJunctionFlipped
+  graph: DisposalPipe
+  startNode: start
+  targetNode: junctionflipped
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: conpipe-j2
+  mirror: DisposalJunction
 
 - type: construction
   name: disposal Y junction
