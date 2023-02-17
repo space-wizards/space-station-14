@@ -16,7 +16,7 @@ namespace Content.Shared.Teleportation.Systems;
 /// <summary>
 /// This handles teleporting entities through portals, and creating new linked portals.
 /// </summary>
-public sealed class PortalSystem : EntitySystem
+public abstract class SharedPortalSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly INetManager _netMan = default!;
@@ -153,9 +153,16 @@ public sealed class PortalSystem : EntitySystem
             projectile.IgnoreShooter = false;
         }
 
+        LogTeleport(portal, subject, Transform(subject).Coordinates, target);
+
         Transform(subject).Coordinates = target;
 
         _audio.PlayPredicted(departureSound, portal, subject);
         _audio.PlayPredicted(arrivalSound, subject, subject);
+    }
+
+    protected virtual void LogTeleport(EntityUid portal, EntityUid subject, EntityCoordinates source,
+        EntityCoordinates target)
+    {
     }
 }
