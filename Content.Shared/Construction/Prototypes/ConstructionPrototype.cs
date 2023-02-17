@@ -11,6 +11,12 @@ namespace Content.Shared.Construction.Prototypes
         [DataField("conditions")] private List<IConstructionCondition> _conditions = new();
 
         /// <summary>
+        ///     Hide from the construction list
+        /// </summary>
+        [DataField("hide")]
+        public bool Hide { get; } = false;
+
+        /// <summary>
         ///     Friendly name displayed in the construction GUI.
         /// </summary>
         [DataField("name")]
