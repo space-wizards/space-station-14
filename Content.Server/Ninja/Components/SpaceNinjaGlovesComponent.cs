@@ -12,19 +12,19 @@ namespace Content.Server.Ninja.Components;
 public sealed class SpaceNinjaGlovesComponent : Component
 {
     /// <summary>
-    /// The action for emagging doors with ninja gloves
+    /// The action for toggling ninja glove actions
     /// </summary>
-    [DataField("doorjackAction")]
-    public EntityTargetAction DoorjackAction = new()
+    [DataField("togglingAction")]
+    public EntityTargetAction ToggleAction = new()
     {
-          UseDelay = TimeSpan.FromSeconds(1), // can't spam it ridiclously fast
-          Icon = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Tools/emag.rsi"), "icon"),
-          ItemIconStyle = ItemActionIconStyle.BigAction,
-          DisplayName = "action-name-ninja-doorjack",
-          Description = "action-desc-ninja-doorjack",
+          UseDelay = TimeSpan.FromSeconds(1), // can't spam things ridiclously fast
+          DisplayName = "action-name-toggle-gloves",
+          Description = "action-desc-toggle-gloves",
           Priority = -11,
-          Event = new NinjaDoorjackEvent()
+          Event = new ToggleNinjaGlovesEvent()
     };
+
+    // doorjacking
 
     /// <summary>
     /// The tag that marks an entity as immune to doorjacking
@@ -32,20 +32,7 @@ public sealed class SpaceNinjaGlovesComponent : Component
     [DataField("emagImmuneTag", customTypeSerializer: typeof(PrototypeIdSerializer<TagPrototype>))]
     public string EmagImmuneTag = "EmagImmune";
 
-    /// <summary>
-    /// The action for stunning people with ninja gloves
-    /// </summary>
-    [DataField("stunAction")]
-    public EntityTargetAction StunAction = new()
-    {
-          UseDelay = TimeSpan.FromSeconds(1),
-          Icon = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Weapons/Melee/stunbaton.rsi"), "stunbaton_on"),
-          ItemIconStyle = ItemActionIconStyle.BigAction,
-          DisplayName = "action-name-ninja-stun",
-          Description = "action-desc-ninja-stun",
-          Priority = -12,
-          Event = new NinjaStunEvent()
-    };
+    // stunning
 
     /// <summary>
     /// Joules required in the suit to stun someone. Defaults to 10 uses on a small battery.
@@ -65,20 +52,7 @@ public sealed class SpaceNinjaGlovesComponent : Component
     [DataField("stunTime")]
     public TimeSpan StunTime = TimeSpan.FromSeconds(3);
 
-    /// <summary>
-    /// The action for emagging doors with ninja gloves
-    /// </summary>
-    [DataField("drainAction")]
-    public EntityTargetAction DrainAction = new()
-    {
-          UseDelay = TimeSpan.FromSeconds(5), // can't visit every apc in rapid succession, gives incentive to drain substations and smeses
-          Icon = new SpriteSpecifier.Rsi(new ResourcePath("Structures/Power/apc.rsi"), "apc0"),
-          ItemIconStyle = ItemActionIconStyle.BigAction,
-          DisplayName = "action-name-ninja-drain",
-          Description = "action-desc-ninja-drain",
-          Priority = -13,
-          Event = new NinjaDrainEvent()
-    };
+    // draining
 
     /// <summary>
     /// Conversion rate between joules in a device and joules added to suit
@@ -92,24 +66,9 @@ public sealed class SpaceNinjaGlovesComponent : Component
     [DataField("drainTime")]
     public float DrainTime = 1f;
 
-    public CancellationTokenSource? DrainCancelToken = null;
+    public CancellationTokenSource? CancelToken = null;
 
-    /// <summary>
-    /// The action for downloading research from a server
-    /// </summary>
-    [DataField("downloadAction")]
-    public EntityTargetAction DownloadAction = new()
-    {
-        Icon = new SpriteSpecifier.Rsi(new ResourcePath("Structures/Machines/server.rsi"), "server"),
-        ItemIconStyle = ItemActionIconStyle.BigAction,
-        DisplayName = "action-name-ninja-download",
-        Description = "action-desc-ninja-download",
-        Priority = -14,
-        Event = new NinjaDownloadEvent(),
-        Whitelist = new EntityWhitelist {
-            Components = new string[] { "TechnologyDatabase" }
-        }
-    };
+    // downloading
 
     /// <summary>
     /// Time taken to download research from a server
@@ -117,49 +76,21 @@ public sealed class SpaceNinjaGlovesComponent : Component
     [DataField("downloadTime")]
     public float DownloadTime = 20f;
 
-    public CancellationTokenSource? DownloadCancelToken = null;
-
-    /// <summary>
-    /// The action for calling in a threat
-    /// </summary>
-    [DataField("terrorAction")]
-    public EntityTargetAction TerrorAction = new()
-    {
-        Icon = new SpriteSpecifier.Rsi(new ResourcePath("Structures/Machines/computers.rsi"), "comm_icon"),
-        ItemIconStyle = ItemActionIconStyle.BigAction,
-        DisplayName = "action-name-ninja-terror",
-        Description = "action-desc-ninja-terror",
-        Priority = -15,
-        Event = new NinjaTerrorEvent()
-    };
+    // terror
 
     /// <summary>
     /// Time taken to call in a threat
     /// </summary>
     [DataField("terrorTime")]
     public float TerrorTime = 20f;
-
-    public CancellationTokenSource? TerrorCancelToken = null;
 }
 
-public sealed class NinjaDoorjackEvent : EntityTargetActionEvent { }
+public sealed class ToggleNinjaGlovesEvent : EntityTargetActionEvent { }
 
-public sealed class NinjaStunEvent : EntityTargetActionEvent { }
-
-public sealed class NinjaDrainEvent : EntityTargetActionEvent { }
+public record GloveActionCancelledEvent;
 
 public record DrainSuccessEvent(EntityUid User, EntityUid Battery);
 
-public record DrainCancelledEvent;
-
-public sealed class NinjaDownloadEvent : EntityTargetActionEvent { }
-
 public record DownloadSuccessEvent(EntityUid User, EntityUid Server);
 
-public record DownloadCancelledEvent;
-
-public sealed class NinjaTerrorEvent : EntityTargetActionEvent { }
-
 public record TerrorSuccessEvent(EntityUid User);
-
-public record TerrorCancelledEvent;

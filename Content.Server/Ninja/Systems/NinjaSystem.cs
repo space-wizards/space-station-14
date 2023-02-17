@@ -76,25 +76,16 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
 
         SubscribeLocalEvent<SpaceNinjaGlovesComponent, GotEquippedEvent>(OnGlovesEquipped);
         SubscribeLocalEvent<SpaceNinjaGlovesComponent, GotUnequippedEvent>(OnGlovesUnequipped);
-        SubscribeLocalEvent<SpaceNinjaGlovesComponent, NinjaDoorjackEvent>(OnDoorjackAction);
-        // for doorjack counting
         SubscribeLocalEvent<DoorComponent, DoorEmaggedEvent>(OnDoorEmagged);
-        SubscribeLocalEvent<SpaceNinjaGlovesComponent, NinjaStunEvent>(OnStunAction);
-        SubscribeLocalEvent<SpaceNinjaGlovesComponent, NinjaDrainEvent>(OnDrainAction);
+        SubscribeLocalEvent<SpaceNinjaGlovesComponent, ToggleNinjaGlovesEvent>(OnToggleGloves);
+        SubscribeLocalEvent<SpaceNinjaGlovesComponent, GloveActionCancelledEvent>(OnCancel);
         SubscribeLocalEvent<SpaceNinjaGlovesComponent, DrainSuccessEvent>(OnDrainSuccess);
-        SubscribeLocalEvent<SpaceNinjaGlovesComponent, DrainCancelledEvent>(OnDrainCancel);
-        SubscribeLocalEvent<SpaceNinjaGlovesComponent, NinjaDownloadEvent>(OnDownloadAction);
         SubscribeLocalEvent<SpaceNinjaGlovesComponent, DownloadSuccessEvent>(OnDownloadSuccess);
-        SubscribeLocalEvent<SpaceNinjaGlovesComponent, DownloadCancelledEvent>(OnDownloadCancel);
-        SubscribeLocalEvent<SpaceNinjaGlovesComponent, NinjaTerrorEvent>(OnTerrorAction);
         SubscribeLocalEvent<SpaceNinjaGlovesComponent, TerrorSuccessEvent>(OnTerrorSuccess);
-        SubscribeLocalEvent<SpaceNinjaGlovesComponent, TerrorCancelledEvent>(OnTerrorCancel);
 
         // TODO: maybe have suit activation stuff
         SubscribeLocalEvent<SpaceNinjaSuitComponent, GotEquippedEvent>(OnSuitEquipped);
         SubscribeLocalEvent<SpaceNinjaSuitComponent, ContainerIsInsertingAttemptEvent>(OnSuitInsertAttempt);
-        // TODO: enable if it causes trouble
-        // SubscribeLocalEvent<SpaceNinjaSuitComponent, ContainerIsRemovingAttemptEvent>(OnSuitRemoveAttempt);
         SubscribeLocalEvent<SpaceNinjaSuitComponent, GotUnequippedEvent>(OnSuitUnequipped);
         SubscribeLocalEvent<SpaceNinjaSuitComponent, TogglePhaseCloakEvent>(OnTogglePhaseCloakAction);
 
@@ -139,40 +130,13 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         var user = args.Equipee;
         if (IsNinja(user) && TryComp<ActionsComponent>(user, out var actions))
         {
-            // TODO: add glove action / glove toggle for using with left click (ideally right click but yeah)
-            _actions.AddAction(user, comp.DoorjackAction, uid, actions);
-            _actions.AddAction(user, comp.StunAction, uid, actions);
-            _actions.AddAction(user, comp.DrainAction, uid, actions);
-            _actions.AddAction(user, comp.DownloadAction, uid, actions);
-            _actions.AddAction(user, comp.TerrorAction, uid, actions);
+            _actions.AddAction(user, comp.ToggleAction, uid, actions);
         }
     }
 
     private void OnGlovesUnequipped(EntityUid uid, SpaceNinjaGlovesComponent comp, GotUnequippedEvent args)
     {
         _actions.RemoveProvidedActions(args.Equipee, uid);
-    }
-
-    // stripped down version of EmagSystem's emagging code, only working on doors
-    private void OnDoorjackAction(EntityUid uid, SpaceNinjaGlovesComponent comp, NinjaDoorjackEvent args)
-    {
-        var target = args.Target;
-        if (_tags.HasTag(target, comp.EmagImmuneTag))
-            return;
-
-        if (!HasComp<DoorComponent>(target))
-            return;
-
-        var user = args.Performer;
-        var handled = _emag.DoEmagEffect(user, target);
-        if (!handled)
-            return;
-
-        _popups.PopupEntity(Loc.GetString("emag-success", ("target", Identity.Entity(target, EntityManager))), user,
-            user, PopupType.Medium);
-        args.Handled = true;
-
-        _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(user):player} doorjacked {ToPrettyString(target):target}");
     }
 
     private void OnDoorEmagged(EntityUid uid, DoorComponent door, DoorEmaggedEvent args)
@@ -182,56 +146,128 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
             ninja.DoorsJacked++;
     }
 
-    private void OnStunAction(EntityUid uid, SpaceNinjaGlovesComponent comp, NinjaStunEvent args)
+    private void OnCancel(EntityUid uid, SpaceNinjaGlovesComponent comp, GloveActionCancelledEvent args)
     {
+        comp.CancelToken = null;
+    }
+
+    private void OnToggleGloves(EntityUid uid, SpaceNinjaGlovesComponent comp, ToggleNinjaGlovesEvent args)
+    {
+        // TODO: make it a toggle and have this be in a OnInteract or something
         var target = args.Target;
         var user = args.Performer;
 
-        // only target things that can be stunned, which excludes yourself
-        if (user == target || !HasComp<StaminaComponent>(target))
+        if (!TryComp<SpaceNinjaComponent>(user, out var ninja))
             return;
 
-        // take charge from battery
-        if (!GetNinjaBattery(user, out var battery) || !battery.TryUseCharge(comp.StunCharge))
+        // cancel any doafters, but still do the new action
+        if (comp.CancelToken != null)
+            comp.CancelToken.Cancel();
+
+        // doorjack ability
+        if (HasComp<DoorComponent>(target))
         {
-            _popups.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
+            if (_tags.HasTag(target, comp.EmagImmuneTag))
+                return;
+
+            var handled = _emag.DoEmagEffect(user, target);
+            if (!handled)
+                return;
+
+            _popups.PopupEntity(Loc.GetString("emag-success", ("target", Identity.Entity(target, EntityManager))), user,
+                user, PopupType.Medium);
+            args.Handled = true;
+
+            _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(user):player} doorjacked {ToPrettyString(target):target}");
             return;
         }
 
-        // not holding hands with target so insuls don't matter
-        args.Handled = _electrocution.TryDoElectrocution(target, comp.Owner, comp.StunDamage, comp.StunTime, false, ignoreInsulation: true);
-    }
+        // stun ability
+        if (user != target && HasComp<StaminaComponent>(target))
+        {
+            // take charge from battery
+            if (!GetNinjaBattery(user, out var battery) || !battery.TryUseCharge(comp.StunCharge))
+            {
+                _popups.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
+                return;
+            }
 
-    private void OnDrainAction(EntityUid uid, SpaceNinjaGlovesComponent comp, NinjaDrainEvent args)
-    {
-        var target = args.Target;
-        var user = args.Performer;
+            // not holding hands with target so insuls don't matter
+            args.Handled = _electrocution.TryDoElectrocution(target, comp.Owner, comp.StunDamage, comp.StunTime, false, ignoreInsulation: true);
+            return;
+        }
 
-        // only target devices that store power
+        // drain ability
         if (HasComp<PowerNetworkBatteryComponent>(target))
         {
-            if (HasComp<BatteryComponent>(target))
+            if (!HasComp<BatteryComponent>(target))
+                return;
+
+            comp.CancelToken = new CancellationTokenSource();
+            var doafterArgs = new DoAfterEventArgs(user, comp.DrainTime, comp.CancelToken.Token, used: uid)
             {
-                if (comp.DrainCancelToken != null)
-                {
-                    comp.DrainCancelToken.Cancel();
-                    return;
-                }
+                BreakOnDamage = true,
+                BreakOnStun = true,
+                BreakOnUserMove = true,
+                MovementThreshold = 0.5f,
+                UsedCancelledEvent = new GloveActionCancelledEvent(),
+                UsedFinishedEvent = new DrainSuccessEvent(user, target)
+            };
 
-                comp.DrainCancelToken = new CancellationTokenSource();
-                var doafterArgs = new DoAfterEventArgs(user, comp.DrainTime, comp.DrainCancelToken.Token, used: uid)
-                {
-                    BreakOnDamage = true,
-                    BreakOnStun = true,
-                    BreakOnUserMove = true,
-                    MovementThreshold = 0.5f,
-                    UsedCancelledEvent = new DrainCancelledEvent(),
-                    UsedFinishedEvent = new DrainSuccessEvent(user, target)
-                };
+            _doafter.DoAfter(doafterArgs);
+            args.Handled = true;
+            return;
+        }
 
-                _doafter.DoAfter(doafterArgs);
-                args.Handled = true;
+        // download ability
+        if (TryComp<TechnologyDatabaseComponent>(target, out var database))
+        {
+            // fail fast if theres no tech right now
+            if (database.TechnologyIds.Count == 0)
+            {
+                _popups.PopupEntity(Loc.GetString("ninja-download-fail"), user, user);
+                return;
             }
+
+            comp.CancelToken = new CancellationTokenSource();
+            var doafterArgs = new DoAfterEventArgs(user, comp.DownloadTime, comp.CancelToken.Token, used: uid)
+            {
+                BreakOnDamage = true,
+                BreakOnStun = true,
+                BreakOnUserMove = true,
+                MovementThreshold = 0.5f,
+                UsedCancelledEvent = new GloveActionCancelledEvent(),
+                UsedFinishedEvent = new DownloadSuccessEvent(user, target)
+            };
+
+            _doafter.DoAfter(doafterArgs);
+            args.Handled = true;
+            return;
+        }
+
+        // terror ability
+        if (HasComp<CommunicationsConsoleComponent>(target))
+        {
+            // can only do it once
+            if (ninja.CalledInThreat)
+            {
+                _popups.PopupEntity(Loc.GetString("ninja-terror-already-called"), user, user);
+                return;
+            }
+
+            comp.CancelToken = new CancellationTokenSource();
+            var doafterArgs = new DoAfterEventArgs(user, comp.TerrorTime, comp.CancelToken.Token, used: uid)
+            {
+                BreakOnDamage = true,
+                BreakOnStun = true,
+                BreakOnUserMove = true,
+                MovementThreshold = 0.5f,
+                UsedCancelledEvent = new GloveActionCancelledEvent(),
+                UsedFinishedEvent = new TerrorSuccessEvent(user)
+            };
+
+            _doafter.DoAfter(doafterArgs);
+            args.Handled = true;
         }
     }
 
@@ -240,7 +276,7 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         var user = args.User;
         var target = args.Battery;
 
-        comp.DrainCancelToken = null;
+        comp.CancelToken = null;
         if (!GetNinjaBattery(user, out var suitBattery))
             // took suit off or something, ignore draining
             return;
@@ -251,69 +287,27 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
             return;
         }
 
-        if (TryComp<BatteryComponent>(target, out var battery) && TryComp<PowerNetworkBatteryComponent>(target, out var pnb))
+        if (!TryComp<BatteryComponent>(target, out var battery) || !TryComp<PowerNetworkBatteryComponent>(target, out var pnb))
+            return;
+
+        if (MathHelper.CloseToPercent(battery.CurrentCharge, 0))
         {
-            if (MathHelper.CloseToPercent(battery.CurrentCharge, 0))
-            {
-                _popups.PopupEntity(Loc.GetString("ninja-drain-empty", ("battery", target)), user, user, PopupType.Medium);
-                return;
-            }
-
-            // TODO: sparks, sound
-            // higher tier storages can charge more
-            var available = battery.CurrentCharge;
-            var required = suitBattery.MaxCharge - suitBattery.CurrentCharge;
-            var maxDrained = pnb.MaxSupply * comp.DrainTime;
-            var input = Math.Min(Math.Min(available, required / comp.DrainEfficiency), maxDrained);
-            if (battery.TryUseCharge(input))
-            {
-                var output = input * comp.DrainEfficiency;
-                suitBattery.CurrentCharge += output;
-                _popups.PopupEntity(Loc.GetString("ninja-drain-success", ("battery", target)), user, user);
-            }
-        }
-    }
-
-    private void OnDrainCancel(EntityUid uid, SpaceNinjaGlovesComponent comp, DrainCancelledEvent args)
-    {
-        comp.DrainCancelToken = null;
-    }
-
-    private void OnDownloadAction(EntityUid uid, SpaceNinjaGlovesComponent comp, NinjaDownloadEvent args)
-    {
-        var target = args.Target;
-        var user = args.Performer;
-
-        if (comp.DownloadCancelToken != null)
-        {
-            comp.DownloadCancelToken.Cancel();
+            _popups.PopupEntity(Loc.GetString("ninja-drain-empty", ("battery", target)), user, user, PopupType.Medium);
             return;
         }
 
-        // only target research servers that have unlocks
-        if (!TryComp<TechnologyDatabaseComponent>(target, out var database))
-            return;
-
-        // fail fast if theres no tech right now
-        if (database.TechnologyIds.Count == 0)
+        // TODO: sparks, sound
+        var available = battery.CurrentCharge;
+        var required = suitBattery.MaxCharge - suitBattery.CurrentCharge;
+        // higher tier storages can charge more
+        var maxDrained = pnb.MaxSupply * comp.DrainTime;
+        var input = Math.Min(Math.Min(available, required / comp.DrainEfficiency), maxDrained);
+        if (battery.TryUseCharge(input))
         {
-            _popups.PopupEntity(Loc.GetString("ninja-download-fail"), user, user);
-            return;
+            var output = input * comp.DrainEfficiency;
+            suitBattery.CurrentCharge += output;
+            _popups.PopupEntity(Loc.GetString("ninja-drain-success", ("battery", target)), user, user);
         }
-
-        comp.DownloadCancelToken = new CancellationTokenSource();
-        var doafterArgs = new DoAfterEventArgs(user, comp.DownloadTime, comp.DownloadCancelToken.Token, used: uid)
-        {
-            BreakOnDamage = true,
-            BreakOnStun = true,
-            BreakOnUserMove = true,
-            MovementThreshold = 0.5f,
-            UsedCancelledEvent = new DownloadCancelledEvent(),
-            UsedFinishedEvent = new DownloadSuccessEvent(user, target)
-        };
-
-        _doafter.DoAfter(doafterArgs);
-        args.Handled = true;
     }
 
     private void OnDownloadSuccess(EntityUid uid, SpaceNinjaGlovesComponent comp, DownloadSuccessEvent args)
@@ -321,7 +315,7 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         var user = args.User;
         var target = args.Server;
 
-        comp.DownloadCancelToken = null;
+        comp.CancelToken = null;
 
         if (!TryComp<SpaceNinjaComponent>(user, out var ninja)
             || !TryComp<TechnologyDatabaseComponent>(target, out var database))
@@ -339,53 +333,11 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         _popups.PopupEntity(str, user, user, PopupType.Medium);
     }
 
-    private void OnDownloadCancel(EntityUid uid, SpaceNinjaGlovesComponent comp, DownloadCancelledEvent args)
-    {
-        comp.DownloadCancelToken = null;
-    }
-
-    private void OnTerrorAction(EntityUid uid, SpaceNinjaGlovesComponent comp, NinjaTerrorEvent args)
-    {
-        var target = args.Target;
-        var user = args.Performer;
-
-        if (comp.TerrorCancelToken != null)
-        {
-            comp.TerrorCancelToken.Cancel();
-            return;
-        }
-
-        // can only do it once, on a comms console
-        if (!TryComp<SpaceNinjaComponent>(user, out var ninja)
-            || !HasComp<CommunicationsConsoleComponent>(target))
-            return;
-
-        if (ninja.CalledInThreat)
-        {
-            _popups.PopupEntity(Loc.GetString("ninja-terror-already-called"), user, user);
-            return;
-        }
-
-        comp.TerrorCancelToken = new CancellationTokenSource();
-        var doafterArgs = new DoAfterEventArgs(user, comp.TerrorTime, comp.TerrorCancelToken.Token, used: uid)
-        {
-            BreakOnDamage = true,
-            BreakOnStun = true,
-            BreakOnUserMove = true,
-            MovementThreshold = 0.5f,
-            UsedCancelledEvent = new TerrorCancelledEvent(),
-            UsedFinishedEvent = new TerrorSuccessEvent(user)
-        };
-
-        _doafter.DoAfter(doafterArgs);
-        args.Handled = true;
-    }
-
     private void OnTerrorSuccess(EntityUid uid, SpaceNinjaGlovesComponent comp, TerrorSuccessEvent args)
     {
         var user = args.User;
 
-        comp.TerrorCancelToken = null;
+        comp.CancelToken = null;
 
         if (!TryComp<SpaceNinjaComponent>(user, out var ninja) || ninja.CalledInThreat)
             return;
@@ -400,41 +352,35 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         {
             _gameTicker.AddGameRule(rule);
             _chat.DispatchGlobalAnnouncement(Loc.GetString(threat.Announcement), playSound: false, colorOverride: Color.Red);
-            return;
         }
-    }
-
-    private void OnTerrorCancel(EntityUid uid, SpaceNinjaGlovesComponent comp, TerrorCancelledEvent args)
-    {
-        comp.TerrorCancelToken = null;
     }
 
     private void OnSuitEquipped(EntityUid uid, SpaceNinjaSuitComponent comp, GotEquippedEvent args)
     {
         var user = args.Equipee;
-        if (TryComp<SpaceNinjaComponent>(user, out var ninja) && TryComp<ActionsComponent>(user, out var actions))
-        {
-            _actions.AddAction(user, comp.TogglePhaseCloakAction, uid, actions);
-            // TODO: emp ability
+        if (!TryComp<SpaceNinjaComponent>(user, out var ninja) || !TryComp<ActionsComponent>(user, out var actions))
+            return;
 
-            // mark the user as wearing this suit, used when being attacked
-            ninja.Suit = uid;
+        _actions.AddAction(user, comp.TogglePhaseCloakAction, uid, actions);
+        // TODO: emp ability
+        // TODO: ninja star ability
+        // TODO: energy katana + recall ability
 
-            // initialize phase cloak
-            AddComp<StealthComponent>(user);
-            SetCloaked(user, comp.Cloaked);
-            SetSuitPowerAlert(user);
-        }
+        // mark the user as wearing this suit, used when being attacked
+        ninja.Suit = uid;
+
+        // initialize phase cloak
+        AddComp<StealthComponent>(user);
+        SetCloaked(user, comp.Cloaked);
+        SetSuitPowerAlert(user);
     }
 
     // TODO: put in shared so client properly predicts insertion
     private void OnSuitInsertAttempt(EntityUid uid, SpaceNinjaSuitComponent comp, ContainerIsInsertingAttemptEvent args)
     {
+        // no power cell for some reason??? allow it
         if (!_powerCell.TryGetBatteryFromSlot(uid, out var battery))
-        {
-            // no power cell for some reason??? allow it
             return;
-        }
 
         // can only upgrade power cell, not swap to recharge instantly otherwise ninja could just swap batteries with flashlights in maints for easy power
         if (!TryComp<BatteryComponent>(args.EntityUid, out var inserting) || inserting.MaxCharge <= battery.MaxCharge)
@@ -442,13 +388,7 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
             args.Cancel();
         }
     }
-/*
-    private void OnSuitRemoveAttempt(EntityUid uid, SpaceNinjaSuitComponent comp, ContainerIsRemovingAttemptEvent args)
-    {
-        // ejecting cell then putting in charger would bypass glove recharging, bad
-        args.Cancel();
-    }
-*/
+
     private void OnSuitUnequipped(EntityUid uid, SpaceNinjaSuitComponent comp, GotUnequippedEvent args)
     {
         var user = args.Equipee;
@@ -615,5 +555,7 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
     {
         if (_proto.TryIndex<ObjectivePrototype>(name, out var objective))
             mind.TryAddObjective(objective);
+        else
+            Logger.Error($"Ninja has unknown objective prototype: {name}");
     }
 }
