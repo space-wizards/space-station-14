@@ -19,7 +19,6 @@ using Content.Server.Warps;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.Doors.Components;
@@ -39,6 +38,7 @@ using Content.Shared.Rounding;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee.Events;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -52,20 +52,20 @@ namespace Content.Server.Ninja.Systems;
 public sealed partial class NinjaSystem : SharedNinjaSystem
 {
     [Dependency] private readonly ActionsSystem _actions = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly IChatManager _chatMan = default!;
     [Dependency] private readonly DoAfterSystem _doafter = default!;
     [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
-    [Dependency] private readonly IChatManager _chatMan = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly SharedSubdermalImplantSystem _implants = default!;
     [Dependency] private readonly PopupSystem _popups = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedSubdermalImplantSystem _implants = default!;
     [Dependency] private readonly TagSystem _tags = default!;
 
     private readonly HashSet<SpaceNinjaComponent> _activeNinja = new();
@@ -76,7 +76,6 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
 
         SubscribeLocalEvent<SpaceNinjaGlovesComponent, GotEquippedEvent>(OnGlovesEquipped);
         SubscribeLocalEvent<SpaceNinjaGlovesComponent, GotUnequippedEvent>(OnGlovesUnequipped);
-        SubscribeLocalEvent<DoorComponent, DoorEmaggedEvent>(OnDoorEmagged);
         SubscribeLocalEvent<SpaceNinjaGlovesComponent, ToggleNinjaGlovesEvent>(OnToggleGloves);
         SubscribeLocalEvent<SpaceNinjaGlovesComponent, GloveActionCancelledEvent>(OnCancel);
         SubscribeLocalEvent<SpaceNinjaGlovesComponent, DrainSuccessEvent>(OnDrainSuccess);
@@ -93,6 +92,8 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         SubscribeLocalEvent<SpaceNinjaComponent, MindAddedMessage>(OnNinjaMindAdded);
         SubscribeLocalEvent<SpaceNinjaComponent, AttackedEvent>(OnNinjaAttacked);
         SubscribeLocalEvent<SpaceNinjaComponent, ComponentRemove>(OnNinjaRemoved);
+
+        SubscribeLocalEvent<DoorComponent, DoorEmaggedEvent>(OnDoorEmagged);
     }
 
     public override void Update(float frameTime)
@@ -107,10 +108,11 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
                 continue;
             }
 
-            if (Paused(ninja.Owner))
+            var uid = ninja.Owner;
+            if (Paused(uid))
                 continue;
 
-            UpdateNinja(ninja, frameTime);
+            UpdateNinja(uid, ninja, frameTime);
         }
 
         foreach (var ninja in toRemove)
@@ -137,13 +139,6 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
     private void OnGlovesUnequipped(EntityUid uid, SpaceNinjaGlovesComponent comp, GotUnequippedEvent args)
     {
         _actions.RemoveProvidedActions(args.Equipee, uid);
-    }
-
-    private void OnDoorEmagged(EntityUid uid, DoorComponent door, DoorEmaggedEvent args)
-    {
-        // make sure it's a ninja doorjacking it
-        if (TryComp<SpaceNinjaComponent>(args.UserUid, out var ninja))
-            ninja.DoorsJacked++;
     }
 
     private void OnCancel(EntityUid uid, SpaceNinjaGlovesComponent comp, GloveActionCancelledEvent args)
@@ -193,7 +188,7 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
             }
 
             // not holding hands with target so insuls don't matter
-            args.Handled = _electrocution.TryDoElectrocution(target, comp.Owner, comp.StunDamage, comp.StunTime, false, ignoreInsulation: true);
+            args.Handled = _electrocution.TryDoElectrocution(target, uid, comp.StunDamage, comp.StunTime, false, ignoreInsulation: true);
             return;
         }
 
@@ -296,7 +291,6 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
             return;
         }
 
-        // TODO: sparks, sound
         var available = battery.CurrentCharge;
         var required = suitBattery.MaxCharge - suitBattery.CurrentCharge;
         // higher tier storages can charge more
@@ -307,6 +301,8 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
             var output = input * comp.DrainEfficiency;
             suitBattery.CurrentCharge += output;
             _popups.PopupEntity(Loc.GetString("ninja-drain-success", ("battery", target)), user, user);
+            // TODO: spark effects
+            _audio.PlayPvs(comp.SparkSound, uid);
         }
     }
 
@@ -487,21 +483,28 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         _activeNinja.Remove(comp);
     }
 
-    private void UpdateNinja(SpaceNinjaComponent ninja, float frameTime)
+    private void OnDoorEmagged(EntityUid uid, DoorComponent door, DoorEmaggedEvent args)
+    {
+        // make sure it's a ninja doorjacking it
+        if (TryComp<SpaceNinjaComponent>(args.UserUid, out var ninja))
+            ninja.DoorsJacked++;
+    }
+
+    private void UpdateNinja(EntityUid uid, SpaceNinjaComponent ninja, float frameTime)
     {
         if (ninja.Suit == null || !TryComp<SpaceNinjaSuitComponent>(ninja.Suit.Value, out var suit))
             return;
 
         float wattage = SuitWattage(suit);
 
-        SetSuitPowerAlert(ninja.Owner, ninja);
-        if (!GetNinjaBattery(ninja.Owner, out var battery) || !battery.TryUseCharge(wattage * frameTime))
+        SetSuitPowerAlert(uid, ninja);
+        if (!GetNinjaBattery(uid, out var battery) || !battery.TryUseCharge(wattage * frameTime))
         {
             // ran out of power, reveal ninja
             if (suit.Cloaked)
             {
                 suit.Cloaked = false;
-                SetCloaked(ninja.Owner, false);
+                SetCloaked(uid, false);
             }
         }
     }

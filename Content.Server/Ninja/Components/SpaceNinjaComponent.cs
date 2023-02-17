@@ -62,7 +62,7 @@ public sealed class SpaceNinjaComponent : Component
 
 //[Serializable]
 [DataDefinition]
-public class Threat
+public sealed class Threat
 {
     [DataField("announcement")]
     public readonly string Announcement = default!;

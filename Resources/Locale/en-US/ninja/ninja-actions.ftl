@@ -4,7 +4,7 @@ action-desc-toggle-ninja-gloves = Toggles all glove actions on (TBD) click. Incl
 ninja-no-power = Not enough charge in suit battery!
 
 ninja-full-power = Suit battery is already full
-ninja-drain-fail = {CAPITALIZE(THE($battery))} does not have enough power to drain
+ninja-drain-empty = {CAPITALIZE(THE($battery))} does not have enough power to drain
 ninja-drain-success = You drain power from {THE($battery)}!
 
 ninja-download-fail = No new research nodes were copied...

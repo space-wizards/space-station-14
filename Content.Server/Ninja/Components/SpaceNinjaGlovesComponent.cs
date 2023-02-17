@@ -1,7 +1,7 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Tag;
-using Content.Shared.Whitelist;
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 using System.Threading;
@@ -11,8 +11,10 @@ namespace Content.Server.Ninja.Components;
 [RegisterComponent]
 public sealed class SpaceNinjaGlovesComponent : Component
 {
+    public CancellationTokenSource? CancelToken = null;
+
     /// <summary>
-    /// The action for toggling ninja glove actions
+    /// The action for toggling ninja gloves abilities
     /// </summary>
     [DataField("togglingAction")]
     public EntityTargetAction ToggleAction = new()
@@ -65,7 +67,8 @@ public sealed class SpaceNinjaGlovesComponent : Component
     [DataField("drainTime")]
     public float DrainTime = 1f;
 
-    public CancellationTokenSource? CancelToken = null;
+    [DataField("sparkSound")]
+    public SoundSpecifier SparkSound = new SoundCollectionSpecifier("sparks");
 
     // downloading
 
