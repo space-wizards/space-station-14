@@ -85,4 +85,5 @@ public enum LogType
     WireHacking = 80,
     Teleport = 81,
     EntityDelete = 82,
+    Vote = 83,
 }
