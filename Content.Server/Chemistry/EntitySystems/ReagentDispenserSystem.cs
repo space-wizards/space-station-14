@@ -93,7 +93,6 @@ namespace Content.Server.Chemistry.EntitySystems
         private void OnEmagged(EntityUid uid, ReagentDispenserComponent reagentDispenser, ref GotEmaggedEvent args)
         {
             // adding component manually to have correct state
-            args.Emag = false;
             EntityManager.AddComponent<EmaggedComponent>(uid);
             UpdateUiState(reagentDispenser);
             args.Handled = true;

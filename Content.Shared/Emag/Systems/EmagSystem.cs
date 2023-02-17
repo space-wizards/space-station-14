@@ -163,13 +163,12 @@ namespace Content.Shared.Emag.Systems
             var emaggedEvent = new GotEmaggedEvent(user);
             RaiseLocalEvent(target, ref emaggedEvent);
 
-            // add marker component unless the handler wants repeatable emagging
-            if (emaggedEvent.Emag)
-                AddComp<EmaggedComponent>(target);
+            if (!emaggedEvent.Repeatable)
+                EnsureComp<EmaggedComponent>(target);
             return emaggedEvent.Handled;
         }
     }
 
     [ByRefEvent]
-    public record struct GotEmaggedEvent(EntityUid UserUid, bool Handled = false, bool Emag = true);
+    public record struct GotEmaggedEvent(EntityUid UserUid, bool Handled = false, bool Repeatable = false);
 }
