@@ -1,0 +1,170 @@
+- type: accent
+  id: mute
+  words:
+  - "..."
+
+- type: damageModifierSet
+  id: SCP173
+  coefficients:
+    Bloodloss: 0.01
+    Blunt: 0.01
+    Cellular: 0.01
+    Cold: 0.01
+    Heat: 0.01
+    Piercing: 0.01
+    Poison: 0.01
+    Radiation: 0.01
+    Shock: 0.01
+    Slash: 0.01
+
+- type: soundCollection
+  id: 173Spooks
+  files:
+    - /Audio/SCP/Horror/Horror0.ogg
+    - /Audio/SCP/Horror/Horror3.ogg
+    - /Audio/SCP/Horror/Horror4.ogg
+    - /Audio/SCP/Horror/Horror10.ogg
+
+- type: soundCollection
+  id: 173Scares
+  files:
+    - /Audio/SCP/Horror/Horror1.ogg
+    - /Audio/SCP/Horror/Horror2.ogg
+    - /Audio/SCP/Horror/Horror9.ogg
+    - /Audio/SCP/Horror/Horror14.ogg
+
+- type: soundCollection
+  id: 173Kills
+  files:
+    - /Audio/SCP/173/NeckSnap1.ogg
+    - /Audio/SCP/173/NeckSnap2.ogg
+    - /Audio/SCP/173/NeckSnap3.ogg
+
+- type: soundCollection
+  id: 173Rattle
+  files:
+    - /Audio/SCP/173/Rattle1.ogg
+    - /Audio/SCP/173/Rattle2.ogg
+    - /Audio/SCP/173/Rattle3.ogg
+
+- type: entity
+  name: Лужа крови?
+  id: SCP173Puddle
+  description: Кроваво-коричнивая лужа, смердит ужасно.
+  components:
+  - type: Transform
+    anchored: true
+  - type: Clickable
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - id: slipFixture
+      shape:
+        !type:PhysShapeAabb
+        bounds: "-0.5,-0.5,0.5,0.5"
+      mask:
+      - ItemMask
+      layer:
+      - SlipLayer
+      hard: false
+  - type: Sprite
+    sprite: Fluids/splatter.rsi
+    state: splatter-0
+    color: "#DDCC00"
+    netsync: false
+  - type: Puddle
+    slipThreshold: 5
+    recolor: false
+  - type: SolutionContainerManager
+    solutions:
+      puddle:
+        maxVol: 1000
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Blood
+          Quantity: 6
+  - type: Slippery
+    launchForwardsMultiplier: 2.0
+    paralyzeTime: 4
+  - type: StepTrigger
+  - type: Appearance
+  - type: PuddleVisualizer
+    customPuddleSprite: true
+
+- type: entity
+  name: SCP-173
+  parent: SCPMobBase
+  id: MobSCP173
+  description: Не моргай.
+  components:
+  - type: SCP173
+    spooksSoundCollection:
+      collection: 173Spooks
+    scaresSoundCollection:
+      collection: 173Scares
+    killSoundCollection:
+      collection: 173Kills
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 4
+    baseSprintSpeed : 10
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      sprite: _Craft/Mobs/SCP/scp173.rsi
+      offset: 0,0.4
+      state: standing
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.4
+      density: 5000
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+  - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      20000: Dead
+  - type: ReplacementAccent
+    accent: mute
+  - type: Tool
+    speed: 1.5
+    qualities:
+      - Prying
+  - type: CombatMode
+    disarm: null
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+        path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      types:
+        Blunt: 180
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: SCP173
+  - type: NoSlip
+  - type: DiseaseProtection
+    protection: 1
+  - type: Insulated
+  - type: Tag
+    tags:
+      - CannotSuicide
+      - DoorBumpOpener
+      - FootstepSound
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: 173Rattle
+      params:
+        variation: 0.1
