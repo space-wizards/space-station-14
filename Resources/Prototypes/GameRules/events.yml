@@ -92,6 +92,21 @@
     endAfter: 1
 
 - type: gameRule
+  id: XenoShuttle
+  config:
+    !type:StationEventRuleConfiguration
+    id: XenoShuttle
+    startAnnouncement: "Внимание! Обнаружен неизвестный шаттл направляющийся в сторону станции. \nЭкипажу приготовится к контакту в течении 60 секунд."
+    startAudio:
+      path: /Audio/Announcements/bloblarm.ogg
+      params:
+        volume: -4
+    earliestStart: 10
+    minimumPlayers: 15
+    weight: 5
+    startAfter: 20
+
+- type: gameRule
   id: GasLeak
   config:
     !type:StationEventRuleConfiguration
