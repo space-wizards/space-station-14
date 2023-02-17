@@ -569,6 +569,25 @@
   icon:
     sprite: Structures/Piping/Atmospherics/gasmixer.rsi
     state: gasMixer
+  mirror: GasMixerFlipped
+  conditions:
+    - !type:TileNotBlocked {}
+
+- type: construction
+  id: GasMixerFlipped
+  hide: true
+  name: gas mixer
+  description: Very useful for mixing gases.
+  graph: GasTrinary
+  startNode: start
+  targetNode: mixerflipped
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/gasmixer.rsi
+    state: gasMixerF
+  mirror: GasMixer
   conditions:
     - !type:TileNotBlocked {}
 

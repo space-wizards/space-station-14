@@ -10,7 +10,14 @@
         amount: 2
         doAfter: 1
 
+    # Mixer
     - to: mixer
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    - to: mixerflipped
       steps:
       - material: Steel
         amount: 2
@@ -38,8 +45,25 @@
       - tool: Welding
         doAfter: 1
 
+  # Mixer
   - node: mixer
     entity: GasMixer
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: mixerflipped
+    entity: GasMixerFlipped
     edges:
     - to: start
       conditions:
