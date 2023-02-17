@@ -29,8 +29,8 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
         SubscribeLocalEvent<ImplanterComponent, AfterInteractEvent>(OnImplanterAfterInteract);
         SubscribeLocalEvent<ImplanterComponent, ComponentGetState>(OnImplanterGetState);
 
-        SubscribeLocalEvent<ImplanterComponent, DoAfterEvent>(OnDoAfter);
-        SubscribeLocalEvent<ImplanterComponent, ImplanterDrawCompleteEvent>(OnDrawAttemptSuccess);
+        SubscribeLocalEvent<ImplanterComponent, DoAfterEvent<ImplantEvent>>(OnImplant);
+        SubscribeLocalEvent<ImplanterComponent, DoAfterEvent<DrawEvent>>(OnDraw);
     }
 
     private void OnImplanterAfterInteract(EntityUid uid, ImplanterComponent component, AfterInteractEvent args)
@@ -80,13 +80,15 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
         var userName = Identity.Entity(user, EntityManager);
         _popup.PopupEntity(Loc.GetString("implanter-component-implanting-target", ("user", userName)), user, target, PopupType.LargeCaution);
 
+        var implantEvent = new ImplantEvent();
+
         _doAfter.DoAfter(new DoAfterEventArgs(user, component.ImplantTime, target:target, used:implanter)
         {
             BreakOnUserMove = true,
             BreakOnTargetMove = true,
             BreakOnDamage = true,
             BreakOnStun = true,
-        });
+        }, implantEvent);
     }
 
     /// <summary>
@@ -101,15 +103,15 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
     {
         _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
 
+        var drawEvent = new DrawEvent();
+
         _doAfter.DoAfter(new DoAfterEventArgs(user, component.DrawTime, target:target,used:implanter)
         {
             BreakOnUserMove = true,
             BreakOnTargetMove = true,
             BreakOnDamage = true,
-            BreakOnStun = true,
-            UsedFinishedEvent = new ImplanterDrawCompleteEvent(implanter, user, target),
-            UsedCancelledEvent = new ImplanterCancelledEvent()
-        });
+            BreakOnStun = true
+        }, drawEvent);
     }
 
     private void OnImplanterGetState(EntityUid uid, ImplanterComponent component, ref ComponentGetState args)
@@ -117,7 +119,7 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
         args.State = new ImplanterComponentState(component.CurrentMode, component.ImplantOnly);
     }
 
-    private void OnDoAfter(EntityUid uid, ImplanterComponent component, DoAfterEvent args)
+    private void OnImplant(EntityUid uid, ImplanterComponent component, DoAfterEvent<ImplantEvent> args)
     {
         if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null)
             return;
@@ -127,29 +129,23 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
         args.Handled = true;
     }
 
-    private void OnDrawAttemptSuccess(EntityUid uid, ImplanterComponent component, ImplanterDrawCompleteEvent args)
+    private void OnDraw(EntityUid uid, ImplanterComponent component, DoAfterEvent<DrawEvent> args)
     {
-        //TODO: Add draw logic for another doafter
-        Draw(args.Implanter, args.User, args.Target, component);
+        if (args.Handled || args.Cancelled || args.Args.Used == null || args.Args.Target == null)
+            return;
+
+        Draw(args.Args.Used.Value, args.Args.User, args.Args.Target.Value, component);
+
+        args.Handled = true;
     }
 
-    private sealed class ImplanterCancelledEvent : EntityEventArgs
+    private sealed class ImplantEvent : EntityEventArgs
     {
 
     }
 
-    private sealed class ImplanterDrawCompleteEvent : EntityEventArgs
+    private sealed class DrawEvent : EntityEventArgs
     {
-        public EntityUid Implanter;
-        public EntityUid User;
-        public EntityUid Target;
 
-        public ImplanterDrawCompleteEvent(EntityUid implanter, EntityUid user, EntityUid target)
-        {
-            Implanter = implanter;
-            User = user;
-            Target = target;
-        }
     }
-
 }
