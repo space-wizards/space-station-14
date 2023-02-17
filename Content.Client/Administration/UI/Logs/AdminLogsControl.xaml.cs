@@ -242,6 +242,14 @@ public sealed partial class AdminLogsControl : Control
                button.Text.Contains(PlayerSearch.Text, StringComparison.OrdinalIgnoreCase);
     }
 
+    private bool LogMatchesPlayerFilter(AdminLogLabel label)
+    {
+        if (label.Log.Players.Length == 0)
+            return SelectedPlayers.Count == 0 || IncludeNonPlayerLogs;
+
+        return SelectedPlayers.Overlaps(label.Log.Players);
+    }
+
     private bool ShouldShowLog(AdminLogLabel label)
     {
         // Check log type
@@ -249,9 +257,7 @@ public sealed partial class AdminLogsControl : Control
             return false;
 
         // Check players
-        if (!(IncludeNonPlayerLogs && SelectedPlayers.Count + label.Log.Players.Length == 0 ||
-             IncludeNonPlayerLogs && label.Log.Players.Length == 0 ||
-             SelectedPlayers.Overlaps(label.Log.Players)))
+        if (!LogMatchesPlayerFilter(label))
             return false;
 
         // Check impact
