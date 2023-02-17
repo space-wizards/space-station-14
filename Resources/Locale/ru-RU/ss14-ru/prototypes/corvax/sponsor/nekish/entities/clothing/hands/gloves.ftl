@@ -1,3 +1,3 @@
-ent-ClothingHandsGlovesLeatherHoS = leather gloves
-    .desc = Стильные кожаные чёрные перчатки
+ent-ClothingHandsGlovesLeatherHoS = кожаные перчатки
+    .desc = Стильные чёрные кожаные перчатки.
     .suffix = { "" }

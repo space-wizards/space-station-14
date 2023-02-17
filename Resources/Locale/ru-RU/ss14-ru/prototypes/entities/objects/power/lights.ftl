@@ -1,6 +1,9 @@
 ent-BaseLightbulb = { ent-BaseItem }
     .desc = { ent-BaseItem.desc }
     .suffix = { "" }
+ent-BaseLightTube = { ent-BaseLightbulb }
+    .desc = { ent-BaseLightbulb.desc }
+    .suffix = { "" }
 ent-LightBulb = лампа накаливания
     .desc = Обычная лампочка.
     .suffix = { "" }

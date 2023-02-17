@@ -1,6 +1,6 @@
 - type: entity
   id: RollerBed
-  parent: BaseItem
+  parent: [BaseItem, BaseFoldable]
   name: rollerbed
   description: Used to carry patients around without damaging them.
   components:
@@ -14,7 +14,13 @@
       noRot: true
       layers:
       - state: rollerbed
-        map: ["enum.FoldableVisualLayers.Base"]
+        map: ["unfoldedLayer"]
+      - state: rollerbed_folded
+        map: ["foldedLayer"]
+        visible: false
+      - state: rollerbed_buckled
+        map: ["buckledLayer"]
+        visible: false
     - type: MovedByPressure
     - type: DamageOnHighSpeedImpact
       soundHit: /Audio/Effects/bang.ogg
@@ -48,13 +54,20 @@
       rotation: -90
       buckleOffset: "0,0.15"
       unbuckleOffset: "0,0.15"
-    - type: Foldable
     - type: Appearance
+    - type: GenericVisualizer
       visuals:
-      - type: FoldableVisualizer
-        key: rollerbed
-      - type: RollerbedVisualizer
-        key: rollerbed
+        enum.StrapVisuals.State:
+          buckledLayer:
+            True: {visible: true}
+            False: {visible: false}
+        enum.FoldedVisuals.State: # Copypasta from BaseFoldable b/c collections don't merge when overriding component prototypes.
+          foldedLayer:
+            True: {visible: true}
+            False: {visible: false}
+          unfoldedLayer:
+            True: {visible: false}
+            False: {visible: true}
     - type: StaticPrice
       price: 200
 
@@ -75,13 +88,14 @@
   - type: Sprite
     layers:
     - state: cheap_rollerbed
-      map: [ "enum.FoldableVisualLayers.Base" ]
+      map: ["unfoldedLayer"]
+    - state: cheap_rollerbed_folded
+      map: ["foldedLayer"]
+      visible: false
+    - state: cheap_rollerbed_buckled
+      map: ["buckledLayer"]
+      visible: false
   - type: Appearance
-    visuals:
-    - type: FoldableVisualizer
-      key: cheap_rollerbed
-    - type: RollerbedVisualizer
-      key: cheap_rollerbed
 
 - type: entity
   parent: CheapRollerBed
@@ -100,13 +114,14 @@
   - type: Sprite
     layers:
     - state: emergency_rollerbed
-      map: [ "enum.FoldableVisualLayers.Base" ]
+      map: ["unfoldedLayer"]
+    - state: emergency_rollerbed_folded
+      map: ["foldedLayer"]
+      visible: false
+    - state: emergency_rollerbed_buckled
+      map: ["buckledLayer"]
+      visible: false
   - type: Appearance
-    visuals:
-    - type: FoldableVisualizer
-      key: emergency_rollerbed
-    - type: RollerbedVisualizer
-      key: emergency_rollerbed
 
 - type: entity
   parent: EmergencyRollerBed
