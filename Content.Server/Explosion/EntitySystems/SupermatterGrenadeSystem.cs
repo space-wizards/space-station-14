@@ -25,22 +25,24 @@ public sealed class SupermatterGrenadeSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<SupermatterGrenadeComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<SupermatterGrenadeComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<SupermatterGrenadeComponent, TriggerEvent>(OnExplode);
     }
 
     private void OnInit(EntityUid uid, SupermatterGrenadeComponent component, ComponentInit args)
     {
         if (TryComp(uid, out component.Distortion))
-        {
             component.DistortionIntensity = component.Distortion.Intensity;
-            component.Distortion.Intensity = 0;
-        }
 
         if (TryComp(uid, out component.GravityWell))
-        {
             component.BaseRadialAcceleration = component.GravityWell.BaseRadialAcceleration;
+    }
+    private void OnStartup(EntityUid uid, SupermatterGrenadeComponent component, ComponentStartup args)
+    {
+        if (component.Distortion != null || TryComp(uid, out component.Distortion))
+            component.Distortion.Intensity = 0;
+        if (component.GravityWell != null || TryComp(uid, out component.GravityWell))
             component.GravityWell.BaseRadialAcceleration = 0;
-        }
     }
 
     private void OnExplode(EntityUid uid, SupermatterGrenadeComponent component, TriggerEvent args)
