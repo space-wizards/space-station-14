@@ -3,7 +3,7 @@ namespace Content.Shared.Emag.Components;
 /// <summary>
 /// Marker component for emagged entities
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed class EmaggedComponent : Component
 {
 }
