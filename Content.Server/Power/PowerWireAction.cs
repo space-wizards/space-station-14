@@ -22,14 +22,14 @@ public sealed class PowerWireAction : BaseWireAction
 
     public override StatusLightState? GetLightState(Wire wire)
     {
-        if (WiresSystem.TryGetData(wire.Owner, PowerWireActionKey.MainWire, out int main)
+        if (WiresSystem.TryGetData<int>(wire.Owner, PowerWireActionKey.MainWire, out var main)
             && main != wire.Id)
         {
             return null;
         }
 
         if (!AllWiresMended(wire.Owner)
-                || WiresSystem.TryGetData(wire.Owner, PowerWireActionKey.Pulsed, out bool pulsed)
+                || WiresSystem.TryGetData<bool>(wire.Owner, PowerWireActionKey.Pulsed, out var pulsed)
                 && pulsed)
         {
             return StatusLightState.BlinkingSlow;
@@ -40,14 +40,14 @@ public sealed class PowerWireAction : BaseWireAction
 
     private bool AllWiresCut(EntityUid owner)
     {
-        return WiresSystem.TryGetData(owner, PowerWireActionKey.CutWires, out int? cut)
-            && WiresSystem.TryGetData(owner, PowerWireActionKey.WireCount, out int? count)
+        return WiresSystem.TryGetData<int?>(owner, PowerWireActionKey.CutWires, out var cut)
+            && WiresSystem.TryGetData<int?>(owner, PowerWireActionKey.WireCount, out var count)
             && count == cut;
     }
 
     private bool AllWiresMended(EntityUid owner)
     {
-        return WiresSystem.TryGetData(owner, PowerWireActionKey.CutWires, out int? cut)
+        return WiresSystem.TryGetData<int?>(owner, PowerWireActionKey.CutWires, out var cut)
                && cut == 0;
     }
 
@@ -72,7 +72,7 @@ public sealed class PowerWireAction : BaseWireAction
         }
         else
         {
-            if (WiresSystem.TryGetData(owner, PowerWireActionKey.Pulsed, out bool isPulsed)
+            if (WiresSystem.TryGetData<bool>(owner, PowerWireActionKey.Pulsed, out var isPulsed)
                 && isPulsed)
             {
                 return;
@@ -84,8 +84,8 @@ public sealed class PowerWireAction : BaseWireAction
 
     private void SetWireCuts(EntityUid owner, bool isCut)
     {
-        if (WiresSystem.TryGetData(owner, PowerWireActionKey.CutWires, out int? cut)
-            && WiresSystem.TryGetData(owner, PowerWireActionKey.WireCount, out int? count))
+        if (WiresSystem.TryGetData<int?>(owner, PowerWireActionKey.CutWires, out var cut)
+            && WiresSystem.TryGetData<int?>(owner, PowerWireActionKey.WireCount, out var count))
         {
             if (cut == count && isCut
                 || cut <= 0 && !isCut)
@@ -131,7 +131,7 @@ public sealed class PowerWireAction : BaseWireAction
 
         var activePulse = false;
 
-        if (WiresSystem.TryGetData(wire.Owner, PowerWireActionKey.Pulsed, out bool pulsed))
+        if (WiresSystem.TryGetData<bool>(wire.Owner, PowerWireActionKey.Pulsed, out var pulsed))
         {
             activePulse = pulsed;
         }
@@ -218,7 +218,7 @@ public sealed class PowerWireAction : BaseWireAction
 
         var electrocuted = !TrySetElectrocution(user, wire, true);
 
-        if (WiresSystem.TryGetData(wire.Owner, PowerWireActionKey.Pulsed, out bool pulsedKey) && pulsedKey)
+        if (WiresSystem.TryGetData<bool>(wire.Owner, PowerWireActionKey.Pulsed, out var pulsedKey) && pulsedKey)
             return;
 
         WiresSystem.SetData(wire.Owner, PowerWireActionKey.Pulsed, true);
@@ -236,7 +236,7 @@ public sealed class PowerWireAction : BaseWireAction
 
         if (!IsPowered(wire.Owner))
         {
-            if (!WiresSystem.TryGetData(wire.Owner, PowerWireActionKey.Pulsed, out bool pulsed)
+            if (!WiresSystem.TryGetData<bool>(wire.Owner, PowerWireActionKey.Pulsed, out var pulsed)
                 || !pulsed)
             {
                 WiresSystem.TryCancelWireAction(wire.Owner, PowerWireActionKey.ElectrifiedCancel);
