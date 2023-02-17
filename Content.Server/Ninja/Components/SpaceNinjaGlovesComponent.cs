@@ -17,11 +17,10 @@ public sealed class SpaceNinjaGlovesComponent : Component
     [DataField("togglingAction")]
     public EntityTargetAction ToggleAction = new()
     {
-          UseDelay = TimeSpan.FromSeconds(1), // can't spam things ridiclously fast
-          DisplayName = "action-name-toggle-gloves",
-          Description = "action-desc-toggle-gloves",
-          Priority = -11,
-          Event = new ToggleNinjaGlovesEvent()
+        DisplayName = "action-name-toggle-ninja-gloves",
+        Description = "action-desc-toggle-ninja-gloves",
+        Priority = -11,
+        Event = new ToggleNinjaGlovesEvent()
     };
 
     // doorjacking
