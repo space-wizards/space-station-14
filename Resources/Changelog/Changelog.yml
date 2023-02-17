@@ -1,10 +1,4 @@
 Entries:
-- author: Carbonhell
-  changes:
-  - {message: Examining a humanoid with an age between 30 and 60 years old now properly
-      shows them as middle-aged instead of old., type: Fix}
-  id: 2548
-  time: '2022-10-30T18:54:20.0000000+00:00'
 - author: Interrobang01
   changes:
   - {message: Made it easier to see codewords in the character menu and syndicate
@@ -2916,3 +2910,8 @@ Entries:
       less likely to get outrun in open areas., type: Fix}
   id: 3047
   time: '2023-02-16T14:24:58.0000000+00:00'
+- author: Skarlet
+  changes:
+  - {message: Added the robes of the honkmother in the autodrobe, type: Add}
+  id: 3048
+  time: '2023-02-17T01:04:40.0000000+00:00'
