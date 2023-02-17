@@ -6,7 +6,7 @@ namespace Content.Shared.Solar;
 
 public abstract class SharedPowerSolarSystem : EntitySystem
 {
-    [Dependency] protected readonly IGameTiming _gameTiming = default!;
+    [Dependency] protected readonly IGameTiming GameTiming = default!;
 
     public override void Initialize()
     {
@@ -25,12 +25,7 @@ public abstract class SharedPowerSolarSystem : EntitySystem
 
     private void GetSolarPanelState(EntityUid uid, SolarPanelComponent component, ref ComponentGetState args)
     {
-        args.State = new SolarPanelComponentState
-        {
-            Angle = component.StartAngle,
-            AngularVelocity = component.AngularVelocity,
-            LastUpdate = component.LastUpdate
-        };
+        args.State = new SolarPanelComponentState(component.StartAngle, component.AngularVelocity, component.LastUpdate);
     }
 
     private void HandleSolarPanelState(EntityUid uid, SolarPanelComponent component, ref ComponentHandleState args)

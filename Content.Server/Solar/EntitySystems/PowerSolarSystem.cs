@@ -72,7 +72,7 @@ namespace Content.Server.Solar.EntitySystems
         {
             panel.StartAngle = TargetPanelRotation;
             panel.AngularVelocity = TargetPanelVelocity;
-            panel.LastUpdate = _gameTiming.CurTime;
+            panel.LastUpdate = GameTiming.CurTime;
             Dirty(panel);
         }
 
@@ -118,7 +118,7 @@ namespace Content.Server.Solar.EntitySystems
             {
                 if (panel.Running)
                 {
-                    Angle targetAngle = panel.StartAngle + panel.AngularVelocity * (_gameTiming.CurTime - panel.LastUpdate).TotalSeconds;
+                    Angle targetAngle = panel.StartAngle + panel.AngularVelocity * (GameTiming.CurTime - panel.LastUpdate).TotalSeconds;
                     panel.Angle = targetAngle.Reduced();
                     UpdatePanelCoverage(panel, xform);
                 }

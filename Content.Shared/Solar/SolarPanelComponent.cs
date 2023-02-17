@@ -10,6 +10,7 @@ namespace Content.Shared.Solar.Components;
 /// </summary>
 [RegisterComponent]
 [NetworkedComponent]
+[Access(typeof(SharedPowerSolarSystem))]
 public sealed class SolarPanelComponent : Component
 {
     /// <summary>
@@ -25,7 +26,7 @@ public sealed class SolarPanelComponent : Component
     /// DO NOT WRITE WITHOUT CALLING UpdateSupply()!
     /// </summary>
     [ViewVariables]
-    public float Coverage { get; set; } = 0;
+    public float Coverage = 0;
 
     /// <summary>
     /// Current solar panel angle (updated by <see cref="PowerSolarSystem"/>)
@@ -59,7 +60,14 @@ public sealed class SolarPanelComponent : Component
 [Serializable, NetSerializable]
 public sealed class SolarPanelComponentState : ComponentState
 {
-    public Angle Angle { get; init; }
-    public Angle AngularVelocity { get; init; }
-    public TimeSpan LastUpdate { get; init; }
+    public Angle Angle;
+    public Angle AngularVelocity;
+    public TimeSpan LastUpdate;
+
+    public SolarPanelComponentState(Angle angle, Angle angularVelocity, TimeSpan lastUpdate)
+    {
+        Angle = angle;
+        AngularVelocity = angularVelocity;
+        LastUpdate = lastUpdate;
+    }
 }
