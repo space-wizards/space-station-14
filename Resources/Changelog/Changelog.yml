@@ -1,11 +1,4 @@
 Entries:
-- author: Interrobang01
-  changes:
-  - {message: Made it easier to see codewords in the character menu and syndicate
-      agent briefing., type: Tweak}
-  - {message: The Syndicate hates Nanotrasen slightly more., type: Tweak}
-  id: 2549
-  time: '2022-10-30T18:56:41.0000000+00:00'
 - author: Rane
   changes:
   - {message: Fixed several items of clothing making your entire head invisible.,
@@ -2915,3 +2908,9 @@ Entries:
   - {message: Added the robes of the honkmother in the autodrobe, type: Add}
   id: 3048
   time: '2023-02-17T01:04:40.0000000+00:00'
+- author: mhamster
+  changes:
+  - {message: 'Added atmosian plushie, that will mentally help you solve those miasmas
+      in medbay and plasma in bridge', type: Add}
+  id: 3049
+  time: '2023-02-17T21:57:15.0000000+00:00'
