@@ -19,7 +19,13 @@
       - material: Steel
         amount: 2
         doAfter: 1
+    # DisposalRouter
     - to: router
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: routerflipped
       steps:
       - material: Steel
         amount: 2
@@ -86,8 +92,21 @@
       steps:
       - tool: Welding
         doAfter: 1
+  # DisposalRouter
   - node: router
     entity: DisposalRouter
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+  - node: routerflipped
+    entity: DisposalRouterFlipped
     edges:
     - to: start
       completed:
