@@ -111,7 +111,7 @@
   - type: SupermatterGrenade
     explodeAfterGravityPull: True
     timeTillExplosion: 10
-    gravityPullLoopSoundOffset: 0.1
+    gravityPullLoopSoundOffset: 0.6
     gravityPullStartSoundVolume: 10
     gravityPullEndSoundVolume: 5
   - type: SingularityDistortion
@@ -120,13 +120,20 @@
   - type: GravityWell
     maxRange: 8
     baseRadialAcceleration: 160
-    gravPulsePeriod: 0.8
+    gravPulsePeriod: 0.1
   - type: AmbientSound
     enabled: False
     volume: -5
     range: 14
     sound:
       path: /Audio/Effects/Grenades/Supermatter_Loop.ogg
+  - type: PointLight
+    enabled: false
+    color: "#ffaa44"
+    energy: 10
+    radius: 6
+    softness: 1
+    offset: "0, 0"
 
 - type: entity
   name: whitehole grenade
@@ -152,6 +159,8 @@
   - type: AmbientSound
     sound:
       path: /Audio/Effects/Grenades/Whitehole_Loop.ogg
+  - type: PointLight
+    color: "#ffffff"
 
 - type: entity
   name: the nuclear option
