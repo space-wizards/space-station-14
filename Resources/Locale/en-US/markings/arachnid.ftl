@@ -1,4 +1,4 @@
-marking-ArachnidAppendagesDefault = Appendages
+marking-ArachnidAppendagesDefault = Appendages (Thin)
 marking-ArachnidAppendagesDefault-spikes = Appendage
 
 marking-ArachnidAppendagesSharp = Appendages (Sharp)
