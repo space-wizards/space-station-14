@@ -84,13 +84,13 @@ public sealed partial class ArtifactSystem : EntitySystem
     /// Medium should get you partway through a tree.
     /// Complex should get you through a full tree and then some.
     /// </remarks>
-    public int GetResearchPointValue(EntityUid uid, ArtifactComponent? component = null)
+    public int GetResearchPointValue(EntityUid uid, ArtifactComponent? component = null, bool getMaxPrice = false)
     {
         if (!Resolve(uid, ref component) || component.NodeTree == null)
             return 0;
 
-        var sumValue = component.NodeTree.AllNodes.Sum(n => GetNodePointValue(n, component));
-        var fullyExploredBonus = component.NodeTree.AllNodes.Any(x => !x.Triggered) ? 1 : 1.25f;
+        var sumValue = component.NodeTree.AllNodes.Sum(n => GetNodePointValue(n, component, getMaxPrice));
+        var fullyExploredBonus = component.NodeTree.AllNodes.All(x => x.Triggered) || getMaxPrice ? 1.25f : 1;
 
         var pointValue = (int) (sumValue * fullyExploredBonus);
         return pointValue;
@@ -99,12 +99,16 @@ public sealed partial class ArtifactSystem : EntitySystem
     /// <summary>
     /// Gets the point value for an individual node
     /// </summary>
-    private float GetNodePointValue(ArtifactNode node, ArtifactComponent component)
+    private float GetNodePointValue(ArtifactNode node, ArtifactComponent component, bool getMaxPrice = false)
     {
-        if (!node.Discovered)
-            return 0;
+        var valueDeduction = 1f;
+        if (!getMaxPrice)
+        {
+            if (!node.Discovered)
+                return 0;
 
-        var valueDeduction = !node.Triggered ? 0.25f : 1;
+            valueDeduction = !node.Triggered ? 0.25f : 1;
+        }
         var nodeDanger = (node.Depth + node.Effect.TargetDepth + node.Trigger.TargetDepth) / 3;
         return component.PointsPerNode * MathF.Pow(component.PointDangerMultiplier, nodeDanger) * valueDeduction;
     }
@@ -225,9 +229,9 @@ public sealed partial class ArtifactSystem : EntitySystem
     /// <param name="component"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public bool TryGetNodeData<T>(EntityUid uid, string key, [NotNullWhen(true)] out T data, ArtifactComponent? component = null)
+    public bool TryGetNodeData<T>(EntityUid uid, string key, [NotNullWhen(true)] out T? data, ArtifactComponent? component = null)
     {
-        data = default!;
+        data = default;
 
         if (!Resolve(uid, ref component))
             return false;

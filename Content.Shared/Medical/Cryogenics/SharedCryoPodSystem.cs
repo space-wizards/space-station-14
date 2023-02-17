@@ -1,4 +1,6 @@
 ﻿using Content.Server.Medical.Components;
+using Content.Shared.Body.Components;
+using Content.Shared.DragDrop;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -24,6 +26,12 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
         base.Initialize();
 
         InitializeInsideCryoPod();
+    }
+
+    protected void OnCryoPodCanDropOn(EntityUid uid, SharedCryoPodComponent component, ref CanDropTargetEvent args)
+    {
+        args.CanDrop = args.CanDrop && HasComp<BodyComponent>(args.Dragged);
+        args.Handled = true;
     }
 
     protected void OnComponentInit(EntityUid uid, SharedCryoPodComponent cryoPodComponent, ComponentInit args)
