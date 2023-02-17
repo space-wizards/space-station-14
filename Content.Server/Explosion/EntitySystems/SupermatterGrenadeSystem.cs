@@ -82,14 +82,16 @@ public sealed class SupermatterGrenadeSystem : EntitySystem
         base.Update(frameTime);
         foreach (var component in EntityQuery<SupermatterGrenadeComponent>())
         {
-            var uid = component.Owner;
             if (!component.IsGravityPulling || component.Distortion == null)
                 return;
+            #pragma warning disable
+            var uid = component.Owner;
+            #pragma warning enable
             if (!component.IsGravitySoundBegan && component.GravityPullWillOccurIn <= _timing.CurTime)
             {
                 component.IsGravitySoundBegan = true;
-                var ambience = Comp<AmbientSoundComponent>(uid);
-                _ambient.SetAmbience(uid, true, ambience);
+                if (TryComp<AmbientSoundComponent>(uid, out var ambience))
+                    _ambient.SetAmbience(uid, true, ambience);
             }
             if (!component.IsExploded && component.ExplosionWillOccurIn <= _timing.CurTime)
             {

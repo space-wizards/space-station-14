@@ -25,6 +25,9 @@ public sealed class SupermatterGrenadeComponent : Component
     [DataField("timeTillExplosion")]
     public float TimeTillExplosion = 0f;
 
+    /// <summary>
+    /// GravityPullStart is event when grenade enables GravityWell. 
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("gravityPullStartSound")]
     public SoundSpecifier? GravityPullStartSound = new SoundPathSpecifier("/Audio/Effects/Grenades/Supermatter_Start.ogg");

@@ -102,7 +102,7 @@
     explosionType: Default
     totalIntensity: 200
     intensitySlope: 30
-    maxIntensity: 60
+    maxIntensity: 120
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer
@@ -111,7 +111,7 @@
   - type: SupermatterGrenade
     explodeAfterGravityPull: True
     timeTillExplosion: 10
-    gravityPullLoopSoundOffset: 0.5
+    gravityPullLoopSoundOffset: 0.1
     gravityPullStartSoundVolume: 10
     gravityPullEndSoundVolume: 5
   - type: SingularityDistortion
@@ -120,7 +120,7 @@
   - type: GravityWell
     maxRange: 8
     baseRadialAcceleration: 160
-    gravPulsePeriod: 0.1
+    gravPulsePeriod: 0.8
   - type: AmbientSound
     enabled: False
     volume: -5
@@ -139,6 +139,7 @@
   - type: SupermatterGrenade
     explodeAfterGravityPull: False
     gravityPullStartSoundVolume: 5
+    gravityPullLoopSoundOffset: 0.8
     gravityPullStartSound:
       path: /Audio/Effects/Grenades/Whitehole_Start.ogg
   - type: SingularityDistortion
