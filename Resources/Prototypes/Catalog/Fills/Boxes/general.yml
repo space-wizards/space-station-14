@@ -284,10 +284,6 @@
   id: BoxEncryptionKey
   description: A box of spare encryption keys.
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingHeadsetGrey
-        amount: 6
   - type: Sprite
     layers:
       - state: box
