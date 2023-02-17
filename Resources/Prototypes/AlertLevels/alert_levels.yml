@@ -61,3 +61,10 @@
       emergencyLightColor: DarkViolet
       forceEnableEmergencyLights: true
       shuttleTime: 1200
+    Евклид:
+      announcement: Произошли массовые нарушения условия содержания объектов класса SCP! Всему персоналу следует оставаться в назначенных отделах и получать дальнейшую информацию по локализации угрозы от руководства станции и комплекса содержания объектов!
+      sound: /Audio/SCP/Announcments/Alarm2_1.ogg
+      color: Cyan
+      emergencyLightColor: Cyan
+      forceEnableEmergencyLights: true
+      shuttleTime: 600
