@@ -90,7 +90,6 @@ public sealed class SupermatterGrenadeSystem : EntitySystem
                 component.IsGravitySoundBegan = true;
                 var ambience = Comp<AmbientSoundComponent>(uid);
                 _ambient.SetAmbience(uid, true, ambience);
-
             }
             if (!component.IsExploded && component.ExplosionWillOccurIn <= _timing.CurTime)
             {
