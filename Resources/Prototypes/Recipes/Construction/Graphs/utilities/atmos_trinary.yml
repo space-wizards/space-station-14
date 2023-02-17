@@ -4,7 +4,14 @@
   graph:
   - node: start
     edges:
+    # Filter
     - to: filter
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    - to: filterflipped
       steps:
       - material: Steel
         amount: 2
@@ -29,8 +36,25 @@
         amount: 2
         doAfter: 1
 
+  # Filter
   - node: filter
     entity: GasFilter
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: filterflipped
+    entity: GasFilterFlipped
     edges:
     - to: start
       conditions:

@@ -553,6 +553,25 @@
   icon:
     sprite: Structures/Piping/Atmospherics/gasfilter.rsi
     state: gasFilter
+  mirror: GasFilterFlipped
+  conditions:
+    - !type:TileNotBlocked {}
+
+- type: construction
+  id: GasFilterFlipped
+  hide: true
+  name: gas filter
+  description: Very useful for filtering gases.
+  graph: GasTrinary
+  startNode: start
+  targetNode: filterflipped
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/gasfilter.rsi
+    state: gasFilterF
+  mirror: GasFilter
   conditions:
     - !type:TileNotBlocked {}
 
