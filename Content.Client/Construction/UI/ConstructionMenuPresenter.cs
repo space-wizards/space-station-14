@@ -339,6 +339,7 @@ namespace Content.Client.Construction.UI
         {
             _constructionSystem = system;
             system.ToggleCraftingWindow += SystemOnToggleMenu;
+            system.FlipConstructionPrototype += SystemFlipConstructionPrototype;
             system.CraftingAvailabilityChanged += SystemCraftingAvailabilityChanged;
             system.ConstructionGuideAvailable += SystemGuideAvailable;
             if (_uiManager.GetActiveUIWidgetOrNull<GameTopMenuBar>() != null)
@@ -355,6 +356,7 @@ namespace Content.Client.Construction.UI
                 throw new InvalidOperationException();
 
             system.ToggleCraftingWindow -= SystemOnToggleMenu;
+            system.FlipConstructionPrototype -= SystemFlipConstructionPrototype;
             system.CraftingAvailabilityChanged -= SystemCraftingAvailabilityChanged;
             system.ConstructionGuideAvailable -= SystemGuideAvailable;
             _constructionSystem = null;
@@ -387,6 +389,22 @@ namespace Content.Client.Construction.UI
                 WindowOpen = true;
                 _uiManager.GetActiveUIWidget<GameTopMenuBar>().CraftingButton.Pressed = true; // This does not call CraftingButtonToggled
             }
+        }
+
+        private void SystemFlipConstructionPrototype(object? sender, EventArgs eventArgs)
+        {
+            if (!_placementManager.IsActive || _placementManager.Eraser)
+            {
+                return;
+            }
+
+            if (_selected == null || _selected.Mirror == String.Empty)
+            {
+                return;
+            }
+
+            _selected = _prototypeManager.Index<ConstructionPrototype>(_selected.Mirror);
+            UpdateGhostPlacement();
         }
 
         private void SystemGuideAvailable(object? sender, string e)
