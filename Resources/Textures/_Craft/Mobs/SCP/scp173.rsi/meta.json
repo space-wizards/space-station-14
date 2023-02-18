@@ -1,0 +1,15 @@
+{
+    "version": 1,
+    "license": "CC BY-SA",
+    "copyright": "Sprite work - GitHub @DeffOS, original model from SCP Containment Breach",
+    "size": {
+        "x": 32,
+        "y": 64
+    },
+    "states": [
+        {
+            "name": "standing",
+            "directions": 8
+        }
+    ]
+}

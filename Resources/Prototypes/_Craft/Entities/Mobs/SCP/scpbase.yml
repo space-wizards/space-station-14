@@ -1,0 +1,76 @@
+- type: faction
+  id: SCPHostile
+  hostile:
+    - NanoTrasen
+
+- type: entity
+  save: false
+  abstract: true
+  id: SCPMobBase
+  suffix: SCP
+  components:
+  - type: LagCompensation
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask: IdleCompound
+  - type: Input
+    context: "human"
+  - type: Faction
+    factions:
+    - SimpleNeutral
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 4
+    baseSprintSpeed : 4
+  - type: MovedByPressure
+  - type: Sprite
+    noRot: true
+    drawdepth: Mobs
+    netsync: false
+  - type: Clickable
+  - type: MobState
+  - type: CombatMode
+  - type: StatusEffects
+    allowed:
+    - SlowedDown
+    - Stutter
+    - Electrocution
+    - ForcedSleep
+    - TemporaryBlindness
+    - Pacified
+  - type: Examiner
+  - type: MeleeWeapon
+    hidden: true
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      groups:
+        Brute: 5
+  - type: Appearance
+  - type: RotationVisuals
+  - type: Actions
+  - type: DoAfter
+  - type: Climbing
+  - type: Pullable
+  - type: Recyclable
+    safe: false
+  - type: StandingState
+  - type: Alerts
+  - type: MobPrice
+    price: 2000
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.4
+      density: 500
+      mask:
+      - MobMask
+      layer:
+      - MobLayer

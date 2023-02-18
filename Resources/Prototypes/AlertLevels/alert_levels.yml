@@ -61,3 +61,10 @@
       emergencyLightColor: DarkViolet
       forceEnableEmergencyLights: true
       shuttleTime: 1200
+    Евклид:
+      announcement: scp-level-euclid-announcement
+      sound: /Audio/SCP/Announcments/Alarm2_1.ogg
+      color: Cyan
+      emergencyLightColor: Cyan
+      forceEnableEmergencyLights: true
+      shuttleTime: 600

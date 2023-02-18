@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "Content.Shared"
+		},
+		{
+			"path": "RobustToolbox"
 		}
 	]
 }
