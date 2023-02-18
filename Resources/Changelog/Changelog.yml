@@ -1,9 +1,4 @@
 Entries:
-- author: aklos
-  changes:
-  - {message: Flying mobs no longer run into mousetraps and glass shards, type: Fix}
-  id: 2551
-  time: '2022-10-30T19:55:07.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed some entity lookup / physics bugs. Hopefully the game should be
@@ -2913,3 +2908,9 @@ Entries:
   - {message: Changed service worker's extended access to include hydro., type: Tweak}
   id: 3050
   time: '2023-02-17T21:58:45.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: The chat channel selector now indicates the radio channel that a message
+      is being sent to., type: Add}
+  id: 3051
+  time: '2023-02-18T17:27:57.0000000+00:00'
