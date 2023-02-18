@@ -2,6 +2,7 @@ using Content.Shared.Body.Part;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Body.Systems;
 using Content.Shared.DragDrop;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -20,6 +21,12 @@ public sealed class BodyComponent : Component, IDraggable
 
     [DataField("gibSound")]
     public SoundSpecifier GibSound = new SoundCollectionSpecifier("gib");
+
+    [DataField("painModifier")] public FixedPoint2 PainModifier = 1.0f;
+
+    [DataField("rawPain")] public FixedPoint2 RawPain = 0f;
+
+    public FixedPoint2 Pain => PainModifier * RawPain;
 
     /// <summary>
     /// The amount of legs required to move at full speed.

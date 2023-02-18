@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Body.Systems;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Body.Organ;
@@ -7,12 +8,13 @@ namespace Content.Shared.Body.Organ;
 [Access(typeof(SharedBodySystem))]
 public sealed class OrganComponent : Component
 {
-    [DataField("body")]
-    public EntityUid? Body;
+    [DataField("body")] public EntityUid? Body;
 
-    [DataField("exposed")]
-    public bool Exposed = true;
+    [DataField("parent")] public OrganSlot? ParentSlot;
 
-    [DataField("parent")]
-    public OrganSlot? ParentSlot;
+    [DataField("painModifier")] public FixedPoint2 PainModifier = 1.0f;
+
+    [DataField("rawPain")] public FixedPoint2 RawPain = 0f;
+
+    public FixedPoint2 Pain => PainModifier * RawPain;
 }
