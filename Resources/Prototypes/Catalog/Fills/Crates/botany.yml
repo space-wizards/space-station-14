@@ -93,3 +93,5 @@
         amount: 1
       - id: OnionSeeds
         amount: 1
+      - id: OnionRedSeeds
+        amount: 1
