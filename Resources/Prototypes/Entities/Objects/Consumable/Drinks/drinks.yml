@@ -103,7 +103,7 @@
   id: DrinkGlassCoupeShaped
   components:
     - type: Sprite
-      sprite: Objects/Consumable/Drinks/glass_wine_shape.rsi
+      sprite: Objects/Consumable/Drinks/glass_coupe_shape.rsi
       layers:
         - state: icon
           map: [ "enum.SolutionContainerLayers.Base" ]
