@@ -36,8 +36,12 @@ public sealed class SpaceNinjaComponent : Component
     public readonly List<Threat> Threats = new();
 
     /// Currently worn suit
-    [DataField("suit")]
+    [ViewVariables]
     public EntityUid? Suit = null;
+
+    /// Currently worn gloves
+    [ViewVariables]
+    public EntityUid? Gloves = null;
 
     /// Number of doors that have been doorjacked, used for objective
     [ViewVariables]

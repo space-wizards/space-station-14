@@ -13,11 +13,17 @@ public sealed class SpaceNinjaGlovesComponent : Component
 {
     public CancellationTokenSource? CancelToken = null;
 
+	/// <summary>
+	/// Whether abilities are enabled, can be toggled with the action.
+	/// </summary>
+	[DataField("enabled")]
+    public bool Enabled;
+
     /// <summary>
     /// The action for toggling ninja gloves abilities
     /// </summary>
     [DataField("togglingAction")]
-    public EntityTargetAction ToggleAction = new()
+    public InstantAction ToggleAction = new()
     {
         DisplayName = "action-name-toggle-ninja-gloves",
         Description = "action-desc-toggle-ninja-gloves",
@@ -87,7 +93,7 @@ public sealed class SpaceNinjaGlovesComponent : Component
     public float TerrorTime = 20f;
 }
 
-public sealed class ToggleNinjaGlovesEvent : EntityTargetActionEvent { }
+public sealed class ToggleNinjaGlovesEvent : InstantActionEvent { }
 
 public record GloveActionCancelledEvent;
 

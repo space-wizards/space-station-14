@@ -23,6 +23,7 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.Doors.Components;
 using Content.Shared.Emag.Systems;
+using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
@@ -77,6 +78,8 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         SubscribeLocalEvent<SpaceNinjaGlovesComponent, GotEquippedEvent>(OnGlovesEquipped);
         SubscribeLocalEvent<SpaceNinjaGlovesComponent, GotUnequippedEvent>(OnGlovesUnequipped);
         SubscribeLocalEvent<SpaceNinjaGlovesComponent, ToggleNinjaGlovesEvent>(OnToggleGloves);
+        SubscribeLocalEvent<SpaceNinjaGlovesComponent, ExaminedEvent>(OnGlovesExamine);
+        SubscribeLocalEvent<ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<SpaceNinjaGlovesComponent, GloveActionCancelledEvent>(OnCancel);
         SubscribeLocalEvent<SpaceNinjaGlovesComponent, DrainSuccessEvent>(OnDrainSuccess);
         SubscribeLocalEvent<SpaceNinjaGlovesComponent, DownloadSuccessEvent>(OnDownloadSuccess);
@@ -130,15 +133,19 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
     private void OnGlovesEquipped(EntityUid uid, SpaceNinjaGlovesComponent comp, GotEquippedEvent args)
     {
         var user = args.Equipee;
-        if (IsNinja(user) && TryComp<ActionsComponent>(user, out var actions))
+        if (TryComp<SpaceNinjaComponent>(user, out var ninja) && TryComp<ActionsComponent>(user, out var actions))
         {
+        	ninja.Gloves = uid;
             _actions.AddAction(user, comp.ToggleAction, uid, actions);
         }
     }
 
     private void OnGlovesUnequipped(EntityUid uid, SpaceNinjaGlovesComponent comp, GotUnequippedEvent args)
     {
+    	var user = args.Equipee;
         _actions.RemoveProvidedActions(args.Equipee, uid);
+    	if (TryComp<SpaceNinjaComponent>(user, out var ninja))
+    		ninja.Gloves = null;
     }
 
     private void OnCancel(EntityUid uid, SpaceNinjaGlovesComponent comp, GloveActionCancelledEvent args)
@@ -148,14 +155,34 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
 
     private void OnToggleGloves(EntityUid uid, SpaceNinjaGlovesComponent comp, ToggleNinjaGlovesEvent args)
     {
-        // TODO: make it a toggle and have this be in a OnInteract or something
-        var target = args.Target;
         var user = args.Performer;
+    	comp.Enabled = !comp.Enabled;
+    	var message = Loc.GetString(comp.Enabled ? "ninja-gloves-on" : "ninja-gloves-off");
+    	_popups.PopupEntity(message, user, user);
+    }
 
-        if (!TryComp<SpaceNinjaComponent>(user, out var ninja))
-            return;
+    private void OnGlovesExamine(EntityUid uid, SpaceNinjaGlovesComponent comp, ExaminedEvent args)
+    {
+    	if (!args.IsInDetailsRange)
+    		return;
 
-        // cancel any doafters, but still do the new action
+    	args.PushText(Loc.GetString(comp.Enabled ? "ninja-gloves-examine-on" : "ninja-gloves-examine-off"));
+    }
+
+    private void OnActivate(ActivateInWorldEvent args)
+    {
+    	var user = args.User;
+		var target = args.Target;
+    	if (args.Handled
+    		|| !TryComp<SpaceNinjaComponent>(user, out var ninja)
+    		|| ninja.Gloves == null
+    		|| !TryComp<SpaceNinjaGlovesComponent>(ninja.Gloves, out var comp)
+    		|| !comp.Enabled)
+    		return;
+
+		var uid = ninja.Gloves.Value;
+
+        // cancel any doafters if trying to do something else, but still do the new action
         if (comp.CancelToken != null)
             comp.CancelToken.Cancel();
 
@@ -171,9 +198,9 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
 
             _popups.PopupEntity(Loc.GetString("emag-success", ("target", Identity.Entity(target, EntityManager))), user,
                 user, PopupType.Medium);
-            args.Handled = true;
-
             _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(user):player} doorjacked {ToPrettyString(target):target}");
+
+            args.Handled = true;
             return;
         }
 
@@ -526,11 +553,6 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         {
             _alerts.ClearAlert(uid, AlertType.SuitPower);
         }
-    }
-
-    private bool IsNinja(EntityUid user)
-    {
-        return HasComp<SpaceNinjaComponent>(user);
     }
 
     private bool GetNinjaBattery(EntityUid user, [NotNullWhen(true)] out BatteryComponent? battery)
