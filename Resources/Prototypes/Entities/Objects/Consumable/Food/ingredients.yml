@@ -481,6 +481,9 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
+  - type: SliceableFood
+    count: 3
+    slice: FoodTofuSlice
 
 - type: entity
   name: burned mess

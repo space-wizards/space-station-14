@@ -114,7 +114,7 @@
   time: 5
   solids:
     FoodBreadBun: 1
-    FoodTofu: 1
+    FoodTofuSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeXenoburger
