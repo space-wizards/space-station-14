@@ -216,7 +216,7 @@ namespace Content.Server.Administration.Systems
             }
 
             // XenoArcheology
-            if (TryComp<ArtifactComponent>(args.Target, out var artifact))
+            if (_adminManager.IsAdmin(player) && TryComp<ArtifactComponent>(args.Target, out var artifact))
             {
                 // make artifact always active (by adding timer trigger)
                 args.Verbs.Add(new Verb()

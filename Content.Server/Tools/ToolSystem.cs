@@ -101,7 +101,7 @@ namespace Content.Server.Tools
         ///          the <see cref="doAfterCompleteEvent"/> and <see cref="doAfterCancelledEvent"/> being broadcast
         ///          to see whether using the tool succeeded or not. If the <see cref="doAfterDelay"/> is zero,
         ///          this simply returns whether using the tool succeeded or not.</returns>
-        public bool UseTool(
+        public override bool UseTool(
             EntityUid tool,
             EntityUid user,
             EntityUid? target,
@@ -146,16 +146,6 @@ namespace Content.Server.Tools
             }
 
             return ToolFinishUse(tool, user, fuel, toolComponent);
-        }
-
-        // This is hilariously long.
-        /// <inheritdoc cref="UseTool(Robust.Shared.GameObjects.EntityUid,Robust.Shared.GameObjects.EntityUid,System.Nullable{Robust.Shared.GameObjects.EntityUid},float,float,System.Collections.Generic.IEnumerable{string},Robust.Shared.GameObjects.EntityUid,object,object,System.Func{bool}?,Content.Shared.Tools.Components.ToolComponent?)"/>
-        public bool UseTool(EntityUid tool, EntityUid user, EntityUid? target, float fuel,
-            float doAfterDelay, string toolQualityNeeded, object doAfterCompleteEvent, object doAfterCancelledEvent, EntityUid? doAfterEventTarget = null,
-            Func<bool>? doAfterCheck = null, ToolComponent? toolComponent = null)
-        {
-            return UseTool(tool, user, target, fuel, doAfterDelay, new[] { toolQualityNeeded },
-                doAfterCompleteEvent, doAfterCancelledEvent, doAfterEventTarget, doAfterCheck, toolComponent);
         }
 
         /// <summary>
