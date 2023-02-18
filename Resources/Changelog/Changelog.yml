@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed some entity lookup / physics bugs. Hopefully the game should be
-      a bit more stable now., type: Fix}
-  id: 2552
-  time: '2022-10-30T23:17:28.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: skeletons can no longer have hair., type: Fix}
@@ -2914,3 +2908,8 @@ Entries:
       is being sent to., type: Add}
   id: 3051
   time: '2023-02-18T17:27:57.0000000+00:00'
+- author: MagnusCrowe
+  changes:
+  - {message: Changed chemistry bottle size from 5 to 3.  Capacity remains 30u., type: Tweak}
+  id: 3052
+  time: '2023-02-18T22:50:21.0000000+00:00'
