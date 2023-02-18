@@ -3,6 +3,7 @@
   mapName: 'NCS Aspid'
   mapPath: /Maps/aspid.yml
   minPlayers: 0
+  maxPlayers: 70
   stations:
     Aspid:
       mapNameTemplate: '{0} NCS Aspid {1}'
