@@ -1,4 +1,5 @@
 using Content.Server.Actions;
+using Content.Server.Administration.Commands;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.Communications;
@@ -7,6 +8,7 @@ using Content.Server.Doors.Systems;
 using Content.Server.Electrocution;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
+using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Ninja.Components;
@@ -42,6 +44,7 @@ using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -135,17 +138,17 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         var user = args.Equipee;
         if (TryComp<SpaceNinjaComponent>(user, out var ninja) && TryComp<ActionsComponent>(user, out var actions))
         {
-        	ninja.Gloves = uid;
+            ninja.Gloves = uid;
             _actions.AddAction(user, comp.ToggleAction, uid, actions);
         }
     }
 
     private void OnGlovesUnequipped(EntityUid uid, SpaceNinjaGlovesComponent comp, GotUnequippedEvent args)
     {
-    	var user = args.Equipee;
+        var user = args.Equipee;
         _actions.RemoveProvidedActions(args.Equipee, uid);
-    	if (TryComp<SpaceNinjaComponent>(user, out var ninja))
-    		ninja.Gloves = null;
+        if (TryComp<SpaceNinjaComponent>(user, out var ninja))
+            ninja.Gloves = null;
     }
 
     private void OnCancel(EntityUid uid, SpaceNinjaGlovesComponent comp, GloveActionCancelledEvent args)
@@ -156,31 +159,31 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
     private void OnToggleGloves(EntityUid uid, SpaceNinjaGlovesComponent comp, ToggleNinjaGlovesEvent args)
     {
         var user = args.Performer;
-    	comp.Enabled = !comp.Enabled;
-    	var message = Loc.GetString(comp.Enabled ? "ninja-gloves-on" : "ninja-gloves-off");
-    	_popups.PopupEntity(message, user, user);
+        comp.Enabled = !comp.Enabled;
+        var message = Loc.GetString(comp.Enabled ? "ninja-gloves-on" : "ninja-gloves-off");
+        _popups.PopupEntity(message, user, user);
     }
 
     private void OnGlovesExamine(EntityUid uid, SpaceNinjaGlovesComponent comp, ExaminedEvent args)
     {
-    	if (!args.IsInDetailsRange)
-    		return;
+        if (!args.IsInDetailsRange)
+            return;
 
-    	args.PushText(Loc.GetString(comp.Enabled ? "ninja-gloves-examine-on" : "ninja-gloves-examine-off"));
+        args.PushText(Loc.GetString(comp.Enabled ? "ninja-gloves-examine-on" : "ninja-gloves-examine-off"));
     }
 
     private void OnActivate(ActivateInWorldEvent args)
     {
-    	var user = args.User;
-		var target = args.Target;
-    	if (args.Handled
-    		|| !TryComp<SpaceNinjaComponent>(user, out var ninja)
-    		|| ninja.Gloves == null
-    		|| !TryComp<SpaceNinjaGlovesComponent>(ninja.Gloves, out var comp)
-    		|| !comp.Enabled)
-    		return;
+        var user = args.User;
+        var target = args.Target;
+        if (args.Handled
+            || !TryComp<SpaceNinjaComponent>(user, out var ninja)
+            || ninja.Gloves == null
+            || !TryComp<SpaceNinjaGlovesComponent>(ninja.Gloves, out var comp)
+            || !comp.Enabled)
+            return;
 
-		var uid = ninja.Gloves.Value;
+        var uid = ninja.Gloves.Value;
 
         // cancel any doafters if trying to do something else, but still do the new action
         if (comp.CancelToken != null)
@@ -367,10 +370,11 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
 
         ninja.CalledInThreat = true;
 
-        if (ninja.Threats.Count == 0)
+        var config = RuleConfig();
+        if (config.Threats.Count == 0)
             return;
 
-        var threat = _random.Pick(ninja.Threats);
+        var threat = _random.Pick(config.Threats);
         if (_proto.TryIndex<GameRulePrototype>(threat.Rule, out var rule))
         {
             _gameTicker.AddGameRule(rule);
@@ -426,7 +430,7 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         // force uncloak
         comp.Cloaked = false;
         SetCloaked(user, false);
-        RemCompDeferred<StealthComponent>(user);
+        RemComp<StealthComponent>(user);
 
         // remove power indicator
         SetSuitPowerAlert(user);
@@ -452,9 +456,11 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
     {
         _activeNinja.Add(comp);
 
+        var config = RuleConfig();
+
         // inject starting implants
         var coords = Transform(uid).Coordinates;
-        foreach (var id in comp.Implants)
+        foreach (var id in config.Implants)
         {
             var implant = Spawn(id, coords);
 
@@ -479,17 +485,45 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
 
     private void OnNinjaMindAdded(EntityUid uid, SpaceNinjaComponent comp, MindAddedMessage args)
     {
-        // TODO: put in yaml somehow
-        if (TryComp<MindComponent>(uid, out var mind) && mind.Mind != null && mind.Mind.TryGetSession(out var session))
-        {
-            mind.Mind.AddRole(new TraitorRole(mind.Mind, _proto.Index<AntagPrototype>(comp.SpaceNinjaRoleId)));
-            foreach (var objective in comp.Objectives)
-            {
-                AddObjective(mind.Mind, objective);
-            }
+        if (TryComp<MindComponent>(uid, out var mind) && mind.Mind != null)
+            GreetNinja(mind.Mind);
+    }
 
-            _chatMan.DispatchServerMessage(session, Loc.GetString("ninja-role-greeting"));
-        }
+    private void GreetNinja(Mind.Mind mind)
+    {
+        if (!mind.TryGetSession(out var session))
+            return;
+
+        var config = RuleConfig();
+        mind.AddRole(new TraitorRole(mind, _proto.Index<AntagPrototype>("SpaceNinja")));
+        foreach (var objective in config.Objectives)
+            AddObjective(mind, objective);
+
+        _chatMan.DispatchServerMessage(session, Loc.GetString("ninja-role-greeting"));
+        _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);
+    }
+
+    private NinjaRuleConfiguration RuleConfig()
+    {
+        return (NinjaRuleConfiguration) _proto.Index<GameRulePrototype>("SpaceNinjaSpawn").Configuration;
+    }
+
+    /// <summary>
+    /// Turns the player into a space ninja
+    /// </summary>
+    public void MakeNinja(Mind.Mind mind)
+    {
+        if (mind.OwnedEntity == null)
+            return;
+
+        // prevent double ninja'ing
+        var user = mind.OwnedEntity.Value;
+        if (HasComp<SpaceNinjaComponent>(user))
+            return;
+
+        AddComp<SpaceNinjaComponent>(user);
+        SetOutfitCommand.SetOutfit(user, "SpaceNinjaGear", EntityManager);
+        GreetNinja(mind);
     }
 
     private void OnNinjaAttacked(EntityUid uid, SpaceNinjaComponent comp, AttackedEvent args)

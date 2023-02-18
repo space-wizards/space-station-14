@@ -13,10 +13,10 @@ public sealed class SpaceNinjaGlovesComponent : Component
 {
     public CancellationTokenSource? CancelToken = null;
 
-	/// <summary>
-	/// Whether abilities are enabled, can be toggled with the action.
-	/// </summary>
-	[DataField("enabled")]
+    /// <summary>
+    /// Whether abilities are enabled, can be toggled with the action.
+    /// </summary>
+    [DataField("enabled")]
     public bool Enabled;
 
     /// <summary>

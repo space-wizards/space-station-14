@@ -76,20 +76,6 @@
     factions:
     - Syndicate
   - type: SpaceNinja
-    # TODO: move to job or something
-    objectives:
-    - DownloadObjective
-    - DoorjackObjective
-    - SpiderChargeObjective
-    - TerrorObjective
-    - SurviveObjective
-    # TODO: remove when job works
-    implants: [ MicroBombImplant ]
-    threats:
-    - announcement: terror-dragon
-      rule: Dragon
-    - announcement: terror-revenant
-      rule: RevenantSpawn
   - type: RandomMetadata
     nameSegments:
     - names_ninja_title

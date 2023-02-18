@@ -72,12 +72,26 @@
 - type: gameRule
   id: SpaceNinjaSpawn
   config:
-    !type:StationEventRuleConfiguration
+    !type:NinjaRuleConfiguration
     id: SpaceNinjaSpawn
     weight: 10
     endAfter: 1
     earliestStart: 60
     minimumPlayers: 15
+    objectives:
+    - DownloadObjective
+    - DoorjackObjective
+    - SpiderChargeObjective
+    - TerrorObjective
+    - SurviveObjective
+    implants: [ MicroBombImplant ]
+    threats:
+    - announcement: terror-dragon
+      rule: Dragon
+    - announcement: terror-revenant
+      rule: RevenantSpawn
+    - announcement: terror-pirates
+      rule: Pirates
 
 - type: gameRule
   id: RevenantSpawn
