@@ -1011,7 +1011,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeKimchiSalad
-  name: caesar salad recipe
+  name: kimchi salad recipe
   result: FoodSaladKimchi
   time: 5
   reagents:
