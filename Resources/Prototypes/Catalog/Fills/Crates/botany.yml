@@ -79,6 +79,8 @@
         amount: 1
       - id: CarrotSeeds
         amount: 1
+      - id: CabbageSeeds
+        amount: 1
       - id: ChanterelleSeeds
         amount: 1
       - id: PotatoSeeds
