@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: skeletons can no longer have hair., type: Fix}
-  id: 2553
-  time: '2022-10-31T00:04:30.0000000+00:00'
 - author: Rane
   changes:
   - {message: Fixed the sprite modifications for female humanoids jumpsuit slot clothes.,
@@ -2913,3 +2908,8 @@ Entries:
   - {message: Changed chemistry bottle size from 5 to 3.  Capacity remains 30u., type: Tweak}
   id: 3052
   time: '2023-02-18T22:50:21.0000000+00:00'
+- author: FluffiestFloof
+  changes:
+  - {message: 'Added Cabbage, Red Onion and 3 new salads.', type: Add}
+  id: 3053
+  time: '2023-02-18T23:52:59.0000000+00:00'
