@@ -28,10 +28,4 @@ public sealed class BodyPartComponent : Component
     [DataField("vital")] public bool IsVital;
 
     [DataField("symmetry")] public BodyPartSymmetry Symmetry = BodyPartSymmetry.None;
-
-    [DataField("painModifier")] public FixedPoint2 PainModifier = 1.0f;
-
-    [DataField("rawPain")] public FixedPoint2 RawPain = 0f;
-
-    public FixedPoint2 Pain => PainModifier * RawPain;
 }

@@ -22,12 +22,6 @@ public sealed class BodyComponent : Component, IDraggable
     [DataField("gibSound")]
     public SoundSpecifier GibSound = new SoundCollectionSpecifier("gib");
 
-    [DataField("painModifier")] public FixedPoint2 PainModifier = 1.0f;
-
-    [DataField("rawPain")] public FixedPoint2 RawPain = 0f;
-
-    public FixedPoint2 Pain => PainModifier * RawPain;
-
     /// <summary>
     /// The amount of legs required to move at full speed.
     /// If 0, then legs do not impact speed.
