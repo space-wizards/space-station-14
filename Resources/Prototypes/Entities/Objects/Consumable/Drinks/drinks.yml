@@ -68,8 +68,8 @@
 
 # Transformable container - normal glass
 - type: entity
-  name: Drinking glass
-  description: A drinking glass.
+  name: metamorphic glass
+  description: A metamorphic glass that automagically turns into a glass appropriate for the drink within. There's a sanded off patent number on the bottom.
   parent: DrinkGlassBase
   id: DrinkGlass
   components:
@@ -95,7 +95,31 @@
     metamorphicDefaultSprite:
       sprite: Objects/Consumable/Drinks/glass_clear.rsi
       state: icon
-    metamorphicNameEmpty: Drinking glass
+
+- type: entity
+  name: Coupe glass
+  description: A classic thin neck coupe glass, the icon of fragile labels on crates around the galaxy.
+  parent: DrinkGlassBase
+  id: DrinkGlassCoupeShaped
+  components:
+    - type: Sprite
+      sprite: Objects/Consumable/Drinks/glass_wine_shape.rsi
+      layers:
+        - state: icon
+          map: [ "enum.SolutionContainerLayers.Base" ]
+        - state: fill1
+          map: [ "enum.SolutionContainerLayers.Fill" ]
+          visible: false
+        - state: icon-front
+          map: [ "enum.SolutionContainerLayers.Overlay" ]
+    - type: Appearance
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+    - type: SolutionContainerVisuals
+      maxFillLevels: 5
+      fillBaseName: fill
 
 - type: entity
   parent: DrinkGlassBase
