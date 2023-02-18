@@ -20,19 +20,28 @@ public sealed class SpaceNinjaSpawn : StationEventSystem
 
     public override void Started()
     {
+        base.Started();
+
         // TODO: spawn outside station with a direction
         var spawnLocations = EntityManager.EntityQuery<MapGridComponent, TransformComponent>().ToList();
 
         if (spawnLocations.Count == 0)
+        {
+            Sawmill.Error($"No locations for space ninja to spawn!");
             return;
+        }
 
-        var location = _random.Pick(spawnLocations);
-        Spawn("MobHumanSpaceNinja", location.Item2.MapPosition);
+        var location = _random.Pick(spawnLocations).Item2.MapPosition;
+        Sawmill.Info($"Spawning space ninja at {location}");
+        Spawn("MobHumanSpaceNinja", location);
 
         // start traitor rule incase it isn't, for the sweet greentext
         var rule = _proto.Index<GameRulePrototype>("Traitor");
         _ticker.StartGameRule(rule);
     }
 
-    public override void Ended() { }
+    public override void Added()
+    {
+        Sawmill.Info("sus among us");
+    }
 }

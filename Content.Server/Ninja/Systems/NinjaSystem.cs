@@ -71,6 +71,7 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly TagSystem _tags = default!;
+    [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
 
     private readonly HashSet<SpaceNinjaComponent> _activeNinja = new();
 
@@ -151,11 +152,6 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
             ninja.Gloves = null;
     }
 
-    private void OnCancel(EntityUid uid, SpaceNinjaGlovesComponent comp, GloveActionCancelledEvent args)
-    {
-        comp.CancelToken = null;
-    }
-
     private void OnToggleGloves(EntityUid uid, SpaceNinjaGlovesComponent comp, ToggleNinjaGlovesEvent args)
     {
         var user = args.Performer;
@@ -185,9 +181,13 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
 
         var uid = ninja.Gloves.Value;
 
-        // cancel any doafters if trying to do something else, but still do the new action
+        // cancel any doafters if trying to do something else
         if (comp.CancelToken != null)
+        {
             comp.CancelToken.Cancel();
+            comp.CancelToken = null;
+            return;
+        }
 
         // doorjack ability
         if (HasComp<DoorComponent>(target))
@@ -296,6 +296,11 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         }
     }
 
+    private void OnCancel(EntityUid uid, SpaceNinjaGlovesComponent comp, GloveActionCancelledEvent args)
+    {
+        comp.CancelToken = null;
+    }
+
     private void OnDrainSuccess(EntityUid uid, SpaceNinjaGlovesComponent comp, DrainSuccessEvent args)
     {
         var user = args.User;
@@ -342,7 +347,6 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         var target = args.Server;
 
         comp.CancelToken = null;
-
         if (!TryComp<SpaceNinjaComponent>(user, out var ninja)
             || !TryComp<TechnologyDatabaseComponent>(target, out var database))
             return;
@@ -364,7 +368,6 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         var user = args.User;
 
         comp.CancelToken = null;
-
         if (!TryComp<SpaceNinjaComponent>(user, out var ninja) || ninja.CalledInThreat)
             return;
 
@@ -495,7 +498,9 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
             return;
 
         var config = RuleConfig();
-        mind.AddRole(new TraitorRole(mind, _proto.Index<AntagPrototype>("SpaceNinja")));
+        var role = new TraitorRole(mind, _proto.Index<AntagPrototype>("SpaceNinja"));
+        mind.AddRole(role);
+        _traitorRule.Traitors.Add(role);
         foreach (var objective in config.Objectives)
             AddObjective(mind, objective);
 

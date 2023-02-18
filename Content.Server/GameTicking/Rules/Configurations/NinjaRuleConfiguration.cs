@@ -7,10 +7,8 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.GameTicking.Rules.Configurations;
 
-public sealed class NinjaRuleConfiguration : GameRuleConfiguration
+public sealed class NinjaRuleConfiguration : StationEventRuleConfiguration
 {
-    public override string Id => "SpaceNinja";
-
     /// <summary>
     /// List of objective prototype ids to add
     /// </summary>

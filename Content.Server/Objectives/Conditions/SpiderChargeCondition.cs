@@ -18,9 +18,7 @@ public sealed class SpiderChargeCondition : IObjectiveCondition
         };
     }
 
-    public string Title => Loc.GetString("objective-condition-spider-charge-title");
-
-    public string Description
+    public string Title
     {
         get
         {
@@ -33,9 +31,11 @@ public sealed class SpiderChargeCondition : IObjectiveCondition
                 // if you are funny and microbomb then press c, you get this
                 return Loc.GetString("objective-condition-spider-charge-no-target");
 
-            return Loc.GetString("objective-condition-spider-charge-description", ("location", warp.Location));
+            return Loc.GetString("objective-condition-spider-charge-title", ("location", warp.Location));
         }
     }
+
+    public string Description => Loc.GetString("objective-condition-spider-charge-description");
 
     public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Objects/Weapons/Bombs/spidercharge.rsi"), "icon");
 
