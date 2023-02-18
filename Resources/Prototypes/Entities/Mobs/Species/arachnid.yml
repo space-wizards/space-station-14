@@ -42,6 +42,13 @@
       50: 0.6
       70: 0.4
   # Misc
+  - type: Speech
+    speechSounds: Arachnid
+  - type: Vocal
+    sounds:
+      Male: UnisexArachnid
+      Female: UnisexArachnid
+      Unsexed: UnisexArachnid
   - type: Inventory
     templateId: arachnid
   - type: MeleeWeapon
@@ -67,7 +74,7 @@
   parent: MobHumanDummy
   id: MobArachnidDummy
   noSpawn: true
-  description: A dummy arachnid meant to be used in character setup.
+  description: A dummy arachnid meant to be used in character setup. # Hey! It's not dumb :(
   components:
   - type: Inventory
     templateId: arachnid
