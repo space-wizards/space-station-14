@@ -73,7 +73,7 @@
     color: "#DDCC00"
     netsync: false
   - type: Puddle
-    slipThreshold: 5
+    slipThreshold: 2
     recolor: false
   - type: SolutionContainerManager
     solutions:
@@ -81,9 +81,9 @@
         maxVol: 1000
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
-        - ReagentId: Blood
           Quantity: 6
+        - ReagentId: Blood
+          Quantity: 8
   - type: Slippery
     launchForwardsMultiplier: 2.0
     paralyzeTime: 4
@@ -136,8 +136,15 @@
       20000: Dead
   - type: ReplacementAccent
     accent: mute
+  - type: GhostTakeoverAvailable
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: SCP-173
+    description: Вы SCP-173, неуязвимая статуя которая не может двигаться пока на неё смотрят! Используя свои способности убейте весь экипаж на станции.
+    rules: Будучи агрессивным обьектом SCP убейте всех живых на станции.
   - type: Tool
-    speed: 1.5
+    speed: 3
     qualities:
       - Prying
   - type: CombatMode
@@ -146,11 +153,11 @@
     hidden: true
     soundHit:
         path: /Audio/Effects/bite.ogg
-    angle: 0
+    angle: 5
     animation: WeaponArcBite
     damage:
       types:
-        Blunt: 180
+        Blunt: 1000
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: SCP173
@@ -168,3 +175,17 @@
       collection: 173Rattle
       params:
         variation: 0.1
+
+- type: entity
+  name: Спавнер SCP-173
+  id: SpawnMobSCP173
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: _Craft/Mobs/SCP/scp173.rsi
+        state: standing
+  - type: ConditionalSpawner
+    prototypes:
+      - MobSCP173
