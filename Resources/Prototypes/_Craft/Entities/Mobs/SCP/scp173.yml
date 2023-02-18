@@ -6,16 +6,16 @@
 - type: damageModifierSet
   id: SCP173
   coefficients:
-    Bloodloss: 0.01
-    Blunt: 0.01
-    Cellular: 0.01
-    Cold: 0.01
-    Heat: 0.01
-    Piercing: 0.01
-    Poison: 0.01
-    Radiation: 0.01
-    Shock: 0.01
-    Slash: 0.01
+    Bloodloss: 0
+    Blunt: 0.5
+    Cellular: 0
+    Cold: 0
+    Heat: 0
+    Piercing: 0.1
+    Poison: 0
+    Radiation: 0
+    Shock: 0
+    Slash: 0
 
 - type: soundCollection
   id: 173Spooks
@@ -121,7 +121,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.4
-      density: 5000
+      density: 1000
       mask:
       - MobMask
       layer:
@@ -133,7 +133,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      20000: Dead
+      5000: Dead
   - type: ReplacementAccent
     accent: mute
   - type: GhostTakeoverAvailable
@@ -157,7 +157,7 @@
     animation: WeaponArcBite
     damage:
       types:
-        Blunt: 1000
+        Piercing: 180
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: SCP173
