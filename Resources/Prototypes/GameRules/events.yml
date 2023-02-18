@@ -101,9 +101,11 @@
       path: /Audio/Announcements/bloblarm.ogg
       params:
         volume: -4
-    earliestStart: 10
-    minimumPlayers: 15
-    weight: 5
+    earliestStart: 20
+    reoccurrenceDelay: 45
+    minimumPlayers: 30
+    maxOccurrences: 1
+    weight: 1
     startAfter: 20
 
 - type: gameRule
