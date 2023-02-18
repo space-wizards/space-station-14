@@ -22,7 +22,10 @@ public sealed class DoorSystem : SharedDoorSystem
 
     protected override void OnComponentInit(EntityUid uid, DoorComponent comp, ComponentInit args)
     {
-        comp.OpenAnimation = new Animation()
+        comp.OpenSpriteStates = new(new (DoorVisualLayers, string)[1]{(DoorVisualLayers.Base, comp.OpenSpriteState)});
+        comp.ClosedSpriteStates = new(new (DoorVisualLayers, string)[1]{(DoorVisualLayers.Base, comp.ClosedSpriteState)});
+
+        comp.OpeningAnimation = new Animation()
         {
             Length = TimeSpan.FromSeconds(comp.OpeningAnimationTime),
             AnimationTracks =
@@ -35,7 +38,7 @@ public sealed class DoorSystem : SharedDoorSystem
             },
         };
 
-        comp.CloseAnimation = new Animation()
+        comp.ClosingAnimation = new Animation()
         {
             Length = TimeSpan.FromSeconds(comp.ClosingAnimationTime),
             AnimationTracks =
@@ -91,28 +94,37 @@ public sealed class DoorSystem : SharedDoorSystem
         {
             case DoorState.Open:
                 args.Sprite.DrawDepth = comp.OpenDrawDepth;
-                args.Sprite.LayerSetState(DoorVisualLayers.Base, comp.OpenSpriteState);
+                foreach(var (layer, layerState) in comp.OpenSpriteStates)
+                {
+                    args.Sprite.LayerSetState(layer, layerState);
+                }
                 break;
             case DoorState.Closed:
-                args.Sprite.LayerSetState(DoorVisualLayers.Base, comp.ClosedSpriteState);
+                foreach(var (layer, layerState) in comp.ClosedSpriteStates)
+                {
+                    args.Sprite.LayerSetState(layer, layerState);
+                }
                 break;
             case DoorState.Opening:
-                if (animPlayer != null)
-                    _animationSystem.Play(uid, animPlayer, (Animation)comp.OpenAnimation, DoorComponent.AnimationKey);
+                if (animPlayer != null && comp.OpeningAnimation != default)
+                    _animationSystem.Play(uid, animPlayer, (Animation)comp.OpeningAnimation, DoorComponent.AnimationKey);
                 else
                     goto case DoorState.Open;
                 break;
             case DoorState.Closing:
-                if (comp.CurrentlyCrushing.Count == 0 && animPlayer != null)
-                    _animationSystem.Play(uid, animPlayer, (Animation)comp.CloseAnimation, DoorComponent.AnimationKey);
+                if (animPlayer != null && comp.ClosingAnimation != default && comp.CurrentlyCrushing.Count == 0)
+                    _animationSystem.Play(uid, animPlayer, (Animation)comp.ClosingAnimation, DoorComponent.AnimationKey);
                 else
                     goto case DoorState.Closed;
                 break;
             case DoorState.Denying:
+                if (animPlayer != null && comp.DenyingAnimation != default)
+                    _animationSystem.Play(uid, animPlayer, (Animation)comp.DenyingAnimation, DoorComponent.AnimationKey);
+                break;
             case DoorState.Welded:
                 break;
             case DoorState.Emagging:
-                if (animPlayer != null)
+                if (animPlayer != null && comp.EmaggingAnimation != default)
                     _animationSystem.Play(uid, animPlayer, (Animation)comp.EmaggingAnimation, DoorComponent.AnimationKey);
                 break;
             default:
@@ -126,12 +138,4 @@ public sealed class DoorSystem : SharedDoorSystem
         if (GameTiming.InPrediction && GameTiming.IsFirstTimePredicted)
             Audio.Play(soundSpecifier, Filter.Local(), uid, false, audioParams);
     }
-}
-
-public enum DoorVisualLayers : byte
-{
-    Base,
-    BaseUnlit,
-    BaseBolted,
-    BaseEmergencyAccess,
 }

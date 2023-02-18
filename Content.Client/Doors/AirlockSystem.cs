@@ -14,39 +14,32 @@ public sealed class AirlockSystem : SharedAirlockSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<AirlockComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<AirlockComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<AirlockComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
-    private void OnComponentInit(EntityUid uid, AirlockComponent comp, ComponentInit args)
-    {
-        comp.OpenAnimation = new Animation()
-        {
-            Length = TimeSpan.FromSeconds(comp.OpeningAnimationTime),
-            AnimationTracks =
-            {
-                new AnimationTrackSpriteFlick()
-                {
-                    LayerKey = DoorVisualLayers.BaseUnlit,
-                    KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(comp.OpeningSpriteState, 0f) },
-                }
-            },
-        };
 
-        comp.CloseAnimation = new Animation()
-        {
-            Length = TimeSpan.FromSeconds(comp.ClosingAnimationTime),
-            AnimationTracks =
-            {
-                new AnimationTrackSpriteFlick()
-                {
-                    LayerKey = DoorVisualLayers.BaseUnlit,
-                    KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(comp.ClosingSpriteState, 0f) },
-                }
-            },
-        };
+    private void OnComponentStartup(EntityUid uid, AirlockComponent comp, ComponentStartup args)
+    {   // Has to be on component startup because we don't know what order components initialize in and running this before DoorComponent inits _will_ crash.
+        if(!TryComp<DoorComponent>(uid, out var door))
+            return;
+        
+        door.OpenSpriteStates.Add((DoorVisualLayers.BaseUnlit, comp.OpenSpriteState));
+        door.ClosedSpriteStates.Add((DoorVisualLayers.BaseUnlit, comp.ClosedSpriteState));
 
-        comp.DenyAnimation = new Animation()
+        ((Animation)door.OpeningAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick() {
+                LayerKey = DoorVisualLayers.BaseUnlit,
+                KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(comp.OpeningSpriteState, 0f) },
+            }
+        );
+
+        ((Animation)door.ClosingAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick() {
+                LayerKey = DoorVisualLayers.BaseUnlit,
+                KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(comp.ClosingSpriteState, 0f) },
+            }
+        );
+
+        door.DenyingAnimation = new Animation()
         {
             Length = TimeSpan.FromSeconds(comp.DenyAnimationTime),
             AnimationTracks =
@@ -62,12 +55,12 @@ public sealed class AirlockSystem : SharedAirlockSystem
         if(!comp.AnimatePanel)
             return;
 
-        ((Animation)comp.OpenAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick() {
+        ((Animation)door.OpeningAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick() {
             LayerKey = WiresVisualLayers.MaintenancePanel,
             KeyFrames = {new AnimationTrackSpriteFlick.KeyFrame(comp.OpeningPanelSpriteState, 0f)},
         });
         
-        ((Animation)comp.CloseAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick() {
+        ((Animation)door.ClosingAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick() {
             LayerKey = WiresVisualLayers.MaintenancePanel,
             KeyFrames = {new AnimationTrackSpriteFlick.KeyFrame(comp.ClosingPanelSpriteState, 0f)},
         });
@@ -84,44 +77,6 @@ public sealed class AirlockSystem : SharedAirlockSystem
 
         if (!_appearanceSystem.TryGetData<DoorState>(uid, DoorVisuals.State, out var state, args.Component))
             state = DoorState.Closed;
-
-        TryComp<DoorComponent>(uid, out var door);
-        TryComp<AnimationPlayerComponent>(uid, out var animPlayer);
-        if (_animationSystem.HasRunningAnimation(uid, animPlayer, AirlockComponent.AnimationKey))
-            _animationSystem.Stop(uid, animPlayer, AirlockComponent.AnimationKey);
-        
-        switch(state)
-        {
-            case DoorState.Open:
-                if (comp.OpenUnlitVisible)
-                    args.Sprite.LayerSetState(DoorVisualLayers.BaseUnlit, comp.OpenSpriteState);
-                break;
-            case DoorState.Closed:
-                args.Sprite.LayerSetState(DoorVisualLayers.BaseUnlit, comp.ClosedSpriteState);
-                args.Sprite.LayerSetState(DoorVisualLayers.BaseBolted, comp.BoltedSpriteState);
-                break;
-            case DoorState.Opening:
-                if (animPlayer != null)
-                    _animationSystem.Play(uid, animPlayer, (Animation)comp.OpenAnimation, AirlockComponent.AnimationKey);
-                else
-                    goto case DoorState.Open;
-                break;
-            case DoorState.Closing:
-                if (door != null && door.CurrentlyCrushing.Count == 0 && animPlayer != null)
-                    _animationSystem.Play(uid, animPlayer, (Animation)comp.CloseAnimation, AirlockComponent.AnimationKey);
-                else
-                    goto case DoorState.Closed;
-                break;
-            case DoorState.Denying:
-                if (animPlayer != null)
-                    _animationSystem.Play(uid, animPlayer, (Animation)comp.DenyAnimation, AirlockComponent.AnimationKey);
-                break;
-            case DoorState.Emagging:
-            case DoorState.Welded:
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
 
         if (_appearanceSystem.TryGetData<bool>(uid, DoorVisuals.Powered, out var powered, args.Component) && powered)
         {

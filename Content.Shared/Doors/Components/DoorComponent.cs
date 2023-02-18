@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using Content.Shared.Damage;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Tools;
@@ -154,13 +155,27 @@ public sealed class DoorComponent : Component
     /// The sprite state used for the door when it's open.
     /// </summary>
     [DataField("openSpriteState")]
+    [ViewVariables(VVAccess.ReadWrite)]
     public string OpenSpriteState = "open";
+
+    /// <summary>
+    /// The sprite states used for the door while it's open.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public List<(DoorVisualLayers, string)> OpenSpriteStates = default!;
 
     /// <summary>
     /// The sprite state used for the door when it's closed.
     /// </summary>
     [DataField("closedSpriteState")]
+    [ViewVariables(VVAccess.ReadWrite)]
     public string ClosedSpriteState = "closed";
+
+    /// <summary>
+    /// The sprite states used for the door while it's closed.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public List<(DoorVisualLayers, string)> ClosedSpriteStates = default!;
 
     /// <summary>
     /// The sprite state used for the door when it's opening.
@@ -202,13 +217,19 @@ public sealed class DoorComponent : Component
     /// The animation used when the door opens.
     /// Not a <see cref="Robust.Client.Animations.Animation"/> because that's stuck in client, I'm not making an engine PR to move it, and we aren't supposed to split components between client and server anymore.
     /// </summary>\
-    public object OpenAnimation = default!;
+    public object OpeningAnimation = default!;
 
     /// <summary>
     /// The animation used when the door closes.
     /// Not a <see cref="Robust.Client.Animations.Animation"/> because that's stuck in client, I'm not making an engine PR to move it, and we aren't supposed to split components between client and server anymore.
     /// </summary>
-    public object CloseAnimation = default!;
+    public object ClosingAnimation = default!;
+
+    /// <summary>
+    /// The animation used when the door denies access.
+    /// Not a <see cref="Robust.Client.Animations.Animation"/> because that's stuck in client, I'm not making an engine PR to move it, and we aren't supposed to split components between client and server anymore.
+    /// </summary>
+    public object DenyingAnimation = default!;
 
     /// <summary>
     /// The animation used when the door is emagged.
@@ -288,7 +309,7 @@ public sealed class DoorComponent : Component
 }
 
 [Serializable, NetSerializable]
-public enum DoorState
+public enum DoorState : byte
 {
     Closed,
     Closing,
@@ -300,7 +321,7 @@ public enum DoorState
 }
 
 [Serializable, NetSerializable]
-public enum DoorVisuals
+public enum DoorVisuals : byte
 {
     State,
     Powered,
@@ -308,6 +329,14 @@ public enum DoorVisuals
     EmergencyLights,
     ClosedLights,
     BaseRSI,
+}
+
+public enum DoorVisualLayers : byte
+{
+    Base,
+    BaseUnlit,
+    BaseBolted,
+    BaseEmergencyAccess,
 }
 
 [Serializable, NetSerializable]
