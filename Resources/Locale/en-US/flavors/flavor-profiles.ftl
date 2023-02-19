@@ -84,6 +84,7 @@ flavor-complex-pineapple = like pineapple
 flavor-complex-onion = like onion
 flavor-complex-eggplant = like eggplant
 flavor-complex-carrot = like carrots
+flavor-complex-cabbage = like cabbages
 flavor-complex-potatoes = like potatoes
 flavor-complex-mushroom = like mushrooms
 flavor-complex-tomato = like tomatoes
