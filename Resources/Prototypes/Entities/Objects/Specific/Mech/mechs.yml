@@ -114,10 +114,10 @@
     baseState: hauler
     openState: hauler-open
     brokenState: hauler-broken
-    mechToPilotDamageMultiplier: 0.80
+    mechToPilotDamageMultiplier: 0.85
   - type: MeleeWeapon
     hidden: true
-    attackRate: 1
+    attackRate: 0.80
     damage:
       types:
         Blunt: 13
