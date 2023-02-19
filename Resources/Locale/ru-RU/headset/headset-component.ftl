@@ -10,7 +10,7 @@ examine-radio-frequency = Настроено на работу на частот
 examine-headset-channels-prefix = На небольшом экране гарнитуры отображаются следующие доступные частоты:
 examine-headset-no-keys = Кажется, она сломана. В ней нет ключа шифрования.
 examine-headset-channel = [color={ $color }]:{ $key } для канала { $id } (частота { $freq })[/color]
-examine-default-channel = Use { $prefix } for the default channel ([color={ $color }]{ $channel }[/color]).
+examine-default-channel = Укажите { $prefix } для общения в канале по умолчанию ([color={ $color }]{ $channel }[/color]).
 examine-headset-default-channel = Отображается, что каналом по умолчанию этой гарнитуры является [color={ $color }]{ $channel }[/color].
 examine-encryption-key-default-channel = Каналом по умолчанию является [color={ $color }]{ $channel }[/color].
 chat-radio-common = Общий
