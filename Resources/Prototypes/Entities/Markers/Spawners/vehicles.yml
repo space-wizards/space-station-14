@@ -48,8 +48,8 @@
   - type: Sprite
     layers:
       - state: green
-      - sprite: Objects/Vehicles/Specific/Mech/mecha.rsi
-        state: hauler_open
+      - sprite: Objects/Specific/Mech/mecha_equipment.rsi
+        state: mecha_clamp
   - type: ConditionalSpawner
     prototypes:
       - MechHauler
