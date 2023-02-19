@@ -66,7 +66,6 @@ public sealed partial class ChatSystem : SharedChatSystem
     public override void Initialize()
     {
         base.Initialize();
-        InitializeRadio();
         InitializeEmotes();
         _configurationManager.OnValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged, true);
         _configurationManager.OnValueChanged(CCVars.DeadLoocEnabled, OnDeadLoocEnabledChanged, true);
@@ -77,7 +76,6 @@ public sealed partial class ChatSystem : SharedChatSystem
     public override void Shutdown()
     {
         base.Shutdown();
-        ShutdownRadio();
         ShutdownEmotes();
         _configurationManager.UnsubValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged);
     }
@@ -141,6 +139,13 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (!CanSendInGame(message, shell, player))
             return;
 
+        if (desiredType == InGameICChatType.Speak && message.StartsWith(LocalPrefix))
+        {
+            // prevent radios and remove prefix.
+            checkRadioPrefix = false;
+            message = message[1..];
+        }
+
         hideGlobalGhostChat |= hideChat;
         bool shouldCapitalize = (desiredType != InGameICChatType.Emote);
         bool shouldPunctuate = _configurationManager.GetCVar(CCVars.ChatPunctuation);
@@ -160,10 +165,9 @@ public sealed partial class ChatSystem : SharedChatSystem
         // This message may have a radio prefix, and should then be whispered to the resolved radio channel
         if (checkRadioPrefix)
         {
-            var (radioMessage, channel) = GetRadioPrefix(source, message);
-            if (channel != null)
+            if (TryProccessRadioMessage(source, message, out var modMessage, out var channel))
             {
-                SendEntityWhisper(source, radioMessage, hideChat, hideGlobalGhostChat, channel, nameOverride);
+                SendEntityWhisper(source, modMessage, hideChat, hideGlobalGhostChat, channel, nameOverride);
                 return;
             }
         }
@@ -545,15 +549,6 @@ public sealed partial class ChatSystem : SharedChatSystem
             .Recipients
             .Union(_adminManager.ActiveAdmins)
             .Select(p => p.ConnectedClient);
-    }
-
-    private string SanitizeMessageCapital(string message)
-    {
-        if (string.IsNullOrEmpty(message))
-            return message;
-        // Capitalize first letter
-        message = message[0].ToString().ToUpper() + message.Remove(0, 1);
-        return message;
     }
 
     private string SanitizeMessagePeriod(string message)

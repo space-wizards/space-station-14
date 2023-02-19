@@ -12,6 +12,7 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.NPC;
 using Content.Shared.NPC.Events;
+using Content.Shared.Physics;
 using Content.Shared.Weapons.Melee;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -363,6 +364,7 @@ namespace Content.Server.NPC.Systems
             // This should also implicitly solve tie situations.
             // I think doing this after all the ops above is best?
             // Originally I had it way above but sometimes mobs would overshoot their tile targets.
+
             if (steering.NextSteer > curTime)
             {
                 SetDirection(mover, steering, steering.LastSteerDirection, false);
@@ -396,7 +398,10 @@ namespace Content.Server.NPC.Systems
             // Short-circuit with no path.
             var targetPoly = _pathfindingSystem.GetPoly(steering.Coordinates);
 
-            if (targetPoly != null && steering.Coordinates.Position.Equals(Vector2.Zero) && _interaction.InRangeUnobstructed(steering.Owner, steering.Coordinates.EntityId))
+            // If this still causes issues future sloth adjust the collision mask.
+            if (targetPoly != null &&
+                steering.Coordinates.Position.Equals(Vector2.Zero) &&
+                _interaction.InRangeUnobstructed(steering.Owner, steering.Coordinates.EntityId, range: 30f))
             {
                 steering.CurrentPath.Clear();
                 steering.CurrentPath.Enqueue(targetPoly);

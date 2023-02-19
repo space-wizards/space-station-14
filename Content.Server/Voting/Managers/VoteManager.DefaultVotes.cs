@@ -4,6 +4,7 @@ using Content.Server.GameTicking.Presets;
 using Content.Server.Maps;
 using Content.Server.RoundEnd;
 using Content.Shared.CCVar;
+using Content.Shared.Database;
 using Content.Shared.Voting;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -22,6 +23,11 @@ namespace Content.Server.Voting.Managers
 
         public void CreateStandardVote(IPlayerSession? initiator, StandardVoteType voteType)
         {
+            if (initiator != null)
+                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"{initiator} initiated a {voteType.ToString()} vote");
+            else
+                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Initiated a {voteType.ToString()} vote");
+
             switch (voteType)
             {
                 case StandardVoteType.Restart:
@@ -75,12 +81,14 @@ namespace Content.Server.Voting.Managers
                 var ratioRequired = _cfg.GetCVar(CCVars.VoteRestartRequiredRatio);
                 if (total > 0 && votesYes / (float) total >= ratioRequired)
                 {
+                    _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote succeeded: {votesYes}/{votesNo}");
                     _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-restart-succeeded"));
                     var roundEnd = _entityManager.EntitySysManager.GetEntitySystem<RoundEndSystem>();
                     roundEnd.EndRound();
                 }
                 else
                 {
+                    _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote failed: {votesYes}/{votesNo}");
                     _chatManager.DispatchServerAnnouncement(
                         Loc.GetString("ui-vote-restart-failed", ("ratio", ratioRequired)));
                 }
@@ -142,6 +150,7 @@ namespace Content.Server.Voting.Managers
                     _chatManager.DispatchServerAnnouncement(
                         Loc.GetString("ui-vote-gamemode-win", ("winner", Loc.GetString(presets[picked]))));
                 }
+                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Preset vote finished: {picked}");
                 var ticker = _entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
                 ticker.SetGamePreset(picked);
             };
@@ -188,6 +197,7 @@ namespace Content.Server.Voting.Managers
                         Loc.GetString("ui-vote-map-win", ("winner", maps[picked])));
                 }
 
+                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Map vote finished: {picked.MapName}");
                 var ticker = _entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
                 if (ticker.RunLevel == GameRunLevel.PreRoundLobby)
                 {
