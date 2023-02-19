@@ -53,6 +53,8 @@
   sounds:
     Scream:
       path: /Audio/Voice/Arachnid/arachnid_scream.ogg
+    Laugh:
+      path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
 
 # body emotes
 - type: emoteSounds

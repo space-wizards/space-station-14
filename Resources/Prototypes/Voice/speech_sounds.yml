@@ -93,6 +93,6 @@
   saySound:
     path: /Audio/Voice/Talk/arachnid.ogg
   askSound:
-    path: /Audio/Voice/Talk/arachnid.ogg
+    path: /Audio/Voice/Talk/arachnid_ask.ogg
   exclaimSound:
-    path: /Audio/Voice/Talk/arachnid.ogg
+    path: /Audio/Voice/Talk/arachnid_exclaim.ogg
