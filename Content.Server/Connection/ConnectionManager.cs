@@ -161,7 +161,7 @@ namespace Content.Server.Connection
                 {
                     var msg = Loc.GetString(_cfg.GetCVar(CCVars.WhitelistReason));
                     // was the whitelist playercount changed?
-                    if (min > 0 || max < int.MaxValue)
+                    if (min >= 0 || max < int.MaxValue)
                         msg += "\n" + Loc.GetString("whitelist-playercount-invalid", ("min", min), ("max", max));
                     return (ConnectionDenyReason.Whitelist, msg, null);
                 }
