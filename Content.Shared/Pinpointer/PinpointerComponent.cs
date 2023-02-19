@@ -31,13 +31,6 @@ namespace Content.Shared.Pinpointer
         public double Precision = 0.09;
 
         /// <summary>
-        ///     When true, ignores <see cref="Component"/> and allows <see cref="Target"/> to be
-        ///     set by using the entity on the desired target.
-        /// </summary>
-        [DataField("emgagged"), ViewVariables(VVAccess.ReadWrite)]
-        public bool Emagged;
-
-        /// <summary>
         ///     Name to display of the target being tracked.
         /// </summary>
         [DataField("targetName"), ViewVariables(VVAccess.ReadWrite)]

@@ -1,5 +1,6 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -38,7 +39,7 @@ namespace Content.Shared.Pinpointer
             if (!args.CanReach || args.Target is not { } target)
                 return;
 
-            if (!component.Emagged || component.IsActive)
+            if (!HasComp<EmaggedComponent>(uid) || component.IsActive)
                 return;
 
             // TODO add doafter once the freeze is lifted
@@ -122,10 +123,6 @@ namespace Content.Shared.Pinpointer
 
         private void OnEmagged(EntityUid uid, PinpointerComponent component, ref GotEmaggedEvent args)
         {
-            if (component.Emagged)
-                return;
-
-            component.Emagged = true;
             args.Handled = true;
         }
     }

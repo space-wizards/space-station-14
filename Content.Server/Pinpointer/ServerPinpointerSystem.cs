@@ -3,6 +3,7 @@ using Content.Shared.Pinpointer;
 using System.Linq;
 using Robust.Shared.Utility;
 using Content.Server.Shuttles.Events;
+using Content.Shared.Emag.Components;
 
 namespace Content.Server.Pinpointer
 {
@@ -20,7 +21,7 @@ namespace Content.Server.Pinpointer
         private void OnActivate(EntityUid uid, PinpointerComponent component, ActivateInWorldEvent args)
         {
             TogglePinpointer(uid, component);
-            if (!component.Emagged)
+            if (!HasComp<EmaggedComponent>(uid))
                 LocateTarget(uid, component);
         }
 
@@ -32,7 +33,7 @@ namespace Content.Server.Pinpointer
             // this code update ALL pinpointers in game
             foreach (var pinpointer in EntityQuery<PinpointerComponent>())
             {
-                if (pinpointer.Emagged)
+                if (HasComp<EmaggedComponent>(pinpointer.Owner))
                     continue;
 
                 LocateTarget(pinpointer.Owner, pinpointer);

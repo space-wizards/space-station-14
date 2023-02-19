@@ -36,5 +36,5 @@
   parent: PinpointerBase
   components:
   - type: Pinpointer
-    emgagged: true
     updateTargetName: true
+  - type: Emagged
