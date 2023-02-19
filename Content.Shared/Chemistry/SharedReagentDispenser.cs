@@ -49,6 +49,7 @@ namespace Content.Shared.Chemistry
         U30 = 30,
         U50 = 50,
         U100 = 100,
+        U300 = 300,
     }
 
     [Serializable, NetSerializable]

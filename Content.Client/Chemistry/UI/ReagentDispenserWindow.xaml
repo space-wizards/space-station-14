@@ -1,49 +1,71 @@
 ﻿<DefaultWindow xmlns="https://spacestation14.io"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+            xmlns:style="clr-namespace:Content.Client.Stylesheets"
+            xmlns:Elements="clr-namespace:Content.Client.SimpleStation14.Documentation.UI.Elements"
             Title="{Loc 'reagent-dispenser-bound-user-interface-title'}"
-            SetSize="590 450"
-            MinSize="590 450">
+            SetSize="600 450"
+            MinSize="600 450">
     <BoxContainer Orientation="Vertical">
-        <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc 'reagent-dispenser-window-amount-to-dispense-label'}"/>
-            <Control MinSize="20 0"></Control>
-            <Button Name="DispenseButton1" Access="Public" Text="1" StyleClasses="OpenRight"/>
-            <Button Name="DispenseButton5" Access="Public" Text="5" StyleClasses="OpenBoth"/>
-            <Button Name="DispenseButton10" Access="Public" Text="10" StyleClasses="OpenBoth"/>
-            <Button Name="DispenseButton15" Access="Public" Text="15" StyleClasses="OpenBoth"/>
-            <Button Name="DispenseButton20" Access="Public" Text="20" StyleClasses="OpenBoth"/>
-            <Button Name="DispenseButton25" Access="Public" Text="25" StyleClasses="OpenBoth"/>
-            <Button Name="DispenseButton30" Access="Public" Text="30" StyleClasses="OpenBoth"/>
-            <Button Name="DispenseButton50" Access="Public" Text="50" StyleClasses="OpenBoth"/>
-            <Button Name="DispenseButton100" Access="Public" Text="100" StyleClasses="OpenLeft"/>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <BoxContainer Orientation="Vertical" HorizontalAlignment="Center">
+                <Label Text="{Loc 'reagent-dispenser-window-amount-to-dispense-label'}" HorizontalAlignment="Center" />
+
+                <GridContainer Columns="2" Name="DispenseAmountGrid">
+                    <Button Name="DispenseButton1" Access="Public" StyleClasses="OpenRight" />
+                    <Button Name="DispenseButton5" Access="Public" StyleClasses="OpenLeft" />
+                    <Button Name="DispenseButton10" Access="Public" StyleClasses="OpenRight" />
+                    <Button Name="DispenseButton15" Access="Public" StyleClasses="OpenLeft" />
+                    <Button Name="DispenseButton20" Access="Public" StyleClasses="OpenRight" />
+                    <Button Name="DispenseButton25" Access="Public" StyleClasses="OpenLeft" />
+                    <Button Name="DispenseButton30" Access="Public" StyleClasses="OpenRight" />
+                    <Button Name="DispenseButton50" Access="Public" StyleClasses="OpenLeft" />
+                    <Button Name="DispenseButton100" Access="Public" StyleClasses="OpenRight" />
+                    <Button Name="DispenseButton300" Access="Public" StyleClasses="OpenLeft" />
+                </GridContainer>
+            </BoxContainer>
+
+            <Control MinSize="5 5" />
+            <PanelContainer MinSize="2 2">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.NanoGold}" ContentMarginTopOverride="2" />
+                </PanelContainer.PanelOverride>
+            </PanelContainer>
+            <Control MinSize="5 5" />
+
+            <BoxContainer Orientation="Vertical" HorizontalAlignment="Center">
+                <Label Text="{Loc 'reagent-dispenser-window-reagents-label'}" HorizontalAlignment="Center" />
+
+                <GridContainer Name="ChemicalList" Access="Public" Columns="4" />
+            </BoxContainer>
         </BoxContainer>
-        <Control MinSize="0 10"/>
-        <GridContainer Name="ChemicalList" Access="Public" Columns="4">
-        </GridContainer>
-        <Control MinSize="0 10"/>
+
+        <Control MinSize="5 5" />
+        <PanelContainer MinSize="2 2">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.NanoGold}" ContentMarginTopOverride="2" />
+            </PanelContainer.PanelOverride>
+        </PanelContainer>
+        <Control MinSize="5 5" />
+
         <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc 'reagent-dispenser-window-container-label'}"/>
-            <Button Name="ClearButton"
-                    Access="Public"
-                    Text="{Loc 'reagent-dispenser-window-clear-button'}"
-                    StyleClasses="OpenRight"/>
-            <Button Name="EjectButton"
-                    Access="Public"
-                    Text="{Loc 'reagent-dispenser-window-eject-button'}"
-                    StyleClasses="OpenLeft"/>
+            <Label Text="{Loc 'reagent-dispenser-window-container-label'}" />
+            <Button Name="ClearButton" Access="Public" Text="{Loc 'reagent-dispenser-window-clear-button'}" StyleClasses="OpenRight" MinWidth="75" />
+            <Button Name="EjectButton" Access="Public" Text="{Loc 'reagent-dispenser-window-eject-button'}" StyleClasses="OpenLeft" MinWidth="75" />
         </BoxContainer>
-        <Control MinSize="0 10"/>
-        <PanelContainer VerticalExpand="True"
-                        SizeFlagsStretchRatio="6"
-                        MinSize="0 150">
+
+        <Control MinSize="10 10" />
+
+        <PanelContainer VerticalExpand="True" SizeFlagsStretchRatio="6" MinSize="0 150">
             <PanelContainer.PanelOverride>
                 <gfx:StyleBoxFlat BackgroundColor="#1b1b1e" />
             </PanelContainer.PanelOverride>
-            <BoxContainer Name="ContainerInfo"
-                          Orientation="Vertical"
-                          HorizontalExpand="True">
-                <Label Text="{Loc 'reagent-dispenser-window-no-container-loaded-text'}"/>
-            </BoxContainer>
+
+            <ScrollContainer HorizontalExpand="True">
+                <BoxContainer Name="ContainerInfo" Orientation="Vertical" HorizontalExpand="True">
+                    <Label Text="{Loc 'reagent-dispenser-window-no-container-loaded-text'}" />
+                </BoxContainer>
+            </ScrollContainer>
         </PanelContainer>
     </BoxContainer>
 </DefaultWindow>

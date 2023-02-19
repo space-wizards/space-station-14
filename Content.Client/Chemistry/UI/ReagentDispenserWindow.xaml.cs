@@ -33,15 +33,14 @@ namespace Content.Client.Chemistry.UI
             IoCManager.InjectDependencies(this);
 
             var dispenseAmountGroup = new ButtonGroup();
-            DispenseButton1.Group = dispenseAmountGroup;
-            DispenseButton5.Group = dispenseAmountGroup;
-            DispenseButton10.Group = dispenseAmountGroup;
-            DispenseButton15.Group = dispenseAmountGroup;
-            DispenseButton20.Group = dispenseAmountGroup;
-            DispenseButton25.Group = dispenseAmountGroup;
-            DispenseButton30.Group = dispenseAmountGroup;
-            DispenseButton50.Group = dispenseAmountGroup;
-            DispenseButton100.Group = dispenseAmountGroup;
+
+            foreach (Button child in DispenseAmountGrid.Children)
+            {
+                child.Group = dispenseAmountGroup;
+                child.MinWidth = 75;
+                child.HorizontalExpand = false;
+                child.Text = child?.Name?.Split("DispenseButton")[1] ?? "null";
+            }
         }
 
         /// <summary>
@@ -63,6 +62,7 @@ namespace Content.Client.Chemistry.UI
                     : Loc.GetString("reagent-dispenser-window-reagent-name-not-found-text");
 
                 var button = new DispenseReagentButton(entry, localizedName);
+                button.MinWidth = 75;
                 button.OnPressed += args => OnDispenseReagentButtonPressed?.Invoke(args, button);
                 button.OnMouseEntered += args => OnDispenseReagentButtonMouseEntered?.Invoke(args, button);
                 button.OnMouseExited += args => OnDispenseReagentButtonMouseExited?.Invoke(args, button);
@@ -112,6 +112,9 @@ namespace Content.Client.Chemistry.UI
                     break;
                 case ReagentDispenserDispenseAmount.U100:
                     DispenseButton100.Pressed = true;
+                    break;
+                case ReagentDispenserDispenseAmount.U300:
+                    DispenseButton300.Pressed = true;
                     break;
             }
         }
