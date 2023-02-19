@@ -271,6 +271,7 @@ public sealed partial class ArtifactSystem : EntitySystem
     /// </summary>
     private void OnRoundEnd(RoundEndTextAppendEvent ev)
     {
+        return; // Corvax: No fun allowed
         foreach (var artifactComp in EntityQuery<ArtifactComponent>())
         {
             artifactComp.CooldownTime = TimeSpan.Zero;
