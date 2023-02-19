@@ -134,6 +134,24 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         _activeNinja.Clear();
     }
 
+    /// <summary>
+    /// Turns the player into a space ninja
+    /// </summary>
+    public void MakeNinja(Mind.Mind mind)
+    {
+        if (mind.OwnedEntity == null)
+            return;
+
+        // prevent double ninja'ing
+        var user = mind.OwnedEntity.Value;
+        if (HasComp<SpaceNinjaComponent>(user))
+            return;
+
+        AddComp<SpaceNinjaComponent>(user);
+        SetOutfitCommand.SetOutfit(user, "SpaceNinjaGear", EntityManager);
+        GreetNinja(mind);
+    }
+
     private void OnGlovesEquipped(EntityUid uid, SpaceNinjaGlovesComponent comp, GotEquippedEvent args)
     {
         var user = args.Equipee;
@@ -147,6 +165,8 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
     private void OnGlovesUnequipped(EntityUid uid, SpaceNinjaGlovesComponent comp, GotUnequippedEvent args)
     {
         var user = args.Equipee;
+        DisableGloves(comp, user);
+
         _actions.RemoveProvidedActions(args.Equipee, uid);
         if (TryComp<SpaceNinjaComponent>(user, out var ninja))
             ninja.Gloves = null;
@@ -155,6 +175,15 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
     private void OnToggleGloves(EntityUid uid, SpaceNinjaGlovesComponent comp, ToggleNinjaGlovesEvent args)
     {
         var user = args.Performer;
+        // need to wear suit to enable gloves
+        if (!TryComp<SpaceNinjaComponent>(user, out var ninja)
+            || ninja.Suit == null
+            || !HasComp<SpaceNinjaSuitComponent>(ninja.Suit.Value))
+        {
+            _popups.PopupEntity(Loc.GetString("ninja-gloves-not-wearing-suit"), user, user);
+            return;
+        }
+
         comp.Enabled = !comp.Enabled;
         var message = Loc.GetString(comp.Enabled ? "ninja-gloves-on" : "ninja-gloves-off");
         _popups.PopupEntity(message, user, user);
@@ -428,6 +457,9 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         if (TryComp<SpaceNinjaComponent>(user, out var ninja))
         {
             ninja.Suit = null;
+            // disable glove abilities
+            if (ninja.Gloves != null && TryComp<SpaceNinjaGlovesComponent>(ninja.Gloves.Value, out var gloves))
+                DisableGloves(gloves, user);
         }
 
         // force uncloak
@@ -513,22 +545,13 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         return (NinjaRuleConfiguration) _proto.Index<GameRulePrototype>("SpaceNinjaSpawn").Configuration;
     }
 
-    /// <summary>
-    /// Turns the player into a space ninja
-    /// </summary>
-    public void MakeNinja(Mind.Mind mind)
+    private void DisableGloves(SpaceNinjaGlovesComponent comp, EntityUid user)
     {
-        if (mind.OwnedEntity == null)
-            return;
-
-        // prevent double ninja'ing
-        var user = mind.OwnedEntity.Value;
-        if (HasComp<SpaceNinjaComponent>(user))
-            return;
-
-        AddComp<SpaceNinjaComponent>(user);
-        SetOutfitCommand.SetOutfit(user, "SpaceNinjaGear", EntityManager);
-        GreetNinja(mind);
+        if (comp.Enabled)
+        {
+            comp.Enabled = false;
+            _popups.PopupEntity(Loc.GetString("ninja-gloves-on"), user, user));
+        }
     }
 
     private void OnNinjaAttacked(EntityUid uid, SpaceNinjaComponent comp, AttackedEvent args)
