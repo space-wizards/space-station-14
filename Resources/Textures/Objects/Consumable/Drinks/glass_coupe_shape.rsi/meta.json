@@ -1,4 +1,4 @@
-{
+﻿{
     "version": 1,
     "size": {
         "x": 32,
@@ -27,18 +27,6 @@
         },
         {
             "name": "fill5"
-        },
-        {
-            "name": "fill6"
-        },
-        {
-            "name": "fill7"
-        },
-        {
-            "name": "fill8"
-        },
-        {
-            "name": "fill9"
         }
     ]
 }
