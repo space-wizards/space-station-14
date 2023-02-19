@@ -224,7 +224,7 @@ public sealed partial class StationJobsSystem : EntitySystem
                 UpdateJobsAvailable();
                 return true;
             case true:
-                stationJobs.TotalJobs += amount - (int) (jobList[jobPrototypeId]!.HasValue ? jobList[jobPrototypeId]!.Value : 0);
+                stationJobs.TotalJobs += amount - (int) (jobList[jobPrototypeId]! ?? 0);
 
                 jobList[jobPrototypeId] = (uint)amount;
                 UpdateJobsAvailable();
