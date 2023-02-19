@@ -1,6 +1,6 @@
 using Content.Shared.Ninja;
 
-namespace Content.Server.Ninja.Components;
+namespace Content.Shared.Ninja.Components;
 
 [RegisterComponent]
 public sealed class SpaceNinjaComponent : Component
@@ -12,6 +12,10 @@ public sealed class SpaceNinjaComponent : Component
     /// Currently worn gloves
     [ViewVariables]
     public EntityUid? Gloves = null;
+
+    /// Bound katana, set once picked up and never removed
+    [ViewVariables]
+    public EntityUid? Katana = null;
 
     /// Number of doors that have been doorjacked, used for objective
     [ViewVariables]

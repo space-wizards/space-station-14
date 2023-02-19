@@ -1,5 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Ninja.Components;
 
@@ -32,6 +33,23 @@ public sealed class SpaceNinjaSuitComponent : Component
     /// </summary>
     [DataField("cloakWattage")]
     public float CloakWattage = 1.44f;
+
+    /// <summary>
+    /// The action for recalling a bound energy katana
+    /// </summary>
+    [DataField("recallkatanaAction")]
+    public InstantAction RecallKatanaAction = new()
+    {
+        UseDelay = TimeSpan.FromSeconds(1),
+        Icon = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Weapons/Melee/energykatana.rsi"), "icon"),
+        ItemIconStyle = ItemActionIconStyle.NoItem,
+        DisplayName = "action-name-recall-katana",
+        Description = "action-desc-recall-katana",
+        Priority = -11,
+        Event = new RecallKatanaEvent()
+    };
 }
 
 public sealed class TogglePhaseCloakEvent : InstantActionEvent { }
+
+public sealed class RecallKatanaEvent : InstantActionEvent { }

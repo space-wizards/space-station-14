@@ -1,8 +1,8 @@
 using Content.Server.Explosion.EntitySystems;
-using Content.Server.Ninja.Components;
 using Content.Server.Sticky.Events;
 using Content.Server.Popups;
 using Content.Shared.Interaction;
+using Content.Shared.Ninja.Components;
 
 namespace Content.Server.Ninja.Systems;
 

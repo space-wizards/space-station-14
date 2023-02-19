@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 using Robust.Shared.Utility;
 using System.Threading;
 
-namespace Content.Server.Ninja.Components;
+namespace Content.Shared.Ninja.Components;
 
 [RegisterComponent]
 public sealed class SpaceNinjaGlovesComponent : Component
@@ -27,7 +27,7 @@ public sealed class SpaceNinjaGlovesComponent : Component
     {
         DisplayName = "action-name-toggle-ninja-gloves",
         Description = "action-desc-toggle-ninja-gloves",
-        Priority = -11,
+        Priority = -13,
         Event = new ToggleNinjaGlovesEvent()
     };
 

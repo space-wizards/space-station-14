@@ -1,5 +1,5 @@
-using Content.Server.Ninja.Components;
 using Content.Server.Objectives.Interfaces;
+using Content.Shared.Ninja.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 

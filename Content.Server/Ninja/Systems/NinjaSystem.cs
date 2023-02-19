@@ -11,7 +11,6 @@ using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind.Components;
-using Content.Server.Ninja.Components;
 using Content.Server.Objectives;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
@@ -26,6 +25,7 @@ using Content.Shared.Database;
 using Content.Shared.Doors.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
@@ -43,6 +43,7 @@ using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -65,6 +66,7 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
     [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedSubdermalImplantSystem _implants = default!;
     [Dependency] private readonly PopupSystem _popups = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
@@ -72,6 +74,7 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly TagSystem _tags = default!;
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private readonly HashSet<SpaceNinjaComponent> _activeNinja = new();
 
@@ -94,6 +97,7 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         SubscribeLocalEvent<SpaceNinjaSuitComponent, ContainerIsInsertingAttemptEvent>(OnSuitInsertAttempt);
         SubscribeLocalEvent<SpaceNinjaSuitComponent, GotUnequippedEvent>(OnSuitUnequipped);
         SubscribeLocalEvent<SpaceNinjaSuitComponent, TogglePhaseCloakEvent>(OnTogglePhaseCloakAction);
+        SubscribeLocalEvent<SpaceNinjaSuitComponent, RecallKatanaEvent>(OnRecallKatanaAction);
 
         SubscribeLocalEvent<SpaceNinjaComponent, ComponentStartup>(OnNinjaStartup);
         SubscribeLocalEvent<SpaceNinjaComponent, MindAddedMessage>(OnNinjaMindAdded);
@@ -421,11 +425,11 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
             return;
 
         _actions.AddAction(user, comp.TogglePhaseCloakAction, uid, actions);
+        _actions.AddAction(user, comp.RecallKatanaAction, uid, actions);
         // TODO: emp ability
         // TODO: ninja star ability
-        // TODO: energy katana + recall ability
 
-        // mark the user as wearing this suit, used when being attacked
+        // mark the user as wearing this suit, used when being attacked among other things
         ninja.Suit = uid;
 
         // initialize phase cloak
@@ -485,6 +489,31 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
 
         comp.Cloaked = !comp.Cloaked;
         SetCloaked(args.Performer, comp.Cloaked);
+    }
+
+    private void OnRecallKatanaAction(EntityUid uid, SpaceNinjaSuitComponent comp, RecallKatanaEvent args)
+    {
+        args.Handled = true;
+        var user = args.Performer;
+        if (!TryComp<SpaceNinjaComponent>(user, out var ninja) || ninja.Katana == null)
+            return;
+
+        // 1% charge per tile
+        var katana = ninja.Katana.Value;
+        var coords = _transform.GetWorldPosition(katana);
+        var distance = (_transform.GetWorldPosition(user) - coords).Length;
+        var chargeNeeded = (float) distance * 3.6f;
+        if (!GetNinjaBattery(user, out var battery) || !battery.TryUseCharge(chargeNeeded))
+        {
+            _popups.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
+            return;
+        }
+
+        // TODO: teleporting into belt slot
+        var message = _hands.TryPickup(user, katana)
+            ? "ninja-katana-recalled"
+            : "ninja-hands-full";
+        _popups.PopupEntity(Loc.GetString(message), user, user);
     }
 
     private void OnNinjaStartup(EntityUid uid, SpaceNinjaComponent comp, ComponentStartup args)

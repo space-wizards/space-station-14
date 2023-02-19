@@ -1,4 +1,4 @@
-namespace Content.Server.Ninja.Components;
+namespace Content.Shared.Ninja.Components;
 
 [RegisterComponent]
 public sealed class SpiderChargeComponent : Component
