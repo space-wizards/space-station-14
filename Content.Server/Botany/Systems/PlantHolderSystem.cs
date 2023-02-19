@@ -40,7 +40,6 @@ namespace Content.Server.Botany.Systems
         [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-        [Dependency] IEntityManager _entityManager = default!;
 
 
 
@@ -352,8 +351,7 @@ namespace Content.Server.Botany.Systems
 
             if (component.Seed != null && component.Seed.TurnIntoKudzu && component.WeedLevel >= component.Seed.WeedHighLevelThreshold)
             {
-
-                _entityManager.SpawnEntity(component.Seed.kudzu, Transform(uid).Coordinates);
+                Spawn(component.Seed.kudzu, Transform(uid).Coordinates);
                 component.Seed.TurnIntoKudzu = false;
                 component.Health = 0;
             }
