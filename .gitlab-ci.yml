@@ -35,6 +35,7 @@ test-release:
 publish:
   stage: publish
   retry: 2
+  interruptible: true
   rules:
     - if: '$SSH_PRIVATE_KEY != null'
   script:
