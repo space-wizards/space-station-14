@@ -486,6 +486,18 @@
     slice: FoodTofuSlice
 
 - type: entity
+  name: tofu slice
+  parent: FoodBakingBase
+  id: FoodTofuSlice
+  description: A slice of tofu. Ingredient of various vegetarian dishes.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - tofu
+  - type: Sprite
+    state: tofu-slice
+
+- type: entity
   name: burned mess
   parent: FoodBakingBase
   id: FoodBadRecipe
