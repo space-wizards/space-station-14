@@ -1,17 +1,6 @@
 Entries:
 - author: Rane
   changes:
-  - {message: Fixed the sprite modifications for female humanoids jumpsuit slot clothes.,
-    type: Fix}
-  id: 2554
-  time: '2022-10-31T00:06:17.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Traitor mode will now work on its own rather than only in secret., type: Fix}
-  id: 2555
-  time: '2022-10-31T02:02:42.0000000+00:00'
-- author: Rane
-  changes:
   - {message: 'You can no longer use nettles, space snakes, and so on as injectors.
       The only injecting melee weapon that lets you use your own reagents is spears.',
     type: Fix}
@@ -2913,3 +2902,19 @@ Entries:
   - {message: 'Added Cabbage, Red Onion and 3 new salads.', type: Add}
   id: 3053
   time: '2023-02-18T23:52:59.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: Jetpacks can now be work in suit storage., type: Tweak}
+  id: 3054
+  time: '2023-02-19T00:59:47.0000000+00:00'
+- author: moonheart08
+  changes:
+  - {message: The drinking glass sprite was redone and now supports nicer visuals.,
+    type: Tweak}
+  - {message: The shot glass sprite was modified to support fill visuals., type: Tweak}
+  - {message: The soda and booze dispensers have been visually offset to sit on tables
+      correctly., type: Tweak}
+  - {message: The booze-o-mat now has flasks and vacuum flasks., type: Add}
+  - {message: Wine glasses were added to the booze-o-mat., type: Add}
+  id: 3055
+  time: '2023-02-19T01:00:31.0000000+00:00'
