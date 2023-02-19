@@ -102,6 +102,15 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
         _appearance.SetData(uid, SolutionContainerVisuals.FillFraction, solution.FillFraction, appearanceComponent);
         _appearance.SetData(uid, SolutionContainerVisuals.Color, solution.GetColor(_prototypeManager), appearanceComponent);
+
+        if (solution.GetPrimaryReagentId() is { } reagent)
+        {
+            _appearance.SetData(uid, SolutionContainerVisuals.BaseOverride, reagent, appearanceComponent);
+        }
+        else
+        {
+            _appearance.SetData(uid, SolutionContainerVisuals.BaseOverride, string.Empty, appearanceComponent);
+        }
     }
 
     /// <summary>
