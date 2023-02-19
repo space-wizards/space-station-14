@@ -56,7 +56,8 @@
   id: SpaceNinjaGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorBlack
-    back: ClothingBackpackFilled
+    # belt holds katana so satchel has the tools for sabotaging things
+    back: ClothingBackpackSatchelTools
     mask: ClothingMaskGasSyndicate
     head: ClothingHeadHelmetSpaceNinja
     # TODO: space ninja mask
@@ -66,9 +67,8 @@
     shoes: ClothingShoesSpaceNinja
     id: PassengerPDA
     ears: ClothingHeadsetGrey
-    pocket1: EnergySword
-    pocket2: SpiderCharge
-    belt: ClothingBeltUtilityFilled
+    pocket1: SpiderCharge
+    belt: EnergyKatana
     suitstorage: YellowOxygenTankFilled
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackSatchelFilled

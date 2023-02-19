@@ -550,7 +550,7 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         if (comp.Enabled)
         {
             comp.Enabled = false;
-            _popups.PopupEntity(Loc.GetString("ninja-gloves-on"), user, user));
+            _popups.PopupEntity(Loc.GetString("ninja-gloves-on"), user, user);
         }
     }
 
