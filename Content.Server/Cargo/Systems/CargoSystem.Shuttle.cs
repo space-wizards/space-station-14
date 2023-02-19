@@ -7,6 +7,8 @@ using Content.Server.UserInterface;
 using Content.Server.Paper;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Components;
+using Content.Server.Stack;
+using Content.Shared.Stacks;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
@@ -27,6 +29,8 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Robust.Shared.Prototypes;
+using Content.Shared.Coordinates;
 
 namespace Content.Server.Cargo.Systems;
 
@@ -40,13 +44,14 @@ public sealed partial class CargoSystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly PricingSystem _pricing = default!;
     [Dependency] private readonly ShuttleConsoleSystem _console = default!;
     [Dependency] private readonly ShuttleSystem _shuttle = default!;
-
+    [Dependency] private readonly StackSystem _stack = default!;
     public MapId? CargoMap { get; private set; }
 
     private const float CallOffset = 50f;
@@ -68,6 +73,8 @@ public sealed partial class CargoSystem
         SubscribeLocalEvent<CargoShuttleConsoleComponent, ComponentStartup>(OnCargoShuttleConsoleStartup);
         SubscribeLocalEvent<CargoShuttleConsoleComponent, CargoCallShuttleMessage>(OnCargoShuttleCall);
         SubscribeLocalEvent<CargoShuttleConsoleComponent, CargoRecallShuttleMessage>(RecallCargoShuttle);
+
+        SubscribeLocalEvent<CargoShuttleConsoleComponent, CargoPalletSellMessage>(OnPalletSale);
 
         SubscribeLocalEvent<CargoPilotConsoleComponent, ConsoleShuttleEvent>(OnCargoGetConsole);
         SubscribeLocalEvent<CargoPilotConsoleComponent, AfterActivatableUIOpenEvent>(OnCargoPilotConsoleOpen);
@@ -238,19 +245,19 @@ public sealed partial class CargoSystem
     /// <summary>
     /// Get the amount of space the cargo shuttle can fit for orders.
     /// </summary>
-    private int GetCargoSpace(CargoShuttleComponent component)
+    private int GetCargoSpace(EntityUid gridUid)
     {
-        var space = GetCargoPallets(component).Count;
+        var space = GetCargoPallets(gridUid).Count;
         return space;
     }
 
-    private List<CargoPalletComponent> GetCargoPallets(CargoShuttleComponent component)
+    private List<CargoPalletComponent> GetCargoPallets(EntityUid gridUid)
     {
         var pads = new List<CargoPalletComponent>();
 
         foreach (var (comp, compXform) in EntityQuery<CargoPalletComponent, TransformComponent>(true))
         {
-            if (compXform.ParentUid != component.Owner ||
+            if (compXform.ParentUid != gridUid ||
                 !compXform.Anchored) continue;
 
             pads.Add(comp);
@@ -303,14 +310,14 @@ public sealed partial class CargoSystem
         _sawmill.Info($"Added cargo shuttle to {ToPrettyString(shuttleUid)}");
     }
 
-    private void SellPallets(CargoShuttleComponent component, StationBankAccountComponent bank)
+    private void SellPallets(EntityUid gridUid, out double amount)
     {
-        double amount = 0;
+        amount = 0;
         var toSell = new HashSet<EntityUid>();
         var xformQuery = GetEntityQuery<TransformComponent>();
         var blacklistQuery = GetEntityQuery<CargoSellBlacklistComponent>();
 
-        foreach (var pallet in GetCargoPallets(component))
+        foreach (var pallet in GetCargoPallets(gridUid))
         {
             // Containers should already get the sell price of their children so can skip those.
             foreach (var ent in _lookup.GetEntitiesIntersecting(pallet.Owner, LookupFlags.Dynamic | LookupFlags.Sundries | LookupFlags.Approximate))
@@ -334,7 +341,6 @@ public sealed partial class CargoSystem
             }
         }
 
-        bank.Balance += (int) amount;
         _sawmill.Debug($"Cargo sold {toSell.Count} entities for {amount}");
 
         foreach (var ent in toSell)
@@ -432,13 +438,30 @@ public sealed partial class CargoSystem
         }
     }
 
+    private void OnPalletSale(EntityUid uid, CargoShuttleConsoleComponent component, CargoPalletSellMessage args)
+    {
+        var player = args.Session.AttachedEntity;
+
+        if (player == null)
+            return;
+
+        var stationUid = _station.GetOwningStation(uid);
+
+        if (stationUid == null)
+            return;
+
+        SellPallets((EntityUid) stationUid, out var price);
+        var stackPrototype = _prototypeManager.Index<StackPrototype>("Credit");
+        _stack.Spawn((int)price, stackPrototype, uid.ToCoordinates());        
+    }
+
     private void RecallCargoShuttle(EntityUid uid, CargoShuttleConsoleComponent component, CargoRecallShuttleMessage args)
     {
         var player = args.Session.AttachedEntity;
 
         if (player == null) return;
 
-        var stationUid = _station.GetOwningStation(component.Owner);
+        var stationUid = _station.GetOwningStation(uid);
 
         if (!TryComp<StationCargoOrderDatabaseComponent>(stationUid, out var orderDatabase) ||
             !TryComp<StationBankAccountComponent>(stationUid, out var bank)) return;
@@ -462,7 +485,8 @@ public sealed partial class CargoSystem
             return;
         }
 
-        SellPallets(shuttle, bank);
+        SellPallets((EntityUid) orderDatabase.Shuttle, out double price);
+        bank.Balance += (int) price;
         _console.RefreshShuttleConsoles();
         SendToCargoMap(orderDatabase.Shuttle.Value);
     }
