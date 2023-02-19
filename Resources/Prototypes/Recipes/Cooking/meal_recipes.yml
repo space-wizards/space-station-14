@@ -214,15 +214,6 @@
     FoodCheeseSlice: 2
 
 - type: microwaveMealRecipe
-  id: RecipeTofuBread
-  name: tofu bread recipe
-  result: FoodBreadTofu
-  time: 20
-  solids:
-    FoodDough: 1
-    FoodTofu: 1
-
-- type: microwaveMealRecipe
   id: RecipeBananaBread
   name: banana bread recipe
   result: FoodBreadBanana
