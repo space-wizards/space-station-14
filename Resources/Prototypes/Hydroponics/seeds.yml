@@ -751,6 +751,7 @@
   plantRsi: Objects/Specific/Hydroponics/soybeans.rsi
   productPrototypes:
     - FoodSoybeans
+  growthStages: 4
   lifespan: 25
   maturation: 4
   production: 4
