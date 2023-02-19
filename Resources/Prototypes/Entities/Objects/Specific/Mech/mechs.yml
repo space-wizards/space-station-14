@@ -75,7 +75,7 @@
 - type: entity
   id: MechRipley
   parent: BaseMech
-  name: Ripley "APLU"
+  name: Ripley APLU
   description: A versatile, lightly armored mech.
   components:
   - type: FootstepModifier
@@ -102,7 +102,7 @@
 - type: entity
   id: MechHauler
   parent: MechRipley
-  name: Hauler "APLU"
+  name: Hauler APLU
   description: A cheaper, more lightweight version of the RIPLEY mech. Designed for use in cargo transfer.
   components:
   - type: Sprite
