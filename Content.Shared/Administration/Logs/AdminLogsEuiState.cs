@@ -28,6 +28,21 @@ public static class AdminLogsEuiMsg
     }
 
     [Serializable, NetSerializable]
+    public sealed class SetLogFilter : EuiMessageBase
+    {
+        public SetLogFilter(string? search = null, bool invertTypes = false, HashSet<LogType>? types = null)
+        {
+            Search = search;
+            InvertTypes = invertTypes;
+            Types = types;
+        }
+
+        public string? Search { get; set; }
+        public bool InvertTypes { get; set; }
+        public HashSet<LogType>? Types { get; set; }
+    }
+
+    [Serializable, NetSerializable]
     public sealed class NewLogs : EuiMessageBase
     {
         public NewLogs(List<SharedAdminLog> logs, bool replace, bool hasNext)
