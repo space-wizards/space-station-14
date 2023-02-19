@@ -37,3 +37,6 @@ ent-ClothingOuterCoatWarden = бронированная куртка смотр
 ent-ClothingOuterDameDane = пальто dame dane
     .desc = Пятница...
     .suffix = { "" }
+ent-ClothingOuterClownPriest = robes of the honkmother
+    .desc = Meant for a clown of the cloth.
+    .suffix = { "" }
