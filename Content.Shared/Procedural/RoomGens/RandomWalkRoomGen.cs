@@ -1,6 +1,6 @@
 using Content.Shared.Procedural.Walls;
 
-namespace Content.Shared.Procedural.Rooms;
+namespace Content.Shared.Procedural.RoomGens;
 
 [DataDefinition]
 public sealed class RandomWalkRoomGen : RoomGen

@@ -2,7 +2,7 @@ using Content.Shared.Maps;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Shared.Procedural.Rooms;
+namespace Content.Shared.Procedural.RoomGens;
 
 [ImplicitDataDefinitionForInheritors]
 public abstract class RoomGen

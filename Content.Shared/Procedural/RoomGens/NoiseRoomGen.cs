@@ -1,4 +1,4 @@
-namespace Content.Shared.Procedural.Rooms;
+namespace Content.Shared.Procedural.RoomGens;
 
 /// <summary>
 /// Uses random noise to generate a room.

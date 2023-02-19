@@ -1,6 +1,5 @@
-using Content.Shared.Procedural.Loot;
 using Content.Shared.Procedural.Paths;
-using Content.Shared.Procedural.Rooms;
+using Content.Shared.Procedural.RoomGens;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Procedural;

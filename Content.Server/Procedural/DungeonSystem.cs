@@ -1,7 +1,7 @@
 using System.Linq;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.Loot;
-using Content.Shared.Procedural.Rooms;
+using Content.Shared.Procedural.RoomGens;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
