@@ -499,7 +499,7 @@
   flavor: beepsky
   color: "#664300"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/beepskysmash.rsi
+    sprite: Objects/Consumable/Drinks/beepskysmashglass.rsi
     state: icon
   metabolisms:
     Drink:
