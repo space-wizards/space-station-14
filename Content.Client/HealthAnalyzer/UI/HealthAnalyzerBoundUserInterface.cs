@@ -22,7 +22,7 @@ namespace Content.Client.HealthAnalyzer.UI
                 Title = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Owner).EntityName,
             };
             _window.OnClose += Close;
-            _window.OpenCentered();
+            _window.OpenCenteredAt((0.25f, 0.25f));
         }
 
         protected override void ReceiveMessage(BoundUserInterfaceMessage message)

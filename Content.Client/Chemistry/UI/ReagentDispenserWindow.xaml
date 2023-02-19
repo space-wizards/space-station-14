@@ -2,7 +2,6 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
             xmlns:style="clr-namespace:Content.Client.Stylesheets"
-            xmlns:Elements="clr-namespace:Content.Client.SimpleStation14.Documentation.UI.Elements"
             Title="{Loc 'reagent-dispenser-bound-user-interface-title'}"
             SetSize="600 450"
             MinSize="600 450">

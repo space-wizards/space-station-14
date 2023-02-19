@@ -1,9 +1,32 @@
 ﻿<DefaultWindow xmlns="https://spacestation14.io"
-            MinSize="250 100"
-            SetSize="250 100">
-    <BoxContainer Orientation="Vertical">
-        <Label
-            Name="Diagnostics"
-            Text="{Loc health-analyzer-window-no-patient-data-text}"/>
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+            xmlns:style="clr-namespace:Content.Client.Stylesheets"
+            MinSize="250 100">
+    <BoxContainer Name="HealthBox" Orientation="Vertical">
+        <PanelContainer VerticalExpand="True" SizeFlagsStretchRatio="6">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#202020" />
+            </PanelContainer.PanelOverride>
+
+            <!-- Patient Information -->
+            <BoxContainer Name="DiagnosticsBox" Orientation="Vertical">
+                <!-- Patient name -->
+                <Label Name="Diagnostics" HorizontalAlignment="Center" Text="{Loc health-analyzer-window-no-patient-data-text}" />
+            </BoxContainer>
+        </PanelContainer>
+
+        <Control MinSize="20 20" />
+
+        <PanelContainer VerticalExpand="True" SizeFlagsStretchRatio="6">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#202020" />
+            </PanelContainer.PanelOverride>
+
+            <BoxContainer Name="DamageBox" Orientation="Vertical">
+                <!-- Damage Groups and Types -->
+                <GridContainer Name="DamageGrid" Columns="2" />
+            </BoxContainer>
+        </PanelContainer>
     </BoxContainer>
 </DefaultWindow>
