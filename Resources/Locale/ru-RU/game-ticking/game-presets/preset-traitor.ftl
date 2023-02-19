@@ -10,9 +10,9 @@ traitor-round-end-result =
 traitor-user-was-a-traitor = [color=gray]{ $user }[/color] был(а) предателем.
 traitor-user-was-a-traitor-named = [color=White]{ $name }[/color] ([color=gray]{ $user }[/color]) был(а) предателем.
 traitor-was-a-traitor-named = [color=White]{ $name }[/color] был(а) предателем.
-traitor-user-was-a-traitor-with-objectives = [color=gray]{ $user }[/color] был(а) предателем, у которого(-ой) были следующие цели:
-traitor-user-was-a-traitor-with-objectives-named = [color=White]{ $name }[/color] ([color=gray]{ $user }[/color]) был(а) предателем, у которого(-ой) были следующие цели:
-traitor-was-a-traitor-with-objectives-named = [color=White]{ $name }[/color] был(а) предателем, у которого(-ой) были следующие цели:
+traitor-user-was-a-traitor-with-objectives = [color=gray]{ $user }[/color] был(а) предателем со следующими целями:
+traitor-user-was-a-traitor-with-objectives-named = [color=White]{ $name }[/color] ([color=gray]{ $user }[/color]) был(а) предателем со следующими целями:
+traitor-was-a-traitor-with-objectives-named = [color=White]{ $name }[/color] был(а) предателем со следующими целями:
 preset-traitor-objective-issuer-syndicate = [color=#87cefa]Синдикат[/color]
 # Shown at the end of a round of Traitor
 traitor-objective-condition-success = { $condition } | [color={ $markupColor }]Успех![/color]

@@ -61,6 +61,7 @@ SERVER_IGNORED_RESOURCES = {
 # Assembly names to copy from content.
 # PDBs are included if available, .dll/.pdb appended automatically.
 SERVER_CONTENT_ASSEMBLIES = [
+    "Content.CorvaxServer", # Corvax-Secrets
     "Content.Server.Database",
     "Content.Server",
     "Content.Shared",
@@ -168,6 +169,22 @@ def build_platform(platform: PlatformReg, skip_build: bool, hybrid_acz: bool) ->
             "/p:FullRelease=True",
             "/m"
         ], check=True)
+        # Corvax-Secrets-Start
+        if os.path.exists(p("Secrets", "Content.CorvaxServer")):
+            print(Fore.GREEN + f"Secrets found. Building secret project for {platform.rid}..." + Style.RESET_ALL)
+            subprocess.run([
+                "dotnet",
+                "build",
+                p("Secrets","Content.CorvaxServer", "Content.CorvaxServer.csproj"),
+                "-c", "Release",
+                "--nologo",
+                "/v:m",
+                f"/p:TargetOS={platform.target_os}",
+                "/t:Rebuild",
+                "/p:FullRelease=True",
+                "/m"
+            ], check=True)
+        # Corvax-Secrets-End
 
         publish_client_server(platform.rid, platform.target_os)
 
@@ -271,7 +288,8 @@ def copy_content_assemblies(target, zipf):
 
     # Include content assemblies.
     for asm in base_assemblies:
-        files.append(asm + ".dll")
+        if os.path.exists(p(source_dir, asm + ".dll")): # Corvax-Secrets: Allow optional assemblies
+            files.append(asm + ".dll")
         # If PDB available, include it aswell.
         pdb_path = asm + ".pdb"
         if os.path.exists(p(source_dir, pdb_path)):

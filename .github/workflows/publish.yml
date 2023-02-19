@@ -16,6 +16,8 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: 'recursive'
+        ssh-key: ${{ secrets.SECRETS_PRIVATE_KEY }}
+        
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v3
       with:
