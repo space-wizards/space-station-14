@@ -217,6 +217,20 @@
   - type: SpaceGarbage
 
 - type: entity
+  name: banana peel
+  parent: TrashBananaPeel
+  id: TrashBananaPeelExplosive
+  components:
+    - type: TriggerOnStepTrigger
+    - type: ExplodeOnTrigger
+    - type: Explosive
+      explosionType: Default
+      maxIntensity: 3
+      totalIntensity: 20
+      canCreateVacuum: false
+    - type: DeleteOnTrigger
+
+- type: entity
   name: carrot
   parent: FoodProduceBase
   id: FoodCarrot
