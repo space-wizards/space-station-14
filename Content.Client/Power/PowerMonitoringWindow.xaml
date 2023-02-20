@@ -1,19 +1,26 @@
-<DefaultWindow
-    xmlns="https://spacestation14.io"
+<DefaultWindow xmlns="https://spacestation14.io"
     Title="{Loc 'power-monitoring-window-title'}">
     <BoxContainer Orientation="Vertical" VerticalExpand="True">
-        <GridContainer Columns="2">
-            <!-- Grid is used here to align things. -->
-            <Label Text="{Loc 'power-monitoring-window-total-sources'}"/><Label Name="TotalSourcesNum" Text="?"/>
-            <Label Text="{Loc 'power-monitoring-window-total-loads'}"/><Label Name="TotalLoadsNum" Text="?"/>
-        </GridContainer>
+        <Button Disabled="True" StyleClasses="OpenBoth">
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <Label Text="{Loc 'power-monitoring-window-total-sources'}" HorizontalExpand="True" HorizontalAlignment="Left" />
+                    <Label Name="TotalSourcesNum" Text="?" HorizontalExpand="True" HorizontalAlignment="Right" />
+                </BoxContainer>
+
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <Label Text="{Loc 'power-monitoring-window-total-loads'}" HorizontalExpand="True" HorizontalAlignment="Left" />
+                    <Label Name="TotalLoadsNum" Text="?" HorizontalExpand="True" HorizontalAlignment="Right" />
+                </BoxContainer>
+            </BoxContainer>
+        </Button>
+
         <TabContainer Name="MasterTabContainer" VerticalExpand="True">
-            <ItemList Name="SourcesList" VerticalExpand="True">
-            </ItemList>
+            <ItemList Name="SourcesList" VerticalExpand="True" />
+
             <BoxContainer Orientation="Vertical" VerticalExpand="True">
-                <CheckBox Margin="8 8" Name="ShowInactiveConsumersCheckBox" Text="{Loc 'power-monitoring-window-show-inactive-consumers'}" />
-                <ItemList Name="LoadsList" VerticalExpand="True">
-                </ItemList>
+                <Button Margin="8 8" Name="ShowInactiveConsumersCheckBox" Text="{Loc 'power-monitoring-window-show-inactive-consumers'}" VerticalAlignment="Center" ToggleMode="True" />
+                <ItemList Name="LoadsList" VerticalExpand="True" />
             </BoxContainer>
         </TabContainer>
     </BoxContainer>

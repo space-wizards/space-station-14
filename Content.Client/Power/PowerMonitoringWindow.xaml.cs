@@ -82,4 +82,3 @@ public sealed class PowerMonitoringConsoleBoundUserInterface : ComputerBoundUser
 {
     public PowerMonitoringConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey) {}
 }
-
