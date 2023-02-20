@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Decals;
 using Content.Shared.Examine;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
@@ -99,6 +100,12 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         }
 
         humanoid.Age = profile.Age;
+        // Corvax-SpeakerColor-Start
+        const string paletteId = "Material";
+        var colors = _prototypeManager.Index<ColorPalettePrototype>(paletteId).Colors.Values.ToArray();
+        var colorIdx = Math.Abs(profile.Name.GetHashCode() % colors.Length);
+        humanoid.SpeakerColor = colors[colorIdx];
+        // Corvax-SpeakerColor-End
 
         Dirty(humanoid);
     }

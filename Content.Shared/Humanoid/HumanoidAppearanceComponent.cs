@@ -79,6 +79,11 @@ public sealed class HumanoidAppearanceComponent : Component
 
     [DataField("eyeColor")]
     public Color EyeColor = Color.Brown;
+    
+    // Corvax-ChatColor-Start
+    [DataField("speakerColor")]
+    public Color SpeakerColor = Color.White;
+    // Corvax-ChatColor-End
 }
 
 [Serializable, NetSerializable]
@@ -94,6 +99,7 @@ public sealed class HumanoidAppearanceState : ComponentState
     public readonly string Species;
     public readonly Color SkinColor;
     public readonly Color EyeColor;
+    public readonly Color SpeakerColor; // Corvax-SpeakerColor
 
     public HumanoidAppearanceState(
         MarkingSet currentMarkings,
@@ -105,7 +111,8 @@ public sealed class HumanoidAppearanceState : ComponentState
         int age,
         string species,
         Color skinColor,
-        Color eyeColor)
+        Color eyeColor,
+        Color speakerColor) // Corvax-SpeakerColor
     {
         Markings = currentMarkings;
         PermanentlyHidden = permanentlyHidden;
@@ -117,6 +124,7 @@ public sealed class HumanoidAppearanceState : ComponentState
         Species = species;
         SkinColor = skinColor;
         EyeColor = eyeColor;
+        SpeakerColor = speakerColor; // Corvax-SpeakerColor
     }
 
     [DataDefinition]

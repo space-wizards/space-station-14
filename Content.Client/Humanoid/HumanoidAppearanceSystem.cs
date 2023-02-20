@@ -38,6 +38,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         component.Age = state.Age;
         component.SkinColor = state.SkinColor;
         component.EyeColor = state.EyeColor;
+        component.SpeakerColor = state.SpeakerColor; // Corvax-SpeakerColor
         component.HiddenLayers = new(state.HiddenLayers);
         component.PermanentlyHidden = new(state.PermanentlyHidden);
 
@@ -162,7 +163,8 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
             profile.Age,
             profile.Species,
             profile.Appearance.SkinColor,
-            profile.Appearance.EyeColor);
+            profile.Appearance.EyeColor,
+            humanoid.SpeakerColor); // Corvax-SpeakerColor
 
         ApplyState(uid, humanoid, Comp<SpriteComponent>(uid), state);
     }

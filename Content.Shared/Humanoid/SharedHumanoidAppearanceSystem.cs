@@ -49,7 +49,8 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
             component.Age,
             component.Species,
             component.SkinColor,
-            component.EyeColor);
+            component.EyeColor,
+            component.SpeakerColor); // Corvax-SpeakerColor
     }
 
     /// <summary>
