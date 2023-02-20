@@ -5,6 +5,7 @@ using Content.Server.Wires;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.APC;
+using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -88,11 +89,8 @@ namespace Content.Server.Power.EntitySystems
 
         private void OnEmagged(EntityUid uid, ApcComponent comp, ref GotEmaggedEvent args)
         {
-            if(!comp.Emagged)
-            {
-                comp.Emagged = true;
-                args.Handled = true;
-            }
+            // no fancy conditions
+            args.Handled = true;
         }
 
         public void UpdateApcState(EntityUid uid,
@@ -147,7 +145,7 @@ namespace Content.Server.Power.EntitySystems
             ApcComponent? apc=null,
             BatteryComponent? battery=null)
         {
-            if (apc != null && apc.Emagged)
+            if (apc != null && HasComp<EmaggedComponent>(uid))
                 return ApcChargeState.Emag;
 
             if (!Resolve(uid, ref apc, ref battery))
