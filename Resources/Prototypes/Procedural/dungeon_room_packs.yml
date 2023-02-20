@@ -1,17 +1,36 @@
-- type: dungeonLayout
-  id: DOTE
+- type: dungeonPreset
+  id: Weh
   roomPacks:
-    - -8,0,4,8
-    - -2,6,2,10
-    - -8,12,8,16
-    - -2,18,2,34
-    - -20,18,-4,34
-    - 4,18,20,34
-    - -2,36,2,52
+    - -8,0,9,5
+    - -2,6,3,11
+    - -8,12,9,17
+    - -2,18,3,35
+    - -20,18,-3,35
+    - 4,18,21,35
+    - -2,36,3,53
 
 - type: dungeonRoomPack
   id: LargeArea1
   size: 17,17
   rooms:
-    - 1,9,19,10
-    - 1,12,6,17
+    - 0,0,5,5
+    - 6,0,11,5
+    - 12,0,17,5
+    - 0,6,5,11
+    - 6,6,5,11
+    - 12,6,17,11
+    - 0,12,5,17
+    - 6,12,11,17
+    - 12,12,17,17
+
+- type: dungeonRoomPack
+  id: MediumArea1
+  size: 17,5
+  rooms:
+    - -0,0,17,5
+
+- type: dungeonRoomPack
+  id: SmallArea
+  size: 5,5
+  rooms:
+    - 0,0,5,5

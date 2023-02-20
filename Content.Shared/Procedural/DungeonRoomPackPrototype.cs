@@ -12,7 +12,7 @@ public sealed class DungeonRoomPackPrototype : IPrototype
     /// Used to associate the room pack with other room packs with the same dimensions.
     /// </summary>
     [DataField("size", required: true)]
-    public Box2i Size;
+    public Vector2i Size;
 
     [DataField("rooms", required: true)]
     public List<Box2i> Rooms = new();

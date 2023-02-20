@@ -10,6 +10,19 @@
       tile: FloorAsteroidSand
       wall: WallRock
 
+- type: dungeonConfig
+  id: Structures
+  rooms:
+    - !type:RoomPackGen
+      roomPacks:
+        - -8,0,4,8
+        - -2,6,2,10
+        - -8,12,8,16
+        - -2,18,2,34
+        - -20,18,-4,34
+        - 4,18,20,34
+        - -2,36,2,52
+
 
 # Loot configs
 - type: weightedRandom
@@ -129,6 +142,23 @@
   reward: SimpleSalvage
   loot:
   - CaveLoot
+
+- type: salvageExpedition
+  id: DOTE
+  desc: DOTE
+  biome: LowDesert
+  light: "#E6CB8B"
+  expedition: !type:SalvageStructure
+  minDuration: 540
+  maxDuration: 720
+  factions:
+    - Xenos
+  dungeonConfig: SandDungeon
+  dungeonRadius: 40
+  dungeonPosition: 70,0
+  reward: SimpleSalvage
+  loot:
+    - CaveLoot
 
 
 # Factions

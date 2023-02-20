@@ -1,15 +1,14 @@
-using System.Linq;
 using Content.Shared.Procedural;
-using Content.Shared.Procedural.Loot;
 using Content.Shared.Procedural.RoomGens;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Utility;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Procedural;
 
 public sealed partial class DungeonSystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDef = default!;
 
     public void SpawnDungeonTiles(Vector2i position, Dungeon dungeon, MapGridComponent grid, Random random, List<Vector2i> reservedTiles)

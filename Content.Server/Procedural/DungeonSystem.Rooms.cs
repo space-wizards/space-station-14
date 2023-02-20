@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.RoomGens;
 using Robust.Shared.Noise;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Procedural;
 
