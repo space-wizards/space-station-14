@@ -1,12 +1,6 @@
 Entries:
 - author: ElectroJr
   changes:
-  - {message: Fixed being unable to craft certain items., type: Fix}
-  - {message: Maybe fixed cargo shuttle not properly selling items., type: Fix}
-  id: 2557
-  time: '2022-10-31T02:26:05.0000000+00:00'
-- author: ElectroJr
-  changes:
   - {message: Deconstructing disposal tubes should no longer delete contained entities.,
     type: Fix}
   - {message: Fixed people getting trapped in disposal trunks., type: Fix}
@@ -2916,3 +2910,9 @@ Entries:
   - {message: Added the chemistry bag as the default belt for the chemist!, type: Add}
   id: 3056
   time: '2023-02-20T03:34:02.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: Alt-clicking a drink now makes you drink it instead of changing the
+      solution transfer amount., type: Tweak}
+  id: 3057
+  time: '2023-02-20T12:29:15.0000000+00:00'
