@@ -1,14 +1,7 @@
 <Control xmlns="https://spacestation14.io">
-    <Button
-        Name="Button"
-        HorizontalExpand="True"
-        TooltipDelay="0.5">
+    <Button Name="Button" HorizontalExpand="True" TooltipDelay="0.5">
         <BoxContainer Orientation="Horizontal">
-            <TextureRect
-                Name="RecipeTexture"
-                Margin="0,0,4,0"
-                MinSize="32 32"
-                Stretch="KeepAspectCentered" />
+            <TextureRect Name="RecipeTexture" Margin="0,0,4,0" MinSize="32 32" Stretch="KeepAspectCentered" />
             <Label Name="RecipeName" HorizontalExpand="True" />
         </BoxContainer>
     </Button>

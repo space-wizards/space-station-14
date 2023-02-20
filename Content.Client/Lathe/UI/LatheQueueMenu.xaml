@@ -1,41 +1,15 @@
-﻿<DefaultWindow
-    xmlns="https://spacestation14.io"
-    Title="{Loc 'lathe-queue-menu-title'}"
-    MinSize="300 450"
-    SetSize="300 450">
+﻿<DefaultWindow xmlns="https://spacestation14.io"
+    Title="{Loc 'lathe-queue-menu-title'}" MinSize="300 450">
     <BoxContainer Orientation="Vertical">
-        <BoxContainer
-            Orientation="Horizontal"
-            HorizontalExpand="True"
-            SizeFlagsStretchRatio="2">
-            <TextureRect
-                Name="Icon"
-                HorizontalExpand="True"
-                SizeFlagsStretchRatio="2">
-            </TextureRect>
-            <BoxContainer
-                Orientation="Vertical"
-                VerticalExpand="True"
-                SizeFlagsStretchRatio="3">
-                <Label
-                    Name="NameLabel"
-                    RectClipContent="True">
-                </Label>
-                <Label
-                    Name="Description"
-                    RectClipContent="True"
-                    VerticalAlignment="Stretch"
-                    VerticalExpand="True">
-                </Label>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" SizeFlagsStretchRatio="2">
+            <TextureRect Name="Icon" HorizontalExpand="True" SizeFlagsStretchRatio="2" />
+
+            <BoxContainer Orientation="Vertical" VerticalExpand="True" SizeFlagsStretchRatio="3">
+                <Label Name="NameLabel" RectClipContent="True" />
+                <Label Name="Description" RectClipContent="True" VerticalAlignment="Stretch" VerticalExpand="True" />
             </BoxContainer>
         </BoxContainer>
-        <ItemList
-            Name="QueueList"
-            VerticalExpand="True"
-            SizeFlagsStretchRatio="3"
-            SelectMode="None">
-        </ItemList>
+
+        <ItemList Name="QueueList" VerticalExpand="True" SizeFlagsStretchRatio="3" SelectMode="None" />
     </BoxContainer>
 </DefaultWindow>
-
-
