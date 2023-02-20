@@ -218,6 +218,7 @@
 
 - type: entity
   name: banana peel
+  suffix: Explosive
   parent: TrashBananaPeel
   id: TrashBananaPeelExplosive
   components:
