@@ -95,36 +95,6 @@ public sealed class DoAfterEventArgs
     public Func<bool>? ExtraCheck;
 
     /// <summary>
-    ///     Event to be raised directed to the <see cref="User"/> entity when the DoAfter is cancelled.
-    /// </summary>
-    public object? UserCancelledEvent { get; set; }
-
-    /// <summary>
-    ///     Event to be raised directed to the <see cref="User"/> entity when the DoAfter is finished successfully.
-    /// </summary>
-    public object? UserFinishedEvent { get; set; }
-
-    /// <summary>
-    ///     Event to be raised directed to the <see cref="Used"/> entity when the DoAfter is cancelled.
-    /// </summary>
-    public object? UsedCancelledEvent { get; set; }
-
-    /// <summary>
-    ///     Event to be raised directed to the <see cref="Used"/> entity when the DoAfter is finished successfully.
-    /// </summary>
-    public object? UsedFinishedEvent { get; set; }
-
-    /// <summary>
-    ///     Event to be raised directed to the <see cref="Target"/> entity when the DoAfter is cancelled.
-    /// </summary>
-    public object? TargetCancelledEvent { get; set; }
-
-    /// <summary>
-    ///     Event to be raised directed to the <see cref="Target"/> entity when the DoAfter is finished successfully.
-    /// </summary>
-    public object? TargetFinishedEvent { get; set; }
-
-    /// <summary>
     ///     Event to be broadcast when the DoAfter is cancelled.
     /// </summary>
     public object? BroadcastCancelledEvent { get; set; }

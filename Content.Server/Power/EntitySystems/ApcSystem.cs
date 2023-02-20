@@ -200,10 +200,11 @@ namespace Content.Server.Power.EntitySystems
         {
             if (!EntityManager.TryGetComponent(args.Used, out ToolComponent? tool))
                 return;
-            if (_toolSystem.UseTool(args.Used, args.User, uid, 0f, ScrewTime, new[] { "Screwing" }, doAfterCompleteEvent: new ApcToolFinishedEvent(uid), toolComponent: tool))
-            {
+
+            var toolEvData = new ToolEventData(new ApcToolFinishedEvent(uid), fuel: 0f);
+
+            if (_toolSystem.UseTool(args.Used, args.User, uid, ScrewTime, new [] { "Screwing" }, toolEvData, toolComponent:tool))
                 args.Handled = true;
-            }
         }
 
         private void OnToolFinished(ApcToolFinishedEvent args)
@@ -218,13 +219,9 @@ namespace Content.Server.Power.EntitySystems
             }
 
             if (component.IsApcOpen)
-            {
                 SoundSystem.Play(component.ScrewdriverOpenSound.GetSound(), Filter.Pvs(args.Target), args.Target);
-            }
             else
-            {
                 SoundSystem.Play(component.ScrewdriverCloseSound.GetSound(), Filter.Pvs(args.Target), args.Target);
-            }
         }
 
         private void UpdatePanelAppearance(EntityUid uid, AppearanceComponent? appearance = null, ApcComponent? apc = null)

@@ -3,7 +3,6 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Shared.Audio;
-using Content.Shared.Item;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Robust.Server.GameObjects;
@@ -26,7 +25,6 @@ namespace Content.Server.Tools
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
-        [Dependency] private readonly SharedItemSystem _itemSystem = default!;
 
         public override void Initialize()
         {
@@ -36,8 +34,31 @@ namespace Content.Server.Tools
             InitializeLatticeCutting();
             InitializeWelders();
 
+            SubscribeLocalEvent<ToolComponent, DoAfterEvent<ToolEventData>>(OnDoAfter);
+
             SubscribeLocalEvent<ToolDoAfterComplete>(OnDoAfterComplete);
             SubscribeLocalEvent<ToolDoAfterCancelled>(OnDoAfterCancelled);
+        }
+
+        private void OnDoAfter(EntityUid uid, ToolComponent component, DoAfterEvent<ToolEventData> args)
+        {
+            if (args.Handled || args.Cancelled)
+                return;
+
+            if (ToolFinishUse(uid, args.Args.User, args.AdditionalData.Fuel))
+            {
+                if (args.AdditionalData.TargetEntity != null)
+                    RaiseLocalEvent(args.AdditionalData.TargetEntity.Value, args.AdditionalData.Ev);
+                else
+                    RaiseLocalEvent(args.AdditionalData.Ev);
+            }
+            else if (args.AdditionalData.CancelledEv != null)
+            {
+                if (args.AdditionalData.TargetEntity != null)
+                    RaiseLocalEvent(args.AdditionalData.TargetEntity.Value, args.AdditionalData.CancelledEv);
+                else
+                    RaiseLocalEvent(args.AdditionalData.CancelledEv);
+            }
         }
 
         private void OnDoAfterComplete(ToolDoAfterComplete ev)
@@ -81,6 +102,47 @@ namespace Content.Server.Tools
         public bool HasAllQualities(EntityUid uid, IEnumerable<string> qualities, ToolComponent? tool = null)
         {
             return Resolve(uid, ref tool, false) && tool.Qualities.ContainsAll(qualities);
+        }
+
+        //Tool UID
+        //User UID
+        //Target UID
+        //ToolType
+        //ToolComp
+        //Fuel as needed
+        //Tool Event?
+        //DoAfter
+        //Even if it's the new doafter, mark it as obsolete anyway
+        public bool UseTool(EntityUid tool, EntityUid user, EntityUid? target, float doAfterDelay, IEnumerable<string> toolQualitiesNeeded, ToolEventData toolEventData, float fuel = 0f, ToolComponent? toolComponent = null)
+        {
+            // No logging here, after all that'd mean the caller would need to check if the component is there or not.
+            if (!Resolve(tool, ref toolComponent, false))
+                return false;
+
+            var ev = new ToolUserAttemptUseEvent(user, target);
+            RaiseLocalEvent(user, ref ev);
+            if (ev.Cancelled)
+                return false;
+
+            if (!ToolStartUse(tool, user, fuel, toolQualitiesNeeded, toolComponent))
+                return false;
+
+            if (doAfterDelay > 0f)
+            {
+                var doAfterArgs = new DoAfterEventArgs(user, doAfterDelay / toolComponent.SpeedModifier, target:target, used:tool)
+                {
+                    BreakOnDamage = true,
+                    BreakOnStun = true,
+                    BreakOnTargetMove = true,
+                    BreakOnUserMove = true,
+                    NeedHand = true
+                };
+
+                _doAfterSystem.DoAfter(doAfterArgs, toolEventData);
+                return true;
+            }
+
+            return ToolFinishUse(tool, user, fuel, toolComponent);
         }
 
         /// <summary>
@@ -314,6 +376,22 @@ namespace Content.Server.Tools
         {
             Fuel = fuel;
             User = user;
+        }
+    }
+
+    public sealed class ToolEventData
+    {
+        public readonly Object Ev;
+        public readonly Object? CancelledEv;
+        public readonly float Fuel;
+        public readonly EntityUid? TargetEntity;
+
+        public ToolEventData(Object ev, float fuel = 0f, Object? cancelledEv = null, EntityUid? targetEntity = null)
+        {
+            Ev = ev;
+            CancelledEv = cancelledEv;
+            Fuel = fuel;
+            TargetEntity = targetEntity;
         }
     }
 
