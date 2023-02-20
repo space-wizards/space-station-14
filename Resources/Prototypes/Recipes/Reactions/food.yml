@@ -93,7 +93,7 @@
   quantized: true
   reactants:
     MilkSoy:
-      amount: 10
+      amount: 30
     Enzyme:
       amount: 5
   effects:

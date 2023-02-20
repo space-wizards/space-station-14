@@ -479,8 +479,10 @@
       food:
         maxVol: 6
         reagents:
+        - ReagentId: Protein
+          Quantity: 9
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 6
   - type: SliceableFood
     count: 3
     slice: FoodTofuSlice
@@ -496,6 +498,15 @@
       - tofu
   - type: Sprite
     state: tofu-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Protein
+          Quantity: 3
+        - ReagentId: Nutriment
+          Quantity: 2
 
 - type: entity
   name: burned mess
