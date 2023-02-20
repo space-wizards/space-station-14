@@ -116,6 +116,8 @@ public sealed partial class TTSSystem : EntitySystem
     {
         var textSanitized = Sanitize(text);
         if (textSanitized == "") return null;
+        if (char.IsLetter(textSanitized[^1]))
+            textSanitized += ".";
 
         var ssmlTraits = SoundTraits.RateFast;
         if (isWhisper)
