@@ -35,8 +35,8 @@ public sealed partial class CableSystem : EntitySystem
         if (args.Handled)
             return;
 
-        var ev = new CuttingFinishedEvent(args.User);
-        args.Handled = _toolSystem.UseTool(args.Used, args.User, uid, 0, cable.CuttingDelay, new[] { cable.CuttingQuality }, doAfterCompleteEvent: ev, doAfterEventTarget: uid);
+        var toolEvData = new ToolEventData(new CuttingFinishedEvent(args.User), targetEntity: uid);
+        args.Handled = _toolSystem.UseTool(args.Used, args.User, uid, cable.CuttingDelay, new[] { cable.CuttingQuality }, toolEvData);
     }
 
     private void OnCableCut(EntityUid uid, CableComponent cable, CuttingFinishedEvent args)

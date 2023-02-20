@@ -102,10 +102,10 @@ namespace Content.Server.Toilet
                     return;
                 component.IsPrying = true;
 
+                var toolEvData = new ToolEventData(new ToiletPryFinished(uid));
+
                 // try to pry toilet cistern
-                if (!_toolSystem.UseTool(args.Used, args.User, uid, 0f,
-                    component.PryLidTime, component.PryingQuality,
-                    new ToiletPryFinished(uid), new ToiletPryInterrupted(uid)))
+                if (!_toolSystem.UseTool(args.Used, args.User, uid, component.PryLidTime, new [] {component.PryingQuality}, toolEvData))
                 {
                     component.IsPrying = false;
                     return;

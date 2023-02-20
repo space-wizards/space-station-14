@@ -188,9 +188,8 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
                 return;
             cryoPodComponent.IsPrying = true;
 
-            _toolSystem.UseTool(args.Used, args.User, uid, 0f,
-                cryoPodComponent.PryDelay, "Prying",
-                new CryoPodPryFinished(), new CryoPodPryInterrupted(), uid);
+            var toolEvData = new ToolEventData(new CryoPodPryFinished(), targetEntity:uid);
+            _toolSystem.UseTool(args.Used, args.User, uid, cryoPodComponent.PryDelay, new [] {"Prying"}, toolEvData);
 
             args.Handled = true;
         }
