@@ -238,7 +238,7 @@
   time: 20
   solids:
     FoodDough: 1
-    FoodTofu: 2
+    FoodTofu: 1
 
 #Pizzas
 - type: microwaveMealRecipe
