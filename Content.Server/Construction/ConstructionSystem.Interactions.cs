@@ -38,6 +38,7 @@ namespace Content.Server.Construction
             SubscribeLocalEvent<ConstructionDoAfterCancelled>(OnDoAfterCancelled);
             SubscribeLocalEvent<ConstructionComponent, ConstructionDoAfterComplete>(EnqueueEvent);
             SubscribeLocalEvent<ConstructionComponent, ConstructionDoAfterCancelled>(EnqueueEvent);
+            SubscribeLocalEvent<ConstructionComponent, DoAfterEvent<ConstructionData>>(OnDoAfter);
 
             #endregion
 
@@ -302,20 +303,16 @@ namespace Content.Server.Construction
                     // If we still haven't completed this step's DoAfter...
                     if (doAfterState == DoAfterState.None && insertStep.DoAfter > 0)
                     {
-                        _doAfterSystem.DoAfter(
-                            new DoAfterEventArgs(interactUsing.User, step.DoAfter, default, interactUsing.Target)
-                            {
-                                BreakOnDamage = false,
-                                BreakOnStun = true,
-                                BreakOnTargetMove = true,
-                                BreakOnUserMove = true,
-                                NeedHand = true,
-
-                                // These events will be broadcast and handled by this very same system, that will
-                                // raise them directed to the target. These events wrap the original event.
-                                BroadcastFinishedEvent = new ConstructionDoAfterComplete(uid, ev),
-                                BroadcastCancelledEvent = new ConstructionDoAfterCancelled(uid, ev)
-                            });
+                        var constructionData = new ConstructionData(new ConstructionDoAfterComplete(uid, ev), new ConstructionDoAfterCancelled(uid, ev));
+                        var doAfterEventArgs = new DoAfterEventArgs(interactUsing.User, step.DoAfter, target: interactUsing.Target)
+                        {
+                            BreakOnDamage = false,
+                            BreakOnStun = true,
+                            BreakOnTargetMove = true,
+                            BreakOnUserMove = true,
+                            NeedHand = true
+                        };
+                        _doAfterSystem.DoAfter(doAfterEventArgs, constructionData);
 
                         // To properly signal that we're waiting for a DoAfter, we have to set the flag on the component
                         // and then also return the DoAfter HandleResult.
@@ -548,6 +545,21 @@ namespace Content.Server.Construction
             _constructionUpdateQueue.Add(uid);
         }
 
+        private void OnDoAfter(EntityUid uid, ConstructionComponent component, DoAfterEvent<ConstructionData> args)
+        {
+            if (!Exists(args.Args.Target) || args.Handled)
+                return;
+
+            if (args.Cancelled)
+            {
+                RaiseLocalEvent(args.Args.Target.Value, args.AdditionalData.CancelEvent);
+                args.Handled = true;
+            }
+
+            RaiseLocalEvent(args.Args.Target.Value, args.AdditionalData.CompleteEvent);
+            args.Handled = true;
+        }
+
         private void OnDoAfterComplete(ConstructionDoAfterComplete ev)
         {
             // Make extra sure the target entity exists...
@@ -571,6 +583,18 @@ namespace Content.Server.Construction
         #endregion
 
         #region Event Definitions
+
+        private sealed class ConstructionData
+        {
+            public readonly object CompleteEvent;
+            public readonly object CancelEvent;
+
+            public ConstructionData(object completeEvent, object cancelEvent)
+            {
+                CompleteEvent = completeEvent;
+                CancelEvent = cancelEvent;
+            }
+        }
 
         /// <summary>
         ///     This event signals that a construction interaction's DoAfter has completed successfully.
