@@ -1,0 +1,19 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+    Title="{Loc 'comms-console-menu-title'}"
+    MinSize="350 225">
+    <Button Disabled="True">
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+            <LineEdit Name="MessageInput" PlaceHolder="{Loc 'comms-console-menu-announcement-placeholder'}" HorizontalExpand="True" SizeFlagsStretchRatio="1" />
+
+            <Control MinSize="10 10" />
+
+            <Button Name="AnnounceButton" Text="{Loc 'comms-console-menu-announcement-button'}" Access="Public" />
+            <OptionButton Name="AlertLevelButton" Access="Public" />
+
+            <Control MinSize="10 10" />
+
+            <RichTextLabel Name="CountdownLabel" MinSize="0 48" />
+            <Button Name="EmergencyShuttleButton" Text="Placeholder Text" Access="Public" />
+        </BoxContainer>
+    </Button>
+</DefaultWindow>
