@@ -1,6 +1,7 @@
 apc-menu-title = APC
 apc-menu-breaker-label = Main Breaker:{" "}
 apc-menu-breaker-button = Toggle
+apc-menu-breaker-button-new = Toggle Main Breaker
 apc-menu-external-label = External Power:{" "}
 apc-menu-charge-label = Charge:{" "}
 
