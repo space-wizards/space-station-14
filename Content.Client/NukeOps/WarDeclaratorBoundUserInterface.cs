@@ -1,7 +1,10 @@
 using Content.Shared.NukeOps;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
+using System.Threading;
 using Content.Client.Stylesheets;
+using Timer = Robust.Shared.Timing.Timer;
+using Robust.Shared.Timing;
+using Content.Client.GameTicking.Managers;
 
 namespace Content.Client.NukeOps
 {
@@ -10,11 +13,14 @@ namespace Content.Client.NukeOps
     /// </summary>
     public sealed class WarDeclaratorBoundUserInterface : BoundUserInterface
     {
-        private WarDeclaratorWindow? _window;
+        
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly ClientGameTicker _gameTicker = default!;
 
-        public WarDeclaratorBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
-        {
-        }
+        private WarDeclaratorWindow? _window;
+        public WarDeclaratorBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey) {}
+        private readonly CancellationTokenSource _timerCancelTokenSource = new();
+        private TimeSpan _timeWindowLength;
 
         protected override void Open()
         {
@@ -30,6 +36,8 @@ namespace Content.Client.NukeOps
             _window.OnMessageEntered += OnMessageChanged;
             _window.OnWarButtonPressed += OnWarButtonPressed;
 
+            if(State is WarDeclaratorBoundUserInterfaceState cast && cast.Status == WarConditionStatus.YES_WAR)
+                Timer.SpawnRepeating(1000, UpdateTimer, _timerCancelTokenSource.Token);
         }
 
         private void OnMessageChanged(string newMsg)
@@ -40,6 +48,27 @@ namespace Content.Client.NukeOps
         private void OnWarButtonPressed()
         {
             SendMessage(new WarDeclaratorPressedWarButton(_window?.MessageLineEdit.Text));
+        }
+
+        public void UpdateTimer()
+        {
+            if (_window == null)
+                return;
+
+            var roundTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
+            var timeLeft = _timeWindowLength.Subtract(roundTime);
+
+            if (timeLeft > TimeSpan.Zero)
+            {
+                _window.InfoLabel.Text = Loc.GetString("war-declarator-boost-timer", ("minutes", timeLeft.Minutes), ("seconds", timeLeft.Seconds));
+            }
+            else
+            {
+                _window.StatusLabel.Text = Loc.GetString("war-declarator-boost-impossible");
+                _window.InfoLabel.Text = Loc.GetString("war-declarator-conditions-time-out");
+                _window.StatusLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateNone);
+                _timerCancelTokenSource.Cancel();
+            }
         }
 
         /// <summary>
@@ -53,12 +82,13 @@ namespace Content.Client.NukeOps
                 return;
 
             _window.WarButton.Disabled = cast.Status != WarConditionStatus.YES_WAR;
+            _timeWindowLength = cast.WindowLength;
 
             switch(cast.Status)
             {
                 case WarConditionStatus.YES_WAR:
                     _window.StatusLabel.Text = Loc.GetString("war-declarator-boost-possible");
-                    _window.InfoLabel.Text = Loc.GetString("war-declarator-boost-timer", ("minutes", "timeLeft.Minutes"), ("seconds", "timeLeft.Seconds"));
+                    UpdateTimer();
                     _window.StatusLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateGood);
                     break;
                 case WarConditionStatus.TC_DISTRIBUTED:
@@ -96,6 +126,7 @@ namespace Content.Client.NukeOps
             base.Dispose(disposing);
             if (!disposing) return;
             _window?.Dispose();
+            _timerCancelTokenSource.Cancel();
         }
     }
 

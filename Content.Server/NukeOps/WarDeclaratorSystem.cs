@@ -28,8 +28,14 @@ namespace Content.Server.NukeOps
             base.Initialize();
             SubscribeLocalEvent<WarDeclaratorComponent, ActivateInWorldEvent>(OnActivate);
             // Bound UI subscriptions
+            SubscribeLocalEvent<WarDeclaratorComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<WarDeclaratorComponent, WarDeclaratorChangedMessage>(OnMessageChanged);
             SubscribeLocalEvent<WarDeclaratorComponent, WarDeclaratorPressedWarButton>(OnWarButtonPressed);
+        }
+
+        private void OnComponentInit(EntityUid uid, WarDeclaratorComponent warDeclarator, ComponentInit args)
+        {
+            DirtyUI(uid, warDeclarator);
         }
 
         private void OnActivate(EntityUid uid, WarDeclaratorComponent handLabeler, ActivateInWorldEvent args)
@@ -64,7 +70,15 @@ namespace Content.Server.NukeOps
             warDeclarator.Message = String.Empty;
             var msg = "Declarator seems to trying declare war but it can't"; //Loc.GetString("");
             _popupSystem.PopupEntity(msg, uid);
-            DirtyUI(uid, warDeclarator);
+            RefreshAllDeclaratorsUI();
+        }
+
+        private void RefreshAllDeclaratorsUI()
+        {
+            foreach (var comp in EntityQuery<WarDeclaratorComponent>())
+            {
+                DirtyUI(comp.Owner, comp);
+            }
         }
 
         private void DirtyUI(EntityUid uid,
@@ -78,7 +92,8 @@ namespace Content.Server.NukeOps
                 (
                     warDeclarator.Message,
                     _nukeopsRuleSystem.GetWarCondition(),
-                    _nukeopsRuleSystem.NukeopsRuleConfig.WarMinCrewSize
+                    _nukeopsRuleSystem.NukeopsRuleConfig.WarMinCrewSize,
+                    _nukeopsRuleSystem.NukeopsRuleConfig.WarTimeLimit
                 )
             );
         }
