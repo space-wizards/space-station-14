@@ -1,15 +1,25 @@
 using Content.Shared.Examine;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Ninja.Components;
+using Content.Shared.Physics;
+using Content.Shared.Popups;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Ninja.Systems;
 
 public sealed class EnergyKatanaSystem : EntitySystem
 {
-	[Dependency] private readonly SharedAudioSystem _audio = default!;
-	[Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+    [Dependency] private readonly SharedPopupSystem _popups = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -17,7 +27,7 @@ public sealed class EnergyKatanaSystem : EntitySystem
 
         SubscribeLocalEvent<EnergyKatanaComponent, GotEquippedEvent>(OnEquipped);
         SubscribeLocalEvent<EnergyKatanaComponent, ExaminedEvent>(OnExamine);
-        SubscribeLocalEvent<EnergyKatanaComponent, DashActionEvent>(OnDash);
+        SubscribeLocalEvent<SpaceNinjaSuitComponent, KatanaDashEvent>(OnDash);
         SubscribeLocalEvent<EnergyKatanaComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<EnergyKatanaComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<EnergyKatanaComponent, EntityUnpausedEvent>(OnUnpaused);
@@ -42,7 +52,7 @@ public sealed class EnergyKatanaSystem : EntitySystem
     private void OnGetState(EntityUid uid, EnergyKatanaComponent component, ref ComponentGetState args)
     {
         args.State = new EnergyKatanaComponentState(component.MaxCharges, component.Charges,
-        	component.RechargeDuration, component.NextChargeTime, component.AutoRecharge);
+            component.RechargeDuration, component.NextChargeTime, component.AutoRecharge);
     }
 
     private void OnHandleState(EntityUid uid, EnergyKatanaComponent component, ref ComponentHandleState args)
@@ -89,14 +99,23 @@ public sealed class EnergyKatanaSystem : EntitySystem
             if (_timing.CurTime < EnergyKatana.NextChargeTime)
                 continue;
 
-            ChangeKatanaCharge(EnergyKatana.Owner, 1, true, EnergyKatana);
+            ChangeCharge(EnergyKatana.Owner, 1, true, EnergyKatana);
         }
     }
 
-    public void OnDashAction(EntityUid uid, EnergyKatanaComponent katana, DashActionEvent args)
+    public void OnDash(EntityUid suit, SpaceNinjaSuitComponent comp, KatanaDashEvent args)
     {
-		args.Handled = true;
-    	var user = args.Performer;
+        var user = args.Performer;
+        args.Handled = true;
+        if (!TryComp<SpaceNinjaComponent>(user, out var ninja) || ninja.Katana == null)
+            return;
+
+        var uid = ninja.Katana.Value;
+        if (!TryComp<EnergyKatanaComponent>(uid, out var katana) || !_hands.IsHolding(user, uid, out var _))
+        {
+            _popups.PopupEntity(Loc.GetString("ninja-katana-not-held"), user, user);
+            return;
+        }
 
         if (katana.Charges <= 0)
         {
@@ -104,12 +123,22 @@ public sealed class EnergyKatanaSystem : EntitySystem
             return;
         }
 
-        _transform.SetCoordinates(user, coords);
+        // TODO: check that target is not dense
+        var origin = Transform(user).MapPosition;
+        var target = args.Target.ToMap(EntityManager);
+        // prevent collision with the user duh
+        if (!_interaction.InRangeUnobstructed(origin, target, 0f, CollisionGroup.Opaque, uid => uid == user))
+        {
+            // can only dash if the destination is visible on screen
+            _popups.PopupEntity(Loc.GetString("ninja-katana-cant-see"), user, user);
+            return;
+        }
+
+        _transform.SetCoordinates(user, args.Target);
         Transform(user).AttachToGridOrMap();
         _audio.PlayPvs(katana.BlinkSound, user, AudioParams.Default.WithVolume(katana.BlinkVolume));
         // TODO: show the funny green man thing
         ChangeCharge(uid, -1, false, katana);
-        return true;
     }
 
     /// <summary>

@@ -426,6 +426,7 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
 
         _actions.AddAction(user, comp.TogglePhaseCloakAction, uid, actions);
         _actions.AddAction(user, comp.RecallKatanaAction, uid, actions);
+        _actions.AddAction(user, comp.KatanaDashAction, uid, actions);
         // TODO: emp ability
         // TODO: ninja star ability
 

@@ -48,6 +48,23 @@ public sealed class SpaceNinjaSuitComponent : Component
         Priority = -11,
         Event = new RecallKatanaEvent()
     };
+
+    /// <summary>
+    /// The action for dashing somewhere using katana
+    /// </summary>
+    [DataField("katanaDashAction")]
+    public WorldTargetAction KatanaDashAction = new()
+    {
+        Icon = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Magic/magicactions.rsi"), "blink"),
+        ItemIconStyle = ItemActionIconStyle.NoItem,
+        DisplayName = "action-name-katana-dash",
+        Description = "action-desc-katana-dash",
+        Priority = -12,
+        Event = new KatanaDashEvent(),
+        // doing checks manually
+        CheckCanAccess = false,
+        Range = 0f
+    };
 }
 
 public sealed class TogglePhaseCloakEvent : InstantActionEvent { }
