@@ -1,0 +1,22 @@
+- type: entity
+  name: hot potato
+  description: When activated the potato can only be transferred away from you by hitting another being with it, and when the timer expires it explodes! 
+  parent: BaseItem
+  id: HotPotato
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Bombs/hot_potato.rsi
+      state: icon
+    - type: Item
+      sprite: Objects/Weapons/Bombs/hot_potato.rsi
+      size: 5
+    - type: OnUseTimerTrigger
+      delay: 10
+      beepSound: /Audio/Machines/Nuke/general_beep.ogg
+    - type: ExplodeOnTrigger
+    - type: Explosive
+      explosionType: Default
+      maxIntensity: 3
+      totalIntensity: 20
+      canCreateVacuum: false
+    - type: DeleteOnTrigger
