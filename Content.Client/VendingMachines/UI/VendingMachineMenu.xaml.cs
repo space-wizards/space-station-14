@@ -6,6 +6,9 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
+using Robust.Shared.Map;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.VendingMachines.UI
 {
@@ -18,15 +21,108 @@ namespace Content.Client.VendingMachines.UI
 
         public VendingMachineMenu()
         {
-            MinSize = SetSize = (250, 150);
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
 
             VendingContents.OnItemSelected += args =>
             {
-                OnItemSelected?.Invoke(args);
+                // OnItemSelected?.Invoke(args);
+                onItemSelected(args);
             };
+
+            VendButton.OnPressed += _ =>
+            {
+                // Stupid solution... but it works.
+
+                int pos = 0;
+                int finalPos = 0;
+                foreach (var item in VendingContents)
+                {
+                    if (item.Selected)
+                    {
+                        finalPos = pos;
+                        pos++;
+                        break;
+                    }
+                    pos++;
+                }
+
+                if (finalPos != 0 && finalPos < pos) OnItemSelected?.Invoke(new ItemList.ItemListSelectedEventArgs(finalPos, VendingContents));
+            };
+
+
+            // Placeholder VendingInfo
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var ent = entityManager.SpawnEntity("VendingMachineCola", MapCoordinates.Nullspace);
+            var sprite = entityManager.GetComponent<SpriteComponent>(ent);
+            VendingInfo.AddChild(new SpriteView
+            {
+                Scale = (3f, 3f),
+                Sprite = sprite
+            });
+
+            VendingInfo.AddChild(new Control { MinSize = (10, 10) });
+
+            var message = new FormattedMessage();
+
+            message.AddMarkup("Item Information");
+            var VendingName = new RichTextLabel();
+            VendingName.SetMessage(message);
+            VendingInfo.AddChild(VendingName);
+
+            VendingInfo.AddChild(new Control { MinSize = (10, 10) });
+
+            message = new FormattedMessage();
+            message.AddMarkup("Select an item from the left to preview it.");
+            var VendingDescription = new RichTextLabel();
+            VendingDescription.SetMessage(message);
+            VendingInfo.AddChild(VendingDescription);
+
+            VendButton.Disabled = true;
+            // Placeholder VendingInfo
         }
+
+        private void onItemSelected(ItemList.ItemListSelectedEventArgs args)
+        {
+            ItemList.Item selected = VendingContents[args.ItemIndex];
+            VendingMachineInventoryEntry? entry = (VendingMachineInventoryEntry?) selected.Metadata!;
+
+            VendingInfo.Children.Clear();
+
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var ent = entityManager.SpawnEntity(entry.ID ?? "VendingMachineCola", MapCoordinates.Nullspace);
+
+            var metaData = entityManager.GetComponent<MetaDataComponent>(ent);
+            var sprite = entityManager.GetComponent<SpriteComponent>(ent);
+            VendingInfo.AddChild(new SpriteView
+            {
+                Scale = (3f, 3f),
+                Sprite = sprite
+            });
+
+            VendingInfo.AddChild(new Control { MinSize = (10, 10) });
+
+            var message = new FormattedMessage();
+
+            message.AddMarkup(metaData.EntityName);
+            var VendingName = new RichTextLabel();
+            VendingName.SetMessage(message);
+            VendingInfo.AddChild(VendingName);
+
+            if (metaData.EntityDescription != null)
+            {
+                VendingInfo.AddChild(new Control { MinSize = (10, 10) });
+
+                message = new FormattedMessage();
+                message.AddMarkup(metaData.EntityDescription);
+                var VendingDescription = new RichTextLabel();
+                VendingDescription.SetMessage(message);
+                VendingInfo.AddChild(VendingDescription);
+            }
+
+            VendButton.Disabled = false;
+        }
+
 
         /// <summary>
         /// Populates the list of available items on the vending machine interface
@@ -72,8 +168,9 @@ namespace Content.Client.VendingMachines.UI
                 if (itemName.Length > longestEntry.Length)
                     longestEntry = itemName;
 
-                vendingItem.Text = $"{itemName} [{entry.Amount}]";
+                vendingItem.Text = $" [{entry.Amount}] {itemName}";
                 vendingItem.Icon = icon;
+                vendingItem.Metadata = entry;
             }
 
             SetSizeAfterUpdate(longestEntry.Length);
@@ -81,8 +178,7 @@ namespace Content.Client.VendingMachines.UI
 
         private void SetSizeAfterUpdate(int longestEntryLength)
         {
-            SetSize = (Math.Clamp((longestEntryLength + 2) * 12, 250, 300),
-                Math.Clamp(VendingContents.Count * 50, 150, 350));
+            SetSize = (Math.Clamp((longestEntryLength + 2) * 12, 500, 600), Math.Clamp(VendingContents.Count * 50, 250, 450));
         }
     }
 }
