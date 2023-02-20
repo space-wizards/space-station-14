@@ -3,6 +3,7 @@ using Content.Server.Construction.Components;
 using Content.Server.DoAfter;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
+using Content.Server.Tools;
 using Content.Shared.Construction;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Construction.Steps;
@@ -376,9 +377,9 @@ namespace Content.Server.Construction
                     if (doAfterState != DoAfterState.None)
                         return doAfterState == DoAfterState.Completed ? HandleResult.True : HandleResult.False;
 
-                    if (!_toolSystem.UseTool(interactUsing.Used, interactUsing.User,
-                        uid, toolInsertStep.Fuel, toolInsertStep.DoAfter, toolInsertStep.Tool,
-                        new ConstructionDoAfterComplete(uid, ev), new ConstructionDoAfterCancelled(uid, ev)))
+                    var toolEvData = new ToolEventData(new ConstructionDoAfterComplete(uid, ev), toolInsertStep.Fuel, new ConstructionDoAfterCancelled(uid, ev));
+
+                    if(!_toolSystem.UseTool(interactUsing.Used, interactUsing.User, uid, toolInsertStep.DoAfter, new [] {toolInsertStep.Tool}, toolEvData))
                         return HandleResult.False;
 
                     // In the case we're not waiting for a doAfter, then this step is complete!
