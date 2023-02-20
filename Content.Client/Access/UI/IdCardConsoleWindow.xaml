@@ -1,39 +1,52 @@
 <DefaultWindow xmlns="https://spacestation14.io"
-            MinSize="650 290">
+    MinSize="600 400">
     <BoxContainer Orientation="Vertical">
-        <GridContainer Columns="2">
-            <GridContainer Columns="3" HorizontalExpand="True">
-                <Label Text="{Loc 'id-card-console-window-privileged-id'}" />
-                <Button Name="PrivilegedIdButton" Access="Public"/>
-                <Label Name="PrivilegedIdLabel" />
+        <Button Disabled="True" HorizontalExpand="True">
+            <GridContainer Columns="5" HorizontalExpand="True" Margin="5">
+                <Label Text="{Loc 'id-card-console-window-privileged-id'}" HorizontalAlignment="Left" />
+                <Control HorizontalExpand="True" SizeFlagsStretchRatio="1" />
+                <Label Name="PrivilegedIdLabel" HorizontalAlignment="Center" />
+                <Control HorizontalExpand="True" SizeFlagsStretchRatio="1" />
+                <Button Name="PrivilegedIdButton" Access="Public" HorizontalAlignment="Right" />
 
-                <Label Text="{Loc 'id-card-console-window-target-id'}" />
-                <Button Name="TargetIdButton" Access="Public"/>
-                <Label Name="TargetIdLabel" />
+                <Label Text="{Loc 'id-card-console-window-target-id'}" HorizontalAlignment="Left" />
+                <Control HorizontalExpand="True" SizeFlagsStretchRatio="1" />
+                <Label Name="TargetIdLabel" HorizontalAlignment="Center" />
+                <Control HorizontalExpand="True" SizeFlagsStretchRatio="1" />
+                <Button Name="TargetIdButton" Access="Public" HorizontalAlignment="Right" />
             </GridContainer>
-            <BoxContainer Orientation="Vertical">
-                <Button Name="CrewManifestButton" Access="Public" Text="{Loc 'crew-manifest-button-label'}" />
+        </Button>
+
+        <Control MinSize="5 5" />
+
+        <Button Disabled="True">
+            <GridContainer Columns="3" HSeparationOverride="4" Margin="5">
+                <Button Name="FullNameLabel" Text="{Loc 'id-card-console-window-full-name-label'}" Disabled="True" />
+                <LineEdit Name="FullNameLineEdit" HorizontalExpand="True" />
+                <Button Name="FullNameSaveButton" Text="{Loc 'id-card-console-window-save-button'}" Disabled="True" />
+
+                <Button Name="JobTitleLabel" Text="{Loc 'id-card-console-window-job-title-label'}" Disabled="True" />
+                <LineEdit Name="JobTitleLineEdit" HorizontalExpand="True" />
+                <Button Name="JobTitleSaveButton" Text="{Loc 'id-card-console-window-save-button'}" Disabled="True" />
+            </GridContainer>
+        </Button>
+
+        <Control MinSize="5 5" />
+
+        <Button Disabled="True">
+            <BoxContainer>
+                <Label Text="{Loc 'id-card-console-window-job-selection-label'}" HorizontalAlignment="Left" />
+                <Control HorizontalExpand="True" SizeFlagsStretchRatio="1" />
+                <Button Name="CrewManifestButton" Access="Public" Text="{Loc 'crew-manifest-button-label'}" MinSize="175 0" HorizontalAlignment="Right" Margin="0 0 5 0" />
+                <OptionButton Name="JobPresetOptionButton" MinSize="225 0" HorizontalAlignment="Right" />
             </BoxContainer>
-        </GridContainer>
-        <Control MinSize="0 8" />
-        <GridContainer Columns="3" HSeparationOverride="4">
-            <Label Name="FullNameLabel" Text="{Loc 'id-card-console-window-full-name-label'}" />
-            <LineEdit Name="FullNameLineEdit" HorizontalExpand="True" />
-            <Button Name="FullNameSaveButton" Text="{Loc 'id-card-console-window-save-button'}" Disabled="True" />
+        </Button>
 
-            <Label Name="JobTitleLabel" Text="{Loc 'id-card-console-window-job-title-label'}" />
-            <LineEdit Name="JobTitleLineEdit" HorizontalExpand="True" />
-            <Button Name="JobTitleSaveButton" Text="{Loc 'id-card-console-window-save-button'}" Disabled="True" />
-        </GridContainer>
-        <Control MinSize="0 8" />
-        <GridContainer Columns="2">
-            <Label Text="{Loc 'id-card-console-window-job-selection-label'}" />
-            <OptionButton Name="JobPresetOptionButton" />
-        </GridContainer>
-        <GridContainer Name="AccessLevelGrid" Columns="5" HorizontalAlignment="Center">
+        <Control MinSize="5 5" />
 
+        <Button Disabled="True" HorizontalExpand="False" VerticalExpand="True">
             <!-- Access level buttons are added here by the C# code -->
-
-        </GridContainer>
+            <GridContainer Name="AccessLevelGrid" Columns="4" HorizontalAlignment="Center" Margin="5" />
+        </Button>
     </BoxContainer>
 </DefaultWindow>
