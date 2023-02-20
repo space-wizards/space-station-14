@@ -106,6 +106,22 @@ public sealed class MarkingSet
     }
 
     /// <summary>
+    ///     Construct a MarkingSet only with a points dictionary.
+    /// </summary>
+    /// <param name="pointsPrototype">The ID of the points dictionary prototype.</param>
+    public MarkingSet(string pointsPrototype, MarkingManager? markingManager = null, IPrototypeManager? prototypeManager = null)
+    {
+        IoCManager.Resolve(ref markingManager, ref prototypeManager);
+
+        if (!prototypeManager.TryIndex(pointsPrototype, out MarkingPointsPrototype? points))
+        {
+            return;
+        }
+
+        Points = MarkingPoints.CloneMarkingPointDictionary(points.Points);
+    }
+
+    /// <summary>
     ///     Construct a MarkingSet by deep cloning another set.
     /// </summary>
     /// <param name="other">The other marking set.</param>
@@ -229,16 +245,6 @@ public sealed class MarkingSet
     {
         IoCManager.Resolve(ref markingManager);
 
-        Color? hairColor = null;
-        if (TryGetCategory(MarkingCategories.Hair, out var hairMarkings) &&
-            hairMarkings.Count > 0)
-        hairColor = hairMarkings[0].MarkingColors.FirstOrDefault();
-
-        Color? facialHairColor = null;
-        if (TryGetCategory(MarkingCategories.Hair, out var facialHairMarkings) &&
-            facialHairMarkings.Count > 0)
-        facialHairColor = facialHairMarkings[0].MarkingColors.FirstOrDefault();
-
         foreach (var (category, points) in Points)
         {
             if (points.Points <= 0 || points.DefaultMarkings.Count <= 0)
@@ -255,8 +261,7 @@ public sealed class MarkingSet
                             prototype,
                             skinColor,
                             eyeColor,
-                            hairColor,
-                            facialHairColor
+                            this
                         );
                     var marking = new Marking(points.DefaultMarkings[index], colors);
 

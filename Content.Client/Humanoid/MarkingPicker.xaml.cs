@@ -40,10 +40,6 @@ public sealed partial class MarkingPicker : Control
     public Color? CurrentHairColor;
     public Color? CurrentFacialHairColor;
 
-    // If hair color must be skin color
-    public bool SkinHairColor = false;
-    public bool SkinFacialHairColor = false;
-
     private readonly HashSet<MarkingCategories> _ignoreCategories = new();
 
     public string IgnoreCategories
@@ -452,13 +448,12 @@ public sealed partial class MarkingPicker : Control
 
         if (!_markingManager.MustMatchSkin(_currentSpecies, marking.BodyPart, _prototypeManager))
         {
-            // Coloring
+            // Do default coloring
             var colors = MarkingColoring.GetMarkingLayerColors(
                 marking,
                 CurrentSkinColor,
                 CurrentEyeColor,
-                SkinHairColor ? CurrentSkinColor : CurrentHairColor,
-                SkinFacialHairColor ? CurrentSkinColor : CurrentFacialHairColor
+                _currentMarkings
             );
             for (var i = 0; i < colors.Count; i++)
             {

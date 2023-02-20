@@ -54,36 +54,13 @@ public sealed class MarkingColors
     /// Coloring properties that will be used on any unspecified layer
     /// </summary>
     [DataField("default", true)]
-    public ColoringProperties Default { get; } = new();
+    public LayerColoring Default = new SkinColoring();
 
     /// <summary>
     ///     Layers with their own coloring type and properties
     /// </summary>
     [DataField("layers", true)]
-    public Dictionary<string, ColoringProperties>? Layers;
-}
-
-[DataDefinition]
-[Serializable, NetSerializable]
-public sealed class ColoringProperties
-{
-    /// <summary>
-    ///     Coloring type that will be used on that layer
-    /// </summary>
-    [DataField("type", true, required: true)]
-    public MarkingColoringType? Type;
-
-    /// <summary>
-    ///     Color that will be used if coloring type can't be performed or used "SimpleColor" type
-    /// </summary>
-    [DataField("color", true)]
-    public Color Color { get; } = Color.White;
-
-    /// <summary>
-    ///     Makes output color negative if true (in e.x. Different Eyes)
-    /// </summary>
-    [DataField("negative", true)]
-    public bool Negative { get; } = false;
+    public Dictionary<string, LayerColoring>? Layers;
 }
 
 public static class MarkingColoring
@@ -96,20 +73,13 @@ public static class MarkingColoring
         MarkingPrototype prototype,
         Color? skinColor,
         Color? eyeColor,
-        Color? hairColor,
-        Color? facialHairColor
+        MarkingSet markingSet
     )
     {
         var colors = new List<Color>();
 
         // Coloring from default properties
-        var defaultColor = MarkingColoring.GetMarkingColor(
-            prototype.Coloring.Default,
-            skinColor,
-            eyeColor,
-            hairColor,
-            facialHairColor
-        );
+        var defaultColor = prototype.Coloring.Default.GetColor(skinColor, eyeColor, markingSet);
 
         if (prototype.Coloring.Layers == null)
         {
@@ -132,21 +102,16 @@ public static class MarkingColoring
                     SpriteSpecifier.Texture texture => texture.TexturePath.Filename,
                     _ => null
                 };
-                if (name == null) {
+                if (name == null)
+                {
                     colors.Add(defaultColor);
                     continue;
                 }
             
                 // All specified layers must be colored separately, all unspecified must depend on default coloring
-                if (prototype.Coloring.Layers.TryGetValue(name, out var properties))
+                if (prototype.Coloring.Layers.TryGetValue(name, out var layerColoring))
                 {
-                    var marking_color = MarkingColoring.GetMarkingColor(
-                        properties,
-                        skinColor,
-                        eyeColor,
-                        hairColor,
-                        facialHairColor
-                    );
+                    var marking_color = layerColoring.GetColor(skinColor, eyeColor, markingSet);
                     colors.Add(marking_color);
                 }
                 else
@@ -156,37 +121,6 @@ public static class MarkingColoring
             }
             return colors;
         }
-    }
-
-    public static Color GetMarkingColor
-    (
-        ColoringProperties properties,
-        Color? skinColor,
-        Color? eyeColor,
-        Color? hairColor,
-        Color? facialHairColor
-    )
-    {
-        var outColor = properties.Type switch {
-            MarkingColoringType.SimpleColor => SimpleColor(properties.Color),
-            MarkingColoringType.SkinColor => SkinColor(skinColor),
-            MarkingColoringType.HairColor => HairColor(skinColor, hairColor),
-            MarkingColoringType.FacialHairColor => HairColor(skinColor, facialHairColor),
-            MarkingColoringType.AnyHairColor => AnyHairColor(skinColor, hairColor, facialHairColor),
-            MarkingColoringType.EyeColor => EyeColor(eyeColor),
-            MarkingColoringType.Tattoo => Tattoo(skinColor),
-            _ => SkinColor(skinColor)
-        } ?? properties.Color;
-
-        // Negative color
-        if (properties.Negative)
-        {
-            outColor.R = 1f-outColor.R;
-            outColor.G = 1f-outColor.G;
-            outColor.B = 1f-outColor.B;
-        }
-
-        return outColor;
     }
 
     public static Color? AnyHairColor(Color? skinColor, Color? hairColor, Color? facialHairColor)

@@ -80,43 +80,43 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
 
         humanoid.MarkingSet.Clear();
 
-        // Hair/facial hair - this may eventually be deprecated.
-        AddMarking(uid, profile.Appearance.HairStyleId, profile.Appearance.HairColor, false);
-        AddMarking(uid, profile.Appearance.FacialHairStyleId, profile.Appearance.FacialHairColor, false);
-
-        humanoid.MarkingSet.EnsureSpecies(profile.Species, profile.Appearance.SkinColor, _markingManager, _prototypeManager);
-
-        Color? hairColor = null;
-        if (humanoid.MarkingSet.TryGetCategory(MarkingCategories.Hair, out var hairMarkings) &&
-            hairMarkings.Count > 0)
-        hairColor = hairMarkings[0].MarkingColors.FirstOrDefault();
-
-        Color? facialHairColor = null;
-        if (humanoid.MarkingSet.TryGetCategory(MarkingCategories.Hair, out var facialHairMarkings) &&
-            facialHairMarkings.Count > 0)
-        facialHairColor = facialHairMarkings[0].MarkingColors.FirstOrDefault();
+        // Markings with forced coloring. We need to color it after we add already colored markings
+        var markingFColored = new Dictionary<Marking, MarkingPrototype>();
 
         // Adding markings from profile with default coloring if needed
         foreach (var marking in profile.Appearance.Markings)
         {
             if (_markingManager.TryGetMarking(marking, out var prototype))
             {
-                if (!prototype.ForcedColoring) AddMarking(uid, marking.MarkingId, marking.MarkingColors, false);
+                if (!prototype.ForcedColoring)
+                {
+                    AddMarking(uid, marking.MarkingId, marking.MarkingColors, false);
+                }
                 else
                 {
-                    var markingColors = MarkingColoring.GetMarkingLayerColors(
-                        prototype,
-                        profile.Appearance.SkinColor,
-                        profile.Appearance.EyeColor,
-                        hairColor,
-                        facialHairColor
-                    );
-                    AddMarking(uid, marking.MarkingId, markingColors, false);
+                    markingFColored.Add(marking, prototype);
                 }
             }
         }
 
+        // Hair/facial hair - this may eventually be deprecated.
+        AddMarking(uid, profile.Appearance.HairStyleId, profile.Appearance.HairColor, false);
+        AddMarking(uid, profile.Appearance.FacialHairStyleId, profile.Appearance.FacialHairColor, false);
+
+        humanoid.MarkingSet.EnsureSpecies(profile.Species, profile.Appearance.SkinColor, _markingManager, _prototypeManager);
         EnsureDefaultMarkings(uid, humanoid);
+
+        // Finally adding marking with forced colors
+        foreach (var (marking, prototype) in markingFColored)
+        {
+            var markingColors = MarkingColoring.GetMarkingLayerColors(
+                prototype,
+                profile.Appearance.SkinColor,
+                profile.Appearance.EyeColor,
+                humanoid.MarkingSet
+            );
+            AddMarking(uid, marking.MarkingId, markingColors, false);
+        }
 
         humanoid.Gender = profile.Gender;
         if (TryComp<GrammarComponent>(uid, out var grammar))

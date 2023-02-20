@@ -223,8 +223,6 @@ namespace Content.Client.Preferences.UI
                     return;
                 Profile = Profile.WithCharacterAppearance(
                     Profile.Appearance.WithHairColor(newColor.marking.MarkingColors[0]));
-
-                if (!CMarkings.SkinHairColor) CMarkings.CurrentHairColor = newColor.marking.MarkingColors[0];
                 IsDirty = true;
             };
 
@@ -243,8 +241,6 @@ namespace Content.Client.Preferences.UI
                     return;
                 Profile = Profile.WithCharacterAppearance(
                     Profile.Appearance.WithFacialHairColor(newColor.marking.MarkingColors[0]));
-                
-                if (!CMarkings.SkinFacialHairColor) CMarkings.CurrentFacialHairColor = newColor.marking.MarkingColors[0];
                 IsDirty = true;
             };
 
@@ -682,9 +678,6 @@ namespace Content.Client.Preferences.UI
                 }
             }
 
-            if (CMarkings.SkinHairColor) CMarkings.CurrentHairColor = CMarkings.CurrentSkinColor;
-            if (CMarkings.SkinFacialHairColor) CMarkings.CurrentFacialHairColor = CMarkings.CurrentSkinColor;
-
             IsDirty = true;
         }
 
@@ -949,35 +942,6 @@ namespace Content.Client.Preferences.UI
                 return;
             }
 
-            Color? hairColor = null;
-            Color? facialHairColor = null;
-
-            // We don't need to seek hair markings if they colors must be skin color
-            if (CMarkings.SkinHairColor) hairColor = Profile.Appearance.SkinColor;
-            if (CMarkings.SkinFacialHairColor) facialHairColor = Profile.Appearance.SkinColor;
-
-            // Looking through all markings to get hair color (unless both are using skin color)
-            if (!CMarkings.SkinHairColor || !CMarkings.SkinFacialHairColor) {
-                foreach (var marking in Profile.Appearance.Markings)
-                {
-                    if (!_markingManager.TryGetMarking(marking, out var markingPrototype))
-                    {
-                        continue;
-                    }
-
-                    switch (markingPrototype.MarkingCategory) {
-                        case MarkingCategories.Hair:
-                            if (hairColor != null && _markingManager.CanBeApplied(Profile.Species, marking, _prototypeManager)) 
-                                hairColor = marking.MarkingColors.FirstOrDefault();
-                            break;
-                        case MarkingCategories.FacialHair:
-                            if (facialHairColor != null && _markingManager.CanBeApplied(Profile.Species, marking, _prototypeManager)) 
-                                facialHairColor = marking.MarkingColors.FirstOrDefault();
-                            break;
-                    }
-                }
-            }
-
             CMarkings.SetData(Profile.Appearance.Markings, Profile.Species,
                 Profile.Appearance.SkinColor, Profile.Appearance.EyeColor
             );
@@ -1040,42 +1004,6 @@ namespace Content.Client.Preferences.UI
                 HairStyles.DefaultFacialHairStyle => new List<Marking>(),
                 _ => new() { new(Profile.Appearance.FacialHairStyleId, new List<Color>() { Profile.Appearance.FacialHairColor }) },
             };
-
-            // If species can't have hair then markings shouldn't have it color
-            var firstHairMarking = hairMarking.FirstOrDefault();
-            if(firstHairMarking != null && _markingManager.CanBeApplied(Profile.Species, firstHairMarking, _prototypeManager) )
-                // If hair use skin color then current hair color must be skin color too
-                if (_markingManager.MustMatchSkin(Profile.Species, HumanoidVisualLayers.Hair, _prototypeManager)) {
-                    CMarkings.CurrentHairColor = Profile.Appearance.SkinColor;
-                    CMarkings.SkinHairColor = true; // Hair Picker will use skin color for current hair color
-                }
-                else
-                {
-                    CMarkings.CurrentHairColor = firstHairMarking.MarkingColors.FirstOrDefault();
-                    CMarkings.SkinHairColor = false;
-                }
-            else
-            {
-                CMarkings.CurrentHairColor = null;
-                CMarkings.SkinHairColor = false;
-            }
-
-            var firstFacialHairMarking = facialHairMarking.FirstOrDefault();
-            if(firstFacialHairMarking != null && _markingManager.CanBeApplied(Profile.Species, firstFacialHairMarking, _prototypeManager))
-                if (_markingManager.MustMatchSkin(Profile.Species, HumanoidVisualLayers.FacialHair, _prototypeManager)) {
-                    CMarkings.CurrentFacialHairColor = Profile.Appearance.SkinColor;
-                    CMarkings.SkinFacialHairColor = true;
-                }
-                else
-                {
-                    CMarkings.CurrentFacialHairColor = firstFacialHairMarking.MarkingColors.FirstOrDefault();
-                    CMarkings.SkinFacialHairColor = false;
-                }
-            else
-            {
-                CMarkings.CurrentFacialHairColor = null;
-                CMarkings.SkinFacialHairColor = false;
-            }
 
             _hairPicker.UpdateData(
                 hairMarking,

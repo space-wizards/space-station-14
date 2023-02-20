@@ -5,7 +5,7 @@
   speciesRestriction: [Diona]
   coloring:
     default:
-      type: SkinColor
+      !type:SkinColoring
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: thorns_head
@@ -17,7 +17,7 @@
   speciesRestriction: [Diona]
   coloring:
     default:
-      type: SkinColor
+      !type:SkinColoring
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: thorns_body
@@ -29,7 +29,8 @@
   speciesRestriction: [Diona]
   coloring:
     default:
-      type: SimpleColor
+      !type:SimpleColoring
+        color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: flowers_head
@@ -41,7 +42,8 @@
   speciesRestriction: [Diona]
   coloring:
     default:
-      type: SimpleColor
+      !type:SimpleColoring
+        color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: flowers_body
@@ -53,7 +55,7 @@
   speciesRestriction: [Diona]
   coloring:
     default:
-      type: SkinColor
+      !type:SkinColoring
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: leaf_cover
@@ -65,7 +67,8 @@
   speciesRestriction: [Diona]
   coloring:
     default:
-      type: SimpleColor
+      !type:SimpleColoring
+        color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: bloom
@@ -77,7 +80,8 @@
   speciesRestriction: [Diona]
   coloring:
     default:
-      type: SimpleColor
+      !type:SimpleColoring
+        color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: bracket
@@ -89,7 +93,7 @@
   speciesRestriction: [Diona]
   coloring:
     default:
-      type: SkinColor
+      !type:SkinColoring
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: brush
@@ -101,7 +105,8 @@
   speciesRestriction: [Diona]
   coloring:
     default:
-      type: SimpleColor
+      !type:SimpleColoring
+        color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: cornflower
@@ -113,7 +118,8 @@
   speciesRestriction: [Diona]
   coloring:
     default:
-      type: SimpleColor
+      !type:SimpleColoring
+        color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: ficus
@@ -125,7 +131,8 @@
   speciesRestriction: [Diona]
   coloring:
     default:
-      type: SimpleColor
+      !type:SimpleColoring
+        color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: garland
@@ -137,7 +144,8 @@
   speciesRestriction: [Diona]
   coloring:
     default:
-      type: SimpleColor
+      !type:SimpleColoring
+        color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: king
@@ -149,7 +157,8 @@
   speciesRestriction: [Diona]
   coloring:
     default:
-      type: SimpleColor
+      !type:SimpleColoring
+        color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: laurel
@@ -161,7 +170,8 @@
   speciesRestriction: [Diona]
   coloring:
     default:
-      type: SimpleColor
+      !type:SimpleColoring
+        color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: leafy
@@ -173,7 +183,8 @@
   speciesRestriction: [Diona]
   coloring:
     default:
-      type: SimpleColor
+      !type:SimpleColoring
+        color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: lotus
@@ -185,7 +196,8 @@
   speciesRestriction: [Diona]
   coloring:
     default:
-      type: SimpleColor
+      !type:SimpleColoring
+        color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: meadow
@@ -197,7 +209,8 @@
   speciesRestriction: [Diona]
   coloring:
     default:
-      type: SimpleColor
+      !type:SimpleColoring
+        color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: oak
@@ -209,7 +222,8 @@
   speciesRestriction: [Diona]
   coloring:
     default:
-      type: SimpleColor
+      !type:SimpleColoring
+        color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: palm
@@ -221,7 +235,8 @@
   speciesRestriction: [Diona]
   coloring:
     default:
-      type: SimpleColor
+      !type:SimpleColoring
+        color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: root
@@ -233,7 +248,8 @@
   speciesRestriction: [Diona]
   coloring:
     default:
-      type: SimpleColor
+      !type:SimpleColoring
+        color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: rose
@@ -245,7 +261,8 @@
   speciesRestriction: [Diona]
   coloring:
     default:
-      type: SimpleColor
+      !type:SimpleColoring
+        color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: rosey
@@ -257,7 +274,8 @@
   speciesRestriction: [Diona]
   coloring:
     default:
-      type: SimpleColor
+      !type:SimpleColoring
+        color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: shrub
@@ -269,7 +287,8 @@
   speciesRestriction: [Diona]
   coloring:
     default:
-      type: SimpleColor
+      !type:SimpleColoring
+        color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: spinner
@@ -281,7 +300,8 @@
   speciesRestriction: [Diona]
   coloring:
     default:
-      type: SimpleColor
+      !type:SimpleColoring
+        color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: sprout
@@ -293,7 +313,8 @@
   speciesRestriction: [Diona]
   coloring:
     default:
-      type: SimpleColor
+      !type:SimpleColoring
+        color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: vine
@@ -305,7 +326,8 @@
   speciesRestriction: [Diona]
   coloring:
     default:
-      type: SimpleColor
+      !type:SimpleColoring
+        color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: vinel
@@ -317,7 +339,8 @@
   speciesRestriction: [Diona]
   coloring:
     default:
-      type: SimpleColor
+      !type:SimpleColoring
+        color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: vines
@@ -329,7 +352,8 @@
   speciesRestriction: [Diona]
   coloring:
     default:
-      type: SimpleColor
+      !type:SimpleColoring
+        color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: wildflower
