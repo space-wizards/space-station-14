@@ -58,13 +58,13 @@
       "name": "torso_m",
       "directions": 4
     },
-	{
+    {
       "name": "eyes",
       "directions": 4
     },
-	{
+    {
 	  "name": "template",
 	  "directions": 4
-	}
+    }
   ]
 }
