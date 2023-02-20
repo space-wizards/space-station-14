@@ -1,6 +1,17 @@
+- type: dungeonLayout
+  id: DOTE
+  roomPacks:
+    - -8,0,4,8
+    - -2,6,2,10
+    - -8,12,8,16
+    - -2,18,2,34
+    - -20,18,-4,34
+    - 4,18,20,34
+    - -2,36,2,52
+
 - type: dungeonRoomPack
-  id: MediumRooms
-  size: 19,19
+  id: LargeArea1
+  size: 17,17
   rooms:
     - 1,9,19,10
     - 1,12,6,17
