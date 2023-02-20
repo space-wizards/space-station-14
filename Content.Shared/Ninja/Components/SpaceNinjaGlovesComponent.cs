@@ -22,7 +22,7 @@ public sealed class SpaceNinjaGlovesComponent : Component
     /// <summary>
     /// The action for toggling ninja gloves abilities
     /// </summary>
-    [DataField("togglingAction")]
+    [DataField("toggleAction")]
     public InstantAction ToggleAction = new()
     {
         DisplayName = "action-name-toggle-ninja-gloves",
