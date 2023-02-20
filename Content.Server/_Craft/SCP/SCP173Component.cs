@@ -1,20 +1,17 @@
 using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.Utility;
 using Robust.Shared.Audio;
+using Content.Shared.SCP.ConcreteSlab;
 
-namespace Content.Server.Abilities.SCP.ConcreteSlab
+namespace Content.Server.SCP.ConcreteSlab
 {
     [RegisterComponent]
-    public sealed class SCP173Component : Component
+    [Access(typeof(SCP173System))]
+    [ComponentReference(typeof(SharedSCP173Component))]
+    public sealed class SCP173Component : SharedSCP173Component
     {
-        [DataField("enabled")]
-        public bool Enabled = true;
-
         [DataField("eyeSightRange")]
         public float EyeSightRange = 8;
-
-        [DataField("lookedAt")]
-        public bool LookedAt = false;
 
         [DataField("spooksSoundCollection", required: true)]
         public SoundSpecifier SpooksSound = default!;
@@ -24,6 +21,9 @@ namespace Content.Server.Abilities.SCP.ConcreteSlab
 
         [DataField("killSoundCollection", required: true)]
         public SoundSpecifier KillSound = default!;
+
+        [DataField("doorOpenSound", required: true)]
+        public SoundSpecifier DoorOpenSound = default!;
 
         [ViewVariables(VVAccess.ReadOnly)]
         [DataField("lookers")]
@@ -42,12 +42,23 @@ namespace Content.Server.Abilities.SCP.ConcreteSlab
         [DataField("blindAction")]
         public InstantAction BlindAction = new()
         {
+            Enabled = false,
             UseDelay = TimeSpan.FromSeconds(90),
             Icon = new SpriteSpecifier.Texture(new("Interface/Actions/malfunction.png")),
             DisplayName = "scp-173-blind",
             Description = "scp-173-blind-desc",
             Priority = -1,
             Event = new BlindActionEvent(),
+        };
+        [DataField("doorOpenAction")]
+        public InstantAction DoorOpenAction = new()
+        {
+            UseDelay = TimeSpan.FromSeconds(20),
+            Icon = new SpriteSpecifier.Texture(new("Interface/Actions/malfunction.png")),
+            DisplayName = "scp-173-dooropen",
+            Description = "scp-173-dooropen-desc",
+            Priority = -1,
+            Event = new DoorOpenActionEvent(),
         };
     }
 }

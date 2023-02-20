@@ -208,6 +208,9 @@
   id: ExplosivePassable
 
 - type: Tag
+  id: EyeSight
+
+- type: Tag
   id: FireAlarm
 
 - type: Tag

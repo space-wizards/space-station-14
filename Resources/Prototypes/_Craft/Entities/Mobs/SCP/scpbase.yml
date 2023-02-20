@@ -37,9 +37,6 @@
     allowed:
     - SlowedDown
     - Stutter
-    - Electrocution
-    - ForcedSleep
-    - TemporaryBlindness
     - Pacified
   - type: Examiner
   - type: MeleeWeapon
@@ -60,7 +57,7 @@
   - type: StandingState
   - type: Alerts
   - type: MobPrice
-    price: 2000
+    price: 5000
   - type: InteractionOutline
   - type: Physics
     bodyType: KinematicController

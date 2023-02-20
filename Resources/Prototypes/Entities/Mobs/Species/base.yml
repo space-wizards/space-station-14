@@ -17,6 +17,7 @@
           MeatLaserImpact
   - type: Tag
     tags:
+    - EyeSight
     - CanPilot
     - FootstepSound
     - DoorBumpOpener

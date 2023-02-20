@@ -47,6 +47,11 @@
     - /Audio/SCP/173/Rattle2.ogg
     - /Audio/SCP/173/Rattle3.ogg
 
+- type: soundCollection
+  id: 173DoorOpen
+  files:
+    - /Audio/SCP/Horror/Horror7.ogg
+
 - type: entity
   name: Лужа крови?
   id: SCP173Puddle
@@ -61,7 +66,7 @@
     - id: slipFixture
       shape:
         !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.5,0.5"
+        bounds: "-0.4,-0.4,0.4,0.4"
       mask:
       - ItemMask
       layer:
@@ -70,10 +75,14 @@
   - type: Sprite
     sprite: Fluids/splatter.rsi
     state: splatter-0
-    color: "#DDCC00"
+    color: "#993300"
     netsync: false
   - type: Puddle
-    slipThreshold: 2
+    slipThreshold: 1
+    overflowVolume: 20
+    recolor: false
+  - type: Puddle
+    slipThreshold: 5
     recolor: false
   - type: SolutionContainerManager
     solutions:
@@ -81,12 +90,12 @@
         maxVol: 1000
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Blood
           Quantity: 8
+        - ReagentId: Blood
+          Quantity: 5
   - type: Slippery
-    launchForwardsMultiplier: 2.0
     paralyzeTime: 4
+    launchForwardsMultiplier: 2.0
   - type: StepTrigger
   - type: Appearance
   - type: PuddleVisualizer
@@ -98,13 +107,15 @@
   id: MobSCP173
   description: Не моргай.
   components:
-  - type: SCP173
+  - type: SCP173 
     spooksSoundCollection:
       collection: 173Spooks
     scaresSoundCollection:
       collection: 173Scares
     killSoundCollection:
       collection: 173Kills
+    doorOpenSound:
+      collection: 173DoorOpen
   - type: MovementSpeedModifier
     baseWalkSpeed : 4
     baseSprintSpeed : 10
@@ -138,10 +149,10 @@
     accent: mute
   - type: GhostTakeoverAvailable
     allowMovement: true
-    allowSpeech: true
-    makeSentient: true
+    allowSpeech: false
+    makeSentient: false
     name: SCP-173
-    description: Вы SCP-173, неуязвимая статуя которая не может двигаться пока на неё смотрят! Используя свои способности убейте весь экипаж на станции.
+    description: Вы SCP-173, неуязвимая статуя которая не может двигаться пока на неё смотрят! Используя свои способности вы можете убить весь экипаж на станции.
     rules: Будучи агрессивным обьектом SCP убейте всех живых на станции.
   - type: Tool
     speed: 3
@@ -157,7 +168,7 @@
     animation: WeaponArcBite
     damage:
       types:
-        Piercing: 180
+        Piercing: 350
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: SCP173
