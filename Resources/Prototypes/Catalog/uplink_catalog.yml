@@ -571,8 +571,6 @@
   - !type:BuyerJobCondition
     whitelist:
     - Clown
-    - Mime
-    - Botanist
 
 # Armor
 
