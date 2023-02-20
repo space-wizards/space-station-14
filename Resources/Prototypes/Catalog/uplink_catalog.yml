@@ -558,6 +558,20 @@
       components:
       - SurplusBundle
 
+- type: listing
+  id: uplinkBananaPeelExplosive
+  name: uplink-banana-peel-explosive-name
+  description: uplink-banana-peel-explosive-desc
+  productEntity: TrashBananaPeelExplosive
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Clown
+
 # Armor
 
 - type: listing
