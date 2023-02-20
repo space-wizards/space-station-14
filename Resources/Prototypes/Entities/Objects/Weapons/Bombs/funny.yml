@@ -1,6 +1,6 @@
 - type: entity
   name: hot potato
-  description: When activated the potato can only be transferred away from you by hitting another being with it, and when the timer expires it explodes! 
+  description: When activated can only be transferred away by hitting another being with it!
   parent: BaseItem
   id: HotPotato
   components:
@@ -20,3 +20,4 @@
       totalIntensity: 20
       canCreateVacuum: false
     - type: DeleteOnTrigger
+    - type: HotPotato
