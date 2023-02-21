@@ -31,6 +31,12 @@
     id: Pirates
 
 - type: gameRule
+  id: Wizard
+  config:
+    !type:WizardRuleConfiguration
+    id: Wizard
+    
+- type: gameRule
   id: Suspicion
   config:
     !type:GenericGameRuleConfiguration

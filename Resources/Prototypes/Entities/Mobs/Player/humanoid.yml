@@ -357,3 +357,19 @@
   id: NukeOp
   components:
     - type: NukeOperative
+
+- type: entity
+  id: RandomHumanoidSpawnerWizard
+  name: Wizard
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Mobs/Species/Human/parts.rsi
+      state: full
+    - type: RandomHumanoidSpawner
+      settings: WizardHumanoid
+ 
+- type: randomHumanoidSettings
+  id: WizardHumanoid
+  components:
+    - type: Wizard

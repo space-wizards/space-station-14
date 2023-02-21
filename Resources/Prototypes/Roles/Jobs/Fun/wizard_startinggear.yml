@@ -9,6 +9,7 @@
     shoes: ClothingShoesWizard
     id: PassengerPDA
     ears: ClothingHeadsetService
+    pocket1: BaseSpellBook10SP
   innerclothingskirt: ClothingUniformJumpskirtColorDarkBlue
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

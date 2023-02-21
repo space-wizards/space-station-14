@@ -3,3 +3,9 @@
   name: telecrystal
   icon: Objects/Specific/Syndicate/telecrystal.rsi
   spawn: Telecrystal1
+
+- type: stack
+  id: Spellpoint
+  name: spellpoint
+  icon: Objects/Specific/Syndicate/telecrystal.rsi
+  spawn: Spellpoint

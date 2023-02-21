@@ -1,0 +1,181 @@
+- type: listing
+  id: SpellbookSpawnBook
+  name: spellbook-spawn-book-name
+  description: spellbook-spawn-book-description
+  productEntity: SpawnSpellbook
+  cost:
+    Spellpoint: 2
+  categories:
+  - SpellbookBooks
+
+- type: listing
+  id: SpellbookForceWallBook
+  name: spellbook-force-wall-book-name
+  description: spellbook-force-wall-book-description
+  productEntity: ForceWallSpellbook
+  cost:
+    Spellpoint: 2
+  categories:
+  - SpellbookBooks
+
+- type: listing
+  id: SpellbookBlinkBook
+  name: spellbook-blink-book-name
+  description: spellbook-blink-book-description
+  productEntity: BlinkBook
+  cost:
+    Spellpoint: 2
+  categories:
+  - SpellbookBooks
+
+- type: listing
+  id: SpellbookSmiteBook
+  name: spellbook-smite-book-name
+  description: spellbook-smite-book-description
+  productEntity: SmiteBook
+  cost:
+    Spellpoint: 4
+  categories:
+  - SpellbookBooks
+  
+- type: listing
+  id: SpellbookKnockSpellbook
+  name: spellbook-knock-book-name
+  description: spellbook-knock-book-description
+  productEntity: KnockSpellbook
+  cost:
+    Spellpoint: 2
+  categories:
+  - SpellbookBooks
+  
+- type: listing
+  id: SpellbookFireballSpellbook
+  name: spellbook-fireball-book-name
+  description: spellbook-fireball-book-description
+  productEntity: FireballSpellbook
+  cost:
+    Spellpoint: 5
+  categories:
+  - SpellbookBooks
+
+- type: listing
+  id: SpellbookScrollRunes
+  name: spellbook-scroll-runes-name
+  description: spellbook-scroll-runes-description
+  productEntity: ScrollRunes
+  cost:
+    Spellpoint: 2
+  categories:
+  - SpellbookBooks
+
+- type: listing
+  id: SpellbookEntranceStaff
+  name: spellbook-entrance-staff-name
+  description: spellbook-entrance-staff-description
+  productEntity: WeaponStaffPolymorphDoor
+  cost:
+    Spellpoint: 2
+  categories:
+  - SpellbookStaves
+
+- type: listing
+  id: SpellbookHealingStaff
+  name: spellbook-healing-staff-name
+  description: spellbook-healing-staff-description
+  productEntity: WeaponStaffHealing
+  cost:
+    Spellpoint: 2
+  categories:
+  - SpellbookStaves
+
+- type: listing
+  id: SpellbookRGBStaff
+  name: spellbook-rgb-staff-name
+  description: spellbook-rgb-staff-description
+  productEntity: RGBStaff
+  cost:
+    Spellpoint: 1
+  categories:
+  - SpellbookStaves
+
+- type: listing
+  id: SpellbookPolyCarpWand
+  name: spellbook-poly-carp-wand-name
+  description: spellbook-poly-carp-wand-description
+  productEntity: WeaponWandPolymorphCarp
+  cost:
+    Spellpoint: 2
+  categories:
+  - SpellbookWands
+
+- type: listing
+  id: SpellbookPolyMonkeyWand
+  name: spellbook-poly-monkey-wand-name
+  description: spellbook-poly-monkey-wand-description
+  productEntity: WeaponWandPolymorphMonkey
+  cost:
+    Spellpoint: 2
+  categories:
+  - SpellbookWands
+
+- type: listing
+  id: SpellbookFireballWand
+  name: spellbook-fireball-wand-name
+  description: spellbook-fireball-wand-description
+  productEntity: WeaponWandFireball
+  cost:
+    Spellpoint: 3
+  categories:
+  - SpellbookWands
+
+- type: listing
+  id: SpellbookDeathWand
+  name: spellbook-death-wand-name
+  description: spellbook-death-wand-description
+  productEntity: WeaponWandDeath
+  cost:
+    Spellpoint: 3
+  categories:
+  - SpellbookWands
+
+- type: listing
+  id: SpellbookEntranceWand
+  name: spellbook-entrance-wand-name
+  description: spellbook-entrance-wand-description
+  productEntity: WeaponWandPolymorphDoor
+  cost:
+    Spellpoint: 1
+  categories:
+  - SpellbookWands
+
+- type: listing
+  id: SpellbookWandBelt
+  name: spellbook-wand-belt-name
+  description: spellbook-wand-belt-description
+  productEntity: ClothingBeltWand
+  cost:
+    Spellpoint: 1
+  categories:
+  - SpellbookMisc
+
+- type: listing
+  id: SpellbookWizardHardsuit
+  name: spellbook-hardsuit-name
+  description: spellbook-hardsuit-description
+  productEntity: ClothingOuterHardsuitWizard
+  cost:
+    Spellpoint: 1
+  categories:
+  - SpellbookMisc
+
+- type: listing
+  id: SpellbookHoloparaKit
+  name: uplink-holopara-kit-name
+  description: uplink-holopara-kit-desc
+  icon: { sprite: /Textures/Objects/Misc/guardian_info.rsi, state: icon }
+  productEntity: BoxHoloparasite
+  cost:
+    Spellpoint: 3
+  categories:
+  - SpellbookMisc
+  
