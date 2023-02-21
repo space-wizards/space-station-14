@@ -32,10 +32,7 @@ public sealed class DoAfterSystem : SharedDoAfterSystem
         UpdatesOutsidePrediction = true;
         SubscribeNetworkEvent<CancelledDoAfterMessage>(OnCancelledDoAfter);
         SubscribeLocalEvent<DoAfterComponent, ComponentHandleState>(OnDoAfterHandleState);
-        _overlay.AddOverlay(
-            new DoAfterOverlay(
-                EntityManager,
-                _prototype));
+        _overlay.AddOverlay(new DoAfterOverlay(EntityManager, _prototype));
     }
 
     public override void Shutdown()
@@ -154,7 +151,7 @@ public sealed class DoAfterSystem : SharedDoAfterSystem
 
                 if (doAfter.EventArgs.BreakOnTargetMove)
                 {
-                    if (!EntityManager.Deleted(doAfter.EventArgs.Target) &&
+                    if (!Deleted(doAfter.EventArgs.Target) &&
                         !Transform(doAfter.EventArgs.Target.Value).Coordinates.InRange(EntityManager,
                             doAfter.TargetGrid,
                             doAfter.EventArgs.MovementThreshold))
