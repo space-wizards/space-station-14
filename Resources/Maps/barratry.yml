@@ -45475,8 +45475,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 21.213781
-      - 79.80423
+      - 20.619795
+      - 77.56971
       - 0
       - 0
       - 0
@@ -150375,6 +150375,239 @@ entities:
   type: CableApcExtension
   components:
   - pos: 10.5,33.5
+    parent: 1
+    type: Transform
+- uid: 15292
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -2.5,18.5
+    parent: 1
+    type: Transform
+- uid: 15293
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 1.5,18.5
+    parent: 1
+    type: Transform
+- uid: 15294
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 5.5,15.5
+    parent: 1
+    type: Transform
+- uid: 15295
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 8.5,27.5
+    parent: 1
+    type: Transform
+- uid: 15296
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 5.5,36.5
+    parent: 1
+    type: Transform
+- uid: 15297
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -19.5,56.5
+    parent: 1
+    type: Transform
+- uid: 15298
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -18.5,61.5
+    parent: 1
+    type: Transform
+- uid: 15299
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -9.5,58.5
+    parent: 1
+    type: Transform
+- uid: 15300
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -60.5,56.5
+    parent: 1
+    type: Transform
+- uid: 15301
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -53.5,59.5
+    parent: 1
+    type: Transform
+- uid: 15302
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -45.5,55.5
+    parent: 1
+    type: Transform
+- uid: 15303
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -45.5,60.5
+    parent: 1
+    type: Transform
+- uid: 15304
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -53.5,67.5
+    parent: 1
+    type: Transform
+- uid: 15305
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -57.5,63.5
+    parent: 1
+    type: Transform
+- uid: 15306
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -56.5,88.5
+    parent: 1
+    type: Transform
+- uid: 15307
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -62.5,82.5
+    parent: 1
+    type: Transform
+- uid: 15308
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -49.5,82.5
+    parent: 1
+    type: Transform
+- uid: 15309
+  type: EmergencyLight
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -4.5,23.5
+    parent: 1
+    type: Transform
+  - type: ActiveEmergencyLight
+- uid: 15310
+  type: EmergencyLight
+  components:
+  - pos: -1.5,34.5
+    parent: 1
+    type: Transform
+  - type: ActiveEmergencyLight
+- uid: 15311
+  type: EmergencyLight
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 4.5,38.5
+    parent: 1
+    type: Transform
+  - type: ActiveEmergencyLight
+- uid: 15312
+  type: EmergencyLight
+  components:
+  - pos: 8.5,37.5
+    parent: 1
+    type: Transform
+  - type: ActiveEmergencyLight
+- uid: 15313
+  type: EmergencyLight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 9.5,28.5
+    parent: 1
+    type: Transform
+  - type: ActiveEmergencyLight
+- uid: 15314
+  type: EmergencyLight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 8.5,22.5
+    parent: 1
+    type: Transform
+  - type: ActiveEmergencyLight
+- uid: 15315
+  type: EmergencyLight
+  components:
+  - pos: 7.5,17.5
+    parent: 1
+    type: Transform
+  - type: ActiveEmergencyLight
+- uid: 15316
+  type: EmergencyLight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 1.5,14.5
+    parent: 1
+    type: Transform
+  - type: ActiveEmergencyLight
+- uid: 15317
+  type: ExtinguisherCabinetFilled
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -75.5,19.5
+    parent: 1
+    type: Transform
+- uid: 15318
+  type: ExtinguisherCabinetFilled
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -83.5,22.5
+    parent: 1
+    type: Transform
+- uid: 15319
+  type: ExtinguisherCabinetFilled
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -75.5,31.5
+    parent: 1
+    type: Transform
+- uid: 15320
+  type: ExtinguisherCabinetFilled
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -76.5,42.5
+    parent: 1
+    type: Transform
+- uid: 15321
+  type: ExtinguisherCabinetFilled
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -65.5,29.5
+    parent: 1
+    type: Transform
+- uid: 15322
+  type: ExtinguisherCabinetFilled
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -66.5,18.5
+    parent: 1
+    type: Transform
+- uid: 15323
+  type: ExtinguisherCabinetFilled
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -62.5,46.5
+    parent: 1
+    type: Transform
+- uid: 15324
+  type: ExtinguisherCabinetFilled
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -59.5,38.5
+    parent: 1
+    type: Transform
+- uid: 15325
+  type: ExtinguisherCabinetFilled
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -52.5,48.5
+    parent: 1
+    type: Transform
+- uid: 15326
+  type: ExtinguisherCabinetFilled
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -45.5,38.5
     parent: 1
     type: Transform
 ...
