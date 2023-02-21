@@ -42,7 +42,7 @@ namespace Content.Server.Tools
 
         private void OnDoAfter(EntityUid uid, ToolComponent component, DoAfterEvent<ToolEventData> args)
         {
-            if (args.Handled || args.Cancelled)
+            if (args.Handled || args.Cancelled || args.AdditionalData.Ev == null)
                 return;
 
             if (ToolFinishUse(uid, args.Args.User, args.AdditionalData.Fuel))
@@ -51,6 +51,8 @@ namespace Content.Server.Tools
                     RaiseLocalEvent(args.AdditionalData.TargetEntity.Value, args.AdditionalData.Ev);
                 else
                     RaiseLocalEvent(args.AdditionalData.Ev);
+
+                args.Handled = true;
             }
             else if (args.AdditionalData.CancelledEv != null)
             {
@@ -58,6 +60,8 @@ namespace Content.Server.Tools
                     RaiseLocalEvent(args.AdditionalData.TargetEntity.Value, args.AdditionalData.CancelledEv);
                 else
                     RaiseLocalEvent(args.AdditionalData.CancelledEv);
+
+                args.Handled = true;
             }
         }
 
@@ -168,15 +172,11 @@ namespace Content.Server.Tools
             EntityUid tool,
             EntityUid user,
             EntityUid? target,
-            float fuel,
             float doAfterDelay,
             IEnumerable<string> toolQualitiesNeeded,
-            object? doAfterCompleteEvent = null,
-            object? doAfterCancelledEvent = null,
-            EntityUid? doAfterEventTarget = null,
-            Func<bool>? doAfterCheck = null,
-            ToolComponent? toolComponent = null,
-            CancellationToken? cancelToken = null)
+            ToolEventData eventData,
+            float fuel = 0f,
+            ToolComponent? toolComponent = null)
         {
             // No logging here, after all that'd mean the caller would need to check if the component is there or not.
             if (!Resolve(tool, ref toolComponent, false))
@@ -366,22 +366,6 @@ namespace Content.Server.Tools
         {
             Fuel = fuel;
             User = user;
-        }
-    }
-
-    public sealed class ToolEventData
-    {
-        public readonly Object Ev;
-        public readonly Object? CancelledEv;
-        public readonly float Fuel;
-        public readonly EntityUid? TargetEntity;
-
-        public ToolEventData(Object ev, float fuel = 0f, Object? cancelledEv = null, EntityUid? targetEntity = null)
-        {
-            Ev = ev;
-            CancelledEv = cancelledEv;
-            Fuel = fuel;
-            TargetEntity = targetEntity;
         }
     }
 

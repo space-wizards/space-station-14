@@ -197,9 +197,8 @@ public sealed class DoorSystem : SharedDoorSystem
         RaiseLocalEvent(target, modEv, false);
 
         door.BeingPried = true;
-        _toolSystem.UseTool(tool, user, target, 0f, modEv.PryTimeModifier * door.PryTime, door.PryingQuality,
-                new PryFinishedEvent(), new PryCancelledEvent(), target);
-
+        var toolEvData = new ToolEventData(new PryFinishedEvent(), cancelledEv: new PryCancelledEvent(),targetEntity: target);
+        _toolSystem.UseTool(tool, user, target, modEv.PryTimeModifier * door.PryTime, new[] { door.PryingQuality }, toolEvData);
         return true; // we might not actually succeeded, but a do-after has started
     }
 

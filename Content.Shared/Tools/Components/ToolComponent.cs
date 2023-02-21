@@ -20,4 +20,20 @@ namespace Content.Shared.Tools.Components
         [DataField("useSound")]
         public SoundSpecifier? UseSound { get; set; }
     }
+
+    public sealed class ToolEventData
+    {
+        public readonly Object? Ev;
+        public readonly Object? CancelledEv;
+        public readonly float Fuel;
+        public readonly EntityUid? TargetEntity;
+
+        public ToolEventData(Object? ev, float fuel = 0f, Object? cancelledEv = null, EntityUid? targetEntity = null)
+        {
+            Ev = ev;
+            CancelledEv = cancelledEv;
+            Fuel = fuel;
+            TargetEntity = targetEntity;
+        }
+    }
 }
