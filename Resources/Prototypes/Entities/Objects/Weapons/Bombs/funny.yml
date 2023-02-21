@@ -10,8 +10,12 @@
     - type: Item
       sprite: Objects/Weapons/Bombs/hot_potato.rsi
       size: 5
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 5
     - type: OnUseTimerTrigger
-      delay: 10
+      delay: 30
       beepSound: /Audio/Machines/Nuke/general_beep.ogg
     - type: ExplodeOnTrigger
     - type: Explosive
