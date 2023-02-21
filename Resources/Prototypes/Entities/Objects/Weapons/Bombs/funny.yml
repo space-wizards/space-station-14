@@ -25,3 +25,10 @@
       canCreateVacuum: false
     - type: DeleteOnTrigger
     - type: HotPotato
+    - type: Appearance
+      visuals:
+        - type: GenericEnumVisualizer
+          key: enum.Trigger.TriggerVisuals.VisualState
+          states:
+            enum.Trigger.TriggerVisualState.Primed: activated
+            enum.Trigger.TriggerVisualState.Unprimed: complete
