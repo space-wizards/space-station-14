@@ -33,12 +33,7 @@ public sealed class InternalsSystem : EntitySystem
         SubscribeLocalEvent<InternalsComponent, ComponentStartup>(OnInternalsStartup);
         SubscribeLocalEvent<InternalsComponent, ComponentShutdown>(OnInternalsShutdown);
         SubscribeLocalEvent<InternalsComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
-        SubscribeLocalEvent<InternalsComponent, DoAfterEvent<AAAAAA>>(OnDoAfter);
-    }
-
-    private record struct AAAAAA
-    {
-
+        SubscribeLocalEvent<InternalsComponent, DoAfterEvent<InternalsData>>(OnDoAfter);
     }
 
     private void OnGetInteractionVerbs(EntityUid uid, InternalsComponent component, GetVerbsEvent<InteractionVerb> args)
@@ -89,7 +84,7 @@ public sealed class InternalsSystem : EntitySystem
 
         var isUser = uid == user;
 
-        var aaa = new AAAAAA();
+        var internalsData = new InternalsData();
 
         if (!force)
         {
@@ -106,7 +101,7 @@ public sealed class InternalsSystem : EntitySystem
                 MovementThreshold = 0.1f,
                 RaiseOnUser = isUser,
                 RaiseOnTarget = !isUser
-            }, aaa);
+            }, internalsData);
 
             return;
         }
@@ -114,7 +109,7 @@ public sealed class InternalsSystem : EntitySystem
         _gasTank.ConnectToInternals(tank);
     }
 
-    private void OnDoAfter(EntityUid uid, InternalsComponent component, DoAfterEvent<AAAAAA> args)
+    private void OnDoAfter(EntityUid uid, InternalsComponent component, DoAfterEvent<InternalsData> args)
     {
         if (args.Cancelled || args.Handled)
             return;
@@ -269,5 +264,10 @@ public sealed class InternalsSystem : EntitySystem
         }
 
         return null;
+    }
+
+    private record struct InternalsData
+    {
+
     }
 }

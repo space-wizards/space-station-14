@@ -29,13 +29,10 @@ namespace Content.Server.VendingMachines.Restock
             SubscribeLocalEvent<VendingMachineRestockComponent, PriceCalculationEvent>(OnPriceCalculation);
         }
 
-        public bool TryAccessMachine(EntityUid uid,
-            VendingMachineRestockComponent component,
-            VendingMachineComponent machineComponent,
-            EntityUid user,
-            EntityUid target)
+        public bool TryAccessMachine(EntityUid uid, EntityUid user, EntityUid target)
         {
-            if (!TryComp<WiresComponent>(target, out var wires) || !wires.IsPanelOpen) {
+            if (!TryComp<WiresComponent>(target, out var wires) || !wires.IsPanelOpen)
+            {
                 _popupSystem.PopupCursor(Loc.GetString("vending-machine-restock-needs-panel-open",
                         ("this", uid),
                         ("user", user),
@@ -53,13 +50,9 @@ namespace Content.Server.VendingMachines.Restock
             EntityUid user,
             EntityUid target)
         {
-            if (!component.CanRestock.Contains(machineComponent.PackPrototypeId)) {
-                _popupSystem.PopupCursor(Loc.GetString("vending-machine-restock-invalid-inventory",
-                        ("this", uid),
-                        ("user", user),
-                        ("target", target)
-                        ),
-                    user);
+            if (!component.CanRestock.Contains(machineComponent.PackPrototypeId))
+            {
+                _popupSystem.PopupCursor(Loc.GetString("vending-machine-restock-invalid-inventory", ("this", uid), ("user", user), ("target", target)), user);
                 return false;
             }
 
@@ -77,7 +70,7 @@ namespace Content.Server.VendingMachines.Restock
             if (!TryMatchPackageToMachine(uid, component, machineComponent, args.User, args.Target.Value))
                 return;
 
-            if (!TryAccessMachine(uid, component, machineComponent, args.User, args.Target.Value))
+            if (!TryAccessMachine(uid, args.User, args.Target.Value))
                 return;
 
             _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, (float) component.RestockDelay.TotalSeconds, target:args.Target, used:uid)
