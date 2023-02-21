@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed an exploit for generating infinite materials from protolathes.,
-    type: Fix}
-  id: 2559
-  time: '2022-11-01T23:05:01.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: Added a Toggle Ghosts button on the ghost GUI to get rid of those pesky
@@ -2915,3 +2909,8 @@ Entries:
     type: Fix}
   id: 3058
   time: '2023-02-21T00:16:26.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: APCs now show the power being drawn from them., type: Add}
+  id: 3059
+  time: '2023-02-21T15:23:39.0000000+00:00'
