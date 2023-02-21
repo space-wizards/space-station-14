@@ -301,6 +301,8 @@ namespace Content.Server.Construction
                     // If we still haven't completed this step's DoAfter...
                     if (doAfterState == DoAfterState.None && insertStep.DoAfter > 0)
                     {
+                        // These events will be broadcast and handled by this very same system, that will
+                        // raise them directed to the target. These events wrap the original event.
                         var constructionData = new ConstructionData(new ConstructionDoAfterComplete(uid, ev), new ConstructionDoAfterCancelled(uid, ev));
                         var doAfterEventArgs = new DoAfterEventArgs(interactUsing.User, step.DoAfter, target: interactUsing.Target)
                         {
@@ -310,6 +312,7 @@ namespace Content.Server.Construction
                             BreakOnUserMove = true,
                             NeedHand = true
                         };
+
                         _doAfterSystem.DoAfter(doAfterEventArgs, constructionData);
 
                         // To properly signal that we're waiting for a DoAfter, we have to set the flag on the component
