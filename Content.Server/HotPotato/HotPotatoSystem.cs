@@ -20,6 +20,7 @@ public sealed class HotPotatoSystem : EntitySystem
     private void OnActiveTimer(EntityUid uid, HotPotatoComponent comp, ActiveTimerTriggerEvent args)
     {
         comp.Activated = true;
+        comp.CanTransfer = false;
     }
 
     private void TransferItem(EntityUid uid, HotPotatoComponent comp, MeleeHitEvent args)
