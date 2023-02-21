@@ -126,7 +126,7 @@ public sealed class ClimbSystem : SharedClimbSystem
             RaiseOnTarget = user != entityToMove
         };
 
-        _doAfterSystem.DoAfter2(args, ev);
+        _doAfterSystem.DoAfter(args, ev);
     }
 
     private void OnDoAfter(EntityUid uid, ClimbingComponent component, DoAfterEvent<ClimbExtraEvent> args)

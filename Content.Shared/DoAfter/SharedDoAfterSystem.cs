@@ -157,26 +157,6 @@ public abstract class SharedDoAfterSystem : EntitySystem
             return doAfter.Status;
         }
 
-        public void DoAfter2<TEvent>(DoAfterEventArgs eventArgs, TEvent ev) where TEvent : EntityEventArgs
-        {
-            var doAfter = CreateDoAfter(eventArgs);
-
-            doAfter.Done = cancelled =>
-            {
-                Send2(ev, cancelled, eventArgs);
-            };
-        }
-
-        public void DoAfter<TEvent, TData>(DoAfterEventArgs eventArgs, TEvent ev, TData data) where TEvent : EntityEventArgs where TData : AdditionalData
-        {
-            var doAfter = CreateDoAfter(eventArgs);
-
-            doAfter.Done = cancelled =>
-            {
-                Send(ev, data, cancelled, eventArgs);
-            };
-        }
-
         /// <summary>
         ///     Creates a DoAfter without waiting for it to finish. You can use events with this.
         ///     These can be potentially cancelled by the user moving or when other things happen.
@@ -365,20 +345,6 @@ public abstract class SharedDoAfterSystem : EntitySystem
         public void Send<T>(T data, bool cancelled, DoAfterEventArgs args)
         {
             var ev = new DoAfterEvent<T>(data, cancelled, args);
-
-            RaiseDoAfterEvent(ev, args);
-        }
-
-        public void Send2<TEvent>(TEvent msg, bool cancelled, DoAfterEventArgs args) where TEvent : EntityEventArgs
-        {
-            var ev = new DoAfterEvent<TEvent>(msg, cancelled, args);
-
-            RaiseDoAfterEvent(ev, args);
-        }
-
-        public void Send<TEvent, TData>(TEvent msg, TData data, bool cancelled, DoAfterEventArgs args) where TEvent : EntityEventArgs where TData : AdditionalData
-        {
-            var ev = new DoAfterEvent<TEvent, TData>(msg, data, cancelled, args);
 
             RaiseDoAfterEvent(ev, args);
         }
