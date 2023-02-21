@@ -15,13 +15,13 @@
         types:
           Blunt: 5
     - type: OnUseTimerTrigger
-      delay: 30
+      delay: 180
       beepSound: /Audio/Machines/Nuke/general_beep.ogg
     - type: ExplodeOnTrigger
     - type: Explosive
       explosionType: Default
-      maxIntensity: 3
-      totalIntensity: 20
+      maxIntensity: 8
+      totalIntensity: 40
       canCreateVacuum: false
     - type: DeleteOnTrigger
     - type: HotPotato
