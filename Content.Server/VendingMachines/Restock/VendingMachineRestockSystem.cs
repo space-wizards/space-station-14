@@ -1,7 +1,4 @@
 using System.Linq;
-using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
-using Robust.Shared.Prototypes;
 using Content.Server.Cargo.Systems;
 using Content.Server.DoAfter;
 using Content.Server.Wires;
@@ -9,6 +6,9 @@ using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.VendingMachines;
+using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.VendingMachines.Restock
 {
@@ -29,7 +29,11 @@ namespace Content.Server.VendingMachines.Restock
             SubscribeLocalEvent<VendingMachineRestockComponent, PriceCalculationEvent>(OnPriceCalculation);
         }
 
-        public bool TryAccessMachine(EntityUid uid, EntityUid user, EntityUid target)
+        public bool TryAccessMachine(EntityUid uid,
+            VendingMachineRestockComponent restock,
+            VendingMachineComponent machineComponent,
+            EntityUid user,
+            EntityUid target)
         {
             if (!TryComp<WiresComponent>(target, out var wires) || !wires.IsPanelOpen)
             {
@@ -70,7 +74,7 @@ namespace Content.Server.VendingMachines.Restock
             if (!TryMatchPackageToMachine(uid, component, machineComponent, args.User, args.Target.Value))
                 return;
 
-            if (!TryAccessMachine(uid, args.User, args.Target.Value))
+            if (!TryAccessMachine(uid, component, machineComponent, args.User, args.Target.Value))
                 return;
 
             _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, (float) component.RestockDelay.TotalSeconds, target:args.Target, used:uid)
