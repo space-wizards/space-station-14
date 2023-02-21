@@ -1,3 +1,8 @@
+- type: dungeonRoom
+  id: Test5x5
+  size: 5,5
+  path: /Maps/Dungeon/5x5.yml
+
 - type: dungeonPreset
   id: Weh
   roomPacks:
