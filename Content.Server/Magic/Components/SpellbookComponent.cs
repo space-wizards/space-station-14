@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using Content.Shared.Actions.ActionTypes;
+﻿using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Server.Magic;
@@ -29,5 +28,5 @@ public sealed class SpellbookComponent : Component
     public readonly Dictionary<string, int> InstantSpells = new();
 
     [DataField("learnTime")]
-    public float LearnTime = 5.0f;
+    public float LearnTime = .75f;
 }
