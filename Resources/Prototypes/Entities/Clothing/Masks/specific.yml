@@ -20,3 +20,28 @@
       interfaces:
         - key: enum.ChameleonUiKey.Key
           type: ChameleonBoundUserInterface
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskGasVoiceChameleon
+  name: gas mask
+  description: A face-covering mask that can be connected to an air supply.
+  suffix: Voice Mask, Chameleon
+  components:
+    - type: Tag
+      tags: []
+    - type: Sprite
+      sprite: Clothing/Mask/gas.rsi
+      netsync: false
+    - type: Clothing
+      sprite: Clothing/Mask/gas.rsi
+    - type: BreathMask # now with 100% more breathing
+    - type: VoiceMasker
+    - type: ChameleonClothing
+      slot: [mask]
+      default: ClothingMaskGas
+    - type: IdentityBlocker
+    - type: UserInterface
+      interfaces:
+        - key: enum.ChameleonUiKey.Key
+          type: ChameleonBoundUserInterface
