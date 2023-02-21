@@ -177,7 +177,7 @@ public sealed class DoAfterSystem : SharedDoAfterSystem
             {
                 var cancelledElapsed = (float)doAfter.CancelledElapsed.TotalSeconds;
 
-                if (cancelledElapsed > cancelledElapsed + ExcessTime)
+                if (cancelledElapsed >  ExcessTime)
                     toRemoveCancelled.Add(doAfter);
             }
 
