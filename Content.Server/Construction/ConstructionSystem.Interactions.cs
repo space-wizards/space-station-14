@@ -9,6 +9,8 @@ using Content.Shared.Interaction;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Containers;
 #if EXCEPTION_TOLERANCE
+// ReSharper disable once RedundantUsingDirective
+using Robust.Shared.Exceptions;
 #endif
 
 namespace Content.Server.Construction
