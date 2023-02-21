@@ -1,10 +1,10 @@
-using Content.Server.Storage.Components;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
-using Content.Shared.Movement.Events;
+using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.DoAfter;
 using Content.Shared.Lock;
+using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
 
@@ -61,7 +61,7 @@ public sealed class ResistLockerSystem : EntitySystem
     private void OnRemoved(EntityUid uid, ResistLockerComponent component, EntRemovedFromContainerMessage args)
     {
         if (component.DoAfter != null)
-            _doAfterSystem.Cancel(component.DoAfter);
+            _doAfterSystem.Cancel(uid, component.DoAfter);
     }
 
     private void OnDoAfter(EntityUid uid, ResistLockerComponent component, DoAfterEvent args)

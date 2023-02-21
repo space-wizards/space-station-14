@@ -75,19 +75,17 @@ public abstract class SharedDoAfterSystem : EntitySystem
 
         foreach (var (_, doAfter) in component.DoAfters)
         {
-            Cancel(doAfter);
+            Cancel(uid, doAfter, component);
         }
     }
 
     /// <summary>
     /// Cancels DoAfter if it breaks on damage and it meets the threshold
     /// </summary>
-    /// <param name="_">
-    /// The EntityUID of the user
-    /// </param>
+    /// <param name="uid">The EntityUID of the user</param>
     /// <param name="component"></param>
     /// <param name="args"></param>
-    private void OnDamage(EntityUid _, DoAfterComponent component, DamageChangedEvent args)
+    private void OnDamage(EntityUid uid, DoAfterComponent component, DamageChangedEvent args)
     {
         if (!args.InterruptsDoAfters || !args.DamageIncreased || args.DamageDelta == null)
             return;
@@ -95,7 +93,7 @@ public abstract class SharedDoAfterSystem : EntitySystem
         foreach (var (_, doAfter) in component.DoAfters)
         {
             if (doAfter.EventArgs.BreakOnDamage && args.DamageDelta?.Total.Float() > doAfter.EventArgs.DamageThreshold)
-                Cancel(doAfter);
+                Cancel(uid, doAfter, component);
         }
     }
 
@@ -107,7 +105,7 @@ public abstract class SharedDoAfterSystem : EntitySystem
         {
             foreach (var (_, doAfter) in comp.DoAfters.ToArray())
             {
-                Run(doAfter);
+                Run(comp.Owner, comp, doAfter);
 
                 switch (doAfter.Status)
                 {
@@ -126,16 +124,20 @@ public abstract class SharedDoAfterSystem : EntitySystem
 
             while (_pending.TryDequeue(out var doAfter))
             {
-                if (doAfter.Status == DoAfterStatus.Cancelled && doAfter.Done != null)
+                if (doAfter.Status == DoAfterStatus.Cancelled)
                 {
                     Cancelled(comp, doAfter);
-                    doAfter.Done(true);
+
+                    if (doAfter.Done != null)
+                        doAfter.Done(true);
                 }
 
-                if (doAfter.Status == DoAfterStatus.Finished && doAfter.Done != null)
+                if (doAfter.Status == DoAfterStatus.Finished)
                 {
                     Finished(comp, doAfter);
-                    doAfter.Done(false);
+
+                    if (doAfter.Done != null)
+                        doAfter.Done(false);
                 }
             }
         }
@@ -199,7 +201,7 @@ public abstract class SharedDoAfterSystem : EntitySystem
         return doAfter;
     }
 
-    private void Run(DoAfter doAfter)
+    private void Run(EntityUid entity, DoAfterComponent comp, DoAfter doAfter)
     {
         switch (doAfter.Status)
         {
@@ -217,14 +219,21 @@ public abstract class SharedDoAfterSystem : EntitySystem
         if (IsFinished(doAfter))
         {
             if (!TryPostCheck(doAfter))
-                doAfter.Tcs.SetResult(DoAfterStatus.Cancelled);
+            {
+                Cancel(entity, doAfter, comp);
+            }
             else
+            {
                 doAfter.Tcs.SetResult(DoAfterStatus.Finished);
+            }
+
             return;
         }
 
         if (IsCancelled(doAfter))
-            doAfter.Tcs.SetResult(DoAfterStatus.Cancelled);
+        {
+            Cancel(entity, doAfter, comp);
+        }
     }
 
     private bool TryPostCheck(DoAfter doAfter)
@@ -313,10 +322,27 @@ public abstract class SharedDoAfterSystem : EntitySystem
         return false;
     }
 
-    public void Cancel(DoAfter doAfter)
+    public void Cancel(EntityUid entity, DoAfter doAfter, DoAfterComponent? comp = null)
     {
+        if (!Resolve(entity, ref comp, false))
+            return;
+
+        if (comp.CancelledDoAfters.ContainsKey(doAfter.ID))
+            return;
+
+        if (!comp.DoAfters.ContainsKey(doAfter.ID))
+            return;
+
+        doAfter.Cancelled = true;
+        doAfter.CancelledTime = _gameTiming.CurTime;
+
+        var doAfterMessage = comp.DoAfters[doAfter.ID];
+        comp.CancelledDoAfters.Add(doAfter.ID, doAfterMessage);
+
         if (doAfter.Status == DoAfterStatus.Running)
+        {
             doAfter.Tcs.SetResult(DoAfterStatus.Cancelled);
+        }
     }
 
     /// <summary>

@@ -87,7 +87,11 @@ public sealed class DoAfter
     public void Cancel()
     {
         if (Status == DoAfterStatus.Running)
+        {
+            Cancelled = true;
+            CancelledTime = _gameTiming.CurTime;
             Tcs.SetResult(DoAfterStatus.Cancelled);
+        }
     }
 
     [Obsolete("Use SharedDoAfterSystem.Run instead")]
@@ -110,14 +114,21 @@ public sealed class DoAfter
         {
             // Do the final checks here
             if (!TryPostCheck())
-                Tcs.SetResult(DoAfterStatus.Cancelled);
+            {
+                Cancel();
+            }
             else
+            {
                 Tcs.SetResult(DoAfterStatus.Finished);
+            }
+
             return;
         }
 
         if (IsCancelled(entityManager))
-            Tcs.SetResult(DoAfterStatus.Cancelled);
+        {
+            Cancel();
+        }
     }
 
     [Obsolete("Use SharedDoAfterSystem.IsCancelled instead")]
