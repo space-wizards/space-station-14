@@ -16,6 +16,7 @@ public sealed class NewDungeonSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private readonly MapLoaderSystem _loader = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -54,7 +55,8 @@ public sealed class NewDungeonSystem : EntitySystem
 
     public Dungeon GetRoomPackDungeon(DungeonPresetPrototype gen, MapGridComponent grid, int seed)
     {
-        var random = new System.Random(seed + 256);
+        var dungeonTransform = Matrix3.CreateTranslation(Vector2.Zero);
+        var random = new Random(seed + 256);
         // TODO: API for this
         var roomPackProtos = new Dictionary<Vector2i, List<DungeonRoomPackPrototype>>();
 
@@ -81,10 +83,8 @@ public sealed class NewDungeonSystem : EntitySystem
 
         foreach (var pack in gen.RoomPacks)
         {
-            var offset = pack.BottomLeft;
             var dimensions = new Vector2i(pack.Width, pack.Height);
-            var rotation = Angle.Zero;
-            var flipped = false;
+            Matrix3 packTransform;
 
             // Fallback tiles for debug.
             if (!roomPackProtos.TryGetValue(dimensions, out var packs))
@@ -94,12 +94,13 @@ public sealed class NewDungeonSystem : EntitySystem
                 if (!roomPackProtos.TryGetValue(dimensions, out packs))
                 {
                     Logger.Error($"No room pack found for {dimensions}, using dummy floor.");
+                    packTransform = Matrix3.CreateTranslation(pack.Center);
 
-                    for (var x = pack.Left; x < pack.Right; x++)
+                    for (var x = 0; x < pack.Width; x++)
                     {
-                        for (var y = pack.Bottom; y < pack.Top; y++)
+                        for (var y = 0; y < pack.Height; y++)
                         {
-                            var index = new Vector2i(x + offset.X, y + offset.Y);
+                            var index = (Vector2i) packTransform.Transform(new Vector2i(x, y));
                             tiles.Add((index, new Tile(_tileDefManager["FloorSteel"].TileId)));
                         }
                     }
@@ -109,30 +110,26 @@ public sealed class NewDungeonSystem : EntitySystem
                     continue;
                 }
 
-                // Well we have a rotated version
-                rotation = new Angle(Math.PI / 2);
-                offset = (Vector2i) rotation.RotateVec(offset);
-                flipped = true;
+                // To avoid rounding issues.
+                packTransform = new Matrix3(0f, -1f, pack.Center.X, 1f, 0f, pack.Center.Y, 0f, 0f, 1f);
                 Logger.Debug($"Using rotated variant for rooms pack");
+            }
+            else
+            {
+                packTransform = Matrix3.CreateTranslation(pack.Center);
             }
 
             // Actual spawn cud here.
             // Pickout the room pack template to get the room dimensions we need.
             // TODO: Need to be able to load entities on top of other entities but das a lot of effo
             var gottem = packs[random.Next(packs.Count)];
+            var packCenter = (Vector2) gottem.Size / 2;
 
             foreach (var roomSize in gottem.Rooms)
             {
-                Vector2i roomDimensions;
-
-                if (flipped)
-                {
-                    roomDimensions = new Vector2i(roomSize.Height, roomSize.Width);
-                }
-                else
-                {
-                    roomDimensions = new Vector2i(roomSize.Width, roomSize.Height);
-                }
+                var roomDimensions = new Vector2i(roomSize.Width, roomSize.Height);
+                var roomCenter = roomDimensions / 2f;
+                Angle roomRotation = Angle.Zero;
 
                 if (!roomProtos.TryGetValue(roomDimensions, out var roomProto))
                 {
@@ -144,8 +141,13 @@ public sealed class NewDungeonSystem : EntitySystem
                         continue;
                     }
 
+                    roomRotation = new Angle(Math.PI / 2);
                     Logger.Debug($"Using rotated variant for room");
                 }
+
+                var roomTransform = Matrix3.CreateTransform(roomSize.Center - packCenter, roomRotation);
+
+                Matrix3.Multiply(roomTransform, packTransform, out var matty);
 
                 var room = roomProto[random.Next(roomProto.Count)];
 
@@ -171,22 +173,38 @@ public sealed class NewDungeonSystem : EntitySystem
 
                 while (loadedEnumerator.MoveNext(out var tile))
                 {
-                    // TODO: Transform
-                    tiles.Add((tile.Value.GridIndices, tile.Value.Tile));
+                    var tilePos = matty.Transform((Vector2) tile.Value.GridIndices + grid.TileSize / 2f - roomCenter);
+                    tiles.Add(((Vector2i) tilePos, tile.Value.Tile));
                 }
-
-                // TODO: Copy contents across
 
                 grid.SetTiles(tiles);
                 tiles.Clear();
+                var xformQuery = GetEntityQuery<TransformComponent>();
+
+                foreach (var ent in Transform(loadedEnts[0]).ChildEntities)
+                {
+                    Del(ent);
+                    /*
+                    var childXform = xformQuery.GetComponent(ent);
+                    var childPos = transform.Transform(childXform.LocalPosition);
+                    var anchored = childXform.Anchored;
+                    _transform.SetCoordinates(childXform, new EntityCoordinates(grid.Owner, childPos));
+
+                    if (anchored)
+                        _transform.AnchorEntity(childXform, grid);
+                        */
+                }
+
+                // TODO: Decals
 
                 // Now copy entities
-                foreach (var )
+                // foreach (var )
 
                 // TODO: Spawn doors
 
                 // Spawn wall outline
                 // - Tiles first
+                /*
                 for (var x = roomSize.Left - 1; x <= roomSize.Right; x++)
                 {
                     for (var y = roomSize.Bottom - 1; y <= roomSize.Top; y++)
@@ -197,7 +215,7 @@ public sealed class NewDungeonSystem : EntitySystem
                             continue;
                         }
 
-                        var index = new Vector2i(x + offset.X, y + offset.Y);
+                        var index = (Vector2i) invTransform.Transform(new Vector2(x, y));
 
                         var anchoredEnts = grid.GetAnchoredEntitiesEnumerator(index);
 
@@ -223,8 +241,7 @@ public sealed class NewDungeonSystem : EntitySystem
                             continue;
                         }
 
-                        var index = new Vector2i(x + offset.X, y + offset.Y);
-
+                        var index = (Vector2i) invTransform.Transform(new Vector2(x, y));
                         var anchoredEnts = grid.GetAnchoredEntitiesEnumerator(index);
 
                         // Occupied tile.
@@ -234,6 +251,7 @@ public sealed class NewDungeonSystem : EntitySystem
                         Spawn("WallSolid", grid.GridTileToLocal(index));
                     }
                 }
+                */
             }
         }
 

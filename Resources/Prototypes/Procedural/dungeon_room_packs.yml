@@ -3,6 +3,11 @@
   size: 5,5
   path: /Maps/Dungeon/5x5.yml
 
+- type: dungeonRoom
+  id: Test17x5
+  size: 17,5
+  path: /Maps/Dungeon/17x5.yml
+
 - type: dungeonPreset
   id: Weh
   roomPacks:
@@ -10,9 +15,9 @@
     - -2,6,3,11
     - -8,12,9,17
     - -2,18,3,35
-    - -20,18,-3,35
-    - 4,18,21,35
     - -2,36,3,53
+    #- -26,18,-3,35
+    #- 4,18,21,35
 
 - type: dungeonRoomPack
   id: LargeArea1
