@@ -109,8 +109,8 @@ namespace Content.Server.Chemistry.EntitySystems
 
             _audio.PlayPvs(component.InjectSound, user);
 
-            // Not the best place to put the delay
             // Medipens and such use this system and don't have a delay, requiring extra checks
+            // BeginDelay function returns if item is already on delay
             if (delayComp is not null)
                 _useDelay.BeginDelay(uid, delayComp);
 
