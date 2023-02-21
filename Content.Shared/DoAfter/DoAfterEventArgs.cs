@@ -94,16 +94,6 @@ public sealed class DoAfterEventArgs
     [NonSerialized]
     public Func<bool>? ExtraCheck;
 
-    /// <summary>
-    ///     Event to be broadcast when the DoAfter is cancelled.
-    /// </summary>
-    public object? BroadcastCancelledEvent { get; set; }
-
-    /// <summary>
-    ///     Event to be broadcast when the DoAfter is finished successfully.
-    /// </summary>
-    public object? BroadcastFinishedEvent { get; set; }
-
     public DoAfterEventArgs(
         EntityUid user,
         float delay,
