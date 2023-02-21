@@ -1,10 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Added a Toggle Ghosts button on the ghost GUI to get rid of those pesky
-      apparitions., type: Add}
-  id: 2560
-  time: '2022-11-02T01:14:06.0000000+00:00'
 - author: Vordenburg
   changes:
   - {message: The flames of lit welders now look bright in the dark., type: Fix}
@@ -2914,3 +2908,8 @@ Entries:
   - {message: APCs now show the power being drawn from them., type: Add}
   id: 3059
   time: '2023-02-21T15:23:39.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Ahelp window now remembers its last position for admins., type: Tweak}
+  id: 3060
+  time: '2023-02-21T19:31:27.0000000+00:00'
