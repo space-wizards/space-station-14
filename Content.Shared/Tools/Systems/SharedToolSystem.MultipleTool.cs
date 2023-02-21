@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading;
 using Content.Shared.Interaction;
 using Content.Shared.Tools.Components;
 using Robust.Shared.GameStates;
@@ -17,6 +18,32 @@ public abstract class SharedToolSystem : EntitySystem
         SubscribeLocalEvent<MultipleToolComponent, ActivateInWorldEvent>(OnMultipleToolActivated);
         SubscribeLocalEvent<MultipleToolComponent, ComponentGetState>(OnMultipleToolGetState);
         SubscribeLocalEvent<MultipleToolComponent, ComponentHandleState>(OnMultipleToolHandleState);
+    }
+
+    public bool UseTool(EntityUid tool, EntityUid user, EntityUid? target, float fuel,
+            float doAfterDelay, string toolQualityNeeded, object? doAfterCompleteEvent = null, object? doAfterCancelledEvent = null, EntityUid? doAfterEventTarget = null,
+            Func<bool>? doAfterCheck = null, ToolComponent? toolComponent = null)
+    {
+        return UseTool(tool, user, target, fuel, doAfterDelay, new[] { toolQualityNeeded },
+            doAfterCompleteEvent, doAfterCancelledEvent, doAfterEventTarget, doAfterCheck, toolComponent);
+    }
+
+    public virtual bool UseTool(
+        EntityUid tool,
+        EntityUid user,
+        EntityUid? target,
+        float fuel,
+        float doAfterDelay,
+        IEnumerable<string> toolQualitiesNeeded,
+        object? doAfterCompleteEvent = null,
+        object? doAfterCancelledEvent = null,
+        EntityUid? doAfterEventTarget = null,
+        Func<bool>? doAfterCheck = null,
+        ToolComponent? toolComponent = null,
+        CancellationToken? cancelToken = null)
+    {
+        // predicted tools when.
+        return false;
     }
 
     private void OnMultipleToolHandleState(EntityUid uid, MultipleToolComponent component, ref ComponentHandleState args)

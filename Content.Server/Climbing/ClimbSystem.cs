@@ -8,7 +8,6 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Buckle.Components;
-using Content.Shared.CCVar;
 using Content.Shared.Climbing;
 using Content.Shared.Climbing.Events;
 using Content.Shared.Damage;
@@ -46,6 +45,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     [Dependency] private readonly StunSystem _stunSystem = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly BonkSystem _bonkSystem = default!;
 
     private const string ClimbingFixtureName = "climb";
     private const int ClimbingCollisionGroup = (int) (CollisionGroup.TableLayer | CollisionGroup.LowImpassable);
@@ -58,7 +58,7 @@ public sealed class ClimbSystem : SharedClimbSystem
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
         SubscribeLocalEvent<ClimbableComponent, GetVerbsEvent<AlternativeVerb>>(AddClimbableVerb);
-        SubscribeLocalEvent<ClimbableComponent, DragDropEvent>(OnClimbableDragDrop);
+        SubscribeLocalEvent<ClimbableComponent, DragDropTargetEvent>(OnClimbableDragDrop);
 
         SubscribeLocalEvent<ClimbingComponent, ClimbFinishedEvent>(OnClimbFinished);
         SubscribeLocalEvent<ClimbingComponent, EndCollideEvent>(OnClimbEndCollide);
@@ -68,17 +68,17 @@ public sealed class ClimbSystem : SharedClimbSystem
         SubscribeLocalEvent<GlassTableComponent, ClimbedOnEvent>(OnGlassClimbed);
     }
 
-    protected override void OnCanDragDropOn(EntityUid uid, ClimbableComponent component, CanDragDropOnEvent args)
+    protected override void OnCanDragDropOn(EntityUid uid, ClimbableComponent component, ref CanDropTargetEvent args)
     {
-        base.OnCanDragDropOn(uid, component, args);
+        base.OnCanDragDropOn(uid, component, ref args);
 
         if (!args.CanDrop)
             return;
 
         string reason;
         var canVault = args.User == args.Dragged
-            ? CanVault(component, args.User, args.Target, out reason)
-            : CanVault(component, args.User, args.Dragged, args.Target, out reason);
+            ? CanVault(component, args.User, uid, out reason)
+            : CanVault(component, args.User, args.Dragged, uid, out reason);
 
         if (!canVault)
             _popupSystem.PopupEntity(reason, args.User, args.User);
@@ -92,9 +92,6 @@ public sealed class ClimbSystem : SharedClimbSystem
         if (!args.CanAccess || !args.CanInteract || !_actionBlockerSystem.CanMove(args.User))
             return;
 
-        if (component.Bonk && _cfg.GetCVar(CCVars.GameTableBonk))
-            return;
-
         if (!TryComp(args.User, out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing)
             return;
 
@@ -106,9 +103,9 @@ public sealed class ClimbSystem : SharedClimbSystem
         });
     }
 
-    private void OnClimbableDragDrop(EntityUid uid, ClimbableComponent component, DragDropEvent args)
+    private void OnClimbableDragDrop(EntityUid uid, ClimbableComponent component, ref DragDropTargetEvent args)
     {
-        TryMoveEntity(component, args.User, args.Dragged, args.Target);
+        TryMoveEntity(component, args.User, args.Dragged, uid);
     }
 
     private void TryMoveEntity(ClimbableComponent component, EntityUid user, EntityUid entityToMove,
@@ -117,7 +114,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         if (!TryComp(entityToMove, out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing)
             return;
 
-        if (TryBonk(component, user))
+        if (_bonkSystem.TryBonk(entityToMove, climbable))
             return;
 
         _doAfterSystem.DoAfter(new DoAfterEventArgs(user, component.ClimbDelay, default, climbable, entityToMove)
@@ -128,29 +125,6 @@ public sealed class ClimbSystem : SharedClimbSystem
             BreakOnStun = true,
             UsedFinishedEvent = new ClimbFinishedEvent(user, climbable, entityToMove)
         });
-    }
-
-    private bool TryBonk(ClimbableComponent component, EntityUid user)
-    {
-        if (!component.Bonk)
-            return false;
-
-        if (!_cfg.GetCVar(CCVars.GameTableBonk))
-        {
-            // Not set to always bonk, try clumsy roll.
-            if (!_interactionSystem.TryRollClumsy(user, component.BonkClumsyChance))
-                return false;
-        }
-
-        // BONK!
-
-        _audioSystem.PlayPvs(component.BonkSound, component.Owner);
-        _stunSystem.TryParalyze(user, TimeSpan.FromSeconds(component.BonkTime), true);
-
-        if (component.BonkDamage is { } bonkDmg)
-            _damageableSystem.TryChangeDamage(user, bonkDmg, true, origin: user);
-
-        return true;
     }
 
     private void OnClimbFinished(EntityUid uid, ClimbingComponent climbing, ClimbFinishedEvent args)

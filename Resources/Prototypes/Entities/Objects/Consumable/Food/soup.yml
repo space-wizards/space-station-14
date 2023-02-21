@@ -157,6 +157,87 @@
 # Tastes like leaves, potato, meat, valids.
 
 - type: entity
+  name: coleslaw
+  parent: FoodBowlBase
+  id: FoodSaladColeslaw
+  description: Shredded cabbage and red onions dressed with a vinaigrette.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - onion
+      - cabbage
+      - sour
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: coleslaw
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: Allicin
+          Quantity: 3
+# Tastes like cabbage, onion, sour.
+
+- type: entity
+  name: caesar salad
+  parent: FoodBowlBase
+  id: FoodSaladCaesar
+  description: A simple yet flavorful salad of onions, lettuce, croutons, and shreds of cheese dressed in oil. Comes with a slice of pita bread!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - onion
+      - cabbage
+      - bread
+      - cheesy
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: caesar
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 6
+# Tastes like cabbage, onion, croutons, cheese.
+
+- type: entity
+  name: kimchi salad
+  parent: FoodBowlBase
+  id: FoodSaladKimchi
+  description: It really is just a spicy salad.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - spicy
+      - cabbage
+      - carrot
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: kimchi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 2
+# Tastes like spicy cabbage, carrots.
+
+- type: entity
   name: fruit salad
   parent: FoodBowlBase
   id: FoodSaladFruit

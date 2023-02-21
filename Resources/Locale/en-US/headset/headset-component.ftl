@@ -14,9 +14,9 @@ examine-radio-frequency = It's set to broadcast over the {$frequency} frequency.
 examine-headset-channels-prefix = A small screen on the headset displays the following available frequencies:
 examine-headset-channel = [color={$color}]{$key} for {$id} ({$freq})[/color]
 examine-headset-no-keys = It seems broken. There are no encryption keys in it.
-examine-headset-chat-prefix = Use this {$prefix} for your department's frequency.
-examine-headset-default-channel = It's indicates that default channel of this headset is [color={$color}]{$channel}[/color].
-examine-encryption-key-default-channel = It's seems like [color={$color}]{$channel}[/color] is a default channel.
+examine-default-channel = Use {$prefix} for the default channel ([color={$color}]{$channel}[/color]).
+examine-headset-default-channel = It indicates that the default channel of this headset is [color={$color}]{$channel}[/color].
+examine-encryption-key-default-channel = The default channel is [color={$color}]{$channel}[/color].
 
 chat-radio-common = Common
 chat-radio-centcom = CentCom

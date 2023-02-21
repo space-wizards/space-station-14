@@ -2,7 +2,6 @@
 using System.Threading;
 using Content.Server.DoAfter;
 using Content.Server.Explosion.EntitySystems;
-using Content.Server.Lock;
 using Content.Server.Mind.Components;
 using Content.Server.Resist;
 using Content.Server.Station.Components;
@@ -10,6 +9,8 @@ using Content.Server.Storage.Components;
 using Content.Server.Tools.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Coordinates;
+using Content.Shared.Lock;
+using Content.Shared.Storage.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -58,7 +59,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
         Spawn(effectSourceComponent.BehaviorProperties.BluespaceEffectPrototype, effectTargetUid.ToCoordinates());
     }
 
-    private void PreOpen(EntityUid uid, BluespaceLockerComponent component, StorageBeforeOpenEvent args)
+    private void PreOpen(EntityUid uid, BluespaceLockerComponent component, ref StorageBeforeOpenEvent args)
     {
         EntityStorageComponent? entityStorageComponent = null;
         int transportedEntities = 0;
@@ -259,7 +260,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
         }
     }
 
-    private void PostClose(EntityUid uid, BluespaceLockerComponent component, StorageAfterCloseEvent args)
+    private void PostClose(EntityUid uid, BluespaceLockerComponent component, ref StorageAfterCloseEvent args)
     {
         PostClose(uid, component);
     }
