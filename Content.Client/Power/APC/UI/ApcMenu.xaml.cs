@@ -32,6 +32,11 @@ namespace Content.Client.Power.APC.UI
                 BreakerButton.Pressed = castState.MainBreaker;
             }
 
+            if (PowerLabel != null)
+            {
+                PowerLabel.Text = Loc.GetString("apc-menu-power-label", ("power", castState.Power));
+            }
+
             if (ExternalPowerStateLabel != null)
             {
                 switch (castState.ApcExternalPower)
