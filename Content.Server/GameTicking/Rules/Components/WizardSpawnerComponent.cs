@@ -2,7 +2,7 @@ namespace Content.Server.GameTicking.Rules.Components;
 
 /// <summary>
 /// This is used for tagging a spawn point as a wizard spawn point
-/// and providing loadout + name for the operative on spawn.
+/// and providing loadout + name for the wizard on spawn.
 /// TODO: Remove once systems can request spawns from the ghost role system directly.
 /// </summary>
 [RegisterComponent]
