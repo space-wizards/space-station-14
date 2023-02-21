@@ -51,7 +51,7 @@ public sealed class EntityHealthBarOverlay : Overlay
         var rotationMatrix = Matrix3.CreateRotation(-rotation);
         handle.UseShader(_shader);
 
-        foreach (var (mob, dmg) in _entManager.EntityQuery<MobStateComponent, DamageableComponent>(true))
+        foreach (var (thresholds, mob, dmg) in _entManager.EntityQuery<MobThresholdsComponent, MobStateComponent, DamageableComponent>(true))
         {
             if (!xformQuery.TryGetComponent(mob.Owner, out var xform) ||
                 xform.MapID != args.MapId)
@@ -70,8 +70,6 @@ public sealed class EntityHealthBarOverlay : Overlay
 
             handle.SetTransform(matty);
 
-            // Use the sprite itself if we know its bounds. This means short or tall sprites don't get overlapped
-            // by the bar.
             float yOffset;
             if (spriteQuery.TryGetComponent(mob.Owner, out var sprite))
             {
@@ -82,8 +80,6 @@ public sealed class EntityHealthBarOverlay : Overlay
                 yOffset = 1f;
             }
 
-            // Position above the entity (we've already applied the matrix transform to the entity itself)
-            // Offset by the texture size for every do_after we have.
             var position = new Vector2(-_barTexture.Width / 2f / EyeManager.PixelsPerMeter,
                 yOffset / EyeManager.PixelsPerMeter);
 
@@ -91,7 +87,7 @@ public sealed class EntityHealthBarOverlay : Overlay
             handle.DrawTexture(_barTexture, position);
 
             // we are all progressing towards death every day
-            (float ratio, bool inCrit) deathProgress = CalcProgress(mob.Owner, mob, dmg);
+            (float ratio, bool inCrit) deathProgress = CalcProgress(mob.Owner, mob, dmg, thresholds);
 
             var color = GetProgressColor(deathProgress.ratio, deathProgress.inCrit);
 
@@ -113,11 +109,11 @@ public sealed class EntityHealthBarOverlay : Overlay
     /// <summary>
     /// Returns a ratio between 0 and 1, and whether the entity is in crit.
     /// </summary>
-    private (float, bool) CalcProgress(EntityUid uid, MobStateComponent component, DamageableComponent dmg)
+    private (float, bool) CalcProgress(EntityUid uid, MobStateComponent component, DamageableComponent dmg, MobThresholdsComponent thresholds)
     {
         if (_mobStateSystem.IsAlive(uid, component))
         {
-            if (!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out var threshold))
+            if (!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out var threshold, thresholds))
                 return (1, false);
 
             var ratio = 1 - ((FixedPoint2)(dmg.TotalDamage / threshold)).Float();
@@ -126,8 +122,8 @@ public sealed class EntityHealthBarOverlay : Overlay
 
         if (_mobStateSystem.IsCritical(uid, component))
         {
-            if (!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out var critThreshold) ||
-                !_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Dead, out var deadThreshold))
+            if (!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out var critThreshold, thresholds) ||
+                !_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Dead, out var deadThreshold, thresholds))
             {
                 return (1, true);
             }
