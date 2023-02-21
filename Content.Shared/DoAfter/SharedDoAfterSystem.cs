@@ -25,12 +25,12 @@ public abstract class SharedDoAfterSystem : EntitySystem
         SubscribeLocalEvent<DoAfterComponent, ComponentGetState>(OnDoAfterGetState);
     }
 
-    public void Add(DoAfterComponent component, DoAfter doAfter)
+    private void Add(EntityUid entity, DoAfterComponent component, DoAfter doAfter)
     {
         doAfter.ID = component.RunningIndex;
         doAfter.Delay = doAfter.EventArgs.Delay;
         component.DoAfters.Add(component.RunningIndex, doAfter);
-        EnsureComp<ActiveDoAfterComponent>(component.Owner);
+        EnsureComp<ActiveDoAfterComponent>(entity);
         component.RunningIndex++;
         Dirty(component);
     }
@@ -40,7 +40,7 @@ public abstract class SharedDoAfterSystem : EntitySystem
         args.State = new DoAfterComponentState(component.DoAfters);
     }
 
-    public void Cancelled(DoAfterComponent component, DoAfter doAfter)
+    private void Cancelled(DoAfterComponent component, DoAfter doAfter)
     {
         if (!component.DoAfters.TryGetValue(doAfter.ID, out var index))
             return;
@@ -57,7 +57,7 @@ public abstract class SharedDoAfterSystem : EntitySystem
     ///     Call when the particular DoAfter is finished.
     ///     Client should be tracking this independently.
     /// </summary>
-    public void Finished(DoAfterComponent component, DoAfter doAfter)
+    private void Finished(DoAfterComponent component, DoAfter doAfter)
     {
         if (!component.DoAfters.ContainsKey(doAfter.ID))
             return;
@@ -87,7 +87,7 @@ public abstract class SharedDoAfterSystem : EntitySystem
     /// </param>
     /// <param name="component"></param>
     /// <param name="args"></param>
-    public void OnDamage(EntityUid _, DoAfterComponent component, DamageChangedEvent args)
+    private void OnDamage(EntityUid _, DoAfterComponent component, DamageChangedEvent args)
     {
         if (!args.InterruptsDoAfters || !args.DamageIncreased || args.DamageDelta == null)
             return;
@@ -195,7 +195,7 @@ public abstract class SharedDoAfterSystem : EntitySystem
         var doAfterComponent = Comp<DoAfterComponent>(eventArgs.User);
         doAfter.ID = doAfterComponent.RunningIndex;
         doAfter.StartTime = _gameTiming.CurTime;
-        Add(doAfterComponent, doAfter);
+        Add(eventArgs.User, doAfterComponent, doAfter);
         return doAfter;
     }
 
@@ -324,7 +324,7 @@ public abstract class SharedDoAfterSystem : EntitySystem
     /// </summary>
     /// <param name="cancelled"></param>
     /// <param name="args"></param>
-    public void Send(bool cancelled, DoAfterEventArgs args)
+    private void Send(bool cancelled, DoAfterEventArgs args)
     {
         var ev = new DoAfterEvent(cancelled, args);
 
@@ -338,7 +338,7 @@ public abstract class SharedDoAfterSystem : EntitySystem
     /// <param name="cancelled"></param>
     /// <param name="args"></param>
     /// <typeparam name="T"></typeparam>
-    public void Send<T>(T data, bool cancelled, DoAfterEventArgs args)
+    private void Send<T>(T data, bool cancelled, DoAfterEventArgs args)
     {
         var ev = new DoAfterEvent<T>(data, cancelled, args);
 
