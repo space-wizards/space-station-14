@@ -2,7 +2,7 @@
 - type: entity
   name: spellpoints
   parent: BaseItem
-  id: Spellpoints
+  id: Spellpoint
   suffix: 10 SP
   description: It seems to be pulsing with magical energies.
   components:
@@ -14,14 +14,14 @@
     sprite: Objects/Specific/Syndicate/telecrystal.rsi
   - type: Stack
     count: 10
-    stackType: Telecrystal
+    stackType: Spellpoint
   - type: StaticPrice
     price: 0
   - type: StackPrice
     price: 200
   - type: Currency
     price:
-      Spellpoints: 1
+      Spellpoint: 1
 
 - type: entity
   parent: BaseItem
