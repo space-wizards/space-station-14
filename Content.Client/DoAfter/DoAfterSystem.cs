@@ -73,9 +73,6 @@ public sealed class DoAfterSystem : SharedDoAfterSystem
     {
         component.DoAfters.Remove(doAfter.ID);
         component.CancelledDoAfters.Remove(doAfter.ID);
-
-        if (!found)
-            component.DoAfters.Remove(doAfter.ID);
     }
 
     /// <summary>
