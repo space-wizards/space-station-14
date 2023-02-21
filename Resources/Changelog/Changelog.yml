@@ -1,11 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Deconstructing disposal tubes should no longer delete contained entities.,
-    type: Fix}
-  - {message: Fixed people getting trapped in disposal trunks., type: Fix}
-  id: 2558
-  time: '2022-10-31T23:53:06.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fixed an exploit for generating infinite materials from protolathes.,
@@ -2916,3 +2909,9 @@ Entries:
       solution transfer amount., type: Tweak}
   id: 3057
   time: '2023-02-20T12:29:15.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed first round after a server restart being displayed as number 0.,
+    type: Fix}
+  id: 3058
+  time: '2023-02-21T00:16:26.0000000+00:00'
