@@ -3,15 +3,15 @@ using Content.Server.Tools.Components;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Tools.Systems;
 
 public sealed class WeldableSystem : EntitySystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly ToolSystem _toolSystem = default!;
+    [Dependency] private readonly SharedToolSystem _toolSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()

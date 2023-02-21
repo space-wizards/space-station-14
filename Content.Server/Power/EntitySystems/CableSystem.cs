@@ -2,9 +2,10 @@ using Content.Server.Administration.Logs;
 using Content.Server.Electrocution;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
-using Content.Server.Tools;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
+using Content.Shared.Tools;
+using Content.Shared.Tools.Components;
 using Robust.Shared.Map;
 
 namespace Content.Server.Power.EntitySystems;
@@ -13,7 +14,7 @@ public sealed partial class CableSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ITileDefinitionManager _tileManager = default!;
-    [Dependency] private readonly ToolSystem _toolSystem = default!;
+    [Dependency] private readonly SharedToolSystem _toolSystem = default!;
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly ElectrocutionSystem _electrocutionSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogs = default!;

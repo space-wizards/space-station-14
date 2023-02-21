@@ -1,19 +1,16 @@
-using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Popups;
 using Content.Server.Pulling;
-using Content.Server.Tools;
 using Content.Shared.Construction.Components;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Player;
 
 namespace Content.Server.Construction
 {
@@ -22,7 +19,7 @@ namespace Content.Server.Construction
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
-        [Dependency] private readonly ToolSystem _tool = default!;
+        [Dependency] private readonly SharedToolSystem _tool = default!;
         [Dependency] private readonly PullingSystem _pulling = default!;
 
         public override void Initialize()

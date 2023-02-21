@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Threading;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
