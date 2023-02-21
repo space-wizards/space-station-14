@@ -96,6 +96,7 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
             BreakOnTargetMove = true,
             BreakOnDamage = true,
             BreakOnStun = true,
+            NeedHand = true
         }, implantEvent);
     }
 
@@ -121,7 +122,8 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
             BreakOnUserMove = true,
             BreakOnTargetMove = true,
             BreakOnDamage = true,
-            BreakOnStun = true
+            BreakOnStun = true,
+            NeedHand = true
         }, drawEvent);
     }
 
