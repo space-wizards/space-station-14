@@ -148,6 +148,7 @@ public abstract class SharedDoAfterSystem : EntitySystem
         /// </summary>
         /// <param name="eventArgs"></param>
         /// <returns></returns>
+        [Obsolete("Use the synchronous version instead, DoAfter")]
         public async Task<DoAfterStatus> WaitDoAfter(DoAfterEventArgs eventArgs)
         {
             var doAfter = CreateDoAfter(eventArgs);

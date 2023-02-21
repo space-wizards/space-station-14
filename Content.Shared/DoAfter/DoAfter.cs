@@ -10,6 +10,7 @@ namespace Content.Shared.DoAfter;
 public sealed class DoAfter
 {
     [NonSerialized]
+    [Obsolete]
     public Task<DoAfterStatus> AsTask;
 
     [NonSerialized]
