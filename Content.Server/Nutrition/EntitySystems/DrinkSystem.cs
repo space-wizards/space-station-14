@@ -389,7 +389,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 },
                 IconTexture = "/Textures/Interface/VerbIcons/drink.svg.192dpi.png",
                 Text = Loc.GetString("drink-system-verb-drink"),
-                Priority = -1
+                Priority = 2
             };
 
             ev.Verbs.Add(verb);
