@@ -1,10 +1,8 @@
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Hands.Components;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Weapons.Melee.Events;
-using Content.Shared.Hands;
-using Content.Server.Explosion.Components;
 using Robust.Shared.Containers;
+using Content.Server.Explosion.EntitySystems;
 
 namespace Content.Server.HotPotato;
 
@@ -14,28 +12,21 @@ public sealed class HotPotatoSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<HotPotatoComponent, UseInHandEvent>(OnUseInHand);
-        SubscribeLocalEvent<HotPotatoComponent, GotEquippedHandEvent>(OnGotEquipped);
+        SubscribeLocalEvent<HotPotatoComponent, ActiveTimerTriggerEvent>(OnActiveTimer);
         SubscribeLocalEvent<HotPotatoComponent, MeleeHitEvent>(TransferItem);
         SubscribeLocalEvent<HotPotatoComponent, ContainerGettingRemovedAttemptEvent>(OnRemoveAttempt);
     }
 
-    private void OnUseInHand(EntityUid uid, HotPotatoComponent comp, UseInHandEvent args)
+    private void OnActiveTimer(EntityUid uid, HotPotatoComponent comp, ActiveTimerTriggerEvent args)
     {
-        comp.CanTransfer = false;
-    }
-
-    private void OnGotEquipped(EntityUid uid, HotPotatoComponent comp, GotEquippedHandEvent args)
-    {
-        if (HasComp<ActiveTimerTriggerComponent>(uid))
-            comp.CanTransfer = false;
+        comp.Activated = true;
     }
 
     private void TransferItem(EntityUid uid, HotPotatoComponent comp, MeleeHitEvent args)
     {
         comp.CanTransfer = true;
         TryTransferItem(uid, args);
-        comp.CanTransfer = false;
+        comp.CanTransfer = !comp.Activated;
     }
 
     private void TryTransferItem(EntityUid uid, MeleeHitEvent args)
