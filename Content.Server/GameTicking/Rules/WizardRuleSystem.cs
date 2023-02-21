@@ -49,7 +49,7 @@ public sealed class WizardRuleSystem : GameRuleSystem
 
     private MapId? _wizardMap;
 
-    // TODO: use components, don't just cache entity UIDs
+    // TODO: use components, don't just cache entity UIDs. Until comp.owner has a replacement this will sadly stay
     // There have been (and probably still are) bugs where these refer to deleted entities from old rounds.
     private EntityUid? _wizardShuttle;
     private EntityUid? _targetStation;
@@ -385,6 +385,7 @@ public sealed class WizardRuleSystem : GameRuleSystem
         string role;
         string gear;
 
+        //TODO: setup wizard and apprentice info in the case of multi-wizard, similar to NukeOps commander and operatives
         switch (spawnNumber)
         {
             default:
@@ -560,5 +561,10 @@ public sealed class WizardRuleSystem : GameRuleSystem
             SpawnWizardsForGhostRoles();
     }
 
-    public override void Ended() { }
+    public override void Ended()
+    {
+        _wizardMap = null;
+        _wizardShuttle = null;
+        _targetStation = null;
+    }
 }
