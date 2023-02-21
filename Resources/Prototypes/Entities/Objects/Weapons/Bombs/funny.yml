@@ -21,7 +21,8 @@
     - type: Explosive
       explosionType: Default
       maxIntensity: 8
-      totalIntensity: 40
+      intensitySlope: 5
+      totalIntensity: 20
       canCreateVacuum: false
     - type: DeleteOnTrigger
     - type: HotPotato
