@@ -192,6 +192,7 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
         helper.Control.Orphan();
         helper.Window.Dispose();
         helper.Window = null;
+        helper.EverOpened = false;
 
         var monitor = _clyde.EnumerateMonitors().First();
 
@@ -238,7 +239,7 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
     private readonly Dictionary<NetUserId, BwoinkPanel> _activePanelMap = new();
     public bool IsAdmin => true;
     public bool IsOpen => Window is { Disposed: false, IsOpen: true } || ClydeWindow is { IsDisposed: false };
-    private bool _everOpened;
+    public bool EverOpened;
 
     public BwoinkWindow? Window;
     public WindowRoot? WindowRoot;
@@ -286,12 +287,12 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
         }
         else
         {
-            if (_everOpened)
+            if (EverOpened)
                 Window!.Open();
             else
                 Window!.OpenCentered();
 
-            _everOpened = true;
+            EverOpened = true;
         }
     }
 
@@ -321,7 +322,7 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
         Window.OnOpen += () =>
         {
             OnOpen?.Invoke();
-            _everOpened = true;
+            EverOpened = true;
         };
 
         // need to readd any unattached panels..
@@ -363,8 +364,10 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
         Window = null;
         Control = null;
         _activePanelMap.Clear();
+        EverOpened = false;
     }
 }
+
 public sealed class UserAHelpUIHandler : IAHelpUIHandler
 {
     private readonly NetUserId _ownerId;
