@@ -146,6 +146,26 @@ namespace Content.Shared.Humanoid.Markings
             return true;
         }
 
+        public bool CanBeApplied(string species, MarkingPrototype prototype, IPrototypeManager? prototypeManager = null)
+        {
+            IoCManager.Resolve(ref prototypeManager);
+
+            var speciesProto = prototypeManager.Index<SpeciesPrototype>(species);
+            var onlyWhitelisted = prototypeManager.Index<MarkingPointsPrototype>(speciesProto.MarkingPoints).OnlyWhitelisted;
+
+            if (onlyWhitelisted && prototype.SpeciesRestrictions == null)
+            {
+                return false;
+            }
+
+            if (prototype.SpeciesRestrictions != null
+                && !prototype.SpeciesRestrictions.Contains(species))
+            {
+                return false;
+            }
+            return true;
+        }
+
         public bool MustMatchSkin(string species, HumanoidVisualLayers layer, IPrototypeManager? prototypeManager = null)
         {
             IoCManager.Resolve(ref prototypeManager);

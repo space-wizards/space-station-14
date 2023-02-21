@@ -37,8 +37,8 @@ public sealed partial class MarkingPicker : Control
     private string _currentSpecies = SharedHumanoidAppearanceSystem.DefaultSpecies;
     public Color CurrentSkinColor = Color.White;
     public Color CurrentEyeColor = Color.Black;
-    public Color? CurrentHairColor;
-    public Color? CurrentFacialHairColor;
+    public Marking? HairMarking;
+    public Marking? FacialHairMarking;
 
     private readonly HashSet<MarkingCategories> _ignoreCategories = new();
 
@@ -88,21 +88,9 @@ public sealed partial class MarkingPicker : Control
             _currentMarkings.EnsureSpecies(species, skinColor, _markingManager); // should be validated server-side but it can't hurt
         }
 
-        Color? hairColor = null;
-        if (_currentMarkings.TryGetCategory(MarkingCategories.Hair, out var hairMarkings) &&
-            hairMarkings.Count > 0)
-        hairColor = hairMarkings[0].MarkingColors.FirstOrDefault();
-
-        Color? facialHairColor = null;
-        if (_currentMarkings.TryGetCategory(MarkingCategories.Hair, out var facialHairMarkings) &&
-            facialHairMarkings.Count > 0)
-        facialHairColor = facialHairMarkings[0].MarkingColors.FirstOrDefault();
-
         _currentSpecies = species;
         CurrentSkinColor = skinColor;
         CurrentEyeColor = eyeColor;
-        CurrentHairColor = hairColor;
-        CurrentFacialHairColor = facialHairColor;
 
         Populate();
         PopulateUsed();
@@ -117,21 +105,9 @@ public sealed partial class MarkingPicker : Control
             _currentMarkings.EnsureSpecies(species, skinColor, _markingManager); // should be validated server-side but it can't hurt
         }
 
-        Color? hairColor = null;
-        if (_currentMarkings.TryGetCategory(MarkingCategories.Hair, out var hairMarkings) &&
-            hairMarkings.Count > 0)
-        hairColor = hairMarkings[0].MarkingColors.FirstOrDefault();
-
-        Color? facialHairColor = null;
-        if (_currentMarkings.TryGetCategory(MarkingCategories.Hair, out var facialHairMarkings) &&
-            facialHairMarkings.Count > 0)
-        facialHairColor = facialHairMarkings[0].MarkingColors.FirstOrDefault();
-
         _currentSpecies = species;
         CurrentSkinColor = skinColor;
         CurrentEyeColor = eyeColor;
-        CurrentHairColor = hairColor;
-        CurrentFacialHairColor = facialHairColor;
 
         Populate();
         PopulateUsed();
@@ -139,8 +115,6 @@ public sealed partial class MarkingPicker : Control
 
     public void SetSkinColor(Color color) => CurrentSkinColor = color;
     public void SetEyeColor(Color color) => CurrentEyeColor = color;
-    public void SetHairColor(Color color) => CurrentHairColor = color;
-    public void SetFacialHairColor(Color color) => CurrentFacialHairColor = color;
 
     public MarkingPicker()
     {
@@ -446,6 +420,11 @@ public sealed partial class MarkingPicker : Control
         var marking = (MarkingPrototype) _selectedUnusedMarking.Metadata!;
         var markingObject = marking.AsMarking();
 
+        // We need add hair markings in cloned set manually because _currentMarkings doesn't have it
+        var markingSet = new MarkingSet(_currentMarkings);
+        if (HairMarking != null) markingSet.AddBack(MarkingCategories.Hair, HairMarking);
+        if (FacialHairMarking != null) markingSet.AddBack(MarkingCategories.FacialHair, FacialHairMarking);
+
         if (!_markingManager.MustMatchSkin(_currentSpecies, marking.BodyPart, _prototypeManager))
         {
             // Do default coloring
@@ -453,7 +432,7 @@ public sealed partial class MarkingPicker : Control
                 marking,
                 CurrentSkinColor,
                 CurrentEyeColor,
-                _currentMarkings
+                markingSet
             );
             for (var i = 0; i < colors.Count; i++)
             {

@@ -223,6 +223,7 @@ namespace Content.Client.Preferences.UI
                     return;
                 Profile = Profile.WithCharacterAppearance(
                     Profile.Appearance.WithHairColor(newColor.marking.MarkingColors[0]));
+                UpdateCMarkingsHair();
                 IsDirty = true;
             };
 
@@ -241,6 +242,7 @@ namespace Content.Client.Preferences.UI
                     return;
                 Profile = Profile.WithCharacterAppearance(
                     Profile.Appearance.WithFacialHairColor(newColor.marking.MarkingColors[0]));
+                UpdateCMarkingsFacialHair();
                 IsDirty = true;
             };
 
@@ -252,6 +254,7 @@ namespace Content.Client.Preferences.UI
                     Profile.Appearance.WithHairStyleName(HairStyles.DefaultHairStyle)
                 );
                 UpdateHairPickers();
+                UpdateCMarkingsHair();
                 IsDirty = true;
             };
 
@@ -263,6 +266,7 @@ namespace Content.Client.Preferences.UI
                     Profile.Appearance.WithFacialHairStyleName(HairStyles.DefaultFacialHairStyle)
                 );
                 UpdateHairPickers();
+                UpdateCMarkingsFacialHair();
                 IsDirty = true;
             };
 
@@ -282,7 +286,7 @@ namespace Content.Client.Preferences.UI
                 );
 
                 UpdateHairPickers();
-
+                UpdateCMarkingsHair();
                 IsDirty = true;
             };
 
@@ -302,7 +306,7 @@ namespace Content.Client.Preferences.UI
                 );
 
                 UpdateHairPickers();
-
+                UpdateCMarkingsFacialHair();
                 IsDirty = true;
             };
 
@@ -1015,6 +1019,66 @@ namespace Content.Client.Preferences.UI
                 1);
         }
 
+        private void UpdateCMarkingsHair()
+        {
+            if (Profile == null)
+            {
+                return;
+            }
+
+            // hair color
+            Color? hairColor = null;
+            if ( Profile.Appearance.HairStyleId != HairStyles.DefaultHairStyle &&
+                _markingManager.Markings.TryGetValue(Profile.Appearance.HairStyleId, out var hairProto)
+            )
+            {
+                if (_markingManager.CanBeApplied(Profile.Species, hairProto, _prototypeManager))
+                {
+                    if (_markingManager.MustMatchSkin(Profile.Species, HumanoidVisualLayers.Hair, _prototypeManager))
+                        { hairColor = Profile.Appearance.SkinColor; }
+                    else { hairColor = Profile.Appearance.HairColor; }
+                }
+            }
+            if (hairColor != null)
+            {
+                CMarkings.HairMarking = new (Profile.Appearance.HairStyleId, new List<Color>() { hairColor.Value });
+            }
+            else
+            {
+                CMarkings.HairMarking = null;
+            }
+        }
+
+        private void UpdateCMarkingsFacialHair()
+        {
+            if (Profile == null)
+            {
+                return;
+            }
+            
+            // facial hair color
+            Color? facialHairColor = null;
+            if ( Profile.Appearance.FacialHairStyleId != HairStyles.DefaultFacialHairStyle &&
+                _markingManager.Markings.TryGetValue(Profile.Appearance.FacialHairStyleId, out var facialHairProto)
+            )
+            {
+                if (_markingManager.CanBeApplied(Profile.Species, facialHairProto, _prototypeManager))
+                {
+                    if (_markingManager.MustMatchSkin(Profile.Species, HumanoidVisualLayers.Hair, _prototypeManager))
+                        { facialHairColor = Profile.Appearance.SkinColor; }
+                    else { facialHairColor = Profile.Appearance.FacialHairColor; }
+                }
+            }
+            if (facialHairColor != null)
+            {
+                CMarkings.FacialHairMarking = new (Profile.Appearance.FacialHairStyleId, new List<Color>() { facialHairColor.Value });
+            }
+            else
+            {
+                CMarkings.FacialHairMarking = null;
+            }
+        }
+
         private void UpdateEyePickers()
         {
             if (Profile == null)
@@ -1060,6 +1124,8 @@ namespace Content.Client.Preferences.UI
             UpdateMarkings();
             RebuildSpriteView();
             UpdateHairPickers();
+            UpdateCMarkingsHair();
+            UpdateCMarkingsFacialHair();
 
             _preferenceUnavailableButton.SelectId((int) Profile.PreferenceUnavailable);
         }
