@@ -6,6 +6,8 @@
   speciesRestriction: [Arachnid]
   sprites:
   - sprite: Mobs/Customization/arachnid.rsi
+    state: web
+  - sprite: Mobs/Customization/arachnid.rsi
     state: spikes
 
 - type: marking
@@ -14,6 +16,8 @@
   markingCategory: Tail
   speciesRestriction: [Arachnid]
   sprites:
+  - sprite: Mobs/Customization/arachnid.rsi
+    state: web
   - sprite: Mobs/Customization/arachnid.rsi
     state: sharp
 

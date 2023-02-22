@@ -15,6 +15,10 @@
       "name": "sharp",
       "directions": 4
     },
+    {
+      "name": "web",
+      "directions": 4
+    },
 	{
       "name": "torso_stripes",
       "directions": 4
