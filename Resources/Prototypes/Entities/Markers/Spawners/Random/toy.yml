@@ -14,6 +14,7 @@
       rareChance: 0.03
       prototypes:
         - PlushieBee
+        - PlushieAtmosian
         - PlushieNuke
         - PlushieLizard
         - PlushieNar
