@@ -254,6 +254,8 @@
           pipeDirection: South
     - type: StaticPrice
       price: 500
+    - type: Transform
+      noRot: false
 
 - type: entity
   parent: BaseGasThermoMachine
