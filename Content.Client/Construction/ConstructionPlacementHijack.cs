@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Robust.Client.Graphics;
@@ -45,20 +46,28 @@ namespace Content.Client.Construction
             return true;
         }
 
+        private List<IDirectionalTextureProvider>? GetFrames()
+        {
+            if (_prototype == null)
+            {
+                return null;
+            }
+
+            // Use multiple sprite if layers is defined
+            if (_prototype.Layers != null)
+            {
+                return _prototype.Layers.Select(sprite => sprite.DirFrame0()).ToList();
+            }
+
+            // Use the construction prototype icon
+            return new List<IDirectionalTextureProvider>{_prototype.Icon.DirFrame0()};
+        }
+
         /// <inheritdoc />
         public override void StartHijack(PlacementManager manager)
         {
             base.StartHijack(manager);
-
-            var frame = _prototype?.Icon.DirFrame0();
-            if (frame == null)
-            {
-                manager.CurrentTextures = null;
-            }
-            else
-            {
-                manager.CurrentTextures = new List<IDirectionalTextureProvider> {frame};
-            }
+            manager.CurrentTextures = GetFrames();
         }
     }
 }

@@ -47,6 +47,12 @@ namespace Content.Shared.Construction.Prototypes
         public SpriteSpecifier Icon { get; } = SpriteSpecifier.Invalid;
 
         /// <summary>
+        ///     Texture paths used for the construction ghost.
+        /// </summary>
+        [DataField("layers")]
+        public List<SpriteSpecifier>? Layers { get; }
+
+        /// <summary>
         ///     If you can start building or complete steps on impassable terrain.
         /// </summary>
         [DataField("canBuildInImpassable")]
