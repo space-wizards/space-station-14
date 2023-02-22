@@ -560,6 +560,11 @@
   icon:
     sprite: Structures/Piping/Atmospherics/gascanisterport.rsi
     state: gasCanisterPort
+  layers:
+  - sprite: Structures/Piping/Atmospherics/pipe.rsi
+    state: pipeHalf
+  - sprite: Structures/Piping/Atmospherics/gascanisterport.rsi
+    state: gasCanisterPort
   conditions:
     - !type:TileNotBlocked {}
 
