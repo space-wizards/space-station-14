@@ -148,6 +148,7 @@ public sealed class NewDungeonSystem : EntitySystem
                 var roomDimensions = new Vector2i(roomSize.Width, roomSize.Height);
                 var roomCenter = roomDimensions / 2f;
                 Angle roomRotation = Angle.Zero;
+                Matrix3 matty;
 
                 if (!roomProtos.TryGetValue(roomDimensions, out var roomProto))
                 {
@@ -155,6 +156,19 @@ public sealed class NewDungeonSystem : EntitySystem
 
                     if (!roomProtos.TryGetValue(roomDimensions, out roomProto))
                     {
+                        Matrix3.Multiply(packTransform, dungeonTransform, out matty);
+
+                        for (var x = roomSize.Left; x < roomSize.Right; x++)
+                        {
+                            for (var y = roomSize.Bottom; y < roomSize.Top; y++)
+                            {
+                                var index = (Vector2i) matty.Transform(new Vector2(x, y) + grid.TileSize / 2f - packCenter);
+                                tiles.Add((index, new Tile(_tileDefManager["FloorPlanetGrass"].TileId)));
+                            }
+                        }
+
+                        grid.SetTiles(tiles);
+                        tiles.Clear();
                         Logger.Error($"Unable to find room variant for {roomDimensions}, leaving empty.");
                         continue;
                     }
@@ -165,7 +179,7 @@ public sealed class NewDungeonSystem : EntitySystem
 
                 var roomTransform = Matrix3.CreateTransform(roomSize.Center - packCenter, roomRotation);
 
-                Matrix3.Multiply(roomTransform, packTransform, out var matty);
+                Matrix3.Multiply(roomTransform, packTransform, out matty);
                 Matrix3.Multiply(matty, dungeonTransform, out matty);
 
                 var room = roomProto[random.Next(roomProto.Count)];
@@ -216,7 +230,7 @@ public sealed class NewDungeonSystem : EntitySystem
                 // Load decals
                 if (TryComp<DecalGridComponent>(loadedEnts[0], out var loadedDecals))
                 {
-                    var decals = EnsureComp<DecalGridComponent>(gridUid);
+                    EnsureComp<DecalGridComponent>(gridUid);
 
                     foreach (var chunk in loadedDecals.ChunkCollection.ChunkCollection.Values)
                     {
@@ -238,22 +252,23 @@ public sealed class NewDungeonSystem : EntitySystem
                     }
                 }
 
+                // Just in case cleanup the old grid.
+                Del(loadedEnts[0]);
                 // TODO: Spawn doors
 
                 // Spawn wall outline
                 // - Tiles first
-                /*
-                for (var x = roomSize.Left - 1; x <= roomSize.Right; x++)
+                for (var x = -1; x <= roomSize.Width; x++)
                 {
-                    for (var y = roomSize.Bottom - 1; y <= roomSize.Top; y++)
+                    for (var y = -1; y <= roomSize.Height; y++)
                     {
-                        if (x != roomSize.Left - 1 && x != roomSize.Right &&
-                            y != roomSize.Bottom - 1 && y != roomSize.Top)
+                        if (x != -1 && x != roomSize.Width &&
+                            y != -1 && y != roomSize.Height)
                         {
                             continue;
                         }
 
-                        var index = (Vector2i) invTransform.Transform(new Vector2(x, y));
+                        var index = (Vector2i) matty.Transform(new Vector2(x, y) + grid.TileSize / 2f - roomCenter);
 
                         var anchoredEnts = grid.GetAnchoredEntitiesEnumerator(index);
 
@@ -269,17 +284,18 @@ public sealed class NewDungeonSystem : EntitySystem
                 tiles.Clear();
 
                 // Double iteration coz we bulk set tiles for speed.
-                for (var x = roomSize.Left - 1; x <= roomSize.Right; x++)
+                for (var x = -1; x <= roomSize.Width; x++)
                 {
-                    for (var y = roomSize.Bottom - 1; y <= roomSize.Top; y++)
+                    for (var y = -1; y <= roomSize.Height; y++)
                     {
-                        if (x != roomSize.Left - 1 && x != roomSize.Right &&
-                            y != roomSize.Bottom - 1 && y != roomSize.Top)
+                        if (x != -1 && x != roomSize.Width &&
+                            y != -1 && y != roomSize.Height)
                         {
                             continue;
                         }
 
-                        var index = (Vector2i) invTransform.Transform(new Vector2(x, y));
+                        var index = (Vector2i) matty.Transform(new Vector2(x, y) + grid.TileSize / 2f - roomCenter);
+
                         var anchoredEnts = grid.GetAnchoredEntitiesEnumerator(index);
 
                         // Occupied tile.
@@ -289,8 +305,9 @@ public sealed class NewDungeonSystem : EntitySystem
                         Spawn("WallSolid", grid.GridTileToLocal(index));
                     }
                 }
-                */
             }
+
+            // TODO: Iterate rooms and spawn the walls here.
         }
 
         _mapManager.DeleteMap(dummyMap);

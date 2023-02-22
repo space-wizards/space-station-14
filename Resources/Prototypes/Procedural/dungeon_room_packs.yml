@@ -1,13 +1,4 @@
-- type: dungeonRoom
-  id: Test5x5
-  size: 5,5
-  path: /Maps/Dungeon/5x5.yml
-
-- type: dungeonRoom
-  id: Test17x5
-  size: 17,5
-  path: /Maps/Dungeon/17x5.yml
-
+# Dungeon presets
 - type: dungeonPreset
   id: Weh
   roomPacks:
@@ -19,6 +10,25 @@
     - -20,18,-3,35
     - 4,18,21,35
 
+# Rooms
+# Large
+# N/A
+
+# Medium
+- type: dungeonRoom
+  id: Test17x5
+  size: 17,5
+  path: /Maps/Dungeon/17x5.yml
+
+# Small
+- type: dungeonRoom
+  id: Test5x5
+  size: 5,5
+  path: /Maps/Dungeon/5x5.yml
+
+# Room packs
+# Large
+# Three-by-three of 5x5 rooms
 - type: dungeonRoomPack
   id: LargeArea1
   size: 17,17
@@ -27,20 +37,50 @@
     - 6,0,11,5
     - 12,0,17,5
     - 0,6,5,11
-    - 6,6,5,11
+    - 6,6,11,11
     - 12,6,17,11
     - 0,12,5,17
     - 6,12,11,17
     - 12,12,17,17
 
+# Medium
+# Whole area room
 - type: dungeonRoomPack
   id: MediumArea1
   size: 17,5
   rooms:
-    - -0,0,17,5
+    - 0,0,17,5
 
+# Three 5x5 rooms
 - type: dungeonRoomPack
-  id: SmallArea
+  id: MediumArea2
+  size: 5,17
+  rooms:
+    - 0,0,5,5
+    - 0,6,5,11
+    - 0,12,5,17
+
+# Two 5x5 and 3x5
+- type: dungeonRoomPack
+  id: MediumArea3
+  size: 5,17
+  rooms:
+    - 0,0,5,5
+    - 0,6,5,11
+    - 1,12,4,17
+
+# 3x5 -> 5x5 -> 3x5
+- type: dungeonRoomPack
+  id: MediumArea4
+  size: 5,17
+  rooms:
+    - 1,0,4,5
+    - 0,6,5,11
+    - 1,12,4,17
+
+# Small
+- type: dungeonRoomPack
+  id: SmallArea1
   size: 5,5
   rooms:
     - 0,0,5,5
