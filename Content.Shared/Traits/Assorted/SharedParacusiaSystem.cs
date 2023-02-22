@@ -16,6 +16,7 @@ public abstract class SharedParacusiaSystem : EntitySystem
         SubscribeLocalEvent<ParacusiaComponent, ComponentHandleState>(HandleCompState);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(ShutdownParacusia);
     }
+
     private void GetCompState(EntityUid uid, ParacusiaComponent component, ref ComponentGetState args)
     {
         args.State = new ParacusiaComponentState
@@ -29,7 +30,8 @@ public abstract class SharedParacusiaSystem : EntitySystem
 
     private void HandleCompState(EntityUid uid, ParacusiaComponent component, ref ComponentHandleState args)
     {
-        if (args.Current is not ParacusiaComponentState state) return;
+        if (args.Current is not ParacusiaComponentState state)
+            return;
         component.MaxTimeBetweenIncidents = state.MaxTimeBetweenIncidents;
         component.MinTimeBetweenIncidents = state.MinTimeBetweenIncidents;
         component.MaxSoundDistance = state.MaxSoundDistance;

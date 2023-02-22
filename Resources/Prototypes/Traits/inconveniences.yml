@@ -18,4 +18,4 @@
   name: trait-lightweight-name
   description: trait-lightweight-desc
   components:
-    - type: Lightweight
+    - type: LightweightDrunk

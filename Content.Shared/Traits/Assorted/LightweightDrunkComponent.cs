@@ -7,6 +7,6 @@ namespace Content.Shared.Traits.Assorted;
 /// Used for the lightweight trait. DrunkSystem will check for this component and modify the boozePower accordingly if it finds it.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class LightweightComponent : Component
+public sealed class LightweightDrunkComponent : Component
 {
 }

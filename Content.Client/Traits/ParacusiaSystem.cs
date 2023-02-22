@@ -18,7 +18,7 @@ public sealed class ParacusiaSystem : SharedParacusiaSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ParacusiaComponent, ComponentStartup>(SetupParacusia);
+        SubscribeLocalEvent<ParacusiaComponent, ComponentStartup>(OnCompStartup);
         SubscribeLocalEvent<ParacusiaComponent, PlayerDetachedEvent>(OnPlayerDetach);
     }
 
@@ -27,7 +27,7 @@ public sealed class ParacusiaSystem : SharedParacusiaSystem
         component.Stream?.Stop();
     }
 
-    private void SetupParacusia(EntityUid uid, ParacusiaComponent component, ComponentStartup args)
+    private void OnCompStartup(EntityUid uid, ParacusiaComponent component, ComponentStartup args)
     {
         component.NextIncidentTime = _timing.CurTime +
                                      TimeSpan.FromSeconds(_random.NextFloat(component.MinTimeBetweenIncidents, component.MaxTimeBetweenIncidents));
@@ -40,11 +40,12 @@ public sealed class ParacusiaSystem : SharedParacusiaSystem
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        var curTime = _timing.CurTime;
         var localPlayer = _player.LocalPlayer?.ControlledEntity;
 
         if (!TryComp<ParacusiaComponent>(localPlayer, out var paracusia))
             return;
+
+        var curTime = _timing.CurTime;
 
         if (curTime < paracusia.NextIncidentTime)
             return;
@@ -63,9 +64,6 @@ public sealed class ParacusiaSystem : SharedParacusiaSystem
 
         var newCoords = Transform(localPlayer.Value).Coordinates
             .Offset(randomOffset);
-
-        // funy camera shake
-        _camera.KickCamera(localPlayer.Value, randomOffset);
 
         // Play the sound
         paracusia.Stream = _audio.PlayStatic(paracusia.Sounds, localPlayer.Value, newCoords);
