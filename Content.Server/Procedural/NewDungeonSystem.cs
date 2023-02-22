@@ -113,13 +113,12 @@ public sealed class NewDungeonSystem : EntitySystem
                 if (!roomPackProtos.TryGetValue(dimensions, out packs))
                 {
                     Logger.Error($"No room pack found for {dimensions}, using dummy floor.");
-                    packTransform = Matrix3.CreateTranslation(pack.Center);
 
-                    for (var x = 0; x < pack.Width; x++)
+                    for (var x = pack.Left; x < pack.Right; x++)
                     {
-                        for (var y = 0; y < pack.Height; y++)
+                        for (var y = pack.Bottom; y < pack.Top; y++)
                         {
-                            var index = (Vector2i) packTransform.Transform(new Vector2i(x, y));
+                            var index = (Vector2i) dungeonTransform.Transform(new Vector2i(x, y));
                             tiles.Add((index, new Tile(_tileDefManager["FloorSteel"].TileId)));
                         }
                     }
@@ -167,6 +166,7 @@ public sealed class NewDungeonSystem : EntitySystem
                 var roomTransform = Matrix3.CreateTransform(roomSize.Center - packCenter, roomRotation);
 
                 Matrix3.Multiply(roomTransform, packTransform, out var matty);
+                Matrix3.Multiply(matty, dungeonTransform, out matty);
 
                 var room = roomProto[random.Next(roomProto.Count)];
 
