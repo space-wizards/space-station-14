@@ -139,7 +139,7 @@ public sealed class MarkingSet
     }
 
     /// <summary>
-    ///     Filters markings based on species restrictions in the marking's prototype from this marking set.
+    ///     Filters and colors markings based on species and it's restrictions in the marking's prototype from this marking set.
     /// </summary>
     /// <param name="species">The species to filter.</param>
     /// <param name="skinColor">The skin color for recoloring (i.e. slimes). Use null if you want only filter markings</param>

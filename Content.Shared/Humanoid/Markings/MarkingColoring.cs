@@ -1,66 +1,24 @@
 using Robust.Shared.Utility;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Humanoid.Markings;
-
-[Serializable, NetSerializable]
-public enum MarkingColoringType : byte
-{
-    /// <summary>
-    ///     Color applied from "color" property
-    /// </summary>
-    SimpleColor,
-
-    /// <summary>
-    ///     Color applied from humanoid skin
-    /// </summary>
-    SkinColor,
-
-    /// <summary>
-    ///     Color applied from humanoid hair color
-    /// </summary>
-    HairColor,
-    
-    /// <summary>
-    ///     Color applied from humanoid facial hair color
-    /// </summary>
-    FacialHairColor,
-
-    /// <summary>
-    ///     Color applied from humanoid hair or facial hair color
-    /// </summary>
-    AnyHairColor,
-
-    /// <summary>
-    ///     Color applied from skin, but much darker.
-    /// </summary>
-    Tattoo,
-
-    /// <summary>
-    ///     Color applied from humanoid eye color
-    /// </summary>
-    EyeColor
-}
-
 
 /// <summary>
 ///     Default colors for marking 
 /// </summary>
 [DataDefinition]
-[Serializable, NetSerializable]
 public sealed class MarkingColors
 {
     /// <summary>
     /// Coloring properties that will be used on any unspecified layer
     /// </summary>
     [DataField("default", true)]
-    public LayerColoring Default = new SkinColoring();
+    public LayerColoringDefinition Default = new LayerColoringDefinition();
 
     /// <summary>
     ///     Layers with their own coloring type and properties
     /// </summary>
     [DataField("layers", true)]
-    public Dictionary<string, LayerColoring>? Layers;
+    public Dictionary<string, LayerColoringDefinition>? Layers;
 }
 
 public static class MarkingColoring
@@ -122,44 +80,68 @@ public static class MarkingColoring
             return colors;
         }
     }
+}
 
-    public static Color? AnyHairColor(Color? skinColor, Color? hairColor, Color? facialHairColor)
-    {
-        return hairColor ?? facialHairColor ?? skinColor;
-    }
+/// <summary>
+///     A class that defines coloring type and fallback for markings
+/// </summary>
+[DataDefinition]
+public sealed class LayerColoringDefinition
+{
+    [DataField("type")]
+    public LayerColoringType Type = new SkinColoring();
 
-    public static Color? HairColor(Color? skinColor, Color? hairColor)
-    {
-        return hairColor ?? skinColor;
-    }
-
-    public static Color? FacialHairColor(Color? skinColor, Color? facialHairColor)
-    {
-        return facialHairColor ?? skinColor;
-    }
-
-    public static Color? SkinColor(Color? skinColor)
-    {
-        return skinColor;
-    }
+    /// <summary>
+    ///     Coloring types that will be used if main coloring type will return nil
+    /// </summary>
+    [DataField("fallbackTypes")]
+    public List<LayerColoringType> FallbackTypes = new() {};
     
-    public static Color? Tattoo(Color? skinColor)
+    /// <summary>
+    ///     Color that will be used if coloring type and fallback type will return nil
+    /// </summary>
+    [DataField("fallbackColor")]
+    public Color FallbackColor = Color.White;
+
+    public Color GetColor(Color? skin, Color? eyes, MarkingSet markingSet)
     {
-        if (skinColor == null) return null;
-
-        var newColor = Color.ToHsv(skinColor.Value);
-        newColor.Z = .20f;
-
-        return Color.FromHsv(newColor);
+        var color = Type.GetColor(skin, eyes, markingSet);
+        if (color == null)
+        {
+            foreach (var type in FallbackTypes)
+            {
+                color = type.GetColor(skin, eyes, markingSet);
+                if (color != null) break;
+            }
+        }
+        return color ?? FallbackColor;
     }
+}
 
-    public static Color? EyeColor(Color? eyeColor)
+/// <summary>
+///     An abstract class for coloring types
+/// </summary>
+[ImplicitDataDefinitionForInheritors]
+public abstract class LayerColoringType
+{
+    /// <summary>
+    ///     Makes output color negative
+    /// </summary>
+    [DataField("negative")]
+    public bool Negative { get; } = false;
+    public abstract Color? GetCleanColor(Color? skin, Color? eyes, MarkingSet markingSet);
+    public Color? GetColor(Color? skin, Color? eyes, MarkingSet markingSet)
     {
-        return eyeColor;
-    }
-
-    public static Color? SimpleColor(Color? color)
-    {
-        return color ?? new Color(1f, 1f, 1f, 1f);
+        var color = GetCleanColor(skin, eyes, markingSet);
+        // Negative color
+        if (color != null && Negative)
+        {
+            var rcolor = color.Value;
+            rcolor.R = 1f-rcolor.R;
+            rcolor.G = 1f-rcolor.G;
+            rcolor.B = 1f-rcolor.B;
+            return rcolor;
+        }
+        return color;
     }
 }

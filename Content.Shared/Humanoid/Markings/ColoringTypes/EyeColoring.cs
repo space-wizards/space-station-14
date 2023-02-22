@@ -3,9 +3,9 @@ namespace Content.Shared.Humanoid.Markings;
 /// <summary>
 ///     Colors layer in an eye color
 /// </summary>
-public sealed class EyeColoring : LayerColoring
+public sealed class EyeColoring : LayerColoringType
 {
-    public override Color? GetNullableColor(Color? skin, Color? eyes, MarkingSet markingSet)
+    public override Color? GetCleanColor(Color? skin, Color? eyes, MarkingSet markingSet)
     {
         return eyes;
     }
