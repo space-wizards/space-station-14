@@ -95,18 +95,107 @@ public sealed class NewDungeonSystem : EntitySystem
             sizeRooms.Add(proto);
         }
 
+        // First we gather all of the edges for each pack
+        // This allows us to determine which ones should connect from being adjacent
+        var edges = new HashSet<Vector2i>[gen.RoomPacks.Count];
+
+        for (var i = 0; i < gen.RoomPacks.Count; i++)
+        {
+            var pack = gen.RoomPacks[i];
+            var nodes = new HashSet<Vector2i>(pack.Width + 2 + pack.Height);
+
+            for (var x = pack.Left - 1; x <= pack.Right; x++)
+            {
+                for (var y = pack.Bottom - 1; y <= pack.Top; y++)
+                {
+                    // Ignore interior
+                    if (x != pack.Left - 1 &&
+                        x != pack.Right &&
+                        y != pack.Bottom - 1 &&
+                        y != pack.Top)
+                    {
+                        continue;
+                    }
+
+                    // If we're in corners then ignore, cardinals only.
+                    if (x == pack.Left - 1 && (y == pack.Bottom - 1 || y == pack.Top) ||
+                        x == pack.Right && (y == pack.Bottom - 1 || y == pack.Top))
+                    {
+                        continue;
+                    }
+
+                    nodes.Add(new Vector2i(x, y));
+                }
+            }
+
+            edges[i] = nodes;
+        }
+
+        // Build up edge groups between each pack.
+        var connections = new Dictionary<int, Dictionary<int, HashSet<Vector2i>>>();
+
+        for (var i = 0; i < edges.Length; i++)
+        {
+            var nodes = edges[i];
+            var nodeConnections = connections.GetOrNew(i);
+
+            for (var j = i + 1; j < edges.Length; j++)
+            {
+                var otherNodes = edges[j];
+                var intersect = new HashSet<Vector2i>(nodes);
+
+                intersect.IntersectWith(otherNodes);
+
+                if (intersect.Count == 0)
+                    continue;
+
+                nodeConnections[j] = intersect;
+                var otherNodeConnections = connections.GetOrNew(j);
+                otherNodeConnections[i] = intersect;
+            }
+        }
+
         var tiles = new List<(Vector2i, Tile)>();
         var dungeon = new Dungeon();
         var dummyMap = _mapManager.CreateMap();
+        var availablePacks = new List<DungeonRoomPackPrototype>();
 
         foreach (var pack in gen.RoomPacks)
         {
             var dimensions = new Vector2i(pack.Width, pack.Height);
             Matrix3 packTransform;
 
-            // TODO:
+            // Try every pack rotation
+            if (roomPackProtos.TryGetValue(dimensions, out var roomPacks))
+            {
+                availablePacks.AddRange(roomPacks);
+            }
+
+            // Try rotated versions if there are any.
+            if (dimensions.X != dimensions.Y)
+            {
+                var rotatedDimensions = new Vector2i(dimensions.Y, dimensions.X);
+
+                if (roomPackProtos.TryGetValue(rotatedDimensions, out roomPacks))
+                {
+                    availablePacks.AddRange(roomPacks);
+                }
+            }
+
+            // TODO: Auto room connections
+            
+
+            // Iterate every pack
+            foreach (var aPack in availablePacks)
+            {
+
+            }
+
+            // Iterate every pack and see what fits
+            // Unless it's the first pack then at least one of its connections needs to match.
+
             // Iterate everything that matches our bounds (or the rotated version) randomly
-            // For each one, check connections that 
+            // For each one, check connections that
 
             // Fallback tiles for debug.
             if (!roomPackProtos.TryGetValue(dimensions, out var packs))

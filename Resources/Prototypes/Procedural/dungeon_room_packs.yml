@@ -13,6 +13,11 @@
 # Store roomconnections (vector2i) on dungeonroompack
 # Have test validating it
 
+# Okay so
+# Pack just grabs any others we are adjacent too and creates edge groups
+# Then it iterates every available template to find one with a room that intersects at least 1 of the nodes in the edge group
+# When we have that template style than iterate rooms that have at least 1 connection to that edge then fulfil every other internal node
+
 # Store connections on dungeonroompack
 # Do room by room on the build and for the new pack validate it connects to the old one exactly.
 # Need to be outside of the bounds
@@ -20,6 +25,8 @@
 # - Rotate the thing until A) it matches its own pack bounds and B) a connection matches what we need
 
 # Rooms need airlock markers and when selecting room need to validate it matches the expected room connections.
+
+# For presets I don't think we care about specifics of where they connect, just that they connect.
 
 # Rooms
 # Large
