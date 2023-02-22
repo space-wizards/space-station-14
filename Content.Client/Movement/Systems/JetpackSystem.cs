@@ -14,6 +14,7 @@ public sealed class JetpackSystem : SharedJetpackSystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ClothingSystem _clothing = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -29,7 +30,7 @@ public sealed class JetpackSystem : SharedJetpackSystem
 
     private void OnJetpackAppearance(EntityUid uid, JetpackComponent component, ref AppearanceChangeEvent args)
     {
-        args.Component.TryGetData(JetpackVisuals.Enabled, out bool enabled);
+        _appearance.TryGetData<bool>(uid, JetpackVisuals.Enabled, out var enabled, args.Component);
 
         var state = "icon" + (enabled ? "-on" : "");
         args.Sprite?.LayerSetState(0, state);

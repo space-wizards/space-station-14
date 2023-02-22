@@ -19,7 +19,6 @@ using Content.Shared.Bed.Sleep;
 using System.Linq;
 using Content.Server.Maps;
 using Content.Server.Revenant.Components;
-using Content.Server.Store.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
@@ -70,7 +69,7 @@ public sealed partial class RevenantSystem
             return;
         }
 
-        if (!HasComp<MobStateComponent>(target) || !HasComp<HumanoidComponent>(target) || HasComp<RevenantComponent>(target))
+        if (!HasComp<MobStateComponent>(target) || !HasComp<HumanoidAppearanceComponent>(target) || HasComp<RevenantComponent>(target))
             return;
 
         args.Handled = true;
@@ -179,13 +178,10 @@ public sealed partial class RevenantSystem
 
         essence.Harvested = true;
         ChangeEssenceAmount(uid, essence.EssenceAmount, component);
-        if (TryComp<StoreComponent>(uid, out var store))
-        {
-            _store.TryAddCurrency(new Dictionary<string, FixedPoint2>()
-                { {component.StolenEssenceCurrencyPrototype, essence.EssenceAmount} }, store);
-        }
+        _store.TryAddCurrency(new Dictionary<string, FixedPoint2>
+            { {component.StolenEssenceCurrencyPrototype, essence.EssenceAmount} }, uid);
 
-        if (!TryComp<MobStateComponent>(args.Target, out var mobstate))
+        if (!HasComp<MobStateComponent>(args.Target))
             return;
 
         if (_mobState.IsAlive(args.Target) || _mobState.IsCritical(args.Target))

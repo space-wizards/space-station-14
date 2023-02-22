@@ -353,7 +353,7 @@ namespace Content.Server.Nutrition.EntitySystems
                     args.User, args.User);
 
                 // log successful forced drinking
-                _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(uid):user} forced {ToPrettyString(args.User):target} to drink {ToPrettyString(args.Drink.Owner):drink}");
+                _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(args.User):user} forced {ToPrettyString(uid):target} to drink {ToPrettyString(args.Drink.Owner):drink}");
             }
             else
             {
@@ -401,7 +401,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 },
                 IconTexture = "/Textures/Interface/VerbIcons/drink.svg.192dpi.png",
                 Text = Loc.GetString("drink-system-verb-drink"),
-                Priority = -1
+                Priority = 2
             };
 
             ev.Verbs.Add(verb);

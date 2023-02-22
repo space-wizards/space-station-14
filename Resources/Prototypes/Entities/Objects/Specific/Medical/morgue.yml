@@ -1,5 +1,6 @@
 - type: entity
   id: BodyBag_Container
+  parent: BaseFoldable
   name: body bag
   description: A plastic bag designed for the storage and transportation of cadavers.
   components:
@@ -11,7 +12,10 @@
     sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
     layers:
     - state: bag
-      map: ["enum.FoldableVisualLayers.Base"]
+      map: ["unfoldedLayer"]
+    - state: bag_folded
+      map: ["foldedLayer"]
+      visible: false
     - state: open_overlay
       map: ["enum.StorageVisualLayers.Door"]
     - state: label_overlay
@@ -45,7 +49,6 @@
     openSound:
       path: /Audio/Misc/zip.ogg
   - type: EntityStorageLayingDownOverride
-  - type: Foldable
   - type: PaperLabel
     labelSlot:
       insertVerbText: Attach Label
@@ -57,14 +60,19 @@
     visuals:
     - type: StorageVisualizer
       state_open: open_overlay
-    - type: FoldableVisualizer
-      key: bag
   - type: GenericVisualizer
     visuals:
       enum.PaperLabelVisuals.HasLabel:
         enum.BodyBagVisualLayers.Label:
           True: {visible: true}
           False: {visible: false}
+      enum.FoldedVisuals.State:
+        foldedLayer:
+          True: {visible: true}
+          False: {visible: false}
+        unfoldedLayer:
+          True: {visible: false}
+          False: {visible: true}
   - type: Pullable
   - type: AntiRottingContainer
   - type: ItemSlots

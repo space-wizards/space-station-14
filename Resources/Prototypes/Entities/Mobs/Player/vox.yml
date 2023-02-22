@@ -17,9 +17,6 @@
       context: "human"
     - type: MobMover
     - type: InputMover
-    - type: Vocal
-      maleScream: /Audio/Voice/Vox/shriek1.ogg
-      femaleScream: /Audio/Voice/Vox/shriek1.ogg
     - type: Alerts
     - type: Eye
     - type: CameraRecoil
