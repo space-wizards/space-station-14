@@ -433,6 +433,11 @@
   icon:
     sprite: Structures/Piping/Atmospherics/scrubber.rsi
     state: scrub_off
+  layers:
+  - sprite: Structures/Piping/Atmospherics/pipe.rsi
+    state: pipeHalf
+  - sprite: Structures/Piping/Atmospherics/scrubber.rsi
+    state: scrub_off
   conditions:
     - !type:TileNotBlocked {}
 
