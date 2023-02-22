@@ -26,7 +26,7 @@ reagent-name-mayo = mayonnaise
 reagent-desc-mayo = Creamy sauce, made from oil, egg, and some (edible) acid.
 
 reagent-name-vinaigrette = vinaigrette
-reagent-desc-vinaigrette = The most used salad dressing made with oil, vinegar and seasonings.
+reagent-desc-vinaigrette = A basic salad dressing made with oil, vinegar and seasoning.
 
 reagent-name-soysauce = soy sauce
 reagent-desc-soysauce = A salty soy-based flavoring.

@@ -232,6 +232,15 @@
     FoodBreadPlainSlice: 1
     FoodFlyAmanita: 1
 
+- type: microwaveMealRecipe
+  id: RecipeGarlicBread
+  name: garlic bread slice recipe
+  result: FoodBreadGarlicSlice
+  time: 5
+  solids:
+    FoodBreadPlainSlice: 1
+    FoodGarlic: 1
+
 #Pizzas
 - type: microwaveMealRecipe
   id: RecipeMargheritaPizza
