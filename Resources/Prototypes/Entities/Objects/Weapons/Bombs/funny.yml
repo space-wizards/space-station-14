@@ -15,7 +15,7 @@
         types:
           Blunt: 5
     - type: OnUseTimerTrigger
-      delay: 15
+      delay: 180
       beepSound: /Audio/Machines/Nuke/general_beep.ogg
     - type: ExplodeOnTrigger
     - type: Explosive
@@ -39,7 +39,7 @@
   noSpawn: true
   components:
   - type: TimedDespawn
-    lifetime: 1
+    lifetime: 1.5
   - type: Sprite
     netsync: false
     noRot: true

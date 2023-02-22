@@ -1,9 +1,11 @@
 using Content.Shared.HotPotato;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 public sealed class HotPotatoSystem : SharedHotPotatoSystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Update(float frameTime)
     {
@@ -16,7 +18,7 @@ public sealed class HotPotatoSystem : SharedHotPotatoSystem
             if (_timing.CurTime < comp.TargetTime)
                 continue;
             comp.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(comp.EffectCooldown);
-            var ent = Spawn("HotPotatoEffect", Transform(comp.Owner).Coordinates);
+            var ent = Spawn("HotPotatoEffect", Transform(comp.Owner).MapPosition.Offset(_random.NextVector2(0.25f)));
         }
     }
 }
