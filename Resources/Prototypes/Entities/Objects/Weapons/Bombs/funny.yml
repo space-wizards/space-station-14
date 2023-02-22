@@ -15,7 +15,7 @@
         types:
           Blunt: 5
     - type: OnUseTimerTrigger
-      delay: 180
+      delay: 15
       beepSound: /Audio/Machines/Nuke/general_beep.ogg
     - type: ExplodeOnTrigger
     - type: Explosive
@@ -33,3 +33,24 @@
           states:
             enum.Trigger.TriggerVisualState.Primed: activated
             enum.Trigger.TriggerVisualState.Unprimed: complete
+
+- type: entity
+  id: HotPotatoEffect
+  noSpawn: true
+  components:
+  - type: TimedDespawn
+    lifetime: 2
+  - type: Sprite
+    netsync: false
+    drawdepth: SmallMobs
+    noRot: true
+    layers:
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+      sprite: Effects/atmospherics.rsi
+      state: frezon_old
+  - type: EffectVisuals
+  - type: Tag
+    tags:
+      - HideContextMenu
+  - type: AnimationPlayer
