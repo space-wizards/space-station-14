@@ -1,10 +1,4 @@
 Entries:
-- author: Carbonhell
-  changes:
-  - {message: Wiki now displays the proper names and descriptions for chemistry recipes
-      and the rest instead of the localization keys., type: Fix}
-  id: 2562
-  time: '2022-11-02T20:38:56.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'Fixed a bug that could result in collisions being disabled for entities
@@ -2913,3 +2907,9 @@ Entries:
   - {message: Fix the emergency shuttle not loading., type: Fix}
   id: 3061
   time: '2023-02-22T01:47:06.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed the AHelp window being recentered when opened through the verb
+      for admins., type: Fix}
+  id: 3062
+  time: '2023-02-22T12:26:02.0000000+00:00'
