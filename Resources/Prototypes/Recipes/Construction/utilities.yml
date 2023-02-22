@@ -518,6 +518,11 @@
   icon:
     sprite: Structures/Piping/Atmospherics/pump.rsi
     state: pumpPassiveGate
+  layers:
+  - sprite: Structures/Piping/Atmospherics/pipe.rsi
+    state: pipeStraight
+  - sprite: Structures/Piping/Atmospherics/pump.rsi
+    state: pumpPassiveGate
   conditions:
     - !type:TileNotBlocked {}
 
