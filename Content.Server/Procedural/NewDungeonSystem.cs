@@ -222,7 +222,10 @@ public sealed class NewDungeonSystem : EntitySystem
                     {
                         foreach (var decal in chunk.Decals.Values)
                         {
-                            var position = matty.Transform(decal.Coordinates - roomCenter);
+                            // Offset by 0.5 because decals are offset from bot-left corner
+                            // So we convert it to center of tile then convert it back again after transform.
+                            var position = matty.Transform(decal.Coordinates + 0.5f - roomCenter);
+                            position -= 0.5f;
                             _decals.TryAddDecal(
                                 decal.Id,
                                 new EntityCoordinates(gridUid, position),
