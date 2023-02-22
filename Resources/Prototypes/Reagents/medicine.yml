@@ -142,6 +142,7 @@
               Brute: -4
               Burn: -4
               Toxin: -4
+              Caustic: -4
 
 - type: reagent
   id: Dermaline

@@ -38,5 +38,4 @@
 - type: damageGroup
   id: Caustic
   damageTypes:
-  - Heat
-  - Poison
+    - Acidic

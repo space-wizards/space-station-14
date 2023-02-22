@@ -27,3 +27,4 @@ health-analyzer-window-damage-group-Genetic = Genetic
 health-analyzer-window-damage-type-Cellular = Cellular
 
 health-analyzer-window-damage-group-Caustic = Caustic
+health-analyzer-window-damage-type-Acidic = Acidic

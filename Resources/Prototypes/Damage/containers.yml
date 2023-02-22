@@ -6,6 +6,7 @@
     - Toxin
     - Airloss
     - Genetic
+    - Caustic
 
 - type: damageContainer
   id: Inorganic
@@ -14,12 +15,14 @@
   supportedTypes:
     - Heat
     - Shock
+    - Caustic
     - Structural # this probably should be in separate container
 
 - type: damageContainer
   id: Shield
   supportedGroups:
     - Brute
+    - Caustic
   supportedTypes:
     - Heat
 

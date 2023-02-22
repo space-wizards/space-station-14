@@ -132,8 +132,8 @@
         scaleByQuantity: true
         ignoreResistances: false
         damage:
-          groups:
-            Caustic: 0.5
+          types:
+            Acidic: 0.5
       - !type:Emote
         emote: Scream
         probability: 0.3
@@ -142,8 +142,8 @@
       effects:
       - !type:HealthChange
         damage:
-          groups:
-            Caustic: 2
+          types:
+            Acidic: 2
       - !type:PopupMessage
         type: Local
         visualType: Large
@@ -168,8 +168,8 @@
         scaleByQuantity: true
         ignoreResistances: false
         damage:
-          groups:
-            Caustic: 0.3
+          types:
+            Acidic: 0.3
       - !type:Emote
         emote: Scream
         probability: 0.2
@@ -178,8 +178,8 @@
       effects:
       - !type:HealthChange
         damage:
-          groups:
-            Caustic: 2
+          types:
+            Acidic: 2
       - !type:PopupMessage
         type: Local
         visualType: Large
@@ -211,8 +211,8 @@
         scaleByQuantity: true
         ignoreResistances: false
         damage:
-          groups:
-            Caustic: 0.1
+          types:
+            Acidic: 0.1
       - !type:Emote
         emote: Scream
         probability: 0.1
@@ -222,7 +222,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 2
+            Acidic: 2
       - !type:PopupMessage
         type: Local
         visualType: Large
