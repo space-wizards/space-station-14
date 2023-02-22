@@ -476,6 +476,11 @@
   icon:
     sprite: Structures/Piping/Atmospherics/pump.rsi
     state: pumpPressure
+  layers:
+  - sprite: Structures/Piping/Atmospherics/pipe.rsi
+    state: pipeStraight
+  - sprite: Structures/Piping/Atmospherics/pump.rsi
+    state: pumpPressure
   conditions:
     - !type:TileNotBlocked {}
 
