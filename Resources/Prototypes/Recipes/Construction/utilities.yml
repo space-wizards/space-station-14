@@ -539,6 +539,11 @@
   icon:
     sprite: Structures/Piping/Atmospherics/pump.rsi
     state: pumpManualValve
+  layers:
+  - sprite: Structures/Piping/Atmospherics/pipe.rsi
+    state: pipeStraight
+  - sprite: Structures/Piping/Atmospherics/pump.rsi
+    state: pumpManualValve
   conditions:
     - !type:TileNotBlocked {}
 
