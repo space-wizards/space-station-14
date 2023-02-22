@@ -1,3 +1,5 @@
+using Content.Server.Decals;
+using Content.Shared.Decals;
 using Content.Shared.Procedural;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
@@ -15,13 +17,29 @@ public sealed class NewDungeonSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
+    [Dependency] private readonly DecalSystem _decals = default!;
     [Dependency] private readonly MapLoaderSystem _loader = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        _console.RegisterCommand("weh", GetRoomPack);
+        _console.RegisterCommand("weh", GetRoomPack, CompletionCallback);
+    }
+
+    private CompletionResult CompletionCallback(IConsoleShell shell, string[] args)
+    {
+        if (args.Length == 1)
+        {
+            return CompletionResult.FromHintOptions(CompletionHelper.MapIds(EntityManager), "Map Id");
+        }
+
+        if (args.Length == 2)
+        {
+            return CompletionResult.FromHintOptions(CompletionHelper.PrototypeIDs<DungeonPresetPrototype>(proto: _prototype), $"Dungeon preset");
+        }
+
+        return CompletionResult.Empty;
     }
 
     private void GetRoomPack(IConsoleShell shell, string argstr, string[] args)
@@ -48,13 +66,14 @@ public sealed class NewDungeonSystem : EntitySystem
             return;
         }
 
-        var random = new System.Random();
+        var random = new Random();
 
         GetRoomPackDungeon(dungeon, mapGrid, random.Next());
     }
 
     public Dungeon GetRoomPackDungeon(DungeonPresetPrototype gen, MapGridComponent grid, int seed)
     {
+        var gridUid = grid.Owner;
         var dungeonTransform = Matrix3.CreateTranslation(Vector2.Zero);
         var random = new Random(seed + 256);
         // TODO: API for this
@@ -171,6 +190,7 @@ public sealed class NewDungeonSystem : EntitySystem
 
                 var loadedEnumerator = loadedGrid.GetAllTilesEnumerator();
 
+                // Load tiles
                 while (loadedEnumerator.MoveNext(out var tile))
                 {
                     var tilePos = matty.Transform((Vector2) tile.Value.GridIndices + grid.TileSize / 2f - roomCenter);
@@ -181,24 +201,39 @@ public sealed class NewDungeonSystem : EntitySystem
                 tiles.Clear();
                 var xformQuery = GetEntityQuery<TransformComponent>();
 
+                // Load entities
                 foreach (var ent in Transform(loadedEnts[0]).ChildEntities)
                 {
-                    Del(ent);
-                    /*
                     var childXform = xformQuery.GetComponent(ent);
-                    var childPos = transform.Transform(childXform.LocalPosition);
+                    var childPos = matty.Transform(childXform.LocalPosition - roomCenter);
                     var anchored = childXform.Anchored;
-                    _transform.SetCoordinates(childXform, new EntityCoordinates(grid.Owner, childPos));
+                    _transform.SetCoordinates(childXform, new EntityCoordinates(gridUid, childPos));
 
                     if (anchored)
                         _transform.AnchorEntity(childXform, grid);
-                        */
                 }
 
-                // TODO: Decals
+                // Load decals
+                if (TryComp<DecalGridComponent>(loadedEnts[0], out var loadedDecals))
+                {
+                    var decals = EnsureComp<DecalGridComponent>(gridUid);
 
-                // Now copy entities
-                // foreach (var )
+                    foreach (var chunk in loadedDecals.ChunkCollection.ChunkCollection.Values)
+                    {
+                        foreach (var decal in chunk.Decals.Values)
+                        {
+                            var position = matty.Transform(decal.Coordinates - roomCenter);
+                            _decals.TryAddDecal(
+                                decal.Id,
+                                new EntityCoordinates(gridUid, position),
+                                out _,
+                                decal.Color,
+                                decal.Angle,
+                                decal.ZIndex,
+                                decal.Cleanable);
+                        }
+                    }
+                }
 
                 // TODO: Spawn doors
 

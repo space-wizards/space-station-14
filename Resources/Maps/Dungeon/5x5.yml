@@ -126,7 +126,12 @@ entities:
   - gravityShakeSound: !type:SoundPathSpecifier
       path: /Audio/Effects/alert.ogg
     type: Gravity
-  - chunkCollection: {}
+  - chunkCollection:
+      0,0:
+        0:
+          color: '#FFFFFFFF'
+          id: BotRight
+          coordinates: 3,1
     type: DecalGrid
   - tiles:
       -1,-1: 0
@@ -154,6 +159,15 @@ entities:
       3,1: 0
       3,2: 0
       3,3: 0
+      0,4: 0
+      1,4: 0
+      2,4: 0
+      3,4: 0
+      4,0: 0
+      4,1: 0
+      4,2: 0
+      4,3: 0
+      4,4: 0
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
