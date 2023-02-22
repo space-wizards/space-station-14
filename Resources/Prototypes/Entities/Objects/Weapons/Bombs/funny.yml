@@ -39,7 +39,7 @@
   noSpawn: true
   components:
   - type: TimedDespawn
-    lifetime: 1.5
+    lifetime: 1
   - type: Sprite
     netsync: false
     noRot: true
