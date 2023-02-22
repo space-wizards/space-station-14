@@ -1,7 +1,7 @@
 using Content.Shared.HotPotato;
 using Robust.Shared.Timing;
 
-public sealed class JetpackSystem : SharedHotPotatoSystem
+public sealed class HotPotatoSystem : SharedHotPotatoSystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
 
