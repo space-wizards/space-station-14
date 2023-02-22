@@ -78,12 +78,52 @@ public sealed class NewDungeonSystem : EntitySystem
         var random = new Random(seed + 256);
         // TODO: API for this
         var roomPackProtos = new Dictionary<Vector2i, List<DungeonRoomPackPrototype>>();
+        var externalNodes = new Dictionary<DungeonRoomPackPrototype, HashSet<Vector2i>>();
 
         foreach (var pack in _prototype.EnumeratePrototypes<DungeonRoomPackPrototype>())
         {
             var size = pack.Size;
             var sizePacks = roomPackProtos.GetOrNew(size);
             sizePacks.Add(pack);
+
+            // Determine external connections
+            // We use this later to determine which room packs connect to each other
+            var nodes = new HashSet<Vector2i>();
+            externalNodes.Add(pack, nodes);
+
+            foreach (var room in pack.Rooms)
+            {
+                for (var x = room.Left - 1; x <= room.Right; x++)
+                {
+                    for (var y = room.Bottom - 1; y <= room.Top; y++)
+                    {
+                        // No interior nodes
+                        if (x != -1 && x != pack.Size.X &&
+                            y != -1 && y != pack.Size.Y)
+                        {
+                            continue;
+                        }
+
+                        // No corners
+                        if (x == -1 && (y == -1 || y == pack.Size.Y) ||
+                            x == pack.Size.X && (y == -1 || y == pack.Size.Y))
+                        {
+                            continue;
+                        }
+
+                        nodes.Add(new Vector2i(x, y));
+                    }
+                }
+            }
+
+            // TODO: Determine internal room connections
+            // Don't worry about MST, do it later after we have all the chosen packs
+            // then work through all room connections and get minimal
+
+            // TODO: Get edge groups for the room pack bounds, then for any actual room packs we need all edges to intersect
+            // for every group
+
+            // TODO: Make sure you support rollback in case you can't find a valid roompack for a certain thing.
         }
 
         var roomProtos = new Dictionary<Vector2i, List<DungeonRoomPrototype>>();
@@ -182,8 +222,10 @@ public sealed class NewDungeonSystem : EntitySystem
                 }
             }
 
-            // TODO: Auto room connections
-            
+            // TODO: for each dungeonroompackprototype determine external connections automatically
+            // TODO: For each dungeonroompackprototype determine internal connections
+            // When iterating room spawning (starting on connecting edge) check each connection and see if it's been found yet
+            // If it has then we can spawn a room with n-1 available connections
 
             // Iterate every pack
             foreach (var aPack in availablePacks)
