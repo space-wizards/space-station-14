@@ -50,7 +50,7 @@ namespace Content.Shared.Construction.Prototypes
         ///     Texture paths used for the construction ghost.
         /// </summary>
         [DataField("layers")]
-        public List<SpriteSpecifier>? Layers { get; }
+        private List<SpriteSpecifier>? _layers;
 
         /// <summary>
         ///     If you can start building or complete steps on impassable terrain.
@@ -76,6 +76,7 @@ namespace Content.Shared.Construction.Prototypes
         public bool CanRotate { get; } = true;
 
         public IReadOnlyList<IConstructionCondition> Conditions => _conditions;
+        public IReadOnlyList<SpriteSpecifier> Layers => _layers ?? new List<SpriteSpecifier>{Icon};
     }
 
     public enum ConstructionType

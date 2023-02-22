@@ -46,28 +46,11 @@ namespace Content.Client.Construction
             return true;
         }
 
-        private List<IDirectionalTextureProvider>? GetFrames()
-        {
-            if (_prototype == null)
-            {
-                return null;
-            }
-
-            // Use multiple sprite if layers is defined
-            if (_prototype.Layers != null)
-            {
-                return _prototype.Layers.Select(sprite => sprite.DirFrame0()).ToList();
-            }
-
-            // Use the construction prototype icon
-            return new List<IDirectionalTextureProvider>{_prototype.Icon.DirFrame0()};
-        }
-
         /// <inheritdoc />
         public override void StartHijack(PlacementManager manager)
         {
             base.StartHijack(manager);
-            manager.CurrentTextures = GetFrames();
+            manager.CurrentTextures = _prototype?.Layers.Select(sprite => sprite.DirFrame0()).ToList();
         }
     }
 }
