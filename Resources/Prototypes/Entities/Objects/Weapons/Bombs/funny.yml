@@ -1,6 +1,6 @@
 - type: entity
   name: hot potato
-  description: When activated can only be transferred away by hitting another being with it!
+  description: Once activated, this time bomb can't be dropped - only passed to someone else!
   parent: BaseItem
   id: HotPotato
   components:

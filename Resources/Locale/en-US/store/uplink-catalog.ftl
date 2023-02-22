@@ -143,7 +143,7 @@ uplink-necronomicon-name = Necronomicon
 uplink-necronomicon-desc = An unholy book capable of summoning a demonic familiar.
 
 uplink-hot-potato-name = Hot Potato
-uplink-hot-potato-desc = When activated can only be transferred away by hitting another being with it!
+uplink-hot-potato-desc = Once activated, this time bomb can't be dropped - only passed to someone else!
 
 # Armor
 uplink-chameleon-name = Chameleon Kit
