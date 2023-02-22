@@ -10,6 +10,17 @@
     - -20,18,-3,35
     - 4,18,21,35
 
+# Store roomconnections (vector2i) on dungeonroompack
+# Have test validating it
+
+# Store connections on dungeonroompack
+# Do room by room on the build and for the new pack validate it connects to the old one exactly.
+# Need to be outside of the bounds
+# - Check if connection count matches
+# - Rotate the thing until A) it matches its own pack bounds and B) a connection matches what we need
+
+# Rooms need airlock markers and when selecting room need to validate it matches the expected room connections.
+
 # Rooms
 # Large
 # N/A
@@ -19,37 +30,107 @@
   id: Test17x5
   size: 17,5
   path: /Maps/Dungeon/17x5.yml
+  connections:
+    - 8,0
+    - 16,2
+    - 8,4
+    - 0,2
 
 # Small
 - type: dungeonRoom
   id: Test5x5
   size: 5,5
   path: /Maps/Dungeon/5x5.yml
+  connections:
+    - 2,0
+    - 4,2
+    - 2,4
+    - 0,2
 
 # Room packs
 # Large
 # Three-by-three of 5x5 rooms
+#- type: dungeonRoomPack
+#  id: LargeArea1
+#  size: 17,17
+#  rooms:
+#    - 0,0,5,5
+#    - 6,0,11,5
+#    - 12,0,17,5
+#    - 0,6,5,11
+#    - 6,6,11,11
+#    - 12,6,17,11
+#    - 0,12,5,17
+#    - 6,12,11,17
+#    - 12,12,17,17
+
+# Hook
 - type: dungeonRoomPack
-  id: LargeArea1
+  id: LargeArea2
   size: 17,17
   rooms:
-    - 0,0,5,5
-    - 6,0,11,5
-    - 12,0,17,5
-    - 0,6,5,11
-    - 6,6,11,11
-    - 12,6,17,11
-    - 0,12,5,17
+    - 7,0,10,11
     - 6,12,11,17
-    - 12,12,17,17
+    - 12,13,17,16
+  roomConnections:
+    - 8,11
+    - 11,15
+  connections:
+    - 8,-1
+    - 8,11
+    - 11,14
+
+# Wide corridor vertically up the middle and small corridors on left
+- type: dungeonRoomPack
+  id: LargeArea3
+  size: 17,17
+  rooms:
+    - 6,0,11,11
+    - 6,12,11,17
+    - 0,13,5,16
+    - 1,5,4,12
+    - 0,1,5,4
+  roomConnections:
+    - 8,11
+    - 5,14
+    - 2,12
+    - 2,4
+    - 5,2
+  connections:
+    - 8,-1
+    - -1,2
+    - -1,14
+    - 8,17
+
+# Long horizontal corridor with rooms above
+- type: dungeonRoomPack
+  id: LargeArea4
+  size: 17,17
+  rooms:
+    - 0,7,17,10
+    - 0,11,5,16
+    - 6,11,11,16
+  roomConnections:
+    - 2,10
+    - 5,13
+  connections:
+    - -1,8
+    - 17,8
+    - 2,10
+    - 5,13
 
 # Medium
 # Whole area room
-- type: dungeonRoomPack
-  id: MediumArea1
-  size: 17,5
-  rooms:
-    - 0,0,17,5
+#- type: dungeonRoomPack
+#  id: MediumArea1
+#  size: 5,17
+#  rooms:
+#    - 0,6,15,9
+#    - 11,12,16,17
+#    - 11,0,16,5
+#  roomConnections:
+#    - 13,5
+#    - 13,9
 
 # Three 5x5 rooms
 - type: dungeonRoomPack
@@ -59,6 +140,18 @@
     - 0,0,5,5
     - 0,6,5,11
     - 0,12,5,17
+  roomConnections:
+    - 2,5
+    - 2,11
+  connections:
+    - 2,-1
+    - 5,2
+    - 5,8
+    - 5,14
+    - 2,17
+    - -1,14
+    - -1,8
+    - -1,2
 
 # Two 5x5 and 3x5
 - type: dungeonRoomPack
@@ -68,6 +161,16 @@
     - 0,0,5,5
     - 0,6,5,11
     - 1,12,4,17
+  roomConnections:
+    - 2,5
+    - 2,11
+  connections:
+    - 2,-1
+    - 5,2
+    - 5,8
+    - 2,17
+    - -1,8
+    - -1,2
 
 # 3x5 -> 5x5 -> 3x5
 - type: dungeonRoomPack
@@ -77,6 +180,14 @@
     - 1,0,4,5
     - 0,6,5,11
     - 1,12,4,17
+  roomConnections:
+    - 2,5
+    - 2,11
+  connections:
+    - 2,-1
+    - 5,8
+    - 2,17
+    - -1,8
 
 # Small
 - type: dungeonRoomPack
@@ -84,3 +195,8 @@
   size: 5,5
   rooms:
     - 0,0,5,5
+  connections:
+    - 2,-1
+    - 5,2
+    - 2,5
+    - -1,2

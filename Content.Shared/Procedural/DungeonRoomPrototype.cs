@@ -16,4 +16,10 @@ public sealed class DungeonRoomPrototype : IPrototype
     /// </summary>
     [DataField("path", required: true)]
     public ResourcePath Path = default!;
+
+    /// <summary>
+    /// Where other rooms are allowed to join us
+    /// </summary>
+    [DataField("connections", required: true)]
+    public List<Vector2i> Connections = new();
 }

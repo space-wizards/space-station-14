@@ -98,12 +98,15 @@ public sealed class NewDungeonSystem : EntitySystem
         var tiles = new List<(Vector2i, Tile)>();
         var dungeon = new Dungeon();
         var dummyMap = _mapManager.CreateMap();
-        var dummyMapUid = _mapManager.GetMapEntityId(dummyMap);
 
         foreach (var pack in gen.RoomPacks)
         {
             var dimensions = new Vector2i(pack.Width, pack.Height);
             Matrix3 packTransform;
+
+            // TODO:
+            // Iterate everything that matches our bounds (or the rotated version) randomly
+            // For each one, check connections that 
 
             // Fallback tiles for debug.
             if (!roomPackProtos.TryGetValue(dimensions, out var packs))

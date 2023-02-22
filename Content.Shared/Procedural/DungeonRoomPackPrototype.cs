@@ -16,4 +16,16 @@ public sealed class DungeonRoomPackPrototype : IPrototype
 
     [DataField("rooms", required: true)]
     public List<Box2i> Rooms = new();
+
+    // TODO: Need a test to ensure no duplicates.
+    /// <summary>
+    /// Connections between internal rooms
+    /// </summary>
+    [DataField("roomConnections")]
+    public List<Vector2i> RoomConnections = new();
+
+    /// <summary>
+    /// Where our connections are to external packs.
+    /// </summary>
+    [DataField("connections")] public List<Vector2i> Connections = new();
 }
