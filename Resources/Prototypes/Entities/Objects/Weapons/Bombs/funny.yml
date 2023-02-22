@@ -39,16 +39,14 @@
   noSpawn: true
   components:
   - type: TimedDespawn
-    lifetime: 2
+    lifetime: 1
   - type: Sprite
     netsync: false
-    drawdepth: SmallMobs
     noRot: true
-    layers:
-    - shader: unshaded
-      map: ["enum.EffectLayers.Unshaded"]
-      sprite: Effects/atmospherics.rsi
-      state: frezon_old
+    drawdepth: Effects
+    sprite: Effects/chemsmoke.rsi
+    state: chemsmoke
+    scale: "0.15, 0.15"
   - type: EffectVisuals
   - type: Tag
     tags:

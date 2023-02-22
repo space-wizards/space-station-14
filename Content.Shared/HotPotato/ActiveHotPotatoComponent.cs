@@ -8,6 +8,6 @@ namespace Content.Shared.HotPotato;
 [RegisterComponent, NetworkedComponent]
 public sealed class ActiveHotPotatoComponent : Component
 {
-    public float EffectCooldown = 0.3f;
+    public float EffectCooldown = 1f;
     public TimeSpan TargetTime = TimeSpan.Zero;
 }
