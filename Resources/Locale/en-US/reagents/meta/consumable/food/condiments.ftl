@@ -25,6 +25,9 @@ reagent-desc-ketchunaise = So-called Russian dressing, popular among Space Ameri
 reagent-name-mayo = mayonnaise
 reagent-desc-mayo = Creamy sauce, made from oil, egg, and some (edible) acid.
 
+reagent-name-vinaigrette = vinaigrette
+reagent-desc-vinaigrette = The most used salad dressing made with oil, vinegar and seasonings.
+
 reagent-name-soysauce = soy sauce
 reagent-desc-soysauce = A salty soy-based flavoring.
 

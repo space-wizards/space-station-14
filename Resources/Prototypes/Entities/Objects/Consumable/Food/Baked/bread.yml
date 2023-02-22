@@ -475,6 +475,10 @@
   id: FoodBreadGarlicSlice
   description: Alas, it is limited.
   components:
+  - type: FlavorProfile
+    flavors:
+      - bread
+      - garlic
   - type: Sprite
     layers:
     - state: garlic-slice
