@@ -86,19 +86,6 @@ public enum DoAfterStatus : byte
 }
 
 [Serializable, NetSerializable]
-public sealed class MoreData : AdditionalData
-{
-    public EntityUid UID;
-    public bool BAR;
-
-    public MoreData(EntityUid uid, bool bar)
-    {
-        UID = uid;
-        BAR = bar;
-    }
-}
-
-[Serializable, NetSerializable]
 public abstract class AdditionalData
 {
 
