@@ -27,11 +27,11 @@ public sealed class DoAfterEventArgs
     /// </summary>
     public EntityUid? Used;
 
-    public bool RaiseOnUser { get; set; } = true;
+    public bool RaiseOnUser = true;
 
-    public bool RaiseOnTarget { get; set; } = true;
+    public bool RaiseOnTarget = true;
 
-    public bool RaiseOnUsed { get; set; } = true;
+    public bool RaiseOnUsed = true;
 
     /// <summary>
     ///     Manually cancel the do_after so it no longer runs
@@ -44,40 +44,40 @@ public sealed class DoAfterEventArgs
     ///     Whether we need to keep our active hand as is (i.e. can't change hand or change item).
     ///     This also covers requiring the hand to be free (if applicable).
     /// </summary>
-    public bool NeedHand { get; set; }
+    public bool NeedHand;
 
     /// <summary>
     ///     If do_after stops when the user moves
     /// </summary>
-    public bool BreakOnUserMove { get; set; }
+    public bool BreakOnUserMove;
 
     /// <summary>
     ///     If do_after stops when the target moves (if there is a target)
     /// </summary>
-    public bool BreakOnTargetMove { get; set; }
+    public bool BreakOnTargetMove;
 
     /// <summary>
     ///     Threshold for user and target movement
     /// </summary>
-    public float MovementThreshold { get; set; }
+    public float MovementThreshold;
 
-    public bool BreakOnDamage { get; set; }
+    public bool BreakOnDamage;
 
     /// <summary>
     ///     Threshold for user damage
     /// </summary>
-    public FixedPoint2 DamageThreshold { get; set; }
-    public bool BreakOnStun { get; set; }
+    public FixedPoint2? DamageThreshold;
+    public bool BreakOnStun;
 
     /// <summary>
     /// Should the DoAfter event broadcast?
     /// </summary>
-    public bool Broadcast { get; set; }
+    public bool Broadcast;
 
     /// <summary>
     ///     Threshold for distance user from the used OR target entities.
     /// </summary>
-    public float? DistanceThreshold { get; set; }
+    public float? DistanceThreshold;
 
     /// <summary>
     ///     Requires a function call once at the end (like InRangeUnobstructed).

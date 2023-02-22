@@ -26,9 +26,6 @@ public sealed class DoAfter
     //Cache the delay so the timer properly shows
     public float Delay;
 
-    [NonSerialized]
-    private readonly IGameTiming _gameTiming;
-
     //Keep track of the time this DoAfter started
     public TimeSpan StartTime;
 
@@ -60,8 +57,7 @@ public sealed class DoAfter
     public DoAfter(DoAfterEventArgs eventArgs, IEntityManager entityManager)
     {
         EventArgs = eventArgs;
-        _gameTiming = IoCManager.Resolve<IGameTiming>();
-        StartTime = _gameTiming.CurTime;
+        StartTime = IoCManager.Resolve<IGameTiming>().CurTime;
 
         if (eventArgs.BreakOnUserMove)
             UserGrid = entityManager.GetComponent<TransformComponent>(eventArgs.User).Coordinates;

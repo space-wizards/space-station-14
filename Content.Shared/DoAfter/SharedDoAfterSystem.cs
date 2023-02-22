@@ -12,7 +12,7 @@ namespace Content.Shared.DoAfter;
 
 public abstract class SharedDoAfterSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] protected readonly IGameTiming GameTiming = default!;
 
     // We cache the list as to not allocate every update tick...
     private readonly Queue<DoAfter> _pending = new();
@@ -90,7 +90,7 @@ public abstract class SharedDoAfterSystem : EntitySystem
         if (!args.InterruptsDoAfters || !args.DamageIncreased || args.DamageDelta == null)
             return;
 
-        foreach (var (_, doAfter) in component.DoAfters)
+        foreach (var doAfter in component.DoAfters.Values)
         {
             if (doAfter.EventArgs.BreakOnDamage && args.DamageDelta?.Total.Float() > doAfter.EventArgs.DamageThreshold)
                 Cancel(uid, doAfter, component);
@@ -103,7 +103,7 @@ public abstract class SharedDoAfterSystem : EntitySystem
 
         foreach (var (_, comp) in EntityManager.EntityQuery<ActiveDoAfterComponent, DoAfterComponent>())
         {
-            foreach (var (_, doAfter) in comp.DoAfters.ToArray())
+            foreach (var doAfter in comp.DoAfters.Values.ToArray())
             {
                 Run(comp.Owner, comp, doAfter);
 
@@ -196,7 +196,7 @@ public abstract class SharedDoAfterSystem : EntitySystem
         // Caller's gonna be responsible for this I guess
         var doAfterComponent = Comp<DoAfterComponent>(eventArgs.User);
         doAfter.ID = doAfterComponent.RunningIndex;
-        doAfter.StartTime = _gameTiming.CurTime;
+        doAfter.StartTime = GameTiming.CurTime;
         Add(eventArgs.User, doAfterComponent, doAfter);
         return doAfter;
     }
@@ -214,7 +214,7 @@ public abstract class SharedDoAfterSystem : EntitySystem
                 throw new ArgumentOutOfRangeException();
         }
 
-        doAfter.Elapsed = _gameTiming.CurTime - doAfter.StartTime;
+        doAfter.Elapsed = GameTiming.CurTime - doAfter.StartTime;
 
         if (IsFinished(doAfter))
         {
@@ -334,7 +334,7 @@ public abstract class SharedDoAfterSystem : EntitySystem
             return;
 
         doAfter.Cancelled = true;
-        doAfter.CancelledTime = _gameTiming.CurTime;
+        doAfter.CancelledTime = GameTiming.CurTime;
 
         var doAfterMessage = comp.DoAfters[doAfter.ID];
         comp.CancelledDoAfters.Add(doAfter.ID, doAfterMessage);

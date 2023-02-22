@@ -54,7 +54,7 @@ public sealed class DoAfterOverlay : Overlay
             var index = 0;
             var worldMatrix = Matrix3.CreateTranslation(worldPosition);
 
-            foreach (var (_, doAfter) in comp.DoAfters)
+            foreach (var doAfter in comp.DoAfters.Values)
             {
                 var elapsed = doAfter.Elapsed;
                 var displayRatio = MathF.Min(1.0f,

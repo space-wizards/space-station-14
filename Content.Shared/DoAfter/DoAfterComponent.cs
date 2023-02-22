@@ -85,6 +85,9 @@ public enum DoAfterStatus : byte
     Finished,
 }
 
+/// <summary>
+///     Inherited by classes used as the generic parameter for <see cref="DoAfterEvent{T}"/>
+/// </summary>
 [Serializable, NetSerializable]
 public abstract class AdditionalData
 {

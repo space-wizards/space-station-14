@@ -1,10 +1,8 @@
 using Content.Shared.DoAfter;
-using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.DoAfter;
@@ -13,10 +11,8 @@ namespace Content.Client.DoAfter;
 /// Handles events that need to happen after a certain amount of time where the event could be cancelled by factors
 /// such as moving.
 /// </summary>
-[UsedImplicitly]
 public sealed class DoAfterSystem : SharedDoAfterSystem
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IOverlayManager _overlay = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
@@ -86,14 +82,14 @@ public sealed class DoAfterSystem : SharedDoAfterSystem
 
         var doAfterMessage = component.DoAfters[id];
         doAfterMessage.Cancelled = true;
-        doAfterMessage.CancelledTime = _gameTiming.CurTime;
+        doAfterMessage.CancelledTime = GameTiming.CurTime;
         component.CancelledDoAfters.Add(id, doAfterMessage);
     }
 
     // TODO separate DoAfter & ActiveDoAfter components for the entity query.
     public override void Update(float frameTime)
     {
-        if (!_gameTiming.IsFirstTimePredicted)
+        if (!GameTiming.IsFirstTimePredicted)
             return;
 
         var playerEntity = _player.LocalPlayer?.ControlledEntity;
@@ -121,11 +117,11 @@ public sealed class DoAfterSystem : SharedDoAfterSystem
 
                 if (doAfter.Cancelled)
                 {
-                    doAfter.CancelledElapsed = _gameTiming.CurTime - doAfter.CancelledTime;
+                    doAfter.CancelledElapsed = GameTiming.CurTime - doAfter.CancelledTime;
                     continue;
                 }
 
-                doAfter.Elapsed = _gameTiming.CurTime - doAfter.StartTime;
+                doAfter.Elapsed = GameTiming.CurTime - doAfter.StartTime;
 
                 // Well we finished so don't try to predict cancels.
                 if ((float)doAfter.Elapsed.TotalSeconds > doAfter.Delay)

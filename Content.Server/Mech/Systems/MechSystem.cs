@@ -3,7 +3,6 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Mech.Components;
 using Content.Server.Power.Components;
-using Content.Server.Tools;
 using Content.Server.Wires;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
@@ -447,18 +446,26 @@ public sealed class MechSystem : SharedMechSystem
     }
     #endregion
 
+    /// <summary>
+    ///     Event raised when the battery is successfully removed from the mech,
+    ///     on both success and failure
+    /// </summary>
     private sealed class RemoveBatteryEvent : EntityEventArgs
     {
-
     }
 
+    /// <summary>
+    ///     Event raised when a person enters a mech, on both success and failure
+    /// </summary>
     private sealed class MechEntryEvent : EntityEventArgs
     {
-
     }
 
+    /// <summary>
+    ///     Event raised when a person removes someone from a mech,
+    ///     on both success and failure
+    /// </summary>
     private sealed class MechExitEvent : EntityEventArgs
     {
-
     }
 }
