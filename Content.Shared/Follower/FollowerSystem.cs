@@ -121,7 +121,7 @@ public sealed class FollowerSystem : EntitySystem
 
         var xform = Transform(follower);
         _containerSystem.AttachParentToContainerOrGrid(xform);  // In case it is an item in an inventory
-        _transform.SetParent(xform, entity);
+        _transform.SetParent(follower, xform, entity);
         xform.LocalPosition = Vector2.Zero;
         xform.LocalRotation = Angle.Zero;
 
