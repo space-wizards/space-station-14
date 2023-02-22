@@ -4,7 +4,7 @@
   roundStart: true
   prototype: MobArachnid
   sprites: MobArachnidSprites
-  defaultSkinTone: "#645F7D"
+  defaultSkinTone: "#385878"
   markingLimits: MobArachnidMarkingLimits
   dollPrototype: MobArachnidDummy
   skinColoration: Hues
