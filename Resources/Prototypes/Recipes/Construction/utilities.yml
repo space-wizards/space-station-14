@@ -581,6 +581,11 @@
   icon:
     sprite: Structures/Piping/Atmospherics/vent.rsi
     state: vent_off
+  layers:
+  - sprite: Structures/Piping/Atmospherics/pipe.rsi
+    state: pipeStraight
+  - sprite: Structures/Piping/Atmospherics/vent.rsi
+    state: vent_off
   conditions:
     - !type:TileNotBlocked {}
 
