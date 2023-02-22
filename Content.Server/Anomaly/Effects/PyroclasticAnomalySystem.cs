@@ -55,7 +55,7 @@ public sealed class PyroclasticAnomalySystem : EntitySystem
 
                 mix.AdjustMoles(component.SupercriticalGas, component.SupercriticalMoleAmount);
                 mix.Temperature += component.HotspotExposeTemperature;
-                _atmosphere.HotspotExpose(grid.Value, indices, component.HotspotExposeTemperature, mix.Volume, true);
+                _atmosphere.HotspotExpose(grid.Value, indices, component.HotspotExposeTemperature, mix.Volume, uid, true);
             }
         }
         IgniteNearby(xform.Coordinates, 1, component.MaximumIgnitionRadius * 2);
@@ -80,7 +80,7 @@ public sealed class PyroclasticAnomalySystem : EntitySystem
 
             if (grid != null && anom.Severity > pyro.AnomalyHotspotThreshold)
             {
-                _atmosphere.HotspotExpose(grid.Value, indices, pyro.HotspotExposeTemperature, pyro.HotspotExposeVolume, true);
+                _atmosphere.HotspotExpose(grid.Value, indices, pyro.HotspotExposeTemperature, pyro.HotspotExposeVolume, ent, true);
             }
         }
     }
