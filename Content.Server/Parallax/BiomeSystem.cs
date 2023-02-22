@@ -206,7 +206,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
                 // At least for now unless we do lookups or smth, only work with anchoring.
                 if (xformQuery.TryGetComponent(ent, out var xform) && !xform.Anchored)
                 {
-                    _transform.AnchorEntity(xform, grid, indices);
+                    _transform.AnchorEntity(ent, xform, grid, indices);
                 }
 
                 loadedEntities.Add(ent);
