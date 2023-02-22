@@ -330,6 +330,7 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 2
     fillBaseName: packet-solid-
+
 # Bottles
 
 - type: entity
