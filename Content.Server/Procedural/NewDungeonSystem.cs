@@ -7,6 +7,7 @@ using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Procedural;
@@ -55,8 +56,9 @@ public sealed class NewDungeonSystem : EntitySystem
         }
 
         var mapId = new MapId(mapInt);
+        var mapUid = _mapManager.GetMapEntityId(mapId);
 
-        if (!TryComp<MapGridComponent>(_mapManager.GetMapEntityId(mapId), out var mapGrid))
+        if (!TryComp<MapGridComponent>(mapUid, out var mapGrid))
         {
             return;
         }
@@ -68,12 +70,11 @@ public sealed class NewDungeonSystem : EntitySystem
 
         var random = new Random();
 
-        GetRoomPackDungeon(dungeon, mapGrid, random.Next());
+        GetRoomPackDungeon(dungeon, mapUid, mapGrid, random.Next());
     }
 
-    public Dungeon GetRoomPackDungeon(DungeonPresetPrototype gen, MapGridComponent grid, int seed)
+    public Dungeon GetRoomPackDungeon(DungeonPresetPrototype gen, EntityUid gridUid, MapGridComponent grid, int seed)
     {
-        var gridUid = grid.Owner;
         var dungeonTransform = Matrix3.CreateTranslation(Vector2.Zero);
         var random = new Random(seed + 256);
         // TODO: API for this
@@ -86,7 +87,7 @@ public sealed class NewDungeonSystem : EntitySystem
             var sizePacks = roomPackProtos.GetOrNew(size);
             sizePacks.Add(pack);
 
-            // Determine external connections
+            // Determine external connections; these are only valid when adjacent to a room node.
             // We use this later to determine which room packs connect to each other
             var nodes = new HashSet<Vector2i>();
             externalNodes.Add(pack, nodes);
@@ -119,9 +120,7 @@ public sealed class NewDungeonSystem : EntitySystem
             // TODO: Determine internal room connections
             // Don't worry about MST, do it later after we have all the chosen packs
             // then work through all room connections and get minimal
-
-            // TODO: Get edge groups for the room pack bounds, then for any actual room packs we need all edges to intersect
-            // for every group
+            // Can't we do this later actually?
 
             // TODO: Make sure you support rollback in case you can't find a valid roompack for a certain thing.
         }
@@ -135,7 +134,7 @@ public sealed class NewDungeonSystem : EntitySystem
             sizeRooms.Add(proto);
         }
 
-        // First we gather all of the edges for each pack
+        // First we gather all of the edges for each roompack in the preset
         // This allows us to determine which ones should connect from being adjacent
         var edges = new HashSet<Vector2i>[gen.RoomPacks.Count];
 
@@ -200,10 +199,11 @@ public sealed class NewDungeonSystem : EntitySystem
         var dummyMap = _mapManager.CreateMap();
         var availablePacks = new List<DungeonRoomPackPrototype>();
 
-        foreach (var pack in gen.RoomPacks)
+        // Actually pick the room packs and rooms
+        for (var i = 0; i < gen.RoomPacks.Count; i++)
         {
-            var dimensions = new Vector2i(pack.Width, pack.Height);
-            Matrix3 packTransform;
+            var bounds = gen.RoomPacks[i];
+            var dimensions = new Vector2i(bounds.Width, bounds.Height);
 
             // Try every pack rotation
             if (roomPackProtos.TryGetValue(dimensions, out var roomPacks))
@@ -222,62 +222,86 @@ public sealed class NewDungeonSystem : EntitySystem
                 }
             }
 
-            // TODO: for each dungeonroompackprototype determine external connections automatically
-            // TODO: For each dungeonroompackprototype determine internal connections
             // When iterating room spawning (starting on connecting edge) check each connection and see if it's been found yet
             // If it has then we can spawn a room with n-1 available connections
 
             // Iterate every pack
+            // To be valid it needs its edge nodes to overlap with every edge group
+            var external = connections[i];
+
+            random.Shuffle(availablePacks);
+            Matrix3 packTransform = default!;
+            var found = true;
+            DungeonRoomPackPrototype pack = default!;
+
             foreach (var aPack in availablePacks)
             {
+                var aExternal = externalNodes[aPack];
 
-            }
-
-            // Iterate every pack and see what fits
-            // Unless it's the first pack then at least one of its connections needs to match.
-
-            // Iterate everything that matches our bounds (or the rotated version) randomly
-            // For each one, check connections that
-
-            // Fallback tiles for debug.
-            if (!roomPackProtos.TryGetValue(dimensions, out var packs))
-            {
-                dimensions = new Vector2i(pack.Height, pack.Width);
-
-                if (!roomPackProtos.TryGetValue(dimensions, out packs))
+                for (var j = 0; j < 4; j++)
                 {
-                    Logger.Error($"No room pack found for {dimensions}, using dummy floor.");
+                    var dir = (DirectionFlag) Math.Pow(2, j);
+                    Vector2i aPackDimensions;
 
-                    for (var x = pack.Left; x < pack.Right; x++)
+                    if ((dir & (DirectionFlag.East | DirectionFlag.West)) != 0x0)
                     {
-                        for (var y = pack.Bottom; y < pack.Top; y++)
-                        {
-                            var index = (Vector2i) dungeonTransform.Transform(new Vector2i(x, y));
-                            tiles.Add((index, new Tile(_tileDefManager["FloorSteel"].TileId)));
-                        }
+                        aPackDimensions = new Vector2i(aPack.Size.Y, aPack.Size.X);
+                    }
+                    else
+                    {
+                        aPackDimensions = aPack.Size;
                     }
 
-                    grid.SetTiles(tiles);
-                    tiles.Clear();
-                    continue;
-                }
+                    // Rotation doesn't match.
+                    if (aPackDimensions != bounds.Size)
+                        continue;
 
-                // To avoid rounding issues.
-                packTransform = new Matrix3(0f, -1f, pack.Center.X, 1f, 0f, pack.Center.Y, 0f, 0f, 1f);
-                Logger.Debug($"Using rotated variant for rooms pack");
+                    var rotatedNodes = new HashSet<Vector2i>(aExternal.Count);
+                    var aRotation = dir.AsDir().ToAngle();
+
+                    foreach (var node in aExternal)
+                    {
+                        var rotated = aRotation.RotateVec(node);
+                        rotatedNodes.Add((Vector2i) rotated.Rounded());
+                    }
+
+                    foreach (var group in external.Values)
+                    {
+                        if (rotatedNodes.Overlaps(group))
+                            continue;
+
+                        found = false;
+                        break;
+                    }
+
+                    if (!found)
+                    {
+                        found = true;
+                        continue;
+                    }
+
+                    // Use this pack
+                    // TODO: Fix rounding
+                    packTransform = Matrix3.CreateTransform(bounds.Center, aRotation);
+                    pack = aPack;
+                    break;
+                }
             }
-            else
+
+            availablePacks.Clear();
+
+            // Oop
+            if (!found)
             {
-                packTransform = Matrix3.CreateTranslation(pack.Center);
+                continue;
             }
 
             // Actual spawn cud here.
             // Pickout the room pack template to get the room dimensions we need.
             // TODO: Need to be able to load entities on top of other entities but das a lot of effo
-            var gottem = packs[random.Next(packs.Count)];
-            var packCenter = (Vector2) gottem.Size / 2;
+            var packCenter = (Vector2) pack.Size / 2;
 
-            foreach (var roomSize in gottem.Rooms)
+            foreach (var roomSize in pack.Rooms)
             {
                 var roomDimensions = new Vector2i(roomSize.Width, roomSize.Height);
                 var roomCenter = roomDimensions / 2f;
