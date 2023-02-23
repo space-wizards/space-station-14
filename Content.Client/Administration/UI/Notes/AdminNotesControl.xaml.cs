@@ -23,10 +23,9 @@ public sealed partial class AdminNotesControl : Control
 
     public AdminNotesControl()
     {
-        IoCManager.InjectDependencies(this);
-        _sprites = _entitySystem.GetEntitySystem<SpriteSystem>();
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
+        _sprites = _entitySystem.GetEntitySystem<SpriteSystem>();
 
         NewNoteButton.OnPressed += OnNewNoteButtonPressed;
     }
