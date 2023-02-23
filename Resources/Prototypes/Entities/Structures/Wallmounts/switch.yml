@@ -11,6 +11,8 @@
     arc: 360
   - type: Clickable
   - type: InteractionOutline
+  - type: Physics
+    canCollide: false
   - type: Sprite
     sprite: Structures/Wallmounts/switch.rsi
     state: on
@@ -39,6 +41,8 @@
     arc: 360
   - type: Clickable
   - type: InteractionOutline
+  - type: Physics
+    canCollide: false
   - type: Sprite
     sprite: Structures/Wallmounts/switch.rsi
     state: dead
@@ -78,25 +82,25 @@
     snap:
       - Wallmount
   components:
-  - type: WallMount
-    arc: 360
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Transform
-    anchored: true
-  - type: Sprite
-    sprite: Structures/Wallmounts/switch.rsi
-    state: on
-  - type: Rotatable
-  - type: ExtensionCableReceiver
-  - type: DeviceNetwork
-    deviceNetId: Apc
-    transmitFrequencyId: SmartLight # assuming people want to use it for light switches.
-  - type: ApcNetworkConnection
-  - type: ApcNetSwitch
-  - type: Construction
-    graph: LightSwitchGraph
-    node: LightSwitchNode
+    - type: WallMount
+      arc: 360
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Transform
+      anchored: true
+    - type: Sprite
+      sprite: Structures/Wallmounts/switch.rsi
+      state: on
+    - type: Rotatable
+    - type: ExtensionCableReceiver
+    - type: DeviceNetwork
+      deviceNetId: Apc
+      transmitFrequencyId: SmartLight # assuming people want to use it for light switches.
+    - type: ApcNetworkConnection
+    - type: ApcNetSwitch
+    - type: Construction
+      graph: LightSwitchGraph
+      node: LightSwitchNode
 
 - type: entity
   id: TwoWayLever
