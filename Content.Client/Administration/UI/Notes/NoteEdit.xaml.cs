@@ -66,6 +66,8 @@ public sealed partial class NoteEdit : FancyWindow
             if (note.NoteType != NoteType.Note)
                 SeverityOption.Disabled = true;
 
+            IsSecret = note.Secret;
+            SecretCheckBox.Pressed = note.Secret;
             ExpiryTime = note.ExpiryTime;
             if (ExpiryTime is not null)
             {
