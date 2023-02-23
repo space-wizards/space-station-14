@@ -6,11 +6,15 @@ namespace Content.Shared.DoAfter;
 [RegisterComponent, NetworkedComponent]
 public sealed class DoAfterComponent : Component
 {
+    [DataField("doAfters")]
     public readonly Dictionary<byte, DoAfter> DoAfters = new();
+
+    [DataField("cancelledDoAfters")]
     public readonly Dictionary<byte, DoAfter> CancelledDoAfters = new();
 
     // So the client knows which one to update (and so we don't send all of the do_afters every time 1 updates)
     // we'll just send them the index. Doesn't matter if it wraps around.
+    [DataField("runningIndex")]
     public byte RunningIndex;
 }
 
@@ -29,7 +33,6 @@ public sealed class DoAfterComponentState : ComponentState
 /// Use this event to raise your DoAfter events now.
 /// Check for cancelled, and if it is, then null the token there.
 /// </summary>
-/// TODO: Keep as overload for the classes that don't need additional data
 /// TODO: Add a networked DoAfterEvent to pass in AdditionalData for the future
 [Serializable, NetSerializable]
 public sealed class DoAfterEvent : HandledEntityEventArgs
@@ -83,13 +86,4 @@ public enum DoAfterStatus : byte
     Running,
     Cancelled,
     Finished,
-}
-
-/// <summary>
-///     Inherited by classes used as the generic parameter for <see cref="DoAfterEvent{T}"/>
-/// </summary>
-[Serializable, NetSerializable]
-public abstract class AdditionalData
-{
-
 }

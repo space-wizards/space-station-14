@@ -6,6 +6,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.DoAfter;
 [Serializable, NetSerializable]
+[DataDefinition]
 public sealed class DoAfter
 {
     [NonSerialized]
@@ -16,6 +17,7 @@ public sealed class DoAfter
     [Obsolete("Will be obsolete for EventBus")]
     public TaskCompletionSource<DoAfterStatus> Tcs;
 
+    //TODO: Should be merged into here
     public readonly DoAfterEventArgs EventArgs;
 
     //ID so the client DoAfterSystem can track

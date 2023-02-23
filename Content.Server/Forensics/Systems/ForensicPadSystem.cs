@@ -115,7 +115,7 @@ namespace Content.Server.Forensics
             args.Handled = true;
         }
 
-        private sealed class ForensicPadData : AdditionalData
+        private sealed class ForensicPadData
         {
             public string Sample;
 

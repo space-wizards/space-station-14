@@ -4,6 +4,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.DoAfter;
+//TODO: Merge into DoAfter
 [Serializable, NetSerializable]
 public sealed class DoAfterEventArgs
 {
@@ -86,12 +87,14 @@ public sealed class DoAfterEventArgs
     ///     Anything that needs a pre-check should do it itself so no DoAfterState is ever sent to the client.
     /// </remarks>
     [NonSerialized]
+    //TODO: Replace with eventbus
     public Func<bool>? PostCheck;
 
     /// <summary>
     ///     Additional conditions that need to be met. Return false to cancel.
     /// </summary>
     [NonSerialized]
+    //TODO Replace with eventbus
     public Func<bool>? ExtraCheck;
 
     public DoAfterEventArgs(
