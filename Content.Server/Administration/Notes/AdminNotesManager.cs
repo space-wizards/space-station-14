@@ -143,7 +143,13 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
         message = message.Trim();
 
         var note = await _db.GetAdminNote(noteId);
-        if (note == null || note.Message == message)
+
+        // If the note doesn't exist or is the same, we skip updating it
+        if (note == null ||
+            note.Message == message &&
+            note.NoteSeverity == severity &&
+            note.Secret == secret &&
+            note.ExpiryTime == expiryTime)
         {
             return;
         }
