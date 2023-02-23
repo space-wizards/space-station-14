@@ -54,11 +54,18 @@ public sealed partial class NoteEdit : FancyWindow
         {
             Title = Loc.GetString("admin-note-editor-title-existing", ("id", note.Id), ("player", PlayerName), ("author", note.CreatedByName));
             NoteId = note.Id;
+
             NoteType = note.NoteType;
             TypeOption.SelectId((int)NoteType);
+            TypeOption.Disabled = true;
+
             NoteTextEdit.InsertAtCursor(note.Message);
+
             NoteSeverity = note.NoteSeverity;
             SeverityOption.SelectId((int)NoteSeverity);
+            if (note.NoteType != NoteType.Note)
+                SeverityOption.Disabled = true;
+
             ExpiryTime = note.ExpiryTime;
             if (ExpiryTime is not null)
             {

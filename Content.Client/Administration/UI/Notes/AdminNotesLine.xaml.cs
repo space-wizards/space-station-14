@@ -34,8 +34,8 @@ public sealed partial class AdminNotesLine : BoxContainer
 
     public AdminNotesLine(SpriteSystem sprites, SharedAdminNote note)
     {
-        _sprites = sprites;
         RobustXamlLoader.Load(this);
+        _sprites = sprites;
 
         Note = note;
         MouseFilter = MouseFilterMode.Pass;
