@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Server.Administration.Commands;
 using Content.Server.CharacterAppearance.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
@@ -49,8 +48,7 @@ public sealed class WizardRuleSystem : GameRuleSystem
 
     private MapId? _wizardMap;
 
-    // TODO: use components, don't just cache entity UIDs. Until comp.owner has a replacement this will sadly stay
-    // There have been (and probably still are) bugs where these refer to deleted entities from old rounds.
+    // TODO: use components, don't just cache entity UIDs. Until comp.owner has a replacement im not sure how to replace them
     private EntityUid? _wizardShuttle;
     private EntityUid? _targetStation;
 
@@ -68,6 +66,7 @@ public sealed class WizardRuleSystem : GameRuleSystem
         ///     Neutral win. The crew escaped, but the wizards did too.
         /// </summary>
         Neutral,
+        //TODO: add more objectives and win conditions?
     }
 
     private WinType _winType = WinType.Neutral;
@@ -79,7 +78,7 @@ public sealed class WizardRuleSystem : GameRuleSystem
         {
             _winType = value;
 
-            if (value == WinType.WizardsEliminated)
+            if (_wizardRuleConfig.EndsRound && value == WinType.WizardsEliminated)
             {
                 _roundEndSystem.EndRound();
             }
@@ -158,13 +157,29 @@ public sealed class WizardRuleSystem : GameRuleSystem
         // TODO: This needs to try and target a Nanotrasen station. At the very least,
         // we can only currently guarantee that NT stations are the only station to
         // exist in the base game.
-
         _targetStation = _stationSystem.Stations.FirstOrNull();
+
+        if (_targetStation == null)
+        {
+            return;
+        }
+
+        foreach (var wizard in EntityQuery<WizardComponent>())
+        {
+            if (!TryComp<ActorComponent>(wizard.Owner, out var actor))
+            {
+                continue;
+            }
+
+            _chatManager.DispatchServerMessage(actor.PlayerSession, Loc.GetString("wizard-welcome"));
+        }
     }
 
     private void OnRoundEnd()
     {
         _targetStation = null;
+        _wizardMap = null;
+        _wizardShuttle = null;
     }
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
@@ -172,9 +187,15 @@ public sealed class WizardRuleSystem : GameRuleSystem
         if (!RuleAdded)
             return;
 
-        var winText = Loc.GetString($"wizard-rule-endtext");
-
-        ev.AddLine(winText);
+        switch (_winType)
+        {
+            case WinType.WizardsEliminated:
+                ev.AddLine(Loc.GetString("wizard-eliminated"));
+                break;
+            case WinType.Neutral:
+                ev.AddLine(Loc.GetString("wizard-escaped"));
+                break;
+        }
 
         ev.AddLine(Loc.GetString("wizard-list-start"));
         foreach (var (name, session) in _wizardPlayers)
@@ -186,7 +207,7 @@ public sealed class WizardRuleSystem : GameRuleSystem
 
     private void CheckRoundShouldEnd()
     {
-        if (!RuleAdded || !_wizardRuleConfig.EndsRound)
+        if (!RuleAdded)
             return;
 
         MapId? shuttleMapId = EntityManager.EntityExists(_wizardShuttle)
@@ -339,7 +360,7 @@ public sealed class WizardRuleSystem : GameRuleSystem
             return;
 
         if (_targetStation != null && !string.IsNullOrEmpty(Name(_targetStation.Value)))
-            _chatManager.DispatchServerMessage(playerSession, Loc.GetString("wizards-welcome", ("station", _targetStation.Value)));
+            _chatManager.DispatchServerMessage(playerSession, Loc.GetString("wizard-welcome"));
     }
 
     private bool SpawnMap()
@@ -402,7 +423,7 @@ public sealed class WizardRuleSystem : GameRuleSystem
     }
 
     /// <summary>
-    ///     Adds missing nuke operative components, equips starting gear and renames the entity.
+    ///     Adds wizard components, equips starting gear and renames the entity.
     /// </summary>
     private void SetupWizardEntity(EntityUid mob, string name, string gear, HumanoidCharacterProfile? profile)
     {
@@ -442,7 +463,7 @@ public sealed class WizardRuleSystem : GameRuleSystem
             Logger.WarningS("wizards", $"Fell back to default spawn for wizards!");
         }
 
-        // TODO: This should spawn the nukies in regardless and transfer if possible; rest should go to shot roles.
+        // TODO: This should spawn the wizards in regardless and transfer if possible; rest should go to shot roles.
         for(var i = 0; i < spawnCount; i++)
         {
             var spawnDetails = GetWizardSpawnDetails(i);
@@ -481,24 +502,14 @@ public sealed class WizardRuleSystem : GameRuleSystem
     private void SpawnWizardsForGhostRoles()
     {
         // Basically copied verbatim from traitor code
-        var playersPerOperative = _wizardRuleConfig.PlayersPerWizard;
-        var maxOperatives = _wizardRuleConfig.MaxWizards;
+        var playersPerWizard = _wizardRuleConfig.PlayersPerWizard;
+        var maxWizards = _wizardRuleConfig.MaxWizards;
 
         var playerPool = _playerSystem.ServerSessions.ToList();
-        var numNukies = MathHelper.Clamp(playerPool.Count / playersPerOperative, 1, maxOperatives);
+        var numWizards = MathHelper.Clamp(playerPool.Count / playersPerWizard, 1, maxWizards);
 
-        var operatives = new List<IPlayerSession>();
-        SpawnWizards(numNukies, operatives, true);
-    }
-
-    //For admins forcing someone to wizard.
-    public void MakeLoneWizard(Mind.Mind mind)
-    {
-        if (!mind.OwnedEntity.HasValue)
-            return;
-
-        mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(_wizardRuleConfig.WizardRoleProto)));
-        SetOutfitCommand.SetOutfit(mind.OwnedEntity.Value, "WizardGearFull", EntityManager);
+        var wizards = new List<IPlayerSession>();
+        SpawnWizards(numWizards, wizards, true);
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
@@ -518,14 +529,13 @@ public sealed class WizardRuleSystem : GameRuleSystem
         if (ev.Players.Length != 0)
             return;
 
-        _chatManager.DispatchServerAnnouncement(Loc.GetString("wizards-no-one-ready"));
+        _chatManager.DispatchServerAnnouncement(Loc.GetString("wizard-no-one-ready"));
         ev.Cancel();
     }
 
     public override void Started()
     {
         RuleWinType = WinType.Neutral;
-//        _winConditions.Clear();
         _wizardMap = null;
 
         _startingGearPrototypes.Clear();
@@ -563,8 +573,5 @@ public sealed class WizardRuleSystem : GameRuleSystem
 
     public override void Ended()
     {
-        _wizardMap = null;
-        _wizardShuttle = null;
-        _targetStation = null;
     }
 }
