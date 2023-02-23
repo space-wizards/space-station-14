@@ -97,7 +97,8 @@ namespace Content.Server.Zombies
 
             //Adds the zombie faction, so ai zombies will no longer attack other zombies.
             //_faction.RemoveFaction(target, "NanoTrasen", false);
-            _faction.AddFaction(target, "Zombies");
+            //var factioncomp = AddComp<FactionComponent>(target);
+            //_faction.AddFaction(target, "Zombies");
 
             //we need to basically remove all of these because zombies shouldn't
             //get diseases, breath, be thirst, be hungry, or die in space
