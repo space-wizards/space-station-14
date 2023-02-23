@@ -26,8 +26,9 @@ public sealed class HotPotatoSystem : SharedHotPotatoSystem
 
     private void TryTransferItem(EntityUid uid, MeleeHitEvent args)
     {
-        foreach (var hitEntity in args.HitEntities) {
-            if (TryComp<SharedHandsComponent>(hitEntity, out var hands)) 
+        foreach (var hitEntity in args.HitEntities)
+        {
+            if (TryComp<SharedHandsComponent>(hitEntity, out var hands))
             {
                 if (_hands.TryPickupAnyHand(hitEntity, uid))
                     return;
