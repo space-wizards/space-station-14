@@ -422,8 +422,14 @@ public sealed partial class MarkingPicker : Control
 
         // We need add hair markings in cloned set manually because _currentMarkings doesn't have it
         var markingSet = new MarkingSet(_currentMarkings);
-        if (HairMarking != null) markingSet.AddBack(MarkingCategories.Hair, HairMarking);
-        if (FacialHairMarking != null) markingSet.AddBack(MarkingCategories.FacialHair, FacialHairMarking);
+        if (HairMarking != null)
+        {
+            markingSet.AddBack(MarkingCategories.Hair, HairMarking);
+        }
+        if (FacialHairMarking != null) 
+        {
+            markingSet.AddBack(MarkingCategories.FacialHair, FacialHairMarking);
+        }
 
         if (!_markingManager.MustMatchSkin(_currentSpecies, marking.BodyPart, _prototypeManager))
         {

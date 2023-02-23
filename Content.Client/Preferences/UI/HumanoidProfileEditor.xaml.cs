@@ -1065,8 +1065,13 @@ namespace Content.Client.Preferences.UI
                 if (_markingManager.CanBeApplied(Profile.Species, facialHairProto, _prototypeManager))
                 {
                     if (_markingManager.MustMatchSkin(Profile.Species, HumanoidVisualLayers.Hair, _prototypeManager))
-                        { facialHairColor = Profile.Appearance.SkinColor; }
-                    else { facialHairColor = Profile.Appearance.FacialHairColor; }
+                    {
+                        facialHairColor = Profile.Appearance.SkinColor;
+                    }
+                    else
+                    {
+                        facialHairColor = Profile.Appearance.FacialHairColor;
+                    }
                 }
             }
             if (facialHairColor != null)

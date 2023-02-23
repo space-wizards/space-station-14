@@ -80,7 +80,9 @@ public sealed partial class HumanoidMarkingModifierWindow : DefaultWindow
 
         var eyesColor = Color.White;
         if (info.TryGetValue(HumanoidVisualLayers.Eyes, out var eyes) && eyes.Color != null)
+        {
             eyesColor = eyes.Color.Value;
+        }
 
         MarkingPickerWidget.SetData(markings, species, skinColor, eyesColor);
     }

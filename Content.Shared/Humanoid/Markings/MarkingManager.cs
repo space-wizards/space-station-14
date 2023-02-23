@@ -158,8 +158,8 @@ namespace Content.Shared.Humanoid.Markings
                 return false;
             }
 
-            if (prototype.SpeciesRestrictions != null
-                && !prototype.SpeciesRestrictions.Contains(species))
+            if (prototype.SpeciesRestrictions != null &&
+                !prototype.SpeciesRestrictions.Contains(species))
             {
                 return false;
             }
@@ -177,7 +177,10 @@ namespace Content.Shared.Humanoid.Markings
                 !prototypeManager.TryIndex(spriteName, out HumanoidSpeciesSpriteLayer? sprite)
             ) return false;
 
-            if (sprite == null || !sprite.MarkingsMatchSkin) return false;
+            if (sprite == null || !sprite.MarkingsMatchSkin)
+            {
+                return false;
+            }
             return true;
         }
     }

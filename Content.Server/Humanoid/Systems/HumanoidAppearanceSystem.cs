@@ -105,12 +105,16 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
             ? profile.Appearance.SkinColor : profile.Appearance.FacialHairColor;
         
         if (_markingManager.Markings.TryGetValue(profile.Appearance.HairStyleId, out var hairPrototype) &&
-            _markingManager.CanBeApplied(profile.Species, hairPrototype, _prototypeManager)
-        ) { AddMarking(uid, profile.Appearance.HairStyleId, hairColor, false); }
+            _markingManager.CanBeApplied(profile.Species, hairPrototype, _prototypeManager))
+        {
+            AddMarking(uid, profile.Appearance.HairStyleId, hairColor, false);
+        }
         
         if (_markingManager.Markings.TryGetValue(profile.Appearance.FacialHairStyleId, out var facialHairPrototype) &&
-            _markingManager.CanBeApplied(profile.Species, facialHairPrototype, _prototypeManager)
-        ) { AddMarking(uid, profile.Appearance.FacialHairStyleId, facialHairColor, false); }
+            _markingManager.CanBeApplied(profile.Species, facialHairPrototype, _prototypeManager))
+        {
+            AddMarking(uid, profile.Appearance.FacialHairStyleId, facialHairColor, false); 
+        }
 
         humanoid.MarkingSet.EnsureSpecies(profile.Species, profile.Appearance.SkinColor, _markingManager, _prototypeManager);
 

@@ -318,8 +318,14 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
                 continue;
             }
 
-            if (colors != null) sprite.LayerSetColor(layerId, colors[j]);
-            else { sprite.LayerSetColor(layerId, Color.White); }
+            if (colors != null) 
+            {
+                sprite.LayerSetColor(layerId, colors[j]);
+            }
+            else
+            {
+                sprite.LayerSetColor(layerId, Color.White);
+            }
         }
     }
 
