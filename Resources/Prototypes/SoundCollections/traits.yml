@@ -3,10 +3,7 @@
   files:
   #- /Audio/Effects/adminhelp.ogg
   #- /Audio/Machines/Nuke/nuke_alarm.ogg
-  #- /Audio/Announcements/war.ogg
-  #- /Audio/Misc/delta.ogg
   #- /Audio/Misc/emergency_meeting.ogg
-  #- /Audio/Misc/epsilon.ogg
   - /Audio/Effects/countdown.ogg
   - /Audio/Effects/explosion1.ogg
   - /Audio/Effects/explosion2.ogg
@@ -36,10 +33,8 @@
   - /Audio/Effects/radpulse5.ogg
   - /Audio/Effects/radpulse9.ogg
   - /Audio/Effects/Chemistry/bubbles.ogg
-  - /Audio/Announcements/meteors.ogg
-  - /Audio/Announcements/outbreak7.ogg
   - /Audio/Announcements/power_off.ogg
-  - /Audio/Announcements/shuttlecalled.ogg
+  - /Audio/Announcements/announce.ogg
   - /Audio/Ambience/anomaly_drone.ogg
   - /Audio/Ambience/Objects/gravity_gen_hum.ogg
   - /Audio/Machines/airlock_close.ogg
@@ -70,9 +65,7 @@
   - /Audio/Items/Toys/toysqueak1.ogg
   - /Audio/Items/Toys/toysqueak2.ogg
   - /Audio/Items/Toys/toysqueak3.ogg
-  - /Audio/Misc/bluealert.ogg
   - /Audio/Misc/notice1.ogg
-  - /Audio/Misc/redalert.ogg
   - /Audio/Voice/Talk/lizard.ogg
   - /Audio/Voice/Talk/pai.ogg
   - /Audio/Voice/Talk/speak_1.ogg
