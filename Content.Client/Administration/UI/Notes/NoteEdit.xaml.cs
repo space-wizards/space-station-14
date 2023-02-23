@@ -60,6 +60,12 @@ public sealed partial class NoteEdit : FancyWindow
             NoteSeverity = note.NoteSeverity;
             SeverityOption.SelectId((int)NoteSeverity);
             ExpiryTime = note.ExpiryTime;
+            if (ExpiryTime is not null)
+            {
+                PermanentCheckBox.Pressed = false;
+                UpdatePermanentCheckboxFields();
+                ExpiryLineEdit.Text = ExpiryTime.Value.ToString("yyyy-MM-dd HH:mm:ss");
+            }
 
             if (!canEdit)
             {
