@@ -50,7 +50,8 @@ public sealed class ParacusiaSystem : SharedParacusiaSystem
             return;
 
         // Set the new time.
-        paracusia.NextIncidentTime =+ TimeSpan.FromSeconds(_random.NextFloat(paracusia.MinTimeBetweenIncidents, paracusia.MaxTimeBetweenIncidents));
+        paracusia.NextIncidentTime = _timing.CurTime +
+                                     TimeSpan.FromSeconds(_random.NextFloat(paracusia.MinTimeBetweenIncidents, paracusia.MaxTimeBetweenIncidents));
 
         // Offset position where the sound is played
         var randomOffset =
