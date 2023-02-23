@@ -39,7 +39,7 @@ public sealed class HotPotatoSystem : SharedHotPotatoSystem
         }
     }
 
-    private void OnActiveTimer(EntityUid uid, HotPotatoComponent comp, ActiveTimerTriggerEvent args)
+    private void OnActiveTimer(EntityUid uid, HotPotatoComponent comp, ref ActiveTimerTriggerEvent args)
     {
         EnsureComp<ActiveHotPotatoComponent>(uid);
         comp.CanTransfer = false;
