@@ -26,7 +26,7 @@ public sealed class AccessWireAction : ComponentWireAction<AccessReaderComponent
         WiresSystem.TryCancelWireAction(wire.Owner, PulseTimeoutKey.Key);
         comp.Enabled = false;
         EntityManager.Dirty(comp);
-        EntityManager.RemoveComponent<EmaggedComponent>(comp.Owner);
+        EntityManager.EnsureComponent<EmaggedComponent>(comp.Owner);
         return true;
     }
 
@@ -34,7 +34,7 @@ public sealed class AccessWireAction : ComponentWireAction<AccessReaderComponent
     {
         comp.Enabled = true;
         EntityManager.Dirty(comp);
-        EntityManager.AddComponent<EmaggedComponent>(comp.Owner);
+        EntityManager.RemoveComponent<EmaggedComponent>(comp.Owner);
         return true;
     }
 
@@ -42,7 +42,7 @@ public sealed class AccessWireAction : ComponentWireAction<AccessReaderComponent
     {
         comp.Enabled = false;
         EntityManager.Dirty(comp);
-        EntityManager.RemoveComponent<EmaggedComponent>(comp.Owner);
+        EntityManager.EnsureComponent<EmaggedComponent>(comp.Owner);
         WiresSystem.StartWireAction(wire.Owner, _pulseTimeout, PulseTimeoutKey.Key, new TimedWireEvent(AwaitPulseCancel, wire));
     }
 
