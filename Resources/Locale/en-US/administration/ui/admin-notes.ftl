@@ -1,6 +1,7 @@
 ﻿# UI
 admin-notes-title = Notes for {$player}
 admin-notes-new-note = New note
+admin-notes-show-more = Show more
 admin-notes-for = Note for: {$player}
 admin-notes-id = Id: {$id}
 admin-notes-type = Type: {$type}

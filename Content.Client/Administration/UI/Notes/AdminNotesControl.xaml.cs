@@ -6,6 +6,8 @@ using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared;
+using Robust.Shared.Configuration;
 
 namespace Content.Client.Administration.UI.Notes;
 
@@ -13,6 +15,7 @@ namespace Content.Client.Administration.UI.Notes;
 public sealed partial class AdminNotesControl : Control
 {
     [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     public event Action<int, string, NoteSeverity, bool, DateTime?>? NoteChanged;
     public event Action<NoteType, string, NoteSeverity, bool, DateTime?>? NewNoteEntered;
@@ -20,6 +23,8 @@ public sealed partial class AdminNotesControl : Control
 
     private AdminNotesLinePopup? _popup;
     private readonly SpriteSystem _sprites;
+    private readonly double _noteFreshDays;
+    private readonly double _noteStaleDays;
 
     public AdminNotesControl()
     {
@@ -27,7 +32,13 @@ public sealed partial class AdminNotesControl : Control
         IoCManager.InjectDependencies(this);
         _sprites = _entitySystem.GetEntitySystem<SpriteSystem>();
 
+        // There should be a warning somewhere if fresh > stale
+        // I thought about putting it here but then it would spam you every time you open notes
+        _noteFreshDays = _cfg.GetCVar(CVars.NoteFreshDays);
+        _noteStaleDays = _cfg.GetCVar(CVars.NoteStaleDays);
+
         NewNoteButton.OnPressed += OnNewNoteButtonPressed;
+        ShowMoreButton.OnPressed += OnShowMoreButtonPressed;
     }
 
     private Dictionary<int, AdminNotesLine> Inputs { get; } = new();
@@ -90,6 +101,7 @@ public sealed partial class AdminNotesControl : Control
             Inputs.Remove(id);
         }
 
+        var showMoreButtonVisible = false;
         foreach (var note in notes.Values.OrderByDescending(note => note.CreatedAt))
         {
             if (Inputs.TryGetValue(note.Id, out var input))
@@ -100,9 +112,40 @@ public sealed partial class AdminNotesControl : Control
 
             input = new AdminNotesLine(_sprites, note);
             input.OnClicked += NoteClicked;
+
+            var timeDiff = DateTime.UtcNow - note.CreatedAt;
+            float alpha;
+            if (_noteFreshDays == 0 || timeDiff.TotalDays <= _noteFreshDays)
+            {
+                alpha = 1f;
+            }
+            else if (_noteStaleDays == 0 || timeDiff.TotalDays > _noteStaleDays)
+            {
+                alpha = 0f;
+                input.Visible = false;
+                showMoreButtonVisible = true;
+            }
+            else
+            {
+                alpha = (float) (1 - Math.Clamp((timeDiff.TotalDays - _noteFreshDays) / (_noteStaleDays - _noteFreshDays), 0, 1));
+            }
+
+            input.Modulate = input.Modulate.WithAlpha(alpha);
             Notes.AddChild(input);
             Inputs[note.Id] = input;
+            ShowMoreButton.Visible = showMoreButtonVisible;
         }
+    }
+
+    private void OnShowMoreButtonPressed(BaseButton.ButtonEventArgs obj)
+    {
+        foreach (var input in Inputs.Values)
+        {
+            input.Modulate = input.Modulate.WithAlpha(1f);
+            input.Visible = true;
+        }
+
+        ShowMoreButton.Visible = false;
     }
 
     public void SetPermissions(bool create, bool delete, bool edit)

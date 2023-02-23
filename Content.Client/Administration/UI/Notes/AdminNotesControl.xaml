@@ -8,6 +8,7 @@
             <ScrollContainer VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">
                 <BoxContainer Orientation="Vertical" Name="Notes" Access="Public" VerticalExpand="True"/>
             </ScrollContainer>
+            <Button Name="ShowMoreButton" Text="{Loc admin-notes-show-more}" Visible="False" HorizontalAlignment="Center" />
             <Button Name="NewNoteButton" Text="{Loc admin-notes-new-note}" />
         </BoxContainer>
     </PanelContainer>
