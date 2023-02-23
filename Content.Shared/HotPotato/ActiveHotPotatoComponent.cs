@@ -8,6 +8,15 @@ namespace Content.Shared.HotPotato;
 [RegisterComponent, NetworkedComponent]
 public sealed class ActiveHotPotatoComponent : Component
 {
+    /// <summary>
+    /// Hot potato effect spawn cooldown in seconds
+    /// </summary>
+    [DataField("effectCooldown"), ViewVariables(VVAccess.ReadWrite)]
     public float EffectCooldown = 0.3f;
+    
+    /// <summary>
+    /// Moment in time next effect will be spawned
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan TargetTime = TimeSpan.Zero;
 }
