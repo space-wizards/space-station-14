@@ -105,6 +105,7 @@ namespace Content.Server.Zombies
 
             //Adds the zombie faction, so ai zombies will no longer attack other zombies.
             _faction.AddFaction(target, "Zombies");
+            _faction.MakeFriendly("Zombies", "Zombies");
 
             //we need to basically remove all of these because zombies shouldn't
             //get diseases, breath, be thirst, be hungry, or die in space
