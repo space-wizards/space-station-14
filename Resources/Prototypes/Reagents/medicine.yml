@@ -758,3 +758,43 @@
         messages: ["ethyloxyephedrine-effect-feeling-awake", "ethyloxyephedrine-effect-clear-mind"]
         type: Local
         probability: 0.1
+        
+- type: reagent
+  id: Sigynate
+  name: reagent-name-sigynate
+  group: Medicine
+  desc: reagent-desc-sigynate
+  physicalDesc: reagent-physical-desc-thick
+  flavor: sweet
+  color: "#e0a5b9"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Acidic: -3
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 16
+        damage:
+          types:
+            Heat: 2
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+        type: Local
+        visualType: Medium
+        messages: [ "generic-reagent-effect-nauseous" ]
+        probability: 0.2
+      - !type:ChemVomit
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        probability: 0.02
