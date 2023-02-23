@@ -24,10 +24,7 @@ public abstract class SharedHotPotatoSystem : EntitySystem
 
     private void GetCompState(EntityUid uid, HotPotatoComponent comp, ref ComponentGetState args)
     {
-        args.State = new HotPotatoComponentState
-        {
-            CanTransfer = comp.CanTransfer,
-        };
+        args.State = new HotPotatoComponentState(comp.CanTransfer);
     }
 
     private void HandleCompState(EntityUid uid, HotPotatoComponent comp, ref ComponentHandleState args)
@@ -40,6 +37,11 @@ public abstract class SharedHotPotatoSystem : EntitySystem
     [Serializable, NetSerializable]
     public sealed class HotPotatoComponentState : ComponentState
     {
-        public bool CanTransfer { get; init; }
+        public bool CanTransfer;
+        
+        public HotPotatoComponentState(bool canTransfer)
+        {
+            CanTransfer = canTransfer;
+        }
     }
 }
