@@ -104,6 +104,17 @@ namespace Content.Server.NPC.Systems
             }
         }
 
+       /* /// <summary>
+        /// Removes all factions from the entity.
+        /// </summary>
+        public void RemoveFaction(EntityUid uid)
+        {
+            if (!TryComp<FactionComponent>(uid, out var component))
+                return;
+            if (!component.Factions.Remove())
+                return;
+        }*/
+
         public IEnumerable<EntityUid> GetNearbyHostiles(EntityUid entity, float range, FactionComponent? component = null)
         {
             if (!Resolve(entity, ref component, false))

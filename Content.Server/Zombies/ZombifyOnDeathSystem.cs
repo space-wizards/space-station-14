@@ -95,10 +95,16 @@ namespace Content.Server.Zombies
             //you're a real zombie now, son.
             var zombiecomp = AddComp<ZombieComponent>(target);
 
+            //Removes all other factions to prevent conflicting factions.
+            //_faction.RemoveFaction(target);
+            _faction.RemoveFaction(target,"NanoTrasen", true);
+            _faction.RemoveFaction(target, "SimpleHostile", true);
+            _faction.RemoveFaction(target, "Syndicate", true);
+            _faction.RemoveFaction(target, "Xeno", true);
+            _faction.RemoveFaction(target, "Dragon", true);
+
             //Adds the zombie faction, so ai zombies will no longer attack other zombies.
-            //_faction.RemoveFaction(target, "NanoTrasen", false);
-            //var factioncomp = AddComp<FactionComponent>(target);
-            //_faction.AddFaction(target, "Zombies");
+            _faction.AddFaction(target, "Zombies");
 
             //we need to basically remove all of these because zombies shouldn't
             //get diseases, breath, be thirst, be hungry, or die in space
