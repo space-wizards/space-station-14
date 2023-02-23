@@ -193,7 +193,7 @@ namespace Content.Server.Explosion.EntitySystems
             active.TimeUntilBeep = initialBeepDelay == null ? active.BeepInterval : initialBeepDelay.Value;
 
             var ev = new ActiveTimerTriggerEvent(uid, user);
-            RaiseLocalEvent(uid, ev, true);
+            RaiseLocalEvent(uid, ev);
 
             if (TryComp<AppearanceComponent>(uid, out var appearance))
                 _appearance.SetData(uid, TriggerVisuals.VisualState, TriggerVisualState.Primed, appearance);
