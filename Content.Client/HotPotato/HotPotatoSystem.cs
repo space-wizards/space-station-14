@@ -15,9 +15,10 @@ public sealed class HotPotatoSystem : SharedHotPotatoSystem
 
         foreach (var comp in EntityQuery<ActiveHotPotatoComponent>())
         {
-            if (_timing.CurTime < comp.TargetTime)
+            var curTime = _timing.CurTime;
+            if (curTime < comp.TargetTime)
                 continue;
-            comp.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(comp.EffectCooldown);
+            comp.TargetTime = curTime + TimeSpan.FromSeconds(comp.EffectCooldown);
             var ent = Spawn("HotPotatoEffect", Transform(comp.Owner).MapPosition.Offset(_random.NextVector2(0.25f)));
         }
     }
