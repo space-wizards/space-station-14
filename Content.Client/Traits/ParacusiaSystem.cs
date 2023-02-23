@@ -29,8 +29,7 @@ public sealed class ParacusiaSystem : SharedParacusiaSystem
 
     private void OnCompStartup(EntityUid uid, ParacusiaComponent component, ComponentStartup args)
     {
-        component.NextIncidentTime = _timing.CurTime +
-                                     TimeSpan.FromSeconds(_random.NextFloat(component.MinTimeBetweenIncidents, component.MaxTimeBetweenIncidents));
+        component.NextIncidentTime += TimeSpan.FromSeconds(_random.NextFloat(component.MinTimeBetweenIncidents, component.MaxTimeBetweenIncidents));
     }
 
     public override void Update(float frameTime)
