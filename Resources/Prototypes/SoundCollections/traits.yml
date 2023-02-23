@@ -33,10 +33,6 @@
   - /Audio/Effects/radpulse5.ogg
   - /Audio/Effects/radpulse9.ogg
   - /Audio/Effects/Chemistry/bubbles.ogg
-  - /Audio/Announcements/power_off.ogg
-  - /Audio/Announcements/announce.ogg
-  - /Audio/Ambience/anomaly_drone.ogg
-  - /Audio/Ambience/Objects/gravity_gen_hum.ogg
   - /Audio/Machines/airlock_close.ogg
   - /Audio/Machines/airlock_deny.ogg
   - /Audio/Machines/airlock_open.ogg
@@ -65,7 +61,6 @@
   - /Audio/Items/Toys/toysqueak1.ogg
   - /Audio/Items/Toys/toysqueak2.ogg
   - /Audio/Items/Toys/toysqueak3.ogg
-  - /Audio/Misc/notice1.ogg
   - /Audio/Voice/Talk/lizard.ogg
   - /Audio/Voice/Talk/pai.ogg
   - /Audio/Voice/Talk/speak_1.ogg
