@@ -84,7 +84,7 @@ public sealed partial class AdminNotesLine : BoxContainer
 
         if (Note.ExpiryTime is not null)
         {
-            ExpiresLabel.Text += Note.ExpiryTime.Value.ToString("yyyy-MM-dd HH:mm:ss") + $" (in {Note.ExpiryTime.Value - DateTime.UtcNow:d'd 'hh':'mm})";
+            ExpiresLabel.Text = $"{Loc.GetString("admin-note-editor-expiry-label")} {Note.ExpiryTime.Value: yyyy-MM-dd HH:mm:ss} (in {Note.ExpiryTime.Value - DateTime.UtcNow:d'd 'hh':'mm})";
             ExpiresLabel.Visible = true;
         }
 
