@@ -1,11 +1,16 @@
-﻿using System.Threading.Tasks;
+using System.Text;
+using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.Database;
 using Content.Server.EUI;
 using Content.Server.GameTicking;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Notes;
+using Content.Shared.Database;
+using Content.Shared.Players.PlayTimeTracking;
 using Robust.Server.Player;
+using Robust.Shared;
+using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 
 namespace Content.Server.Administration.Notes;
@@ -17,6 +22,7 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly EuiManager _euis = default!;
     [Dependency] private readonly IEntitySystemManager _systems = default!;
+    [Dependency] private readonly IConfigurationManager _config = default!;
 
     public const string SawmillId = "admin.notes";
 
@@ -54,23 +60,63 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
         await ui.ChangeNotedPlayer(notedPlayer);
     }
 
-    public async Task AddNote(IPlayerSession createdBy, Guid player, string message)
+    public async Task AddNote(IPlayerSession createdBy, Guid player, NoteType type, string message, NoteSeverity severity, bool secret, DateTime? expiryTime)
     {
-        _sawmill.Info($"Player {createdBy.Name} added note with message {message}");
+        message = message.Trim();
+        var sb = new StringBuilder($"{createdBy.Name} has added ");
+
+        if (secret && type == NoteType.Note)
+        {
+            sb.Append(" secret");
+        }
+
+        sb.Append($"{type} with message {message}");
+
+        switch (type)
+        {
+            case NoteType.Note:
+                sb.Append($" with {severity} severity");
+                break;
+            case NoteType.Message:
+                severity = NoteSeverity.None;
+                secret = false;
+                break;
+            case NoteType.Watchlist:
+                severity = NoteSeverity.None;
+                secret = true;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown note type");
+        }
+
+        if (expiryTime is not null)
+        {
+            sb.Append($" which expires on {expiryTime.Value.ToUniversalTime(): yyyy-MM-dd HH:mm:ss} UTC");
+        }
+
+        _sawmill.Info(sb.ToString());
 
         _systems.TryGetEntitySystem(out GameTicker? ticker);
-        int? round = ticker == null || ticker.RoundId == 0 ? null : ticker.RoundId;
+        int? roundId = ticker == null || ticker.RoundId == 0 ? null : ticker.RoundId;
+        var serverName = _config.GetCVar(CVars.GameHostName); // This could probably be done another way, but this is fine. For displaying only.
         var createdAt = DateTime.UtcNow;
-        var noteId = await _db.AddAdminNote(round, player, message, createdBy.UserId, createdAt);
+        var playtime = (await _db.GetPlayTimes(player)).Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall)?.TimeSpent ?? TimeSpan.Zero;
+        var noteId = await _db.AddAdminNote(roundId, player, playtime, type, message, severity, secret, createdBy.UserId, createdAt, expiryTime);
 
         var note = new SharedAdminNote(
             noteId,
-            round,
+            roundId,
+            serverName,
+            playtime,
+            type,
             message,
+            severity,
+            secret,
             createdBy.Name,
             createdBy.Name,
             createdAt,
-            createdAt
+            createdAt,
+            expiryTime
         );
         NoteAdded?.Invoke(note);
     }
@@ -80,11 +126,11 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
         var note = await _db.GetAdminNote(noteId);
         if (note == null)
         {
-            _sawmill.Info($"Player {deletedBy.Name} tried to delete non-existent note {noteId}");
+            _sawmill.Info($"{deletedBy.Name} has tried to delete non-existent note {noteId}");
             return;
         }
 
-        _sawmill.Info($"Player {deletedBy.Name} deleted note {noteId}");
+        _sawmill.Info($"{deletedBy.Name} has deleted note {noteId}");
 
         var deletedAt = DateTime.UtcNow;
         await _db.DeleteAdminNote(noteId, deletedBy.UserId, deletedAt);
@@ -92,7 +138,7 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
         NoteDeleted?.Invoke(noteId);
     }
 
-    public async Task ModifyNote(int noteId, IPlayerSession editedBy, string message)
+    public async Task ModifyNote(int noteId, IPlayerSession editedBy, string message, NoteSeverity severity, bool secret, DateTime? expiryTime)
     {
         message = message.Trim();
 
@@ -102,26 +148,80 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
             return;
         }
 
-        _sawmill.Info($"Player {editedBy.Name} modified note {noteId} with message {message}");
+        var sb = new StringBuilder($"{editedBy.Name} has modified {note.NoteType} {noteId}");
+
+        if (note.Message != message)
+        {
+            sb.Append($", modified message from {note.Message} to {message}");
+        }
+
+        if (note.Secret != secret)
+        {
+            sb.Append($", made it {(secret ? "secret" : "visible")}");
+        }
+
+        if (note.NoteSeverity != severity)
+        {
+            sb.Append($", updated the severity from {note.NoteSeverity} to {severity}");
+        }
+
+        if (note.ExpiryTime != expiryTime)
+        {
+            sb.Append(", updated the expiry time from ");
+            if (note.ExpiryTime is null)
+                sb.Append("never");
+            else
+                sb.Append($"{note.ExpiryTime.Value.ToUniversalTime(): yyyy-MM-dd HH:mm:ss} UTC");
+
+            sb.Append(" to ");
+
+            if (expiryTime is null)
+                sb.Append("never");
+            else
+                sb.Append($"{expiryTime.Value.ToUniversalTime(): yyyy-MM-dd HH:mm:ss} UTC");
+        }
+
+        _sawmill.Info(sb.ToString());
 
         var editedAt = DateTime.UtcNow;
-        await _db.EditAdminNote(noteId, message, editedBy.UserId, editedAt);
+        await _db.EditAdminNote(noteId, message, severity, editedBy.UserId, editedAt);
 
         var sharedNote = new SharedAdminNote(
             noteId,
             note.RoundId,
+            note.Round?.Server.Name,
+            note.PlaytimeAtNote,
+            note.NoteType,
             message,
+            severity,
+            secret,
             note.CreatedBy.LastSeenUserName,
             editedBy.Name,
             note.CreatedAt,
-            note.LastEditedAt
+            note.LastEditedAt,
+            expiryTime
         );
         NoteModified?.Invoke(sharedNote);
     }
 
-    public async Task<List<AdminNote>> GetNotes(Guid player)
+    public async Task<List<AdminNote>> GetAllNotes(Guid player)
     {
-        return await _db.GetAdminNotes(player);
+        return await _db.GetAllAdminNotes(player);
+    }
+
+    public async Task<List<AdminNote>> GetVisibleNotes(Guid player)
+    {
+        return await _db.GetVisibleAdminNotes(player);
+    }
+
+    public async Task<List<AdminNote>> GetActiveWatchlists(Guid player)
+    {
+        return await _db.GetActiveWatchlists(player);
+    }
+
+    public async Task<List<AdminNote>> GetNewMessages(Guid player)
+    {
+        return await _db.GetMessages(player);
     }
 
     public async Task<string> GetPlayerName(Guid player)
