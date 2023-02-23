@@ -48,7 +48,7 @@ public sealed class WizardRuleConfiguration : GameRuleConfiguration
     public string WizardLastNames = "names_wizard_last";
 
     [DataField("endsRound")]
-    public bool EndsRound = false;
+    public bool EndsRound = true;
 
     [DataField("shuttleMap", customTypeSerializer: typeof(ResourcePathSerializer))]
     public ResourcePath? WizardShuttleMap = new("/Maps/Shuttles/wizard.yml");

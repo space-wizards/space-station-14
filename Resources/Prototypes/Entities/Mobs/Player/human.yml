@@ -58,7 +58,8 @@
   components:
     - type: NukeOperative
     - type: RandomHumanoidAppearance
-    
+
+# Wizards    
 - type: entity
   noSpawn: true
   name: Wizard

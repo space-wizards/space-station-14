@@ -392,8 +392,11 @@
       state: full
     - type: RandomHumanoidSpawner
       settings: WizardHumanoid
+    - type: Loadout
+      prototypes: [WizardBlueGear]
 
 - type: randomHumanoidSettings
   id: WizardHumanoid
   components:
     - type: Wizard
+
