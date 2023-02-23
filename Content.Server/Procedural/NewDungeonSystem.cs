@@ -198,6 +198,9 @@ public sealed class NewDungeonSystem : EntitySystem
         var dungeon = new Dungeon();
         var dummyMap = _mapManager.CreateMap();
         var availablePacks = new List<DungeonRoomPackPrototype>();
+        var chosenPacks = new DungeonRoomPackPrototype?[gen.RoomPacks.Count];
+        var packTransforms = new Matrix3[gen.RoomPacks.Count];
+        var rotatedPackNodes = new HashSet<Vector2i>[gen.RoomPacks.Count];
 
         // Actually pick the room packs and rooms
         for (var i = 0; i < gen.RoomPacks.Count; i++)
@@ -222,16 +225,13 @@ public sealed class NewDungeonSystem : EntitySystem
                 }
             }
 
-            // When iterating room spawning (starting on connecting edge) check each connection and see if it's been found yet
-            // If it has then we can spawn a room with n-1 available connections
-
             // Iterate every pack
             // To be valid it needs its edge nodes to overlap with every edge group
             var external = connections[i];
 
             random.Shuffle(availablePacks);
             Matrix3 packTransform = default!;
-            var found = true;
+            var found = false;
             DungeonRoomPackPrototype pack = default!;
 
             foreach (var aPack in availablePacks)
@@ -256,13 +256,24 @@ public sealed class NewDungeonSystem : EntitySystem
                     if (aPackDimensions != bounds.Size)
                         continue;
 
+                    found = true;
                     var rotatedNodes = new HashSet<Vector2i>(aExternal.Count);
                     var aRotation = dir.AsDir().ToAngle();
 
+                    // PLACEHOLDER
+                    if (i == 2)
+                    {
+
+                    }
+
+                    // Get the external nodes in terms of the dungeon layout
+                    // (i.e. rotated if necessary + translated to the room position)
                     foreach (var node in aExternal)
                     {
-                        var rotated = aRotation.RotateVec(node);
-                        rotatedNodes.Add((Vector2i) rotated.Rounded());
+                        // Get the node in pack terms (offset from center), then rotate it
+                        // Afterwards we offset it by where the pack is supposed to be in world terms.
+                        var rotated = aRotation.RotateVec(node - aPack.Size / 2f);
+                        rotatedNodes.Add((rotated.Floored() + bounds.Center).Floored());
                     }
 
                     foreach (var group in external.Values)
@@ -283,9 +294,13 @@ public sealed class NewDungeonSystem : EntitySystem
                     // Use this pack
                     // TODO: Fix rounding
                     packTransform = Matrix3.CreateTransform(bounds.Center, aRotation);
+                    rotatedPackNodes[i] = rotatedNodes;
                     pack = aPack;
                     break;
                 }
+
+                if (found)
+                    break;
             }
 
             availablePacks.Clear();
@@ -295,6 +310,36 @@ public sealed class NewDungeonSystem : EntitySystem
             {
                 continue;
             }
+
+            // If we're not the first pack then connect to our edges.
+            chosenPacks[i] = pack;
+            packTransforms[i] = packTransform;
+            var chosenExternal = rotatedPackNodes[i];
+
+            for (var j = i - 1; j >= 0; j--)
+            {
+                var neighborPack = chosenPacks[j];
+
+                if (neighborPack == null)
+                    continue;
+
+                var neighborExternal = rotatedPackNodes[j];
+
+                var overlap = new HashSet<Vector2i>(chosenExternal);
+                overlap.IntersectWith(neighborExternal);
+
+                if (neighborExternal.Count == 0)
+                    continue;
+
+                // TODO: Smarter airlock placement
+                foreach (var node in overlap)
+                {
+                    grid.SetTile(node, new Tile(_tileDefManager["FloorSteel"].TileId));
+                    Spawn("AirlockGlass", grid.GridTileToLocal(node));
+                }
+            }
+
+            continue;
 
             // Actual spawn cud here.
             // Pickout the room pack template to get the room dimensions we need.
