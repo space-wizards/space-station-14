@@ -87,7 +87,6 @@ public abstract class NPCCombatOperator : HTNOperator
 
         // TODO: Need a perception system instead
         // TODO: This will be expensive so will be good to optimise and cut corners.
-
         foreach (var target in _factions
                      .GetNearbyHostiles(owner, radius))
         {

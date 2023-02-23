@@ -104,6 +104,7 @@ namespace Content.Server.NPC.Systems
             }
         }
 
+        // TODO: this function should exist, it assists in reseting factions, important for zombies, for example.
        /* /// <summary>
         /// Removes all factions from the entity.
         /// </summary>
