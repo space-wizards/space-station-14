@@ -42,8 +42,16 @@ public sealed class ParacusiaComponent : Component
 [Serializable, NetSerializable]
 public sealed class ParacusiaComponentState : ComponentState
 {
-    public float MaxTimeBetweenIncidents { get; init; }
-    public float MinTimeBetweenIncidents { get; init; }
-    public float MaxSoundDistance { get; init; }
-    public SoundSpecifier Sounds { get; init; } = default!;
+    public float MaxTimeBetweenIncidents;
+    public float MinTimeBetweenIncidents;
+    public float MaxSoundDistance;
+    public SoundSpecifier Sounds = default!;
+
+    public ParacusiaComponentState(float maxTimeBetweenIncidents, float minTimeBetweenIncidents, float maxSoundDistance, SoundSpecifier sounds)
+    {
+        MaxTimeBetweenIncidents = maxTimeBetweenIncidents;
+        MinTimeBetweenIncidents = minTimeBetweenIncidents;
+        MaxSoundDistance = maxSoundDistance;
+        Sounds = sounds;
+    }
 }
