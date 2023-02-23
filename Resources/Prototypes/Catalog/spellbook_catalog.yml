@@ -100,7 +100,7 @@
 
 - type: listing
   id: SpellbookPolyCarpWand
-  name: action-name-spell-summon-magicarp
+  name: spellbook-poly-carp-wand-name
   description: spellbook-poly-carp-wand-description
   productEntity: WeaponWandPolymorphCarp
   cost:

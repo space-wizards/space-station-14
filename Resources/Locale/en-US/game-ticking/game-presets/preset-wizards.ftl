@@ -10,3 +10,6 @@ wizard-list-start = The Wizards were:
 wizard-list-name = - [color=White]{$name}[/color] ([color=gray]{$user}[/color])
 wizard-not-enough-ready-players = Not enough players readied up for the game! There were {$readyPlayersCount} players readied up out of {$minimumPlayers} needed. Can't start Wizards.
 wizard-no-one-ready = No players readied up! Can't start Wizards.
+
+roles-antag-wizard-name = Wizard
+roles-antag-wizard-objective = Make the station a magical place and survive the ensuing chaos.

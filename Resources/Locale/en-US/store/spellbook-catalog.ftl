@@ -9,7 +9,7 @@ spellbook-entrance-staff-name = Entrance
 spellbook-entrance-staff-description = Interior decorating in the palm of your hand.
 
 spellbook-healing-staff-name = Healing
-spellbook-healing-staff-Description = From the Space Wizard Federation's xxx.
+spellbook-healing-staff-description = The Space Wizard Federation is still trying to find a use for this mysterious power.
 
 spellbook-rgb-staff-name = RGB
 spellbook-rgb-staff-description = Its gaming time.
@@ -22,11 +22,13 @@ spellbook-poly-monkey-wand-description = For when you really need a friend. 5 ch
 spellbook-death-wand-name = Instant Death
 spellbook-death-wand-description = From the brightest minds at the Space Wizard Federation. 3 charges.
 
-spellbook-entrance-wand-description = Interior decorating in the palm of your hand. x charges.
+spellbook-entrance-wand-description = Interior decorating in the palm of your hand. 10 charges.
 
-spellbook-poly-carp-wand-description = Turn your enemies into different enemies. x charges.
+spellbook-poly-carp-wand-name = Magicarp Polymorph
+spellbook-poly-carp-wand-description = Turn your enemies into different enemies. 5 charges.
 
-spellbook-fireball-wand-description = EL' NATH! x charges.
+spellbook-fireball-wand-description = Fireball
+spellbook-fireball-wand-description = ONI'SOMA! Beware tight spaces. 5 charges.
 
 # Misc
 
