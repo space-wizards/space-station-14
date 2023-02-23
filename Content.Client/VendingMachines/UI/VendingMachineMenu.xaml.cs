@@ -16,6 +16,7 @@ namespace Content.Client.VendingMachines.UI
     public sealed partial class VendingMachineMenu : DefaultWindow
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public event Action<ItemList.ItemListSelectedEventArgs>? OnItemSelected;
 
@@ -26,7 +27,6 @@ namespace Content.Client.VendingMachines.UI
 
             VendingContents.OnItemSelected += args =>
             {
-                // OnItemSelected?.Invoke(args);
                 onItemSelected(args);
             };
 
@@ -47,14 +47,14 @@ namespace Content.Client.VendingMachines.UI
                     pos++;
                 }
 
-                if (finalPos != 0 && finalPos < pos) OnItemSelected?.Invoke(new ItemList.ItemListSelectedEventArgs(finalPos, VendingContents));
+                if (finalPos != 0 && finalPos < pos)
+                    OnItemSelected?.Invoke(new ItemList.ItemListSelectedEventArgs(finalPos, VendingContents));
             };
 
 
             // Placeholder VendingInfo
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var ent = entityManager.SpawnEntity("VendingMachineCola", MapCoordinates.Nullspace);
-            var sprite = entityManager.GetComponent<SpriteComponent>(ent);
+            var ent = _entityManager.SpawnEntity("VendingMachineCola", MapCoordinates.Nullspace);
+            var sprite = _entityManager.GetComponent<SpriteComponent>(ent);
             VendingInfo.AddChild(new SpriteView
             {
                 Scale = (3f, 3f),
@@ -65,7 +65,7 @@ namespace Content.Client.VendingMachines.UI
 
             var message = new FormattedMessage();
 
-            message.AddMarkup("Item Information");
+            message.AddMarkup(Loc.GetString("vending-machine-placeholder-name"));
             var VendingName = new RichTextLabel();
             VendingName.SetMessage(message);
             VendingInfo.AddChild(VendingName);
@@ -73,13 +73,12 @@ namespace Content.Client.VendingMachines.UI
             VendingInfo.AddChild(new Control { MinSize = (10, 10) });
 
             message = new FormattedMessage();
-            message.AddMarkup("Select an item from the left to preview it.");
+            message.AddMarkup(Loc.GetString("vending-machine-placeholder-description"));
             var VendingDescription = new RichTextLabel();
             VendingDescription.SetMessage(message);
             VendingInfo.AddChild(VendingDescription);
 
             VendButton.Disabled = true;
-            // Placeholder VendingInfo
         }
 
         private void onItemSelected(ItemList.ItemListSelectedEventArgs args)
@@ -89,16 +88,18 @@ namespace Content.Client.VendingMachines.UI
 
             VendingInfo.Children.Clear();
 
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var ent = entityManager.SpawnEntity(entry.ID ?? "VendingMachineCola", MapCoordinates.Nullspace);
+            var ent = _entityManager.SpawnEntity(entry.ID ?? "VendingMachineCola", MapCoordinates.Nullspace);
 
-            var metaData = entityManager.GetComponent<MetaDataComponent>(ent);
-            var sprite = entityManager.GetComponent<SpriteComponent>(ent);
-            VendingInfo.AddChild(new SpriteView
+            var metaData = _entityManager.GetComponent<MetaDataComponent>(ent);
+            _entityManager.TryGetComponent<SpriteComponent>(ent, out var sprite);
+            if (sprite != null)
             {
-                Scale = (3f, 3f),
-                Sprite = sprite
-            });
+                VendingInfo.AddChild(new SpriteView
+                {
+                    Scale = (3f, 3f),
+                    Sprite = sprite
+                });
+            }
 
             VendingInfo.AddChild(new Control { MinSize = (10, 10) });
 
