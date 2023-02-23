@@ -183,7 +183,7 @@
     - type: GasTank
       outputPressure: 42.6
       air:
-        volume: 4
+        volume: 20
 
 # Filled mini
 - type: entity
@@ -248,6 +248,7 @@
     sprite: Objects/Tanks/Jetpacks/void.rsi
     slots:
       - Back
+      - suitStorage      
 
 # Filled void
 - type: entity
