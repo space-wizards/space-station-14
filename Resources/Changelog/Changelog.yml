@@ -1,12 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'Fixed a bug that could result in collisions being disabled for entities
-      (e.g., after leaving disposal pipes).', type: Fix}
-  - {message: Fixed collision mispredictions when something like a locker or crates
-      get toggled open and closed., type: Fix}
-  id: 2563
-  time: '2022-11-03T02:03:36.0000000+00:00'
 - author: ashtronaut
   changes:
   - {message: Added a volume slider for the lobby & round-end music so you can enjoy
@@ -2913,3 +2905,8 @@ Entries:
       for admins., type: Fix}
   id: 3062
   time: '2023-02-22T12:26:02.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Reduce bullet impulses in space from 85 to 5., type: Tweak}
+  id: 3063
+  time: '2023-02-23T01:37:57.0000000+00:00'
