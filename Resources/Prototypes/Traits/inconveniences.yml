@@ -19,3 +19,4 @@
   description: trait-lightweight-desc
   components:
     - type: LightweightDrunk
+      boozeMultiplier: 2

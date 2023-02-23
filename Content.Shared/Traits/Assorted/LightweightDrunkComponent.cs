@@ -9,4 +9,6 @@ namespace Content.Shared.Traits.Assorted;
 [RegisterComponent, NetworkedComponent]
 public sealed class LightweightDrunkComponent : Component
 {
+    [DataField("boozeMultiplier"), ViewVariables(VVAccess.ReadWrite)]
+    public float BoozeMultiplier = 2f;
 }
