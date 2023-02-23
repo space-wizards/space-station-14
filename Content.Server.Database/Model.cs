@@ -559,8 +559,11 @@ namespace Content.Server.Database
 
         [Required, ForeignKey("Player")] public Guid PlayerUserId { get; set; }
         public Player Player { get; set; } = default!;
+        [Required] public TimeSpan PlaytimeAtNote { get; set; }
+        [Required] public NoteType NoteType { get; set; }
 
         [Required, MaxLength(4096)] public string Message { get; set; } = string.Empty;
+        [Required] public NoteSeverity NoteSeverity { get; set; }
 
         [Required, ForeignKey("CreatedBy")] public Guid CreatedById { get; set; }
         [Required] public Player CreatedBy { get; set; } = default!;
@@ -571,12 +574,13 @@ namespace Content.Server.Database
         [Required] public Player LastEditedBy { get; set; } = default!;
 
         [Required] public DateTime LastEditedAt { get; set; }
+        public DateTime? ExpiryTime { get; set; }
 
         public bool Deleted { get; set; }
         [ForeignKey("DeletedBy")] public Guid? DeletedById { get; set; }
         public Player? DeletedBy { get; set; }
         public DateTime? DeletedAt { get; set; }
 
-        public bool ShownToPlayer { get; set; }
+        public bool Secret { get; set; }
     }
 }
