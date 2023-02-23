@@ -4,8 +4,3 @@ Licensed under MIT at https://github.com/cpetry/TextureGenerator-Online/blob/gh-
 noise.png generated from https://giggster.com/guide/cloud-texture-generator/
 
 KettleParallaxNeb.png and KettleParallaxBG.png adapted from Screaming Brain Studios CC-0 https://opengameart.org/content/seamless-space-backgrounds
-
-files: ["planet.png"]
-license: "CC-BY-NC-SA-3.0"
-copyright: "by Adipemdragon for tgstation, taken at commit 3839e860a7f3102b1488285d3319f61bbfe1fa51 from parallax.dmi
-source: "https://github.com/tgstation/tgstation"
