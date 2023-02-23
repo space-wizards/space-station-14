@@ -31,6 +31,9 @@
   - type: Appearance
   - type: PaperVisuals
   - type: Recyclable
+  - type: Tag
+    tags:
+      - Trash
 
 - type: entity
   name: office paper
