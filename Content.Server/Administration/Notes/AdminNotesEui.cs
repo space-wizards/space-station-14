@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.EUI;
 using Content.Shared.Administration.Notes;
@@ -63,7 +63,7 @@ public sealed class AdminNotesEui : BaseEui
                 Close();
                 break;
             }
-            case CreateNoteRequest {Message: var message}:
+            case CreateNoteRequest request:
             {
                 if (!_notesMan.CanCreate(Player))
                 {
@@ -71,12 +71,17 @@ public sealed class AdminNotesEui : BaseEui
                     break;
                 }
 
-                if (string.IsNullOrWhiteSpace(message))
+                if (string.IsNullOrWhiteSpace(request.Message))
                 {
                     break;
                 }
 
-                await _notesMan.AddNote(Player, NotedPlayer, message);
+                if (request.ExpiryTime is not null && request.ExpiryTime <= DateTime.UtcNow)
+                {
+                    break;
+                }
+
+                await _notesMan.AddNote(Player, NotedPlayer, request.NoteType, request.Message, request.NoteSeverity, request.Secret, request.ExpiryTime);
                 break;
             }
             case DeleteNoteRequest request:
@@ -103,7 +108,7 @@ public sealed class AdminNotesEui : BaseEui
                     break;
                 }
 
-                await _notesMan.ModifyNote(request.Id, Player, request.Message);
+                await _notesMan.ModifyNote(request.Id, Player, request.Message, request.NoteSeverity, request.Secret, request.ExpiryTime);
                 break;
             }
         }
@@ -132,7 +137,7 @@ public sealed class AdminNotesEui : BaseEui
         NotedPlayerName = await _notesMan.GetPlayerName(NotedPlayer);
 
         var notes = new Dictionary<int, SharedAdminNote>();
-        foreach (var note in await _notesMan.GetNotes(NotedPlayer))
+        foreach (var note in await _notesMan.GetAllNotes(NotedPlayer))
         {
             notes.Add(note.Id, note.ToShared());
         }

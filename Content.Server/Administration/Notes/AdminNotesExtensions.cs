@@ -1,4 +1,4 @@
-﻿using Content.Server.Database;
+using Content.Server.Database;
 using Content.Shared.Administration.Notes;
 
 namespace Content.Server.Administration.Notes;
@@ -10,11 +10,17 @@ public static class AdminNotesExtensions
         return new SharedAdminNote(
             note.Id,
             note.RoundId,
+            note.Round?.Server.Name,
+            note.PlaytimeAtNote,
+            note.NoteType,
             note.Message,
+            note.NoteSeverity,
+            note.Secret,
             note.CreatedBy.LastSeenUserName,
             note.LastEditedBy.LastSeenUserName,
             note.CreatedAt,
-            note.LastEditedAt
+            note.LastEditedAt,
+            note.ExpiryTime
         );
     }
 }
