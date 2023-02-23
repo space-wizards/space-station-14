@@ -87,6 +87,7 @@ public abstract class NPCCombatOperator : HTNOperator
 
         // TODO: Need a perception system instead
         // TODO: This will be expensive so will be good to optimise and cut corners.
+
         foreach (var target in _factions
                      .GetNearbyHostiles(owner, radius))
         {
@@ -112,6 +113,7 @@ public abstract class NPCCombatOperator : HTNOperator
         return targets;
     }
 
+    // TODO: Hostiles are not checked if their factions change mid combat. This mostly affects zombie ai so far.
     private async Task UpdateTarget(
         EntityUid owner,
         EntityUid target,

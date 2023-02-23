@@ -96,6 +96,7 @@ namespace Content.Server.Zombies
             var zombiecomp = AddComp<ZombieComponent>(target);
 
             //Removes all other factions to prevent conflicting factions.
+            //This should ideally be coded to remove all factions rather than hardcoding them in... function does not exist.
             //_faction.RemoveFaction(target);
             _faction.RemoveFaction(target,"NanoTrasen", true);
             _faction.RemoveFaction(target, "SimpleHostile", true);
