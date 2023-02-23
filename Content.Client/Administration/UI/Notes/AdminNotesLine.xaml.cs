@@ -54,18 +54,20 @@ public sealed partial class AdminNotesLine : BoxContainer
     /// </summary>
     private void Refresh()
     {
-        try
-        {
-            SeverityRect.Texture = _sprites.Frame0(new SpriteSpecifier.Texture(new ResourcePath(
-                Note.NoteType == NoteType.Note
-                    ? SeverityIcons[Note.NoteSeverity]
-                    : NoteTypeIcons[Note.NoteType]
-            )));
-        }
-        catch (KeyNotFoundException)
+        string? iconPath;
+        if(Note.NoteType == NoteType.Note)
+            SeverityIcons.TryGetValue(Note.NoteSeverity, out iconPath);
+        else
+            NoteTypeIcons.TryGetValue(Note.NoteType, out iconPath);
+
+        if (iconPath is null)
         {
             SeverityRect.Visible = false;
             Logger.WarningS("admin.notes", $"Could not find an icon for note ID {Note.Id}");
+        }
+        else
+        {
+            SeverityRect.Texture = _sprites.Frame0(new SpriteSpecifier.Texture(new ResourcePath(iconPath)));
         }
 
         TimeLabel.Text = Note.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss");
