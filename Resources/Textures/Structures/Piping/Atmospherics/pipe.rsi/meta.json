@@ -30,6 +30,10 @@
       {
          "name":"pipeConnector",
          "directions":4
+      },
+	  {
+         "name":"pipeTrinaryConnectors",
+         "directions":4
       }
    ]
 }
