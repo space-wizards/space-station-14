@@ -260,20 +260,14 @@ public sealed class NewDungeonSystem : EntitySystem
                     var rotatedNodes = new HashSet<Vector2i>(aExternal.Count);
                     var aRotation = dir.AsDir().ToAngle();
 
-                    // PLACEHOLDER
-                    if (i == 2)
-                    {
-
-                    }
-
                     // Get the external nodes in terms of the dungeon layout
                     // (i.e. rotated if necessary + translated to the room position)
                     foreach (var node in aExternal)
                     {
                         // Get the node in pack terms (offset from center), then rotate it
                         // Afterwards we offset it by where the pack is supposed to be in world terms.
-                        var rotated = aRotation.RotateVec(node - aPack.Size / 2f);
-                        rotatedNodes.Add((rotated.Floored() + bounds.Center).Floored());
+                        var rotated = aRotation.RotateVec((Vector2) node + grid.TileSize / 2f - aPack.Size / 2f);
+                        rotatedNodes.Add((rotated + bounds.Center).Floored());
                     }
 
                     foreach (var group in external.Values)
@@ -287,7 +281,6 @@ public sealed class NewDungeonSystem : EntitySystem
 
                     if (!found)
                     {
-                        found = true;
                         continue;
                     }
 
@@ -332,6 +325,7 @@ public sealed class NewDungeonSystem : EntitySystem
                     continue;
 
                 // TODO: Smarter airlock placement
+                // Take the middle-most tile and then choose either 1x1 or 1x3
                 foreach (var node in overlap)
                 {
                     grid.SetTile(node, new Tile(_tileDefManager["FloorSteel"].TileId));
