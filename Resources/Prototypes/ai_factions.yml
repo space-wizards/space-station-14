@@ -33,3 +33,11 @@
   hostile:
   - NanoTrasen
   - Syndicate
+
+  - type: faction
+    id: Zombies
+    hostile:
+    - NanoTrasen
+    - Syndicate
+    - SimpleNeutral
+    - SimpleHostile

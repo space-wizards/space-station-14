@@ -30,6 +30,8 @@ using Content.Shared.Mobs;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio;
+using Content.Server.NPC.Components;
+using Content.Server.NPC.Systems;
 
 namespace Content.Server.Zombies
 {
@@ -51,6 +53,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
         [Dependency] private readonly IChatManager _chatMan = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
+        [Dependency] private readonly FactionSystem _faction = default!;
 
         public override void Initialize()
         {
@@ -91,6 +94,10 @@ namespace Content.Server.Zombies
 
             //you're a real zombie now, son.
             var zombiecomp = AddComp<ZombieComponent>(target);
+
+            //Adds the zombie faction, so ai zombies will no longer attack other zombies.
+            //_faction.RemoveFaction(target, "NanoTrasen", false);
+            _faction.AddFaction(target, "Zombies");
 
             //we need to basically remove all of these because zombies shouldn't
             //get diseases, breath, be thirst, be hungry, or die in space
