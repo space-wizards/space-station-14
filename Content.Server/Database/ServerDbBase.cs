@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Preferences;
@@ -926,12 +927,13 @@ namespace Content.Server.Database
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<List<AdminNote>> GetAdminNotes(Guid player)
+        public async Task<List<AdminNote>> GetAllAdminNotes(Guid player)
         {
             await using var db = await GetDb();
             return await db.DbContext.AdminNotes
                 .Where(note => note.PlayerUserId == player)
                 .Where(note => !note.Deleted)
+                .Where(note => note.ExpiryTime == null || DateTime.UtcNow < note.ExpiryTime)
                 .Include(note => note.Round)
                 .Include(note => note.CreatedBy)
                 .Include(note => note.LastEditedBy)
@@ -952,16 +954,70 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync();
         }
 
-        public async Task EditAdminNote(int id, string message, Guid editedBy, DateTime editedAt)
+        public async Task EditAdminNote(int id, string message, NoteSeverity severity, Guid editedBy, DateTime editedAt)
         {
             await using var db = await GetDb();
 
             var note = await db.DbContext.AdminNotes.Where(note => note.Id == id).SingleAsync();
             note.Message = message;
+            note.NoteSeverity = severity;
             note.LastEditedById = editedBy;
             note.LastEditedAt = editedAt;
 
             await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<AdminNote>> GetVisibleAdminNotes(Guid player)
+        {
+            await using var db = await GetDb();
+
+            return await (from note in db.DbContext.AdminNotes
+                          where note.PlayerUserId == player &&
+                          !note.Secret &&
+                          !note.Deleted &&
+                          (note.ExpiryTime == null || DateTime.UtcNow < note.ExpiryTime)
+                          select note)
+                .Include(note => note.Round)
+                .Include(note => note.CreatedBy)
+                .Include(note => note.LastEditedBy)
+                .Include(note => note.Player)
+                .ToListAsync();
+        }
+
+        public async Task<List<AdminNote>> GetActiveWatchlists(Guid player)
+        {
+            await using var db = await GetDb();
+
+            // Why would you ever have a non-secret watchlist? No need to check for secrecy.
+            return await (from note in db.DbContext.AdminNotes
+                    where note.PlayerUserId == player &&
+                          !note.Deleted &&
+                          (note.ExpiryTime == null || DateTime.UtcNow < note.ExpiryTime) &&
+                          note.NoteType == NoteType.Watchlist
+                    select note)
+                .Include(note => note.Round)
+                .Include(note => note.CreatedBy)
+                .Include(note => note.LastEditedBy)
+                .Include(note => note.Player)
+                .ToListAsync();
+        }
+
+        public async Task<List<AdminNote>> GetMessages(Guid player)
+        {
+            await using var db = await GetDb();
+
+            // We don't need to check for message secrecy, they should always be visible. Otherwise what's the point?
+            return await (from note in db.DbContext.AdminNotes
+                    where note.PlayerUserId == player &&
+                          !note.Deleted &&
+                          (note.ExpiryTime == null || DateTime.UtcNow < note.ExpiryTime) &&
+                          note.NoteType == NoteType.Message
+                    select note)
+                .Include(note => note.Round)
+                .Include(note => note.CreatedBy)
+                .Include(note => note.LastEditedBy)
+                .Include(note => note.Player)
+                .ToListAsync();
         }
 
         #endregion

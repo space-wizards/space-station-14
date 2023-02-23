@@ -1,4 +1,4 @@
-﻿using System.Collections.Immutable;
+using System.Collections.Immutable;
 using System.IO;
 using System.Net;
 using System.Text.Json;
@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
+using Content.Shared.Database;
 using Content.Shared.Preferences;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -216,11 +217,14 @@ namespace Content.Server.Database
 
         #region Admin Notes
 
-        Task<int> AddAdminNote(int? roundId, Guid player, string message, Guid createdBy, DateTime createdAt);
+        Task<int> AddAdminNote(int? roundId, Guid player, TimeSpan playtimeAtNote, NoteType type, string message, NoteSeverity severity, bool secret, Guid createdBy, DateTime createdAt, DateTime? expiryTime);
         Task<AdminNote?> GetAdminNote(int id);
-        Task<List<AdminNote>> GetAdminNotes(Guid player);
+        Task<List<AdminNote>> GetAllAdminNotes(Guid player);
+        Task<List<AdminNote>> GetVisibleAdminNotes(Guid player);
+        Task<List<AdminNote>> GetActiveWatchlists(Guid player);
+        Task<List<AdminNote>> GetMessages(Guid player);
         Task DeleteAdminNote(int id, Guid deletedBy, DateTime deletedAt);
-        Task EditAdminNote(int id, string message, Guid editedBy, DateTime editedAt);
+        Task EditAdminNote(int id, string message, NoteSeverity severity, Guid editedBy, DateTime editedAt);
 
         #endregion
     }
@@ -588,18 +592,23 @@ namespace Content.Server.Database
             return _db.SetLastReadRules(player, time);
         }
 
-        public Task<int> AddAdminNote(int? roundId, Guid player, string message, Guid createdBy, DateTime createdAt)
+        public Task<int> AddAdminNote(int? roundId, Guid player, TimeSpan playtimeAtNote, NoteType type, string message, NoteSeverity severity, bool secret, Guid createdBy, DateTime createdAt, DateTime? expiryTime)
         {
             DbWriteOpsMetric.Inc();
             var note = new AdminNote
             {
                 RoundId = roundId,
+                NoteType = type,
                 CreatedById = createdBy,
                 LastEditedById = createdBy,
                 PlayerUserId = player,
+                PlaytimeAtNote = playtimeAtNote,
                 Message = message,
+                NoteSeverity = severity,
+                Secret = secret,
                 CreatedAt = createdAt,
-                LastEditedAt = createdAt
+                LastEditedAt = createdAt,
+                ExpiryTime = expiryTime
             };
 
             return _db.AddAdminNote(note);
@@ -611,10 +620,25 @@ namespace Content.Server.Database
             return _db.GetAdminNote(id);
         }
 
-        public Task<List<AdminNote>> GetAdminNotes(Guid player)
+        public Task<List<AdminNote>> GetAllAdminNotes(Guid player)
         {
             DbReadOpsMetric.Inc();
-            return _db.GetAdminNotes(player);
+            return _db.GetAllAdminNotes(player);
+        }
+
+        public Task<List<AdminNote>> GetVisibleAdminNotes(Guid player)
+        {
+            return _db.GetVisibleAdminNotes(player);
+        }
+
+        public Task<List<AdminNote>> GetActiveWatchlists(Guid player)
+        {
+            return _db.GetActiveWatchlists(player);
+        }
+
+        public Task<List<AdminNote>> GetMessages(Guid player)
+        {
+            return _db.GetMessages(player);
         }
 
         public Task DeleteAdminNote(int id, Guid deletedBy, DateTime deletedAt)
@@ -623,10 +647,10 @@ namespace Content.Server.Database
             return _db.DeleteAdminNote(id, deletedBy, deletedAt);
         }
 
-        public Task EditAdminNote(int id, string message, Guid editedBy, DateTime editedAt)
+        public Task EditAdminNote(int id, string message, NoteSeverity severity, Guid editedBy, DateTime editedAt)
         {
             DbWriteOpsMetric.Inc();
-            return _db.EditAdminNote(id, message, editedBy, editedAt);
+            return _db.EditAdminNote(id, message, severity, editedBy, editedAt);
         }
 
         private DbContextOptions<PostgresServerDbContext> CreatePostgresOptions()
