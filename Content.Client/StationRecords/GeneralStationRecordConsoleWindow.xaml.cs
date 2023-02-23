@@ -96,37 +96,31 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
         RecordContainer.RemoveAllChildren();
 
 
-        var name = new Label()
-        {
-            Text = record.Name,
-            StyleClasses = { "LabelBig" }
-        };
-        RecordContainer.AddChild(name);
-
-        var jobIcon = new TextureRect
-        {
-            Texture = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/job_icons.rsi"), record.JobIcon).Frame0(),
-            TextureScale = (2, 2),
-            Stretch = TextureRect.StretchMode.KeepCentered
-        };
-
-        var jobTitle = new Label()
-        {
-            Text = Loc.GetString(record.JobTitle)
-        };
-
-        BoxContainer jobBox = new()
-        {
-            Orientation = LayoutOrientation.Horizontal,
-            SeparationOverride = 5,
-            Children = { jobIcon, jobTitle }
-        };
-        RecordContainer.AddChild(jobBox);
-
-
         // sure
         var recordControls = new Control[]
         {
+            new Label()
+            {
+                Text = record.Name,
+                StyleClasses = { "LabelBig" }
+            },
+            new BoxContainer()
+            {
+                Orientation = LayoutOrientation.Horizontal,
+                SeparationOverride = 5,
+                Children = {
+                    new TextureRect
+                    {
+                        Texture = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/job_icons.rsi"), record.JobIcon).Frame0(),
+                        TextureScale = (2, 2),
+                        Stretch = TextureRect.StretchMode.KeepCentered
+                    },
+                    new Label()
+                    {
+                        Text = Loc.GetString(record.JobTitle)
+                    }
+                }
+            },
             new Label()
             {
                 Text = Loc.GetString("general-station-record-console-record-species", ("species", record.Species))
