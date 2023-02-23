@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -17,6 +17,13 @@ namespace Content.Server.Database.Migrations.Sqlite
                 name: "shown_to_player",
                 table: "admin_notes",
                 newName: "secret");
+
+            migrationBuilder.UpdateData(
+                table: "admin_notes",
+                keyColumn: "secret",
+                keyValue: false,
+                column: "secret",
+                value: true);
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "expiry_time",
@@ -78,6 +85,13 @@ namespace Content.Server.Database.Migrations.Sqlite
                 name: "secret",
                 table: "admin_notes",
                 newName: "shown_to_player");
+
+            migrationBuilder.UpdateData(
+                table: "admin_notes",
+                keyColumn: "shown_to_player",
+                keyValue: true,
+                column: "shown_to_player",
+                value: false);
 
             migrationBuilder.CreateIndex(
                 name: "IX_trait_profile_id",
