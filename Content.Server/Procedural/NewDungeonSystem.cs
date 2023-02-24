@@ -4,6 +4,7 @@ using Content.Shared.Decals;
 using Content.Shared.Procedural;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
+using Robust.Shared.Collections;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -96,28 +97,11 @@ public sealed class NewDungeonSystem : EntitySystem
 
             foreach (var room in pack.Rooms)
             {
-                for (var x = room.Left - 1; x <= room.Right; x++)
+                var rator = new Box2iEdgeEnumerator(room, false);
+
+                while (rator.MoveNext(out var index))
                 {
-                    for (var y = room.Bottom - 1; y <= room.Top; y++)
-                    {
-                        // No interior nodes
-                        if (x != room.Left - 1 &&
-                            x != room.Right &&
-                            y != room.Bottom - 1 &&
-                            y != room.Top)
-                        {
-                            continue;
-                        }
-
-                        // No corners
-                        if (x == room.Left - 1 && (y == room.Bottom - 1 || y == room.Top) ||
-                            x == room.Right && (y == room.Bottom - 1 || y == room.Top))
-                        {
-                            continue;
-                        }
-
-                        nodes.Add(new Vector2i(x, y));
-                    }
+                    nodes.Add(index);
                 }
             }
 
@@ -147,28 +131,11 @@ public sealed class NewDungeonSystem : EntitySystem
             var pack = gen.RoomPacks[i];
             var nodes = new HashSet<Vector2i>(pack.Width + 2 + pack.Height);
 
-            for (var x = pack.Left - 1; x <= pack.Right; x++)
+            var rator = new Box2iEdgeEnumerator(pack, false);
+
+            while (rator.MoveNext(out var index))
             {
-                for (var y = pack.Bottom - 1; y <= pack.Top; y++)
-                {
-                    // Ignore interior
-                    if (x != pack.Left - 1 &&
-                        x != pack.Right &&
-                        y != pack.Bottom - 1 &&
-                        y != pack.Top)
-                    {
-                        continue;
-                    }
-
-                    // If we're in corners then ignore, cardinals only.
-                    if (x == pack.Left - 1 && (y == pack.Bottom - 1 || y == pack.Top) ||
-                        x == pack.Right && (y == pack.Bottom - 1 || y == pack.Top))
-                    {
-                        continue;
-                    }
-
-                    nodes.Add(new Vector2i(x, y));
-                }
+                nodes.Add(index);
             }
 
             edges[i] = nodes;
@@ -311,56 +278,98 @@ public sealed class NewDungeonSystem : EntitySystem
             // If we're not the first pack then connect to our edges.
             chosenPacks[i] = pack;
             packTransforms[i] = packTransform;
-            var chosenExternal = rotatedPackNodes[i];
+        }
 
-            for (var j = i - 1; j >= 0; j--)
+        // Grab all of the room bounds
+        // Then, work out connections between them
+        // TODO: Could use arrays given we do know room count up front
+        var rooms = new ValueList<Box2i>(chosenPacks.Length);
+        var roomBorders = new Dictionary<Box2i, HashSet<Vector2i>>(chosenPacks.Length);
+
+        for (var i = 0; i < chosenPacks.Length; i++)
+        {
+            var pack = chosenPacks[i];
+            var transform = packTransforms[i];
+
+            foreach (var room in pack!.Rooms)
             {
-                var neighborPack = chosenPacks[j];
+                var dRoom = (Box2i) transform.TransformBox(room);
+                rooms.Add(dRoom);
+                var roomEdges = new HashSet<Vector2i>();
+                var rator = new Box2iEdgeEnumerator(dRoom, false);
 
-                if (neighborPack == null)
+                while (rator.MoveNext(out var edge))
+                {
+                    roomEdges.Add(edge);
+                }
+
+                roomBorders.Add(dRoom, roomEdges);
+            }
+        }
+
+        // Do pathfind from first room to work out graph.
+        // TODO: Optional loops
+        var roomConnections = new Dictionary<Box2i, List<Box2i>>();
+        var frontier = new Queue<Box2i>();
+        frontier.Enqueue(rooms[0]);
+
+        while (frontier.TryDequeue(out var room))
+        {
+            var conns = roomConnections.GetOrNew(room);
+            var border = roomBorders[room];
+
+            foreach (var (otherRoom, otherBorders) in roomBorders)
+            {
+                if (room.Equals(otherRoom) ||
+                    roomConnections.ContainsKey(otherRoom))
+                {
+                    continue;
+                }
+
+                var flipp = new HashSet<Vector2i>(border);
+                flipp.IntersectWith(otherBorders);
+
+                if (flipp.Count == 0)
                     continue;
 
-                var neighborExternal = rotatedPackNodes[j];
-
-                var overlap = new HashSet<Vector2i>(chosenExternal);
-                overlap.IntersectWith(neighborExternal);
-
-                if (overlap.Count == 0)
-                    continue;
-
-                // TODO: Get all of the room areas sorted
-                // then, work out room connections, then MST of rooms, then do conns
-
-                // TODO: Smarter airlock placement
-                // Spawn the airlock offset to an edge by at least 1 and do a 3x3 if possible
-
-                // TODO: Need this for room spawning too you goob.
-                // TODO: Rotated room variants I think
+                // Work out center tile
+                // Prune edge tiles if we have > 3
+                // Then we can just pick a random one to use for the airlock.
+                // TODO: Work out furthest 2 tiles
+                // TODO: Spawn either 1x1 or 3x1 airlock based on <some logic>
                 var center = Vector2.Zero;
 
-                foreach (var node in overlap)
+                foreach (var node in flipp)
                 {
                     center += (Vector2) node + grid.TileSize / 2f;
                 }
 
-                center /= overlap.Count;
-                var closest = overlap.First();
-                var closestDistance = ((Vector2) closest + grid.TileSize / 2f - center).LengthSquared;
+                center /= flipp.Count;
+                Vector2i closestNode;
+                var closestDistance = float.MaxValue;
+                var nodeDistances = new List<Vector2i>(flipp);
 
-                foreach (var node in overlap)
+                nodeDistances.Sort((x, y) =>
+                    ((Vector2) y + grid.TileSize / 2f - center).LengthSquared.CompareTo(
+                        (Vector2) x + grid.TileSize / 2f - center.LengthSquared));
+
+                if (nodeDistances.Count > 3)
                 {
-                    var distance = ((Vector2) node + grid.TileSize / 2f - center).LengthSquared;
 
-                    if (distance >= closestDistance)
-                        continue;
-
-                    closest = node;
-                    closestDistance = distance;
                 }
 
-                grid.SetTile(closest, new Tile(_tileDefManager["FloorSteel"].TileId));
-                Spawn("AirlockGlass", grid.GridTileToLocal(closest));
+                conns.Add(otherRoom);
+                frontier.Enqueue(otherRoom);
             }
+        }
+
+        // Then for overlaps choose either 1x1 / 3x1
+        // Pick a random tile for it and then expand outwards as relevant (weighted towards middle?)
+
+        for (var i = 0; i < chosenPacks.Length; i++)
+        {
+            var pack = chosenPacks[i]!;
+            var packTransform = packTransforms[i];
 
             // Actual spawn cud here.
             // Pickout the room pack template to get the room dimensions we need.
