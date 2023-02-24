@@ -99,17 +99,17 @@
   icon: { sprite: Objects/Tiles/tile.rsi, state: carpetclown }
   objectType: Item
 
-#   objectType: Item
-# - type: construction
-#   name: techmaint floor
-#   id: tileTechmaint
-#   graph: tileTechmaint
-#   startNode: start
-#   targetNode: techmainttile
-#   category: construction-category-tiles
-#   description: "A piece of techmaint flooring."
-#   icon: { sprite: Objects/Tiles/tile.rsi, state: steel_techfloor_grid }
-#   objectType: Item
+- type: construction
+  name: techmaint tile
+  id: TileTechmaint
+  graph: TileTechmaint
+  startNode: start
+  targetNode: techmainttile
+  category: construction-category-tiles
+  description: "Four techmaint tiles."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: techmaint }
+  objectType: Item
+
 #
 # - type: construction
 #   name: freezer tile

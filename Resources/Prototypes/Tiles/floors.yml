@@ -549,9 +549,9 @@
 - type: tile
   id: FloorTechMaint
   name: tiles-techmaint-floor
-  sprite: /Textures/Tiles/tech_maint.png
+  sprite: /Textures/Tiles/techmaint.png
   baseTurfs:
-  - Plating
+    - Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -560,7 +560,7 @@
   itemDrop: FloorTileItemTechmaint
   thermalConductivity: 0.04
   heatCapacity: 10000
-
+#for some reason naming it "Techmaint" and not "TechMaint" is impossible and hurts me physically
 - type: tile
   id: FloorReinforced
   name: tiles-reinforced-floor

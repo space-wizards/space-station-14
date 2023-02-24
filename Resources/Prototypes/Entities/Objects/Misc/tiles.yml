@@ -150,12 +150,12 @@
     node: darktile
 
 - type: entity
-  name: techmaint floor
+  name: techmaint tile
   parent: FloorTileItemBase
   id: FloorTileItemTechmaint
   components:
   - type: Sprite
-    state: techfloor
+    state: techmaint
   - type: Item
     heldPrefix: dark
   - type: FloorTile
@@ -164,6 +164,9 @@
       - FloorTechMaint
   - type: Stack
     stackType: FloorTileTechmaint
+  - type: Construction
+    graph: TileTechmaint
+    node: techmainttile
 
 - type: entity
   name: reinforced tile

@@ -143,3 +143,18 @@
     - node: carpetclowntile
       entity: FloorTileItemCarpetClown
 
+- type: constructionGraph
+  id: TileTechmaint
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: techmainttile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: techmainttile
+      entity: FloorTileItemTechmaint
