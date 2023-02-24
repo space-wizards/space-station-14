@@ -60,6 +60,14 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
         await ui.ChangeNotedPlayer(notedPlayer);
     }
 
+    public async Task OpenUserNotesEui(IPlayerSession player)
+    {
+        var ui = new UserNotesEui();
+        _euis.OpenEui(ui, player);
+
+        await ui.UpdateNotes();
+    }
+
     public async Task AddNote(IPlayerSession createdBy, Guid player, NoteType type, string message, NoteSeverity severity, bool secret, DateTime? expiryTime)
     {
         message = message.Trim();

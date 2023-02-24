@@ -17,6 +17,7 @@ public interface IAdminNotesManager
     bool CanEdit(IPlayerSession admin);
     bool CanView(IPlayerSession admin);
     Task OpenEui(IPlayerSession admin, Guid notedPlayer);
+    Task OpenUserNotesEui(IPlayerSession player);
     Task AddNote(IPlayerSession createdBy, Guid player, NoteType type, string message, NoteSeverity severity, bool secret, DateTime? expiryTime);
     Task DeleteNote(int noteId, IPlayerSession deletedBy);
     Task ModifyNote(int noteId, IPlayerSession editedBy, string message, NoteSeverity severity, bool secret, DateTime? expiryTime);

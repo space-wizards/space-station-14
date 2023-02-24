@@ -47,3 +47,8 @@ admin-notes-verb-text = Open Admin Notes
 # Watchlist and message login
 admin-notes-watchlist = {$player} is on the watchlist and has just connected: {$message}
 admin-notes-new-message = You've received an admin message from {$admin}: {$message}
+
+# Admin remarks
+admin-remarks-command-description = Opens the admin remarks page
+admin-remarks-command-error = Admin remarks have been disabled
+admin-remarks-title = Admin remarks
