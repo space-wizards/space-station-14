@@ -44,6 +44,16 @@
   icon: { sprite: Objects/Tiles/tile.rsi, state: dark }
   objectType: Item
 
+- type: construction
+  name: metal diamond tile
+  id: TileMetalDiamond
+  graph: TileMetalDiamond
+  startNode: start
+  targetNode: metaldiamondtile
+  category: construction-category-tiles
+  description: "Four metal diamond tiles."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: metaldiamond }
+  objectType: Item
 # - type: construction
 #   name: techmaint floor
 #   id: tileTechmaint

@@ -62,3 +62,19 @@
               amount: 1
     - node: darktile
       entity: FloorTileItemDark
+
+- type: constructionGraph
+  id: TileMetalDiamond
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: metaldiamondtile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: metaldiamondtile
+      entity: FloorTileItemMetalDiamond

@@ -55,7 +55,7 @@
     node: steeltile
 
 - type: entity
-  name: steel tile
+  name: metal diamond tile
   parent: FloorTileItemBase
   id: FloorTileItemMetalDiamond
   components:
@@ -69,9 +69,9 @@
       - FloorMetalDiamond
   - type: Stack
     stackType: FloorTileMetalDiamond
-#  - type: Construction
-#    graph: TileSteel
-#    node: steeltile
+  - type: Construction
+    graph: TileMetalDiamond
+    node: metaldiamondtile
 
 - type: entity
   name: wood floor
