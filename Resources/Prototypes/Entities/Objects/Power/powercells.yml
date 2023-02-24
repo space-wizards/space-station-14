@@ -71,6 +71,10 @@
   - type: Battery
     maxCharge: 360
     startingCharge: 0
+  - type: Sprite
+    layers:
+      - map: [ "enum.PowerCellVisualLayers.Base" ]
+        state: small
 
 - type: entity
   name: medium-capacity power cell
@@ -98,6 +102,10 @@
   - type: Battery
     maxCharge: 720
     startingCharge: 0
+  - type: Sprite
+    layers:
+      - map: [ "enum.PowerCellVisualLayers.Base" ]
+        state: medium
 
 - type: entity
   name: high-capacity power cell
@@ -125,6 +133,10 @@
   - type: Battery
     maxCharge: 1080
     startingCharge: 0
+  - type: Sprite
+    layers:
+      - map: [ "enum.PowerCellVisualLayers.Base" ]
+        state: high
 
 - type: entity
   name: hyper-capacity power cell
@@ -152,6 +164,10 @@
   - type: Battery
     maxCharge: 1800
     startingCharge: 0
+  - type: Sprite
+    layers:
+      - map: [ "enum.PowerCellVisualLayers.Base" ]
+        state: hyper
 
 - type: entity
   name: small microreactor cell
