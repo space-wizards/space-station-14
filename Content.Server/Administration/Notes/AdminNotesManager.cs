@@ -63,14 +63,14 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
     public async Task AddNote(IPlayerSession createdBy, Guid player, NoteType type, string message, NoteSeverity severity, bool secret, DateTime? expiryTime)
     {
         message = message.Trim();
-        var sb = new StringBuilder($"{createdBy.Name} has added ");
+        var sb = new StringBuilder($"{createdBy.Name} added a");
 
         if (secret && type == NoteType.Note)
         {
             sb.Append(" secret");
         }
 
-        sb.Append($"{type} with message {message}");
+        sb.Append($" {type} with message {message}");
 
         switch (type)
         {
@@ -217,6 +217,12 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
 
     public async Task<List<AdminNote>> GetVisibleNotes(Guid player)
     {
+        var canSeeOwnNotes = _config.GetCVar(CVars.SeeOwnNotes);
+        if (!canSeeOwnNotes)
+        {
+            _sawmill.Warning($"Someone tried to call GetVisibleNotes for {player} when see_own_notes was false");
+            return new List<AdminNote>();
+        }
         return await _db.GetVisibleAdminNotes(player);
     }
 
