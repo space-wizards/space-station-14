@@ -155,7 +155,7 @@
       "name": "gratingmaintfloor"
     },
     {
-      "name": "woodpatternfloor"
+      "name": "mosaicwood"
     },
     {
       "name": "bcircuit-inhand-left",
@@ -339,6 +339,14 @@
     },
     {
       "name": "hydro-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "mosaicwood-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "mosaicwood-inhand-left",
       "directions": 4
     }
   ]

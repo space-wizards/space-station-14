@@ -93,6 +93,25 @@
     node: woodtile
 
 - type: entity
+  name: mosaic wood floor
+  parent: FloorTileItemBase
+  id: FloorTileItemMosaicWood
+  components:
+  - type: Sprite
+    state: mosaicwood
+  - type: Item
+    heldPrefix: mosaicwood
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorMosaicWood
+  - type: Stack
+    stackType: FloorTileMosaicWood
+  - type: Construction
+    graph: TileMosaicWood
+    node: mosaicwoodtile
+
+- type: entity
   name: white tile
   parent: FloorTileItemBase
   id: FloorTileItemWhite
@@ -719,22 +738,6 @@
       - FloorSnow
   - type: Stack
     stackType: FloorTileSnow
-
-- type: entity
-  name: wood pattern floor
-  parent: FloorTileItemBase
-  id: FloorTileItemWoodPattern
-  components:
-  - type: Sprite
-    state: woodpatternfloor
-  - type: Item
-    heldPrefix: wood
-  - type: FloorTile
-    outputs:
-      - Plating
-      - FloorWoodTile
-  - type: Stack
-    stackType: FloorTileWoodPattern
 
 - type: entity
   name: steel maint floor

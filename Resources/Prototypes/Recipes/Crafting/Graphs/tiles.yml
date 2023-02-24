@@ -110,3 +110,19 @@
               amount: 1
     - node: silvertile
       entity: FloorTileItemSilver
+
+- type: constructionGraph
+  id: TileMosaicWood
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: mosaicwoodtile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: WoodPlank
+              amount: 1
+    - node: mosaicwoodtile
+      entity: FloorTileItemMosaicWood

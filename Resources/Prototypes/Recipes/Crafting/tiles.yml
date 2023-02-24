@@ -77,6 +77,17 @@
   icon: { sprite: Objects/Tiles/tile.rsi, state: silver }
   objectType: Item
 
+- type: construction
+  name: mosaic wood tile
+  id: TileMosaicWood
+  graph: TileMosaicWood
+  startNode: start
+  targetNode: mosaicwoodtile
+  category: construction-category-tiles
+  description: "Four mosaic wood floor tiles."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: mosaicwood }
+  objectType: Item
+
 #   objectType: Item
 # - type: construction
 #   name: techmaint floor

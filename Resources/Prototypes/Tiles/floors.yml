@@ -188,6 +188,25 @@
   heatCapacity: 10000
 
 - type: tile
+  id: FloorMosaicWood
+  name: tiles-mosaic-wood
+  sprite: /Textures/Tiles/mosaic_wood.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurfs:
+  - Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepWood
+  barestepSounds:
+    collection: BarestepWood
+  friction: 0.30
+  itemDrop: FloorTileItemMosaicWood
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
   id: FloorWhite
   name: tiles-white-floor
   sprite: /Textures/Tiles/white.png
@@ -1411,24 +1430,5 @@
     collection: FootstepHull
   friction: 0.30
   itemDrop: FloorTileItemGratingMaint
-  thermalConductivity: 0.04
-  heatCapacity: 10000
-
-- type: tile
-  id: FloorWoodTile
-  name: tiles-wood2
-  sprite: /Textures/Tiles/wood_tile.png
-  variants: 4
-  placementVariants: [0, 1, 2, 3]
-  baseTurfs:
-  - Plating
-  isSubfloor: false
-  canCrowbar: true
-  footstepSounds:
-    collection: FootstepWood
-  barestepSounds:
-    collection: BarestepWood
-  friction: 0.30
-  itemDrop: FloorTileItemWoodPattern
   thermalConductivity: 0.04
   heatCapacity: 10000
