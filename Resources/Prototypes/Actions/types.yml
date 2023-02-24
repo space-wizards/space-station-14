@@ -39,7 +39,7 @@
   description: activate-micro-bomb-action-description
   checkCanInteract: false
   itemIconStyle: BigAction
-  priority: -21
+  priority: -20
   icon:
     sprite: Actions/Implants/implants.rsi
     state: explosive
@@ -52,7 +52,7 @@
   charges: 3
   checkCanInteract: false
   itemIconStyle: BigAction
-  priority: -22
+  priority: -20
   icon:
     sprite: Actions/Implants/implants.rsi
     state: freedom
