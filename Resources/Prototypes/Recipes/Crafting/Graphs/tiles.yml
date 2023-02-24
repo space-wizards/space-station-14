@@ -78,3 +78,20 @@
               amount: 1
     - node: metaldiamondtile
       entity: FloorTileItemMetalDiamond
+
+- type: constructionGraph
+  id: TileGold
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: goldtile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Gold
+              amount: 1
+    - node: goldtile
+      entity: FloorTileItemGold
+

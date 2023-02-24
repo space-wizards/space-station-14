@@ -54,6 +54,19 @@
   description: "Four metal diamond tiles."
   icon: { sprite: Objects/Tiles/tile.rsi, state: metaldiamond }
   objectType: Item
+
+- type: construction
+  name: gold tile
+  id: TileGold
+  graph: TileGold
+  startNode: start
+  targetNode: goldtile
+  category: construction-category-tiles
+  description: "Four gold floor tiles."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: gold }
+  objectType: Item
+
+#   objectType: Item
 # - type: construction
 #   name: techmaint floor
 #   id: tileTechmaint
@@ -96,17 +109,6 @@
 #   category: construction-category-tiles
 #   description: "A piece of green-circuit flooring."
 #   icon: { sprite: Objects/Tiles/tile.rsi, state: gcircuit }
-#   objectType: Item
-#
-# - type: construction
-#   name: gold floor
-#   id: tileGold
-#   graph: tileGold
-#   startNode: start
-#   targetNode: goldtile
-#   category: construction-category-tiles
-#   description: "A piece of gold flooring."
-#   icon: { sprite: Objects/Tiles/tile.rsi, state: gold }
 #   objectType: Item
 #
 # - type: construction

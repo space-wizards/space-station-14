@@ -998,11 +998,10 @@
   thermalConductivity: 0.04
   heatCapacity: 10000
 
-
 # Materials
 - type: tile
   id: FloorGold
-  name: tiles-gold-tile
+  name: tiles-gold-floor
   sprite: /Textures/Tiles/gold.png
   baseTurfs:
   - Plating

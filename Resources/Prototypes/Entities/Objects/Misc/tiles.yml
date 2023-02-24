@@ -601,7 +601,7 @@
 
 # Materials
 - type: entity
-  name: gold floor
+  name: gold tile
   parent: FloorTileItemBase
   id: FloorTileItemGold
   components:
@@ -615,6 +615,9 @@
       - FloorGold
   - type: Stack
     stackType: FloorTileGold
+  - type: Construction
+    graph: TileGold
+    node: goldtile
 
 - type: entity
   name: silver tile
