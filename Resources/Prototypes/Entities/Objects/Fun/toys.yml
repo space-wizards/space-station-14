@@ -282,6 +282,16 @@
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Voice/Vox/shriek1.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieAtmosian
+  name: atmosian plushie
+  description: An adorable stuffed toy that resembles a brave atmosian. Unfortunately, he won't fix those depressurizations for you.
+  components:
+  - type: Sprite
+    state: plushie_atmosian
+
 ## Figurines
 
 - type: entity
