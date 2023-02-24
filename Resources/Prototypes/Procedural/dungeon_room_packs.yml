@@ -31,9 +31,6 @@
 
 # Rooms
 # Large
-# N/A
-
-# Large
 - type: dungeonRoom
   id: Test17x5
   size: 17,5
