@@ -163,7 +163,7 @@ namespace Content.Server.Administration.Commands
 
             if (player is null)
             {
-                Logger.ErrorS("admin.notes", "While creating a server ban, player was null. A note could not be added.");
+                Logger.WarningS("admin.notes", "While creating a server ban, player was null. A note could not be added.");
                 return;
             }
             await adminNotesManager.AddNote(player, targetUid, NoteType.Note, banMessage.ToString(), severity, false, null);

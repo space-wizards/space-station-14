@@ -201,7 +201,7 @@ public sealed class RoleBanManager
 
         if (player is null)
         {
-            Logger.ErrorS("admin.notes", "While creating a role ban, player was null. A note could not be added.");
+            Logger.WarningS("admin.notes", "While creating a role ban, player was null. A note could not be added.");
             return;
         }
         await _adminNotesManager.AddNote(player, targetUid, NoteType.Note, banMessage.ToString(), severity, false, null);

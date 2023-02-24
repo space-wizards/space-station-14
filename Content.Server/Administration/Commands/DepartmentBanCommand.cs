@@ -110,7 +110,7 @@ public sealed class DepartmentBanCommand : IConsoleCommand
 
         if (shell.Player is not IPlayerSession player)
         {
-            Logger.ErrorS("admin.notes", "While creating a role ban, player was null. A note could not be added.");
+            Logger.WarningS("admin.notes", "While creating a department ban, player was null. A note could not be added.");
             return;
         }
 
