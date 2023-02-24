@@ -333,8 +333,6 @@ public sealed class NewDungeonSystem : EntitySystem
                 }
             }
 
-            continue;
-
             // Actual spawn cud here.
             // Pickout the room pack template to get the room dimensions we need.
             // TODO: Need to be able to load entities on top of other entities but das a lot of effo

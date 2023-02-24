@@ -4,7 +4,8 @@
   roomPacks:
     - -8,0,9,5
     - -2,6,3,11
-    - -8,12,9,17
+    # Offset to the first one
+    - -2,12,15,17
     - -2,18,3,35
     - -2,36,3,53
     - -20,18,-3,35
@@ -99,6 +100,19 @@
     - 0,7,17,10
     - 0,11,5,16
     - 6,11,11,16
+
+# Corridor from botleft to topright with 3 rooms in top left
+- type: dungeonRoomPack
+  id: LargeArea5
+  size: 17,17
+  rooms:
+    # Corridor (with fat bot-left)
+    - 0,0,5,5
+    - 5,1,16,4
+    - 13,4,16,17
+    # Rooms (5x7)
+    - 7,5,12,12
+    - 1,6,6,13
 
 # Medium
 # Whole area room
