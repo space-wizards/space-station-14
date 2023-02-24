@@ -1,10 +1,12 @@
-﻿using System.Collections.Immutable;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using Content.Server.Administration.Notes;
 using Content.Server.Database;
+using Content.Shared.Database;
 using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Console;
@@ -20,6 +22,7 @@ public sealed class RoleBanManager
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IPlayerLocator _playerLocator = default!;
+    [Dependency] private readonly IAdminNotesManager _adminNotesManager = default!;
 
     private const string JobPrefix = "Job:";
 
@@ -98,7 +101,7 @@ public sealed class RoleBanManager
     }
 
     #region Job Bans
-    public async void CreateJobBan(IConsoleShell shell, string target, string job, string reason, uint minutes)
+    public async void CreateJobBan(IConsoleShell shell, string target, string job, string reason, uint minutes, NoteSeverity severity, bool addNote = true)
     {
         if (!_prototypeManager.TryIndex(job, out JobPrototype? _))
         {
@@ -107,7 +110,7 @@ public sealed class RoleBanManager
         }
 
         job = string.Concat(JobPrefix, job);
-        CreateRoleBan(shell, target, job, reason, minutes);
+        CreateRoleBan(shell, target, job, reason, minutes, severity, addNote);
     }
 
     public HashSet<string>? GetJobBans(NetUserId playerUserId)
@@ -122,7 +125,7 @@ public sealed class RoleBanManager
     #endregion
 
     #region Commands
-    private async void CreateRoleBan(IConsoleShell shell, string target, string role, string reason, uint minutes)
+    private async void CreateRoleBan(IConsoleShell shell, string target, string role, string reason, uint minutes, NoteSeverity severity, bool addNote = true)
     {
         var located = await _playerLocator.LookupIdByNameOrIdAsync(target);
         if (located == null)
@@ -173,6 +176,35 @@ public sealed class RoleBanManager
 
         var length = expires == null ? Loc.GetString("cmd-roleban-inf") : Loc.GetString("cmd-roleban-until", ("expires", expires));
         shell.WriteLine(Loc.GetString("cmd-roleban-success", ("target", target), ("role", role), ("reason", reason), ("length", length)));
+
+        if (!addNote || located.LastAddress is null)
+            return;
+
+        var banMessage = new StringBuilder($"Banned from {role} ");
+        if (minutes == 0)
+        {
+            banMessage.Append("permanently");
+        }
+        else
+        {
+            var banLength = TimeSpan.FromMinutes(minutes);
+            if (banLength.Days > 0)
+                banMessage.Append($"{banLength.TotalDays} days");
+            else if (banLength.Hours > 0)
+                banMessage.Append($"{banLength.TotalHours} hours");
+            else
+                banMessage.Append($"{minutes} minutes");
+        }
+
+        banMessage.Append(" - ");
+        banMessage.Append(reason);
+
+        if (player is null)
+        {
+            Logger.ErrorS("admin.notes", "While creating a role ban, player was null. A note could not be added.");
+            return;
+        }
+        await _adminNotesManager.AddNote(player, targetUid, NoteType.Note, banMessage.ToString(), severity, false, null);
     }
     #endregion
 }

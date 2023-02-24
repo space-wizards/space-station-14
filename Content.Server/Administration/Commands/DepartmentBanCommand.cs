@@ -1,6 +1,10 @@
+using System.Text;
 using Content.Server.Administration.Managers;
+using Content.Server.Administration.Notes;
 using Content.Shared.Administration;
+using Content.Shared.Database;
 using Content.Shared.Roles;
+using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 
@@ -19,6 +23,7 @@ public sealed class DepartmentBanCommand : IConsoleCommand
         string department;
         string reason;
         uint minutes;
+        var severity = NoteSeverity.Medium;
 
         switch (args.Length)
         {
@@ -40,6 +45,24 @@ public sealed class DepartmentBanCommand : IConsoleCommand
                 }
 
                 break;
+            case 5:
+                target = args[0];
+                department = args[1];
+                reason = args[2];
+
+                if (!uint.TryParse(args[3], out minutes))
+                {
+                    shell.WriteError(Loc.GetString("cmd-roleban-minutes-parse", ("time", args[3]), ("help", Help)));
+                    return;
+                }
+
+                if (!Enum.TryParse(args[4], ignoreCase: true, out severity))
+                {
+                    shell.WriteLine(Loc.GetString("cmd-roleban-severity-parse", ("severity", args[4]), ("help", Help)));
+                    return;
+                }
+
+                break;
             default:
                 shell.WriteError(Loc.GetString("cmd-roleban-arg-count"));
                 shell.WriteLine(Help);
@@ -55,10 +78,43 @@ public sealed class DepartmentBanCommand : IConsoleCommand
 
         var banManager = IoCManager.Resolve<RoleBanManager>();
 
+        // I know this code is horrible. This is temporary, I promise.
         foreach (var job in departmentProto.Roles)
         {
-            banManager.CreateJobBan(shell, target, job, reason, minutes);
+            banManager.CreateJobBan(shell, target, job, reason, minutes, severity, false);
         }
+
+        var playerLocator = IoCManager.Resolve<IPlayerLocator>();
+        var located = await playerLocator.LookupIdByNameOrIdAsync(target);
+        if (located?.LastAddress is null)
+            return;
+        var adminNotesManager = IoCManager.Resolve<IAdminNotesManager>();
+        var banMessage = new StringBuilder($"Banned from {department} ");
+        if (minutes == 0)
+        {
+            banMessage.Append("permanently");
+        }
+        else
+        {
+            var banLength = TimeSpan.FromMinutes(minutes);
+            if (banLength.Days > 0)
+                banMessage.Append($"{banLength.TotalDays} days");
+            else if (banLength.Hours > 0)
+                banMessage.Append($"{banLength.TotalHours} hours");
+            else
+                banMessage.Append($"{minutes} minutes");
+        }
+
+        banMessage.Append(" - ");
+        banMessage.Append(reason);
+
+        if (shell.Player is not IPlayerSession player)
+        {
+            Logger.ErrorS("admin.notes", "While creating a role ban, player was null. A note could not be added.");
+            return;
+        }
+
+        await adminNotesManager.AddNote(player, located.UserId, NoteType.Note, banMessage.ToString(), severity, false, null);
     }
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -70,6 +126,14 @@ public sealed class DepartmentBanCommand : IConsoleCommand
             new("10080", Loc.GetString("cmd-roleban-hint-duration-3")),
         };
 
+        var severities = new CompletionOption[]
+        {
+            new("none", Loc.GetString("admin-note-editor-severity-none")),
+            new("minor", Loc.GetString("admin-note-editor-severity-low")),
+            new("medium", Loc.GetString("admin-note-editor-severity-medium")),
+            new("high", Loc.GetString("admin-note-editor-severity-high")),
+        };
+
         return args.Length switch
         {
             1 => CompletionResult.FromHintOptions(CompletionHelper.SessionNames(),
@@ -78,6 +142,7 @@ public sealed class DepartmentBanCommand : IConsoleCommand
                 Loc.GetString("cmd-roleban-hint-2")),
             3 => CompletionResult.FromHint(Loc.GetString("cmd-roleban-hint-3")),
             4 => CompletionResult.FromHintOptions(durOpts, Loc.GetString("cmd-roleban-hint-4")),
+            5 => CompletionResult.FromHintOptions(severities, Loc.GetString("cmd-roleban-hint-5")),
             _ => CompletionResult.Empty
         };
     }

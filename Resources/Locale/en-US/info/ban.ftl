@@ -3,9 +3,13 @@ cmd-ban-desc = Bans somebody
 cmd-ban-help = Usage: {$Command} <name or user ID> <reason> [duration in minutes, leave out or 0 for permanent ban]
 cmd-ban-player = Unable to find a player with that name.
 cmd-ban-self = You can't ban yourself!
+cmd-ban-invalid-minutes = ${minutes} is not a valid amount of minutes!
+cmd-ban-invalid-severity = ${severity} is not a valid severity!
+cmd-ban-invalid-arguments = Invalid amount of arguments
 cmd-ban-hint = <name/user ID>
 cmd-ban-hint-reason = <reason>
 cmd-ban-hint-duration = [duration]
+cmd-ban-hint-severity = [severity]
 
 cmd-ban-hint-duration-1 = Permanent
 cmd-ban-hint-duration-2 = 1 day

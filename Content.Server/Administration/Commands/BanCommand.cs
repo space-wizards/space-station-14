@@ -2,8 +2,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using Content.Server.Administration.Notes;
 using Content.Server.Database;
 using Content.Shared.Administration;
+using Content.Shared.Database;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 
@@ -23,10 +25,12 @@ namespace Content.Server.Administration.Commands
             var plyMgr = IoCManager.Resolve<IPlayerManager>();
             var locator = IoCManager.Resolve<IPlayerLocator>();
             var dbMan = IoCManager.Resolve<IServerDbManager>();
+            var adminNotesManager = IoCManager.Resolve<IAdminNotesManager>();
 
             string target;
             string reason;
             uint minutes;
+            var severity = NoteSeverity.High;
 
             switch (args.Length)
             {
@@ -41,13 +45,34 @@ namespace Content.Server.Administration.Commands
 
                     if (!uint.TryParse(args[2], out minutes))
                     {
-                        shell.WriteLine($"{args[2]} is not a valid amount of minutes.\n{Help}");
+                        shell.WriteLine(Loc.GetString("cmd-ban-invalid-minutes", ("minutes", args[2])));
+                        shell.WriteLine(Help);
+                        return;
+                    }
+
+                    break;
+                case 4:
+                    target = args[0];
+                    reason = args[1];
+
+                    if (!uint.TryParse(args[2], out minutes))
+                    {
+                        shell.WriteLine(Loc.GetString("cmd-ban-invalid-minutes", ("minutes", args[2])));
+                        shell.WriteLine(Help);
+                        return;
+                    }
+
+                    if (!Enum.TryParse(args[3], ignoreCase: true, out severity))
+                    {
+                        shell.WriteLine(Loc.GetString("cmd-ban-invalid-severity", ("severity", args[3])));
+                        shell.WriteLine(Help);
                         return;
                     }
 
                     break;
                 default:
-                    shell.WriteLine($"Invalid amount of arguments.{Help}");
+                    shell.WriteLine(Loc.GetString("cmd-ban-invalid-arguments"));
+                    shell.WriteLine(Help);
                     return;
             }
 
@@ -100,8 +125,8 @@ namespace Content.Server.Administration.Commands
 
             var response = new StringBuilder($"Banned {target} with reason \"{reason}\"");
 
-            response.Append(expires == null ?
-                " permanently."
+            response.Append(expires == null
+                ? " permanently."
                 : $" until {expires}");
 
             shell.WriteLine(response.ToString());
@@ -110,6 +135,38 @@ namespace Content.Server.Administration.Commands
             {
                 targetPlayer.ConnectedClient.Disconnect(banDef.DisconnectMessage);
             }
+
+            // Without this the note foreign key constraint fails. You can ban player who have never before connected,
+            // but you can't note them. Neat!
+            if (located.LastAddress == null)
+                return;
+
+            var banMessage = new StringBuilder("Banned from the server ");
+            if (minutes == 0)
+            {
+                banMessage.Append("permanently");
+            }
+            else
+            {
+                banMessage.Append("for ");
+                var banLength = TimeSpan.FromMinutes(minutes);
+                if (banLength.Days > 0)
+                    banMessage.Append($"{banLength.TotalDays} days");
+                else if (banLength.Hours > 0)
+                    banMessage.Append($"{banLength.TotalHours} hours");
+                else
+                    banMessage.Append($"{minutes} minutes");
+            }
+
+            banMessage.Append(" - ");
+            banMessage.Append(reason);
+
+            if (player is null)
+            {
+                Logger.ErrorS("admin.notes", "While creating a server ban, player was null. A note could not be added.");
+                return;
+            }
+            await adminNotesManager.AddNote(player, targetUid, NoteType.Note, banMessage.ToString(), severity, false, null);
         }
 
         public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -137,6 +194,19 @@ namespace Content.Server.Administration.Commands
                 };
 
                 return CompletionResult.FromHintOptions(durations, Loc.GetString("cmd-ban-hint-duration"));
+            }
+
+            if (args.Length == 4)
+            {
+                var severities = new CompletionOption[]
+                {
+                    new("none", Loc.GetString("admin-note-editor-severity-none")),
+                    new("minor", Loc.GetString("admin-note-editor-severity-low")),
+                    new("medium", Loc.GetString("admin-note-editor-severity-medium")),
+                    new("high", Loc.GetString("admin-note-editor-severity-high")),
+                };
+
+                return CompletionResult.FromHintOptions(severities, Loc.GetString("cmd-ban-hint-severity"));
             }
 
             return CompletionResult.Empty;
