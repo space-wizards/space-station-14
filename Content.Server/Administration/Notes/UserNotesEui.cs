@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using Content.Server.EUI;
 using Content.Shared.Administration.Notes;
+using Content.Shared.CCVar;
 using Content.Shared.Eui;
-using Robust.Shared;
 using Robust.Shared.Configuration;
 using static Content.Shared.Administration.Notes.UserNotesEuiMsg;
 
@@ -17,7 +17,7 @@ public sealed class UserNotesEui : BaseEui
     public UserNotesEui()
     {
         IoCManager.InjectDependencies(this);
-        _seeOwnNotes = _cfg.GetCVar(CVars.SeeOwnNotes);
+        _seeOwnNotes = _cfg.GetCVar(CCVars.SeeOwnNotes);
 
         if (!_seeOwnNotes)
         {

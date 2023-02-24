@@ -6,6 +6,7 @@ using Content.Server.EUI;
 using Content.Server.GameTicking;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Notes;
+using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Players.PlayTimeTracking;
 using Robust.Server.Player;
@@ -225,7 +226,7 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
 
     public async Task<List<AdminNote>> GetVisibleNotes(Guid player)
     {
-        var canSeeOwnNotes = _config.GetCVar(CVars.SeeOwnNotes);
+        var canSeeOwnNotes = _config.GetCVar(CCVars.SeeOwnNotes);
         if (!canSeeOwnNotes)
         {
             _sawmill.Warning($"Someone tried to call GetVisibleNotes for {player} when see_own_notes was false");

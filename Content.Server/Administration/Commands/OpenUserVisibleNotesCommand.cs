@@ -1,7 +1,7 @@
 using Content.Server.Administration.Notes;
 using Content.Shared.Administration;
+using Content.Shared.CCVar;
 using Robust.Server.Player;
-using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 
@@ -19,7 +19,7 @@ public sealed class OpenUserVisibleNotesCommand : IConsoleCommand
 
     public async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (!_configuration.GetCVar(CVars.SeeOwnNotes))
+        if (!_configuration.GetCVar(CCVars.SeeOwnNotes))
         {
             shell.WriteError(Loc.GetString("admin-remarks-command-error"));
             return;
