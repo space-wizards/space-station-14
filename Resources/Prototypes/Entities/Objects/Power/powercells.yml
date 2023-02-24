@@ -68,13 +68,17 @@
   suffix: Empty
   parent: PowerCellSmall
   components:
-  - type: Battery
-    maxCharge: 360
-    startingCharge: 0
   - type: Sprite
     layers:
       - map: [ "enum.PowerCellVisualLayers.Base" ]
         state: small
+      - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+        state: o2
+        shader: unshaded
+        visible: false
+  - type: Battery
+    maxCharge: 360
+    startingCharge: 0
 
 - type: entity
   name: medium-capacity power cell
@@ -99,13 +103,17 @@
   suffix: Empty
   parent: PowerCellMedium
   components:
-  - type: Battery
-    maxCharge: 720
-    startingCharge: 0
   - type: Sprite
     layers:
       - map: [ "enum.PowerCellVisualLayers.Base" ]
         state: medium
+      - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+        state: o2
+        shader: unshaded
+        visible: false
+  - type: Battery
+    maxCharge: 720
+    startingCharge: 0
 
 - type: entity
   name: high-capacity power cell
@@ -130,13 +138,17 @@
   suffix: Empty
   parent: PowerCellHigh
   components:
-  - type: Battery
-    maxCharge: 1080
-    startingCharge: 0
   - type: Sprite
     layers:
       - map: [ "enum.PowerCellVisualLayers.Base" ]
         state: high
+      - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+        state: o2
+        shader: unshaded
+        visible: false
+  - type: Battery
+    maxCharge: 1080
+    startingCharge: 0
 
 - type: entity
   name: hyper-capacity power cell
@@ -161,13 +173,17 @@
   suffix: Empty
   parent: PowerCellHyper
   components:
-  - type: Battery
-    maxCharge: 1800
-    startingCharge: 0
   - type: Sprite
     layers:
       - map: [ "enum.PowerCellVisualLayers.Base" ]
         state: hyper
+      - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+        state: o2
+        shader: unshaded
+        visible: false
+  - type: Battery
+    maxCharge: 1800
+    startingCharge: 0
 
 - type: entity
   name: small microreactor cell
