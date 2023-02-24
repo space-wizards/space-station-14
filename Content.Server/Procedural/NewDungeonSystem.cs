@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Decals;
 using Content.Shared.Decals;
 using Content.Shared.Procedural;
@@ -75,6 +76,7 @@ public sealed class NewDungeonSystem : EntitySystem
 
     public Dungeon GetRoomPackDungeon(DungeonPresetPrototype gen, EntityUid gridUid, MapGridComponent grid, int seed)
     {
+        Logger.Info($"Generating dungeon for seed {seed}");
         var dungeonTransform = Matrix3.CreateTranslation(Vector2.Zero);
         var random = new Random(seed + 256);
         // TODO: API for this
@@ -99,15 +101,17 @@ public sealed class NewDungeonSystem : EntitySystem
                     for (var y = room.Bottom - 1; y <= room.Top; y++)
                     {
                         // No interior nodes
-                        if (x != -1 && x != pack.Size.X &&
-                            y != -1 && y != pack.Size.Y)
+                        if (x != room.Left - 1 &&
+                            x != room.Right &&
+                            y != room.Bottom - 1 &&
+                            y != room.Top)
                         {
                             continue;
                         }
 
                         // No corners
-                        if (x == -1 && (y == -1 || y == pack.Size.Y) ||
-                            x == pack.Size.X && (y == -1 || y == pack.Size.Y))
+                        if (x == room.Left - 1 && (y == room.Bottom - 1 || y == room.Top) ||
+                            x == room.Right && (y == room.Bottom - 1 || y == room.Top))
                         {
                             continue;
                         }
@@ -321,16 +325,41 @@ public sealed class NewDungeonSystem : EntitySystem
                 var overlap = new HashSet<Vector2i>(chosenExternal);
                 overlap.IntersectWith(neighborExternal);
 
-                if (neighborExternal.Count == 0)
+                if (overlap.Count == 0)
                     continue;
 
+                // TODO: Get all of the room areas sorted
+                // then, work out room connections, then MST of rooms, then do conns
+
                 // TODO: Smarter airlock placement
-                // Take the middle-most tile and then choose either 1x1 or 1x3
+                // Spawn the airlock offset to an edge by at least 1 and do a 3x3 if possible
+
+                // TODO: Need this for room spawning too you goob.
+                // TODO: Rotated room variants I think
+                var center = Vector2.Zero;
+
                 foreach (var node in overlap)
                 {
-                    grid.SetTile(node, new Tile(_tileDefManager["FloorSteel"].TileId));
-                    Spawn("AirlockGlass", grid.GridTileToLocal(node));
+                    center += (Vector2) node + grid.TileSize / 2f;
                 }
+
+                center /= overlap.Count;
+                var closest = overlap.First();
+                var closestDistance = ((Vector2) closest + grid.TileSize / 2f - center).LengthSquared;
+
+                foreach (var node in overlap)
+                {
+                    var distance = ((Vector2) node + grid.TileSize / 2f - center).LengthSquared;
+
+                    if (distance >= closestDistance)
+                        continue;
+
+                    closest = node;
+                    closestDistance = distance;
+                }
+
+                grid.SetTile(closest, new Tile(_tileDefManager["FloorSteel"].TileId));
+                Spawn("AirlockGlass", grid.GridTileToLocal(closest));
             }
 
             // Actual spawn cud here.
