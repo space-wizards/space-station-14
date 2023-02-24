@@ -460,3 +460,5 @@ cmd-replaystop-not-recording = Not currently recording a replay.
 cmd-replaystats-desc = Displays information about the current replay recording.
 cmd-replaystats-help = Usage: replaystats
 cmd-replaystats-result = Duration: { $time } min, Ticks: { $ticks }, Size: { $size } mb, rate: { $rate } mb/min.
+cmd-dump_netserializer_type_map-desc = Dump NetSerializer's type map and serializer hash.
+cmd-dump_netserializer_type_map-help = Usage: dump_netserializer_type_map
