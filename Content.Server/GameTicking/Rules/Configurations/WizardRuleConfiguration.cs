@@ -46,8 +46,11 @@ public sealed class WizardRuleConfiguration : GameRuleConfiguration
     [DataField("wizardLastNames", customTypeSerializer: typeof(PrototypeIdSerializer<DatasetPrototype>))]
     public string WizardLastNames = "names_wizard_last";
 
+    //<summary>
+    //    Whether or not killing all of the wizards will immidiately end the round
+    //</summary>
     [DataField("endsRound")]
-    public bool EndsRound = true;
+    public bool EndsRound = false;
 
     [DataField("shuttleMap", customTypeSerializer: typeof(ResourcePathSerializer))]
     public ResourcePath? WizardShuttleMap = new("/Maps/Shuttles/wizard.yml");

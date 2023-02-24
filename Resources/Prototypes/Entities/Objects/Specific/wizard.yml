@@ -31,13 +31,13 @@
   suffix: Empty
   components:
   - type: Sprite
-    sprite: Objects/Devices/communication.rsi
+    sprite: Objects/Misc/books.rsi
     layers:
-    - state: old-radio
+    - state: book1
     netsync: false
   - type: Item
-    sprite: Objects/Devices/communication.rsi
-    heldPrefix: old-radio
+    sprite: Objects/Misc/books.rsi
+    heldPrefix: book1
   - type: UserInterface
     interfaces:
     - key: enum.StoreUiKey.Key
