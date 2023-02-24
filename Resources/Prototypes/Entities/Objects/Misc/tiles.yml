@@ -634,6 +634,9 @@
       - FloorSilver
   - type: Stack
     stackType: FloorTileSilver
+  - type: Construction
+    graph: TileSilver
+    node: silvertile
 
 # Circuits
 - type: entity

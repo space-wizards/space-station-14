@@ -1016,7 +1016,7 @@
 
 - type: tile
   id: FloorSilver
-  name: tiles-silver-tile
+  name: tiles-silver-floor
   sprite: /Textures/Tiles/silver.png
   baseTurfs:
   - Plating

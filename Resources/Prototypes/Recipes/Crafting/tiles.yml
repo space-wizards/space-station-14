@@ -66,6 +66,17 @@
   icon: { sprite: Objects/Tiles/tile.rsi, state: gold }
   objectType: Item
 
+- type: construction
+  name: silver tile
+  id: TileSilver
+  graph: TileSilver
+  startNode: start
+  targetNode: silvertile
+  category: construction-category-tiles
+  description: "Four silver floor tiles."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: silver }
+  objectType: Item
+
 #   objectType: Item
 # - type: construction
 #   name: techmaint floor

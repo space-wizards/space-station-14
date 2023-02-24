@@ -95,3 +95,18 @@
     - node: goldtile
       entity: FloorTileItemGold
 
+- type: constructionGraph
+  id: TileSilver
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: silvertile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Silver
+              amount: 1
+    - node: silvertile
+      entity: FloorTileItemSilver
