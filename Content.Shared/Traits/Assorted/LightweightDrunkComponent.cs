@@ -1,5 +1,4 @@
 using Robust.Shared.GameStates;
-using System.ComponentModel.DataAnnotations;
 
 namespace Content.Shared.Traits.Assorted;
 
