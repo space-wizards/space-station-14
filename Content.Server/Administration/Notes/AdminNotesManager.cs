@@ -190,7 +190,7 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
         _sawmill.Info(sb.ToString());
 
         var editedAt = DateTime.UtcNow;
-        await _db.EditAdminNote(noteId, message, severity, editedBy.UserId, editedAt);
+        await _db.EditAdminNote(noteId, message, severity, secret, editedBy.UserId, editedAt, expiryTime);
 
         var sharedNote = new SharedAdminNote(
             noteId,

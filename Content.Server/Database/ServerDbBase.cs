@@ -954,15 +954,17 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync();
         }
 
-        public async Task EditAdminNote(int id, string message, NoteSeverity severity, Guid editedBy, DateTime editedAt)
+        public async Task EditAdminNote(int id, string message, NoteSeverity severity, bool secret, Guid editedBy, DateTime editedAt, DateTime? expiryTime)
         {
             await using var db = await GetDb();
 
             var note = await db.DbContext.AdminNotes.Where(note => note.Id == id).SingleAsync();
             note.Message = message;
             note.NoteSeverity = severity;
+            note.Secret = secret;
             note.LastEditedById = editedBy;
             note.LastEditedAt = editedAt;
+            note.ExpiryTime = expiryTime;
 
             await db.DbContext.SaveChangesAsync();
         }
@@ -979,7 +981,6 @@ namespace Content.Server.Database
                           select note)
                 .Include(note => note.Round)
                 .Include(note => note.CreatedBy)
-                .Include(note => note.LastEditedBy)
                 .Include(note => note.Player)
                 .ToListAsync();
         }

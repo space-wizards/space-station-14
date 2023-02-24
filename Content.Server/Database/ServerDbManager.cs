@@ -224,7 +224,7 @@ namespace Content.Server.Database
         Task<List<AdminNote>> GetActiveWatchlists(Guid player);
         Task<List<AdminNote>> GetMessages(Guid player);
         Task DeleteAdminNote(int id, Guid deletedBy, DateTime deletedAt);
-        Task EditAdminNote(int id, string message, NoteSeverity severity, Guid editedBy, DateTime editedAt);
+        Task EditAdminNote(int id, string message, NoteSeverity severity, bool secret, Guid editedBy, DateTime editedAt, DateTime? expiryTime);
 
         #endregion
     }
@@ -647,10 +647,10 @@ namespace Content.Server.Database
             return _db.DeleteAdminNote(id, deletedBy, deletedAt);
         }
 
-        public Task EditAdminNote(int id, string message, NoteSeverity severity, Guid editedBy, DateTime editedAt)
+        public Task EditAdminNote(int id, string message, NoteSeverity severity, bool secret, Guid editedBy, DateTime editedAt, DateTime? expiryTime)
         {
             DbWriteOpsMetric.Inc();
-            return _db.EditAdminNote(id, message, severity, editedBy, editedAt);
+            return _db.EditAdminNote(id, message, severity, secret, editedBy, editedAt, expiryTime);
         }
 
         private DbContextOptions<PostgresServerDbContext> CreatePostgresOptions()
