@@ -595,7 +595,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("net.gasoverlaythresholds", 20);
 
         /*
-         * Admin stuff
+         * Admin
          */
 
         public static readonly CVarDef<bool> AdminAnnounceLogin =
@@ -603,6 +603,25 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> AdminAnnounceLogout =
             CVarDef.Create("admin.announce_logout", true, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Should users be able to see their own notes? Admins will be able to see and set notes regardless
+        /// </summary>
+        public static readonly CVarDef<bool> SeeOwnNotes =
+            CVarDef.Create("admin.see_own_notes", true, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
+
+        /// <summary>
+        /// The amount of days before the note starts fading. It will slowly lose opacity until it reaches stale. Set to 0 to disable.
+        /// </summary>
+        public static readonly CVarDef<double> NoteFreshDays =
+            CVarDef.Create("admin.note_fresh_days", 91.31055, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
+
+        /// <summary>
+        /// The amount of days before the note completely fades, and can only be seen by admins if they press "see more notes". Set to 0
+        /// if you want the note to immediately disappear without fading.
+        /// </summary>
+        public static readonly CVarDef<double> NoteStaleDays =
+            CVarDef.Create("admin.note_stale_days", 365.2422, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
 
         /*
          * Explosions
