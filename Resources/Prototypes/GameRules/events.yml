@@ -163,6 +163,23 @@
       path: /Audio/Announcements/attention.ogg
 
 - type: gameRule
+  id: SolarFlare
+  config: !type:SolarFlareEventRuleConfiguration
+    id: SolarFlare
+    weight: 10
+    startAnnouncement: station-event-solar-flare-start-announcement
+    endAnnouncement: station-event-solar-flare-end-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    minEndAfter: 120
+    maxEndAfter: 240
+    onlyJamHeadsets: true
+    affectedChannels:
+    - Common
+    - Service
+    lightBreakChance: 0.05
+
+- type: gameRule
   id: VentClog
   config:
     !type:StationEventRuleConfiguration
@@ -194,7 +211,7 @@
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
-    endAfter: 60    
+    endAfter: 60
 
 - type: gameRule
   id: ZombieOutbreak

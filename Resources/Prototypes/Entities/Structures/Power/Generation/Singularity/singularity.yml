@@ -45,7 +45,5 @@
     enabled: true
     radius: 10
   - type: Appearance
-    visuals:
-    - type: SingularityVisualizer
   - type: GuideHelp
     guides: [ Singularity, Power ]

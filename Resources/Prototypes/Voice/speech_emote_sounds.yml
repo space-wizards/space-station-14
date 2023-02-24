@@ -36,6 +36,16 @@
     params:
       variation: 0.125
 
+- type: emoteSounds
+  id: UnisexDiona
+  sounds:
+    Scream:
+      path: /Audio/Voice/Diona/diona_scream.ogg
+    Laugh:
+      collection: DionaLaugh
+  params:
+    variation: 0.125
+
 # body emotes
 - type: emoteSounds
   id: GeneralBodyEmotes
@@ -46,6 +56,16 @@
       collection: Snaps
       params:
         volume: -6
+
+- type: emoteSounds
+  id: DionaBodyEmotes
+  sounds:
+    Clap:
+      path: /Audio/Voice/Diona/diona_clap.ogg
+    Snap:
+      path: /Audio/Voice/Diona/diona_snap.ogg
+      params:
+        volume: -10
 
 # mobs
 - type: emoteSounds

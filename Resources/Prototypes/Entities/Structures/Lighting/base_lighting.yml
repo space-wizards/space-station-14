@@ -90,10 +90,9 @@
     receiveFrequencyId: SmartLight
   - type: ApcNetworkConnection
   - type: Appearance
-    visuals:
-    - type: PoweredLightVisualizer
-      blinkingSound:
-        path: "/Audio/Machines/light_tube_on.ogg"
+  - type: PoweredLightVisuals
+    blinkingSound:
+      path: "/Audio/Machines/light_tube_on.ogg"
   - type: SignalReceiver
     inputs:
       On: []
@@ -263,8 +262,7 @@
     receiveFrequencyId: SmartLight
   - type: ApcNetworkConnection
   - type: Appearance
-    visuals:
-    - type: PoweredLightVisualizer
+  - type: PoweredLightVisuals
   - type: SignalReceiver
     inputs:
       On: []
@@ -309,13 +307,16 @@
     sprite: Structures/Wallmounts/Lighting/emergency_light.rsi
     layers:
     - state: base
-      map: ["enum.EmergencyLightVisualLayers.Base"]
+      map: [ "enum.EmergencyLightVisualLayers.Base" ]
     - state: emergency_light_off
-      map: ["enum.EmergencyLightVisualLayers.Light"]
+      map: [ "enum.EmergencyLightVisualLayers.LightOff" ]
       color: "#FF4020"
+    - state: emergency_light_on
+      map: [ "enum.EmergencyLightVisualLayers.LightOn" ]
+      color: "#FF4020"
+      shader: "unshaded"
+      visible: false
   - type: Appearance
-    visuals:
-    - type: EmergencyLightVisualizer
   - type: AmbientSound
     sound:
       path: /Audio/Ambience/Objects/alarm.ogg

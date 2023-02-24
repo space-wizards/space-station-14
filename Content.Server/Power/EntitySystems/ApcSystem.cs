@@ -5,6 +5,7 @@ using Content.Server.Wires;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.APC;
+using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -88,11 +89,8 @@ namespace Content.Server.Power.EntitySystems
 
         private void OnEmagged(EntityUid uid, ApcComponent comp, ref GotEmaggedEvent args)
         {
-            if(!comp.Emagged)
-            {
-                comp.Emagged = true;
-                args.Handled = true;
-            }
+            // no fancy conditions
+            args.Handled = true;
         }
 
         public void UpdateApcState(EntityUid uid,
@@ -137,9 +135,12 @@ namespace Content.Server.Power.EntitySystems
             if (!Resolve(uid, ref apc, ref battery, ref ui))
                 return;
 
+            var netBattery = Comp<PowerNetworkBatteryComponent>(uid);
+            float power = netBattery is not null ? netBattery.CurrentSupply : 0f;
+
             if (_userInterfaceSystem.GetUiOrNull(uid, ApcUiKey.Key, ui) is { } bui)
             {
-                bui.SetState(new ApcBoundInterfaceState(apc.MainBreakerEnabled, apc.LastExternalState, battery.CurrentCharge / battery.MaxCharge));
+                bui.SetState(new ApcBoundInterfaceState(apc.MainBreakerEnabled, (int)MathF.Ceiling(power), apc.LastExternalState, battery.CurrentCharge / battery.MaxCharge));
             }
         }
 
@@ -147,7 +148,7 @@ namespace Content.Server.Power.EntitySystems
             ApcComponent? apc=null,
             BatteryComponent? battery=null)
         {
-            if (apc != null && apc.Emagged)
+            if (apc != null && HasComp<EmaggedComponent>(uid))
                 return ApcChargeState.Emag;
 
             if (!Resolve(uid, ref apc, ref battery))

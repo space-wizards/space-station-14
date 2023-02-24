@@ -127,7 +127,7 @@ public sealed partial class NPCSteeringSystem
                         // TODO: Validate we can damage it
                         if (destructibleQuery.HasComponent(ent))
                         {
-                            _melee.AttemptLightAttack(component.Owner, meleeWeapon, ent);
+                            _melee.AttemptLightAttack(component.Owner, component.Owner, meleeWeapon, ent);
                             break;
                         }
                     }

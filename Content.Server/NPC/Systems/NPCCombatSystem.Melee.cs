@@ -32,10 +32,10 @@ public sealed partial class NPCCombatSystem
             if (cdRemaining < TimeSpan.FromSeconds(1f / weapon.AttackRate) * 0.5f)
                 return;
 
-            if (!_physics.TryGetNearestPoints(uid, component.Target, out _, out var pointB))
+            if (!_physics.TryGetNearestPoints(uid, component.Target, out var pointA, out var pointB))
                 return;
 
-            var idealDistance = weapon.Range * 1.25f;
+            var idealDistance = weapon.Range * 1.5f;
             var obstacleDirection = pointB - args.WorldPosition;
             var obstacleDistance = obstacleDirection.Length;
 
@@ -95,17 +95,19 @@ public sealed partial class NPCCombatSystem
 
         foreach (var (comp, _) in EntityQuery<NPCMeleeCombatComponent, ActiveNPCComponent>())
         {
-            if (!combatQuery.TryGetComponent(comp.Owner, out var combat) || !combat.IsInCombatMode)
+            var uid = comp.Owner;
+
+            if (!combatQuery.TryGetComponent(uid, out var combat) || !combat.IsInCombatMode)
             {
-                RemComp<NPCMeleeCombatComponent>(comp.Owner);
+                RemComp<NPCMeleeCombatComponent>(uid);
                 continue;
             }
 
-            Attack(comp, curTime, physicsQuery, xformQuery);
+            Attack(uid, comp, curTime, physicsQuery, xformQuery);
         }
     }
 
-    private void Attack(NPCMeleeCombatComponent component, TimeSpan curTime, EntityQuery<PhysicsComponent> physicsQuery, EntityQuery<TransformComponent> xformQuery)
+    private void Attack(EntityUid uid, NPCMeleeCombatComponent component, TimeSpan curTime, EntityQuery<PhysicsComponent> physicsQuery, EntityQuery<TransformComponent> xformQuery)
     {
         component.Status = CombatStatus.Normal;
 
@@ -115,7 +117,7 @@ public sealed partial class NPCCombatSystem
             return;
         }
 
-        if (!xformQuery.TryGetComponent(component.Owner, out var xform) ||
+        if (!xformQuery.TryGetComponent(uid, out var xform) ||
             !xformQuery.TryGetComponent(component.Target, out var targetXform))
         {
             component.Status = CombatStatus.TargetUnreachable;
@@ -134,7 +136,7 @@ public sealed partial class NPCCombatSystem
             return;
         }
 
-        if (TryComp<NPCSteeringComponent>(component.Owner, out var steering) &&
+        if (TryComp<NPCSteeringComponent>(uid, out var steering) &&
             steering.Status == SteeringStatus.NoPath)
         {
             component.Status = CombatStatus.TargetUnreachable;
@@ -147,11 +149,11 @@ public sealed partial class NPCCombatSystem
             return;
         }
 
-        steering = EnsureComp<NPCSteeringComponent>(component.Owner);
+        steering = EnsureComp<NPCSteeringComponent>(uid);
         steering.Range = MathF.Max(0.2f, weapon.Range - 0.4f);
 
         // Gets unregistered on component shutdown.
-        _steering.TryRegister(component.Owner, new EntityCoordinates(component.Target, Vector2.Zero), steering);
+        _steering.TryRegister(uid, new EntityCoordinates(component.Target, Vector2.Zero), steering);
 
         if (weapon.NextAttack > curTime || !Enabled)
             return;
@@ -160,11 +162,11 @@ public sealed partial class NPCCombatSystem
             physicsQuery.TryGetComponent(component.Target, out var targetPhysics) &&
             targetPhysics.LinearVelocity.LengthSquared != 0f)
         {
-            _melee.AttemptLightAttackMiss(component.Owner, weapon, targetXform.Coordinates.Offset(_random.NextVector2(0.5f)));
+            _melee.AttemptLightAttackMiss(uid, component.Weapon, weapon, targetXform.Coordinates.Offset(_random.NextVector2(0.5f)));
         }
         else
         {
-            _melee.AttemptLightAttack(component.Owner, weapon, component.Target);
+            _melee.AttemptLightAttack(uid, component.Weapon, weapon, component.Target);
         }
     }
 }
