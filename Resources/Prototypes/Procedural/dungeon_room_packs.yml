@@ -33,27 +33,33 @@
 # Large
 # N/A
 
-# Medium
+# Large
 - type: dungeonRoom
   id: Test17x5
   size: 17,5
   path: /Maps/Dungeon/17x5.yml
-  connections:
-    - 8,0
-    - 16,2
-    - 8,4
-    - 0,2
+
+# Medium
+- type: dungeonRoom
+  id: Test11x5
+  size: 11,5
+  path: /Maps/Dungeon/11x5a.yml
+
+- type: dungeonRoom
+  id: Test7x5
+  size: 7,5
+  path: /Maps/Dungeon/7x5a.yml
 
 # Small
 - type: dungeonRoom
   id: Test5x5
   size: 5,5
   path: /Maps/Dungeon/5x5.yml
-  connections:
-    - 2,0
-    - 4,2
-    - 2,4
-    - 0,2
+
+- type: dungeonRoom
+  id: Test5x3
+  size: 5,3
+  path: /Maps/Dungeon/5x3a.yml
 
 # Room packs
 # Large

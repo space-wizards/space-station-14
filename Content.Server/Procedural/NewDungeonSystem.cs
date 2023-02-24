@@ -77,9 +77,13 @@ public sealed class NewDungeonSystem : EntitySystem
 
     public Dungeon GetRoomPackDungeon(DungeonPresetPrototype gen, EntityUid gridUid, MapGridComponent grid, int seed)
     {
+        // Naughty seeds
+        // 952532317 (no hook and top bit???)
+        // 200682996 (left is so fucking far)
+
         Logger.Info($"Generating dungeon for seed {seed}");
         var dungeonTransform = Matrix3.CreateTranslation(Vector2.Zero);
-        var random = new Random(seed + 256);
+        var random = new Random(seed);
         // TODO: API for this
         var roomPackProtos = new Dictionary<Vector2i, List<DungeonRoomPackPrototype>>();
         var externalNodes = new Dictionary<DungeonRoomPackPrototype, HashSet<Vector2i>>();
@@ -104,13 +108,6 @@ public sealed class NewDungeonSystem : EntitySystem
                     nodes.Add(index);
                 }
             }
-
-            // TODO: Determine internal room connections
-            // Don't worry about MST, do it later after we have all the chosen packs
-            // then work through all room connections and get minimal
-            // Can't we do this later actually?
-
-            // TODO: Make sure you support rollback in case you can't find a valid roompack for a certain thing.
         }
 
         var roomProtos = new Dictionary<Vector2i, List<DungeonRoomPrototype>>();
@@ -171,6 +168,8 @@ public sealed class NewDungeonSystem : EntitySystem
         var availablePacks = new List<DungeonRoomPackPrototype>();
         var chosenPacks = new DungeonRoomPackPrototype?[gen.RoomPacks.Count];
         var packTransforms = new Matrix3[gen.RoomPacks.Count];
+        // TODO: Shouldn't need this
+        var packRotations = new Angle[gen.RoomPacks.Count];
         var rotatedPackNodes = new HashSet<Vector2i>[gen.RoomPacks.Count];
 
         // Actually pick the room packs and rooms
@@ -256,8 +255,8 @@ public sealed class NewDungeonSystem : EntitySystem
                     }
 
                     // Use this pack
-                    // TODO: Fix rounding
                     packTransform = Matrix3.CreateTransform(bounds.Center, aRotation);
+                    packRotations[i] = aRotation;
                     rotatedPackNodes[i] = rotatedNodes;
                     pack = aPack;
                     break;
@@ -293,8 +292,12 @@ public sealed class NewDungeonSystem : EntitySystem
 
             foreach (var room in pack!.Rooms)
             {
-                var dRoom = (Box2i) transform.TransformBox(room);
+                // Rooms are at 0,0, need them offset from center
+                var offRoom = ((Box2) room).Translated(-pack.Size / 2f);
+
+                var dRoom = (Box2i) transform.TransformBox(offRoom);
                 rooms.Add(dRoom);
+                DebugTools.Assert(dRoom.Size.X * dRoom.Size.Y == room.Size.X * room.Size.Y);
                 var roomEdges = new HashSet<Vector2i>();
                 var rator = new Box2iEdgeEnumerator(dRoom, false);
 
@@ -332,30 +335,58 @@ public sealed class NewDungeonSystem : EntitySystem
                 if (flipp.Count == 0)
                     continue;
 
-                // Work out center tile
-                // Prune edge tiles if we have > 3
-                // Then we can just pick a random one to use for the airlock.
-                // TODO: Work out furthest 2 tiles
-                // TODO: Spawn either 1x1 or 3x1 airlock based on <some logic>
-                var center = Vector2.Zero;
+                // Spawn the edge airlocks
+                // Weight towards center of the group but not always.
 
-                foreach (var node in flipp)
+                // If there's 3 overlaps just do a 3x1
+                if (flipp.Count == 3)
                 {
-                    center += (Vector2) node + grid.TileSize / 2f;
+                    foreach (var node in flipp)
+                    {
+                        grid.SetTile(node, new Tile(_tileDefManager["FloorSteel"].TileId));
+                        Spawn("AirlockGlass", grid.GridTileToLocal(node));
+                    }
                 }
-
-                center /= flipp.Count;
-                Vector2i closestNode;
-                var closestDistance = float.MaxValue;
-                var nodeDistances = new List<Vector2i>(flipp);
-
-                nodeDistances.Sort((x, y) =>
-                    ((Vector2) y + grid.TileSize / 2f - center).LengthSquared.CompareTo(
-                        (Vector2) x + grid.TileSize / 2f - center.LengthSquared));
-
-                if (nodeDistances.Count > 3)
+                else
                 {
+                    // Pick a random one weighted towards the center
+                    var center = Vector2.Zero;
 
+                    foreach (var node in flipp)
+                    {
+                        center += (Vector2) node + grid.TileSize / 2f;
+                    }
+
+                    center /= flipp.Count;
+                    // Weight airlocks towards center more.
+                    var nodeDistances = new List<(Vector2i Node, float Distance)>(flipp.Count);
+
+                    foreach (var node in flipp)
+                    {
+                        nodeDistances.Add((node, ((Vector2) node + grid.TileSize / 2f - center).LengthSquared));
+                    }
+
+                    nodeDistances.Sort((x, y) => x.Distance.CompareTo(y.Distance));
+
+                    var weightMax = nodeDistances.Max(o => o.Distance);
+                    var weightSum = nodeDistances.Sum(o => (weightMax - o.Distance));
+                    var value = random.NextFloat() * weightSum;
+                    var width = 1;
+
+                    for (var i = 0; i < nodeDistances.Count; i++)
+                    {
+                        value -= (weightMax - nodeDistances[i].Distance);
+
+                        if (value < 0f)
+                        {
+                            width--;
+                            grid.SetTile(nodeDistances[i].Node, new Tile(_tileDefManager["FloorSteel"].TileId));
+                            Spawn("AirlockGlass", grid.GridTileToLocal(nodeDistances[i].Node));
+
+                            if (width == 0)
+                                break;
+                        }
+                    }
                 }
 
                 conns.Add(otherRoom);
@@ -370,6 +401,7 @@ public sealed class NewDungeonSystem : EntitySystem
         {
             var pack = chosenPacks[i]!;
             var packTransform = packTransforms[i];
+            var packRotation = packRotations[i];
 
             // Actual spawn cud here.
             // Pickout the room pack template to get the room dimensions we need.
@@ -379,7 +411,6 @@ public sealed class NewDungeonSystem : EntitySystem
             foreach (var roomSize in pack.Rooms)
             {
                 var roomDimensions = new Vector2i(roomSize.Width, roomSize.Height);
-                var roomCenter = roomDimensions / 2f;
                 Angle roomRotation = Angle.Zero;
                 Matrix3 matty;
 
@@ -440,8 +471,8 @@ public sealed class NewDungeonSystem : EntitySystem
                 // Load tiles
                 while (loadedEnumerator.MoveNext(out var tile))
                 {
-                    var tilePos = matty.Transform((Vector2) tile.Value.GridIndices + grid.TileSize / 2f - roomCenter);
-                    tiles.Add(((Vector2i) tilePos, tile.Value.Tile));
+                    var tilePos = matty.Transform((Vector2) tile.Value.GridIndices + grid.TileSize / 2f - roomDimensions / 2f);
+                    tiles.Add((tilePos.Floored(), tile.Value.Tile));
                 }
 
                 grid.SetTiles(tiles);
@@ -452,7 +483,7 @@ public sealed class NewDungeonSystem : EntitySystem
                 foreach (var ent in Transform(loadedEnts[0]).ChildEntities)
                 {
                     var childXform = xformQuery.GetComponent(ent);
-                    var childPos = matty.Transform(childXform.LocalPosition - roomCenter);
+                    var childPos = matty.Transform(childXform.LocalPosition - roomDimensions / 2f);
                     var anchored = childXform.Anchored;
                     _transform.SetCoordinates(childXform, new EntityCoordinates(gridUid, childPos));
 
@@ -471,14 +502,14 @@ public sealed class NewDungeonSystem : EntitySystem
                         {
                             // Offset by 0.5 because decals are offset from bot-left corner
                             // So we convert it to center of tile then convert it back again after transform.
-                            var position = matty.Transform(decal.Coordinates + 0.5f - roomCenter);
+                            var position = matty.Transform(decal.Coordinates + 0.5f - roomDimensions / 2f);
                             position -= 0.5f;
                             _decals.TryAddDecal(
                                 decal.Id,
                                 new EntityCoordinates(gridUid, position),
                                 out _,
                                 decal.Color,
-                                decal.Angle,
+                                decal.Angle + roomRotation + packRotation,
                                 decal.ZIndex,
                                 decal.Cleanable);
                         }
@@ -487,56 +518,40 @@ public sealed class NewDungeonSystem : EntitySystem
 
                 // Just in case cleanup the old grid.
                 Del(loadedEnts[0]);
-                // TODO: Spawn doors
+                Matrix3.Multiply(packTransform, dungeonTransform, out matty);
 
                 // Spawn wall outline
                 // - Tiles first
-                for (var x = -1; x <= roomSize.Width; x++)
+                var rator = new Box2iEdgeEnumerator(roomSize, true);
+
+                while (rator.MoveNext(out var index))
                 {
-                    for (var y = -1; y <= roomSize.Height; y++)
-                    {
-                        if (x != -1 && x != roomSize.Width &&
-                            y != -1 && y != roomSize.Height)
-                        {
-                            continue;
-                        }
+                    index = matty.Transform((Vector2) index + grid.TileSize / 2f - packCenter).Floored();
+                    var anchoredEnts = grid.GetAnchoredEntitiesEnumerator(index);
 
-                        var index = (Vector2i) matty.Transform(new Vector2(x, y) + grid.TileSize / 2f - roomCenter);
+                    // Occupied tile.
+                    if (anchoredEnts.MoveNext(out _))
+                        continue;
 
-                        var anchoredEnts = grid.GetAnchoredEntitiesEnumerator(index);
-
-                        // Occupied tile.
-                        if (anchoredEnts.MoveNext(out _))
-                            continue;
-
-                        tiles.Add((index, new Tile(_tileDefManager["FloorSteel"].TileId)));
-                    }
+                    tiles.Add((index, new Tile(_tileDefManager["FloorSteel"].TileId)));
                 }
 
                 grid.SetTiles(tiles);
                 tiles.Clear();
 
                 // Double iteration coz we bulk set tiles for speed.
-                for (var x = -1; x <= roomSize.Width; x++)
+                rator = new Box2iEdgeEnumerator(roomSize, true);
+
+                while (rator.MoveNext(out var index))
                 {
-                    for (var y = -1; y <= roomSize.Height; y++)
-                    {
-                        if (x != -1 && x != roomSize.Width &&
-                            y != -1 && y != roomSize.Height)
-                        {
-                            continue;
-                        }
+                    index = matty.Transform((Vector2) index + grid.TileSize / 2f - packCenter).Floored();
+                    var anchoredEnts = grid.GetAnchoredEntitiesEnumerator(index);
 
-                        var index = (Vector2i) matty.Transform(new Vector2(x, y) + grid.TileSize / 2f - roomCenter);
+                    // Occupied tile.
+                    if (anchoredEnts.MoveNext(out _))
+                        continue;
 
-                        var anchoredEnts = grid.GetAnchoredEntitiesEnumerator(index);
-
-                        // Occupied tile.
-                        if (anchoredEnts.MoveNext(out _))
-                            continue;
-
-                        Spawn("WallSolid", grid.GridTileToLocal(index));
-                    }
+                    Spawn("WallSolid", grid.GridTileToLocal(index));
                 }
             }
 
