@@ -3,8 +3,8 @@ wizard-description = The Space Wizard Federation has sent a representative to th
 
 wizard-welcome = You are a Wizard sent by the Space Wizard Federation to make the station a more magical place. Bring chaos to the station and try to make it back alive!
 
-wizard-eliminated = [color=green]Wizards Eliminated![/color]
-wizard-escaped = [color=crimson]The Wizards Escaped![/color]
+wizard-eliminated = [color=green]The Wizards were eliminated![/color]
+wizard-escaped = [color=crimson]The Wizards escaped![/color]
 
 wizard-list-start = The Wizards were:
 wizard-list-name = - [color=White]{$name}[/color] ([color=gray]{$user}[/color])

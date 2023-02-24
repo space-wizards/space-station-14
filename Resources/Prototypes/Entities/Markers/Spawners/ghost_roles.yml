@@ -85,7 +85,7 @@
     sprite: Markers/jobs.rsi
     layers:
       - state: green
-      - sprite: Structures/Wallmounts/signs.rsi
-        state: radiation
+      - sprite: Clothing/Head/Hats/wizardhat.rsi
+        state: icon
 
 
