@@ -57,7 +57,7 @@ public sealed partial class AdminNotesLinePopup : Popup
         if (!ConfirmingDelete)
         {
             ConfirmingDelete = true;
-            Task.Delay(3000).ContinueWith(_ => ResetDeleteButton()); // TODO: fix
+            // Task.Delay(3000).ContinueWith(_ => ResetDeleteButton()); // TODO: fix
             DeleteButton.Text = Loc.GetString("admin-notes-delete-confirm");
             DeleteButton.ModulateSelfOverride = Color.Red;
             return;

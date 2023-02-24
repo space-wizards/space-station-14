@@ -162,7 +162,7 @@ public sealed partial class NoteEdit : FancyWindow
             ConfirmingSubmit = true;
             SubmitButton.Text = Loc.GetString("admin-note-editor-submit-confirm");
             SubmitButton.ModulateSelfOverride = Color.Red;
-            Task.Delay(3000).ContinueWith(_ => ResetSubmitButton()); // TODO: fix
+            // Task.Delay(3000).ContinueWith(_ => ResetSubmitButton()); // TODO: fix
             return;
         }
 
