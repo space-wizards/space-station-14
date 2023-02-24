@@ -19,7 +19,8 @@ public abstract class SharedParacusiaSystem : EntitySystem
 
     private void GetCompState(EntityUid uid, ParacusiaComponent component, ref ComponentGetState args)
     {
-        args.State = new ParacusiaComponentState
+        args.State = new ParacusiaComponentState(component.MaxTimeBetweenIncidents, component.MinTimeBetweenIncidents,
+            component.MaxSoundDistance, component.Sounds)
         {
             MaxTimeBetweenIncidents = component.MaxTimeBetweenIncidents,
             MinTimeBetweenIncidents = component.MinTimeBetweenIncidents,
