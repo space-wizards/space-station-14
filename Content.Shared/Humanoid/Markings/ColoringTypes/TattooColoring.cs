@@ -7,8 +7,11 @@ public sealed class TattooColoring : LayerColoringType
 {
     public override Color? GetCleanColor(Color? skin, Color? eyes, MarkingSet markingSet)
     {
-        if (skin == null) return null;
-
+        if (skin == null)
+        {
+            return null;
+        }
+        
         var newColor = Color.ToHsv(skin.Value);
         newColor.Z = .40f;
 
