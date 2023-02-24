@@ -1,10 +1,4 @@
 Entries:
-- author: JustinTrotter
-  changes:
-  - {message: Overdrawing with a syringe no longer destroys the transferred solution,
-    type: Fix}
-  id: 2565
-  time: '2022-11-04T00:16:32.0000000+00:00'
 - author: ashtronaut
   changes:
   - {message: The Lobby's ready button now clearly states whether you are ready not.
@@ -2909,3 +2903,9 @@ Entries:
   - {message: Fixed entity sub menu (right-click menu), type: Fix}
   id: 3064
   time: '2023-02-24T00:27:15.0000000+00:00'
+- author: Menshin
+  changes:
+  - {message: Recent progress in atmos machines materials made heaters and freezers
+      connection pipes rotatable again., type: Fix}
+  id: 3065
+  time: '2023-02-24T01:33:34.0000000+00:00'
