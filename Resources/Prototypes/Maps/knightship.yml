@@ -1,0 +1,31 @@
+﻿- type: gameMap
+  id: Knightship
+  mapName: 'Knightship'
+  mapPath: /Maps/knightship.yml
+  minPlayers: 0
+  maxPlayers: 16
+  stations:
+    Knightship:
+      mapNameTemplate: '{0} Knightship {1}'
+      nameGenerator:
+        !type:NanotrasenNameGenerator
+        prefixCreator: '14'
+      overflowJobs:
+        - Passenger
+      availableJobs:
+        CargoTechnician: [ 1, 1 ]
+        Passenger: [ -1, -1 ]
+        Bartender: [ 1, 1 ]
+        Chef: [ 1, 1 ]
+        Captain: [ 1, 1 ]
+        HeadOfPersonnel: [ 1, 1 ]
+        ChiefEngineer: [ 1, 1 ]
+        StationEngineer: [ 1, 1 ]
+        ChiefMedicalOfficer: [ 1, 1 ]
+        Chemist: [ 1, 1 ]
+        ResearchDirector: [ 1, 1 ]
+        Scientist: [ 1, 1 ]
+        HeadOfSecurity: [ 1, 1 ]
+        Warden: [ 1, 1 ]
+        SalvageSpecialist: [ 1, 1 ]
+        Quartermaster: [ 1, 1 ]
