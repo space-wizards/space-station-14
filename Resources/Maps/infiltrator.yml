@@ -135,7 +135,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 679
+        uid: 238
     type: SignalReceiver
 - uid: 5
   type: WallPlastitanium
@@ -576,7 +576,8 @@ entities:
     type: Transform
 - uid: 73
   components:
-  - type: MetaData
+  - name: GX-13 Infiltrator
+    type: MetaData
   - pos: 0.64252126,4.1776605
     parent: invalid
     type: Transform
@@ -589,10 +590,10 @@ entities:
         tiles: FwAAARcAAAEXAAABFwAAAV4AAABeAAAAXgAAAF4AAABeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXAAACQAAAAF4AAABeAAAAXgAAAF4AAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFwAAAkAAAABeAAAAXgAAAF4AAABeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABcAAAFAAAAAXgAAAF4AAABeAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXAAAAXgAAAF4AAABeAAAAXgAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFwAAAV4AAABdAAAAXQAAAF0AAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABcAAANeAAAAXgAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeAAAAXgAAAF4AAABeAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFwAAAUAAAABbAAADXgAAAF4AAABeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABcAAAMXAAAAFwAAAFsAAANbAAABXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXAAAAQAAAAFsAAAADAAAAWwAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFwAAA0AAAABeAAAAAwAAAF4AAABeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAXgAAAF4AAABeAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeAAAAXgAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
       -1,-2:
         ind: -1,-2
-        tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF4AAABdAAAAXQAAAF0AAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF0AAABdAAAAXgAAAF4AAABeAAAAXQAAAF0AAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeAAAAXgAAAF4AAABeAAAAXgAAAF0AAABdAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAABcAAAMXAAABFwAAAV4AAABdAAAAXQAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF4AAAAXAAADXgAAABcAAABeAAAAXQAAAF0AAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeAAAAFwAAAV4AAAAXAAACXgAAAF4AAABeAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAABcAAAFeAAAAFwAAAUAAAABeAAAAXgAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF4AAAAXAAACXgAAABcAAANAAAAAXgAAAF4AAABeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeAAAAFwAAAhcAAAEXAAABQAAAAF4AAABeAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAABcAAAAXAAAAFwAAAEAAAABeAAAAFwAAABcAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF4AAABeAAAAFwAAAxcAAABAAAAAFwAAAxcAAAAXAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABdAAAAXgAAAEAAAAAXAAAAQAAAAF4AAAAXAAAAFwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAABcAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeAAAAXgAAAF4AAABeAAAAXgAAABcAAAIXAAABFwAAABcAAAMXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAAF4AAABeAAAAXgAAAF4AAAAXAAAAFwAAAV4AAABeAAAAXgAAAA==
+        tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF4AAABdAAAAXQAAAF0AAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABdAAAAXgAAAF4AAABeAAAAXQAAAF0AAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeAAAAXgAAAF4AAABeAAAAXgAAAF0AAABdAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAABcAAAMXAAABFwAAAV4AAABdAAAAXQAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF4AAAAXAAADXgAAABcAAABeAAAAXQAAAF0AAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeAAAAFwAAAV4AAAAXAAACXgAAAF4AAABeAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAABcAAAFeAAAAFwAAAUAAAABeAAAAXgAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF4AAAAXAAACXgAAABcAAANAAAAAXgAAAF4AAABeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeAAAAFwAAAhcAAAEXAAABQAAAAF4AAABeAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAABcAAAAXAAAAFwAAAEAAAABeAAAAFwAAABcAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF4AAABeAAAAFwAAAxcAAABAAAAAFwAAAxcAAAAXAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABdAAAAXgAAAEAAAAAXAAAAQAAAAF4AAAAXAAAAFwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAABcAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeAAAAXgAAAF4AAABeAAAAXgAAABcAAAIXAAABFwAAABcAAAMXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAAF4AAABeAAAAXgAAAF4AAAAXAAAAFwAAAV4AAABeAAAAXgAAAA==
       0,-2:
         ind: 0,-2
-        tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABdAAAAXQAAAF0AAABdAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABdAAAAXQAAAF4AAABeAAAAXgAAAF0AAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXQAAAF0AAABeAAAAXgAAAF4AAABeAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF0AAABdAAAAXgAAADoAAABeAAAAOgAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABdAAAAXQAAAF4AAAA6AAAAXgAAADoAAABeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAAF4AAABeAAAAOgAAAF4AAAA6AAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeAAAAXgAAAF4AAABeAAAAXgAAAF4AAABeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAAF4AAABeAAAAFwAAAV4AAABeAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABcAAAEXAAADFwAAARcAAAMXAAABQAAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXAAADFwAAAhcAAAAXAAACFwAAA14AAABeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFwAAABcAAAIXAAAAFwAAAxcAAAFeAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXAAABFwAAABcAAAEXAAADXgAAAF4AAABeAAAAXgAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAAF4AAAAXAAAAFwAAAl4AAABeAAAAXgAAAF4AAABeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+        tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABdAAAAXQAAAF0AAABdAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABdAAAAXQAAAF4AAABeAAAAXgAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXQAAAF0AAABeAAAAXgAAAF4AAABeAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF0AAABdAAAAXgAAADoAAABeAAAAOgAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABdAAAAXQAAAF4AAAA6AAAAXgAAADoAAABeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAAF4AAABeAAAAOgAAAF4AAAA6AAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeAAAAXgAAAF4AAABeAAAAXgAAAF4AAABeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAAF4AAABeAAAAFwAAAV4AAABeAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABcAAAEXAAADFwAAARcAAAMXAAABQAAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXAAADFwAAAhcAAAAXAAACFwAAA14AAABeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFwAAABcAAAIXAAAAFwAAAxcAAAFeAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXAAABFwAAABcAAAEXAAADXgAAAF4AAABeAAAAXgAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAAF4AAAAXAAAAFwAAAl4AAABeAAAAXgAAAF4AAABeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
     type: MapGrid
   - type: Broadphase
   - angularDamping: 0.05
@@ -954,8 +955,8 @@ entities:
       0,-28: 0
       0,-27: 0
       0,-26: 0
-      0,-25: 0
-      0,-24: 0
+      0,-25: 1
+      0,-24: 1
       0,-23: 0
       0,-22: 0
       0,-21: 0
@@ -994,8 +995,8 @@ entities:
       3,-31: 0
       3,-30: 0
       3,-29: 0
-      3,-28: 1
-      3,-27: 1
+      3,-28: 2
+      3,-27: 2
       3,-26: 0
       3,-25: 0
       3,-24: 0
@@ -1022,8 +1023,8 @@ entities:
       5,-31: 0
       5,-30: 0
       5,-29: 0
-      5,-28: 2
-      5,-27: 2
+      5,-28: 3
+      5,-27: 3
       5,-26: 0
       5,-25: 0
       5,-24: 0
@@ -1063,6 +1064,9 @@ entities:
       -10,-17: 0
       8,-18: 0
       8,-17: 0
+      -7,-10: 4
+      -6,-10: 4
+      5,-10: 4
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
@@ -1082,6 +1086,21 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
+      - 21.213781
+      - 79.80423
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
       - 6666.982
       - 0
       - 0
@@ -1099,6 +1118,21 @@ entities:
       moles:
       - 0
       - 6666.982
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 0
+      - 0
       - 0
       - 0
       - 0
@@ -1127,356 +1161,356 @@ entities:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: -4,-20
-        90:
-          color: '#FFFFFFFF'
-          id: syndlogo7
-          coordinates: -1,-6
-        86:
-          color: '#FFFFFFFF'
-          id: syndlogo2
-          coordinates: -2,-5
-        83:
-          color: '#DE3A3A96'
-          id: BrickTileSteelLineN
-          coordinates: -1,-4
-        137:
-          color: '#DE3A3A96'
-          id: WarnLineGreyscaleS
-          coordinates: -1,-22
-        92:
-          color: '#FFFFFFFF'
-          id: syndlogo10
-          coordinates: -2,-7
-        87:
-          color: '#FFFFFFFF'
-          id: syndlogo3
-          coordinates: -1,-5
-        79:
-          color: '#DE3A3A96'
-          id: BrickTileSteelLineW
-          coordinates: -2,-5
-        89:
-          color: '#FFFFFFFF'
-          id: syndlogo6
-          coordinates: -2,-6
-        108:
-          color: '#FFFFFFFF'
-          id: syndlogo5
-          coordinates: -3,-6
-        78:
-          color: '#DE3A3A96'
-          id: BrickTileSteelLineW
-          coordinates: -2,-7
-        82:
-          color: '#DE3A3A96'
-          id: BrickTileSteelCornerNw
-          coordinates: -2,-4
-        102:
-          color: '#DE3A3A96'
-          id: MonoOverlay
-          coordinates: -4,-5
-        93:
-          color: '#FFFFFFFF'
-          id: syndlogo11
-          coordinates: -1,-7
-        65:
+        3:
           color: '#FFFFFFFF'
           id: WarnLineE
           coordinates: -4,-23
-        66:
+        4:
           color: '#FFFFFFFF'
           id: WarnLineE
           coordinates: -4,-24
-        67:
+        5:
           color: '#FFFFFFFF'
           id: WarnLineE
           coordinates: -4,-25
-        101:
+        7:
+          color: '#DE3A3A96'
+          id: BrickTileSteelLineW
+          coordinates: -2,-7
+        8:
+          color: '#DE3A3A96'
+          id: BrickTileSteelLineW
+          coordinates: -2,-5
+        11:
+          color: '#DE3A3A96'
+          id: BrickTileSteelCornerNw
+          coordinates: -2,-4
+        12:
+          color: '#DE3A3A96'
+          id: BrickTileSteelLineN
+          coordinates: -1,-4
+        14:
+          color: '#FFFFFFFF'
+          id: syndlogo2
+          coordinates: -2,-5
+        15:
+          color: '#FFFFFFFF'
+          id: syndlogo3
+          coordinates: -1,-5
+        17:
+          color: '#FFFFFFFF'
+          id: syndlogo6
+          coordinates: -2,-6
+        18:
+          color: '#FFFFFFFF'
+          id: syndlogo7
+          coordinates: -1,-6
+        20:
+          color: '#FFFFFFFF'
+          id: syndlogo10
+          coordinates: -2,-7
+        21:
+          color: '#FFFFFFFF'
+          id: syndlogo11
+          coordinates: -1,-7
+        23:
           color: '#DE3A3A96'
           id: MonoOverlay
           coordinates: -5,-6
-        103:
+        24:
+          color: '#DE3A3A96'
+          id: MonoOverlay
+          coordinates: -4,-5
+        25:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale180
           coordinates: -4,-4
-        104:
+        26:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale180
           coordinates: -5,-4
-        105:
+        27:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale90
           coordinates: -6,-6
-        106:
+        28:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale90
           coordinates: -6,-5
-        107:
+        29:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: -4,-7
-        109:
+        30:
+          color: '#FFFFFFFF'
+          id: syndlogo5
+          coordinates: -3,-6
+        31:
           color: '#DE3A3A96'
           id: DeliveryGreyscale
           coordinates: -3,-6
-        115:
+        37:
           color: '#DE3A3A96'
           id: BrickTileSteelCornerSw
           coordinates: -2,-14
-        116:
+        38:
           color: '#DE3A3A96'
           id: BrickTileSteelLineW
           coordinates: -2,-13
-        117:
+        39:
           color: '#DE3A3A96'
           id: BrickTileSteelLineW
           coordinates: -2,-12
-        118:
+        40:
           color: '#DE3A3A96'
           id: BrickTileSteelLineW
           coordinates: -2,-11
-        122:
-          color: '#DE3A3A96'
-          id: BrickTileSteelCornerNw
-          coordinates: -2,-9
-        121:
+        41:
           color: '#DE3A3A96'
           id: BrickTileSteelLineW
           coordinates: -2,-10
-        124:
+        42:
+          color: '#DE3A3A96'
+          id: BrickTileSteelCornerNw
+          coordinates: -2,-9
+        44:
           color: '#DE3A3A96'
           id: WarnLineGreyscaleN
           coordinates: -1,-9
-        125:
+        45:
           color: '#DE3A3A96'
           id: BrickTileSteelCornerNw
           coordinates: -2,-20
-        126:
+        46:
           color: '#DE3A3A96'
           id: BrickTileSteelCornerSw
           coordinates: -2,-22
-        138:
+        57:
+          color: '#DE3A3A96'
+          id: WarnLineGreyscaleS
+          coordinates: -1,-22
+        58:
           color: '#DE3A3A96'
           id: WarnLineGreyscaleW
           coordinates: -2,-21
-        139:
+        59:
           color: '#DE3A3A96'
           id: WarnLineGreyscaleN
           coordinates: -1,-20
-        147:
+        66:
           color: '#DE3A3A96'
           id: BrickTileSteelLineN
           coordinates: -2,-16
-        148:
+        67:
           color: '#DE3A3A96'
           id: BrickTileSteelLineN
           coordinates: -3,-16
-        149:
+        68:
           color: '#DE3A3A96'
           id: BrickTileSteelLineN
           coordinates: -4,-16
-        153:
+        72:
           color: '#DE3A3A96'
           id: BrickTileSteelLineS
           coordinates: -2,-18
-        154:
+        73:
           color: '#DE3A3A96'
           id: BrickTileSteelLineS
           coordinates: -3,-18
-        155:
+        74:
           color: '#DE3A3A96'
           id: BrickTileSteelLineS
           coordinates: -4,-18
-        156:
+        75:
           color: '#DE3A3A96'
           id: BrickTileSteelCornerSw
           coordinates: -5,-18
-        158:
+        77:
           color: '#DE3A3A96'
           id: WarnLineGreyscaleS
           coordinates: -1,-18
-        160:
+        79:
           color: '#DE3A3A96'
           id: WarnLineGreyscaleW
           coordinates: -5,-17
-        161:
+        80:
           color: '#DE3A3A96'
           id: WarnCornerGreyscaleNW
           coordinates: -5,-16
-        163:
+        82:
           color: '#DE3A3A96'
           id: WarnLineGreyscaleN
           coordinates: -1,-16
-        164:
+        83:
           color: '#DE3A3A96'
           id: DeliveryGreyscale
           coordinates: -1,-19
-        165:
+        84:
           color: '#DE3A3A96'
           id: DeliveryGreyscale
           coordinates: -3,-21
-        166:
+        85:
           color: '#DE3A3A96'
           id: DeliveryGreyscale
           coordinates: -1,-15
-        168:
+        87:
           color: '#DE3A3A96'
           id: DeliveryGreyscale
           coordinates: -6,-17
-        169:
+        88:
           color: '#DE3A3A96'
           id: DeliveryGreyscale
           coordinates: -5,-15
-        171:
+        90:
           color: '#DE3A3A96'
           id: DeliveryGreyscale
           coordinates: -1,-8
       0,-1:
-        77:
+        6:
           color: '#DE3A3A96'
           id: BrickTileSteelLineE
           coordinates: 0,-7
-        84:
+        9:
           color: '#DE3A3A96'
-          id: DeliveryGreyscale
-          coordinates: 1,-6
-        81:
+          id: BrickTileSteelLineE
+          coordinates: 0,-5
+        10:
           color: '#DE3A3A96'
           id: BrickTileSteelCornerNe
           coordinates: 0,-4
-        91:
-          color: '#FFFFFFFF'
-          id: syndlogo8
-          coordinates: 0,-6
-        130:
+        13:
           color: '#DE3A3A96'
-          id: BrickTileSteelCornerSe
-          coordinates: 4,-22
-        129:
-          color: '#DE3A3A96'
-          id: BrickTileSteelLineS
-          coordinates: 2,-22
-        128:
-          color: '#DE3A3A96'
-          id: BrickTileSteelLineS
-          coordinates: 1,-22
-        127:
-          color: '#DE3A3A96'
-          id: BrickTileSteelLineS
-          coordinates: 0,-22
-        88:
+          id: DeliveryGreyscale
+          coordinates: 1,-6
+        16:
           color: '#FFFFFFFF'
           id: syndlogo4
           coordinates: 0,-5
-        80:
-          color: '#DE3A3A96'
-          id: BrickTileSteelLineE
-          coordinates: 0,-5
-        111:
-          color: '#DE3A3A96'
-          id: BrickTileSteelLineE
-          coordinates: 0,-10
-        110:
-          color: '#DE3A3A96'
-          id: BrickTileSteelLineE
-          coordinates: 0,-11
-        94:
+        19:
+          color: '#FFFFFFFF'
+          id: syndlogo8
+          coordinates: 0,-6
+        22:
           color: '#FFFFFFFF'
           id: syndlogo12
           coordinates: 0,-7
-        113:
+        32:
           color: '#DE3A3A96'
           id: BrickTileSteelLineE
-          coordinates: 0,-13
-        112:
+          coordinates: 0,-11
+        33:
+          color: '#DE3A3A96'
+          id: BrickTileSteelLineE
+          coordinates: 0,-10
+        34:
           color: '#DE3A3A96'
           id: BrickTileSteelLineE
           coordinates: 0,-12
-        114:
+        35:
+          color: '#DE3A3A96'
+          id: BrickTileSteelLineE
+          coordinates: 0,-13
+        36:
           color: '#DE3A3A96'
           id: BrickTileSteelCornerSe
           coordinates: 0,-14
-        123:
+        43:
           color: '#DE3A3A96'
           id: BrickTileSteelCornerNe
           coordinates: 0,-9
-        131:
+        47:
+          color: '#DE3A3A96'
+          id: BrickTileSteelLineS
+          coordinates: 0,-22
+        48:
+          color: '#DE3A3A96'
+          id: BrickTileSteelLineS
+          coordinates: 1,-22
+        49:
+          color: '#DE3A3A96'
+          id: BrickTileSteelLineS
+          coordinates: 2,-22
+        50:
+          color: '#DE3A3A96'
+          id: BrickTileSteelCornerSe
+          coordinates: 4,-22
+        51:
           color: '#DE3A3A96'
           id: BrickTileSteelCornerNe
           coordinates: 4,-20
-        132:
+        52:
           color: '#DE3A3A96'
           id: BrickTileSteelLineE
           coordinates: 4,-21
-        133:
+        53:
           color: '#DE3A3A96'
           id: BrickTileSteelLineN
           coordinates: 3,-20
-        134:
+        54:
           color: '#DE3A3A96'
           id: BrickTileSteelLineN
           coordinates: 2,-20
-        135:
+        55:
           color: '#DE3A3A96'
           id: BrickTileSteelLineN
           coordinates: 1,-20
-        136:
+        56:
           color: '#DE3A3A96'
           id: BrickTileSteelLineN
           coordinates: 0,-20
-        140:
+        60:
           color: '#DE3A3A96'
           id: WarnLineGreyscaleS
           coordinates: 3,-22
-        142:
+        61:
           color: '#FFFFFFFF'
           id: WoodTrimThinEndS
           coordinates: 3,-5
-        143:
+        62:
           color: '#FFFFFFFF'
           id: WoodTrimThinEndN
           coordinates: 3,-4
-        144:
+        63:
           color: '#DE3A3A96'
           id: BrickTileSteelLineN
           coordinates: 0,-16
-        145:
+        64:
           color: '#DE3A3A96'
           id: BrickTileSteelLineN
           coordinates: 1,-16
-        146:
+        65:
           color: '#DE3A3A96'
           id: BrickTileSteelLineN
           coordinates: 2,-16
-        150:
+        69:
           color: '#DE3A3A96'
           id: BrickTileSteelLineS
           coordinates: 2,-18
-        151:
+        70:
           color: '#DE3A3A96'
           id: BrickTileSteelLineS
           coordinates: 1,-18
-        152:
+        71:
           color: '#DE3A3A96'
           id: BrickTileSteelLineS
           coordinates: 0,-18
-        157:
+        76:
           color: '#DE3A3A96'
           id: BrickTileSteelCornerSe
           coordinates: 3,-18
-        159:
+        78:
           color: '#DE3A3A96'
           id: WarnLineGreyscaleE
           coordinates: 3,-17
-        162:
+        81:
           color: '#DE3A3A96'
           id: WarnCornerGreyscaleNE
           coordinates: 3,-16
-        167:
+        86:
           color: '#DE3A3A96'
           id: DeliveryGreyscale
           coordinates: 4,-17
-        170:
+        89:
           color: '#DE3A3A96'
           id: DeliveryGreyscale
           coordinates: 3,-15
@@ -1990,11 +2024,9 @@ entities:
     parent: 73
     type: Transform
 - uid: 150
-  type: WeaponTurretSyndicate
+  type: WallPlastitanium
   components:
-  - flags: SessionSpecific
-    type: MetaData
-  - pos: 6.5,-29.5
+  - pos: -3.5,-30.5
     parent: 73
     type: Transform
 - uid: 151
@@ -2062,7 +2094,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 679
+        uid: 238
     type: SignalReceiver
 - uid: 161
   type: WallPlastitanium
@@ -2276,7 +2308,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 679
+        uid: 238
     type: SignalReceiver
 - uid: 194
   type: BedsheetSyndie
@@ -2567,23 +2599,29 @@ entities:
   - outputs:
       Pressed:
       - port: Toggle
-        uid: 239
+        uid: 4
       - port: Toggle
-        uid: 508
+        uid: 160
+      - port: Toggle
+        uid: 693
+      - port: Toggle
+        uid: 670
+      - port: Toggle
+        uid: 511
+      - port: Toggle
+        uid: 687
+      - port: Toggle
+        uid: 193
     type: SignalTransmitter
 - uid: 239
-  type: ShuttersNormalOpen
+  type: PoweredSmallLight
   components:
-  - pos: -1.5,-7.5
+  - rot: 3.141592653589793 rad
+    pos: 5.5,-21.5
     parent: 73
     type: Transform
-  - inputs:
-      Open: []
-      Close: []
-      Toggle:
-      - port: Pressed
-        uid: 238
-    type: SignalReceiver
+  - powerLoad: 0
+    type: ApcPowerReceiver
 - uid: 240
   type: CableMV
   components:
@@ -3432,6 +3470,8 @@ entities:
     pos: -0.5,-5.5
     parent: 73
     type: Transform
+  - color: '#0335FCFF'
+    type: AtmosPipeColor
 - uid: 379
   type: WallPlastitanium
   components:
@@ -3789,6 +3829,8 @@ entities:
     pos: 0.5,-5.5
     parent: 73
     type: Transform
+  - color: '#0335FCFF'
+    type: AtmosPipeColor
 - uid: 425
   type: GasPipeBend
   components:
@@ -3796,6 +3838,8 @@ entities:
     pos: -1.5,-4.5
     parent: 73
     type: Transform
+  - color: '#FF1212FF'
+    type: AtmosPipeColor
 - uid: 426
   type: ClothingOuterHardsuitSyndicate
   components:
@@ -3808,6 +3852,8 @@ entities:
   - pos: 0.5,-18.5
     parent: 73
     type: Transform
+  - color: '#FF1212FF'
+    type: AtmosPipeColor
 - uid: 428
   type: GasVentPump
   components:
@@ -3824,6 +3870,8 @@ entities:
     pos: -1.5,-16.5
     parent: 73
     type: Transform
+  - color: '#0335FCFF'
+    type: AtmosPipeColor
 - uid: 430
   type: GasVentPump
   components:
@@ -4075,6 +4123,8 @@ entities:
     pos: -1.5,-6.5
     parent: 73
     type: Transform
+  - color: '#FF1212FF'
+    type: AtmosPipeColor
 - uid: 459
   type: GasPipeFourway
   components:
@@ -4274,6 +4324,8 @@ entities:
     pos: -0.5,-4.5
     parent: 73
     type: Transform
+  - color: '#FF1212FF'
+    type: AtmosPipeColor
 - uid: 483
   type: PoweredSmallLight
   components:
@@ -4410,13 +4462,11 @@ entities:
     parent: 73
     type: Transform
 - uid: 499
-  type: Poweredlight
+  type: TableWood
   components:
-  - pos: 4.5,-19.5
+  - pos: 4.5,-5.5
     parent: 73
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
 - uid: 500
   type: APCBasic
   components:
@@ -4478,18 +4528,11 @@ entities:
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 508
-  type: ShuttersNormalOpen
+  type: TableReinforced
   components:
-  - pos: 0.5,-7.5
+  - pos: -1.5,-3.5
     parent: 73
     type: Transform
-  - inputs:
-      Open: []
-      Close: []
-      Toggle:
-      - port: Pressed
-        uid: 238
-    type: SignalReceiver
 - uid: 509
   type: ReinforcedPlasmaWindow
   components:
@@ -4513,7 +4556,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 679
+        uid: 238
     type: SignalReceiver
 - uid: 512
   type: Poweredlight
@@ -4864,9 +4907,9 @@ entities:
     parent: 73
     type: Transform
 - uid: 566
-  type: TableCarpet
+  type: WallPlastitanium
   components:
-  - pos: 4.5,-5.5
+  - pos: 2.5,-30.5
     parent: 73
     type: Transform
 - uid: 567
@@ -5548,7 +5591,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 679
+        uid: 238
     type: SignalReceiver
 - uid: 671
   type: CableApcExtension
@@ -5600,28 +5643,13 @@ entities:
     parent: 73
     type: Transform
 - uid: 679
-  type: SignalButton
+  type: WeaponTurretSyndicate
   components:
-  - pos: -1.5,-3.5
+  - flags: SessionSpecific
+    type: MetaData
+  - pos: -4.5,-17.5
     parent: 73
     type: Transform
-  - outputs:
-      Pressed:
-      - port: Toggle
-        uid: 693
-      - port: Toggle
-        uid: 670
-      - port: Toggle
-        uid: 511
-      - port: Toggle
-        uid: 687
-      - port: Toggle
-        uid: 193
-      - port: Toggle
-        uid: 160
-      - port: Toggle
-        uid: 4
-    type: SignalTransmitter
 - uid: 680
   type: Catwalk
   components:
@@ -5675,7 +5703,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 679
+        uid: 238
     type: SignalReceiver
 - uid: 688
   type: GravityGeneratorMini
@@ -5722,7 +5750,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 679
+        uid: 238
     type: SignalReceiver
 - uid: 694
   type: AirlockExternalGlass
@@ -5795,6 +5823,8 @@ entities:
     pos: -1.5,-5.5
     parent: 73
     type: Transform
+  - color: '#FF1212FF'
+    type: AtmosPipeColor
 - uid: 705
   type: ClothingMaskGasSyndicate
   components:
@@ -5819,6 +5849,8 @@ entities:
   - pos: 0.5,-3.5
     parent: 73
     type: Transform
+  - color: '#0335FCFF'
+    type: AtmosPipeColor
 - uid: 709
   type: AMEShielding
   components:
@@ -5838,6 +5870,8 @@ entities:
     pos: 0.5,-4.5
     parent: 73
     type: Transform
+  - color: '#0335FCFF'
+    type: AtmosPipeColor
 - uid: 712
   type: CableHV
   components:
@@ -5857,6 +5891,8 @@ entities:
   - pos: -0.5,-3.5
     parent: 73
     type: Transform
+  - color: '#FF1212FF'
+    type: AtmosPipeColor
 - uid: 715
   type: AMEShielding
   components:
@@ -5880,7 +5916,7 @@ entities:
   components:
   - flags: SessionSpecific
     type: MetaData
-  - pos: -7.5,-29.5
+  - pos: 3.5,-17.5
     parent: 73
     type: Transform
 - uid: 719
@@ -6041,12 +6077,46 @@ entities:
   - pos: 6.5,-18.5
     parent: 73
     type: Transform
+- uid: 740
+  type: PoweredSmallLight
+  components:
+  - pos: 2.5,-19.5
+    parent: 73
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+- uid: 741
+  type: PoweredSmallLight
+  components:
+  - pos: -1.5,-26.5
+    parent: 73
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+- uid: 742
+  type: PoweredSmallLight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -5.5,-9.5
+    parent: 73
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
 - uid: 743
   type: Wrench
   components:
   - pos: 1.6061028,-13.284962
     parent: 73
     type: Transform
+- uid: 744
+  type: PoweredSmallLight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 4.5,-9.5
+    parent: 73
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
 - uid: 745
   type: SignSecureSmallRed
   components:
@@ -6125,12 +6195,6 @@ entities:
   type: ComputerRadar
   components:
   - pos: 0.5,-2.5
-    parent: 73
-    type: Transform
-- uid: 772
-  type: TableReinforced
-  components:
-  - pos: -1.5,-3.5
     parent: 73
     type: Transform
 - uid: 773
