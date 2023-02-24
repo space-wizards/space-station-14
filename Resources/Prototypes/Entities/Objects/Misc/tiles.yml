@@ -488,6 +488,9 @@
       - FloorCarpetClown
   - type: Stack
     stackType: FloorTileStackCarpetClown
+  - type: Construction
+    graph: TileCarpetClown
+    node: carpetclowntile
 
 - type: entity
   name: office carpet floor

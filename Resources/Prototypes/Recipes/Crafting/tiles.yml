@@ -62,7 +62,7 @@
   startNode: start
   targetNode: goldtile
   category: construction-category-tiles
-  description: "Four gold floor tiles."
+  description: "Four gold tiles."
   icon: { sprite: Objects/Tiles/tile.rsi, state: gold }
   objectType: Item
 
@@ -73,7 +73,7 @@
   startNode: start
   targetNode: silvertile
   category: construction-category-tiles
-  description: "Four silver floor tiles."
+  description: "Four silver tiles."
   icon: { sprite: Objects/Tiles/tile.rsi, state: silver }
   objectType: Item
 
@@ -84,8 +84,19 @@
   startNode: start
   targetNode: mosaicwoodtile
   category: construction-category-tiles
-  description: "Four mosaic wood floor tiles."
+  description: "Four mosaic wood tiles."
   icon: { sprite: Objects/Tiles/tile.rsi, state: mosaicwood }
+  objectType: Item
+
+- type: construction
+  name: clown carpet tile
+  id: TileCarpetClown
+  graph: TileCarpetClown
+  startNode: start
+  targetNode: carpetclowntile
+  category: construction-category-tiles
+  description: "Four clown carpet tiles."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: carpetclown }
   objectType: Item
 
 #   objectType: Item

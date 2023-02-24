@@ -126,3 +126,20 @@
               amount: 1
     - node: mosaicwoodtile
       entity: FloorTileItemMosaicWood
+
+- type: constructionGraph
+  id: TileCarpetClown
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: carpetclowntile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Cloth
+              amount: 1
+    - node: carpetclowntile
+      entity: FloorTileItemCarpetClown
+
