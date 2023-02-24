@@ -81,9 +81,6 @@
     slipThreshold: 1
     overflowVolume: 20
     recolor: false
-  - type: Puddle
-    slipThreshold: 5
-    recolor: false
   - type: SolutionContainerManager
     solutions:
       puddle:
