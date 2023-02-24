@@ -180,6 +180,8 @@ namespace Content.Server.GameTicking
 
             RoundLengthMetric.Set(0);
 
+            var startingEvent = new RoundStartingEvent(RoundId);
+            RaiseLocalEvent(startingEvent);
             var readyPlayers = new List<IPlayerSession>();
             var readyPlayerProfiles = new Dictionary<NetUserId, HumanoidCharacterProfile>();
 

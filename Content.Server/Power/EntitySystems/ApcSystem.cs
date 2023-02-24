@@ -135,9 +135,12 @@ namespace Content.Server.Power.EntitySystems
             if (!Resolve(uid, ref apc, ref battery, ref ui))
                 return;
 
+            var netBattery = Comp<PowerNetworkBatteryComponent>(uid);
+            float power = netBattery is not null ? netBattery.CurrentSupply : 0f;
+
             if (_userInterfaceSystem.GetUiOrNull(uid, ApcUiKey.Key, ui) is { } bui)
             {
-                bui.SetState(new ApcBoundInterfaceState(apc.MainBreakerEnabled, apc.LastExternalState, battery.CurrentCharge / battery.MaxCharge));
+                bui.SetState(new ApcBoundInterfaceState(apc.MainBreakerEnabled, (int)MathF.Ceiling(power), apc.LastExternalState, battery.CurrentCharge / battery.MaxCharge));
             }
         }
 
