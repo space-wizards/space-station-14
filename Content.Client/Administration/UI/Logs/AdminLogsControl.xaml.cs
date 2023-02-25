@@ -174,6 +174,32 @@ public sealed partial class AdminLogsControl : Control
         UpdateLogs();
     }
 
+    public void SetTypesSelection(HashSet<LogType> selectedTypes, bool invert = false)
+    {
+        SelectedTypes.Clear();
+
+        foreach (var control in TypesContainer.Children)
+        {
+            if (control is not AdminLogTypeButton type)
+            {
+                continue;
+            }
+
+            if (selectedTypes.Contains(type.Type) ^ invert)
+            {
+                type.Pressed = true;
+                SelectedTypes.Add(type.Type);
+            }
+            else
+            {
+                type.Pressed = false;
+                type.Visible = ShouldShowType(type);
+            }
+        }
+
+        UpdateLogs();
+    }
+
     public void UpdateTypes()
     {
         foreach (var control in TypesContainer.Children)

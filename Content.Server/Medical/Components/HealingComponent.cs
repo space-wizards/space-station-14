@@ -45,8 +45,6 @@ namespace Content.Server.Medical.Components
         [DataField("selfHealPenaltyMultiplier")]
         public float SelfHealPenaltyMultiplier = 3f;
 
-        public CancellationTokenSource? CancelToken = null;
-
         /// <summary>
         ///     Sound played on healing begin
         /// </summary>

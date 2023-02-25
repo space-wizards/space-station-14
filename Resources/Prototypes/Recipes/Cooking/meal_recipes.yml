@@ -982,6 +982,45 @@
     FoodPotato: 1
     FoodMeatMeatball: 1
 
+- type: microwaveMealRecipe
+  id: RecipeColeslaw
+  name: coleslaw recipe
+  result: FoodSaladColeslaw
+  time: 5
+  reagents:
+    Vinegar: 5
+    OilOlive: 5
+  solids:
+    FoodBowlBig: 1
+    FoodOnionRed: 1
+    FoodCabbage: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCaesarSalad
+  name: caesar salad recipe
+  result: FoodSaladCaesar
+  time: 5
+  reagents:
+    OilOlive: 5
+  solids:
+    FoodBowlBig: 1
+    FoodOnionRedSlice: 1
+    FoodBreadPlainSlice: 1
+    FoodCheeseSlice: 1
+    FoodCabbage: 1
+
+- type: microwaveMealRecipe
+  id: RecipeKimchiSalad
+  name: kimchi salad recipe
+  result: FoodSaladKimchi
+  time: 5
+  reagents:
+    Vinegar: 5
+  solids:
+    FoodBowlBig: 1
+    FoodCarrot: 1
+    FoodCabbage: 1
+
 # NOT ACTUAL FOOD
 
 - type: microwaveMealRecipe

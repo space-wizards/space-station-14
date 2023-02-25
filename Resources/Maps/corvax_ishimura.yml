@@ -154099,12 +154099,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-- uid: 18314
-  type: DrinkCarafe
-  components:
-  - pos: -14.60981,33.534657
-    parent: 0
-    type: Transform
 - uid: 18315
   type: ClothingHeadHatPurplesoftFlipped
   components:
