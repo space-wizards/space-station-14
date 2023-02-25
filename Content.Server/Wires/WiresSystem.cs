@@ -5,12 +5,13 @@ using Content.Server.Administration.Logs;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Power.Components;
-using Content.Server.Tools;
+using Content.Shared.DoAfter;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
@@ -26,7 +27,7 @@ public sealed class WiresSystem : EntitySystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
-    [Dependency] private readonly ToolSystem _toolSystem = default!;
+    [Dependency] private readonly SharedToolSystem _toolSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -55,8 +56,7 @@ public sealed class WiresSystem : EntitySystem
         SubscribeLocalEvent<WiresComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<WiresComponent, TimedWireEvent>(OnTimedWire);
         SubscribeLocalEvent<WiresComponent, PowerChangedEvent>(OnWiresPowered);
-        SubscribeLocalEvent<WiresComponent, OnWireDoAfterEvent>(OnWireDoAfter);
-        SubscribeLocalEvent<WiresComponent, OnWireDoAfterCancelEvent>(OnWireDoAfterCancel);
+        SubscribeLocalEvent<WiresComponent, DoAfterEvent<WireExtraData>>(OnDoAfter);
     }
 
     private void SetOrCreateWireLayout(EntityUid uid, WiresComponent? wires = null)
@@ -434,14 +434,20 @@ public sealed class WiresSystem : EntitySystem
         TryDoWireAction(uid, player, activeHandEntity, args.Id, args.Action, component, tool);
     }
 
-    private void OnWireDoAfter(EntityUid uid, WiresComponent component, OnWireDoAfterEvent args)
+    private void OnDoAfter(EntityUid uid, WiresComponent component, DoAfterEvent<WireExtraData> args)
     {
-        UpdateWires(args.Target, args.User, args.Tool, args.Id, args.Action, component);
-    }
+        if (args.Cancelled)
+        {
+            component.WiresQueue.Remove(args.AdditionalData.Id);
+            return;
+        }
 
-    private void OnWireDoAfterCancel(EntityUid uid, WiresComponent component, OnWireDoAfterCancelEvent args)
-    {
-        component.WiresQueue.Remove(args.Id);
+        if (args.Handled || args.Args.Target == null || args.Args.Used == null)
+            return;
+
+        UpdateWires(args.Args.Target.Value, args.Args.User, args.Args.Used.Value, args.AdditionalData.Id, args.AdditionalData.Action, component);
+
+        args.Handled = true;
     }
 
     private void OnInteractUsing(EntityUid uid, WiresComponent component, InteractUsingEvent args)
@@ -461,11 +467,9 @@ public sealed class WiresSystem : EntitySystem
         }
         else if (!component.IsScrewing && _toolSystem.HasQuality(args.Used, "Screwing", tool))
         {
-            component.IsScrewing = _toolSystem.UseTool(args.Used, args.User, uid,
-                0f, ScrewTime, new[] { "Screwing" },
-                new WireToolFinishedEvent(uid, args.User),
-                new WireToolCanceledEvent(uid),
-                toolComponent: tool);
+            var toolEvData = new ToolEventData(new WireToolFinishedEvent(uid, args.User));
+
+            component.IsScrewing = _toolSystem.UseTool(args.Used, args.User, uid, ScrewTime, new[] { "Screwing" }, toolEvData, toolComponent: tool);
             args.Handled = component.IsScrewing;
 
             // Log attempt
@@ -711,27 +715,16 @@ public sealed class WiresSystem : EntitySystem
 
         if (_toolTime > 0f)
         {
-            var args = new DoAfterEventArgs(user, _toolTime, default, used)
+            var data = new WireExtraData(action, id);
+            var args = new DoAfterEventArgs(user, _toolTime, target:used, used:toolEntity)
             {
                 NeedHand = true,
                 BreakOnStun = true,
                 BreakOnDamage = true,
-                BreakOnUserMove = true,
-                TargetFinishedEvent = new OnWireDoAfterEvent
-                {
-                    Target = used,
-                    User = user,
-                    Tool = toolEntity,
-                    Action = action,
-                    Id = id
-                },
-                TargetCancelledEvent = new OnWireDoAfterCancelEvent
-                {
-                    Id = id
-                }
+                BreakOnUserMove = true
             };
 
-            _doAfter.DoAfter(args);
+            _doAfter.DoAfter(args, data);
         }
         else
         {
@@ -739,7 +732,11 @@ public sealed class WiresSystem : EntitySystem
         }
     }
 
-
+    private record struct WireExtraData(WiresAction Action, int Id)
+    {
+        public WiresAction Action = Action;
+        public int Id = Id;
+    }
 
     private void UpdateWires(EntityUid used, EntityUid user, EntityUid toolEntity, int id, WiresAction action, WiresComponent? wires = null, ToolComponent? tool = null)
     {
@@ -931,20 +928,6 @@ public sealed class WiresSystem : EntitySystem
     }
 
     public record struct WireToolCanceledEvent(EntityUid Target);
-
-    private sealed class OnWireDoAfterEvent : EntityEventArgs
-    {
-        public EntityUid User { get; set; }
-        public EntityUid Target { get; set; }
-        public EntityUid Tool { get; set; }
-        public WiresAction Action { get; set; }
-        public int Id { get; set; }
-    }
-
-    private sealed class OnWireDoAfterCancelEvent : EntityEventArgs
-    {
-        public int Id { get; set; }
-    }
     #endregion
 }
 

@@ -1,6 +1,9 @@
-﻿using Robust.Shared.GameStates;
+﻿using Content.Shared.Singularity;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
+using Robust.Client.GameObjects;
+using Robust.Shared.GameStates;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Singularity.EntitySystems;
 
@@ -10,11 +13,14 @@ namespace Content.Client.Singularity.EntitySystems;
 /// </summary>
 public sealed class SingularitySystem : SharedSingularitySystem
 {
+    [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
+
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<SingularityComponent, ComponentHandleState>(HandleSingularityState);
+        SubscribeLocalEvent<SingularityComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
     /// <summary>
@@ -29,5 +35,32 @@ public sealed class SingularitySystem : SharedSingularitySystem
             return;
 
         SetLevel(uid, state.Level, comp);
+    }
+
+    /// <summary>
+    /// Handles ensuring that the singularity has a sprite to see.
+    /// </summary>
+    protected override void OnSingularityStartup(EntityUid uid, SingularityComponent comp, ComponentStartup args)
+    {
+        base.OnSingularityStartup(uid, comp, args);
+        if (TryComp<SpriteComponent>(uid, out var sprite))
+        {
+            sprite.LayerMapReserveBlank(comp.Layer);
+        }
+    }
+
+    /// <summary>
+    /// Handles updating the visible state of the singularity to reflect its current level.
+    /// </summary>
+    private void OnAppearanceChange(EntityUid uid, SingularityComponent comp, ref AppearanceChangeEvent args)
+    {
+        if (args.Sprite == null)
+            return;
+
+        if(!_appearanceSystem.TryGetData<byte>(uid, SingularityVisuals.Level, out var level, args.Component))
+            return;
+
+        args.Sprite.LayerSetSprite(comp.Layer,
+            new SpriteSpecifier.Rsi(new ResourcePath($"{comp.BaseSprite.RsiPath}_{level}.rsi"), $"{comp.BaseSprite.RsiState}_{level}"));
     }
 }
