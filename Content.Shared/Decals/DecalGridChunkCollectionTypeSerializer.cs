@@ -8,6 +8,7 @@ using Robust.Shared.Serialization.Markdown.Sequence;
 using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Serialization.TypeSerializers.Interfaces;
+using Robust.Shared.Utility;
 using static Content.Shared.Decals.DecalGridComponent;
 
 namespace Content.Shared.Decals
@@ -33,22 +34,24 @@ namespace Content.Shared.Decals
             // TODO: Dump this when we don't need support anymore.
             if (version > 1)
             {
-                var map = serializationManager.Read<Dictionary<int, DecalData>>(node["map"], context, notNullableOverride: true);
+                var nodes = (SequenceDataNode) node["nodes"];
                 dictionary = new Dictionary<Vector2i, DecalChunk>();
 
-                foreach (var (chunkNode, baseDecalNodes) in (MappingDataNode) node["nodes"])
+                foreach (var dNode in nodes)
                 {
-                    var chunk = new DecalChunk();
-                    dictionary.Add(serializationManager.Read<Vector2i>(chunkNode, context), chunk);
-                    var decalNodes = (MappingDataNode) baseDecalNodes;
+                    var aNode = (MappingDataNode) dNode;
+                    var data = serializationManager.Read<DecalData>(aNode["node"], hookCtx, context);
+                    var deckNodes = (MappingDataNode) aNode["decals"];
 
-                    foreach (var (id, data) in decalNodes)
+                    foreach (var (decalUidNode, decalData) in deckNodes)
                     {
-                        var mData = (MappingDataNode) data;
-                        var mapData = map[serializationManager.Read<int>(mData["index"], context)];
-                        var coords = serializationManager.Read<Vector2>(mData["coordinates"], context);
-                        var decal = new Decal(coords, mapData.Id, mapData.Color, mapData.Angle, mapData.ZIndex, mapData.Cleanable);
-                        chunk.Decals.Add(((ValueDataNode) id).AsUint(), decal);
+                        var dUid = serializationManager.Read<uint>(decalUidNode, hookCtx, context);
+                        var coords = serializationManager.Read<Vector2>(((MappingDataNode) decalData)["coordinates"], hookCtx, context);
+
+                        var chunkOrigin = SharedMapSystem.GetChunkIndices(coords, SharedDecalSystem.ChunkSize);
+                        var chunk = dictionary.GetOrNew(chunkOrigin);
+                        var decal = new Decal(coords, data.Id, data.Color, data.Angle, data.ZIndex, data.Cleanable);
+                        chunk.Decals.Add(dUid, decal);
                     }
                 }
             }
@@ -92,60 +95,63 @@ namespace Content.Shared.Decals
             bool alwaysWrite = false,
             ISerializationContext? context = null)
         {
-            var lookup = new List<DecalData>();
+            var lookup = new Dictionary<DecalData, List<uint>>();
+            var decalLookup = new Dictionary<uint, Decal>();
+
             var allData = new MappingDataNode();
             // Want consistent chunk + decal ordering so diffs aren't mangled
             var chunks = new List<Vector2i>(value.ChunkCollection.Keys);
             chunks.Sort((x, y) => x.X == y.X ? x.Y.CompareTo(y.Y) : x.X.CompareTo(y.X));
-            var compressed = 0;
-            var nodes = new MappingDataNode();
+            var nodes = new SequenceDataNode();
 
-            foreach (var index in chunks)
+            // Assuming decal indices stay consistent:
+            // We'll write decals by
+            // - decaldata
+            // - decal uid
+            // - additional decal data
+
+            // Build all of the decal lookups first.
+            foreach (var chunk in value.ChunkCollection.Values)
             {
-                var chunk = value.ChunkCollection[index];
-                var seq = new MappingDataNode();
                 var sortedDecals = new List<uint>(chunk.Decals.Keys);
                 sortedDecals.Sort();
 
-                foreach (var dId in sortedDecals)
+                foreach (var (uid, decal) in chunk.Decals)
                 {
-                    var decal = chunk.Decals[dId];
                     var data = new DecalData(decal);
-                    var decalIndex = lookup.IndexOf(data);
+                    var existing = lookup.GetOrNew(data);
+                    existing.Add(uid);
+                    decalLookup[uid] = decal;
+                }
+            }
 
-                    if (decalIndex == -1)
-                    {
-                        decalIndex = lookup.Count;
-                        lookup.Add(data);
-                    }
-                    else
-                    {
-                        compressed++;
-                    }
+            var lookupIndex = 0;
+
+            foreach (var (data, uids) in lookup)
+            {
+                var lookupNode = new MappingDataNode { { "node", serializationManager.WriteValue(data, alwaysWrite, context) } };
+                var decks = new MappingDataNode();
+
+                uids.Sort();
+
+                foreach (var uid in uids)
+                {
+                    var decal = decalLookup[uid];
 
                     // Write coordinates + index
+                    // Leave it as a map node in case we need future data
                     var decalMapNode = new MappingDataNode
                     {
-                        { "index", new ValueDataNode(decalIndex.ToString(CultureInfo.InvariantCulture)) },
                         { "coordinates", serializationManager.WriteValue(decal.Coordinates, alwaysWrite, context) }
                     };
 
-                    seq.Add(new ValueDataNode(dId.ToString(CultureInfo.InvariantCulture)), decalMapNode);
+                    decks.Add(serializationManager.WriteValue(uid, alwaysWrite, context), decalMapNode);
                 }
 
-                nodes.Add(serializationManager.WriteValue(index, alwaysWrite, context), seq);
+                lookupNode.Add("decals", decks);
+                nodes.Add(lookupNode);
             }
 
-            var map = new MappingDataNode();
-
-            for (var i = 0; i < lookup.Count; i++)
-            {
-                var data = lookup[i];
-                map.Add(new ValueDataNode(i.ToString(CultureInfo.InvariantCulture)),
-                    serializationManager.WriteValue(data));
-            }
-
-            allData.Add("map", map);
             allData.Add("version", 2.ToString(CultureInfo.InvariantCulture));
             allData.Add("nodes", nodes);
 
