@@ -1,83 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: skeletons can no longer have hair., type: Fix}
-  id: 2553
-  time: '2022-10-31T00:04:30.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Fixed the sprite modifications for female humanoids jumpsuit slot clothes.,
-    type: Fix}
-  id: 2554
-  time: '2022-10-31T00:06:17.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Traitor mode will now work on its own rather than only in secret., type: Fix}
-  id: 2555
-  time: '2022-10-31T02:02:42.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: 'You can no longer use nettles, space snakes, and so on as injectors.
-      The only injecting melee weapon that lets you use your own reagents is spears.',
-    type: Fix}
-  id: 2556
-  time: '2022-10-31T02:04:51.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed being unable to craft certain items., type: Fix}
-  - {message: Maybe fixed cargo shuttle not properly selling items., type: Fix}
-  id: 2557
-  time: '2022-10-31T02:26:05.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Deconstructing disposal tubes should no longer delete contained entities.,
-    type: Fix}
-  - {message: Fixed people getting trapped in disposal trunks., type: Fix}
-  id: 2558
-  time: '2022-10-31T23:53:06.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed an exploit for generating infinite materials from protolathes.,
-    type: Fix}
-  id: 2559
-  time: '2022-11-01T23:05:01.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Added a Toggle Ghosts button on the ghost GUI to get rid of those pesky
-      apparitions., type: Add}
-  id: 2560
-  time: '2022-11-02T01:14:06.0000000+00:00'
-- author: Vordenburg
-  changes:
-  - {message: The flames of lit welders now look bright in the dark., type: Fix}
-  id: 2561
-  time: '2022-11-02T01:16:33.0000000+00:00'
-- author: Carbonhell
-  changes:
-  - {message: Wiki now displays the proper names and descriptions for chemistry recipes
-      and the rest instead of the localization keys., type: Fix}
-  id: 2562
-  time: '2022-11-02T20:38:56.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Fixed a bug that could result in collisions being disabled for entities
-      (e.g., after leaving disposal pipes).', type: Fix}
-  - {message: Fixed collision mispredictions when something like a locker or crates
-      get toggled open and closed., type: Fix}
-  id: 2563
-  time: '2022-11-03T02:03:36.0000000+00:00'
-- author: ashtronaut
-  changes:
-  - {message: Added a volume slider for the lobby & round-end music so you can enjoy
-      it without blowing out your eardrums., type: Add}
-  id: 2564
-  time: '2022-11-04T00:15:38.0000000+00:00'
-- author: JustinTrotter
-  changes:
-  - {message: Overdrawing with a syringe no longer destroys the transferred solution,
-    type: Fix}
-  id: 2565
-  time: '2022-11-04T00:16:32.0000000+00:00'
 - author: ashtronaut
   changes:
   - {message: The Lobby's ready button now clearly states whether you are ready not.
@@ -2913,3 +2834,78 @@ Entries:
   - {message: Changed chemistry bottle size from 5 to 3.  Capacity remains 30u., type: Tweak}
   id: 3052
   time: '2023-02-18T22:50:21.0000000+00:00'
+- author: FluffiestFloof
+  changes:
+  - {message: 'Added Cabbage, Red Onion and 3 new salads.', type: Add}
+  id: 3053
+  time: '2023-02-18T23:52:59.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: Jetpacks can now be work in suit storage., type: Tweak}
+  id: 3054
+  time: '2023-02-19T00:59:47.0000000+00:00'
+- author: moonheart08
+  changes:
+  - {message: The drinking glass sprite was redone and now supports nicer visuals.,
+    type: Tweak}
+  - {message: The shot glass sprite was modified to support fill visuals., type: Tweak}
+  - {message: The soda and booze dispensers have been visually offset to sit on tables
+      correctly., type: Tweak}
+  - {message: The booze-o-mat now has flasks and vacuum flasks., type: Add}
+  - {message: Wine glasses were added to the booze-o-mat., type: Add}
+  id: 3055
+  time: '2023-02-19T01:00:31.0000000+00:00'
+- author: reapsnI and joelhed
+  changes:
+  - {message: Added the chemistry bag as the default belt for the chemist!, type: Add}
+  id: 3056
+  time: '2023-02-20T03:34:02.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: Alt-clicking a drink now makes you drink it instead of changing the
+      solution transfer amount., type: Tweak}
+  id: 3057
+  time: '2023-02-20T12:29:15.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed first round after a server restart being displayed as number 0.,
+    type: Fix}
+  id: 3058
+  time: '2023-02-21T00:16:26.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: APCs now show the power being drawn from them., type: Add}
+  id: 3059
+  time: '2023-02-21T15:23:39.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Ahelp window now remembers its last position for admins., type: Tweak}
+  id: 3060
+  time: '2023-02-21T19:31:27.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix the emergency shuttle not loading., type: Fix}
+  id: 3061
+  time: '2023-02-22T01:47:06.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed the AHelp window being recentered when opened through the verb
+      for admins., type: Fix}
+  id: 3062
+  time: '2023-02-22T12:26:02.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Reduce bullet impulses in space from 85 to 5., type: Tweak}
+  id: 3063
+  time: '2023-02-23T01:37:57.0000000+00:00'
+- author: 08A
+  changes:
+  - {message: Fixed entity sub menu (right-click menu), type: Fix}
+  id: 3064
+  time: '2023-02-24T00:27:15.0000000+00:00'
+- author: Menshin
+  changes:
+  - {message: Recent progress in atmos machines materials made heaters and freezers
+      connection pipes rotatable again., type: Fix}
+  id: 3065
+  time: '2023-02-24T01:33:34.0000000+00:00'

@@ -15,6 +15,7 @@ using Robust.Server.GameObjects;
 using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Ensnaring.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Strip;
@@ -56,7 +57,7 @@ namespace Content.Server.Strip
                 if (!TryComp<EnsnaringComponent>(entity, out var ensnaring))
                     continue;
 
-                _ensnaring.TryFree(component.Owner, ensnaring, user);
+                _ensnaring.TryFree(uid, entity, ensnaring, user);
                 return;
             }
         }

@@ -137,6 +137,15 @@ public sealed class AdminLogsEui : BaseEui
 
                 LogsControl.NextButton.Disabled = !newLogs.HasNext;
                 break;
+
+            case SetLogFilter setLogFilter:
+                if (setLogFilter.Search != null)
+                    LogsControl.LogSearch.SetText(setLogFilter.Search);
+
+                if (setLogFilter.Types != null)
+                    LogsControl.SetTypesSelection(setLogFilter.Types, setLogFilter.InvertTypes);
+
+                break;
         }
     }
 

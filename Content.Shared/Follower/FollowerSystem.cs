@@ -73,7 +73,7 @@ public sealed class FollowerSystem : EntitySystem
         followedComp.Following.Add(follower);
 
         var xform = Transform(follower);
-        _transform.SetParent(xform, entity);
+        _transform.SetParent(follower, xform, entity);
         xform.LocalPosition = Vector2.Zero;
         xform.LocalRotation = Angle.Zero;
 

@@ -248,6 +248,29 @@
         Quantity: 10
 
 - type: entity
+  name: cabbage
+  parent: FoodProduceBase
+  id: FoodCabbage
+  description: Ewwwwwwwwww. Cabbage.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cabbage
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 14
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 4
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/cabbage.rsi
+  - type: Produce
+    seedId: cabbage
+
+- type: entity
   name: lemon
   parent: FoodProduceBase
   id: FoodLemon

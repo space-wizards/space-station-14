@@ -8,7 +8,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
   - type: SolutionTransfer
     canChangeTransferAmount: true
   - type: Drink
@@ -68,18 +68,58 @@
 
 # Transformable container - normal glass
 - type: entity
-  name: Drinking glass
-  description: A drinking glass.
+  name: metamorphic glass
+  description: A metamorphic glass that automagically turns into a glass appropriate for the drink within. There's a sanded off patent number on the bottom.
   parent: DrinkGlassBase
   id: DrinkGlass
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_clear.rsi
+    layers:
+      - state: icon
+        map: [ "enum.SolutionContainerLayers.Base" ]
+      - state: fill1
+        map: [ "enum.SolutionContainerLayers.Fill" ]
+        visible: false
+      - state: icon-front
+        map: [ "enum.SolutionContainerLayers.Overlay" ]
+  - type: Appearance
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
-  - type: TransformableContainer
+        maxVol: 30
+  - type: SolutionContainerVisuals
+    maxFillLevels: 9
+    fillBaseName: fill
+    metamorphic: true
+    metamorphicDefaultSprite:
+      sprite: Objects/Consumable/Drinks/glass_clear.rsi
+      state: icon
+
+- type: entity
+  name: Coupe glass
+  description: A classic thin neck coupe glass, the icon of fragile labels on crates around the galaxy.
+  parent: DrinkGlassBase
+  id: DrinkGlassCoupeShaped
+  components:
+    - type: Sprite
+      sprite: Objects/Consumable/Drinks/glass_coupe_shape.rsi
+      layers:
+        - state: icon
+          map: [ "enum.SolutionContainerLayers.Base" ]
+        - state: fill1
+          map: [ "enum.SolutionContainerLayers.Fill" ]
+          visible: false
+        - state: icon-front
+          map: [ "enum.SolutionContainerLayers.Overlay" ]
+    - type: Appearance
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+    - type: SolutionContainerVisuals
+      maxFillLevels: 5
+      fillBaseName: fill
 
 - type: entity
   parent: DrinkGlassBase
@@ -90,10 +130,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Absinthe
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/absintheglass.rsi
 
@@ -106,10 +146,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: AcidSpit
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/acidspitglass.rsi
 
@@ -122,10 +162,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Ale
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/aleglass.rsi
 
@@ -138,10 +178,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: AlliesCocktail
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alliescocktail.rsi
 
@@ -154,10 +194,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Aloe
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/aloe.rsi
 
@@ -170,10 +210,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Amasec
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/amasecglass.rsi
 
@@ -186,10 +226,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Andalusia
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/andalusia.rsi
 
@@ -202,10 +242,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Antifreeze
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/antifreeze.rsi
@@ -219,10 +259,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: AtomicBomb
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/atomicbombglass.rsi
@@ -236,10 +276,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: B52
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/b52glass.rsi
@@ -253,10 +293,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: BahamaMama
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/bahama_mama.rsi
@@ -270,10 +310,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: BananaHonk
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/bananahonkglass.rsi
@@ -287,10 +327,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Barefoot
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/b&p.rsi
@@ -304,10 +344,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: BeepskySmash
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beepskysmashglass.rsi
@@ -321,10 +361,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Beer
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beerglass.rsi
 
@@ -338,10 +378,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: JuiceBerry
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/berryjuice.rsi
 
@@ -354,10 +394,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Bilk
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_brown.rsi
@@ -371,10 +411,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: BlackRussian
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/blackrussianglass.rsi
@@ -389,10 +429,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: BlueCuracao
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/curacaoglass.rsi
 
@@ -405,10 +445,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: BloodyMary
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/bloodymaryglass.rsi
@@ -422,10 +462,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Booger
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/booger.rsi
@@ -439,10 +479,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: BraveBull
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/bravebullglass.rsi
@@ -457,10 +497,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: JuiceCarrot
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/carrotjuice.rsi
 
@@ -483,10 +523,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: CafeLatte
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cafe_latte.rsi
@@ -500,10 +540,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Coffee
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/coffee.rsi
 
@@ -516,10 +556,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Cognac
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cognacglass.rsi
 
@@ -532,10 +572,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Cream
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cream.rsi
 
@@ -548,10 +588,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: CubaLibre
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cubalibreglass.rsi
 
@@ -564,10 +604,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: DeadRum
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/rumglass.rsi
@@ -581,10 +621,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: DemonsBlood
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/demonsblood.rsi
@@ -598,10 +638,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: DevilsKiss
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/devilskiss.rsi
@@ -615,10 +655,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: DoctorsDelight
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/doctorsdelightglass.rsi
@@ -632,10 +672,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: DriestMartini
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/driestmartiniglass.rsi
@@ -649,10 +689,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: DrGibb
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/dr_gibb_glass.rsi
@@ -666,10 +706,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: ErikaSurprise
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/erikasurprise.rsi
@@ -683,10 +723,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: FourteenLoko
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/fourteen_loko_glass.rsi
@@ -700,10 +740,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: GargleBlaster
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/gargleblasterglass.rsi
@@ -717,10 +757,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Gin
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
@@ -734,10 +774,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: GinFizz
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ginfizzglass.rsi
@@ -751,10 +791,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: GinTonic
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/gintonicglass.rsi
@@ -768,10 +808,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Goldschlager
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/goldschlagerglass.rsi
@@ -786,10 +826,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: JuiceGrape
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/grapejuice.rsi
 
@@ -812,10 +852,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: GreenTea
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_green.rsi #Placeholder
@@ -829,10 +869,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Grenadine
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/grenadineglass.rsi
@@ -846,10 +886,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Grog
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/grogglass.rsi
@@ -873,10 +913,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Hooch
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_brown2.rsi
@@ -890,10 +930,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: IcedCoffee
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/icedcoffeeglass.rsi
@@ -907,10 +947,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: IcedGreenTea
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_green.rsi #Placeholder
@@ -924,10 +964,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: IcedTea
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/icedteaglass.rsi
@@ -951,10 +991,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Ice
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/iceglass.rsi
 
@@ -967,10 +1007,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: IceCream
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/icecreamglass.rsi
@@ -985,10 +1025,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: IrishCarBomb
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/irishcarbomb.rsi
 
@@ -1001,10 +1041,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: IrishCoffee
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/irishcoffeeglass.rsi
 
@@ -1017,10 +1057,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: IrishCream
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/irishcreamglass.rsi
 
@@ -1033,10 +1073,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: CoffeeLiqueur
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/coffeeliqueurglass.rsi
 
@@ -1049,10 +1089,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: KiraSpecial
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/kiraspecial.rsi
@@ -1066,10 +1106,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Lemonade
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lemonadeglass.rsi
@@ -1084,10 +1124,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: JuiceLemon
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lemonjuice.rsi
 
@@ -1101,10 +1141,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: LemonLime
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lemonlime.rsi
 
@@ -1118,10 +1158,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: JuiceLime
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/limejuice.rsi
 
@@ -1134,10 +1174,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: LongIslandIcedTea
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/longislandicedteaglass.rsi
@@ -1151,10 +1191,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Manhattan
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/manhattanglass.rsi
@@ -1168,10 +1208,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: ManhattanProject
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/proj_manhattanglass.rsi
@@ -1185,10 +1225,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: ManlyDorf
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/manlydorfglass.rsi
 
@@ -1201,10 +1241,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Margarita
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/margaritaglass.rsi
@@ -1218,10 +1258,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Martini
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/martiniglass.rsi
@@ -1235,10 +1275,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Mead
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/meadglass.rsi
@@ -1262,10 +1302,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Mojito
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mojito.rsi
@@ -1279,10 +1319,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Neurotoxin
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/neurotoxinglass.rsi
@@ -1296,10 +1336,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Nothing
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/nothing.rsi
@@ -1313,10 +1353,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: NTCahors
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ntcahors.rsi
@@ -1330,10 +1370,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: NuclearCola
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/nuclear_colaglass.rsi
@@ -1348,10 +1388,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: JuiceOrange
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/orangejuice.rsi
 
@@ -1364,10 +1404,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Patron
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/patronglass.rsi
@@ -1382,10 +1422,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: JuiceBerryPoison
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/poisonberryjuice.rsi
 
@@ -1398,10 +1438,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: PoisonWine
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/pwineglass.rsi
@@ -1415,10 +1455,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Posca
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_light_yellow.rsi
@@ -1432,10 +1472,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: RedMead
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/red_meadglass.rsi
@@ -1449,10 +1489,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Rewriter
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/rewriter.rsi
@@ -1466,10 +1506,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: RootBeer
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/rootbeerglass.rsi
@@ -1484,10 +1524,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: RootBeerFloat
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/rootbeerfloatglass.rsi
@@ -1502,10 +1542,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Rum
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/rumglass.rsi
@@ -1519,10 +1559,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Sake
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
@@ -1536,10 +1576,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Sbiten
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/sbitenglass.rsi
@@ -1553,10 +1593,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: ScrewdriverCocktail
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/screwdriverglass.rsi
@@ -1570,10 +1610,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: SuiDream
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/sdreamglass.rsi
@@ -1587,10 +1627,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: MelonLiquor
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/emeraldglass.rsi
@@ -1604,10 +1644,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Moonshine
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_clear.rsi
@@ -1621,10 +1661,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Milk
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_white.rsi
 
@@ -1637,10 +1677,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Silencer
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/silencerglass.rsi
@@ -1654,10 +1694,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Singulo
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/singulo.rsi
@@ -1671,10 +1711,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: SnowWhite
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/snowwhite.rsi
@@ -1688,10 +1728,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: SoyLatte
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/soy_latte.rsi
@@ -1705,10 +1745,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: SpaceUp
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space-up_glass.rsi
@@ -1722,10 +1762,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: SpaceMountainWind
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space_mountain_wind_glass.rsi
@@ -1739,10 +1779,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: SyndicateBomb
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/syndicatebomb.rsi
 
@@ -1755,10 +1795,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Tea
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teaglass.rsi
 
@@ -1787,10 +1827,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Tequila
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tequillaglass.rsi
@@ -1804,10 +1844,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: TequilaSunrise
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tequillasunriseglass.rsi
@@ -1821,10 +1861,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: ThreeMileIsland
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/threemileislandglass.rsi
@@ -1839,10 +1879,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: JuiceTomato
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tomatojuice.rsi
 
@@ -1855,10 +1895,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: ToxinsSpecial
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/toxinsspecialglass.rsi
@@ -1872,10 +1912,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Vermouth
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/vermouthglass.rsi
@@ -1889,10 +1929,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Vodka
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
@@ -1906,10 +1946,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: VodkaMartini
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/martiniglass.rsi
@@ -1923,10 +1963,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: VodkaTonic
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/vodkatonicglass.rsi
@@ -1940,10 +1980,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Water
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/water.rsi
@@ -1958,10 +1998,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: JuiceWatermelon
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/watermelon.rsi
 
@@ -1974,10 +2014,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: WhiskeyCola
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/whiskeycolaglass.rsi
 
@@ -1990,10 +2030,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Whiskey
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/whiskeyglass.rsi
 
@@ -2006,10 +2046,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: WhiskeySoda
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/whiskeysodaglass.rsi
@@ -2023,10 +2063,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: WhiteRussian
-          Quantity: 50
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/whiterussianglass.rsi
@@ -2040,10 +2080,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: Wine
-          Quantity: 50
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/wineglass.rsi
 
@@ -2108,7 +2148,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: DryRamen
           Quantity: 30
@@ -2129,7 +2169,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 30
         reagents:
         - ReagentId: DryRamen
           Quantity: 30
@@ -2145,9 +2185,9 @@
     - type: SolutionContainerManager
       solutions:
         drink:
-          maxVol: 50
+          maxVol: 30
           reagents:
             - ReagentId: Kvass
-              Quantity: 50
+              Quantity: 30
     - type: Sprite
       sprite: Objects/Consumable/Drinks/kvass.rsi
