@@ -1,4 +1,5 @@
-﻿- type: entity
+﻿# TODO add a catwalk tile item once tile smoothing is supported
+- type: entity
   parent: BaseItem
   id: FloorTileItemBase
   description: These could work as a pretty decent throwing weapon.
@@ -35,6 +36,7 @@
       types:
         Blunt: 5
 
+#steel variants
 - type: entity
   name: steel tile
   parent: FloorTileItemBase
@@ -55,6 +57,197 @@
     node: steeltile
 
 - type: entity
+  name: steel diagonal tile
+  parent: FloorTileItemBase
+  id: FloorTileItemSteelDiagonal
+  components:
+  - type: Sprite
+    state: steel
+  - type: Item
+    heldPrefix: steel
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorSteelDiagonal
+  - type: Stack
+    stackType: FloorTileSteelDiagonal
+  - type: Construction
+    graph: TileSteelDiagonal
+    node: steeldiagonaltile
+
+- type: entity
+  name: steel diagonal mini tile
+  parent: FloorTileItemBase
+  id: FloorTileItemSteelDiagonalMini
+  components:
+  - type: Sprite
+    state: steel
+  - type: Item
+    heldPrefix: steel
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorSteelDiagonalMini
+  - type: Stack
+    stackType: FloorTileSteelDiagonalMini
+  - type: Construction
+    graph: TileSteelDiagonalMini
+    node: steeldiagonalminitile
+
+- type: entity
+  name: steel herringbone tile
+  parent: FloorTileItemBase
+  id: FloorTileItemSteelHerringbone
+  components:
+  - type: Sprite
+    state: steel
+  - type: Item
+    heldPrefix: steel
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorSteelHerringbone
+  - type: Stack
+    stackType: FloorTileSteelHerringbone
+  - type: Construction
+    graph: TileSteelHerringbone
+    node: steelherringbonetile
+
+- type: entity
+  name: steel mini tile
+  parent: FloorTileItemBase
+  id: FloorTileItemSteelMini
+  components:
+  - type: Sprite
+    state: steel
+  - type: Item
+    heldPrefix: steel
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorSteelMini
+  - type: Stack
+    stackType: FloorTileSteelMini
+  - type: Construction
+    graph: TileSteelMini
+    node: steelminitile
+
+- type: entity
+  name: steel mono tile
+  parent: FloorTileItemBase
+  id: FloorTileItemSteelMono
+  components:
+  - type: Sprite
+    state: steel
+  - type: Item
+    heldPrefix: steel
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorSteelMono
+  - type: Stack
+    stackType: FloorTileSteelMono
+  - type: Construction
+    graph: TileSteelMono
+    node: steelmonotile
+
+- type: entity
+  name: steel offset tile
+  parent: FloorTileItemBase
+  id: FloorTileItemSteelOffset
+  components:
+  - type: Sprite
+    state: steel
+  - type: Item
+    heldPrefix: steel
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorSteelOffset
+  - type: Stack
+    stackType: FloorTileSteelOffset
+  - type: Construction
+    graph: TileSteelOffset
+    node: steeloffsettile
+
+- type: entity
+  name: steel pavement tile
+  parent: FloorTileItemBase
+  id: FloorTileItemSteelPavement
+  components:
+  - type: Sprite
+    state: steel
+  - type: Item
+    heldPrefix: steel
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorSteelPavement
+  - type: Stack
+    stackType: FloorTileSteelPavement
+  - type: Construction
+    graph: TileSteelPavement
+    node: steelpavementtile
+
+- type: entity
+  name: steel pavement vertical tile
+  parent: FloorTileItemBase
+  id: FloorTileItemSteelPavementVertical
+  components:
+  - type: Sprite
+    state: steel
+  - type: Item
+    heldPrefix: steel
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorSteelPavementVertical
+  - type: Stack
+    stackType: FloorTileSteel
+  - type: Construction
+    graph: TileSteelPavementVertical
+    node: steelpavementverticaltile
+
+#special steel variants
+- type: entity
+  name: steel maint tile
+  parent: FloorTileItemBase
+  id: FloorTileItemSteelMaint
+  components:
+  - type: Sprite
+    state: steelmaint
+  - type: Item
+    heldPrefix: steel
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorTechMaint2
+  - type: Stack
+    stackType: FloorTileSteelMaint
+  - type: Construction
+    graph: TileSteelMaint
+    node: steelmainttile
+
+- type: entity
+  name: maint grating tile
+  parent: FloorTileItemBase
+  id: FloorTileItemMaintGrating
+  components:
+  - type: Sprite
+    state: maintgrating
+  - type: Item
+    heldPrefix: steel
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorTechMaint3
+  - type: Stack
+    stackType: FloorTileMaintGrating
+  - type: Construction
+    graph: TileMaintGrating
+    node: maintgratingtile
+
+- type: entity
   name: metal diamond tile
   parent: FloorTileItemBase
   id: FloorTileItemMetalDiamond
@@ -72,82 +265,6 @@
   - type: Construction
     graph: TileMetalDiamond
     node: metaldiamondtile
-
-- type: entity
-  name: wood floor
-  parent: FloorTileItemBase
-  id: FloorTileItemWood
-  components:
-  - type: Sprite
-    state: wood
-  - type: Item
-    heldPrefix: wood
-  - type: FloorTile
-    outputs:
-      - Plating
-      - FloorWood
-  - type: Stack
-    stackType: FloorTileWood
-  - type: Construction
-    graph: TileWood
-    node: woodtile
-
-- type: entity
-  name: mosaic wood floor
-  parent: FloorTileItemBase
-  id: FloorTileItemMosaicWood
-  components:
-  - type: Sprite
-    state: mosaicwood
-  - type: Item
-    heldPrefix: mosaicwood
-  - type: FloorTile
-    outputs:
-      - Plating
-      - FloorMosaicWood
-  - type: Stack
-    stackType: FloorTileMosaicWood
-  - type: Construction
-    graph: TileMosaicWood
-    node: mosaicwoodtile
-
-- type: entity
-  name: white tile
-  parent: FloorTileItemBase
-  id: FloorTileItemWhite
-  components:
-  - type: Sprite
-    state: white
-  - type: Item
-    heldPrefix: white
-  - type: FloorTile
-    outputs:
-      - Plating
-      - FloorWhite
-  - type: Stack
-    stackType: FloorTileWhite
-  - type: Construction
-    graph: TileWhite
-    node: whitetile
-
-- type: entity
-  name: dark tile
-  parent: FloorTileItemBase
-  id: FloorTileItemDark
-  components:
-  - type: Sprite
-    state: dark
-  - type: Item
-    heldPrefix: dark
-  - type: FloorTile
-    outputs:
-      - Plating
-      - FloorDark
-  - type: Stack
-    stackType: FloorTileDark
-  - type: Construction
-    graph: TileDark
-    node: darktile
 
 - type: entity
   name: techmaint tile
@@ -184,40 +301,6 @@
   - type: Stack
     stackType: FloorTileReinforced
 
-# TODO add a catwalk tile item once tile smoothing is supported
-
-- type: entity
-  name: mono tile
-  parent: FloorTileItemBase
-  id: FloorTileItemMono
-  components:
-  - type: Sprite
-    state: monofloor
-  - type: Item
-    heldPrefix: steel
-  - type: FloorTile
-    outputs:
-      - Plating
-      - FloorMono
-  - type: Stack
-    stackType: FloorTileMono
-
-- type: entity
-  name: linoleum floor
-  parent: FloorTileItemBase
-  id: FloorTileItemLino
-  components:
-  - type: Sprite
-    state: lino
-  - type: Item
-    heldPrefix: steel
-  - type: FloorTile
-    outputs:
-      - Plating
-      - FloorLino
-  - type: Stack
-    stackType: FloorTileLino
-
 - type: entity
   name: dirty tile
   parent: FloorTileItemBase
@@ -234,10 +317,70 @@
   - type: Stack
     stackType: FloorTileDirty
 
+#wood variants
 - type: entity
-  name: elevator shaft tile
+  name: wood tile
   parent: FloorTileItemBase
-  id: FloorTileItemElevatorShaft
+  id: FloorTileItemWood
+  components:
+  - type: Sprite
+    state: wood
+  - type: Item
+    heldPrefix: wood
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWood
+  - type: Stack
+    stackType: FloorTileWood
+  - type: Construction
+    graph: TileWood
+    node: woodtile
+
+- type: entity
+  name: mosaic wood floor
+  parent: FloorTileItemBase
+  id: FloorTileItemMosaicWood
+  components:
+  - type: Sprite
+    state: mosaicwood
+  - type: Item
+    heldPrefix: mosaicwood
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWoodTile
+  - type: Stack
+    stackType: FloorTileMosaicWood
+  - type: Construction
+    graph: TileMosaicWood
+    node: mosaicwoodtile
+
+#white variants
+- type: entity
+  name: white tile
+  parent: FloorTileItemBase
+  id: FloorTileItemWhite
+  components:
+  - type: Sprite
+    state: white
+  - type: Item
+    heldPrefix: white
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWhite
+  - type: Stack
+    stackType: FloorTileWhite
+  - type: Construction
+    graph: TileWhite
+    node: whitetile
+
+#dark variants
+- type: entity
+  name: dark tile
+  parent: FloorTileItemBase
+  id: FloorTileItemDark
   components:
   - type: Sprite
     state: dark
@@ -246,172 +389,173 @@
   - type: FloorTile
     outputs:
       - Plating
-      - FloorElevatorShaft
+      - FloorDark
   - type: Stack
-    stackType: FloorTileElevatorShaft
+    stackType: FloorTileDark
+  - type: Construction
+    graph: TileDark
+    node: darktile
 
+#circuits
 - type: entity
-  name: rock vault tile
+  name: green circuit tile
   parent: FloorTileItemBase
-  id: FloorTileItemRockVault
+  id: FloorTileItemGreenCircuit
   components:
   - type: Sprite
-    state: rockvault
+    state: gcircuit
   - type: Item
-    heldPrefix: steel
+    heldPrefix: gcircuit
   - type: FloorTile
     outputs:
       - Plating
-      - FloorRockVault
+      - FloorGreenCircuit
   - type: Stack
-    stackType: FloorTileRockVault
+    stackType: FloorTileGreenCircuit
+  - type: Construction
+    graph: TileGreenCircuit
+    node: greencircuittile
 
 - type: entity
-  name: blue tile
+  name: blue circuit tile
   parent: FloorTileItemBase
-  id: FloorTileItemBlue
+  id: FloorTileItemBlueCircuit
   components:
   - type: Sprite
-    state: blue
+    state: bcircuit
   - type: Item
-    heldPrefix: carpet-blue
+    heldPrefix: bcircuit
   - type: FloorTile
     outputs:
       - Plating
-      - FloorBlue
+      - FloorBlueCircuit
   - type: Stack
-    stackType: FloorTileBlue
+    stackType: FloorTileBlueCircuit
+  - type: Construction
+    graph: TileBlueCircuit
+    node: bluecircuittile
 
-# Departamental
+#material
 - type: entity
-  name: freezer tile
+  name: gold tile
   parent: FloorTileItemBase
-  id: FloorTileItemFreezer
+  id: FloorTileItemGold
   components:
   - type: Sprite
-    state: showroom
+    state: gold
   - type: Item
-    heldPrefix: showroom
+    heldPrefix: gold
   - type: FloorTile
     outputs:
       - Plating
-      - FloorFreezer
+      - FloorGold
   - type: Stack
-    stackType: FloorTileFreezer
+    stackType: FloorTileGold
+  - type: Construction
+    graph: TileGold
+    node: goldtile
 
 - type: entity
-  name: showroom tile
+  name: silver tile
   parent: FloorTileItemBase
-  id: FloorTileItemShowroom
+  id: FloorTileItemSilver
   components:
   - type: Sprite
-    state: showroom
+    state: silver
   - type: Item
-    heldPrefix: showroom
+    heldPrefix: silver
   - type: FloorTile
     outputs:
       - Plating
-      - FloorShowroom
+      - FloorSilver
   - type: Stack
-    stackType: FloorTileShowroom
+    stackType: FloorTileSilver
+  - type: Construction
+    graph: TileSilver
+    node: silvertile
 
+#shuttle
 - type: entity
-  name: hydro tile
+  name: white shuttle floor
   parent: FloorTileItemBase
-  id: FloorTileItemHydro
+  id: FloorTileItemShuttleWhite
   components:
   - type: Sprite
-    state: hydro
+    state: shuttlewhite
   - type: Item
-    heldPrefix: hydro
+    heldPrefix: shuttlewhite
   - type: FloorTile
     outputs:
       - Plating
-      - FloorHydro
+      - FloorShuttleWhite
   - type: Stack
-    stackType: FloorTileHydro
+    stackType: FloorTileStackShuttleWhite
 
 - type: entity
-  name: bar tile
+  name: blue shuttle floor
   parent: FloorTileItemBase
-  id: FloorTileItemBar
+  id: FloorTileItemShuttleBlue
   components:
   - type: Sprite
-    state: bar
+    state: shuttleblue
   - type: Item
-    heldPrefix: steel
+    heldPrefix: shuttleblue
   - type: FloorTile
     outputs:
       - Plating
-      - FloorBar
+      - FloorShuttleBlue
   - type: Stack
-    stackType: FloorTileBar
+    stackType: FloorTileStackShuttleBlue
 
 - type: entity
-  name: clown tile
+  name: orange shuttle floor
   parent: FloorTileItemBase
-  id: FloorTileItemClown
+  id: FloorTileItemShuttleOrange
   components:
   - type: Sprite
-    state: clown
+    state: shuttleorange
   - type: Item
-    heldPrefix: steel
+    heldPrefix: shuttleorange
   - type: FloorTile
     outputs:
       - Plating
-      - FloorClown
+      - FloorShuttleOrange
   - type: Stack
-    stackType: FloorTileClown
+    stackType: FloorTileStackShuttleOrange
 
 - type: entity
-  name: mime tile
+  name: purple shuttle floor
   parent: FloorTileItemBase
-  id: FloorTileItemMime
+  id: FloorTileItemShuttlePurple
   components:
   - type: Sprite
-    state: mime
+    state: shuttlepurple
   - type: Item
-    heldPrefix: steel
+    heldPrefix: shuttlepurple
   - type: FloorTile
     outputs:
       - Plating
-      - FloorMime
+      - FloorShuttlePurple
   - type: Stack
-    stackType: FloorTileMime
+    stackType: FloorTileStackShuttlePurple
 
 - type: entity
-  name: kitchen tile
+  name: red shuttle floor
   parent: FloorTileItemBase
-  id: FloorTileItemKitchen
+  id: FloorTileItemShuttleRed
   components:
   - type: Sprite
-    state: kitchen
+    state: shuttlered
   - type: Item
-    heldPrefix: dark
+    heldPrefix: shuttlered
   - type: FloorTile
     outputs:
       - Plating
-      - FloorKitchen
+      - FloorShuttleRed
   - type: Stack
-    stackType: FloorTileKitchen
+    stackType: FloorTileStackShuttleRed
 
-- type: entity
-  name: laundry tile
-  parent: FloorTileItemBase
-  id: FloorTileItemLaundry
-  components:
-  - type: Sprite
-    state: laundry
-  - type: Item
-    heldPrefix: steel
-  - type: FloorTile
-    outputs:
-      - Plating
-      - FloorLaundry
-  - type: Stack
-    stackType: FloorTileLaundry
-
-# Carpets
+#carpets
 - type: entity
   name: blue arcade floor
   parent: FloorTileItemBase
@@ -543,160 +687,184 @@
   - type: Stack
     stackType: FloorTileStackGym
 
-# Shuttles
 - type: entity
-  name: white shuttle floor
+  name: linoleum floor
   parent: FloorTileItemBase
-  id: FloorTileItemShuttleWhite
+  id: FloorTileItemLino
   components:
   - type: Sprite
-    state: shuttlewhite
+    state: lino
   - type: Item
-    heldPrefix: shuttlewhite
+    heldPrefix: steel
   - type: FloorTile
     outputs:
       - Plating
-      - FloorShuttleWhite
+      - FloorLino
   - type: Stack
-    stackType: FloorTileStackShuttleWhite
+    stackType: FloorTileLino
 
+#department
 - type: entity
-  name: blue shuttle floor
+  name: freezer tile
   parent: FloorTileItemBase
-  id: FloorTileItemShuttleBlue
+  id: FloorTileItemFreezer
   components:
   - type: Sprite
-    state: shuttleblue
+    state: showroom
   - type: Item
-    heldPrefix: shuttleblue
+    heldPrefix: showroom
   - type: FloorTile
     outputs:
       - Plating
-      - FloorShuttleBlue
+      - FloorFreezer
   - type: Stack
-    stackType: FloorTileStackShuttleBlue
+    stackType: FloorTileFreezer
 
 - type: entity
-  name: orange shuttle floor
+  name: showroom tile
   parent: FloorTileItemBase
-  id: FloorTileItemShuttleOrange
+  id: FloorTileItemShowroom
   components:
   - type: Sprite
-    state: shuttleorange
+    state: showroom
   - type: Item
-    heldPrefix: shuttleorange
+    heldPrefix: showroom
   - type: FloorTile
     outputs:
       - Plating
-      - FloorShuttleOrange
+      - FloorShowroom
   - type: Stack
-    stackType: FloorTileStackShuttleOrange
+    stackType: FloorTileShowroom
 
 - type: entity
-  name: purple shuttle floor
+  name: hydro tile
   parent: FloorTileItemBase
-  id: FloorTileItemShuttlePurple
+  id: FloorTileItemHydro
   components:
   - type: Sprite
-    state: shuttlepurple
+    state: hydro
   - type: Item
-    heldPrefix: shuttlepurple
+    heldPrefix: hydro
   - type: FloorTile
     outputs:
       - Plating
-      - FloorShuttlePurple
+      - FloorHydro
   - type: Stack
-    stackType: FloorTileStackShuttlePurple
+    stackType: FloorTileHydro
 
 - type: entity
-  name: red shuttle floor
+  name: bar tile
   parent: FloorTileItemBase
-  id: FloorTileItemShuttleRed
+  id: FloorTileItemBar
   components:
   - type: Sprite
-    state: shuttlered
+    state: bar
   - type: Item
-    heldPrefix: shuttlered
+    heldPrefix: steel
   - type: FloorTile
     outputs:
       - Plating
-      - FloorShuttleRed
+      - FloorBar
   - type: Stack
-    stackType: FloorTileStackShuttleRed
+    stackType: FloorTileBar
 
-# Materials
 - type: entity
-  name: gold tile
+  name: clown tile
   parent: FloorTileItemBase
-  id: FloorTileItemGold
+  id: FloorTileItemClown
   components:
   - type: Sprite
-    state: gold
+    state: clown
   - type: Item
-    heldPrefix: gold
+    heldPrefix: steel
   - type: FloorTile
     outputs:
       - Plating
-      - FloorGold
+      - FloorClown
   - type: Stack
-    stackType: FloorTileGold
-  - type: Construction
-    graph: TileGold
-    node: goldtile
+    stackType: FloorTileClown
 
 - type: entity
-  name: silver tile
+  name: mime tile
   parent: FloorTileItemBase
-  id: FloorTileItemSilver
+  id: FloorTileItemMime
   components:
   - type: Sprite
-    state: silver
+    state: mime
   - type: Item
-    heldPrefix: silver
+    heldPrefix: steel
   - type: FloorTile
     outputs:
       - Plating
-      - FloorSilver
+      - FloorMime
   - type: Stack
-    stackType: FloorTileSilver
-  - type: Construction
-    graph: TileSilver
-    node: silvertile
+    stackType: FloorTileMime
 
-# Circuits
 - type: entity
-  name: green circuit floor
+  name: kitchen tile
   parent: FloorTileItemBase
-  id: FloorTileItemGCircuit
+  id: FloorTileItemKitchen
   components:
   - type: Sprite
-    state: gcircuit
+    state: kitchen
   - type: Item
-    heldPrefix: gcircuit
+    heldPrefix: dark
   - type: FloorTile
     outputs:
       - Plating
-      - FloorGreenCircuit
+      - FloorKitchen
   - type: Stack
-    stackType: FloorTileGCircuit
+    stackType: FloorTileKitchen
 
 - type: entity
-  name: blue circuit floor
+  name: laundry tile
   parent: FloorTileItemBase
-  id: FloorTileItemBCircuit
+  id: FloorTileItemLaundry
   components:
   - type: Sprite
-    state: bcircuit
+    state: laundry
   - type: Item
-    heldPrefix: bcircuit
+    heldPrefix: steel
   - type: FloorTile
     outputs:
       - Plating
-      - FloorBlueCircuit
+      - FloorLaundry
   - type: Stack
-    stackType: FloorTileBCircuit
+    stackType: FloorTileLaundry
 
-# Terrain
+- type: entity
+  name: mono tile
+  parent: FloorTileItemBase
+  id: FloorTileItemMono
+  components:
+  - type: Sprite
+    state: monofloor
+  - type: Item
+    heldPrefix: steel
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorMono
+  - type: Stack
+    stackType: FloorTileMono
+
+- type: entity
+  name: blue tile
+  parent: FloorTileItemBase
+  id: FloorTileItemBlue
+  components:
+  - type: Sprite
+    state: blue
+  - type: Item
+    heldPrefix: carpet-blue
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorBlue
+  - type: Stack
+    stackType: FloorTileBlue
+
+#terrain
 - type: entity
   name: grass tile
   parent: FloorTileItemBase
@@ -745,40 +913,35 @@
   - type: Stack
     stackType: FloorTileSnow
 
+#other
 - type: entity
-  name: steel maint tile
+  name: elevator shaft tile
   parent: FloorTileItemBase
-  id: FloorTileItemSteelMaint
+  id: FloorTileItemElevatorShaft
   components:
   - type: Sprite
-    state: steelmaint
+    state: dark
   - type: Item
-    heldPrefix: steel
+    heldPrefix: dark
   - type: FloorTile
     outputs:
       - Plating
-      - FloorTechMaint2
+      - FloorElevatorShaft
   - type: Stack
-    stackType: FloorTileSteelMaint
-  - type: Construction
-    graph: TileSteelMaint
-    node: steelmainttile
+    stackType: FloorTileElevatorShaft
 
 - type: entity
-  name: maint grating tile
+  name: rock vault tile
   parent: FloorTileItemBase
-  id: FloorTileItemMaintGrating
+  id: FloorTileItemRockVault
   components:
   - type: Sprite
-    state: maintgrating
+    state: rockvault
   - type: Item
     heldPrefix: steel
   - type: FloorTile
     outputs:
       - Plating
-      - FloorMaintGrating
+      - FloorRockVault
   - type: Stack
-    stackType: FloorTileMaintGrating
-  - type: Construction
-    graph: TileMaintGrating
-    node: maintgratingtile
+    stackType: FloorTileRockVault

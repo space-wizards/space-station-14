@@ -1,3 +1,4 @@
+#steel variants
 - type: constructionGraph
   id: TileSteel
   start: start
@@ -15,54 +16,134 @@
       entity: FloorTileItemSteel
 
 - type: constructionGraph
-  id: TileWood
+  id: TileSteelDiagonal
   start: start
   graph:
     - node: start
       edges:
-        - to: woodtile
-          completed:
-            - !type:SetStackCount
-              amount: 4
-          steps:
-            # Needs StackType ID
-            - material: WoodPlank
-              amount: 1
-    - node: woodtile
-      entity: FloorTileItemWood
-
-- type: constructionGraph
-  id: TileWhite
-  start: start
-  graph:
-    - node: start
-      edges:
-        - to: whitetile
+        - to: steeldiagonaltile
           completed:
             - !type:SetStackCount
               amount: 4
           steps:
             - material: Steel
               amount: 1
-    - node: whitetile
-      entity: FloorTileItemWhite
+    - node: steeldiagonaltile
+      entity: FloorTileItemSteelDiagonal
 
 - type: constructionGraph
-  id: TileDark
+  id: TileSteelDiagonalMini
   start: start
   graph:
     - node: start
       edges:
-        - to: darktile
+        - to: steeldiagonalminitile
           completed:
             - !type:SetStackCount
               amount: 4
           steps:
             - material: Steel
               amount: 1
-    - node: darktile
-      entity: FloorTileItemDark
+    - node: steeldiagonalminitile
+      entity: FloorTileItemSteelDiagonalMini
 
+- type: constructionGraph
+  id: TileSteelHerringbone
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: steelherringbonetile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: steelherringbonetile
+      entity: FloorTileItemSteelHerringbone
+
+- type: constructionGraph
+  id: TileSteelMini
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: steelminitile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: steelminitile
+      entity: FloorTileItemSteelMini
+
+- type: constructionGraph
+  id: TileSteelMono
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: steelmonotile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: steelmonotile
+      entity: FloorTileItemSteelMono
+
+- type: constructionGraph
+  id: TileSteelOffset
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: steeloffsettile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: steeloffsettile
+      entity: FloorTileItemSteelOffset
+
+- type: constructionGraph
+  id: TileSteelPavement
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: steelpavementtile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: steelpavementtile
+      entity: FloorTileItemSteelPavement
+
+- type: constructionGraph
+  id: TileSteelPavementVertical
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: steelpavementverticaltile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: steelpavementverticaltile
+      entity: FloorTileItemSteelPavementVertical
+
+#special steel variants
 - type: constructionGraph
   id: TileMetalDiamond
   start: start
@@ -78,70 +159,6 @@
               amount: 1
     - node: metaldiamondtile
       entity: FloorTileItemMetalDiamond
-
-- type: constructionGraph
-  id: TileGold
-  start: start
-  graph:
-    - node: start
-      edges:
-        - to: goldtile
-          completed:
-            - !type:SetStackCount
-              amount: 4
-          steps:
-            - material: Gold
-              amount: 1
-    - node: goldtile
-      entity: FloorTileItemGold
-
-- type: constructionGraph
-  id: TileSilver
-  start: start
-  graph:
-    - node: start
-      edges:
-        - to: silvertile
-          completed:
-            - !type:SetStackCount
-              amount: 4
-          steps:
-            - material: Silver
-              amount: 1
-    - node: silvertile
-      entity: FloorTileItemSilver
-
-- type: constructionGraph
-  id: TileMosaicWood
-  start: start
-  graph:
-    - node: start
-      edges:
-        - to: mosaicwoodtile
-          completed:
-            - !type:SetStackCount
-              amount: 4
-          steps:
-            - material: WoodPlank
-              amount: 1
-    - node: mosaicwoodtile
-      entity: FloorTileItemMosaicWood
-
-- type: constructionGraph
-  id: TileCarpetClown
-  start: start
-  graph:
-    - node: start
-      edges:
-        - to: carpetclowntile
-          completed:
-            - !type:SetStackCount
-              amount: 4
-          steps:
-            - material: Cloth
-              amount: 1
-    - node: carpetclowntile
-      entity: FloorTileItemCarpetClown
 
 - type: constructionGraph
   id: TileTechmaint
@@ -190,3 +207,157 @@
               amount: 1
     - node: steelmainttile
       entity: FloorTileItemSteelMaint
+
+#wood variants
+- type: constructionGraph
+  id: TileWood
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: woodtile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: WoodPlank
+              amount: 1
+    - node: woodtile
+      entity: FloorTileItemWood
+
+- type: constructionGraph
+  id: TileMosaicWood
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: mosaicwoodtile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: WoodPlank
+              amount: 1
+    - node: mosaicwoodtile
+      entity: FloorTileItemMosaicWood
+
+#white variants
+- type: constructionGraph
+  id: TileWhite
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: whitetile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: whitetile
+      entity: FloorTileItemWhite
+
+#dark variants
+- type: constructionGraph
+  id: TileDark
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: darktile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: darktile
+      entity: FloorTileItemDark
+
+#circuits
+- type: constructionGraph
+  id: TileGreenCircuit
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: greencircuittile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+            - material: Cable
+              amount: 1
+    - node: greencircuittile
+      entity: FloorTileItemGreenCircuit
+
+- type: constructionGraph
+  id: TileBlueCircuit
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: bluecircuittile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+            - material: Cable
+              amount: 1
+    - node: bluecircuittile
+      entity: FloorTileItemBlueCircuit
+
+#material
+- type: constructionGraph
+  id: TileGold
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: goldtile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Gold
+              amount: 1
+    - node: goldtile
+      entity: FloorTileItemGold
+
+- type: constructionGraph
+  id: TileSilver
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: silvertile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Silver
+              amount: 1
+    - node: silvertile
+      entity: FloorTileItemSilver
+
+#carpet
+- type: constructionGraph
+  id: TileCarpetClown
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: carpetclowntile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Cloth
+              amount: 1
+    - node: carpetclowntile
+      entity: FloorTileItemCarpetClown

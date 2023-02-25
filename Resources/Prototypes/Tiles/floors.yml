@@ -188,7 +188,7 @@
   heatCapacity: 10000
 
 - type: tile
-  id: FloorMosaicWood
+  id: FloorWoodTile
   name: tiles-mosaic-wood
   sprite: /Textures/Tiles/mosaic_wood.png
   variants: 4
@@ -561,7 +561,7 @@
   thermalConductivity: 0.04
   heatCapacity: 10000
 
-#for some reason naming it "Techmaint" and not "TechMaint" is impossible and hurts me physically
+
 - type: tile
   id: FloorReinforced
   name: tiles-reinforced-floor
@@ -1091,7 +1091,7 @@
   footstepSounds:
     collection: FootstepHull
   friction: 0.30
-  itemDrop: FloorTileItemGCircuit
+  itemDrop: FloorTileItemGreenCircuit
   thermalConductivity: 0.04
   heatCapacity: 10000
 
@@ -1106,7 +1106,7 @@
   footstepSounds:
     collection: FootstepHull
   friction: 0.30
-  itemDrop: FloorTileItemBCircuit
+  itemDrop: FloorTileItemGreenCircuit
   thermalConductivity: 0.04
   heatCapacity: 10000
 
@@ -1417,9 +1417,9 @@
   thermalConductivity: 0.04
   heatCapacity: 10000
 
-#naming this anything other than techmaint2 breaks the game funny haha
+
 - type: tile
-  id: FloorMaintGrating
+  id: FloorTechMaint3
   name: tiles-maintgrating-floor
   sprite: /Textures/Tiles/grating_maint.png
   variants: 4

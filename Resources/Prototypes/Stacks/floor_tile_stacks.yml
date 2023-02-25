@@ -1,7 +1,75 @@
-﻿- type: stack
+﻿#steel tile variants
+- type: stack
   id: FloorTileSteel
   name: steel tile
   spawn: FloorTileItemSteel
+  maxCount: 30
+
+- type: stack
+  id: FloorTileSteelDiagonal
+  name: steel diagonal tile
+  spawn: FloorTileItemSteelDiagonal
+  maxCount: 30
+
+- type: stack
+  id: FloorTileSteelDiagonalMini
+  name: steel diagonal mini tile
+  spawn: FloorTileItemSteelDiagonalMini
+  maxCount: 30
+
+- type: stack
+  id: FloorTileSteelHerringbone
+  name: steel herringbone tile
+  spawn: FloorTileItemSteelHerringbone
+  maxCount: 30
+
+- type: stack
+  id: FloorTileSteelMini
+  name: steel mini tile
+  spawn: FloorTileItemSteelMini
+  maxCount: 30
+
+- type: stack
+  id: FloorTileSteelMono
+  name: steel mono tile
+  spawn: FloorTileItemSteelMono
+  maxCount: 30
+
+- type: stack
+  id: FloorTileSteelOffset
+  name: steel offset tile
+  spawn: FloorTileItemSteelOffset
+  maxCount: 30
+
+- type: stack
+  id: FloorTileSteelPavement
+  name: steel pavement tile
+  spawn: FloorTileItemSteelPavement
+  maxCount: 30
+
+- type: stack
+  id: FloorTileSteelPavementVertical
+  name: steel pavement vertical tile
+  spawn: FloorTileItemSteelPavementVertical
+  maxCount: 30
+
+#special steel variants
+- type: stack
+  id: FloorTileTechmaint
+  name: techmaint tile
+  spawn: FloorTileItemTechmaint
+  maxCount: 30
+
+- type: stack
+  id: FloorTileSteelMaint
+  name: steel maint tile
+  spawn: FloorTileItemSteelMaint
+  maxCount: 30
+
+- type: stack
+  id: FloorTileMaintGrating
+  name: maint grating tile
+  spawn: FloorTileItemMaintGrating
   maxCount: 30
 
 - type: stack
@@ -11,75 +79,9 @@
   maxCount: 30
 
 - type: stack
-  id: FloorTileWood
-  name: wood floor
-  spawn: FloorTileItemWood
-  maxCount: 30
-
-- type: stack
-  id: FloorTileWhite
-  name: white tile
-  spawn: FloorTileItemWhite
-  maxCount: 30
-
-- type: stack
-  id: FloorTileDark
-  name: dark tile
-  spawn: FloorTileItemDark
-  maxCount: 30
-
-- type: stack
-  id: FloorTileTechmaint
-  name: techmaint tile
-  spawn: FloorTileItemTechmaint
-  maxCount: 30
-
-- type: stack
-  id: FloorTileFreezer
-  name: freezer tile
-  spawn: FloorTileItemFreezer
-  maxCount: 30
-
-- type: stack
-  id: FloorTileShowroom
-  name: showroom tile
-  spawn: FloorTileItemShowroom
-  maxCount: 30
-
-- type: stack
-  id: FloorTileGCircuit
-  name: green-circuit floor
-  spawn: FloorTileItemGCircuit
-  maxCount: 30
-
-- type: stack
-  id: FloorTileGold
-  name: gold tile
-  spawn: FloorTileItemGold
-  maxCount: 30
-
-- type: stack
   id: FloorTileReinforced
   name: reinforced tile
   spawn: FloorTileItemReinforced
-  maxCount: 30
-
-- type: stack
-  id: FloorTileMono
-  name: mono tile
-  spawn: FloorTileItemMono
-  maxCount: 30
-
-- type: stack
-  id: FloorTileLino
-  name: linoleum floor
-  spawn: FloorTileItemLino
-  maxCount: 30
-
-- type: stack
-  id: FloorTileHydro
-  name: hydro tile
-  spawn: FloorTileItemHydro
   maxCount: 30
 
 - type: stack
@@ -88,6 +90,60 @@
   spawn: FloorTileItemDirty
   maxCount: 30
 
+#wood variants
+- type: stack
+  id: FloorTileWood
+  name: wood tile
+  spawn: FloorTileItemWood
+  maxCount: 30
+
+- type: stack
+  id: FloorTileMosaicWood
+  name: mosaic wood floor
+  spawn: FloorTileItemMosaicWood
+  maxCount: 30
+
+#white variants
+- type: stack
+  id: FloorTileWhite
+  name: white tile
+  spawn: FloorTileItemWhite
+  maxCount: 30
+
+#dark variants
+- type: stack
+  id: FloorTileDark
+  name: dark tile
+  spawn: FloorTileItemDark
+  maxCount: 30
+
+#circuits
+- type: stack
+  id: FloorTileGreenCircuit
+  name: green circuit tile
+  spawn: FloorTileItemGreenCircuit
+  maxCount: 30
+
+- type: stack
+  id: FloorTileBlueCircuit
+  name: blue circuit tile
+  spawn: FloorTileItemBlueCircuit
+  maxCount: 30
+
+#material
+- type: stack
+  id: FloorTileGold
+  name: gold tile
+  spawn: FloorTileItemGold
+  maxCount: 30
+
+- type: stack
+  id: FloorTileSilver
+  name: silver tile
+  spawn: FloorTileItemSilver
+  maxCount: 30
+
+#shuttle
 - type: stack
   id: FloorTileStackShuttleWhite
   name: white shuttle tile
@@ -118,6 +174,7 @@
   spawn: FloorTileItemShuttleRed
   maxCount: 30
 
+#carpet
 - type: stack
   id: FloorTileStackEighties
   name: eighties floor tile
@@ -215,17 +272,12 @@
   maxCount: 30
 
 - type: stack
-  id: FloorTileElevatorShaft
-  name: elevator shaft tile
-  spawn: FloorTileItemElevatorShaft
+  id: FloorTileLino
+  name: linoleum floor
+  spawn: FloorTileItemLino
   maxCount: 30
 
-- type: stack
-  id: FloorTileRockVault
-  name: rock vault tile
-  spawn: FloorTileItemRockVault
-  maxCount: 30
-
+#departments
 - type: stack
   id: FloorTileBlue
   name: blue floor tile
@@ -263,17 +315,18 @@
   maxCount: 30
 
 - type: stack
-  id: FloorTileSilver
-  name: silver tile
-  spawn: FloorTileItemSilver
+  id: FloorTileMono
+  name: mono tile
+  spawn: FloorTileItemMono
   maxCount: 30
 
 - type: stack
-  id: FloorTileBCircuit
-  name: bcircuit floor tile
-  spawn: FloorTileItemBCircuit
+  id: FloorTileHydro
+  name: hydro tile
+  spawn: FloorTileItemHydro
   maxCount: 30
 
+#terrain
 - type: stack
   id: FloorTileGrass
   name: grass floor tile
@@ -292,21 +345,27 @@
   spawn: FloorTileItemSnow
   maxCount: 30
 
+#other
 - type: stack
-  id: FloorTileMosaicWood
-  name: mosaic wood floor
-  spawn: FloorTileItemMosaicWood
+  id: FloorTileFreezer
+  name: freezer tile
+  spawn: FloorTileItemFreezer
   maxCount: 30
 
 - type: stack
-  id: FloorTileSteelMaint
-  name: steel maint tile
-  spawn: FloorTileItemSteelMaint
+  id: FloorTileShowroom
+  name: showroom tile
+  spawn: FloorTileItemShowroom
   maxCount: 30
 
 - type: stack
-  id: FloorTileMaintGrating
-  name: maint grating tile
-  spawn: FloorTileItemMaintGrating
+  id: FloorTileElevatorShaft
+  name: elevator shaft tile
+  spawn: FloorTileItemElevatorShaft
   maxCount: 30
 
+- type: stack
+  id: FloorTileRockVault
+  name: rock vault tile
+  spawn: FloorTileItemRockVault
+  maxCount: 30
