@@ -1,10 +1,4 @@
 Entries:
-- author: ashtronaut
-  changes:
-  - {message: The Lobby's ready button now clearly states whether you are ready not.
-      Hopefully this reduces confusion!, type: Tweak}
-  id: 2566
-  time: '2022-11-04T00:51:26.0000000+00:00'
 - author: Carbonhell
   changes:
   - {message: Ghosts can now toggle the lighting manager to be able to better observe
@@ -2909,3 +2903,8 @@ Entries:
       connection pipes rotatable again., type: Fix}
   id: 3065
   time: '2023-02-24T01:33:34.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Hugging/Petting no longer opens the strip menu., type: Fix}
+  id: 3066
+  time: '2023-02-25T17:17:40.0000000+00:00'
