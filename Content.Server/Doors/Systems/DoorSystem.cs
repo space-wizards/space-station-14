@@ -2,8 +2,6 @@ using Content.Server.Access;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction;
-using Content.Server.Doors.Components;
-using Content.Server.Tools;
 using Content.Server.Tools.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
@@ -17,9 +15,9 @@ using Content.Shared.Tools.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
 using System.Linq;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Tools;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 
@@ -31,7 +29,7 @@ public sealed class DoorSystem : SharedDoorSystem
     [Dependency] private readonly AirlockSystem _airlock = default!;
     [Dependency] private readonly AirtightSystem _airtightSystem = default!;
     [Dependency] private readonly ConstructionSystem _constructionSystem = default!;
-    [Dependency] private readonly ToolSystem _toolSystem = default!;
+    [Dependency] private readonly SharedToolSystem _toolSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
     public override void Initialize()
@@ -197,9 +195,8 @@ public sealed class DoorSystem : SharedDoorSystem
         RaiseLocalEvent(target, modEv, false);
 
         door.BeingPried = true;
-        _toolSystem.UseTool(tool, user, target, 0f, modEv.PryTimeModifier * door.PryTime, door.PryingQuality,
-                new PryFinishedEvent(), new PryCancelledEvent(), target);
-
+        var toolEvData = new ToolEventData(new PryFinishedEvent(), cancelledEv: new PryCancelledEvent(),targetEntity: target);
+        _toolSystem.UseTool(tool, user, target, modEv.PryTimeModifier * door.PryTime, new[] { door.PryingQuality }, toolEvData);
         return true; // we might not actually succeeded, but a do-after has started
     }
 
