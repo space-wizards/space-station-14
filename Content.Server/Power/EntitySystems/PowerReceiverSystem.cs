@@ -7,14 +7,18 @@ using Content.Shared.Verbs;
 using Content.Shared.Database;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Content.Server.Administration.Managers;
+using Content.Shared.Administration;
 
 namespace Content.Server.Power.EntitySystems
 {
     public sealed class PowerReceiverSystem : EntitySystem
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly AppearanceSystem _appearance = default!;
         [Dependency] private readonly AudioSystem _audio = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -27,7 +31,23 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<ApcPowerProviderComponent, ExtensionCableSystem.ReceiverConnectedEvent>(OnReceiverConnected);
             SubscribeLocalEvent<ApcPowerProviderComponent, ExtensionCableSystem.ReceiverDisconnectedEvent>(OnReceiverDisconnected);
 
+            SubscribeLocalEvent<ApcPowerReceiverComponent, GetVerbsEvent<Verb>>(OnGetVerbs);
             SubscribeLocalEvent<PowerSwitchComponent, GetVerbsEvent<AlternativeVerb>>(AddSwitchPowerVerb);
+        }
+
+        private void OnGetVerbs(EntityUid uid, ApcPowerReceiverComponent component, GetVerbsEvent<Verb> args)
+        {
+            if (!_adminManager.HasAdminFlag(args.User, AdminFlags.Admin))
+                return;
+
+            // add debug verb to toggle power requirements
+            args.Verbs.Add(new()
+            {
+                Text = Loc.GetString("verb-debug-toggle-need-power"),
+                Category = VerbCategory.Debug,
+                IconTexture = "/Textures/Interface/VerbIcons/smite.svg.192dpi.png", // "smite" is a lightning bolt
+                Act = () => component.NeedsPower = !component.NeedsPower
+            });
         }
 
         ///<summary>
