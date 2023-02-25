@@ -1,3 +1,3 @@
-ent-SpawnPointEvilTwin = evil twin spawn point
+ent-SpawnPointEvilTwin = спавнер злой двойник
     .desc = { ent-MarkerBase.desc }
     .suffix = { "" }
