@@ -4,7 +4,6 @@ using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Serialization.TypeSerializers.Interfaces;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Atmos.Serialization;
 
@@ -48,16 +47,11 @@ public sealed class TileAtmosCollectionSerializer : ITypeSerializer<Dictionary<V
     {
         var uniqueMixes = new List<GasMixture>();
         var uniqueMixHash = new Dictionary<GasMixture, int>();
-        var tileChunks = new Dictionary<Vector2i, Dictionary<Vector2i, int>>();
-        var chunkSize = 4;
+        var tiles = new Dictionary<Vector2i, int>();
 
-        foreach (var (gridIndices, tile) in value)
+        foreach (var (indices, tile) in value)
         {
             if (tile.Air == null) continue;
-
-            var chunkOrigin = SharedMapSystem.GetChunkIndices(gridIndices, chunkSize);
-            var tiles = tileChunks.GetOrNew(chunkOrigin);
-            var indices = SharedMapSystem.GetChunkRelative(gridIndices, chunkSize);
 
             if (uniqueMixHash.TryGetValue(tile.Air, out var index))
             {
@@ -71,30 +65,22 @@ public sealed class TileAtmosCollectionSerializer : ITypeSerializer<Dictionary<V
             tiles[indices] = newIndex;
         }
 
-        if (uniqueMixes.Count == 0)
-            uniqueMixes = null;
-        if (tileChunks.Count == 0)
-            tileChunks = null;
+        if (uniqueMixes.Count == 0) uniqueMixes = null;
+        if (tiles.Count == 0) tiles = null;
 
         return serializationManager.WriteValue(new TileAtmosData
         {
-            ChunkSize = chunkSize,
             UniqueMixes = uniqueMixes,
-            TilesUniqueMixes = null,
-            TileChunksUniqueMixes = tileChunks
+            TilesUniqueMixes = tiles
         }, alwaysWrite, context);
     }
 
     [DataDefinition]
     private struct TileAtmosData
     {
-        [DataField("chunkSize")] public int ChunkSize;
-
         [DataField("uniqueMixes")] public List<GasMixture>? UniqueMixes;
 
         [DataField("tiles")] public Dictionary<Vector2i, int>? TilesUniqueMixes;
-
-        [DataField("tileChunks")] public HashSet<Vector2i, Dictionary<Vector2i, int>>? TileChunksUniqueMixes;
     }
 
     public void CopyTo(ISerializationManager serializationManager, Dictionary<Vector2i, TileAtmosphere> source, ref Dictionary<Vector2i, TileAtmosphere> target, SerializationHookContext hookCtx,
