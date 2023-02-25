@@ -560,6 +560,7 @@
   itemDrop: FloorTileItemTechmaint
   thermalConductivity: 0.04
   heatCapacity: 10000
+
 #for some reason naming it "Techmaint" and not "TechMaint" is impossible and hurts me physically
 - type: tile
   id: FloorReinforced
@@ -1403,7 +1404,7 @@
 
 - type: tile
   id: FloorTechMaint2
-  name: tiles-techmaint2-floor
+  name: tiles-steelmaint-floor
   sprite: /Textures/Tiles/steel_maint.png
   baseTurfs:
   - Plating
@@ -1416,9 +1417,10 @@
   thermalConductivity: 0.04
   heatCapacity: 10000
 
+#naming this anything other than techmaint2 breaks the game funny haha
 - type: tile
-  id: FloorTechMaint3
-  name: tiles-techmaint3-floor
+  id: FloorMaintGrating
+  name: tiles-maintgrating-floor
   sprite: /Textures/Tiles/grating_maint.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
@@ -1429,6 +1431,7 @@
   footstepSounds:
     collection: FootstepHull
   friction: 0.30
-  itemDrop: FloorTileItemGratingMaint
+  itemDrop: FloorTileItemMaintGrating
   thermalConductivity: 0.04
   heatCapacity: 10000
+

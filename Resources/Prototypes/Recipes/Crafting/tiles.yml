@@ -110,7 +110,28 @@
   icon: { sprite: Objects/Tiles/tile.rsi, state: techmaint }
   objectType: Item
 
-#
+- type: construction
+  name: maint grating tile
+  id: TileMaintGrating
+  graph: TileMaintGrating
+  startNode: start
+  targetNode: maintgratingtile
+  category: construction-category-tiles
+  description: "Four maint grating tiles."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: maintgrating }
+  objectType: Item
+
+- type: construction
+  name: steel maint tile
+  id: TileSteelMaint
+  graph: TileSteelMaint
+  startNode: start
+  targetNode: steelmainttile
+  category: construction-category-tiles
+  description: "Four steel maint tiles."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: steelmaint }
+  objectType: Item
+
 # - type: construction
 #   name: freezer tile
 #   id: tileFreezer

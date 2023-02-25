@@ -6,7 +6,7 @@
 
 - type: stack
   id: FloorTileMetalDiamond
-  name: steel tile
+  name: metal diamond tile
   spawn: FloorTileItemMetalDiamond
   maxCount: 30
 
@@ -54,7 +54,7 @@
 
 - type: stack
   id: FloorTileGold
-  name: gold floor
+  name: gold tile
   spawn: FloorTileItemGold
   maxCount: 30
 
@@ -264,7 +264,7 @@
 
 - type: stack
   id: FloorTileSilver
-  name: silver floor tile
+  name: silver tile
   spawn: FloorTileItemSilver
   maxCount: 30
 
@@ -300,12 +300,13 @@
 
 - type: stack
   id: FloorTileSteelMaint
-  name: steel maint floor
+  name: steel maint tile
   spawn: FloorTileItemSteelMaint
   maxCount: 30
 
 - type: stack
-  id: FloorTileGratingMaint
-  name: grating maint floor
-  spawn: FloorTileItemGratingMaint
+  id: FloorTileMaintGrating
+  name: maint grating tile
+  spawn: FloorTileItemMaintGrating
   maxCount: 30
+

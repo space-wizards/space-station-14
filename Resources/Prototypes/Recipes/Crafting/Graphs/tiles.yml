@@ -158,3 +158,35 @@
               amount: 1
     - node: techmainttile
       entity: FloorTileItemTechmaint
+
+- type: constructionGraph
+  id: TileMaintGrating
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: maintgratingtile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: maintgratingtile
+      entity: FloorTileItemMaintGrating
+
+- type: constructionGraph
+  id: TileSteelMaint
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: steelmainttile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: steelmainttile
+      entity: FloorTileItemSteelMaint

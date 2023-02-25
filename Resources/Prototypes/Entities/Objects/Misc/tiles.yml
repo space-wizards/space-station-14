@@ -477,7 +477,7 @@
     stackType: FloorTileStackEighties
 
 - type: entity
-  name: clown carpet floor
+  name: clown carpet tile
   parent: FloorTileItemBase
   id: FloorTileItemCarpetClown
   components:
@@ -746,12 +746,12 @@
     stackType: FloorTileSnow
 
 - type: entity
-  name: steel maint floor
+  name: steel maint tile
   parent: FloorTileItemBase
   id: FloorTileItemSteelMaint
   components:
   - type: Sprite
-    state: steelmaintfloor
+    state: steelmaint
   - type: Item
     heldPrefix: steel
   - type: FloorTile
@@ -760,20 +760,25 @@
       - FloorTechMaint2
   - type: Stack
     stackType: FloorTileSteelMaint
+  - type: Construction
+    graph: TileSteelMaint
+    node: steelmainttile
 
 - type: entity
-  name: grating maint floor
+  name: maint grating tile
   parent: FloorTileItemBase
-  id: FloorTileItemGratingMaint
+  id: FloorTileItemMaintGrating
   components:
   - type: Sprite
-    state: gratingmaintfloor
+    state: maintgrating
   - type: Item
     heldPrefix: steel
   - type: FloorTile
     outputs:
       - Plating
-      - FloorTechMaint3
+      - FloorMaintGrating
   - type: Stack
-    stackType: FloorTileGratingMaint
-
+    stackType: FloorTileMaintGrating
+  - type: Construction
+    graph: TileMaintGrating
+    node: maintgratingtile
