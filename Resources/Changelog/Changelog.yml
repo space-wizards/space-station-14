@@ -1,10 +1,4 @@
 Entries:
-- author: Carbonhell
-  changes:
-  - {message: Ghosts can now toggle the lighting manager to be able to better observe
-      dark areas., type: Add}
-  id: 2567
-  time: '2022-11-04T00:56:30.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Melee weapon cooldown now resets when swapping hands., type: Fix}
@@ -2908,3 +2902,8 @@ Entries:
   - {message: Hugging/Petting no longer opens the strip menu., type: Fix}
   id: 3066
   time: '2023-02-25T17:17:40.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Ambient sounds no longer play for paused entities., type: Tweak}
+  id: 3067
+  time: '2023-02-25T17:19:31.0000000+00:00'
