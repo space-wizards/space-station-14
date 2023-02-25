@@ -170,8 +170,14 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         var facialHair = new Marking(profile.Appearance.FacialHairStyleId,
             new[] { facialHairColor });
 
-        if (_markingManager.CanBeApplied(profile.Species, hair, _prototypeManager)) { markings.AddBack(MarkingCategories.Hair, hair); }
-        if (_markingManager.CanBeApplied(profile.Species, facialHair, _prototypeManager)) { markings.AddBack(MarkingCategories.FacialHair, facialHair); }
+        if (_markingManager.CanBeApplied(profile.Species, hair, _prototypeManager))
+        {
+            markings.AddBack(MarkingCategories.Hair, hair);
+        }
+        if (_markingManager.CanBeApplied(profile.Species, facialHair, _prototypeManager))
+        {
+            markings.AddBack(MarkingCategories.FacialHair, facialHair);
+        }
         
         // Finally adding marking with forced colors
         foreach (var (marking, prototype) in markingFColored)

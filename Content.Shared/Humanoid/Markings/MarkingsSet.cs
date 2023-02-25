@@ -189,11 +189,8 @@ public sealed class MarkingSet
             {
                 foreach (var marking in list)
                 {
-                    if
-                    (
-                        markingManager.TryGetMarking(marking, out var prototype) &&
-                        markingManager.MustMatchSkin(species, prototype.BodyPart, prototypeManager)
-                    )
+                    if (markingManager.TryGetMarking(marking, out var prototype) &&
+                        markingManager.MustMatchSkin(species, prototype.BodyPart, prototypeManager))
                     {
                         marking.SetColor(skinColor.Value);
                     }

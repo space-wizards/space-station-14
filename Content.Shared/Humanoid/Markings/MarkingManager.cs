@@ -174,13 +174,14 @@ namespace Content.Shared.Humanoid.Markings
             if (
                 !prototypeManager.TryIndex(speciesProto.SpriteSet, out HumanoidSpeciesBaseSpritesPrototype? baseSprites) ||
                 !baseSprites.Sprites.TryGetValue(layer, out var spriteName) ||
-                !prototypeManager.TryIndex(spriteName, out HumanoidSpeciesSpriteLayer? sprite)
-            ) return false;
-
-            if (sprite == null || !sprite.MarkingsMatchSkin)
+                !prototypeManager.TryIndex(spriteName, out HumanoidSpeciesSpriteLayer? sprite) ||
+                sprite == null ||
+                !sprite.MarkingsMatchSkin
+            )
             {
                 return false;
             }
+            
             return true;
         }
     }
