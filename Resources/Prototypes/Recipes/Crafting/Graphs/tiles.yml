@@ -258,6 +258,134 @@
     - node: whitetile
       entity: FloorTileItemWhite
 
+- type: constructionGraph
+  id: TileWhiteDiagonal
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: whitediagonaltile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: whitediagonaltile
+      entity: FloorTileItemWhiteDiagonal
+
+- type: constructionGraph
+  id: TileWhiteDiagonalMini
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: whitediagonalminitile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: whitediagonalminitile
+      entity: FloorTileItemWhiteDiagonalMini
+
+- type: constructionGraph
+  id: TileWhiteHerringbone
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: whiteherringbonetile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: whiteherringbonetile
+      entity: FloorTileItemWhiteHerringbone
+
+- type: constructionGraph
+  id: TileWhiteMini
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: whiteminitile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: whiteminitile
+      entity: FloorTileItemWhiteMini
+
+- type: constructionGraph
+  id: TileWhiteMono
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: whitemonotile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: whitemonotile
+      entity: FloorTileItemWhiteMono
+
+- type: constructionGraph
+  id: TileWhiteOffset
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: whiteoffsettile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: whiteoffsettile
+      entity: FloorTileItemWhiteOffset
+
+- type: constructionGraph
+  id: TileWhitePavement
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: whitepavementtile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: whitepavementtile
+      entity: FloorTileItemWhitePavement
+
+- type: constructionGraph
+  id: TileWhitePavementVertical
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: whitepavementverticaltile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: whitepavementverticaltile
+      entity: FloorTileItemWhitePavementVertical
+
 #dark variants
 - type: constructionGraph
   id: TileDark
@@ -274,6 +402,134 @@
               amount: 1
     - node: darktile
       entity: FloorTileItemDark
+
+- type: constructionGraph
+  id: TileDarkDiagonal
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: darkdiagonaltile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: darkdiagonaltile
+      entity: FloorTileItemDarkDiagonal
+
+- type: constructionGraph
+  id: TileDarkDiagonalMini
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: darkdiagonalminitile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: darkdiagonalminitile
+      entity: FloorTileItemDarkDiagonalMini
+
+- type: constructionGraph
+  id: TileDarkHerringbone
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: darkherringbonetile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: darkherringbonetile
+      entity: FloorTileItemDarkHerringbone
+
+- type: constructionGraph
+  id: TileDarkMini
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: darkminitile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: darkminitile
+      entity: FloorTileItemDarkMini
+
+- type: constructionGraph
+  id: TileDarkMono
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: darkmonotile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: darkmonotile
+      entity: FloorTileItemDarkMono
+
+- type: constructionGraph
+  id: TileDarkOffset
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: darkoffsettile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: darkoffsettile
+      entity: FloorTileItemDarkOffset
+
+- type: constructionGraph
+  id: TileDarkPavement
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: darkpavementtile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: darkpavementtile
+      entity: FloorTileItemDarkPavement
+
+- type: constructionGraph
+  id: TileDarkPavementVertical
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: darkpavementverticaltile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: darkpavementverticaltile
+      entity: FloorTileItemDarkPavementVertical
 
 #circuits
 - type: constructionGraph

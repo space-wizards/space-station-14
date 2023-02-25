@@ -110,11 +110,107 @@
   spawn: FloorTileItemWhite
   maxCount: 30
 
+- type: stack
+  id: FloorTileWhiteDiagonal
+  name: white diagonal tile
+  spawn: FloorTileItemWhiteDiagonal
+  maxCount: 30
+
+- type: stack
+  id: FloorTileWhiteDiagonalMini
+  name: white diagonal mini tile
+  spawn: FloorTileItemWhiteDiagonalMini
+  maxCount: 30
+
+- type: stack
+  id: FloorTileWhiteHerringbone
+  name: white herringbone tile
+  spawn: FloorTileItemWhiteHerringbone
+  maxCount: 30
+
+- type: stack
+  id: FloorTileWhiteMini
+  name: white mini tile
+  spawn: FloorTileItemWhiteMini
+  maxCount: 30
+
+- type: stack
+  id: FloorTileWhiteMono
+  name: white mono tile
+  spawn: FloorTileItemWhiteMono
+  maxCount: 30
+
+- type: stack
+  id: FloorTileWhiteOffset
+  name: white offset tile
+  spawn: FloorTileItemWhiteOffset
+  maxCount: 30
+
+- type: stack
+  id: FloorTileWhitePavement
+  name: white pavement tile
+  spawn: FloorTileItemWhitePavement
+  maxCount: 30
+
+- type: stack
+  id: FloorTileWhitePavementVertical
+  name: white pavement vertical tile
+  spawn: FloorTileItemWhitePavementVertical
+  maxCount: 30
+
 #dark variants
 - type: stack
   id: FloorTileDark
   name: dark tile
   spawn: FloorTileItemDark
+  maxCount: 30
+
+- type: stack
+  id: FloorTileDarkDiagonal
+  name: dark diagonal tile
+  spawn: FloorTileItemDarkDiagonal
+  maxCount: 30
+
+- type: stack
+  id: FloorTileDarkDiagonalMini
+  name: dark diagonal mini tile
+  spawn: FloorTileItemDarkDiagonalMini
+  maxCount: 30
+
+- type: stack
+  id: FloorTileDarkHerringbone
+  name: dark herringbone tile
+  spawn: FloorTileItemDarkHerringbone
+  maxCount: 30
+
+- type: stack
+  id: FloorTileDarkMini
+  name: dark mini tile
+  spawn: FloorTileItemDarkMini
+  maxCount: 30
+
+- type: stack
+  id: FloorTileDarkMono
+  name: Dark mono tile
+  spawn: FloorTileItemDarkMono
+  maxCount: 30
+
+- type: stack
+  id: FloorTileDarkOffset
+  name: dark offset tile
+  spawn: FloorTileItemDarkOffset
+  maxCount: 30
+
+- type: stack
+  id: FloorTileDarkPavement
+  name: dark pavement tile
+  spawn: FloorTileItemDarkPavement
+  maxCount: 30
+
+- type: stack
+  id: FloorTileDarkPavementVertical
+  name: dark pavement vertical tile
+  spawn: FloorTileItemDarkPavementVertical
   maxCount: 30
 
 #circuits
