@@ -18,7 +18,7 @@ public sealed class BotanySwabSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<BotanySwabComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<BotanySwabComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<DoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<BotanySwabComponent, DoAfterEvent>(OnDoAfter);
     }
 
     /// <summary>
@@ -41,7 +41,7 @@ public sealed class BotanySwabSystem : EntitySystem
     /// </summary>
     private void OnAfterInteract(EntityUid uid, BotanySwabComponent swab, AfterInteractEvent args)
     {
-        if (args.Target == null || !args.CanReach)
+        if (args.Target == null || !args.CanReach || !HasComp<PlantHolderComponent>(args.Target))
             return;
 
         _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, swab.SwabDelay, target: args.Target, used: uid)
@@ -57,7 +57,7 @@ public sealed class BotanySwabSystem : EntitySystem
     /// <summary>
     /// Save seed data or cross-pollenate.
     /// </summary>
-    private void OnDoAfter(DoAfterEvent args)
+    private void OnDoAfter(EntityUid uid, BotanySwabComponent component, DoAfterEvent args)
     {
         if (args.Cancelled || args.Handled || !TryComp<PlantHolderComponent>(args.Args.Target, out var plant) || !TryComp<BotanySwabComponent>(args.Args.Used, out var swab))
             return;

@@ -217,7 +217,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private bool TryDrink(EntityUid user, EntityUid target, DrinkComponent drink, EntityUid item)
         {
-            if (!EntityManager.HasComponent<BodyComponent>(target))
+            if (!EntityManager.HasComponent<BodyComponent>(target) || drink.ForceDrink)
                 return false;
 
             if (!drink.Opened)
@@ -241,9 +241,9 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!_interactionSystem.InRangeUnobstructed(user, item, popup: true))
                 return true;
 
-            var forceDrink = user != target;
+            drink.ForceDrink = user != target;
 
-            if (forceDrink)
+            if (drink.ForceDrink)
             {
                 var userName = Identity.Entity(user, EntityManager);
 
@@ -264,7 +264,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var drinkData = new DrinkData(drinkSolution, flavors);
 
-            var doAfterEventArgs = new DoAfterEventArgs(user, forceDrink ? drink.ForceFeedDelay : drink.Delay,
+            var doAfterEventArgs = new DoAfterEventArgs(user, drink.ForceDrink ? drink.ForceFeedDelay : drink.Delay,
                 target: target, used: item)
             {
                 BreakOnUserMove = moveBreak,
@@ -286,6 +286,14 @@ namespace Content.Server.Nutrition.EntitySystems
         /// </summary>
         private void OnDoAfter(EntityUid uid, DrinkComponent component, DoAfterEvent<DrinkData> args)
         {
+            //Special cancel if they're force feeding someone.
+            //Allows self to drink multiple times but prevents force feeding drinks to others rapidly.
+            if (args.Cancelled && component.ForceDrink)
+            {
+                component.ForceDrink = false;
+                return;
+            }
+
             if (args.Handled || args.Cancelled || component.Deleted)
                 return;
 
@@ -295,11 +303,11 @@ namespace Content.Server.Nutrition.EntitySystems
             var transferAmount = FixedPoint2.Min(component.TransferAmount, args.AdditionalData.DrinkSolution.Volume);
             var drained = _solutionContainerSystem.Drain(uid, args.AdditionalData.DrinkSolution, transferAmount);
 
-            var forceDrink = args.Args.Target.Value != args.Args.User;
+            //var forceDrink = args.Args.Target.Value != args.Args.User;
 
             if (!_bodySystem.TryGetBodyOrganComponents<StomachComponent>(args.Args.Target.Value, out var stomachs, body))
             {
-                _popupSystem.PopupEntity(forceDrink ? Loc.GetString("drink-component-try-use-drink-cannot-drink-other") : Loc.GetString("drink-component-try-use-drink-had-enough"), args.Args.Target.Value, args.Args.User);
+                _popupSystem.PopupEntity(component.ForceDrink ? Loc.GetString("drink-component-try-use-drink-cannot-drink-other") : Loc.GetString("drink-component-try-use-drink-had-enough"), args.Args.Target.Value, args.Args.User);
 
                 if (HasComp<RefillableSolutionComponent>(args.Args.Target.Value))
                 {
@@ -320,7 +328,7 @@ namespace Content.Server.Nutrition.EntitySystems
             {
                 _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-had-enough"), args.Args.Target.Value, args.Args.Target.Value);
 
-                if (forceDrink)
+                if (component.ForceDrink)
                 {
                     _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-had-enough-other"), args.Args.Target.Value, args.Args.User);
                     _spillableSystem.SpillAt(args.Args.Target.Value, drained, "PuddleSmear");
@@ -334,7 +342,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var flavors = args.AdditionalData.FlavorMessage;
 
-            if (forceDrink)
+            if (component.ForceDrink)
             {
                 var targetName = Identity.Entity(args.Args.Target.Value, EntityManager);
                 var userName = Identity.Entity(args.Args.User, EntityManager);
@@ -366,6 +374,7 @@ namespace Content.Server.Nutrition.EntitySystems
             //TODO: Grab the stomach UIDs somehow without using Owner
             _stomachSystem.TryTransferSolution(firstStomach.Value.Comp.Owner, drained, firstStomach.Value.Comp);
 
+            component.ForceDrink = false;
             args.Handled = true;
         }
 

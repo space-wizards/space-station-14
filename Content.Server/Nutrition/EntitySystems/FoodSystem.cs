@@ -86,8 +86,8 @@ namespace Content.Server.Nutrition.EntitySystems
             if (food == user || EntityManager.TryGetComponent<MobStateComponent>(food, out var mobState) && _mobStateSystem.IsAlive(food, mobState)) // Suppresses eating alive mobs
                 return false;
 
-            // Target can't be fed
-            if (!EntityManager.HasComponent<BodyComponent>(target))
+            // Target can't be fed or they're already forcefeeding
+            if (!EntityManager.HasComponent<BodyComponent>(target) || foodComp.ForceFeed)
                 return false;
 
             if (!_solutionContainerSystem.TryGetSolution(food, foodComp.SolutionName, out var foodSolution))
@@ -111,9 +111,9 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!_interactionSystem.InRangeUnobstructed(user, food, popup: true))
                 return true;
 
-            var forceFeed = user != target;
+            foodComp.ForceFeed = user != target;
 
-            if (forceFeed)
+            if (foodComp.ForceFeed)
             {
                 var userName = Identity.Entity(user, EntityManager);
                 _popupSystem.PopupEntity(Loc.GetString("food-system-force-feed", ("user", userName)),
@@ -128,16 +128,16 @@ namespace Content.Server.Nutrition.EntitySystems
                 _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(target):target} is eating {ToPrettyString(food):food} {SolutionContainerSystem.ToPrettyString(foodSolution)}");
             }
 
-            var moveBreak = user != target;
-
             var foodData = new FoodData(foodSolution, flavors, utensils);
 
-            var doAfterEventArgs = new DoAfterEventArgs(user, forceFeed ? foodComp.ForceFeedDelay : foodComp.Delay, target: target, used: food)
+            var doAfterEventArgs = new DoAfterEventArgs(user, foodComp.ForceFeed ? foodComp.ForceFeedDelay : foodComp.Delay, target: target, used: food)
             {
-                BreakOnUserMove = moveBreak,
+                RaiseOnTarget = foodComp.ForceFeed,
+                RaiseOnUser = !foodComp.ForceFeed,
+                BreakOnUserMove = foodComp.ForceFeed,
                 BreakOnDamage = true,
                 BreakOnStun = true,
-                BreakOnTargetMove = moveBreak,
+                BreakOnTargetMove = foodComp.ForceFeed,
                 MovementThreshold = 0.01f,
                 DistanceThreshold = 1.0f,
                 NeedHand = true
@@ -151,6 +151,13 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void OnDoAfter(EntityUid uid, FoodComponent component, DoAfterEvent<FoodData> args)
         {
+            //Prevents the target from being force fed food but allows the user to chow down
+            if (args.Cancelled && component.ForceFeed)
+            {
+                component.ForceFeed = false;
+                return;
+            }
+
             if (args.Cancelled || args.Handled || component.Deleted || args.Args.Target == null)
                 return;
 
@@ -166,13 +173,11 @@ namespace Content.Server.Nutrition.EntitySystems
             //TODO: Get the stomach UID somehow without nabbing owner
             var firstStomach = stomachs.FirstOrNull(stomach => _stomachSystem.CanTransferSolution(stomach.Comp.Owner, split));
 
-            var forceFeed = args.Args.Target.Value != args.Args.User;
-
             // No stomach so just popup a message that they can't eat.
             if (firstStomach == null)
             {
                 _solutionContainerSystem.TryAddSolution(uid, args.AdditionalData.FoodSolution, split);
-                _popupSystem.PopupEntity(forceFeed ? Loc.GetString("food-system-you-cannot-eat-any-more-other") : Loc.GetString("food-system-you-cannot-eat-any-more"), args.Args.Target.Value, args.Args.User);
+                _popupSystem.PopupEntity(component.ForceFeed ? Loc.GetString("food-system-you-cannot-eat-any-more-other") : Loc.GetString("food-system-you-cannot-eat-any-more"), args.Args.Target.Value, args.Args.User);
                 args.Handled = true;
                 return;
             }
@@ -182,7 +187,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var flavors = args.AdditionalData.FlavorMessage;
 
-            if (forceFeed)
+            if (component.ForceFeed)
             {
                 var targetName = Identity.Entity(args.Args.Target.Value, EntityManager);
                 var userName = Identity.Entity(args.Args.User, EntityManager);
