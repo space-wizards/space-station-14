@@ -17,3 +17,7 @@
 - type: lobbyBackground
   id: SSXIV
   background: /Textures/LobbyScreens/ssxiv.png
+- type: lobbyBackground
+  id: saucestation
+  background: /Textures/LobbyScreens/saucestation.png
+
