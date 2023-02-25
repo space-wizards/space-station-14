@@ -18,7 +18,7 @@ public abstract class SharedBiomeSystem : EntitySystem
     [Dependency] protected readonly IPrototypeManager ProtoManager = default!;
     [Dependency] protected readonly ITileDefinitionManager TileDefManager = default!;
 
-    protected const byte ChunkSize = 4;
+    protected const byte ChunkSize = 8;
 
     // TODO: After I wrote all of this FastNoiseLite got ported so this needs updating for that don't @ me
 
