@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Construction.Components;
 using Content.Server.Temperature.Components;
@@ -8,6 +9,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Containers;
+using Robust.Shared.Utility;
 #if EXCEPTION_TOLERANCE
 // ReSharper disable once RedundantUsingDirective
 using Robust.Shared.Exceptions;
@@ -22,7 +24,8 @@ namespace Content.Server.Construction
         [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
 #endif
 
-        private readonly HashSet<EntityUid> _constructionUpdateQueue = new();
+        private readonly Queue<EntityUid> _constructionUpdateQueue = new();
+        private readonly HashSet<EntityUid> _queuedUpdates = new();
 
         private void InitializeInteractions()
         {
@@ -480,19 +483,42 @@ namespace Content.Server.Construction
             // We iterate all entities waiting for their interactions to be handled.
             // This is much more performant than making an EntityQuery for ConstructionComponent,
             // since, for example, every single wall has a ConstructionComponent....
-            foreach (var uid in _constructionUpdateQueue)
+            while (_constructionUpdateQueue.TryDequeue(out var uid))
             {
+                _queuedUpdates.Remove(uid);
+
                 // Ensure the entity exists and has a Construction component.
-                if (!Exists(uid) || !TryComp(uid, out ConstructionComponent? construction))
+                if (!TryComp(uid, out ConstructionComponent? construction))
                     continue;
 
 #if EXCEPTION_TOLERANCE
                 try
                 {
 #endif
+
+                // temporary code for debugging a grafana exception. Something is fishy with the girder graph.
+                object? prev = null;
+                var queued = string.Join(", ", construction.InteractionQueue.Select(x => x.GetType().Name));
+
                 // Handle all queued interactions!
                 while (construction.InteractionQueue.TryDequeue(out var interaction))
                 {
+                    if (construction.Deleted)
+                    {
+                        // I suspect the error might just happen if two users try to deconstruction or otherwise modify an entity at the exact same tick?
+                        // In which case this isn't really an error, but should just be a `if (deleted) -> break`
+                        // But might as well verify this.
+
+                        _sawmill.Error($"Construction component was deleted while still processing interactions." +
+                            $"Entity {ToPrettyString(uid)}, graph: {construction.Graph}, " +
+                            $"Previous: {prev?.GetType()?.Name ?? "null"}, " +
+                            $"Next: {interaction.GetType().Name}, " +
+                            $"Initial Queue: {queued}, " +
+                            $"Remaining Queue: {string.Join(", ", construction.InteractionQueue.Select(x => x.GetType().Name))}");
+                        break;
+                    }
+                    prev = interaction;
+
                     // We set validation to false because we actually want to perform the interaction here.
                     HandleEvent(uid, interaction, false, construction);
                 }
@@ -507,7 +533,7 @@ namespace Content.Server.Construction
 #endif
             }
 
-            _constructionUpdateQueue.Clear();
+            DebugTools.Assert(_queuedUpdates.Count == 0);
         }
 
         #region Event Handlers
@@ -543,7 +569,8 @@ namespace Content.Server.Construction
             construction.InteractionQueue.Enqueue(args);
 
             // Add this entity to the queue so it'll be updated next tick.
-            _constructionUpdateQueue.Add(uid);
+            if (_queuedUpdates.Add(uid))
+                _constructionUpdateQueue.Enqueue(uid);
         }
 
         private void OnDoAfter(EntityUid uid, ConstructionComponent component, DoAfterEvent<ConstructionData> args)
