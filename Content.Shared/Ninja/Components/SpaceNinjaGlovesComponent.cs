@@ -8,11 +8,10 @@ using System.Threading;
 
 namespace Content.Shared.Ninja.Components;
 
+// TODO: split into separate components, including enabled
 [RegisterComponent]
 public sealed class SpaceNinjaGlovesComponent : Component
 {
-    public CancellationTokenSource? CancelToken = null;
-
     /// <summary>
     /// Whether abilities are enabled, can be toggled with the action.
     /// </summary>
@@ -95,10 +94,8 @@ public sealed class SpaceNinjaGlovesComponent : Component
 
 public sealed class ToggleNinjaGlovesEvent : InstantActionEvent { }
 
-public record GloveActionCancelledEvent;
+public record struct PowerDrainData;
 
-public record DrainSuccessEvent(EntityUid User, EntityUid Battery);
+public record struct ResearchDownloadData;
 
-public record DownloadSuccessEvent(EntityUid User, EntityUid Server);
-
-public record TerrorSuccessEvent(EntityUid User);
+public record struct TerrorData;

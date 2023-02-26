@@ -18,7 +18,7 @@
     initialBeepDelay: 0
     beepSound: /Audio/Machines/Nuke/general_beep.ogg
     startOnStick: true
-    automated: true
+  - type: AutomatedTimer
   - type: Sticky
     stickDelay: 5
     stickPopupStart: comp-sticky-start-stick-bomb

@@ -44,11 +44,5 @@ namespace Content.Server.Explosion.Components
         /// </summary>
         [DataField("canToggleStartOnStick")]
         public bool AllowToggleStartOnStick;
-
-        /// <summary>
-        ///     Disallows starting the timer by hand, must be stuck or triggered by a system.
-        /// </summary>
-        [DataField("automated")]
-        public bool Automated;
     }
 }

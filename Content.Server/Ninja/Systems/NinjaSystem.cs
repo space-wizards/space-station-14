@@ -3,8 +3,8 @@ using Content.Server.Administration.Commands;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.Communications;
-using Content.Server.DoAfter;
 using Content.Server.Doors.Systems;
+using Content.Server.DoAfter;
 using Content.Server.Electrocution;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
@@ -22,6 +22,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
@@ -76,8 +77,6 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-    private readonly HashSet<SpaceNinjaComponent> _activeNinja = new();
-
     public override void Initialize()
     {
         base.Initialize();
@@ -87,10 +86,9 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         SubscribeLocalEvent<SpaceNinjaGlovesComponent, ToggleNinjaGlovesEvent>(OnToggleGloves);
         SubscribeLocalEvent<SpaceNinjaGlovesComponent, ExaminedEvent>(OnGlovesExamine);
         SubscribeLocalEvent<ActivateInWorldEvent>(OnActivate);
-        SubscribeLocalEvent<SpaceNinjaGlovesComponent, GloveActionCancelledEvent>(OnCancel);
-        SubscribeLocalEvent<SpaceNinjaGlovesComponent, DrainSuccessEvent>(OnDrainSuccess);
-        SubscribeLocalEvent<SpaceNinjaGlovesComponent, DownloadSuccessEvent>(OnDownloadSuccess);
-        SubscribeLocalEvent<SpaceNinjaGlovesComponent, TerrorSuccessEvent>(OnTerrorSuccess);
+        SubscribeLocalEvent<SpaceNinjaGlovesComponent, DoAfterEvent<PowerDrainData>>(OnDrainDoAfter);
+        SubscribeLocalEvent<SpaceNinjaGlovesComponent, DoAfterEvent<ResearchDownloadData>>(OnDownloadDoAfter);
+        SubscribeLocalEvent<SpaceNinjaGlovesComponent, DoAfterEvent<TerrorData>>(OnTerrorDoAfter);
 
         // TODO: maybe have suit activation stuff
         SubscribeLocalEvent<SpaceNinjaSuitComponent, GotEquippedEvent>(OnSuitEquipped);
@@ -102,40 +100,17 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         SubscribeLocalEvent<SpaceNinjaComponent, ComponentStartup>(OnNinjaStartup);
         SubscribeLocalEvent<SpaceNinjaComponent, MindAddedMessage>(OnNinjaMindAdded);
         SubscribeLocalEvent<SpaceNinjaComponent, AttackedEvent>(OnNinjaAttacked);
-        SubscribeLocalEvent<SpaceNinjaComponent, ComponentRemove>(OnNinjaRemoved);
 
         SubscribeLocalEvent<DoorComponent, DoorEmaggedEvent>(OnDoorEmagged);
     }
 
     public override void Update(float frameTime)
     {
-        var toRemove = new RemQueue<SpaceNinjaComponent>();
-
-        foreach (var ninja in _activeNinja)
+        foreach (var ninja in EntityQuery<SpaceNinjaComponent>())
         {
-            if (ninja.Deleted)
-            {
-                toRemove.Add(ninja);
-                continue;
-            }
-
             var uid = ninja.Owner;
-            if (Paused(uid))
-                continue;
-
             UpdateNinja(uid, ninja, frameTime);
         }
-
-        foreach (var ninja in toRemove)
-        {
-            _activeNinja.Remove(ninja);
-        }
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        _activeNinja.Clear();
     }
 
     /// <summary>
@@ -214,14 +189,6 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
 
         var uid = ninja.Gloves.Value;
 
-        // cancel any doafters if trying to do something else
-        if (comp.CancelToken != null)
-        {
-            comp.CancelToken.Cancel();
-            comp.CancelToken = null;
-            return;
-        }
-
         // doorjack ability
         if (HasComp<DoorComponent>(target))
         {
@@ -261,15 +228,12 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
             if (!HasComp<BatteryComponent>(target))
                 return;
 
-            comp.CancelToken = new CancellationTokenSource();
-            var doafterArgs = new DoAfterEventArgs(user, comp.DrainTime, comp.CancelToken.Token, used: uid)
+            var doafterArgs = new DoAfterEventArgs(user, comp.DrainTime, target: target, used: uid)
             {
                 BreakOnDamage = true,
                 BreakOnStun = true,
                 BreakOnUserMove = true,
-                MovementThreshold = 0.5f,
-                UsedCancelledEvent = new GloveActionCancelledEvent(),
-                UsedFinishedEvent = new DrainSuccessEvent(user, target)
+                MovementThreshold = 0.5f
             };
 
             _doafter.DoAfter(doafterArgs);
@@ -287,15 +251,12 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
                 return;
             }
 
-            comp.CancelToken = new CancellationTokenSource();
-            var doafterArgs = new DoAfterEventArgs(user, comp.DownloadTime, comp.CancelToken.Token, used: uid)
+            var doafterArgs = new DoAfterEventArgs(user, comp.DownloadTime, target: target, used: uid)
             {
                 BreakOnDamage = true,
                 BreakOnStun = true,
                 BreakOnUserMove = true,
-                MovementThreshold = 0.5f,
-                UsedCancelledEvent = new GloveActionCancelledEvent(),
-                UsedFinishedEvent = new DownloadSuccessEvent(user, target)
+                MovementThreshold = 0.5f
             };
 
             _doafter.DoAfter(doafterArgs);
@@ -313,15 +274,12 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
                 return;
             }
 
-            comp.CancelToken = new CancellationTokenSource();
-            var doafterArgs = new DoAfterEventArgs(user, comp.TerrorTime, comp.CancelToken.Token, used: uid)
+            var doafterArgs = new DoAfterEventArgs(user, comp.TerrorTime, target: target, used: uid)
             {
                 BreakOnDamage = true,
                 BreakOnStun = true,
                 BreakOnUserMove = true,
-                MovementThreshold = 0.5f,
-                UsedCancelledEvent = new GloveActionCancelledEvent(),
-                UsedFinishedEvent = new TerrorSuccessEvent(user)
+                MovementThreshold = 0.5f
             };
 
             _doafter.DoAfter(doafterArgs);
@@ -329,17 +287,14 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         }
     }
 
-    private void OnCancel(EntityUid uid, SpaceNinjaGlovesComponent comp, GloveActionCancelledEvent args)
+    private void OnDrainDoAfter(EntityUid uid, SpaceNinjaGlovesComponent comp, DoAfterEvent<PowerDrainData> args)
     {
-        comp.CancelToken = null;
-    }
+		if (args.Cancelled || args.Handled)
+			return;
 
-    private void OnDrainSuccess(EntityUid uid, SpaceNinjaGlovesComponent comp, DrainSuccessEvent args)
-    {
-        var user = args.User;
-        var target = args.Battery;
+        var user = args.Args.User;
+        var target = args.Args.Target;
 
-        comp.CancelToken = null;
         if (!GetNinjaBattery(user, out var suitBattery))
             // took suit off or something, ignore draining
             return;
@@ -374,12 +329,14 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         }
     }
 
-    private void OnDownloadSuccess(EntityUid uid, SpaceNinjaGlovesComponent comp, DownloadSuccessEvent args)
+    private void OnDownloadDoAfter(EntityUid uid, SpaceNinjaGlovesComponent comp, DoAfterEvent<ResearchDownloadData> args)
     {
-        var user = args.User;
-        var target = args.Server;
+		if (args.Cancelled || args.Handled)
+			return;
 
-        comp.CancelToken = null;
+        var user = args.Args.User;
+        var target = args.Args.Target;
+
         if (!TryComp<SpaceNinjaComponent>(user, out var ninja)
             || !TryComp<TechnologyDatabaseComponent>(target, out var database))
             return;
@@ -396,11 +353,13 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         _popups.PopupEntity(str, user, user, PopupType.Medium);
     }
 
-    private void OnTerrorSuccess(EntityUid uid, SpaceNinjaGlovesComponent comp, TerrorSuccessEvent args)
+    private void OnTerrorDoAfter(EntityUid uid, SpaceNinjaGlovesComponent comp, DoAfterEvent<TerrorData> args)
     {
-        var user = args.User;
+		if (args.Cancelled || args.Handled)
+			return;
 
-        comp.CancelToken = null;
+        var user = args.Args.User;
+
         if (!TryComp<SpaceNinjaComponent>(user, out var ninja) || ninja.CalledInThreat)
             return;
 
@@ -519,8 +478,6 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
 
     private void OnNinjaStartup(EntityUid uid, SpaceNinjaComponent comp, ComponentStartup args)
     {
-        _activeNinja.Add(comp);
-
         var config = RuleConfig();
 
         // inject starting implants
@@ -595,11 +552,6 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
                 // TODO: disable all actions for 5 seconds
             }
         }
-    }
-
-    private void OnNinjaRemoved(EntityUid uid, SpaceNinjaComponent comp, ComponentRemove args)
-    {
-        _activeNinja.Remove(comp);
     }
 
     private void OnDoorEmagged(EntityUid uid, DoorComponent door, DoorEmaggedEvent args)
