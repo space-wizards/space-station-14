@@ -11,6 +11,7 @@ using Content.Shared.Verbs;
 using Content.Server.Popups;
 using Content.Server.DoAfter;
 using Content.Shared.DoAfter;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems;
 
@@ -48,7 +49,7 @@ public sealed class InternalsSystem : EntitySystem
                 ToggleInternals(uid, args.User, false, component);
             },
             Message = Loc.GetString("action-description-internals-toggle"),
-            IconTexture = "/Textures/Interface/VerbIcons/dot.svg.192dpi.png",
+            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/dot.svg.192dpi.png")),
             Text = Loc.GetString("action-name-internals-toggle"),
         };
 
