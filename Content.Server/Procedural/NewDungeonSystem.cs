@@ -137,7 +137,7 @@ public sealed class NewDungeonSystem : EntitySystem
 
         Logger.Info($"Generating dungeon for seed {seed}");
         var dungeonTransform = Matrix3.CreateTranslation(Vector2.Zero);
-        var random = new Random(seed);
+        var random = new Random();
         // TODO: API for this
         var roomPackProtos = new Dictionary<Vector2i, List<DungeonRoomPackPrototype>>();
         var externalNodes = new Dictionary<DungeonRoomPackPrototype, HashSet<Vector2i>>();
@@ -366,6 +366,9 @@ public sealed class NewDungeonSystem : EntitySystem
 
         // Do pathfind from first room to work out graph.
         // TODO: Optional loops
+        // TODO: Need to split this off into its own gen thing
+        // Same with walls.
+
         var roomConnections = new Dictionary<Box2i, List<Box2i>>();
         var frontier = new Queue<Box2i>();
         frontier.Enqueue(rooms[0]);
@@ -378,7 +381,7 @@ public sealed class NewDungeonSystem : EntitySystem
             foreach (var (otherRoom, otherBorders) in roomBorders)
             {
                 if (room.Equals(otherRoom) ||
-                    roomConnections.ContainsKey(otherRoom))
+                    conns.Contains(otherRoom))
                 {
                     continue;
                 }
@@ -422,28 +425,22 @@ public sealed class NewDungeonSystem : EntitySystem
 
                     nodeDistances.Sort((x, y) => x.Distance.CompareTo(y.Distance));
 
-                    var weightMax = nodeDistances.Max(o => o.Distance);
-                    var weightSum = nodeDistances.Sum(o => (weightMax - o.Distance));
-                    var value = random.NextFloat() * weightSum;
                     var width = 1;
 
                     for (var i = 0; i < nodeDistances.Count; i++)
                     {
-                        value -= (weightMax - nodeDistances[i].Distance);
+                        width--;
+                        grid.SetTile(nodeDistances[i].Node, new Tile(_tileDefManager["FloorSteel"].TileId));
+                        Spawn("AirlockGlass", grid.GridTileToLocal(nodeDistances[i].Node));
 
-                        if (value < 0f)
-                        {
-                            width--;
-                            grid.SetTile(nodeDistances[i].Node, new Tile(_tileDefManager["FloorSteel"].TileId));
-                            Spawn("AirlockGlass", grid.GridTileToLocal(nodeDistances[i].Node));
-
-                            if (width == 0)
-                                break;
-                        }
+                        if (width == 0)
+                            break;
                     }
                 }
 
                 conns.Add(otherRoom);
+                var otherConns = roomConnections.GetOrNew(otherRoom);
+                otherConns.Add(room);
                 frontier.Enqueue(otherRoom);
             }
         }
