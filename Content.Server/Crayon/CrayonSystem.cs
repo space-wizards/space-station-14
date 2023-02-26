@@ -88,9 +88,13 @@ public sealed class CrayonSystem : SharedCrayonSystem
         if (args.Handled)
             return;
 
-        if (!TryComp<ActorComponent>(args.User, out var actor)) return;
+        if (!TryComp<ActorComponent>(args.User, out var actor) ||
+            component.UserInterface == null)
+        {
+            return;
+        }
 
-        _uiSystem.ToggleUi(component.UserInterface!, actor.PlayerSession);
+        _uiSystem.ToggleUi(component.UserInterface, actor.PlayerSession);
 
         if (component.UserInterface?.SubscribedSessions.Contains(actor.PlayerSession) == true)
         {
@@ -136,7 +140,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
     private void OnCrayonDropped(EntityUid uid, CrayonComponent component, DroppedEvent args)
     {
         if (TryComp<ActorComponent>(args.User, out var actor))
-            _uiSystem.CloseUi(component.UserInterface!, actor!.PlayerSession);
+            _uiSystem.TryClose(uid, SharedCrayonComponent.CrayonUiKey.Key, actor.PlayerSession);
     }
 
     private void UseUpCrayon(EntityUid uid, EntityUid user)
