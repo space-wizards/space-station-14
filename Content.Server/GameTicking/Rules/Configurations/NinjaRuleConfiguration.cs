@@ -15,21 +15,21 @@ public sealed class NinjaRuleConfiguration : StationEventRuleConfiguration
     /// <summary>
     /// List of objective prototype ids to add
     /// </summary>
-    [DataField("objectives", customTypeSerializer: typeof(PrototypeIdListSerializer<ObjectivePrototype>))]
-    public readonly List<string> Objectives = default!;
+    [DataField("objectives", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<ObjectivePrototype>))]
+    public readonly List<string> Objectives = new();
 
     // TODO: move to job and use job???
     /// <summary>
     /// List of implants to inject on spawn
     /// </summary>
-    [DataField("implants", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
-    public readonly List<string> Implants = default!;
+    [DataField("implants", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
+    public readonly List<string> Implants = new();
 
     /// <summary>
     /// List of threats that can be called in
     /// </summary>
-    [DataField("threats")]
-    public readonly List<Threat> Threats = default!;
+    [DataField("threats", required: true)]
+    public readonly List<Threat> Threats = new();
 
     /// <summary>
     /// Sound played when making the player a ninja via antag control or ghost role
