@@ -6,10 +6,6 @@ using Content.Shared.IdentityManagement;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
-using Robust.Shared.Utility;
 
 namespace Content.Client.ContextMenu.UI
 {
