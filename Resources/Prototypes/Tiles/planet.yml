@@ -1,0 +1,89 @@
+# Desert
+- type: tile
+  id: FloorDesert
+  name: tiles-desert-floor
+  sprite: /Textures/Tiles/Planet/Desert/desert.png
+  variants: 6
+  placementVariants: [0, 1, 2, 3, 4, 5]
+  isSubfloor: true
+  canCrowbar: false
+  footstepSounds:
+    collection: FootstepAsteroid
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorLowDesert
+  name: tiles-low-desert-floor
+  sprite: /Textures/Tiles/Planet/Desert/low_desert.png
+  variants: 6
+  placementVariants: [0, 1, 2, 3, 4, 5]
+  isSubfloor: true
+  canCrowbar: false
+  footstepSounds:
+    collection: FootstepAsteroid
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  weather: true
+
+# Grass
+- type: tile
+  id: FloorPlanetGrass
+  name: tiles-grass-planet-floor
+  sprite: /Textures/Tiles/Planet/Grass/grass.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  cornerSprites:
+  - /Textures/Tiles/Planet/Grass/single_edge.png
+  cardinalSprites:
+  - /Textures/Tiles/Planet/Grass/double_edge.png
+  baseTurfs:
+  - FloorDirt
+  isSubfloor: true
+  canCrowbar: false
+  footstepSounds:
+    collection: FootstepGrass
+  friction: 0.30
+  itemDrop: FloorTileItemGrass
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  weather: true
+
+# Lava
+- type: tile
+  id: FloorBasalt
+  name: tiles-basalt-floor
+  sprite: /Textures/Tiles/Planet/basalt.png
+  isSubfloor: true
+  canCrowbar: false
+  footstepSounds:
+    collection: FootstepAsteroid
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  weather: true
+
+# Snow
+- type: tile
+  id: FloorSnow
+  name: tiles-snow-floor
+  sprite: /Textures/Tiles/Planet/Snow/snow.png
+  variants: 13
+  placementVariants: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+  #cornerSprites:
+  #  - /Textures/Tiles/Planet/Snow/single_edge.png
+  #cardinalSprites:
+  #  - /Textures/Tiles/Planet/Snow/double_edge.png
+  isSubfloor: true
+  canCrowbar: false
+  footstepSounds:
+    collection: FootstepSnow
+  friction: 0.20
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  weather: true
+
+# Wasteland

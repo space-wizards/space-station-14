@@ -244,9 +244,15 @@ namespace Content.Client.Examine
                 return;
             }
 
-            foreach (var msg in message.Tags.OfType<FormattedMessage.TagText>())
+            foreach (var msg in message.Nodes)
             {
-                if (string.IsNullOrWhiteSpace(msg.Text)) continue;
+                if (msg.Name != null)
+                    continue;
+
+                var text = msg.Value.StringValue ?? "";
+
+                if (string.IsNullOrWhiteSpace(text))
+                    continue;
 
                 var richLabel = new RichTextLabel() { Margin = new Thickness(4, 4, 0, 4)};
                 richLabel.SetMessage(message);

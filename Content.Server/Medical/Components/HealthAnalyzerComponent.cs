@@ -20,10 +20,7 @@ namespace Content.Server.Medical.Components
         /// </summary>
         [DataField("scanDelay")]
         public float ScanDelay = 0.8f;
-        /// <summary>
-        ///     Token for interrupting scanning do after.
-        /// </summary>
-        public CancellationTokenSource? CancelToken;
+
         public BoundUserInterface? UserInterface => Owner.GetUIOrNull(HealthAnalyzerUiKey.Key);
 
         /// <summary>

@@ -19,7 +19,7 @@ public sealed class ResistLockerComponent : Component
     public bool IsResisting = false;
 
     /// <summary>
-    /// Cancellation token used to cancel the DoAfter if the container is opened before it's complete
+    /// Used to cancel the DoAfter when a locker is open
     /// </summary>
-    public CancellationTokenSource? CancelToken;
+    public Shared.DoAfter.DoAfter? DoAfter;
 }

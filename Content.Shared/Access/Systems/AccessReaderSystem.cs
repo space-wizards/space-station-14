@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Inventory;
+using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.PDA;
 using Content.Shared.Access.Components;
@@ -49,7 +50,7 @@ namespace Content.Shared.Access.Systems
         {
             if (args.User == null) // AutoLink (and presumably future external linkers) have no user.
                 return;
-            if (component.Enabled && !IsAllowed(args.User.Value, component))
+            if (!HasComp<EmaggedComponent>(uid) && !IsAllowed(args.User.Value, component))
                 args.Cancel();
         }
 
@@ -67,10 +68,7 @@ namespace Content.Shared.Access.Systems
 
         private void OnEmagged(EntityUid uid, AccessReaderComponent reader, ref GotEmaggedEvent args)
         {
-            if (!reader.Enabled)
-                return;
-            reader.Enabled = false;
-            Dirty(reader);
+            // no fancy conditions
             args.Handled = true;
         }
 
@@ -114,7 +112,7 @@ namespace Content.Shared.Access.Systems
         /// <param name="reader">An access reader to check against</param>
         public bool AreAccessTagsAllowed(ICollection<string> accessTags, AccessReaderComponent reader)
         {
-            if (!reader.Enabled)
+            if (HasComp<EmaggedComponent>(reader.Owner))
             {
                 // Access reader is totally disabled, so access is always allowed.
                 return true;

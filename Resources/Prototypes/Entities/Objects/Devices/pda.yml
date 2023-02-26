@@ -8,9 +8,11 @@
   - type: Appearance
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
+    netsync: false
     layers:
     - map: [ "enum.PDAVisualLayers.Base" ]
-    - map: [ "enum.PDAVisualLayers.Flashlight" ]
+    - state: "light_overlay"
+      map: [ "enum.PDAVisualLayers.Flashlight" ]
       shader: "unshaded"
       visible: false
     - state: "id_overlay"
@@ -417,7 +419,6 @@
     state: pda-ce
   - type: PDABorderColor
     borderColor: "#949137"
-    state: pda-ce
     accentHColor: "#447987"
   - type: Icon
     state: pda-ce
@@ -623,7 +624,6 @@
     state: pda-ert
   - type: PDABorderColor
     borderColor: "#A32D26"
-    state: pda-ert
     accentHColor: "#447987"
   - type: Icon
     state: pda-ert

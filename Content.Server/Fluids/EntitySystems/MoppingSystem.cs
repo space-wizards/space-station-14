@@ -1,10 +1,13 @@
+using System.Linq;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Fluids.Components;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
+using Content.Shared.Fluids;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using JetBrains.Annotations;
@@ -15,7 +18,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Fluids.EntitySystems;
 
 [UsedImplicitly]
-public sealed class MoppingSystem : EntitySystem
+public sealed class MoppingSystem : SharedMoppingSystem
 {
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SpillableSystem _spillableSystem = default!;
@@ -30,9 +33,33 @@ public sealed class MoppingSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<AbsorbentComponent, ComponentInit>(OnAbsorbentInit);
         SubscribeLocalEvent<AbsorbentComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<TransferCancelledEvent>(OnTransferCancelled);
-        SubscribeLocalEvent<TransferCompleteEvent>(OnTransferComplete);
+        SubscribeLocalEvent<AbsorbentComponent, DoAfterEvent<AbsorbantData>>(OnDoAfter);
+    }
+
+    private void OnAbsorbentInit(EntityUid uid, AbsorbentComponent component, ComponentInit args)
+    {
+        // TODO: I know dirty on init but no prediction moment.
+        UpdateAbsorbent(uid, component);
+    }
+
+    private void OnAbsorbentSolutionChange(EntityUid uid, AbsorbentComponent component, SolutionChangedEvent args)
+    {
+        UpdateAbsorbent(uid, component);
+    }
+
+    private void UpdateAbsorbent(EntityUid uid, AbsorbentComponent component)
+    {
+        if (!_solutionSystem.TryGetSolution(uid, AbsorbentComponent.SolutionName, out var solution))
+            return;
+
+        var oldProgress = component.Progress;
+
+        component.Progress = (float) (solution.Volume / solution.MaxVolume);
+        if (component.Progress.Equals(oldProgress))
+            return;
+        Dirty(component);
     }
 
     private void OnAfterInteract(EntityUid uid, AbsorbentComponent component, AfterInteractEvent args)
@@ -228,63 +255,38 @@ public sealed class MoppingSystem : EntitySystem
         if (!component.InteractingEntities.Add(target))
             return;
 
-        var doAfterArgs = new DoAfterEventArgs(user, delay, target: target)
+        var aborbantData = new AbsorbantData(targetSolution, msg, sfx, transferAmount);
+
+        var doAfterArgs = new DoAfterEventArgs(user, delay, target: target, used:used)
         {
             BreakOnUserMove = true,
             BreakOnStun = true,
             BreakOnDamage = true,
-            MovementThreshold = 0.2f,
-            BroadcastCancelledEvent = new TransferCancelledEvent(target, component),
-            BroadcastFinishedEvent = new TransferCompleteEvent(used, target, component, targetSolution, msg, sfx, transferAmount)
+            MovementThreshold = 0.2f
         };
 
-        _doAfterSystem.DoAfter(doAfterArgs);
+        _doAfterSystem.DoAfter(doAfterArgs, aborbantData);
     }
 
-    private void OnTransferComplete(TransferCompleteEvent ev)
+    private void OnDoAfter(EntityUid uid, AbsorbentComponent component, DoAfterEvent<AbsorbantData> args)
     {
-        _audio.PlayPvs(ev.Sound, ev.Tool);
-        _popups.PopupEntity(ev.Message, ev.Tool);
-        _solutionSystem.TryTransferSolution(ev.Target, ev.Tool, ev.TargetSolution, AbsorbentComponent.SolutionName, ev.TransferAmount);
-        ev.Component.InteractingEntities.Remove(ev.Target);
+        if (args.Handled || args.Cancelled || args.Args.Target == null)
+            return;
+
+        _audio.PlayPvs(args.AdditionalData.Sound, uid);
+        _popups.PopupEntity(Loc.GetString(args.AdditionalData.Message, ("target", args.Args.Target.Value), ("used", uid)), uid);
+        _solutionSystem.TryTransferSolution(args.Args.Target.Value, uid, args.AdditionalData.TargetSolution,
+            AbsorbentComponent.SolutionName, args.AdditionalData.TransferAmount);
+        component.InteractingEntities.Remove(args.Args.Target.Value);
+
+        args.Handled = true;
     }
 
-    private void OnTransferCancelled(TransferCancelledEvent ev)
+    private record struct AbsorbantData(string TargetSolution, string Message, SoundSpecifier Sound, FixedPoint2 TransferAmount)
     {
-        ev.Component.InteractingEntities.Remove(ev.Target);
-    }
-}
-
-public sealed class TransferCompleteEvent : EntityEventArgs
-{
-    public readonly EntityUid Tool;
-    public readonly EntityUid Target;
-    public readonly AbsorbentComponent Component;
-    public readonly string TargetSolution;
-    public readonly string Message;
-    public readonly SoundSpecifier Sound;
-    public readonly FixedPoint2 TransferAmount;
-
-    public TransferCompleteEvent(EntityUid tool, EntityUid target, AbsorbentComponent component, string targetSolution, string message, SoundSpecifier sound, FixedPoint2 transferAmount)
-    {
-        Tool = tool;
-        Target = target;
-        Component = component;
-        TargetSolution = targetSolution;
-        Message = Loc.GetString(message, ("target", target), ("used", tool));
-        Sound = sound;
-        TransferAmount = transferAmount;
-    }
-}
-
-public sealed class TransferCancelledEvent : EntityEventArgs
-{
-    public readonly EntityUid Target;
-    public readonly AbsorbentComponent Component;
-
-    public TransferCancelledEvent(EntityUid target, AbsorbentComponent component)
-    {
-        Target = target;
-        Component = component;
+        public readonly string TargetSolution = TargetSolution;
+        public readonly string Message = Message;
+        public readonly SoundSpecifier Sound = Sound;
+        public readonly FixedPoint2 TransferAmount = TransferAmount;
     }
 }
