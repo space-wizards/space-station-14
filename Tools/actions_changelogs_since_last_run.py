@@ -12,10 +12,10 @@ import requests
 import yaml
 from typing import Any, Iterable
 
-GITHUB_API_URL = os.environ.get("GITHUB_API_URL", "https://api.github.com")
-GITHUB_REPO    = os.environ["GITHUB_REPO"]
-GITHUB_RUN     = os.environ["GITHUB_RUN_ID"]
-GITHUB_TOKEN   = os.environ["GITHUB_TOKEN"]
+GITHUB_API_URL    = os.environ.get("GITHUB_API_URL", "https://api.github.com")
+GITHUB_REPOSITORY = os.environ["GITHUB_REPOSITORY"]
+GITHUB_RUN        = os.environ["GITHUB_RUN_ID"]
+GITHUB_TOKEN      = os.environ["GITHUB_TOKEN"]
 
 DISCORD_WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL")
 
@@ -62,7 +62,7 @@ def get_most_recent_workflow(sess: requests.Session) -> Any:
 
 
 def get_current_run(sess: requests.Session) -> Any:
-    resp = sess.get(f"{GITHUB_API_URL}/repos/{GITHUB_REPO}/actions/runs/{GITHUB_RUN}")
+    resp = sess.get(f"{GITHUB_API_URL}/repos/{GITHUB_REPOSITORY}/actions/runs/{GITHUB_RUN}")
     resp.raise_for_status()
     return resp.json()
 
@@ -91,7 +91,7 @@ def get_last_changelog(sess: requests.Session, sha: str) -> str:
         "Accept": "application/vnd.github.raw"
     }
 
-    resp = sess.get(f"{GITHUB_API_URL}/repos/{GITHUB_REPO}/contents/{CHANGELOG_FILE}", headers=headers, params=params)
+    resp = sess.get(f"{GITHUB_API_URL}/repos/{GITHUB_REPOSITORY}/contents/{CHANGELOG_FILE}", headers=headers, params=params)
     resp.raise_for_status()
     return resp.text
 
