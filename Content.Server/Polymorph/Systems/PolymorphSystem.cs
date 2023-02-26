@@ -1,4 +1,5 @@
 using Content.Server.Actions;
+using Content.Server.Administration.Commands;
 using Content.Server.Buckle.Systems;
 using Content.Server.Humanoid;
 using Content.Server.Inventory;
@@ -14,6 +15,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Polymorph;
 using Content.Shared.Popups;
+using Content.Shared.Rejuvenate;
 using JetBrains.Annotations;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
@@ -49,6 +51,7 @@ namespace Content.Server.Polymorph.Systems
 
             SubscribeLocalEvent<PolymorphableComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<PolymorphableComponent, PolymorphActionEvent>(OnPolymorphActionEvent);
+            SubscribeLocalEvent<PolymorphedEntityComponent, RejuvenateEvent>(OnRejuvenate);
             SubscribeLocalEvent<PolymorphedEntityComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<PolymorphedEntityComponent, RevertPolymorphActionEvent>(OnRevertPolymorphActionEvent);
 
@@ -72,9 +75,16 @@ namespace Content.Server.Polymorph.Systems
             PolymorphEntity(uid, args.Prototype);
         }
 
+        private void OnRejuvenate(EntityUid uid, PolymorphedEntityComponent component, RejuvenateEvent args)
+        {
+            var parent = component.Parent;
+            Revert(uid, component);
+            RejuvenateCommand.PerformRejuvenate(parent);
+        }
+
         private void OnRevertPolymorphActionEvent(EntityUid uid, PolymorphedEntityComponent component, RevertPolymorphActionEvent args)
         {
-            Revert(uid);
+            Revert(uid, component);
         }
 
         public void OnStartup(EntityUid uid, PolymorphedEntityComponent component, ComponentStartup args)
