@@ -6,7 +6,9 @@ using Content.Shared.Verbs;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.Disposal.Unit.EntitySystems;
 using Content.Server.DoAfter;
+using Content.Shared.DoAfter;
 using Content.Shared.Placeable;
+using Content.Shared.Storage;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
 
@@ -17,6 +19,7 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly DisposalUnitSystem _disposalUnitSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
 
         public override void Initialize()
         {
@@ -24,8 +27,7 @@ namespace Content.Server.Storage.EntitySystems
             SubscribeLocalEvent<DumpableComponent, AfterInteractEvent>(OnAfterInteract, after: new[]{ typeof(StorageSystem) });
             SubscribeLocalEvent<DumpableComponent, GetVerbsEvent<AlternativeVerb>>(AddDumpVerb);
             SubscribeLocalEvent<DumpableComponent, GetVerbsEvent<UtilityVerb>>(AddUtilityVerbs);
-            SubscribeLocalEvent<DumpCompletedEvent>(OnDumpCompleted);
-            SubscribeLocalEvent<DumpCancelledEvent>(OnDumpCancelled);
+            SubscribeLocalEvent<DumpableComponent, DoAfterEvent>(OnDoAfter);
         }
 
         private void OnAfterInteract(EntityUid uid, DumpableComponent component, AfterInteractEvent args)
@@ -33,16 +35,8 @@ namespace Content.Server.Storage.EntitySystems
             if (!args.CanReach)
                 return;
 
-            if (!TryComp<ServerStorageComponent>(args.Used, out var storage))
-                return;
-
-            if (storage.StoredEntities == null || storage.StoredEntities.Count == 0 || storage.CancelToken != null)
-                return;
-
             if (HasComp<DisposalUnitComponent>(args.Target) || HasComp<PlaceableSurfaceComponent>(args.Target))
-            {
-                StartDoAfter(uid, args.Target.Value, args.User, component, storage);
-            }
+                StartDoAfter(uid, args.Target.Value, args.User, component);
         }
 
         private void AddDumpVerb(EntityUid uid, DumpableComponent dumpable, GetVerbsEvent<AlternativeVerb> args)
@@ -57,7 +51,7 @@ namespace Content.Server.Storage.EntitySystems
             {
                 Act = () =>
                 {
-                    StartDoAfter(uid, null, args.User, dumpable, storage, 0.6f);
+                    StartDoAfter(uid, null, args.User, dumpable);//Had multiplier of 0.6f
                 },
                 Text = Loc.GetString("dump-verb-name"),
                 IconTexture = "/Textures/Interface/VerbIcons/drop.svg.192dpi.png",
@@ -79,7 +73,7 @@ namespace Content.Server.Storage.EntitySystems
                 {
                     Act = () =>
                     {
-                        StartDoAfter(uid, args.Target, args.User, dumpable, storage);
+                        StartDoAfter(uid, args.Target, args.User, dumpable);
                     },
                     Text = Loc.GetString("dump-disposal-verb-name", ("unit", args.Target)),
                     IconEntity = uid
@@ -93,7 +87,7 @@ namespace Content.Server.Storage.EntitySystems
                 {
                     Act = () =>
                     {
-                        StartDoAfter(uid, args.Target, args.User, dumpable, storage);
+                        StartDoAfter(uid, args.Target, args.User, dumpable);
                     },
                     Text = Loc.GetString("dump-placeable-verb-name", ("surface", args.Target)),
                     IconEntity = uid
@@ -102,21 +96,15 @@ namespace Content.Server.Storage.EntitySystems
             }
         }
 
-        public void StartDoAfter(EntityUid storageUid, EntityUid? targetUid, EntityUid userUid, DumpableComponent dumpable, ServerStorageComponent storage, float multiplier = 1)
+        public void StartDoAfter(EntityUid storageUid, EntityUid? targetUid, EntityUid userUid, DumpableComponent dumpable)
         {
-            if (dumpable.CancelToken != null)
+            if (!TryComp<SharedStorageComponent>(storageUid, out var storage) || storage.StoredEntities == null)
                 return;
 
-            if (storage.StoredEntities == null)
-                return;
+            float delay = storage.StoredEntities.Count * (float) dumpable.DelayPerItem.TotalSeconds * dumpable.Multiplier;
 
-            float delay = storage.StoredEntities.Count * (float) dumpable.DelayPerItem.TotalSeconds * multiplier;
-
-            dumpable.CancelToken = new CancellationTokenSource();
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(userUid, delay, dumpable.CancelToken.Token, target: targetUid)
+            _doAfterSystem.DoAfter(new DoAfterEventArgs(userUid, delay, target: targetUid, used: storageUid)
             {
-                BroadcastFinishedEvent = new DumpCompletedEvent(dumpable, userUid, targetUid, storage.StoredEntities),
-                BroadcastCancelledEvent = new DumpCancelledEvent(dumpable.Owner),
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 BreakOnStun = true,
@@ -124,71 +112,43 @@ namespace Content.Server.Storage.EntitySystems
             });
         }
 
-
-        private void OnDumpCompleted(DumpCompletedEvent args)
+        private void OnDoAfter(EntityUid uid, DumpableComponent component, DoAfterEvent args)
         {
-            args.Component.CancelToken = null;
+            if (args.Handled || args.Cancelled || !TryComp<SharedStorageComponent>(uid, out var storage) || storage.StoredEntities == null)
+                return;
 
             Queue<EntityUid> dumpQueue = new();
-            foreach (var entity in args.StoredEntities)
+            foreach (var entity in storage.StoredEntities)
             {
                 dumpQueue.Enqueue(entity);
-            }
-
-            if (TryComp<DisposalUnitComponent>(args.Target, out var disposal))
-            {
-                foreach (var entity in dumpQueue)
-                {
-                    _disposalUnitSystem.DoInsertDisposalUnit(args.Target.Value, entity, args.User);
-                }
-                return;
             }
 
             foreach (var entity in dumpQueue)
             {
                 var transform = Transform(entity);
-                transform.AttachParentToContainerOrGrid(EntityManager);
-                transform.LocalPosition = transform.LocalPosition + _random.NextVector2Box() / 2;
+                _container.AttachParentToContainerOrGrid(transform);
+                transform.LocalPosition += _random.NextVector2Box() / 2;
                 transform.LocalRotation = _random.NextAngle();
             }
 
-            if (HasComp<PlaceableSurfaceComponent>(args.Target))
+            if (args.Args.Target == null)
+                return;
+
+            if (HasComp<DisposalUnitComponent>(args.Args.Target.Value))
             {
                 foreach (var entity in dumpQueue)
                 {
-                    Transform(entity).LocalPosition = Transform(args.Target.Value).LocalPosition + _random.NextVector2Box() / 4;
+                    _disposalUnitSystem.DoInsertDisposalUnit(args.Args.Target.Value, entity, args.Args.User);
                 }
+                return;
             }
-        }
 
-        private void OnDumpCancelled(DumpCancelledEvent args)
-        {
-            if (TryComp<DumpableComponent>(args.Uid, out var dumpable))
-                dumpable.CancelToken = null;
-        }
-
-        private sealed class DumpCancelledEvent : EntityEventArgs
-        {
-            public readonly EntityUid Uid;
-            public DumpCancelledEvent(EntityUid uid)
+            if (HasComp<PlaceableSurfaceComponent>(args.Args.Target.Value))
             {
-                Uid = uid;
-            }
-        }
-
-        private sealed class DumpCompletedEvent : EntityEventArgs
-        {
-            public DumpableComponent Component { get; }
-            public EntityUid User { get; }
-            public EntityUid? Target { get; }
-            public IReadOnlyList<EntityUid> StoredEntities { get; }
-
-            public DumpCompletedEvent(DumpableComponent component, EntityUid user, EntityUid? target, IReadOnlyList<EntityUid> storedEntities)
-            {
-                Component = component;
-                User = user;
-                Target = target;
-                StoredEntities = storedEntities;
+                foreach (var entity in dumpQueue)
+                {
+                    Transform(entity).LocalPosition = Transform(args.Args.Target.Value).LocalPosition + _random.NextVector2Box() / 4;
+                }
             }
         }
     }

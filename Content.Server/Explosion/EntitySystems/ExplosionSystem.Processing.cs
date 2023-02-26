@@ -396,7 +396,7 @@ public sealed partial class ExplosionSystem : EntitySystem
                 {
                     var damageStr = string.Join(", ", damage.DamageDict.Select(entry => $"{entry.Key}: {entry.Value}"));
                     _adminLogger.Add(LogType.Explosion, LogImpact.Medium,
-                        $"Explosion caused {{{damageStr}}} to {ToPrettyString(uid):target} at {Transform(uid).Coordinates}");
+                        $"Explosion caused [{damageStr}] to {ToPrettyString(uid):target} at {Transform(uid).Coordinates}");
                 }
             }
             else
@@ -407,7 +407,7 @@ public sealed partial class ExplosionSystem : EntitySystem
                 {
                     var damageStr = string.Join(", ", appliedDamage.DamageDict.Select(entry => $"{entry.Key}: {entry.Value}"));
                     _adminLogger.Add(LogType.Explosion, LogImpact.Medium,
-                        $"Explosion caused {{{damageStr}}} to {ToPrettyString(uid):target} at {Transform(uid).Coordinates}");
+                        $"Explosion caused [{damageStr}] to {ToPrettyString(uid):target} at {Transform(uid).Coordinates}");
                 }
             }
         }

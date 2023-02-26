@@ -1,4 +1,5 @@
 using Content.Server.Administration.Commands;
+using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.UI;
 using Content.Server.Chemistry.Components.SolutionManager;
@@ -48,6 +49,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly ArtifactSystem _artifactSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly PrayerSystem _prayerSystem = default!;
+        [Dependency] private readonly EuiManager _eui = default!;
 
         private readonly Dictionary<IPlayerSession, EditSolutionsEui> _openSolutionUis = new();
 
@@ -119,27 +121,23 @@ namespace Content.Server.Administration.Systems
                     });
                 }
 
-                // XenoArcheology
-                if (TryComp<ArtifactComponent>(args.Target, out var artifact))
+                // Admin Logs
+                if (_adminManager.HasAdminFlag(player, AdminFlags.Logs))
                 {
-                    // make artifact always active (by adding timer trigger)
-                    args.Verbs.Add(new Verb()
+                    Verb logsVerbEntity = new()
                     {
-                        Text = Loc.GetString("artifact-verb-make-always-active"),
+                        Priority = -2,
+                        Text = Loc.GetString("admin-verbs-admin-logs-entity"),
                         Category = VerbCategory.Admin,
-                        Act = () => EntityManager.AddComponent<ArtifactTimerTriggerComponent>(args.Target),
-                        Disabled = EntityManager.HasComponent<ArtifactTimerTriggerComponent>(args.Target),
-                        Impact = LogImpact.High
-                    });
-
-                    // force to activate artifact ignoring timeout
-                    args.Verbs.Add(new Verb()
-                    {
-                        Text = Loc.GetString("artifact-verb-activate"),
-                        Category = VerbCategory.Admin,
-                        Act = () => _artifactSystem.ForceActivateArtifact(args.Target, component: artifact),
-                        Impact = LogImpact.High
-                    });
+                        Act = () =>
+                        {
+                            var ui = new AdminLogsEui();
+                            _eui.OpenEui(ui, player);
+                            ui.SetLogFilter(search:args.Target.GetHashCode().ToString());
+                        },
+                        Impact = LogImpact.Low
+                    };
+                    args.Verbs.Add(logsVerbEntity);
                 }
 
                 // TeleportTo
@@ -236,6 +234,29 @@ namespace Content.Server.Administration.Systems
                     ConfirmationPopup = true
                 };
                 args.Verbs.Add(verb);
+            }
+
+            // XenoArcheology
+            if (_adminManager.IsAdmin(player) && TryComp<ArtifactComponent>(args.Target, out var artifact))
+            {
+                // make artifact always active (by adding timer trigger)
+                args.Verbs.Add(new Verb()
+                {
+                    Text = Loc.GetString("artifact-verb-make-always-active"),
+                    Category = VerbCategory.Debug,
+                    Act = () => EntityManager.AddComponent<ArtifactTimerTriggerComponent>(args.Target),
+                    Disabled = EntityManager.HasComponent<ArtifactTimerTriggerComponent>(args.Target),
+                    Impact = LogImpact.High
+                });
+
+                // force to activate artifact ignoring timeout
+                args.Verbs.Add(new Verb()
+                {
+                    Text = Loc.GetString("artifact-verb-activate"),
+                    Category = VerbCategory.Debug,
+                    Act = () => _artifactSystem.ForceActivateArtifact(args.Target, component: artifact),
+                    Impact = LogImpact.High
+                });
             }
 
             // Make Sentient verb

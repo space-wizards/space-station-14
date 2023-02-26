@@ -31,8 +31,8 @@ public sealed partial class BuckleSystem
         SubscribeLocalEvent<BuckleComponent, InteractHandEvent>(HandleInteractHand);
         SubscribeLocalEvent<BuckleComponent, GetVerbsEvent<InteractionVerb>>(AddUnbuckleVerb);
         SubscribeLocalEvent<BuckleComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
-        SubscribeLocalEvent<BuckleComponent, CanDropEvent>(OnBuckleCanDrop);
-        SubscribeLocalEvent<BuckleComponent, DragDropEvent>(OnBuckleDragDrop);
+        SubscribeLocalEvent<BuckleComponent, CanDropDraggedEvent>(OnBuckleCanDrop);
+        SubscribeLocalEvent<BuckleComponent, DragDropDraggedEvent>(OnBuckleDragDrop);
     }
 
     private void AddUnbuckleVerb(EntityUid uid, BuckleComponent component, GetVerbsEvent<InteractionVerb> args)
@@ -76,7 +76,8 @@ public sealed partial class BuckleSystem
 
     private void HandleInteractHand(EntityUid uid, BuckleComponent component, InteractHandEvent args)
     {
-        args.Handled = TryUnbuckle(uid, args.User, buckle: component);
+        if (TryUnbuckle(uid, args.User, buckle: component))
+            args.Handled = true;
     }
 
     private void MoveEvent(EntityUid uid, BuckleComponent buckle, ref MoveEvent ev)
@@ -104,12 +105,12 @@ public sealed partial class BuckleSystem
             args.Cancelled = true;
     }
 
-    private void OnBuckleCanDrop(EntityUid uid, BuckleComponent component, CanDropEvent args)
+    private void OnBuckleCanDrop(EntityUid uid, BuckleComponent component, ref CanDropDraggedEvent args)
     {
         args.Handled = HasComp<StrapComponent>(args.Target);
     }
 
-    private void OnBuckleDragDrop(EntityUid uid, BuckleComponent component, DragDropEvent args)
+    private void OnBuckleDragDrop(EntityUid uid, BuckleComponent component, ref DragDropDraggedEvent args)
     {
         args.Handled = TryBuckle(uid, args.User, args.Target, component);
     }
