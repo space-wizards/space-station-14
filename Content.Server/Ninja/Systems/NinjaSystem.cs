@@ -25,7 +25,6 @@ using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
 using Content.Shared.Emag.Systems;
-using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Implants;
@@ -69,7 +68,6 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedSubdermalImplantSystem _implants = default!;
-    [Dependency] private readonly PopupSystem _popups = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -81,19 +79,13 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SpaceNinjaGlovesComponent, GotEquippedEvent>(OnGlovesEquipped);
-        SubscribeLocalEvent<SpaceNinjaGlovesComponent, GotUnequippedEvent>(OnGlovesUnequipped);
-        SubscribeLocalEvent<SpaceNinjaGlovesComponent, ToggleNinjaGlovesEvent>(OnToggleGloves);
-        SubscribeLocalEvent<SpaceNinjaGlovesComponent, ExaminedEvent>(OnGlovesExamine);
         SubscribeLocalEvent<ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<NinjaDrainComponent, DoAfterEvent>(OnDrainDoAfter);
         SubscribeLocalEvent<NinjaDownloadComponent, DoAfterEvent>(OnDownloadDoAfter);
         SubscribeLocalEvent<NinjaTerrorComponent, DoAfterEvent>(OnTerrorDoAfter);
 
         // TODO: maybe have suit activation stuff
-        SubscribeLocalEvent<SpaceNinjaSuitComponent, GotEquippedEvent>(OnSuitEquipped);
         SubscribeLocalEvent<SpaceNinjaSuitComponent, ContainerIsInsertingAttemptEvent>(OnSuitInsertAttempt);
-        SubscribeLocalEvent<SpaceNinjaSuitComponent, GotUnequippedEvent>(OnSuitUnequipped);
         SubscribeLocalEvent<SpaceNinjaSuitComponent, TogglePhaseCloakEvent>(OnTogglePhaseCloakAction);
         SubscribeLocalEvent<SpaceNinjaSuitComponent, RecallKatanaEvent>(OnRecallKatanaAction);
 
@@ -131,55 +123,19 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         GreetNinja(mind);
     }
 
-    private void OnGlovesEquipped(EntityUid uid, SpaceNinjaGlovesComponent comp, GotEquippedEvent args)
+    protected override void NinjaEquippedGloves(EntityUid uid, SpaceNinjaGlovesComponent comp, EntityUid user, SpaceNinjaComponent ninja)
     {
-        var user = args.Equipee;
-        if (TryComp<SpaceNinjaComponent>(user, out var ninja) && TryComp<ActionsComponent>(user, out var actions))
-        {
-            ninja.Gloves = uid;
+        base.NinjaEquippedGloves(uid, comp, user, ninja);
+
+        if (TryComp<ActionsComponent>(user, out var actions))
             _actions.AddAction(user, comp.ToggleAction, uid, actions);
-        }
     }
 
-    private void OnGlovesUnequipped(EntityUid uid, SpaceNinjaGlovesComponent comp, GotUnequippedEvent args)
-    {
-        var user = args.Equipee;
-        DisableGloves(uid, user);
+	protected override void UserUnequippedGloves(EntityUid uid, SpaceNinjaGlovesComponent comp, EntityUid user)
+	{
+		base.UserUnequippedGloves(uid, comp, user);
 
-        _actions.RemoveProvidedActions(args.Equipee, uid);
-        if (TryComp<SpaceNinjaComponent>(user, out var ninja))
-            ninja.Gloves = null;
-    }
-
-    private void OnToggleGloves(EntityUid uid, SpaceNinjaGlovesComponent comp, ToggleNinjaGlovesEvent args)
-    {
-        var user = args.Performer;
-        // need to wear suit to enable gloves
-        if (!TryComp<SpaceNinjaComponent>(user, out var ninja)
-            || ninja.Suit == null
-            || !HasComp<SpaceNinjaSuitComponent>(ninja.Suit.Value))
-        {
-            _popups.PopupEntity(Loc.GetString("ninja-gloves-not-wearing-suit"), user, user);
-            return;
-        }
-
-		var enabled = !HasComp<GlovesEnabledComponent>(uid);
-		if (enabled)
-			AddComp<GlovesEnabledComponent>(uid);
-		else
-			RemComp<GlovesEnabledComponent>(uid);
-
-        var message = Loc.GetString(enabled ? "ninja-gloves-on" : "ninja-gloves-off");
-        _popups.PopupEntity(message, user, user);
-    }
-
-    private void OnGlovesExamine(EntityUid uid, SpaceNinjaGlovesComponent comp, ExaminedEvent args)
-    {
-        if (!args.IsInDetailsRange)
-            return;
-
-		var enabled = HasComp<GlovesEnabledComponent>(uid);
-        args.PushText(Loc.GetString(enabled ? "ninja-gloves-examine-on" : "ninja-gloves-examine-off"));
+        _actions.RemoveProvidedActions(user, uid);
     }
 
 	// TODO: make this per-ability
@@ -389,28 +345,23 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         }
     }
 
-    private void OnSuitEquipped(EntityUid uid, SpaceNinjaSuitComponent comp, GotEquippedEvent args)
-    {
-        var user = args.Equipee;
-        if (!TryComp<SpaceNinjaComponent>(user, out var ninja) || !TryComp<ActionsComponent>(user, out var actions))
-            return;
+	protected override void NinjaEquippedSuit(EntityUid uid, SpaceNinjaSuitComponent comp, EntityUid user, SpaceNinjaComponent ninja)
+	{
+		base.NinjaEquippedSuit(uid, comp, user, ninja);
+
+        SetSuitPowerAlert(user);
+
+        if (!TryComp<ActionsComponent>(user, out var actions))
+        	return;
 
         _actions.AddAction(user, comp.TogglePhaseCloakAction, uid, actions);
         _actions.AddAction(user, comp.RecallKatanaAction, uid, actions);
         _actions.AddAction(user, comp.KatanaDashAction, uid, actions);
         // TODO: emp ability
         // TODO: ninja star ability
-
-        // mark the user as wearing this suit, used when being attacked among other things
-        ninja.Suit = uid;
-
-        // initialize phase cloak
-        AddComp<StealthComponent>(user);
-        SetCloaked(user, comp.Cloaked);
-        SetSuitPowerAlert(user);
     }
 
-    // TODO: put in shared so client properly predicts insertion
+    // TODO: put in shared so client properly predicts insertion, but it uses powercell so how???
     private void OnSuitInsertAttempt(EntityUid uid, SpaceNinjaSuitComponent comp, ContainerIsInsertingAttemptEvent args)
     {
         // no power cell for some reason??? allow it
@@ -424,28 +375,16 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         }
     }
 
-    private void OnSuitUnequipped(EntityUid uid, SpaceNinjaSuitComponent comp, GotUnequippedEvent args)
-    {
-        var user = args.Equipee;
+	protected override void UserUnequippedSuit(EntityUid uid, SpaceNinjaSuitComponent comp, EntityUid user)
+	{
+		base.UserUnequippedSuit(uid, comp, user);
+
+		// remove suit ability actions
         _actions.RemoveProvidedActions(user, uid);
-
-        // mark the user as not wearing a suit
-        if (TryComp<SpaceNinjaComponent>(user, out var ninja))
-        {
-            ninja.Suit = null;
-            // disable glove abilities
-            if (ninja.Gloves != null)
-                DisableGloves(ninja.Gloves.Value, user);
-        }
-
-        // force uncloak
-        comp.Cloaked = false;
-        SetCloaked(user, false);
-        RemComp<StealthComponent>(user);
 
         // remove power indicator
         SetSuitPowerAlert(user);
-    }
+	}
 
     private void OnTogglePhaseCloakAction(EntityUid uid, SpaceNinjaSuitComponent comp, TogglePhaseCloakEvent args)
     {
@@ -542,15 +481,6 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
     private NinjaRuleConfiguration RuleConfig()
     {
         return (NinjaRuleConfiguration) _proto.Index<GameRulePrototype>("SpaceNinjaSpawn").Configuration;
-    }
-
-    private void DisableGloves(EntityUid uid, EntityUid user)
-    {
-        if (HasComp<GlovesEnabledComponent>(uid))
-        {
-            RemComp<GlovesEnabledComponent>(uid);
-            _popups.PopupEntity(Loc.GetString("ninja-gloves-off"), user, user);
-        }
     }
 
     private void OnNinjaAttacked(EntityUid uid, SpaceNinjaComponent comp, AttackedEvent args)
