@@ -1,4 +1,4 @@
-using Content.Server.Body.Systems;
+﻿using Content.Server.Body.Systems;
 using Content.Server.DoAfter;
 using Content.Server.Kitchen.Components;
 using Content.Shared.Body.Components;
@@ -13,6 +13,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Server.Containers;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Kitchen.EntitySystems;
 
@@ -149,7 +150,7 @@ public sealed class SharpSystem : EntitySystem
             },
             Message = message,
             Disabled = disabled,
-            IconTexture = "/Textures/Interface/VerbIcons/cutlery.svg.192dpi.png",
+            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/cutlery.svg.192dpi.png")),
             Text = Loc.GetString("butcherable-verb-name"),
         };
 

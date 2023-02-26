@@ -4,6 +4,7 @@ using Content.Shared.Ghost;
 using Content.Shared.Movement.Events;
 using Content.Shared.Verbs;
 using Robust.Shared.Map;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Follower;
 
@@ -37,7 +38,7 @@ public sealed class FollowerSystem : EntitySystem
             }),
             Impact = LogImpact.Low,
             Text = Loc.GetString("verb-follow-text"),
-            IconTexture = "/Textures/Interface/VerbIcons/open.svg.192dpi.png",
+            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/open.svg.192dpi.png")),
         };
 
         ev.Verbs.Add(verb);

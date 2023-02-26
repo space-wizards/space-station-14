@@ -15,6 +15,7 @@ using Content.Shared.Stunnable;
 using Content.Shared.Vehicle.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.GameStates;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Buckle.Systems;
 
@@ -44,7 +45,7 @@ public sealed partial class BuckleSystem
         {
             Act = () => TryUnbuckle(uid, args.User, buckle: component),
             Text = Loc.GetString("verb-categories-unbuckle"),
-            IconTexture = "/Textures/Interface/VerbIcons/unbuckle.svg.192dpi.png"
+            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/unbuckle.svg.192dpi.png"))
         };
 
         if (args.Target == args.User && args.Using == null)

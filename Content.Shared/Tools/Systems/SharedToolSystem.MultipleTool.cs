@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading;
 using Content.Shared.Audio;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
@@ -31,8 +32,23 @@ public abstract class SharedToolSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, ToolComponent component, DoAfterEvent<ToolEventData> args)
     {
-        if (args.Handled || args.Cancelled || args.AdditionalData.Ev == null)
+        if (args.Handled || args.AdditionalData.Ev == null)
             return;
+
+        if (args.Cancelled)
+        {
+            if (args.AdditionalData.CancelledEv != null)
+            {
+                if (args.AdditionalData.TargetEntity != null)
+                    RaiseLocalEvent(args.AdditionalData.TargetEntity.Value, args.AdditionalData.CancelledEv);
+                else
+                    RaiseLocalEvent(args.AdditionalData.CancelledEv);
+
+                args.Handled = true;
+            }
+
+            return;
+        }
 
         if (ToolFinishUse(uid, args.Args.User, args.AdditionalData.Fuel))
         {
@@ -43,18 +59,9 @@ public abstract class SharedToolSystem : EntitySystem
 
             args.Handled = true;
         }
-        else if (args.AdditionalData.CancelledEv != null)
-        {
-            if (args.AdditionalData.TargetEntity != null)
-                RaiseLocalEvent(args.AdditionalData.TargetEntity.Value, args.AdditionalData.CancelledEv);
-            else
-                RaiseLocalEvent(args.AdditionalData.CancelledEv);
-
-            args.Handled = true;
-        }
     }
 
-    public bool UseTool(EntityUid tool, EntityUid user, EntityUid? target, float doAfterDelay, IEnumerable<string> toolQualitiesNeeded, ToolEventData toolEventData, float fuel = 0f, ToolComponent? toolComponent = null, Func<bool>? doAfterCheck = null)
+    public bool UseTool(EntityUid tool, EntityUid user, EntityUid? target, float doAfterDelay, IEnumerable<string> toolQualitiesNeeded, ToolEventData toolEventData, float fuel = 0f, ToolComponent? toolComponent = null, Func<bool>? doAfterCheck = null, CancellationTokenSource? cancelToken = null)
     {
         // No logging here, after all that'd mean the caller would need to check if the component is there or not.
         if (!Resolve(tool, ref toolComponent, false))
@@ -70,7 +77,7 @@ public abstract class SharedToolSystem : EntitySystem
 
         if (doAfterDelay > 0f)
         {
-            var doAfterArgs = new DoAfterEventArgs(user, doAfterDelay / toolComponent.SpeedModifier, target:target, used:tool)
+            var doAfterArgs = new DoAfterEventArgs(user, doAfterDelay / toolComponent.SpeedModifier, cancelToken:cancelToken?.Token ?? default, target:target, used:tool)
             {
                 ExtraCheck = doAfterCheck,
                 BreakOnDamage = true,

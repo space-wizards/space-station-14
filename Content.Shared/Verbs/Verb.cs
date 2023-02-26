@@ -71,14 +71,7 @@ namespace Content.Shared.Verbs
         /// <summary>
         ///     Sprite of the icon that the user sees on the verb button.
         /// </summary>
-        public SpriteSpecifier? Icon
-        {
-            get => _icon ??=
-                IconTexture == null ? null : new SpriteSpecifier.Texture(new ResourcePath(IconTexture));
-            set => _icon = value;
-        }
-        [NonSerialized]
-        private SpriteSpecifier? _icon;
+        public SpriteSpecifier? Icon;
 
         /// <summary>
         ///     Name of the category this button is under. Used to group verbs in the context menu.
@@ -113,11 +106,6 @@ namespace Content.Shared.Verbs
         ///     Bigger is higher priority (appears first, gets executed preferentially).
         /// </remarks>
         public int Priority;
-
-        /// <summary>
-        ///     Raw texture path used to load the <see cref="Icon"/> for displaying on the client.
-        /// </summary>
-        public string? IconTexture;
 
         /// <summary>
         ///     If this is not null, and no icon or icon texture were specified, a sprite view of this entity will be
@@ -211,7 +199,7 @@ namespace Content.Shared.Verbs
             }
 
             // Finally, compare icon texture paths. Note that this matters for verbs that don't have any text (e.g., the rotate-verbs)
-            return string.Compare(IconTexture, otherVerb.IconTexture, StringComparison.CurrentCulture);
+            return string.Compare(Icon?.ToString(), otherVerb.Icon?.ToString(), StringComparison.CurrentCulture);
         }
 
         /// <summary>
