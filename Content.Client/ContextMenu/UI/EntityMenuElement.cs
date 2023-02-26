@@ -64,6 +64,34 @@ namespace Content.Client.ContextMenu.UI
             Count = 0;
         }
 
+        private string? SearchPlayerName(EntityUid entity)
+        {
+            return _adminSystem.PlayerList.FirstOrDefault(player => player.EntityUid == entity)?.Username;
+        }
+
+        private string GetEntityDescriptionAdmin(EntityUid entity)
+        {
+            var representation = _entityManager.ToPrettyString(entity);
+
+            var name = representation.Name;
+            var id = representation.Uid;
+            var prototype = representation.Prototype;
+            var playerName = representation.Session?.Name ?? SearchPlayerName(entity);
+            var deleted = representation.Deleted;
+
+            return $"{name} ({id}{(prototype != null ? $", {prototype}" : "")}{(playerName != null ? $", {playerName}" : "")}){(deleted ? "D" : "")}";
+        }
+
+        private string GetEntityDescription(EntityUid entity)
+        {
+            if (_adminManager.HasFlag(AdminFlags.Admin | AdminFlags.Debug))
+            {
+                return GetEntityDescriptionAdmin(entity);
+            }
+
+            return Identity.Name(entity, _entityManager, _playerManager.LocalPlayer!.ControlledEntity!);
+        }
+
         /// <summary>
         ///     Update the icon and text of this element based on the given entity or this element's own entity if none
         ///     is provided.
@@ -76,28 +104,14 @@ namespace Content.Client.ContextMenu.UI
             // _entityManager.Deleted() implicitly checks all of these.
             if (_entityManager.Deleted(entity))
             {
-                Text = string.Empty;
                 EntityIcon.Sprite = null;
-                return;
-            }
-
-            EntityIcon.Sprite = _entityManager.GetComponentOrNull<SpriteComponent>(entity);
-
-            if (_adminManager.HasFlag(AdminFlags.Admin | AdminFlags.Debug))
-            {
-                var representation = _entityManager.ToPrettyString(entity.Value);
-                var name = representation.Name;
-                var id = representation.Uid;
-                var prototype = representation.Prototype;
-                var playerName =
-                    representation.Session?.Name ??
-                    _adminSystem.PlayerList.FirstOrDefault(player => player.EntityUid == entity)?.Username;
-                var deleted = representation.Deleted;
-
-                Text = $"{name} ({id}{(representation.Prototype != null ? $", {prototype}" : "")}{(playerName != null ? $", {playerName}" : "")}){(deleted ? "D" : "")}";
+                Text = string.Empty;
             }
             else
-                Text = Identity.Name(entity.Value, _entityManager, _playerManager.LocalPlayer!.ControlledEntity!);
+            {
+                EntityIcon.Sprite = _entityManager.GetComponentOrNull<SpriteComponent>(entity);
+                Text = GetEntityDescription(entity.Value);
+            }
         }
     }
 }
