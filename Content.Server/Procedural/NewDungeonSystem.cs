@@ -25,9 +25,6 @@ public sealed class NewDungeonSystem : EntitySystem
     [Dependency] private readonly MapLoaderSystem _loader = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-    // TODO: Probably need a component for this for world saves.
-    private readonly Dictionary<ResourcePath, MapId> _templateMaps = new();
-
     public override void Initialize()
     {
         base.Initialize();
@@ -39,7 +36,6 @@ public sealed class NewDungeonSystem : EntitySystem
     {
         base.Shutdown();
         _prototype.PrototypesReloaded -= PrototypeReload;
-        _templateMaps.Clear();
     }
 
     private void PrototypeReload(PrototypesReloadedEventArgs obj)
@@ -49,22 +45,43 @@ public sealed class NewDungeonSystem : EntitySystem
             return;
         }
 
-        foreach (var map in _templateMaps.Values)
+        foreach (var proto in rooms.Modified.Values)
         {
-            _mapManager.DeleteMap(map);
-        }
+            var roomProto = (DungeonRoomPrototype) proto;
+            var query = AllEntityQuery<DungeonAtlasTemplateComponent>();
 
-        _templateMaps.Clear();
+            while (query.MoveNext(out var comp))
+            {
+                var uid = comp.Owner;
+
+                if (!roomProto.AtlasPath.Equals(comp.Path))
+                    continue;
+
+                QueueDel(uid);
+                return;
+            }
+        }
     }
 
-    private void SetupTemplate(DungeonRoomPrototype proto)
+    private MapId GetOrCreateTemplate(DungeonRoomPrototype proto)
     {
-        if (_templateMaps.TryGetValue(proto.AtlasPath, out var mapId))
-            return;
+        var query = AllEntityQuery<DungeonAtlasTemplateComponent>();
+        DungeonAtlasTemplateComponent? comp;
 
-        mapId = _mapManager.CreateMap();
+        while (query.MoveNext(out comp))
+        {
+            var uid = comp.Owner;
+
+            // Exists
+            if (comp.Path?.Equals(proto.AtlasPath) == true)
+                return Transform(uid).MapID;
+        }
+
+        var mapId = _mapManager.CreateMap();
         _loader.Load(mapId, proto.AtlasPath.ToString());
-        _templateMaps[proto.AtlasPath] = mapId;
+        comp = AddComp<DungeonAtlasTemplateComponent>(_mapManager.GetMapEntityId(mapId));
+        comp.Path = proto.AtlasPath;
+        return mapId;
     }
 
     private CompletionResult CompletionCallback(IConsoleShell shell, string[] args)
@@ -475,19 +492,17 @@ public sealed class NewDungeonSystem : EntitySystem
                     }
 
                     roomRotation = new Angle(Math.PI / 2);
-
-                    // Randomly flip it 180 degrees
-                    if (random.Next(2) == 1)
-                    {
-                        roomRotation += Math.PI;
-                    }
-
                     Logger.Debug($"Using rotated variant for room");
                 }
-                else
+
+                if (roomDimensions.X == roomDimensions.Y)
                 {
                     // Give it a random rotation
                     roomRotation = random.Next(4) * Math.PI / 2;
+                }
+                else if (random.Next(2) == 1)
+                {
+                    roomRotation += Math.PI;
                 }
 
                 var roomTransform = Matrix3.CreateTransform(roomSize.Center - packCenter, roomRotation);
@@ -496,8 +511,7 @@ public sealed class NewDungeonSystem : EntitySystem
                 Matrix3.Multiply(matty, dungeonTransform, out matty);
 
                 var room = roomProto[random.Next(roomProto.Count)];
-                SetupTemplate(room);
-                var roomMap = _templateMaps[room.AtlasPath];
+                var roomMap = GetOrCreateTemplate(room);
                 var templateMapUid = _mapManager.GetMapEntityId(roomMap);
                 var templateGrid = Comp<MapGridComponent>(templateMapUid);
                 var roomCenter = (room.Offset + room.Size / 2f) * grid.TileSize;
