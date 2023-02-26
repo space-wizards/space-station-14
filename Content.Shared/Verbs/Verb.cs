@@ -71,12 +71,7 @@ namespace Content.Shared.Verbs
         /// <summary>
         ///     Sprite of the icon that the user sees on the verb button.
         /// </summary>
-        [field: NonSerialized]
-        public SpriteSpecifier? Icon
-        {
-            get;
-            set;
-        }
+        public SpriteSpecifier? Icon;
 
         /// <summary>
         ///     Name of the category this button is under. Used to group verbs in the context menu.

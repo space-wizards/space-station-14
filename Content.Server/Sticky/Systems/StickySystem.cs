@@ -10,6 +10,7 @@ using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Sticky.Systems;
 
@@ -57,7 +58,7 @@ public sealed class StickySystem : EntitySystem
         {
             DoContactInteraction = true,
             Text = Loc.GetString("comp-sticky-unstick-verb-text"),
-            IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png",
+            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/eject.svg.192dpi.png")),
             Act = () => StartUnsticking(uid, args.User, component)
         });
     }

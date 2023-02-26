@@ -31,6 +31,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Disposal.Unit.EntitySystems
 {
@@ -96,7 +97,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 AlternativeVerb flushVerb = new();
                 flushVerb.Act = () => Engage(uid, component);
                 flushVerb.Text = Loc.GetString("disposal-flush-verb-get-data-text");
-                flushVerb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
+                flushVerb.Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png"));
                 flushVerb.Priority = 1;
                 args.Verbs.Add(flushVerb);
 

@@ -117,12 +117,14 @@ namespace Content.Server.Storage.EntitySystems
             if (component.Open)
             {
                 verb.Text = Loc.GetString("verb-common-close");
-                verb.IconTexture = "/Textures/Interface/VerbIcons/close.svg.192dpi.png";
+                verb.Icon = new SpriteSpecifier.Texture(
+                    new ResourcePath("/Textures/Interface/VerbIcons/close.svg.192dpi.png"));
             }
             else
             {
                 verb.Text = Loc.GetString("verb-common-open");
-                verb.IconTexture = "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
+                verb.Icon = new SpriteSpecifier.Texture(
+                    new ResourcePath("/Textures/Interface/VerbIcons/open.svg.192dpi.png"));
             }
             verb.Act = () => _entityStorage.ToggleOpen(args.User, args.Target, component);
             args.Verbs.Add(verb);
@@ -147,12 +149,14 @@ namespace Content.Server.Storage.EntitySystems
             if (uiOpen)
             {
                 verb.Text = Loc.GetString("verb-common-close-ui");
-                verb.IconTexture = "/Textures/Interface/VerbIcons/close.svg.192dpi.png";
+                verb.Icon = new SpriteSpecifier.Texture(
+                    new ResourcePath("/Textures/Interface/VerbIcons/close.svg.192dpi.png"));
             }
             else
             {
                 verb.Text = Loc.GetString("verb-common-open-ui");
-                verb.IconTexture = "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
+                verb.Icon = new SpriteSpecifier.Texture(
+                    new ResourcePath("/Textures/Interface/VerbIcons/open.svg.192dpi.png"));
             }
             args.Verbs.Add(verb);
         }
