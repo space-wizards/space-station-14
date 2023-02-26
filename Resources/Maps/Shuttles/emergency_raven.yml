@@ -100,20 +100,13 @@ tilemap:
   93: Plating
 entities:
 - uid: 0
-  type: BlastDoorOpen
+  type: EmergencyLight
   components:
-  - pos: 4.5,9.5
+  - rot: 3.141592653589793 rad
+    pos: 7.5,-24.5
     parent: 1
     type: Transform
-  - inputs:
-      Open: []
-      Close: []
-      Toggle:
-      - port: Pressed
-        uid: 2276
-      - port: Pressed
-        uid: 2277
-    type: SignalReceiver
+  - type: ActiveEmergencyLight
 - uid: 1
   components:
   - name: NT Evac Raven
@@ -3541,8 +3534,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 20.04244
-      - 75.39776
+      - 18.935778
+      - 71.2346
       - 0
       - 0
       - 0
@@ -19224,9 +19217,9 @@ entities:
       - port: Toggle
         uid: 2242
       - port: Toggle
-        uid: 0
-      - port: Toggle
         uid: 2451
+      - port: Toggle
+        uid: 2452
     type: SignalTransmitter
 - uid: 2277
   type: SignalButton
@@ -19262,9 +19255,9 @@ entities:
       - port: Toggle
         uid: 2231
       - port: Toggle
-        uid: 0
-      - port: Toggle
         uid: 2451
+      - port: Toggle
+        uid: 2452
     type: SignalTransmitter
 - uid: 2278
   type: ShuttersNormalOpen
@@ -20604,6 +20597,21 @@ entities:
 - uid: 2451
   type: BlastDoorOpen
   components:
+  - pos: 4.5,9.5
+    parent: 1
+    type: Transform
+  - inputs:
+      Open: []
+      Close: []
+      Toggle:
+      - port: Pressed
+        uid: 2276
+      - port: Pressed
+        uid: 2277
+    type: SignalReceiver
+- uid: 2452
+  type: BlastDoorOpen
+  components:
   - pos: 18.5,9.5
     parent: 1
     type: Transform
@@ -20616,4 +20624,386 @@ entities:
       - port: Pressed
         uid: 2276
     type: SignalReceiver
+- uid: 2453
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 6.5,-20.5
+    parent: 1
+    type: Transform
+- uid: 2454
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 9.5,-25.5
+    parent: 1
+    type: Transform
+- uid: 2455
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 12.5,-23.5
+    parent: 1
+    type: Transform
+- uid: 2456
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 16.5,-19.5
+    parent: 1
+    type: Transform
+- uid: 2457
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 14.5,-25.5
+    parent: 1
+    type: Transform
+- uid: 2458
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 10.5,-14.5
+    parent: 1
+    type: Transform
+- uid: 2459
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 14.5,-18.5
+    parent: 1
+    type: Transform
+- uid: 2460
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 1.5,-12.5
+    parent: 1
+    type: Transform
+- uid: 2461
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 0.5,-6.5
+    parent: 1
+    type: Transform
+- uid: 2462
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 0.5,7.5
+    parent: 1
+    type: Transform
+- uid: 2463
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 1.5,13.5
+    parent: 1
+    type: Transform
+- uid: 2464
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 2.5,18.5
+    parent: 1
+    type: Transform
+- uid: 2465
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 11.5,18.5
+    parent: 1
+    type: Transform
+- uid: 2466
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 20.5,18.5
+    parent: 1
+    type: Transform
+- uid: 2467
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 21.5,13.5
+    parent: 1
+    type: Transform
+- uid: 2468
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 22.5,7.5
+    parent: 1
+    type: Transform
+- uid: 2469
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 22.5,-6.5
+    parent: 1
+    type: Transform
+- uid: 2470
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 21.5,-12.5
+    parent: 1
+    type: Transform
+- uid: 2471
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 20.5,-17.5
+    parent: 1
+    type: Transform
+- uid: 2472
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 8.5,-18.5
+    parent: 1
+    type: Transform
+- uid: 2473
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 4.5,-5.5
+    parent: 1
+    type: Transform
+- uid: 2474
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 7.5,-12.5
+    parent: 1
+    type: Transform
+- uid: 2475
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 16.5,-11.5
+    parent: 1
+    type: Transform
+- uid: 2476
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 10.5,-11.5
+    parent: 1
+    type: Transform
+- uid: 2477
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 18.5,-5.5
+    parent: 1
+    type: Transform
+- uid: 2478
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 18.5,-11.5
+    parent: 1
+    type: Transform
+- uid: 2479
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 12.5,-8.5
+    parent: 1
+    type: Transform
+- uid: 2480
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 7.5,4.5
+    parent: 1
+    type: Transform
+- uid: 2481
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 15.5,4.5
+    parent: 1
+    type: Transform
+- uid: 2482
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 8.5,5.5
+    parent: 1
+    type: Transform
+- uid: 2483
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 4.5,13.5
+    parent: 1
+    type: Transform
+- uid: 2484
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 18.5,13.5
+    parent: 1
+    type: Transform
+- uid: 2485
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 10.5,10.5
+    parent: 1
+    type: Transform
+- uid: 2486
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 12.5,10.5
+    parent: 1
+    type: Transform
+- uid: 2487
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 2.5,21.5
+    parent: 1
+    type: Transform
+- uid: 2488
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 20.5,21.5
+    parent: 1
+    type: Transform
+- uid: 2489
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 6.5,22.5
+    parent: 1
+    type: Transform
+- uid: 2490
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: 16.5,22.5
+    parent: 1
+    type: Transform
+- uid: 2491
+  type: EmergencyLight
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 3.5,-14.5
+    parent: 1
+    type: Transform
+  - type: ActiveEmergencyLight
+- uid: 2492
+  type: EmergencyLight
+  components:
+  - pos: 7.5,3.5
+    parent: 1
+    type: Transform
+  - type: ActiveEmergencyLight
+- uid: 2493
+  type: EmergencyLight
+  components:
+  - pos: 11.5,-16.5
+    parent: 1
+    type: Transform
+  - type: ActiveEmergencyLight
+- uid: 2494
+  type: EmergencyLight
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 19.5,-14.5
+    parent: 1
+    type: Transform
+  - type: ActiveEmergencyLight
+- uid: 2495
+  type: EmergencyLight
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 19.5,-7.5
+    parent: 1
+    type: Transform
+  - type: ActiveEmergencyLight
+- uid: 2496
+  type: EmergencyLight
+  components:
+  - pos: 15.5,3.5
+    parent: 1
+    type: Transform
+  - type: ActiveEmergencyLight
+- uid: 2497
+  type: EmergencyLight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 11.5,-2.5
+    parent: 1
+    type: Transform
+  - type: ActiveEmergencyLight
+- uid: 2498
+  type: EmergencyLight
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 3.5,8.5
+    parent: 1
+    type: Transform
+  - type: ActiveEmergencyLight
+- uid: 2499
+  type: EmergencyLight
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 3.5,-6.5
+    parent: 1
+    type: Transform
+  - type: ActiveEmergencyLight
+- uid: 2500
+  type: EmergencyLight
+  components:
+  - pos: 11.5,17.5
+    parent: 1
+    type: Transform
+  - type: ActiveEmergencyLight
+- uid: 2501
+  type: EmergencyLight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 15.5,-24.5
+    parent: 1
+    type: Transform
+  - type: ActiveEmergencyLight
+- uid: 2502
+  type: EmergencyLight
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 19.5,8.5
+    parent: 1
+    type: Transform
+  - type: ActiveEmergencyLight
+- uid: 2503
+  type: EmergencyLight
+  components:
+  - pos: 11.5,14.5
+    parent: 1
+    type: Transform
+  - type: ActiveEmergencyLight
+- uid: 2504
+  type: EmergencyLight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 11.5,-14.5
+    parent: 1
+    type: Transform
+  - type: ActiveEmergencyLight
+- uid: 2505
+  type: EmergencyLight
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 5.5,-9.5
+    parent: 1
+    type: Transform
+  - type: ActiveEmergencyLight
+- uid: 2506
+  type: EmergencyLight
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 17.5,-6.5
+    parent: 1
+    type: Transform
+  - type: ActiveEmergencyLight
+- uid: 2507
+  type: EmergencyLight
+  components:
+  - pos: 10.5,6.5
+    parent: 1
+    type: Transform
+  - type: ActiveEmergencyLight
+- uid: 2508
+  type: EmergencyLight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 11.5,19.5
+    parent: 1
+    type: Transform
+  - type: ActiveEmergencyLight
+- uid: 2509
+  type: EmergencyLight
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 4.5,23.5
+    parent: 1
+    type: Transform
+  - type: ActiveEmergencyLight
+- uid: 2510
+  type: EmergencyLight
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 18.5,23.5
+    parent: 1
+    type: Transform
+  - type: ActiveEmergencyLight
 ...
