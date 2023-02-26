@@ -4,12 +4,14 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Tools;
+using Content.Shared.Tools.Components;
 
 namespace Content.Server.Repairable
 {
     public sealed class RepairableSystem : EntitySystem
     {
-        [Dependency] private readonly ToolSystem _toolSystem = default!;
+        [Dependency] private readonly SharedToolSystem _toolSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger= default!;
 
@@ -30,8 +32,10 @@ namespace Content.Server.Repairable
             if (args.User == args.Target)
                 delay *= component.SelfRepairPenalty;
 
+            var toolEvData = new ToolEventData(null);
+
             // Can the tool actually repair this, does it have enough fuel?
-            if (!await _toolSystem.UseTool(args.Used, args.User, uid, component.FuelCost, delay, component.QualityNeeded))
+            if (!_toolSystem.UseTool(args.Used, args.User, uid, delay, component.QualityNeeded, toolEvData, component.FuelCost))
                 return;
 
             if (component.Damage != null)
