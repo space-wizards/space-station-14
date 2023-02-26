@@ -88,10 +88,7 @@ public sealed partial class AnomalySystem
     private void OnVesselGetPointsPerSecond(EntityUid uid, AnomalyVesselComponent component, ref ResearchServerGetPointsPerSecondEvent args)
     {
         if (!this.IsPowered(uid, EntityManager) || component.Anomaly is not {} anomaly)
-        {
-            args.Points = 0;
             return;
-        }
 
         args.Points += (int) (GetAnomalyPointValue(anomaly) * component.PointMultiplier);
     }

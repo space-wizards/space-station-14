@@ -354,7 +354,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
 
             // Should this be a full component state or a delta-state?
-            if (args.FromTick <= component.CreationTick && args.FromTick <= component.ForceTick)
+            if (args.FromTick <= component.CreationTick || args.FromTick <= component.ForceTick)
             {
                 args.State = new GasTileOverlayState(component.Chunks);
                 return;
