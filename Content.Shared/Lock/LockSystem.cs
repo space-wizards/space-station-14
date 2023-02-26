@@ -14,6 +14,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Lock;
 
@@ -224,7 +225,9 @@ public sealed class LockSystem : EntitySystem
                 () => TryUnlock(uid, args.User, component) :
                 () => TryLock(uid, args.User, component),
             Text = Loc.GetString(component.Locked ? "toggle-lock-verb-unlock" : "toggle-lock-verb-lock"),
-            IconTexture = component.Locked ? "/Textures/Interface/VerbIcons/unlock.svg.192dpi.png" : "/Textures/Interface/VerbIcons/lock.svg.192dpi.png"
+            Icon = component.Locked ?
+                new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/unlock.svg.192dpi.png")) :
+                new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/lock.svg.192dpi.png")),
         };
         args.Verbs.Add(verb);
     }

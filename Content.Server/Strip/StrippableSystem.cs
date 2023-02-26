@@ -19,6 +19,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Ensnaring.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Strip;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Strip
 {
@@ -132,7 +133,7 @@ namespace Content.Server.Strip
             Verb verb = new()
             {
                 Text = Loc.GetString("strip-verb-get-data-text"),
-                IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png",
+                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
                 Act = () => StartOpeningStripper(args.User, component, true),
             };
             args.Verbs.Add(verb);
@@ -149,7 +150,7 @@ namespace Content.Server.Strip
             ExamineVerb verb = new()
             {
                 Text = Loc.GetString("strip-verb-get-data-text"),
-                IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png",
+                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
                 Act = () => StartOpeningStripper(args.User, component, true),
                 Category = VerbCategory.Examine,
             };

@@ -269,7 +269,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 {
                     TryFeed(ev.User, ev.User, uid, component);
                 },
-                IconTexture = "/Textures/Interface/VerbIcons/cutlery.svg.192dpi.png",
+                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/cutlery.svg.192dpi.png")),
                 Text = Loc.GetString("food-system-verb-eat"),
                 Priority = -1
             };
