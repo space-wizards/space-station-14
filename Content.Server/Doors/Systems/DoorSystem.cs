@@ -275,7 +275,8 @@ public sealed class DoorSystem : SharedDoorSystem
             {
                 SetState(uid, DoorState.Emagging, door);
                 PlaySound(uid, door.SparkSound, AudioParams.Default.WithVolume(8), args.UserUid, false);
-                RaiseLocalEvent(uid, new DoorEmaggedEvent(args.UserUid));
+                var emagged = new DoorEmaggedEvent(args.UserUid);
+                RaiseLocalEvent(uid, ref emagged);
                 args.Handled = true;
             }
         }
@@ -313,4 +314,9 @@ public sealed class DoorSystem : SharedDoorSystem
 public sealed class PryFinishedEvent : EntityEventArgs { }
 public sealed class PryCancelledEvent : EntityEventArgs { }
 
-public record struct DoorEmaggedEvent(EntityUid UserUid);
+/// <summary>
+/// Event raised when a door is emagged, either with an emag or a Space Ninja's doorjack ability.
+/// Used to track doors for ninja's objective.
+/// </summary>
+[ByRefEvent]
+public readonly record struct DoorEmaggedEvent(EntityUid UserUid);

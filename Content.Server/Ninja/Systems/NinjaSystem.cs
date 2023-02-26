@@ -566,7 +566,7 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         }
     }
 
-    private void OnDoorEmagged(EntityUid uid, DoorComponent door, DoorEmaggedEvent args)
+    private void OnDoorEmagged(EntityUid uid, DoorComponent door, ref DoorEmaggedEvent args)
     {
         // make sure it's a ninja doorjacking it
         if (TryComp<SpaceNinjaComponent>(args.UserUid, out var ninja))
