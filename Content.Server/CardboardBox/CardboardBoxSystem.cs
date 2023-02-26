@@ -8,6 +8,7 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
+using Content.Shared.Storage.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -44,7 +45,7 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         _storage.OpenStorage(uid);
     }
 
-    private void AfterStorageOpen(EntityUid uid, CardboardBoxComponent component, StorageAfterOpenEvent args)
+    private void AfterStorageOpen(EntityUid uid, CardboardBoxComponent component, ref StorageAfterOpenEvent args)
     {
         //Remove the mover after the box is opened and play the effect if it hasn't been played yet.
         if (component.Mover != null)
@@ -64,7 +65,7 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         _stealth.SetEnabled(uid, false);
     }
 
-    private void AfterStorageClosed(EntityUid uid, CardboardBoxComponent component, StorageAfterCloseEvent args)
+    private void AfterStorageClosed(EntityUid uid, CardboardBoxComponent component, ref StorageAfterCloseEvent args)
     {
         // If this box has a stealth/chameleon effect, enable the stealth effect.
         if (TryComp(uid, out StealthComponent? stealth))

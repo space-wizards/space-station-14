@@ -118,6 +118,9 @@ namespace Content.Server.Tools
             var ev = new WelderToggledEvent(true);
             RaiseLocalEvent(welder.Owner, ev, false);
 
+            var hotEvent = new IsHotEvent() {IsHot = true};
+            RaiseLocalEvent(uid, hotEvent);
+
             _appearanceSystem.SetData(uid, WelderVisuals.Lit, true);
             _appearanceSystem.SetData(uid, ToggleableLightVisuals.Enabled, true);
 
@@ -222,8 +225,6 @@ namespace Content.Server.Tools
             args.Handled = TryToggleWelder(uid, args.User, welder);
             if (args.Handled)
                 args.WasLogged = true;
-            var hotEvent = new IsHotEvent() {IsHot = true};
-            RaiseLocalEvent(uid, hotEvent);
         }
 
         private void OnWelderAfterInteract(EntityUid uid, WelderComponent welder, AfterInteractEvent args)

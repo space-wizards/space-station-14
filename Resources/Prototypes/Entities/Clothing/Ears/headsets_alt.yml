@@ -115,6 +115,7 @@
   description: An updated, modular syndicate intercom that fits over the head and takes encryption keys (there are 4 slots for them).
   components:
   - type: Headset
+  - type: EncryptionKeyHolder
     keySlots: 4
   - type: ContainerFill
     containers:
