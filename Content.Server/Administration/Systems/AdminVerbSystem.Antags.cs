@@ -109,7 +109,7 @@ public sealed partial class AdminVerbSystem
             Text = "Make space ninja",
             Category = VerbCategory.Antag,
             // TODO: Change to ninja star?
-            IconTexture = "/Textures/Clothing/Head/Helmets/spaceninja.rsi/icon.png",
+            Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Clothing/Head/Helmets/spaceninja.rsi"), "icon"),
             Act = () =>
             {
                 if (targetMindComp.Mind == null || targetMindComp.Mind.Session == null)
