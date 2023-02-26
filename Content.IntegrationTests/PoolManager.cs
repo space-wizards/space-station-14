@@ -218,10 +218,7 @@ public static class PoolManager
             options.CVarOverrides[CCVars.GameDummyTicker.Name] = "true";
         }
 
-        if (poolSettings.InLobby)
-        {
-            options.CVarOverrides[CCVars.GameLobbyEnabled.Name] = "true";
-        }
+        options.CVarOverrides[CCVars.GameLobbyEnabled.Name] = poolSettings.InLobby.ToString();
 
         if (poolSettings.DisableInterpolate)
         {
@@ -232,6 +229,8 @@ public static class PoolManager
         {
             options.CVarOverrides[CCVars.GameMap.Name] = poolSettings.Map;
         }
+
+        options.CVarOverrides[CCVars.ConfigPresetDevelopment.Name] = "false";
 
         // This breaks some tests.
         // TODO: Figure out which tests this breaks.
