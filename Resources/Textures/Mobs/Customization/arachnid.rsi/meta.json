@@ -20,7 +20,19 @@
       "directions": 4
     },
 	{
-      "name": "torso_stripes",
+      "name": "stripes",
+      "directions": 4
+    },
+    {
+      "name": "slashes",
+      "directions": 4
+    },
+    {
+      "name": "x",
+      "directions": 4
+    },
+    {
+      "name": "cross",
       "directions": 4
     }
   ]

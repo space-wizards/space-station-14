@@ -21,7 +21,7 @@
   - sprite: Mobs/Customization/arachnid.rsi
     state: sharp
 
-# Face
+# Chest
 - type: marking
   id: ArachnidTorsoStripes
   bodyPart: Chest
@@ -29,4 +29,31 @@
   speciesRestriction: [Arachnid]
   sprites:
   - sprite: Mobs/Customization/arachnid.rsi
-    state: torso_stripes
+    state: stripes
+
+- type: marking
+  id: ArachnidTorsoSlashes
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/arachnid.rsi
+    state: slashes
+
+- type: marking
+  id: ArachnidTorsoX
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/arachnid.rsi
+    state: x
+
+- type: marking
+  id: ArachnidTorsoCross
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/arachnid.rsi
+    state: cross
