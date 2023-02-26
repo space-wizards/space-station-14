@@ -68,7 +68,7 @@ public sealed class WeatherOverlay : Overlay
             if (!_protoManager.TryIndex<WeatherPrototype>(proto, out var weatherProto))
                 continue;
 
-            var alpha = weather.Alpha;
+            var alpha = _weather.GetPercent(weather, mapUid);
             DrawWorld(args, weatherProto, alpha);
         }
     }

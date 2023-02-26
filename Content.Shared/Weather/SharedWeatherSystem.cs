@@ -3,10 +3,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Weather;
 
@@ -16,6 +14,7 @@ public abstract class SharedWeatherSystem : EntitySystem
     [Dependency] protected readonly IMapManager MapManager = default!;
     [Dependency] protected readonly IPrototypeManager ProtoMan = default!;
     [Dependency] private   readonly ITileDefinitionManager _tileDefManager = default!;
+    [Dependency] private   readonly MetaDataSystem _metadata = default!;
 
     protected ISawmill Sawmill = default!;
 
@@ -61,6 +60,31 @@ public abstract class SharedWeatherSystem : EntitySystem
 
     }
 
+    public float GetPercent(WeatherData component, EntityUid mapUid)
+    {
+        var pauseTime = _metadata.GetPauseTime(mapUid);
+        var elapsed = Timing.CurTime - (component.StartTime + pauseTime);
+        var duration = component.Duration;
+        var remaining = duration - elapsed;
+        float alpha;
+
+        if (remaining < WeatherComponent.ShutdownTime)
+        {
+            alpha = (float) (remaining / WeatherComponent.ShutdownTime);
+        }
+        else if (elapsed < WeatherComponent.StartupTime)
+        {
+            alpha = (float) (elapsed / WeatherComponent.StartupTime);
+        }
+        else
+        {
+            alpha = 1f;
+        }
+
+        return alpha;
+    }
+
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -89,30 +113,6 @@ public abstract class SharedWeatherSystem : EntitySystem
                 }
 
                 var remainingTime = endTime - curTime;
-
-                switch (weather.State)
-                {
-                    case WeatherState.Invalid:
-                        break;
-                    case WeatherState.Starting:
-                        weather.Alpha += frameTime / (float) WeatherComponent.StartupTime.TotalSeconds;
-                        weather.Alpha = MathF.Min(1f, weather.Alpha);
-                        break;
-                    case WeatherState.Running:
-                        weather.Alpha = 1f;
-                        break;
-                    case WeatherState.Ending:
-                        if (remainingTime != null)
-                        {
-                            var change = MathF.Max(1f / (float) remainingTime.Value.TotalSeconds * frameTime,
-                                                        frameTime / (float) WeatherComponent.ShutdownTime.TotalSeconds);
-                            weather.Alpha -= change;
-                            weather.Alpha = MathF.Max(0f, weather.Alpha);
-                        }
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
 
                 // Admin messed up or the likes.
                 if (!ProtoMan.TryIndex<WeatherPrototype>(proto, out var weatherProto))

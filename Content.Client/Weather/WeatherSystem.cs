@@ -17,7 +17,6 @@ public sealed class WeatherSystem : SharedWeatherSystem
     [Dependency] private readonly IOverlayManager _overlayManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
@@ -66,7 +65,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
         var volumeMod = MathF.Pow(10, weatherProto.Sound.Params.Volume / 10f);
 
         var stream = (AudioSystem.PlayingStream) weather.Stream!;
-        var alpha = weather.Alpha;
+        var alpha = weather.LastAlpha;
         alpha = MathF.Pow(alpha, 2f) * volumeMod;
         // TODO: Lerp this occlusion.
         var occlusion = 0f;
@@ -202,6 +201,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
 
             // New weather
             StartWeather(component, ProtoMan.Index<WeatherPrototype>(proto), weather.EndTime);
+            weather.LastAlpha = 0f;
         }
     }
 }

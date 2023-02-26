@@ -45,9 +45,6 @@ public sealed class WeatherData
     public WeatherState State = WeatherState.Invalid;
 
     [ViewVariables, NonSerialized]
-    public float Alpha;
-
-    [ViewVariables, NonSerialized]
     public float LastAlpha;
 
     [ViewVariables, NonSerialized]
