@@ -11,7 +11,6 @@ namespace Content.Shared.Access.Components;
 ///     and allows checking if something or somebody is authorized with these access levels.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(AccessReaderSystem))]
 public sealed class AccessReaderComponent : Component
 {
     /// <summary>
