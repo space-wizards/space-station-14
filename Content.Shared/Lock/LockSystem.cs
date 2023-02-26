@@ -86,7 +86,7 @@ public sealed class LockSystem : EntitySystem
     {
         if (!component.Locked)
             return;
-        if (!args.Silent)
+        if (!args.Silent && _net.IsServer)
             _sharedPopupSystem.PopupEntity(Loc.GetString("entity-storage-component-locked-message"), uid);
 
         args.Cancelled = true;
@@ -118,12 +118,12 @@ public sealed class LockSystem : EntitySystem
         if (!HasUserAccess(uid, user, quiet: false))
             return false;
 
-        if (_net.IsClient && _timing.IsFirstTimePredicted)
+        if (_net.IsServer)
         {
             _sharedPopupSystem.PopupEntity(Loc.GetString("lock-comp-do-lock-success",
                 ("entityName", Identity.Name(uid, EntityManager))), uid, user);
-            _audio.PlayPvs(_audio.GetSound(lockComp.LockSound), uid, AudioParams.Default.WithVolume(-5));
         }
+        _audio.PlayPredicted(lockComp.LockSound, uid, user, AudioParams.Default.WithVolume(-5));
 
         lockComp.Locked = true;
         _appearanceSystem.SetData(uid, StorageVisuals.Locked, true);
@@ -145,15 +145,15 @@ public sealed class LockSystem : EntitySystem
         if (!Resolve(uid, ref lockComp))
             return;
 
-        if (_net.IsClient && _timing.IsFirstTimePredicted)
+        if (_net.IsServer)
         {
             if (user is { Valid: true })
             {
                 _sharedPopupSystem.PopupEntity(Loc.GetString("lock-comp-do-unlock-success",
                     ("entityName", Identity.Name(uid, EntityManager))), uid, user.Value);
             }
-            _audio.PlayPvs(_audio.GetSound(lockComp.UnlockSound), uid, AudioParams.Default.WithVolume(-5));
         }
+        _audio.PlayPredicted(lockComp.UnlockSound, uid, user, AudioParams.Default.WithVolume(-5));
 
         lockComp.Locked = false;
         _appearanceSystem.SetData(uid, StorageVisuals.Locked, false);
@@ -236,10 +236,7 @@ public sealed class LockSystem : EntitySystem
     {
         if (!component.Locked)
             return;
-        if (_net.IsClient && _timing.IsFirstTimePredicted)
-        {
-            _audio.PlayPvs(_audio.GetSound(component.UnlockSound), uid, AudioParams.Default.WithVolume(-5));
-        }
+        _audio.PlayPredicted(component.UnlockSound, uid, null, AudioParams.Default.WithVolume(-5));
         _appearanceSystem.SetData(uid, StorageVisuals.Locked, false);
         RemComp<LockComponent>(uid); //Literally destroys the lock as a tell it was emagged
         args.Handled = true;
