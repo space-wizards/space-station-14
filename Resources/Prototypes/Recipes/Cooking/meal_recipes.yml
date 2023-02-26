@@ -1010,6 +1010,17 @@
     FoodCabbage: 1
 
 - type: microwaveMealRecipe
+  id: RecipeCitrusSalad
+  name: citrus salad recipe
+  result: FoodSaladCitrus
+  time: 5
+  solids:
+    FoodBowlBig: 1
+    FoodOrange: 1
+    FoodLemon: 1
+    FoodLime: 1
+
+- type: microwaveMealRecipe
   id: RecipeKimchiSalad
   name: kimchi salad recipe
   result: FoodSaladKimchi
