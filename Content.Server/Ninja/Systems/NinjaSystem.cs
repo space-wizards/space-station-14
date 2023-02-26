@@ -86,9 +86,9 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         SubscribeLocalEvent<SpaceNinjaGlovesComponent, ToggleNinjaGlovesEvent>(OnToggleGloves);
         SubscribeLocalEvent<SpaceNinjaGlovesComponent, ExaminedEvent>(OnGlovesExamine);
         SubscribeLocalEvent<ActivateInWorldEvent>(OnActivate);
-        SubscribeLocalEvent<SpaceNinjaGlovesComponent, DoAfterEvent<PowerDrainData>>(OnDrainDoAfter);
-        SubscribeLocalEvent<SpaceNinjaGlovesComponent, DoAfterEvent<ResearchDownloadData>>(OnDownloadDoAfter);
-        SubscribeLocalEvent<SpaceNinjaGlovesComponent, DoAfterEvent<TerrorData>>(OnTerrorDoAfter);
+        SubscribeLocalEvent<NinjaDrainComponent, DoAfterEvent>(OnDrainDoAfter);
+        SubscribeLocalEvent<NinjaDownloadComponent, DoAfterEvent>(OnDownloadDoAfter);
+        SubscribeLocalEvent<NinjaTerrorComponent, DoAfterEvent>(OnTerrorDoAfter);
 
         // TODO: maybe have suit activation stuff
         SubscribeLocalEvent<SpaceNinjaSuitComponent, GotEquippedEvent>(OnSuitEquipped);
@@ -144,7 +144,7 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
     private void OnGlovesUnequipped(EntityUid uid, SpaceNinjaGlovesComponent comp, GotUnequippedEvent args)
     {
         var user = args.Equipee;
-        DisableGloves(comp, user);
+        DisableGloves(uid, user);
 
         _actions.RemoveProvidedActions(args.Equipee, uid);
         if (TryComp<SpaceNinjaComponent>(user, out var ninja))
@@ -163,8 +163,13 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
             return;
         }
 
-        comp.Enabled = !comp.Enabled;
-        var message = Loc.GetString(comp.Enabled ? "ninja-gloves-on" : "ninja-gloves-off");
+		var enabled = !HasComp<GlovesEnabledComponent>(uid);
+		if (enabled)
+			AddComp<GlovesEnabledComponent>(uid);
+		else
+			RemComp<GlovesEnabledComponent>(uid);
+
+        var message = Loc.GetString(enabled ? "ninja-gloves-on" : "ninja-gloves-off");
         _popups.PopupEntity(message, user, user);
     }
 
@@ -173,9 +178,11 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         if (!args.IsInDetailsRange)
             return;
 
-        args.PushText(Loc.GetString(comp.Enabled ? "ninja-gloves-examine-on" : "ninja-gloves-examine-off"));
+		var enabled = HasComp<GlovesEnabledComponent>(uid);
+        args.PushText(Loc.GetString(enabled ? "ninja-gloves-examine-on" : "ninja-gloves-examine-off"));
     }
 
+	// TODO: make this per-ability
     private void OnActivate(ActivateInWorldEvent args)
     {
         var user = args.User;
@@ -183,16 +190,15 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         if (args.Handled
             || !TryComp<SpaceNinjaComponent>(user, out var ninja)
             || ninja.Gloves == null
-            || !TryComp<SpaceNinjaGlovesComponent>(ninja.Gloves, out var comp)
-            || !comp.Enabled)
+            || !HasComp<GlovesEnabledComponent>(ninja.Gloves))
             return;
 
         var uid = ninja.Gloves.Value;
 
         // doorjack ability
-        if (HasComp<DoorComponent>(target))
+        if (TryComp<NinjaDoorjackComponent>(uid, out var doorjack) && HasComp<DoorComponent>(target))
         {
-            if (_tags.HasTag(target, comp.EmagImmuneTag))
+            if (_tags.HasTag(target, doorjack.EmagImmuneTag))
                 return;
 
             var handled = _emag.DoEmagEffect(user, target);
@@ -208,27 +214,27 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         }
 
         // stun ability
-        if (user != target && HasComp<StaminaComponent>(target))
+        if (user != target && TryComp<NinjaStunComponent>(uid, out var stun) && HasComp<StaminaComponent>(target))
         {
             // take charge from battery
-            if (!GetNinjaBattery(user, out var battery) || !battery.TryUseCharge(comp.StunCharge))
+            if (!GetNinjaBattery(user, out var battery) || !battery.TryUseCharge(stun.StunCharge))
             {
                 _popups.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
                 return;
             }
 
             // not holding hands with target so insuls don't matter
-            args.Handled = _electrocution.TryDoElectrocution(target, uid, comp.StunDamage, comp.StunTime, false, ignoreInsulation: true);
+            args.Handled = _electrocution.TryDoElectrocution(target, uid, stun.StunDamage, stun.StunTime, false, ignoreInsulation: true);
             return;
         }
 
         // drain ability
-        if (HasComp<PowerNetworkBatteryComponent>(target))
+        if (TryComp<NinjaDrainComponent>(uid, out var drain) && HasComp<PowerNetworkBatteryComponent>(target))
         {
             if (!HasComp<BatteryComponent>(target))
                 return;
 
-            var doafterArgs = new DoAfterEventArgs(user, comp.DrainTime, target: target, used: uid)
+            var doafterArgs = new DoAfterEventArgs(user, drain.DrainTime, target: target, used: uid)
             {
                 BreakOnDamage = true,
                 BreakOnStun = true,
@@ -242,7 +248,7 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         }
 
         // download ability
-        if (TryComp<TechnologyDatabaseComponent>(target, out var database))
+        if (TryComp<NinjaDownloadComponent>(uid, out var download) && TryComp<TechnologyDatabaseComponent>(target, out var database))
         {
             // fail fast if theres no tech right now
             if (database.TechnologyIds.Count == 0)
@@ -251,7 +257,7 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
                 return;
             }
 
-            var doafterArgs = new DoAfterEventArgs(user, comp.DownloadTime, target: target, used: uid)
+            var doafterArgs = new DoAfterEventArgs(user, download.DownloadTime, target: target, used: uid)
             {
                 BreakOnDamage = true,
                 BreakOnStun = true,
@@ -265,7 +271,7 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         }
 
         // terror ability
-        if (HasComp<CommunicationsConsoleComponent>(target))
+        if (TryComp<NinjaTerrorComponent>(uid, out var terror) && HasComp<CommunicationsConsoleComponent>(target))
         {
             // can only do it once
             if (ninja.CalledInThreat)
@@ -274,7 +280,7 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
                 return;
             }
 
-            var doafterArgs = new DoAfterEventArgs(user, comp.TerrorTime, target: target, used: uid)
+            var doafterArgs = new DoAfterEventArgs(user, terror.TerrorTime, target: target, used: uid)
             {
                 BreakOnDamage = true,
                 BreakOnStun = true,
@@ -287,7 +293,7 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         }
     }
 
-    private void OnDrainDoAfter(EntityUid uid, SpaceNinjaGlovesComponent comp, DoAfterEvent<PowerDrainData> args)
+    private void OnDrainDoAfter(EntityUid uid, NinjaDrainComponent comp, DoAfterEvent args)
     {
         if (args.Cancelled || args.Handled)
             return;
@@ -329,7 +335,7 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         }
     }
 
-    private void OnDownloadDoAfter(EntityUid uid, SpaceNinjaGlovesComponent comp, DoAfterEvent<ResearchDownloadData> args)
+    private void OnDownloadDoAfter(EntityUid uid, NinjaDownloadComponent comp, DoAfterEvent args)
     {
         if (args.Cancelled || args.Handled)
             return;
@@ -353,12 +359,14 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         _popups.PopupEntity(str, user, user, PopupType.Medium);
     }
 
-    private void OnTerrorDoAfter(EntityUid uid, SpaceNinjaGlovesComponent comp, DoAfterEvent<TerrorData> args)
+    private void OnTerrorDoAfter(EntityUid uid, NinjaTerrorComponent comp, DoAfterEvent args)
     {
-        if (args.Cancelled || args.Handled)
-            return;
-
         var user = args.Args.User;
+        if (args.Cancelled || args.Handled)
+        {
+            _popups.PopupEntity($"sorry bub {args.Cancelled} {args.Handled}", user, user);
+            return;
+        }
 
         if (!TryComp<SpaceNinjaComponent>(user, out var ninja) || ninja.CalledInThreat)
             return;
@@ -374,6 +382,10 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         {
             _gameTicker.AddGameRule(rule);
             _chat.DispatchGlobalAnnouncement(Loc.GetString(threat.Announcement), playSound: false, colorOverride: Color.Red);
+        }
+        else
+        {
+            Logger.Error($"Threat gamerule does not exist: {threat.Rule}");
         }
     }
 
@@ -422,8 +434,8 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         {
             ninja.Suit = null;
             // disable glove abilities
-            if (ninja.Gloves != null && TryComp<SpaceNinjaGlovesComponent>(ninja.Gloves.Value, out var gloves))
-                DisableGloves(gloves, user);
+            if (ninja.Gloves != null)
+                DisableGloves(ninja.Gloves.Value, user);
         }
 
         // force uncloak
@@ -532,12 +544,12 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         return (NinjaRuleConfiguration) _proto.Index<GameRulePrototype>("SpaceNinjaSpawn").Configuration;
     }
 
-    private void DisableGloves(SpaceNinjaGlovesComponent comp, EntityUid user)
+    private void DisableGloves(EntityUid uid, EntityUid user)
     {
-        if (comp.Enabled)
+        if (HasComp<GlovesEnabledComponent>(uid))
         {
-            comp.Enabled = false;
-            _popups.PopupEntity(Loc.GetString("ninja-gloves-on"), user, user);
+            RemComp<GlovesEnabledComponent>(uid);
+            _popups.PopupEntity(Loc.GetString("ninja-gloves-off"), user, user);
         }
     }
 

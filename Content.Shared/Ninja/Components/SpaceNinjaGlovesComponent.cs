@@ -1,5 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Ninja.Systems;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -8,16 +9,14 @@ using System.Threading;
 
 namespace Content.Shared.Ninja.Components;
 
-// TODO: split into separate components, including enabled
+/// <summary>
+/// Component for toggling glove powers.
+/// Powers being enabled is controlled by GlovesEnabledComponent
+/// </summary>
+[Access(typeof(SharedNinjaSystem))]
 [RegisterComponent]
 public sealed class SpaceNinjaGlovesComponent : Component
 {
-    /// <summary>
-    /// Whether abilities are enabled, can be toggled with the action.
-    /// </summary>
-    [DataField("enabled")]
-    public bool Enabled;
-
     /// <summary>
     /// The action for toggling ninja gloves abilities
     /// </summary>
@@ -29,17 +28,38 @@ public sealed class SpaceNinjaGlovesComponent : Component
         Priority = -13,
         Event = new ToggleNinjaGlovesEvent()
     };
+}
 
-    // doorjacking
+/// <summary>
+/// This marker component enables Space Ninja Gloves' abilities, usable on clicking something using an empty hand.
+/// </summary>
+[Access(typeof(SharedNinjaSystem))]
+[RegisterComponent]
+public sealed class GlovesEnabledComponent : Component
+{
+}
 
+/// <summary>
+/// Component for emagging doors on click, when gloves are enabled.
+/// Only works on entities with DoorComponent.
+/// </summary>
+[RegisterComponent]
+public sealed class NinjaDoorjackComponent : Component
+{
     /// <summary>
     /// The tag that marks an entity as immune to doorjacking
     /// </summary>
     [DataField("emagImmuneTag", customTypeSerializer: typeof(PrototypeIdSerializer<TagPrototype>))]
     public string EmagImmuneTag = "EmagImmune";
+}
 
-    // stunning
-
+/// <summary>
+/// Component for stunning mobs on click, when gloves are enabled.
+/// Knocks them down for a bit and deals shock damage.
+/// </summary>
+[RegisterComponent]
+public sealed class NinjaStunComponent : Component
+{
     /// <summary>
     /// Joules required in the suit to stun someone. Defaults to 10 uses on a small battery.
     /// </summary>
@@ -57,11 +77,17 @@ public sealed class SpaceNinjaGlovesComponent : Component
     /// </summary>
     [DataField("stunTime")]
     public TimeSpan StunTime = TimeSpan.FromSeconds(3);
+}
 
-    // draining
-
+/// <summary>
+/// Component for draining power from APCs/substations/SMESes, when gloves are enabled.
+/// </summary>
+[RegisterComponent]
+public sealed class NinjaDrainComponent : Component
+{
     /// <summary>
-    /// Conversion rate between joules in a device and joules added to suit
+    /// Conversion rate between joules in a device and joules added to suit.
+    /// Should be very low since powercells store nothing compared to even an APC.
     /// </summary>
     [DataField("drainEfficiency")]
     public float DrainEfficiency = 0.001f;
@@ -74,28 +100,35 @@ public sealed class SpaceNinjaGlovesComponent : Component
 
     [DataField("sparkSound")]
     public SoundSpecifier SparkSound = new SoundCollectionSpecifier("sparks");
+}
 
-    // downloading
-
+/// <summary>
+/// Component for downloading research nodes from a R&D server, when gloves are enabled.
+/// Requirement for greentext.
+/// </summary>
+[RegisterComponent]
+public sealed class NinjaDownloadComponent : Component
+{
     /// <summary>
     /// Time taken to download research from a server
     /// </summary>
     [DataField("downloadTime")]
     public float DownloadTime = 20f;
+}
 
-    // terror
 
+/// <summary>
+/// Component for hacking a communications console to call in a threat.
+/// Called threat is rolled from the ninja gamerule config.
+/// </summary>
+[RegisterComponent]
+public sealed class NinjaTerrorComponent : Component
+{
     /// <summary>
-    /// Time taken to call in a threat
+    /// Time taken to hack the console
     /// </summary>
     [DataField("terrorTime")]
     public float TerrorTime = 20f;
 }
 
 public sealed class ToggleNinjaGlovesEvent : InstantActionEvent { }
-
-public record struct PowerDrainData;
-
-public record struct ResearchDownloadData;
-
-public record struct TerrorData;

@@ -17,6 +17,7 @@ public sealed class EnergyKatanaSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+    [Dependency] private readonly SharedNinjaSystem _ninja = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -46,7 +47,7 @@ public sealed class EnergyKatanaSystem : EntitySystem
 
         // bind it
         comp.Ninja = user;
-        ninja.Katana = uid;
+        _ninja.BindKatana(ninja, uid);
     }
 
     private void OnGetState(EntityUid uid, EnergyKatanaComponent component, ref ComponentGetState args)

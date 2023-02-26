@@ -1,5 +1,9 @@
 namespace Content.Shared.Ninja.Components;
 
+/// <summary>
+/// Component for the Space Ninja's unique Spider Charge.
+/// Only this component detonating can trigger the ninja's objective.
+/// </summary>
 [RegisterComponent]
 public sealed class SpiderChargeComponent : Component
 {

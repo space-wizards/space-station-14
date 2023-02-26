@@ -1,5 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Ninja.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -8,7 +9,12 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Ninja.Components;
 
+/// <summary>
+/// Component for a Space Ninja's katana, controls its dash sound.
+/// Requires a ninja with a suit for abilities to work.
+/// </summary>
 // basically emag but without immune tag, TODO: make the charge thing its own component and have emag use it too
+[Access(typeof(EnergyKatanaSystem))]
 [RegisterComponent, NetworkedComponent]
 public sealed class EnergyKatanaComponent : Component
 {

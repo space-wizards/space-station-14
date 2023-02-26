@@ -1,9 +1,15 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Ninja.Systems;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Ninja.Components;
 
+/// <summary>
+/// Component for ninja suit abilities and power consumption.
+/// As an implementation detail, dashing with katana is a suit action which isn't ideal.
+/// </summary>
+[Access(typeof(SharedNinjaSystem))]
 [RegisterComponent]
 public sealed class SpaceNinjaSuitComponent : Component
 {

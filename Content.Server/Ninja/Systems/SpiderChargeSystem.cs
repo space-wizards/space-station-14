@@ -3,11 +3,13 @@ using Content.Server.Sticky.Events;
 using Content.Server.Popups;
 using Content.Shared.Interaction;
 using Content.Shared.Ninja.Components;
+using Content.Shared.Ninja.Systems;
 
 namespace Content.Server.Ninja.Systems;
 
 public sealed class SpiderChargeSystem : EntitySystem
 {
+    [Dependency] private readonly SharedNinjaSystem _ninja = default!;
     [Dependency] private readonly PopupSystem _popups = default!;
 
     public override void Initialize()
@@ -55,6 +57,6 @@ public sealed class SpiderChargeSystem : EntitySystem
             return;
 
         // assumes the target was destroyed, that the charge wasn't moved somehow
-        ninja.SpiderChargeDetonated = true;
+        _ninja.DetonateSpiderCharge(ninja);
     }
 }
