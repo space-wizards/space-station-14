@@ -300,9 +300,9 @@
 
 - type: entity
   name: lime
-  parent: FoodProduceBase
+  parent: FoodLemon
   id: FoodLime
-  description: #TODO
+  description: Cures Space Scurvy, allows you to act like a Space Pirate.
   components:
   - type: FlavorProfile
     flavors:
@@ -319,13 +319,13 @@
 
 - type: entity
   name: orange
-  parent: FoodProduceBase
+  parent: FoodLemon
   id: FoodOrange
-  description: #TODO
+  description: Healthy, very orange.
   components:
   - type: FlavorProfile
     flavors:
-      - oranges
+      - orange
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/orange.rsi
   - type: Produce
