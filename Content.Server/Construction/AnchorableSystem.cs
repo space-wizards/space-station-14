@@ -22,6 +22,7 @@ namespace Content.Server.Construction
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly SharedToolSystem _tool = default!;
         [Dependency] private readonly PullingSystem _pulling = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         public override void Initialize()
         {
@@ -43,7 +44,7 @@ namespace Content.Server.Construction
             var xform = Transform(uid);
 
             RaiseLocalEvent(uid, new BeforeUnanchoredEvent(args.User, args.Using));
-            xform.Anchored = false;
+            _transform.Unanchor(uid, xform);
             RaiseLocalEvent(uid, new UserUnanchoredEvent(args.User, args.Using));
 
             _popup.PopupEntity(Loc.GetString("anchorable-unanchored"), uid);
@@ -76,10 +77,12 @@ namespace Content.Server.Construction
 
             // TODO: Anchoring snaps rn anyway!
             if (component.Snap)
-                xform.Coordinates = xform.Coordinates.SnapToGrid(EntityManager, _mapManager);
+            {
+                _transform.SetCoordinates(uid, xform.Coordinates.SnapToGrid(EntityManager, _mapManager));
+            }
 
             RaiseLocalEvent(uid, new BeforeAnchoredEvent(args.User, args.Using));
-            xform.Anchored = true;
+            _transform.AnchorEntity(uid, xform);
             RaiseLocalEvent(uid, new UserAnchoredEvent(args.User, args.Using));
 
             _popup.PopupEntity(Loc.GetString("anchorable-anchored"), uid);
