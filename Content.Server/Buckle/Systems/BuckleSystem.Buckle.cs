@@ -76,7 +76,8 @@ public sealed partial class BuckleSystem
 
     private void HandleInteractHand(EntityUid uid, BuckleComponent component, InteractHandEvent args)
     {
-        args.Handled = TryUnbuckle(uid, args.User, buckle: component);
+        if (TryUnbuckle(uid, args.User, buckle: component))
+            args.Handled = true;
     }
 
     private void MoveEvent(EntityUid uid, BuckleComponent buckle, ref MoveEvent ev)

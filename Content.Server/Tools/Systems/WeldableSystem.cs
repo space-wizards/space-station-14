@@ -3,15 +3,15 @@ using Content.Server.Tools.Components;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Tools.Systems;
 
 public sealed class WeldableSystem : EntitySystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly ToolSystem _toolSystem = default!;
+    [Dependency] private readonly SharedToolSystem _toolSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
@@ -65,9 +65,8 @@ public sealed class WeldableSystem : EntitySystem
         if (!CanWeld(uid, tool, user, component))
             return false;
 
-        component.BeingWelded = _toolSystem.UseTool(tool, user, uid, component.FuelConsumption,
-            component.WeldingTime.Seconds, component.WeldingQuality,
-            new WeldFinishedEvent(user, tool), new WeldCancelledEvent(), uid);
+        var toolEvData = new ToolEventData(new WeldFinishedEvent(user, tool), targetEntity: uid);
+        component.BeingWelded = _toolSystem.UseTool(tool, user, uid, component.WeldingTime.Seconds, new[] { component.WeldingQuality }, toolEvData, fuel: component.FuelConsumption);
 
         // Log attempt
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):user} is {(component.IsWelded ? "un" : "")}welding {ToPrettyString(uid):target} at {Transform(uid).Coordinates:targetlocation}");

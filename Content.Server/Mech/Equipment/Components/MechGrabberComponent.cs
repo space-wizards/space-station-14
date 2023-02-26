@@ -46,29 +46,4 @@ public sealed class MechGrabberComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite)]
     public Container ItemContainer = default!;
-    public CancellationTokenSource? Token;
-}
-
-/// <summary>
-/// Event raised on the user when the grab is complete.
-/// </summary>
-public sealed class MechGrabberGrabFinishedEvent : EntityEventArgs
-{
-    /// <summary>
-    /// The thing that was grabbed.
-    /// </summary>
-    public EntityUid Grabbed;
-
-    public MechGrabberGrabFinishedEvent(EntityUid grabbed)
-    {
-        Grabbed = grabbed;
-    }
-}
-
-/// <summary>
-/// Event raised on the user when the grab fails
-/// </summary>
-public sealed class MechGrabberGrabCancelledEvent : EntityEventArgs
-{
-
 }

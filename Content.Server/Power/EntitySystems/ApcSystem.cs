@@ -1,7 +1,5 @@
 using Content.Server.Popups;
 using Content.Server.Power.Components;
-using Content.Server.Tools;
-using Content.Server.Wires;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.APC;
@@ -10,8 +8,8 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
-using Content.Shared.Wires;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -27,7 +25,7 @@ namespace Content.Server.Power.EntitySystems
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly ToolSystem _toolSystem = default!;
+        [Dependency] private readonly SharedToolSystem _toolSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         private const float ScrewTime = 2f;
@@ -201,10 +199,11 @@ namespace Content.Server.Power.EntitySystems
         {
             if (!EntityManager.TryGetComponent(args.Used, out ToolComponent? tool))
                 return;
-            if (_toolSystem.UseTool(args.Used, args.User, uid, 0f, ScrewTime, new[] { "Screwing" }, doAfterCompleteEvent: new ApcToolFinishedEvent(uid), toolComponent: tool))
-            {
+
+            var toolEvData = new ToolEventData(new ApcToolFinishedEvent(uid), fuel: 0f);
+
+            if (_toolSystem.UseTool(args.Used, args.User, uid, ScrewTime, new [] { "Screwing" }, toolEvData, toolComponent:tool))
                 args.Handled = true;
-            }
         }
 
         private void OnToolFinished(ApcToolFinishedEvent args)
@@ -219,13 +218,9 @@ namespace Content.Server.Power.EntitySystems
             }
 
             if (component.IsApcOpen)
-            {
                 SoundSystem.Play(component.ScrewdriverOpenSound.GetSound(), Filter.Pvs(args.Target), args.Target);
-            }
             else
-            {
                 SoundSystem.Play(component.ScrewdriverCloseSound.GetSound(), Filter.Pvs(args.Target), args.Target);
-            }
         }
 
         private void UpdatePanelAppearance(EntityUid uid, AppearanceComponent? appearance = null, ApcComponent? apc = null)
