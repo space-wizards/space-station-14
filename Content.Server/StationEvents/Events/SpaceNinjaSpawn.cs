@@ -10,6 +10,9 @@ using System.Linq;
 
 namespace Content.Server.StationEvents.Events;
 
+/// <summary>
+/// Event for spawning a Space Ninja mid-game.
+/// </summary>
 public sealed class SpaceNinjaSpawn : StationEventSystem
 {
     [Dependency] private readonly GameTicker _ticker = default!;

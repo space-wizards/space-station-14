@@ -7,6 +7,9 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.GameTicking.Rules.Configurations;
 
+/// <summary>
+/// Configuration for the Space Ninja antag.
+/// </summary>
 public sealed class NinjaRuleConfiguration : StationEventRuleConfiguration
 {
     /// <summary>
@@ -28,16 +31,30 @@ public sealed class NinjaRuleConfiguration : StationEventRuleConfiguration
     [DataField("threats")]
     public readonly List<Threat> Threats = default!;
 
+    /// <summary>
+    /// Sound played when making the player a ninja via antag control or ghost role
+    /// </summary>
     [DataField("greetingSound", customTypeSerializer: typeof(SoundSpecifierTypeSerializer))]
     public SoundSpecifier? GreetingSound = new SoundPathSpecifier("/Audio/Misc/ninja_greeting.ogg");
 }
 
+/// <summary>
+/// A threat that can be called in to the station by a ninja hacking a communications console.
+/// Generally some kind of mid-round antag, though you could make it call in scrubber backflow if you wanted to.
+/// You wouldn't do that, right?
+/// </summary>
 [DataDefinition]
 public sealed class Threat
 {
+    /// <summary>
+    /// Locale id for the announcement to be made from CentCom.
+    /// </summary>
     [DataField("announcement")]
     public readonly string Announcement = default!;
 
-    [DataField("rule")]
+    /// <summary>
+    /// The game rule for the threat to be added, it should be able to work when added mid-round otherwise this will do nothing.
+    /// </summary>
+    [DataField("rule", customTypeSerializer: typeof(PrototypeIdSerializer<GameRulePrototype>))]
     public readonly string Rule = default!;
 }

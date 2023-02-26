@@ -289,8 +289,8 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
 
     private void OnDrainDoAfter(EntityUid uid, SpaceNinjaGlovesComponent comp, DoAfterEvent<PowerDrainData> args)
     {
-		if (args.Cancelled || args.Handled)
-			return;
+        if (args.Cancelled || args.Handled)
+            return;
 
         var user = args.Args.User;
         var target = args.Args.Target;
@@ -331,8 +331,8 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
 
     private void OnDownloadDoAfter(EntityUid uid, SpaceNinjaGlovesComponent comp, DoAfterEvent<ResearchDownloadData> args)
     {
-		if (args.Cancelled || args.Handled)
-			return;
+        if (args.Cancelled || args.Handled)
+            return;
 
         var user = args.Args.User;
         var target = args.Args.Target;
@@ -355,8 +355,8 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
 
     private void OnTerrorDoAfter(EntityUid uid, SpaceNinjaGlovesComponent comp, DoAfterEvent<TerrorData> args)
     {
-		if (args.Cancelled || args.Handled)
-			return;
+        if (args.Cancelled || args.Handled)
+            return;
 
         var user = args.Args.User;
 
