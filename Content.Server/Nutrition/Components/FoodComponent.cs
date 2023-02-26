@@ -41,6 +41,13 @@ namespace Content.Server.Nutrition.Components
         public string EatMessage = "food-nom";
 
         /// <summary>
+        /// Is this entity being forcefed?
+        /// Prevents the entity from being forced to eat multiple times if not self
+        /// </summary>
+        [DataField("forceFeed")]
+        public bool ForceFeed;
+
+        /// <summary>
         /// How long it takes to eat the food personally.
         /// </summary>
         [DataField("delay")]

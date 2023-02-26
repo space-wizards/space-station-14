@@ -47,7 +47,7 @@ namespace Content.Server.Disease
             // Private Events
             SubscribeLocalEvent<DiseaseDiagnoserComponent, DiseaseMachineFinishedEvent>(OnDiagnoserFinished);
             SubscribeLocalEvent<DiseaseVaccineCreatorComponent, DiseaseMachineFinishedEvent>(OnVaccinatorFinished);
-            SubscribeLocalEvent<DoAfterEvent>(OnSwabDoAfter);
+            SubscribeLocalEvent<DiseaseSwabComponent, DoAfterEvent>(OnSwabDoAfter);
         }
 
         private Queue<EntityUid> AddQueue = new();
@@ -99,7 +99,7 @@ namespace Content.Server.Disease
         /// </summary>
         private void OnAfterInteract(EntityUid uid, DiseaseSwabComponent swab, AfterInteractEvent args)
         {
-            if (args.Target == null || !args.CanReach)
+            if (args.Target == null || !args.CanReach || !HasComp<DiseaseCarrierComponent>(args.Target))
                 return;
 
             if (swab.Used)
@@ -116,8 +116,12 @@ namespace Content.Server.Disease
                 return;
             }
 
+            var isTarget = args.User != args.Target;
+
             _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, swab.SwabDelay, target: args.Target, used: uid)
             {
+                RaiseOnTarget = isTarget,
+                RaiseOnUser = !isTarget,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 BreakOnStun = true,
@@ -301,9 +305,9 @@ namespace Content.Server.Disease
         /// Copies a disease prototype to the swab
         /// after the doafter completes.
         /// </summary>
-        private void OnSwabDoAfter(DoAfterEvent args)
+        private void OnSwabDoAfter(EntityUid uid, DiseaseSwabComponent component, DoAfterEvent args)
         {
-            if (args.Handled || args.Cancelled || !TryComp<DiseaseCarrierComponent>(args.Args.Target, out var carrier) || !TryComp<DiseaseSwabComponent>(args.Args.Target, out var swab))
+            if (args.Handled || args.Cancelled || !TryComp<DiseaseCarrierComponent>(args.Args.Target, out var carrier) || !TryComp<DiseaseSwabComponent>(args.Args.Used, out var swab))
                 return;
 
             swab.Used = true;
@@ -313,7 +317,6 @@ namespace Content.Server.Disease
                 return;
 
             swab.Disease = _random.Pick(carrier.Diseases);
-
         }
 
 

@@ -6,6 +6,7 @@ using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Weapons.Ranged.Systems;
 
@@ -38,11 +39,13 @@ public sealed partial class GunSystem
 
     private void UpdateShots(EntityUid uid, BatteryAmmoProviderComponent component)
     {
-        if (!TryComp<BatteryComponent>(uid, out var battery)) return;
-        UpdateShots(component, battery);
+        if (!TryComp<BatteryComponent>(uid, out var battery))
+            return;
+
+        UpdateShots(uid, component, battery);
     }
 
-    private void UpdateShots(BatteryAmmoProviderComponent component, BatteryComponent battery)
+    private void UpdateShots(EntityUid uid, BatteryAmmoProviderComponent component, BatteryComponent battery)
     {
         var shots = (int) (battery.CurrentCharge / component.FireCost);
         var maxShots = (int) (battery.MaxCharge / component.FireCost);
@@ -54,7 +57,7 @@ public sealed partial class GunSystem
 
         component.Shots = shots;
         component.Capacity = maxShots;
-        UpdateBatteryAppearance(component.Owner, component);
+        UpdateBatteryAppearance(uid, component);
     }
 
     private void OnBatteryExaminableVerb(EntityUid uid, BatteryAmmoProviderComponent component, GetVerbsEvent<ExamineVerb> args)
@@ -91,7 +94,7 @@ public sealed partial class GunSystem
             Text = Loc.GetString("damage-examinable-verb-text"),
             Message = Loc.GetString("damage-examinable-verb-message"),
             Category = VerbCategory.Examine,
-            IconTexture = "/Textures/Interface/VerbIcons/smite.svg.192dpi.png"
+            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/smite.svg.192dpi.png")),
         };
 
         args.Verbs.Add(verb);
@@ -125,9 +128,10 @@ public sealed partial class GunSystem
 
     protected override void TakeCharge(EntityUid uid, BatteryAmmoProviderComponent component)
     {
-        if (!TryComp<BatteryComponent>(uid, out var battery)) return;
+        if (!TryComp<BatteryComponent>(uid, out var battery))
+            return;
 
         battery.CurrentCharge -= component.FireCost;
-        UpdateShots(component, battery);
+        UpdateShots(uid, component, battery);
     }
 }
