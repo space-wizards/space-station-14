@@ -124,21 +124,14 @@ namespace Content.Client.Gameplay
                 screenType = default;
             }
 
-            var chatSize = new Vector2();
-            ChatBox chatBox;
-            Action<Vector2> OnChatResize;
             switch (screenType)
             {
                 case ScreenType.Default:
                     _uiManager.LoadScreen<DefaultGameScreen>();
-                    chatBox = _uiManager.ActiveScreen!.GetWidget<ResizableChatBox>()!;
-                    chatSize = _configurationManager.GetCVar(CCVars.DefaultScreenChatSize);
 
                     break;
                 case ScreenType.Separated:
                     _uiManager.LoadScreen<SeparatedChatGameScreen>();
-                    chatBox = _uiManager.ActiveScreen!.GetWidget<ChatBox>()!;
-                    chatSize = _configurationManager.GetCVar(CCVars.SeparatedScreenChatSize);
                     // Approaching this:
                     // - We need to find the correct size of the chat to store in cvars
                     //   - ?: How to get this? Maybe leverage OnResized for chat size?

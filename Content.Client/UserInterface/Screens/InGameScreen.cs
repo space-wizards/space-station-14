@@ -4,13 +4,14 @@ using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface.Screens;
 
-public abstract class BaseGameScreen : UIScreen
+/// <summary>
+///     Screens that are considered to be 'in-game'.
+/// </summary>
+public abstract class InGameScreen : UIScreen
 {
     public Action<Vector2>? OnChatResized;
 
     public abstract ChatBox ChatBox { get; }
-
-    public abstract ScreenType ScreenType { get; }
 
     public abstract void SetChatSize(Vector2 size);
 }

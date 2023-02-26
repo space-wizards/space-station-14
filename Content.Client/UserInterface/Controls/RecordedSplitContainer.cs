@@ -11,6 +11,32 @@ public sealed class RecordedSplitContainer : SplitContainer
 {
     public Action<Vector2, Vector2>? OnSplitResizeFinish;
 
+    public float? DesiredSplitCenter;
+
+    protected override Vector2 ArrangeOverride(Vector2 finalSize)
+    {
+        if (ResizeMode == SplitResizeMode.RespectChildrenMinSize
+            && DesiredSplitCenter != null)
+        {
+            var maxSize = Orientation == SplitOrientation.Vertical
+                ? finalSize.Y
+                : finalSize.X;
+
+            // brute force it
+            if (SplitCenter != DesiredSplitCenter.Value
+                && maxSize > DesiredSplitCenter)
+            {
+                SplitCenter = DesiredSplitCenter.Value;
+            }
+            else if (maxSize != 0)
+            {
+                DesiredSplitCenter = null;
+            }
+        }
+
+        return base.ArrangeOverride(finalSize);
+    }
+
     protected override void KeyBindUp(GUIBoundKeyEventArgs args)
     {
         base.KeyBindUp(args);

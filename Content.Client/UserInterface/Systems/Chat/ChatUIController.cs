@@ -7,6 +7,7 @@ using Content.Client.Chat.UI;
 using Content.Client.Examine;
 using Content.Client.Gameplay;
 using Content.Client.Ghost;
+using Content.Client.Lobby.UI;
 using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Chat.Widgets;
 using Content.Shared.Administration;
@@ -14,6 +15,8 @@ using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Examine;
 using Content.Shared.Input;
+using Nett;
+using NFluidsynth;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
@@ -27,6 +30,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Logger = Robust.Shared.Log.Logger;
 
 namespace Content.Client.UserInterface.Systems.Chat;
 
@@ -193,49 +197,83 @@ public sealed class ChatUIController : UIController
 
     public void SetMainChat(bool setting)
     {
-        if (UIManager.ActiveScreen is not BaseGameScreen gameScreen)
+        if (UIManager.ActiveScreen == null)
         {
-            throw new Exception("Cannot get ChatBox in game screen!");
+            throw new Exception("Cannot get active screen!");
         }
 
-        var chatBox = gameScreen.ChatBox;
+        ChatBox chatBox;
+        string? chatSizeRaw;
 
-        var chatSize = gameScreen.ScreenType switch
+        switch (UIManager.ActiveScreen)
         {
-            ScreenType.Default => _config.GetCVar(CCVars.DefaultScreenChatSize),
-            ScreenType.Separated => _config.GetCVar(CCVars.SeparatedScreenChatSize),
-            _ => throw new ArgumentException("Non-existent chat size in CCVars for screen type")
-        };
+            case DefaultGameScreen defaultScreen:
+                chatBox = defaultScreen.ChatBox;
+                chatSizeRaw = _config.GetCVar(CCVars.DefaultScreenChatSize);
+                InitializeChatSizing(chatSizeRaw, defaultScreen, setting);
+                break;
+            case SeparatedChatGameScreen separatedScreen:
+                chatBox = separatedScreen.ChatBox;
+                chatSizeRaw = _config.GetCVar(CCVars.SeparatedScreenChatSize);
+                InitializeChatSizing(chatSizeRaw, separatedScreen, setting);
+                break;
+            default:
+                // this could be better?
+                var maybeChat = UIManager.ActiveScreen.GetWidget<ChatBox>();
+                if (maybeChat == null)
+                {
+                    throw new Exception("Cannot get chatbox in screen!");
+                }
+
+                chatBox = maybeChat;
+
+                break;
+        }
 
         chatBox.Main = setting;
+    }
 
-        if (setting)
+    private void InitializeChatSizing(string sizing, InGameScreen screen, bool setting)
+    {
+        if (!setting)
         {
-            gameScreen.SetChatSize(chatSize);
-            gameScreen.OnChatResized += StoreChatSize;
+            screen.OnChatResized -= StoreChatSize;
+            return;
         }
-        else
-        {
-            gameScreen.OnChatResized -= StoreChatSize;
-        }
+
+        var split = sizing.Split(",");
+
+        var chatSize = new Vector2(
+            float.Parse(split[0]),
+            float.Parse(split[1]));
+
+
+        screen.SetChatSize(chatSize);
+        screen.OnChatResized += StoreChatSize;
     }
 
     private void StoreChatSize(Vector2 size)
     {
-        if (UIManager.ActiveScreen is not BaseGameScreen gameScreen)
+        if (UIManager.ActiveScreen == null)
         {
-            throw new Exception("Cannot get ChatBox in game screen!");
+            throw new Exception("Cannot get active screen!");
         }
 
-        switch (gameScreen.ScreenType)
+        var stringSize = $"{size.X},{size.Y}";
+        switch (UIManager.ActiveScreen)
         {
-            case ScreenType.Default:
-                _config.SetCVar(CCVars.DefaultScreenChatSize, size);
+            case DefaultGameScreen _:
+                _config.SetCVar(CCVars.DefaultScreenChatSize, stringSize);
                 break;
-            case ScreenType.Separated:
-                _config.SetCVar(CCVars.SeparatedScreenChatSize, size);
+            case SeparatedChatGameScreen _:
+                _config.SetCVar(CCVars.SeparatedScreenChatSize, stringSize);
                 break;
+            default:
+                // do nothing
+                return;
         }
+
+        _config.SaveToFile();
     }
 
     private void FocusChat()
