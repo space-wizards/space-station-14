@@ -5,14 +5,12 @@ using Content.Shared.Popups;
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
 using Robust.Shared.Network;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Ninja.Systems;
 
 public abstract class SharedNinjaSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] protected readonly SharedPopupSystem _popups = default!;
     [Dependency] protected readonly SharedStealthSystem _stealth = default!;
 
@@ -172,7 +170,7 @@ public abstract class SharedNinjaSystem : EntitySystem
 	// popups used in shared will be duplicated if sent by server
     private void ClientPopup(string msg, EntityUid user)
     {
-        if (_net.IsClient && _timing.IsFirstTimePredicted)
+        if (_net.IsClient)
     		_popups.PopupEntity(msg, user, user);
     }
 
