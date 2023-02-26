@@ -57,6 +57,14 @@ namespace Content.Server.Administration.Managers
             return null;
         }
 
+        public AdminData? GetAdminData(EntityUid uid, bool includeDeAdmin = false)
+        {
+            if (_playerManager.TryGetSessionByEntity(uid, out var session) && session is IPlayerSession playerSession)
+                return GetAdminData(playerSession, includeDeAdmin);
+
+            return null;
+        }
+
         public void DeAdmin(IPlayerSession session)
         {
             if (!_admins.TryGetValue(session, out var reg))
@@ -169,7 +177,7 @@ namespace Content.Server.Administration.Managers
             _netMgr.RegisterNetMessage<MsgUpdateAdminStatus>();
 
             // Cache permissions for loaded console commands with the requisite attributes.
-            foreach (var (cmdName, cmd) in _consoleHost.RegisteredCommands)
+            foreach (var (cmdName, cmd) in _consoleHost.AvailableCommands)
             {
                 var (isAvail, flagsReq) = GetRequiredFlag(cmd);
 

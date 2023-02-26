@@ -1,16 +1,30 @@
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.PowerCell.Components;
+using Content.Shared.Rejuvenate;
 using Robust.Shared.Containers;
 
 namespace Content.Shared.PowerCell;
 
 public abstract class SharedPowerCellSystem : EntitySystem
 {
+    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
+
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<PowerCellSlotComponent, RejuvenateEvent>(OnRejuventate);
         SubscribeLocalEvent<PowerCellSlotComponent, EntInsertedIntoContainerMessage>(OnCellInserted);
         SubscribeLocalEvent<PowerCellSlotComponent, EntRemovedFromContainerMessage>(OnCellRemoved);
         SubscribeLocalEvent<PowerCellSlotComponent, ContainerIsInsertingAttemptEvent>(OnCellInsertAttempt);
+    }
+
+    private void OnRejuventate(EntityUid uid, PowerCellSlotComponent component, RejuvenateEvent args)
+    {
+        if (!_itemSlots.TryGetSlot(uid, component.CellSlotId, out ItemSlot? itemSlot) || !itemSlot.Item.HasValue)
+            return;
+
+        // charge entity batteries and remove booby traps.
+        RaiseLocalEvent(itemSlot.Item.Value, args);
     }
 
     private void OnCellInsertAttempt(EntityUid uid, PowerCellSlotComponent component, ContainerIsInsertingAttemptEvent args)

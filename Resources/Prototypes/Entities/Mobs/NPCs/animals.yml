@@ -1360,7 +1360,7 @@
       makeSentient: true
       name: ghost-role-information-giant-spider-name
       description: ghost-role-information-giant-spider-description
-      
+
 - type: entity
   name: possum
   parent: SimpleMobBase
@@ -2020,11 +2020,6 @@
     damage:
       types:
         Blunt: 0.1
-  - type: Vocal
-    maleScream: /Audio/Animals/mouse_squeak.ogg
-    femaleScream: /Audio/Animals/mouse_squeak.ogg
-    unsexedScream: /Audio/Animals/mouse_squeak.ogg
-    wilhelmProbability: 0.001
   - type: CombatMode
     disarmAction:
       enabled: false
