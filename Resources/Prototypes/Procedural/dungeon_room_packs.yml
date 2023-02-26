@@ -11,6 +11,8 @@
     - -20,18,-3,35
     - 4,18,21,35
 
+# TODO: Need to have a command to clear all of the preloaded maps
+
 # Store roomconnections (vector2i) on dungeonroompack
 # Have test validating it
 
@@ -49,6 +51,24 @@
   size: 7,5
   atlas: /Maps/Dungeon/Test.yml
   offset: 0,12
+
+- type: dungeonRoom
+  id: Test13x3
+  size: 13,3
+  atlas: /Maps/Dungeon/Test.yml
+  offset: 0,30
+
+- type: dungeonRoom
+  id: Test11x3
+  size: 11,3
+  atlas: /Maps/Dungeon/Test.yml
+  offset: 0,34
+
+- type: dungeonRoom
+  id: Test7x3
+  size: 7,3
+  atlas: /Maps/Dungeon/Test.yml
+  offset: 0,38
 
 # Small
 - type: dungeonRoom

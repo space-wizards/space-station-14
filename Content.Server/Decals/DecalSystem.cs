@@ -319,10 +319,10 @@ namespace Content.Server.Decals
             return decalIds;
         }
 
-        public HashSet<(uint Index, Decal Decal)> GetDecalsIntersecting(EntityUid gridUid, Box2 bounds)
+        public HashSet<(uint Index, Decal Decal)> GetDecalsIntersecting(EntityUid gridUid, Box2 bounds, DecalGridComponent? component = null)
         {
             var decalIds = new HashSet<(uint, Decal)>();
-            var chunkCollection = ChunkCollection(gridUid);
+            var chunkCollection = ChunkCollection(gridUid, component);
 
             if (chunkCollection == null)
                 return decalIds;

@@ -559,7 +559,7 @@ public sealed class NewDungeonSystem : EntitySystem
                 {
                     EnsureComp<DecalGridComponent>(gridUid);
 
-                    foreach (var (_, decal) in _decals.GetDecalsIntersecting(gridUid, bounds))
+                    foreach (var (_, decal) in _decals.GetDecalsIntersecting(templateMapUid, bounds, loadedDecals))
                     {
                         // Offset by 0.5 because decals are offset from bot-left corner
                         // So we convert it to center of tile then convert it back again after transform.
@@ -612,8 +612,6 @@ public sealed class NewDungeonSystem : EntitySystem
                     Spawn("WallSolid", grid.GridTileToLocal(index));
                 }
             }
-
-            // TODO: Iterate rooms and spawn the walls here.
         }
 
         _mapManager.DeleteMap(dummyMap);
