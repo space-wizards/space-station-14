@@ -34,29 +34,34 @@
 - type: dungeonRoom
   id: Test17x5
   size: 17,5
-  path: /Maps/Dungeon/17x5.yml
+  atlas: /Maps/Dungeon/Test.yml
+  offset: 0,0
 
 # Medium
 - type: dungeonRoom
   id: Test11x5
   size: 11,5
-  path: /Maps/Dungeon/11x5a.yml
+  atlas: /Maps/Dungeon/Test.yml
+  offset: 0,6
 
 - type: dungeonRoom
   id: Test7x5
   size: 7,5
-  path: /Maps/Dungeon/7x5a.yml
+  atlas: /Maps/Dungeon/Test.yml
+  offset: 0,12
 
 # Small
 - type: dungeonRoom
   id: Test5x5
   size: 5,5
-  path: /Maps/Dungeon/5x5.yml
+  atlas: /Maps/Dungeon/Test.yml
+  offset: 0,18
 
 - type: dungeonRoom
-  id: Test5x3
-  size: 5,3
-  path: /Maps/Dungeon/5x3a.yml
+  id: Test3x5
+  size: 3,5
+  atlas: /Maps/Dungeon/Test.yml
+  offset: 0,24
 
 # Room packs
 # Large

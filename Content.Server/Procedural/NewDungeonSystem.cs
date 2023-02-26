@@ -21,13 +21,50 @@ public sealed class NewDungeonSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private readonly DecalSystem _decals = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly MapLoaderSystem _loader = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+
+    // TODO: Probably need a component for this for world saves.
+    private readonly Dictionary<ResourcePath, MapId> _templateMaps = new();
 
     public override void Initialize()
     {
         base.Initialize();
         _console.RegisterCommand("weh", GetRoomPack, CompletionCallback);
+        _prototype.PrototypesReloaded += PrototypeReload;
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _prototype.PrototypesReloaded -= PrototypeReload;
+        _templateMaps.Clear();
+    }
+
+    private void PrototypeReload(PrototypesReloadedEventArgs obj)
+    {
+        if (!obj.ByType.TryGetValue(typeof(DungeonRoomPrototype), out var rooms))
+        {
+            return;
+        }
+
+        foreach (var map in _templateMaps.Values)
+        {
+            _mapManager.DeleteMap(map);
+        }
+
+        _templateMaps.Clear();
+    }
+
+    private void SetupTemplate(DungeonRoomPrototype proto)
+    {
+        if (_templateMaps.TryGetValue(proto.AtlasPath, out var mapId))
+            return;
+
+        mapId = _mapManager.CreateMap();
+        _loader.Load(mapId, proto.AtlasPath.ToString());
+        _templateMaps[proto.AtlasPath] = mapId;
     }
 
     private CompletionResult CompletionCallback(IConsoleShell shell, string[] args)
@@ -438,7 +475,19 @@ public sealed class NewDungeonSystem : EntitySystem
                     }
 
                     roomRotation = new Angle(Math.PI / 2);
+
+                    // Randomly flip it 180 degrees
+                    if (random.Next(2) == 1)
+                    {
+                        roomRotation += Math.PI;
+                    }
+
                     Logger.Debug($"Using rotated variant for room");
+                }
+                else
+                {
+                    // Give it a random rotation
+                    roomRotation = random.Next(4) * Math.PI / 2;
                 }
 
                 var roomTransform = Matrix3.CreateTransform(roomSize.Center - packCenter, roomRotation);
@@ -447,77 +496,72 @@ public sealed class NewDungeonSystem : EntitySystem
                 Matrix3.Multiply(matty, dungeonTransform, out matty);
 
                 var room = roomProto[random.Next(roomProto.Count)];
-
-                // Load contents onto a dummy map and copy across as there's no current way
-                // to overwrite tile contents via maploader.
-                if (!_loader.TryLoad(dummyMap, room.Path.ToString(), out var loadedEnts) ||
-                    loadedEnts.Count != 1 ||
-                    !TryComp<MapGridComponent>(loadedEnts[0], out var loadedGrid))
-                {
-                    // A
-                    if (loadedEnts != null)
-                    {
-                        foreach (var ent in loadedEnts)
-                        {
-                            Del(ent);
-                        }
-                    }
-
-                    continue;
-                }
-
-                var loadedEnumerator = loadedGrid.GetAllTilesEnumerator();
+                SetupTemplate(room);
+                var roomMap = _templateMaps[room.AtlasPath];
+                var templateMapUid = _mapManager.GetMapEntityId(roomMap);
+                var templateGrid = Comp<MapGridComponent>(templateMapUid);
+                var roomCenter = (room.Offset + room.Size / 2f) * grid.TileSize;
 
                 // Load tiles
-                while (loadedEnumerator.MoveNext(out var tile))
+                for (var x = 0; x < room.Size.X; x++)
                 {
-                    var tilePos = matty.Transform((Vector2) tile.Value.GridIndices + grid.TileSize / 2f - roomDimensions / 2f);
-                    tiles.Add((tilePos.Floored(), tile.Value.Tile));
+                    for (var y = 0; y < room.Size.Y; y++)
+                    {
+                        var indices = new Vector2i(x + room.Offset.X, y + room.Offset.Y);
+                        var tileRef = templateGrid.GetTileRef(indices);
+
+                        var tilePos = matty.Transform((Vector2) indices + grid.TileSize / 2f - roomCenter);
+                        tiles.Add((tilePos.Floored(), tileRef.Tile));
+                    }
                 }
 
                 grid.SetTiles(tiles);
                 tiles.Clear();
                 var xformQuery = GetEntityQuery<TransformComponent>();
+                var metaQuery = GetEntityQuery<MetaDataComponent>();
 
                 // Load entities
-                foreach (var ent in Transform(loadedEnts[0]).ChildEntities)
+                // TODO: I don't think engine supports full entity copying so we do this piece of shit.
+                var bounds = new Box2(room.Offset, room.Offset + room.Size);
+
+                foreach (var templateEnt in _lookup.GetEntitiesIntersecting(templateMapUid, bounds, LookupFlags.Uncontained))
                 {
+                    var templateXform = xformQuery.GetComponent(templateEnt);
+                    var childPos = matty.Transform(templateXform.LocalPosition - roomCenter);
+
+                    var ent = Spawn(metaQuery.GetComponent(templateEnt).EntityPrototype?.ID,
+                        new EntityCoordinates(gridUid, childPos));
+
                     var childXform = xformQuery.GetComponent(ent);
-                    var childPos = matty.Transform(childXform.LocalPosition - roomDimensions / 2f);
                     var anchored = childXform.Anchored;
                     _transform.SetCoordinates(childXform, new EntityCoordinates(gridUid, childPos));
 
-                    if (anchored)
+                    if (anchored && !childXform.Anchored)
                         _transform.AnchorEntity(childXform, grid);
                 }
 
                 // Load decals
-                if (TryComp<DecalGridComponent>(loadedEnts[0], out var loadedDecals))
+                if (TryComp<DecalGridComponent>(templateMapUid, out var loadedDecals))
                 {
                     EnsureComp<DecalGridComponent>(gridUid);
 
-                    foreach (var chunk in loadedDecals.ChunkCollection.ChunkCollection.Values)
+                    foreach (var (_, decal) in _decals.GetDecalsIntersecting(gridUid, bounds))
                     {
-                        foreach (var decal in chunk.Decals.Values)
-                        {
-                            // Offset by 0.5 because decals are offset from bot-left corner
-                            // So we convert it to center of tile then convert it back again after transform.
-                            var position = matty.Transform(decal.Coordinates + 0.5f - roomDimensions / 2f);
-                            position -= 0.5f;
-                            _decals.TryAddDecal(
-                                decal.Id,
-                                new EntityCoordinates(gridUid, position),
-                                out _,
-                                decal.Color,
-                                decal.Angle + roomRotation + packRotation,
-                                decal.ZIndex,
-                                decal.Cleanable);
-                        }
+                        // Offset by 0.5 because decals are offset from bot-left corner
+                        // So we convert it to center of tile then convert it back again after transform.
+                        var position = matty.Transform(decal.Coordinates + 0.5f - roomCenter);
+                        position -= 0.5f;
+                        _decals.TryAddDecal(
+                            decal.Id,
+                            new EntityCoordinates(gridUid, position),
+                            out _,
+                            decal.Color,
+                            decal.Angle + roomRotation + packRotation,
+                            decal.ZIndex,
+                            decal.Cleanable);
                     }
                 }
 
-                // Just in case cleanup the old grid.
-                Del(loadedEnts[0]);
                 Matrix3.Multiply(packTransform, dungeonTransform, out matty);
 
                 // Spawn wall outline

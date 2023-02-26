@@ -13,5 +13,10 @@ public sealed class DungeonRoomPrototype : IPrototype
     /// <summary>
     /// Path to the file to use for the room.
     /// </summary>
-    [DataField("path", required: true)] public ResourcePath Path = default!;
+    [DataField("atlas", required: true)] public ResourcePath AtlasPath = default!;
+
+    /// <summary>
+    /// Tile offset into the atlas to use for the room.
+    /// </summary>
+    [DataField("offset", required: true)] public Vector2i Offset;
 }
