@@ -71,7 +71,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly GodmodeSystem _godmodeSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
-    [Dependency] private readonly PolymorphableSystem _polymorphableSystem = default!;
+    [Dependency] private readonly PolymorphSystem _polymorphSystem = default!;
     [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
@@ -171,7 +171,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Mobs/Animals/monkey.rsi"), "dead"),
             Act = () =>
             {
-                _polymorphableSystem.PolymorphEntity(args.Target, "AdminMonkeySmite");
+                _polymorphSystem.PolymorphEntity(args.Target, "AdminMonkeySmite");
             },
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-smite-monkeyify-description")
@@ -185,7 +185,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Structures/Piping/disposal.rsi"), "disposal"),
             Act = () =>
             {
-                _polymorphableSystem.PolymorphEntity(args.Target, "AdminDisposalsSmite");
+                _polymorphSystem.PolymorphEntity(args.Target, "AdminDisposalsSmite");
             },
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-smite-garbage-can-description")
@@ -487,7 +487,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Objects/Consumable/Food/Baked/bread.rsi"), "plain"),
             Act = () =>
             {
-                _polymorphableSystem.PolymorphEntity(args.Target, "AdminBreadSmite");
+                _polymorphSystem.PolymorphEntity(args.Target, "AdminBreadSmite");
             },
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-smite-become-bread-description")
@@ -501,7 +501,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Mobs/Animals/mouse.rsi"), "icon-0"),
             Act = () =>
             {
-                _polymorphableSystem.PolymorphEntity(args.Target, "AdminMouseSmite");
+                _polymorphSystem.PolymorphEntity(args.Target, "AdminMouseSmite");
             },
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-smite-become-mouse-description")
@@ -648,7 +648,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Objects/Fun/Instruments/h_synthesizer.rsi"), "icon"),
             Act = () =>
             {
-                _polymorphableSystem.PolymorphEntity(args.Target, "AdminInstrumentSmite");
+                _polymorphSystem.PolymorphEntity(args.Target, "AdminInstrumentSmite");
             },
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-smite-become-instrument-description"),
@@ -679,7 +679,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Objects/Fun/toys.rsi"), "plushie_lizard"),
             Act = () =>
             {
-                _polymorphableSystem.PolymorphEntity(args.Target, "AdminLizardSmite");
+                _polymorphSystem.PolymorphEntity(args.Target, "AdminLizardSmite");
             },
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-smite-reptilian-species-swap-description"),
