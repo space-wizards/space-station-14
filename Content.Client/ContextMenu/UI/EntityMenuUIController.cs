@@ -5,7 +5,6 @@ using Content.Client.Gameplay;
 using Content.Client.Verbs;
 using Content.Client.Verbs.UI;
 using Content.Shared.CCVar;
-using Content.Shared.CombatMode;
 using Content.Shared.Examine;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
