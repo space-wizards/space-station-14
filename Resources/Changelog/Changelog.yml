@@ -1,9 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Fixed an issue where crates would clip through firelocks., type: Fix}
-  id: 2569
-  time: '2022-11-04T01:18:59.0000000+00:00'
 - author: Vordenburg
   changes:
   - {message: Allowed gas filters to be reset to filter no gases., type: Add}
@@ -2916,3 +2911,10 @@ Entries:
   - {message: Syringes - Prevents multi use on injecting self/targets., type: Fix}
   id: 3068
   time: '2023-02-26T05:33:06.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix console warnings about rsi sprite access, type: Fix}
+  - {message: Fix issue with device configurators out of line-of-sight not closing
+      properly., type: Fix}
+  id: 3069
+  time: '2023-02-26T07:48:58.0000000+00:00'
