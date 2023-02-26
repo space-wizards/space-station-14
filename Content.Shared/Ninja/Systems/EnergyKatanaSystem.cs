@@ -12,6 +12,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Ninja.Systems;
 
+/// <summary>
+/// System for katana dashing, recharging and what not.
+/// </summary>
+// TODO: move all recharging stuff into its own system and use for emag too
 public sealed class EnergyKatanaSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
