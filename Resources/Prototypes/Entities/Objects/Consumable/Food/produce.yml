@@ -299,6 +299,44 @@
         Quantity: 10
 
 - type: entity
+  name: lime
+  parent: FoodProduceBase
+  id: FoodLime
+  description: #TODO
+  components:
+  - type: FlavorProfile
+    flavors:
+      - sour
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/lime.rsi
+  - type: Produce
+    seedId: lime
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceLime
+        Quantity: 10
+
+- type: entity
+  name: orange
+  parent: FoodProduceBase
+  id: FoodOrange
+  description: #TODO
+  components:
+  - type: FlavorProfile
+    flavors:
+      - oranges
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/orange.rsi
+  - type: Produce
+    seedId: orange
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceOrange
+        Quantity: 10
+
+- type: entity
   name: pineapple
   parent: FoodProduceBase
   id: FoodPineapple
