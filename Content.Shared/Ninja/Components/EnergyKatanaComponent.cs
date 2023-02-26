@@ -1,3 +1,6 @@
+using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -12,16 +15,16 @@ public sealed class EnergyKatanaComponent : Component
     public EntityUid? Ninja = null;
 
     /// <summary>
-    /// The action for dashing somewhere
+    /// Sound played when using dash action.
     /// </summary>
-    [DataField("dashAction")]
-    public WorldTargetAction DashAction = new()
-    {
-        DisplayName = "action-name-katana-dash",
-        Description = "action-desc-katana-dash",
-        Priority = -14,
-        Event = new KatanaDashEvent()
-    };
+    [DataField("blinkSound")]
+    public SoundSpecifier BlinkSound = new SoundPathSpecifier("/Audio/Magic/blink.ogg");
+
+    /// <summary>
+    /// Volume control for katana dash action.
+    /// </summary>
+    [DataField("blinkVolume")]
+    public float BlinkVolume = 5f;
 
     /// <summary>
     /// The maximum number of dash charges the katana can have
@@ -55,3 +58,22 @@ public sealed class EnergyKatanaComponent : Component
 }
 
 public sealed class KatanaDashEvent : WorldTargetActionEvent { }
+
+[Serializable, NetSerializable]
+public sealed class EnergyKatanaComponentState : ComponentState
+{
+    public int MaxCharges;
+    public int Charges;
+    public bool AutoRecharge;
+    public TimeSpan RechargeTime;
+    public TimeSpan NextChargeTime;
+
+    public EnergyKatanaComponentState(int maxCharges, int charges, TimeSpan rechargeTime, TimeSpan nextChargeTime, bool autoRecharge)
+    {
+        MaxCharges = maxCharges;
+        Charges = charges;
+        RechargeTime = rechargeTime;
+        NextChargeTime = nextChargeTime;
+        AutoRecharge = autoRecharge;
+    }
+}
