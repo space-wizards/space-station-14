@@ -25,24 +25,18 @@ public sealed class AccessWireAction : ComponentWireAction<AccessReaderComponent
     {
         WiresSystem.TryCancelWireAction(wire.Owner, PulseTimeoutKey.Key);
         EntityManager.EnsureComponent<EmaggedComponent>(comp.Owner);
-        comp.Enabled = false;
-        EntityManager.Dirty(comp);
         return true;
     }
 
     public override bool Mend(EntityUid user, Wire wire, AccessReaderComponent comp)
     {
         EntityManager.RemoveComponent<EmaggedComponent>(comp.Owner);
-        comp.Enabled = true;
-        EntityManager.Dirty(comp);
         return true;
     }
 
     public override void Pulse(EntityUid user, Wire wire, AccessReaderComponent comp)
     {
         EntityManager.EnsureComponent<EmaggedComponent>(comp.Owner);
-        comp.Enabled = false;
-        EntityManager.Dirty(comp);
         WiresSystem.StartWireAction(wire.Owner, _pulseTimeout, PulseTimeoutKey.Key, new TimedWireEvent(AwaitPulseCancel, wire));
     }
 

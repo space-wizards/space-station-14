@@ -1,6 +1,8 @@
+using Content.Shared.Access.Systems;
 using Content.Shared.StationRecords;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Shared.Access.Components;
 
@@ -9,15 +11,13 @@ namespace Content.Shared.Access.Components;
 ///     and allows checking if something or somebody is authorized with these access levels.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
+[Access(typeof(AccessReaderSystem))]
 public sealed class AccessReaderComponent : Component
 {
     /// <summary>
-    ///     Whether this reader is enabled or not. If disabled, all access
-    ///     checks will pass.
-    /// </summary>
-    /// <summary>
     ///     The set of tags that will automatically deny an allowed check, if any of them are present.
     /// </summary>
+    [DataField("denyTags", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AccessLevelPrototype>))]
     public HashSet<string> DenyTags = new();
 
     /// <summary>
@@ -37,17 +37,14 @@ public sealed class AccessReaderComponent : Component
 [Serializable, NetSerializable]
 public sealed class AccessReaderComponentState : ComponentState
 {
-    public bool Enabled;
-
     public HashSet<string> DenyTags;
 
     public List<HashSet<string>> AccessLists;
 
     public HashSet<StationRecordKey> AccessKeys;
 
-    public AccessReaderComponentState(bool enabled, HashSet<string> denyTags, List<HashSet<string>> accessLists, HashSet<StationRecordKey> accessKeys)
+    public AccessReaderComponentState(HashSet<string> denyTags, List<HashSet<string>> accessLists, HashSet<StationRecordKey> accessKeys)
     {
-        Enabled = enabled;
         DenyTags = denyTags;
         AccessLists = accessLists;
         AccessKeys = accessKeys;
