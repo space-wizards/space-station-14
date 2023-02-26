@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <PropertyGroup>
     <!-- Work around https://github.com/dotnet/project-system/issues/4314 -->
     <TargetFramework>$(TargetFramework)</TargetFramework>
@@ -16,7 +15,6 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <NoWarn>RA0003</NoWarn>
   </PropertyGroup>
-  <Import Project="..\RobustToolbox\MSBuild\Robust.DefineConstants.targets" />
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.5">
@@ -31,5 +29,5 @@
     <ProjectReference Include="..\Content.Shared.Database\Content.Shared.Database.csproj" />
   </ItemGroup>
 
-  <Import Project="..\RobustToolbox\MSBuild\Robust.Analyzers.targets" />
+  <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
 </Project>

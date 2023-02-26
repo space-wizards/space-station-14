@@ -13,17 +13,17 @@ namespace Content.YAMLLinter
 {
     internal class Program
     {
-        private static int Main(string[] args)
+        private static async Task<int> Main(string[] args)
         {
-            return new Program().Run();
+            return await new Program().Run();
         }
 
-        private int Run()
+        private async Task<int> Run()
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var errors = RunValidation().Result;
+            var errors = await RunValidation();
 
             if (errors.Count == 0)
             {
