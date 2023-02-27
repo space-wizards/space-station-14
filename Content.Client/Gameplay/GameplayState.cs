@@ -132,16 +132,10 @@ namespace Content.Client.Gameplay
                     break;
                 case ScreenType.Separated:
                     _uiManager.LoadScreen<SeparatedChatGameScreen>();
-                    // Approaching this:
-                    // - We need to find the correct size of the chat to store in cvars
-                    //   - ?: How to get this? Maybe leverage OnResized for chat size?
-                    //   - Chat size in general would be a 'good idea' to store anyways, so maybe leverage
-                    //     this for doing chat size?
-                    // - When loading the separated screen, we need to apply the chat size from the cvar to the chat
                     break;
             }
 
-            _chatController.SetMainChat( true);
+            _chatController.SetMainChat(true);
             _viewportController.ReloadViewport();
             _menuController.LoadButtons();
 
