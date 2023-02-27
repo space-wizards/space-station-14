@@ -237,6 +237,13 @@ public sealed class ChatUIController : UIController
             return;
         }
 
+        screen.OnChatResized += StoreChatSize;
+
+         if (string.IsNullOrEmpty(sizing))
+        {
+            return;
+        }
+
         var split = sizing.Split(",");
 
         var chatSize = new Vector2(
@@ -245,7 +252,6 @@ public sealed class ChatUIController : UIController
 
 
         screen.SetChatSize(chatSize);
-        screen.OnChatResized += StoreChatSize;
     }
 
     private void StoreChatSize(Vector2 size)
