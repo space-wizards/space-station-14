@@ -109,10 +109,6 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         if (component is not InstrumentComponent instrument)
             return;
 
-        // Inactive
-        if (!instrument.IsInputOpen && !instrument.IsMidiOpen && instrument.Renderer == null)
-            return;
-
         if (instrument.IsInputOpen)
         {
             CloseInput(uid, fromStateChange, instrument);
@@ -131,7 +127,9 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
 
         // We dispose of the synth two seconds from now to allow the last notes to stop from playing.
         // Don't use timers bound to the entity in case it is getting deleted.
-        Timer.Spawn(2000, () => { renderer?.Dispose(); });
+        if (renderer != null)
+            Timer.Spawn(2000, () => { renderer?.Dispose(); });
+
         instrument.Renderer = null;
         instrument.MidiEventBuffer.Clear();
 
