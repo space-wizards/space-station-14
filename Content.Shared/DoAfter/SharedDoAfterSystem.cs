@@ -7,6 +7,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Stunnable;
 using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.DoAfter;
 
@@ -23,6 +24,17 @@ public abstract class SharedDoAfterSystem : EntitySystem
         SubscribeLocalEvent<DoAfterComponent, DamageChangedEvent>(OnDamage);
         SubscribeLocalEvent<DoAfterComponent, MobStateChangedEvent>(OnStateChanged);
         SubscribeLocalEvent<DoAfterComponent, ComponentGetState>(OnDoAfterGetState);
+    }
+
+    public bool DoAfterExists(EntityUid uid, DoAfter doAFter, DoAfterComponent? component = null)
+        => DoAfterExists(uid, doAFter.ID, component);
+
+    public bool DoAfterExists(EntityUid uid, byte id, DoAfterComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return false;
+
+        return component.DoAfters.ContainsKey(id);
     }
 
     private void Add(EntityUid entity, DoAfterComponent component, DoAfter doAfter)
@@ -373,13 +385,20 @@ public abstract class SharedDoAfterSystem : EntitySystem
 
     private void RaiseDoAfterEvent<TEvent>(TEvent ev, DoAfterEventArgs args) where TEvent : notnull
     {
-        if (EntityManager.EntityExists(args.User) && args.RaiseOnUser)
+        if (args.RaiseOnUser && Exists(args.User))
             RaiseLocalEvent(args.User, ev, args.Broadcast);
 
-        if (args.Target is { } target && EntityManager.EntityExists(target) && args.RaiseOnTarget)
+        if (args.RaiseOnTarget && args.Target is { } target && Exists(target))
+        {
+            DebugTools.Assert(!args.RaiseOnUser || args.Target != args.User);
+            DebugTools.Assert(!args.RaiseOnUsed || args.Target != args.Used);
             RaiseLocalEvent(target, ev, args.Broadcast);
+        }
 
-        if (args.Used is { } used && EntityManager.EntityExists(used) && args.RaiseOnUsed)
+        if (args.RaiseOnUsed && args.Used is { } used && Exists(used))
+        {
+            DebugTools.Assert(!args.RaiseOnUser || args.Used != args.User);
             RaiseLocalEvent(used, ev, args.Broadcast);
+        }
     }
 }

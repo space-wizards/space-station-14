@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Client.CombatMode;
 using Content.Client.ContextMenu.UI;
@@ -9,12 +7,7 @@ using Content.Shared.Verbs;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
-using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Verbs.UI
 {
@@ -68,7 +61,7 @@ namespace Content.Client.Verbs.UI
         /// <param name="popup">
         ///     If this is not null, verbs will be placed into the given popup instead.
         /// </param>
-        public void OpenVerbMenu(EntityUid target, bool force = false, ContextMenuPopup? popup=null)
+        public void OpenVerbMenu(EntityUid target, bool force = false, ContextMenuPopup? popup=null, ICollection<Type>? verbTypes = null)
         {
             if (_playerManager.LocalPlayer?.ControlledEntity is not {Valid: true} user ||
                 _combatMode.IsInCombatMode(user))
@@ -80,7 +73,7 @@ namespace Content.Client.Verbs.UI
             menu.MenuBody.DisposeAllChildren();
 
             CurrentTarget = target;
-            CurrentVerbs = _verbSystem.GetVerbs(target, user, Verb.VerbTypes, force);
+            CurrentVerbs = _verbSystem.GetVerbs(target, user, verbTypes ?? Verb.ConextMenuTypes, force);
             OpenMenu = menu;
 
             // Fill in client-side verbs.

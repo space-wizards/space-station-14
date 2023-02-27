@@ -1,12 +1,14 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Clothing.Components;
+using Content.Shared.DoAfter;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Popups;
+using Content.Shared.Verbs;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -18,6 +20,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
 
     private Queue<EntityUid> _toInsert = new();
@@ -36,6 +39,108 @@ public sealed class ToggleableClothingSystem : EntitySystem
         SubscribeLocalEvent<AttachedClothingComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<AttachedClothingComponent, GotUnequippedEvent>(OnAttachedUnequip);
         SubscribeLocalEvent<AttachedClothingComponent, ComponentRemove>(OnRemoveAttached);
+
+        SubscribeLocalEvent<ToggleableClothingComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbsEvent);
+        SubscribeLocalEvent<ToggleableClothingComponent, GetVerbsEvent<StrippingVerb>>(OnGetStripVerbsEvent);
+        SubscribeLocalEvent<AttachedClothingComponent, GetVerbsEvent<StrippingVerb>>(OnGetAttachedStripVerbsEvent);
+        SubscribeLocalEvent<ToggleableClothingComponent, DoAfterEvent<ToggleClothingEvent>>(OnDoAfterComplete);
+    }
+
+    private void OnGetVerbsEvent(EntityUid uid, ToggleableClothingComponent component, GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract || component.ClothingUid == null || component.Container == null)
+            return;
+
+        var text = component.VerbText ?? component.ToggleAction?.DisplayName;
+        if (text == null)
+            return;
+
+        var parent = Transform(uid).ParentUid;
+        DebugTools.Assert(args.User == parent);
+
+        // verify that the clothing is equipped to an appropriate slot:
+        if (!TryComp(uid, out ClothingComponent? clothing)
+            || clothing.InSlot == null
+            || !_inventorySystem.TryGetSlot(parent, clothing.InSlot, out var slotDef)
+            || (slotDef.SlotFlags & component.RequiredFlags) != component.RequiredFlags)
+        {
+            return;
+        }
+
+        args.Verbs.Add(new()
+        {
+            EventTarget = uid,
+            ExecutionEventArgs = new ToggleClothingEvent() { Performer = args.User },
+            IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png",
+            Text = Loc.GetString(text),
+        });
+    }
+
+    private void OnGetStripVerbsEvent(EntityUid uid, ToggleableClothingComponent component, GetVerbsEvent<StrippingVerb> args)
+    {
+        if (!args.CanInteract || component.ClothingUid == null || component.Container == null || component.StripDelay == null)
+            return;
+
+        var text = component.VerbText ?? component.ToggleAction?.DisplayName;
+        if (text == null)
+            return;
+
+        var wearer = Transform(uid).ParentUid;
+
+        // verify that the clothing is equipped to an appropriate slot:
+        if (!TryComp(uid, out ClothingComponent? clothing)
+            || clothing.InSlot == null
+            || !_inventorySystem.TryGetSlot(Transform(uid).ParentUid, clothing.InSlot, out var slotDef)
+            || (slotDef.SlotFlags & component.RequiredFlags) != component.RequiredFlags)
+        {
+            return;
+        }
+
+        args.Verbs.Add(new()
+        {
+            Act = () => StartDoAfter(args.User, uid, wearer, component),
+            IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png",
+            Text = Loc.GetString(text),
+        });
+    }
+
+    private void StartDoAfter(EntityUid user, EntityUid item, EntityUid wearer, ToggleableClothingComponent component)
+    {
+        if (!component.DoAfterUsers.Add(user) || component.StripDelay == null)
+            return;
+
+        var popup = Loc.GetString("strippable-component-alert-owner-interact", ("user", Identity.Entity(user, EntityManager)), ("item", item));
+        _popupSystem.PopupEntity(popup, wearer, wearer, PopupType.Large);
+
+        var doAfter = new DoAfterEventArgs(user, (float) component.StripDelay.Value.TotalSeconds, default, wearer, item)
+        {
+            DistanceThreshold = 1f,
+            BreakOnDamage = true,
+            BreakOnStun = true,
+            BreakOnTargetMove = true,
+            RaiseOnTarget = false,
+            RaiseOnUsed = true,
+            RaiseOnUser = false,
+        };
+
+        _doAfter.DoAfter(doAfter, new ToggleClothingEvent() { Performer = user });
+    }
+
+    private void OnGetAttachedStripVerbsEvent(EntityUid uid, AttachedClothingComponent component, GetVerbsEvent<StrippingVerb> args)
+    {
+        // redirect to the attached entity.
+        OnGetStripVerbsEvent(component.AttachedUid, Comp<ToggleableClothingComponent>(component.AttachedUid), args);
+    }
+
+    private void OnDoAfterComplete(EntityUid uid, ToggleableClothingComponent component, DoAfterEvent<ToggleClothingEvent> args)
+    {
+        if (!component.DoAfterUsers.Remove(args.Args.User))
+            return;
+
+        if (args.Cancelled)
+            return;
+
+        OnToggleClothing(uid, component, args.AdditionalData);
     }
 
     public override void Update(float frameTime)

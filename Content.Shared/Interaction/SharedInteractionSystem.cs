@@ -1,7 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Managers;
 using Content.Shared.CombatMode;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
@@ -45,6 +47,7 @@ namespace Content.Shared.Interaction
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly ISharedAdminManager _adminManager = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
@@ -104,7 +107,12 @@ namespace Content.Shared.Interaction
                 return;
             }
 
-            if (!_containerSystem.IsInSameOrParentContainer(user, ev.Target) && !CanAccessViaStorage(user, ev.Target))
+            // Check if the bound entity is accessible. Note that we allow admins to ignore this restriction, so that
+            // they can fiddle with UI's that people can't normally interact with (e.g., placing things directly into
+            // other people's backpacks).
+            if (!_containerSystem.IsInSameOrParentContainer(user, ev.Target)
+                && !CanAccessViaStorage(user, ev.Target)
+                && !_adminManager.HasAdminFlag(user, AdminFlags.Admin))
             {
                 ev.Cancel();
                 return;

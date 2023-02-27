@@ -55,7 +55,7 @@ namespace Content.Shared.Verbs
         ///     Raises a number of events in order to get all verbs of the given type(s) defined in local systems. This
         ///     does not request verbs from the server.
         /// </summary>
-        public SortedSet<Verb> GetLocalVerbs(EntityUid target, EntityUid user, List<Type> types, bool force = false)
+        public SortedSet<Verb> GetLocalVerbs(EntityUid target, EntityUid user, ICollection<Type> types, bool force = false)
         {
             SortedSet<Verb> verbs = new();
 
@@ -93,6 +93,7 @@ namespace Content.Shared.Verbs
                 }
             }
 
+            // TODO: fix this garbage and use proper generics or reflection or something else, not this.
             if (types.Contains(typeof(InteractionVerb)))
             {
                 var verbEvent = new GetVerbsEvent<InteractionVerb>(user, target, @using, hands, canInteract, canAccess);
@@ -142,6 +143,20 @@ namespace Content.Shared.Verbs
             {
                 var verbEvent = new GetVerbsEvent<Verb>(user, target, @using, hands, canInteract, canAccess);
                 RaiseLocalEvent(target, verbEvent, true);
+                verbs.UnionWith(verbEvent.Verbs);
+            }
+
+            if (types.Contains(typeof(ExamineVerb)))
+            {
+                var verbEvent = new GetVerbsEvent<ExamineVerb>(user, target, @using, hands, canInteract, canAccess);
+                RaiseLocalEvent(target, verbEvent, true);
+                verbs.UnionWith(verbEvent.Verbs);
+            }
+
+            if (types.Contains(typeof(StrippingVerb)))
+            {
+                var verbEvent = new GetVerbsEvent<StrippingVerb>(user, target, @using, hands, canInteract, canAccess);
+                RaiseLocalEvent(target, verbEvent);
                 verbs.UnionWith(verbEvent.Verbs);
             }
 
