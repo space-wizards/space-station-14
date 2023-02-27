@@ -1,14 +1,15 @@
 using Content.Shared.Ninja.Systems;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Ninja.Components;
 
 /// <summary>
 /// Component placed on a mob to make it a space ninja, able to use suit and glove powers.
-/// Contains ids of equipment
+/// Contains ids of all ninja equipment.
 /// </summary>
 // TODO: Contains objective related stuff, might want to move it out somehow
 [Access(typeof(SharedNinjaSystem))]
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed class SpaceNinjaComponent : Component
 {
     /// Currently worn suit
@@ -42,4 +43,28 @@ public sealed class SpaceNinjaComponent : Component
     /// Whether the comms console has been hacked, used for objective
     [ViewVariables]
     public bool CalledInThreat;
+}
+
+[Serializable, NetSerializable]
+public sealed class SpaceNinjaComponentState : ComponentState
+{
+    public int DoorsJacked;
+
+    // TODO: client doesn't need to know what nodes are downloaded, just how many
+    public HashSet<string> DownloadedNodes;
+
+	public EntityUid? SpiderChargeTarget;
+
+    public bool SpiderChargeDetonated;
+
+    public bool CalledInThreat;
+
+    public SpaceNinjaComponentState(int doorsJacked, HashSet<string> DownloadedNodes, EntityUid? spiderChargeTarget, bool spiderChargeDetonated, bool calledInThreat)
+    {
+        DoorsJacked = doorsJacked;
+        DownloadedNodes = downloadedNodes;
+        SpiderChargeTarget = spiderChargeTarget;
+        SpiderChargeDetonated = spiderChargeDetonated;
+        CalledInThreat = calledInThreat;
+    }
 }

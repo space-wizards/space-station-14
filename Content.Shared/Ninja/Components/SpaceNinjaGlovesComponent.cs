@@ -3,6 +3,7 @@ using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 using System.Threading;
@@ -131,4 +132,7 @@ public sealed class NinjaTerrorComponent : Component
     public float TerrorTime = 20f;
 }
 
+/// <summary>
+/// Event fired when a ninja toggles glove abilities.
+/// </summary>
 public sealed class ToggleNinjaGlovesEvent : InstantActionEvent { }

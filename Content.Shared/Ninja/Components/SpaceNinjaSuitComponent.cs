@@ -1,6 +1,7 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Ninja.Systems;
+using Robust.Shared.GameStates;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Ninja.Components;
@@ -10,7 +11,7 @@ namespace Content.Shared.Ninja.Components;
 /// As an implementation detail, dashing with katana is a suit action which isn't ideal.
 /// </summary>
 [Access(typeof(SharedNinjaSystem))]
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed class SpaceNinjaSuitComponent : Component
 {
     public bool Cloaked = false;
@@ -76,3 +77,14 @@ public sealed class SpaceNinjaSuitComponent : Component
 public sealed class TogglePhaseCloakEvent : InstantActionEvent { }
 
 public sealed class RecallKatanaEvent : InstantActionEvent { }
+
+[Serializable, NetSerializable]
+public sealed class SpaceNinjaSuitComponentState : ComponentState
+{
+    public bool Cloaked;
+
+    public SpaceNinjaSuitComponentState(bool cloaked)
+    {
+        Cloaked = cloaked;
+    }
+}
