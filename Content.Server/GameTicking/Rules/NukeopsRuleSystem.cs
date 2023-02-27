@@ -68,6 +68,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly PowerReceiverSystem _powerReceiverSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     public const string TelecrystalCurrencyPrototype = "Telecrystal";
 
@@ -142,6 +143,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     private bool _announcementMade = false;
     private bool _leftOutpost = false;
     private bool _tcDistributed = false;
+
+    public TimeSpan _gameruleStartTime;
+    public ref readonly TimeSpan GameruleStartTime => ref _gameruleStartTime;
 
     public override string Prototype => "Nukeops";
 
@@ -255,7 +259,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         if (
             !_leftOutpost && 
             _operativePlayers.Count >= _nukeopsRuleConfig.WarMinCrewSize &&
-            roundTime < _nukeopsRuleConfig.WarTimeLimit
+            _gameruleStartTime.Subtract(roundTime) < _nukeopsRuleConfig.WarTimeLimit
         )
         {
             GiveExtraTC();
@@ -370,7 +374,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         _targetStation = _stationSystem.Stations.FirstOrNull();
         _announcementMade = false;
         _leftOutpost = false;
-        _tcDistributed = true;
+        _tcDistributed = false;
+        _gameruleStartTime = _gameTiming.CurTime;
 
         if (_targetStation == null)
         {
@@ -957,6 +962,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         _leftOutpost = false;
         _announcementMade = false;
         _tcDistributed = false;
+        _gameruleStartTime = _gameTiming.CurTime;
 
         _startingGearPrototypes.Clear();
         _operativeNames.Clear();

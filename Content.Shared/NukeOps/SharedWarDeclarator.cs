@@ -31,14 +31,16 @@ namespace Content.Shared.NukeOps
         public string Message { get; }
         public WarConditionStatus Status;
         public int MinCrew;
-        public TimeSpan WindowLength;
+        public TimeSpan WindowDuration;
+        public TimeSpan GameruleStartTime;
 
-        public WarDeclaratorBoundUserInterfaceState(string msg, WarConditionStatus status, int minCrew, TimeSpan windowLength)
+        public WarDeclaratorBoundUserInterfaceState(string msg, WarConditionStatus status, int minCrew, TimeSpan windowDuration, TimeSpan gameruleStartTime)
         {
             Message = msg;
             Status = status;
             MinCrew = minCrew;
-            WindowLength = windowLength;
+            WindowDuration = windowDuration;
+            GameruleStartTime = gameruleStartTime;
         }
     }
 

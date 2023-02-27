@@ -93,7 +93,8 @@ namespace Content.Server.NukeOps
                     warDeclarator.Message,
                     _nukeopsRuleSystem.GetWarCondition(),
                     _nukeopsRuleSystem.NukeopsRuleConfig.WarMinCrewSize,
-                    _nukeopsRuleSystem.NukeopsRuleConfig.WarTimeLimit
+                    _nukeopsRuleSystem.NukeopsRuleConfig.WarTimeLimit,
+                    _nukeopsRuleSystem.GameruleStartTime
                 )
             );
         }
