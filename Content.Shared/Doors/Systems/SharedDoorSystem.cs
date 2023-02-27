@@ -41,17 +41,11 @@ public abstract class SharedDoorSystem : EntitySystem
     /// </remarks>
     public const float IntersectPercentage = 0.2f;
 
-    /// <summary>
-    ///     A set of doors that are currently opening, closing, or just queued to open/close after some delay.
-    /// </summary>
-    private readonly HashSet<DoorComponent> _activeDoors = new();
-
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<DoorComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<DoorComponent, ComponentRemove>(OnRemove);
 
         SubscribeLocalEvent<DoorComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<DoorComponent, ComponentHandleState>(OnHandleState);
@@ -64,9 +58,7 @@ public abstract class SharedDoorSystem : EntitySystem
 
     private void OnInit(EntityUid uid, DoorComponent door, ComponentInit args)
     {
-        if (door.NextStateChange != null)
-            _activeDoors.Add(door);
-        else
+        if (door.NextStateChange == null)
         {
             // Make sure doors are not perpetually stuck opening or closing.
             if (door.State == DoorState.Opening)
@@ -92,11 +84,6 @@ public abstract class SharedDoorSystem : EntitySystem
         UpdateAppearance(uid, door);
     }
 
-    private void OnRemove(EntityUid uid, DoorComponent door, ComponentRemove args)
-    {
-        _activeDoors.Remove(door);
-    }
-
     #region StateManagement
     private void OnGetState(EntityUid uid, DoorComponent door, ref ComponentGetState args)
     {
@@ -117,11 +104,6 @@ public abstract class SharedDoorSystem : EntitySystem
         door.NextStateChange = state.NextStateChange;
         door.Partial = state.Partial;
 
-        if (state.NextStateChange == null)
-            _activeDoors.Remove(door);
-        else
-            _activeDoors.Add(door);
-
         RaiseLocalEvent(uid, new DoorStateChangedEvent(door.State), false);
         UpdateAppearance(uid, door);
     }
@@ -134,29 +116,23 @@ public abstract class SharedDoorSystem : EntitySystem
         switch (state)
         {
             case DoorState.Opening:
-                _activeDoors.Add(door);
                 door.NextStateChange = GameTiming.CurTime + door.OpenTimeOne;
                 break;
 
             case DoorState.Closing:
-                _activeDoors.Add(door);
                 door.NextStateChange = GameTiming.CurTime + door.CloseTimeOne;
                 break;
 
             case DoorState.Denying:
-                _activeDoors.Add(door);
                 door.NextStateChange = GameTiming.CurTime + door.DenyDuration;
                 break;
 
             case DoorState.Emagging:
-                _activeDoors.Add(door);
                 door.NextStateChange = GameTiming.CurTime + door.EmagDuration;
                 break;
 
             case DoorState.Open:
                 door.Partial = false;
-                if (door.NextStateChange == null)
-                    _activeDoors.Remove(door);
                 break;
             case DoorState.Closed:
                 // May want to keep the door around to re-check for opening if we got a contact during closing.
@@ -297,7 +273,6 @@ public abstract class SharedDoorSystem : EntitySystem
         SetCollidable(uid, false, door);
         door.Partial = true;
         door.NextStateChange = GameTiming.CurTime + door.CloseTimeTwo;
-        _activeDoors.Add(door);
         Dirty(door);
 
     }
@@ -371,7 +346,6 @@ public abstract class SharedDoorSystem : EntitySystem
 
         SetCollidable(uid, true, door, physics);
         door.NextStateChange = GameTiming.CurTime + door.CloseTimeTwo;
-        _activeDoors.Add(door);
 
         // Crush any entities. Note that we don't check airlock safety here. This should have been checked before
         // the door closed.
@@ -535,12 +509,10 @@ public abstract class SharedDoorSystem : EntitySystem
         if (delay == null || delay.Value <= TimeSpan.Zero)
         {
             door.NextStateChange = null;
-            _activeDoors.Remove(door);
             return;
         }
 
         door.NextStateChange = GameTiming.CurTime + delay.Value;
-        _activeDoors.Add(door);
     }
 
     /// <summary>
@@ -550,13 +522,10 @@ public abstract class SharedDoorSystem : EntitySystem
     {
         var time = GameTiming.CurTime;
 
-        foreach (var door in _activeDoors.ToList())
+        foreach (var door in EntityQuery<DoorComponent>())
         {
             if (door.Deleted || door.NextStateChange == null)
-            {
-                _activeDoors.Remove(door);
                 continue;
-            }
 
             if (Paused(door.Owner))
                 continue;
@@ -567,8 +536,7 @@ public abstract class SharedDoorSystem : EntitySystem
             if (door.State == DoorState.Closed &&
                 TryComp<PhysicsComponent>(door.Owner, out var doorBody))
             {
-                // If something bumped into us during closing then start to re-open, otherwise, remove it from active.
-                _activeDoors.Remove(door);
+                // If something bumped into us during closing then start to re-open, otherwise, deactivate
                 CheckDoorBump(door, doorBody);
             }
         }
