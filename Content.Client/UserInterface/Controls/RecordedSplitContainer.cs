@@ -29,10 +29,10 @@ public sealed class RecordedSplitContainer : SplitContainer
             var firstTotalFractional = (finalSizeComponent - minSize - SplitWidth - SplitEdgeSeparation) / finalSizeComponent;
             DesiredSplitCenter = Math.Round(DesiredSplitCenter.Value, 2, MidpointRounding.ToZero);
 
-            // minimum size of second child must fit into the leftover percentage of DesiredSplitCenter,
-            var canSecondFit = DesiredSplitCenter <= firstTotalFractional;
+            // total space the split center takes up must fit the available space percentage given to the first child
+            var canFirstFit = DesiredSplitCenter <= firstTotalFractional;
 
-            if (DesiredSplitCenter > 1 || DesiredSplitCenter < 0 || !canSecondFit)
+            if (DesiredSplitCenter > 1 || DesiredSplitCenter < 0 || !canFirstFit)
             {
                 DesiredSplitCenter = Math.Round(firstTotalFractional, 2, MidpointRounding.ToZero);
             }
