@@ -210,22 +210,18 @@ public sealed class ChatUIController : UIController
             case DefaultGameScreen defaultScreen:
                 chatBox = defaultScreen.ChatBox;
                 chatSizeRaw = _config.GetCVar(CCVars.DefaultScreenChatSize);
-                InitializeChatSizing(chatSizeRaw, defaultScreen, setting);
+                SetChatSizing(chatSizeRaw, defaultScreen, setting);
                 break;
             case SeparatedChatGameScreen separatedScreen:
                 chatBox = separatedScreen.ChatBox;
                 chatSizeRaw = _config.GetCVar(CCVars.SeparatedScreenChatSize);
-                InitializeChatSizing(chatSizeRaw, separatedScreen, setting);
+                SetChatSizing(chatSizeRaw, separatedScreen, setting);
                 break;
             default:
                 // this could be better?
                 var maybeChat = UIManager.ActiveScreen.GetWidget<ChatBox>();
-                if (maybeChat == null)
-                {
-                    throw new Exception("Cannot get chatbox in screen!");
-                }
 
-                chatBox = maybeChat;
+                chatBox = maybeChat ?? throw new Exception("Cannot get chat box in screen!");
 
                 break;
         }
@@ -233,7 +229,7 @@ public sealed class ChatUIController : UIController
         chatBox.Main = setting;
     }
 
-    private void InitializeChatSizing(string sizing, InGameScreen screen, bool setting)
+    private void SetChatSizing(string sizing, InGameScreen screen, bool setting)
     {
         if (!setting)
         {

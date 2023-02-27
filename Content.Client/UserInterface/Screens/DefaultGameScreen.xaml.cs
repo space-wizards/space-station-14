@@ -37,7 +37,7 @@ public sealed partial class DefaultGameScreen : InGameScreen
 
     public override ChatBox ChatBox => Chat;
 
-    // HACKY! Need to find a way to get the inverse of this, but this 'works' for now.
+    //TODO: There's probably a better way to do this... but this is also the easiest way.
     public override void SetChatSize(Vector2 size)
     {
         SetMarginBottom(Chat, size.X);
