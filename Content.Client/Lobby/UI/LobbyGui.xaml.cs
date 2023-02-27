@@ -21,7 +21,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.Lobby.UI
 {
     [GenerateTypedNameReferences]
-    internal sealed partial class LobbyGui : InGameScreen
+    internal sealed partial class LobbyGui : UIScreen
     {
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
@@ -72,12 +72,6 @@ namespace Content.Client.Lobby.UI
             ///  The character setup state.
             /// </summary>
             CharacterSetup
-        }
-
-        public override ChatBox ChatBox => GetWidget<ChatBox>()!;
-
-        public override void SetChatSize(Vector2 size)
-        {
         }
     }
 }
