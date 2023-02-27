@@ -138,752 +138,752 @@ entities:
       path: /Audio/Effects/alert.ogg
     type: Gravity
   - chunkCollection:
+      0,0:
+        0:
+          color: '#FFFFFFFF'
+          id: BrickTileSteelBox
+          coordinates: 1,0
+        1:
+          color: '#FFFFFFFF'
+          id: BrickTileSteelBox
+          coordinates: 1,2
+        2:
+          color: '#FFFFFFFF'
+          id: BrickTileSteelBox
+          coordinates: 1,4
+        30:
+          color: '#D4D4D428'
+          id: QuarterTileOverlayGreyscale180
+          coordinates: 1,1
+        31:
+          color: '#D4D4D428'
+          id: QuarterTileOverlayGreyscale90
+          coordinates: 1,3
+        32:
+          color: '#D4D4D428'
+          id: QuarterTileOverlayGreyscale90
+          coordinates: 1,5
+        33:
+          color: '#D4D4D428'
+          id: QuarterTileOverlayGreyscale90
+          coordinates: 1,7
+        34:
+          color: '#D4D4D428'
+          id: QuarterTileOverlayGreyscale90
+          coordinates: 1,8
+        35:
+          color: '#334E6DC8'
+          id: QuarterTileOverlayGreyscale90
+          coordinates: 1,9
+        36:
+          color: '#334E6DC8'
+          id: QuarterTileOverlayGreyscale90
+          coordinates: 1,10
+        37:
+          color: '#334E6DC8'
+          id: QuarterTileOverlayGreyscale90
+          coordinates: 1,11
+        38:
+          color: '#FFFFFFFF'
+          id: BotLeft
+        39:
+          color: '#FFFFFFFF'
+          id: BotLeft
+          coordinates: 0,1
+        40:
+          color: '#FFFFFFFF'
+          id: BotLeft
+          coordinates: 0,2
+        41:
+          color: '#FFFFFFFF'
+          id: BotLeft
+          coordinates: 0,3
+        42:
+          color: '#FFFFFFFF'
+          id: BotLeft
+          coordinates: 0,4
+        83:
+          angle: 1.5707963267948966 rad
+          color: '#FFFFFFFF'
+          id: Arrows
+          coordinates: 1,5
+        84:
+          angle: 1.5707963267948966 rad
+          color: '#FFFFFFFF'
+          id: Arrows
+          coordinates: 1,7
+        89:
+          color: '#FFFFFFFF'
+          id: Bot
+          coordinates: 1,8
+        90:
+          color: '#FFFFFFFF'
+          id: BotLeft
+          coordinates: 1,9
+        91:
+          color: '#FFFFFFFF'
+          id: BotLeft
+          coordinates: 1,10
+        92:
+          color: '#334E6DC8'
+          id: QuarterTileOverlayGreyscale
+          coordinates: 0,11
+        93:
+          color: '#334E6DC8'
+          id: QuarterTileOverlayGreyscale
+          coordinates: 0,10
+        94:
+          color: '#334E6DC8'
+          id: QuarterTileOverlayGreyscale
+          coordinates: 0,9
+        95:
+          color: '#D4D4D428'
+          id: QuarterTileOverlayGreyscale
+          coordinates: 0,8
+        96:
+          color: '#D4D4D428'
+          id: QuarterTileOverlayGreyscale
+          coordinates: 0,7
+        97:
+          color: '#D4D4D428'
+          id: QuarterTileOverlayGreyscale
+          coordinates: 0,6
+        100:
+          color: '#D4D4D428'
+          id: BrickTileWhiteLineS
+          coordinates: 0,5
+        104:
+          color: '#D4D4D428'
+          id: BrickTileWhiteInnerSw
+          coordinates: 1,5
+        148:
+          color: '#FFFFFFFF'
+          id: BotLeft
+          coordinates: 1,6
       -1,0:
-        47:
+        3:
           color: '#FFFFFFFF'
           id: BrickTileSteelBox
           coordinates: -3,0
-        48:
+        4:
           color: '#FFFFFFFF'
           id: BrickTileSteelBox
           coordinates: -3,2
-        49:
+        5:
           color: '#FFFFFFFF'
           id: BrickTileSteelBox
           coordinates: -3,4
-        50:
+        6:
           color: '#FFFFFFFF'
           id: BrickTileSteelBox
           coordinates: -7,0
-        51:
+        7:
           color: '#FFFFFFFF'
           id: BrickTileSteelBox
           coordinates: -7,2
-        52:
+        8:
           color: '#FFFFFFFF'
           id: BrickTileSteelBox
           coordinates: -7,4
-        53:
+        9:
           color: '#FFFFFFFF'
           id: WoodTrimThinCornerNw
           coordinates: -5,14
-        54:
+        10:
           color: '#FFFFFFFF'
           id: WoodTrimThinLineW
           coordinates: -5,13
-        55:
+        11:
           color: '#FFFFFFFF'
           id: WoodTrimThinCornerNe
           coordinates: -1,14
-        56:
+        12:
           color: '#FFFFFFFF'
           id: WoodTrimThinLineE
           coordinates: -1,13
-        57:
+        13:
           color: '#FFFFFFFF'
           id: WoodTrimThinLineN
           coordinates: -2,14
-        58:
+        14:
           color: '#FFFFFFFF'
           id: WoodTrimThinLineN
           coordinates: -3,14
-        59:
+        15:
           color: '#FFFFFFFF'
           id: WoodTrimThinLineN
           coordinates: -4,14
-        66:
+        16:
           color: '#0000004A'
           id: HalfTileOverlayGreyscale
           coordinates: -4,6
-        68:
-          color: '#0000004A'
-          id: HalfTileOverlayGreyscale
-          coordinates: -2,6
-        67:
+        17:
           color: '#0000004A'
           id: HalfTileOverlayGreyscale
           coordinates: -3,6
-        69:
+        18:
+          color: '#0000004A'
+          id: HalfTileOverlayGreyscale
+          coordinates: -2,6
+        19:
           color: '#0000004A'
           id: BrickTileWhiteLineN
           coordinates: -2,6
-        70:
+        20:
           color: '#0000004A'
           id: BrickTileWhiteLineN
           coordinates: -3,6
-        71:
+        21:
           color: '#0000004A'
           id: BrickTileWhiteLineN
           coordinates: -4,6
-        72:
+        22:
           color: '#D4D4D428'
           id: QuarterTileOverlayGreyscale
           coordinates: -7,7
-        213:
-          color: '#FFFFFFFF'
-          id: BotRight
-          coordinates: -7,6
-        74:
+        23:
           color: '#D4D4D428'
           id: QuarterTileOverlayGreyscale
           coordinates: -7,5
-        75:
+        24:
           color: '#D4D4D428'
           id: QuarterTileOverlayGreyscale
           coordinates: -7,3
-        76:
+        25:
           color: '#D4D4D428'
           id: QuarterTileOverlayGreyscale270
           coordinates: -7,1
-        97:
+        43:
           color: '#FFFFFFFF'
           id: BotLeft
           coordinates: -4,0
-        98:
+        44:
           color: '#FFFFFFFF'
           id: BotLeft
           coordinates: -4,1
-        99:
+        45:
           color: '#FFFFFFFF'
           id: BotLeft
           coordinates: -4,2
-        100:
+        46:
           color: '#FFFFFFFF'
           id: BotLeft
           coordinates: -4,3
-        101:
+        47:
           color: '#FFFFFFFF'
           id: BotLeft
           coordinates: -4,4
-        102:
+        48:
           color: '#FFFFFFFF'
           id: BotRight
           coordinates: -2,0
-        103:
+        49:
           color: '#FFFFFFFF'
           id: BotRight
           coordinates: -2,1
-        104:
+        50:
           color: '#FFFFFFFF'
           id: BotRight
           coordinates: -2,2
-        105:
+        51:
           color: '#FFFFFFFF'
           id: BotRight
           coordinates: -2,3
-        106:
+        52:
           color: '#FFFFFFFF'
           id: BotRight
           coordinates: -2,4
-        107:
+        53:
           color: '#FFFFFFFF'
           id: BotRight
           coordinates: -6,0
-        108:
+        54:
           color: '#FFFFFFFF'
           id: BotRight
           coordinates: -6,1
-        109:
+        55:
           color: '#FFFFFFFF'
           id: BotRight
           coordinates: -6,2
-        110:
+        56:
           color: '#FFFFFFFF'
           id: BotRight
           coordinates: -6,3
-        111:
+        57:
           color: '#FFFFFFFF'
           id: BotRight
           coordinates: -6,4
-        112:
+        58:
           color: '#9FED5896'
           id: BrickTileWhiteCornerNw
           coordinates: -7,11
-        113:
+        59:
           color: '#9FED5896'
           id: BrickTileWhiteCornerNe
           coordinates: -5,11
-        114:
+        60:
           color: '#9FED5896'
           id: BrickTileWhiteCornerSe
           coordinates: -5,10
-        115:
+        61:
           color: '#9FED5896'
           id: BrickTileWhiteCornerSe
           coordinates: -6,9
-        116:
+        62:
           color: '#9FED5896'
           id: BrickTileWhiteCornerSw
           coordinates: -7,9
-        117:
+        63:
           color: '#9FED5896'
           id: BrickTileWhiteInnerSe
           coordinates: -6,10
-        118:
+        64:
           color: '#9FED5896'
           id: BrickTileWhiteLineN
           coordinates: -6,11
-        119:
+        65:
           color: '#9FED5896'
           id: BrickTileWhiteLineW
           coordinates: -7,10
-        120:
+        66:
           color: '#EFDF4196'
           id: ThreeQuarterTileOverlayGreyscale
           coordinates: -6,10
-        121:
+        67:
           color: '#EFDF4196'
           id: QuarterTileOverlayGreyscale270
           coordinates: -6,11
-        122:
+        68:
           color: '#EFDF4196'
           id: QuarterTileOverlayGreyscale90
           coordinates: -7,10
-        123:
+        69:
           color: '#52B4E996'
           id: BrickTileWhiteCornerNe
           coordinates: -2,11
-        124:
+        70:
           color: '#52B4E996'
           id: BrickTileWhiteCornerNw
           coordinates: -4,11
-        125:
+        71:
           color: '#52B4E996'
           id: BrickTileWhiteLineN
           coordinates: -3,11
-        126:
+        72:
           color: '#52B4E996'
           id: BrickTileWhiteCornerSe
           coordinates: -2,10
-        127:
+        73:
           color: '#52B4E996'
           id: BrickTileWhiteCornerSw
           coordinates: -4,10
-        128:
+        74:
           color: '#52B4E996'
           id: BrickTileWhiteLineS
           coordinates: -3,10
-        129:
+        75:
           color: '#52B4E996'
           id: BoxGreyscale
           coordinates: -3,11
-        130:
+        76:
           angle: -3.141592653589793 rad
           color: '#52B4E996'
           id: ArrowsGreyscale
           coordinates: -3,10
-        131:
+        77:
           angle: -1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: Arrows
           coordinates: -7,7
-        132:
+        78:
           angle: -1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: Arrows
           coordinates: -7,5
-        139:
+        85:
           color: '#FFFFFFFF'
           id: WarnLineN
           coordinates: -5,5
-        140:
+        86:
           color: '#FFFFFFFF'
           id: WarnLineN
           coordinates: -1,5
-        141:
+        87:
           color: '#FFFFFFFF'
           id: WarnLineW
           coordinates: -1,6
-        142:
+        88:
           color: '#FFFFFFFF'
           id: WarnLineW
           coordinates: -5,6
-        152:
+        98:
           color: '#D4D4D428'
           id: QuarterTileOverlayGreyscale90
           coordinates: -6,6
-        153:
+        99:
           color: '#D4D4D428'
           id: QuarterTileOverlayGreyscale90
           coordinates: -6,7
-        155:
+        101:
           color: '#D4D4D428'
           id: BrickTileWhiteLineS
           coordinates: -2,5
-        156:
+        102:
           color: '#D4D4D428'
           id: BrickTileWhiteLineS
           coordinates: -4,5
-        157:
+        103:
           color: '#D4D4D428'
           id: BrickTileWhiteLineS
           coordinates: -6,5
-        159:
+        105:
           color: '#D4D4D428'
           id: BrickTileWhiteInnerSw
           coordinates: -3,5
-        160:
+        106:
           color: '#D4D4D428'
           id: BrickTileWhiteInnerSe
           coordinates: -3,5
-        161:
+        107:
           color: '#D4D4D428'
           id: BrickTileWhiteInnerSe
           coordinates: -7,5
-        174:
+        120:
           color: '#FFFFFFFF'
           id: Grasse3
           coordinates: -1,1
-        175:
+        121:
           color: '#FFFFFFFF'
           id: Grasse3
           coordinates: -5,2
-        176:
+        122:
           color: '#FFFFFFFF'
           id: Grasse2
           coordinates: -1,2
-        177:
+        123:
           color: '#FFFFFFFF'
           id: Grasse2
           coordinates: -1,3
-        178:
+        124:
           color: '#FFFFFFFF'
           id: Grasse1
           coordinates: -5,1
-        179:
+        125:
           color: '#FFFFFFFF'
           id: Grassd3
           coordinates: -5,3
-        180:
+        126:
           color: '#FFFFFFFF'
           id: Flowersy2
           coordinates: -0.95633864,0.9614446
-        181:
+        127:
           color: '#FFFFFFFF'
           id: Flowersy2
           coordinates: -5.003214,2.7270696
-        182:
+        128:
           color: '#FFFFFFFF'
           id: Flowersy3
           coordinates: -0.97196364,1.8208196
-        183:
+        129:
           color: '#FFFFFFFF'
           id: Flowersy3
           coordinates: -5.003214,1.3364446
-        184:
+        130:
           color: '#FFFFFFFF'
           id: FlowersBRTwo
           coordinates: -0.97196364,2.4770696
-        185:
+        131:
           color: '#FFFFFFFF'
           id: FlowersBROne
           coordinates: -5.034464,1.8989446
-        186:
+        132:
           color: '#FFFFFFFF'
           id: BushCThree
           coordinates: -5.018839,0.9301946
-        187:
+        133:
           color: '#FFFFFFFF'
           id: Bushc3
           coordinates: -1.0032136,2.9458196
-        188:
+        134:
           color: '#FFFFFFFF'
           id: BushATwo
           coordinates: -1.0188386,1.4614446
-        189:
+        135:
           color: '#FFFFFFFF'
           id: Grassb5
           coordinates: -5.003214,3.1020696
-        190:
+        136:
           color: '#FFFFFFFF'
           id: Bushi3
           coordinates: -0.98758864,2.5083196
+        147:
+          color: '#FFFFFFFF'
+          id: BotRight
+          coordinates: -7,6
       -1,-1:
-        77:
+        26:
           color: '#D4D4D428'
           id: QuarterTileOverlayGreyscale270
           coordinates: -7,-1
-        215:
-          color: '#FFFFFFFF'
-          id: BotLeft
-          coordinates: -7,-2
+        27:
+          color: '#D4D4D428'
+          id: QuarterTileOverlayGreyscale270
+          coordinates: -7,-3
         79:
-          color: '#D4D4D428'
-          id: QuarterTileOverlayGreyscale270
-          coordinates: -7,-3
-        133:
           angle: -1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: Arrows
           coordinates: -7,-1
-        134:
+        80:
           angle: -1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: Arrows
           coordinates: -7,-3
-        163:
+        109:
           color: '#D4D4D428'
           id: BrickTileWhiteLineN
           coordinates: -2,-1
-        164:
+        110:
           color: '#D4D4D428'
           id: BrickTileWhiteLineN
           coordinates: -4,-1
-        165:
+        111:
           color: '#D4D4D428'
           id: BrickTileWhiteLineN
           coordinates: -6,-1
-        167:
+        113:
           color: '#D4D4D428'
           id: BrickTileWhiteInnerNw
           coordinates: -3,-1
-        168:
+        114:
           color: '#D4D4D428'
           id: BrickTileWhiteInnerNe
           coordinates: -3,-1
-        169:
+        115:
           color: '#D4D4D428'
           id: BrickTileWhiteInnerNe
           coordinates: -7,-1
-        170:
+        116:
           color: '#FFFFFFFF'
           id: WarnLineN
           coordinates: -1,-2
-        171:
+        117:
           color: '#FFFFFFFF'
           id: WarnLineN
           coordinates: -5,-2
-        172:
+        118:
           color: '#FFFFFFFF'
           id: WarnLineW
           coordinates: -1,-1
-        173:
+        119:
           color: '#FFFFFFFF'
           id: WarnLineW
           coordinates: -5,-1
-        220:
+        149:
+          color: '#FFFFFFFF'
+          id: BotLeft
+          coordinates: -7,-2
+        153:
           color: '#FFFFFFFF'
           id: WarnLineN
           coordinates: -2,-10
-        221:
+        154:
           color: '#FFFFFFFF'
           id: WarnLineN
           coordinates: -3,-10
-        223:
+        155:
           color: '#FFFFFFFF'
           id: WarnCornerSW
           coordinates: -4,-10
-        224:
+        156:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -4,-9
-        225:
+        157:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -4,-8
-        226:
+        158:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -5,-10
-        227:
+        159:
           color: '#FFFFFFFF'
           id: WarnLineN
           coordinates: -6,-9
-        228:
+        160:
           color: '#FFFFFFFF'
           id: WarnLineN
           coordinates: -7,-9
-        229:
+        161:
           color: '#FFFFFFFF'
           id: WarnCornerSmallSW
           coordinates: -5,-9
-        230:
+        162:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: -7,-9
-        231:
+        163:
           color: '#FFFFFFFF'
           id: Caution
           coordinates: -5,-9
-        232:
+        164:
           angle: -1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: Arrows
           coordinates: -6,-9
-        234:
+        166:
           color: '#FFFFFFFF'
           id: WarnCornerSmallNW
           coordinates: -5,-11
-        235:
+        167:
           color: '#FFFFFFFF'
           id: WarnLineW
           coordinates: -6,-11
-        236:
+        168:
           color: '#D4D4D428'
           id: QuarterTileOverlayGreyscale180
           coordinates: -2,-2
-        237:
+        169:
           color: '#D4D4D428'
           id: QuarterTileOverlayGreyscale270
           coordinates: -4,-2
-        238:
+        170:
           color: '#DE3A3A96'
           id: BrickTileWhiteCornerNw
           coordinates: -7,-5
-        239:
+        171:
           color: '#DE3A3A96'
           id: BrickTileWhiteCornerSw
           coordinates: -7,-6
-        240:
+        172:
           color: '#DE3A3A96'
           id: BrickTileWhiteCornerSe
           coordinates: -4,-6
-        241:
+        173:
           color: '#DE3A3A96'
           id: BrickTileWhiteLineS
           coordinates: -5,-6
-        242:
+        174:
           color: '#DE3A3A96'
           id: BrickTileWhiteLineS
           coordinates: -6,-6
-        243:
+        175:
           color: '#DE3A3A96'
           id: BrickTileWhiteLineN
           coordinates: -5,-5
-        244:
+        176:
           color: '#DE3A3A96'
           id: BrickTileWhiteInnerNw
           coordinates: -4,-5
-        245:
+        177:
           color: '#DE3A3A96'
           id: BrickTileWhiteEndN
           coordinates: -4,-4
-        246:
+        178:
           color: '#DE3A3A96'
           id: BrickTileWhiteLineE
           coordinates: -4,-5
-        247:
+        179:
           color: '#DE3A3A96'
           id: WarnLineGreyscaleN
           coordinates: -6,-5
-        248:
+        180:
           color: '#DE3A3A96'
           id: Delivery
           coordinates: -6,-4
-        249:
+        181:
           color: '#DE3A3A96'
           id: WarnLineGreyscaleS
           coordinates: -6,-3
-      0,0:
-        44:
-          color: '#FFFFFFFF'
-          id: BrickTileSteelBox
-          coordinates: 1,0
-        45:
-          color: '#FFFFFFFF'
-          id: BrickTileSteelBox
-          coordinates: 1,2
-        46:
-          color: '#FFFFFFFF'
-          id: BrickTileSteelBox
-          coordinates: 1,4
-        83:
-          color: '#D4D4D428'
-          id: QuarterTileOverlayGreyscale180
-          coordinates: 1,1
-        84:
-          color: '#D4D4D428'
-          id: QuarterTileOverlayGreyscale90
-          coordinates: 1,3
-        85:
-          color: '#D4D4D428'
-          id: QuarterTileOverlayGreyscale90
-          coordinates: 1,5
-        214:
-          color: '#FFFFFFFF'
-          id: BotLeft
-          coordinates: 1,6
-        87:
-          color: '#D4D4D428'
-          id: QuarterTileOverlayGreyscale90
-          coordinates: 1,7
-        88:
-          color: '#D4D4D428'
-          id: QuarterTileOverlayGreyscale90
-          coordinates: 1,8
-        89:
-          color: '#334E6DC8'
-          id: QuarterTileOverlayGreyscale90
-          coordinates: 1,9
-        90:
-          color: '#334E6DC8'
-          id: QuarterTileOverlayGreyscale90
-          coordinates: 1,10
-        91:
-          color: '#334E6DC8'
-          id: QuarterTileOverlayGreyscale90
-          coordinates: 1,11
-        92:
-          color: '#FFFFFFFF'
-          id: BotLeft
-        93:
-          color: '#FFFFFFFF'
-          id: BotLeft
-          coordinates: 0,1
-        94:
-          color: '#FFFFFFFF'
-          id: BotLeft
-          coordinates: 0,2
-        95:
-          color: '#FFFFFFFF'
-          id: BotLeft
-          coordinates: 0,3
-        96:
-          color: '#FFFFFFFF'
-          id: BotLeft
-          coordinates: 0,4
-        137:
-          angle: 1.5707963267948966 rad
-          color: '#FFFFFFFF'
-          id: Arrows
-          coordinates: 1,5
-        138:
-          angle: 1.5707963267948966 rad
-          color: '#FFFFFFFF'
-          id: Arrows
-          coordinates: 1,7
-        143:
-          color: '#FFFFFFFF'
-          id: Bot
-          coordinates: 1,8
-        144:
-          color: '#FFFFFFFF'
-          id: BotLeft
-          coordinates: 1,9
-        145:
-          color: '#FFFFFFFF'
-          id: BotLeft
-          coordinates: 1,10
-        146:
-          color: '#334E6DC8'
-          id: QuarterTileOverlayGreyscale
-          coordinates: 0,11
-        147:
-          color: '#334E6DC8'
-          id: QuarterTileOverlayGreyscale
-          coordinates: 0,10
-        148:
-          color: '#334E6DC8'
-          id: QuarterTileOverlayGreyscale
-          coordinates: 0,9
-        149:
-          color: '#D4D4D428'
-          id: QuarterTileOverlayGreyscale
-          coordinates: 0,8
-        150:
-          color: '#D4D4D428'
-          id: QuarterTileOverlayGreyscale
-          coordinates: 0,7
-        151:
-          color: '#D4D4D428'
-          id: QuarterTileOverlayGreyscale
-          coordinates: 0,6
-        154:
-          color: '#D4D4D428'
-          id: BrickTileWhiteLineS
-          coordinates: 0,5
-        158:
-          color: '#D4D4D428'
-          id: BrickTileWhiteInnerSw
-          coordinates: 1,5
       0,-1:
-        80:
+        28:
           color: '#D4D4D428'
           id: QuarterTileOverlayGreyscale180
           coordinates: 1,-3
-        212:
+        29:
+          color: '#D4D4D428'
+          id: QuarterTileOverlayGreyscale180
+          coordinates: 1,-1
+        81:
+          angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
-          id: BotRight
-          coordinates: 1,-2
+          id: Arrows
+          coordinates: 1,-3
         82:
-          color: '#D4D4D428'
-          id: QuarterTileOverlayGreyscale180
-          coordinates: 1,-1
-        135:
-          angle: 1.5707963267948966 rad
-          color: '#FFFFFFFF'
-          id: Arrows
-          coordinates: 1,-3
-        136:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: Arrows
           coordinates: 1,-1
-        162:
+        108:
           color: '#D4D4D428'
           id: BrickTileWhiteLineN
           coordinates: 0,-1
-        166:
+        112:
           color: '#D4D4D428'
           id: BrickTileWhiteInnerNw
           coordinates: 1,-1
-        207:
-          color: '#EFB34196'
-          id: QuarterTileOverlayGreyscale
-          coordinates: 0,-5
-        201:
+        137:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale90
-          coordinates: 1,-9
-        200:
+          coordinates: 1,-5
+        138:
+          color: '#A4610696'
+          id: QuarterTileOverlayGreyscale90
+          coordinates: 1,-6
+        139:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale90
           coordinates: 1,-8
-        233:
-          color: '#FFFFFFFF'
-          id: Delivery
-          coordinates: 1,-4
-        198:
+        140:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale90
-          coordinates: 1,-6
-        197:
-          color: '#A4610696'
-          id: QuarterTileOverlayGreyscale90
-          coordinates: 1,-5
-        208:
+          coordinates: 1,-9
+        141:
+          color: '#EFB34196'
+          id: QuarterTileOverlayGreyscale
+          coordinates: 0,-5
+        142:
           color: '#EFB34196'
           id: QuarterTileOverlayGreyscale
           coordinates: 0,-6
-        209:
+        143:
           color: '#EFB34196'
           id: QuarterTileOverlayGreyscale
           coordinates: 0,-7
-        210:
+        144:
           color: '#EFB34196'
           id: QuarterTileOverlayGreyscale
           coordinates: 0,-8
-        211:
+        145:
           color: '#EFB34196'
           id: QuarterTileOverlayGreyscale
           coordinates: 0,-9
-        216:
+        146:
+          color: '#FFFFFFFF'
+          id: BotRight
+          coordinates: 1,-2
+        150:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: 1,-5
-        217:
+        151:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: 1,-6
-        219:
+        152:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale90
           coordinates: 1,-7
-        267:
+        165:
+          color: '#FFFFFFFF'
+          id: Delivery
+          coordinates: 1,-4
+        182:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: 0,-11
-        268:
+        183:
           color: '#FFFFFFFF'
           id: Arrows
           coordinates: 0,-9
@@ -1245,6 +1245,54 @@ entities:
       -4,-1: 0
       -8,11: 0
       -8,12: 0
+      -8,13: 0
+      -8,14: 0
+      -7,14: 0
+      -7,15: 0
+      -6,15: 0
+      -5,15: 0
+      -4,15: 0
+      -3,15: 0
+      -8,-12: 0
+      -8,-11: 0
+      -8,-10: 0
+      -8,-9: 0
+      -8,-8: 0
+      -8,-7: 0
+      -7,-13: 0
+      -7,-12: 0
+      -7,-11: 0
+      -7,-10: 0
+      -7,-9: 0
+      -7,-8: 0
+      -7,-7: 0
+      -6,-13: 0
+      -6,-12: 0
+      -6,-11: 0
+      -6,-10: 0
+      -6,-9: 0
+      -6,-8: 0
+      -6,-7: 0
+      -5,-12: 0
+      -5,-11: 0
+      -5,-10: 0
+      -5,-9: 0
+      -5,-8: 0
+      -5,-7: 0
+      -4,-12: 0
+      -4,-11: 0
+      -3,-12: 0
+      -2,-12: 0
+      -1,-12: 0
+      0,-13: 0
+      0,-12: 0
+      1,-13: 0
+      1,-12: 0
+      2,-12: 0
+      -6,16: 0
+      -5,16: 0
+      -4,16: 0
+      -3,16: 0
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
@@ -1278,15 +1326,15 @@ entities:
     parent: 0
     type: Transform
 - uid: 2
-  type: WallShuttle
+  type: ShuttleWindow
   components:
-  - pos: 2.5,-4.5
+  - pos: 2.5,-8.5
     parent: 0
     type: Transform
 - uid: 3
-  type: WallShuttle
+  type: ShuttleWindow
   components:
-  - pos: 2.5,-5.5
+  - pos: 2.5,-6.5
     parent: 0
     type: Transform
 - uid: 4
@@ -1358,7 +1406,7 @@ entities:
 - uid: 14
   type: WallShuttle
   components:
-  - pos: 2.5,-7.5
+  - pos: 2.5,-5.5
     parent: 0
     type: Transform
 - uid: 15
@@ -2090,7 +2138,7 @@ entities:
 - uid: 98
   type: WallShuttle
   components:
-  - pos: 2.5,-8.5
+  - pos: 2.5,-7.5
     parent: 0
     type: Transform
 - uid: 99
@@ -4067,9 +4115,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 401
-  type: WallShuttle
+  type: ShuttleWindow
   components:
-  - pos: 2.5,-6.5
+  - pos: 2.5,-4.5
     parent: 0
     type: Transform
 - uid: 402
@@ -5761,4 +5809,163 @@ entities:
     parent: 0
     type: Transform
   - type: ActiveEmergencyLight
+- uid: 640
+  type: AtmosDeviceFanTiny
+  components:
+  - pos: -7.5,-2.5
+    parent: 0
+    type: Transform
+- uid: 641
+  type: AtmosDeviceFanTiny
+  components:
+  - pos: -7.5,-0.5
+    parent: 0
+    type: Transform
+- uid: 642
+  type: AtmosDeviceFanTiny
+  components:
+  - pos: 2.5,-2.5
+    parent: 0
+    type: Transform
+- uid: 643
+  type: AtmosDeviceFanTiny
+  components:
+  - pos: 2.5,-0.5
+    parent: 0
+    type: Transform
+- uid: 644
+  type: AtmosDeviceFanTiny
+  components:
+  - pos: 2.5,5.5
+    parent: 0
+    type: Transform
+- uid: 645
+  type: AtmosDeviceFanTiny
+  components:
+  - pos: 2.5,7.5
+    parent: 0
+    type: Transform
+- uid: 646
+  type: AtmosDeviceFanTiny
+  components:
+  - pos: -7.5,7.5
+    parent: 0
+    type: Transform
+- uid: 647
+  type: AtmosDeviceFanTiny
+  components:
+  - pos: -7.5,5.5
+    parent: 0
+    type: Transform
+- uid: 648
+  type: PosterLegitGetYourLEGS
+  components:
+  - pos: -0.5,10.5
+    parent: 0
+    type: Transform
+- uid: 649
+  type: PosterLegitReportCrimes
+  components:
+  - pos: -0.5,-2.5
+    parent: 0
+    type: Transform
+- uid: 650
+  type: PosterContrabandBeachStarYamamoto
+  components:
+  - desc: A highly illegal poster outlawed by Nanotrasen.
+    name: Beach Star Bratton!
+    type: MetaData
+  - pos: -1.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 651
+  type: PosterContrabandHighEffectEngineering
+  components:
+  - pos: 1.5,-10.5
+    parent: 0
+    type: Transform
+- uid: 652
+  type: PosterContrabandFreeSyndicateEncryptionKey
+  components:
+  - pos: -0.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 653
+  type: PowerCellRecharger
+  components:
+  - pos: -2.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 654
+  type: Grille
+  components:
+  - pos: 2.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 655
+  type: Grille
+  components:
+  - pos: 2.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 656
+  type: Grille
+  components:
+  - pos: 2.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 657
+  type: BlastDoorOpen
+  components:
+  - pos: 2.5,-8.5
+    parent: 0
+    type: Transform
+  - inputs:
+      Open: []
+      Close: []
+      Toggle:
+      - port: Pressed
+        uid: 660
+    type: SignalReceiver
+- uid: 658
+  type: BlastDoorOpen
+  components:
+  - pos: 2.5,-6.5
+    parent: 0
+    type: Transform
+  - inputs:
+      Open: []
+      Close: []
+      Toggle:
+      - port: Pressed
+        uid: 660
+    type: SignalReceiver
+- uid: 659
+  type: BlastDoorOpen
+  components:
+  - pos: 2.5,-4.5
+    parent: 0
+    type: Transform
+  - inputs:
+      Open: []
+      Close: []
+      Toggle:
+      - port: Pressed
+        uid: 660
+    type: SignalReceiver
+- uid: 660
+  type: SignalButton
+  components:
+  - pos: -0.5,-6.5
+    parent: 0
+    type: Transform
+  - outputs:
+      Pressed:
+      - port: Toggle
+        uid: 658
+      - port: Toggle
+        uid: 657
+      - port: Toggle
+        uid: 659
+    type: SignalTransmitter
 ...
