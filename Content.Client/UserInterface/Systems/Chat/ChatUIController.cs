@@ -199,7 +199,7 @@ public sealed class ChatUIController : UIController
     {
         if (UIManager.ActiveScreen == null)
         {
-            throw new Exception("Cannot get active screen!");
+            return;
         }
 
         ChatBox chatBox;
