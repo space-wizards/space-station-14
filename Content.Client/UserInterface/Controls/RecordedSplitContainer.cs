@@ -11,24 +11,41 @@ public sealed class RecordedSplitContainer : SplitContainer
 {
     public Action<Vector2, Vector2>? OnSplitResizeFinish;
 
-    public float? DesiredSplitCenter;
+    public double? DesiredSplitCenter;
 
     protected override Vector2 ArrangeOverride(Vector2 finalSize)
     {
         if (ResizeMode == SplitResizeMode.RespectChildrenMinSize
             && DesiredSplitCenter != null)
         {
-            var maxSize = Orientation == SplitOrientation.Vertical
+            var secondMin = GetChild(1).MinSize;
+            var minSize = Orientation == SplitOrientation.Vertical
+                ? secondMin.Y
+                : secondMin.X;
+            var finalSizeComponent = Orientation == SplitOrientation.Vertical
                 ? finalSize.Y
                 : finalSize.X;
 
-            // brute force it
-            if (SplitCenter != DesiredSplitCenter.Value
-                && maxSize > DesiredSplitCenter)
+            var secondMinFractional = minSize / finalSizeComponent;
+            DesiredSplitCenter = Math.Round(DesiredSplitCenter.Value, 2, MidpointRounding.ToZero);
+
+            // minimum size of second child must fit into the leftover percentage of DesiredSplitCenter,
+            var canSecondFit = DesiredSplitCenter + secondMinFractional <= 1;
+
+            if (DesiredSplitCenter > 1 || DesiredSplitCenter < 0 || !canSecondFit)
             {
-                SplitCenter = DesiredSplitCenter.Value;
+                DesiredSplitCenter = 0.5;
             }
-            else if (maxSize != 0)
+
+            // don't need anything more than two digits of precision for this
+            var currentSplitFraction = Math.Round(SplitFraction, 2, MidpointRounding.ToZero);
+
+            // brute force it
+            if (currentSplitFraction != DesiredSplitCenter.Value)
+            {
+                SplitFraction = (float) DesiredSplitCenter.Value;
+            }
+            else
             {
                 DesiredSplitCenter = null;
             }

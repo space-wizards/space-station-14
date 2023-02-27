@@ -21,12 +21,12 @@
             <actions:ActionsBar Name="Actions" Access="Protected" />
             <alerts:AlertsUI Name="Alerts" Access="Protected" />
         </LayoutContainer>
-        <PanelContainer HorizontalExpand="True">
+        <PanelContainer HorizontalExpand="True" MinWidth="300">
             <PanelContainer.PanelOverride>
                 <graphics:StyleBoxFlat BackgroundColor="#2B2C3B" />
             </PanelContainer.PanelOverride>
 
-            <BoxContainer Orientation="Vertical" HorizontalExpand="True" MinWidth="300" SeparationOverride="10" Margin="10">
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="10" Margin="10">
                 <menuBar:GameTopMenuBar Name="TopBar" HorizontalExpand="True" Access="Protected" />
                 <chat:ChatBox VerticalExpand="True" HorizontalExpand="True" Name="Chat" Access="Protected" />
             </BoxContainer>
