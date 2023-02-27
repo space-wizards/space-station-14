@@ -239,7 +239,7 @@ public sealed class ChatUIController : UIController
 
         screen.OnChatResized += StoreChatSize;
 
-         if (string.IsNullOrEmpty(sizing))
+        if (string.IsNullOrEmpty(sizing))
         {
             return;
         }
