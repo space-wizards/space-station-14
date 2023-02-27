@@ -87,7 +87,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         if (!Resolve(uid, ref instrument) || instrument.Renderer == null)
             return;
 
-        instrument.Renderer.TrackingEntity = instrument.Owner;
+        instrument.Renderer.TrackingEntity = uid;
         instrument.Renderer.DisablePercussionChannel = !instrument.AllowPercussion;
         instrument.Renderer.DisableProgramChangeEvent = !instrument.AllowProgramChange;
 
@@ -107,6 +107,10 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
             return;
 
         if (component is not InstrumentComponent instrument)
+            return;
+
+        // Inactive
+        if (!instrument.IsInputOpen && !instrument.IsMidiOpen && instrument.Renderer == null)
             return;
 
         if (instrument.IsInputOpen)
