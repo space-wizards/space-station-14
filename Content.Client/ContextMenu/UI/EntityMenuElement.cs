@@ -33,6 +33,7 @@ namespace Content.Client.ContextMenu.UI
         public int Count;
 
         public readonly Label CountLabel;
+        public readonly Label UnanchoredLabel;
         public readonly SpriteView EntityIcon = new() { OverrideDirection = Direction.South};
 
         public EntityMenuElement(EntityUid? entity = null)
@@ -42,11 +43,20 @@ namespace Content.Client.ContextMenu.UI
             _adminSystem = _entityManager.System<AdminSystem>();
 
             CountLabel = new Label { StyleClasses = { StyleClassEntityMenuIconLabel } };
+            UnanchoredLabel = new Label { StyleClasses = { StyleClassEntityMenuIconLabel } };
             Icon.AddChild(new LayoutContainer() { Children = { EntityIcon, CountLabel, UnanchoredLabel } });
 
+            // CountLabel
             LayoutContainer.SetAnchorPreset(CountLabel, LayoutContainer.LayoutPreset.BottomRight);
             LayoutContainer.SetGrowHorizontal(CountLabel, LayoutContainer.GrowDirection.Begin);
             LayoutContainer.SetGrowVertical(CountLabel, LayoutContainer.GrowDirection.Begin);
+
+            // UnanchoredLabel
+            UnanchoredLabel.Text = "u";
+            UnanchoredLabel.Visible = false;
+            LayoutContainer.SetAnchorPreset(UnanchoredLabel, LayoutContainer.LayoutPreset.CenterRight);
+            LayoutContainer.SetGrowHorizontal(UnanchoredLabel, LayoutContainer.GrowDirection.Begin);
+            LayoutContainer.SetGrowVertical(UnanchoredLabel, LayoutContainer.GrowDirection.Begin);
 
             Entity = entity;
             if (Entity == null)

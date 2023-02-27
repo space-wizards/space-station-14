@@ -5,6 +5,7 @@ using Content.Client.Gameplay;
 using Content.Client.Verbs;
 using Content.Client.Verbs.UI;
 using Content.Shared.CCVar;
+using Content.Shared.Construction.Components;
 using Content.Shared.Examine;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
@@ -259,6 +260,17 @@ namespace Content.Client.ContextMenu.UI
             }
         }
 
+        private bool EntityIsUnanchored(EntityUid entity)
+        {
+            if (!_entityManager.HasComponent<AnchorableComponent>(entity))
+            {
+                return false;
+            }
+
+            var transform = _entityManager.GetComponentOrNull<TransformComponent>(entity);
+            return transform != null ? !transform.Anchored : false;
+        }
+
         /// <summary>
         ///     Add the entity to the menu
         /// </summary>
@@ -268,6 +280,9 @@ namespace Content.Client.ContextMenu.UI
             element.SubMenu = new ContextMenuPopup(_context, element);
             element.SubMenu.OnPopupOpen += () => _verb.OpenVerbMenu(entity, popup: element.SubMenu);
             element.SubMenu.OnPopupHide += element.SubMenu.MenuBody.DisposeAllChildren;
+
+            element.UnanchoredLabel.Visible = EntityIsUnanchored(entity);
+
             _context.AddElement(menu, element);
             Elements.TryAdd(entity, element);
         }
@@ -319,6 +334,7 @@ namespace Content.Client.ContextMenu.UI
             }
 
             element.UpdateEntity(entity);
+            element.UnanchoredLabel.Visible = EntityIsUnanchored(entity.Value);
 
             // Update the entity count & count label
             element.Count = 0;
