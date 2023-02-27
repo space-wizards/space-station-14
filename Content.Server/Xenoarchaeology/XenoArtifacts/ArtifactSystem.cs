@@ -229,9 +229,9 @@ public sealed partial class ArtifactSystem : EntitySystem
     /// <param name="component"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public bool TryGetNodeData<T>(EntityUid uid, string key, [NotNullWhen(true)] out T data, ArtifactComponent? component = null)
+    public bool TryGetNodeData<T>(EntityUid uid, string key, [NotNullWhen(true)] out T? data, ArtifactComponent? component = null)
     {
-        data = default!;
+        data = default;
 
         if (!Resolve(uid, ref component))
             return false;
