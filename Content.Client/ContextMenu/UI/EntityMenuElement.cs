@@ -11,7 +11,7 @@ namespace Content.Client.ContextMenu.UI
 {
     public sealed partial class EntityMenuElement : ContextMenuElement
     {
-        public const string StyleClassEntityMenuCountText = "contextMenuCount";
+        public const string StyleClassEntityMenuIconLabel = "contextMenuIconLabel";
 
         [Dependency] private readonly IClientAdminManager _adminManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -41,8 +41,8 @@ namespace Content.Client.ContextMenu.UI
 
             _adminSystem = _entityManager.System<AdminSystem>();
 
-            CountLabel = new Label { StyleClasses = { StyleClassEntityMenuCountText } };
-            Icon.AddChild(new LayoutContainer() { Children = { EntityIcon, CountLabel } });
+            CountLabel = new Label { StyleClasses = { StyleClassEntityMenuIconLabel } };
+            Icon.AddChild(new LayoutContainer() { Children = { EntityIcon, CountLabel, UnanchoredLabel } });
 
             LayoutContainer.SetAnchorPreset(CountLabel, LayoutContainer.LayoutPreset.BottomRight);
             LayoutContainer.SetGrowHorizontal(CountLabel, LayoutContainer.GrowDirection.Begin);
