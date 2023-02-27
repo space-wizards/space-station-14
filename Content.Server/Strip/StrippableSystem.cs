@@ -163,7 +163,7 @@ namespace Content.Server.Strip
             if (args.Target == args.User)
                 return;
 
-            if (HasComp<ActorComponent>(args.User))
+            if (!HasComp<ActorComponent>(args.User))
                 return;
 
             args.Handled = true;

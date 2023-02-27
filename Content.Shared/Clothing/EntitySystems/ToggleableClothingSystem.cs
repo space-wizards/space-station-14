@@ -114,13 +114,16 @@ public sealed class ToggleableClothingSystem : EntitySystem
 
         var args = new DoAfterEventArgs(user, time, default, wearer, item)
         {
-            DistanceThreshold = 1f,
             BreakOnDamage = true,
             BreakOnStun = true,
             BreakOnTargetMove = true,
             RaiseOnTarget = false,
             RaiseOnUsed = true,
             RaiseOnUser = false,
+            // This should just re-use the BUI range checks & cancel the do after if the BUI closes. But that is all
+            // server-side at the moment.
+            // TODO BUI REFACTOR.
+            DistanceThreshold = 2,
         };
 
         var doAfter = _doAfter.DoAfter(args, new ToggleClothingEvent() { Performer = user });
