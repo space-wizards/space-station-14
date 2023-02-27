@@ -4,13 +4,16 @@ using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Tag;
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
 public abstract class ClothingSystem : EntitySystem
 {
     [Dependency] private readonly SharedItemSystem _itemSys = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
 
@@ -22,6 +25,23 @@ public abstract class ClothingSystem : EntitySystem
         SubscribeLocalEvent<ClothingComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<ClothingComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<ClothingComponent, GotUnequippedEvent>(OnGotUnequipped);
+    }
+
+    /// <summary>
+    ///     Returns true if the given clothing is equipped to an inventory slot with the given inventory slot flags.
+    /// </summary>
+    public bool InSlotWithFlags(EntityUid uid, SlotFlags flags, ClothingComponent? clothing = null)
+    {
+        if (!Resolve(uid, ref clothing) || clothing.InSlot == null)
+            return false;
+
+        var parent = Transform(uid).ParentUid;
+
+        if (!_inventory.TryGetSlot(parent, clothing.InSlot, out var slotDef))
+            return false;
+
+        DebugTools.Assert(Comp<ContainerManagerComponent>(parent).GetContainer(slotDef.Name).Contains(uid));
+        return (slotDef.SlotFlags & flags) == flags;
     }
 
     protected virtual void OnGotEquipped(EntityUid uid, ClothingComponent component, GotEquippedEvent args)

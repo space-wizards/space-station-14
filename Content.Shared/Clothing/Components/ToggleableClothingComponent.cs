@@ -71,5 +71,5 @@ public sealed class ToggleableClothingComponent : Component
     public string? VerbText;
 
     // prevent duplicate doafters
-    public readonly HashSet<EntityUid> DoAfterUsers = new();
+    public byte? DoAfterId;
 }

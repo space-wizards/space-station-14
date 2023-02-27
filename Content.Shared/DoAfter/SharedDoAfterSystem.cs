@@ -178,11 +178,11 @@ public abstract class SharedDoAfterSystem : EntitySystem
     /// </summary>
     /// <param name="eventArgs">The DoAfterEventArgs</param>
     /// <param name="data">The extra data sent over </param>
-    public void DoAfter<T>(DoAfterEventArgs eventArgs, T data)
+    public DoAfter DoAfter<T>(DoAfterEventArgs eventArgs, T data)
     {
         var doAfter = CreateDoAfter(eventArgs);
-
-        doAfter.Done = cancelled => { Send(data, cancelled, eventArgs); };
+        doAfter.Done = cancelled => { Send(data, cancelled, eventArgs, doAfter.ID); };
+        return doAfter;
     }
 
     /// <summary>
@@ -195,7 +195,7 @@ public abstract class SharedDoAfterSystem : EntitySystem
     {
         var doAfter = CreateDoAfter(eventArgs);
 
-        doAfter.Done = cancelled => { Send(cancelled, eventArgs); };
+        doAfter.Done = cancelled => { Send(cancelled, eventArgs, doAfter.ID); };
 
         return doAfter;
     }
@@ -362,9 +362,9 @@ public abstract class SharedDoAfterSystem : EntitySystem
     /// </summary>
     /// <param name="cancelled"></param>
     /// <param name="args"></param>
-    private void Send(bool cancelled, DoAfterEventArgs args)
+    private void Send(bool cancelled, DoAfterEventArgs args, byte Id)
     {
-        var ev = new DoAfterEvent(cancelled, args);
+        var ev = new DoAfterEvent(cancelled, args, Id);
 
         RaiseDoAfterEvent(ev, args);
     }
@@ -376,9 +376,9 @@ public abstract class SharedDoAfterSystem : EntitySystem
     /// <param name="cancelled"></param>
     /// <param name="args"></param>
     /// <typeparam name="T"></typeparam>
-    private void Send<T>(T data, bool cancelled, DoAfterEventArgs args)
+    private void Send<T>(T data, bool cancelled, DoAfterEventArgs args, byte id)
     {
-        var ev = new DoAfterEvent<T>(data, cancelled, args);
+        var ev = new DoAfterEvent<T>(data, cancelled, args, id);
 
         RaiseDoAfterEvent(ev, args);
     }
