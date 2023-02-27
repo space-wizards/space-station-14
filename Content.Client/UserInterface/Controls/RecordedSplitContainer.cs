@@ -18,23 +18,23 @@ public sealed class RecordedSplitContainer : SplitContainer
         if (ResizeMode == SplitResizeMode.RespectChildrenMinSize
             && DesiredSplitCenter != null)
         {
-            var secondMin = GetChild(1).MinSize;
-            var minSize = Orientation == SplitOrientation.Vertical
+            var secondMin = GetChild(1).DesiredSize;
+            double minSize = Orientation == SplitOrientation.Vertical
                 ? secondMin.Y
                 : secondMin.X;
-            var finalSizeComponent = Orientation == SplitOrientation.Vertical
+            double finalSizeComponent = Orientation == SplitOrientation.Vertical
                 ? finalSize.Y
                 : finalSize.X;
 
-            var secondMinFractional = minSize / finalSizeComponent;
+            var firstTotalFractional = (finalSizeComponent - minSize - SplitWidth - SplitEdgeSeparation) / finalSizeComponent;
             DesiredSplitCenter = Math.Round(DesiredSplitCenter.Value, 2, MidpointRounding.ToZero);
 
             // minimum size of second child must fit into the leftover percentage of DesiredSplitCenter,
-            var canSecondFit = DesiredSplitCenter + secondMinFractional <= 1;
+            var canSecondFit = DesiredSplitCenter <= firstTotalFractional;
 
             if (DesiredSplitCenter > 1 || DesiredSplitCenter < 0 || !canSecondFit)
             {
-                DesiredSplitCenter = Math.Round(1 - secondMinFractional, 2, MidpointRounding.ToZero);
+                DesiredSplitCenter = Math.Round(firstTotalFractional, 2, MidpointRounding.ToZero);
             }
 
             // don't need anything more than two digits of precision for this
