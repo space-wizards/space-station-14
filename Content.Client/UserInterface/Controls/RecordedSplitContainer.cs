@@ -34,7 +34,7 @@ public sealed class RecordedSplitContainer : SplitContainer
 
             if (DesiredSplitCenter > 1 || DesiredSplitCenter < 0 || !canSecondFit)
             {
-                DesiredSplitCenter = 0.5;
+                DesiredSplitCenter = Math.Round(1 - secondMinFractional, 2, MidpointRounding.ToZero);
             }
 
             // don't need anything more than two digits of precision for this
