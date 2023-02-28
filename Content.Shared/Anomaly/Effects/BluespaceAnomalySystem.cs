@@ -3,7 +3,6 @@ using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Teleportation.Components;
-using Robust.Shared.Map;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Anomaly.Effects;
@@ -32,17 +31,17 @@ public sealed class BluespaceAnomalySystem : EntitySystem
         allEnts.Add(uid);
 
         var xformQuery = GetEntityQuery<TransformComponent>();
-        var coords = new List<EntityCoordinates>();
+        var coords = new List<Vector2>();
         foreach (var ent in allEnts)
         {
             if (xformQuery.TryGetComponent(ent, out var xf))
-                coords.Add(xf.Coordinates);
+                coords.Add(xf.MapPosition.Position);
         }
 
         _random.Shuffle(coords);
         for (var i = 0; i < allEnts.Count; i++)
         {
-            _xform.SetCoordinates(allEnts[i], coords[i]);
+            _xform.SetWorldPosition(allEnts[i], coords[i], xformQuery);
         }
     }
 
