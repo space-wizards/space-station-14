@@ -1,29 +1,15 @@
-using Content.Client.Construction.UI;
 using Content.Client.Hands;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Screens;
-using Content.Client.UserInterface.Systems.Actions;
-using Content.Client.UserInterface.Systems.Alerts;
-using Content.Client.UserInterface.Systems.Chat;
 using Content.Client.UserInterface.Systems.Gameplay;
-using Content.Client.UserInterface.Systems.Ghost;
-using Content.Client.UserInterface.Systems.Hands;
-using Content.Client.UserInterface.Systems.Hotbar;
-using Content.Client.UserInterface.Systems.Hotbar.Widgets;
-using Content.Client.UserInterface.Systems.Inventory;
-using Content.Client.UserInterface.Systems.MenuBar;
-using Content.Client.UserInterface.Systems.Viewport;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
-using Robust.Client.Player;
-using Robust.Client.GameObjects;
 
 namespace Content.Client.Gameplay
 {
