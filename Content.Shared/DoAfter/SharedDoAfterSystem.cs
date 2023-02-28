@@ -179,13 +179,11 @@ public abstract class SharedDoAfterSystem : EntitySystem
     ///     Use this if you don't have any extra data to send with the DoAfter
     /// </summary>
     /// <param name="eventArgs">The DoAfterEventArgs</param>
-    public DoAfter DoAfter(DoAfterEventArgs eventArgs)
+    public void DoAfter(DoAfterEventArgs eventArgs)
     {
         var doAfter = CreateDoAfter(eventArgs);
 
         doAfter.Done = cancelled => { Send(cancelled, eventArgs); };
-
-        return doAfter;
     }
 
     private DoAfter CreateDoAfter(DoAfterEventArgs eventArgs)
