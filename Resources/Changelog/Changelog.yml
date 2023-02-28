@@ -1,10 +1,4 @@
 Entries:
-- author: Daemon
-  changes:
-  - {message: Added security target dummies., type: Add}
-  - {message: Added practice laser gun., type: Add}
-  id: 2583
-  time: '2022-11-05T15:32:00.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Stunned individuals can no longer attack., type: Fix}
@@ -2915,3 +2909,13 @@ Entries:
   - {message: Change L6 firerate from 8 to 5 in line with rifles., type: Tweak}
   id: 3082
   time: '2023-02-28T19:10:20.0000000+00:00'
+- author: GoodWheatley
+  changes:
+  - {message: 'After the Hypopen Incident of 2556, The recipe for Lexorin now requires
+      Heartbreaker Toxin instead of Ammonia.', type: Tweak}
+  - {message: You need to heat up the chemicals for Mindbreaker Toxin to get them
+      to react., type: Tweak}
+  - {message: 'Due to budget cuts, the Syndicate is now offering an inferior version
+      of the hypopen that only holds 10 units of chemicals.', type: Tweak}
+  id: 3083
+  time: '2023-02-28T20:02:18.0000000+00:00'
