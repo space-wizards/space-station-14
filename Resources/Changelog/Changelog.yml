@@ -1,9 +1,4 @@
 Entries:
-- author: checkraze
-  changes:
-  - {message: Added Xenoarcheology Laboratory to Kettle station., type: Add}
-  id: 2588
-  time: '2022-11-07T02:00:22.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: Computer's hitbox is now smaller., type: Tweak}
@@ -2909,3 +2904,8 @@ Entries:
   - {message: Youtool no longer has free utility belts., type: Remove}
   id: 3087
   time: '2023-02-28T20:36:02.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Janitors discovered the ability to put paper in trash bags!, type: Add}
+  id: 3088
+  time: '2023-02-28T21:00:39.0000000+00:00'
