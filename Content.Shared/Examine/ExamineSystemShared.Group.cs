@@ -38,7 +38,7 @@ namespace Content.Shared.Examine
                     Text = group.ContextText,
                     Message = group.HoverMessage,
                     Category = VerbCategory.Examine,
-                    IconTexture = group.Icon
+                    Icon = new SpriteSpecifier.Texture(new ResourcePath(group.Icon)),
                 };
 
                 args.Verbs.Add(examineVerb);
@@ -149,7 +149,7 @@ namespace Content.Shared.Examine
                 Text = verbText,
                 Message = hoverMessage,
                 Category = VerbCategory.Examine,
-                IconTexture = iconTexture
+                Icon = new SpriteSpecifier.Texture(new ResourcePath(iconTexture)),
             };
 
             verbsEvent.Verbs.Add(examineVerb);

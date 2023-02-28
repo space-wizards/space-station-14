@@ -1214,6 +1214,15 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> ChatShowTypingIndicator =
             CVarDef.Create("chat.show_typing_indicator", true, CVar.CLIENTONLY);
 
+        /// <summary>
+        /// A message broadcast to each player that joins the lobby.
+        /// May be changed by admins ingame through use of the "set-motd" command.
+        /// In this case the new value, if not empty, is broadcast to all connected players and saved between rounds.
+        /// May be requested by any player through use of the "get-motd" command.
+        /// </summary>
+        public static readonly CVarDef<string> MOTD =
+            CVarDef.Create("chat.motd", "", CVar.SERVER | CVar.SERVERONLY | CVar.ARCHIVE, "A message broadcast to each player that joins the lobby.");
+
         /*
          * AFK
          */

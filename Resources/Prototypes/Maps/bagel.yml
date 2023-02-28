@@ -7,7 +7,7 @@
   stations:
     Bagel:
       mapNameTemplate: '{0} Bagel Station {1}'
-      emergencyShuttlePath: /Maps/Shuttles/emergency_courser.yml
+      emergencyShuttlePath: /Maps/Shuttles/emergency_lox.yml
       nameGenerator:
         !type:NanotrasenNameGenerator
         prefixCreator: '14'

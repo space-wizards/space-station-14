@@ -19,10 +19,20 @@ public sealed partial class ToolSystem
     {
         SubscribeLocalEvent<TilePryingComponent, AfterInteractEvent>(OnTilePryingAfterInteract);
         SubscribeLocalEvent<TilePryingComponent, TilePryingCompleteEvent>(OnTilePryComplete);
+        SubscribeLocalEvent<TilePryingComponent, TilePryingCancelledEvent>(OnTilePryCancelled);
+    }
+
+    private void OnTilePryingAfterInteract(EntityUid uid, TilePryingComponent component, AfterInteractEvent args)
+    {
+        if (args.Handled || !args.CanReach || (args.Target != null && !HasComp<PuddleComponent>(args.Target))) return;
+
+        if (TryPryTile(uid, args.User, component, args.ClickLocation))
+            args.Handled = true;
     }
 
     private void OnTilePryComplete(EntityUid uid, TilePryingComponent component, TilePryingCompleteEvent args)
     {
+        component.CancelToken = null;
         var gridUid = args.Coordinates.GetGridUid(EntityManager);
         if (!_mapManager.TryGetGrid(gridUid, out var grid))
         {
@@ -34,17 +44,14 @@ public sealed partial class ToolSystem
         _tile.PryTile(tile);
     }
 
-    private void OnTilePryingAfterInteract(EntityUid uid, TilePryingComponent component, AfterInteractEvent args)
+    private void OnTilePryCancelled(EntityUid uid, TilePryingComponent component, TilePryingCancelledEvent args)
     {
-        if (args.Handled || !args.CanReach || (args.Target != null && !HasComp<PuddleComponent>(args.Target))) return;
-
-        if (TryPryTile(uid, args.User, component, args.ClickLocation))
-            args.Handled = true;
+        component.CancelToken = null;
     }
 
     private bool TryPryTile(EntityUid toolEntity, EntityUid user, TilePryingComponent component, EntityCoordinates clickLocation)
     {
-        if (!TryComp<ToolComponent?>(toolEntity, out var tool) && component.ToolComponentNeeded)
+        if (!TryComp<ToolComponent?>(toolEntity, out var tool) && component.ToolComponentNeeded || component.CancelToken != null)
             return false;
 
         if (!_mapManager.TryGetGrid(clickLocation.GetGridUid(EntityManager), out var mapGrid))
@@ -62,9 +69,11 @@ public sealed partial class ToolSystem
         if (!tileDef.CanCrowbar)
             return false;
 
-        var toolEvData = new ToolEventData(new TilePryingCompleteEvent(clickLocation), targetEntity:toolEntity);
+        component.CancelToken = new CancellationTokenSource();
 
-        if (!UseTool(toolEntity, user, null, component.Delay, new[] { component.QualityNeeded }, toolEvData, toolComponent: tool))
+        var toolEvData = new ToolEventData(new TilePryingCompleteEvent(clickLocation), cancelledEv:new TilePryingCancelledEvent() ,targetEntity:toolEntity);
+
+        if (!UseTool(toolEntity, user, null, component.Delay, new[] { component.QualityNeeded }, toolEvData, toolComponent: tool, cancelToken: component.CancelToken))
             return false;
 
         return true;
