@@ -1,9 +1,4 @@
 Entries:
-- author: rolfero
-  changes:
-  - {message: You can now link airlocks and windoors to buttons and levers!, type: Add}
-  id: 2576
-  time: '2022-11-04T04:00:34.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Pinpointer arrow should be more accurate., type: Tweak}
@@ -2913,3 +2908,9 @@ Entries:
   - {message: meat spike no longer vaporizes victim items, type: Fix}
   id: 3075
   time: '2023-02-28T13:14:14.0000000+00:00'
+- author: Visne
+  changes:
+  - {message: Fixed a bug where an unwrapped nutribrick was worth more than a wrapped
+      one, type: Fix}
+  id: 3076
+  time: '2023-02-28T15:55:25.0000000+00:00'
