@@ -1,9 +1,4 @@
 Entries:
-- author: Salex08
-  changes:
-  - {message: Shot Projectiles cause impulses like it was supposed to, type: Fix}
-  id: 2580
-  time: '2022-11-05T03:08:32.0000000+00:00'
 - author: rolfero
   changes:
   - {message: Glowstick sprites inhand are now visible, type: Fix}
@@ -2913,3 +2908,9 @@ Entries:
   - {message: Experimental research hardsuit can now be hidden in a backpack., type: Add}
   id: 3079
   time: '2023-02-28T16:04:30.0000000+00:00'
+- author: Visne
+  changes:
+  - {message: Removed annoying margin between viewport and chat in separated HUD.,
+    type: Tweak}
+  id: 3080
+  time: '2023-02-28T16:11:39.0000000+00:00'
