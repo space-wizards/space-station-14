@@ -110,11 +110,20 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
 
     content = io.StringIO()
     for name, group in itertools.groupby(entries, lambda x: x["author"]):
-        content.write(f"**{name}** updated:\n")
+        content.write(f"**{name}** обновил:\n")
         for entry in group:
             for change in entry["changes"]:
                 emoji = TYPES_TO_EMOJI.get(change['type'], "❓")
                 message = change['message']
+                # Corvax-Localization-Start
+                if TRANSLATION_API_URL:
+                    translate = requests.post(TRANSLATION_API_URL, json={
+                        "text": message,
+                        "source_lang": "EN",
+                        "target_lang": "RU"
+                    })
+                    message = translate.data
+                # Corvax-Localization-End
                 content.write(f"{emoji} {message}\n")
 
     body = {
