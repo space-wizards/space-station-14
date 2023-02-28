@@ -292,7 +292,7 @@
       - state: box
       - state: encryptokey
   - type: Storage
-    capacity: 60
+    capacity: 30
     whitelist:
       components:
       - EncryptionKey
