@@ -191,7 +191,6 @@ public abstract class SharedDoAfterSystem : EntitySystem
     private DoAfter CreateDoAfter(DoAfterEventArgs eventArgs)
     {
         // Setup
-        eventArgs.CancelToken = new CancellationToken();
         var doAfter = new DoAfter(eventArgs, EntityManager);
         // Caller's gonna be responsible for this I guess
         var doAfterComponent = Comp<DoAfterComponent>(eventArgs.User);

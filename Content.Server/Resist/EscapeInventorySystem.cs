@@ -107,6 +107,7 @@ public sealed class EscapeInventorySystem : EntitySystem
 
     private void OnDropped(EntityUid uid, CanEscapeInventoryComponent component, DroppedEvent args)
     {
+        component.CancelToken?.Cancel();
         component.CancelToken = null;
     }
 
