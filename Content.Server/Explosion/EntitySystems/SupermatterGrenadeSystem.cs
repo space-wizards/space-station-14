@@ -47,7 +47,7 @@ public sealed class SupermatterGrenadeSystem : EntitySystem
         }
         _container.TryRemoveFromContainer(uid, true);
         if (component.AnchorOnGravityPull)
-            _transformSystem.AnchorEntity(Transform(uid));
+            _transformSystem.AnchorEntity(uid, Transform(uid));
         var param = AudioParams.Default;
         if (component.GravityPullStartSound != null)
             _audio.PlayPvs(component.GravityPullStartSound, uid,
