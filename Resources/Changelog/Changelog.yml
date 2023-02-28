@@ -1,9 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Holofans and tiny fans are airtight again., type: Fix}
-  id: 2586
-  time: '2022-11-06T19:34:07.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Artifacts now generate with multiple randomly generated effects and
@@ -2918,3 +2913,9 @@ Entries:
   - {message: 'added fake cap gun, can be purchased in clown and mime uplink', type: Add}
   id: 3085
   time: '2023-02-28T20:06:55.0000000+00:00'
+- author: router
+  changes:
+  - {message: Made sound emotes not abhorrent. You can now add some punctuation marks
+      after emotes., type: Tweak}
+  id: 3086
+  time: '2023-02-28T20:13:17.0000000+00:00'
