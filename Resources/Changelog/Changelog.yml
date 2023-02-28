@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fixed the damage/death overlay being off-centre while using the "separated"
-      HUD layout., type: Fix}
-  id: 2572
-  time: '2022-11-04T01:44:51.0000000+00:00'
 - author: Rane
   changes:
   - {message: Objectives involving other traitors should be more reliable at providing
@@ -2920,3 +2914,8 @@ Entries:
     type: Tweak}
   id: 3071
   time: '2023-02-27T21:19:53.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix tile definition reloads., type: Fix}
+  id: 3072
+  time: '2023-02-28T05:32:05.0000000+00:00'
