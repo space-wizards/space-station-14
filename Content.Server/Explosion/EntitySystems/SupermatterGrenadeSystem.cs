@@ -1,50 +1,38 @@
 using Content.Server.Explosion.Components;
 using Content.Shared.Singularity.Components;
-using Content.Server.Singularity.Components;
 using Robust.Shared.Timing;
 using Robust.Shared.Audio;
 using Content.Shared.Audio;
 using Content.Server.Audio;
 using Robust.Shared.Containers;
 using Robust.Server.GameObjects;
+using Content.Server.Singularity.Components;
 
 namespace Content.Server.Explosion.EntitySystems;
 
 public sealed class SupermatterGrenadeSystem : EntitySystem
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly TriggerSystem _triggerSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly AmbientSoundSystem _ambient = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly PointLightSystem _pointLightSystem = default!;
+    [Dependency] private readonly TriggerSystem _triggerSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SupermatterGrenadeComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<SupermatterGrenadeComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<SupermatterGrenadeComponent, TriggerEvent>(OnExplode);
     }
 
-    private void OnInit(EntityUid uid, SupermatterGrenadeComponent component, ComponentInit args)
-    {
-        if (TryComp(uid, out component.Distortion))
-            component.DistortionIntensity = component.Distortion.Intensity;
-
-        if (TryComp(uid, out component.GravityWell))
-            component.BaseRadialAcceleration = component.GravityWell.BaseRadialAcceleration;
-    }
     private void OnStartup(EntityUid uid, SupermatterGrenadeComponent component, ComponentStartup args)
     {
-        if (component.Distortion != null || TryComp(uid, out component.Distortion))
-            component.Distortion.Intensity = 0;
-        if (component.GravityWell != null || TryComp(uid, out component.GravityWell))
-            component.GravityWell.BaseRadialAcceleration = 0;
+        component.Distortion = Comp<SingularityDistortionComponent>(uid);
+        component.GravityWell = Comp<GravityWellComponent>(uid);
     }
-
     private void OnExplode(EntityUid uid, SupermatterGrenadeComponent component, TriggerEvent args)
     {
         if (component.IsExploded)
@@ -90,7 +78,7 @@ public sealed class SupermatterGrenadeSystem : EntitySystem
         base.Update(frameTime);
         foreach (var component in EntityQuery<SupermatterGrenadeComponent>())
         {
-            if (!component.IsGravityPulling || component.Distortion == null)
+            if (!component.IsGravityPulling)
                 return;
             #pragma warning disable
             var uid = component.Owner;

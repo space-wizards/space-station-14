@@ -90,7 +90,7 @@
 
 - type: entity
   name: supermatter grenade
-  description: Grenade that simulates delamination of suppermatter engine, pulling things in heap and explode after some time.
+  description: Grenade that simulates delamination of supermatter engine, pulling things in heap and explode after some time.
   parent: GrenadeBase
   id: SupermatterGrenade
   components:
@@ -108,19 +108,13 @@
     - type: TimerTriggerVisualizer
       countdown_sound:
         path: /Audio/Effects/minibombcountdown.ogg
-  - type: SupermatterGrenade
-    explodeAfterGravityPull: True
-    timeTillExplosion: 10
-    gravityPullLoopSoundOffset: 0.6
-    gravityPullStartSoundVolume: 10
-    gravityPullEndSoundVolume: 5
   - type: SingularityDistortion
-    intensity: 100
+    intensity: 0
     falloffPower: 2
   - type: GravityWell
     maxRange: 8
-    baseRadialAcceleration: 160
-    gravPulsePeriod: 0.1
+    baseRadialAcceleration: 0
+    gravPulsePeriod: 0.01
   - type: AmbientSound
     enabled: False
     volume: -5
@@ -130,10 +124,18 @@
   - type: PointLight
     enabled: false
     color: "#ffaa44"
-    energy: 10
+    energy: 8
     radius: 6
     softness: 1
     offset: "0, 0"
+  - type: SupermatterGrenade
+    explodeAfterGravityPull: True
+    timeTillExplosion: 8
+    distortionIntensity: 100
+    baseRadialAcceleration: 145
+    gravityPullStartSoundVolume: 10
+    gravityPullEndSoundVolume: 5
+    gravityPullLoopSoundOffset: 0.6
 
 - type: entity
   name: whitehole grenade
@@ -143,24 +145,21 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/whiteholegrenade.rsi
+  - type: GravityWell
+    maxRange: 10
+  - type: AmbientSound
+    sound:
+      path: /Audio/Effects/Grenades/Whitehole_Loop.ogg
+  - type: PointLight
+    color: "#ffffff"
   - type: SupermatterGrenade
     explodeAfterGravityPull: False
     gravityPullStartSoundVolume: 5
     gravityPullLoopSoundOffset: 0.8
     gravityPullStartSound:
       path: /Audio/Effects/Grenades/Whitehole_Start.ogg
-  - type: SingularityDistortion
-    intensity: -100
-    falloffPower: 2
-  - type: GravityWell
-    maxRange: 10
-    baseRadialAcceleration: -240
-    gravPulsePeriod: 0.1
-  - type: AmbientSound
-    sound:
-      path: /Audio/Effects/Grenades/Whitehole_Loop.ogg
-  - type: PointLight
-    color: "#ffffff"
+    distortionIntensity: -100
+    baseRadialAcceleration: -180
 
 - type: entity
   name: the nuclear option

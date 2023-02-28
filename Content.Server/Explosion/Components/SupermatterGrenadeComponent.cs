@@ -77,6 +77,7 @@ public sealed class SupermatterGrenadeComponent : Component
     /// And then used to turn on/off GravityWell.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("baseRadialAcceleration")]
     public float BaseRadialAcceleration = 10f;
 
     public GravityWellComponent? GravityWell;
@@ -88,6 +89,7 @@ public sealed class SupermatterGrenadeComponent : Component
     /// And then used to turn on/off effect of SingularityDistortion.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("distortionIntensity")]
     public float DistortionIntensity = 1;
 
     public SingularityDistortionComponent? Distortion;
