@@ -100,13 +100,38 @@ tilemap:
   93: Plating
 entities:
 - uid: 0
-  type: EmergencyLight
+  type: AirlockGlassShuttle
   components:
-  - rot: 3.141592653589793 rad
-    pos: 7.5,-24.5
+  - rot: 1.5707963267948966 rad
+    pos: 22.5,-2.5
     parent: 1
     type: Transform
-  - type: ActiveEmergencyLight
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - 0.49,-0.49
+        - 0.49,0.49
+        - -0.49,0.49
+        - -0.49,-0.49
+      mask:
+      - Impassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
+      - InteractImpassable
+      layer:
+      - MidImpassable
+      - HighImpassable
+      - BulletImpassable
+      - InteractImpassable
+      - Opaque
+      density: 100
+    - shape: !type:PhysShapeCircle
+        radius: 0.2
+        position: 0,-0.5
+      hard: False
+      id: docking
+    type: Fixtures
 - uid: 1
   components:
   - name: NT Evac Raven
@@ -3534,8 +3559,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 18.935778
-      - 71.2346
+      - 18.405577
+      - 69.24003
       - 0
       - 0
       - 0
@@ -6207,10 +6232,10 @@ entities:
     parent: 1
     type: Transform
 - uid: 439
-  type: AirlockExternalGlassShuttleEmergencyLocked
+  type: AirlockGlassShuttle
   components:
   - rot: 1.5707963267948966 rad
-    pos: 22.5,-2.5
+    pos: 22.5,-4.5
     parent: 1
     type: Transform
   - fixtures:
@@ -6426,40 +6451,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 471
-  type: AirlockExternalGlassShuttleEmergencyLocked
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: 22.5,-4.5
-    parent: 1
-    type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-      density: 100
-    - shape: !type:PhysShapeCircle
-        radius: 0.2
-        position: 0,-0.5
-      hard: False
-      id: docking
-    type: Fixtures
-- uid: 472
-  type: AirlockExternalGlassShuttleEmergencyLocked
+  type: AirlockGlassShuttle
   components:
   - rot: 1.5707963267948966 rad
     pos: 22.5,3.5
@@ -6491,8 +6483,8 @@ entities:
       hard: False
       id: docking
     type: Fixtures
-- uid: 473
-  type: AirlockExternalGlassShuttleEmergencyLocked
+- uid: 472
+  type: AirlockGlassShuttle
   components:
   - rot: 1.5707963267948966 rad
     pos: 22.5,5.5
@@ -6524,11 +6516,44 @@ entities:
       hard: False
       id: docking
     type: Fixtures
-- uid: 474
-  type: AirlockExternalGlassShuttleEmergencyLocked
+- uid: 473
+  type: AirlockGlassShuttle
   components:
   - rot: -1.5707963267948966 rad
-    pos: 0.5,5.5
+    pos: 0.5,-4.5
+    parent: 1
+    type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - 0.49,-0.49
+        - 0.49,0.49
+        - -0.49,0.49
+        - -0.49,-0.49
+      mask:
+      - Impassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
+      - InteractImpassable
+      layer:
+      - MidImpassable
+      - HighImpassable
+      - BulletImpassable
+      - InteractImpassable
+      - Opaque
+      density: 100
+    - shape: !type:PhysShapeCircle
+        radius: 0.2
+        position: 0,-0.5
+      hard: False
+      id: docking
+    type: Fixtures
+- uid: 474
+  type: AirlockGlassShuttle
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 0.5,-2.5
     parent: 1
     type: Transform
   - fixtures:
@@ -6558,7 +6583,7 @@ entities:
       id: docking
     type: Fixtures
 - uid: 475
-  type: AirlockExternalGlassShuttleEmergencyLocked
+  type: AirlockGlassShuttle
   components:
   - rot: -1.5707963267948966 rad
     pos: 0.5,3.5
@@ -6591,43 +6616,10 @@ entities:
       id: docking
     type: Fixtures
 - uid: 476
-  type: AirlockExternalGlassShuttleEmergencyLocked
+  type: AirlockGlassShuttle
   components:
   - rot: -1.5707963267948966 rad
-    pos: 0.5,-2.5
-    parent: 1
-    type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-      density: 100
-    - shape: !type:PhysShapeCircle
-        radius: 0.2
-        position: 0,-0.5
-      hard: False
-      id: docking
-    type: Fixtures
-- uid: 477
-  type: AirlockExternalGlassShuttleEmergencyLocked
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: 0.5,-4.5
+    pos: 0.5,5.5
     parent: 1
     type: Transform
   - fixtures:
@@ -20855,30 +20847,30 @@ entities:
 - uid: 2491
   type: EmergencyLight
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 3.5,-14.5
+  - rot: 3.141592653589793 rad
+    pos: 7.5,-24.5
     parent: 1
     type: Transform
   - type: ActiveEmergencyLight
 - uid: 2492
   type: EmergencyLight
   components:
-  - pos: 7.5,3.5
+  - rot: -1.5707963267948966 rad
+    pos: 3.5,-14.5
     parent: 1
     type: Transform
   - type: ActiveEmergencyLight
 - uid: 2493
   type: EmergencyLight
   components:
-  - pos: 11.5,-16.5
+  - pos: 7.5,3.5
     parent: 1
     type: Transform
   - type: ActiveEmergencyLight
 - uid: 2494
   type: EmergencyLight
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 19.5,-14.5
+  - pos: 11.5,-16.5
     parent: 1
     type: Transform
   - type: ActiveEmergencyLight
@@ -20886,18 +20878,26 @@ entities:
   type: EmergencyLight
   components:
   - rot: 1.5707963267948966 rad
-    pos: 19.5,-7.5
+    pos: 19.5,-14.5
     parent: 1
     type: Transform
   - type: ActiveEmergencyLight
 - uid: 2496
   type: EmergencyLight
   components:
-  - pos: 15.5,3.5
+  - rot: 1.5707963267948966 rad
+    pos: 19.5,-7.5
     parent: 1
     type: Transform
   - type: ActiveEmergencyLight
 - uid: 2497
+  type: EmergencyLight
+  components:
+  - pos: 15.5,3.5
+    parent: 1
+    type: Transform
+  - type: ActiveEmergencyLight
+- uid: 2498
   type: EmergencyLight
   components:
   - rot: 3.141592653589793 rad
@@ -20905,7 +20905,7 @@ entities:
     parent: 1
     type: Transform
   - type: ActiveEmergencyLight
-- uid: 2498
+- uid: 2499
   type: EmergencyLight
   components:
   - rot: -1.5707963267948966 rad
@@ -20913,7 +20913,7 @@ entities:
     parent: 1
     type: Transform
   - type: ActiveEmergencyLight
-- uid: 2499
+- uid: 2500
   type: EmergencyLight
   components:
   - rot: -1.5707963267948966 rad
@@ -20921,14 +20921,14 @@ entities:
     parent: 1
     type: Transform
   - type: ActiveEmergencyLight
-- uid: 2500
+- uid: 2501
   type: EmergencyLight
   components:
   - pos: 11.5,17.5
     parent: 1
     type: Transform
   - type: ActiveEmergencyLight
-- uid: 2501
+- uid: 2502
   type: EmergencyLight
   components:
   - rot: 3.141592653589793 rad
@@ -20936,7 +20936,7 @@ entities:
     parent: 1
     type: Transform
   - type: ActiveEmergencyLight
-- uid: 2502
+- uid: 2503
   type: EmergencyLight
   components:
   - rot: 1.5707963267948966 rad
@@ -20944,14 +20944,14 @@ entities:
     parent: 1
     type: Transform
   - type: ActiveEmergencyLight
-- uid: 2503
+- uid: 2504
   type: EmergencyLight
   components:
   - pos: 11.5,14.5
     parent: 1
     type: Transform
   - type: ActiveEmergencyLight
-- uid: 2504
+- uid: 2505
   type: EmergencyLight
   components:
   - rot: 3.141592653589793 rad
@@ -20959,7 +20959,7 @@ entities:
     parent: 1
     type: Transform
   - type: ActiveEmergencyLight
-- uid: 2505
+- uid: 2506
   type: EmergencyLight
   components:
   - rot: 1.5707963267948966 rad
@@ -20967,7 +20967,7 @@ entities:
     parent: 1
     type: Transform
   - type: ActiveEmergencyLight
-- uid: 2506
+- uid: 2507
   type: EmergencyLight
   components:
   - rot: -1.5707963267948966 rad
@@ -20975,14 +20975,14 @@ entities:
     parent: 1
     type: Transform
   - type: ActiveEmergencyLight
-- uid: 2507
+- uid: 2508
   type: EmergencyLight
   components:
   - pos: 10.5,6.5
     parent: 1
     type: Transform
   - type: ActiveEmergencyLight
-- uid: 2508
+- uid: 2509
   type: EmergencyLight
   components:
   - rot: 3.141592653589793 rad
@@ -20990,7 +20990,7 @@ entities:
     parent: 1
     type: Transform
   - type: ActiveEmergencyLight
-- uid: 2509
+- uid: 2510
   type: EmergencyLight
   components:
   - rot: 1.5707963267948966 rad
@@ -20998,7 +20998,7 @@ entities:
     parent: 1
     type: Transform
   - type: ActiveEmergencyLight
-- uid: 2510
+- uid: 2511
   type: EmergencyLight
   components:
   - rot: -1.5707963267948966 rad
