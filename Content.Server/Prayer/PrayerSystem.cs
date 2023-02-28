@@ -45,7 +45,7 @@ public sealed class PrayerSystem : EntitySystem
         var prayerVerb = new ActivationVerb
         {
             Text = Loc.GetString(comp.Verb),
-            IconTexture = comp.VerbImage == "" ? null : comp.VerbImage,
+            Icon = comp.VerbImage,
             Act = () =>
             {
                 if (comp.BibleUserOnly && !EntityManager.TryGetComponent<BibleUserComponent>(args.User, out var bibleUser))

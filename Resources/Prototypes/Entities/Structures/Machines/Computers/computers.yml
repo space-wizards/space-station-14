@@ -513,6 +513,9 @@
     radius: 1.5
     energy: 1.6
     color: "#3c5eb5"
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: StrongMetallic
 
 - type: entity
   parent: ComputerComms
@@ -713,6 +716,9 @@
         type: CloningConsoleBoundUserInterface
   - type: Speech
     speechSounds: Pai
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: StrongMetallic
 
 - type: entity
   parent: BaseComputer
