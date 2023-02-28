@@ -2,6 +2,10 @@ name: Mirror and run GitLab CI
 
 on: [push]
 
+concurrency:
+  group: ${{ github.head_ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
