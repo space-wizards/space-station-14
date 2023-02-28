@@ -1,38 +1,60 @@
 using Content.Server.Actions;
+using Content.Server.Popups;
+using Content.Server.Power.Components;
+using Content.Server.PowerCell;
+using Content.Shared.Actions;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Ninja.Components;
+using Content.Shared.Ninja.Systems;
+using Content.Shared.Popups;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Ninja.Systems;
 
-public sealed class SpaceNinjaSuitSystem : SharedSpaceNinjaSuitSystem
+public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
 {
     [Dependency] private readonly ActionsSystem _actions = default!;
-	[Dependency] private readonly SpaceNinjaSystem _ninja = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly new NinjaSystem _ninja = default!;
+    [Dependency] private readonly PopupSystem _popups = default!;
+    [Dependency] private readonly PowerCellSystem _powerCell = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         // TODO: maybe have suit activation stuff
-        SubscribeLocalEvent<SpaceNinjaSuitComponent, ContainerIsInsertingAttemptEvent>(OnSuitInsertAttempt);
-        SubscribeLocalEvent<SpaceNinjaSuitComponent, TogglePhaseCloakEvent>(OnTogglePhaseCloakAction);
-        SubscribeLocalEvent<SpaceNinjaSuitComponent, RecallKatanaEvent>(OnRecallKatanaAction);
+        SubscribeLocalEvent<NinjaSuitComponent, ContainerIsInsertingAttemptEvent>(OnSuitInsertAttempt);
+        SubscribeLocalEvent<NinjaSuitComponent, TogglePhaseCloakEvent>(OnTogglePhaseCloakAction);
+        SubscribeLocalEvent<NinjaSuitComponent, RecallKatanaEvent>(OnRecallKatanaAction);
     }
 
-	/// <summary>
-	/// Force uncloak the user and disable suit abilities for 5 seconds.
-	/// </summary>
-	public void Attacked(SpaceNinjaSuitComponent comp, EntityUid user)
-	{
+    /// <summary>
+    /// Force uncloak the user, does not disable suit abilities.
+    /// </summary>
+    public void RevealNinja(NinjaSuitComponent comp, EntityUid user)
+    {
         if (comp.Cloaked)
         {
             comp.Cloaked = false;
             SetCloaked(user, false);
-            // TODO: disable all actions for 5 seconds
             // TODO: add the box open thing its funny
         }
-	}
+    }
 
-    protected override void NinjaEquippedSuit(EntityUid uid, SpaceNinjaSuitComponent comp, EntityUid user, SpaceNinjaComponent ninja)
+    /// <summary>
+    /// Returns the power used by a suit
+    /// </summary>
+    public float SuitWattage(NinjaSuitComponent suit)
+    {
+        float wattage = suit.PassiveWattage;
+        if (suit.Cloaked)
+            wattage += suit.CloakWattage;
+        return wattage;
+    }
+
+    protected override void NinjaEquippedSuit(EntityUid uid, NinjaSuitComponent comp, EntityUid user, NinjaComponent ninja)
     {
         base.NinjaEquippedSuit(uid, comp, user, ninja);
 
@@ -49,7 +71,7 @@ public sealed class SpaceNinjaSuitSystem : SharedSpaceNinjaSuitSystem
     }
 
     // TODO: put in shared so client properly predicts insertion, but it uses powercell so how???
-    private void OnSuitInsertAttempt(EntityUid uid, SpaceNinjaSuitComponent comp, ContainerIsInsertingAttemptEvent args)
+    private void OnSuitInsertAttempt(EntityUid uid, NinjaSuitComponent comp, ContainerIsInsertingAttemptEvent args)
     {
         // no power cell for some reason??? allow it
         if (!_powerCell.TryGetBatteryFromSlot(uid, out var battery))
@@ -62,7 +84,7 @@ public sealed class SpaceNinjaSuitSystem : SharedSpaceNinjaSuitSystem
         }
     }
 
-    protected override void UserUnequippedSuit(EntityUid uid, SpaceNinjaSuitComponent comp, EntityUid user)
+    protected override void UserUnequippedSuit(EntityUid uid, NinjaSuitComponent comp, EntityUid user)
     {
         base.UserUnequippedSuit(uid, comp, user);
 
@@ -73,13 +95,13 @@ public sealed class SpaceNinjaSuitSystem : SharedSpaceNinjaSuitSystem
         _ninja.SetSuitPowerAlert(user);
     }
 
-    private void OnTogglePhaseCloakAction(EntityUid uid, SpaceNinjaSuitComponent comp, TogglePhaseCloakEvent args)
+    private void OnTogglePhaseCloakAction(EntityUid uid, NinjaSuitComponent comp, TogglePhaseCloakEvent args)
     {
         args.Handled = true;
         var user = args.Performer;
         // need 1 second of charge to turn on stealth
         var chargeNeeded = SuitWattage(comp);
-        if (!comp.Cloaked && (!GetNinjaBattery(user, out var battery) || battery.CurrentCharge < chargeNeeded))
+        if (!comp.Cloaked && (!_ninja.GetNinjaBattery(user, out var battery) || battery.CurrentCharge < chargeNeeded))
         {
             _popups.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
             return;
@@ -89,11 +111,11 @@ public sealed class SpaceNinjaSuitSystem : SharedSpaceNinjaSuitSystem
         SetCloaked(args.Performer, comp.Cloaked);
     }
 
-    private void OnRecallKatanaAction(EntityUid uid, SpaceNinjaSuitComponent comp, RecallKatanaEvent args)
+    private void OnRecallKatanaAction(EntityUid uid, NinjaSuitComponent comp, RecallKatanaEvent args)
     {
         args.Handled = true;
         var user = args.Performer;
-        if (!TryComp<SpaceNinjaComponent>(user, out var ninja) || ninja.Katana == null)
+        if (!TryComp<NinjaComponent>(user, out var ninja) || ninja.Katana == null)
             return;
 
         // 1% charge per tile
@@ -101,7 +123,7 @@ public sealed class SpaceNinjaSuitSystem : SharedSpaceNinjaSuitSystem
         var coords = _transform.GetWorldPosition(katana);
         var distance = (_transform.GetWorldPosition(user) - coords).Length;
         var chargeNeeded = (float) distance * 3.6f;
-        if (!GetNinjaBattery(user, out var battery) || !battery.TryUseCharge(chargeNeeded))
+        if (!_ninja.GetNinjaBattery(user, out var battery) || !battery.TryUseCharge(chargeNeeded))
         {
             _popups.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
             return;
@@ -113,4 +135,4 @@ public sealed class SpaceNinjaSuitSystem : SharedSpaceNinjaSuitSystem
             : "ninja-hands-full";
         _popups.PopupEntity(Loc.GetString(message), user, user);
     }
-
+}

@@ -2,6 +2,7 @@ using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Ninja.Systems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Ninja.Components;
@@ -10,9 +11,9 @@ namespace Content.Shared.Ninja.Components;
 /// Component for ninja suit abilities and power consumption.
 /// As an implementation detail, dashing with katana is a suit action which isn't ideal.
 /// </summary>
-[Access(typeof(SharedNinjaSystem))]
+[Access(typeof(SharedNinjaSuitSystem))]
 [RegisterComponent, NetworkedComponent]
-public sealed class SpaceNinjaSuitComponent : Component
+public sealed class NinjaSuitComponent : Component
 {
     public bool Cloaked = false;
 
@@ -79,11 +80,11 @@ public sealed class TogglePhaseCloakEvent : InstantActionEvent { }
 public sealed class RecallKatanaEvent : InstantActionEvent { }
 
 [Serializable, NetSerializable]
-public sealed class SpaceNinjaSuitComponentState : ComponentState
+public sealed class NinjaSuitComponentState : ComponentState
 {
     public bool Cloaked;
 
-    public SpaceNinjaSuitComponentState(bool cloaked)
+    public NinjaSuitComponentState(bool cloaked)
     {
         Cloaked = cloaked;
     }

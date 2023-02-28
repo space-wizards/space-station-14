@@ -3,13 +3,12 @@ using Content.Server.Sticky.Events;
 using Content.Server.Popups;
 using Content.Shared.Interaction;
 using Content.Shared.Ninja.Components;
-using Content.Shared.Ninja.Systems;
 
 namespace Content.Server.Ninja.Systems;
 
 public sealed class SpiderChargeSystem : EntitySystem
 {
-    [Dependency] private readonly SharedNinjaSystem _ninja = default!;
+    [Dependency] private readonly NinjaSystem _ninja = default!;
     [Dependency] private readonly PopupSystem _popups = default!;
 
     public override void Initialize()
@@ -25,7 +24,7 @@ public sealed class SpiderChargeSystem : EntitySystem
     {
         var user = args.User;
 
-        if (!TryComp<SpaceNinjaComponent>(user, out var ninja))
+        if (!TryComp<NinjaComponent>(user, out var ninja))
         {
             _popups.PopupEntity(Loc.GetString("spider-charge-not-ninja"), user, user);
             args.Handled = true;
@@ -53,7 +52,7 @@ public sealed class SpiderChargeSystem : EntitySystem
 
     private void OnExplode(EntityUid uid, SpiderChargeComponent comp, TriggerEvent args)
     {
-        if (comp.Planter == null || !TryComp<SpaceNinjaComponent>(comp.Planter, out var ninja))
+        if (comp.Planter == null || !TryComp<NinjaComponent>(comp.Planter, out var ninja))
             return;
 
         // assumes the target was destroyed, that the charge wasn't moved somehow

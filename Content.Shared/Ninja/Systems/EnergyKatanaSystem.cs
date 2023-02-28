@@ -32,7 +32,7 @@ public sealed class EnergyKatanaSystem : EntitySystem
 
         SubscribeLocalEvent<EnergyKatanaComponent, GotEquippedEvent>(OnEquipped);
         SubscribeLocalEvent<EnergyKatanaComponent, ExaminedEvent>(OnExamine);
-        SubscribeLocalEvent<SpaceNinjaSuitComponent, KatanaDashEvent>(OnDash);
+        SubscribeLocalEvent<NinjaSuitComponent, KatanaDashEvent>(OnDash);
         SubscribeLocalEvent<EnergyKatanaComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<EnergyKatanaComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<EnergyKatanaComponent, EntityUnpausedEvent>(OnUnpaused);
@@ -46,7 +46,7 @@ public sealed class EnergyKatanaSystem : EntitySystem
 
         // check if ninja already has a katana bound
         var user = args.Equipee;
-        if (!TryComp<SpaceNinjaComponent>(user, out var ninja) || ninja.Katana != null)
+        if (!TryComp<NinjaComponent>(user, out var ninja) || ninja.Katana != null)
             return;
 
         // bind it
@@ -108,11 +108,11 @@ public sealed class EnergyKatanaSystem : EntitySystem
         }
     }
 
-    public void OnDash(EntityUid suit, SpaceNinjaSuitComponent comp, KatanaDashEvent args)
+    public void OnDash(EntityUid suit, NinjaSuitComponent comp, KatanaDashEvent args)
     {
         var user = args.Performer;
         args.Handled = true;
-        if (!TryComp<SpaceNinjaComponent>(user, out var ninja) || ninja.Katana == null)
+        if (!TryComp<NinjaComponent>(user, out var ninja) || ninja.Katana == null)
             return;
 
         var uid = ninja.Katana.Value;

@@ -1,79 +1,55 @@
 using Content.Server.Administration.Commands;
 using Content.Server.Chat.Managers;
-using Content.Server.Chat.Systems;
-using Content.Server.Communications;
-using Content.Server.Electrocution;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Configurations;
-using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Objectives;
-using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.PowerCell;
 using Content.Server.Traitor;
 using Content.Server.Warps;
-using Content.Shared.Actions;
 using Content.Shared.Alert;
-using Content.Shared.Damage.Components;
-using Content.Shared.Database;
-using Content.Shared.Hands.EntitySystems;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
-using Content.Shared.Interaction;
-using Content.Shared.Inventory.Events;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
-using Content.Shared.Popups;
-using Content.Shared.PowerCell.Components;
-using Content.Shared.Research.Components;
 using Content.Shared.Roles;
+using Content.Shared.PowerCell.Components;
 using Content.Shared.Rounding;
-using Content.Shared.Stealth.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading;
 
 namespace Content.Server.Ninja.Systems;
 
-public sealed class NinjaSystem : SharedSpaceNinjaSystem
+public sealed class NinjaSystem : SharedNinjaSystem
 {
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly IChatManager _chatMan = default!;
-    [Dependency] private readonly DoAfterSystem _doafter = default!;
-    [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedSubdermalImplantSystem _implants = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SpaceNinjaSuitSystem _suit = default!;
+    [Dependency] private readonly NinjaSuitSystem _suit = default!;
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SpaceNinjaComponent, ComponentStartup>(OnNinjaStartup);
-        SubscribeLocalEvent<SpaceNinjaComponent, MindAddedMessage>(OnNinjaMindAdded);
-        SubscribeLocalEvent<SpaceNinjaComponent, AttackedEvent>(OnNinjaAttacked);
+        SubscribeLocalEvent<NinjaComponent, ComponentStartup>(OnNinjaStartup);
+        SubscribeLocalEvent<NinjaComponent, MindAddedMessage>(OnNinjaMindAdded);
+        SubscribeLocalEvent<NinjaComponent, AttackedEvent>(OnNinjaAttacked);
     }
 
     public override void Update(float frameTime)
     {
-        foreach (var ninja in EntityQuery<SpaceNinjaComponent>())
+        foreach (var ninja in EntityQuery<NinjaComponent>())
         {
             var uid = ninja.Owner;
             UpdateNinja(uid, ninja, frameTime);
@@ -90,18 +66,18 @@ public sealed class NinjaSystem : SharedSpaceNinjaSystem
 
         // prevent double ninja'ing
         var user = mind.OwnedEntity.Value;
-        if (HasComp<SpaceNinjaComponent>(user))
+        if (HasComp<NinjaComponent>(user))
             return;
 
-        AddComp<SpaceNinjaComponent>(user);
+        AddComp<NinjaComponent>(user);
         SetOutfitCommand.SetOutfit(user, "SpaceNinjaGear", EntityManager);
         GreetNinja(mind);
     }
 
-	/// <summary>
-	/// Update the alert for the ninja's suit power indicator.
-	/// </summary>
-    public void SetSuitPowerAlert(EntityUid uid, SpaceNinjaComponent? comp = null)
+    /// <summary>
+    /// Update the alert for the ninja's suit power indicator.
+    /// </summary>
+    public void SetSuitPowerAlert(EntityUid uid, NinjaComponent? comp = null)
     {
         if (!Resolve(uid, ref comp, false) || comp.Deleted || comp.Suit == null)
         {
@@ -120,7 +96,7 @@ public sealed class NinjaSystem : SharedSpaceNinjaSystem
         }
     }
 
-    private void OnNinjaStartup(EntityUid uid, SpaceNinjaComponent comp, ComponentStartup args)
+    private void OnNinjaStartup(EntityUid uid, NinjaComponent comp, ComponentStartup args)
     {
         var config = RuleConfig();
 
@@ -149,7 +125,7 @@ public sealed class NinjaSystem : SharedSpaceNinjaSystem
             comp.SpiderChargeTarget = _random.Pick(warps);
     }
 
-    private void OnNinjaMindAdded(EntityUid uid, SpaceNinjaComponent comp, MindAddedMessage args)
+    private void OnNinjaMindAdded(EntityUid uid, NinjaComponent comp, MindAddedMessage args)
     {
         if (TryComp<MindComponent>(uid, out var mind) && mind.Mind != null)
             GreetNinja(mind.Mind);
@@ -171,29 +147,29 @@ public sealed class NinjaSystem : SharedSpaceNinjaSystem
         _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);
     }
 
-	/// <summary>
-	/// Returns the space ninja spawn gamerule's config
-	/// </summary>
+    /// <summary>
+    /// Returns the space ninja spawn gamerule's config
+    /// </summary>
     public NinjaRuleConfiguration RuleConfig()
     {
         return (NinjaRuleConfiguration) _proto.Index<GameRulePrototype>("SpaceNinjaSpawn").Configuration;
     }
 
-    private void OnNinjaAttacked(EntityUid uid, SpaceNinjaComponent comp, AttackedEvent args)
+    private void OnNinjaAttacked(EntityUid uid, NinjaComponent comp, AttackedEvent args)
     {
-        if (comp.Suit != null && TryComp<SpaceNinjaSuitComponent>(comp.Suit, out var suit))
+        if (comp.Suit != null && TryComp<NinjaSuitComponent>(comp.Suit, out var suit))
         {
-        	_suit.RevealNinja(suit, uid);
-        	// TODO: disable abilities for 5 seconds
+            _suit.RevealNinja(suit, uid);
+            // TODO: disable abilities for 5 seconds
         }
     }
 
-    private void UpdateNinja(EntityUid uid, SpaceNinjaComponent ninja, float frameTime)
+    private void UpdateNinja(EntityUid uid, NinjaComponent ninja, float frameTime)
     {
-        if (ninja.Suit == null || !TryComp<SpaceNinjaSuitComponent>(ninja.Suit.Value, out var suit))
+        if (ninja.Suit == null || !TryComp<NinjaSuitComponent>(ninja.Suit.Value, out var suit))
             return;
 
-        float wattage = SuitWattage(suit);
+        float wattage = _suit.SuitWattage(suit);
 
         SetSuitPowerAlert(uid, ninja);
         if (!GetNinjaBattery(uid, out var battery) || !battery.TryUseCharge(wattage * frameTime))
@@ -203,9 +179,12 @@ public sealed class NinjaSystem : SharedSpaceNinjaSystem
         }
     }
 
-    private bool GetNinjaBattery(EntityUid user, [NotNullWhen(true)] out BatteryComponent? battery)
+    /// <summary>
+    /// Get the battery component in a ninja's suit, if it's worn.
+    /// </summary>
+    public bool GetNinjaBattery(EntityUid user, [NotNullWhen(true)] out BatteryComponent? battery)
     {
-        if (TryComp<SpaceNinjaComponent>(user, out var ninja)
+        if (TryComp<NinjaComponent>(user, out var ninja)
             && ninja.Suit != null
             && _powerCell.TryGetBatteryFromSlot(ninja.Suit.Value, out battery))
         {
@@ -214,14 +193,6 @@ public sealed class NinjaSystem : SharedSpaceNinjaSystem
 
         battery = null;
         return false;
-    }
-
-    private float SuitWattage(SpaceNinjaSuitComponent suit)
-    {
-        float wattage = suit.PassiveWattage;
-        if (suit.Cloaked)
-            wattage += suit.CloakWattage;
-        return wattage;
     }
 
     private void AddObjective(Mind.Mind mind, string name)

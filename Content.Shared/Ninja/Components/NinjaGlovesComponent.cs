@@ -4,6 +4,7 @@ using Content.Shared.Ninja.Systems;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 using System.Threading;
@@ -14,10 +15,21 @@ namespace Content.Shared.Ninja.Components;
 /// Component for toggling glove powers.
 /// Powers being enabled is controlled by GlovesEnabledComponent
 /// </summary>
-[Access(typeof(SharedNinjaSystem))]
-[RegisterComponent]
-public sealed class SpaceNinjaGlovesComponent : Component
+[Access(typeof(SharedNinjaGlovesSystem))]
+[RegisterComponent, NetworkedComponent]
+public sealed class NinjaGlovesComponent : Component
 {
+    /// <summary>
+    /// Enable glove abilities, usable by clicking something using an empty hand.
+    /// </summary>
+    public bool Enabled;
+
+    /// <summary>
+    /// Whether the gloves are doing a doafter or not, set to false whenever it finishes or is cancelled.
+    /// Used to prevent doing multiple drains/hacks at once.
+    /// </summary>
+    public bool Busy;
+
     /// <summary>
     /// The action for toggling ninja gloves abilities
     /// </summary>
@@ -31,13 +43,15 @@ public sealed class SpaceNinjaGlovesComponent : Component
     };
 }
 
-/// <summary>
-/// This marker component enables Space Ninja Gloves' abilities, usable on clicking something using an empty hand.
-/// </summary>
-[Access(typeof(SharedNinjaSystem))]
-[RegisterComponent]
-public sealed class GlovesEnabledComponent : Component
+[Serializable, NetSerializable]
+public sealed class NinjaGlovesComponentState : ComponentState
 {
+    public bool Enabled;
+
+    public NinjaGlovesComponentState(bool enabled)
+    {
+        Enabled = enabled;
+    }
 }
 
 /// <summary>

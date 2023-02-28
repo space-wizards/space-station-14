@@ -26,7 +26,7 @@ public sealed class TerrorCondition : IObjectiveCondition
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
             if (_mind?.OwnedEntity == null
-                || !entMan.TryGetComponent<SpaceNinjaComponent>(_mind.OwnedEntity, out var ninja))
+                || !entMan.TryGetComponent<NinjaComponent>(_mind.OwnedEntity, out var ninja))
                 return 0f;
 
             return ninja.CalledInThreat ? 1f : 0f;

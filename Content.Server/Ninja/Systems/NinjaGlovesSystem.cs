@@ -1,23 +1,46 @@
+using Content.Server.Actions;
+using Content.Server.Chat.Systems;
+using Content.Server.Communications;
 using Content.Server.Doors.Systems;
 using Content.Server.DoAfter;
+using Content.Server.Electrocution;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
+using Content.Server.Popups;
+using Content.Server.Power.Components;
+using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Damage.Components;
+using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
 using Content.Shared.Emag.Systems;
+using Content.Shared.IdentityManagement;
+using Content.Shared.Interaction;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
+using Content.Shared.Popups;
+using Content.Shared.Research.Components;
 using Content.Shared.Tag;
+using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Ninja.Systems;
 
-public sealed class SpaceNinjaGlovesSystem : SharedSpaceNinjaGlovesSystem
+public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
 {
+    [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly DoAfterSystem _doafter = default!;
+    [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
-    [Dependency] private readonly SpaceNinjaSystem _ninja = default!;
+    [Dependency] private readonly NinjaSystem _ninja = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly TagSystem _tags = default!;
 
     public override void Initialize()
@@ -25,6 +48,8 @@ public sealed class SpaceNinjaGlovesSystem : SharedSpaceNinjaGlovesSystem
         base.Initialize();
 
         SubscribeLocalEvent<ActivateInWorldEvent>(OnActivate);
+        SubscribeLocalEvent<NinjaGlovesComponent, DoAfterEvent>(EndedDoAfter);
+        // TODO: raising 1 event triggers for all 3 components sicne on same entity, change to be per-component?
         SubscribeLocalEvent<NinjaDrainComponent, DoAfterEvent>(OnDrainDoAfter);
         SubscribeLocalEvent<NinjaDownloadComponent, DoAfterEvent>(OnDownloadDoAfter);
         SubscribeLocalEvent<NinjaTerrorComponent, DoAfterEvent>(OnTerrorDoAfter);
@@ -32,7 +57,7 @@ public sealed class SpaceNinjaGlovesSystem : SharedSpaceNinjaGlovesSystem
         SubscribeLocalEvent<DoorComponent, DoorEmaggedEvent>(OnDoorEmagged);
     }
 
-    protected override void NinjaEquippedGloves(EntityUid uid, SpaceNinjaGlovesComponent comp, EntityUid user, SpaceNinjaComponent ninja)
+    protected override void NinjaEquippedGloves(EntityUid uid, NinjaGlovesComponent comp, EntityUid user, NinjaComponent ninja)
     {
         base.NinjaEquippedGloves(uid, comp, user, ninja);
 
@@ -40,7 +65,7 @@ public sealed class SpaceNinjaGlovesSystem : SharedSpaceNinjaGlovesSystem
             _actions.AddAction(user, comp.ToggleAction, uid, actions);
     }
 
-    protected override void UserUnequippedGloves(EntityUid uid, SpaceNinjaGlovesComponent comp, EntityUid user)
+    protected override void UserUnequippedGloves(EntityUid uid, NinjaGlovesComponent comp, EntityUid user)
     {
         base.UserUnequippedGloves(uid, comp, user);
 
@@ -53,9 +78,10 @@ public sealed class SpaceNinjaGlovesSystem : SharedSpaceNinjaGlovesSystem
         var user = args.User;
         var target = args.Target;
         if (args.Handled
-            || !TryComp<SpaceNinjaComponent>(user, out var ninja)
+            || !TryComp<NinjaComponent>(user, out var ninja)
             || ninja.Gloves == null
-            || !HasComp<GlovesEnabledComponent>(ninja.Gloves))
+            || !TryComp<NinjaGlovesComponent>(ninja.Gloves, out var comp)
+            || !comp.Enabled)
             return;
 
         var uid = ninja.Gloves.Value;
@@ -82,7 +108,7 @@ public sealed class SpaceNinjaGlovesSystem : SharedSpaceNinjaGlovesSystem
         if (user != target && TryComp<NinjaStunComponent>(uid, out var stun) && HasComp<StaminaComponent>(target))
         {
             // take charge from battery
-            if (!GetNinjaBattery(user, out var battery) || !battery.TryUseCharge(stun.StunCharge))
+            if (!_ninja.GetNinjaBattery(user, out var battery) || !battery.TryUseCharge(stun.StunCharge))
             {
                 _popups.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
                 return;
@@ -96,8 +122,12 @@ public sealed class SpaceNinjaGlovesSystem : SharedSpaceNinjaGlovesSystem
         // drain ability
         if (TryComp<NinjaDrainComponent>(uid, out var drain) && HasComp<PowerNetworkBatteryComponent>(target))
         {
-            if (!HasComp<BatteryComponent>(target))
+            // nicer for spam-clicking to not open apc ui so cancel it
+            if (comp.Busy || !HasComp<BatteryComponent>(target))
+            {
+                args.Handled = true;
                 return;
+            }
 
             var doafterArgs = new DoAfterEventArgs(user, drain.DrainTime, target: target, used: uid)
             {
@@ -107,6 +137,7 @@ public sealed class SpaceNinjaGlovesSystem : SharedSpaceNinjaGlovesSystem
                 MovementThreshold = 0.5f
             };
 
+            comp.Busy = true;
             _doafter.DoAfter(doafterArgs);
             args.Handled = true;
             return;
@@ -115,6 +146,9 @@ public sealed class SpaceNinjaGlovesSystem : SharedSpaceNinjaGlovesSystem
         // download ability
         if (TryComp<NinjaDownloadComponent>(uid, out var download) && TryComp<TechnologyDatabaseComponent>(target, out var database))
         {
+            if (comp.Busy)
+                return;
+
             // fail fast if theres no tech right now
             if (database.TechnologyIds.Count == 0)
             {
@@ -130,6 +164,7 @@ public sealed class SpaceNinjaGlovesSystem : SharedSpaceNinjaGlovesSystem
                 MovementThreshold = 0.5f
             };
 
+            comp.Busy = true;
             _doafter.DoAfter(doafterArgs);
             args.Handled = true;
             return;
@@ -138,6 +173,9 @@ public sealed class SpaceNinjaGlovesSystem : SharedSpaceNinjaGlovesSystem
         // terror ability
         if (TryComp<NinjaTerrorComponent>(uid, out var terror) && HasComp<CommunicationsConsoleComponent>(target))
         {
+            if (comp.Busy)
+                return;
+
             // can only do it once
             if (ninja.CalledInThreat)
             {
@@ -153,9 +191,18 @@ public sealed class SpaceNinjaGlovesSystem : SharedSpaceNinjaGlovesSystem
                 MovementThreshold = 0.5f
             };
 
+            comp.Busy = true;
             _doafter.DoAfter(doafterArgs);
             args.Handled = true;
         }
+    }
+
+    private void EndedDoAfter(EntityUid uid, NinjaGlovesComponent comp, DoAfterEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        comp.Busy = false;
     }
 
     private void OnDrainDoAfter(EntityUid uid, NinjaDrainComponent comp, DoAfterEvent args)
@@ -166,8 +213,11 @@ public sealed class SpaceNinjaGlovesSystem : SharedSpaceNinjaGlovesSystem
         var user = args.Args.User;
         var target = args.Args.Target;
 
-        if (!GetNinjaBattery(user, out var suitBattery))
+        if (!_ninja.GetNinjaBattery(user, out var suitBattery))
             // took suit off or something, ignore draining
+            return;
+
+        if (!TryComp<BatteryComponent>(target, out var battery) || !TryComp<PowerNetworkBatteryComponent>(target, out var pnb))
             return;
 
         if (suitBattery.IsFullyCharged)
@@ -175,9 +225,6 @@ public sealed class SpaceNinjaGlovesSystem : SharedSpaceNinjaGlovesSystem
             _popups.PopupEntity(Loc.GetString("ninja-drain-full"), user, user, PopupType.Medium);
             return;
         }
-
-        if (!TryComp<BatteryComponent>(target, out var battery) || !TryComp<PowerNetworkBatteryComponent>(target, out var pnb))
-            return;
 
         if (MathHelper.CloseToPercent(battery.CurrentCharge, 0))
         {
@@ -208,15 +255,11 @@ public sealed class SpaceNinjaGlovesSystem : SharedSpaceNinjaGlovesSystem
         var user = args.Args.User;
         var target = args.Args.Target;
 
-        if (!TryComp<SpaceNinjaComponent>(user, out var ninja)
+        if (!TryComp<NinjaComponent>(user, out var ninja)
             || !TryComp<TechnologyDatabaseComponent>(target, out var database))
             return;
 
-        var oldCount = ninja.DownloadedNodes.Count;
-        ninja.DownloadedNodes.UnionWith(database.TechnologyIds);
-        var newCount = ninja.DownloadedNodes.Count;
-
-        var gained = newCount - oldCount;
+        var gained = _ninja.Download(ninja, database.TechnologyIds);
         var str = gained == 0
             ? Loc.GetString("ninja-download-fail")
             : Loc.GetString("ninja-download-success", ("count", gained), ("server", target));
@@ -226,17 +269,15 @@ public sealed class SpaceNinjaGlovesSystem : SharedSpaceNinjaGlovesSystem
 
     private void OnTerrorDoAfter(EntityUid uid, NinjaTerrorComponent comp, DoAfterEvent args)
     {
+        var target = args.Args.Target;
+        if (args.Cancelled || args.Handled || !HasComp<CommunicationsConsoleComponent>(target))
+            return;
+
         var user = args.Args.User;
-        if (args.Cancelled || args.Handled)
-        {
-            _popups.PopupEntity($"sorry bub {args.Cancelled} {args.Handled}", user, user);
-            return;
-        }
-
-        if (!TryComp<SpaceNinjaComponent>(user, out var ninja) || ninja.CalledInThreat)
+        if (!TryComp<NinjaComponent>(user, out var ninja) || ninja.CalledInThreat)
             return;
 
-        ninja.CalledInThreat = true;
+        _ninja.CallInThreat(ninja);
 
         var config = _ninja.RuleConfig();
         if (config.Threats.Count == 0)
@@ -257,7 +298,7 @@ public sealed class SpaceNinjaGlovesSystem : SharedSpaceNinjaGlovesSystem
     private void OnDoorEmagged(EntityUid uid, DoorComponent door, ref DoorEmaggedEvent args)
     {
         // make sure it's a ninja doorjacking it
-        if (TryComp<SpaceNinjaComponent>(args.UserUid, out var ninja))
+        if (TryComp<NinjaComponent>(args.UserUid, out var ninja))
             ninja.DoorsJacked++;
     }
 }

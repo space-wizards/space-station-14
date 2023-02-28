@@ -75,7 +75,7 @@
   - type: Faction
     factions:
     - Syndicate
-  - type: SpaceNinja
+  - type: Ninja
   - type: RandomMetadata
     nameSegments:
     - names_ninja_title

@@ -1,5 +1,6 @@
 using Content.Shared.Ninja.Systems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Ninja.Components;
 
@@ -10,7 +11,7 @@ namespace Content.Shared.Ninja.Components;
 // TODO: Contains objective related stuff, might want to move it out somehow
 [Access(typeof(SharedNinjaSystem))]
 [RegisterComponent, NetworkedComponent]
-public sealed class SpaceNinjaComponent : Component
+public sealed class NinjaComponent : Component
 {
     /// Currently worn suit
     [ViewVariables]
@@ -46,20 +47,20 @@ public sealed class SpaceNinjaComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class SpaceNinjaComponentState : ComponentState
+public sealed class NinjaComponentState : ComponentState
 {
     public int DoorsJacked;
 
     // TODO: client doesn't need to know what nodes are downloaded, just how many
     public HashSet<string> DownloadedNodes;
 
-	public EntityUid? SpiderChargeTarget;
+    public EntityUid? SpiderChargeTarget;
 
     public bool SpiderChargeDetonated;
 
     public bool CalledInThreat;
 
-    public SpaceNinjaComponentState(int doorsJacked, HashSet<string> DownloadedNodes, EntityUid? spiderChargeTarget, bool spiderChargeDetonated, bool calledInThreat)
+    public NinjaComponentState(int doorsJacked, HashSet<string> downloadedNodes, EntityUid? spiderChargeTarget, bool spiderChargeDetonated, bool calledInThreat)
     {
         DoorsJacked = doorsJacked;
         DownloadedNodes = downloadedNodes;

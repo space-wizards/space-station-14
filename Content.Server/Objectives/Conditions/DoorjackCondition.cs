@@ -32,7 +32,7 @@ public sealed class DoorjackCondition : IObjectiveCondition
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
             if (_mind?.OwnedEntity == null
-                || !entMan.TryGetComponent<SpaceNinjaComponent>(_mind.OwnedEntity, out var ninja))
+                || !entMan.TryGetComponent<NinjaComponent>(_mind.OwnedEntity, out var ninja))
                 return 0f;
 
             // prevent divide-by-zero
