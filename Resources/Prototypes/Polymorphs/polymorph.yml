@@ -99,7 +99,7 @@
 
 - type: polymorph
   id: SkeletonMutationMorph
-  entity: MobReptilian
+  entity: MobSkeletonPerson
   forced: true
   transferName: true
   # transferHumanoidAppearance: true
