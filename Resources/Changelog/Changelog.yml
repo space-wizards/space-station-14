@@ -1,9 +1,4 @@
 Entries:
-- author: Cripes
-  changes:
-  - {message: Construction menu displays correct icon for air injector, type: Fix}
-  id: 2582
-  time: '2022-11-05T15:31:22.0000000+00:00'
 - author: Daemon
   changes:
   - {message: Added security target dummies., type: Add}
@@ -2915,3 +2910,8 @@ Entries:
       the lobby., type: Add}
   id: 3081
   time: '2023-02-28T16:15:49.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Change L6 firerate from 8 to 5 in line with rifles., type: Tweak}
+  id: 3082
+  time: '2023-02-28T19:10:20.0000000+00:00'
