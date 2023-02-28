@@ -20,6 +20,7 @@ namespace Content.Client.ContextMenu.UI
     {
         public const string StyleClassContextMenuButton = "contextMenuButton";
         public const string StyleClassContextMenuExpansionTexture = "contextMenuExpansionTexture";
+        public const string StyleClassEntityMenuIconLabel = "contextMenuIconLabel";
         public const string StyleClassContextMenuUnanchoredTexture = "contextMenuUnanchoredTexture";
 
         public const float ElementMargin = 2;

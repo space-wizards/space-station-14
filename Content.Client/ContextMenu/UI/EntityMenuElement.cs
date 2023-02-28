@@ -5,14 +5,11 @@ using Content.Shared.Administration;
 using Content.Shared.IdentityManagement;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
-using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.ContextMenu.UI
 {
     public sealed partial class EntityMenuElement : ContextMenuElement
     {
-        public const string StyleClassEntityMenuIconLabel = "contextMenuIconLabel";
-
         [Dependency] private readonly IClientAdminManager _adminManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -32,31 +29,17 @@ namespace Content.Client.ContextMenu.UI
         /// </remarks>
         public int Count;
 
-        public readonly Label CountLabel;
-        public readonly SpriteView EntityIcon = new() { OverrideDirection = Direction.South};
-
         public EntityMenuElement(EntityUid? entity = null)
         {
             IoCManager.InjectDependencies(this);
 
             _adminSystem = _entityManager.System<AdminSystem>();
 
-            CountLabel = new Label { StyleClasses = { StyleClassEntityMenuIconLabel } };
-            var layout = new LayoutContainer() { Children = { EntityIcon, CountLabel } };
-            Icon.AddChild(layout);
-            layout.SetPositionFirst();
-
-            // CountLabel
-            LayoutContainer.SetAnchorPreset(CountLabel, LayoutContainer.LayoutPreset.BottomRight);
-            LayoutContainer.SetGrowHorizontal(CountLabel, LayoutContainer.GrowDirection.Begin);
-            LayoutContainer.SetGrowVertical(CountLabel, LayoutContainer.GrowDirection.Begin);
-
             Entity = entity;
             if (Entity == null)
                 return;
 
             Count = 1;
-            CountLabel.Visible = false;
             UpdateEntity();
         }
 
@@ -107,12 +90,12 @@ namespace Content.Client.ContextMenu.UI
             // _entityManager.Deleted() implicitly checks all of these.
             if (_entityManager.Deleted(entity))
             {
-                EntityIcon.Sprite = null;
+                Icon.Sprite = null;
                 Text = string.Empty;
             }
             else
             {
-                EntityIcon.Sprite = _entityManager.GetComponentOrNull<SpriteComponent>(entity);
+                Icon.Sprite = _entityManager.GetComponentOrNull<SpriteComponent>(entity);
                 Text = GetEntityDescription(entity.Value);
             }
         }

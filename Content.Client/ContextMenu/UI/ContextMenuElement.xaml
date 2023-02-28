@@ -4,19 +4,26 @@
     xmlns:ui="clr-namespace:Content.Client.ContextMenu.UI"
     MinHeight="{x:Static ui:ContextMenuElement.ElementHeight}">
     <BoxContainer Orientation="Horizontal">
-        <Control
+        <SpriteView
             Name="Icon"
             SetWidth="{x:Static ui:ContextMenuElement.ElementHeight}"
-            SetHeight="{x:Static ui:ContextMenuElement.ElementHeight}">
+            SetHeight="{x:Static ui:ContextMenuElement.ElementHeight}"
+            OverrideDirection="South">
             <TextureRect
-                Name="Unanchored"
+                Name="UnanchoredIndication"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
                 StyleClasses="contextMenuUnanchoredTexture"
                 TextureScale="0.15 0.15"
                 Access="Public"
                 Visible="false"/>
-        </Control>
+            <Label
+                Name="CountIndication"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                StyleClasses="contextMenuIconLabel"
+                Access="Public"/>
+        </SpriteView>
         <RichTextLabel
             Name="Label"
             MaxWidth="300"
