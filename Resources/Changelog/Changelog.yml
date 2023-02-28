@@ -1,9 +1,4 @@
 Entries:
-- author: rolfero
-  changes:
-  - {message: Glowstick sprites inhand are now visible, type: Fix}
-  id: 2581
-  time: '2022-11-05T15:28:44.0000000+00:00'
 - author: Cripes
   changes:
   - {message: Construction menu displays correct icon for air injector, type: Fix}
@@ -2914,3 +2909,9 @@ Entries:
     type: Tweak}
   id: 3080
   time: '2023-02-28T16:11:39.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: Admins may now configure a message to be sent to players when they join
+      the lobby., type: Add}
+  id: 3081
+  time: '2023-02-28T16:15:49.0000000+00:00'
