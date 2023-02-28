@@ -190,7 +190,7 @@
     startAnnouncement: station-event-solar-flare-start-announcement
     endAnnouncement: station-event-solar-flare-end-announcement
     startAudio: # Corvax-Announcements
-      path: /Audio/Corvax/Announcements/ionstorm.ogg
+      path: /Audio/Corvax/Announcements/comms_blackout.ogg
       params:
         volume: -4
     minEndAfter: 120
