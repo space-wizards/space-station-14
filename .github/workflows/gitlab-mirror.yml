@@ -3,7 +3,7 @@ name: Mirror and run GitLab CI
 on: [push]
 
 concurrency:
-  group: ${{ github.head_ref }}
+  group: ${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
