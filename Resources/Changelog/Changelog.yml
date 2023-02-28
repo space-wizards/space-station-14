@@ -1,26 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Objectives involving other traitors should be more reliable at providing
-      traitors that are alive and not SSD., type: Fix}
-  id: 2573
-  time: '2022-11-04T02:58:19.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: Stealth boxes are now available via traitor uplinks., type: Add}
-  - {message: 'Stealth boxes have been rebalanced. They now require players to move
-      slower to stay hidden, collide with bullets, and can no longer trap simple mobs.',
-    type: Tweak}
-  - {message: Fixed a bug that allowed sleeping mobs to still control vehicles and
-      boxes., type: Fix}
-  id: 2574
-  time: '2022-11-04T03:16:24.0000000+00:00'
-- author: 25203
-  changes:
-  - {message: Upgradeable machines can now be examined to show the effects that the
-      upgrades have., type: Add}
-  id: 2575
-  time: '2022-11-04T03:27:47.0000000+00:00'
 - author: rolfero
   changes:
   - {message: You can now link airlocks and windoors to buttons and levers!, type: Add}
@@ -2919,3 +2897,19 @@ Entries:
   - {message: Fix tile definition reloads., type: Fix}
   id: 3072
   time: '2023-02-28T05:32:05.0000000+00:00'
+- author: pofitlo
+  changes:
+  - {message: added ability to drag something for animals, type: Add}
+  id: 3073
+  time: '2023-02-28T12:57:09.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: 'Changed ID card examine icon, at least until someone makes a better
+      icon.', type: Tweak}
+  id: 3074
+  time: '2023-02-28T13:00:23.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: meat spike no longer vaporizes victim items, type: Fix}
+  id: 3075
+  time: '2023-02-28T13:14:14.0000000+00:00'
