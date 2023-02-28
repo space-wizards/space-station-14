@@ -396,7 +396,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 {
                     TryDrink(ev.User, ev.User, component, uid);
                 },
-                IconTexture = "/Textures/Interface/VerbIcons/drink.svg.192dpi.png",
+                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/drink.svg.192dpi.png")),
                 Text = Loc.GetString("drink-system-verb-drink"),
                 Priority = 2
             };

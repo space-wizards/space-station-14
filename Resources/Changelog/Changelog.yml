@@ -1,25 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Fixed an issue where crates would clip through firelocks., type: Fix}
-  id: 2569
-  time: '2022-11-04T01:18:59.0000000+00:00'
-- author: Vordenburg
-  changes:
-  - {message: Allowed gas filters to be reset to filter no gases., type: Add}
-  id: 2570
-  time: '2022-11-04T01:27:20.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Alt-clicking can now be used on hands again., type: Fix}
-  id: 2571
-  time: '2022-11-04T01:36:45.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fixed the damage/death overlay being off-centre while using the "separated"
-      HUD layout., type: Fix}
-  id: 2572
-  time: '2022-11-04T01:44:51.0000000+00:00'
 - author: Rane
   changes:
   - {message: Objectives involving other traitors should be more reliable at providing
@@ -2916,3 +2895,27 @@ Entries:
   - {message: Syringes - Prevents multi use on injecting self/targets., type: Fix}
   id: 3068
   time: '2023-02-26T05:33:06.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix console warnings about rsi sprite access, type: Fix}
+  - {message: Fix issue with device configurators out of line-of-sight not closing
+      properly., type: Fix}
+  id: 3069
+  time: '2023-02-26T07:48:58.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Game changelogs are now sent to Discord. Assuming everything works you
+      might even be reading this there right now!, type: Add}
+  id: 3070
+  time: '2023-02-26T16:45:07.0000000+00:00'
+- author: Hypospray Nerfer
+  changes:
+  - {message: 'Hypospray, Hypopen, and Gorlax Hypospray now all have short cooldowns.',
+    type: Tweak}
+  id: 3071
+  time: '2023-02-27T21:19:53.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix tile definition reloads., type: Fix}
+  id: 3072
+  time: '2023-02-28T05:32:05.0000000+00:00'

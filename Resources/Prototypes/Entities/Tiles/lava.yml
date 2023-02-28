@@ -12,6 +12,7 @@
   - type: Lava
   - type: Transform
     anchored: true
+  - type: SyncSprite
   - type: Sprite
     sprite: Tiles/Planet/lava.rsi
     netsync: false
