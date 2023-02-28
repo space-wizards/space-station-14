@@ -1,11 +1,11 @@
-using System.Threading;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
+using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
-using Robust.Shared.Player;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.Forensics
 {
@@ -16,7 +16,6 @@ namespace Content.Server.Forensics
     {
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
-
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public override void Initialize()
@@ -24,8 +23,7 @@ namespace Content.Server.Forensics
             base.Initialize();
             SubscribeLocalEvent<ForensicPadComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<ForensicPadComponent, AfterInteractEvent>(OnAfterInteract);
-            SubscribeLocalEvent<TargetPadSuccessfulEvent>(OnTargetPadSuccessful);
-            SubscribeLocalEvent<PadCancelledEvent>(OnPadCancelled);
+            SubscribeLocalEvent<ForensicPadComponent, DoAfterEvent<ForensicPadData>>(OnDoAfter);
         }
 
         private void OnExamined(EntityUid uid, ForensicPadComponent component, ExaminedEvent args)
@@ -44,7 +42,7 @@ namespace Content.Server.Forensics
 
         private void OnAfterInteract(EntityUid uid, ForensicPadComponent component, AfterInteractEvent args)
         {
-            if (component.CancelToken != null || !args.CanReach || args.Target == null)
+            if (!args.CanReach || args.Target == null)
                 return;
 
             if (HasComp<ForensicScannerComponent>(args.Target))
@@ -71,74 +69,58 @@ namespace Content.Server.Forensics
                     _popupSystem.PopupEntity(Loc.GetString("forensic-pad-start-scan-user", ("target", Identity.Entity(args.Target.Value, EntityManager))), args.Target.Value, args.User);
                     _popupSystem.PopupEntity(Loc.GetString("forensic-pad-start-scan-target", ("user", Identity.Entity(args.User, EntityManager))), args.Target.Value, args.Target.Value);
                 }
-                StartScan(args.User, args.Target.Value, component, fingerprint.Fingerprint);
+                StartScan(uid, args.User, args.Target.Value, component, fingerprint.Fingerprint);
                 return;
             }
 
             if (TryComp<FiberComponent>(args.Target, out var fiber))
-                StartScan(args.User, args.Target.Value, component, string.IsNullOrEmpty(fiber.FiberColor) ? Loc.GetString("forensic-fibers", ("material", fiber.FiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", fiber.FiberColor), ("material", fiber.FiberMaterial)));
+                StartScan(uid, args.User, args.Target.Value, component, string.IsNullOrEmpty(fiber.FiberColor) ? Loc.GetString("forensic-fibers", ("material", fiber.FiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", fiber.FiberColor), ("material", fiber.FiberMaterial)));
         }
 
-        private void StartScan(EntityUid user, EntityUid target, ForensicPadComponent pad, string sample)
+        private void StartScan(EntityUid used, EntityUid user, EntityUid target, ForensicPadComponent pad, string sample)
         {
-            pad.CancelToken = new CancellationTokenSource();
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, pad.ScanDelay, pad.CancelToken.Token, target: target)
+            var padData = new ForensicPadData(sample);
+
+            var doAfterEventArgs = new DoAfterEventArgs(user, pad.ScanDelay, target: target, used: used)
             {
-                BroadcastFinishedEvent = new TargetPadSuccessfulEvent(user, target, pad.Owner, sample),
-                BroadcastCancelledEvent = new PadCancelledEvent(pad.Owner),
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 BreakOnStun = true,
                 NeedHand = true
-            });
+            };
+
+            _doAfterSystem.DoAfter(doAfterEventArgs, padData);
         }
 
-        /// <summary>
-        /// When the forensic pad is successfully used, take their fingerprint sample and flag the pad as used.
-        /// </summary>
-        private void OnTargetPadSuccessful(TargetPadSuccessfulEvent ev)
+        private void OnDoAfter(EntityUid uid, ForensicPadComponent component, DoAfterEvent<ForensicPadData> args)
         {
-            if (!EntityManager.TryGetComponent(ev.Pad, out ForensicPadComponent? component))
-                return;
-
-            if (HasComp<FingerprintComponent>(ev.Target))
-                MetaData(component.Owner).EntityName = Loc.GetString("forensic-pad-fingerprint-name", ("entity", ev.Target));
-            else
-                MetaData(component.Owner).EntityName = Loc.GetString("forensic-pad-gloves-name", ("entity", ev.Target));
-
-            component.CancelToken = null;
-            component.Sample = ev.Sample;
-            component.Used = true;
-        }
-        private void OnPadCancelled(PadCancelledEvent ev)
-        {
-            if (!EntityManager.TryGetComponent(ev.Pad, out ForensicPadComponent? component))
-                return;
-            component.CancelToken = null;
-        }
-
-        private sealed class PadCancelledEvent : EntityEventArgs
-        {
-            public EntityUid Pad;
-
-            public PadCancelledEvent(EntityUid pad)
+            if (args.Handled
+                || args.Cancelled
+                || !EntityManager.TryGetComponent(args.Args.Used, out ForensicPadComponent? padComponent))
             {
-                Pad = pad;
+                return;
             }
+
+            if (args.Args.Target != null)
+            {
+                if (HasComp<FingerprintComponent>(args.Args.Target))
+                    MetaData(uid).EntityName = Loc.GetString("forensic-pad-fingerprint-name", ("entity", args.Args.Target));
+                else
+                    MetaData(uid).EntityName = Loc.GetString("forensic-pad-gloves-name", ("entity", args.Args.Target));
+            }
+
+            padComponent.Sample = args.AdditionalData.Sample;
+            padComponent.Used = true;
+
+            args.Handled = true;
         }
 
-        private sealed class TargetPadSuccessfulEvent : EntityEventArgs
+        private sealed class ForensicPadData
         {
-            public EntityUid User;
-            public EntityUid Target;
-            public EntityUid Pad;
-            public string Sample = string.Empty;
+            public string Sample;
 
-            public TargetPadSuccessfulEvent(EntityUid user, EntityUid target, EntityUid pad, string sample)
+            public ForensicPadData(string sample)
             {
-                User = user;
-                Target = target;
-                Pad = pad;
                 Sample = sample;
             }
         }

@@ -9,37 +9,37 @@
   id: Small1
   name: "Small / Engineering Storage 1"
   mapPath: /Maps/Salvage/small-1.yml
-  bounds: "-2.5,-3.5,3.5,3.5"
+  bounds: "-3,-4,3,3"
 
 - type: salvageMap
   id: Small2
   name: "Small / Gaming Nook 1"
   mapPath: /Maps/Salvage/small-2.yml
-  bounds: "-3.5,-3.5,3.5,3.5"
+  bounds: "-4,-4,3,3"
 
 - type: salvageMap
   id: Small-ship-1
   name: "Small / Ship 1 (Pill)"
   mapPath: /Maps/Salvage/small-ship-1.yml
-  bounds: "-1.5,-0.5,2.5,1.5"
+  bounds: "-2,-1,2,1"
 
 - type: salvageMap
   id: Small3
   name: "Small / Laundromat 1"
   mapPath: /Maps/Salvage/small-3.yml
-  bounds: "-3.5,-3.5,2.5,3.5"
+  bounds: "-4,-4,2,3"
 
 - type: salvageMap
   id: SmallAISurveyDrone
   name: "Small / AI Survey Drone"
   mapPath: /Maps/Salvage/small-ai-survey-drone.yml
-  bounds: "-3.5,-3.5,3.5,3.5"
+  bounds: "-4,-4,3,3"
 
 - type: salvageMap
   id: Small4
   name: "Small / Bar Salvage"
   mapPath: /Maps/Salvage/small-4.yml
-  bounds: "-3.5,-3.5,3.5,3.5"
+  bounds: "-4,-4,3,3"
 
 # Small - Asteroids
 
@@ -47,7 +47,7 @@
   id: SmallA1
   name: "Small / Asteroid 1 Plasmafire"
   mapPath: /Maps/Salvage/small-a-1.yml
-  bounds: "-3.5,-3.5,3.5,3.5"
+  bounds: "-4,-4,3,3"
 
 # "Medium"-class maps - Max size square: 15x15, indicated size: 7.5
 
@@ -55,37 +55,37 @@
   id: Medium1
   name: "Medium / Plasma-Trapped Cache 1"
   mapPath: /Maps/Salvage/medium-1.yml
-  bounds: "-7.5,-7.5,7.5,7.5"
+  bounds: "-8,-8,7,7"
 
 - type: salvageMap
   id: MediumVault1
   name: "Medium / Vault 1"
   mapPath: /Maps/Salvage/medium-vault-1.yml
-  bounds: "-7.5,-7.5,7.5,7.5"
+  bounds: "-8,-8,7,7"
 
 - type: salvageMap
   id: MediumOrchestra
   name: "Medium / Silent Orchestra"
   mapPath: /Maps/Salvage/medium-silent-orchestra.yml
-  bounds: "-7.5,-7.5,7.5,7.5"
+  bounds: "-8,-8,7,7"
 
 - type: salvageMap
   id: MediumLibraryWreck
   name: "Medium / Abandoned Library"
   mapPath: /Maps/Salvage/medium-library.yml
-  bounds: "-8.5,-8.5,6.5,7.5"
+  bounds: "-9,-9,6,7"
 
 - type: salvageMap
   id: MediumCargoWreck
   name: "Medium / Cargo Department Wreck"
   mapPath: /Maps/Salvage/cargo-1.yml
-  bounds: "-5.5,-5.5,5.5,9.5"
+  bounds: "-6,-6,5,9"
 
 - type: salvageMap
   id: MediumPirateWreck
   name: "Medium / Pirate Barge Fragment"
   mapPath: /Maps/Salvage/medium-pirate.yml
-  bounds: "-3.5,-9.5,6.5,7.5"
+  bounds: "-4,-10,6,7"
 
 - type: salvageMap
   id: TickColony
@@ -109,13 +109,13 @@
   id: MediumShuttleWreck
   name: "Medium / Ruined Emergency Shuttle"
   mapPath: /Maps/Salvage/medium-ruined-emergency-shuttle.yml
-  bounds: "-8.5,-8.5,8.5,8.5"
+  bounds: "-6,-9,5,8"
   
 - type: salvageMap
   id: mediumPetHospital
   name: "Medium / Pet and Bear Hospital"
   mapPath: /Maps/Salvage/medium-pet-hospital.yml
-  bounds: "-5.5,-8.5,5.5,8.5"
+  bounds: "-2,-14,16,2"
 
 - type: salvageMap
   id: MediumCrashedShuttle
