@@ -177,7 +177,7 @@ namespace Content.Client.Verbs
         ///     Ask the server to send back a list of server-side verbs, and for now return an incomplete list of verbs
         ///     (only those defined locally).
         /// </summary>
-        public SortedSet<Verb> GetVerbs(EntityUid target, EntityUid user, ICollection<Type> verbTypes,
+        public SortedSet<Verb> GetVerbs(EntityUid target, EntityUid user, List<Type> verbTypes,
             bool force = false)
         {
             if (!target.IsClientSide())

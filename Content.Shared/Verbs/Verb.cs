@@ -222,20 +222,6 @@ namespace Content.Shared.Verbs
             typeof(ExamineVerb),
             typeof(StrippingVerb) 
         };
-
-        /// <summary>
-        ///     The list of verbs that get displayed in the context menu.
-        /// </summary>
-        public static List<Type> ConextMenuTypes = new()
-        {
-            typeof(Verb),
-            typeof(InteractionVerb),
-            typeof(UtilityVerb),
-            typeof(InnateVerb),
-            typeof(AlternativeVerb),
-            typeof(ActivationVerb),
-            typeof(ExamineVerb)
-        };
     }
 
     /// <summary>

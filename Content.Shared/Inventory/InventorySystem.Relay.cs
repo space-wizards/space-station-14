@@ -7,6 +7,7 @@ using Content.Shared.Radio;
 using Content.Shared.Slippery;
 using Content.Shared.Strip.Components;
 using Content.Shared.Temperature;
+using Content.Shared.Verbs;
 
 namespace Content.Shared.Inventory;
 
@@ -23,6 +24,8 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, SeeIdentityAttemptEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, ModifyChangedTemperatureEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, GetDefaultRadioChannelEvent>(RelayInventoryEvent);
+
+        SubscribeLocalEvent<InventoryComponent, GetVerbsEvent<StrippingVerb>>(OnGetStrippingVerbs);
     }
 
     protected void RelayInventoryEvent<T>(EntityUid uid, InventoryComponent component, T args) where T : EntityEventArgs, IInventoryRelayEvent
@@ -38,6 +41,19 @@ public partial class InventorySystem
             RaiseLocalEvent(container.ContainedEntity.Value, ev, false);
         }
     }
+
+    private void OnGetStrippingVerbs(EntityUid uid, InventoryComponent component, GetVerbsEvent<StrippingVerb> args)
+    {
+        // Automatically relay stripping related verbs to all equipped clothing.
+        var containerEnumerator = new ContainerSlotEnumerator(uid, component.TemplateId, _prototypeManager, this);
+        var ev = new InventoryRelayedEvent<GetVerbsEvent<StrippingVerb>>(args);
+        while (containerEnumerator.MoveNext(out var container))
+        {
+            if (container.ContainedEntity.HasValue)
+                RaiseLocalEvent(container.ContainedEntity.Value, ev);
+        }
+    }
+
 }
 
 /// <summary>
@@ -49,7 +65,7 @@ public partial class InventorySystem
 ///      happens to be a dead mouse. Clothing that wishes to modify movement speed must subscribe to
 ///      InventoryRelayedEvent&lt;RefreshMovementSpeedModifiersEvent&gt;
 /// </remarks>
-public sealed class InventoryRelayedEvent<TEvent> : EntityEventArgs where TEvent : EntityEventArgs, IInventoryRelayEvent
+public sealed class InventoryRelayedEvent<TEvent> : EntityEventArgs where TEvent : EntityEventArgs
 {
     public readonly TEvent Args;
 

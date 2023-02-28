@@ -61,7 +61,7 @@ namespace Content.Client.Verbs.UI
         /// <param name="popup">
         ///     If this is not null, verbs will be placed into the given popup instead.
         /// </param>
-        public void OpenVerbMenu(EntityUid target, bool force = false, ContextMenuPopup? popup=null, ICollection<Type>? verbTypes = null)
+        public void OpenVerbMenu(EntityUid target, bool force = false, ContextMenuPopup? popup=null)
         {
             if (_playerManager.LocalPlayer?.ControlledEntity is not {Valid: true} user ||
                 _combatMode.IsInCombatMode(user))
@@ -73,7 +73,7 @@ namespace Content.Client.Verbs.UI
             menu.MenuBody.DisposeAllChildren();
 
             CurrentTarget = target;
-            CurrentVerbs = _verbSystem.GetVerbs(target, user, verbTypes ?? Verb.ConextMenuTypes, force);
+            CurrentVerbs = _verbSystem.GetVerbs(target, user, Verb.VerbTypes, force);
             OpenMenu = menu;
 
             // Fill in client-side verbs.

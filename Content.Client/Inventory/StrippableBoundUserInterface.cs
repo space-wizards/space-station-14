@@ -182,17 +182,9 @@ namespace Content.Client.Inventory
                 return;
 
             if (ev.Function == ContentKeyFunctions.ExamineEntity)
-            {
                 _examine.DoExamine(slot.Entity.Value);
-                return;
-            }
-
-            if (ev.Function == EngineKeyFunctions.UseSecondary)
-            {
-                var verbTypes = Verb.ConextMenuTypes.ShallowClone();
-                verbTypes.Add(typeof(StrippingVerb));
-                _ui.GetUIController<VerbMenuUIController>().OpenVerbMenu(slot.Entity.Value, verbTypes: verbTypes);
-            }
+            else if (ev.Function == EngineKeyFunctions.UseSecondary)
+                _ui.GetUIController<VerbMenuUIController>().OpenVerbMenu(slot.Entity.Value);
         }
 
         private void AddInventoryButton(string slotId, InventoryTemplatePrototype template, InventoryComponent inv)
