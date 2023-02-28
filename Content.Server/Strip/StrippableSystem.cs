@@ -309,7 +309,7 @@ namespace Content.Server.Strip
                 return;
 
             _handsSystem.TryDrop(user, checkActionBlocker: false, handsComp: userHands);
-            _handsSystem.TryPickup(component.Owner, held, handName, checkActionBlocker: false, animateUser: true, handsComp: hands);
+            _handsSystem.TryPickup(component.Owner, held, handName, checkActionBlocker: false, animateUser: true, animate: !stealth, handsComp: hands);
             _adminLogger.Add(LogType.Stripping, LogImpact.Medium, $"{ToPrettyString(user):user} has placed the item {ToPrettyString(held):item} in {ToPrettyString(component.Owner):target}'s hands");
             // hand update will trigger strippable update
         }
@@ -378,7 +378,7 @@ namespace Content.Server.Strip
                 // Raise a dropped event, so that things like gas tank internals properly deactivate when stripping
                 RaiseLocalEvent(item.Value, new DroppedEvent(user), true);
 
-                _handsSystem.PickupOrDrop(user, item.Value);
+                _handsSystem.PickupOrDrop(user, item.Value, animate: !stealth);
                 _adminLogger.Add(LogType.Stripping, LogImpact.Medium, $"{ToPrettyString(user):user} has stripped the item {ToPrettyString(item.Value):item} from {ToPrettyString(component.Owner):target}");
             }
         }
@@ -441,7 +441,7 @@ namespace Content.Server.Strip
                 return;
 
             _handsSystem.TryDrop(component.Owner, hand, checkActionBlocker: false, handsComp: hands);
-            _handsSystem.PickupOrDrop(user, held, handsComp: userHands);
+            _handsSystem.PickupOrDrop(user, held, handsComp: userHands, animate: !stealth);
             // hand update will trigger strippable update
             _adminLogger.Add(LogType.Stripping, LogImpact.Medium, $"{ToPrettyString(user):user} has stripped the item {ToPrettyString(held):item} from {ToPrettyString(component.Owner):target}");
         }
