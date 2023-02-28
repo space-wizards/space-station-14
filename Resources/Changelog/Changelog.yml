@@ -1,10 +1,4 @@
 Entries:
-- author: rolfero
-  changes:
-  - {message: You can now inspect/strip someone through the examine tooltip again.,
-    type: Fix}
-  id: 2585
-  time: '2022-11-06T16:33:17.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Holofans and tiny fans are airtight again., type: Fix}
@@ -2919,3 +2913,8 @@ Entries:
   - {message: Added a ghost warp to the singularity, type: Add}
   id: 3084
   time: '2023-02-28T20:03:58.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: 'added fake cap gun, can be purchased in clown and mime uplink', type: Add}
+  id: 3085
+  time: '2023-02-28T20:06:55.0000000+00:00'
