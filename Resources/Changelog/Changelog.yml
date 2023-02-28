@@ -1,19 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Artifacts now generate with multiple randomly generated effects and
-      triggers. Have fun exploring the hundreds of different possibilities., type: Add}
-  - {message: 'Added the artifact analyzer and analysis console: two machines capable
-      of interfacing with artifacts. Make sure you link them.', type: Add}
-  - {message: Artifacts can be destroyed at the analyzer to generate research points
-      based on how many effects have been activated., type: Add}
-  - {message: Artifacts can now be purchased from Cargo and can occasionally teleport
-      onto the station., type: Add}
-  - {message: Artifact price is now based on how many of its effects have been activated.,
-    type: Tweak}
-  - {message: Decreased passive research point generation., type: Tweak}
-  id: 2587
-  time: '2022-11-06T23:05:44.0000000+00:00'
 - author: checkraze
   changes:
   - {message: Added Xenoarcheology Laboratory to Kettle station., type: Add}
@@ -2919,3 +2904,8 @@ Entries:
       after emotes., type: Tweak}
   id: 3086
   time: '2023-02-28T20:13:17.0000000+00:00'
+- author: moonheart08
+  changes:
+  - {message: Youtool no longer has free utility belts., type: Remove}
+  id: 3087
+  time: '2023-02-28T20:36:02.0000000+00:00'
