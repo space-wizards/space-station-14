@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed a bug allowing lathes to infinitely print items when upgraded.,
-    type: Fix}
-  id: 2578
-  time: '2022-11-04T19:13:07.0000000+00:00'
 - author: checkraze
   changes:
   - {message: changed the presents to be boxes and made a new present that has a surprise
@@ -2915,3 +2909,8 @@ Entries:
     type: Fix}
   id: 3077
   time: '2023-02-28T15:57:17.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: You can now fit more bread in your bag., type: Tweak}
+  id: 3078
+  time: '2023-02-28T16:00:15.0000000+00:00'
