@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Objectives involving other traitors should be more reliable at providing
-      traitors that are alive and not SSD., type: Fix}
-  id: 2573
-  time: '2022-11-04T02:58:19.0000000+00:00'
 - author: keronshb
   changes:
   - {message: Stealth boxes are now available via traitor uplinks., type: Add}
@@ -2919,3 +2913,8 @@ Entries:
   - {message: Fix tile definition reloads., type: Fix}
   id: 3072
   time: '2023-02-28T05:32:05.0000000+00:00'
+- author: pofitlo
+  changes:
+  - {message: added ability to drag something for animals, type: Add}
+  id: 3073
+  time: '2023-02-28T12:57:09.0000000+00:00'
