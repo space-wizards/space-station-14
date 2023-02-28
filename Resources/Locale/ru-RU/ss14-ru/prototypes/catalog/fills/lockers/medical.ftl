@@ -1,13 +1,13 @@
 ent-LockerMedicineFilled = { ent-LockerMedicine }
     .suffix = Заполненный
     .desc = { ent-LockerMedicine.desc }
-ent-LockerWallMedicalFilled = { ent-LockerWallMedical }
+ent-LockerWallMedicalFilled = настенный шкафчик для медикаментов
     .suffix = Заполненный
     .desc = { ent-LockerWallMedical.desc }
 ent-LockerMedicalFilled = { ent-LockerMedical }
     .suffix = Заполненный
     .desc = { ent-LockerMedical.desc }
-ent-LockerWallMedicalDoctorFilled = { ent-LockerWallMedical }
+ent-LockerWallMedicalDoctorFilled = настенный врачебный шкаф
     .suffix = Заполненный
     .desc = { ent-LockerWallMedical.desc }
 ent-LockerChemistryFilled = { ent-LockerChemistry }
