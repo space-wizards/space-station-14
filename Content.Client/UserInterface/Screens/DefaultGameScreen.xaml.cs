@@ -25,14 +25,20 @@ public sealed partial class DefaultGameScreen : InGameScreen
         SetAnchorAndMarginPreset(Alerts, LayoutPreset.TopRight, margin: 10);
 
         Chat.OnResized += ChatOnResized;
+        Chat.OnChatResizeFinish += ChatOnResizeFinish;
+    }
+
+    private void ChatOnResizeFinish(Vector2 _)
+    {
+        var marginBottom = Chat.GetValue<float>(MarginBottomProperty);
+        var marginLeft = Chat.GetValue<float>(MarginLeftProperty);
+        OnChatResized!(new Vector2(marginBottom, marginLeft));
     }
 
     private void ChatOnResized()
     {
         var marginBottom = Chat.GetValue<float>(MarginBottomProperty);
-        var marginLeft = Chat.GetValue<float>(MarginLeftProperty);
         SetMarginTop(Alerts, marginBottom);
-        OnChatResized!(new Vector2(marginBottom, marginLeft));
     }
 
     public override ChatBox ChatBox => Chat;
@@ -42,5 +48,6 @@ public sealed partial class DefaultGameScreen : InGameScreen
     {
         SetMarginBottom(Chat, size.X);
         SetMarginLeft(Chat, size.Y);
+        SetMarginTop(Alerts, Size.X);
     }
 }
