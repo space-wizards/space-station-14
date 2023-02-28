@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Flash.Components;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Stunnable;
@@ -43,11 +44,12 @@ namespace Content.Server.Flash
 
         private void OnFlashMeleeHit(EntityUid uid, FlashComponent comp, MeleeHitEvent args)
         {
-            if (!args.IsHit)
+            if (!args.IsHit ||
+                !args.HitEntities.Any() ||
+                !UseFlash(comp, args.User))
+            {
                 return;
-
-            if (!UseFlash(comp, args.User))
-                return;
+            }
 
             args.Handled = true;
             foreach (var e in args.HitEntities)

@@ -6,15 +6,37 @@
   description: Personal Data Assistant.
   components:
   - type: Appearance
-    visuals:
-    - type: PDAVisualizer
-      state: pda
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
     netsync: false
+    layers:
+    - map: [ "enum.PDAVisualLayers.Base" ]
+    - state: "light_overlay"
+      map: [ "enum.PDAVisualLayers.Flashlight" ]
+      shader: "unshaded"
+      visible: false
+    - state: "id_overlay"
+      map: [ "enum.PDAVisualLayers.IDLight" ]
+      shader: "unshaded"
+      visible: false
   - type: Icon
     sprite: Objects/Devices/pda.rsi
     state: pda
+  - type: PDA
+    state: pda
+    penSlot:
+      startingItem: Pen
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+    idSlot:
+      name: ID Card
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      whitelist:
+        components:
+        - IdCard
   - type: Item
     size: 10
   - type: ContainerContainer
@@ -76,20 +98,6 @@
       type: InstrumentBoundUserInterface
     - key: enum.HealthAnalyzerUiKey.Key
       type: HealthAnalyzerBoundUserInterface
-  - type: PDA
-    penSlot:
-      startingItem: Pen
-      priority: -1
-      whitelist:
-        tags:
-        - Write
-    idSlot:
-      name: ID Card
-      ejectSound: /Audio/Machines/id_swipe.ogg
-      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-      whitelist:
-        components:
-        - IdCard
   - type: CrewManifestViewer
     unsecure: true
   - type: Tag
@@ -106,6 +114,7 @@
   components:
   - type: PDA
     id: PassengerIDCard
+    state: pda
   - type: PDABorderColor
     borderColor: "#717059"
 
@@ -117,10 +126,7 @@
   components:
   - type: PDA
     id: TechnicalAssistantIDCard
-  - type: Appearance
-    visuals:
-    - type: PDAVisualizer
-      state: pda-interntech
+    state: pda-interntech
   - type: Icon
     state: pda-interntech
 
@@ -132,10 +138,7 @@
   components:
   - type: PDA
     id: MedicalInternIDCard
-  - type: Appearance
-    visuals:
-    - type: PDAVisualizer
-      state: pda-internmed
+    state: pda-internmed
   - type: Icon
     state: pda-internmed
   - type: HealthAnalyzer
@@ -151,12 +154,21 @@
   components:
   - type: PDA
     id: SecurityCadetIDCard
-  - type: Appearance
-    visuals:
-    - type: PDAVisualizer
-      state: pda-interncadet
+    state: pda-interncadet
   - type: Icon
     state: pda-interncadet
+
+- type: entity
+  parent: BasePDA
+  id: ResearchAssistantPDA
+  name: research assistant PDA
+  description: Why isn't it purple?
+  components:
+  - type: PDA
+    id: ResearchAssistantIDCard
+    state: pda-internsci
+  - type: Icon
+    state: pda-internsci
 
 - type: entity
   parent: BasePDA
@@ -166,10 +178,7 @@
   components:
   - type: PDA
     id: ServiceWorkerIDCard
-  - type: Appearance
-    visuals:
-    - type: PDAVisualizer
-      state: pda-internservice
+    state: pda-internservice
   - type: Icon
     state: pda-internservice
 
@@ -181,10 +190,7 @@
   components:
   - type: PDA
     id: ChefIDCard
-  - type: Appearance
-    visuals:
-    - type: PDAVisualizer
-      state: pda-cook
+    state: pda-cook
   - type: PDABorderColor
     borderColor: "#d7d7d0"
   - type: Icon
@@ -198,10 +204,7 @@
   components:
   - type: PDA
     id: BotanistIDCard
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-hydro
+    state: pda-hydro
   - type: Icon
     state: pda-hydro
 
@@ -213,6 +216,7 @@
   components:
   - type: PDA
     id: ClownIDCard
+    state: pda-clown
     penSlot:
       startingItem: CrayonOrange # no pink crayon?!?
       # ^ Still unacceptable.
@@ -221,10 +225,6 @@
       whitelist:
         tags:
         - Write
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-clown
   - type: PDABorderColor
     borderColor: "#C18199"
   - type: Icon
@@ -261,15 +261,12 @@
   components:
   - type: PDA
     id: MimeIDCard
+    state: pda-mime
     idSlot:
       name: ID Card
       whitelist:
         components:
         - IdCard
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-mime
   - type: Icon
     state: pda-mime
 
@@ -281,10 +278,7 @@
   components:
   - type: PDA
     id: ChaplainIDCard
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-chaplain
+    state: pda-chaplain
   - type: PDABorderColor
     borderColor: "#333333"
   - type: Icon
@@ -298,10 +292,7 @@
   components:
   - type: PDA
     id: QuartermasterIDCard
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-qm
+    state: pda-qm
   - type: Icon
     state: pda-qm
 
@@ -313,10 +304,7 @@
   components:
   - type: PDA
     id: CargoIDCard
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-cargo
+    state: pda-cargo
   - type: Icon
     state: pda-cargo
 
@@ -328,10 +316,7 @@
   components:
   - type: PDA
     id: SalvageIDCard
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-miner
+    state: pda-miner
   - type: Icon
     state: pda-miner
 
@@ -343,10 +328,7 @@
   components:
   - type: PDA
     id: BartenderIDCard
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-bartender
+    state: pda-bartender
   - type: Icon
     state: pda-bartender
 
@@ -358,10 +340,7 @@
   components:
   - type: PDA
     id: LibrarianIDCard
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-library
+    state: pda-library
   - type: Icon
     state: pda-library
 
@@ -373,10 +352,7 @@
   components:
   - type: PDA
     id: LawyerIDCard
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-lawyer
+    state: pda-lawyer
   - type: Icon
     state: pda-lawyer
 
@@ -388,10 +364,7 @@
   components:
   - type: PDA
     id: JanitorIDCard
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-janitor
+    state: pda-janitor
   - type: PDABorderColor
     borderColor: "#5D2D56"
   - type: Icon
@@ -405,16 +378,13 @@
   components:
   - type: PDA
     id: CaptainIDCard
+    state: pda-captain
     penSlot:
       startingItem: PenCap
       priority: -1
       whitelist:
         tags:
         - Write
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-captain
   - type: PDABorderColor
     borderColor: "#7C5D00"
   - type: Icon
@@ -428,16 +398,13 @@
   components:
   - type: PDA
     id: HoPIDCard
+    state: pda-hop
     penSlot:
       startingItem: PenHop
       priority: -1
       whitelist:
         tags:
         - Write
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-hop
   - type: Icon
     state: pda-hop
 
@@ -449,13 +416,10 @@
   components:
   - type: PDA
     id: CEIDCard
+    state: pda-ce
   - type: PDABorderColor
     borderColor: "#949137"
     accentHColor: "#447987"
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-ce
   - type: Icon
     state: pda-ce
 
@@ -467,10 +431,7 @@
   components:
   - type: PDA
     id: EngineeringIDCard
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-engineer
+    state: pda-engineer
   - type: Icon
     state: pda-engineer
 
@@ -482,10 +443,7 @@
   components:
   - type: PDA
     id: CMOIDCard
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-cmo
+    state: pda-cmo
   - type: PDABorderColor
     borderColor: "#d7d7d0"
     accentHColor: "#447987"
@@ -505,10 +463,7 @@
   components:
   - type: PDA
     id: MedicalIDCard
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-medical
+    state: pda-medical
   - type: PDABorderColor
     borderColor: "#d7d7d0"
     accentVColor: "#447987"
@@ -527,10 +482,7 @@
   components:
   - type: PDA
     id: ChemistIDCard
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-chemistry
+    state: pda-chemistry
   - type: PDABorderColor
     borderColor: "#d7d7d0"
     accentVColor: "#B34200"
@@ -545,10 +497,7 @@
   components:
   - type: PDA
     id: RDIDCard
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-rd
+    state: pda-rd
   - type: Icon
     state: pda-rd
 
@@ -560,10 +509,7 @@
   components:
   - type: PDA
     id: ResearchIDCard
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-science
+    state: pda-science
   - type: Icon
     state: pda-science
 
@@ -575,10 +521,7 @@
   components:
   - type: PDA
     id: HoSIDCard
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-hos
+    state: pda-hos
   - type: PDABorderColor
     borderColor: "#A32D26"
     accentHColor: "#447987"
@@ -593,10 +536,7 @@
   components:
   - type: PDA
     id: WardenIDCard
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-warden
+    state: pda-warden
   - type: Icon
     state: pda-warden
 
@@ -608,10 +548,7 @@
   components:
   - type: PDA
     id: SecurityIDCard
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-security
+    state: pda-security
   - type: Icon
     state: pda-security
 
@@ -623,6 +560,7 @@
   components:
   - type: PDA
     id: CentcomIDCardSyndie
+    state: pda
 
 - type: entity
   parent: BasePDA
@@ -632,10 +570,7 @@
   components:
   - type: PDA
     id: MusicianIDCard
-  - type: Appearance
-    visuals:
-    - type: PDAVisualizer
-      state: pda-musician
+    state: pda-musician
   - type: Instrument
     allowPercussion: false
     handheld: true
@@ -650,10 +585,7 @@
   components:
   - type: PDA
     id: AtmosIDCard
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-atmos
+    state: pda-atmos
   - type: Icon
     state: pda-atmos
 
@@ -665,10 +597,7 @@
   components:
   - type: PDA
     id: PassengerIDCard
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-clear
+    state: pda-clear
   - type: Icon
     state: pda-clear
 
@@ -680,10 +609,7 @@
   components:
   - type: PDA
     id: SyndicateIDCard
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-syndi
+    state: pda-syndi
   - type: Icon
     state: pda-syndi
 
@@ -695,13 +621,10 @@
   components:
   - type: PDA
     id: ERTLeaderIDCard
+    state: pda-ert
   - type: PDABorderColor
     borderColor: "#A32D26"
     accentHColor: "#447987"
-  - type: Appearance
-    visuals:
-    - type: PDAVisualizer
-      state: pda-ert
   - type: Icon
     state: pda-ert
 
@@ -713,6 +636,7 @@
   components:
   - type: PDA
     id: CBURNIDcard
+    state: pda-ert
   - type: PDABorderColor
     borderColor: "#A32D26"
     accentHColor: "#447987"
@@ -725,10 +649,7 @@
   components:
   - type: PDA
     id: PsychologistIDCard
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-medical
+    state: pda-medical
   - type: PDABorderColor
     borderColor: "#d7d7d0"
     accentVColor: "#447987"
@@ -743,10 +664,7 @@
   components:
   - type: PDA
     id: ReporterIDCard
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-reporter
+    state: pda-reporter
   - type: Icon
     state: pda-reporter
 
@@ -758,10 +676,7 @@
   components:
   - type: PDA
     id: ZookeeperIDCard
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-zookeeper
+    state: pda-zookeeper
   - type: Icon
     state: pda-zookeeper
 
@@ -773,10 +688,7 @@
   components:
   - type: PDA
     id: BoxerIDCard
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-boxer
+    state: pda-boxer
   - type: PDABorderColor
     borderColor: "#333333"
     borderVColor: "#390504"
@@ -791,10 +703,7 @@
   components:
   - type: PDA
     id: DetectiveIDCard
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-detective
+    state: pda-detective
   - type: PDABorderColor
     borderColor: "#774705"
   - type: Icon

@@ -1,33 +1,34 @@
 using Content.Server.Administration.Logs;
 using Content.Server.DoAfter;
 using Content.Server.Kitchen.Components;
-using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition.Components;
-using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Content.Shared.Storage;
 using Robust.Shared.Random;
 using static Content.Shared.Kitchen.Components.SharedKitchenSpikeComponent;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Kitchen;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
-    internal sealed class KitchenSpikeSystem : EntitySystem
+    public sealed class KitchenSpikeSystem : SharedKitchenSpikeSystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfter = default!;
         [Dependency] private readonly IAdminLogManager _logger = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         public override void Initialize()
         {
@@ -35,59 +36,63 @@ namespace Content.Server.Kitchen.EntitySystems
 
             SubscribeLocalEvent<KitchenSpikeComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<KitchenSpikeComponent, InteractHandEvent>(OnInteractHand);
-            SubscribeLocalEvent<KitchenSpikeComponent, DragDropEvent>(OnDragDrop);
+            SubscribeLocalEvent<KitchenSpikeComponent, DragDropTargetEvent>(OnDragDrop);
 
             //DoAfter
-            SubscribeLocalEvent<KitchenSpikeComponent, SpikingFinishedEvent>(OnSpikingFinished);
-            SubscribeLocalEvent<KitchenSpikeComponent, SpikingFailEvent>(OnSpikingFail);
+            SubscribeLocalEvent<KitchenSpikeComponent, DoAfterEvent>(OnDoAfter);
 
             SubscribeLocalEvent<KitchenSpikeComponent, SuicideEvent>(OnSuicide);
+
+            SubscribeLocalEvent<ButcherableComponent, CanDropDraggedEvent>(OnButcherableCanDrop);
+        }
+
+        private void OnButcherableCanDrop(EntityUid uid, ButcherableComponent component, ref CanDropDraggedEvent args)
+        {
+            args.Handled = true;
+            args.CanDrop |= component.Type != ButcheringType.Knife;
         }
 
         private void OnSuicide(EntityUid uid, KitchenSpikeComponent component, SuicideEvent args)
         {
-            if (args.Handled) return;
+            if (args.Handled)
+                return;
             args.SetHandled(SuicideKind.Piercing);
             var victim = args.Victim;
             var othersMessage = Loc.GetString("comp-kitchen-spike-suicide-other", ("victim", victim));
-            victim.PopupMessageOtherClients(othersMessage);
+            _popupSystem.PopupEntity(othersMessage, victim);
 
             var selfMessage = Loc.GetString("comp-kitchen-spike-suicide-self");
-            victim.PopupMessage(selfMessage);
+            _popupSystem.PopupEntity(selfMessage, victim, victim);
         }
 
-        private void OnSpikingFail(EntityUid uid, KitchenSpikeComponent component, SpikingFailEvent args)
+        private void OnDoAfter(EntityUid uid, KitchenSpikeComponent component, DoAfterEvent args)
         {
-            component.InUse = false;
+            if (args.Args.Target == null)
+                return;
 
-            if (EntityManager.TryGetComponent<SharedButcherableComponent>(args.VictimUid, out var butcherable))
-                butcherable.BeingButchered = false;
-        }
-
-        private void OnSpikingFinished(EntityUid uid, KitchenSpikeComponent component, SpikingFinishedEvent args)
-        {
-            component.InUse = false;
-
-            if (EntityManager.TryGetComponent<SharedButcherableComponent>(args.VictimUid, out var butcherable))
+            if (TryComp<ButcherableComponent>(args.Args.Target.Value, out var butcherable))
                 butcherable.BeingButchered = false;
 
-            if (Spikeable(uid, args.UserUid, args.VictimUid, component, butcherable))
-            {
-                Spike(uid, args.UserUid, args.VictimUid, component);
-            }
+            if (args.Handled || args.Cancelled)
+                return;
+
+            if (Spikeable(uid, args.Args.User, args.Args.Target.Value, component, butcherable))
+                Spike(uid, args.Args.User, args.Args.Target.Value, component);
+
+            args.Handled = true;
         }
 
-        private void OnDragDrop(EntityUid uid, KitchenSpikeComponent component, DragDropEvent args)
+        private void OnDragDrop(EntityUid uid, KitchenSpikeComponent component, ref DragDropTargetEvent args)
         {
-            if(args.Handled)
+            if (args.Handled)
                 return;
 
             args.Handled = true;
 
             if (Spikeable(uid, args.User, args.Dragged, component))
                 TrySpike(uid, args.User, args.Dragged, component);
-
         }
+
         private void OnInteractHand(EntityUid uid, KitchenSpikeComponent component, InteractHandEvent args)
         {
             if (args.Handled)
@@ -109,7 +114,7 @@ namespace Content.Server.Kitchen.EntitySystems
         }
 
         private void Spike(EntityUid uid, EntityUid userUid, EntityUid victimUid,
-            KitchenSpikeComponent? component = null, SharedButcherableComponent? butcherable = null)
+            KitchenSpikeComponent? component = null, ButcherableComponent? butcherable = null)
         {
             if (!Resolve(uid, ref component) || !Resolve(victimUid, ref butcherable))
                 return;
@@ -132,7 +137,7 @@ namespace Content.Server.Kitchen.EntitySystems
             // TODO: Need to be able to leave them on the spike to do DoT, see ss13.
             EntityManager.QueueDeleteEntity(victimUid);
 
-            SoundSystem.Play(component.SpikeSound.GetSound(), Filter.Pvs(uid), uid);
+            _audio.Play(component.SpikeSound, Filter.Pvs(uid), uid, true);
         }
 
         private bool TryGetPiece(EntityUid uid, EntityUid user, EntityUid used,
@@ -154,9 +159,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 Loc.GetString("comp-kitchen-spike-meat-name", ("name", Name(ent)), ("victim", component.Victim));
 
             if (component.PrototypesToSpawn.Count != 0)
-            {
                 _popupSystem.PopupEntity(component.MeatSource1p, uid, user, PopupType.MediumCaution);
-            }
             else
             {
                 UpdateAppearance(uid, null, component);
@@ -171,11 +174,11 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!Resolve(uid, ref component, ref appearance, false))
                 return;
 
-            appearance.SetData(KitchenSpikeVisuals.Status, (component.PrototypesToSpawn?.Count > 0) ? KitchenSpikeStatus.Bloody : KitchenSpikeStatus.Empty);
+            _appearance.SetData(uid, KitchenSpikeVisuals.Status, component.PrototypesToSpawn?.Count > 0 ? KitchenSpikeStatus.Bloody : KitchenSpikeStatus.Empty, appearance);
         }
 
         private bool Spikeable(EntityUid uid, EntityUid userUid, EntityUid victimUid,
-            KitchenSpikeComponent? component = null, SharedButcherableComponent? butcherable = null)
+            KitchenSpikeComponent? component = null, ButcherableComponent? butcherable = null)
         {
             if (!Resolve(uid, ref component))
                 return false;
@@ -206,7 +209,7 @@ namespace Content.Server.Kitchen.EntitySystems
         }
 
         public bool TrySpike(EntityUid uid, EntityUid userUid, EntityUid victimUid, KitchenSpikeComponent? component = null,
-            SharedButcherableComponent? butcherable = null, MobStateComponent? mobState = null)
+            ButcherableComponent? butcherable = null, MobStateComponent? mobState = null)
         {
             if (!Resolve(uid, ref component) || component.InUse ||
                 !Resolve(victimUid, ref butcherable) || butcherable.BeingButchered)
@@ -233,42 +236,18 @@ namespace Content.Server.Kitchen.EntitySystems
             butcherable.BeingButchered = true;
             component.InUse = true;
 
-            var doAfterArgs = new DoAfterEventArgs(userUid, component.SpikeDelay + butcherable.ButcherDelay, default, uid)
+            var doAfterArgs = new DoAfterEventArgs(userUid, component.SpikeDelay + butcherable.ButcherDelay, target:victimUid, used:uid)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 BreakOnDamage = true,
                 BreakOnStun = true,
-                NeedHand = true,
-                TargetFinishedEvent = new SpikingFinishedEvent(userUid, victimUid),
-                TargetCancelledEvent = new SpikingFailEvent(victimUid)
+                NeedHand = true
             };
 
             _doAfter.DoAfter(doAfterArgs);
 
             return true;
-        }
-
-        private sealed class SpikingFinishedEvent : EntityEventArgs
-        {
-            public EntityUid VictimUid;
-            public EntityUid UserUid;
-
-            public SpikingFinishedEvent(EntityUid userUid, EntityUid victimUid)
-            {
-                UserUid = userUid;
-                VictimUid = victimUid;
-            }
-        }
-
-        private sealed class SpikingFailEvent : EntityEventArgs
-        {
-            public EntityUid VictimUid;
-
-            public SpikingFailEvent(EntityUid victimUid)
-            {
-                VictimUid = victimUid;
-            }
         }
     }
 }

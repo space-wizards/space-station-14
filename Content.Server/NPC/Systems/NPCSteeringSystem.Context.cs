@@ -320,7 +320,7 @@ public sealed partial class NPCSteeringSystem
         EntityQuery<PhysicsComponent> bodyQuery,
         EntityQuery<TransformComponent> xformQuery)
     {
-        var detectionRadius = MathF.Max(1.5f, agentRadius + moveSpeed / 4f);
+        var detectionRadius = MathF.Max(1f, agentRadius);
 
         foreach (var ent in _lookup.GetEntitiesInRange(uid, detectionRadius, LookupFlags.Static))
         {
@@ -338,11 +338,23 @@ public sealed partial class NPCSteeringSystem
             if (!_physics.TryGetNearestPoints(uid, ent, out var pointA, out var pointB, xform, xformQuery.GetComponent(ent)))
                 continue;
 
-            var obstacleDirection = pointB - worldPos;
+            var obstacleDirection = pointB - pointA;
             var obstableDistance = obstacleDirection.Length;
 
-            if (obstableDistance > detectionRadius || obstableDistance == 0f)
+            if (obstableDistance > detectionRadius)
                 continue;
+
+            // Fallback to worldpos if we're colliding.
+            if (obstableDistance == 0f)
+            {
+                obstacleDirection = pointB - worldPos;
+                obstableDistance = obstacleDirection.Length;
+
+                if (obstableDistance == 0f)
+                    continue;
+
+                obstableDistance = agentRadius;
+            }
 
             dangerPoints.Add(pointB);
             obstacleDirection = offsetRot.RotateVec(obstacleDirection);
@@ -352,7 +364,7 @@ public sealed partial class NPCSteeringSystem
             for (var i = 0; i < InterestDirections; i++)
             {
                 var dot = Vector2.Dot(norm, Directions[i]);
-                danger[i] = MathF.Max(dot * weight, danger[i]);
+                danger[i] = MathF.Max(dot * weight * 0.9f, danger[i]);
             }
         }
 

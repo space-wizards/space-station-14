@@ -28,10 +28,9 @@
           - FireExtinguisher
       doorSound:
         path: /Audio/Machines/machine_switch.ogg
-    - type: Appearance
-    - type: ItemCabinetVisuals
       openState: open
       closedState: closed
+    - type: Appearance
     - type: ItemSlots
     - type: ContainerContainer
       containers:
@@ -61,6 +60,10 @@
   components:
   - type: ItemCabinet
     opened: true
+    doorSound:
+      path: /Audio/Machines/machine_switch.ogg
+    openState: open
+    closedState: closed
 
 - type: entity
   id: ExtinguisherCabinetFilled
@@ -74,6 +77,10 @@
       whitelist:
         components:
         - FireExtinguisher
+    doorSound:
+      path: /Audio/Machines/machine_switch.ogg
+    openState: open
+    closedState: closed
 
 - type: entity
   id: ExtinguisherCabinetFilledOpen
@@ -82,3 +89,7 @@
   components:
   - type: ItemCabinet
     opened: true
+    doorSound:
+      path: /Audio/Machines/machine_switch.ogg
+    openState: open
+    closedState: closed

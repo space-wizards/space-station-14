@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: TableFrame
   # BaseStructure and not BaseTable, since these shouldn't be climbable/placeable.
   parent: BaseStructure
@@ -54,9 +54,10 @@
   components:
   - type: SpriteFade
   - type: Sprite
-    sprite: Structures/Furniture/Tables/counterwood.rsi
+    sprite: Structures/Furniture/Tables/frame.rsi
+    netsync: false
   - type: Icon
-    sprite: Structures/Furniture/Tables/counterwood.rsi
+    sprite: Structures/Furniture/Tables/frame.rsi
     state: full
   - type: Fixtures
     fixtures:
@@ -107,9 +108,9 @@
   description: Pieces of metal that make the frame of a table.
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Tables/countermetal.rsi
+    sprite: Structures/Furniture/Tables/frame.rsi
   - type: Icon
-    sprite: Structures/Furniture/Tables/countermetal.rsi
+    sprite: Structures/Furniture/Tables/frame.rsi
     state: full
   - type: Damageable
     damageContainer: Inorganic
@@ -219,6 +220,7 @@
     node: TableReinforced
   - type: Climbable
     # Reinforced tables are extra tough
+  - type: Bonkable
     bonkDamage:
       types:
         Blunt: 8
@@ -490,20 +492,80 @@
 
 - type: entity
   id: TableCounterWood
-  parent: CounterWoodFrame
+  parent: CounterBase
   name: wood counter
   description: Do not apply fire to this. Rumour says it burns easily.
   components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/counterwood.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/counterwood.rsi
+    state: full
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/woodhit.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 0
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Construction
     graph: Table
     node: CounterWood
 
 - type: entity
   id: TableCounterMetal
-  parent: CounterMetalFrame
+  parent: CounterBase
   name: metal counter
   description: Looks like a good place to put a drink down.
   components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/countermetal.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/countermetal.rsi
+    state: full
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 0
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Construction
     graph: Table
     node: CounterMetal

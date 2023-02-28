@@ -7,6 +7,7 @@ using Content.Server.GameTicking;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
+using Content.Shared.Database;
 using Content.Shared.Eui;
 using Microsoft.Extensions.ObjectPool;
 using Robust.Shared.Configuration;
@@ -138,6 +139,16 @@ public sealed class AdminLogsEui : BaseEui
                 break;
             }
         }
+    }
+
+    public void SetLogFilter(string? search = null, bool invertTypes = false, HashSet<LogType>? types = null)
+    {
+        var message = new SetLogFilter(
+            search,
+            invertTypes,
+            types);
+
+        SendMessage(message);
     }
 
     private async void SendLogs(bool replace)
