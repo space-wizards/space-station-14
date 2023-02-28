@@ -273,19 +273,19 @@
 #carpet
 - type: stack
   id: FloorTileStackEighties
-  name: eighties floor tile
+  name: eighties tile
   spawn: FloorTileItemEighties
   maxCount: 30
 
 - type: stack
   id: FloorTileStackArcadeBlue
-  name: blue arcade tile
+  name: light tile
   spawn: FloorTileItemArcadeBlue
   maxCount: 30
 
 - type: stack
   id: FloorTileStackArcadeBlue2
-  name: blue arcade tile
+  name: dark tile
   spawn: FloorTileItemArcadeBlue2
   maxCount: 30
 
@@ -369,7 +369,7 @@
 
 - type: stack
   id: FloorTileLino
-  name: linoleum floor
+  name: linoleum tile
   spawn: FloorTileItemLino
   maxCount: 30
 

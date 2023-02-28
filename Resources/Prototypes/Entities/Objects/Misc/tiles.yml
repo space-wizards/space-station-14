@@ -861,7 +861,7 @@
 
 #carpets
 - type: entity
-  name: blue arcade floor
+  name: light arcade tile
   parent: FloorTileItemBase
   id: FloorTileItemArcadeBlue
   components:
@@ -875,9 +875,12 @@
       - FloorArcadeBlue
   - type: Stack
     stackType: FloorTileStackArcadeBlue
+  - type: Construction
+    graph: TileArcadeBlue
+    node: arcadebluetile
 
 - type: entity
-  name: blue arcade floor
+  name: dark arcade tile
   parent: FloorTileItemBase
   id: FloorTileItemArcadeBlue2
   components:
@@ -891,9 +894,12 @@
       - FloorArcadeBlue2
   - type: Stack
     stackType: FloorTileStackArcadeBlue2
+  - type: Construction
+    graph: TileArcadeBlue2
+    node: arcadeblue2tile
 
 - type: entity
-  name: red arcade floor
+  name: red arcade tile
   parent: FloorTileItemBase
   id: FloorTileItemArcadeRed
   components:
@@ -907,9 +913,12 @@
       - FloorArcadeRed
   - type: Stack
     stackType: FloorTileStackArcadeRed
+  - type: Construction
+    graph: TileArcadeRed
+    node: arcaderedtile
 
 - type: entity
-  name: eighties floor
+  name: eighties tile
   parent: FloorTileItemBase
   id: FloorTileItemEighties
   components:
@@ -923,6 +932,9 @@
       - FloorEighties
   - type: Stack
     stackType: FloorTileStackEighties
+  - type: Construction
+    graph: TileEighties
+    node: eightiestile
 
 - type: entity
   name: clown carpet tile
@@ -992,7 +1004,7 @@
     stackType: FloorTileStackGym
 
 - type: entity
-  name: linoleum floor
+  name: linoleum tile
   parent: FloorTileItemBase
   id: FloorTileItemLino
   components:
@@ -1006,6 +1018,9 @@
       - FloorLino
   - type: Stack
     stackType: FloorTileLino
+  - type: Construction
+    graph: TileLino
+    node: linotile
 
 #department
 - type: entity

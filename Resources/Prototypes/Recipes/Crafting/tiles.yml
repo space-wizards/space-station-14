@@ -425,3 +425,58 @@
   description: "Four clown carpet tiles."
   icon: { sprite: Objects/Tiles/tile.rsi, state: carpetclown }
   objectType: Item
+
+- type: construction
+  name: light arcade tile
+  id: TileArcadeBlue
+  graph: TileArcadeBlue
+  startNode: start
+  targetNode: arcadebluetile
+  category: construction-category-tiles
+  description: "Four light arcade tiles."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: arcadeblue }
+  objectType: Item
+
+- type: construction
+  name: dark arcade tile
+  id: TileArcadeBlue2
+  graph: TileArcadeBlue2
+  startNode: start
+  targetNode: arcadeblue2tile
+  category: construction-category-tiles
+  description: "Four dark arcade tiles."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: arcadeblue2 }
+  objectType: Item
+
+- type: construction
+  name: red arcade tile
+  id: TileArcadeRed
+  graph: TileArcadeRed
+  startNode: start
+  targetNode: arcaderedtile
+  category: construction-category-tiles
+  description: "Four red arcade tiles."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: arcadered }
+  objectType: Item
+
+- type: construction
+  name: eighties tile
+  id: TileEighties
+  graph: TileEighties
+  startNode: start
+  targetNode: eightiestile
+  category: construction-category-tiles
+  description: "Four eighties tiles."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: eighties }
+  objectType: Item
+
+- type: construction
+  name: linoleum carpet tile
+  id: TileLino
+  graph: TileLino
+  startNode: start
+  targetNode: linotile
+  category: construction-category-tiles
+  description: "Four lino carpet tiles."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: lino }
+  objectType: Item

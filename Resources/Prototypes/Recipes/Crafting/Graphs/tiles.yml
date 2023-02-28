@@ -617,3 +617,83 @@
               amount: 1
     - node: carpetclowntile
       entity: FloorTileItemCarpetClown
+
+- type: constructionGraph
+  id: TileArcadeBlue
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: arcadebluetile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Cloth
+              amount: 1
+    - node: arcadebluetile
+      entity: FloorTileItemArcadeBlue
+
+- type: constructionGraph
+  id: TileArcadeBlue2
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: arcadeblue2tile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Cloth
+              amount: 1
+    - node: arcadeblue2tile
+      entity: FloorTileItemArcadeBlue2
+
+- type: constructionGraph
+  id: TileArcadeRed
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: arcaderedtile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Cloth
+              amount: 1
+    - node: arcaderedtile
+      entity: FloorTileItemArcadeRed
+
+- type: constructionGraph
+  id: TileEighties
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: eightiestile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Cloth
+              amount: 1
+    - node: eightiestile
+      entity: FloorTileItemEighties
+
+- type: constructionGraph
+  id: TileLino
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: linotile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Cloth
+              amount: 1
+    - node: linotile
+      entity: FloorTileItemLino
