@@ -1312,8 +1312,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 21.213781
-      - 79.80423
+      - 20.619795
+      - 77.56971
       - 0
       - 0
       - 0
@@ -1392,7 +1392,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 10
-  type: WindoorSecurityLocked
+  type: WindowReinforcedDirectional
   components:
   - rot: -1.5707963267948966 rad
     pos: -2.5,-3.5
@@ -1707,10 +1707,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 58
-  type: WindowReinforcedDirectional
+  type: ChairPilotSeat
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -2.5,-4.5
+  - pos: -3.5,-3.5
     parent: 0
     type: Transform
 - uid: 59
@@ -3419,10 +3418,10 @@ entities:
     parent: 0
     type: Transform
 - uid: 287
-  type: FirelockEdge
+  type: WindoorSecurityLocked
   components:
   - rot: -1.5707963267948966 rad
-    pos: -2.5,-3.5
+    pos: -2.5,-4.5
     parent: 0
     type: Transform
 - uid: 288
