@@ -844,1403 +844,1403 @@ entities:
     type: Gravity
   - chunkCollection:
       0,-1:
-        221:
-          color: '#9FED5896'
-          id: BrickTileWhiteCornerNe
-          coordinates: 7,-11
-        222:
-          color: '#9FED5896'
-          id: BrickTileWhiteCornerNw
-          coordinates: 6,-11
-        219:
-          color: '#FFFFFFFF'
-          id: WarnLineE
-          coordinates: 7,-3
-        214:
-          color: '#FFFFFFFF'
-          id: WarnEndW
-          coordinates: 0,-9
-        216:
-          color: '#FFFFFFFF'
-          id: WarnEndS
-          coordinates: 7,-4
-        218:
-          color: '#FFFFFFFF'
-          id: WarnLineS
-          coordinates: 7,-3
-        215:
-          color: '#FFFFFFFF'
-          id: WarnEndE
-          coordinates: 1,-9
-        217:
-          color: '#FFFFFFFF'
-          id: WarnEndN
-          coordinates: 7,-2
-        194:
-          color: '#DE3A3A96'
-          id: BrickTileSteelInnerSw
-          coordinates: 12,-13
-        195:
-          color: '#DE3A3A96'
-          id: BrickTileSteelInnerSw
-          coordinates: 14,-13
-        197:
-          color: '#DE3A3A96'
-          id: BrickTileSteelLineS
-          coordinates: 11,-13
-        196:
-          color: '#DE3A3A96'
-          id: BrickTileSteelLineS
-          coordinates: 13,-13
-        201:
-          color: '#DE3A3A96'
-          id: BrickTileSteelCornerSe
-          coordinates: 15,-15
-        198:
-          color: '#DE3A3A96'
-          id: BrickTileSteelCornerSw
-          coordinates: 9,-13
-        200:
-          color: '#DE3A3A96'
-          id: BrickTileSteelInnerSe
-          coordinates: 12,-13
-        15:
+        0:
           color: '#FFFFFFFF'
           id: WarnCorner
           coordinates: 17,-10
-        16:
+        1:
           color: '#FFFFFFFF'
           id: WarnCorner
           coordinates: 18,-11
-        17:
+        2:
           color: '#FFFFFFFF'
           id: WarnCorner
           coordinates: 19,-11
-        18:
+        3:
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 19,-11
-        19:
+        4:
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 19,-12
-        20:
+        5:
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 20,-12
-        21:
+        6:
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 21,-12
-        22:
+        7:
           color: '#FFFFFFFF'
           id: WarnCornerFlipped
           coordinates: 23,-10
-        23:
+        8:
           angle: 4.71238898038469 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 24,-9
-        24:
+        9:
           angle: 4.71238898038469 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 24,-8
-        25:
+        10:
           angle: 4.71238898038469 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 24,-7
-        26:
+        11:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarnCornerFlipped
           coordinates: 23,-6
-        27:
+        12:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarnCornerFlipped
           coordinates: 22,-5
-        28:
+        13:
           color: '#FFFFFFFF'
           id: WarnCornerFlipped
           coordinates: 16,-6
-        29:
+        14:
           angle: 4.71238898038469 rad
           color: '#FFFFFFFF'
           id: WarnCorner
           coordinates: 17,-6
-        30:
+        15:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 19,-4
-        31:
+        16:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 20,-4
-        32:
+        17:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 21,-4
-        33:
+        18:
           angle: 4.71238898038469 rad
           color: '#FFFFFFFF'
           id: WarningLineCornerFlipped
           coordinates: 24,-10
-        34:
+        19:
           color: '#FFFFFFFF'
           id: WarnCornerFlipped
           coordinates: 22,-11
-        35:
+        20:
           color: '#FFFFFFFF'
           id: WarningLineCornerFlipped
           coordinates: 22,-4
-        36:
+        21:
           angle: -1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarnCorner
           coordinates: 18,-5
-        188:
-          color: '#DE3A3A96'
-          id: BrickTileSteelLineE
-          coordinates: 12,-14
-        187:
-          color: '#DE3A3A96'
-          id: BrickTileSteelCornerSw
-          coordinates: 14,-15
-        193:
-          color: '#DE3A3A96'
-          id: BrickTileSteelInnerSw
-          coordinates: 10,-13
-        199:
-          color: '#DE3A3A96'
-          id: BrickTileSteelInnerSe
-          coordinates: 10,-13
-        192:
-          color: '#DE3A3A96'
-          id: BrickTileSteelLineW
-          coordinates: 10,-14
-        191:
-          color: '#DE3A3A96'
-          id: BrickTileSteelLineW
-          coordinates: 12,-14
-        134:
+        94:
           color: '#DE3A3A96'
           id: ThreeQuarterTileOverlayGreyscale180
           coordinates: 15,-9
-        135:
+        95:
           color: '#DE3A3A96'
           id: ThreeQuarterTileOverlayGreyscale90
           coordinates: 15,-7
-        136:
+        96:
           color: '#DE3A3A96'
           id: ThreeQuarterTileOverlayGreyscale270
           coordinates: 12,-9
-        137:
+        97:
           color: '#DE3A3A96'
           id: ThreeQuarterTileOverlayGreyscale
           coordinates: 12,-7
-        190:
-          color: '#DE3A3A96'
-          id: BrickTileSteelLineW
-          coordinates: 14,-14
-        189:
-          color: '#DE3A3A96'
-          id: BrickTileSteelLineE
-          coordinates: 10,-14
-        186:
-          color: '#DE3A3A96'
-          id: BrickTileSteelEndS
-          coordinates: 12,-15
-        185:
-          color: '#DE3A3A96'
-          id: BrickTileSteelEndS
-          coordinates: 10,-15
-        174:
+        128:
           color: '#FFFFFFFF'
           id: WoodTrimThinLineW
           coordinates: 5,-9
-        175:
+        129:
           color: '#FFFFFFFF'
           id: WoodTrimThinLineW
           coordinates: 5,-8
-        176:
+        130:
           color: '#FFFFFFFF'
           id: WoodTrimThinLineW
           coordinates: 5,-7
-        177:
+        131:
           color: '#FFFFFFFF'
           id: WoodTrimThinLineS
           coordinates: 4,-6
-        178:
+        132:
           color: '#FFFFFFFF'
           id: WoodTrimThinLineS
           coordinates: 3,-6
-        179:
+        133:
           color: '#FFFFFFFF'
           id: WoodTrimThinLineS
           coordinates: 2,-6
-        180:
+        134:
           color: '#FFFFFFFF'
           id: WoodTrimThinLineS
           coordinates: 1,-6
-        181:
+        135:
           color: '#FFFFFFFF'
           id: WoodTrimThinLineS
           coordinates: 0,-6
-        183:
+        137:
           color: '#FFFFFFFF'
           id: WoodTrimThinInnerSw
           coordinates: 5,-6
-        202:
+        139:
+          color: '#DE3A3A96'
+          id: BrickTileSteelEndS
+          coordinates: 10,-15
+        140:
+          color: '#DE3A3A96'
+          id: BrickTileSteelEndS
+          coordinates: 12,-15
+        141:
+          color: '#DE3A3A96'
+          id: BrickTileSteelCornerSw
+          coordinates: 14,-15
+        142:
+          color: '#DE3A3A96'
+          id: BrickTileSteelLineE
+          coordinates: 12,-14
+        143:
+          color: '#DE3A3A96'
+          id: BrickTileSteelLineE
+          coordinates: 10,-14
+        144:
+          color: '#DE3A3A96'
+          id: BrickTileSteelLineW
+          coordinates: 14,-14
+        145:
+          color: '#DE3A3A96'
+          id: BrickTileSteelLineW
+          coordinates: 12,-14
+        146:
+          color: '#DE3A3A96'
+          id: BrickTileSteelLineW
+          coordinates: 10,-14
+        147:
+          color: '#DE3A3A96'
+          id: BrickTileSteelInnerSw
+          coordinates: 10,-13
+        148:
+          color: '#DE3A3A96'
+          id: BrickTileSteelInnerSw
+          coordinates: 12,-13
+        149:
+          color: '#DE3A3A96'
+          id: BrickTileSteelInnerSw
+          coordinates: 14,-13
+        150:
+          color: '#DE3A3A96'
+          id: BrickTileSteelLineS
+          coordinates: 13,-13
+        151:
+          color: '#DE3A3A96'
+          id: BrickTileSteelLineS
+          coordinates: 11,-13
+        152:
+          color: '#DE3A3A96'
+          id: BrickTileSteelCornerSw
+          coordinates: 9,-13
+        153:
+          color: '#DE3A3A96'
+          id: BrickTileSteelInnerSe
+          coordinates: 10,-13
+        154:
+          color: '#DE3A3A96'
+          id: BrickTileSteelInnerSe
+          coordinates: 12,-13
+        155:
+          color: '#DE3A3A96'
+          id: BrickTileSteelCornerSe
+          coordinates: 15,-15
+        156:
           color: '#DE3A3A96'
           id: BrickTileSteelLineE
           coordinates: 15,-13
-        204:
+        157:
           color: '#DE3A3A96'
           id: BrickTileSteelCornerNe
           coordinates: 15,-12
-        205:
+        158:
           color: '#DE3A3A96'
           id: BrickTileSteelLineN
           coordinates: 14,-12
-        206:
+        159:
           color: '#DE3A3A96'
           id: BrickTileSteelLineN
           coordinates: 13,-12
-        207:
+        160:
           color: '#DE3A3A96'
           id: BrickTileSteelLineN
           coordinates: 12,-12
-        208:
+        161:
           color: '#DE3A3A96'
           id: BrickTileSteelLineN
           coordinates: 11,-12
-        209:
+        162:
           color: '#DE3A3A96'
           id: BrickTileSteelInnerNe
           coordinates: 10,-12
-        210:
+        163:
           color: '#DE3A3A96'
           id: BrickTileSteelCornerNe
           coordinates: 10,-11
-        211:
+        164:
           color: '#DE3A3A96'
           id: BrickTileSteelCornerNw
           coordinates: 9,-11
-        212:
+        165:
           color: '#DE3A3A96'
           id: BrickTileSteelLineW
           coordinates: 9,-12
-        213:
+        166:
           color: '#DE3A3A96'
           id: WarnLineGreyscaleE
           coordinates: 15,-14
-        223:
+        167:
+          color: '#FFFFFFFF'
+          id: WarnEndW
+          coordinates: 0,-9
+        168:
+          color: '#FFFFFFFF'
+          id: WarnEndE
+          coordinates: 1,-9
+        169:
+          color: '#FFFFFFFF'
+          id: WarnEndS
+          coordinates: 7,-4
+        170:
+          color: '#FFFFFFFF'
+          id: WarnEndN
+          coordinates: 7,-2
+        171:
+          color: '#FFFFFFFF'
+          id: WarnLineS
+          coordinates: 7,-3
+        172:
+          color: '#FFFFFFFF'
+          id: WarnLineE
+          coordinates: 7,-3
+        173:
+          color: '#9FED5896'
+          id: BrickTileWhiteCornerNe
+          coordinates: 7,-11
+        174:
+          color: '#9FED5896'
+          id: BrickTileWhiteCornerNw
+          coordinates: 6,-11
+        175:
           color: '#9FED5896'
           id: BrickTileWhiteLineW
           coordinates: 6,-13
-        224:
+        176:
           color: '#9FED5896'
           id: BrickTileWhiteInnerNw
           coordinates: 6,-14
-        225:
+        177:
           color: '#9FED5896'
           id: BrickTileWhiteLineN
           coordinates: 5,-14
-        226:
+        178:
           color: '#9FED5896'
           id: BrickTileWhiteLineN
           coordinates: 4,-14
-        245:
-          color: '#9FED5896'
-          id: BrickTileWhiteCornerNw
-          coordinates: 3,-14
-        228:
+        179:
           color: '#9FED5896'
           id: BrickTileWhiteLineE
           coordinates: 7,-12
-        229:
+        180:
           color: '#9FED5896'
           id: BrickTileWhiteLineE
           coordinates: 7,-13
-        230:
+        181:
           color: '#9FED5896'
           id: BrickTileWhiteLineE
           coordinates: 7,-14
-        231:
+        182:
           color: '#9FED5896'
           id: BrickTileWhiteLineE
           coordinates: 7,-15
-        232:
+        183:
           color: '#9FED5896'
           id: BrickTileWhiteLineE
           coordinates: 7,-16
-        233:
+        184:
           color: '#9FED5896'
           id: BrickTileWhiteLineE
           coordinates: 7,-17
-        235:
+        185:
           color: '#9FED5896'
           id: BrickTileWhiteCornerSe
           coordinates: 7,-18
-        237:
+        186:
           color: '#9FED5896'
           id: BrickTileWhiteLineS
           coordinates: 6,-18
-        238:
+        187:
           color: '#9FED5896'
           id: BrickTileWhiteLineS
           coordinates: 5,-18
-        242:
-          color: '#9FED5896'
-          id: BrickTileWhiteLineS
-          coordinates: 4,-18
-        241:
+        188:
           color: '#9FED5896'
           id: BrickTileWhiteCornerSw
           coordinates: 3,-18
-        243:
+        189:
+          color: '#9FED5896'
+          id: BrickTileWhiteLineS
+          coordinates: 4,-18
+        190:
           color: '#9FED5896'
           id: BrickTileWhiteLineW
           coordinates: 3,-17
-        244:
+        191:
           color: '#9FED5896'
           id: BrickTileWhiteLineW
           coordinates: 3,-16
-        246:
+        192:
+          color: '#9FED5896'
+          id: BrickTileWhiteCornerNw
+          coordinates: 3,-14
+        193:
           color: '#FFFFFFFF'
           id: WarnLineGreyscaleW
           coordinates: 3,-15
-        247:
+        194:
           color: '#FFFFFFFF'
           id: WarnLineGreyscaleW
           coordinates: 6,-12
-        248:
+        195:
           color: '#9FED5896'
           id: FullTileOverlayGreyscale
           coordinates: 5,-17
-        249:
+        196:
           color: '#9FED5896'
           id: FullTileOverlayGreyscale
           coordinates: 5,-16
-        250:
+        197:
           color: '#9FED5896'
           id: FullTileOverlayGreyscale
           coordinates: 5,-15
-        251:
+        198:
           color: '#9FED5896'
           id: FullTileOverlayGreyscale
           coordinates: 6,-16
-        252:
+        199:
           color: '#9FED5896'
           id: FullTileOverlayGreyscale
           coordinates: 4,-16
-        253:
+        200:
           color: '#DE3A3A96'
           id: BrickTileSteelCornerNe
           coordinates: 5,-11
-        254:
+        201:
           color: '#DE3A3A96'
           id: BrickTileSteelCornerNw
           coordinates: 3,-11
-        255:
+        202:
           color: '#DE3A3A96'
           id: BrickTileSteelCornerSe
           coordinates: 5,-13
-        256:
+        203:
           color: '#DE3A3A96'
           id: BrickTileSteelCornerSw
           coordinates: 3,-13
-        257:
+        204:
           color: '#DE3A3A96'
           id: BrickTileSteelLineS
           coordinates: 4,-13
-        258:
+        205:
           color: '#DE3A3A96'
           id: BrickTileSteelLineE
           coordinates: 5,-12
-        259:
+        206:
           color: '#DE3A3A96'
           id: BrickTileSteelLineN
           coordinates: 4,-11
-        260:
+        207:
           color: '#DE3A3A96'
           id: BrickTileSteelLineW
           coordinates: 3,-12
-        261:
+        208:
           color: '#FFFFFFFF'
           id: BotLeft
           coordinates: 5,-11
-        262:
+        209:
           color: '#FFFFFFFF'
           id: BotLeft
           coordinates: 4,-11
-        311:
-          color: '#D381C996'
-          id: CheckerNWSE
-          coordinates: 13,-17
-        304:
-          color: '#D381C996'
-          id: CheckerNWSE
-          coordinates: 10,-19
-        309:
-          color: '#D381C996'
-          id: CheckerNWSE
-          coordinates: 14,-18
-        308:
-          color: '#D381C996'
-          id: CheckerNWSE
-          coordinates: 14,-19
-        320:
-          color: '#FFFFFFFF'
-          id: WarnLineN
-          coordinates: 13,-19
-        286:
+        220:
           color: '#FFFFFFFF'
           id: Box
           coordinates: 12,-22
-        319:
-          color: '#FFFFFFFF'
-          id: WarnLineN
-          coordinates: 14,-19
-        307:
+        221:
+          color: '#D381C996'
+          id: CheckerNWSE
+          coordinates: 10,-19
+        222:
+          color: '#D381C996'
+          id: CheckerNWSE
+          coordinates: 11,-19
+        223:
+          color: '#D381C996'
+          id: CheckerNWSE
+          coordinates: 12,-19
+        224:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: 13,-19
-        306:
+        225:
           color: '#D381C996'
           id: CheckerNWSE
-          coordinates: 12,-19
-        305:
+          coordinates: 14,-19
+        226:
           color: '#D381C996'
           id: CheckerNWSE
-          coordinates: 11,-19
-        310:
+          coordinates: 14,-18
+        227:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: 14,-17
-        312:
+        228:
+          color: '#D381C996'
+          id: CheckerNWSE
+          coordinates: 13,-17
+        229:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: 13,-18
-        313:
+        230:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: 12,-18
-        314:
+        231:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: 12,-17
-        315:
+        232:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: 11,-17
-        316:
+        233:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: 11,-18
-        318:
-          color: '#D381C996'
-          id: CheckerNWSE
-          coordinates: 10,-17
-        317:
+        234:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: 10,-18
-        321:
+        235:
+          color: '#D381C996'
+          id: CheckerNWSE
+          coordinates: 10,-17
+        236:
+          color: '#FFFFFFFF'
+          id: WarnLineN
+          coordinates: 14,-19
+        237:
+          color: '#FFFFFFFF'
+          id: WarnLineN
+          coordinates: 13,-19
+        238:
           color: '#FFFFFFFF'
           id: WarnLineN
           coordinates: 12,-19
-        322:
+        239:
           color: '#FFFFFFFF'
           id: WarnLineN
           coordinates: 11,-19
-        323:
+        240:
           color: '#FFFFFFFF'
           id: WarnCornerSW
           coordinates: 10,-19
-        324:
+        241:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: 10,-18
-        325:
+        242:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: 10,-17
-        329:
+        243:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale180
           coordinates: 1,-16
-        330:
+        244:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale180
           coordinates: 0,-16
-        332:
+        246:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: 1,-14
-        335:
+        247:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: 0,-14
-        342:
+        254:
           color: '#52B4E996'
           id: BrickTileSteelBox
           coordinates: 1,-17
-        343:
+        255:
           color: '#52B4E996'
           id: BrickTileSteelBox
           coordinates: 1,-13
-        345:
+        257:
           color: '#DE3A3A96'
           id: BrickTileSteelLineN
           coordinates: 0,-17
-        347:
+        259:
           color: '#DE3A3A96'
           id: BrickTileSteelLineS
           coordinates: 0,-13
-        353:
+        265:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: 7,-18
-        354:
+        266:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: 6,-18
-        403:
-          color: '#FFFFFFFF'
-          id: WarnCornerSW
-          coordinates: 24,-20
-        368:
-          color: '#DE3A3A96'
-          id: BrickTileSteelCornerSw
-          coordinates: 18,-20
-        357:
+        267:
           color: '#DE3A3A96'
           id: BrickTileSteelLineW
           coordinates: 18,-18
-        358:
+        268:
           color: '#DE3A3A96'
           id: BrickTileSteelLineW
           coordinates: 17,-16
-        359:
+        269:
           color: '#DE3A3A96'
           id: BrickTileSteelLineW
           coordinates: 17,-15
-        360:
+        270:
           color: '#DE3A3A96'
           id: BrickTileSteelCornerSw
           coordinates: 17,-17
-        367:
-          color: '#DE3A3A96'
-          id: BrickTileSteelLineW
-          coordinates: 18,-19
-        362:
+        271:
           color: '#DE3A3A96'
           id: BrickTileSteelLineE
           coordinates: 26,-19
-        363:
+        272:
           color: '#DE3A3A96'
           id: BrickTileSteelLineE
           coordinates: 26,-18
-        364:
+        273:
           color: '#DE3A3A96'
           id: BrickTileSteelCornerSe
           coordinates: 27,-17
-        365:
+        274:
           color: '#DE3A3A96'
           id: BrickTileSteelInnerSe
           coordinates: 26,-17
-        366:
+        275:
           color: '#DE3A3A96'
           id: BrickTileSteelInnerSw
           coordinates: 18,-17
-        370:
+        276:
+          color: '#DE3A3A96'
+          id: BrickTileSteelLineW
+          coordinates: 18,-19
+        277:
+          color: '#DE3A3A96'
+          id: BrickTileSteelCornerSw
+          coordinates: 18,-20
+        278:
           color: '#DE3A3A96'
           id: BrickTileSteelCornerSe
           coordinates: 26,-20
-        402:
-          color: '#DE3A3A96'
-          id: BrickTileSteelLineE
-          coordinates: 20,-19
-        406:
-          color: '#FFFFFFFF'
-          id: WarnLineE
-          coordinates: 20,-18
-        405:
-          color: '#FFFFFFFF'
-          id: WarnLineS
-          coordinates: 24,-18
-        374:
+        279:
           color: '#DE3A3A96'
           id: BrickTileSteelLineE
           coordinates: 20,-17
-        375:
+        280:
           color: '#DE3A3A96'
           id: BrickTileSteelLineE
           coordinates: 20,-16
-        376:
+        281:
           color: '#DE3A3A96'
           id: BrickTileSteelLineE
           coordinates: 20,-15
-        377:
+        282:
           color: '#DE3A3A96'
           id: BrickTileSteelLineW
           coordinates: 24,-19
-        404:
-          color: '#FFFFFFFF'
-          id: WarnCornerSE
-          coordinates: 20,-20
-        379:
+        283:
           color: '#DE3A3A96'
           id: BrickTileSteelLineW
           coordinates: 24,-17
-        380:
+        284:
           color: '#DE3A3A96'
           id: BrickTileSteelLineW
           coordinates: 24,-16
-        381:
+        285:
           color: '#DE3A3A96'
           id: BrickTileSteelLineW
           coordinates: 24,-15
-        382:
+        286:
           color: '#DE3A3A96'
           id: BrickTileSteelLineS
           coordinates: 25,-20
-        383:
+        287:
           color: '#DE3A3A96'
           id: BrickTileSteelLineS
           coordinates: 19,-20
-        384:
+        288:
           color: '#DE3A3A96'
           id: BrickTileSteelLineN
           coordinates: 26,-14
-        385:
+        289:
           color: '#DE3A3A96'
           id: BrickTileSteelLineN
           coordinates: 25,-14
-        397:
-          color: '#DE3A3A96'
-          id: BrickTileSteelInnerSw
-          coordinates: 24,-14
-        387:
+        290:
           color: '#DE3A3A96'
           id: BrickTileSteelLineN
           coordinates: 23,-14
-        388:
+        291:
           color: '#DE3A3A96'
           id: BrickTileSteelLineN
           coordinates: 22,-14
-        389:
+        292:
           color: '#DE3A3A96'
           id: BrickTileSteelLineN
           coordinates: 21,-14
-        390:
+        293:
           color: '#DE3A3A96'
           id: BrickTileSteelLineN
           coordinates: 20,-14
-        391:
+        294:
           color: '#DE3A3A96'
           id: BrickTileSteelLineN
           coordinates: 18,-14
-        392:
+        295:
           color: '#DE3A3A96'
           id: BrickTileSteelLineN
           coordinates: 19,-14
-        393:
+        296:
           color: '#DE3A3A96'
           id: WarnCornerGreyscaleNW
           coordinates: 17,-14
-        394:
+        297:
           color: '#DE3A3A96'
           id: DeliveryGreyscale
           coordinates: 16,-14
-        396:
+        298:
           color: '#DE3A3A96'
           id: BrickTileSteelLineN
           coordinates: 24,-14
-        398:
+        299:
+          color: '#DE3A3A96'
+          id: BrickTileSteelInnerSw
+          coordinates: 24,-14
+        300:
           color: '#DE3A3A96'
           id: BrickTileSteelLineS
           coordinates: 23,-14
-        399:
+        301:
           color: '#DE3A3A96'
           id: BrickTileSteelLineS
           coordinates: 22,-14
-        400:
+        302:
           color: '#DE3A3A96'
           id: BrickTileSteelLineS
           coordinates: 21,-14
-        401:
+        303:
           color: '#DE3A3A96'
           id: BrickTileSteelInnerSe
           coordinates: 20,-14
-        417:
+        304:
+          color: '#DE3A3A96'
+          id: BrickTileSteelLineE
+          coordinates: 20,-19
+        305:
           color: '#FFFFFFFF'
-          id: Bot
-          coordinates: 17,-19
-        408:
+          id: WarnCornerSW
+          coordinates: 24,-20
+        306:
+          color: '#FFFFFFFF'
+          id: WarnCornerSE
+          coordinates: 20,-20
+        307:
+          color: '#FFFFFFFF'
+          id: WarnLineS
+          coordinates: 24,-18
+        308:
+          color: '#FFFFFFFF'
+          id: WarnLineE
+          coordinates: 20,-18
+        309:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: 21,-16
-        409:
+        310:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: 22,-15
-        410:
+        311:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: 23,-16
-        411:
+        312:
           color: '#FFFFFFFF'
           id: BotRight
           coordinates: 23,-17
-        412:
+        313:
           color: '#FFFFFFFF'
           id: BotRight
           coordinates: 21,-15
-        413:
+        314:
           color: '#FFFFFFFF'
           id: BotLeft
           coordinates: 23,-15
-        416:
-          color: '#FFFFFFFF'
-          id: Bot
-          coordinates: 22,-17
-        415:
+        315:
           color: '#FFFFFFFF'
           id: BotLeft
           coordinates: 21,-17
-        418:
+        316:
+          color: '#FFFFFFFF'
+          id: Bot
+          coordinates: 22,-17
+        317:
+          color: '#FFFFFFFF'
+          id: Bot
+          coordinates: 17,-19
+        318:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: 27,-19
-        419:
+        319:
           color: '#FFFFFFFF'
           id: BotLeft
           coordinates: 27,-18
-        420:
+        320:
           color: '#FFFFFFFF'
           id: BotLeft
           coordinates: 17,-20
-        421:
+        321:
           color: '#FFFFFFFF'
           id: BotRight
           coordinates: 27,-20
-        422:
+        322:
           color: '#FFFFFFFF'
           id: BotRight
           coordinates: 17,-18
-        423:
+        323:
           color: '#FFFFFFFF'
           id: Arrows
           coordinates: 18,-19
-        424:
+        324:
           color: '#FFFFFFFF'
           id: Arrows
           coordinates: 26,-19
-        425:
+        325:
           angle: -3.141592653589793 rad
           color: '#FFFFFFFF'
           id: Arrows
           coordinates: 27,-15
-        426:
+        326:
           color: '#DE3A3A96'
           id: BrickTileSteelLineE
           coordinates: 27,-16
-        427:
+        327:
           color: '#DE3A3A96'
           id: BrickTileSteelLineE
           coordinates: 27,-15
-        428:
+        328:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: 13,-7
-        429:
+        329:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale180
           coordinates: 14,-9
-        430:
+        330:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale180
           coordinates: 13,-9
-        435:
+        335:
           color: '#9FED5896'
           id: QuarterTileOverlayGreyscale180
           coordinates: 13,-2
-        436:
+        336:
           color: '#9FED5896'
           id: QuarterTileOverlayGreyscale180
           coordinates: 12,-2
-        437:
+        337:
           color: '#9FED5896'
           id: QuarterTileOverlayGreyscale270
           coordinates: 9,-2
-        438:
+        338:
           color: '#9FED5896'
           id: QuarterTileOverlayGreyscale270
           coordinates: 10,-2
-        439:
+        339:
           color: '#9FED5896'
           id: HalfTileOverlayGreyscale90
           coordinates: 10,-1
-        440:
+        340:
           color: '#9FED5896'
           id: HalfTileOverlayGreyscale270
           coordinates: 12,-1
-        441:
+        341:
           color: '#9FED5896'
           id: HalfTileOverlayGreyscale
           coordinates: 11,-2
-        444:
+        343:
           color: '#FFFFFFFF'
           id: BrickTileDarkLineN
           coordinates: 2,-1
-        445:
+        344:
           color: '#FFFFFFFF'
           id: BrickTileDarkLineN
           coordinates: 1,-1
-        446:
+        345:
           color: '#FFFFFFFF'
           id: BrickTileDarkLineN
           coordinates: 0,-1
       -1,-1:
-        37:
+        22:
           color: '#FFFFFFFF'
           id: grasssnowa2
           coordinates: -3.6290493,-9.771207
-        38:
+        23:
           color: '#FFFFFFFF'
           id: grasssnowb3
           coordinates: -3.3477993,-19.991972
-        331:
-          color: '#52B4E996'
-          id: HalfTileOverlayGreyscale180
-          coordinates: -1,-16
-        40:
+        24:
           color: '#FFFFFFFF'
           id: grasssnowc1
           coordinates: -3.9999733,-6.081314
-        337:
-          color: '#52B4E996'
-          id: HalfTileOverlayGreyscale270
-          coordinates: -2,-15
-        71:
+        50:
           color: '#FFFFFFFF'
           id: grasssnowb3
           coordinates: -3.1864414,-0.9828911
-        143:
+        103:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -9,-1
-        144:
+        104:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -9,-2
-        145:
+        105:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -9,-3
-        146:
+        106:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -9,-4
-        147:
+        107:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -9,-5
-        148:
+        108:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -9,-6
-        149:
+        109:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -9,-7
-        150:
+        110:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -9,-8
-        151:
+        111:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -9,-9
-        152:
+        112:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -9,-10
-        153:
+        113:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -9,-11
-        154:
+        114:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -9,-12
-        155:
+        115:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -9,-13
-        156:
+        116:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -9,-14
-        157:
+        117:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -9,-15
-        158:
+        118:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -9,-16
-        159:
+        119:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -9,-17
-        160:
+        120:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -9,-18
-        161:
+        121:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -9,-19
-        162:
+        122:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -9,-20
-        163:
+        123:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -9,-21
-        164:
+        124:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -9,-22
-        165:
+        125:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -9,-23
-        166:
+        126:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -9,-24
-        336:
-          color: '#52B4E996'
-          id: HalfTileOverlayGreyscale
-          coordinates: -1,-14
-        184:
-          color: '#FFFFFFFF'
-          id: WarnBox
-          coordinates: -5,-3
-        182:
+        136:
           color: '#FFFFFFFF'
           id: WoodTrimThinLineS
           coordinates: -1,-6
-        338:
+        138:
+          color: '#FFFFFFFF'
+          id: WarnBox
+          coordinates: -5,-3
+        245:
+          color: '#52B4E996'
+          id: HalfTileOverlayGreyscale180
+          coordinates: -1,-16
+        248:
+          color: '#52B4E996'
+          id: HalfTileOverlayGreyscale
+          coordinates: -1,-14
+        249:
+          color: '#52B4E996'
+          id: HalfTileOverlayGreyscale270
+          coordinates: -2,-15
+        250:
           color: '#52B4E996'
           id: ThreeQuarterTileOverlayGreyscale270
           coordinates: -2,-16
-        339:
+        251:
           color: '#52B4E996'
           id: ThreeQuarterTileOverlayGreyscale
           coordinates: -2,-14
-        340:
+        252:
           color: '#52B4E996'
           id: BrickTileSteelBox
           coordinates: -3,-15
-        341:
+        253:
           color: '#52B4E996'
           id: BrickTileSteelBox
           coordinates: -2,-17
-        344:
+        256:
           color: '#52B4E996'
           id: BrickTileSteelBox
           coordinates: -2,-13
-        346:
+        258:
           color: '#DE3A3A96'
           id: BrickTileSteelLineN
           coordinates: -1,-17
-        348:
+        260:
           color: '#DE3A3A96'
           id: BrickTileSteelLineS
           coordinates: -1,-13
-        349:
+        261:
           color: '#DE3A3A96'
           id: BrickTileSteelLineE
           coordinates: -3,-16
-        350:
+        262:
           color: '#DE3A3A96'
           id: BrickTileSteelLineE
           coordinates: -3,-14
-        351:
+        263:
           color: '#DE3A3A96'
           id: BrickTileSteelInnerSe
           coordinates: -3,-13
-        352:
+        264:
           color: '#DE3A3A96'
           id: BrickTileSteelInnerNe
           coordinates: -3,-17
       0,0:
-        42:
+        25:
           color: '#FFFFFFFF'
           id: grasssnowa2
           coordinates: 15.159365,5.392831
-        43:
+        26:
           color: '#FFFFFFFF'
           id: grasssnowc1
           coordinates: 15.819311,9.398571
-        44:
+        27:
           color: '#FFFFFFFF'
           id: grasssnowc2
           coordinates: 14.194311,14.208315
-        45:
+        28:
           color: '#FFFFFFFF'
           id: grasssnowc3
           coordinates: 15.694311,15.172535
-        46:
+        29:
           color: '#FFFFFFFF'
           id: grasssnowc2
           coordinates: 12.819311,16.642818
-        47:
+        30:
           color: '#FFFFFFFF'
           id: grasssnowa1
           coordinates: 9.251883,16.971285
-        48:
+        31:
           color: '#FFFFFFFF'
           id: grasssnowb3
           coordinates: 9.061624,11.550716
-        49:
+        32:
           color: '#FFFFFFFF'
           id: grasssnowc1
           coordinates: 12.170999,10.565315
-        50:
+        33:
           color: '#FFFFFFFF'
           id: grasssnowc2
           coordinates: 8.01938,8.972565
-        51:
+        34:
           color: '#FFFFFFFF'
           id: grasssnowc3
           coordinates: 10.48813,7.3443623
-        52:
+        35:
           color: '#FFFFFFFF'
           id: grasssnowb3
           coordinates: 9.066255,4.2786684
-        53:
+        36:
           color: '#FFFFFFFF'
           id: grasssnowb2
           coordinates: 6.1287537,4.4684677
-        55:
+        37:
           color: '#FFFFFFFF'
           id: grasssnowc3
           coordinates: 9.0946245,2.0440664
-        56:
+        38:
           color: '#FFFFFFFF'
           id: grasssnowb2
           coordinates: 13.017959,2.0284252
-        57:
+        39:
           color: '#FFFFFFFF'
           id: grasssnowc1
           coordinates: 10.861709,2.2630453
-        58:
+        40:
           color: '#FFFFFFFF'
           id: grasssnowc1
           coordinates: 8.471084,13.624069
-        442:
-          color: '#9FED5896'
-          id: HalfTileOverlayGreyscale180
-          coordinates: 11,0
-        60:
+        41:
           color: '#FFFFFFFF'
           id: grasssnowa1
           coordinates: 4.707512,15.727119
-        61:
+        42:
           color: '#FFFFFFFF'
           id: grasssnowa2
           coordinates: 2.707512,15.930454
-        72:
+        51:
           color: '#FFFFFFFF'
           id: grasssnowb1
           coordinates: 0.79449654,2.152192
-        76:
+        53:
           color: '#FFFFFFFF'
           id: grasssnowa2
           coordinates: 1.6412125,14.139866
-        77:
+        54:
           color: '#FFFFFFFF'
           id: grasssnowa3
           coordinates: 0.43808746,13.654987
-        80:
+        55:
           color: '#FFFFFFFF'
           id: grasssnowb1
           coordinates: 0.18808746,9.666458
-        81:
+        56:
           color: '#FFFFFFFF'
           id: grasssnowc1
           coordinates: 4.1724625,13.733192
-        82:
+        57:
           color: '#FFFFFFFF'
           id: grasssnowa3
           coordinates: 3.1880875,12.434965
-        84:
+        58:
           color: '#FFFFFFFF'
           id: grasssnowa3
           coordinates: 2.1568375,9.893942
-        85:
+        59:
           color: '#FFFFFFFF'
           id: grasssnowc3
           coordinates: 0.45371246,11.270374
-        86:
+        60:
           color: '#FFFFFFFF'
           id: grasssnowc3
           coordinates: 9.166802,10.222887
-        431:
-          color: '#9FED5896'
-          id: QuarterTileOverlayGreyscale
-          coordinates: 9,0
-        90:
+        61:
           color: '#FFFFFFFF'
           id: grasssnowb2
           coordinates: 8.19574,16.289047
-        91:
+        62:
           color: '#FFFFFFFF'
           id: grasssnowa2
           coordinates: 14.449558,12.269236
-        434:
-          color: '#9FED5896'
-          id: QuarterTileOverlayGreyscale90
-          coordinates: 12,0
-        93:
-          color: '#FFFFFFFF'
-          id: grasssnowa3
-          coordinates: 16.060982,2.673603
-        94:
-          color: '#FFFFFFFF'
-          id: grasssnowb2
-          coordinates: 3.43816,14.798347
-        96:
-          color: '#FFFFFFFF'
-          id: grasssnowb3
-          coordinates: 0.5527668,14.892197
-        98:
-          color: '#FFFFFFFF'
-          id: bushsnowa1
-          coordinates: 12.033197,7.701807
-        100:
-          color: '#FFFFFFFF'
-          id: bushsnowa1
-          coordinates: 14.310135,6.6772776
-        101:
-          color: '#FFFFFFFF'
-          id: bushsnowa2
-          coordinates: 13.896899,12.679136
-        102:
-          color: '#FFFFFFFF'
-          id: bushsnowb2
-          coordinates: 12.943774,14.853275
-        103:
-          color: '#FFFFFFFF'
-          id: bushsnowb3
-          coordinates: 0.2452774,15.588417
-        106:
-          color: '#FFFFFFFF'
-          id: Rock06
-          coordinates: 9.232971,15.9332485
-        107:
-          color: '#FFFFFFFF'
-          id: grasssnowc1
-          coordinates: 2.5912228,19.753052
-        108:
-          color: '#FFFFFFFF'
-          id: grasssnowc3
-          coordinates: 6.122473,18.001226
-        109:
-          color: '#FFFFFFFF'
-          id: grasssnowb2
-          coordinates: 2.4505978,18.17328
-        110:
-          color: '#FFFFFFFF'
-          id: grasssnowb1
-          coordinates: 4.997473,19.080475
-        433:
-          color: '#9FED5896'
-          id: QuarterTileOverlayGreyscale90
-          coordinates: 13,0
-        112:
-          color: '#FFFFFFFF'
-          id: grasssnowc3
-          coordinates: 18.166714,4.631343
-        113:
-          color: '#FFFFFFFF'
-          id: grasssnowc2
-          coordinates: 19.322964,7.2277966
-        432:
-          color: '#9FED5896'
-          id: QuarterTileOverlayGreyscale
-          coordinates: 10,0
-        115:
-          color: '#FFFFFFFF'
-          id: grasssnowc1
-          coordinates: 17.947964,3.1297789
-        116:
-          color: '#FFFFFFFF'
-          id: grasssnowb3
-          coordinates: 17.104214,9.229881
-        117:
-          color: '#FFFFFFFF'
-          id: grasssnowa1
-          coordinates: 16.072964,17.452217
-        127:
-          color: '#FFFFFFFF'
-          id: grasssnowb2
-          coordinates: 4.1790752,7.8279076
-      -1,0:
-        62:
-          color: '#FFFFFFFF'
-          id: grasssnowc3
-          coordinates: -2.8895664,16.211998
         63:
           color: '#FFFFFFFF'
           id: grasssnowa3
+          coordinates: 16.060982,2.673603
+        64:
+          color: '#FFFFFFFF'
+          id: grasssnowb2
+          coordinates: 3.43816,14.798347
+        65:
+          color: '#FFFFFFFF'
+          id: grasssnowb3
+          coordinates: 0.5527668,14.892197
+        67:
+          color: '#FFFFFFFF'
+          id: bushsnowa1
+          coordinates: 12.033197,7.701807
+        69:
+          color: '#FFFFFFFF'
+          id: bushsnowa1
+          coordinates: 14.310135,6.6772776
+        70:
+          color: '#FFFFFFFF'
+          id: bushsnowa2
+          coordinates: 13.896899,12.679136
+        71:
+          color: '#FFFFFFFF'
+          id: bushsnowb2
+          coordinates: 12.943774,14.853275
+        72:
+          color: '#FFFFFFFF'
+          id: bushsnowb3
+          coordinates: 0.2452774,15.588417
+        75:
+          color: '#FFFFFFFF'
+          id: Rock06
+          coordinates: 9.232971,15.9332485
+        76:
+          color: '#FFFFFFFF'
+          id: grasssnowc1
+          coordinates: 2.5912228,19.753052
+        77:
+          color: '#FFFFFFFF'
+          id: grasssnowc3
+          coordinates: 6.122473,18.001226
+        78:
+          color: '#FFFFFFFF'
+          id: grasssnowb2
+          coordinates: 2.4505978,18.17328
+        79:
+          color: '#FFFFFFFF'
+          id: grasssnowb1
+          coordinates: 4.997473,19.080475
+        80:
+          color: '#FFFFFFFF'
+          id: grasssnowc3
+          coordinates: 18.166714,4.631343
+        81:
+          color: '#FFFFFFFF'
+          id: grasssnowc2
+          coordinates: 19.322964,7.2277966
+        82:
+          color: '#FFFFFFFF'
+          id: grasssnowc1
+          coordinates: 17.947964,3.1297789
+        83:
+          color: '#FFFFFFFF'
+          id: grasssnowb3
+          coordinates: 17.104214,9.229881
+        84:
+          color: '#FFFFFFFF'
+          id: grasssnowa1
+          coordinates: 16.072964,17.452217
+        93:
+          color: '#FFFFFFFF'
+          id: grasssnowb2
+          coordinates: 4.1790752,7.8279076
+        331:
+          color: '#9FED5896'
+          id: QuarterTileOverlayGreyscale
+          coordinates: 9,0
+        332:
+          color: '#9FED5896'
+          id: QuarterTileOverlayGreyscale
+          coordinates: 10,0
+        333:
+          color: '#9FED5896'
+          id: QuarterTileOverlayGreyscale90
+          coordinates: 13,0
+        334:
+          color: '#9FED5896'
+          id: QuarterTileOverlayGreyscale90
+          coordinates: 12,0
+        342:
+          color: '#9FED5896'
+          id: HalfTileOverlayGreyscale180
+          coordinates: 11,0
+      -1,0:
+        43:
+          color: '#FFFFFFFF'
+          id: grasssnowc3
+          coordinates: -2.8895664,16.211998
+        44:
+          color: '#FFFFFFFF'
+          id: grasssnowa3
           coordinates: -1.3739414,16.399694
-        277:
-          color: '#A4610647'
-          id: CheckerNWSE
-          coordinates: -14,8
-        276:
-          color: '#A4610647'
-          id: CheckerNWSE
-          coordinates: -13,7
-        66:
+        45:
           color: '#FFFFFFFF'
           id: grasssnowc1
           coordinates: -2.1864414,7.911888
-        67:
+        46:
           color: '#FFFFFFFF'
           id: grasssnowc3
           coordinates: -4.0458164,7.6303444
-        68:
+        47:
           color: '#FFFFFFFF'
           id: grasssnowa1
           coordinates: -2.8426914,5.7681084
-        69:
+        48:
           color: '#FFFFFFFF'
           id: grasssnowc1
           coordinates: -0.6551914,1.8769035
-        70:
+        49:
           color: '#FFFFFFFF'
           id: grasssnowc1
           coordinates: -3.7333164,0.34661865
-        73:
+        52:
           color: '#FFFFFFFF'
           id: grasssnowb3
           coordinates: -0.88188744,15.563225
-        278:
-          color: '#A4610647'
-          id: CheckerNWSE
-          coordinates: -15,8
-        275:
-          color: '#A4610647'
-          id: CheckerNWSE
-          coordinates: -14,7
-        97:
+        66:
           color: '#FFFFFFFF'
           id: grasssnowc3
           coordinates: -1.9470882,14.409473
-        99:
+        68:
           color: '#FFFFFFFF'
           id: bushsnowa2
           coordinates: -1.884201,10.692345
-        104:
+        73:
           color: '#FFFFFFFF'
           id: bushsnowa2
           coordinates: -2.6609726,10.251652
-        105:
+        74:
           color: '#FFFFFFFF'
           id: bushsnowb3
           coordinates: -0.9488945,8.937782
-        118:
+        85:
           color: '#FFFFFFFF'
           id: grasssnowa1
           coordinates: -4.644718,19.141476
-        119:
+        86:
           color: '#FFFFFFFF'
           id: grasssnowa2
           coordinates: -6.332218,17.702477
-        120:
+        87:
           color: '#FFFFFFFF'
           id: grasssnowa2
           coordinates: -7.488468,14.82448
-        121:
+        88:
           color: '#FFFFFFFF'
           id: grasssnowc1
           coordinates: -7.175968,10.382353
-        122:
+        89:
           color: '#FFFFFFFF'
           id: grasssnowc2
           coordinates: -5.675968,10.1320915
-        123:
+        90:
           color: '#FFFFFFFF'
           id: grasssnowa3
           coordinates: -6.207218,16.0445
-        124:
+        91:
           color: '#FFFFFFFF'
           id: grasssnowa2
           coordinates: -5.738468,8.348984
-        125:
+        92:
           color: '#FFFFFFFF'
           id: grasssnowb2
           coordinates: -5.832218,13.979851
-        138:
+        98:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -9,4
-        139:
+        99:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -9,3
-        140:
+        100:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -9,2
-        141:
+        101:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -9,1
-        142:
+        102:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: -9,0
-        167:
+        127:
           color: '#FFFFFFFF'
           id: WarnEndS
           coordinates: -6,21
-        272:
-          color: '#A4610647'
-          id: CheckerNWSE
-          coordinates: -14,6
-        271:
+        210:
           color: '#A4610647'
           id: CheckerNWSE
           coordinates: -13,6
-        273:
+        211:
+          color: '#A4610647'
+          id: CheckerNWSE
+          coordinates: -14,6
+        212:
           color: '#A4610647'
           id: CheckerNWSE
           coordinates: -15,6
-        274:
+        213:
           color: '#A4610647'
           id: CheckerNWSE
           coordinates: -15,7
-        279:
+        214:
+          color: '#A4610647'
+          id: CheckerNWSE
+          coordinates: -14,7
+        215:
+          color: '#A4610647'
+          id: CheckerNWSE
+          coordinates: -13,7
+        216:
+          color: '#A4610647'
+          id: CheckerNWSE
+          coordinates: -14,8
+        217:
+          color: '#A4610647'
+          id: CheckerNWSE
+          coordinates: -15,8
+        218:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: -16,8
-        280:
+        219:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: -16,9
@@ -2300,7 +2300,7 @@ entities:
       -3,-6: 0
       -3,-5: 0
       -3,-4: 0
-      -3,-3: 0
+      -3,-3: 1
       -3,-2: 0
       -3,-1: 0
       -2,-16: 0
@@ -2409,7 +2409,7 @@ entities:
       5,-16: 0
       5,-15: 0
       5,-14: 0
-      5,-13: 0
+      5,-13: 1
       5,-12: 0
       5,-11: 0
       5,-10: 0
@@ -2471,8 +2471,8 @@ entities:
       8,-2: 0
       8,-1: 0
       9,-16: 0
-      9,-15: 0
-      9,-14: 0
+      9,-15: 1
+      9,-14: 1
       9,-13: 0
       9,-12: 0
       9,-11: 0
@@ -2482,7 +2482,7 @@ entities:
       9,-7: 0
       9,-6: 0
       9,-5: 0
-      9,-4: 0
+      9,-4: 1
       9,-3: 0
       9,-2: 0
       9,-1: 0
@@ -2503,8 +2503,8 @@ entities:
       10,-2: 0
       10,-1: 0
       11,-16: 0
-      11,-15: 0
-      11,-14: 0
+      11,-15: 1
+      11,-14: 1
       11,-13: 0
       11,-12: 0
       11,-11: 0
@@ -2513,7 +2513,7 @@ entities:
       11,-8: 0
       11,-7: 0
       11,-6: 0
-      11,-5: 0
+      11,-5: 1
       11,-4: 0
       11,-3: 0
       11,-2: 0
@@ -2535,8 +2535,8 @@ entities:
       12,-2: 0
       12,-1: 0
       13,-16: 0
-      13,-15: 0
-      13,-14: 0
+      13,-15: 1
+      13,-14: 1
       13,-13: 0
       13,-12: 0
       13,-11: 0
@@ -2545,7 +2545,7 @@ entities:
       13,-8: 0
       13,-7: 0
       13,-6: 0
-      13,-5: 0
+      13,-5: 1
       13,-4: 0
       13,-3: 0
       13,-2: 0
@@ -2983,7 +2983,7 @@ entities:
       19,-2: 0
       19,-1: 0
       20,-16: 0
-      20,-15: 0
+      20,-15: 1
       20,-14: 0
       20,-13: 0
       20,-12: 0
@@ -3047,7 +3047,7 @@ entities:
       23,-2: 0
       23,-1: 0
       24,-16: 0
-      24,-15: 0
+      24,-15: 1
       24,-14: 0
       24,-13: 0
       24,-12: 0
@@ -3198,13 +3198,13 @@ entities:
       6,-21: 0
       6,-20: 0
       6,-19: 0
-      6,-18: 0
+      6,-18: 1
       6,-17: 0
       7,-22: 0
       7,-21: 0
       7,-20: 0
       7,-19: 0
-      7,-18: 0
+      7,-18: 1
       7,-17: 0
       8,-22: 0
       8,-21: 0
@@ -6438,12 +6438,57 @@ entities:
       -33,2: 0
       -33,3: 0
       -33,4: 0
+      4,-26: 2
+      5,-26: 2
+      6,-26: 2
+      7,-26: 2
+      8,-26: 2
+      9,-25: 2
+      10,-25: 2
+      11,-25: 2
+      12,-25: 2
+      13,-25: 2
+      14,-25: 2
+      -22,7: 2
+      -21,5: 2
+      -21,6: 2
+      -21,7: 2
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
       moles:
       - 21.824879
       - 82.10312
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 21.213781
+      - 79.80423
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 0
+      - 0
       - 0
       - 0
       - 0
@@ -14122,7 +14167,7 @@ entities:
   components:
   - type: MetaData
   - type: Transform
-  - index: 5
+  - index: 4
     type: Map
   - type: PhysicsMap
   - type: Broadphase
@@ -20442,6 +20487,8 @@ entities:
     type: Transform
   - charge: 100
     type: GravityGenerator
+  - radius: 175.75
+    type: PointLight
 - uid: 2328
   type: GeneratorPlasma
   components:
@@ -21123,6 +21170,24 @@ entities:
     type: Transform
   - fixtures: []
     type: Fixtures
+- uid: 2439
+  type: CableApcExtension
+  components:
+  - pos: 13.5,-9.5
+    parent: 104
+    type: Transform
+- uid: 2440
+  type: CableApcExtension
+  components:
+  - pos: 5.5,-6.5
+    parent: 104
+    type: Transform
+- uid: 2441
+  type: CableApcExtension
+  components:
+  - pos: 5.5,-5.5
+    parent: 104
+    type: Transform
 - uid: 2505
   type: Catwalk
   components:

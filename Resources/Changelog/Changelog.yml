@@ -1,96 +1,4 @@
 Entries:
-- author: ashtronaut
-  changes:
-  - {message: The Lobby's ready button now clearly states whether you are ready not.
-      Hopefully this reduces confusion!, type: Tweak}
-  id: 2566
-  time: '2022-11-04T00:51:26.0000000+00:00'
-- author: Carbonhell
-  changes:
-  - {message: Ghosts can now toggle the lighting manager to be able to better observe
-      dark areas., type: Add}
-  id: 2567
-  time: '2022-11-04T00:56:30.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Melee weapon cooldown now resets when swapping hands., type: Fix}
-  id: 2568
-  time: '2022-11-04T01:18:01.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: Fixed an issue where crates would clip through firelocks., type: Fix}
-  id: 2569
-  time: '2022-11-04T01:18:59.0000000+00:00'
-- author: Vordenburg
-  changes:
-  - {message: Allowed gas filters to be reset to filter no gases., type: Add}
-  id: 2570
-  time: '2022-11-04T01:27:20.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Alt-clicking can now be used on hands again., type: Fix}
-  id: 2571
-  time: '2022-11-04T01:36:45.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fixed the damage/death overlay being off-centre while using the "separated"
-      HUD layout., type: Fix}
-  id: 2572
-  time: '2022-11-04T01:44:51.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Objectives involving other traitors should be more reliable at providing
-      traitors that are alive and not SSD., type: Fix}
-  id: 2573
-  time: '2022-11-04T02:58:19.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: Stealth boxes are now available via traitor uplinks., type: Add}
-  - {message: 'Stealth boxes have been rebalanced. They now require players to move
-      slower to stay hidden, collide with bullets, and can no longer trap simple mobs.',
-    type: Tweak}
-  - {message: Fixed a bug that allowed sleeping mobs to still control vehicles and
-      boxes., type: Fix}
-  id: 2574
-  time: '2022-11-04T03:16:24.0000000+00:00'
-- author: 25203
-  changes:
-  - {message: Upgradeable machines can now be examined to show the effects that the
-      upgrades have., type: Add}
-  id: 2575
-  time: '2022-11-04T03:27:47.0000000+00:00'
-- author: rolfero
-  changes:
-  - {message: You can now link airlocks and windoors to buttons and levers!, type: Add}
-  id: 2576
-  time: '2022-11-04T04:00:34.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Pinpointer arrow should be more accurate., type: Tweak}
-  id: 2577
-  time: '2022-11-04T04:15:24.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed a bug allowing lathes to infinitely print items when upgraded.,
-    type: Fix}
-  id: 2578
-  time: '2022-11-04T19:13:07.0000000+00:00'
-- author: checkraze
-  changes:
-  - {message: changed the presents to be boxes and made a new present that has a surprise
-      inside!, type: Tweak}
-  id: 2579
-  time: '2022-11-04T19:24:29.0000000+00:00'
-- author: Salex08
-  changes:
-  - {message: Shot Projectiles cause impulses like it was supposed to, type: Fix}
-  id: 2580
-  time: '2022-11-05T03:08:32.0000000+00:00'
-- author: rolfero
-  changes:
-  - {message: Glowstick sprites inhand are now visible, type: Fix}
-  id: 2581
-  time: '2022-11-05T15:28:44.0000000+00:00'
 - author: Cripes
   changes:
   - {message: Construction menu displays correct icon for air injector, type: Fix}
@@ -2909,3 +2817,101 @@ Entries:
       connection pipes rotatable again., type: Fix}
   id: 3065
   time: '2023-02-24T01:33:34.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Hugging/Petting no longer opens the strip menu., type: Fix}
+  id: 3066
+  time: '2023-02-25T17:17:40.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Ambient sounds no longer play for paused entities., type: Tweak}
+  id: 3067
+  time: '2023-02-25T17:19:31.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: BotanySwab/Disease Swab - Does not double dip uses (was activating twice
+      because of the swab having a doafter for plants and one for humans). Grabs the
+      disease data now correctly too., type: Fix}
+  - {message: 'Healing - Prevents multi-use, actually heals the target now.', type: Fix}
+  - {message: Drinks - Prevents multi use on force feeding targets, type: Fix}
+  - {message: Food - Prevents multi use on force feeding targets, type: Fix}
+  - {message: Tile Prying - Prevents multi use on multiple tiles, type: Fix}
+  - {message: Door Prying - Fixes an issue where doors wouldn't be able to be pried
+      again if cancelled., type: Fix}
+  - {message: Syringes - Prevents multi use on injecting self/targets., type: Fix}
+  id: 3068
+  time: '2023-02-26T05:33:06.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix console warnings about rsi sprite access, type: Fix}
+  - {message: Fix issue with device configurators out of line-of-sight not closing
+      properly., type: Fix}
+  id: 3069
+  time: '2023-02-26T07:48:58.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Game changelogs are now sent to Discord. Assuming everything works you
+      might even be reading this there right now!, type: Add}
+  id: 3070
+  time: '2023-02-26T16:45:07.0000000+00:00'
+- author: Hypospray Nerfer
+  changes:
+  - {message: 'Hypospray, Hypopen, and Gorlax Hypospray now all have short cooldowns.',
+    type: Tweak}
+  id: 3071
+  time: '2023-02-27T21:19:53.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix tile definition reloads., type: Fix}
+  id: 3072
+  time: '2023-02-28T05:32:05.0000000+00:00'
+- author: pofitlo
+  changes:
+  - {message: added ability to drag something for animals, type: Add}
+  id: 3073
+  time: '2023-02-28T12:57:09.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: 'Changed ID card examine icon, at least until someone makes a better
+      icon.', type: Tweak}
+  id: 3074
+  time: '2023-02-28T13:00:23.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: meat spike no longer vaporizes victim items, type: Fix}
+  id: 3075
+  time: '2023-02-28T13:14:14.0000000+00:00'
+- author: Visne
+  changes:
+  - {message: Fixed a bug where an unwrapped nutribrick was worth more than a wrapped
+      one, type: Fix}
+  id: 3076
+  time: '2023-02-28T15:55:25.0000000+00:00'
+- author: h3half
+  changes:
+  - {message: Freshly-printed powercells no longer look like they're fully charged.,
+    type: Fix}
+  id: 3077
+  time: '2023-02-28T15:57:17.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: You can now fit more bread in your bag., type: Tweak}
+  id: 3078
+  time: '2023-02-28T16:00:15.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Experimental research hardsuit can now be hidden in a backpack., type: Add}
+  id: 3079
+  time: '2023-02-28T16:04:30.0000000+00:00'
+- author: Visne
+  changes:
+  - {message: Removed annoying margin between viewport and chat in separated HUD.,
+    type: Tweak}
+  id: 3080
+  time: '2023-02-28T16:11:39.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: Admins may now configure a message to be sent to players when they join
+      the lobby., type: Add}
+  id: 3081
+  time: '2023-02-28T16:15:49.0000000+00:00'

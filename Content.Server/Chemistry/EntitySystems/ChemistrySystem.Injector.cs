@@ -129,11 +129,18 @@ public sealed partial class ChemistrySystem
 
     private void OnInjectDoAfter(EntityUid uid, InjectorComponent component, DoAfterEvent args)
     {
-        if (args.Handled || args.Cancelled || args.Args.Target == null)
+        if (args.Cancelled)
+        {
+            component.IsInjecting = false;
+            return;
+        }
+
+        if (args.Handled || args.Args.Target == null)
             return;
 
         UseInjector(args.Args.Target.Value, args.Args.User, uid, component);
 
+        component.IsInjecting = false;
         args.Handled = true;
     }
 
@@ -216,12 +223,18 @@ public sealed partial class ChemistrySystem
         if (!_solutions.TryGetSolution(injector, InjectorComponent.SolutionName, out var solution))
             return;
 
+        //If it found it's injecting
+        if (component.IsInjecting)
+            return;
+
         var actualDelay = MathF.Max(component.Delay, 1f);
 
         // Injections take 1 second longer per additional 5u
         actualDelay += (float) component.TransferAmount / component.Delay - 1;
 
-        if (user != target)
+        var isTarget = user != target;
+
+        if (isTarget)
         {
             // Create a pop-up for the target
             var userName = Identity.Entity(user, EntityManager);
@@ -256,8 +269,12 @@ public sealed partial class ChemistrySystem
                 _adminLogger.Add(LogType.Ingestion, $"{EntityManager.ToPrettyString(user):user} is attempting to inject themselves with a solution {SolutionContainerSystem.ToPrettyString(solution):solution}.");
         }
 
+        component.IsInjecting = true;
+
         _doAfter.DoAfter(new DoAfterEventArgs(user, actualDelay, target:target, used:injector)
         {
+            RaiseOnTarget = isTarget,
+            RaiseOnUser = !isTarget,
             BreakOnUserMove = true,
             BreakOnDamage = true,
             BreakOnStun = true,
