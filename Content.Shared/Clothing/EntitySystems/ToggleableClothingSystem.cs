@@ -24,7 +24,6 @@ public sealed class ToggleableClothingSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedStrippableSystem _strippable = default!;
-    [Dependency] private readonly ClothingSystem _clothing = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly INetManager _net = default!;
 
@@ -44,7 +43,6 @@ public sealed class ToggleableClothingSystem : EntitySystem
         SubscribeLocalEvent<AttachedClothingComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<AttachedClothingComponent, GotUnequippedEvent>(OnAttachedUnequip);
         SubscribeLocalEvent<AttachedClothingComponent, ComponentRemove>(OnRemoveAttached);
-
 
         SubscribeLocalEvent<ToggleableClothingComponent, InventoryRelayedEvent<GetVerbsEvent<EquipmentVerb>>>(GetRelayedVerbs);
         SubscribeLocalEvent<ToggleableClothingComponent, GetVerbsEvent<EquipmentVerb>>(OnGetVerbs);
@@ -66,7 +64,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
         if (text == null)
             return;
 
-        if (!_clothing.InSlotWithFlags(uid, component.RequiredFlags))
+        if (!_inventorySystem.InSlotWithFlags(uid, component.RequiredFlags))
             return;
 
         var wearer = Transform(uid).ParentUid;

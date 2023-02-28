@@ -146,13 +146,6 @@ namespace Content.Shared.Verbs
                 verbs.UnionWith(verbEvent.Verbs);
             }
 
-            if (types.Contains(typeof(ExamineVerb)))
-            {
-                var verbEvent = new GetVerbsEvent<ExamineVerb>(user, target, @using, hands, canInteract, canAccess);
-                RaiseLocalEvent(target, verbEvent, true);
-                verbs.UnionWith(verbEvent.Verbs);
-            }
-
             if (types.Contains(typeof(EquipmentVerb)))
             {
                 var access = canAccess || _interactionSystem.CanAccessEquipment(user, target);

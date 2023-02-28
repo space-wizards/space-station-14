@@ -40,7 +40,7 @@ public interface ISharedAdminManager
     ///     Whether to return admin data for admins that are current de-adminned.
     /// </param>
     /// <returns>true if the player is an admin, false otherwise.</returns>
-    public bool IsAdmin(EntityUid uid, bool includeDeAdmin = false)
+    bool IsAdmin(EntityUid uid, bool includeDeAdmin = false)
     {
         return GetAdminData(uid, includeDeAdmin) != null;
     }

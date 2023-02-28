@@ -15,7 +15,7 @@ namespace Content.Shared.Examine
         [DataField("group")]
         public List<ExamineGroup> ExamineGroups = new()
         {
-            // TODO Remove hardcodedd component names.
+            // TODO Remove hardcoded component names.
             new ExamineGroup()
             {
                 Components = new()

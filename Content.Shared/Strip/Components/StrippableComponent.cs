@@ -63,7 +63,7 @@ namespace Content.Shared.Strip.Components
     /// Used to modify strip times. Raised directed at the user.
     /// </summary>
     /// <remarks>
-    /// This is also used by some stripping related interactions, i.e., interactions that interacting with items that are currently equipped by another player.
+    /// This is also used by some stripping related interactions, i.e., interactions with items that are currently equipped by another player.
     /// </remarks>
     public sealed class BeforeStripEvent : BaseBeforeStripEvent
     {
@@ -74,7 +74,7 @@ namespace Content.Shared.Strip.Components
     /// Used to modify strip times. Raised directed at the target.
     /// </summary>
     /// <remarks>
-    /// This is also used by some stripping related interactions, i.e., interactions that interacting with items that are currently equipped by another player.
+    /// This is also used by some stripping related interactions, i.e., interactions with items that are currently equipped by another player.
     /// </remarks>
     public sealed class BeforeGettingStrippedEvent : BaseBeforeStripEvent
     {
