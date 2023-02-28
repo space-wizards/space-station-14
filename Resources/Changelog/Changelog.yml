@@ -1,14 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Stealth boxes are now available via traitor uplinks., type: Add}
-  - {message: 'Stealth boxes have been rebalanced. They now require players to move
-      slower to stay hidden, collide with bullets, and can no longer trap simple mobs.',
-    type: Tweak}
-  - {message: Fixed a bug that allowed sleeping mobs to still control vehicles and
-      boxes., type: Fix}
-  id: 2574
-  time: '2022-11-04T03:16:24.0000000+00:00'
 - author: 25203
   changes:
   - {message: Upgradeable machines can now be examined to show the effects that the
@@ -2918,3 +2908,9 @@ Entries:
   - {message: added ability to drag something for animals, type: Add}
   id: 3073
   time: '2023-02-28T12:57:09.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: 'Changed ID card examine icon, at least until someone makes a better
+      icon.', type: Tweak}
+  id: 3074
+  time: '2023-02-28T13:00:23.0000000+00:00'
