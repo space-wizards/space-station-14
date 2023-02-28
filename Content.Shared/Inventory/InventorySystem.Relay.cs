@@ -8,6 +8,7 @@ using Content.Shared.Slippery;
 using Content.Shared.Strip.Components;
 using Content.Shared.Temperature;
 using Content.Shared.Verbs;
+using Robust.Shared.Containers;
 
 namespace Content.Shared.Inventory;
 
@@ -45,12 +46,26 @@ public partial class InventorySystem
     private void OnGetStrippingVerbs(EntityUid uid, InventoryComponent component, GetVerbsEvent<EquipmentVerb> args)
     {
         // Automatically relay stripping related verbs to all equipped clothing.
-        var containerEnumerator = new ContainerSlotEnumerator(uid, component.TemplateId, _prototypeManager, this);
+
+        if (!_prototypeManager.TryIndex(component.TemplateId, out InventoryTemplatePrototype? proto))
+            return;
+
+        if (!TryComp(uid, out ContainerManagerComponent? containers))
+            return;
+
         var ev = new InventoryRelayedEvent<GetVerbsEvent<EquipmentVerb>>(args);
-        while (containerEnumerator.MoveNext(out var container))
+        foreach (var slotDef in proto.Slots)
         {
-            if (container.ContainedEntity.HasValue)
-                RaiseLocalEvent(container.ContainedEntity.Value, ev);
+            if (slotDef.StripHidden && args.User != uid)
+                continue;
+
+            if (!containers.TryGetContainer(slotDef.Name, out var container))
+                continue;
+
+            if (container is not ContainerSlot slot || slot.ContainedEntity is not { } ent)
+                continue;
+
+            RaiseLocalEvent(ent, ev);
         }
     }
 

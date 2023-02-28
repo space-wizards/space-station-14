@@ -155,7 +155,8 @@ namespace Content.Shared.Verbs
 
             if (types.Contains(typeof(EquipmentVerb)))
             {
-                var verbEvent = new GetVerbsEvent<EquipmentVerb>(user, target, @using, hands, canInteract, canAccess);
+                var access = canAccess || _interactionSystem.CanAccessEquipment(user, target);
+                var verbEvent = new GetVerbsEvent<EquipmentVerb>(user, target, @using, hands, canInteract, access);
                 RaiseLocalEvent(target, verbEvent);
                 verbs.UnionWith(verbEvent.Verbs);
             }

@@ -11,6 +11,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Content.Shared.Movement.Components;
 using Content.Shared.Physics;
@@ -58,6 +59,7 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
         [Dependency] private readonly SharedPullingSystem _pullSystem = default!;
+        [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
         private const CollisionGroup InRangeUnobstructedMask
@@ -989,6 +991,32 @@ namespace Content.Shared.Interaction
         ///     checks if the user can access the item in these situations.
         /// </summary>
         public abstract bool CanAccessViaStorage(EntityUid user, EntityUid target);
+
+        /// <summary>
+        ///     Checks whether an entity currently equipped by another player is accessible to some user. This shouldn't
+        ///     be used as a general interaction check, as these kinda of interactions should generally trigger a
+        ///     do-after and a warning for the other player.
+        /// </summary>
+        public bool CanAccessEquipment(EntityUid user, EntityUid target)
+        {
+            if (Deleted(target))
+                return false;
+
+            if (!_containerSystem.TryGetContainingContainer(target, out var container))
+                return false;
+
+            var wearer = container.Owner;
+            if (!_inventory.TryGetSlot(wearer, container.ID, out var slotDef))
+                return false;
+
+            if (wearer == user)
+                return true;
+
+            if (slotDef.StripHidden)
+                return false;
+
+            return InRangeUnobstructed(user, wearer) && _containerSystem.IsInSameOrParentContainer(user, wearer);
+        }
 
         protected bool ValidateClientInput(ICommonSession? session, EntityCoordinates coords,
             EntityUid uid, [NotNullWhen(true)] out EntityUid? userEntity)
