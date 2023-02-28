@@ -7,7 +7,16 @@
         <Control
             Name="Icon"
             SetWidth="{x:Static ui:ContextMenuElement.ElementHeight}"
-            SetHeight="{x:Static ui:ContextMenuElement.ElementHeight}"/>
+            SetHeight="{x:Static ui:ContextMenuElement.ElementHeight}">
+            <TextureRect
+                Name="Unanchored"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                StyleClasses="contextMenuUnanchoredTexture"
+                TextureScale="0.15 0.15"
+                Access="Public"
+                Visible="false"/>
+        </Control>
         <RichTextLabel
             Name="Label"
             MaxWidth="300"

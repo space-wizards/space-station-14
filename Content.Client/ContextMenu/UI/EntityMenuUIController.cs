@@ -281,7 +281,7 @@ namespace Content.Client.ContextMenu.UI
             element.SubMenu.OnPopupOpen += () => _verb.OpenVerbMenu(entity, popup: element.SubMenu);
             element.SubMenu.OnPopupHide += element.SubMenu.MenuBody.DisposeAllChildren;
 
-            element.UnanchoredLabel.Visible = EntityIsUnanchored(entity);
+            element.Unanchored.Visible = EntityIsUnanchored(entity);
 
             _context.AddElement(menu, element);
             Elements.TryAdd(entity, element);
@@ -334,7 +334,7 @@ namespace Content.Client.ContextMenu.UI
             }
 
             element.UpdateEntity(entity);
-            element.UnanchoredLabel.Visible = EntityIsUnanchored(entity.Value);
+            element.Unanchored.Visible = EntityIsUnanchored(entity.Value);
 
             // Update the entity count & count label
             element.Count = 0;

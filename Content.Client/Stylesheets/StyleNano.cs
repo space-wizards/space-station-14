@@ -494,6 +494,7 @@ namespace Content.Client.Stylesheets
             paperBackground.SetPatchMargin(StyleBox.Margin.All, 16.0f);
 
             var contextMenuExpansionTexture = resCache.GetTexture("/Textures/Interface/VerbIcons/group.svg.192dpi.png");
+            var contextMenuUnanchoredTexture = resCache.GetTexture("/Textures/Interface/VerbIcons/anchor.svg.192dpi.png");
             var verbMenuConfirmationTexture = resCache.GetTexture("/Textures/Interface/VerbIcons/group.svg.192dpi.png");
 
             // south-facing arrow:
@@ -680,6 +681,10 @@ namespace Content.Client.Stylesheets
 
                 Element<TextureRect>().Class(ContextMenuElement.StyleClassContextMenuExpansionTexture)
                     .Prop(TextureRect.StylePropertyTexture, contextMenuExpansionTexture),
+
+                Element<TextureRect>().Class(ContextMenuElement.StyleClassContextMenuUnanchoredTexture)
+                    .Prop(TextureRect.StylePropertyTexture, contextMenuUnanchoredTexture)
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#FF004F")),
 
                 Element<TextureRect>().Class(VerbMenuElement.StyleClassVerbMenuConfirmationTexture)
                     .Prop(TextureRect.StylePropertyTexture, verbMenuConfirmationTexture),
