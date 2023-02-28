@@ -1,10 +1,4 @@
 Entries:
-- author: checkraze
-  changes:
-  - {message: changed the presents to be boxes and made a new present that has a surprise
-      inside!, type: Tweak}
-  id: 2579
-  time: '2022-11-04T19:24:29.0000000+00:00'
 - author: Salex08
   changes:
   - {message: Shot Projectiles cause impulses like it was supposed to, type: Fix}
@@ -2914,3 +2908,8 @@ Entries:
   - {message: You can now fit more bread in your bag., type: Tweak}
   id: 3078
   time: '2023-02-28T16:00:15.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Experimental research hardsuit can now be hidden in a backpack., type: Add}
+  id: 3079
+  time: '2023-02-28T16:04:30.0000000+00:00'
