@@ -37,6 +37,6 @@ ent-ClosetWallMixed = mixed wall closet
 ent-ClosetWallAtmospherics = atmospherics wall closet
     .desc = { ent-BaseWallCloset.desc }
     .suffix = { "" }
-ent-LockerWallMedical = medical doctor's wall locker
+ent-LockerWallMedical = medical wall locker
     .desc = { ent-BaseWallLocker.desc }
     .suffix = { "" }
