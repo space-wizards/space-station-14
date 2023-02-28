@@ -697,3 +697,84 @@
               amount: 1
     - node: linotile
       entity: FloorTileItemLino
+
+#shuttle
+- type: constructionGraph
+  id: TileShuttleRed
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: shuttleredtile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: shuttleredtile
+      entity: FloorTileItemShuttleRed
+
+- type: constructionGraph
+  id: TileShuttleOrange
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: shuttleorangetile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: shuttleorangetile
+      entity: FloorTileItemShuttleOrange
+
+- type: constructionGraph
+  id: TileShuttleBlue
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: shuttlebluetile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: shuttlebluetile
+      entity: FloorTileItemShuttleBlue
+
+- type: constructionGraph
+  id: TileShuttlePurple
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: shuttlepurpletile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: shuttlepurpletile
+      entity: FloorTileItemShuttlePurple
+
+- type: constructionGraph
+  id: TileShuttleWhite
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: shuttlewhitetile
+          completed:
+            - !type:SetStackCount
+              amount: 4
+          steps:
+            - material: Steel
+              amount: 1
+    - node: shuttlewhitetile
+      entity: FloorTileItemShuttleWhite

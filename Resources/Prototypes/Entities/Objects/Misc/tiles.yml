@@ -217,7 +217,7 @@
   - type: Sprite
     state: steelmaint
   - type: Item
-    heldPrefix: steel
+    heldPrefix: steelmaint
   - type: FloorTile
     outputs:
       - Plating
@@ -236,7 +236,7 @@
   - type: Sprite
     state: maintgrating
   - type: Item
-    heldPrefix: steel
+    heldPrefix: maintgrating
   - type: FloorTile
     outputs:
       - Plating
@@ -274,7 +274,7 @@
   - type: Sprite
     state: techmaint
   - type: Item
-    heldPrefix: dark
+    heldPrefix: techmaint
   - type: FloorTile
     outputs:
       - Plating
@@ -794,6 +794,9 @@
       - FloorShuttleWhite
   - type: Stack
     stackType: FloorTileStackShuttleWhite
+  - type: Construction
+    graph: TileShuttleWhite
+    node: shuttlewhitetile
 
 - type: entity
   name: blue shuttle floor
@@ -810,6 +813,9 @@
       - FloorShuttleBlue
   - type: Stack
     stackType: FloorTileStackShuttleBlue
+  - type: Construction
+    graph: TileShuttleBlue
+    node: shuttlebluetile
 
 - type: entity
   name: orange shuttle floor
@@ -826,6 +832,9 @@
       - FloorShuttleOrange
   - type: Stack
     stackType: FloorTileStackShuttleOrange
+  - type: Construction
+    graph: TileShuttleOrange
+    node: shuttleorangetile
 
 - type: entity
   name: purple shuttle floor
@@ -842,6 +851,9 @@
       - FloorShuttlePurple
   - type: Stack
     stackType: FloorTileStackShuttlePurple
+  - type: Construction
+    graph: TileShuttlePurple
+    node: shuttlepurpletile
 
 - type: entity
   name: red shuttle floor
@@ -858,6 +870,9 @@
       - FloorShuttleRed
   - type: Stack
     stackType: FloorTileStackShuttleRed
+  - type: Construction
+    graph: TileShuttleRed
+    node: shuttleredtile
 
 #carpets
 - type: entity
@@ -944,7 +959,7 @@
   - type: Sprite
     state: carpetclown
   - type: Item
-    heldPrefix: generic
+    heldPrefix: carpetclown
   - type: FloorTile
     outputs:
       - Plating
@@ -1011,7 +1026,7 @@
   - type: Sprite
     state: lino
   - type: Item
-    heldPrefix: steel
+    heldPrefix: lino
   - type: FloorTile
     outputs:
       - Plating

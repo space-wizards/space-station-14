@@ -188,7 +188,7 @@
   targetNode: whitediagonaltile
   category: construction-category-tiles
   description: "Four white diagonal tiles."
-  icon: { sprite: Objects/Tiles/tile.rsi, state: steel }
+  icon: { sprite: Objects/Tiles/tile.rsi, state: white }
   objectType: Item
 
 - type: construction
@@ -199,7 +199,7 @@
   targetNode: whitediagonalminitile
   category: construction-category-tiles
   description: "Four white diagonal mini tiles."
-  icon: { sprite: Objects/Tiles/tile.rsi, state: steel }
+  icon: { sprite: Objects/Tiles/tile.rsi, state: white }
   objectType: Item
 
 - type: construction
@@ -210,7 +210,7 @@
   targetNode: whiteherringbonetile
   category: construction-category-tiles
   description: "Four white herringbone tiles."
-  icon: { sprite: Objects/Tiles/tile.rsi, state: steel }
+  icon: { sprite: Objects/Tiles/tile.rsi, state: white }
   objectType: Item
 
 - type: construction
@@ -221,7 +221,7 @@
   targetNode: whiteminitile
   category: construction-category-tiles
   description: "Four white mini tiles."
-  icon: { sprite: Objects/Tiles/tile.rsi, state: steel }
+  icon: { sprite: Objects/Tiles/tile.rsi, state: white }
   objectType: Item
 
 - type: construction
@@ -232,7 +232,7 @@
   targetNode: whitemonotile
   category: construction-category-tiles
   description: "Four white mono tiles."
-  icon: { sprite: Objects/Tiles/tile.rsi, state: steel }
+  icon: { sprite: Objects/Tiles/tile.rsi, state: white }
   objectType: Item
 
 - type: construction
@@ -243,7 +243,7 @@
   targetNode: whiteoffsettile
   category: construction-category-tiles
   description: "Four white offset tiles."
-  icon: { sprite: Objects/Tiles/tile.rsi, state: steel }
+  icon: { sprite: Objects/Tiles/tile.rsi, state: white }
   objectType: Item
 
 - type: construction
@@ -254,7 +254,7 @@
   targetNode: whitepavementtile
   category: construction-category-tiles
   description: "Four white pavement tiles."
-  icon: { sprite: Objects/Tiles/tile.rsi, state: steel }
+  icon: { sprite: Objects/Tiles/tile.rsi, state: white }
   objectType: Item
 
 - type: construction
@@ -265,7 +265,7 @@
   targetNode: whitepavementverticaltile
   category: construction-category-tiles
   description: "Four white pavement vertical tiles."
-  icon: { sprite: Objects/Tiles/tile.rsi, state: steel }
+  icon: { sprite: Objects/Tiles/tile.rsi, state: white }
   objectType: Item
 
 #dark variants
@@ -288,7 +288,7 @@
   targetNode: darkdiagonaltile
   category: construction-category-tiles
   description: "Four dark diagonal tiles."
-  icon: { sprite: Objects/Tiles/tile.rsi, state: steel }
+  icon: { sprite: Objects/Tiles/tile.rsi, state: dark }
   objectType: Item
 
 - type: construction
@@ -299,7 +299,7 @@
   targetNode: darkdiagonalminitile
   category: construction-category-tiles
   description: "Four dark diagonal mini tiles."
-  icon: { sprite: Objects/Tiles/tile.rsi, state: steel }
+  icon: { sprite: Objects/Tiles/tile.rsi, state: dark }
   objectType: Item
 
 - type: construction
@@ -310,7 +310,7 @@
   targetNode: darkherringbonetile
   category: construction-category-tiles
   description: "Four dark herringbone tiles."
-  icon: { sprite: Objects/Tiles/tile.rsi, state: steel }
+  icon: { sprite: Objects/Tiles/tile.rsi, state: dark }
   objectType: Item
 
 - type: construction
@@ -321,7 +321,7 @@
   targetNode: darkminitile
   category: construction-category-tiles
   description: "Four dark mini tiles."
-  icon: { sprite: Objects/Tiles/tile.rsi, state: steel }
+  icon: { sprite: Objects/Tiles/tile.rsi, state: dark }
   objectType: Item
 
 - type: construction
@@ -332,7 +332,7 @@
   targetNode: darkmonotile
   category: construction-category-tiles
   description: "Four dark mono tiles."
-  icon: { sprite: Objects/Tiles/tile.rsi, state: steel }
+  icon: { sprite: Objects/Tiles/tile.rsi, state: dark }
   objectType: Item
 
 - type: construction
@@ -343,7 +343,7 @@
   targetNode: darkoffsettile
   category: construction-category-tiles
   description: "Four dark offset tiles."
-  icon: { sprite: Objects/Tiles/tile.rsi, state: steel }
+  icon: { sprite: Objects/Tiles/tile.rsi, state: dark }
   objectType: Item
 
 - type: construction
@@ -354,7 +354,7 @@
   targetNode: darkpavementtile
   category: construction-category-tiles
   description: "Four dark pavement tiles."
-  icon: { sprite: Objects/Tiles/tile.rsi, state: steel }
+  icon: { sprite: Objects/Tiles/tile.rsi, state: dark }
   objectType: Item
 
 - type: construction
@@ -365,7 +365,7 @@
   targetNode: darkpavementverticaltile
   category: construction-category-tiles
   description: "Four dark pavement vertical tiles."
-  icon: { sprite: Objects/Tiles/tile.rsi, state: steel }
+  icon: { sprite: Objects/Tiles/tile.rsi, state: dark }
   objectType: Item
 
 #circuits
@@ -479,4 +479,60 @@
   category: construction-category-tiles
   description: "Four lino carpet tiles."
   icon: { sprite: Objects/Tiles/tile.rsi, state: lino }
+  objectType: Item
+
+#shuttle
+- type: construction
+  name: red shuttle tile
+  id: TileShuttleRed
+  graph: TileShuttleRed
+  startNode: start
+  targetNode: shuttleredtile
+  category: construction-category-tiles
+  description: "Four red shuttle tiles."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: shuttlered }
+  objectType: Item
+
+- type: construction
+  name: orange shuttle tile
+  id: TileShuttleOrange
+  graph: TileShuttleOrange
+  startNode: start
+  targetNode: shuttleorangetile
+  category: construction-category-tiles
+  description: "Four orange shuttle tiles."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: shuttleorange }
+  objectType: Item
+
+- type: construction
+  name: blue shuttle tile
+  id: TileShuttleBlue
+  graph: TileShuttleBlue
+  startNode: start
+  targetNode: shuttlebluetile
+  category: construction-category-tiles
+  description: "Four blue shuttle tiles."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: shuttleblue }
+  objectType: Item
+
+- type: construction
+  name: purple shuttle tile
+  id: TileShuttlePurple
+  graph: TileShuttlePurple
+  startNode: start
+  targetNode: shuttlepurpletile
+  category: construction-category-tiles
+  description: "Four purple shuttle tiles."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: shuttlepurple }
+  objectType: Item
+
+- type: construction
+  name: white shuttle tile
+  id: TileShuttleWhite
+  graph: TileShuttleWhite
+  startNode: start
+  targetNode: shuttlewhitetile
+  category: construction-category-tiles
+  description: "Four white shuttle tiles."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: shuttlewhite }
   objectType: Item
