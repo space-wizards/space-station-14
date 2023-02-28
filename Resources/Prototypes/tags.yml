@@ -568,6 +568,9 @@
   id: SyndicateSegwayKeys
 
 - type: Tag
+  id: Syringe
+
+- type: Tag
   id: Taser
 
 - type: Tag

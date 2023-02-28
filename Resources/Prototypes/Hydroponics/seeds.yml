@@ -277,6 +277,30 @@
       PotencyDivisor: 25
 
 - type: seed
+  id: cabbage
+  name: seeds-cabbage-name
+  noun: seeds-noun-seeds
+  displayName: seeds-cabbage-display-name
+  plantRsi: Objects/Specific/Hydroponics/cabbage.rsi
+  productPrototypes:
+    - FoodCabbage
+  lifespan: 50
+  maturation: 3
+  production: 5
+  yield: 4
+  potency: 10
+  growthStages: 1
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
   id: apple
   name: seeds-apple-name
   noun: seeds-noun-seeds

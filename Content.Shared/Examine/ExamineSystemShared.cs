@@ -319,7 +319,7 @@ namespace Content.Shared.Examine
         /// <seealso cref="PushText"/>
         public void PushMessage(FormattedMessage message)
         {
-            if (message.Tags.Count == 0)
+            if (message.Nodes.Count == 0)
                 return;
 
             if (_doNewLine)

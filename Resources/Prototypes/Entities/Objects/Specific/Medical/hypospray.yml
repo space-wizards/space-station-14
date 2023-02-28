@@ -18,6 +18,8 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
+  - type: UseDelay
+    delay: 0.5
   - type: StaticPrice
     price: 750
 
@@ -41,6 +43,8 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
+  - type: UseDelay
+    delay: 0.5
 
 - type: entity
   name: chemical medipen
@@ -166,5 +170,7 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
+  - type: UseDelay
+    delay: 0.5
   - type: StaticPrice # A new shitcurity meta
     price: 75

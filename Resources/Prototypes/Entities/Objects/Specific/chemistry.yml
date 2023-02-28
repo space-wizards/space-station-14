@@ -251,6 +251,9 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 4
     fillBaseName: syringe
+  - type: Tag
+    tags:
+    - Syringe
 
 - type: entity
   parent: BaseSyringe
@@ -258,6 +261,7 @@
   components:
   - type: Tag
     tags:
+    - Syringe
     - Trash
 
 - type: entity

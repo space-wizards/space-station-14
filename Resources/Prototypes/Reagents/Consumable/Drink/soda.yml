@@ -59,7 +59,9 @@
   physicalDesc: reagent-physical-desc-creamy
   flavor: soda
   color: "#fffbd6"
-  spritePath: icecreamglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/icecreamglass.rsi
+    state: icon
 
 - type: reagent
   id: LemonLime
@@ -69,7 +71,9 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: soda
   color: "#878F00"
-  spritePath: lemonlime.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/lemonlime.rsi
+    state: icon
 
 - type: reagent
   id: PwrGame
@@ -88,7 +92,9 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: soda
   color: "#381c07"
-  spritePath: rootbeerglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/rootbeerglass.rsi
+    state: icon
 
 - type: reagent
   id: RootBeerFloat
@@ -98,7 +104,9 @@
   physicalDesc: reagent-physical-desc-fizzy and creamy
   flavor: soda
   color: "#4f361f"
-  spritePath: rootbeerfloatglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/rootbeerfloatglass.rsi
+    state: icon
 
 - type: reagent
   id: SpaceMountainWind
