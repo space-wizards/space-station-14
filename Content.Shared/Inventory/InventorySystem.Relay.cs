@@ -25,7 +25,7 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, ModifyChangedTemperatureEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, GetDefaultRadioChannelEvent>(RelayInventoryEvent);
 
-        SubscribeLocalEvent<InventoryComponent, GetVerbsEvent<StrippingVerb>>(OnGetStrippingVerbs);
+        SubscribeLocalEvent<InventoryComponent, GetVerbsEvent<EquipmentVerb>>(OnGetStrippingVerbs);
     }
 
     protected void RelayInventoryEvent<T>(EntityUid uid, InventoryComponent component, T args) where T : EntityEventArgs, IInventoryRelayEvent
@@ -42,11 +42,11 @@ public partial class InventorySystem
         }
     }
 
-    private void OnGetStrippingVerbs(EntityUid uid, InventoryComponent component, GetVerbsEvent<StrippingVerb> args)
+    private void OnGetStrippingVerbs(EntityUid uid, InventoryComponent component, GetVerbsEvent<EquipmentVerb> args)
     {
         // Automatically relay stripping related verbs to all equipped clothing.
         var containerEnumerator = new ContainerSlotEnumerator(uid, component.TemplateId, _prototypeManager, this);
-        var ev = new InventoryRelayedEvent<GetVerbsEvent<StrippingVerb>>(args);
+        var ev = new InventoryRelayedEvent<GetVerbsEvent<EquipmentVerb>>(args);
         while (containerEnumerator.MoveNext(out var container))
         {
             if (container.ContainedEntity.HasValue)

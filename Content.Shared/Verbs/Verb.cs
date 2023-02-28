@@ -220,7 +220,7 @@ namespace Content.Shared.Verbs
             typeof(AlternativeVerb),
             typeof(ActivationVerb),
             typeof(ExamineVerb),
-            typeof(StrippingVerb) 
+            typeof(EquipmentVerb) 
         };
     }
 
@@ -337,12 +337,12 @@ namespace Content.Shared.Verbs
     }
 
     /// <summary>
-    ///     Verbs specifically for interactions that occur via the stripping UI. This is also servers as an indication
-    ///     that the <see cref="GetVerbsEvent{TVerb}.CanAccess"/> bool can be ignored. These interactions should
-    ///     generally trigger a do-after in order to allow the target to react.
+    ///     Verbs specifically for interactions that occur with equipped entities. These verbs should be accessible via
+    ///     the stripping UI, and may optionally also be accessible via a verb on the equipee if the via inventory relay
+    ///     events.get-verbs event.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class StrippingVerb : Verb
+    public sealed class EquipmentVerb : Verb
     {
         public override int TypePriority => 5;
     }

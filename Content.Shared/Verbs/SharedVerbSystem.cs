@@ -153,9 +153,9 @@ namespace Content.Shared.Verbs
                 verbs.UnionWith(verbEvent.Verbs);
             }
 
-            if (types.Contains(typeof(StrippingVerb)))
+            if (types.Contains(typeof(EquipmentVerb)))
             {
-                var verbEvent = new GetVerbsEvent<StrippingVerb>(user, target, @using, hands, canInteract, canAccess);
+                var verbEvent = new GetVerbsEvent<EquipmentVerb>(user, target, @using, hands, canInteract, canAccess);
                 RaiseLocalEvent(target, verbEvent);
                 verbs.UnionWith(verbEvent.Verbs);
             }

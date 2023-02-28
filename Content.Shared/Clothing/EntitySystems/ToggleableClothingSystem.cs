@@ -46,18 +46,18 @@ public sealed class ToggleableClothingSystem : EntitySystem
         SubscribeLocalEvent<AttachedClothingComponent, ComponentRemove>(OnRemoveAttached);
 
 
-        SubscribeLocalEvent<ToggleableClothingComponent, InventoryRelayedEvent<GetVerbsEvent<StrippingVerb>>>(GetRelayedVerbs);
-        SubscribeLocalEvent<ToggleableClothingComponent, GetVerbsEvent<StrippingVerb>>(OnGetVerbs);
-        SubscribeLocalEvent<AttachedClothingComponent, GetVerbsEvent<StrippingVerb>>(OnGetAttachedStripVerbsEvent);
+        SubscribeLocalEvent<ToggleableClothingComponent, InventoryRelayedEvent<GetVerbsEvent<EquipmentVerb>>>(GetRelayedVerbs);
+        SubscribeLocalEvent<ToggleableClothingComponent, GetVerbsEvent<EquipmentVerb>>(OnGetVerbs);
+        SubscribeLocalEvent<AttachedClothingComponent, GetVerbsEvent<EquipmentVerb>>(OnGetAttachedStripVerbsEvent);
         SubscribeLocalEvent<ToggleableClothingComponent, DoAfterEvent<ToggleClothingEvent>>(OnDoAfterComplete);
     }
 
-    private void GetRelayedVerbs(EntityUid uid, ToggleableClothingComponent component, InventoryRelayedEvent<GetVerbsEvent<StrippingVerb>> args)
+    private void GetRelayedVerbs(EntityUid uid, ToggleableClothingComponent component, InventoryRelayedEvent<GetVerbsEvent<EquipmentVerb>> args)
     {
         OnGetVerbs(uid, component, args.Args);
     }
 
-    private void OnGetVerbs(EntityUid uid, ToggleableClothingComponent component, GetVerbsEvent<StrippingVerb> args)
+    private void OnGetVerbs(EntityUid uid, ToggleableClothingComponent component, GetVerbsEvent<EquipmentVerb> args)
     {
         if (!args.CanInteract || component.ClothingUid == null || component.Container == null)
             return;
@@ -73,7 +73,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
         if (args.User != wearer && component.StripDelay == null)
             return;
 
-        var verb = new StrippingVerb()
+        var verb = new EquipmentVerb()
         {
             Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
             Text = Loc.GetString(text),
@@ -127,7 +127,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
         component.DoAfterId = doAfter.ID;
     }
 
-    private void OnGetAttachedStripVerbsEvent(EntityUid uid, AttachedClothingComponent component, GetVerbsEvent<StrippingVerb> args)
+    private void OnGetAttachedStripVerbsEvent(EntityUid uid, AttachedClothingComponent component, GetVerbsEvent<EquipmentVerb> args)
     {
         // redirect to the attached entity.
         OnGetVerbs(component.AttachedUid, Comp<ToggleableClothingComponent>(component.AttachedUid), args);
