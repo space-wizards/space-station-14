@@ -307,6 +307,8 @@
       - id: FoodSnackNutribrickOpen
     sound:
       path: /Audio/Effects/unwrap.ogg
+  - type: StaticPrice
+    price: 20
 
 - type: entity
   id: FoodSnackNutribrickOpen
@@ -329,6 +331,8 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 25
+  - type: StaticPrice
+    price: -30
 
 - type: entity
   id: FoodSnackMREBrownie
@@ -346,6 +350,7 @@
       - id: FoodSnackMREBrownieOpen
     sound:
       path: /Audio/Effects/unwrap.ogg
+
 
 
 - type: entity
