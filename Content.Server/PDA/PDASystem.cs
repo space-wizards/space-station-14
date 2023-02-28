@@ -76,12 +76,12 @@ namespace Content.Server.PDA
             UpdatePDAUserInterface(pda);
         }
 
-        private void OnUplinkInit(EntityUid uid, PDAComponent pda, StoreAddedEvent args)
+        private void OnUplinkInit(EntityUid uid, PDAComponent pda, ref StoreAddedEvent args)
         {
             UpdatePDAUserInterface(pda);
         }
 
-        private void OnUplinkRemoved(EntityUid uid, PDAComponent pda, StoreRemovedEvent args)
+        private void OnUplinkRemoved(EntityUid uid, PDAComponent pda, ref StoreRemovedEvent args)
         {
             UpdatePDAUserInterface(pda);
         }
@@ -132,6 +132,7 @@ namespace Content.Server.PDA
 
         private void OnUIMessage(PDAComponent pda, ServerBoundUserInterfaceMessage msg)
         {
+            var pdaEnt = pda.Owner;
             // todo: move this to entity events
             switch (msg.Message)
             {
@@ -140,28 +141,28 @@ namespace Content.Server.PDA
                     break;
                 case PDAToggleFlashlightMessage _:
                     {
-                        if (EntityManager.TryGetComponent(pda.Owner, out UnpoweredFlashlightComponent? flashlight))
-                            _unpoweredFlashlight.ToggleLight(flashlight.Owner, flashlight);
+                        if (EntityManager.TryGetComponent(pdaEnt, out UnpoweredFlashlightComponent? flashlight))
+                            _unpoweredFlashlight.ToggleLight(pdaEnt, flashlight);
                         break;
                     }
 
                 case PDAShowUplinkMessage _:
                     {
                         if (msg.Session.AttachedEntity != null &&
-                            TryComp<StoreComponent>(pda.Owner, out var store))
-                            _storeSystem.ToggleUi(msg.Session.AttachedEntity.Value, store);
+                            TryComp<StoreComponent>(pdaEnt, out var store))
+                            _storeSystem.ToggleUi(msg.Session.AttachedEntity.Value, pdaEnt, store);
                         break;
                     }
                 case PDAShowRingtoneMessage _:
                     {
-                        if (EntityManager.TryGetComponent(pda.Owner, out RingerComponent? ringer))
+                        if (EntityManager.TryGetComponent(pdaEnt, out RingerComponent? ringer))
                             _ringerSystem.ToggleRingerUI(ringer, msg.Session);
                         break;
                     }
                 case PDAShowMusicMessage _:
                 {
-                    if (TryComp(pda.Owner, out InstrumentComponent? instrument))
-                        _instrumentSystem.ToggleInstrumentUi(pda.Owner, msg.Session, instrument);
+                    if (TryComp(pdaEnt, out InstrumentComponent? instrument))
+                        _instrumentSystem.ToggleInstrumentUi(pdaEnt, msg.Session, instrument);
                     break;
                 }
             }

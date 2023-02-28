@@ -56,7 +56,7 @@ namespace Content.Server.Kitchen.EntitySystems
             SubscribeLocalEvent<MicrowaveComponent, RefreshPartsEvent>(OnRefreshParts);
             SubscribeLocalEvent<MicrowaveComponent, UpgradeExamineEvent>(OnUpgradeExamine);
 
-            SubscribeLocalEvent<MicrowaveComponent, MicrowaveStartCookMessage>((u,c,_) => Wzhzhzh(u,c));
+            SubscribeLocalEvent<MicrowaveComponent, MicrowaveStartCookMessage>((u,c,m) => Wzhzhzh(u,c,m.Session.AttachedEntity));
             SubscribeLocalEvent<MicrowaveComponent, MicrowaveEjectMessage>(OnEjectMessage);
             SubscribeLocalEvent<MicrowaveComponent, MicrowaveEjectSolidIndexedMessage>(OnEjectIndex);
             SubscribeLocalEvent<MicrowaveComponent, MicrowaveSelectCookTimeMessage>(OnSelectTime);
@@ -215,7 +215,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
             _audio.PlayPvs(component.ClickSound, uid, AudioParams.Default.WithVolume(-2));
             component.CurrentCookTimerTime = 10;
-            Wzhzhzh(uid, component);
+            Wzhzhzh(uid, component, args.Victim);
             UpdateUserInterfaceState(uid, component);
         }
 
@@ -314,7 +314,7 @@ namespace Content.Server.Kitchen.EntitySystems
         /// It does not make a "wzhzhzh" sound, it makes a "mmmmmmmm" sound!
         /// -emo
         /// </remarks>
-        public void Wzhzhzh(EntityUid uid, MicrowaveComponent component)
+        public void Wzhzhzh(EntityUid uid, MicrowaveComponent component, EntityUid? user)
         {
             if (!HasContents(component) || HasComp<ActiveMicrowaveComponent>(uid))
                 return;
@@ -324,7 +324,7 @@ namespace Content.Server.Kitchen.EntitySystems
             foreach (var item in component.Storage.ContainedEntities)
             {
                 // special behavior when being microwaved ;)
-                var ev = new BeingMicrowavedEvent(uid);
+                var ev = new BeingMicrowavedEvent(uid, user);
                 RaiseLocalEvent(item, ev);
 
                 if (ev.Handled)
