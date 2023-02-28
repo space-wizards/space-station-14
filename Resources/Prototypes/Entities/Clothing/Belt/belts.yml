@@ -448,6 +448,8 @@
     whitelist:
       components:
         - Gun
+        - Tool
+        - RCD
         - MeleeWeapon
         - BallisticAmmoProvider
         - CartridgeAmmo
