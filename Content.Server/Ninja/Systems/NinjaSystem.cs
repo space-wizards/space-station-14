@@ -1,5 +1,7 @@
 using Content.Server.Administration.Commands;
 using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
+using Content.Server.Doors.Systems;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Mind.Components;
@@ -9,6 +11,7 @@ using Content.Server.PowerCell;
 using Content.Server.Traitor;
 using Content.Server.Warps;
 using Content.Shared.Alert;
+using Content.Shared.Doors.Components;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.Ninja.Components;
@@ -30,6 +33,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
 {
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedChatSystem _chat = default!;
     [Dependency] private readonly IChatManager _chatMan = default!;
     [Dependency] private readonly SharedSubdermalImplantSystem _implants = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
@@ -45,6 +49,8 @@ public sealed class NinjaSystem : SharedNinjaSystem
         SubscribeLocalEvent<NinjaComponent, ComponentStartup>(OnNinjaStartup);
         SubscribeLocalEvent<NinjaComponent, MindAddedMessage>(OnNinjaMindAdded);
         SubscribeLocalEvent<NinjaComponent, AttackedEvent>(OnNinjaAttacked);
+
+        SubscribeLocalEvent<DoorComponent, DoorEmaggedEvent>(OnDoorEmagged);
     }
 
     public override void Update(float frameTime)
@@ -75,6 +81,14 @@ public sealed class NinjaSystem : SharedNinjaSystem
     }
 
     /// <summary>
+    /// Returns the space ninja spawn gamerule's config
+    /// </summary>
+    public NinjaRuleConfiguration RuleConfig()
+    {
+        return (NinjaRuleConfiguration) _proto.Index<GameRulePrototype>("SpaceNinjaSpawn").Configuration;
+    }
+
+    /// <summary>
     /// Update the alert for the ninja's suit power indicator.
     /// </summary>
     public void SetSuitPowerAlert(EntityUid uid, NinjaComponent? comp = null)
@@ -95,6 +109,47 @@ public sealed class NinjaSystem : SharedNinjaSystem
             _alerts.ClearAlert(uid, AlertType.SuitPower);
         }
     }
+
+    /// <summary>
+    /// Get the battery component in a ninja's suit, if it's worn.
+    /// </summary>
+    public bool GetNinjaBattery(EntityUid user, [NotNullWhen(true)] out BatteryComponent? battery)
+    {
+        if (TryComp<NinjaComponent>(user, out var ninja)
+            && ninja.Suit != null
+            && _powerCell.TryGetBatteryFromSlot(ninja.Suit.Value, out battery))
+        {
+            return true;
+        }
+
+        battery = null;
+        return false;
+    }
+
+    public override bool TryUseCharge(EntityUid user, float charge)
+    {
+        return GetNinjaBattery(user, out var battery) && battery.TryUseCharge(comp.StunCharge);
+    }
+
+	public override void CallInThreat(NinjaComponent comp)
+	{
+		base.CallInThreat(comp)
+
+        var config = RuleConfig();
+        if (config.Threats.Count == 0)
+            return;
+
+        var threat = _random.Pick(config.Threats);
+        if (_proto.TryIndex<GameRulePrototype>(threat.Rule, out var rule))
+        {
+            _gameTicker.AddGameRule(rule);
+            _chat.DispatchGlobalAnnouncement(Loc.GetString(threat.Announcement), playSound: false, colorOverride: Color.Red);
+        }
+        else
+        {
+            Logger.Error($"Threat gamerule does not exist: {threat.Rule}");
+        }
+	}
 
     private void OnNinjaStartup(EntityUid uid, NinjaComponent comp, ComponentStartup args)
     {
@@ -147,14 +202,6 @@ public sealed class NinjaSystem : SharedNinjaSystem
         _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);
     }
 
-    /// <summary>
-    /// Returns the space ninja spawn gamerule's config
-    /// </summary>
-    public NinjaRuleConfiguration RuleConfig()
-    {
-        return (NinjaRuleConfiguration) _proto.Index<GameRulePrototype>("SpaceNinjaSpawn").Configuration;
-    }
-
     private void OnNinjaAttacked(EntityUid uid, NinjaComponent comp, AttackedEvent args)
     {
         if (comp.Suit != null && TryComp<NinjaSuitComponent>(comp.Suit, out var suit))
@@ -162,6 +209,13 @@ public sealed class NinjaSystem : SharedNinjaSystem
             _suit.RevealNinja(suit, uid);
             // TODO: disable abilities for 5 seconds
         }
+    }
+
+    private void OnDoorEmagged(EntityUid uid, DoorComponent door, ref DoorEmaggedEvent args)
+    {
+        // make sure it's a ninja doorjacking it
+        if (TryComp<NinjaComponent>(args.UserUid, out var ninja))
+            ninja.DoorsJacked++;
     }
 
     private void UpdateNinja(EntityUid uid, NinjaComponent ninja, float frameTime)
@@ -172,27 +226,11 @@ public sealed class NinjaSystem : SharedNinjaSystem
         float wattage = _suit.SuitWattage(suit);
 
         SetSuitPowerAlert(uid, ninja);
-        if (!GetNinjaBattery(uid, out var battery) || !battery.TryUseCharge(wattage * frameTime))
+        if (!TryUseCharge(uid, wattage * frameTime))
         {
             // ran out of power, reveal ninja
             _suit.RevealNinja(suit, uid);
         }
-    }
-
-    /// <summary>
-    /// Get the battery component in a ninja's suit, if it's worn.
-    /// </summary>
-    public bool GetNinjaBattery(EntityUid user, [NotNullWhen(true)] out BatteryComponent? battery)
-    {
-        if (TryComp<NinjaComponent>(user, out var ninja)
-            && ninja.Suit != null
-            && _powerCell.TryGetBatteryFromSlot(ninja.Suit.Value, out battery))
-        {
-            return true;
-        }
-
-        battery = null;
-        return false;
     }
 
     private void AddObjective(Mind.Mind mind, string name)

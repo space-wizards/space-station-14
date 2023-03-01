@@ -63,6 +63,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         if (!TryComp<ActionsComponent>(user, out var actions))
             return;
 
+		// TODO: do actions like with gloves are now
         _actions.AddAction(user, comp.TogglePhaseCloakAction, uid, actions);
         _actions.AddAction(user, comp.RecallKatanaAction, uid, actions);
         _actions.AddAction(user, comp.KatanaDashAction, uid, actions);

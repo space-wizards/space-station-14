@@ -15,7 +15,7 @@ namespace Content.Shared.Ninja.Components;
 /// Component for toggling glove powers.
 /// Powers being enabled is controlled by GlovesEnabledComponent
 /// </summary>
-[Access(typeof(SharedNinjaGlovesSystem))]
+[Access(typeof(NinjaGlovesSystem))]
 [RegisterComponent, NetworkedComponent]
 public sealed class NinjaGlovesComponent : Component
 {
@@ -39,7 +39,7 @@ public sealed class NinjaGlovesComponent : Component
         DisplayName = "action-name-toggle-ninja-gloves",
         Description = "action-desc-toggle-ninja-gloves",
         Priority = -13,
-        Event = new ToggleNinjaGlovesEvent()
+        Event = new ToggleActionEvent()
     };
 }
 
@@ -145,8 +145,3 @@ public sealed class NinjaTerrorComponent : Component
     [DataField("terrorTime")]
     public float TerrorTime = 20f;
 }
-
-/// <summary>
-/// Event fired when a ninja toggles glove abilities.
-/// </summary>
-public sealed class ToggleNinjaGlovesEvent : InstantActionEvent { }

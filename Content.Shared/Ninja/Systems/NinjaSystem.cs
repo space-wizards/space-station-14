@@ -44,7 +44,11 @@ public abstract class SharedNinjaSystem : EntitySystem
         comp.SpiderChargeDetonated = true;
     }
 
-    public void CallInThreat(NinjaComponent comp)
+	/// <summary>
+	/// Marks the objective as complete.
+	/// On server, makes announcement and adds rule of random threat.
+	/// </summary>
+    public virtual void CallInThreat(NinjaComponent comp)
     {
         comp.CalledInThreat = true;
     }
@@ -58,7 +62,16 @@ public abstract class SharedNinjaSystem : EntitySystem
         ninja.DownloadedNodes.UnionWith(ids);
         var newCount = ninja.DownloadedNodes.Count;
         return newCount - oldCount;
-   }
+    }
+
+    /// <summary>
+    /// Gets the user's battery and tries to use some charge from it, returning true if successful.
+    /// Serverside only.
+    /// </summary>
+    public virtual bool TryUseCharge(EntityUid user, float charge)
+    {
+    	return false;
+    }
 
     private void OnNinjaGetState(EntityUid uid, NinjaComponent comp, ref ComponentGetState args)
     {
