@@ -57,7 +57,7 @@ internal sealed class EnergySwordComponent : Component
 }
 
 [ByRefEvent]
-public record struct EnergySwordActivatedEvent();
+public readonly record struct EnergySwordActivatedEvent();
 
 [ByRefEvent]
-public record struct EnergySwordDeactivatedEvent();
+public readonly record struct EnergySwordDeactivatedEvent();
