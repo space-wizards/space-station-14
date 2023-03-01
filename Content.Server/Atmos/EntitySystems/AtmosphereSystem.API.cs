@@ -97,7 +97,10 @@ public partial class AtmosphereSystem
 
         // If we've been passed a grid, try to let it handle it.
         if (gridUid.HasValue)
+        {
+            DebugTools.Assert(_mapManager.IsGrid(gridUid.Value));
             RaiseLocalEvent(gridUid.Value, ref ev, false);
+        }
 
         if (ev.Handled)
             return ev.Mixtures;
@@ -105,7 +108,10 @@ public partial class AtmosphereSystem
         // We either don't have a grid, or the event wasn't handled.
         // Let the map handle it instead, and also broadcast the event.
         if (mapUid.HasValue)
+        {
+            DebugTools.Assert(_mapManager.IsMap(mapUid.Value));
             RaiseLocalEvent(mapUid.Value, ref ev, true);
+        }
         else
             RaiseLocalEvent(ref ev);
 
@@ -127,7 +133,10 @@ public partial class AtmosphereSystem
 
         // If we've been passed a grid, try to let it handle it.
         if(gridUid.HasValue)
+        {
+            DebugTools.Assert(_mapManager.IsGrid(gridUid.Value));
             RaiseLocalEvent(gridUid.Value, ref ev, false);
+        }
 
         if (ev.Handled)
             return ev.Mixture;
@@ -135,7 +144,10 @@ public partial class AtmosphereSystem
         // We either don't have a grid, or the event wasn't handled.
         // Let the map handle it instead, and also broadcast the event.
         if(mapUid.HasValue)
+        {
+            DebugTools.Assert(_mapManager.IsMap(mapUid.Value));
             RaiseLocalEvent(mapUid.Value, ref ev, true);
+        }
         else
             RaiseLocalEvent(ref ev);
 
