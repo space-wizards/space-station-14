@@ -1,6 +1,5 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Hands.Components;
-using Content.Server.Reflect;
 using Content.Server.Weapons.Ranged;
 using Content.Shared.Audio;
 using Content.Shared.Database;
@@ -10,8 +9,9 @@ using Content.Server.Popups;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Physics.Systems;
+using Content.Server.Weapons.Reflect;
 
-namespace Server.Content.Reflect;
+namespace Server.Content.Weapons.Reflect;
 
 /// <summary>
 /// This handles reflecting projectiles and hitscan shots.
@@ -53,7 +53,7 @@ public sealed class ReflectSystem : EntitySystem
                     _physics.SetLinearVelocity(uid, vel);
                     _transform.SetWorldRotation(uid, vel.ToWorldAngle());
                     projComp.Shooter = args.Target;
-                    _popup.PopupEntity(Loc.GetString("reflect-projectile"), uid, PopupType.Small);
+                    _popup.PopupEntity(Loc.GetString("reflect-shot"), uid, PopupType.Small);
                     _audio.PlayPvs(reflect.OnReflect, uid, AudioHelpers.WithVariation(0.05f, _random));
                     _adminLogger.Add(LogType.ShotReflected, $"{ToPrettyString(args.Target):user} reflected projectile {ToPrettyString(uid):projectile}");
                     args.Cancel();
@@ -75,7 +75,7 @@ public sealed class ReflectSystem : EntitySystem
                     && reflect.Enabled
                     && _random.Prob(reflect.Chance))
                 {
-                    _popup.PopupEntity(Loc.GetString("reflect-hit-scan"), args.Target, PopupType.Small);
+                    _popup.PopupEntity(Loc.GetString("reflect-shot"), args.Target, PopupType.Small);
                     _audio.PlayPvs(reflect.OnReflect, args.Target, AudioHelpers.WithVariation(0.05f, _random));
                     _adminLogger.Add(LogType.ShotReflected, $"{ToPrettyString(args.Target):entity} reflected hitscan shot");
                     args.Target = args.User.Value;

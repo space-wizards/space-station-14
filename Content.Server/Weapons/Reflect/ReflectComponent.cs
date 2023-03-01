@@ -1,15 +1,15 @@
 using Robust.Shared.Audio;
 
-namespace Content.Server.Reflect;
+namespace Content.Server.Weapons.Reflect;
 
 /// <summary>
-///     Entities with this component have a chance to reflect projectiles and hitscan shots
+/// Entities with this component have a chance to reflect projectiles and hitscan shots
 /// </summary>
 [RegisterComponent]
 public sealed class ReflectComponent : Component
 {
     /// <summary>
-    ///     Can only reflect when enabled
+    /// Can only reflect when enabled
     /// </summary>
     [DataField("enabled"), ViewVariables(VVAccess.ReadWrite)]
     public bool Enabled;
