@@ -7,11 +7,11 @@ namespace Content.Shared.Movement.Components;
 [NetworkedComponent, RegisterComponent]
 public sealed class SlowContactsComponent : Component
 {
-    [DataField("walkSpeedModifier")]
-    public float WalkSpeedModifier { get; set; } = 1.0f;
+    [ViewVariables(VVAccess.ReadWrite), DataField("walkSpeedModifier")]
+    public float WalkSpeedModifier = 1.0f;
 
     [DataField("sprintSpeedModifier")]
-    public float SprintSpeedModifier { get; set; } = 1.0f;
+    public float SprintSpeedModifier = 1.0f;
 
     [DataField("ignoreWhitelist")]
     public EntityWhitelist? IgnoreWhitelist;
