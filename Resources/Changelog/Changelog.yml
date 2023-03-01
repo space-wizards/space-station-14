@@ -1,9 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: Computer's hitbox is now smaller., type: Tweak}
-  id: 2589
-  time: '2022-11-07T07:17:39.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Artifact node traversal now favors undiscovered nodes., type: Tweak}
@@ -2909,3 +2904,13 @@ Entries:
   - {message: Janitors discovered the ability to put paper in trash bags!, type: Add}
   id: 3088
   time: '2023-02-28T21:00:39.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Walls and construction now properly cancel out of a doafter., type: Fix}
+  - {message: Cancelling screwing doors or anything with wires won't prevent further
+      doafters from running anymore., type: Fix}
+  - {message: EscapeInventory can no longer spam and cancels on drop again., type: Fix}
+  - {message: Mopping won't break anymore if cancelled, type: Fix}
+  - {message: Meatspikes won't break anymore on use or if cancelled., type: Fix}
+  id: 3089
+  time: '2023-03-01T00:51:43.0000000+00:00'
