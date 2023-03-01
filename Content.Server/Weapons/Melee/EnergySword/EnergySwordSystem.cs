@@ -1,7 +1,7 @@
 using Content.Server.CombatMode.Disarm;
 using Content.Server.Kitchen.Components;
 using Content.Server.Weapons.Melee.EnergySword.Components;
-using Content.Server.Reflect;
+using Content.Server.Weapons.Reflect;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
