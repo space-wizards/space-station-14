@@ -1,19 +1,16 @@
-using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Popups;
 using Content.Server.Pulling;
-using Content.Server.Tools;
 using Content.Shared.Construction.Components;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Player;
 
 namespace Content.Server.Construction
 {
@@ -22,16 +19,14 @@ namespace Content.Server.Construction
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
-        [Dependency] private readonly ToolSystem _tool = default!;
+        [Dependency] private readonly SharedToolSystem _tool = default!;
         [Dependency] private readonly PullingSystem _pulling = default!;
 
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<AnchorableComponent, TryAnchorCompletedEvent>(OnAnchorComplete);
-            SubscribeLocalEvent<AnchorableComponent, TryAnchorCancelledEvent>(OnAnchorCancelled);
             SubscribeLocalEvent<AnchorableComponent, TryUnanchorCompletedEvent>(OnUnanchorComplete);
-            SubscribeLocalEvent<AnchorableComponent, TryUnanchorCancelledEvent>(OnUnanchorCancelled);
             SubscribeLocalEvent<AnchorableComponent, ExaminedEvent>(OnAnchoredExamine);
         }
 
@@ -42,14 +37,8 @@ namespace Content.Server.Construction
             args.PushMarkup(Loc.GetString(messageId, ("target", uid)));
         }
 
-        private void OnUnanchorCancelled(EntityUid uid, AnchorableComponent component, TryUnanchorCancelledEvent args)
-        {
-            component.CancelToken = null;
-        }
-
         private void OnUnanchorComplete(EntityUid uid, AnchorableComponent component, TryUnanchorCompletedEvent args)
         {
-            component.CancelToken = null;
             var xform = Transform(uid);
 
             RaiseLocalEvent(uid, new BeforeUnanchoredEvent(args.User, args.Using));
@@ -65,14 +54,8 @@ namespace Content.Server.Construction
             );
         }
 
-        private void OnAnchorCancelled(EntityUid uid, AnchorableComponent component, TryAnchorCancelledEvent args)
-        {
-            component.CancelToken = null;
-        }
-
         private void OnAnchorComplete(EntityUid uid, AnchorableComponent component, TryAnchorCompletedEvent args)
         {
-            component.CancelToken = null;
             var xform = Transform(uid);
             if (TryComp<PhysicsComponent>(uid, out var anchorBody) &&
                 !TileFree(xform.Coordinates, anchorBody))
@@ -144,8 +127,7 @@ namespace Content.Server.Construction
         /// <returns>true if it is valid, false otherwise</returns>
         private bool Valid(EntityUid uid, EntityUid userUid, EntityUid usingUid, bool anchoring, AnchorableComponent? anchorable = null, ToolComponent? usingTool = null)
         {
-            if (!Resolve(uid, ref anchorable) ||
-                anchorable.CancelToken != null)
+            if (!Resolve(uid, ref anchorable))
                 return false;
 
             if (!Resolve(usingUid, ref usingTool))
@@ -194,10 +176,8 @@ namespace Content.Server.Construction
                 return;
             }
 
-            anchorable.CancelToken = new CancellationTokenSource();
-
-            _tool.UseTool(usingUid, userUid, uid, 0f, anchorable.Delay, usingTool.Qualities,
-                new TryAnchorCompletedEvent(userUid, usingUid), new TryAnchorCancelledEvent(userUid, usingUid), uid, cancelToken: anchorable.CancelToken.Token);
+            var toolEvData = new ToolEventData(new TryAnchorCompletedEvent(userUid, usingUid), targetEntity:uid);
+            _tool.UseTool(usingUid, userUid, uid, anchorable.Delay, usingTool.Qualities, toolEvData);
         }
 
         /// <summary>
@@ -209,18 +189,17 @@ namespace Content.Server.Construction
             TransformComponent? transform = null,
             ToolComponent? usingTool = null)
         {
-            if (!Resolve(uid, ref anchorable, ref transform) ||
-                anchorable.CancelToken != null)
+            if (!Resolve(uid, ref anchorable, ref transform))
                 return;
 
-            if (!Resolve(usingUid, ref usingTool)) return;
+            if (!Resolve(usingUid, ref usingTool))
+                return;
 
-            if (!Valid(uid, userUid, usingUid, false)) return;
+            if (!Valid(uid, userUid, usingUid, false))
+                return;
 
-            anchorable.CancelToken = new CancellationTokenSource();
-
-            _tool.UseTool(usingUid, userUid, uid, 0f, anchorable.Delay, usingTool.Qualities,
-                new TryUnanchorCompletedEvent(userUid, usingUid), new TryUnanchorCancelledEvent(userUid, usingUid), uid, cancelToken: anchorable.CancelToken.Token);
+            var toolEvData = new ToolEventData(new TryUnanchorCompletedEvent(userUid, usingUid), targetEntity:uid);
+            _tool.UseTool(usingUid, userUid, uid, anchorable.Delay, usingTool.Qualities, toolEvData);
         }
 
         /// <summary>
@@ -271,23 +250,10 @@ namespace Content.Server.Construction
             }
         }
 
-        private sealed class TryUnanchorCancelledEvent : AnchorEvent
-        {
-            public TryUnanchorCancelledEvent(EntityUid userUid, EntityUid usingUid) : base(userUid, usingUid)
-            {
-            }
-        }
 
         private sealed class TryAnchorCompletedEvent : AnchorEvent
         {
             public TryAnchorCompletedEvent(EntityUid userUid, EntityUid usingUid) : base(userUid, usingUid)
-            {
-            }
-        }
-
-        private sealed class TryAnchorCancelledEvent : AnchorEvent
-        {
-            public TryAnchorCancelledEvent(EntityUid userUid, EntityUid usingUid) : base(userUid, usingUid)
             {
             }
         }
