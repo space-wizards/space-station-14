@@ -319,14 +319,7 @@ namespace Content.Client.ContextMenu.UI
             }
 
             element.UpdateEntity(entity);
-
-            // Update the entity count & count label
-            element.Count = 0;
-            foreach (var subElement in element.SubMenu.MenuBody.Children)
-            {
-                if (subElement is EntityMenuElement entityElement)
-                    element.Count += entityElement.Count;
-            }
+            element.UpdateCount();
 
             if (element.Count == 1)
             {

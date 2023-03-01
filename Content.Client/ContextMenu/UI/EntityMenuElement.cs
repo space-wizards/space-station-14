@@ -27,13 +27,12 @@ namespace Content.Client.ContextMenu.UI
         private int _count;
         public int Count {
             get => _count;
-            set {
+            private set {
                 _count = value;
-                if (_count > 1)
-                {
+
+                IconLabel.Visible = _count > 1;
+                if (IconLabel.Visible)
                     IconLabel.Text = _count.ToString();
-                    IconLabel.Visible = true;
-                }
             }
         }
 
@@ -61,6 +60,24 @@ namespace Content.Client.ContextMenu.UI
         private string? SearchPlayerName(EntityUid entity)
         {
             return _adminSystem.PlayerList.FirstOrDefault(player => player.EntityUid == entity)?.Username;
+        }
+
+        /// <summary>
+        ///     Update the entity count
+        /// </summary>
+        public void UpdateCount()
+        {
+            if (SubMenu == null)
+                return;
+
+            var result = 0;
+            foreach (var subElement in SubMenu.MenuBody.Children)
+            {
+                if (subElement is EntityMenuElement entityElement)
+                    result += entityElement.Count;
+            }
+
+            Count = result;
         }
 
         private string GetEntityDescriptionAdmin(EntityUid entity)
