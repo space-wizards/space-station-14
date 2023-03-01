@@ -48,11 +48,8 @@ public sealed class ReflectSystem : EntitySystem
                     && _random.Prob(reflect.Chance))
                 {
                     var vel = _physics.GetMapLinearVelocity(args.Target) - _physics.GetMapLinearVelocity(uid);
-                    var force = -physicsComp.Force;
                     var spread = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2);
                     vel = spread.RotateVec(vel);
-                    _physics.ResetDynamics(physicsComp);
-                    _physics.ApplyForce(uid, force);
                     _physics.SetLinearVelocity(uid, vel);
                     _transform.SetWorldRotation(uid, vel.ToWorldAngle());
                     projComp.Shooter = args.Target;
