@@ -1,4 +1,4 @@
-﻿using System.Collections.Immutable;
+using System.Collections.Immutable;
 using System.IO;
 using System.Net;
 using System.Text.Json;
@@ -222,6 +222,18 @@ namespace Content.Server.Database
         Task DeleteAdminNote(int id, Guid deletedBy, DateTime deletedAt);
         Task EditAdminNote(int id, string message, Guid editedBy, DateTime editedAt);
 
+        #endregion
+
+        #region Patronlist
+        Task<bool> IsInPatronlistAsync(Guid player);
+        Task InitPatronlistAsync(Guid player);
+        Task InitPatronlistAsync(Guid player, string[] items);
+        Task RemovePatronlistAsync(Guid player);
+        Task<bool> AddPatronItemsAsync(Guid player, string item);
+        Task<bool> AddPatronItemsAsync(Guid player, string[] item);
+        Task<bool> RemovePatronItemsAsync(Guid player, string item);
+        Task<bool> RemovePatronItemsAsync(Guid player, string[] item);
+        Task<List<string>> GetPatronItemsAsync(Guid player);
         #endregion
     }
 
@@ -628,6 +640,61 @@ namespace Content.Server.Database
             DbWriteOpsMetric.Inc();
             return _db.EditAdminNote(id, message, editedBy, editedAt);
         }
+
+        #region Patronlist
+        public Task<bool> IsInPatronlistAsync(Guid player)
+        {
+            DbReadOpsMetric.Inc();
+            return _db.IsInPatronlistAsync(player);
+        }
+
+        public Task InitPatronlistAsync(Guid player)
+        {
+            DbWriteOpsMetric.Inc();
+            return _db.InitPatronlistAsync(new Patronlist { UserId = player, Items = new() } );
+        }
+        public Task InitPatronlistAsync(Guid player, string[] items)
+        {
+            var itemlist = new List<PatronItem>();
+            foreach (var item in items)
+                itemlist.Add(new PatronItem { ItemClass = item });
+
+            DbWriteOpsMetric.Inc();
+            return _db.InitPatronlistAsync(new Patronlist { UserId = player, Items = itemlist } );
+        }
+
+        public Task RemovePatronlistAsync(Guid player)
+        {
+            DbWriteOpsMetric.Inc();
+            return _db.RemovePatronlistAsync(player);
+        }
+
+        public Task<bool> AddPatronItemsAsync(Guid player, string item)
+        {
+            DbWriteOpsMetric.Inc();
+            return _db.AddPatronItemsAsync(player, new[] { item });
+        }
+        public Task<bool> AddPatronItemsAsync(Guid player, string[] items)
+        {
+            DbWriteOpsMetric.Inc();
+            return _db.AddPatronItemsAsync(player, items);
+        }
+        public Task<bool> RemovePatronItemsAsync(Guid player, string item)
+        {
+            DbWriteOpsMetric.Inc();
+            return _db.RemovePatronItemsAsync(player, new[] { item });
+        }
+        public Task<bool> RemovePatronItemsAsync(Guid player, string[] items)
+        {
+            DbWriteOpsMetric.Inc();
+            return _db.RemovePatronItemsAsync(player, items);
+        }
+        public Task<List<string>> GetPatronItemsAsync(Guid player)
+        {
+            DbReadOpsMetric.Inc();
+            return _db.GetPatronItemsAsync(player);
+        }
+        #endregion
 
         private DbContextOptions<PostgresServerDbContext> CreatePostgresOptions()
         {

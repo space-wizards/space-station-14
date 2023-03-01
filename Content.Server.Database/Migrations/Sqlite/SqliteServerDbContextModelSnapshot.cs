@@ -417,6 +417,47 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.ToTable("job", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.PatronItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("patron_item_id");
+
+                    b.Property<string>("ItemClass")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("item_class");
+
+                    b.Property<Guid>("PatronId")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("patron_id");
+
+                    b.HasKey("Id")
+                        .HasName("PK_patron_item");
+
+                    b.HasIndex("PatronId", "ItemClass")
+                        .IsUnique();
+
+                    b.ToTable("patron_item", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.Patronlist", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("UserId")
+                        .HasName("PK_patronlist");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("patronlist", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.Player", b =>
                 {
                     b.Property<int>("Id")
@@ -871,8 +912,8 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.HasKey("Id")
                         .HasName("PK_trait");
 
-                    b.HasIndex("ProfileId")
-                        .HasDatabaseName("IX_trait_profile_id");
+                    b.HasIndex("ProfileId", "TraitName")
+                        .IsUnique();
 
                     b.ToTable("trait", (string)null);
                 });
@@ -1089,6 +1130,18 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("Profile");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.PatronItem", b =>
+                {
+                    b.HasOne("Content.Server.Database.Patronlist", "Patron")
+                        .WithMany("Items")
+                        .HasForeignKey("PatronId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_patron_item_patronlist_patron_id");
+
+                    b.Navigation("Patron");
+                });
+
             modelBuilder.Entity("Content.Server.Database.Profile", b =>
                 {
                     b.HasOne("Content.Server.Database.Preference", "Preference")
@@ -1209,6 +1262,11 @@ namespace Content.Server.Database.Migrations.Sqlite
             modelBuilder.Entity("Content.Server.Database.ConnectionLog", b =>
                 {
                     b.Navigation("BanHits");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.Patronlist", b =>
+                {
+                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("Content.Server.Database.Player", b =>

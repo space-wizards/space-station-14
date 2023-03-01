@@ -966,6 +966,87 @@ namespace Content.Server.Database
 
         #endregion
 
+        #region Patronlist
+        public async Task<bool> IsInPatronlistAsync(Guid player)
+        {
+            await using var db = await GetDb();
+            return await db.DbContext.Patronlist.AnyAsync(w => w.UserId == player);
+        }
+        public async Task InitPatronlistAsync(Patronlist list)
+        {
+            await using var db = await GetDb();
+            if (await db.DbContext.Patronlist.AnyAsync(w => w.UserId == list.UserId)) return;
+
+            await db.DbContext.Patronlist.AddAsync(list);
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task RemovePatronlistAsync(Guid player)
+        {
+            await using var db = await GetDb();
+
+            var entry = await db.DbContext.Patronlist.SingleAsync(w => w.UserId == player);
+            db.DbContext.Patronlist.Remove(entry);
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task<bool> AddPatronItemsAsync(Guid player, string[] items)
+        {
+            await using var db = await GetDb();
+
+            var prefs = await db.DbContext.Patronlist
+                .Include(i => i.Items)
+                .SingleAsync(p => p.UserId == player);
+
+            foreach (string item in items)
+            {
+                var oldItem = prefs.Items
+                    .SingleOrDefault(h => h.ItemClass == item);
+
+                if (oldItem is not null) continue;
+
+                prefs.Items.Add(new PatronItem { ItemClass = item });
+            }
+            await db.DbContext.SaveChangesAsync();
+            return true;
+        }
+        public async Task<bool> RemovePatronItemsAsync(Guid player, string[] items)
+        {
+            await using var db = await GetDb();
+
+            var prefs = await db.DbContext.Patronlist
+                .Include(i => i.Items)
+                .SingleAsync(p => p.UserId == player);
+
+            foreach (string item in items)
+            {
+                var oldItem = prefs.Items
+                    .SingleOrDefault(h => h.ItemClass == item);
+
+                if (oldItem is null) continue;
+
+                prefs.Items.Remove(oldItem);
+            }
+            await db.DbContext.SaveChangesAsync();
+            return true;
+        }
+        public async Task<List<string>> GetPatronItemsAsync(Guid player)
+        {
+            await using var db = await GetDb();
+
+            var prefs = await db.DbContext.Patronlist
+                .Include(i => i.Items)
+                .SingleAsync(p => p.UserId == player);
+
+            var result = new List<string>();
+            foreach(var item in prefs.Items)
+                result.Add(item.ItemClass);
+
+            return result;
+        }
+
+        #endregion
+
         protected abstract Task<DbGuard> GetDb();
 
         protected abstract class DbGuard : IAsyncDisposable

@@ -36,6 +36,7 @@ namespace Content.Server.Database
         public DbSet<PlayTime> PlayTime { get; set; } = default!;
         public DbSet<UploadedResourceLog> UploadedResourceLog { get; set; } = default!;
         public DbSet<AdminNote> AdminNotes { get; set; } = null!;
+        public DbSet<Patronlist> Patronlist { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -177,6 +178,14 @@ namespace Content.Server.Database
                 .WithMany(author => author.AdminNotesDeleted)
                 .HasForeignKey(note => note.DeletedById)
                 .HasPrincipalKey(author => author.UserId);
+
+            modelBuilder.Entity<PatronItem>()
+                .HasIndex(p => new { UserId = p.PatronId, p.ItemClass })
+                .IsUnique();
+
+            modelBuilder.Entity<Patronlist>()
+                .HasIndex(patron => patron.UserId)
+                .IsUnique();
         }
 
         public virtual IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)
@@ -578,5 +587,20 @@ namespace Content.Server.Database
         public DateTime? DeletedAt { get; set; }
 
         public bool ShownToPlayer { get; set; }
+    }
+
+    [Table("patronlist")]
+    public class Patronlist
+    {
+        [Required, Key] public Guid UserId { get; set; }
+        public List<PatronItem> Items { get; set; } = null!;
+    }
+    public class PatronItem
+    {
+        public int Id { get; set; }
+        public Patronlist Patron { get; set; } = null!;
+        public Guid PatronId { get; set; }
+
+        public string ItemClass { get; set; } = null!;
     }
 }

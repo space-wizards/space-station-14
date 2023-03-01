@@ -11,6 +11,12 @@
 		},
 		{
 			"path": "RobustToolbox"
+		},
+		{
+			"path": "Content.Server.Database"
+		},
+		{
+			"path": "Content.Shared.Database"
 		}
 	]
 }
