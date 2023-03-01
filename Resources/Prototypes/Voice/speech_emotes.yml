@@ -6,18 +6,26 @@
   chatTriggers:
     - scream
     - screams
+    - screams.
+    - screams!
     - screaming
     - screamed
     - shriek
     - shrieks
+    - shrieks.
+    - shrieks!
     - shrieking
     - shrieked
     - screech
-    - screechs
+    - screeches
+    - screeches.
+    - screeches!
     - screeching
     - screeched
     - yell
     - yells
+    - yells.
+    - yells!
     - yelled
     - yelling
     - крик
@@ -34,14 +42,20 @@
   chatTriggers:
     - laugh
     - laughs
+    - laughs.
+    - laughs!
     - laughing
     - laughed
     - chuckle
     - chuckles
+    - chuckles.
+    - chuckles!
     - chuckled
     - chuckling
     - giggle
     - giggles
+    - giggles.
+    - giggles!
     - giggling
     - giggled
     - смех
@@ -56,10 +70,12 @@
 - type: emote
   id: Clap
   category: Hands
-  chatMessages: [claps]
+  chatMessages: [claps!]
   chatTriggers:
     - clap
     - claps
+    - claps.
+    - claps!
     - clapping
     - clapped
     - хлопает
@@ -79,6 +95,11 @@
     - snapped
     - snap fingers
     - snaps fingers
+    - snaps fingers.
+    - snaps fingers!
+    - snaps their fingers
+    - snaps their fingers.
+    - snaps their fingers!
     - snapping fingers
     - snapped fingers
     - щелкает
