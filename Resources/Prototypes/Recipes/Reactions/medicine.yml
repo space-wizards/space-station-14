@@ -355,7 +355,7 @@
       amount: 1
   products:
     Cognizine: 1
-        
+
 - type: reaction
   id: Sigynate
   impact: Medium
