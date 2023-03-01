@@ -13,7 +13,8 @@
                 Name="IconLabel"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
-                StyleClasses="contextMenuIconLabel"/>
+                StyleClasses="contextMenuIconLabel"
+                Visible="false"/>
         </SpriteView>
         <RichTextLabel
             Name="Label"

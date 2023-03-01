@@ -24,17 +24,7 @@ namespace Content.Client.ContextMenu.UI
         /// <summary>
         ///     How many entities are accessible through this element's sub-menus.
         /// </summary>
-        private int _count;
-        public int Count {
-            get => _count;
-            private set {
-                _count = value;
-
-                IconLabel.Visible = _count > 1;
-                if (IconLabel.Visible)
-                    IconLabel.Text = _count.ToString();
-            }
-        }
+        public int Count { get; private set; }
 
         public EntityMenuElement(EntityUid? entity = null)
         {
@@ -70,14 +60,16 @@ namespace Content.Client.ContextMenu.UI
             if (SubMenu == null)
                 return;
 
-            var result = 0;
+            Count = 0;
             foreach (var subElement in SubMenu.MenuBody.Children)
             {
                 if (subElement is EntityMenuElement entityElement)
-                    result += entityElement.Count;
+                    Count += entityElement.Count;
             }
 
-            Count = result;
+            IconLabel.Visible = Count > 1;
+            if (IconLabel.Visible)
+                IconLabel.Text = Count.ToString();
         }
 
         private string GetEntityDescriptionAdmin(EntityUid entity)
