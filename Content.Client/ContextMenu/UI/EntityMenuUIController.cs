@@ -327,7 +327,6 @@ namespace Content.Client.ContextMenu.UI
                 if (subElement is EntityMenuElement entityElement)
                     element.Count += entityElement.Count;
             }
-            element.IconLabel.Text = element.Count.ToString();
 
             if (element.Count == 1)
             {
@@ -336,7 +335,6 @@ namespace Content.Client.ContextMenu.UI
                 element.Entity = entity;
                 element.SubMenu.Dispose();
                 element.SubMenu = null;
-                element.IconLabel.Visible = false;
                 Elements[entity.Value] = element;
             }
 

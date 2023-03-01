@@ -24,7 +24,18 @@ namespace Content.Client.ContextMenu.UI
         /// <summary>
         ///     How many entities are accessible through this element's sub-menus.
         /// </summary>
-        public int Count;
+        private int _count;
+        public int Count {
+            get => _count;
+            set {
+                _count = value;
+                if (_count > 1)
+                {
+                    IconLabel.Text = _count.ToString();
+                    IconLabel.Visible = true;
+                }
+            }
+        }
 
         public EntityMenuElement(EntityUid? entity = null)
         {
