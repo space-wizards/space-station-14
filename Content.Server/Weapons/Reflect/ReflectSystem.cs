@@ -10,6 +10,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Physics.Systems;
 using Content.Server.Weapons.Reflect;
 using Content.Shared.Weapons.Ranged;
+using Content.Server.Weapons.Melee.EnergySword;
 
 namespace Server.Content.Weapons.Reflect;
 
