@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Artifact node traversal now favors undiscovered nodes., type: Tweak}
-  - {message: You can now print out artifact analyzer scans., type: Add}
-  id: 2590
-  time: '2022-11-07T21:57:30.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed a bug causing duplicate actions to appear in the actions bar/menu.,
@@ -2914,3 +2908,8 @@ Entries:
   - {message: Meatspikes won't break anymore on use or if cancelled., type: Fix}
   id: 3089
   time: '2023-03-01T00:51:43.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Wizard bedsheet sprite animation has been fixed., type: Fix}
+  id: 3090
+  time: '2023-03-01T13:31:04.0000000+00:00'
