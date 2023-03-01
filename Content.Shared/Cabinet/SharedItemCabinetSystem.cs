@@ -6,6 +6,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Cabinet;
 
@@ -105,12 +106,14 @@ public abstract class SharedItemCabinetSystem : EntitySystem
         if (cabinet.Opened)
         {
             toggleVerb.Text = Loc.GetString("verb-common-close");
-            toggleVerb.IconTexture = "/Textures/Interface/VerbIcons/close.svg.192dpi.png";
+            toggleVerb.Icon =
+                new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/close.svg.192dpi.png"));
         }
         else
         {
             toggleVerb.Text = Loc.GetString("verb-common-open");
-            toggleVerb.IconTexture = "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
+            toggleVerb.Icon =
+                new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/open.svg.192dpi.png"));
         }
         args.Verbs.Add(toggleVerb);
     }
