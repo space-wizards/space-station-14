@@ -1,6 +1,5 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Hands.Components;
-using Content.Server.Weapons.Ranged;
 using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Popups;
@@ -10,6 +9,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Physics.Systems;
 using Content.Server.Weapons.Reflect;
+using Content.Shared.Weapons.Ranged;
 
 namespace Server.Content.Weapons.Reflect;
 
@@ -63,9 +63,9 @@ public sealed class ReflectSystem : EntitySystem
         }
     }
 
-    private void TryReflectHitScan(HitScanShotEvent args)
+    private void TryReflectHitScan(ref HitScanShotEvent args)
     {
-        if (args.Handled || args.User == null)
+        if (args.User == null)
             return;
         if (TryComp<HandsComponent>(args.Target, out var hands))
         {
@@ -79,7 +79,6 @@ public sealed class ReflectSystem : EntitySystem
                     _audio.PlayPvs(reflect.OnReflect, args.Target, AudioHelpers.WithVariation(0.05f, _random));
                     _adminLogger.Add(LogType.ShotReflected, $"{ToPrettyString(args.Target):entity} reflected hitscan shot");
                     args.Target = args.User.Value;
-                    args.Handled = true;
                     return;
                 }
             }
