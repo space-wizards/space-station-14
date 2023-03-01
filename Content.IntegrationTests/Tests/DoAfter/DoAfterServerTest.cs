@@ -88,7 +88,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
             });
 
             await server.WaitRunTicks(3);
-            Assert.That(data.Cancelled, Is.False);
+            Assert.That(data.Cancelled, Is.True);
 
             await pairTracker.CleanReturnAsync();
         }

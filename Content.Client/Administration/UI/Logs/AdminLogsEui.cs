@@ -51,8 +51,10 @@ public sealed class AdminLogsEui : BaseEui
             null,
             null,
             null,
+            LogsControl.SelectedPlayers.Count != 0,
             LogsControl.SelectedPlayers.ToArray(),
             null,
+            LogsControl.IncludeNonPlayerLogs,
             null,
             DateOrder.Descending);
 
