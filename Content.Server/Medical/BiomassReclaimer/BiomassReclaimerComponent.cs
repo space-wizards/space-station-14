@@ -57,7 +57,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         /// The base yield per mass unit when no components are upgraded.
         /// </summary>
         [DataField("baseYieldPerUnitMass")]
-        public float BaseYieldPerUnitMass = 0.4f;
+        public float BaseYieldPerUnitMass = 0.2f; // changed this
 
         /// <summary>
         /// Machine part whose rating modifies the yield per mass.
@@ -83,7 +83,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         /// when no components are upgraded.
         /// </summary>
         [DataField("baseProcessingTimePerUnitMass")]
-        public float BaseProcessingTimePerUnitMass = 0.5f;
+        public float BaseProcessingTimePerUnitMass = 0.25f;
 
         /// <summary>
         /// The machine part that increses the processing speed.

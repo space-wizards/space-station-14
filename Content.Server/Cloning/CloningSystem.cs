@@ -31,7 +31,6 @@ using Robust.Shared.Random;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
-using Content.Shared.Humanoid;
 
 namespace Content.Server.Cloning
 {
