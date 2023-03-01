@@ -2,6 +2,7 @@ using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Tag;
+using Content.Shared.Toggleable;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -15,14 +16,15 @@ namespace Content.Shared.Ninja.Components;
 /// Component for toggling glove powers.
 /// Powers being enabled is controlled by GlovesEnabledComponent
 /// </summary>
-[Access(typeof(NinjaGlovesSystem))]
+[Access(typeof(SharedNinjaGlovesSystem))]
 [RegisterComponent, NetworkedComponent]
 public sealed class NinjaGlovesComponent : Component
 {
     /// <summary>
-    /// Enable glove abilities, usable by clicking something using an empty hand.
+    /// Entity of the ninja using these gloves, usually means enabled
     /// </summary>
-    public bool Enabled;
+    [ViewVariables]
+    public EntityUid? User;
 
     /// <summary>
     /// Whether the gloves are doing a doafter or not, set to false whenever it finishes or is cancelled.

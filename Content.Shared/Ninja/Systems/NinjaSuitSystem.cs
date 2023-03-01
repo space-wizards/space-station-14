@@ -9,7 +9,7 @@ namespace Content.Shared.Ninja.Systems;
 
 public abstract class SharedNinjaSuitSystem : EntitySystem
 {
-    [Dependency] protected readonly NinjaGlovesSystem _gloves = default!;
+    [Dependency] protected readonly SharedNinjaGlovesSystem _gloves = default!;
     [Dependency] protected readonly SharedNinjaSystem _ninja = default!;
     [Dependency] protected readonly SharedStealthSystem _stealth = default!;
 
