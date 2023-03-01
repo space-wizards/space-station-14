@@ -1,7 +1,7 @@
 using Content.Shared.Damage;
 using Robust.Shared.Audio;
 
-namespace Content.Server.Weapons.Melee.EnergySword.Components
+namespace Content.Server.Weapons.Melee.EnergySword
 {
     [RegisterComponent]
     internal sealed class EnergySwordComponent : Component
@@ -56,3 +56,9 @@ namespace Content.Server.Weapons.Melee.EnergySword.Components
         public float LitDisarmMalus = 0.6f;
     }
 }
+
+[ByRefEvent]
+public record struct EnergySwordActivatedEvent();
+
+[ByRefEvent]
+public record struct EnergySwordDeactivatedEvent();

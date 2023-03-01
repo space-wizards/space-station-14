@@ -30,6 +30,9 @@ public sealed class ReflectSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<ProjectileComponent, ProjectileCollideAttemptEvent>(TryReflectProjectile);
         SubscribeLocalEvent<HitScanShotEvent>(TryReflectHitScan);
+
+        SubscribeLocalEvent<ReflectComponent, EnergySwordActivatedEvent>(EnableReflect);
+        SubscribeLocalEvent<ReflectComponent, EnergySwordDeactivatedEvent>(DisableReflect);
     }
 
     private void TryReflectProjectile(EntityUid uid, ProjectileComponent projComp, ProjectileCollideAttemptEvent args)
@@ -83,5 +86,15 @@ public sealed class ReflectSystem : EntitySystem
                 }
             }
         }
+    }
+
+    private void EnableReflect(EntityUid uid, ReflectComponent comp, ref EnergySwordActivatedEvent args)
+    {
+        comp.Enabled = true;
+    }
+
+    private void DisableReflect(EntityUid uid, ReflectComponent comp, ref EnergySwordDeactivatedEvent args)
+    {
+        comp.Enabled = false;
     }
 }
