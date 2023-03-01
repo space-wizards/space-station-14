@@ -32,6 +32,8 @@
                     <BoxContainer Orientation="Vertical" MinWidth="200">
                         <LineEdit Name="PlayerSearch" Access="Public" StyleClasses="actionSearchBox"
                                   HorizontalExpand="true" PlaceHolder="{Loc admin-logs-search-players-placeholder}"/>
+                        <Button Name="IncludeNonPlayersButton" Text="{Loc admin-logs-include-non-player}"
+                                MinWidth="100" StyleClasses="ButtonSquare" ToggleMode="True" />
                         <BoxContainer Orientation="Horizontal">
                             <Button Name="SelectAllPlayersButton" Text="{Loc admin-logs-select-all}"
                                     MinWidth="100" StyleClasses="ButtonSquare" />
