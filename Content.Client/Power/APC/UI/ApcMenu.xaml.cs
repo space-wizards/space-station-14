@@ -17,12 +17,13 @@ namespace Content.Client.Power.APC.UI
     [GenerateTypedNameReferences]
     public sealed partial class ApcMenu : FancyWindow
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
         public ApcMenu(ApcBoundUserInterface owner, ClientUserInterfaceComponent component)
         {
             IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);
 
-            EntityView.Sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(component.Owner);
+            EntityView.Sprite = _entityManager.GetComponent<SpriteComponent>(component.Owner);
             BreakerButton.OnPressed += _ => owner.BreakerPressed();
         }
 
@@ -32,7 +33,17 @@ namespace Content.Client.Power.APC.UI
 
             if (BreakerButton != null)
             {
-                BreakerButton.Pressed = castState.MainBreaker;
+                if(castState.HasAccess == false)
+                {
+                    BreakerButton.Disabled = true;
+                    BreakerButton.ToolTip = Loc.GetString("apc-component-insufficient-access");
+                }
+                else
+                {
+                    BreakerButton.Disabled = false;
+                    BreakerButton.ToolTip = null;
+                    BreakerButton.Pressed = castState.MainBreaker;
+                }
             }
 
             if (PowerLabel != null)
