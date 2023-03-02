@@ -1,0 +1,10 @@
+﻿- type: objective
+  id: HijackShuttleObjective
+  issuer: syndicate
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+  conditions:
+    - !type:HijackShuttleCondition {}
