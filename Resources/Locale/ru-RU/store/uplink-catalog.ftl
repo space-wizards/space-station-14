@@ -98,6 +98,8 @@ uplink-gatfruit-seeds-name = Семена Гатфрута
 uplink-gatfruit-seeds-desc = И кто сказал что оружие не растёт на деревьях?
 uplink-necronomicon-name = Некрономикон
 uplink-necronomicon-desc = Несвятая книга, способная вызвать такого же несвятого фамильяра.
+uplink-revolver-cap-gun-fake-name = Фальшивый пистон
+uplink-revolver-cap-gun-fake-desc = Обманите своего врага! Может использовать как пистон, так и магнум пули. Поставляется заряженным пулями магнум.
 # Броня
 uplink-chameleon-name = Набор Хамелеона
 uplink-chameleon-desc = Рюкзак, полный предметов, содержащих технологию хамелеона, позволяющую вам маскироваться практически под что угодно на станции, и многое другое!
