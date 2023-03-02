@@ -1,6 +1,6 @@
 - type: entity
   id: FloorWaterEntity
-  name: water floor
+  name: water
   placement:
     mode: SnapgridCenter
     snap:
@@ -34,6 +34,6 @@
         - ItemMask
       density: 1000
       hard: false
-  - type: Tag
-    tags:
-      - HideContextMenu
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepWater
