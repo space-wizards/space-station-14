@@ -10,8 +10,5 @@ public sealed class SlowedByContactComponent : Component
     public bool Refresh = false;
 
     [ViewVariables]
-    public readonly HashSet<EntityUid> Intersecting = new();
-
-    [DataField("fixture")]
-    public string Fixture = "fixture_1";
+    public HashSet<EntityUid> Intersecting = new();
 }

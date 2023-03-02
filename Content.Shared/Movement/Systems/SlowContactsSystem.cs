@@ -1,8 +1,11 @@
 using Content.Shared.Movement.Components;
+using Content.Shared.Stunnable;
 using Robust.Shared.GameStates;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
-using Robust.Shared.Serialization;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Movement.Systems;
 
@@ -13,39 +16,13 @@ public sealed class SlowContactsSystem : VirtualController
     public override void Initialize()
     {
         base.Initialize();
-        UpdatesBefore.Add(typeof(SharedMoverController));
+        UpdatesAfter.Add(typeof(SharedMoverController));
         SubscribeLocalEvent<SlowContactsComponent, StartCollideEvent>(OnEntityEnter);
         SubscribeLocalEvent<SlowContactsComponent, EndCollideEvent>(OnEntityExit);
+        SubscribeLocalEvent<SlowedByContactComponent, RefreshMovementSpeedModifiersEvent>(MovementSpeedCheck);
+
         SubscribeLocalEvent<SlowContactsComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<SlowContactsComponent, ComponentGetState>(OnGetState);
-
-        SubscribeLocalEvent<SlowedByContactComponent, RefreshMovementSpeedModifiersEvent>(MovementSpeedCheck);
-        SubscribeLocalEvent<SlowedByContactComponent, ComponentGetState>(OnSlowedGetState);
-        SubscribeLocalEvent<SlowedByContactComponent, ComponentHandleState>(OnSlowedHandleState);
-    }
-
-    private void OnSlowedHandleState(EntityUid uid, SlowedByContactComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not SlowedByContactComponentState state)
-            return;
-
-        component.Refresh = state.Active;
-    }
-
-    [Serializable, NetSerializable]
-    private sealed class SlowedByContactComponentState : ComponentState
-    {
-        public readonly bool Active;
-
-        public SlowedByContactComponentState(bool active)
-        {
-            Active = active;
-        }
-    }
-
-    private void OnSlowedGetState(EntityUid uid, SlowedByContactComponent component, ref ComponentGetState args)
-    {
-        args.State = new SlowedByContactComponentState(component.Refresh);
     }
 
     private void OnGetState(EntityUid uid, SlowContactsComponent component, ref ComponentGetState args)
@@ -70,13 +47,10 @@ public sealed class SlowContactsSystem : VirtualController
 
         while (query.MoveNext(out var uid, out var comp))
         {
-            // TODO: Contacts not working with prediction
-            //if (!comp.Refresh)
-            //    continue;
-
             _speedModifierSystem.RefreshMovementSpeedModifiers(uid);
-            //comp.Refresh = false;
-            //Dirty(comp);
+
+            //if (comp.Intersecting.Count == 0)
+                //RemCompDeferred<SlowedByContactComponent>(uid);
         }
     }
 
@@ -98,35 +72,27 @@ public sealed class SlowContactsSystem : VirtualController
         }
 
         args.ModifySpeed(walkSpeed, sprintSpeed);
+        component.Refresh = false;
     }
 
     private void OnEntityExit(EntityUid uid, SlowContactsComponent component, ref EndCollideEvent args)
     {
         var otherUid = args.OtherFixture.Body.Owner;
 
-        if (!TryComp<SlowedByContactComponent>(otherUid, out var slowed) ||
-            slowed.Fixture != args.OtherFixture.ID ||
-            !slowed.Intersecting.Remove(uid))
-        {
+        if (!TryComp<SlowedByContactComponent>(otherUid, out var slowed))
             return;
-        }
 
-        //slowed.Refresh = true;
-        //Dirty(slowed);
+        slowed.Refresh = true;
+        slowed.Intersecting.Remove(uid);
     }
 
     private void OnEntityEnter(EntityUid uid, SlowContactsComponent component, ref StartCollideEvent args)
     {
         var otherUid = args.OtherFixture.Body.Owner;
-        if (!TryComp<SlowedByContactComponent>(otherUid, out var slowed) ||
-            slowed.Fixture != args.OtherFixture.ID ||
-            !HasComp<MovementSpeedModifierComponent>(otherUid) ||
-            !slowed.Intersecting.Add(uid))
-        {
+        if (!HasComp<MovementSpeedModifierComponent>(otherUid) || !TryComp<SlowedByContactComponent>(otherUid, out var slowed))
             return;
-        }
 
-        //slowed.Refresh = true;
-        //Dirty(slowed);
+        slowed.Refresh = true;
+        slowed.Intersecting.Add(uid);
     }
 }
