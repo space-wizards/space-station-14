@@ -3,6 +3,7 @@ using Content.Shared.Stunnable;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 
@@ -10,7 +11,6 @@ namespace Content.Shared.Movement.Systems;
 
 public sealed class SlowContactsSystem : VirtualController
 {
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
 
     public override void Initialize()
@@ -56,16 +56,11 @@ public sealed class SlowContactsSystem : VirtualController
 
     private void MovementSpeedCheck(EntityUid uid, SlowedByContactComponent component, RefreshMovementSpeedModifiersEvent args)
     {
-        if (!EntityManager.TryGetComponent<PhysicsComponent>(uid, out var physicsComponent))
-            return;
-
         var walkSpeed = 1.0f;
         var sprintSpeed = 1.0f;
 
-        bool remove = true;
-        foreach (var colliding in component.Intersecting)
+        foreach (var ent in component.Intersecting)
         {
-            var ent = colliding;
             if (!TryComp<SlowContactsComponent>(ent, out var slowContactsComponent))
                 continue;
 
@@ -77,6 +72,7 @@ public sealed class SlowContactsSystem : VirtualController
         }
 
         args.ModifySpeed(walkSpeed, sprintSpeed);
+        component.Refresh = false;
     }
 
     private void OnEntityExit(EntityUid uid, SlowContactsComponent component, ref EndCollideEvent args)
@@ -86,16 +82,17 @@ public sealed class SlowContactsSystem : VirtualController
         if (!TryComp<SlowedByContactComponent>(otherUid, out var slowed))
             return;
 
+        slowed.Refresh = true;
         slowed.Intersecting.Remove(uid);
     }
 
     private void OnEntityEnter(EntityUid uid, SlowContactsComponent component, ref StartCollideEvent args)
     {
         var otherUid = args.OtherFixture.Body.Owner;
-        if (!HasComp<MovementSpeedModifierComponent>(otherUid))
+        if (!HasComp<MovementSpeedModifierComponent>(otherUid) || !TryComp<SlowedByContactComponent>(otherUid, out var slowed))
             return;
 
-        var slowed = EnsureComp<SlowedByContactComponent>(otherUid);
+        slowed.Refresh = true;
         slowed.Intersecting.Add(uid);
     }
 }

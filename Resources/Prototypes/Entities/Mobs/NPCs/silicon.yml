@@ -3,6 +3,7 @@
   abstract: true
   id: MobSiliconBase
   components:
+  - type: SlowedByContact
   - type: LagCompensation
   - type: Reactive
     groups:

@@ -1,5 +1,4 @@
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Movement.Components;
 
@@ -7,6 +6,9 @@ namespace Content.Shared.Movement.Components;
 [NetworkedComponent, RegisterComponent]
 public sealed class SlowedByContactComponent : Component
 {
+    [ViewVariables]
+    public bool Refresh = false;
+
     [ViewVariables]
     public HashSet<EntityUid> Intersecting = new();
 }

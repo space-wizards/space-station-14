@@ -6,6 +6,7 @@
   description: guardian
   save: false
   components:
+    - type: SlowedByContact
     - type: LagCompensation
     - type: GhostTakeoverAvailable
       allowMovement: true
