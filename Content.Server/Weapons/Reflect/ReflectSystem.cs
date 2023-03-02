@@ -11,6 +11,7 @@ using Robust.Shared.Physics.Systems;
 using Content.Server.Weapons.Reflect;
 using Content.Shared.Weapons.Ranged;
 using Content.Server.Weapons.Melee.EnergySword;
+using Content.Server.Projectiles;
 
 namespace Server.Content.Weapons.Reflect;
 
@@ -36,7 +37,7 @@ public sealed class ReflectSystem : EntitySystem
         SubscribeLocalEvent<ReflectComponent, EnergySwordDeactivatedEvent>(DisableReflect);
     }
 
-    private void TryReflectProjectile(EntityUid uid, ProjectileComponent projComp, ProjectileCollideAttemptEvent args)
+    private void TryReflectProjectile(EntityUid uid, ProjectileComponent projComp, ref ProjectileCollideAttemptEvent args)
     {
         if (!TryComp<PhysicsComponent>(uid, out var physicsComp))
             return;
@@ -57,7 +58,7 @@ public sealed class ReflectSystem : EntitySystem
                     _popup.PopupEntity(Loc.GetString("reflect-shot"), uid, PopupType.Small);
                     _audio.PlayPvs(reflect.OnReflect, uid, AudioHelpers.WithVariation(0.05f, _random));
                     _adminLogger.Add(LogType.ShotReflected, $"{ToPrettyString(args.Target):user} reflected projectile {ToPrettyString(uid):projectile}");
-                    args.Cancel();
+                    args.Cancelled = true;
                     return;
                 }
             }
