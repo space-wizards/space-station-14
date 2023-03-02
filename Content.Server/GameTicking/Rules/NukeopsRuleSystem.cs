@@ -25,7 +25,8 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Traitor;
 using Content.Shared.Dataset;
 using Content.Shared.Examine;
-using Content.Shared.FixedPoint;
+using Robust.Shared.Audio;
+using Content.Server.Chat.Systems;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Nuke;
@@ -66,6 +67,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly StoreSystem _storeSystem = default!;
     [Dependency] private readonly PowerReceiverSystem _powerReceiverSystem = default!;
+    [Dependency] private readonly WarDeclaratorSystem _warDeclaratorSystem = default!;
+    [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -262,7 +265,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             _gameruleStartTime.Subtract(roundTime) < _nukeopsRuleConfig.WarTimeLimit
         )
         {
-            GiveExtraTC();
+            DistributeExtraTC();
         }
     }
 
@@ -275,8 +278,13 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         _leftOutpost = true;
     }
 
-    private void GiveExtraTC()
+    public void DistributeExtraTC()
     {
+    	if (!RuleAdded || _tcDistributed)
+        {
+            return;
+        }
+
         var uplinkList = new List<StoreComponent>();
 
         foreach (var uplink in EntityQuery<StoreComponent>())
@@ -294,6 +302,16 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             var msg = Loc.GetString("store-currency-war-boost-given", ("target", owner));
             _popupSystem.PopupEntity(msg, owner);
         }
+        _warDeclaratorSystem.RefreshAllDeclaratorsUI();
+    }
+
+    public void DeclareWar(string msg, string title, SoundSpecifier? announcementSound = null, Color? colorOverride = null)
+    {
+    	if (!RuleAdded || _announcementMade)
+            return;
+    	_chatSystem.DispatchGlobalAnnouncement(msg, title, announcementSound: announcementSound, colorOverride: colorOverride);
+        _announcementMade = true;
+        DistributeExtraTC();
     }
 
     private void OnComponentInit(EntityUid uid, NukeOperativeComponent component, ComponentInit args)
