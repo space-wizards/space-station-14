@@ -43,14 +43,11 @@ public sealed class SlowContactsSystem : VirtualController
     {
         base.UpdateBeforeSolve(prediction, frameTime);
 
-        var query = EntityQueryEnumerator<SlowedByContactComponent>();
+        var query = EntityQueryEnumerator<SlowedByContactComponent, MovementSpeedModifierComponent>();
 
-        while (query.MoveNext(out var uid, out var comp))
+        while (query.MoveNext(out var uid, out var comp, out var modifier))
         {
-            _speedModifierSystem.RefreshMovementSpeedModifiers(uid);
-
-            //if (comp.Intersecting.Count == 0)
-                //RemCompDeferred<SlowedByContactComponent>(uid);
+            _speedModifierSystem.RefreshMovementSpeedModifiers(uid, modifier);
         }
     }
 
