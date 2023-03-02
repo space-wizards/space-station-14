@@ -20,6 +20,8 @@ public sealed class BiomePrototype : IPrototype
 [ImplicitDataDefinitionForInheritors]
 public interface IBiomeLayer
 {
+    public FastNoiseLite.NoiseType NoiseType { get; }
+
     /// <summary>
     /// Threshold for this layer to be present. If set to 0 forces it for every tile.
     /// </summary>
@@ -39,6 +41,8 @@ public interface IBiomeLayer
 
 public sealed class BiomeTileLayer : IBiomeLayer
 {
+    [DataField("noiseType")] public FastNoiseLite.NoiseType NoiseType { get; } = FastNoiseLite.NoiseType.Cellular;
+
     /// <inheritdoc/>
     [DataField("threshold")]
     public float Threshold { get; } = 0.5f;
@@ -74,6 +78,8 @@ public interface IBiomeWorldLayer : IBiomeLayer
 
 public sealed class BiomeDecalLayer : IBiomeWorldLayer
 {
+    [DataField("noiseType")] public FastNoiseLite.NoiseType NoiseType { get; } = FastNoiseLite.NoiseType.Cellular;
+
     /// <inheritdoc/>
     [DataField("allowedTiles", customTypeSerializer:typeof(PrototypeIdListSerializer<ContentTileDefinition>))]
     public List<string> AllowedTiles { get; } = new();
@@ -102,6 +108,8 @@ public sealed class BiomeDecalLayer : IBiomeWorldLayer
 
 public sealed class BiomeEntityLayer : IBiomeWorldLayer
 {
+    [DataField("noiseType")] public FastNoiseLite.NoiseType NoiseType { get; } = FastNoiseLite.NoiseType.Cellular;
+
     /// <inheritdoc/>
     [DataField("allowedTiles", customTypeSerializer:typeof(PrototypeIdListSerializer<ContentTileDefinition>))]
     public List<string> AllowedTiles { get; } = new();

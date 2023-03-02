@@ -35,72 +35,73 @@
 - type: biome
   id: Grasslands
   layers:
-    - !type:BiomeDecalLayer
-      allowedTiles:
-        - FloorPlanetGrass
-      seedOffset: 3
-      threshold: 0.98
-      divisions: 1
-      frequency: 1
-      decals:
-        - FlowersBROne
-        - FlowersBRTwo
-        - FlowersBRThree
-    - !type:BiomeDecalLayer
-      allowedTiles:
-        - FloorPlanetGrass
-      seedOffset: 2
-      threshold: 0.95
-      divisions: 2
-      frequency: 1
-      decals:
-        - BushDOne
-        - BushDTwo
-        - BushDThree
-    - !type:BiomeDecalLayer
-      allowedTiles:
-        - FloorPlanetGrass
-      seedOffset: 1
-      threshold: 0.8
-      divisions: 1
-      frequency: 0.05
-      decals:
-        - BushCOne
-        - BushCTwo
-        - BushCThree
-    - !type:BiomeDecalLayer
-      allowedTiles:
-      - FloorPlanetGrass
-      divisions: 1
-      decals:
-        - BushAOne
-        - BushATwo
-        - BushAThree
-    - !type:BiomeEntityLayer
-      threshold: 0.9
-      frequency: 1
-      allowedTiles:
-        - FloorPlanetGrass
-      entities:
-        - FloraTree01
-        - FloraTree02
-        - FloraTree03
-        - FloraTree04
-        - FloraTree05
-        - FloraTree06
-        - FloraTreeLarge01
-        - FloraTreeLarge02
-        - FloraTreeLarge03
-        - FloraTreeLarge04
-        - FloraTreeLarge05
-        - FloraTreeLarge06
+    #- !type:BiomeDecalLayer
+    #  allowedTiles:
+    #    - FloorPlanetGrass
+    #  seedOffset: 3
+    #  threshold: 0.98
+    #  divisions: 1
+    #  frequency: 1
+    #  decals:
+    #    - FlowersBROne
+    #    - FlowersBRTwo
+    #    - FlowersBRThree
+    #- !type:BiomeDecalLayer
+    #  allowedTiles:
+    #    - FloorPlanetGrass
+    #  seedOffset: 2
+    #  threshold: 0.95
+    #  divisions: 2
+    #  frequency: 1
+    #  decals:
+    #    - BushDOne
+    #    - BushDTwo
+    #    - BushDThree
+    #- !type:BiomeDecalLayer
+    #  allowedTiles:
+    #    - FloorPlanetGrass
+    #  seedOffset: 1
+    #  threshold: 0.8
+    #  divisions: 1
+    #  frequency: 0.05
+    #  decals:
+    #    - BushCOne
+    #    - BushCTwo
+    #    - BushCThree
+    #- !type:BiomeDecalLayer
+    #  allowedTiles:
+    #  - FloorPlanetGrass
+    #  divisions: 1
+    #  decals:
+    #    - BushAOne
+    #    - BushATwo
+    #    - BushAThree
+    #- !type:BiomeEntityLayer
+    #  threshold: 0.9
+    #  frequency: 1
+    #  allowedTiles:
+    #    - FloorPlanetGrass
+    #  entities:
+    #    - FloraTree01
+    #    - FloraTree02
+    #    - FloraTree03
+    #    - FloraTree04
+    #    - FloraTree05
+    #    - FloraTree06
+    #    - FloraTreeLarge01
+    #    - FloraTreeLarge02
+    #    - FloraTreeLarge03
+    #    - FloraTreeLarge04
+    #    - FloraTreeLarge05
+    #    - FloraTreeLarge06
     # Fill remainder with sand.
     - !type:BiomeTileLayer
-      threshold: 0
+      threshold: -1
       tile: FloorAsteroidSand
     - !type:BiomeTileLayer
-      threshold: 0.5
+      threshold: -0.8
       tile: FloorPlanetGrass
+      frequency: 0.02
 
 # Lava
 - type: biome
