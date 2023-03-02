@@ -4,7 +4,6 @@ using Content.Server.Disease.Components;
 using Content.Server.Body.Components;
 using Content.Server.Atmos.Components;
 using Content.Server.Nutrition.Components;
-using Robust.Shared.Player;
 using Content.Server.Popups;
 using Content.Server.Speech.Components;
 using Content.Server.Body.Systems;
@@ -29,7 +28,6 @@ using Content.Shared.Humanoid;
 using Content.Shared.Mobs;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Weapons.Melee;
-using Robust.Shared.Audio;
 
 namespace Content.Server.Zombies
 {

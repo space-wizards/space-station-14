@@ -11,6 +11,7 @@ using Content.Shared.Placeable;
 using Content.Shared.Storage;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Storage.EntitySystems
 {
@@ -54,7 +55,7 @@ namespace Content.Server.Storage.EntitySystems
                     StartDoAfter(uid, null, args.User, dumpable);//Had multiplier of 0.6f
                 },
                 Text = Loc.GetString("dump-verb-name"),
-                IconTexture = "/Textures/Interface/VerbIcons/drop.svg.192dpi.png",
+                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/drop.svg.192dpi.png")),
             };
             args.Verbs.Add(verb);
         }
