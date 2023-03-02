@@ -199,7 +199,7 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            actor.PlayerSession.ContentData()!.Mind?.UnVisit();
+            _mindSystem.UnVisit(actor.PlayerSession.ContentData()!.Mind);
         }
 
         private void OnGhostWarpToTargetRequest(GhostWarpToTargetRequestEvent msg, EntitySessionEventArgs args)

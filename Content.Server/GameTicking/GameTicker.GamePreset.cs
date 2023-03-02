@@ -180,7 +180,7 @@ namespace Content.Server.GameTicking
 
             if (mind.VisitingEntity != default)
             {
-                mind.UnVisit();
+                _mindSystem.UnVisit(mind);
             }
 
             var position = playerEntity is {Valid: true}
@@ -240,7 +240,7 @@ namespace Content.Server.GameTicking
             _ghosts.SetCanReturnToBody(ghostComponent, canReturn);
 
             if (canReturn)
-                mind.Visit(ghost);
+                _mindSystem.Visit(mind, ghost);
             else
                 mind.TransferTo(ghost);
             return true;

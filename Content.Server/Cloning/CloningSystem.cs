@@ -19,6 +19,7 @@ using Content.Server.Construction;
 using Content.Server.Materials;
 using Content.Server.Stack;
 using Content.Server.Jobs;
+using Content.Server.Mind;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Zombies;
@@ -54,6 +55,7 @@ namespace Content.Server.Cloning
         [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly MaterialStorageSystem _material = default!;
+        [Dependency] private readonly MindSystem _mindSystem = default!;
 
         public readonly Dictionary<Mind.Mind, EntityUid> ClonesWaitingForMind = new();
         public const float EasyModeCloningCost = 0.7f;
@@ -102,7 +104,7 @@ namespace Content.Server.Cloning
                 return;
 
             mind.TransferTo(entity, ghostCheckOverride: true);
-            mind.UnVisit();
+            _mindSystem.UnVisit(mind);
             ClonesWaitingForMind.Remove(mind);
         }
 

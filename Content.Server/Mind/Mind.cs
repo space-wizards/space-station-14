@@ -75,7 +75,7 @@ namespace Content.Server.Mind
         public bool IsVisitingEntity => VisitingEntity != null;
 
         [ViewVariables]
-        public EntityUid? VisitingEntity { get; private set; }
+        public EntityUid? VisitingEntity { get; set; }
 
         [ViewVariables]
         public EntityUid? CurrentEntity => VisitingEntity ?? OwnedEntity;
@@ -324,7 +324,7 @@ namespace Content.Server.Mind
             // Looks like caller just wants us to go back to normal.
             if (entity == OwnedEntity)
             {
-                UnVisit();
+                _mindSystem.UnVisit(this);
                 return;
             }
 
@@ -374,7 +374,7 @@ namespace Content.Server.Mind
                       || !_entityManager.TryGetComponent(VisitingEntity!, out GhostComponent? ghostComponent) // visiting entity is not a Ghost
                       || !ghostComponent.CanReturnToBody))  // it is a ghost, but cannot return to body anyway, so it's okay
             {
-                RemoveVisitingEntity();
+                _mindSystem.RemoveVisitingEntity(this);
             }
 
             // Player is CURRENTLY connected.
@@ -429,48 +429,6 @@ namespace Content.Server.Mind
             DebugTools.AssertNotNull(newOwnerData);
             newOwnerData!.Mind?.ChangeOwningPlayer(null);
             newOwnerData.UpdateMindFromMindChangeOwningPlayer(this);
-        }
-
-        public void Visit(EntityUid entity)
-        {
-            Session?.AttachToEntity(entity);
-            VisitingEntity = entity;
-
-            var comp = _entityManager.AddComponent<VisitingMindComponent>(entity);
-            comp.Mind = this;
-
-            Logger.Info($"Session {Session?.Name} visiting entity {entity}.");
-        }
-
-        /// <summary>
-        /// Returns the mind to its original entity.
-        /// </summary>
-        public void UnVisit()
-        {
-            var currentEntity = Session?.AttachedEntity;
-            Session?.AttachToEntity(OwnedEntity);
-            RemoveVisitingEntity();
-
-            if (Session != null && OwnedEntity != null && currentEntity != OwnedEntity)
-                _adminLogger.Add(LogType.Mind, LogImpact.Low,
-                    $"{Session.Name} returned to {_entityManager.ToPrettyString(OwnedEntity.Value)}");
-        }
-
-        /// <summary>
-        /// Cleans up the VisitingEntity.
-        /// </summary>
-        private void RemoveVisitingEntity()
-        {
-            if (VisitingEntity == null)
-                return;
-
-            var oldVisitingEnt = VisitingEntity.Value;
-            // Null this before removing the component to avoid any infinite loops.
-            VisitingEntity = null;
-
-            DebugTools.AssertNotNull(oldVisitingEnt);
-            _entityManager.RemoveComponent<VisitingMindComponent>(oldVisitingEnt);
-            _entityManager.EventBus.RaiseLocalEvent(oldVisitingEnt, new MindUnvisitedMessage(), true);
         }
 
         public bool TryGetSession([NotNullWhen(true)] out IPlayerSession? session)

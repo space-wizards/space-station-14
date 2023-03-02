@@ -1,8 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
 using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
+using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Interaction.Events;
@@ -11,6 +13,7 @@ using Robust.Server.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Mind;
 
@@ -20,6 +23,7 @@ public sealed class MindSystem : EntitySystem
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly GhostSystem _ghostSystem = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
     {
@@ -28,6 +32,12 @@ public sealed class MindSystem : EntitySystem
         SubscribeLocalEvent<MindComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<MindComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<MindComponent, SuicideEvent>(OnSuicide);
+        SubscribeLocalEvent<VisitingMindComponent, ComponentRemove>(OnVistingMindRemoved);
+    }
+
+    private void OnVistingMindRemoved(EntityUid uid, VisitingMindComponent component, ComponentRemove args)
+    {
+        UnVisit(component.Mind);
     }
 
     public void SetGhostOnShutdown(EntityUid uid, bool value, MindComponent? mind = null)
@@ -258,5 +268,53 @@ public sealed class MindSystem : EntitySystem
             return true;
         // They might actually be alive.
         return _mobStateSystem.IsDead(mind.OwnedEntity.Value, targetMobState);
+    }
+    
+    public void Visit(Mind mind, EntityUid entity)
+    {
+        mind.Session?.AttachToEntity(entity);
+        mind.VisitingEntity = entity;
+
+        var comp = AddComp<VisitingMindComponent>(entity);
+        comp.Mind = mind;
+
+        Logger.Info($"Session {mind.Session?.Name} visiting entity {entity}.");
+    }
+
+    /// <summary>
+    /// Returns the mind to its original entity.
+    /// </summary>
+    public void UnVisit(Mind? mind)
+    {
+        if (mind == null)
+            return;
+        
+        var currentEntity = mind.Session?.AttachedEntity;
+        mind.Session?.AttachToEntity(mind.OwnedEntity);
+        RemoveVisitingEntity(mind);
+
+        if (mind.Session != null && mind.OwnedEntity != null && mind.OwnedEntity != currentEntity)
+        {
+            _adminLogger.Add(LogType.Mind, LogImpact.Low,
+                $"{mind.Session.Name} returned to {ToPrettyString(mind.OwnedEntity.Value)}");
+        }
+    }
+
+    /// <summary>
+    /// Cleans up the VisitingEntity.
+    /// </summary>
+    /// <param name="mind"></param>
+    public void RemoveVisitingEntity(Mind mind)
+    {
+        if (mind.VisitingEntity == null)
+            return;
+
+        var oldVisitingEnt = mind.VisitingEntity.Value;
+        // Null this before removing the component to avoid any infinite loops.
+        mind.VisitingEntity = null;
+
+        DebugTools.AssertNotNull(oldVisitingEnt);
+        RemComp<VisitingMindComponent>(oldVisitingEnt);
+        RaiseLocalEvent(oldVisitingEnt, new MindUnvisitedMessage(), true);
     }
 }

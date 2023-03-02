@@ -31,6 +31,8 @@ namespace Content.IntegrationTests.Tests.Minds
                 var player = IoCManager.Resolve<IPlayerManager>().ServerSessions.Single();
 
                 var mapMan = IoCManager.Resolve<IMapManager>();
+                
+                var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
 
                 var mapId = mapMan.GetAllMapIds().Last();
                 var pos = new MapCoordinates(Vector2.Zero, mapId);
@@ -42,7 +44,7 @@ namespace Content.IntegrationTests.Tests.Minds
                 mind.ChangeOwningPlayer(player.UserId);
 
                 mind.TransferTo(playerEnt);
-                mind.Visit(visitEnt);
+                mindSystem.Visit(mind, visitEnt);
 
                 Assert.That(player.AttachedEntity, Is.EqualTo(visitEnt));
                 Assert.That(mind.VisitingEntity, Is.EqualTo(visitEnt));
