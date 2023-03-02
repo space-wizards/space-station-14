@@ -11,7 +11,7 @@ namespace Content.Server.Patron
     [AdminCommand(AdminFlags.Host)]
     public sealed class PatronAddCommand : EntitySystem, IConsoleCommand
     {
-        public string Command => "patronadd";
+        public string Command => "addpatron";
         public string Description => Loc.GetString("cmd-patronadd-desc");
         public string Help => Loc.GetString("cmd-patronadd-help");
 
@@ -96,7 +96,7 @@ namespace Content.Server.Patron
     [AdminCommand(AdminFlags.Host)]
     public sealed class PatronRemoveCommand : EntitySystem, IConsoleCommand
     {
-        public string Command => "patronremove";
+        public string Command => "rmpatron";
         public string Description => Loc.GetString("cmd-patronremove-desc");
         public string Help => Loc.GetString("cmd-patronremove-help");
 
@@ -182,9 +182,9 @@ namespace Content.Server.Patron
     [AdminCommand(AdminFlags.Host)]
     public sealed class PatronGetItemsCommand : EntitySystem, IConsoleCommand
     {
-        public string Command => "patron_getitems";
-        public string Description => Loc.GetString("cmd-patron-getitems-desc");
-        public string Help => Loc.GetString("cmd-patron-getitems-help");
+        public string Command => "lspatronitems";
+        public string Description => Loc.GetString("cmd-patrongetitems-desc");
+        public string Help => Loc.GetString("cmd-patrongetitems-help");
 
         public async void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -233,7 +233,7 @@ namespace Content.Server.Patron
             {
                 var playerMgr = IoCManager.Resolve<IPlayerManager>();
                 var options = playerMgr.ServerSessions.Select(c => c.Name).OrderBy(c => c).ToArray();
-                return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-patronadd-hint-player"));
+                return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-patron-hint-player"));
             }
             return CompletionResult.Empty;
         }

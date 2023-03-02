@@ -15,19 +15,24 @@ using Robust.Shared.Asynchronous;
 using Robust.Shared.Prototypes;
 
 using Robust.Server.Player;
+using Content.Shared.Humanoid;
+using Content.Shared.Interaction.Events;
+using Robust.Server.GameObjects;
+using Content.Shared.Patron;
+using Content.Server.Speech.Components;
 
 namespace Content.Server.Patron
 {
-    public sealed class PatronSystem : EntitySystem
+    public sealed class PatronSystem : SharedPatronSystem
     {
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
         [Dependency] private readonly ITaskManager _taskManager = default!;
         [Dependency] private readonly IServerDbManager _dbMan = default!;
         [Dependency] private readonly IAdminManager _adminMan = default!;
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly StorageSystem _storeSys = default!;
         [Dependency] private readonly InventorySystem _invSys = default!;
-
 
         private ISawmill _sawmill = default!;
 
@@ -37,6 +42,7 @@ namespace Content.Server.Patron
 
             SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawnComplete);
             SubscribeLocalEvent<PatronItemComponent,GettingPickedUpAttemptEvent>(OnItemPickTry);
+            SubscribeLocalEvent<PatronEarsComponent, UseInHandEvent>(OnApplyEars);
         }
         private void OnPlayerSpawnComplete(PlayerSpawnCompleteEvent ev)
         {
@@ -45,26 +51,38 @@ namespace Content.Server.Patron
 
         private void OnItemPickTry(EntityUid uid, PatronItemComponent comp, GettingPickedUpAttemptEvent ev)
         {
-            if (HasComp<MindComponent>(ev.User))
-            {
-                var mind = Comp<MindComponent>(ev.User).Mind;
-                if (mind is null || mind.Session is null)
-                {
-                    ev.Cancel();
-                    return;
-                }
-                var session = mind.Session;
-                if (session != comp.Patron && (!_adminMan.IsAdmin(session) || !_adminMan.HasAdminFlag(session, AdminFlags.Host)))
-                {
-                    ev.Cancel();
-                    _popup.PopupCursor(Loc.GetString("patronitem-denypickup"), ev.User);
-                    return;
-                }
-                else
-                    return;
-            }
+            var user = ev.User;
+            if (IsItemOwnedByEntity(comp, user, out var session) || (session is not null && _adminMan.IsAdmin(session) && _adminMan.HasAdminFlag(session, AdminFlags.Host)))
+                return;
             ev.Cancel();
+            _popup.PopupCursor(Loc.GetString("patronitem-denypickup"), user);
             return;
+        }
+
+        private void OnApplyEars(EntityUid uid, PatronEarsComponent comp, UseInHandEvent ev)
+        {
+            var user = ev.User;
+            if (TryComp<PatronItemComponent>(uid, out var patronComp))
+                if (!IsItemOwnedByEntity(patronComp, user, out var session))
+                    return;
+
+            var curse = EnsureComp<OwOAccentComponent>(user);
+            var visComp = EnsureComp<PatronEarsVisualizerComponent>(user);
+            visComp.RsiPath = comp.RsiPath;
+            Dirty(visComp);
+            _entMan.DeleteEntity(uid);
+        }
+
+        private bool IsItemOwnedByEntity(PatronItemComponent comp, EntityUid uid, out IPlayerSession? session)
+        {
+            session = null;
+            if (!HasComp<MindComponent>(uid))
+                return false;
+            var mind = Comp<MindComponent>(uid).Mind;
+            if (mind is null || mind.Session is null)
+                return false;
+            session = mind.Session;
+            return session == comp.Patron;
         }
 
         private async Task GivePatronItems(IPlayerSession ply, EntityUid ent)

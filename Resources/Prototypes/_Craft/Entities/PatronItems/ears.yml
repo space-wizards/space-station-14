@@ -1,0 +1,8 @@
+- type: entity
+  parent: ClothingHeadHatCatEars
+  id: PatronRewardCatEars
+  name: Кошачьи уши
+  description: Теперь со встроенной системой B.R.U.H.
+  components:
+  - type: PatronEars
+    sprite: Clothing/Head/Hats/catears.rsi
