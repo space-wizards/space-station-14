@@ -70,8 +70,9 @@ public sealed partial class StoreSystem : EntitySystem
             return;
 
         // prevent valid checking traitors by inserting tc
+        // still lets crew use nukie uplinks since they don't have owners
         var user = args.User;
-        if (store.Traitor && !(TryComp<MindComponent>(user, out var mind) && mind.Mind != null && mind.Mind.HasRole<TraitorRole>()))
+        if (store.Traitor && store.AccountOwner != null && !(TryComp<MindComponent>(user, out var mind) && mind.Mind != null && mind.Mind.HasRole<TraitorRole>()))
             return;
 
         args.Handled = TryAddCurrency(GetCurrencyValue(uid, component), args.Target.Value, store);

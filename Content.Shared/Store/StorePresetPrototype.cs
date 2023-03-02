@@ -40,7 +40,7 @@ public sealed class StorePresetPrototype : IPrototype
     public HashSet<string> CurrencyWhitelist { get; } = new();
 
     /// <summary>
-    /// Is this store a traitor uplink, if it is then only traitors can insert currency to prevent valid checking pdas with renault's help.
+    /// Is this store a hidden traitor uplink (not nukie), if it is then only traitors can insert currency to prevent valid checking pdas with renault's help.
     /// </summary>
     [DataField("traitor")]
     public bool Traitor;
