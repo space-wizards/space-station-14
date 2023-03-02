@@ -171,4 +171,3 @@
     - type: StorageFill
       contents:
         - id: MobLizard
-          amount: 1
