@@ -99,7 +99,7 @@
       threshold: -1
       tile: FloorAsteroidSand
     - !type:BiomeTileLayer
-      threshold: -0.8
+      threshold: -0.7
       tile: FloorPlanetGrass
       frequency: 0.02
 

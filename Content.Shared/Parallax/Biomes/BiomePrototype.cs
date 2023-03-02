@@ -22,6 +22,8 @@ public interface IBiomeLayer
 {
     public FastNoiseLite.NoiseType NoiseType { get; }
 
+    public FastNoiseLite.FractalType FractalType { get; }
+
     /// <summary>
     /// Threshold for this layer to be present. If set to 0 forces it for every tile.
     /// </summary>
@@ -42,6 +44,8 @@ public interface IBiomeLayer
 public sealed class BiomeTileLayer : IBiomeLayer
 {
     [DataField("noiseType")] public FastNoiseLite.NoiseType NoiseType { get; } = FastNoiseLite.NoiseType.Cellular;
+
+    [DataField("fractalType")] public FastNoiseLite.FractalType FractalType { get; } = FastNoiseLite.FractalType.FBm;
 
     /// <inheritdoc/>
     [DataField("threshold")]
@@ -80,6 +84,8 @@ public sealed class BiomeDecalLayer : IBiomeWorldLayer
 {
     [DataField("noiseType")] public FastNoiseLite.NoiseType NoiseType { get; } = FastNoiseLite.NoiseType.Cellular;
 
+    [DataField("fractalType")] public FastNoiseLite.FractalType FractalType { get; } = FastNoiseLite.FractalType.FBm;
+
     /// <inheritdoc/>
     [DataField("allowedTiles", customTypeSerializer:typeof(PrototypeIdListSerializer<ContentTileDefinition>))]
     public List<string> AllowedTiles { get; } = new();
@@ -109,6 +115,8 @@ public sealed class BiomeDecalLayer : IBiomeWorldLayer
 public sealed class BiomeEntityLayer : IBiomeWorldLayer
 {
     [DataField("noiseType")] public FastNoiseLite.NoiseType NoiseType { get; } = FastNoiseLite.NoiseType.Cellular;
+
+    [DataField("fractalType")] public FastNoiseLite.FractalType FractalType { get; } = FastNoiseLite.FractalType.FBm;
 
     /// <inheritdoc/>
     [DataField("allowedTiles", customTypeSerializer:typeof(PrototypeIdListSerializer<ContentTileDefinition>))]

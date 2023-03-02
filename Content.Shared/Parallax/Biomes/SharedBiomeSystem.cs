@@ -116,7 +116,6 @@ public abstract class SharedBiomeSystem : EntitySystem
         }
 
         var oldSeed = seed.GetSeed();
-        var oldFrequency = seed.GetFrequency();
 
         for (var i = prototype.Layers.Count - 1; i >= 0; i--)
         {
@@ -144,7 +143,7 @@ public abstract class SharedBiomeSystem : EntitySystem
     /// <summary>
     /// Gets the underlying biome tile, ignoring any existing tile that may be there.
     /// </summary>
-    public bool TryGetTile(Vector2i indices, FastNoiseLite seed, float threshold, ContentTileDefinition tileDef, List<byte>? variants, [NotNullWhen(true)] out Tile? tile)
+    private bool TryGetTile(Vector2i indices, FastNoiseLite seed, float threshold, ContentTileDefinition tileDef, List<byte>? variants, [NotNullWhen(true)] out Tile? tile)
     {
         var found = seed.GetNoise(indices.X, indices.Y);
 
