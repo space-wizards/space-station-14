@@ -66,6 +66,12 @@ public sealed class StoreComponent : Component
     [DataField("buySuccessSound")]
     public SoundSpecifier BuySuccessSound = new SoundPathSpecifier("/Audio/Effects/kaching.ogg");
     #endregion
+
+    /// <summary>
+    /// Is this store a traitor uplink, if it is then only traitors can insert currency to prevent valid checking pdas with renault's help.
+    /// </summary>
+    [DataField("traitor")]
+    public bool Traitor;
 }
 
 /// <summary>

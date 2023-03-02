@@ -1,13 +1,15 @@
+using Content.Server.Mind.Components;
 using Content.Server.Store.Components;
+using Content.Server.Traitor;
+using Content.Server.UserInterface;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Stacks;
 using Content.Shared.Store;
+using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using System.Linq;
-using Content.Server.UserInterface;
-using Content.Shared.Stacks;
-using JetBrains.Annotations;
 
 namespace Content.Server.Store.Systems;
 
@@ -65,6 +67,11 @@ public sealed partial class StoreSystem : EntitySystem
             return;
 
         if (args.Target == null || !TryComp<StoreComponent>(args.Target, out var store))
+            return;
+
+        // prevent valid checking traitors by inserting tc
+        var user = args.User;
+        if (store.Traitor && !(TryComp<MindComponent>(user, out var mind) && mind.Mind != null && mind.Mind.HasRole<TraitorRole>()))
             return;
 
         args.Handled = TryAddCurrency(GetCurrencyValue(uid, component), args.Target.Value, store);
@@ -163,6 +170,7 @@ public sealed partial class StoreSystem : EntitySystem
         component.Preset = preset.ID;
         component.CurrencyWhitelist.UnionWith(preset.CurrencyWhitelist);
         component.Categories.UnionWith(preset.Categories);
+        component.Traitor = preset.Traitor;
         if (component.Balance == new Dictionary<string, FixedPoint2>() && preset.InitialBalance != null) //if we don't have a value stored, use the preset
             TryAddCurrency(preset.InitialBalance, uid, component);
 

@@ -38,4 +38,10 @@ public sealed class StorePresetPrototype : IPrototype
     /// </summary>
     [DataField("currencyWhitelist", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<CurrencyPrototype>))]
     public HashSet<string> CurrencyWhitelist { get; } = new();
+
+    /// <summary>
+    /// Is this store a traitor uplink, if it is then only traitors can insert currency to prevent valid checking pdas with renault's help.
+    /// </summary>
+    [DataField("traitor")]
+    public bool Traitor;
 }
