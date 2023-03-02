@@ -116,6 +116,7 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
                 emoji = TYPES_TO_EMOJI.get(change['type'], "❓")
                 message = change['message']
                 # Corvax-Localization-Start
+                TRANSLATION_API_URL = os.environ.get("TRANSLATION_API_URL")
                 if TRANSLATION_API_URL:
                     translate = requests.post(TRANSLATION_API_URL, json={
                         "text": message,
