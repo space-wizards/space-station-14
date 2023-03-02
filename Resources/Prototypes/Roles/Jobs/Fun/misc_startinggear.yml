@@ -147,7 +147,7 @@
     outerClothing: ClothingOuterHardsuitSyndieCommander
     shoes: ClothingShoesBootsCombatFilled
     id: SyndiPDA
-    pocket1: ExtendedEmergencyOxygenTankFilled
+    pocket1: NukeOpsTheDeclarationOfWar
     pocket2: BaseUplinkRadio40TC
     belt: ClothingBeltMilitaryWebbing
   innerclothingskirt: ClothingUniformJumpskirtOperative
