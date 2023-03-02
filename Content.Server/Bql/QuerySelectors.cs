@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Tag;
@@ -68,9 +69,11 @@ namespace Content.Server.Bql
 
             public override IEnumerable<EntityUid> DoSelection(IEnumerable<EntityUid> input, IReadOnlyList<object> arguments, bool isInverted, IEntityManager entityManager)
             {
+                var mindSystem = entityManager.System<MindSystem>();
                 return input.Where(e =>
-                    (entityManager.TryGetComponent<MindComponent>(e, out var mind) &&
-                    !(mind.Mind?.CharacterDeadPhysically ?? false)) ^ isInverted);
+                    entityManager.TryGetComponent<MindComponent>(e, out var mind)
+                    && mind.Mind != null
+                    && !mindSystem.IsCharacterDeadPhysically(mind.Mind));
             }
 
             public override IEnumerable<EntityUid> DoInitialSelection(IReadOnlyList<object> arguments, bool isInverted, IEntityManager entityManager)

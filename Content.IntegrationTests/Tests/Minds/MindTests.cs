@@ -131,7 +131,7 @@ public sealed partial class MindTests
 
             mindSystem.TransferTo(mind, entity);
             Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind));
-            Assert.That(!mind.CharacterDeadPhysically);
+            Assert.That(!mindSystem.IsCharacterDeadPhysically(mind));
         });
 
         await PoolManager.RunTicksSync(pairTracker.Pair, 5);
@@ -152,7 +152,7 @@ public sealed partial class MindTests
 
         await server.WaitAssertion(() =>
         {
-            Assert.That(mind.CharacterDeadPhysically);
+            Assert.That(mindSystem.IsCharacterDeadPhysically(mind));
         });
 
         await pairTracker.CleanReturnAsync();

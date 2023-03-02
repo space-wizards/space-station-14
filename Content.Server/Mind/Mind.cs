@@ -155,7 +155,7 @@ namespace Content.Server.Mind
         ///     (Maybe you were looking for the action blocker system?)
         /// </summary>
         [ViewVariables]
-        public bool CharacterDeadIC => CharacterDeadPhysically;
+        public bool CharacterDeadIC => _mindSystem.IsCharacterDeadPhysically(this);
 
         /// <summary>
         ///     True if the OwnedEntity of this mind is physically dead.
