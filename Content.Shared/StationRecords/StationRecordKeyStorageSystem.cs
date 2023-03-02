@@ -1,9 +1,29 @@
-using Content.Shared.StationRecords;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.StationRecords.Systems;
+namespace Content.Shared.StationRecords;
 
 public sealed class StationRecordKeyStorageSystem : EntitySystem
 {
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<StationRecordKeyStorageComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<StationRecordKeyStorageComponent, ComponentHandleState>(OnHandleState);
+    }
+
+    private void OnGetState(EntityUid uid, StationRecordKeyStorageComponent component, ref ComponentGetState args)
+    {
+        args.State = new StationRecordKeyStorageComponentState(component.Key);
+    }
+
+    private void OnHandleState(EntityUid uid, StationRecordKeyStorageComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not StationRecordKeyStorageComponentState state)
+            return;
+        component.Key = state.Key;
+    }
+
     /// <summary>
     ///     Assigns a station record key to an entity.
     /// </summary>
@@ -18,6 +38,7 @@ public sealed class StationRecordKeyStorageSystem : EntitySystem
         }
 
         keyStorage.Key = key;
+        Dirty(keyStorage);
     }
 
     /// <summary>
@@ -35,6 +56,7 @@ public sealed class StationRecordKeyStorageSystem : EntitySystem
 
         var key = keyStorage.Key;
         keyStorage.Key = null;
+        Dirty(keyStorage);
 
         return key;
     }
