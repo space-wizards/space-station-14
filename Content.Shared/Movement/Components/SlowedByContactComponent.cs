@@ -7,8 +7,5 @@ namespace Content.Shared.Movement.Components;
 public sealed class SlowedByContactComponent : Component
 {
     [ViewVariables]
-    public bool Refresh = false;
-
-    [ViewVariables]
     public HashSet<EntityUid> Intersecting = new();
 }

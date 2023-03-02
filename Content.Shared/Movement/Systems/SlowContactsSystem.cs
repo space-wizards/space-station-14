@@ -1,11 +1,7 @@
 using Content.Shared.Movement.Components;
-using Content.Shared.Stunnable;
 using Robust.Shared.GameStates;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
-using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Movement.Systems;
 
@@ -45,7 +41,11 @@ public sealed class SlowContactsSystem : VirtualController
 
         var query = EntityQueryEnumerator<SlowedByContactComponent, MovementSpeedModifierComponent>();
 
-        while (query.MoveNext(out var uid, out var comp, out var modifier))
+        // TODO: I really hate this but I have tried for an hour to fix the mispredict yet somehow
+        // it still felt worse than conveyors.
+        // It may just be the contact mispredict but that requires significant physics work + optimisation +
+        // box2d 3.0 is coming so all of it may get uplifted.
+        while (query.MoveNext(out var uid, out _, out var modifier))
         {
             _speedModifierSystem.RefreshMovementSpeedModifiers(uid, modifier);
         }
@@ -69,7 +69,6 @@ public sealed class SlowContactsSystem : VirtualController
         }
 
         args.ModifySpeed(walkSpeed, sprintSpeed);
-        component.Refresh = false;
     }
 
     private void OnEntityExit(EntityUid uid, SlowContactsComponent component, ref EndCollideEvent args)
@@ -77,19 +76,22 @@ public sealed class SlowContactsSystem : VirtualController
         var otherUid = args.OtherFixture.Body.Owner;
 
         if (!TryComp<SlowedByContactComponent>(otherUid, out var slowed))
+        {
             return;
+        }
 
-        slowed.Refresh = true;
         slowed.Intersecting.Remove(uid);
     }
 
     private void OnEntityEnter(EntityUid uid, SlowContactsComponent component, ref StartCollideEvent args)
     {
         var otherUid = args.OtherFixture.Body.Owner;
-        if (!HasComp<MovementSpeedModifierComponent>(otherUid) || !TryComp<SlowedByContactComponent>(otherUid, out var slowed))
+        if (!HasComp<MovementSpeedModifierComponent>(otherUid) ||
+            !TryComp<SlowedByContactComponent>(otherUid, out var slowed))
+        {
             return;
+        }
 
-        slowed.Refresh = true;
         slowed.Intersecting.Add(uid);
     }
 }
