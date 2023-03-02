@@ -18,9 +18,9 @@ namespace Content.Client.NukeOps
 
         private WarDeclaratorWindow? _window;
         public WarDeclaratorBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey) {}
-        private readonly CancellationTokenSource _timerCancelTokenSource = new();
         private TimeSpan _windowDuration;
         private TimeSpan _gameruleStartTime;
+        private WarConditionStatus _status;
 
         protected override void Open()
         {
@@ -35,13 +35,7 @@ namespace Content.Client.NukeOps
             _window.OnClose += Close;
             _window.OnMessageEntered += OnMessageChanged;
             _window.OnWarButtonPressed += OnWarButtonPressed;
-
-            if(State is WarDeclaratorBoundUserInterfaceState cast && cast.Status == WarConditionStatus.YES_WAR)
-            {
-                Timer.SpawnRepeating(1000, UpdateTimer, _timerCancelTokenSource.Token);
-                Logger.DebugS("decl", "started timer");
-            }
-
+            _window.OnDraw += UpdateTimer;
         }
 
         private void OnMessageChanged(string newMsg)
@@ -56,13 +50,14 @@ namespace Content.Client.NukeOps
 
         public void UpdateTimer()
         {
-            Logger.DebugS("decl", "timer fire");
-            if (_window == null)
+            if (_window == null ||
+                _status != WarConditionStatus.YES_WAR)
+            {
                 return;
+            }
 
             var gameruleTime = _gameTiming.CurTime.Subtract(_gameruleStartTime);
             var timeLeft = _windowDuration.Subtract(gameruleTime);
-            
 
             if (timeLeft > TimeSpan.Zero)
             {
@@ -70,11 +65,11 @@ namespace Content.Client.NukeOps
             }
             else
             {
+                _status = WarConditionStatus.NO_WAR_TIMEOUT;
                 _window.StatusLabel.Text = Loc.GetString("war-declarator-boost-impossible");
                 _window.InfoLabel.Text = Loc.GetString("war-declarator-conditions-time-out");
                 _window.StatusLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateNone);
-                _timerCancelTokenSource.Cancel();
-                Logger.DebugS("decl", "cancel timer");
+                _window.WarButton.Disabled = true;
             }
         }
 
@@ -91,6 +86,7 @@ namespace Content.Client.NukeOps
             _window.WarButton.Disabled = cast.Status != WarConditionStatus.YES_WAR;
             _gameruleStartTime = cast.GameruleStartTime;
             _windowDuration = cast.WindowDuration;
+            _status = cast.Status;
 
             switch(cast.Status)
             {
@@ -134,7 +130,6 @@ namespace Content.Client.NukeOps
             base.Dispose(disposing);
             if (!disposing) return;
             _window?.Dispose();
-            _timerCancelTokenSource.Cancel();
         }
     }
 
