@@ -33,6 +33,7 @@
           - !type:PlaySoundBehavior
             sound:
               path: /Audio/Effects/metalbreak.ogg
+  - type: Sink
 
 - type: entity
   name: sink
@@ -56,7 +57,7 @@
     sprite: Structures/Furniture/sink.rsi
     state: sink_wide
     netsync: false
-    
+
 #Stemless Sink
 
 - type: entity
@@ -67,7 +68,7 @@
   - type: Sprite
     sprite: Structures/Furniture/sink.rsi
     state: sink
-    netsync: false    
+    netsync: false
 
 - type: entity
   name: sink

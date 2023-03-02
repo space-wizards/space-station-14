@@ -16,7 +16,13 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Hands.Systems;
+using Content.Server.Popups;
+using Content.Shared.Coordinates;
 using Content.Shared.DoAfter;
+using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
 
 namespace Content.Server.Fluids.EntitySystems;
 
@@ -30,6 +36,8 @@ public sealed class SpillableSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger= default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly AudioSystem _audioSystem = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
@@ -39,6 +47,7 @@ public sealed class SpillableSystem : EntitySystem
         SubscribeLocalEvent<SpillableComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<SpillableComponent, SolutionSpikeOverflowEvent>(OnSpikeOverflow);
         SubscribeLocalEvent<SpillableComponent, DoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<SinkComponent, GetVerbsEvent<Verb>>(AddEmptyVerb);
     }
 
     private void OnSpikeOverflow(EntityUid uid, SpillableComponent component, SolutionSpikeOverflowEvent args)
@@ -109,6 +118,27 @@ public sealed class SpillableSystem : EntitySystem
 
         var drainedSolution = _solutionContainerSystem.Drain(uid, solution, solution.Volume);
         SpillAt(drainedSolution, EntityManager.GetComponent<TransformComponent>(uid).Coordinates, "PuddleSmear");
+    }
+
+    private void AddEmptyVerb(EntityUid uid, SinkComponent component, GetVerbsEvent<Verb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract || args.Using == null)
+            return;
+
+        if (!EntityManager.TryGetComponent<SpillableComponent>(args.Using, out var spillable))
+            return;
+
+        if (!_solutionContainerSystem.TryGetDrainableSolution(args.Using.Value, out var solution))
+            return;
+
+        Verb verb = new();
+        verb.Text = Loc.GetString("empty-inhand-verb", ("object", "" + Name(args.Using.Value)));
+        verb.Act = () =>
+        {
+            Empty(solution, component, args.Using.Value);
+        };
+        verb.Impact = LogImpact.Low;
+        args.Verbs.Add(verb);
     }
 
     private void AddSpillVerb(EntityUid uid, SpillableComponent component, GetVerbsEvent<Verb> args)
@@ -192,6 +222,19 @@ public sealed class SpillableSystem : EntitySystem
 
         puddle = null;
         return false;
+    }
+
+    private void Empty(Solution solution, SinkComponent sink, EntityUid user)
+    {
+        if (solution.Volume == FixedPoint2.Zero)
+        {
+            _popupSystem.PopupEntity(Loc.GetString("spill-target-verb-activate-is-empty-message", ("owner", user)), user);
+            return;
+        }
+
+
+        solution.RemoveAllSolution();
+        _audioSystem.Play(sink.EmptySound, Filter.Pvs(user), user, false);
     }
 
     public PuddleComponent? SpillAt(TileRef tileRef, Solution solution, string prototype,
