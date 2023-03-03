@@ -54,14 +54,29 @@ namespace Content.Client.Cargo.UI
         }
 
         public IEnumerable<CargoProductPrototype> ProductPrototypes => _protoManager.EnumeratePrototypes<CargoProductPrototype>();
+        public IEnumerable<CargoProductPrototype>? AdvanedProductPrototypes = null;
 
         /// <summary>
         ///     Populates the list of products that will actually be shown, using the current filters.
         /// </summary>
+
+        public void SetupAdvancedProducts(IEnumerable<CargoProductPrototype> advancedProducts)
+        {
+            AdvanedProductPrototypes = advancedProducts;
+        }
+
         public void PopulateProducts()
         {
             Products.RemoveAllChildren();
-            var products = ProductPrototypes.ToList();
+            var products = ProductPrototypes
+                .ToList()
+                .FindAll(prototype => prototype.Enabled);
+
+            if (AdvanedProductPrototypes != null)
+            {
+                products.AddRange(AdvanedProductPrototypes);
+            }
+
             products.Sort((x, y) =>
                 string.Compare(x.Name, y.Name, StringComparison.CurrentCultureIgnoreCase));
 

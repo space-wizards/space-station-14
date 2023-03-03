@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server._Craft.StationGoals;
 using Content.Server.Access.Systems;
 using Content.Server.Cargo.Components;
 using Content.Server.MachineLinking.System;
@@ -38,6 +39,7 @@ namespace Content.Server.Cargo.Systems
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly StationGoalPaperSystem _stationGoalSystem = default!;
 
         private void InitializeConsole()
         {
@@ -222,7 +224,9 @@ namespace Content.Server.Cargo.Systems
                 GetOrderCount(orderDatabase),
                 orderDatabase.Capacity,
                 bankAccount.Balance,
-                orderDatabase.Orders.Values.ToList());
+                orderDatabase.Orders.Values.ToList(),
+                _stationGoalSystem.advancedPrototypes
+            );
 
             _uiSystem.GetUiOrNull(component.Owner, CargoConsoleUiKey.Orders)?.SetState(state);
         }

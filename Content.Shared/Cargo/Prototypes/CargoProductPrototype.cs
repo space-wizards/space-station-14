@@ -85,5 +85,10 @@ namespace Content.Shared.Cargo.Prototypes
         /// </summary>
         [DataField("group")]
         public string Group { get; } = string.Empty;
+
+
+        //The prototype can be purchased
+        [DataField("enabled")]
+        public bool Enabled { get; set; } = true;
     }
 }
