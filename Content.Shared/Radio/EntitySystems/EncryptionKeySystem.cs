@@ -109,7 +109,9 @@ public sealed class EncryptionKeySystem : EntitySystem
             return;
         }
 
-        if (!_toolSystem.UseTool(args.Used, args.User, uid, 0f, 0f, component.KeysExtractionMethod, toolComponent: tool))
+        var toolEvData = new ToolEventData(null);
+
+        if(!_toolSystem.UseTool(args.Used, args.User, uid, 0f, new[] { component.KeysExtractionMethod }, toolEvData, toolComponent: tool))
             return;
 
         var contained = component.KeyContainer.ContainedEntities.ToArray();
