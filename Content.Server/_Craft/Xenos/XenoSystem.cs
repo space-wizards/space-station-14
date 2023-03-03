@@ -1,19 +1,11 @@
-using Content.Server.Abilities.Mime;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Popups;
 using Content.Shared.Actions;
-using Content.Shared.Alert;
 using Content.Shared.Doors.Components;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
-using Content.Shared.Speech;
 using Robust.Shared.Random;
 using Robust.Shared.Physics.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Robust.Shared.Map;
 
 namespace Content.Server.Abilities.Xeno
@@ -21,7 +13,6 @@ namespace Content.Server.Abilities.Xeno
     public sealed class XenoSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = null!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 

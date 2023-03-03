@@ -17,16 +17,12 @@ using Content.Shared.SCP.ConcreteSlab;
 
 
 using Content.Server.Fluids.EntitySystems;
-using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Actions;
-using Content.Server.Chat.Systems;
-using Content.Shared.Administration.Events;
 using Content.Server.Ghost;
 using Content.Server.GameTicking;
 using Content.Shared.Doors.Components;
 using Content.Server.Doors.Systems;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.SCP.ConcreteSlab
 {
