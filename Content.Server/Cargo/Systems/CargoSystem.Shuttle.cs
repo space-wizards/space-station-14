@@ -37,11 +37,8 @@ public sealed partial class CargoSystem
     [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly PricingSystem _pricing = default!;
     [Dependency] private readonly ShuttleConsoleSystem _console = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public MapId? CargoMap { get; private set; }
-
-    private const float CallOffset = 50f;
 
     private int _index;
 
@@ -77,7 +74,9 @@ public sealed partial class CargoSystem
 
     private void SetCargoShuttleEnabled(bool value)
     {
-        if (_enabled == value) return;
+        if (_enabled == value)
+            return;
+
         _enabled = value;
 
         if (value)
@@ -99,7 +98,7 @@ public sealed partial class CargoSystem
 
     private void OnCargoPilotConsoleOpen(EntityUid uid, CargoPilotConsoleComponent component, AfterActivatableUIOpenEvent args)
     {
-        component.Entity = GetShuttleConsole(component);
+        component.Entity = GetShuttleConsole(uid);
     }
 
     private void OnCargoPilotConsoleClose(EntityUid uid, CargoPilotConsoleComponent component, BoundUIClosedEvent args)
@@ -109,17 +108,20 @@ public sealed partial class CargoSystem
 
     private void OnCargoGetConsole(EntityUid uid, CargoPilotConsoleComponent component, ref ConsoleShuttleEvent args)
     {
-        args.Console = GetShuttleConsole(component);
+        args.Console = GetShuttleConsole(uid);
     }
 
-    private EntityUid? GetShuttleConsole(CargoPilotConsoleComponent component)
+    private EntityUid? GetShuttleConsole(EntityUid uid)
     {
-        var stationUid = _station.GetOwningStation(component.Owner);
+        var stationUid = _station.GetOwningStation(uid);
 
         if (!TryComp<StationCargoOrderDatabaseComponent>(stationUid, out var orderDatabase) ||
-            !TryComp<CargoShuttleComponent>(orderDatabase.Shuttle, out var shuttle)) return null;
+            !TryComp<CargoShuttleComponent>(orderDatabase.Shuttle, out var shuttle))
+        {
+            return null;
+        }
 
-        return GetShuttleConsole(shuttle);
+        return GetShuttleConsole(orderDatabase.Shuttle.Value, shuttle);
     }
 
     #endregion
@@ -128,21 +130,25 @@ public sealed partial class CargoSystem
 
     private void UpdateShuttleCargoConsoles(CargoShuttleComponent component)
     {
-        foreach (var console in EntityQuery<CargoShuttleConsoleComponent>(true))
+        var query = AllEntityQuery<CargoShuttleConsoleComponent>();
+
+        while (query.MoveNext(out var uid, out var console))
         {
-            var stationUid = _station.GetOwningStation(console.Owner);
-            if (stationUid != component.Station) continue;
-            UpdateShuttleState(console, stationUid);
+            var stationUid = _station.GetOwningStation(uid);
+            if (stationUid != component.Station)
+                continue;
+
+            UpdateShuttleState(uid, console, stationUid);
         }
     }
 
     private void OnCargoShuttleConsoleStartup(EntityUid uid, CargoShuttleConsoleComponent component, ComponentStartup args)
     {
         var station = _station.GetOwningStation(uid);
-        UpdateShuttleState(component, station);
+        UpdateShuttleState(uid, component, station);
     }
 
-    private void UpdateShuttleState(CargoShuttleConsoleComponent component, EntityUid? station = null)
+    private void UpdateShuttleState(EntityUid uid, CargoShuttleConsoleComponent component, EntityUid? station = null)
     {
         TryComp<StationCargoOrderDatabaseComponent>(station, out var orderDatabase);
         TryComp<CargoShuttleComponent>(orderDatabase?.Shuttle, out var shuttle);
@@ -150,7 +156,7 @@ public sealed partial class CargoSystem
         var orders = GetProjectedOrders(orderDatabase, shuttle);
         var shuttleName = orderDatabase?.Shuttle != null ? MetaData(orderDatabase.Shuttle.Value).EntityName : string.Empty;
 
-        _uiSystem.GetUiOrNull(component.Owner, CargoConsoleUiKey.Shuttle)?.SetState(
+        _uiSystem.GetUiOrNull(uid, CargoConsoleUiKey.Shuttle)?.SetState(
             new CargoShuttleConsoleBoundUserInterfaceState(
                 station != null ? MetaData(station.Value).EntityName : Loc.GetString("cargo-shuttle-console-station-unknown"),
                 string.IsNullOrEmpty(shuttleName) ? Loc.GetString("cargo-shuttle-console-shuttle-not-found") : shuttleName,
@@ -161,12 +167,16 @@ public sealed partial class CargoSystem
 
     #region Shuttle
 
-    public EntityUid? GetShuttleConsole(CargoShuttleComponent component)
+    public EntityUid? GetShuttleConsole(EntityUid uid, CargoShuttleComponent component)
     {
-        foreach (var (comp, xform) in EntityQuery<ShuttleConsoleComponent, TransformComponent>(true))
+        var query = AllEntityQuery<ShuttleConsoleComponent, TransformComponent>();
+
+        while (query.MoveNext(out var cUid, out var comp, out var xform))
         {
-            if (xform.ParentUid != component.Owner) continue;
-            return comp.Owner;
+            if (xform.ParentUid != uid)
+                continue;
+
+            return cUid;
         }
 
         return null;
@@ -186,7 +196,8 @@ public sealed partial class CargoSystem
 
         var space = GetCargoSpace(shuttle);
 
-        if (space == 0) return orders;
+        if (space == 0)
+            return orders;
 
         var indices = component.Orders.Keys.ToList();
         indices.Sort();
@@ -445,13 +456,15 @@ public sealed partial class CargoSystem
         CargoMap = null;
 
         // Shuttle may not have been in the cargo dimension (e.g. on the station map) so need to delete.
-        foreach (var comp in EntityQuery<CargoShuttleComponent>())
+        var query = AllEntityQuery<CargoShuttleComponent>();
+
+        while (query.MoveNext(out var uid, out var comp))
         {
             if (TryComp<StationCargoOrderDatabaseComponent>(comp.Station, out var station))
             {
                 station.Shuttle = null;
             }
-            QueueDel(comp.Owner);
+            QueueDel(uid);
         }
     }
 
