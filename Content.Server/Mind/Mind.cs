@@ -49,7 +49,6 @@ namespace Content.Server.Mind
             _entityManager.EntitySysManager.Resolve(ref _mindSystem);
         }
 
-        // TODO: This session should be able to be changed, probably.
         /// <summary>
         ///     The session ID of the player owning this mind.
         /// </summary>
