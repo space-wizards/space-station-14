@@ -753,7 +753,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                 {
                     CharacterName = spawnDetails.Name
                 };
-                newMind.ChangeOwningPlayer(session.UserId);
+                _mindSystem.ChangeOwningPlayer(newMind, session.UserId);
                 newMind.AddRole(new TraitorRole(newMind, nukeOpsAntag));
 
                 _mindSystem.TransferTo(newMind, mob);

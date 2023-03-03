@@ -4,6 +4,7 @@ using Content.Server.GameTicking;
 using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
+using Content.Server.Players;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Mobs.Systems;
@@ -223,11 +224,6 @@ public sealed class MindSystem : EntitySystem
         return true;
     }
 
-    public void ChangeOwningPlayer(Mind mind, NetUserId? netUserId, IPlayerManager? playerManager = null)
-    {
-        mind.ChangeOwningPlayer(netUserId, playerManager);
-    }
-
     public void ChangeOwningPlayer(EntityUid uid, NetUserId? netUserId, MindComponent? mindComp = null, IPlayerManager? playerManager = null)
     {
         if (!Resolve(uid, ref mindComp))
@@ -237,7 +233,8 @@ public sealed class MindSystem : EntitySystem
             return;
 
         var mind = mindComp.Mind;
-        mind!.ChangeOwningPlayer(netUserId, playerManager);
+        if (mind != null)
+            ChangeOwningPlayer(mind, netUserId, playerManager);
     }
 
     public bool IsCharacterDeadPhysically(Mind mind)
@@ -397,5 +394,52 @@ public sealed class MindSystem : EntitySystem
             mind.Session.AttachToEntity(entity);
             Logger.Info($"Session {mind.Session.Name} transferred to entity {entity}.");
         }
+    }
+
+    public void ChangeOwningPlayer(Mind mind, NetUserId? newOwner, IPlayerManager? playerMgr = null)
+    {
+        IoCManager.Resolve(ref playerMgr);
+    
+        // Make sure to remove control from our old owner if they're logged in.
+        var oldSession = mind.Session;
+        oldSession?.AttachToEntity(null);
+    
+        if (mind.UserId.HasValue)
+        {
+            if (playerMgr.TryGetPlayerData(mind.UserId.Value, out var oldUncast))
+            {
+                var data = oldUncast.ContentData();
+                DebugTools.AssertNotNull(data);
+                data!.UpdateMindFromMindChangeOwningPlayer(null);
+            }
+            else
+            {
+                Logger.Warning($"Mind UserId {newOwner} is does not exist in PlayerManager");
+            }
+        }
+    
+        mind.UserId = newOwner;
+        if (!newOwner.HasValue)
+        {
+            return;
+        }
+    
+        if (!playerMgr.TryGetPlayerData(newOwner.Value, out var uncast))
+        {
+            // This restriction is because I'm too lazy to initialize the player data
+            // for a client that hasn't logged in yet.
+            // Go ahead and remove it if you need.
+            throw new ArgumentException("New owner must have previously logged into the server.", nameof(newOwner));
+        }
+    
+        // PlayerData? newOwnerData = null;
+        var newOwnerData = uncast.ContentData();
+    
+        // Yank new owner out of their old mind too.
+        // Can I mention how much I love the word yank?
+        DebugTools.AssertNotNull(newOwnerData);
+        if (newOwnerData!.Mind != null)
+            ChangeOwningPlayer(newOwnerData.Mind, null);
+        newOwnerData.UpdateMindFromMindChangeOwningPlayer(mind);
     }
 }

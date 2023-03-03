@@ -2,18 +2,14 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
-using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Objectives;
-using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Shared.Database;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Network;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Mind
 {
@@ -62,7 +58,7 @@ namespace Content.Server.Mind
         ///     The session ID of the player owning this mind.
         /// </summary>
         [ViewVariables]
-        public NetUserId? UserId { get; private set; }
+        public NetUserId? UserId { get; internal set; }
 
         /// <summary>
         ///     The session ID of the original owner, if any.
@@ -306,52 +302,6 @@ namespace Content.Server.Mind
             return true;
         }
 
-
-        public void ChangeOwningPlayer(NetUserId? newOwner, IPlayerManager? playerMgr = null)
-        {
-            IoCManager.Resolve(ref playerMgr);
-
-            // Make sure to remove control from our old owner if they're logged in.
-            var oldSession = Session;
-            oldSession?.AttachToEntity(null);
-
-            if (UserId.HasValue)
-            {
-                if (playerMgr.TryGetPlayerData(UserId.Value, out var oldUncast))
-                {
-                    var data = oldUncast.ContentData();
-                    DebugTools.AssertNotNull(data);
-                    data!.UpdateMindFromMindChangeOwningPlayer(null);
-                }
-                else
-                {
-                    Logger.Warning($"Mind UserId {newOwner} is does not exist in PlayerManager");
-                }
-            }
-
-            UserId = newOwner;
-            if (!newOwner.HasValue)
-            {
-                return;
-            }
-
-            if (!playerMgr.TryGetPlayerData(newOwner.Value, out var uncast))
-            {
-                // This restriction is because I'm too lazy to initialize the player data
-                // for a client that hasn't logged in yet.
-                // Go ahead and remove it if you need.
-                throw new ArgumentException("New owner must have previously logged into the server.", nameof(newOwner));
-            }
-
-            // PlayerData? newOwnerData = null;
-            var newOwnerData = uncast.ContentData();
-
-            // Yank new owner out of their old mind too.
-            // Can I mention how much I love the word yank?
-            DebugTools.AssertNotNull(newOwnerData);
-            newOwnerData!.Mind?.ChangeOwningPlayer(null);
-            newOwnerData.UpdateMindFromMindChangeOwningPlayer(this);
-        }
 
         public bool TryGetSession([NotNullWhen(true)] out IPlayerSession? session)
         {

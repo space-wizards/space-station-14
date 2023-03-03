@@ -175,7 +175,7 @@ namespace Content.Server.GameTicking
             {
                 CharacterName = character.Name
             };
-            newMind.ChangeOwningPlayer(data.UserId);
+            _mindSystem.ChangeOwningPlayer(newMind, data.UserId);
 
             var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
             var job = new Job(newMind, jobPrototype);
@@ -271,7 +271,7 @@ namespace Content.Server.GameTicking
 
             data!.WipeMind();
             var newMind = new Mind.Mind(data.UserId);
-            newMind.ChangeOwningPlayer(data.UserId);
+            _mindSystem.ChangeOwningPlayer(newMind, data.UserId);
             newMind.AddRole(new ObserverRole(newMind));
 
             var mob = SpawnObserverMob();

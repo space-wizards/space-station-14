@@ -42,7 +42,8 @@ namespace Content.Server.Players
             var mindSystem = entityManager.System<MindSystem>();
             mindSystem.TransferTo(Mind, null);
             // This will ensure Mind == null
-            Mind?.ChangeOwningPlayer(null);
+            if (Mind != null)
+                mindSystem.ChangeOwningPlayer(Mind, null);
         }
 
         /// <summary>

@@ -212,7 +212,7 @@ namespace Content.Server.Ghost.Roles
             };
             newMind.AddRole(new GhostRoleMarkerRole(newMind, role.RoleName));
 
-            newMind.ChangeOwningPlayer(player.UserId);
+            _mindSystem.ChangeOwningPlayer(newMind, player.UserId);
             _mindSystem.TransferTo(newMind, mob);
         }
 

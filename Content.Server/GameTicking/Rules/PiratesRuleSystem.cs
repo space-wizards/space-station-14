@@ -212,7 +212,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem
             {
                 CharacterName = name
             };
-            newMind.ChangeOwningPlayer(session.UserId);
+            _mindSystem.ChangeOwningPlayer(newMind, session.UserId);
 
             var mob = Spawn("MobHuman", _random.Pick(spawns));
             MetaData(mob).EntityName = name;

@@ -61,6 +61,8 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
+            var mindSystem = entityManager.System<MindSystem>();
+            
             var mind = playerCData.Mind;
             if (mind == null)
             {
@@ -68,10 +70,9 @@ namespace Content.Server.Administration.Commands
                 {
                     CharacterName = entityManager.GetComponent<MetaDataComponent>(eUid).EntityName
                 };
-                mind.ChangeOwningPlayer(session.UserId);
+                mindSystem.ChangeOwningPlayer(mind, session.UserId);
             }
             
-            var mindSystem = entityManager.System<MindSystem>();
             mindSystem.TransferTo(mind, eUid);
         }
     }
