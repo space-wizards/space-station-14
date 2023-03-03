@@ -188,6 +188,25 @@
   heatCapacity: 10000
 
 - type: tile
+  id: FloorWoodTile
+  name: tiles-mosaic-wood
+  sprite: /Textures/Tiles/mosaic_wood.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurfs:
+  - Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepWood
+  barestepSounds:
+    collection: BarestepWood
+  friction: 0.30
+  itemDrop: FloorTileItemMosaicWood
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
   id: FloorWhite
   name: tiles-white-floor
   sprite: /Textures/Tiles/white.png
@@ -532,7 +551,7 @@
   name: tiles-techmaint-floor
   sprite: /Textures/Tiles/tech_maint.png
   baseTurfs:
-  - Plating
+    - Plating
   isSubfloor: false
   canCrowbar: true
   footstepSounds:
@@ -541,6 +560,7 @@
   itemDrop: FloorTileItemTechmaint
   thermalConductivity: 0.04
   heatCapacity: 10000
+
 
 - type: tile
   id: FloorReinforced
@@ -998,11 +1018,10 @@
   thermalConductivity: 0.04
   heatCapacity: 10000
 
-
 # Materials
 - type: tile
   id: FloorGold
-  name: tiles-gold-tile
+  name: tiles-gold-floor
   sprite: /Textures/Tiles/gold.png
   baseTurfs:
   - Plating
@@ -1017,7 +1036,7 @@
 
 - type: tile
   id: FloorSilver
-  name: tiles-silver-tile
+  name: tiles-silver-floor
   sprite: /Textures/Tiles/silver.png
   baseTurfs:
   - Plating
@@ -1072,7 +1091,7 @@
   footstepSounds:
     collection: FootstepHull
   friction: 0.30
-  itemDrop: FloorTileItemGCircuit
+  itemDrop: FloorTileItemGreenCircuit
   thermalConductivity: 0.04
   heatCapacity: 10000
 
@@ -1087,7 +1106,7 @@
   footstepSounds:
     collection: FootstepHull
   friction: 0.30
-  itemDrop: FloorTileItemBCircuit
+  itemDrop: FloorTileItemGreenCircuit
   thermalConductivity: 0.04
   heatCapacity: 10000
 
@@ -1361,7 +1380,7 @@
 
 - type: tile
   id: FloorTechMaint2
-  name: tiles-techmaint2-floor
+  name: tiles-steelmaint-floor
   sprite: /Textures/Tiles/steel_maint.png
   baseTurfs:
   - Plating
@@ -1374,9 +1393,10 @@
   thermalConductivity: 0.04
   heatCapacity: 10000
 
+
 - type: tile
   id: FloorTechMaint3
-  name: tiles-techmaint3-floor
+  name: tiles-maintgrating-floor
   sprite: /Textures/Tiles/grating_maint.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
@@ -1387,25 +1407,7 @@
   footstepSounds:
     collection: FootstepHull
   friction: 0.30
-  itemDrop: FloorTileItemGratingMaint
+  itemDrop: FloorTileItemMaintGrating
   thermalConductivity: 0.04
   heatCapacity: 10000
 
-- type: tile
-  id: FloorWoodTile
-  name: tiles-wood2
-  sprite: /Textures/Tiles/wood_tile.png
-  variants: 4
-  placementVariants: [0, 1, 2, 3]
-  baseTurfs:
-  - Plating
-  isSubfloor: false
-  canCrowbar: true
-  footstepSounds:
-    collection: FootstepWood
-  barestepSounds:
-    collection: BarestepWood
-  friction: 0.30
-  itemDrop: FloorTileItemWoodPattern
-  thermalConductivity: 0.04
-  heatCapacity: 10000
