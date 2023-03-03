@@ -10,7 +10,7 @@ public sealed class RadioJammerComponent : Component
     public bool Activated = false;
 
     [DataField("range"), ViewVariables(VVAccess.ReadWrite)]
-    public float Range = 12f;
+    public float Range = 8f;
 
     /// <summary>
     /// Power usage per second when enabled
