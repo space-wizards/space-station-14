@@ -584,7 +584,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             _operativeMindPendingData.Remove(uid);
         }
 
-        if (!mind.TryGetSession(out var playerSession))
+        if (!_mindSystem.TryGetSession(mind, out var playerSession))
             return;
         if (_operativePlayers.ContainsValue(playerSession))
             return;
@@ -856,7 +856,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         var query = EntityQuery<NukeOperativeComponent, MindComponent>(true);
         foreach (var (_, mindComp) in query)
         {
-            if (mindComp.Mind == null || !mindComp.Mind.TryGetSession(out var session))
+            if (mindComp.HasMind || !_mindSystem.TryGetSession(mindComp.Mind!, out var session))
                 continue;
             var name = MetaData(mindComp.Owner).EntityName;
             _operativePlayers.Add(name, session);

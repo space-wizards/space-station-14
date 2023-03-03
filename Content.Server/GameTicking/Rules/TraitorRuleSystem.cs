@@ -327,7 +327,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         foreach (var traitor in Traitors)
         {
             var name = traitor.Mind.CharacterName;
-            traitor.Mind.TryGetSession(out var session);
+            _mindSystem.TryGetSession(traitor.Mind, out var session);
             var username = session?.Name;
 
             var objectives = traitor.Mind.AllObjectives.ToArray();

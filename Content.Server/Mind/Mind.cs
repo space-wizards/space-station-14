@@ -167,10 +167,5 @@ namespace Content.Server.Mind
         ///     Gets the current job
         /// </summary>
         public Job? CurrentJob => Roles.OfType<Job>().SingleOrDefault();
-
-        public bool TryGetSession([NotNullWhen(true)] out IPlayerSession? session)
-        {
-            return (session = Session) != null;
-        }
     }
 }

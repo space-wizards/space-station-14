@@ -1,4 +1,5 @@
 using Content.Server.Chat.Managers;
+using Content.Server.Mind;
 using Content.Server.Roles;
 using Content.Shared.Roles;
 
@@ -20,7 +21,10 @@ namespace Content.Server.Traitor
 
         public void GreetTraitor(string[] codewords)
         {
-            if (Mind.TryGetSession(out var session))
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var mindSystem = entityManager.System<MindSystem>();
+            
+            if (mindSystem.TryGetSession(Mind, out var session))
             {
                 var chatMgr = IoCManager.Resolve<IChatManager>();
                 chatMgr.DispatchServerMessage(session, Loc.GetString("traitor-role-greeting"));

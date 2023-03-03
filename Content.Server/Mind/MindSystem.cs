@@ -548,4 +548,9 @@ public sealed class MindSystem : EntitySystem
     
         return mind.Roles.Any(role => role.GetType() == t);
     }
+    
+    public bool TryGetSession(Mind mind, [NotNullWhen(true)] out IPlayerSession? session)
+    {
+        return (session = mind.Session) != null;
+    }
 }
