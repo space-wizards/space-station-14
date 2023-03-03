@@ -9,8 +9,6 @@
     sprite: Objects/Devices/jammer.rsi
     state: jammer
   - type: RadioJammer
-    enabled: true
-    range: 16
   - type: PowerCellSlot
     cellSlotId: cell_slot
   - type: ContainerContainer

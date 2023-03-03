@@ -7,7 +7,14 @@ namespace Content.Server.Radio.Components;
 public sealed class RadioJammerComponent : Component
 {
     [DataField("enabled"), ViewVariables(VVAccess.ReadWrite)]
-    public bool Enabled;
-    [DataField("range", required: true), ViewVariables(VVAccess.ReadWrite)]
-    public float Range;
+    public bool Enabled = false;
+
+    [DataField("range"), ViewVariables(VVAccess.ReadWrite)]
+    public float Range = 12f;
+
+    /// <summary>
+    /// Power usage per second when enabled
+    /// </summary>
+    [DataField("wattage"), ViewVariables(VVAccess.ReadWrite)]
+    public float Wattage = 6f;
 }
