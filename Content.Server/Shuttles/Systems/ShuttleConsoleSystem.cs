@@ -236,7 +236,7 @@ namespace Content.Server.Shuttles.Systems
 
             TryComp<TransformComponent>(entity, out var consoleXform);
             TryComp<RadarConsoleComponent>(entity, out var radar);
-            var range = radar?.MaxRange ?? 0f;
+            var range = radar?.MaxRange ?? SharedRadarConsoleSystem.DefaultMaxRange;
 
             var shuttleGridUid = consoleXform?.GridUid;
 

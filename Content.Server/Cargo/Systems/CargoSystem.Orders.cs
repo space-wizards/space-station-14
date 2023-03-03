@@ -116,7 +116,10 @@ namespace Content.Server.Cargo.Systems
 
             // No order to approve?
             if (!orderDatabase.Orders.TryGetValue(args.OrderIndex, out var order) ||
-                order.Approved) return;
+                order.Approved)
+            {
+                return;
+            }
 
             // Invalid order
             if (!_protoMan.TryIndex<CargoProductPrototype>(order.ProductId, out var product))
@@ -259,20 +262,25 @@ namespace Content.Server.Cargo.Systems
         private void UpdateOrders(StationCargoOrderDatabaseComponent component)
         {
             // Order added so all consoles need updating.
-            foreach (var comp in EntityQuery<CargoOrderConsoleComponent>(true))
+            var orderQuery = AllEntityQuery<CargoOrderConsoleComponent>();
+
+            while (orderQuery.MoveNext(out var uid, out var comp))
             {
-                var station = _station.GetOwningStation(component.Owner);
-                if (station != component.Owner) continue;
+                var station = _station.GetOwningStation(uid);
+                if (station != component.Owner)
+                    continue;
 
                 UpdateOrderState(comp, station);
             }
 
-            foreach (var comp in EntityQuery<CargoShuttleConsoleComponent>(true))
+            var consoleQuery = AllEntityQuery<CargoShuttleConsoleComponent>();
+            while (consoleQuery.MoveNext(out var uid, out var comp))
             {
-                var station = _station.GetOwningStation(component.Owner);
-                if (station != component.Owner) continue;
+                var station = _station.GetOwningStation(uid);
+                if (station != component.Owner)
+                    continue;
 
-                UpdateShuttleState(comp, station);
+                UpdateShuttleState(uid, comp, station);
             }
         }
 

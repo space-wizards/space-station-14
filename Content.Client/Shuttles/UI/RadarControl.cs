@@ -1,6 +1,7 @@
 using Content.Client.Stylesheets;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
+using Content.Shared.Shuttles.Systems;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -32,14 +33,14 @@ public sealed class RadarControl : Control
 
     private Angle? _rotation;
 
-    private float _radarMinRange = 64f;
-    private float _radarMaxRange = 256f;
-    public float RadarRange { get; private set; } = 256f;
+    private float _radarMinRange = SharedRadarConsoleSystem.DefaultMinRange;
+    private float _radarMaxRange = SharedRadarConsoleSystem.DefaultMaxRange;
+    public float RadarRange { get; private set; } = SharedRadarConsoleSystem.DefaultMinRange;
 
     /// <summary>
     /// We'll lerp between the radarrange and actual range
     /// </summary>
-    private float _actualRadarRange = 256f;
+    private float _actualRadarRange = SharedRadarConsoleSystem.DefaultMinRange;
 
     /// <summary>
     /// Controls the maximum distance that IFF labels will display.
@@ -86,13 +87,10 @@ public sealed class RadarControl : Control
     {
         _radarMaxRange = ls.MaxRange;
 
-        if (_radarMaxRange < RadarRange)
-        {
-            _actualRadarRange = _radarMaxRange;
-        }
-
         if (_radarMaxRange < _radarMinRange)
             _radarMinRange = _radarMaxRange;
+
+        _actualRadarRange = Math.Clamp(_actualRadarRange, _radarMinRange, _radarMaxRange);
 
         _docks.Clear();
 
