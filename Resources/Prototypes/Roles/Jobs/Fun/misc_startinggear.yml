@@ -65,7 +65,7 @@
     gloves: ClothingHandsGlovesSpaceNinja
     outerClothing: ClothingOuterSuitSpaceninja
     shoes: ClothingShoesSpaceNinja
-    id: PassengerPDA
+    id: AgentIDCard
     ears: ClothingHeadsetGrey
     pocket1: SpiderCharge
     belt: EnergyKatana

@@ -2,7 +2,9 @@ using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Ninja.Systems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Ninja.Components;
@@ -26,7 +28,7 @@ public sealed class NinjaSuitComponent : Component
         UseDelay = TimeSpan.FromSeconds(5), // have to plan un/cloaking ahead of time
         DisplayName = "action-name-toggle-phase-cloak",
         Description = "action-desc-toggle-phase-cloak",
-        Priority = -10,
+        Priority = -9,
         Event = new TogglePhaseCloakEvent()
     };
 
@@ -41,6 +43,33 @@ public sealed class NinjaSuitComponent : Component
     /// </summary>
     [DataField("cloakWattage")]
     public float CloakWattage = 1.44f;
+
+    /// <summary>
+    /// The action for creating throwing soap, in place of ninja throwing stars since embedding doesn't exist.
+    /// </summary>
+    [DataField("createSoapAction")]
+    public InstantAction CreateSoapAction = new()
+    {
+    	UseDelay = TimeSpan.FromSeconds(1),
+        Icon = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Specific/Janitorial/soap.rsi"), "soap"),
+        ItemIconStyle = ItemActionIconStyle.NoItem,
+    	DisplayName = "action-name-create-soap",
+    	Description = "action-desc-create-soap",
+    	Priority = -10,
+    	Event = new CreateSoapEvent()
+    };
+
+	/// <summary>
+	/// Battery charge used to create a throwing soap. Can do it 25 times on a small-capacity power cell.
+	/// </summary>
+	[DataField("soapCharge")]
+	public float SoapCharge = 14.4f;
+
+	/// <summary>
+	/// Soap item to create with the action
+	/// </summary>
+	[DataField("soapPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+	public string SoapPrototype = "SoapNinja";
 
     /// <summary>
     /// The action for recalling a bound energy katana
@@ -76,6 +105,8 @@ public sealed class NinjaSuitComponent : Component
 }
 
 public sealed class TogglePhaseCloakEvent : InstantActionEvent { }
+
+public sealed class CreateSoapEvent : InstantActionEvent { }
 
 public sealed class RecallKatanaEvent : InstantActionEvent { }
 

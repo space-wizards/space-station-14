@@ -26,8 +26,9 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
 
         // TODO: maybe have suit activation stuff
         SubscribeLocalEvent<NinjaSuitComponent, ContainerIsInsertingAttemptEvent>(OnSuitInsertAttempt);
-        SubscribeLocalEvent<NinjaSuitComponent, TogglePhaseCloakEvent>(OnTogglePhaseCloakAction);
-        SubscribeLocalEvent<NinjaSuitComponent, RecallKatanaEvent>(OnRecallKatanaAction);
+        SubscribeLocalEvent<NinjaSuitComponent, TogglePhaseCloakEvent>(OnTogglePhaseCloak);
+        SubscribeLocalEvent<NinjaSuitComponent, CreateSoapEvent>(OnCreateSoap);
+        SubscribeLocalEvent<NinjaSuitComponent, RecallKatanaEvent>(OnRecallKatana);
     }
 
     /// <summary>
@@ -66,9 +67,10 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         // TODO: do actions like with gloves are now
         _actions.AddAction(user, comp.TogglePhaseCloakAction, uid, actions);
         _actions.AddAction(user, comp.RecallKatanaAction, uid, actions);
+        // TODO: ninja stars instead of soap, when embedding is a thing
+        _actions.AddAction(user, comp.CreateSoapAction, uid, actions);
         _actions.AddAction(user, comp.KatanaDashAction, uid, actions);
         // TODO: emp ability
-        // TODO: ninja star ability
     }
 
     // TODO: put in shared so client properly predicts insertion, but it uses powercell so how???
@@ -96,7 +98,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         _ninja.SetSuitPowerAlert(user);
     }
 
-    private void OnTogglePhaseCloakAction(EntityUid uid, NinjaSuitComponent comp, TogglePhaseCloakEvent args)
+    private void OnTogglePhaseCloak(EntityUid uid, NinjaSuitComponent comp, TogglePhaseCloakEvent args)
     {
         args.Handled = true;
         var user = args.Performer;
@@ -112,7 +114,22 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         SetCloaked(args.Performer, comp.Cloaked);
     }
 
-    private void OnRecallKatanaAction(EntityUid uid, NinjaSuitComponent comp, RecallKatanaEvent args)
+    private void OnCreateSoap(EntityUid uid, NinjaSuitComponent comp, CreateSoapEvent args)
+    {
+    	args.Handled = true;
+    	var user = args.Performer;
+    	if (!_ninja.TryUseCharge(user, comp.SoapCharge))
+    	{
+    		_popups.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
+    		return;
+    	}
+
+		// try to put soap in hand, otherwise it goes on the ground
+        var soap = Spawn(comp.SoapPrototype, Transform(user).Coordinates);
+    	_hands.TryPickupAnyHand(user, soap);
+    }
+
+    private void OnRecallKatana(EntityUid uid, NinjaSuitComponent comp, RecallKatanaEvent args)
     {
         args.Handled = true;
         var user = args.Performer;
@@ -124,14 +141,14 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         var coords = _transform.GetWorldPosition(katana);
         var distance = (_transform.GetWorldPosition(user) - coords).Length;
         var chargeNeeded = (float) distance * 3.6f;
-        if (!_ninja.GetNinjaBattery(user, out var battery) || !battery.TryUseCharge(chargeNeeded))
+        if (!_ninja.TryUseCharge(user, chargeNeeded))
         {
             _popups.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
             return;
         }
 
         // TODO: teleporting into belt slot
-        var message = _hands.TryPickup(user, katana)
+        var message = _hands.TryPickupAnyHand(user, katana)
             ? "ninja-katana-recalled"
             : "ninja-hands-full";
         _popups.PopupEntity(Loc.GetString(message), user, user);
