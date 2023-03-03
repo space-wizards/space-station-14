@@ -86,7 +86,7 @@ namespace Content.Server.Mind
         ///     Can be null.
         /// </summary>
         [ViewVariables]
-        public EntityUid? OwnedEntity => OwnedComponent?.Owner;
+        public EntityUid? OwnedEntity { get; internal set; }
 
         /// <summary>
         ///     An enumerable over all the roles this mind has.

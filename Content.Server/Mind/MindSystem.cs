@@ -371,13 +371,12 @@ public sealed class MindSystem : EntitySystem
         }
 
         var oldComp = mind.OwnedComponent;
-
         if(oldComp != null)
             InternalEjectMind(oldComp.Owner, oldComp);
 
-        mind.OwnedComponent = component;
+        SetOwnedEntity(mind, entity, component);
         if (mind.OwnedComponent != null)
-            InternalAssignMind(mind.OwnedComponent.Owner, mind, mind.OwnedComponent);
+            InternalAssignMind(mind.OwnedEntity!.Value, mind, mind.OwnedComponent);
 
         // Don't do the full deletion cleanup if we're transferring to our visitingentity
         if (alreadyAttached)
@@ -572,5 +571,20 @@ public sealed class MindSystem : EntitySystem
 
         mind = mindComponent.Mind!;
         return true;
-    } 
+    }
+
+    /// <summary>
+    /// Sets the Minds OwnedComponent and OwnedEntity
+    /// </summary>
+    /// <param name="mind">Mind to set OwnedComponent and OwnedEntity on</param>
+    /// <param name="uid">Entity owned by <paramref name="mind"/></param>
+    /// <param name="mindComponent">MindComponent owned by <paramref name="mind"/></param>
+    public void SetOwnedEntity(Mind mind, EntityUid? uid, MindComponent? mindComponent)
+    {
+        if (uid != null)
+            Resolve(uid.Value, ref mindComponent);
+
+        mind.OwnedEntity = uid;
+        mind.OwnedComponent = mindComponent;
+    }
 }

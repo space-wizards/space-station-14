@@ -29,7 +29,7 @@ namespace Content.Server.Chat.Commands
             var mind = player.ContentData()?.Mind;
 
             // This check also proves mind not-null for at the end when the mob is ghosted.
-            if (mind?.OwnedComponent?.Owner is not { Valid: true } victim)
+            if (mind?.OwnedEntity is not { Valid: true } victim)
             {
                 shell.WriteLine("You don't have a mind!");
                 return;
