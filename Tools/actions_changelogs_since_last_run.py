@@ -118,12 +118,12 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
                 # Corvax-Localization-Start
                 TRANSLATION_API_URL = os.environ.get("TRANSLATION_API_URL")
                 if TRANSLATION_API_URL:
-                    translate = requests.post(TRANSLATION_API_URL, json={
+                    resp = requests.post(TRANSLATION_API_URL, json={
                         "text": message,
                         "source_lang": "EN",
                         "target_lang": "RU"
                     })
-                    message = translate.data
+                    message = resp.json()['data']
                 # Corvax-Localization-End
                 content.write(f"{emoji} {message}\n")
 
