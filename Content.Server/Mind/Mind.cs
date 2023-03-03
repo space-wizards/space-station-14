@@ -4,7 +4,6 @@ using Content.Server.GameTicking;
 using Content.Server.Mind.Components;
 using Content.Server.Objectives;
 using Content.Server.Roles;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Server.Player;
 using Robust.Shared.Network;
@@ -149,37 +148,6 @@ namespace Content.Server.Mind
         /// </summary>
         [ViewVariables]
         public bool CharacterDeadIC => _mindSystem.IsCharacterDeadPhysically(this);
-
-        /// <summary>
-        ///     True if the OwnedEntity of this mind is physically dead.
-        ///     This specific definition, as opposed to CharacterDeadIC, is used to determine if ghosting should allow return.
-        /// </summary>
-        [ViewVariables]
-        public bool CharacterDeadPhysically
-        {
-            get
-            {
-                // This is written explicitly so that the logic can be understood.
-                // But it's also weird and potentially situational.
-                // Specific considerations when updating this:
-                //  + Does being turned into a borg (if/when implemented) count as dead?
-                //    *If not, add specific conditions to users of this property where applicable.*
-                //  + Is being transformed into a donut 'dead'?
-                //    TODO: Consider changing the way ghost roles work.
-                //    Mind is an *IC* mind, therefore ghost takeover is IC revival right now.
-                //  + Is it necessary to have a reference to a specific 'mind iteration' to cycle when certain events happen?
-                //    (If being a borg or AI counts as dead, then this is highly likely, as it's still the same Mind for practical purposes.)
-
-                // This can be null if they're deleted (spike / brain nom)
-                var targetMobState = _entityManager.GetComponentOrNull<MobStateComponent>(OwnedEntity);
-                // This can be null if it's a brain (this happens very often)
-                // Brains are the result of gibbing so should definitely count as dead
-                if (targetMobState == null)
-                    return true;
-                // They might actually be alive.
-                return _mobStateSystem.IsDead(OwnedEntity!.Value, targetMobState);
-            }
-        }
 
         /// <summary>
         ///     A string to represent the mind for logging

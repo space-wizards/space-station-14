@@ -240,6 +240,10 @@ public sealed class MindSystem : EntitySystem
             ChangeOwningPlayer(mind, netUserId, playerManager);
     }
 
+    /// <summary>
+    ///     True if the OwnedEntity of this mind is physically dead.
+    ///     This specific definition, as opposed to CharacterDeadIC, is used to determine if ghosting should allow return.
+    /// </summary>
     public bool IsCharacterDeadPhysically(Mind mind)
     {
         // This is written explicitly so that the logic can be understood.
