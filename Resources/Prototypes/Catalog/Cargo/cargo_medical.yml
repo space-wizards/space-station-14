@@ -81,7 +81,7 @@
 - type: cargoProduct
   id: MedicalBodybags
   icon:
-    sprite: Objects/Specific/Medical/Morgue/bodybags.rsi/
+    sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
     state: bag_folded
   product: CrateBodyBags
   cost: 700
