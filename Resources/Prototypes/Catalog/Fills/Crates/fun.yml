@@ -172,3 +172,18 @@
           amount: 1
         - id: VehicleKeySyndicateSegway
           amount: 1
+
+- type: entity
+  id: CrateFunBoxing
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHandsGlovesBoxingRed
+      - id: ClothingHandsGlovesBoxingBlue
+      - id: ClothingHandsGlovesBoxingYellow
+      - id: ClothingHandsGlovesBoxingGreen
+      - id: UniformShortsRed
+        amount: 3
+      - id: UniformShortsRedWithTop
+        amount: 3
