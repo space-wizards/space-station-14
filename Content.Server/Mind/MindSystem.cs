@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
 using Content.Server.Ghost;
@@ -535,5 +536,12 @@ public sealed class MindSystem : EntitySystem
         }
         _adminLogger.Add(LogType.Mind, LogImpact.Low,
             $"'{role.Name}' removed from mind of {mind.MindOwnerLoggingString}");
+    }
+    
+    public bool HasRole<T>(Mind mind) where T : Role
+    {
+        var t = typeof(T);
+    
+        return mind.Roles.Any(role => role.GetType() == t);
     }
 }

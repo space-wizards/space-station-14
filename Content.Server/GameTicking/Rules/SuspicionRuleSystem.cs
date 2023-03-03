@@ -206,8 +206,11 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
         _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-suspicion-added-announcement"));
 
-        var filter = Filter.Empty()
-            .AddWhere(session => ((IPlayerSession) session).ContentData()?.Mind?.HasRole<SuspicionTraitorRole>() ?? false);
+        var filter = Filter.Empty().AddWhere(session =>
+        {
+            var mind = ((IPlayerSession) session).ContentData()?.Mind;
+            return mind != null && _mindSystem.HasRole<SuspicionTraitorRole>(mind);
+        });
 
         SoundSystem.Play(_addedSound.GetSound(), filter, AudioParams.Default);
 
@@ -303,7 +306,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
             var mind = playerSession.ContentData()?.Mind;
 
-            if (mind != null && mind.HasRole<SuspicionTraitorRole>())
+            if (mind != null && _mindSystem.HasRole<SuspicionTraitorRole>(mind))
                 traitorsAlive++;
             else
                 innocentsAlive++;

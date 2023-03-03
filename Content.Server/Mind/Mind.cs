@@ -1,11 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
 using Content.Server.Mind.Components;
 using Content.Server.Objectives;
 using Content.Server.Roles;
-using Content.Shared.Database;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Server.Player;
@@ -196,13 +194,6 @@ namespace Content.Server.Mind
                     return UserId.Value.ToString();
                 return "(originally " + OriginalOwnerUserId + ")";
             }
-        }
-
-        public bool HasRole<T>() where T : Role
-        {
-            var t = typeof(T);
-
-            return Roles.Any(role => role.GetType() == t);
         }
 
         /// <summary>
