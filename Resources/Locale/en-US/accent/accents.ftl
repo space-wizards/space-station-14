@@ -13,7 +13,7 @@ accent-words-dog-4 = Arf.
 accent-words-dog-5 = Grrr.
 
 # Mouse
-accent-words-mouse-1 = Squeak!
+accent-words-mouse-1 = Squak!
 accent-words-mouse-2 = Piep!
 accent-words-mouse-3 = Chuu!
 accent-words-mouse-4 = Eeee!
