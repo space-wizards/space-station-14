@@ -2,31 +2,45 @@
 - type: emote
   id: Scream
   category: Vocal
-  chatMessages: [кричит, орёт] # Corvax-Localization
+  chatMessages: [кричит!] # Corvax-Localization
   chatTriggers:
     - scream
     - screams
+    - screams.
+    - screams!
     - screaming
     - screamed
     - shriek
     - shrieks
+    - shrieks.
+    - shrieks!
     - shrieking
     - shrieked
     - screech
-    - screechs
+    - screeches
+    - screeches.
+    - screeches!
     - screeching
     - screeched
     - yell
     - yells
+    - yells.
+    - yells!
     - yelled
     - yelling
     # Corvax-Localization-Start
     - крик
     - кричит
+    - кричит.
+    - кричит!
     - ор
     - орёт
+    - орёт.
+    - орёт!
     - визг
     - визжит
+    - визжит.
+    - визжит!
     # Corvax-Localization-End
 
 - type: emote
@@ -36,23 +50,37 @@
   chatTriggers:
     - laugh
     - laughs
+    - laughs.
+    - laughs!
     - laughing
     - laughed
     - chuckle
     - chuckles
+    - chuckles.
+    - chuckles!
     - chuckled
     - chuckling
     - giggle
     - giggles
+    - giggles.
+    - giggles!
     - giggling
     - giggled
     # Corvax-Localization-Start
     - смех
     - смеется
+    - смеется.
+    - смеется!
     - смеётся
+    - смеётся.
+    - смеётся!
     - хохот
     - хохочет
+    - хохочет.
+    - хохочет!
     - хихикает
+    - хихикает.
+    - хихикает!
     - хихикнул
     - хихикнула
     - ржёт
@@ -62,20 +90,28 @@
 - type: emote
   id: Clap
   category: Hands
-  chatMessages: [хлопает в ладоши] # Corvax-Localization
+  chatMessages: [хлопает!] # Corvax-Localization
   chatTriggers:
     - clap
     - claps
+    - claps.
+    - claps!
     - clapping
     - clapped
     # Corvax-Localization-Start
     - хлопает
+    - хлопает.
+    - хлопает!
     - хлопнул
     - хлопнула
     - хлопает в ладоши
+    - хлопает в ладоши.
+    - хлопает в ладоши!
     - хлопнул в ладоши
     - хлопнула в ладоши
     - апплодирует
+    - апплодирует.
+    - апплодирует!
     # Corvax-Localization-End
 
 - type: emote
@@ -89,19 +125,32 @@
     - snapped
     - snap fingers
     - snaps fingers
+    - snaps fingers.
+    - snaps fingers!
+    - snaps their fingers
+    - snaps their fingers.
+    - snaps their fingers!
     - snapping fingers
     - snapped fingers
     # Corvax-Localization-Start
     - щелкает
+    - щелкает.
+    - щелкает!
     - щелкнул
     - щелкнула
     - щёлкает
+    - щёлкает.
+    - щёлкает!
     - щёлкнул
     - щёлкнула
     - щелкает пальцами
+    - щелкает пальцами.
+    - щелкает пальцами!
     - щелкнул пальцами
     - щелкнула пальцами
     - щёлкает пальцами
+    - щёлкает пальцами.
+    - щёлкает пальцами!
     - щёлкнул пальцами
     - щёлкнула пальцами
     # Corvax-Localization-End    
