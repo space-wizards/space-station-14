@@ -553,4 +553,24 @@ public sealed class MindSystem : EntitySystem
     {
         return (session = mind.Session) != null;
     }
+
+    /// <summary>
+    /// Gets a mind from uid and/or MindComponent. Used for null checks.
+    /// </summary>
+    /// <param name="uid">Entity UID that owns the mind.</param>
+    /// <param name="mindComponent">Mind component on <paramref name="uid"/> to get the mind from.</param>
+    /// <param name="mind">The returned mind.</param>
+    /// <returns>True if mind found. False if not.</returns>
+    public bool TryGetMind(EntityUid uid, MindComponent? mindComponent, [NotNullWhen(true)] out Mind? mind)
+    {
+        mind = null;
+        if (!Resolve(uid, ref mindComponent))
+            return false;
+
+        if (!mindComponent.HasMind)
+            return false;
+
+        mind = mindComponent.Mind!;
+        return true;
+    } 
 }

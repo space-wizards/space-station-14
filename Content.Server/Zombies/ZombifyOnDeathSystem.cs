@@ -178,11 +178,10 @@ namespace Content.Server.Zombies
 
             //He's gotta have a mind
             var mindComp = EnsureComp<MindComponent>(target);
-            var mind = mindComp.Mind;
-            if (mindComp.HasMind && _mindSystem.TryGetSession(mind!, out var session))
+            if (_mindSystem.TryGetMind(target, mindComp, out var mind) && _mindSystem.TryGetSession(mind, out var session))
             {
                 //Zombie role for player manifest
-                _mindSystem.AddRole(mind!, new TraitorRole(mind!, _proto.Index<AntagPrototype>(zombiecomp.ZombieRoleId)));
+                _mindSystem.AddRole(mind, new TraitorRole(mind, _proto.Index<AntagPrototype>(zombiecomp.ZombieRoleId)));
                 //Greeting message for new bebe zombers
                 _chatMan.DispatchServerMessage(session, Loc.GetString("zombie-infection-greeting"));
             }
