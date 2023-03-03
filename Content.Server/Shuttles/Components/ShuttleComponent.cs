@@ -1,5 +1,3 @@
-using Content.Shared.Shuttles.Components;
-
 namespace Content.Server.Shuttles.Components
 {
     [RegisterComponent]
@@ -7,6 +5,10 @@ namespace Content.Server.Shuttles.Components
     {
         [ViewVariables]
         public bool Enabled = true;
+
+        // Placeholder until we get more detailed controls later
+        [DataField("preferDock")]
+        public bool PreferDock = true;
 
         /// <summary>
         /// The cached thrust available for each cardinal direction

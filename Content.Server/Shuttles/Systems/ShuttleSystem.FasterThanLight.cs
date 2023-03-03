@@ -81,7 +81,9 @@ public sealed partial class ShuttleSystem
 
     private void OnStationGridAdd(StationGridAddedEvent ev)
     {
-        if (TryComp<PhysicsComponent>(ev.GridId, out var body) && body.Mass > 500f)
+        if (HasComp<MapComponent>(ev.GridId) ||
+            TryComp<PhysicsComponent>(ev.GridId, out var body) &&
+            body.Mass > 500f)
         {
             AddFTLDestination(ev.GridId, true);
         }
@@ -163,8 +165,7 @@ public sealed partial class ShuttleSystem
     public void FTLTravel(ShuttleComponent component,
         EntityUid target,
         float startupTime = DefaultStartupTime,
-        float hyperspaceTime = DefaultTravelTime,
-        bool dock = false)
+        float hyperspaceTime = DefaultTravelTime)
     {
         if (!TrySetupFTL(component, out var hyperspace))
             return;
@@ -173,7 +174,6 @@ public sealed partial class ShuttleSystem
         hyperspace.TravelTime = hyperspaceTime;
         hyperspace.Accumulator = hyperspace.StartupTime;
         hyperspace.TargetUid = target;
-        hyperspace.Dock = dock;
         _console.RefreshShuttleConsoles();
     }
 
@@ -201,6 +201,7 @@ public sealed partial class ShuttleSystem
 
         component = AddComp<FTLComponent>(uid);
         component.State = FTLState.Starting;
+        component.Dock = shuttle.PreferDock;
         // TODO: Need BroadcastGrid to not be bad.
         SoundSystem.Play(_startupSound.GetSound(), Filter.Empty().AddInRange(Transform(uid).MapPosition, GetSoundRange(component.Owner)), _startupSound.Params);
         // Make sure the map is setup before we leave to avoid pop-in (e.g. parallax).
@@ -210,13 +211,16 @@ public sealed partial class ShuttleSystem
 
     private void UpdateHyperspace(float frameTime)
     {
-        foreach (var comp in EntityQuery<FTLComponent>())
+        var query = EntityQueryEnumerator<FTLComponent>();
+
+        while (query.MoveNext(out var uid, out var comp))
         {
             comp.Accumulator -= frameTime;
 
-            if (comp.Accumulator > 0f) continue;
+            if (comp.Accumulator > 0f)
+                continue;
 
-            var xform = Transform(comp.Owner);
+            var xform = Transform(uid);
             PhysicsComponent? body;
             ShuttleComponent? shuttle;
 
@@ -228,16 +232,16 @@ public sealed partial class ShuttleSystem
 
                     comp.State = FTLState.Travelling;
 
-                    var width = Comp<MapGridComponent>(comp.Owner).LocalAABB.Width;
+                    var width = Comp<MapGridComponent>(uid).LocalAABB.Width;
                     xform.Coordinates = new EntityCoordinates(_mapManager.GetMapEntityId(_hyperSpaceMap!.Value), new Vector2(_index + width / 2f, 0f));
                     xform.LocalRotation = Angle.Zero;
                     _index += width + Buffer;
                     comp.Accumulator += comp.TravelTime - DefaultArrivalTime;
 
-                    if (TryComp(comp.Owner, out body))
+                    if (TryComp(uid, out body))
                     {
-                        _physics.SetLinearVelocity(comp.Owner, new Vector2(0f, 20f), body: body);
-                        _physics.SetAngularVelocity(comp.Owner, 0f, body: body);
+                        _physics.SetLinearVelocity(uid, new Vector2(0f, 20f), body: body);
+                        _physics.SetAngularVelocity(uid, 0f, body: body);
                         _physics.SetLinearDamping(body, 0f);
                         _physics.SetAngularDamping(body, 0f);
                     }
@@ -245,11 +249,11 @@ public sealed partial class ShuttleSystem
                     if (comp.TravelSound != null)
                     {
                         comp.TravelStream = SoundSystem.Play(comp.TravelSound.GetSound(),
-                            Filter.Pvs(comp.Owner, 4f, entityManager: EntityManager), comp.TravelSound.Params);
+                            Filter.Pvs(uid, 4f, entityManager: EntityManager), comp.TravelSound.Params);
                     }
 
-                    SetDockBolts(comp.Owner, true);
-                    _console.RefreshShuttleConsoles(comp.Owner);
+                    SetDockBolts(uid, true);
+                    _console.RefreshShuttleConsoles(uid);
                     break;
                 // Arriving, play effects
                 case FTLState.Travelling:
@@ -258,29 +262,29 @@ public sealed partial class ShuttleSystem
                     // TODO: Arrival effects
                     // For now we'll just use the ss13 bubbles but we can do fancier.
 
-                    if (TryComp(comp.Owner, out shuttle))
+                    if (TryComp(uid, out shuttle))
                     {
                         _thruster.DisableLinearThrusters(shuttle);
                         _thruster.EnableLinearThrustDirection(shuttle, DirectionFlag.South);
                     }
 
-                    _console.RefreshShuttleConsoles(comp.Owner);
+                    _console.RefreshShuttleConsoles(uid);
                     break;
                 // Arrived
                 case FTLState.Arriving:
                     DoTheDinosaur(xform);
-                    SetDockBolts(comp.Owner, false);
-                    SetDocks(comp.Owner, true);
+                    SetDockBolts(uid, false);
+                    SetDocks(uid, true);
 
-                    if (TryComp(comp.Owner, out body))
+                    if (TryComp(uid, out body))
                     {
-                        _physics.SetLinearVelocity(comp.Owner, Vector2.Zero, body: body);
-                        _physics.SetAngularVelocity(comp.Owner, 0f, body: body);
+                        _physics.SetLinearVelocity(uid, Vector2.Zero, body: body);
+                        _physics.SetAngularVelocity(uid, 0f, body: body);
                         _physics.SetLinearDamping(body, ShuttleLinearDamping);
                         _physics.SetAngularDamping(body, ShuttleAngularDamping);
                     }
 
-                    TryComp(comp.Owner, out shuttle);
+                    TryComp(uid, out shuttle);
 
                     if (comp.TargetUid != null && shuttle != null)
                     {
@@ -305,25 +309,26 @@ public sealed partial class ShuttleSystem
                         comp.TravelStream = null;
                     }
 
-                    SoundSystem.Play(_arrivalSound.GetSound(), Filter.Empty().AddInRange(Transform(comp.Owner).MapPosition, GetSoundRange(comp.Owner)), _arrivalSound.Params);
+                    SoundSystem.Play(_arrivalSound.GetSound(), Filter.Empty().AddInRange(Transform(uid).MapPosition, GetSoundRange(uid)), _arrivalSound.Params);
 
-                    if (TryComp<FTLDestinationComponent>(comp.Owner, out var dest))
+                    if (TryComp<FTLDestinationComponent>(uid, out var dest))
                     {
                         dest.Enabled = true;
                     }
 
                     comp.State = FTLState.Cooldown;
                     comp.Accumulator += FTLCooldown;
-                    _console.RefreshShuttleConsoles(comp.Owner);
-                    RaiseLocalEvent(new HyperspaceJumpCompletedEvent());
+                    _console.RefreshShuttleConsoles(uid);
+                    var ev = new FTLCompletedEvent();
+                    RaiseLocalEvent(ref ev);
                     break;
                 case FTLState.Cooldown:
-                    RemComp<FTLComponent>(comp.Owner);
-                    _console.RefreshShuttleConsoles(comp.Owner);
+                    RemComp<FTLComponent>(uid);
+                    _console.RefreshShuttleConsoles(uid);
                     break;
                 default:
-                    _sawmill.Error($"Found invalid FTL state {comp.State} for {comp.Owner}");
-                    RemComp<FTLComponent>(comp.Owner);
+                    _sawmill.Error($"Found invalid FTL state {comp.State} for {uid}");
+                    RemComp<FTLComponent>(uid);
                     break;
             }
         }
@@ -436,7 +441,7 @@ public sealed partial class ShuttleSystem
            // Connect everything
            foreach (var (dockA, dockB) in config.Docks)
            {
-               _dockSystem.Dock(dockA, dockB);
+               _dockSystem.Dock(dockA.Owner, dockA, dockB.Owner, dockB);
            }
 
            return true;

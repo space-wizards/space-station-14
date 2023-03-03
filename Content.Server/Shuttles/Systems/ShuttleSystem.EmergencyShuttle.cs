@@ -111,8 +111,13 @@ public sealed partial class ShuttleSystem
    /// <summary>
    /// Checks whether the emergency shuttle can warp to the specified position.
    /// </summary>
-   private bool ValidSpawn(MapGridComponent grid, Box2 area)
+   private bool ValidSpawn(EntityUid gridUid, MapGridComponent grid, Box2 area)
    {
+       // If the target is a map then any tile is valid.
+       // TODO: We already need the entities-under check
+       if (HasComp<MapComponent>(gridUid))
+           return true;
+
        return !grid.GetLocalTilesIntersecting(area).Any();
    }
 
@@ -148,6 +153,7 @@ public sealed partial class ShuttleSystem
                            gridDock, gridXform,
                            targetGridAngle,
                            shuttleAABB,
+                           targetGrid,
                            targetGridGrid,
                            out var dockedAABB,
                            out var matty,
@@ -175,8 +181,6 @@ public sealed partial class ShuttleSystem
                        (shuttleDock, gridDock),
                    };
 
-                   // TODO: Check shuttle orientation as the tiebreaker.
-
                    foreach (var other in shuttleDocks)
                    {
                        if (other == shuttleDock) continue;
@@ -191,7 +195,9 @@ public sealed partial class ShuttleSystem
                                    otherGrid,
                                    xformQuery.GetComponent(otherGrid.Owner),
                                    targetGridAngle,
-                                   shuttleAABB, targetGridGrid,
+                                   shuttleAABB,
+                                   targetGrid,
+                                   targetGridGrid,
                                    out var otherDockedAABB,
                                    out _,
                                    out var otherTargetAngle) ||
@@ -304,6 +310,7 @@ public sealed partial class ShuttleSystem
        TransformComponent gridDockXform,
        Angle targetGridRotation,
        Box2 shuttleAABB,
+       EntityUid gridUid,
        MapGridComponent grid,
        [NotNullWhen(true)] out Box2? shuttleDockedAABB,
        out Matrix3 matty,
@@ -336,7 +343,8 @@ public sealed partial class ShuttleSystem
        // Rounding moment
        shuttleDockedAABB = shuttleDockedAABB.Value.Enlarged(-0.01f);
 
-       if (!ValidSpawn(grid, shuttleDockedAABB.Value)) return false;
+       if (!ValidSpawn(gridUid, grid, shuttleDockedAABB.Value))
+           return false;
 
        gridRotation = targetGridRotation + gridDockAngle - shuttleDockAngle;
        return true;

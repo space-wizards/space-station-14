@@ -64,10 +64,17 @@ namespace Content.Server.Shuttles.Systems
             RaiseLocalEvent(entity.Value, ref getShuttleEv);
             entity = getShuttleEv.Console;
 
-            if (entity == null || dest.Whitelist?.IsValid(entity.Value, EntityManager) == false) return;
-
             if (!TryComp<TransformComponent>(entity, out var xform) ||
-                !TryComp<ShuttleComponent>(xform.GridUid, out var shuttle)) return;
+                !TryComp<ShuttleComponent>(xform.GridUid, out var shuttle))
+            {
+                return;
+            }
+
+            if (dest.Whitelist?.IsValid(entity.Value, EntityManager) == false &&
+                dest.Whitelist?.IsValid(xform.GridUid.Value, EntityManager) == false)
+            {
+                return;
+            }
 
             if (HasComp<FTLComponent>(xform.GridUid))
             {
@@ -81,7 +88,7 @@ namespace Content.Server.Shuttles.Systems
                 return;
             }
 
-            _shuttle.FTLTravel(shuttle, args.Destination, hyperspaceTime: _shuttle.TransitTime);
+            _shuttle.FTLTravel(shuttle, args.Destination);
         }
 
         private void OnDock(DockEvent ev)
@@ -222,36 +229,43 @@ namespace Content.Server.Shuttles.Systems
             TryComp<RadarConsoleComponent>(entity, out var radar);
             var range = radar?.MaxRange ?? 0f;
 
-            TryComp<ShuttleComponent>(consoleXform?.GridUid, out var shuttle);
+            var shuttleGridUid = consoleXform?.GridUid;
+            TryComp<ShuttleComponent>(shuttleGridUid, out var shuttle);
 
             var destinations = new List<(EntityUid, string, bool)>();
             var ftlState = FTLState.Available;
             var ftlTime = TimeSpan.Zero;
 
-            if (TryComp<FTLComponent>(shuttle?.Owner, out var shuttleFtl))
+            if (TryComp<FTLComponent>(shuttleGridUid, out var shuttleFtl))
             {
                 ftlState = shuttleFtl.State;
                 ftlTime = _timing.CurTime + TimeSpan.FromSeconds(shuttleFtl.Accumulator);
             }
 
             // Mass too large
-            if (entity != null && shuttle?.Owner != null && (!TryComp<PhysicsComponent>(shuttle?.Owner, out var shuttleBody) ||
-                shuttleBody.Mass < 1000f))
+            if (entity != null && shuttleGridUid != null &&
+                (!TryComp<PhysicsComponent>(shuttleGridUid, out var shuttleBody) || shuttleBody.Mass < 1000f))
             {
                 var metaQuery = GetEntityQuery<MetaDataComponent>();
 
                 // Can't go anywhere when in FTL.
-                var locked = shuttleFtl != null || Paused(shuttle!.Owner);
+                var locked = shuttleFtl != null || Paused(shuttleGridUid.Value);
 
                 // Can't cache it because it may have a whitelist for the particular console.
                 // Include paused as we still want to show CentCom.
-                foreach (var comp in EntityQuery<FTLDestinationComponent>(true))
-                {
-                    // Can't warp to itself or if it's not on the whitelist.
-                    if (comp.Owner == shuttle?.Owner ||
-                        comp.Whitelist?.IsValid(entity.Value) == false) continue;
+                var destQuery = AllEntityQuery<FTLDestinationComponent>();
 
-                    var meta = metaQuery.GetComponent(comp.Owner);
+                while (destQuery.MoveNext(out var destUid, out var comp))
+                {
+                    // Can't warp to itself or if it's not on the whitelist (console or shuttle).
+                    if (destUid == shuttleGridUid ||
+                        comp.Whitelist?.IsValid(entity.Value) == false &&
+                        (shuttleGridUid == null || comp.Whitelist?.IsValid(shuttleGridUid.Value, EntityManager) == false))
+                    {
+                        continue;
+                    }
+
+                    var meta = metaQuery.GetComponent(destUid);
                     var name = meta.EntityName;
 
                     if (string.IsNullOrEmpty(name))
@@ -259,16 +273,16 @@ namespace Content.Server.Shuttles.Systems
 
                     var canTravel = !locked &&
                                     comp.Enabled &&
-                                    !Paused(comp.Owner, meta) &&
-                                    (!TryComp<FTLComponent>(comp.Owner, out var ftl) || ftl.State == FTLState.Cooldown);
+                                    !Paused(destUid, meta) &&
+                                    (!TryComp<FTLComponent>(destUid, out var ftl) || ftl.State == FTLState.Cooldown);
 
-                    // Can't travel to same map.
-                    if (canTravel && consoleXform?.MapUid == Transform(comp.Owner).MapUid)
+                    // Can't travel to same map (yet)
+                    if (canTravel && consoleXform?.MapUid == Transform(destUid).MapUid)
                     {
                         canTravel = false;
                     }
 
-                    destinations.Add((comp.Owner, name, canTravel));
+                    destinations.Add((destUid, name, canTravel));
                 }
             }
 
