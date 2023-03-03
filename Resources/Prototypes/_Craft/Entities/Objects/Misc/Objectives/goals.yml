@@ -4,40 +4,30 @@
   text: station-goal-shuttle
   cargoAdvancedProductsIDs:
     - ShuttleMiniGravitation
-    - AtmosphericsGasMinerNitrousOxide
-    - AtmosphericsGasMinerOxygen
 
 - type: stationGoal
   id: StationGoalSecurityShuttle
   text: station-goal-security-shuttle
   cargoAdvancedProductsIDs:
     - ShuttleMiniGravitation
-    - AtmosphericsGasMinerNitrousOxide
-    - AtmosphericsGasMinerOxygen
 
 - type: stationGoal
   id: StationGoalScienceShuttle
   text: station-goal-science-shuttle
   cargoAdvancedProductsIDs:
     - ShuttleMiniGravitation
-    - AtmosphericsGasMinerNitrousOxide
-    - AtmosphericsGasMinerOxygen
 
 - type: stationGoal
   id: StationGoalMedicalShuttle
   text: station-goal-medical-shuttle
   cargoAdvancedProductsIDs:
     - ShuttleMiniGravitation
-    - AtmosphericsGasMinerNitrousOxide
-    - AtmosphericsGasMinerOxygen
 
 - type: stationGoal
   id: StationGoalZooShuttle
   text: station-goal-zoo-shuttle
   cargoAdvancedProductsIDs:
     - ShuttleMiniGravitation
-    - AtmosphericsGasMinerNitrousOxide
-    - AtmosphericsGasMinerOxygen
 
 # - type: stationGoal
 #   id: StationGoalEvacShuttle
