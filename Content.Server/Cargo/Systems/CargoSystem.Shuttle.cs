@@ -56,7 +56,7 @@ public sealed partial class CargoSystem
         // Don't want to immediately call this as shuttles will get setup in the natural course of things.
         _configManager.OnValueChanged(CCVars.CargoShuttles, SetCargoShuttleEnabled);
 
-        SubscribeLocalEvent<CargoShuttleComponent, FTLCompletedEvent>(OnCargoFTL);
+        SubscribeLocalEvent<CargoShuttleComponent, FTLStartedEvent>(OnCargoFTL);
 
         SubscribeLocalEvent<CargoShuttleConsoleComponent, ComponentStartup>(OnCargoShuttleConsoleStartup);
 
@@ -392,7 +392,7 @@ public sealed partial class CargoSystem
         }
     }
 
-    private void OnCargoFTL(EntityUid uid, CargoShuttleComponent component, ref FTLCompletedEvent args)
+    private void OnCargoFTL(EntityUid uid, CargoShuttleComponent component, ref FTLStartedEvent args)
     {
         var xform = Transform(uid);
         var stationUid = component.Station;

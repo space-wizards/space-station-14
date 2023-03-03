@@ -15,6 +15,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.Shuttles.Events;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Doors.Components;
+using JetBrains.Annotations;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 
@@ -45,7 +46,7 @@ public sealed partial class ShuttleSystem
     /// <summary>
     /// Minimum mass a grid needs to be to block a shuttle recall.
     /// </summary>
-    private const float ShuttleFTLMassThreshold = 300f;
+    public const float ShuttleFTLMassThreshold = 300f;
 
     // I'm too lazy to make CVars.
 
@@ -68,6 +69,11 @@ public sealed partial class ShuttleSystem
     /// </summary>
     private const int FTLProximityIterations = 3;
 
+    /// <summary>
+    /// Minimum mass for an FTL destination
+    /// </summary>
+    public const float FTLDestinationMass = 500f;
+
     private void InitializeFTL()
     {
         SubscribeLocalEvent<StationGridAddedEvent>(OnStationGridAdd);
@@ -83,7 +89,7 @@ public sealed partial class ShuttleSystem
     {
         if (HasComp<MapComponent>(ev.GridId) ||
             TryComp<PhysicsComponent>(ev.GridId, out var body) &&
-            body.Mass > 500f)
+            body.Mass > FTLDestinationMass)
         {
             AddFTLDestination(ev.GridId, true);
         }
@@ -134,9 +140,11 @@ public sealed partial class ShuttleSystem
         return destination;
     }
 
+    [PublicAPI]
     public void RemoveFTLDestination(EntityUid uid)
     {
-        if (!RemComp<FTLDestinationComponent>(uid)) return;
+        if (!RemComp<FTLDestinationComponent>(uid))
+            return;
         _console.RefreshShuttleConsoles();
     }
 
@@ -165,7 +173,8 @@ public sealed partial class ShuttleSystem
     public void FTLTravel(ShuttleComponent component,
         EntityUid target,
         float startupTime = DefaultStartupTime,
-        float hyperspaceTime = DefaultTravelTime)
+        float hyperspaceTime = DefaultTravelTime,
+        bool dock = false)
     {
         if (!TrySetupFTL(component, out var hyperspace))
             return;
@@ -174,6 +183,7 @@ public sealed partial class ShuttleSystem
         hyperspace.TravelTime = hyperspaceTime;
         hyperspace.Accumulator = hyperspace.StartupTime;
         hyperspace.TargetUid = target;
+        hyperspace.Dock = dock;
         _console.RefreshShuttleConsoles();
     }
 
@@ -201,11 +211,13 @@ public sealed partial class ShuttleSystem
 
         component = AddComp<FTLComponent>(uid);
         component.State = FTLState.Starting;
-        component.Dock = shuttle.PreferDock;
         // TODO: Need BroadcastGrid to not be bad.
         SoundSystem.Play(_startupSound.GetSound(), Filter.Empty().AddInRange(Transform(uid).MapPosition, GetSoundRange(component.Owner)), _startupSound.Params);
         // Make sure the map is setup before we leave to avoid pop-in (e.g. parallax).
         SetupHyperspace();
+
+        var ev = new FTLStartedEvent();
+        RaiseLocalEvent(uid, ref ev);
         return true;
     }
 
@@ -320,7 +332,7 @@ public sealed partial class ShuttleSystem
                     comp.Accumulator += FTLCooldown;
                     _console.RefreshShuttleConsoles(uid);
                     var ev = new FTLCompletedEvent();
-                    RaiseLocalEvent(ref ev);
+                    RaiseLocalEvent(uid, ref ev);
                     break;
                 case FTLState.Cooldown:
                     RemComp<FTLComponent>(uid);
