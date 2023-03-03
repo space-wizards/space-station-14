@@ -201,7 +201,7 @@ namespace Content.Server.Nutrition.EntitySystems
             }
             else
             {
-                _popupSystem.PopupEntity(Loc.GetString(component.EatMessage, ("foodComp", uid), ("flavors", flavors)), args.Args.User, args.Args.User);
+                _popupSystem.PopupEntity(Loc.GetString(component.EatMessage, ("food", uid), ("flavors", flavors)), args.Args.User, args.Args.User);
 
                 // log successful voluntary eating
                 _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(args.Args.User):target} ate {ToPrettyString(uid):food}");
