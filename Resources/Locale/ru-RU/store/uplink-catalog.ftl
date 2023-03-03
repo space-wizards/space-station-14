@@ -98,8 +98,8 @@ uplink-gatfruit-seeds-name = { ent-GatfruitSeeds }
 uplink-gatfruit-seeds-desc = И кто сказал, что пушки не растут на деревьях?
 uplink-necronomicon-name = некрономикон
 uplink-necronomicon-desc = Нечестивая книга, позволяющая призвать демонического фамильяра.
-uplink-revolver-cap-gun-fake-name = Fake Cap Gun
-uplink-revolver-cap-gun-fake-desc = Fool your enemy! It can use both cap and magnum bullets. Comes loaded with magnum bullets.
+uplink-revolver-cap-gun-fake-name = Фальшивый игрушечный пистолет
+uplink-revolver-cap-gun-fake-desc = Одурачьте своих врагов! Использует как пистоны, так и патроны калибра .45 магнум. Последними и будет заряжен при покупке.
 # Armor
 uplink-chameleon-name = набор "Хамелеон"
 uplink-chameleon-desc = Рюкзак, полный вещей, оснащенных технологией хамелеона, позволяющих вам маскироваться под кого угодно на станции, и даже больше!
