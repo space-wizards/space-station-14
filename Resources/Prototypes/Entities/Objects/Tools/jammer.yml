@@ -10,7 +10,7 @@
     state: jammer
   - type: RadioJammer
     enabled: true
-    distance: 16
+    range: 16
   - type: PowerCellSlot
     cellSlotId: cell_slot
   - type: ContainerContainer
