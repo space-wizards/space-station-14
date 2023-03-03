@@ -21,13 +21,40 @@
 
 - type: entity
   id: CrateServiceReplacementLights
-  parent: CrateGenericSteel
+  parent: CratePlastic
   components:
   - type: StorageFill
     contents:
       - id: BoxLighttube
         amount: 1
       - id: BoxLightbulb
+        amount: 1
+
+- type: entity
+  id: CrateServiceLedLights
+  parent: CrateServiceReplacementLights
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxLedLighttube
+        amount: 1
+
+- type: entity
+  id: CrateServiceExteriorLights
+  parent: CrateServiceReplacementLights
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxExteriorLighttube
+        amount: 1
+
+- type: entity
+  id: CrateServiceSodiumLights
+  parent: CrateServiceReplacementLights
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSodiumLighttube
         amount: 1
 
 - type: entity

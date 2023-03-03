@@ -69,6 +69,36 @@
       - DroneUsable
 
 - type: entity
+  name: led lighttube box
+  parent: BoxLighttube
+  id: BoxLedLighttube
+  components:
+  - type: StorageFill
+    contents:
+      - id: LedLightTube
+        amount: 12
+
+- type: entity
+  name: exterior lighttube box
+  parent: BoxLighttube
+  id: BoxExteriorLighttube
+  components:
+  - type: StorageFill
+    contents:
+      - id: ExteriorLightTube
+        amount: 12
+
+- type: entity
+  name: sodium lighttube box
+  parent: BoxLighttube
+  id: BoxSodiumLighttube
+  components:
+  - type: StorageFill
+    contents:
+      - id: SodiumLightTube
+        amount: 12
+
+- type: entity
   name: mixed lights box
   parent: BoxCardboard
   id: BoxLightMixed

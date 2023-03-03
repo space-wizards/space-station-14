@@ -4,6 +4,15 @@ ent-CrateServiceJanitorialSupplies = Janitorial supplies crate
 ent-CrateServiceReplacementLights = Replacement lights crate
     .desc = May the light of Aether shine upon this station! Or at least, the light of forty two light tubes and twenty one light bulbs.
 
+ent-CrateServiceLedLights = LED lights crate
+    .desc = May the light of Aether shine upon this station! Those lights are extra-bright.
+
+ent-CrateServiceExteriorLights = Exterior lights crate
+    .desc = May the light of Aether shine upon this station! Now with a blue tint.
+
+ent-CrateServiceSodiumLights = Sodium lights crate
+    .desc = May the light of Aether shine upon this station! Now with a orange tint.
+
 ent-CrateMousetrapBoxes = Mousetraps crate
     .desc = Mousetraps, for when all of service is being haunted by an entire horde of rats. Use sparingly... or not.
 
