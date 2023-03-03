@@ -77,3 +77,13 @@
   cost: 2500
   category: Medical
   group: market
+
+- type: cargoProduct
+  id: MedicalBodybags
+  icon:
+    sprite: Objects/Specific/Medical/Morgue/bodybags.rsi/
+    state: bag_folded
+  product: CrateBodyBags
+  cost: 700
+  category: Medical
+  group: market
