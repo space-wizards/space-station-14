@@ -12,7 +12,6 @@ using Content.Shared.Bed.Sleep;
 using Content.Shared.Chemistry.Components;
 using Content.Server.Emoting.Systems;
 using Content.Server.Speech.EntitySystems;
-using Content.Shared.Damage;
 using Content.Shared.Disease.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs;
@@ -33,6 +32,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly ServerInventorySystem _inv = default!;
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
+        [Dependency] private readonly EmoteOnDamageSystem _emoteOnDamage = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
@@ -49,12 +49,11 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<ZombieComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<ZombieComponent, MobStateChangedEvent>(OnMobState);
             SubscribeLocalEvent<ZombieComponent, CloningEvent>(OnZombieCloning);
-            SubscribeLocalEvent<ActiveZombieComponent, DamageChangedEvent>(OnDamage);
-            SubscribeLocalEvent<ActiveZombieComponent, AttemptSneezeCoughEvent>(OnSneeze);
-            SubscribeLocalEvent<ActiveZombieComponent, TryingToSleepEvent>(OnSleepAttempt);
+            SubscribeLocalEvent<ZombieComponent, AttemptSneezeCoughEvent>(OnSneeze);
+            SubscribeLocalEvent<ZombieComponent, TryingToSleepEvent>(OnSleepAttempt);
         }
 
-        private void OnSleepAttempt(EntityUid uid, ActiveZombieComponent component, ref TryingToSleepEvent args)
+        private void OnSleepAttempt(EntityUid uid, ZombieComponent component, ref TryingToSleepEvent args)
         {
             args.Cancelled = true;
         }
@@ -76,11 +75,11 @@ namespace Content.Server.Zombies
 
         private void OnMobState(EntityUid uid, ZombieComponent component, MobStateChangedEvent args)
         {
-            //BUG: this won't work when an entity becomes a zombie some other way, such as admin smite
             if (args.NewMobState == MobState.Alive)
             {
                 // Groaning when damaged
-                EnsureComp<ActiveZombieComponent>(uid);
+                EnsureComp<EmoteOnDamageComponent>(uid);
+                _emoteOnDamage.AddEmote(uid, "Scream");
 
                 // Random groaning
                 EnsureComp<AutoEmoteComponent>(uid);
@@ -89,20 +88,14 @@ namespace Content.Server.Zombies
             else
             {
                 // Stop groaning when damaged
-                RemComp<ActiveZombieComponent>(uid);
+                _emoteOnDamage.RemoveEmote(uid, "Scream");
 
                 // Stop random groaning
                 _autoEmote.RemoveEmote(uid, "ZombieGroan");
             }
         }
 
-        private void OnDamage(EntityUid uid, ActiveZombieComponent component, DamageChangedEvent args)
-        {
-            if (args.DamageIncreased)
-                AttemptDamageGroan(uid, component);
-        }
-
-        private void OnSneeze(EntityUid uid, ActiveZombieComponent component, ref AttemptSneezeCoughEvent args)
+        private void OnSneeze(EntityUid uid, ZombieComponent component, ref AttemptSneezeCoughEvent args)
         {
             args.Cancelled = true;
         }
@@ -177,18 +170,6 @@ namespace Content.Server.Zombies
                     _bloodstream.TryAddToChemicals(args.User, healingSolution);
                 }
             }
-        }
-
-        private void AttemptDamageGroan(EntityUid uid, ActiveZombieComponent component)
-        {
-            if (component.LastDamageGroan + component.DamageGroanCooldown > _gameTiming.CurTime)
-                return;
-
-            if (_robustRandom.Prob(component.DamageGroanChance))
-                return;
-
-            _chat.TryEmoteWithoutChat(uid, component.GroanEmoteId);
-            component.LastDamageGroan = _gameTiming.CurTime;
         }
 
         /// <summary>
