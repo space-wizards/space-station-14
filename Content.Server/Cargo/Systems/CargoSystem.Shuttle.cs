@@ -128,11 +128,24 @@ public sealed partial class CargoSystem
 
     #region Console
 
-    private void UpdateShuttleCargoConsoles(CargoShuttleComponent component)
+    private void UpdateCargoShuttleConsoles(CargoShuttleComponent component)
     {
-        var query = AllEntityQuery<CargoShuttleConsoleComponent>();
+        // Update pilot consoles that are already open.
+        var pilotConsoleQuery = AllEntityQuery<CargoPilotConsoleComponent>();
 
-        while (query.MoveNext(out var uid, out var console))
+        while (pilotConsoleQuery.MoveNext(out var uid, out var console))
+        {
+            var stationUid = _station.GetOwningStation(uid);
+            if (stationUid != component.Station)
+                continue;
+
+            console.Entity = component.Owner;
+        }
+
+        // Update order consoles.
+        var shuttleConsoleQuery = AllEntityQuery<CargoShuttleConsoleComponent>();
+
+        while (shuttleConsoleQuery.MoveNext(out var uid, out var console))
         {
             var stationUid = _station.GetOwningStation(uid);
             if (stationUid != component.Station)
@@ -292,7 +305,7 @@ public sealed partial class CargoSystem
         comp.Station = component.Owner;
 
         component.Shuttle = shuttleUid;
-        UpdateShuttleCargoConsoles(comp);
+        UpdateCargoShuttleConsoles(comp);
         _index++;
         _sawmill.Info($"Added cargo shuttle to {ToPrettyString(shuttleUid)}");
     }
@@ -418,7 +431,7 @@ public sealed partial class CargoSystem
 
         AddCargoContents(component, orderDatabase);
         UpdateOrders(orderDatabase);
-        UpdateShuttleCargoConsoles(component);
+        UpdateCargoShuttleConsoles(component);
     }
 
     private void OnCargoFTLCompleted(EntityUid uid, CargoShuttleComponent component, ref FTLCompletedEvent args)
