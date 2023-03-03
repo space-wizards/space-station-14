@@ -1,12 +1,4 @@
 Entries:
-- author: 3RMc
-  changes:
-  - message: "\u043F\u0443\u0441\u0442\u043E\u0439 \u043F\u0435\u0440\u0435\u0432\u043E\
-      \u0434 \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E \u0434\
-      \u043B\u044F ent-BaseItem.desc"
-    type: Fix
-  id: 8
-  time: '2022-01-09T15:26:52.0000000+00:00'
 - author: 3RMC
   changes:
   - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u044B \u043F\u0435\u0440\
@@ -4262,3 +4254,10 @@ Entries:
     type: Add
   id: 507
   time: '2023-03-02T17:38:45.0000000+00:00'
+- author: lapatison
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u044B \u043F\u0435\u0440\
+      \u0435\u0432\u043E\u0434\u044B"
+    type: Add
+  id: 508
+  time: '2023-03-03T12:14:22.0000000+00:00'
