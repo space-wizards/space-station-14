@@ -1,4 +1,5 @@
 using Content.Server.Administration.Commands;
+using Content.Server.Body.Systems;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.Doors.Systems;
@@ -40,6 +41,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
     [Dependency] private readonly IChatManager _chatMan = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly SharedSubdermalImplantSystem _implants = default!;
+    [Dependency] private readonly InternalsSystem _internals = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly PopupSystem _popups = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
@@ -195,6 +197,9 @@ public sealed class NinjaSystem : SharedNinjaSystem
     private void OnNinjaStartup(EntityUid uid, NinjaComponent comp, ComponentStartup args)
     {
         var config = RuleConfig();
+
+        // start with internals on, only when spawned by event. antag control ninja won't do this due to component add order.
+        _internals.ToggleInternals(uid, uid, true);
 
         // inject starting implants
         var coords = Transform(uid).Coordinates;
