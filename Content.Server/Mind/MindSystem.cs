@@ -58,7 +58,7 @@ public sealed class MindSystem : EntitySystem
     ///     Use <see cref="MindSystem.TransferTo(Mind,System.Nullable{Robust.Shared.GameObjects.EntityUid},bool)"/> instead.
     ///     If that doesn't cover it, make something to cover it.
     /// </summary>
-    public void InternalAssignMind(EntityUid uid, Mind value, MindComponent? mind = null)
+    private void InternalAssignMind(EntityUid uid, Mind value, MindComponent? mind = null)
     {
         if (!Resolve(uid, ref mind))
             return;
@@ -72,7 +72,7 @@ public sealed class MindSystem : EntitySystem
     ///     Use <see cref="MindSystem.TransferTo(Mind,System.Nullable{Robust.Shared.GameObjects.EntityUid},bool)"/> instead.
     ///     If that doesn't cover it, make something to cover it.
     /// </summary>
-    public void InternalEjectMind(EntityUid uid, MindComponent? mind = null)
+    private void InternalEjectMind(EntityUid uid, MindComponent? mind = null)
     {
         if (!Resolve(uid, ref mind))
             return;
@@ -304,7 +304,7 @@ public sealed class MindSystem : EntitySystem
     /// Cleans up the VisitingEntity.
     /// </summary>
     /// <param name="mind"></param>
-    public void RemoveVisitingEntity(Mind mind)
+    private void RemoveVisitingEntity(Mind mind)
     {
         if (mind.VisitingEntity == null)
             return;
@@ -371,8 +371,9 @@ public sealed class MindSystem : EntitySystem
         }
 
         var oldComp = mind.OwnedComponent;
-        if(oldComp != null)
-            InternalEjectMind(oldComp.Owner, oldComp);
+        var oldEntity = mind.OwnedEntity;
+        if(oldComp != null && oldEntity != null)
+            InternalEjectMind(oldEntity.Value, oldComp);
 
         SetOwnedEntity(mind, entity, component);
         if (mind.OwnedComponent != null)
@@ -461,7 +462,9 @@ public sealed class MindSystem : EntitySystem
             return false;
 
         foreach (var condition in objective.Conditions)
+        {
             _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{condition.Title}' added to mind of {mind.MindOwnerLoggingString}");
+        }
 
 
         mind.Objectives.Add(objective);
@@ -479,7 +482,9 @@ public sealed class MindSystem : EntitySystem
         var objective = mind.Objectives[index];
 
         foreach (var condition in objective.Conditions)
+        {
             _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{condition.Title}' removed from the mind of {mind.MindOwnerLoggingString}");
+        }
 
         mind.Objectives.Remove(objective);
         return true;
