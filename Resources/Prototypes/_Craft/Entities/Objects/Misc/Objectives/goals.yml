@@ -1,0 +1,75 @@
+#Shuttles
+- type: stationGoal
+  id: StationGoalShuttle
+  text: station-goal-shuttle
+  cargoAdvancedProductsIDs:
+    - ShuttleMiniGravitation
+    - AtmosphericsGasMinerNitrousOxide
+    - AtmosphericsGasMinerOxygen
+
+- type: stationGoal
+  id: StationGoalSecurityShuttle
+  text: station-goal-security-shuttle
+  cargoAdvancedProductsIDs:
+    - ShuttleMiniGravitation
+    - AtmosphericsGasMinerNitrousOxide
+    - AtmosphericsGasMinerOxygen
+
+- type: stationGoal
+  id: StationGoalScienceShuttle
+  text: station-goal-science-shuttle
+  cargoAdvancedProductsIDs:
+    - ShuttleMiniGravitation
+    - AtmosphericsGasMinerNitrousOxide
+    - AtmosphericsGasMinerOxygen
+
+- type: stationGoal
+  id: StationGoalMedicalShuttle
+  text: station-goal-medical-shuttle
+  cargoAdvancedProductsIDs:
+    - ShuttleMiniGravitation
+    - AtmosphericsGasMinerNitrousOxide
+    - AtmosphericsGasMinerOxygen
+
+- type: stationGoal
+  id: StationGoalZooShuttle
+  text: station-goal-zoo-shuttle
+  cargoAdvancedProductsIDs:
+    - ShuttleMiniGravitation
+    - AtmosphericsGasMinerNitrousOxide
+    - AtmosphericsGasMinerOxygen
+
+# - type: stationGoal
+#   id: StationGoalEvacShuttle
+#   text: station-goal-evac-shuttle
+#   cargoAdvancedProductsIDs:
+#     - ShuttleMiniGravitation
+
+#Engineers
+- type: stationGoal
+  id: StationGoalZoo
+  text: station-goal-zoo
+
+- type: stationGoal
+  id: StationGoalSolarPanels
+  text: station-goal-solar-
+
+- type: stationGoal
+  id: StationGoalBank
+  text: station-goal-bank
+
+- type: stationGoal
+  id: StationGoalAutonomousSecurity
+  text: station-goal-autonomous-security
+
+- type: stationGoal
+  id: StationGoalAutonomousMedical
+  text: station-goal-autonomous-medical
+
+- type: stationGoal
+  id: StationGoalAutonomousScience
+  text: station-goal-autonomous-science
+#Science
+- type: stationGoal
+  id: StationGoalArtifacts
+  text: station-goal-artifacts
