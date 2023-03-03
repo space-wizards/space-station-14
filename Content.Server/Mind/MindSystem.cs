@@ -464,7 +464,7 @@ public sealed class MindSystem : EntitySystem
 
         foreach (var condition in objective.Conditions)
         {
-            _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{condition.Title}' added to mind of {mind.MindOwnerLoggingString}");
+            _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{condition.Title}' added to mind of {MindOwnerLoggingString(mind)}");
         }
 
 
@@ -484,7 +484,7 @@ public sealed class MindSystem : EntitySystem
 
         foreach (var condition in objective.Conditions)
         {
-            _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{condition.Title}' removed from the mind of {mind.MindOwnerLoggingString}");
+            _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{condition.Title}' removed from the mind of {MindOwnerLoggingString(mind)}");
         }
 
         mind.Objectives.Remove(objective);
@@ -517,7 +517,7 @@ public sealed class MindSystem : EntitySystem
         }
 
         _adminLogger.Add(LogType.Mind, LogImpact.Low,
-            $"'{role.Name}' added to mind of {mind.MindOwnerLoggingString}");
+            $"'{role.Name}' added to mind of {MindOwnerLoggingString(mind)}");
     }
 
     /// <summary>
@@ -544,7 +544,7 @@ public sealed class MindSystem : EntitySystem
             RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
         }
         _adminLogger.Add(LogType.Mind, LogImpact.Low,
-            $"'{role.Name}' removed from mind of {mind.MindOwnerLoggingString}");
+            $"'{role.Name}' removed from mind of {MindOwnerLoggingString(mind)}");
     }
     
     public bool HasRole<T>(Mind mind) where T : Role
@@ -619,5 +619,17 @@ public sealed class MindSystem : EntitySystem
     public bool IsCharacterDeadIc(Mind mind)
     {
         return IsCharacterDeadPhysically(mind);
+    }
+
+    /// <summary>
+    ///     A string to represent the mind for logging
+    /// </summary>
+    private string MindOwnerLoggingString(Mind mind)
+    {
+        if (mind.OwnedEntity != null)
+            return ToPrettyString(mind.OwnedEntity.Value);
+        if (mind.UserId != null)
+            return mind.UserId.Value.ToString();
+        return "(originally " + mind.OriginalOwnerUserId + ")";
     }
 }

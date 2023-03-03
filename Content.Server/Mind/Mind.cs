@@ -19,8 +19,6 @@ namespace Content.Server.Mind
     /// </remarks>
     public sealed class Mind
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
         internal readonly ISet<Role> Roles = new HashSet<Role>();
 
         internal readonly List<Objective> Objectives = new();
@@ -36,7 +34,6 @@ namespace Content.Server.Mind
         public Mind(NetUserId? userId)
         {
             OriginalOwnerUserId = userId;
-            IoCManager.InjectDependencies(this);
         }
 
         /// <summary>
@@ -117,21 +114,6 @@ namespace Content.Server.Mind
         /// </summary>
         [ViewVariables]
         public IPlayerSession? Session { get; internal set; }
-
-        /// <summary>
-        ///     A string to represent the mind for logging
-        /// </summary>
-        public string MindOwnerLoggingString
-        {
-            get
-            {
-                if (OwnedEntity != null)
-                    return _entityManager.ToPrettyString(OwnedEntity.Value);
-                if (UserId != null)
-                    return UserId.Value.ToString();
-                return "(originally " + OriginalOwnerUserId + ")";
-            }
-        }
 
         /// <summary>
         ///     Gets the current job
