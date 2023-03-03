@@ -12,12 +12,8 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
 {
     protected override void OnDrain(EntityUid uid, NinjaDrainComponent comp, InteractionAttemptEvent args)
     {
-        if (args.Target == null || !TryComp<NinjaGlovesComponent>(uid, out var gloves) || gloves.User == null)
-            return;
-
-        var user = gloves.User.Value;
-        var target = args.Target.Value;
-        if (!HasComp<PowerNetworkBatteryComponent>(target))
+        if (!GloveCheck(uid, args, out var gloves, out var user, out var target)
+            || !HasComp<PowerNetworkBatteryComponent>(target))
             return;
 
         // nicer for spam-clicking to not open apc ui, and when draining starts, so cancel the ui action

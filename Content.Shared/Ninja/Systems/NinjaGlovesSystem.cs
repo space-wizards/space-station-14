@@ -19,6 +19,7 @@ using Content.Shared.Research.Components;
 using Content.Shared.Tag;
 using Content.Shared.Toggleable;
 using Robust.Shared.Network;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Ninja.Systems;
 
@@ -132,13 +133,30 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         comp.Busy = false;
     }
 
+    /// <summary>
+    /// Helper for glove ability handlers, checks gloves and range
+    /// </summary>
+    protected bool GloveCheck(EntityUid uid, InteractionAttemptEvent args, [NotNullWhen(true)] out NinjaGlovesComponent? gloves,
+        out EntityUid user, out EntityUid target)
+    {
+        if (args.Target != null && TryComp<NinjaGlovesComponent>(uid, out gloves) && gloves.User != null)
+        {
+            user = gloves.User.Value;
+            target = args.Target.Value;
+
+            if (_interaction.InRangeUnobstructed(user, target))
+                return true;
+        }
+
+        gloves = null;
+        user = target = EntityUid.Invalid;
+        return false;
+    }
+
     private void OnDoorjack(EntityUid uid, NinjaDoorjackComponent comp, InteractionAttemptEvent args)
     {
-        if (args.Target == null || !TryComp<NinjaGlovesComponent>(uid, out var gloves) || gloves.User == null)
+        if (!GloveCheck(uid, args, out var gloves, out var user, out var target))
             return;
-
-        var user = gloves.User.Value;
-        var target = args.Target.Value;
 
         // only allowed to emag non-immune doors
         if (!HasComp<DoorComponent>(target) || _tags.HasTag(target, comp.EmagImmuneTag))
@@ -155,11 +173,9 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
 
     private void OnStun(EntityUid uid, NinjaStunComponent comp, InteractionAttemptEvent args)
     {
-        if (args.Target == null || !TryComp<NinjaGlovesComponent>(uid, out var gloves) || gloves.User == null)
+        if (!GloveCheck(uid, args, out var gloves, out var user, out var target))
             return;
 
-        var user = gloves.User.Value;
-        var target = args.Target.Value;
         // battery can't be predicted since it's serverside
         if (user == target || _net.IsClient || !HasComp<StaminaComponent>(target))
             return;
@@ -192,11 +208,9 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
 
     private void OnDownload(EntityUid uid, NinjaDownloadComponent comp, InteractionAttemptEvent args)
     {
-        if (args.Target == null || !TryComp<NinjaGlovesComponent>(uid, out var gloves) || gloves.User == null)
+        if (!GloveCheck(uid, args, out var gloves, out var user, out var target))
             return;
 
-        var user = gloves.User.Value;
-        var target = args.Target.Value;
         if (gloves.Busy || !TryComp<TechnologyDatabaseComponent>(target, out var database))
             return;
 
@@ -241,16 +255,10 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
 
     private void OnTerror(EntityUid uid, NinjaTerrorComponent comp, InteractionAttemptEvent args)
     {
-        if (args.Target == null
-            || !TryComp<NinjaGlovesComponent>(uid, out var gloves)
-            || gloves.User == null)
+        if (!GloveCheck(uid, args, out var gloves, out var user, out var target)
+            || !TryComp<NinjaComponent>(user, out var ninja))
             return;
 
-        var user = gloves.User.Value;
-        if (!TryComp<NinjaComponent>(user, out var ninja))
-            return;
-
-        var target = args.Target.Value;
         if (gloves.Busy || !IsCommsConsole(target))
             return;
 
@@ -275,7 +283,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         args.Cancel();
     }
 
-    //for some reason comms console component isn't a component, so this has to be done server-side
+    //for some reason shared comms console component isn't a component, so this has to be done server-side
     protected virtual bool IsCommsConsole(EntityUid uid)
     {
         return false;
