@@ -3,6 +3,7 @@ using Content.Server.PowerCell;
 using Content.Server.Radio.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.PowerCell.Components;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -16,6 +17,7 @@ public sealed class JammerSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<RadioJammerComponent, ActivateInWorldEvent>(OnActivate);
+        SubscribeLocalEvent<RadioJammerComponent, PowerCellChangedEvent>(OnPowerCellChanged);
         SubscribeLocalEvent<RadioJammerComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RadioReceiveAttemptEvent>(OnRadioSendAttempt);
     }
@@ -25,23 +27,27 @@ public sealed class JammerSystem : EntitySystem
         foreach (var jam in EntityQuery<RadioJammerComponent>())
         {
             var uid = jam.Owner;
-            if (!_powerCell.TryGetBatteryFromSlot(uid, out var battery))
-            {
-                jam.Activated = false;
-                continue;
-            }
-            if (jam.Activated)
+            if (jam.Activated && _powerCell.TryGetBatteryFromSlot(uid, out var battery))
                 jam.Activated = battery.TryUseCharge(jam.Wattage * frameTime);
         }
     }
 
     private void OnActivate(EntityUid uid, RadioJammerComponent comp, ActivateInWorldEvent args)
     {
-        comp.Activated = !comp.Activated;
+        comp.Activated = 
+            !comp.Activated &&
+            _powerCell.TryGetBatteryFromSlot(uid, out var battery) &&
+            battery.CurrentCharge > comp.Wattage;
         var state = Loc.GetString(comp.Activated ? "radio-jammer-component-on-state" : "radio-jammer-component-off-state");
         var message = Loc.GetString("radio-jammer-component-on-use", ("state", state));
         _popup.PopupEntity(message, args.User, args.User);
         args.Handled = true;
+    }
+
+    private void OnPowerCellChanged(EntityUid uid, RadioJammerComponent comp, PowerCellChangedEvent args)
+    {
+        if (args.Ejected)
+            comp.Activated = false;
     }
 
     private void OnExamine(EntityUid uid, RadioJammerComponent comp, ExaminedEvent args)
