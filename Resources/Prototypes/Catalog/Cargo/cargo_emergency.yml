@@ -51,7 +51,7 @@
 - type: cargoProduct
   id: EmergencyNitrogenTanks
   icon:
-    sprite: Objects/Tanks/red.rsi/
+    sprite: Objects/Tanks/red.rsi
     state: icon
   product: CrateSlimepersonLifeSupport
   cost: 300
