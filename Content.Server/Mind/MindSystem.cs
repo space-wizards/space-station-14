@@ -9,6 +9,7 @@ using Content.Shared.Examine;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Components;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -50,7 +51,7 @@ public sealed class MindSystem : EntitySystem
 
     /// <summary>
     ///     Don't call this unless you know what the hell you're doing.
-    ///     Use <see cref="Mind.TransferTo(System.Nullable{Robust.Shared.GameObjects.EntityUid},bool)"/> instead.
+    ///     Use <see cref="MindSystem.TransferTo(Mind,System.Nullable{Robust.Shared.GameObjects.EntityUid},bool)"/> instead.
     ///     If that doesn't cover it, make something to cover it.
     /// </summary>
     public void InternalAssignMind(EntityUid uid, Mind value, MindComponent? mind = null)
@@ -64,7 +65,7 @@ public sealed class MindSystem : EntitySystem
 
     /// <summary>
     ///     Don't call this unless you know what the hell you're doing.
-    ///     Use <see cref="Mind.TransferTo(System.Nullable{Robust.Shared.GameObjects.EntityUid},bool)"/> instead.
+    ///     Use <see cref="MindSystem.TransferTo(Mind,System.Nullable{Robust.Shared.GameObjects.EntityUid},bool)"/> instead.
     ///     If that doesn't cover it, make something to cover it.
     /// </summary>
     public void InternalEjectMind(EntityUid uid, MindComponent? mind = null)
@@ -93,7 +94,7 @@ public sealed class MindSystem : EntitySystem
                     _ghostSystem.SetCanReturnToBody(ghost, false);
                 }
 
-                mind.Mind!.TransferTo(visiting);
+                TransferTo(mind.Mind, visiting);
             }
             else if (mind.GhostOnShutdown)
             {
@@ -122,7 +123,7 @@ public sealed class MindSystem : EntitySystem
                     {
                         // This should be an error, if it didn't cause tests to start erroring when they delete a player.
                         Logger.WarningS("mind", $"Entity \"{ToPrettyString(uid)}\" for {mind.Mind?.CharacterName} was deleted, and no applicable spawn location is available.");
-                        mind.Mind?.TransferTo(null);
+                        TransferTo(mind.Mind, null);
                         return;
                     }
 
@@ -138,7 +139,7 @@ public sealed class MindSystem : EntitySystem
 
                     var val = mind.Mind.CharacterName ?? string.Empty;
                     MetaData(ghost).EntityName = val;
-                    mind.Mind.TransferTo(ghost);
+                    TransferTo(mind.Mind, ghost);
                 });
             }
         }
@@ -205,12 +206,7 @@ public sealed class MindSystem : EntitySystem
         if (!mind.HasMind)
             return;
 
-        mind.Mind!.TransferTo(target);
-    }
-
-    public void TransferTo(Mind mind, EntityUid? target)
-    {
-        mind.TransferTo(target);
+        TransferTo(mind.Mind!, target);
     }
 
     public Mind CreateMind(NetUserId userId, IPlayerManager? playerManager = null)
@@ -316,5 +312,90 @@ public sealed class MindSystem : EntitySystem
         DebugTools.AssertNotNull(oldVisitingEnt);
         RemComp<VisitingMindComponent>(oldVisitingEnt);
         RaiseLocalEvent(oldVisitingEnt, new MindUnvisitedMessage(), true);
+    }
+
+    /// <summary>
+    ///     Transfer this mind's control over to a new entity.
+    /// </summary>
+    /// <param name="mind">The mind to transfer</param>
+    /// <param name="entity">
+    ///     The entity to control.
+    ///     Can be null, in which case it will simply detach the mind from any entity.
+    /// </param>
+    /// <param name="ghostCheckOverride">
+    ///     If true, skips ghost check for Visiting Entity
+    /// </param>
+    /// <exception cref="ArgumentException">
+    ///     Thrown if <paramref name="entity"/> is already owned by another mind.
+    /// </exception>
+    public void TransferTo(Mind? mind, EntityUid? entity, bool ghostCheckOverride = false)
+    {
+        if (mind == null)
+            return;
+        
+        // Looks like caller just wants us to go back to normal.
+        if (entity == mind.OwnedEntity)
+        {
+            UnVisit(mind);
+            return;
+        }
+
+        MindComponent? component = null;
+        var alreadyAttached = false;
+
+        if (entity != null)
+        {
+            if (!TryComp(entity.Value, out component))
+            {
+                component = AddComp<MindComponent>(entity.Value);
+            }
+            else if (component.HasMind)
+            {
+                _gameTicker.OnGhostAttempt(component.Mind!, false);
+            }
+
+            if (TryComp<ActorComponent>(entity.Value, out var actor))
+            {
+                // Happens when transferring to your currently visited entity.
+                if (actor.PlayerSession != mind.Session)
+                {
+                    throw new ArgumentException("Visit target already has a session.", nameof(entity));
+                }
+
+                alreadyAttached = true;
+            }
+        }
+
+        var oldComp = mind.OwnedComponent;
+
+        if(oldComp != null)
+            InternalEjectMind(oldComp.Owner, oldComp);
+
+        mind.OwnedComponent = component;
+        if (mind.OwnedComponent != null)
+            InternalAssignMind(mind.OwnedComponent.Owner, mind, mind.OwnedComponent);
+
+        // Don't do the full deletion cleanup if we're transferring to our visitingentity
+        if (alreadyAttached)
+        {
+            // Set VisitingEntity null first so the removal of VisitingMind doesn't get through Unvisit() and delete what we're visiting.
+            // Yes this control flow sucks.
+            mind.VisitingEntity = null;
+            RemComp<VisitingMindComponent>(entity!.Value);
+        }
+        else if (mind.VisitingEntity != null
+              && (ghostCheckOverride // to force mind transfer, for example from ControlMobVerb
+                  || !TryComp(mind.VisitingEntity!, out GhostComponent? ghostComponent) // visiting entity is not a Ghost
+                  || !ghostComponent.CanReturnToBody))  // it is a ghost, but cannot return to body anyway, so it's okay
+        {
+            RemoveVisitingEntity(mind);
+        }
+
+        // Player is CURRENTLY connected.
+        if (mind.Session != null && !alreadyAttached && mind.VisitingEntity == null)
+        {
+            mind.Session.AttachToEntity(entity);
+            Logger.Info($"Session {mind.Session.Name} transferred to entity {entity}.");
+        }
     }
 }

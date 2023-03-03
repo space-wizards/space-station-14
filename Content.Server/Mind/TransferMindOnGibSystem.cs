@@ -15,6 +15,7 @@ public sealed class TransferMindOnGibSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly MindSystem _mindSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -32,6 +33,6 @@ public sealed class TransferMindOnGibSystem : EntitySystem
             return;
 
         var ent = _random.Pick(validParts);
-        mindcomp.Mind.TransferTo(ent);
+        _mindSystem.TransferTo(mindcomp.Mind, ent);
     }
 }

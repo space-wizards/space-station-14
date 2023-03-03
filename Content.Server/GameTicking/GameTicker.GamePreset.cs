@@ -242,7 +242,7 @@ namespace Content.Server.GameTicking
             if (canReturn)
                 _mindSystem.Visit(mind, ghost);
             else
-                mind.TransferTo(ghost);
+                _mindSystem.TransferTo(mind, ghost);
             return true;
         }
 

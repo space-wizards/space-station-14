@@ -7,6 +7,7 @@ using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Humanoid.Systems;
+using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.NPC.Systems;
 using Content.Server.Nuke;
@@ -52,7 +53,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly RandomHumanoidSystem _randomHumanoid = default!;
-
+    [Dependency] private readonly MindSystem _mindSystem = default!;
 
     private enum WinType
     {
@@ -755,7 +756,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                 newMind.ChangeOwningPlayer(session.UserId);
                 newMind.AddRole(new TraitorRole(newMind, nukeOpsAntag));
 
-                newMind.TransferTo(mob);
+                _mindSystem.TransferTo(newMind, mob);
             }
             else if (addSpawnPoints)
             {

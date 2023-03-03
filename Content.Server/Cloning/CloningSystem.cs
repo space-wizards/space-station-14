@@ -103,7 +103,7 @@ namespace Content.Server.Cloning
                 mindComp.Mind != null)
                 return;
 
-            mind.TransferTo(entity, ghostCheckOverride: true);
+            _mindSystem.TransferTo(mind, entity, ghostCheckOverride: true);
             _mindSystem.UnVisit(mind);
             ClonesWaitingForMind.Remove(mind);
         }

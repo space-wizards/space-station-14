@@ -1,3 +1,4 @@
+using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Shared.Administration;
@@ -54,7 +55,8 @@ namespace Content.Server.Administration.Commands
 
             DebugTools.AssertNotNull(mind);
 
-            mind!.TransferTo(target);
+            var mindSystem = _entities.System<MindSystem>();
+            mindSystem.TransferTo(mind!, target);
         }
     }
 }

@@ -95,7 +95,7 @@ namespace Content.Server.Mind
         ///     Can be null.
         /// </summary>
         [ViewVariables]
-        public MindComponent? OwnedComponent { get; private set; }
+        public MindComponent? OwnedComponent { get; internal set; }
 
         /// <summary>
         ///     The entity currently owned by this mind.
@@ -306,84 +306,6 @@ namespace Content.Server.Mind
             return true;
         }
 
-        /// <summary>
-        ///     Transfer this mind's control over to a new entity.
-        /// </summary>
-        /// <param name="entity">
-        ///     The entity to control.
-        ///     Can be null, in which case it will simply detach the mind from any entity.
-        /// </param>
-        /// <param name="ghostCheckOverride">
-        ///     If true, skips ghost check for Visiting Entity
-        /// </param>
-        /// <exception cref="ArgumentException">
-        ///     Thrown if <paramref name="entity"/> is already owned by another mind.
-        /// </exception>
-        public void TransferTo(EntityUid? entity, bool ghostCheckOverride = false)
-        {
-            // Looks like caller just wants us to go back to normal.
-            if (entity == OwnedEntity)
-            {
-                _mindSystem.UnVisit(this);
-                return;
-            }
-
-            MindComponent? component = null;
-            var alreadyAttached = false;
-
-            if (entity != null)
-            {
-                if (!_entityManager.TryGetComponent(entity.Value, out component))
-                {
-                    component = _entityManager.AddComponent<MindComponent>(entity.Value);
-                }
-                else if (component.HasMind)
-                {
-                    _gameTickerSystem.OnGhostAttempt(component.Mind!, false);
-                }
-
-                if (_entityManager.TryGetComponent<ActorComponent>(entity.Value, out var actor))
-                {
-                    // Happens when transferring to your currently visited entity.
-                    if (actor.PlayerSession != Session)
-                    {
-                        throw new ArgumentException("Visit target already has a session.", nameof(entity));
-                    }
-
-                    alreadyAttached = true;
-                }
-            }
-
-            if(OwnedComponent != null)
-                _mindSystem.InternalEjectMind(OwnedComponent.Owner, OwnedComponent);
-
-            OwnedComponent = component;
-            if(OwnedComponent != null)
-                _mindSystem.InternalAssignMind(OwnedComponent.Owner, this, OwnedComponent);
-
-            // Don't do the full deletion cleanup if we're transferring to our visitingentity
-            if (alreadyAttached)
-            {
-                // Set VisitingEntity null first so the removal of VisitingMind doesn't get through Unvisit() and delete what we're visiting.
-                // Yes this control flow sucks.
-                VisitingEntity = null;
-                _entityManager.RemoveComponent<VisitingMindComponent>(entity!.Value);
-            }
-            else if (VisitingEntity != null
-                  && (ghostCheckOverride // to force mind transfer, for example from ControlMobVerb
-                      || !_entityManager.TryGetComponent(VisitingEntity!, out GhostComponent? ghostComponent) // visiting entity is not a Ghost
-                      || !ghostComponent.CanReturnToBody))  // it is a ghost, but cannot return to body anyway, so it's okay
-            {
-                _mindSystem.RemoveVisitingEntity(this);
-            }
-
-            // Player is CURRENTLY connected.
-            if (Session != null && !alreadyAttached && VisitingEntity == null)
-            {
-                Session.AttachToEntity(entity);
-                Logger.Info($"Session {Session.Name} transferred to entity {entity}.");
-            }
-        }
 
         public void ChangeOwningPlayer(NetUserId? newOwner, IPlayerManager? playerMgr = null)
         {

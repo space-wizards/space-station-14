@@ -43,7 +43,7 @@ namespace Content.IntegrationTests.Tests.Minds
                 mind = new Mind(player.UserId);
                 mind.ChangeOwningPlayer(player.UserId);
 
-                mind.TransferTo(playerEnt);
+                mindSystem.TransferTo(mind, playerEnt);
                 mindSystem.Visit(mind, visitEnt);
 
                 Assert.That(player.AttachedEntity, Is.EqualTo(visitEnt));
@@ -90,6 +90,8 @@ namespace Content.IntegrationTests.Tests.Minds
                 var player = IoCManager.Resolve<IPlayerManager>().ServerSessions.Single();
 
                 var mapMan = IoCManager.Resolve<IMapManager>();
+                
+                var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
 
                 var mapId = mapMan.GetAllMapIds().Last();
                 var pos = new MapCoordinates(Vector2.Zero, mapId);
@@ -99,7 +101,7 @@ namespace Content.IntegrationTests.Tests.Minds
                 mind = new Mind(player.UserId);
                 mind.ChangeOwningPlayer(player.UserId);
 
-                mind.TransferTo(playerEnt);
+                mindSystem.TransferTo(mind, playerEnt);
 
                 Assert.That(mind.CurrentEntity, Is.EqualTo(playerEnt));
             });
@@ -137,11 +139,14 @@ namespace Content.IntegrationTests.Tests.Minds
 
                 var mapMan = IoCManager.Resolve<IMapManager>();
                 var entMgr = IoCManager.Resolve<IServerEntityManager>();
+                
+                var mindSystem = entMgr.EntitySysManager.GetEntitySystem<MindSystem>();
+                
                 playerEnt = entMgr.SpawnEntity(null, coordinates);
                 mind = new Mind(player.UserId);
                 mind.ChangeOwningPlayer(player.UserId);
 
-                mind.TransferTo(playerEnt);
+                mindSystem.TransferTo(mind, playerEnt);
 
                 Assert.That(mind.CurrentEntity, Is.EqualTo(playerEnt));
             });

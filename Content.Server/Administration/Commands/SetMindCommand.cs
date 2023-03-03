@@ -1,3 +1,4 @@
+using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Shared.Administration;
@@ -9,6 +10,7 @@ namespace Content.Server.Administration.Commands
     [AdminCommand(AdminFlags.Admin)]
     sealed class SetMindCommand : IConsoleCommand
     {
+        
         public string Command => "setmind";
 
         public string Description => Loc.GetString("set-mind-command-description", ("requiredComponent", nameof(MindComponent)));
@@ -68,7 +70,9 @@ namespace Content.Server.Administration.Commands
                 };
                 mind.ChangeOwningPlayer(session.UserId);
             }
-            mind.TransferTo(eUid);
+            
+            var mindSystem = entityManager.System<MindSystem>();
+            mindSystem.TransferTo(mind, eUid);
         }
     }
 }

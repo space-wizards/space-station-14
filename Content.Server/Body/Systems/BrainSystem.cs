@@ -1,5 +1,6 @@
 using Content.Server.Body.Components;
 using Content.Server.Ghost.Components;
+using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
@@ -10,6 +11,8 @@ namespace Content.Server.Body.Systems
 {
     public sealed class BrainSystem : EntitySystem
     {
+        [Dependency] private readonly MindSystem _mindSystem = default!;
+        
         public override void Initialize()
         {
             base.Initialize();
@@ -44,7 +47,7 @@ namespace Content.Server.Body.Systems
             // TODO: This is an awful solution.
             EnsureComp<InputMoverComponent>(newEntity);
 
-            oldMind.Mind?.TransferTo(newEntity);
+            _mindSystem.TransferTo(oldMind.Mind, newEntity);
         }
     }
 }

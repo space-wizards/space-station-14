@@ -8,6 +8,7 @@ using Content.Server.Configurable;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.EUI;
 using Content.Server.Ghost.Roles;
+using Content.Server.Mind;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
@@ -51,6 +52,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly PrayerSystem _prayerSystem = default!;
         [Dependency] private readonly EuiManager _eui = default!;
+        [Dependency] private readonly MindSystem _mindSystem = default!;
 
         private readonly Dictionary<IPlayerSession, EditSolutionsEui> _openSolutionUis = new();
 
@@ -229,7 +231,7 @@ namespace Content.Server.Administration.Systems
                     Act = () =>
                     {
                         MakeSentientCommand.MakeSentient(args.Target, EntityManager);
-                        player.ContentData()?.Mind?.TransferTo(args.Target, ghostCheckOverride: true);
+                        _mindSystem.TransferTo(player.ContentData()?.Mind, args.Target, ghostCheckOverride: true);
                     },
                     Impact = LogImpact.High,
                     ConfirmationPopup = true

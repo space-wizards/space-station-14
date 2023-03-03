@@ -64,7 +64,7 @@ namespace Content.Server.Administration.Commands
             else
             {
                 _entities.GetComponent<MetaDataComponent>(ghost).EntityName = player.Name;
-                mind.TransferTo(ghost);
+                mindSystem.TransferTo(mind, ghost);
             }
 
             var comp = _entities.GetComponent<GhostComponent>(ghost);

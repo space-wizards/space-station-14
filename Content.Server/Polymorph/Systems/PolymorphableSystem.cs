@@ -2,6 +2,7 @@ using Content.Server.Actions;
 using Content.Server.Buckle.Systems;
 using Content.Server.Humanoid;
 using Content.Server.Inventory;
+using Content.Server.Mind;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Polymorph.Components;
@@ -34,6 +35,7 @@ namespace Content.Server.Polymorph.Systems
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
         [Dependency] private readonly ContainerSystem _container = default!;
+        [Dependency] private readonly MindSystem _mindSystem = default!;
 
         public override void Initialize()
         {
@@ -154,7 +156,7 @@ namespace Content.Server.Polymorph.Systems
             }
 
             if (TryComp<MindComponent>(target, out var mind) && mind.Mind != null)
-                    mind.Mind.TransferTo(child);
+                _mindSystem.TransferTo(mind.Mind, child);
 
             //Ensures a map to banish the entity to
             EnsurePausesdMap();

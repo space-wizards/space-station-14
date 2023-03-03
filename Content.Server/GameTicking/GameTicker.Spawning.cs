@@ -188,7 +188,7 @@ namespace Content.Server.GameTicking
             DebugTools.AssertNotNull(mobMaybe);
             var mob = mobMaybe!.Value;
 
-            newMind.TransferTo(mob);
+            _mindSystem.TransferTo(newMind, mob);
 
             if (lateJoin)
             {
@@ -278,7 +278,7 @@ namespace Content.Server.GameTicking
             EntityManager.GetComponent<MetaDataComponent>(mob).EntityName = name;
             var ghost = EntityManager.GetComponent<GhostComponent>(mob);
             EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghost, false);
-            newMind.TransferTo(mob);
+            _mindSystem.TransferTo(newMind, mob);
 
             _playerGameStatuses[player.UserId] = PlayerGameStatus.JoinedGame;
             RaiseNetworkEvent(GetStatusSingle(player, PlayerGameStatus.JoinedGame));

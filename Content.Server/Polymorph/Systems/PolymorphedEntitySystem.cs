@@ -1,5 +1,6 @@
 using Content.Server.Actions;
 using Content.Server.Inventory;
+using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.Polymorph.Components;
 using Content.Server.Popups;
@@ -29,6 +30,7 @@ namespace Content.Server.Polymorph.Systems
         [Dependency] private readonly SharedHandsSystem _sharedHands = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly ContainerSystem _container = default!;
+        [Dependency] private readonly MindSystem _mindSystem = default!;
 
         public override void Initialize()
         {
@@ -104,7 +106,7 @@ namespace Content.Server.Polymorph.Systems
 
             if (TryComp<MindComponent>(uid, out var mind) && mind.Mind != null)
             {
-                mind.Mind.TransferTo(component.Parent);
+                _mindSystem.TransferTo(mind.Mind, component.Parent);
             }
 
             _popup.PopupEntity(Loc.GetString("polymorph-revert-popup-generic",
