@@ -29,6 +29,7 @@ public sealed class MindSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly GhostSystem _ghostSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     public override void Initialize()
     {
@@ -425,7 +426,7 @@ public sealed class MindSystem : EntitySystem
             }
         }
     
-        mind.UserId = newOwner;
+        SetUserId(mind, newOwner);
         if (!newOwner.HasValue)
         {
             return;
@@ -579,7 +580,7 @@ public sealed class MindSystem : EntitySystem
     }
 
     /// <summary>
-    /// Sets the Minds OwnedComponent and OwnedEntity
+    /// Sets the Mind's OwnedComponent and OwnedEntity
     /// </summary>
     /// <param name="mind">Mind to set OwnedComponent and OwnedEntity on</param>
     /// <param name="uid">Entity owned by <paramref name="mind"/></param>
@@ -591,5 +592,21 @@ public sealed class MindSystem : EntitySystem
 
         mind.OwnedEntity = uid;
         mind.OwnedComponent = mindComponent;
+    }
+
+    /// <summary>
+    /// Sets the Mind's UserId and Session
+    /// </summary>
+    /// <param name="mind"></param>
+    /// <param name="userId"></param>
+    public void SetUserId(Mind mind, NetUserId? userId)
+    {
+        mind.UserId = userId;
+        
+        if (!userId.HasValue)
+            return;
+        
+        _playerManager.TryGetSessionById(userId.Value, out var ret);
+        mind.Session = ret;
     }
 }

@@ -20,7 +20,6 @@ namespace Content.Server.Mind
     public sealed class Mind
     {
         private readonly MindSystem _mindSystem = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         internal readonly ISet<Role> Roles = new HashSet<Role>();
@@ -119,18 +118,7 @@ namespace Content.Server.Mind
         ///     Can be null, in which case the player is currently not logged in.
         /// </summary>
         [ViewVariables]
-        public IPlayerSession? Session
-        {
-            get
-            {
-                if (!UserId.HasValue)
-                {
-                    return null;
-                }
-                _playerManager.TryGetSessionById(UserId.Value, out var ret);
-                return ret;
-            }
-        }
+        public IPlayerSession? Session { get; internal set; }
 
         /// <summary>
         ///     True if this Mind is 'sufficiently dead' IC (objectives, endtext).
