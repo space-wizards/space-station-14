@@ -50,7 +50,7 @@
 - type: soundCollection
   id: 173DoorOpen
   files:
-    - /Audio/SCP/Horror/Horror7.ogg
+    - /Audio/SCP/173/DoorOpen173.ogg
 
 - type: entity
   name: Лужа крови?
