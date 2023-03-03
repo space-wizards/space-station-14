@@ -54,6 +54,6 @@
     sprite: Clothing/Head/Hoods/Bio/general.rsi
     state: icon
   product: CrateGenericBiosuit
-  cost: 500
+  cost: 800
   category: Emergency
   group: market

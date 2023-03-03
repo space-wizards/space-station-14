@@ -64,6 +64,6 @@
     sprite: Clothing/Head/Hoods/Bio/security.rsi
     state: icon
   product: CrateSecurityBiosuit
-  cost: 300
+  cost: 500
   category: Security
   group: market

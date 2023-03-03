@@ -24,6 +24,6 @@
     sprite: Clothing/Head/Hoods/Bio/scientist.rsi
     state: icon
   product: CrateScienceBiosuit
-  cost: 300
+  cost: 500
   category: Science
   group: market
