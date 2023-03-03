@@ -1,10 +1,7 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.GameTicking;
 using Content.Server.Mind.Components;
 using Content.Server.Objectives;
 using Content.Server.Roles;
-using Content.Shared.Mobs.Systems;
 using Robust.Server.Player;
 using Robust.Shared.Network;
 
@@ -22,8 +19,6 @@ namespace Content.Server.Mind
     /// </remarks>
     public sealed class Mind
     {
-        private readonly MobStateSystem _mobStateSystem = default!;
-        private readonly GameTicker _gameTickerSystem = default!;
         private readonly MindSystem _mindSystem = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -44,8 +39,6 @@ namespace Content.Server.Mind
         {
             OriginalOwnerUserId = userId;
             IoCManager.InjectDependencies(this);
-            _entityManager.EntitySysManager.Resolve(ref _mobStateSystem);
-            _entityManager.EntitySysManager.Resolve(ref _gameTickerSystem);
             _entityManager.EntitySysManager.Resolve(ref _mindSystem);
         }
 
