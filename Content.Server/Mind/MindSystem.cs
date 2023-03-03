@@ -4,6 +4,7 @@ using Content.Server.GameTicking;
 using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
+using Content.Server.Objectives;
 using Content.Server.Players;
 using Content.Shared.Database;
 using Content.Shared.Examine;
@@ -441,5 +442,41 @@ public sealed class MindSystem : EntitySystem
         if (newOwnerData!.Mind != null)
             ChangeOwningPlayer(newOwnerData.Mind, null);
         newOwnerData.UpdateMindFromMindChangeOwningPlayer(mind);
+    }
+    
+    /// <summary>
+    /// Adds an objective to this mind.
+    /// </summary>
+    public bool TryAddObjective(Mind mind, ObjectivePrototype objectivePrototype)
+    {
+        if (!objectivePrototype.CanBeAssigned(mind))
+            return false;
+        var objective = objectivePrototype.GetObjective(mind);
+        if (mind.Objectives.Contains(objective))
+            return false;
+
+        foreach (var condition in objective.Conditions)
+            _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{condition.Title}' added to mind of {mind.MindOwnerLoggingString}");
+
+
+        mind.Objectives.Add(objective);
+        return true;
+    }
+
+    /// <summary>
+    /// Removes an objective to this mind.
+    /// </summary>
+    /// <returns>Returns true if the removal succeeded.</returns>
+    public bool TryRemoveObjective(Mind mind, int index)
+    {
+        if (mind.Objectives.Count >= index) return false;
+
+        var objective = mind.Objectives[index];
+
+        foreach (var condition in objective.Conditions)
+            _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{condition.Title}' removed from the mind of {mind.MindOwnerLoggingString}");
+
+        mind.Objectives.Remove(objective);
+        return true;
     }
 }

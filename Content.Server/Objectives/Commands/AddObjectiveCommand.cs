@@ -1,4 +1,5 @@
 ﻿using Content.Server.Administration;
+using Content.Server.Mind;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Robust.Server.Player;
@@ -10,6 +11,8 @@ namespace Content.Server.Objectives.Commands
     [AdminCommand(AdminFlags.Admin)]
     public sealed class AddObjectiveCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        
         public string Command => "addobjective";
         public string Description => "Adds an objective to the player's mind.";
         public string Help => "addobjective <username> <objectiveID>";
@@ -42,8 +45,10 @@ namespace Content.Server.Objectives.Commands
                 shell.WriteLine($"Can't find matching ObjectivePrototype {objectivePrototype}");
                 return;
             }
+            
+            var mindSystem = _entityManager.System<MindSystem>();
 
-            if (!mind.TryAddObjective(objectivePrototype))
+            if (!mindSystem.TryAddObjective(mind, objectivePrototype))
             {
                 shell.WriteLine("Objective requirements dont allow that objective to be added.");
             }

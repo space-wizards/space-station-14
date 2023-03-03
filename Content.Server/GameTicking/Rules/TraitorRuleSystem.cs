@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Chat.Managers;
+using Content.Server.Mind;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.Players;
 using Content.Server.Roles;
@@ -35,6 +36,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly MindSystem _mindSystem = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -255,7 +257,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         {
             var objective = _objectivesManager.GetRandomObjective(traitorRole.Mind, "TraitorObjectiveGroups");
             if (objective == null) continue;
-            if (traitorRole.Mind.TryAddObjective(objective))
+            if (_mindSystem.TryAddObjective(traitorRole.Mind, objective))
                 difficulty += objective.Difficulty;
         }
 

@@ -34,7 +34,7 @@ namespace Content.Server.Mind
 
         private readonly ISet<Role> _roles = new HashSet<Role>();
 
-        private readonly List<Objective> _objectives = new();
+        internal readonly List<Objective> Objectives = new();
 
         public string Briefing = String.Empty;
 
@@ -110,7 +110,7 @@ namespace Content.Server.Mind
         ///     An enumerable over all the objectives this mind has.
         /// </summary>
         [ViewVariables]
-        public IEnumerable<Objective> AllObjectives => _objectives;
+        public IEnumerable<Objective> AllObjectives => Objectives;
 
         /// <summary>
         ///     Prevents user from ghosting out
@@ -187,7 +187,7 @@ namespace Content.Server.Mind
         /// <summary>
         ///     A string to represent the mind for logging
         /// </summary>
-        private string MindOwnerLoggingString
+        internal string MindOwnerLoggingString
         {
             get
             {
@@ -265,43 +265,6 @@ namespace Content.Server.Mind
         ///     Gets the current job
         /// </summary>
         public Job? CurrentJob => _roles.OfType<Job>().SingleOrDefault();
-
-        /// <summary>
-        /// Adds an objective to this mind.
-        /// </summary>
-        public bool TryAddObjective(ObjectivePrototype objectivePrototype)
-        {
-            if (!objectivePrototype.CanBeAssigned(this))
-                return false;
-            var objective = objectivePrototype.GetObjective(this);
-            if (_objectives.Contains(objective))
-                return false;
-
-            foreach (var condition in objective.Conditions)
-                _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{condition.Title}' added to mind of {MindOwnerLoggingString}");
-
-
-            _objectives.Add(objective);
-            return true;
-        }
-
-        /// <summary>
-        /// Removes an objective to this mind.
-        /// </summary>
-        /// <returns>Returns true if the removal succeeded.</returns>
-        public bool TryRemoveObjective(int index)
-        {
-            if (_objectives.Count >= index) return false;
-
-            var objective = _objectives[index];
-
-            foreach (var condition in objective.Conditions)
-                _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{condition.Title}' removed from the mind of {MindOwnerLoggingString}");
-
-            _objectives.Remove(objective);
-            return true;
-        }
-
 
         public bool TryGetSession([NotNullWhen(true)] out IPlayerSession? session)
         {
