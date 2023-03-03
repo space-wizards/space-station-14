@@ -23,7 +23,7 @@
       types:
         Piercing: 15
   - type: Item
-    size: 40
+    size: 20
   - type: Clothing
     quickEquip: false
     slots:
@@ -48,7 +48,7 @@
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Piercing: 7
+        Piercing: 8
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
