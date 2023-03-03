@@ -21,12 +21,14 @@ public sealed class RadioReceiveEvent : EntityEventArgs
     }
 }
 
-public sealed class RadioReceiveAttemptEvent : CancellableEntityEventArgs
+[ByRefEvent]
+public record struct RadioReceiveAttemptEvent
 {
     public readonly string Message;
     public readonly EntityUid Source;
     public readonly RadioChannelPrototype Channel;
     public readonly EntityUid? RadioSource;
+    public bool Cancelled = false;
 
     public RadioReceiveAttemptEvent(string message, EntityUid source, RadioChannelPrototype channel, EntityUid? radioSource)
     {
