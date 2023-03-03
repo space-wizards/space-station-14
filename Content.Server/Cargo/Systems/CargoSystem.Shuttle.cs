@@ -37,7 +37,7 @@ public sealed partial class CargoSystem
     [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly PricingSystem _pricing = default!;
     [Dependency] private readonly ShuttleConsoleSystem _console = default!;
-    [Dependency] private readonly ShuttleSystem _shuttle = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public MapId? CargoMap { get; private set; }
 
@@ -56,7 +56,8 @@ public sealed partial class CargoSystem
         // Don't want to immediately call this as shuttles will get setup in the natural course of things.
         _configManager.OnValueChanged(CCVars.CargoShuttles, SetCargoShuttleEnabled);
 
-        SubscribeLocalEvent<CargoShuttleComponent, FTLStartedEvent>(OnCargoFTL);
+        SubscribeLocalEvent<CargoShuttleComponent, FTLStartedEvent>(OnCargoFTLStarted);
+        SubscribeLocalEvent<CargoShuttleComponent, FTLCompletedEvent>(OnCargoFTLCompleted);
 
         SubscribeLocalEvent<CargoShuttleConsoleComponent, ComponentStartup>(OnCargoShuttleConsoleStartup);
 
@@ -392,34 +393,35 @@ public sealed partial class CargoSystem
         }
     }
 
-    private void OnCargoFTL(EntityUid uid, CargoShuttleComponent component, ref FTLStartedEvent args)
+    private void OnCargoFTLStarted(EntityUid uid, CargoShuttleComponent component, ref FTLStartedEvent args)
     {
         var xform = Transform(uid);
         var stationUid = component.Station;
 
-        // Recalled
-        if (xform.MapID == CargoMap)
-        {
-            if (TryComp<StationBankAccountComponent>(stationUid, out var bank))
-            {
-                SellPallets(component, bank);
-            }
-        }
         // Called
-        else if (TryComp<StationDataComponent>(stationUid, out var stationData) &&
-                 TryComp<ShuttleComponent>(uid, out var shuttleComp) &&
-                 TryComp<StationCargoOrderDatabaseComponent>(stationUid, out var orderDatabase))
+        if (xform.MapID != CargoMap ||
+            !TryComp<StationCargoOrderDatabaseComponent>(stationUid, out var orderDatabase))
         {
-            var targetGrid = _station.GetLargestGrid(stationData);
+            return;
+        }
 
-            if (targetGrid == null || !_shuttle.TryFTLDock(shuttleComp, targetGrid.Value))
-            {
-                return;
-            }
+        AddCargoContents(component, orderDatabase);
+        UpdateOrders(orderDatabase);
+        UpdateShuttleCargoConsoles(component);
+    }
 
-            AddCargoContents(component, orderDatabase);
-            UpdateOrders(orderDatabase);
-            UpdateShuttleCargoConsoles(component);
+    private void OnCargoFTLCompleted(EntityUid uid, CargoShuttleComponent component, ref FTLCompletedEvent args)
+    {
+        var xform = Transform(uid);
+        // Recalled
+        if (xform.MapID != CargoMap)
+            return;
+
+        var stationUid = component.Station;
+
+        if (TryComp<StationBankAccountComponent>(stationUid, out var bank))
+        {
+            SellPallets(component, bank);
         }
     }
 
