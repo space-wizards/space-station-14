@@ -1,0 +1,16 @@
+- type: gameRule
+  id: ScpBreakout
+  config:
+    !type:StationEventRuleConfiguration
+    id: ScpBreakout
+    startAnnouncement: station-event-power-grid-check-start-announcement
+    endAnnouncement: station-event-power-grid-check-end-announcement
+    startAudio:
+      path: /Audio/SCP/containment_breach.ogg
+      params:
+        volume: -4
+    weight: 4
+    startAfter: 6
+    earliestStart: 15
+    reoccurrenceDelay: 40
+    minimumPlayers: 30

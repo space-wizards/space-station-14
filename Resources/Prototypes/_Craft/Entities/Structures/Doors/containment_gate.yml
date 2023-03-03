@@ -1,0 +1,49 @@
+- type: soundCollection
+  id: ContainmentDoorOpen
+  files:
+    - /Audio/SCP/Door/BigDoorOpen.ogg
+    - /Audio/SCP/Door/BigDoorOpen1.ogg
+    - /Audio/SCP/Door/BigDoorOpen2.ogg
+
+- type: soundCollection
+  id: ContainmentDoorClose
+  files:
+    - /Audio/SCP/Door/BigDoorClose.ogg
+    - /Audio/SCP/Door/BigDoorClose1.ogg
+    - /Audio/SCP/Door/BigDoorClose2.ogg
+
+- type: entity
+  id: ContainmentGate
+  parent: BaseShutter
+  name: Ворота камеры содержания
+  description: Огромные ворота останавливающие что-то чудовищное
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Doors/Shutters/blastdoor.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Door
+    closeTimeOne: 1
+    closeTimeTwo: 1
+    openTimeOne: 1
+    openTimeTwo: 1
+    pryTime: -1
+    crushDamage:
+      types:
+        Blunt: 50 # death
+    openSound:
+      collection: ContainmentDoorOpen
+    closeSound:
+      collection: ContainmentDoorClose
+  - type: ScpContainmentDoor
+    doorGroup: "SCP173"
+  - type: Occluder
+  - type: Appearance
+    visuals:
+    - type: AirlockVisualizer
+      simpleVisuals: true
+      animationTime: 1.0
+  - type: RadiationBlocker
+    resistance: 10
