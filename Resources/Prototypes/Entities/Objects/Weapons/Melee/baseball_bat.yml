@@ -10,12 +10,12 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 8
+        Blunt: 10
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Blunt: 6
+        Blunt: 8
   - type: Item
     size: 20
   - type: Clothing

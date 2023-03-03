@@ -48,7 +48,7 @@
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Piercing: 8
+        Piercing: 6
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
