@@ -609,4 +609,15 @@ public sealed class MindSystem : EntitySystem
         _playerManager.TryGetSessionById(userId.Value, out var ret);
         mind.Session = ret;
     }
+    
+    /// <summary>
+    ///     True if this Mind is 'sufficiently dead' IC (objectives, endtext).
+    ///     Note that this is *IC logic*, it's not necessarily tied to any specific truth.
+    ///     "If administrators decide that zombies are dead, this returns true for zombies."
+    ///     (Maybe you were looking for the action blocker system?)
+    /// </summary>
+    public bool IsCharacterDeadIc(Mind mind)
+    {
+        return IsCharacterDeadPhysically(mind);
+    }
 }

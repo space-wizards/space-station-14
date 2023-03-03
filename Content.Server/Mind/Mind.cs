@@ -19,7 +19,6 @@ namespace Content.Server.Mind
     /// </remarks>
     public sealed class Mind
     {
-        private readonly MindSystem _mindSystem = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         internal readonly ISet<Role> Roles = new HashSet<Role>();
@@ -38,7 +37,6 @@ namespace Content.Server.Mind
         {
             OriginalOwnerUserId = userId;
             IoCManager.InjectDependencies(this);
-            _entityManager.EntitySysManager.Resolve(ref _mindSystem);
         }
 
         /// <summary>
@@ -119,15 +117,6 @@ namespace Content.Server.Mind
         /// </summary>
         [ViewVariables]
         public IPlayerSession? Session { get; internal set; }
-
-        /// <summary>
-        ///     True if this Mind is 'sufficiently dead' IC (objectives, endtext).
-        ///     Note that this is *IC logic*, it's not necessarily tied to any specific truth.
-        ///     "If administrators decide that zombies are dead, this returns true for zombies."
-        ///     (Maybe you were looking for the action blocker system?)
-        /// </summary>
-        [ViewVariables]
-        public bool CharacterDeadIC => _mindSystem.IsCharacterDeadPhysically(this);
 
         /// <summary>
         ///     A string to represent the mind for logging
