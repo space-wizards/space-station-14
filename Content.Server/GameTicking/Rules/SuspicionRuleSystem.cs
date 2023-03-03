@@ -2,6 +2,7 @@ using System.Linq;
 using System.Threading;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Configurations;
+using Content.Server.Mind;
 using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Server.Station.Components;
@@ -50,6 +51,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
+    [Dependency] private readonly MindSystem _mindSystem = default!;
 
     public override string Prototype => "Suspicion";
 
@@ -171,11 +173,11 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
             DebugTools.AssertNotNull(mind?.OwnedEntity);
 
             var traitorRole = new SuspicionTraitorRole(mind!, antagPrototype);
-            mind!.AddRole(traitorRole);
+            _mindSystem.AddRole(mind!, traitorRole);
             traitors.Add(traitorRole);
 
             // try to place uplink
-            _uplink.AddUplink(mind.OwnedEntity!.Value, traitorStartingBalance);
+            _uplink.AddUplink(mind!.OwnedEntity!.Value, traitorStartingBalance);
         }
 
         foreach (var player in list)
@@ -185,7 +187,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
             DebugTools.AssertNotNull(mind);
 
-            mind!.AddRole(new SuspicionInnocentRole(mind, antagPrototype));
+            _mindSystem.AddRole(mind!, new SuspicionInnocentRole(mind!, antagPrototype));
         }
 
         foreach (var traitor in traitors)

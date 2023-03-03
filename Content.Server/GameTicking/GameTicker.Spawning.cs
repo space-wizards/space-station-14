@@ -179,7 +179,7 @@ namespace Content.Server.GameTicking
 
             var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
             var job = new Job(newMind, jobPrototype);
-            newMind.AddRole(job);
+            _mindSystem.AddRole(newMind, job);
 
             _playTimeTrackings.PlayerRolesChanged(player);
 
@@ -272,7 +272,7 @@ namespace Content.Server.GameTicking
             data!.WipeMind();
             var newMind = new Mind.Mind(data.UserId);
             _mindSystem.ChangeOwningPlayer(newMind, data.UserId);
-            newMind.AddRole(new ObserverRole(newMind));
+            _mindSystem.AddRole(newMind, new ObserverRole(newMind));
 
             var mob = SpawnObserverMob();
             EntityManager.GetComponent<MetaDataComponent>(mob).EntityName = name;

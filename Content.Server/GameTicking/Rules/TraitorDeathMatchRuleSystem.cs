@@ -3,6 +3,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Hands.Components;
+using Content.Server.Mind;
 using Content.Server.PDA;
 using Content.Server.Players;
 using Content.Server.Spawners.Components;
@@ -41,6 +42,7 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
+    [Dependency] private readonly MindSystem _mindSystem = default!;
 
     public override string Prototype => "TraitorDeathMatch";
 
@@ -81,7 +83,7 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
 
         var antagPrototype = _prototypeManager.Index<AntagPrototype>(TraitorPrototypeID);
         var traitorRole = new TraitorRole(mind, antagPrototype);
-        mind.AddRole(traitorRole);
+        _mindSystem.AddRole(mind, traitorRole);
 
         // Delete anything that may contain "dangerous" role-specific items.
         // (This includes the PDA, as everybody gets the captain PDA in this mode for true-all-access reasons.)

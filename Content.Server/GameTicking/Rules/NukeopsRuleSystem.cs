@@ -580,7 +580,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         if (_operativeMindPendingData.TryGetValue(uid, out var role))
         {
-            mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(role)));
+            _mindSystem.AddRole(mind, new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(role)));
             _operativeMindPendingData.Remove(uid);
         }
 
@@ -754,7 +754,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                     CharacterName = spawnDetails.Name
                 };
                 _mindSystem.ChangeOwningPlayer(newMind, session.UserId);
-                newMind.AddRole(new TraitorRole(newMind, nukeOpsAntag));
+                _mindSystem.AddRole(newMind, new TraitorRole(newMind, nukeOpsAntag));
 
                 _mindSystem.TransferTo(newMind, mob);
             }
@@ -792,7 +792,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         if (!mind.OwnedEntity.HasValue)
             return;
 
-        mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(_nukeopsRuleConfig.OperativeRoleProto)));
+        _mindSystem.AddRole(mind, new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(_nukeopsRuleConfig.OperativeRoleProto)));
         SetOutfitCommand.SetOutfit(mind.OwnedEntity.Value, "SyndicateOperativeGearFull", EntityManager);
     }
 

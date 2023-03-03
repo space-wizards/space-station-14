@@ -6,6 +6,7 @@ using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Objectives;
 using Content.Server.Players;
+using Content.Server.Roles;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Mobs.Systems;
@@ -478,5 +479,61 @@ public sealed class MindSystem : EntitySystem
 
         mind.Objectives.Remove(objective);
         return true;
+    }
+
+    /// <summary>
+    ///     Gives this mind a new role.
+    /// </summary>
+    /// <param name="mind">The mind to add the role to.</param>
+    /// <param name="role">The type of the role to give.</param>
+    /// <returns>The instance of the role.</returns>
+    /// <exception cref="ArgumentException">
+    ///     Thrown if we already have a role with this type.
+    /// </exception>
+    public void AddRole(Mind mind, Role role)
+    {
+        if (mind.Roles.Contains(role))
+        {
+            throw new ArgumentException($"We already have this role: {role}");
+        }
+
+        mind.Roles.Add(role);
+        role.Greet();
+
+        var message = new RoleAddedEvent(mind, role);
+        if (mind.OwnedEntity != null)
+        {
+            RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
+        }
+
+        _adminLogger.Add(LogType.Mind, LogImpact.Low,
+            $"'{role.Name}' added to mind of {mind.MindOwnerLoggingString}");
+    }
+
+    /// <summary>
+    ///     Removes a role from this mind.
+    /// </summary>
+    /// <param name="mind">The mind to remove the role from.</param>
+    /// <param name="role">The type of the role to remove.</param>
+    /// <exception cref="ArgumentException">
+    ///     Thrown if we do not have this role.
+    /// </exception>
+    public void RemoveRole(Mind mind, Role role)
+    {
+        if (!mind.Roles.Contains(role))
+        {
+            throw new ArgumentException($"We do not have this role: {role}");
+        }
+
+        mind.Roles.Remove(role);
+
+        var message = new RoleRemovedEvent(mind, role);
+
+        if (mind.OwnedEntity != null)
+        {
+            RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
+        }
+        _adminLogger.Add(LogType.Mind, LogImpact.Low,
+            $"'{role.Name}' removed from mind of {mind.MindOwnerLoggingString}");
     }
 }

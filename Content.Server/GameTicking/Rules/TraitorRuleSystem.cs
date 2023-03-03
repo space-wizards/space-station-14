@@ -241,7 +241,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
 
         var antagPrototype = _prototypeManager.Index<AntagPrototype>(TraitorPrototypeID);
         var traitorRole = new TraitorRole(mind, antagPrototype);
-        mind.AddRole(traitorRole);
+        _mindSystem.AddRole(mind, traitorRole);
         Traitors.Add(traitorRole);
         traitorRole.GreetTraitor(Codewords);
 

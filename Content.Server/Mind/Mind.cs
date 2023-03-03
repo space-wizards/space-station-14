@@ -30,9 +30,8 @@ namespace Content.Server.Mind
         private readonly MindSystem _mindSystem = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
-        private readonly ISet<Role> _roles = new HashSet<Role>();
+        internal readonly ISet<Role> Roles = new HashSet<Role>();
 
         internal readonly List<Objective> Objectives = new();
 
@@ -104,7 +103,7 @@ namespace Content.Server.Mind
         ///     An enumerable over all the roles this mind has.
         /// </summary>
         [ViewVariables]
-        public IEnumerable<Role> AllRoles => _roles;
+        public IEnumerable<Role> AllRoles => Roles;
 
         /// <summary>
         ///     An enumerable over all the objectives this mind has.
@@ -187,7 +186,7 @@ namespace Content.Server.Mind
         /// <summary>
         ///     A string to represent the mind for logging
         /// </summary>
-        internal string MindOwnerLoggingString
+        public string MindOwnerLoggingString
         {
             get
             {
@@ -199,72 +198,17 @@ namespace Content.Server.Mind
             }
         }
 
-        /// <summary>
-        ///     Gives this mind a new role.
-        /// </summary>
-        /// <param name="role">The type of the role to give.</param>
-        /// <returns>The instance of the role.</returns>
-        /// <exception cref="ArgumentException">
-        ///     Thrown if we already have a role with this type.
-        /// </exception>
-        public Role AddRole(Role role)
-        {
-            if (_roles.Contains(role))
-            {
-                throw new ArgumentException($"We already have this role: {role}");
-            }
-
-            _roles.Add(role);
-            role.Greet();
-
-            var message = new RoleAddedEvent(this, role);
-            if (OwnedEntity != null)
-            {
-                _entityManager.EventBus.RaiseLocalEvent(OwnedEntity.Value, message, true);
-            }
-            _adminLogger.Add(LogType.Mind, LogImpact.Low,
-                $"'{role.Name}' added to mind of {MindOwnerLoggingString}");
-
-            return role;
-        }
-
-        /// <summary>
-        ///     Removes a role from this mind.
-        /// </summary>
-        /// <param name="role">The type of the role to remove.</param>
-        /// <exception cref="ArgumentException">
-        ///     Thrown if we do not have this role.
-        /// </exception>
-        public void RemoveRole(Role role)
-        {
-            if (!_roles.Contains(role))
-            {
-                throw new ArgumentException($"We do not have this role: {role}");
-            }
-
-            _roles.Remove(role);
-
-            var message = new RoleRemovedEvent(this, role);
-
-            if (OwnedEntity != null)
-            {
-                _entityManager.EventBus.RaiseLocalEvent(OwnedEntity.Value, message, true);
-            }
-            _adminLogger.Add(LogType.Mind, LogImpact.Low,
-                $"'{role.Name}' removed from mind of {MindOwnerLoggingString}");
-        }
-
         public bool HasRole<T>() where T : Role
         {
             var t = typeof(T);
 
-            return _roles.Any(role => role.GetType() == t);
+            return Roles.Any(role => role.GetType() == t);
         }
 
         /// <summary>
         ///     Gets the current job
         /// </summary>
-        public Job? CurrentJob => _roles.OfType<Job>().SingleOrDefault();
+        public Job? CurrentJob => Roles.OfType<Job>().SingleOrDefault();
 
         public bool TryGetSession([NotNullWhen(true)] out IPlayerSession? session)
         {
