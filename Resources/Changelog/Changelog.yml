@@ -1,9 +1,4 @@
 Entries:
-- author: rolfero
-  changes:
-  - {message: Armor prices are calculated based on damage reduction., type: Add}
-  id: 2592
-  time: '2022-11-08T00:36:53.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: Events are now quieter., type: Tweak}
@@ -2912,3 +2907,8 @@ Entries:
   - {message: Lava is now clickable., type: Tweak}
   id: 3091
   time: '2023-03-03T00:01:07.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: Salvage magnet shows remaining cooldown time when examined., type: Tweak}
+  id: 3092
+  time: '2023-03-03T16:25:43.0000000+00:00'
