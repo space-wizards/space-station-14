@@ -136,3 +136,15 @@
     contents:
       - id: MedkitRadiationFilled
         amount: 4
+- type: entity
+  id: CrateVirologyBiosuit
+  parent: CrateMedicalSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterBioVirology
+        amount: 2
+      - id: ClothingHeadHatHoodBioVirology
+        amount: 2
+      - id: ClothingMaskSterile
+        amount: 2

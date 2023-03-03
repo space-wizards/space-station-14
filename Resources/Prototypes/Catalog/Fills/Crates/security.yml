@@ -75,5 +75,17 @@
       - id: BoxZiptie
         amount: 2
 
+- type: entity
+  id: CrateSecurityBiosuit
+  parent: CrateSecgear
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterBioSecurity
+        amount: 2
+      - id: ClothingHeadHatHoodBioSecurity
+        amount: 2
+      - id: ClothingMaskSterile
+        amount: 2
 
 # Cosmetic Crates
