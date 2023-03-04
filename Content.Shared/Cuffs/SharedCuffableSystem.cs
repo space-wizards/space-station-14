@@ -27,6 +27,7 @@ using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Cuffs
 {
@@ -35,6 +36,7 @@ namespace Content.Shared.Cuffs
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly AlertsSystem _alerts = default!;
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly INetManager _net = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
@@ -540,7 +542,7 @@ namespace Content.Shared.Cuffs
             if (_net.IsServer)
                 _popup.PopupEntity(Loc.GetString("cuffable-component-start-removing-cuffs-message"), user, user);
 
-            _audio.PlayPvs(isOwner ? cuff.StartBreakoutSound : cuff.StartUncuffSound, target);
+            _audio.PlayPredicted(isOwner ? cuff.StartBreakoutSound : cuff.StartUncuffSound, target, user);
 
             var uncuffTime = isOwner ? cuff.BreakoutTime : cuff.UncuffTime;
             var doAfterEventArgs = new DoAfterEventArgs(user, uncuffTime, default, target, cuffsToRemove)
@@ -557,7 +559,8 @@ namespace Content.Shared.Cuffs
 
             cuffable.Uncuffing = true;
             Dirty(cuffable);
-            _doAfter.DoAfter(doAfterEventArgs);
+            if (_timing.IsFirstTimePredicted)
+                _doAfter.DoAfter(doAfterEventArgs);
         }
 
         public void Uncuff(EntityUid target, EntityUid user, EntityUid cuffsToRemove, CuffableComponent? cuffable = null, HandcuffComponent? cuff = null)
