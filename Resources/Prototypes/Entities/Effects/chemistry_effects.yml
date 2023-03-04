@@ -29,8 +29,7 @@
     sprite: Effects/chemsmoke.rsi
     state: chemsmoke
   - type: Appearance
-    visuals:
-      - type: SmokeVisualizer
+  - type: SmokeVisuals
   - type: Transform
     anchored: true
   - type: SmokeSolutionAreaEffect
