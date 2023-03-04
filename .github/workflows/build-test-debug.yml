@@ -2,7 +2,7 @@ name: Build & Test Debug
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, staging, trying ]
     paths:
       - '**.cs'
       - '**.csproj'
