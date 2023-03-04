@@ -3,28 +3,10 @@ name: Build & Test Release
 on:
   push:
     branches: [ master, staging, trying ]
-    paths:
-      - '**.cs'
-      - '**.csproj'
-      - '**.sln'
-      - '**.git**'
-      - '**.yml'
-      # no docs on which one of these is supposed to work, so
-      # why not just do both
-      - 'RobustToolbox'
-      - 'RobustToolbox/**'
   merge_group:
   pull_request:
     types: [ opened, reopened, synchronize, ready_for_review ]
     branches: [ master ]
-    paths:
-      - '**.cs'
-      - '**.csproj'
-      - '**.sln'
-      - '**.git**'
-      - '**.yml'
-      - 'RobustToolbox'
-      - 'RobustToolbox/**'
 
 jobs:
   build:
@@ -70,3 +52,11 @@ jobs:
       run: |
         $env:DOTNET_gcServer=1
         dotnet test --no-build Content.IntegrationTests/Content.IntegrationTests.csproj -- NUnit.ConsoleOut=0
+  ci-success:
+    name: Build & Test Release
+    needs:
+      - build
+    runs-on: ubuntu-latest
+    steps:
+      - name: CI succeeded
+        run: exit 0
