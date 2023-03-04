@@ -25,13 +25,13 @@ public sealed class EmpSystem : EntitySystem
 
     public void EmpPulse(ref EmpPulseEvent args)
     {
-        foreach (var uid in _lookup.GetEntitiesInRange(args.coordinates, args.range))
+        foreach (var uid in _lookup.GetEntitiesInRange(args.Coordinates, args.Range))
         {
             var affected = false;
             if (TryComp<BatteryComponent>(uid, out var battery))
             {
                 affected = true;
-                battery.UseCharge(args.energyConsumption);
+                battery.UseCharge(args.EnergyConsumption);
             }
             if (TryComp<PoweredLightComponent>(uid, out var light))
             {
@@ -48,7 +48,7 @@ public sealed class EmpSystem : EntitySystem
                 Spawn(EmpDisabledEffectPrototype, Transform(uid).Coordinates);
             }
         }
-        Spawn(EmpPulseEffectPrototype, args.coordinates);
+        Spawn(EmpPulseEffectPrototype, args.Coordinates);
     }
 
     private void HandleEmpTrigger(EntityUid uid, EmpOnTriggerComponent comp, TriggerEvent args)
@@ -60,4 +60,4 @@ public sealed class EmpSystem : EntitySystem
 }
 
 [ByRefEvent]
-public readonly record struct EmpPulseEvent(MapCoordinates coordinates, float range, float energyConsumption);
+public readonly record struct EmpPulseEvent(MapCoordinates Coordinates, float Range, float EnergyConsumption);
