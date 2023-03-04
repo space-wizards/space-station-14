@@ -19,9 +19,9 @@ public sealed class EmpSystem : EntitySystem
         SubscribeLocalEvent<EmpOnTriggerComponent, TriggerEvent>(HandleEmpTrigger);
     }
 
-    public void EmpPulse(EntityCoordinates coordinates, float range, float energyConsumption)
+    public void EmpPulse(MapCoordinates coordinates, float range, float energyConsumption)
     {
-        foreach (var uid in _lookup.GetEntitiesInRange(coordinates.ToMap(EntityManager), range))
+        foreach (var uid in _lookup.GetEntitiesInRange(coordinates, range))
         {
             if (TryComp<BatteryComponent>(uid, out var battery))
                 battery.UseCharge(energyConsumption);
@@ -33,7 +33,7 @@ public sealed class EmpSystem : EntitySystem
 
     private void HandleEmpTrigger(EntityUid uid, EmpOnTriggerComponent comp, TriggerEvent args)
     {
-        EmpPulse(Transform(uid).Coordinates, comp.Range, comp.EnergyConsumption);
+        EmpPulse(Transform(uid).Coordinates.ToMap(EntityManager), comp.Range, comp.EnergyConsumption);
         args.Handled = true;
     }
 }
