@@ -623,3 +623,6 @@
 
 - type: Tag
   id: SubdermalImplant
+
+- type: Tag
+  id: AppraisalTool
