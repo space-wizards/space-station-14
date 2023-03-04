@@ -246,4 +246,4 @@
     sprite: Clothing/Mask/cluwne.rsi
   - type: Unremoveable 
   - type: AddAccentClothing
-    accent: ScrambledAccent
+    accent: StutteringAccent
