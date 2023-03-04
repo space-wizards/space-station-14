@@ -1,11 +1,6 @@
 Entries:
 - author: Nairod
   changes:
-  - {message: Added flashlights to the YouTool and SecTech, type: Add}
-  id: 2596
-  time: '2022-11-08T02:41:00.0000000+00:00'
-- author: Nairod
-  changes:
   - {message: 'Added forensic pads, zipties and glasses to the secfab', type: Add}
   id: 2597
   time: '2022-11-08T02:42:29.0000000+00:00'
@@ -2912,3 +2907,9 @@ Entries:
       utilities, type: Add}
   id: 3095
   time: '2023-03-04T20:31:47.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: 'Disposals are now pressurized again, so you can safely travel through
+      them in hazardous environments or space.', type: Fix}
+  id: 3096
+  time: '2023-03-04T23:08:44.0000000+00:00'
