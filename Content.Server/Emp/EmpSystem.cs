@@ -12,6 +12,7 @@ public sealed class EmpSystem : EntitySystem
     [Dependency] private readonly PoweredLightSystem _poweredLight = default!;
 
     public const string EmpPulseEffectPrototype = "EffectEmpPulse";
+    public const string EmpDisabledEffectPrototype = "EffectEmpDisabled";
 
     public override void Initialize()
     {
@@ -24,10 +25,21 @@ public sealed class EmpSystem : EntitySystem
     {
         foreach (var uid in _lookup.GetEntitiesInRange(args.coordinates, args.range))
         {
+            var affected = false;
             if (TryComp<BatteryComponent>(uid, out var battery))
+            {
+                affected = true;
                 battery.UseCharge(args.energyConsumption);
+            }
             if (TryComp<PoweredLightComponent>(uid, out var light))
+            {
+                affected = true;
                 _poweredLight.TryDestroyBulb(uid, light);
+            }
+            if (affected)
+            {
+                Spawn(EmpDisabledEffectPrototype, Transform(uid).Coordinates);
+            }
         }
         Spawn(EmpPulseEffectPrototype, args.coordinates);
     }
