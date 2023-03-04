@@ -37,4 +37,10 @@ public sealed class SolarFlareEventRuleConfiguration : StationEventRuleConfigura
     /// </summary>
     [DataField("lightBreakChancePerSecond")]
     public float LightBreakChancePerSecond;
+
+    /// <summary>
+    ///     Chance door toggles per second during event
+    /// </summary>
+    [DataField("doorToggleChancePerSecond")]
+    public float DoorToggleChancePerSecond;
 }

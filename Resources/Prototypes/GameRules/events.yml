@@ -178,6 +178,7 @@
     - Common
     - Service
     lightBreakChancePerSecond: 0.0003
+    doorToggleChancePerSecond: 0.001
 
 - type: gameRule
   id: VentClog
