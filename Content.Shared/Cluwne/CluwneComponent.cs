@@ -9,9 +9,6 @@ namespace Content.Shared.Cluwne;
 [NetworkedComponent]
 public sealed class CluwneComponent : Component
 {
-    [ViewVariables(VVAccess.ReadWrite)]
-    public string GiggleEmoteId = "Scream";
-
     /// <summary>
     /// timings for giggles and knocks.
     /// </summary>
@@ -23,12 +20,6 @@ public sealed class CluwneComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite)]
     public float GiggleRandomChance = 0.1f;
-
-    /// <summary>
-    /// The last time the zombie groaned from taking damage.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan LastDamageGiggle = TimeSpan.Zero;
 
     [DataField("emoteId", customTypeSerializer: typeof(PrototypeIdSerializer<EmoteSoundsPrototype>))]
     public string? EmoteSoundsId = "Cluwne";
