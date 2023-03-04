@@ -13,5 +13,5 @@ sealed class EmpOnTriggerComponent : Component
     /// How much energy will be consumed per battery in range
     /// </summary>
     [DataField("energyConsumption"), ViewVariables(VVAccess.ReadWrite)]
-    public float EnergyConsumption = 50000;
+    public float EnergyConsumption;
 }
