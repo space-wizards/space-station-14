@@ -1,6 +1,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckPinBase
+  abstract: true
   name: pin
   description: be nothing do crime
   components:
