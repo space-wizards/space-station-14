@@ -30,8 +30,10 @@ public sealed class SupermatterGrenadeSystem : EntitySystem
 
     private void OnStartup(EntityUid uid, SupermatterGrenadeComponent component, ComponentStartup args)
     {
-        component.Distortion = Comp<SingularityDistortionComponent>(uid);
-        component.GravityWell = Comp<GravityWellComponent>(uid);
+        if(TryComp<SingularityDistortionComponent>(uid, out var singulo))
+            component.Distortion = singulo;
+        if (TryComp<GravityWellComponent>(uid, out var well))
+            component.GravityWell = well;
     }
     private void OnExplode(EntityUid uid, SupermatterGrenadeComponent component, TriggerEvent args)
     {
