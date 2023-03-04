@@ -153,35 +153,19 @@ public sealed class MindSystem : EntitySystem
     private void OnExamined(EntityUid uid, MindComponent mind, ExaminedEvent args)
     {
         if (!mind.ShowExamineInfo || !args.IsInDetailsRange)
-        {
             return;
-        }
 
         var dead = _mobStateSystem.IsDead(uid);
-
         var hasSession = mind.Mind?.Session;
 
-        if (dead)
-        {
-            if (hasSession == null)
-            {
-                // Player has no session attached and dead
-                args.PushMarkup($"[color=yellow]{Loc.GetString("mind-component-no-mind-and-dead-text", ("ent", uid))}[/color]");
-            }
-            else
-            {
-                // Player is dead with session
-                args.PushMarkup($"[color=red]{Loc.GetString("comp-mind-examined-dead", ("ent", uid))}[/color]");
-            }
-        }
+        if (dead && hasSession == null)
+            args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-dead-and-ssd", ("ent", uid))}[/color]");
+        else if (dead)
+            args.PushMarkup($"[color=red]{Loc.GetString("comp-mind-examined-dead", ("ent", uid))}[/color]");
         else if (!mind.HasMind)
-        {
             args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-catatonic", ("ent", uid))}[/color]");
-        }
         else if (hasSession == null)
-        {
             args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", uid))}[/color]");
-        }
     }
 
     private void OnSuicide(EntityUid uid, MindComponent component, SuicideEvent args)
