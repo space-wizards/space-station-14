@@ -1,7 +1,7 @@
 # Desert
 - type: tile
   id: FloorDesert
-  name: sand floor
+  name: tiles-desert-floor
   sprite: /Textures/Tiles/Planet/Desert/desert.png
   variants: 6
   placementVariants: [0, 1, 2, 3, 4, 5]
@@ -16,7 +16,7 @@
 
 - type: tile
   id: FloorLowDesert
-  name: sand dune floor
+  name: tiles-low-desert-floor
   sprite: /Textures/Tiles/Planet/Desert/low_desert.png
   variants: 6
   placementVariants: [0, 1, 2, 3, 4, 5]
@@ -32,7 +32,7 @@
 # Grass
 - type: tile
   id: FloorPlanetGrass
-  name: planet grass floor
+  name: tiles-grass-planet-floor
   sprite: /Textures/Tiles/Planet/Grass/grass.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
@@ -55,7 +55,7 @@
 # Lava
 - type: tile
   id: FloorBasalt
-  name: basalt floor
+  name: tiles-basalt-floor
   sprite: /Textures/Tiles/Planet/basalt.png
   isSubfloor: true
   canCrowbar: false
@@ -69,7 +69,7 @@
 # Snow
 - type: tile
   id: FloorSnow
-  name: snow floor
+  name: tiles-snow-floor
   sprite: /Textures/Tiles/Planet/Snow/snow.png
   variants: 13
   placementVariants: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
