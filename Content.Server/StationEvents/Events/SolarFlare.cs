@@ -18,6 +18,7 @@ public sealed class SolarFlare : StationEventSystem
     public override string Prototype => "SolarFlare";
 
     private SolarFlareEventRuleConfiguration _event = default!;
+    private float _effectTimer = 0;
 
     public override void Initialize()
     {
@@ -43,16 +44,21 @@ public sealed class SolarFlare : StationEventSystem
         if (!RuleStarted)
             return;
 
-        foreach (var comp in EntityQuery<PoweredLightComponent>())
+        _effectTimer -= frameTime;
+        if (_effectTimer < 0)
         {
-            if (RobustRandom.Prob(frameTime * _event.LightBreakChancePerSecond))
-                _poweredLight.TryDestroyBulb(comp.Owner, comp);
-        }
+            _effectTimer += 1;
+            foreach (var comp in EntityQuery<PoweredLightComponent>())
+            {
+                if (RobustRandom.Prob(_event.LightBreakChancePerSecond))
+                    _poweredLight.TryDestroyBulb(comp.Owner, comp);
+            }
 
-        foreach (var comp in EntityQuery<DoorComponent>())
-        {
-            if (RobustRandom.Prob(frameTime * _event.DoorToggleChancePerSecond))
-                _door.TryToggleDoor(comp.Owner, comp);
+            foreach (var comp in EntityQuery<DoorComponent>())
+            {
+                if (RobustRandom.Prob(_event.DoorToggleChancePerSecond))
+                    _door.TryToggleDoor(comp.Owner, comp);
+            }
         }
 
         if (Elapsed > _event.EndAfter)
