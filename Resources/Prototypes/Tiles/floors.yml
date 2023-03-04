@@ -1093,20 +1093,6 @@
 
 # Terrain
 - type: tile
-  id: FloorBasaslt
-  name: tiles-basalt-floor
-  sprite: /Textures/Tiles/Planet/basalt.png
-  isSubfloor: true
-  canCrowbar: false
-  footstepSounds:
-    collection: FootstepAsteroid
-  friction: 0.30
-  thermalConductivity: 0.04
-  heatCapacity: 10000
-  weather: true
-
-
-- type: tile
   id: FloorGrass
   name: tiles-planet-grass-floor
   sprite: /Textures/Tiles/grass.png
@@ -1236,6 +1222,10 @@
   thermalConductivity: 0.04
   heatCapacity: 10000
   weather: true
+
+- type: tileAlias
+  id: FloorBasaslt
+  target: FloorBasalt
 
 - type: tileAlias
   id: FloorAsteroidCoarseSand1

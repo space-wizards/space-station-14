@@ -405,7 +405,7 @@ public sealed partial class AtmosphereSystem
         if (!component.Tiles.TryGetValue(args.Tile, out var tile))
             return;
 
-        HotspotExpose(component, tile, args.ExposedTemperature, args.ExposedVolume, args.soh);
+        HotspotExpose(component, tile, args.ExposedTemperature, args.ExposedVolume, args.soh, args.SparkSourceUid);
         args.Handled = true;
     }
 

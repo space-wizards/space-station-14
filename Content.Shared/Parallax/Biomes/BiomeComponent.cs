@@ -34,6 +34,6 @@ public sealed class BiomeComponent : Component
     /// <summary>
     /// Currently active chunks
     /// </summary>
-    [ViewVariables]
+    [DataField("loadedChunks")]
     public readonly HashSet<Vector2i> LoadedChunks = new();
 }

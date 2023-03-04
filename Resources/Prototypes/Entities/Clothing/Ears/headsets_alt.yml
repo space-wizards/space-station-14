@@ -115,6 +115,7 @@
   description: An updated, modular syndicate headset that accepts up to 4 encryption keys.
   components:
   - type: Headset
+  - type: EncryptionKeyHolder
     keySlots: 4
   - type: ContainerFill
     containers:

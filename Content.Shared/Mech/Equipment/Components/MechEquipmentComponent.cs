@@ -20,8 +20,6 @@ public sealed class MechEquipmentComponent : Component
     /// </summary>
     [ViewVariables]
     public EntityUid? EquipmentOwner;
-
-    public CancellationTokenSource? TokenSource = null;
 }
 
 /// <summary>
