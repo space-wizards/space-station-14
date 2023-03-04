@@ -21,7 +21,7 @@ public sealed class EmpSystem : EntitySystem
 
     public void EmpPulse(EntityCoordinates coordinates, float range, float energyConsumption)
     {
-        foreach (var uid in _lookup.GetEntitiesInRange(coordinates.EntityId, range))
+        foreach (var uid in _lookup.GetEntitiesInRange(coordinates.ToMap(EntityManager), range))
         {
             if (TryComp<BatteryComponent>(uid, out var battery))
                 battery.UseCharge(energyConsumption);
