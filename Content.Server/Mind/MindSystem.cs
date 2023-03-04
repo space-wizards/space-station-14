@@ -38,10 +38,10 @@ public sealed class MindSystem : EntitySystem
         SubscribeLocalEvent<MindComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<MindComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<MindComponent, SuicideEvent>(OnSuicide);
-        SubscribeLocalEvent<VisitingMindComponent, ComponentRemove>(OnVistingMindRemoved);
+        SubscribeLocalEvent<VisitingMindComponent, ComponentRemove>(OnVisitingMindRemoved);
     }
 
-    private void OnVistingMindRemoved(EntityUid uid, VisitingMindComponent component, ComponentRemove args)
+    private void OnVisitingMindRemoved(EntityUid uid, VisitingMindComponent component, ComponentRemove args)
     {
         UnVisit(component.Mind);
     }
