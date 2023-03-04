@@ -19,7 +19,6 @@ namespace Content.Client.Medical.CrewMonitoring
         private List<(DirectionIcon Icon, Vector2 Position)> _directionIcons = new();
         private readonly IEntityManager _entManager;
         private readonly IEyeManager _eye;
-        private readonly IEntityManager _entityManager;
 
         public static int IconSize = 16; // XAML has a `VSeparationOverride` of 20 for each row.
 

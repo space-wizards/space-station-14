@@ -21,13 +21,15 @@ namespace Content.Server.Medical.SuitSensors
 {
     public sealed class SuitSensorSystem : EntitySystem
     {
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly CrewMonitoringServerSystem _monitoringServerSystem = default!;
+        [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
         [Dependency] private readonly IdCardSystem _idCardSystem = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-        [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly StationSystem _stationSystem = default!;
 
         public override void Initialize()
         {
@@ -273,9 +275,6 @@ namespace Content.Server.Medical.SuitSensors
                 totalDamage = damageable.TotalDamage.Int();
 
             // finally, form suit sensor status
-            var xForm = Transform(sensor.User.Value);
-            var xFormQuery = GetEntityQuery<TransformComponent>();
-            var coords = _xform.GetMoverCoordinates(xForm, xFormQuery);
             var status = new SuitSensorStatus(userName, userJob);
             switch (sensor.Mode)
             {

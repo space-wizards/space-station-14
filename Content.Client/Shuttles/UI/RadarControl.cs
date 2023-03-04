@@ -83,8 +83,8 @@ public sealed class RadarControl : MapGridControl
 
         var fakeAA = new Color(0.08f, 0.08f, 0.08f);
 
-        handle.DrawCircle((MidPoint.X, MidPoint.Y), ScaledMinimapRadius + 1, fakeAA);
-        handle.DrawCircle((MidPoint.X, MidPoint.Y), ScaledMinimapRadius, Color.Black);
+        handle.DrawCircle((MidPoint, MidPoint), ScaledMinimapRadius + 1, fakeAA);
+        handle.DrawCircle((MidPoint, MidPoint), ScaledMinimapRadius, Color.Black);
 
         // No data
         if (_coordinates == null || _rotation == null)
@@ -99,14 +99,14 @@ public sealed class RadarControl : MapGridControl
 
         for (var i = 1; i < gridLinesEquatorial + 1; i++)
         {
-            handle.DrawCircle((MidPoint.X, MidPoint.Y), GridLinesDistance * MinimapScale * i, gridLines, false);
+            handle.DrawCircle((MidPoint, MidPoint), GridLinesDistance * MinimapScale * i, gridLines, false);
         }
 
         for (var i = 0; i < gridLinesRadial; i++)
         {
             Angle angle = (Math.PI / gridLinesRadial) * i;
             var aExtent = angle.ToVec() * ScaledMinimapRadius;
-            handle.DrawLine((MidPoint.X, MidPoint.Y) - aExtent, (MidPoint.X, MidPoint.Y) + aExtent, gridLines);
+            handle.DrawLine((MidPoint, MidPoint) - aExtent, (MidPoint, MidPoint) + aExtent, gridLines);
         }
 
         var metaQuery = _entManager.GetEntityQuery<MetaDataComponent>();
