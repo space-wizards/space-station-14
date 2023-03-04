@@ -26,7 +26,7 @@ public sealed class EmpSystem : EntitySystem
             if (TryComp<BatteryComponent>(uid, out var battery))
                 battery.UseCharge(energyConsumption);
             if (TryComp<PoweredLightComponent>(uid, out var light))
-                _poweredLight.TryDestroyBulb(light.Owner, light);
+                _poweredLight.TryDestroyBulb(uid, light);
         }
         Spawn(EmpPulseEffectPrototype, coordinates);
     }
