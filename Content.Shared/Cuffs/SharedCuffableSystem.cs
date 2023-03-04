@@ -45,7 +45,7 @@ namespace Content.Shared.Cuffs
 
         private void OnRejuvenate(EntityUid uid, SharedCuffableComponent component, RejuvenateEvent args)
         {
-            _container.EmptyContainer(component.Container, true, attachToGridOrMap: true);
+            _container.EmptyContainer(component.Container, true);
         }
 
         private void OnCuffCountChanged(EntityUid uid, SharedCuffableComponent component, ContainerModifiedMessage args)

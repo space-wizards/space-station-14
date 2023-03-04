@@ -115,7 +115,7 @@ public sealed class EncryptionKeySystem : EntitySystem
             return;
 
         var contained = component.KeyContainer.ContainedEntities.ToArray();
-        _container.EmptyContainer(component.KeyContainer, entMan: EntityManager);
+        _container.EmptyContainer(component.KeyContainer, reparent: false);
         foreach (var ent in contained)
         {
             _hands.PickupOrDrop(args.User, ent);
