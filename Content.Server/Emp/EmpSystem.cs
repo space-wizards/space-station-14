@@ -20,7 +20,7 @@ public sealed class EmpSystem : EntitySystem
     {
         foreach (var uid in _lookup.GetEntitiesInRange(coordinates, range))
         {
-            var ev = new EmpPulseEvent(coordinates, range, energyConsumption, false);
+            var ev = new EmpPulseEvent(energyConsumption, false);
             RaiseLocalEvent(uid, ref ev);
             if (ev.Affected)
                 Spawn(EmpDisabledEffectPrototype, Transform(uid).Coordinates);
@@ -36,4 +36,4 @@ public sealed class EmpSystem : EntitySystem
 }
 
 [ByRefEvent]
-public record struct EmpPulseEvent(MapCoordinates Coordinates, float Range, float EnergyConsumption, bool Affected);
+public record struct EmpPulseEvent(float EnergyConsumption, bool Affected);
