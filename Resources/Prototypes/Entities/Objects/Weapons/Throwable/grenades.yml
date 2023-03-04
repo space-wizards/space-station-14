@@ -163,9 +163,8 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/empgrenade.rsi
-  - type: EmitSoundOnTrigger
-    sound:
-      path: /Audio/Effects/Lightning/lightningshock.ogg
+  - type: EmpOnTrigger
+    range: 4
   - type: DeleteOnTrigger
   - type: Appearance
     visuals:
