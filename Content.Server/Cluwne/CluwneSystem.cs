@@ -35,7 +35,7 @@ public sealed class CluwneSystem : EntitySystem
         SubscribeLocalEvent<CluwneComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<CluwneComponent, MobStateChangedEvent>(OnMobState);
         SubscribeLocalEvent<CluwneComponent, EmoteEvent>(OnEmote, before:
-            new[] { typeof(VocalSystem), typeof(BodyEmotesSystem) });
+        new[] { typeof(VocalSystem), typeof(BodyEmotesSystem) });
     }
 
     /// <summary>
@@ -85,7 +85,7 @@ public sealed class CluwneSystem : EntitySystem
     {
         if (args.Handled)
             return;
-            args.Handled = _chat.TryPlayEmoteSound(uid, EmoteSounds, args.Emote);
+        args.Handled = _chat.TryPlayEmoteSound(uid, EmoteSounds, args.Emote);
 
         if (_robustRandom.Prob(component.GiggleRandomChance))
         {
