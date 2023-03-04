@@ -2,6 +2,7 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Light.Components;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Robust.Shared.Map;
 
 namespace Content.Server.Emp;
@@ -10,6 +11,7 @@ public sealed class EmpSystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly PoweredLightSystem _poweredLight = default!;
+    [Dependency] private readonly ApcSystem _apc = default!;
 
     public const string EmpPulseEffectPrototype = "EffectEmpPulse";
     public const string EmpDisabledEffectPrototype = "EffectEmpDisabled";
@@ -35,6 +37,11 @@ public sealed class EmpSystem : EntitySystem
             {
                 affected = true;
                 _poweredLight.TryDestroyBulb(uid, light);
+            }
+            if (TryComp<ApcComponent>(uid, out var apc) && apc.MainBreakerEnabled)
+            {
+                affected = true;
+                _apc.ApcToggleBreaker(uid, apc);
             }
             if (affected)
             {
