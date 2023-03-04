@@ -111,6 +111,34 @@ public sealed class MindTests
     }
 
     [Test]
+    public async Task TestReplaceMind()
+    {
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ NoClient = true });
+        var server = pairTracker.Pair.Server;
+
+        var entMan = server.ResolveDependency<IServerEntityManager>();
+
+        await server.WaitAssertion(() =>
+        {
+            var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
+
+            var entity = entMan.SpawnEntity(null, new MapCoordinates());
+            var mindComp = entMan.EnsureComponent<MindComponent>(entity);
+
+            var mind = CreateMind(null, mindSystem);
+            mindSystem.TransferTo(mind, entity);
+            Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind));
+            
+            var mind2 = CreateMind(null, mindSystem);
+            mindSystem.TransferTo(mind2, entity);
+            Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind2));
+            Assert.That(mind.OwnedEntity != entity);
+        });
+
+        await pairTracker.CleanReturnAsync();
+    }
+
+    [Test]
     public async Task TestEntityDeadWhenGibbed()
     {
         await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ NoClient = true, ExtraPrototypes = Prototypes });
