@@ -74,7 +74,9 @@ public sealed partial class CargoSystem
         SubscribeLocalEvent<CargoShuttleConsoleComponent, CargoCallShuttleMessage>(OnCargoShuttleCall);
         SubscribeLocalEvent<CargoShuttleConsoleComponent, CargoRecallShuttleMessage>(RecallCargoShuttle);
 
-        SubscribeLocalEvent<CargoShuttleConsoleComponent, CargoPalletSellMessage>(OnPalletSale);
+        SubscribeLocalEvent<CargoPalletConsoleComponent, CargoPalletSellMessage>(OnPalletSale);
+        SubscribeLocalEvent<CargoPalletConsoleComponent, CargoPalletAppraiseMessage>(OnPalletAppraise);
+        SubscribeLocalEvent<CargoPalletConsoleComponent, BoundUIOpenedEvent>(OnPalletUIOpen);
 
         SubscribeLocalEvent<CargoPilotConsoleComponent, ConsoleShuttleEvent>(OnCargoGetConsole);
         SubscribeLocalEvent<CargoPilotConsoleComponent, AfterActivatableUIOpenEvent>(OnCargoPilotConsoleOpen);
@@ -149,6 +151,48 @@ public sealed partial class CargoSystem
             if (stationUid != component.Station) continue;
             UpdateShuttleState(console, stationUid);
         }
+    }
+
+    private void UpdatePalletConsoleInterface(EntityUid uid, CargoPalletConsoleComponent component)
+    {
+        var bui = _uiSystem.GetUi(component.Owner, CargoPalletConsoleUiKey.Sale);
+
+        if (!TryComp<TransformComponent>(uid, out var xform) || xform.GridUid == null)
+            return;
+        var gridUid = xform.GridUid;
+        _sawmill.Debug($"console updated");
+
+        GetPalletGoods((EntityUid) gridUid, out var toSell, out var amount);
+        _uiSystem.SetUiState(bui,
+            new CargoPalletConsoleInterfaceState((int) amount, toSell.Count));
+    }
+
+    private void OnPalletUIOpen(EntityUid uid, CargoPalletConsoleComponent component, BoundUIOpenedEvent args)
+    {
+        var player = args.Session.AttachedEntity;
+        _sawmill.Debug($"UI opened");
+        if (player == null)
+            return;
+
+        UpdatePalletConsoleInterface(uid, component);
+    }
+
+    /// <summary>
+    /// Ok so this is just the same thing as opening the UI, its a refresh button.
+    /// I know this would probably feel better if it were like predicted and dynamic as pallet contents change
+    /// However.
+    /// I dont want it to explode if cargo uses a conveyor to move 8000 pineapple slices or whatever, they are
+    /// known for their entity spam i wouldnt put it past them
+    /// </summary>
+
+    private void OnPalletAppraise(EntityUid uid, CargoPalletConsoleComponent component, CargoPalletAppraiseMessage args)
+    {
+        var player = args.Session.AttachedEntity;
+        _sawmill.Debug($"appraise message sent");
+        if (player == null)
+            return;
+
+        UpdatePalletConsoleInterface(uid, component);
     }
 
     private void OnCargoShuttleConsoleStartup(EntityUid uid, CargoShuttleConsoleComponent component, ComponentStartup args)
@@ -312,11 +356,22 @@ public sealed partial class CargoSystem
 
     private void SellPallets(EntityUid gridUid, out double amount)
     {
+        GetPalletGoods(gridUid, out var toSell, out amount);
+
+        _sawmill.Debug($"Cargo sold {toSell.Count} entities for {amount}");
+
+        foreach (var ent in toSell)
+        {
+            Del(ent);
+        }
+    }
+
+    private void GetPalletGoods(EntityUid gridUid, out HashSet<EntityUid> toSell, out double amount)
+    {
         amount = 0;
-        var toSell = new HashSet<EntityUid>();
         var xformQuery = GetEntityQuery<TransformComponent>();
         var blacklistQuery = GetEntityQuery<CargoSellBlacklistComponent>();
-
+        toSell = new HashSet<EntityUid>();
         foreach (var pallet in GetCargoPallets(gridUid))
         {
             // Containers should already get the sell price of their children so can skip those.
@@ -339,13 +394,6 @@ public sealed partial class CargoSystem
                 toSell.Add(ent);
                 amount += price;
             }
-        }
-
-        _sawmill.Debug($"Cargo sold {toSell.Count} entities for {amount}");
-
-        foreach (var ent in toSell)
-        {
-            Del(ent);
         }
     }
 
@@ -438,21 +486,21 @@ public sealed partial class CargoSystem
         }
     }
 
-    private void OnPalletSale(EntityUid uid, CargoShuttleConsoleComponent component, CargoPalletSellMessage args)
+    private void OnPalletSale(EntityUid uid, CargoPalletConsoleComponent component, CargoPalletSellMessage args)
     {
         var player = args.Session.AttachedEntity;
-
+        _sawmill.Debug($"sell message sent");
         if (player == null)
             return;
 
-        var stationUid = _station.GetOwningStation(uid);
-
-        if (stationUid == null)
+        if (!TryComp<TransformComponent>(uid, out var xform) || xform.GridUid == null)
             return;
+        var gridUid = xform.GridUid;
 
-        SellPallets((EntityUid) stationUid, out var price);
+        SellPallets((EntityUid) gridUid, out var price);
         var stackPrototype = _prototypeManager.Index<StackPrototype>("Credit");
-        _stack.Spawn((int)price, stackPrototype, uid.ToCoordinates());        
+        _stack.Spawn((int)price, stackPrototype, uid.ToCoordinates());
+        UpdatePalletConsoleInterface(uid, component);
     }
 
     private void RecallCargoShuttle(EntityUid uid, CargoShuttleConsoleComponent component, CargoRecallShuttleMessage args)
