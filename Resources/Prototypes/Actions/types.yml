@@ -27,6 +27,7 @@
   name: open-storage-implant-action-name
   description: open-storage-implant-action-description
   itemIconStyle: BigAction
+  priority: -20
   icon:
     sprite: Clothing/Back/Backpacks/backpack.rsi
     state: icon
@@ -38,6 +39,7 @@
   description: activate-micro-bomb-action-description
   checkCanInteract: false
   itemIconStyle: BigAction
+  priority: -20
   icon:
     sprite: Actions/Implants/implants.rsi
     state: explosive
@@ -50,6 +52,7 @@
   charges: 3
   checkCanInteract: false
   itemIconStyle: BigAction
+  priority: -20
   icon:
     sprite: Actions/Implants/implants.rsi
     state: freedom

@@ -247,8 +247,6 @@
       - id: FoodTinMREOpen
     sound:
       path: /Audio/Items/can_open3.ogg
-  - type: StaticPrice
-    price: 50
 
 
 - type: entity

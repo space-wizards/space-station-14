@@ -15,7 +15,7 @@
             return (Acts & act) != 0;
         }
 
-        public void Execute(EntityUid owner, DestructibleSystem system)
+        public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
         {
             if (HasAct(ThresholdActs.Breakage))
             {

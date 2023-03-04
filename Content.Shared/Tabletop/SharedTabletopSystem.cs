@@ -40,7 +40,7 @@ namespace Content.Shared.Tabletop
 
             // Move the entity and dirty it (we use the map ID from the entity so noone can try to be funny and move the item to another map)
             var transform = EntityManager.GetComponent<TransformComponent>(msg.MovedEntityUid);
-            _transforms.SetParent(transform, _mapMan.GetMapEntityId(transform.MapID));
+            _transforms.SetParent(msg.MovedEntityUid, transform, _mapMan.GetMapEntityId(transform.MapID));
             _transforms.SetLocalPositionNoLerp(transform, msg.Coordinates.Position);
         }
 
