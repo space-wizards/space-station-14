@@ -728,7 +728,7 @@
   suffix: External, Emergency, Glass, Docking, Locked
   components:
     - type: PriorityDock
-      tag: EmergencyDock
+      tag: DockEmergency
     - type: AccessReader
       access: [["External"]]
 
