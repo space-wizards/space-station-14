@@ -1,11 +1,15 @@
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.Light.Components;
+using Content.Server.Light.EntitySystems;
+using Content.Server.Power.Components;
 using Robust.Shared.Map;
 
 namespace Content.Server.Emp;
 
 public sealed class EmpSystem : EntitySystem
 {
-    [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly PoweredLightSystem _poweredLight = default!;
 
     public const string EmpPulseEffectPrototype = "EffectEmpPulse";
 
@@ -15,14 +19,21 @@ public sealed class EmpSystem : EntitySystem
         SubscribeLocalEvent<EmpOnTriggerComponent, TriggerEvent>(HandleEmpTrigger);
     }
 
-    public void EmpPulse(EntityCoordinates coordinates, float range)
+    public void EmpPulse(EntityCoordinates coordinates, float range, float energyConsumption)
     {
+        foreach (var uid in _lookup.GetEntitiesInRange(coordinates.EntityId, range))
+        {
+            if (TryComp<BatteryComponent>(uid, out var battery))
+                battery.UseCharge(energyConsumption);
+            if (TryComp<PoweredLightComponent>(uid, out var light))
+                _poweredLight.TryDestroyBulb(light.Owner, light);
+        }
         Spawn(EmpPulseEffectPrototype, coordinates);
     }
 
     private void HandleEmpTrigger(EntityUid uid, EmpOnTriggerComponent comp, TriggerEvent args)
     {
-        EmpPulse(Transform(uid).Coordinates, comp.Range);
+        EmpPulse(Transform(uid).Coordinates, comp.Range, comp.EnergyConsumption);
         args.Handled = true;
     }
 }
