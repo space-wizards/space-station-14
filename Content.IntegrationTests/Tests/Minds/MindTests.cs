@@ -222,4 +222,57 @@ public sealed class MindTests
 
         await pairTracker.CleanReturnAsync();
     }
+
+    [Test]
+    public async Task TestAddRemoveHasRoles()
+    {
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ NoClient = true });
+        var server = pairTracker.Pair.Server;
+
+        var entMan = server.ResolveDependency<IServerEntityManager>();
+
+        await server.WaitAssertion(() =>
+        {
+            var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
+
+            var entity = entMan.SpawnEntity(null, new MapCoordinates());
+            var mindComp = entMan.EnsureComponent<MindComponent>(entity);
+
+            var mind = CreateMind(null, mindSystem);
+
+            Assert.That(mind.UserId, Is.EqualTo(null));
+
+            mindSystem.TransferTo(mind, entity);
+            Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind));
+
+            Assert.That(!mindSystem.HasRole<TraitorRole>(mind));
+            Assert.That(!mindSystem.HasRole<Job>(mind));
+
+            var traitorRole = new TraitorRole(mind, new AntagPrototype());
+            
+            mindSystem.AddRole(mind, traitorRole);
+            
+            Assert.That(mindSystem.HasRole<TraitorRole>(mind));
+            Assert.That(!mindSystem.HasRole<Job>(mind));
+
+            var jobRole = new Job(mind, new JobPrototype());
+            
+            mindSystem.AddRole(mind, jobRole);
+            
+            Assert.That(mindSystem.HasRole<TraitorRole>(mind));
+            Assert.That(mindSystem.HasRole<Job>(mind));
+            
+            mindSystem.RemoveRole(mind, traitorRole);
+            
+            Assert.That(!mindSystem.HasRole<TraitorRole>(mind));
+            Assert.That(mindSystem.HasRole<Job>(mind));
+            
+            mindSystem.RemoveRole(mind, jobRole);
+            
+            Assert.That(!mindSystem.HasRole<TraitorRole>(mind));
+            Assert.That(!mindSystem.HasRole<Job>(mind));
+        });
+
+        await pairTracker.CleanReturnAsync();
+    }
 }
