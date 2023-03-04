@@ -20,7 +20,7 @@ public sealed class EmpSystem : EntitySystem
     {
         foreach (var uid in _lookup.GetEntitiesInRange(coordinates, range))
         {
-            var ev = new EmpPulseEvent(Transform(uid).Coordinates.ToMap(EntityManager), range, energyConsumption, false);
+            var ev = new EmpPulseEvent(coordinates, range, energyConsumption, false);
             RaiseLocalEvent(uid, ref ev);
             if (ev.Affected)
                 Spawn(EmpDisabledEffectPrototype, Transform(uid).Coordinates);
