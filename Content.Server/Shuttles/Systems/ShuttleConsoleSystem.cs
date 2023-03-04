@@ -91,7 +91,10 @@ namespace Content.Server.Shuttles.Systems
             }
 
             var dock = HasComp<MapComponent>(args.Destination);
-            _shuttle.FTLTravel(shuttle, args.Destination, dock: dock);
+            var tagEv = new FTLTagEvent();
+            RaiseLocalEvent(xform.GridUid.Value, ref tagEv);
+
+            _shuttle.FTLTravel(shuttle, args.Destination, dock: dock, priorityTag: tagEv.Tag);
         }
 
         private void OnDock(DockEvent ev)
