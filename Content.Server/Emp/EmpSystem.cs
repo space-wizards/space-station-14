@@ -1,8 +1,4 @@
 using Content.Server.Explosion.EntitySystems;
-using Content.Server.Light.Components;
-using Content.Server.Light.EntitySystems;
-using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
 using Robust.Shared.Map;
 
 namespace Content.Server.Emp;
@@ -10,8 +6,6 @@ namespace Content.Server.Emp;
 public sealed class EmpSystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly PoweredLightSystem _poweredLight = default!;
-    [Dependency] private readonly ApcSystem _apc = default!;
 
     public const string EmpPulseEffectPrototype = "EffectEmpPulse";
     public const string EmpDisabledEffectPrototype = "EffectEmpDisabled";
@@ -19,45 +13,27 @@ public sealed class EmpSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<EmpPulseEvent>(EmpPulse);
         SubscribeLocalEvent<EmpOnTriggerComponent, TriggerEvent>(HandleEmpTrigger);
     }
 
-    public void EmpPulse(ref EmpPulseEvent args)
+    public void EmpPulse(MapCoordinates coordinates, float range, float energyConsumption)
     {
-        foreach (var uid in _lookup.GetEntitiesInRange(args.Coordinates, args.Range))
+        foreach (var uid in _lookup.GetEntitiesInRange(coordinates, range))
         {
-            var affected = false;
-            if (TryComp<BatteryComponent>(uid, out var battery))
-            {
-                affected = true;
-                battery.UseCharge(args.EnergyConsumption);
-            }
-            if (TryComp<PoweredLightComponent>(uid, out var light))
-            {
-                affected = true;
-                _poweredLight.TryDestroyBulb(uid, light);
-            }
-            if (TryComp<ApcComponent>(uid, out var apc) && apc.MainBreakerEnabled)
-            {
-                affected = true;
-                _apc.ApcToggleBreaker(uid, apc);
-            }
-            if (affected)
-            {
+            var ev = new EmpPulseEvent(Transform(uid).Coordinates.ToMap(EntityManager), range, energyConsumption, false);
+            RaiseLocalEvent(uid, ref ev);
+            if (ev.Affected)
                 Spawn(EmpDisabledEffectPrototype, Transform(uid).Coordinates);
-            }
         }
-        Spawn(EmpPulseEffectPrototype, args.Coordinates);
+        Spawn(EmpPulseEffectPrototype, coordinates);
     }
 
     private void HandleEmpTrigger(EntityUid uid, EmpOnTriggerComponent comp, TriggerEvent args)
     {
-        var ev = new EmpPulseEvent(Transform(uid).Coordinates.ToMap(EntityManager), comp.Range, comp.EnergyConsumption);
-        RaiseLocalEvent(ref ev);
+        EmpPulse(Transform(uid).Coordinates.ToMap(EntityManager), comp.Range, comp.EnergyConsumption);
         args.Handled = true;
     }
 }
 
 [ByRefEvent]
-public readonly record struct EmpPulseEvent(MapCoordinates Coordinates, float Range, float EnergyConsumption);
+public record struct EmpPulseEvent(MapCoordinates Coordinates, float Range, float EnergyConsumption, bool Affected);
