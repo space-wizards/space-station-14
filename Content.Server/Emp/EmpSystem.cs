@@ -16,24 +16,29 @@ public sealed class EmpSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<EmpPulseEvent>(EmpPulse);
         SubscribeLocalEvent<EmpOnTriggerComponent, TriggerEvent>(HandleEmpTrigger);
     }
 
-    public void EmpPulse(MapCoordinates coordinates, float range, float energyConsumption)
+    public void EmpPulse(ref EmpPulseEvent args)
     {
-        foreach (var uid in _lookup.GetEntitiesInRange(coordinates, range))
+        foreach (var uid in _lookup.GetEntitiesInRange(args.coordinates, args.range))
         {
             if (TryComp<BatteryComponent>(uid, out var battery))
-                battery.UseCharge(energyConsumption);
+                battery.UseCharge(args.energyConsumption);
             if (TryComp<PoweredLightComponent>(uid, out var light))
                 _poweredLight.TryDestroyBulb(uid, light);
         }
-        Spawn(EmpPulseEffectPrototype, coordinates);
+        Spawn(EmpPulseEffectPrototype, args.coordinates);
     }
 
     private void HandleEmpTrigger(EntityUid uid, EmpOnTriggerComponent comp, TriggerEvent args)
     {
-        EmpPulse(Transform(uid).Coordinates.ToMap(EntityManager), comp.Range, comp.EnergyConsumption);
+        var ev = new EmpPulseEvent(Transform(uid).Coordinates.ToMap(EntityManager), comp.Range, comp.EnergyConsumption);
+        RaiseLocalEvent(ref ev);
         args.Handled = true;
     }
 }
+
+[ByRefEvent]
+public readonly record struct EmpPulseEvent(MapCoordinates coordinates, float range, float energyConsumption);
