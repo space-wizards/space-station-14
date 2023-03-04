@@ -25,6 +25,8 @@
   id: FoodBreadSliceBase
   abstract: true
   components:
+  - type: Item
+    size: 1
   - type: FlavorProfile
     flavors:
       - bread

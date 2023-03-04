@@ -2,6 +2,7 @@ name: YAML Linter
 
 on:
   push:
+    branches: [ master, staging, trying ]
   merge_group:
   pull_request:
     types: [ opened, reopened, synchronize, ready_for_review ]

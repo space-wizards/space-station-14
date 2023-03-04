@@ -1,4 +1,5 @@
-﻿using Content.Server.Medical.Components;
+using Content.Server.Medical.Components;
+using Content.Shared.DoAfter;
 using Content.Shared.Body.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.Emag.Systems;
@@ -143,17 +144,6 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
         args.Handled = true;
     }
 
-    protected void DoInsertCryoPod(EntityUid uid, SharedCryoPodComponent cryoPodComponent, DoInsertCryoPodEvent args)
-    {
-        cryoPodComponent.DragDropCancelToken = null;
-        InsertBody(uid, args.ToInsert, cryoPodComponent);
-    }
-
-    protected void DoInsertCancelCryoPod(EntityUid uid, SharedCryoPodComponent cryoPodComponent, DoInsertCancelledCryoPodEvent args)
-    {
-        cryoPodComponent.DragDropCancelToken = null;
-    }
-
     protected void OnCryoPodPryFinished(EntityUid uid, SharedCryoPodComponent cryoPodComponent, CryoPodPryFinished args)
     {
         cryoPodComponent.IsPrying = false;
@@ -167,8 +157,6 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
 
     #region Event records
 
-    protected record DoInsertCryoPodEvent(EntityUid ToInsert);
-    protected record DoInsertCancelledCryoPodEvent;
     protected record CryoPodPryFinished;
     protected record CryoPodPryInterrupted;
 
