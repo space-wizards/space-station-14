@@ -1,5 +1,3 @@
-#Oh dear god this shit took way too long to do.
-#TODO: Probably split these up later on because it's not possible to make these not have a chance to have like 50 things in them
 - type: entity
   id: ClosetMaintenanceFilledRandom
   suffix: Filled, Random
@@ -7,500 +5,735 @@
   components:
     - type: StorageFill
       contents:
-#Junk
-        - id: FoodPacketPopcornTrash
-          prob: 0.025
-        - id: FoodPacketChipsTrash
-          prob: 0.025
-        - id: FoodPacketCheesieTrash
-          prob: 0.025
-        - id: FoodPacketSemkiTrash
-          prob: 0.025
-        - id: FoodPacketBoritosTrash
-          prob: 0.025
-        - id: FoodPacketSyndiTrash
-          prob: 0.025
-        - id: FoodPacketChocolateTrash
-          prob: 0.025
-        - id: FoodPacketChowMeinTrash
-          prob: 0.025
-        - id: FoodPlateSmallTrash
-          prob: 0.025
-        - id: FoodBowlBigTrash
-          prob: 0.025
-        - id: FoodTinPeachesTrash
-          prob: 0.025
-        - id: FoodTinMRETrash
-          prob: 0.025
-        - id: FoodTinBeansTrash
-          prob: 0.025
-        - id: TrashBananaPeel
-          prob: 0.05
-        - id: DrinkMug
-          prob: 0.025
-        - id: DrinkMugMetal
-          prob: 0.025
-        - id: DrinkGlass
-          prob: 0.050
-        - id: ChemistryEmptyBottle01
-          prob: 0.010
-        - id: ChemistryEmptyBottle02
-          prob: 0.010
-        - id: ChemistryEmptyBottle03
-          prob: 0.010
-        - id: ChemistryEmptyBottle04
-          prob: 0.010
-        - id: ShardGlass
-          prob: 0.075
-        - id: ShardGlassReinforced
-          prob: 0.025
-        - id: ShardGlassPlasma
-          prob: 0.010
-        - id: Lighter
-          prob: 0.025
-        - id: CheapLighter
-          prob: 0.025
-        - id: Matchbox
-          prob: 0.010
-        - id: Syringe
-          prob: 0.010
-        - id: Dropper
-          prob: 0.010
-        - id: Flare
-          prob: 0.010
-        - id: GlowstickBase
-          prob: 0.0075
-        - id: GlowstickRed
-          prob: 0.0075
-        - id: GlowstickBlue
-          prob: 0.0075
-        - id: GlowstickPurple
-          prob: 0.0075
-        - id: GlowstickYellow
-          prob: 0.0075
-        - id: EmergencyOxygenTankFilled
-          prob: 0.04
-        - id: Pen
-          prob: 0.04
-        - id: LampGold
-          prob: 0.025
-        - id: Lamp
-          prob: 0.025
-        - id: ClothingHeadHatCone
-          prob: 0.025
-        - id: WetFloorSign
-          prob: 0.025
-        - id: LidSalami
-          prob: 0.025
-        - id: PowerCellSmall
-          prob: 0.0125
-        - id: PowerCellMedium
-          prob: 0.0125
-        - id: BoxFolderBase
-          prob: 0.0125
-        - id: BoxFolderGrey
-          prob: 0.0125
-        - id: BoxFolderBlack
-          prob: 0.0125
-        - id: PaperOffice
-          prob: 0.025
-        - id: ClothingMaskBreath
-          prob: 0.025
-        - id: ClothingHeadsetGrey
-          prob: 0.025
-        - id: ClothingUniformJumpsuitColorGrey
-          prob: 0.010
-        - id: ClothingUniformJumpsuitColorBlack
-          prob: 0.010
-        - id: ClothingShoesFlippers
-          prob: 0.010
-        - id: BoxMousetrap
-          prob: 0.010
-        - id: ClothingBackpack
-          prob: 0.010
-        - id: ClothingBackpackSatchel
-          prob: 0.010
-        - id: ClothingBackpackDuffel
-          prob: 0.010
-        - id: ClothingEyesGlasses  
-          prob: 0.010
+#Primary loot
+#Shitty way of doing it, but orGroups are always garunteed to spawn so there isn't really any other way.
+      - id: FoodPacketCheesieTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPacketChipsTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPacketCheesieTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPacketSemkiTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPacketBoritosTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPacketSyndiTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPacketChocolateTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPacketChowMeinTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPacketDanDanTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPlateSmallTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPlateTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBowlBig
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBowlBigTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodTinPeachesTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodTinMRETrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodTinBeansTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodCornTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodFrozenSnowconeTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodFrozenPopsicleTrash
+        prob: 1      
+        orGroup: MaintenancePrimaryLoot
+      - id: TrashBananaPeel
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: BrokenBottle
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPlateTin
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: DrinkMug
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: DrinkMugMetal
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: DrinkGlass
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: DrinkWaterCup
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: DrinkShaker
+        prob: 0.50
+        orGroup: MaintenancePrimaryLoot
+      - id: DrinkTeacup
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: DrinkCoffee
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: DrinkWaterJug
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: Bucket
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: ChemistryEmptyBottle01
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: ChemistryEmptyBottle02
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: ChemistryEmptyBottle03
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: ChemistryEmptyBottle04
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: ShardGlass
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: ShardGlassReinforced
+        prob: 0.5
+        orGroup: MaintenancePrimaryLoot
+      - id: ShardGlassPlasma
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: Pen
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: EnergyDagger
+        prob: 0.01
+        orGroup: MaintenancePrimaryLoot
+      - id: Flare
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: Syringe
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: Dropper
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: LidSalami
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: WetFloorSign
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHeadHatCone
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: PowerCellSmall
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: PowerCellMedium
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: PowerCellHigh
+        prob: 0.5
+        orGroup: MaintenancePrimaryLoot
+      - id: PowerCellHyper
+        prob: 0.125
+        orGroup: MaintenancePrimaryLoot
+      - id: PowerCellPotato
+        prob: 0.125
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxFolderBase
+        prob: 0.142
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxFolderGrey
+        prob: 0.142
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxFolderBlack
+        prob: 0.142
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxFolderRed
+        prob: 0.142
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxFolderBlue
+        prob: 0.142
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxFolderYellow
+        prob: 0.142
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxFolderWhite
+        prob: 0.142
+        orGroup: MaintenancePrimaryLoot
+      - id: CigarSpent
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: CigarGoldSpent
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxCardboard
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: EmergencyMedipen
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: EmergencyOxygenTankFilled
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: OxygenTankFilled
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: YellowOxygenTankFilled
+        prob: 0.025
+        orGroup: MaintenancePrimaryLoot
+      - id: PlasmaTankFilled
+        prob: 0.010
+        orGroup: MaintenancePrimaryLoot
+      - id: PlasmaTankFilled
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: FlashlightLantern
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHeadsetGrey
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingMaskBreath
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: GlowstickBase
+        prob: 0.275
+        orGroup: MaintenancePrimaryLoot
+      - id: GlowstickRed
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: GlowstickBlue
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: GlowstickPurple
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: GlowstickYellow
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: NetProbeCartridge
+        prob: 0.5
+        orGroup: MaintenancePrimaryLoot
+      - id: NotekeeperCartridge
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBoxDonkpocket
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBoxDonkpocketPizza
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBoxDonkpocketHonk
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBoxDonkpocketBerry
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBoxDonkpocketSpicy
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBoxDonkpocketTeriyaki
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBoxDonkpocketDink
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: WelderMini
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: WelderIndustrial
+        prob: 0.5
+        orGroup: MaintenancePrimaryLoot
+      - id: CableApcStack
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: CableMVStack
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: CableHVStack
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: RadioHandheld
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: HandheldGPSBasic
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: GeigerCounter
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: GasAnalyzer
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: CigPackBlue
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: CigPackRed
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: CigPackGreen
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: CigPackBlack
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: CigCartonBlue
+        prob: 0.10
+        orGroup: MaintenancePrimaryLoot
+      - id: CigCartonRed
+        prob: 0.10
+        orGroup: MaintenancePrimaryLoot
+      - id: CigCartonGreen
+        prob: 0.10
+        orGroup: MaintenancePrimaryLoot
+      - id: CigCartonBlack
+        prob: 0.10
+        orGroup: MaintenancePrimaryLoot
+      - id: Matchbox
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingBackpack
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingBackpackSatchel
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingBackpackDuffel
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: Soap
+        prob: 0.333
+        orGroup: MaintenancePrimaryLoot
+      - id: SoapDeluxe
+        prob: 0.333
+        orGroup: MaintenancePrimaryLoot
+      - id: SoapNT
+        prob: 0.333
+        orGroup: MaintenancePrimaryLoot
+      - id: SoapHomemade
+        prob: 0.1
+        orGroup: MaintenancePrimaryLoot
+      - id: SoapSyndie
+        prob: 0.01
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBoxDonkpocketGondola
+        prob: 0.001
+        orGroup: MaintenancePrimaryLoot
+      - id: SoapOmega
+        prob: 0.0001
+        orGroup: MaintenancePrimaryLoot
+      - id: MedkitFilled
+        prob: 0.70
+        orGroup: MaintenancePrimaryLoot
+      - id: MedkitOxygenFilled
+        prob: 0.70
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxMousetrap
+        prob: 0.333
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxSterileMask
+        prob: 0.333
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxHugHealing
+        prob: 0.333
+        orGroup: MaintenancePrimaryLoot
+      - id: CrayonBox
+        prob: 0.333
+        orGroup: MaintenancePrimaryLoot
+      - id: MonkeyCubeBox
+        prob: 0.333
+        orGroup: MaintenancePrimaryLoot
+      - id: PackPaperRolling
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: PackPaperRollingFilters
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: ComplexXenoArtifactItem
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: FireExtinguisher
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: MopItem
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingMaskGas
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHeadHelmetCosmonaut
+        prob: 0.10
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHeadHelmetScaf
+        prob: 0.10
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingOuterArmorScaf
+        prob: 0.10
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingOuterVestKevlar
+        prob: 0.10
+        orGroup: MaintenancePrimaryLoot
+      - id: Spear
+        prob: 0.001
+        orGroup: MaintenancePrimaryLoot
+      - id: SpaceMedipen
+        prob: 0.025
+        orGroup: MaintenancePrimaryLoot
+      - id: AntiPoisonMedipen
+        prob: 0.010
+        orGroup: MaintenancePrimaryLoot
+      - id: Flash
+        prob: 0.001
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingEyesGlassesMeson
+        prob: 0.050
+        orGroup: MaintenancePrimaryLoot
+      - id: HandLabeler
+        prob: 0.4
+        orGroup: MaintenancePrimaryLoot
+      - id: lantern
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: PartRodMetal
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHandsGlovesColorYellowBudget
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHandsGlovesColorBlack
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHandsGlovesFingerless
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHeadHatHardhatYellow
+        prob: 0.50
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHeadHatHardhatRed
+        prob: 0.50
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHeadHatHardhatOrange
+        prob: 0.50
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingShoesColorBlack
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingShoesLeather
+        prob: 0.50
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingShoesBootsSalvage
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingShoesGaloshes
+        prob: 0.1
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingEyesGlassesSunglasses
+        prob: 0.1
+        orGroup: MaintenancePrimaryLoot
+      - id: AcousticGuitarInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: ViolinInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: TrumpetInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: ElectricGuitarInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: AccordionInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: HarmonicaInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: TromboneInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: FrenchHornInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: EuphoniumInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: SaxophoneInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: BanjoInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: GlockenspielInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: XylophoneInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: BikeHornInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: RecorderInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: FluteInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: ClarinetInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: CelloInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: KalimbaInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: MicrophoneInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: OcarinaInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: BassGuitarInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: PanFluteInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: SynthesizerInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: GunpetInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: BagpipeInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: RockGuitarInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: MusicBoxInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: ViolaInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: SuperSynthesizerInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: MusicalLungInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: CannedApplauseInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: SeashellInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: ReverseCymbalsInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHeadHatWelding
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+#High-chance items
+      - id: Crowbar
+        prob: 0.2
+      - id: ClothingOuterSuitEmergency
+        prob: 0.1
+      - id: Wirecutter
+        prob: 0.075
+      - id: Wrench
+        prob: 0.075
+      - id: Welder
+        prob: 0.075
+      - id: Screwdriver
+        prob: 0.075
+      - id: Multitool
+        prob: 0.075
+      - id: trayScanner
+        prob: 0.075
+      - id: ClothingBeltUtility
+        prob: 0.075
+      - id: BoxLightMixed
+        prob: 0.050
+      - id: SheetSteel
+        prob: 0.050
+      - id: SheetSteel
+        prob: 0.050
+      - id: SheetGlass
+        prob: 0.050
+      - id: SheetPlastic
+        prob: 0.050
+#Misc.
+      - id: SheetPlasma1
+        prob: 0.025
+      - id: SheetUranium1
+        prob: 0.010
+      - id: SimpleXenoArtifactItem
+        prob: 0.06
+      - id: MediumXenoArtifactItem
+        prob: 0.02
+      - id: ResearchDisk
+        prob: 0.10
+      - id: ResearchDisk5000
+        prob: 0.05
+      - id: BoxMRE
+        prob: 0.005
+      - id: FoodTinPeachesMaint
+        prob: 0.020
+      - id: WeaponFlareGun
+        prob: 0.010
+      - id: KitchenKnife
+        prob: 0.020
+      - id: DrinkCanPack
+        prob: 0.025
+      - id: ClothingShoesBootsJack
+        prob: 0.010
+      - id: ClothingEyesGlassesThermal
+        prob: 0.010
+      - id: ClothingEyesBlindfold
+        prob: 0.010
+      - id: Paper
+        prob: 0.025
+      - id: CigarCase
+        prob: 0.025
+      - id: Cigarette
+        prob: 0.025
+      - id: CigaretteSyndicate
+        prob: 0.01
+      - id: CigarGoldCase
+        prob: 0.01
+      - id: CigarGold
+        prob: 0.01
+      - id: Cigar
+        prob: 0.01
+      - id: SmokingPipe
+        prob: 0.015
+      - id: SmokingPipeFilledTobacco
+        prob: 0.005
+      - id: SmokingPipeFilledCannabis
+        prob: 0.005
+      - id: HandheldHealthAnalyzer
+        prob: 0.025   
+      - id: AMEJar
+        prob: 0.010
+      - id: Lighter
+        prob: 0.025
+      - id: CheapLighter
+        prob: 0.050
+      - id: HydroponicsToolSpade
+        prob: 0.010
+      - id: HydroponicsToolHatchet
+        prob: 0.010
+      - id: HydroponicsToolMiniHoe
+        prob: 0.010
+      - id: HydroponicsToolClippers
+        prob: 0.010
+      - id: HydroponicsToolScythe
+        prob: 0.010
+      - id: SurvivalKnife
+        prob: 0.05
+      - id: ClothingHandsGlovesColorYellow
+        prob: 0.010
+      - id: SheetPlasteel
+        prob: 0.010
+      - id: SheetRGlass
+        prob: 0.010
+      - id: SheetPGlass
+        prob: 0.005
+      - id: SheetRPGlass
+        prob: 0.001
+      - id: JetpackMini
+        prob: 0.001
+      - id: PlushieRGBee
+        prob: 0.001
+      - id: ClothingShoesBootsCombat
+        prob: 0.002
+      - id: ClothingShoesBootsCombatFilled
+        prob: 0.001
+      - id: ClothingHandsGlovesCombat
+        prob: 0.001
+      - id: PowerCellMicroreactor
+        prob: 0.001
+      - id: WeaponMakeshiftLaser
+        prob: 0.0005
+      - id: Machete
+        prob: 0.0005
+      - id: ClothingShoesBootsMagBlinding
+        prob: 0.0001
+      - id: PowerCellAntiqueProto
+        prob: 0.00001
+      - id: SingularityToy
+        prob: 0.00001
+      - id: WeaponWandPolymorphMonkey
+        prob: 0.000001
+#Stock parts
+      - id: MicroLaserStockPart
+        prob: 0.010
+      - id: MicroManipulatorStockPart
+        prob: 0.010
+      - id: MatterBinStockPart
+        prob: 0.010
+      - id: CapacitorStockPart
+        prob: 0.010
+      - id: ScanningModuleStockPart
+        prob: 0.010
 #Fluff
-        - id: ClothingShoeSlippersDuck
-          prob: 0.005
-        - id: ClothingShoeSlippers
-          prob: 0.005
-        - id: ClothingNeckBling
-          prob: 0.005
-        - id: ClothingNeckHeadphones
-          prob: 0.005
-        - id: ClothingNeckRedTie
-          prob: 0.005
-        - id: ClothingNeckStethoscope
-          prob: 0.005
-        - id: PlushieBee
-          prob: 0.005
-        - id: PlushieCarp
-          prob: 0.005
-        - id: PlushieLizard
-          prob: 0.005
-        - id: PlushieVox
-          prob: 0.005
-        - id: PlushieSnake
-          prob: 0.005
-        - id: PlushieSlime
-          prob: 0.005
-        - id: PlushieLamp
-          prob: 0.005
-        - id: BirdToyInstrument
-          prob: 0.005
-        - id: HelicopterInstrument
-          prob: 0.005
-        - id: ToyAi
-          prob: 0.05
-        - id: ToyIan
-          prob: 0.005
-        - id: ToyMouse
-          prob: 0.005
-        - id: ToyNuke
-          prob: 0.005
-        - id: ToySword
-          prob: 0.005
-        - id: PonderingOrb
-          prob: 0.005
-        - id: PlushieSharkBlue
-          prob: 0.005
-        - id: PlushieSharkGrey
-          prob: 0.005
-        - id: PlushieSharkPink
-          prob: 0.005
-        - id: PlushieAtmosian
-          prob: 0.004
-        - id: PlushieNuke
-          prob: 0.004
-        - id: PlushieNar
-          prob: 0.003
-        - id: PlushieRouny
-          prob: 0.003
-        - id: PlushieSpaceLizard
-          prob: 0.003
-        - id: ToyAmongPequeno
-          prob: 0.003
-        - id: ClothingNeckLGBTQPin
-          prob: 0.003
-        - id: ClothingNeckAromanticPin
-          prob: 0.003
-        - id: ClothingNeckAsexualPin
-          prob: 0.003
-        - id: ClothingNeckIntersexPin
-          prob: 0.003
-        - id: ClothingNeckLesbianPin
-          prob: 0.003
-        - id: ClothingNeckNonBinaryPin
-          prob: 0.003
-        - id: ClothingNeckPansexualPin
-          prob: 0.003
-        - id: ClothingNeckBisexualPin
-          prob: 0.003
-        - id: ClothingNeckTransPin
-          prob: 0.003
-        - id: ClothingNeckCloakTrans
-          prob: 0.003
-#Instruments
-        - id: AcousticGuitarInstrument
-          prob: 0.005
-        - id: ViolinInstrument
-          prob: 0.005
-        - id: TrumpetInstrument
-          prob: 0.005
-        - id: ElectricGuitarInstrument
-          prob: 0.005
-        - id: AccordionInstrument
-          prob: 0.005
-        - id: HarmonicaInstrument
-          prob: 0.005
-        - id: TromboneInstrument
-          prob: 0.005
-        - id: FrenchHornInstrument
-          prob: 0.005
-        - id: EuphoniumInstrument
-          prob: 0.005
-        - id: SaxophoneInstrument
-          prob: 0.005
-        - id: BanjoInstrument
-          prob: 0.005
-        - id: GlockenspielInstrument
-          prob: 0.005
-        - id: XylophoneInstrument
-          prob: 0.005
-        - id: BikeHornInstrument
-          prob: 0.005
-        - id: RecorderInstrument
-          prob: 0.005
-        - id: FluteInstrument
-          prob: 0.005
-        - id: ClarinetInstrument
-          prob: 0.005
-        - id: CelloInstrument
-          prob: 0.005
-        - id: KalimbaInstrument
-          prob: 0.005
-        - id: MicrophoneInstrument
-          prob: 0.005
-        - id: OcarinaInstrument
-          prob: 0.005
-        - id: BassGuitarInstrument
-          prob: 0.005
-        - id: PanFluteInstrument
-          prob: 0.005
-        - id: SynthesizerInstrument
-          prob: 0.005
-        - id: GunpetInstrument
-          prob: 0.005
-        - id: BagpipeInstrument
-          prob: 0.005
-        - id: RockGuitarInstrument
-          prob: 0.005
-        - id: MusicBoxInstrument
-          prob: 0.005
-        - id: ViolaInstrument
-          prob: 0.005
-#Common
-        - id: Crowbar #Everyone neds a crowbar, so it is substansially more common than every other piece of loot
-          prob: 0.2
-        - id: FlashlightLantern
-          prob: 0.1
-        - id: ClothingMaskGas
-          prob: 0.1
-        - id: ClothingHeadHatWelding
-          prob: 0.1
-        - id: SheetSteel
-          prob: 0.05
-        - id: SheetGlass
-          prob: 0.05
-        - id: PartRodMetal
-          prob: 0.05
-        - id: SheetPlastic
-          prob: 0.05
-        - id: ClothingMaskSterile
-          prob: 0.05
-        - id: FoodTinPeachesMaint
-          prob: 0.033
-        - id: ClothingHandsGlovesColorYellowBudget
-          prob: 0.033
-        - id: ClothingHandsGlovesColorBlack
-          prob: 0.033
-        - id: ClothingHandsGlovesFingerless
-          prob: 0.033
-        - id: CableApcStack
-          prob: 0.1
-        - id: Wirecutter
-          prob: 0.075
-        - id: Screwdriver
-          prob: 0.075
-        - id: Wrench
-          prob: 0.075
-        - id: Welder
-          prob: 0.0375
-        - id: WelderMini
-          prob: 0.0375
-        - id: GeigerCounter
-          prob: 0.075
-        - id: trayScanner
-          prob: 0.075
-        - id: SprayBottleSpaceCleaner
-          prob: 0.025
-        - id: PlantBGoneSpray
-          prob: 0.025
-        - id: WeedSpray
-          prob: 0.025
-#Uncommon
-        - id: GasAnalyzer
-          prob: 0.05
-        - id: HandheldGPSBasic
-          prob: 0.05
-        - id: Multitool
-          prob: 0.05
-        - id: ClothingBeltUtility
-          prob: 0.05
-        - id: lantern
-          prob: 0.05
-        - id: CrayonBox
-          prob: 0.05
-        - id: Soap
-          prob: 0.025
-        - id: SoapHomemade
-          prob: 0.025
-        - id: SoapNT
-          prob: 0.025
-        - id: ClothingOuterCoatGentle
-          prob: 0.01875
-        - id: ClothingOuterCoatJensen
-          prob: 0.01875
-        - id: ClothingOuterWinterCoat
-          prob: 0.01875
-        - id: ClothingOuterCoatLab
-          prob: 0.01875
-        - id: ClothingOuterHoodieGrey
-          prob: 0.01875
-        - id: ClothingOuterHoodieBlack
-          prob: 0.01875
-        - id: HandLabeler
-          prob: 0.04
-        - id: ClothingEyesGlassesMeson
-          prob: 0.04
-#Rare
-        - id: ClothingShoesBootsJack  
-          prob: 0.033
-        - id: SheetPlasma1
-          prob: 0.033
-        - id: MopItem
-          prob: 0.033
-        - id: Bucket
-          prob: 0.033
-        - id: DrinkCanPack
-          prob: 0.033
-        - id: BriefcaseBrownFilled
-          prob: 0.033
-        - id: SimpleXenoArtifactItem
-          prob: 0.033
-        - id: MediumXenoArtifactItem
-          prob: 0.025
-        - id: CableMVStack
-          prob: 0.025
-        - id: CableHVStack
-          prob: 0.025
-        - id: DiceBag
-          prob: 0.025
-        - id: ClothingOuterSuitEmergency
-          prob: 0.025
-        - id: HandheldHealthAnalyzer
-          prob: 0.025          
-        - id: MedkitFilled
-          prob: 0.025
-        - id: MedkitOxygenFilled
-          prob: 0.025
-        - id: EmergencyMedipen
-          prob: 0.025
-        - id: SpaceMedipen
-          prob: 0.025
-        - id: SheetUranium1
-          prob: 0.025
-        - id: Beaker
-          prob: 0.025
-        - id: ResearchDisk
-          prob: 0.025
-        - id: OxygenTankFilled
-          prob: 0.025
-        - id: PowerCellHigh
-          prob: 0.025
-        - id: Shovel
-          prob: 0.025
-        - id: ClothingHeadHatCake
-          prob: 0.0125
-        - id: ClothingHeadHatUshanka
-          prob: 0.0125
-        - id: WeaponFlareGun
-          prob: 0.025
-        - id: ResearchDisk5000
-          prob: 0.025
-        - id: SoapDeluxe
-          prob: 0.020
-        - id: ClothingHeadHatWeldingMaskPainted
-          prob: 0.0125
-        - id: ClothingHeadHatWeldingMaskPainted
-          prob: 0.0125
-        - id: WelderIndustrial
-          prob: 0.020
-        - id: ClothingHandsGlovesColorYellow
-          prob: 0.020
-        - id: ClothingHeadHelmetHelmetOld
-          prob: 0.020
-        - id: MonkeyCubeBox
-          prob: 0.020
-        - id: NotekeeperCartridge
-          prob: 0.010
-        - id: NetProbeCartridge
-          prob: 0.010
-        - id: BoxLightbulb
-          prob: 0.020
-        - id: BoxLighttube
-          prob: 0.020
-        - id: HydroponicsToolSpade
-          prob: 0.010
-        - id: HydroponicsToolHatchet
-          prob: 0.010
-        - id: HydroponicsToolMiniHoe
-          prob: 0.010
-        - id: HydroponicsToolClippers
-          prob: 0.010
-        - id: HydroponicsToolScythe
-          prob: 0.010
-#Very Rare
-        - id: ClothingHeadHelmetCosmonaut
-          prob: 0.010
-        - id: ClothingHeadHelmetScaf
-          prob: 0.010
-        - id: ClothingOuterArmorScaf
-          prob: 0.010
-        - id: ClothingOuterVestKevlar
-          prob: 0.010
-        - id: LargeBeaker
-          prob: 0.010
-        - id: SoapSyndie
-          prob: 0.010
-        - id: CigarCaseGold
-          prob: 0.010
-        - id: ComplexXenoArtifactItem
-          prob: 0.010
-        - id: ClothingHandsGlovesCombat
-          prob: 0.010
-        - id: ClothingShoesBootsCombat
-          prob: 0.010
-        - id: Flash
-          prob: 0.010
-        - id: Spear
-          prob: 0.010
-        - id: ClothingUniformJumpsuitColorBlack
-          prob: 0.010
-        - id: WelderIndustrialAdvanced
-          prob: 0.010
-        - id: PowerCellHyper
-          prob: 0.010
-        - id: YellowOxygenTankFilled
-          prob: 0.010
-        - id: FlashlightSeclite
-          prob: 0.010
-        - id: WeaponMakeshiftLaser
-          prob: 0.005
-        - id: WeaponPistolHandmade
-          prob: 0.005
-        - id: SurvivalKnife
-          prob: 0.010
-        - id: Machete
-          prob: 0.005
-        - id: ClothingShoesBootsCombatFilled
-          prob: 0.005
-        - id: CowToolboxFilled
-          prob: 0.005
-        - id: PowerCellMicroreactor
-          prob: 0.005
-        - id: ResearchDisk10000
-          prob: 0.005
-        - id: SoapOmega
-          prob: 0.005
-        - id: EnergyDagger
-          prob: 0.001
-        - id: MagicDiceBag
-          prob: 0.001
-        - id: PowerCellAntiqueProto
-          prob: 0.001
-        - id: PlushieRGBee
-          prob: 0.001
-        - id: SingularityToy
-          prob: 0.0005
-        - id: WeaponWandPolymorphMonkey
-          prob: 0.0005
-          
+#This list is intentionally short to avoid locker bloat
+      - id: ClothingNeckHeadphones
+        prob: 0.003
+      - id: ClothingNeckRedTie
+        prob: 0.003
+      - id: ClothingNeckLGBTPin
+        prob: 0.003
+      - id: ClothingNeckAromanticPin
+        prob: 0.003
+      - id: ClothingNeckAsexualPin
+        prob: 0.003
+      - id: ClothingNeckIntersexPin
+        prob: 0.003
+      - id: ClothingNeckLesbianPin
+        prob: 0.003
+      - id: ClothingNeckNonBinaryPin
+        prob: 0.003
+      - id: ClothingNeckPansexualPin
+        prob: 0.003
+      - id: ClothingNeckBisexualPin
+        prob: 0.003
+      - id: ClothingNeckTransPin
+        prob: 0.003
+      - id: PlushieSpaceLizard
+        prob: 0.0025
+      - id: ToyAmongPequeno
+        prob: 0.0025
+      - id: ClothingNeckCloakTrans
+        prob: 0.0025
+      - id: ClothingNeckStethoscope
+        prob: 0.0025
+      - id: ClothingSocksUnderCoder
+        prob: 0.0025
+        
 - type: entity
   id: ClosetWallMaintenanceFilledRandom
   parent: ClosetWall
@@ -508,977 +741,1469 @@
   components:
     - type: StorageFill
       contents:
-#Junk
-        - id: FoodPacketPopcornTrash
-          prob: 0.025
-        - id: FoodPacketChipsTrash
-          prob: 0.025
-        - id: FoodPacketCheesieTrash
-          prob: 0.025
-        - id: FoodPacketSemkiTrash
-          prob: 0.025
-        - id: FoodPacketBoritosTrash
-          prob: 0.025
-        - id: FoodPacketSyndiTrash
-          prob: 0.025
-        - id: FoodPacketChocolateTrash
-          prob: 0.025
-        - id: FoodPacketChowMeinTrash
-          prob: 0.025
-        - id: FoodPlateSmallTrash
-          prob: 0.025
-        - id: FoodBowlBigTrash
-          prob: 0.025
-        - id: FoodTinPeachesTrash
-          prob: 0.025
-        - id: FoodTinMRETrash
-          prob: 0.025
-        - id: FoodTinBeansTrash
-          prob: 0.025
-        - id: TrashBananaPeel
-          prob: 0.05
-        - id: DrinkMug
-          prob: 0.025
-        - id: DrinkMugMetal
-          prob: 0.025
-        - id: DrinkGlass
-          prob: 0.050
-        - id: ChemistryEmptyBottle01
-          prob: 0.010
-        - id: ChemistryEmptyBottle02
-          prob: 0.010
-        - id: ChemistryEmptyBottle03
-          prob: 0.010
-        - id: ChemistryEmptyBottle04
-          prob: 0.010
-        - id: ShardGlass
-          prob: 0.075
-        - id: ShardGlassReinforced
-          prob: 0.025
-        - id: ShardGlassPlasma
-          prob: 0.010
-        - id: Lighter
-          prob: 0.025
-        - id: CheapLighter
-          prob: 0.025
-        - id: Matchbox
-          prob: 0.010
-        - id: Syringe
-          prob: 0.010
-        - id: Dropper
-          prob: 0.010
-        - id: Flare
-          prob: 0.010
-        - id: GlowstickBase
-          prob: 0.0075
-        - id: GlowstickRed
-          prob: 0.0075
-        - id: GlowstickBlue
-          prob: 0.0075
-        - id: GlowstickPurple
-          prob: 0.0075
-        - id: GlowstickYellow
-          prob: 0.0075
-        - id: EmergencyOxygenTankFilled
-          prob: 0.04
-        - id: Pen
-          prob: 0.04
-        - id: LampGold
-          prob: 0.025
-        - id: Lamp
-          prob: 0.025
-        - id: ClothingHeadHatCone
-          prob: 0.025
-        - id: WetFloorSign
-          prob: 0.025
-        - id: LidSalami
-          prob: 0.025
-        - id: PowerCellSmall
-          prob: 0.0125
-        - id: PowerCellMedium
-          prob: 0.0125
-        - id: BoxFolderBase
-          prob: 0.0125
-        - id: BoxFolderGrey
-          prob: 0.0125
-        - id: BoxFolderBlack
-          prob: 0.0125
-        - id: PaperOffice
-          prob: 0.025
-        - id: ClothingMaskBreath
-          prob: 0.025
-        - id: ClothingHeadsetGrey
-          prob: 0.025
-        - id: ClothingUniformJumpsuitColorGrey
-          prob: 0.010
-        - id: ClothingUniformJumpsuitColorBlack
-          prob: 0.010
-        - id: ClothingShoesFlippers
-          prob: 0.010
-        - id: BoxMousetrap
-          prob: 0.010
-        - id: ClothingBackpack
-          prob: 0.010
-        - id: ClothingBackpackSatchel
-          prob: 0.010
-        - id: ClothingBackpackDuffel
-          prob: 0.010
-        - id: ClothingEyesGlasses  
-          prob: 0.010
+#Primary loot
+#Shitty way of doing it, but orGroups are always garunteed to spawn so there isn't really any other way.
+      - id: FoodPacketCheesieTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPacketChipsTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPacketCheesieTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPacketSemkiTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPacketBoritosTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPacketSyndiTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPacketChocolateTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPacketChowMeinTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPacketDanDanTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPlateSmallTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPlateTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBowlBig
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBowlBigTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodTinPeachesTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodTinMRETrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodTinBeansTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodCornTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodFrozenSnowconeTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodFrozenPopsicleTrash
+        prob: 1      
+        orGroup: MaintenancePrimaryLoot
+      - id: TrashBananaPeel
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: BrokenBottle
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPlateTin
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: DrinkMug
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: DrinkMugMetal
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: DrinkGlass
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: DrinkWaterCup
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: DrinkShaker
+        prob: 0.50
+        orGroup: MaintenancePrimaryLoot
+      - id: DrinkTeacup
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: DrinkCoffee
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: DrinkWaterJug
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: Bucket
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: ChemistryEmptyBottle01
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: ChemistryEmptyBottle02
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: ChemistryEmptyBottle03
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: ChemistryEmptyBottle04
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: ShardGlass
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: ShardGlassReinforced
+        prob: 0.5
+        orGroup: MaintenancePrimaryLoot
+      - id: ShardGlassPlasma
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: Pen
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: EnergyDagger
+        prob: 0.01
+        orGroup: MaintenancePrimaryLoot
+      - id: Flare
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: Syringe
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: Dropper
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: LidSalami
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: WetFloorSign
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHeadHatCone
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: PowerCellSmall
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: PowerCellMedium
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: PowerCellHigh
+        prob: 0.5
+        orGroup: MaintenancePrimaryLoot
+      - id: PowerCellHyper
+        prob: 0.125
+        orGroup: MaintenancePrimaryLoot
+      - id: PowerCellPotato
+        prob: 0.125
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxFolderBase
+        prob: 0.142
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxFolderGrey
+        prob: 0.142
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxFolderBlack
+        prob: 0.142
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxFolderRed
+        prob: 0.142
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxFolderBlue
+        prob: 0.142
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxFolderYellow
+        prob: 0.142
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxFolderWhite
+        prob: 0.142
+        orGroup: MaintenancePrimaryLoot
+      - id: CigarSpent
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: CigarGoldSpent
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxCardboard
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: EmergencyMedipen
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: EmergencyOxygenTankFilled
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: OxygenTankFilled
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: YellowOxygenTankFilled
+        prob: 0.025
+        orGroup: MaintenancePrimaryLoot
+      - id: PlasmaTankFilled
+        prob: 0.010
+        orGroup: MaintenancePrimaryLoot
+      - id: PlasmaTankFilled
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: FlashlightLantern
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHeadsetGrey
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingMaskBreath
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: GlowstickBase
+        prob: 0.275
+        orGroup: MaintenancePrimaryLoot
+      - id: GlowstickRed
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: GlowstickBlue
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: GlowstickPurple
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: GlowstickYellow
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: NetProbeCartridge
+        prob: 0.5
+        orGroup: MaintenancePrimaryLoot
+      - id: NotekeeperCartridge
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBoxDonkpocket
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBoxDonkpocketPizza
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBoxDonkpocketHonk
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBoxDonkpocketBerry
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBoxDonkpocketSpicy
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBoxDonkpocketTeriyaki
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBoxDonkpocketDink
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: WelderMini
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: WelderIndustrial
+        prob: 0.5
+        orGroup: MaintenancePrimaryLoot
+      - id: CableApcStack
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: CableMVStack
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: CableHVStack
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: RadioHandheld
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: HandheldGPSBasic
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: GeigerCounter
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: GasAnalyzer
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: CigPackBlue
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: CigPackRed
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: CigPackGreen
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: CigPackBlack
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: CigCartonBlue
+        prob: 0.10
+        orGroup: MaintenancePrimaryLoot
+      - id: CigCartonRed
+        prob: 0.10
+        orGroup: MaintenancePrimaryLoot
+      - id: CigCartonGreen
+        prob: 0.10
+        orGroup: MaintenancePrimaryLoot
+      - id: CigCartonBlack
+        prob: 0.10
+        orGroup: MaintenancePrimaryLoot
+      - id: Matchbox
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingBackpack
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingBackpackSatchel
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingBackpackDuffel
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: Soap
+        prob: 0.333
+        orGroup: MaintenancePrimaryLoot
+      - id: SoapDeluxe
+        prob: 0.333
+        orGroup: MaintenancePrimaryLoot
+      - id: SoapNT
+        prob: 0.333
+        orGroup: MaintenancePrimaryLoot
+      - id: SoapHomemade
+        prob: 0.1
+        orGroup: MaintenancePrimaryLoot
+      - id: SoapSyndie
+        prob: 0.01
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBoxDonkpocketGondola
+        prob: 0.001
+        orGroup: MaintenancePrimaryLoot
+      - id: SoapOmega
+        prob: 0.0001
+        orGroup: MaintenancePrimaryLoot
+      - id: MedkitFilled
+        prob: 0.70
+        orGroup: MaintenancePrimaryLoot
+      - id: MedkitOxygenFilled
+        prob: 0.70
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxMousetrap
+        prob: 0.333
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxSterileMask
+        prob: 0.333
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxHugHealing
+        prob: 0.333
+        orGroup: MaintenancePrimaryLoot
+      - id: CrayonBox
+        prob: 0.333
+        orGroup: MaintenancePrimaryLoot
+      - id: MonkeyCubeBox
+        prob: 0.333
+        orGroup: MaintenancePrimaryLoot
+      - id: PackPaperRolling
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: PackPaperRollingFilters
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: ComplexXenoArtifactItem
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: FireExtinguisher
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: MopItem
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingMaskGas
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHeadHelmetCosmonaut
+        prob: 0.10
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHeadHelmetScaf
+        prob: 0.10
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingOuterArmorScaf
+        prob: 0.10
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingOuterVestKevlar
+        prob: 0.10
+        orGroup: MaintenancePrimaryLoot
+      - id: Spear
+        prob: 0.001
+        orGroup: MaintenancePrimaryLoot
+      - id: SpaceMedipen
+        prob: 0.025
+        orGroup: MaintenancePrimaryLoot
+      - id: AntiPoisonMedipen
+        prob: 0.010
+        orGroup: MaintenancePrimaryLoot
+      - id: Flash
+        prob: 0.001
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingEyesGlassesMeson
+        prob: 0.050
+        orGroup: MaintenancePrimaryLoot
+      - id: HandLabeler
+        prob: 0.4
+        orGroup: MaintenancePrimaryLoot
+      - id: lantern
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: PartRodMetal
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHandsGlovesColorYellowBudget
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHandsGlovesColorBlack
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHandsGlovesFingerless
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHeadHatHardhatYellow
+        prob: 0.50
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHeadHatHardhatRed
+        prob: 0.50
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHeadHatHardhatOrange
+        prob: 0.50
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingShoesColorBlack
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingShoesLeather
+        prob: 0.50
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingShoesBootsSalvage
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingShoesGaloshes
+        prob: 0.1
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingEyesGlassesSunglasses
+        prob: 0.1
+        orGroup: MaintenancePrimaryLoot
+      - id: AcousticGuitarInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: ViolinInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: TrumpetInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: ElectricGuitarInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: AccordionInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: HarmonicaInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: TromboneInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: FrenchHornInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: EuphoniumInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: SaxophoneInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: BanjoInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: GlockenspielInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: XylophoneInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: BikeHornInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: RecorderInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: FluteInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: ClarinetInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: CelloInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: KalimbaInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: MicrophoneInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: OcarinaInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: BassGuitarInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: PanFluteInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: SynthesizerInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: GunpetInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: BagpipeInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: RockGuitarInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: MusicBoxInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: ViolaInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: SuperSynthesizerInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: MusicalLungInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: CannedApplauseInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: SeashellInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: ReverseCymbalsInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHeadHatWelding
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+#High-chance items
+      - id: Crowbar
+        prob: 0.2
+      - id: ClothingOuterSuitEmergency
+        prob: 0.1
+      - id: Wirecutter
+        prob: 0.075
+      - id: Wrench
+        prob: 0.075
+      - id: Welder
+        prob: 0.075
+      - id: Screwdriver
+        prob: 0.075
+      - id: Multitool
+        prob: 0.075
+      - id: trayScanner
+        prob: 0.075
+      - id: ClothingBeltUtility
+        prob: 0.075
+      - id: BoxLightMixed
+        prob: 0.050
+      - id: SheetSteel
+        prob: 0.050
+      - id: SheetSteel
+        prob: 0.050
+      - id: SheetGlass
+        prob: 0.050
+      - id: SheetPlastic
+        prob: 0.050
+#Misc.
+      - id: SheetPlasma1
+        prob: 0.025
+      - id: SheetUranium1
+        prob: 0.010
+      - id: SimpleXenoArtifactItem
+        prob: 0.06
+      - id: MediumXenoArtifactItem
+        prob: 0.02
+      - id: ResearchDisk
+        prob: 0.10
+      - id: ResearchDisk5000
+        prob: 0.05
+      - id: BoxMRE
+        prob: 0.005
+      - id: FoodTinPeachesMaint
+        prob: 0.020
+      - id: WeaponFlareGun
+        prob: 0.010
+      - id: KitchenKnife
+        prob: 0.020
+      - id: DrinkCanPack
+        prob: 0.025
+      - id: ClothingShoesBootsJack
+        prob: 0.010
+      - id: ClothingEyesGlassesThermal
+        prob: 0.010
+      - id: ClothingEyesBlindfold
+        prob: 0.010
+      - id: Paper
+        prob: 0.025
+      - id: CigarCase
+        prob: 0.025
+      - id: Cigarette
+        prob: 0.025
+      - id: CigaretteSyndicate
+        prob: 0.01
+      - id: CigarGoldCase
+        prob: 0.01
+      - id: CigarGold
+        prob: 0.01
+      - id: Cigar
+        prob: 0.01
+      - id: SmokingPipe
+        prob: 0.015
+      - id: SmokingPipeFilledTobacco
+        prob: 0.005
+      - id: SmokingPipeFilledCannabis
+        prob: 0.005
+      - id: HandheldHealthAnalyzer
+        prob: 0.025   
+      - id: AMEJar
+        prob: 0.010
+      - id: Lighter
+        prob: 0.025
+      - id: CheapLighter
+        prob: 0.050
+      - id: HydroponicsToolSpade
+        prob: 0.010
+      - id: HydroponicsToolHatchet
+        prob: 0.010
+      - id: HydroponicsToolMiniHoe
+        prob: 0.010
+      - id: HydroponicsToolClippers
+        prob: 0.010
+      - id: HydroponicsToolScythe
+        prob: 0.010
+      - id: SurvivalKnife
+        prob: 0.05
+      - id: ClothingHandsGlovesColorYellow
+        prob: 0.010
+      - id: SheetPlasteel
+        prob: 0.010
+      - id: SheetRGlass
+        prob: 0.010
+      - id: SheetPGlass
+        prob: 0.005
+      - id: SheetRPGlass
+        prob: 0.001
+      - id: JetpackMini
+        prob: 0.001
+      - id: PlushieRGBee
+        prob: 0.001
+      - id: ClothingShoesBootsCombat
+        prob: 0.002
+      - id: ClothingShoesBootsCombatFilled
+        prob: 0.001
+      - id: ClothingHandsGlovesCombat
+        prob: 0.001
+      - id: PowerCellMicroreactor
+        prob: 0.001
+      - id: WeaponMakeshiftLaser
+        prob: 0.0005
+      - id: Machete
+        prob: 0.0005
+      - id: ClothingShoesBootsMagBlinding
+        prob: 0.0001
+      - id: PowerCellAntiqueProto
+        prob: 0.00001
+      - id: SingularityToy
+        prob: 0.00001
+      - id: WeaponWandPolymorphMonkey
+        prob: 0.000001
+#Stock parts
+      - id: MicroLaserStockPart
+        prob: 0.010
+      - id: MicroManipulatorStockPart
+        prob: 0.010
+      - id: MatterBinStockPart
+        prob: 0.010
+      - id: CapacitorStockPart
+        prob: 0.010
+      - id: ScanningModuleStockPart
+        prob: 0.010
 #Fluff
-        - id: ClothingShoeSlippersDuck
-          prob: 0.005
-        - id: ClothingShoeSlippers
-          prob: 0.005
-        - id: ClothingNeckBling
-          prob: 0.005
-        - id: ClothingNeckHeadphones
-          prob: 0.005
-        - id: ClothingNeckRedTie
-          prob: 0.005
-        - id: ClothingNeckStethoscope
-          prob: 0.005
-        - id: PlushieBee
-          prob: 0.005
-        - id: PlushieCarp
-          prob: 0.005
-        - id: PlushieLizard
-          prob: 0.005
-        - id: PlushieVox
-          prob: 0.005
-        - id: PlushieSnake
-          prob: 0.005
-        - id: PlushieSlime
-          prob: 0.005
-        - id: PlushieLamp
-          prob: 0.005
-        - id: BirdToyInstrument
-          prob: 0.005
-        - id: HelicopterInstrument
-          prob: 0.005
-        - id: ToyAi
-          prob: 0.05
-        - id: ToyIan
-          prob: 0.005
-        - id: ToyMouse
-          prob: 0.005
-        - id: ToyNuke
-          prob: 0.005
-        - id: ToySword
-          prob: 0.005
-        - id: PonderingOrb
-          prob: 0.005
-        - id: PlushieSharkBlue
-          prob: 0.005
-        - id: PlushieSharkGrey
-          prob: 0.005
-        - id: PlushieSharkPink
-          prob: 0.005
-        - id: PlushieAtmosian
-          prob: 0.004
-        - id: PlushieNuke
-          prob: 0.004
-        - id: PlushieNar
-          prob: 0.003
-        - id: PlushieRouny
-          prob: 0.003
-        - id: PlushieSpaceLizard
-          prob: 0.003
-        - id: ToyAmongPequeno
-          prob: 0.003
-        - id: ClothingNeckLGBTQPin
-          prob: 0.003
-        - id: ClothingNeckAromanticPin
-          prob: 0.003
-        - id: ClothingNeckAsexualPin
-          prob: 0.003
-        - id: ClothingNeckIntersexPin
-          prob: 0.003
-        - id: ClothingNeckLesbianPin
-          prob: 0.003
-        - id: ClothingNeckNonBinaryPin
-          prob: 0.003
-        - id: ClothingNeckPanseuxalPin
-          prob: 0.003
-        - id: ClothingNeckBisexualPin
-          prob: 0.003
-        - id: ClothingNeckTransPin
-          prob: 0.003
-        - id: ClothingNeckCloakTrans
-          prob: 0.003
-#Instruments
-        - id: AcousticGuitarInstrument
-          prob: 0.005
-        - id: ViolinInstrument
-          prob: 0.005
-        - id: TrumpetInstrument
-          prob: 0.005
-        - id: ElectricGuitarInstrument
-          prob: 0.005
-        - id: AccordionInstrument
-          prob: 0.005
-        - id: HarmonicaInstrument
-          prob: 0.005
-        - id: TromboneInstrument
-          prob: 0.005
-        - id: FrenchHornInstrument
-          prob: 0.005
-        - id: EuphoniumInstrument
-          prob: 0.005
-        - id: SaxophoneInstrument
-          prob: 0.005
-        - id: BanjoInstrument
-          prob: 0.005
-        - id: GlockenspielInstrument
-          prob: 0.005
-        - id: XylophoneInstrument
-          prob: 0.005
-        - id: BikeHornInstrument
-          prob: 0.005
-        - id: RecorderInstrument
-          prob: 0.005
-        - id: FluteInstrument
-          prob: 0.005
-        - id: ClarinetInstrument
-          prob: 0.005
-        - id: CelloInstrument
-          prob: 0.005
-        - id: KalimbaInstrument
-          prob: 0.005
-        - id: MicrophoneInstrument
-          prob: 0.005
-        - id: OcarinaInstrument
-          prob: 0.005
-        - id: BassGuitarInstrument
-          prob: 0.005
-        - id: PanFluteInstrument
-          prob: 0.005
-        - id: SynthesizerInstrument
-          prob: 0.005
-        - id: GunpetInstrument
-          prob: 0.005
-        - id: BagpipeInstrument
-          prob: 0.005
-        - id: RockGuitarInstrument
-          prob: 0.005
-        - id: MusicBoxInstrument
-          prob: 0.005
-        - id: ViolaInstrument
-          prob: 0.005
-#Common
-        - id: Crowbar #Everyone neds a crowbar, so it is substansially more common than every other piece of loot
-          prob: 0.2
-        - id: FlashlightLantern
-          prob: 0.1
-        - id: ClothingMaskGas
-          prob: 0.1
-        - id: ClothingHeadHatWelding
-          prob: 0.1
-        - id: SheetSteel
-          prob: 0.05
-        - id: SheetGlass
-          prob: 0.05
-        - id: PartRodMetal
-          prob: 0.05
-        - id: SheetPlastic
-          prob: 0.05
-        - id: ClothingMaskSterile
-          prob: 0.05
-        - id: FoodTinPeachesMaint
-          prob: 0.033
-        - id: ClothingHandsGlovesColorYellowBudget
-          prob: 0.033
-        - id: ClothingHandsGlovesColorBlack
-          prob: 0.033
-        - id: ClothingHandsGlovesFingerless
-          prob: 0.033
-        - id: CableApcStack
-          prob: 0.1
-        - id: Wirecutter
-          prob: 0.075
-        - id: Screwdriver
-          prob: 0.075
-        - id: Wrench
-          prob: 0.075
-        - id: Welder
-          prob: 0.0375
-        - id: WelderMini
-          prob: 0.0375
-        - id: GeigerCounter
-          prob: 0.075
-        - id: trayScanner
-          prob: 0.075
-        - id: SprayBottleSpaceCleaner
-          prob: 0.025
-        - id: PlantBGoneSpray
-          prob: 0.025
-        - id: WeedSpray
-          prob: 0.025
-#Uncommon
-        - id: GasAnalyzer
-          prob: 0.05
-        - id: HandheldGPSBasic
-          prob: 0.05
-        - id: Multitool
-          prob: 0.05
-        - id: ClothingBeltUtility
-          prob: 0.05
-        - id: lantern
-          prob: 0.05
-        - id: CrayonBox
-          prob: 0.05
-        - id: Soap
-          prob: 0.025
-        - id: SoapHomemade
-          prob: 0.025
-        - id: SoapNT
-          prob: 0.025
-        - id: ClothingOuterCoatGentle
-          prob: 0.01875
-        - id: ClothingOuterCoatJensen
-          prob: 0.01875
-        - id: ClothingOuterWinterCoat
-          prob: 0.01875
-        - id: ClothingOuterCoatLab
-          prob: 0.01875
-        - id: ClothingOuterHoodieGrey
-          prob: 0.01875
-        - id: ClothingOuterHoodieBlack
-          prob: 0.01875
-        - id: HandLabeler
-          prob: 0.04
-        - id: ClothingEyesGlassesMeson
-          prob: 0.04
-#Rare
-        - id: ClothingShoesBootsJack  
-          prob: 0.033
-        - id: SheetPlasma1
-          prob: 0.033
-        - id: MopItem
-          prob: 0.033
-        - id: Bucket
-          prob: 0.033
-        - id: DrinkCanPack
-          prob: 0.033
-        - id: BriefcaseBrownFilled
-          prob: 0.033
-        - id: SimpleXenoArtifactItem
-          prob: 0.033
-        - id: MediumXenoArtifactItem
-          prob: 0.025
-        - id: CableMVStack
-          prob: 0.025
-        - id: CableHVStack
-          prob: 0.025
-        - id: DiceBag
-          prob: 0.025
-        - id: ClothingOuterSuitEmergency
-          prob: 0.025
-        - id: HandheldHealthAnalyzer
-          prob: 0.025          
-        - id: MedkitFilled
-          prob: 0.025
-        - id: MedkitOxygenFilled
-          prob: 0.025
-        - id: EmergencyMedipen
-          prob: 0.025
-        - id: SpaceMedipen
-          prob: 0.025
-        - id: SheetUranium1
-          prob: 0.025
-        - id: Beaker
-          prob: 0.025
-        - id: ResearchDisk
-          prob: 0.025
-        - id: OxygenTankFilled
-          prob: 0.025
-        - id: PowerCellHigh
-          prob: 0.025
-        - id: Shovel
-          prob: 0.025
-        - id: ClothingHeadHatCake
-          prob: 0.0125
-        - id: ClothingHeadHatUshanka
-          prob: 0.0125
-        - id: WeaponFlareGun
-          prob: 0.025
-        - id: ResearchDisk5000
-          prob: 0.025
-        - id: SoapDeluxe
-          prob: 0.020
-        - id: ClothingHeadHatWeldingMaskPainted
-          prob: 0.0125
-        - id: ClothingHeadHatWeldingMaskPainted
-          prob: 0.0125
-        - id: WelderIndustrial
-          prob: 0.020
-        - id: ClothingHandsGlovesColorYellow
-          prob: 0.020
-        - id: ClothingHeadHelmetHelmetOld
-          prob: 0.020
-        - id: MonkeyCubeBox
-          prob: 0.020
-        - id: NotekeeperCartridge
-          prob: 0.010
-        - id: NetProbeCartridge
-          prob: 0.010
-        - id: BoxLightbulb
-          prob: 0.020
-        - id: BoxLighttube
-          prob: 0.020
-        - id: HydroponicsToolSpade
-          prob: 0.010
-        - id: HydroponicsToolHatchet
-          prob: 0.010
-        - id: HydroponicsToolMiniHoe
-          prob: 0.010
-        - id: HydroponicsToolClippers
-          prob: 0.010
-        - id: HydroponicsToolScythe
-          prob: 0.010
-#Very Rare
-        - id: ClothingHeadHelmetCosmonaut
-          prob: 0.010
-        - id: ClothingHeadHelmetScaf
-          prob: 0.010
-        - id: ClothingOuterArmorScaf
-          prob: 0.010
-        - id: ClothingOuterVestKevlar
-          prob: 0.010
-        - id: LargeBeaker
-          prob: 0.010
-        - id: SoapSyndie
-          prob: 0.010
-        - id: CigarCaseGold
-          prob: 0.010
-        - id: ComplexXenoArtifactItem
-          prob: 0.010
-        - id: ClothingHandsGlovesCombat
-          prob: 0.010
-        - id: ClothingShoesBootsCombat
-          prob: 0.010
-        - id: Flash
-          prob: 0.010
-        - id: Spear
-          prob: 0.010
-        - id: ClothingUniformJumpsuitColorBlack
-          prob: 0.010
-        - id: WelderIndustrialAdvanced
-          prob: 0.010
-        - id: PowerCellHyper
-          prob: 0.010
-        - id: YellowOxygenTankFilled
-          prob: 0.010
-        - id: FlashlightSeclite
-          prob: 0.010
-        - id: WeaponMakeshiftLaser
-          prob: 0.005
-        - id: WeaponPistolHandmade
-          prob: 0.005
-        - id: SurvivalKnife
-          prob: 0.010
-        - id: Machete
-          prob: 0.005
-        - id: ClothingShoesBootsCombatFilled
-          prob: 0.005
-        - id: CowToolboxFilled
-          prob: 0.005
-        - id: PowerCellMicroreactor
-          prob: 0.005
-        - id: ResearchDisk10000
-          prob: 0.005
-        - id: SoapOmega
-          prob: 0.005
-        - id: EnergyDagger
-          prob: 0.001
-        - id: MagicDiceBag
-          prob: 0.001
-        - id: PowerCellAntiqueProto
-          prob: 0.001
-        - id: PlushieRGBee
-          prob: 0.001
-        - id: SingularityToy
-          prob: 0.0005
-        - id: WeaponWandPolymorphMonkey
-          prob: 0.0005
-          
+#This list is intentionally short to avoid locker bloat
+      - id: ClothingNeckHeadphones
+        prob: 0.003
+      - id: ClothingNeckRedTie
+        prob: 0.003
+      - id: ClothingNeckLGBTPin
+        prob: 0.003
+      - id: ClothingNeckAromanticPin
+        prob: 0.003
+      - id: ClothingNeckAsexualPin
+        prob: 0.003
+      - id: ClothingNeckIntersexPin
+        prob: 0.003
+      - id: ClothingNeckLesbianPin
+        prob: 0.003
+      - id: ClothingNeckNonBinaryPin
+        prob: 0.003
+      - id: ClothingNeckPansexualPin
+        prob: 0.003
+      - id: ClothingNeckBisexualPin
+        prob: 0.003
+      - id: ClothingNeckTransPin
+        prob: 0.003
+      - id: PlushieSpaceLizard
+        prob: 0.0025
+      - id: ToyAmongPequeno
+        prob: 0.0025
+      - id: ClothingNeckCloakTrans
+        prob: 0.0025
+      - id: ClothingNeckStethoscope
+        prob: 0.0025
+      - id: ClothingSocksUnderCoder
+        prob: 0.0025
+        
 - type: entity
-  id: ClosetMaintenanceFilledRandomLesser
-  suffix: Lesser Filled, Random
-  parent: ClosetMaintenance
+  id: CrateMaintenanceFilledRandom
+  parent: CrateGenericSteel
+  name: maintenance crate
+  suffix: Filled, Random
   components:
     - type: StorageFill
       contents:
-#Junk
-        - id: FoodPacketPopcornTrash
-          prob: 0.025
-        - id: FoodPacketChipsTrash
-          prob: 0.025
-        - id: FoodPacketCheesieTrash
-          prob: 0.025
-        - id: FoodPacketSemkiTrash
-          prob: 0.025
-        - id: FoodPacketBoritosTrash
-          prob: 0.025
-        - id: FoodPacketSyndiTrash
-          prob: 0.025
-        - id: FoodPacketChocolateTrash
-          prob: 0.025
-        - id: FoodPacketChowMeinTrash
-          prob: 0.025
-        - id: FoodPlateSmallTrash
-          prob: 0.025
-        - id: FoodBowlBigTrash
-          prob: 0.025
-        - id: FoodTinPeachesTrash
-          prob: 0.025
-        - id: FoodTinMRETrash
-          prob: 0.025
-        - id: FoodTinBeansTrash
-          prob: 0.025
-        - id: TrashBananaPeel
-          prob: 0.05
-        - id: DrinkMug
-          prob: 0.025
-        - id: DrinkMugMetal
-          prob: 0.025
-        - id: DrinkGlass
-          prob: 0.050
-        - id: ChemistryEmptyBottle01
-          prob: 0.010
-        - id: ChemistryEmptyBottle02
-          prob: 0.010
-        - id: ChemistryEmptyBottle03
-          prob: 0.010
-        - id: ChemistryEmptyBottle04
-          prob: 0.010
-        - id: ShardGlass
-          prob: 0.075
-        - id: ShardGlassReinforced
-          prob: 0.025
-        - id: ShardGlassPlasma
-          prob: 0.010
-        - id: Lighter
-          prob: 0.025
-        - id: CheapLighter
-          prob: 0.025
-        - id: Matchbox
-          prob: 0.010
-        - id: Syringe
-          prob: 0.010
-        - id: Dropper
-          prob: 0.010
-        - id: Flare
-          prob: 0.010
-        - id: GlowstickBase
-          prob: 0.0075
-        - id: GlowstickRed
-          prob: 0.0075
-        - id: GlowstickBlue
-          prob: 0.0075
-        - id: GlowstickPurple
-          prob: 0.0075
-        - id: GlowstickYellow
-          prob: 0.0075
-        - id: EmergencyOxygenTankFilled
-          prob: 0.04
-        - id: Pen
-          prob: 0.04
-        - id: LampGold
-          prob: 0.025
-        - id: Lamp
-          prob: 0.025
-        - id: ClothingHeadHatCone
-          prob: 0.025
-        - id: WetFloorSign
-          prob: 0.025
-        - id: LidSalami
-          prob: 0.0125
-        - id: PowerCellSmall
-          prob: 0.0125
-        - id: PowerCellMedium
-          prob: 0.0125
-        - id: BoxFolderBase
-          prob: 0.0125
-        - id: BoxFolderGrey
-          prob: 0.0125
-        - id: BoxFolderBlack
-          prob: 0.0125
-        - id: PaperOffice
-          prob: 0.025
-        - id: ClothingMaskBreath
-          prob: 0.025
-        - id: ClothingHeadsetGrey
-          prob: 0.025
-        - id: ClothingUniformJumpsuitColorGrey
-          prob: 0.010
-        - id: ClothingUniformJumpsuitColorBlack
-          prob: 0.010
-        - id: ClothingShoesFlippers
-          prob: 0.010
-        - id: BoxMousetrap
-          prob: 0.010
-        - id: ClothingBackpack
-          prob: 0.010
-        - id: ClothingBackpackSatchel
-          prob: 0.010
-        - id: ClothingBackpackDuffel
-          prob: 0.010
-        - id: ClothingEyesGlasses  
-          prob: 0.010
+#Primary loot
+#Shitty way of doing it, but orGroups are always garunteed to spawn so there isn't really any other way.
+      - id: FoodPacketCheesieTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPacketChipsTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPacketCheesieTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPacketSemkiTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPacketBoritosTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPacketSyndiTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPacketChocolateTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPacketChowMeinTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPacketDanDanTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPlateSmallTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPlateTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBowlBig
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBowlBigTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodTinPeachesTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodTinMRETrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodTinBeansTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodCornTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodFrozenSnowconeTrash
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodFrozenPopsicleTrash
+        prob: 1      
+        orGroup: MaintenancePrimaryLoot
+      - id: TrashBananaPeel
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: BrokenBottle
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodPlateTin
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: DrinkMug
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: DrinkMugMetal
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: DrinkGlass
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: DrinkWaterCup
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: DrinkShaker
+        prob: 0.50
+        orGroup: MaintenancePrimaryLoot
+      - id: DrinkTeacup
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: DrinkCoffee
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: DrinkWaterJug
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: Bucket
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: ChemistryEmptyBottle01
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: ChemistryEmptyBottle02
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: ChemistryEmptyBottle03
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: ChemistryEmptyBottle04
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: ShardGlass
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: ShardGlassReinforced
+        prob: 0.5
+        orGroup: MaintenancePrimaryLoot
+      - id: ShardGlassPlasma
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: Pen
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: EnergyDagger
+        prob: 0.01
+        orGroup: MaintenancePrimaryLoot
+      - id: Flare
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: Syringe
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: Dropper
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: LidSalami
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: WetFloorSign
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHeadHatCone
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: PowerCellSmall
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: PowerCellMedium
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: PowerCellHigh
+        prob: 0.5
+        orGroup: MaintenancePrimaryLoot
+      - id: PowerCellHyper
+        prob: 0.125
+        orGroup: MaintenancePrimaryLoot
+      - id: PowerCellPotato
+        prob: 0.125
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxFolderBase
+        prob: 0.142
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxFolderGrey
+        prob: 0.142
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxFolderBlack
+        prob: 0.142
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxFolderRed
+        prob: 0.142
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxFolderBlue
+        prob: 0.142
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxFolderYellow
+        prob: 0.142
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxFolderWhite
+        prob: 0.142
+        orGroup: MaintenancePrimaryLoot
+      - id: CigarSpent
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: CigarGoldSpent
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxCardboard
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: EmergencyMedipen
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: EmergencyOxygenTankFilled
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: OxygenTankFilled
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: YellowOxygenTankFilled
+        prob: 0.025
+        orGroup: MaintenancePrimaryLoot
+      - id: PlasmaTankFilled
+        prob: 0.010
+        orGroup: MaintenancePrimaryLoot
+      - id: PlasmaTankFilled
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: FlashlightLantern
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHeadsetGrey
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingMaskBreath
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: GlowstickBase
+        prob: 0.275
+        orGroup: MaintenancePrimaryLoot
+      - id: GlowstickRed
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: GlowstickBlue
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: GlowstickPurple
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: GlowstickYellow
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: NetProbeCartridge
+        prob: 0.5
+        orGroup: MaintenancePrimaryLoot
+      - id: NotekeeperCartridge
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBoxDonkpocket
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBoxDonkpocketPizza
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBoxDonkpocketHonk
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBoxDonkpocketBerry
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBoxDonkpocketSpicy
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBoxDonkpocketTeriyaki
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBoxDonkpocketDink
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: WelderMini
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: WelderIndustrial
+        prob: 0.5
+        orGroup: MaintenancePrimaryLoot
+      - id: CableApcStack
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: CableMVStack
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: CableHVStack
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: RadioHandheld
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: HandheldGPSBasic
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: GeigerCounter
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: GasAnalyzer
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: CigPackBlue
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: CigPackRed
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: CigPackGreen
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: CigPackBlack
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: CigCartonBlue
+        prob: 0.10
+        orGroup: MaintenancePrimaryLoot
+      - id: CigCartonRed
+        prob: 0.10
+        orGroup: MaintenancePrimaryLoot
+      - id: CigCartonGreen
+        prob: 0.10
+        orGroup: MaintenancePrimaryLoot
+      - id: CigCartonBlack
+        prob: 0.10
+        orGroup: MaintenancePrimaryLoot
+      - id: Matchbox
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingBackpack
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingBackpackSatchel
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingBackpackDuffel
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: Soap
+        prob: 0.333
+        orGroup: MaintenancePrimaryLoot
+      - id: SoapDeluxe
+        prob: 0.333
+        orGroup: MaintenancePrimaryLoot
+      - id: SoapNT
+        prob: 0.333
+        orGroup: MaintenancePrimaryLoot
+      - id: SoapHomemade
+        prob: 0.1
+        orGroup: MaintenancePrimaryLoot
+      - id: SoapSyndie
+        prob: 0.01
+        orGroup: MaintenancePrimaryLoot
+      - id: FoodBoxDonkpocketGondola
+        prob: 0.001
+        orGroup: MaintenancePrimaryLoot
+      - id: SoapOmega
+        prob: 0.0001
+        orGroup: MaintenancePrimaryLoot
+      - id: MedkitFilled
+        prob: 0.70
+        orGroup: MaintenancePrimaryLoot
+      - id: MedkitOxygenFilled
+        prob: 0.70
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxMousetrap
+        prob: 0.333
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxSterileMask
+        prob: 0.333
+        orGroup: MaintenancePrimaryLoot
+      - id: BoxHugHealing
+        prob: 0.333
+        orGroup: MaintenancePrimaryLoot
+      - id: CrayonBox
+        prob: 0.333
+        orGroup: MaintenancePrimaryLoot
+      - id: MonkeyCubeBox
+        prob: 0.333
+        orGroup: MaintenancePrimaryLoot
+      - id: PackPaperRolling
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: PackPaperRollingFilters
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: ComplexXenoArtifactItem
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: FireExtinguisher
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: MopItem
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingMaskGas
+        prob: 1
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHeadHelmetCosmonaut
+        prob: 0.10
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHeadHelmetScaf
+        prob: 0.10
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingOuterArmorScaf
+        prob: 0.10
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingOuterVestKevlar
+        prob: 0.10
+        orGroup: MaintenancePrimaryLoot
+      - id: Spear
+        prob: 0.001
+        orGroup: MaintenancePrimaryLoot
+      - id: SpaceMedipen
+        prob: 0.025
+        orGroup: MaintenancePrimaryLoot
+      - id: AntiPoisonMedipen
+        prob: 0.010
+        orGroup: MaintenancePrimaryLoot
+      - id: Flash
+        prob: 0.001
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingEyesGlassesMeson
+        prob: 0.050
+        orGroup: MaintenancePrimaryLoot
+      - id: HandLabeler
+        prob: 0.4
+        orGroup: MaintenancePrimaryLoot
+      - id: lantern
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: PartRodMetal
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHandsGlovesColorYellowBudget
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHandsGlovesColorBlack
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHandsGlovesFingerless
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHeadHatHardhatYellow
+        prob: 0.50
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHeadHatHardhatRed
+        prob: 0.50
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHeadHatHardhatOrange
+        prob: 0.50
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingShoesColorBlack
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingShoesLeather
+        prob: 0.50
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingShoesBootsSalvage
+        prob: 0.25
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingShoesGaloshes
+        prob: 0.1
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingEyesGlassesSunglasses
+        prob: 0.1
+        orGroup: MaintenancePrimaryLoot
+      - id: AcousticGuitarInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: ViolinInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: TrumpetInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: ElectricGuitarInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: AccordionInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: HarmonicaInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: TromboneInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: FrenchHornInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: EuphoniumInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: SaxophoneInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: BanjoInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: GlockenspielInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: XylophoneInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: BikeHornInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: RecorderInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: FluteInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: ClarinetInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: CelloInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: KalimbaInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: MicrophoneInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: OcarinaInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: BassGuitarInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: PanFluteInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: SynthesizerInstrument
+        prob: 0.05
+        orGroup: MaintenancePrimaryLoot
+      - id: GunpetInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: BagpipeInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: RockGuitarInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: MusicBoxInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: ViolaInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: SuperSynthesizerInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: MusicalLungInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: CannedApplauseInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: SeashellInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: ReverseCymbalsInstrument
+        prob: 0.005
+        orGroup: MaintenancePrimaryLoot
+      - id: ClothingHeadHatWelding
+        prob: 0.75
+        orGroup: MaintenancePrimaryLoot
+#High-chance items
+      - id: Crowbar
+        prob: 0.2
+      - id: ClothingOuterSuitEmergency
+        prob: 0.1
+      - id: Wirecutter
+        prob: 0.075
+      - id: Wrench
+        prob: 0.075
+      - id: Welder
+        prob: 0.075
+      - id: Screwdriver
+        prob: 0.075
+      - id: Multitool
+        prob: 0.075
+      - id: trayScanner
+        prob: 0.075
+      - id: ClothingBeltUtility
+        prob: 0.075
+      - id: BoxLightMixed
+        prob: 0.050
+      - id: SheetSteel
+        prob: 0.050
+      - id: SheetSteel
+        prob: 0.050
+      - id: SheetGlass
+        prob: 0.050
+      - id: SheetPlastic
+        prob: 0.050
+#Misc.
+      - id: SheetPlasma1
+        prob: 0.025
+      - id: SheetUranium1
+        prob: 0.010
+      - id: SimpleXenoArtifactItem
+        prob: 0.06
+      - id: MediumXenoArtifactItem
+        prob: 0.02
+      - id: ResearchDisk
+        prob: 0.10
+      - id: ResearchDisk5000
+        prob: 0.05
+      - id: BoxMRE
+        prob: 0.005
+      - id: FoodTinPeachesMaint
+        prob: 0.020
+      - id: WeaponFlareGun
+        prob: 0.010
+      - id: KitchenKnife
+        prob: 0.020
+      - id: DrinkCanPack
+        prob: 0.025
+      - id: ClothingShoesBootsJack
+        prob: 0.010
+      - id: ClothingEyesGlassesThermal
+        prob: 0.010
+      - id: ClothingEyesBlindfold
+        prob: 0.010
+      - id: Paper
+        prob: 0.025
+      - id: CigarCase
+        prob: 0.025
+      - id: Cigarette
+        prob: 0.025
+      - id: CigaretteSyndicate
+        prob: 0.01
+      - id: CigarGoldCase
+        prob: 0.01
+      - id: CigarGold
+        prob: 0.01
+      - id: Cigar
+        prob: 0.01
+      - id: SmokingPipe
+        prob: 0.015
+      - id: SmokingPipeFilledTobacco
+        prob: 0.005
+      - id: SmokingPipeFilledCannabis
+        prob: 0.005
+      - id: HandheldHealthAnalyzer
+        prob: 0.025   
+      - id: AMEJar
+        prob: 0.010
+      - id: Lighter
+        prob: 0.025
+      - id: CheapLighter
+        prob: 0.050
+      - id: HydroponicsToolSpade
+        prob: 0.010
+      - id: HydroponicsToolHatchet
+        prob: 0.010
+      - id: HydroponicsToolMiniHoe
+        prob: 0.010
+      - id: HydroponicsToolClippers
+        prob: 0.010
+      - id: HydroponicsToolScythe
+        prob: 0.010
+      - id: SurvivalKnife
+        prob: 0.05
+      - id: ClothingHandsGlovesColorYellow
+        prob: 0.010
+      - id: SheetPlasteel
+        prob: 0.010
+      - id: SheetRGlass
+        prob: 0.010
+      - id: SheetPGlass
+        prob: 0.005
+      - id: SheetRPGlass
+        prob: 0.001
+      - id: JetpackMini
+        prob: 0.001
+      - id: PlushieRGBee
+        prob: 0.001
+      - id: ClothingShoesBootsCombat
+        prob: 0.002
+      - id: ClothingShoesBootsCombatFilled
+        prob: 0.001
+      - id: ClothingHandsGlovesCombat
+        prob: 0.001
+      - id: PowerCellMicroreactor
+        prob: 0.001
+      - id: WeaponMakeshiftLaser
+        prob: 0.0005
+      - id: Machete
+        prob: 0.0005
+      - id: ClothingShoesBootsMagBlinding
+        prob: 0.0001
+      - id: PowerCellAntiqueProto
+        prob: 0.00001
+      - id: SingularityToy
+        prob: 0.00001
+      - id: WeaponWandPolymorphMonkey
+        prob: 0.000001
+#Stock parts
+      - id: MicroLaserStockPart
+        prob: 0.010
+      - id: MicroManipulatorStockPart
+        prob: 0.010
+      - id: MatterBinStockPart
+        prob: 0.010
+      - id: CapacitorStockPart
+        prob: 0.010
+      - id: ScanningModuleStockPart
+        prob: 0.010
 #Fluff
-        - id: ClothingShoeSlippersDuck
-          prob: 0.005
-        - id: ClothingShoeSlippers
-          prob: 0.005
-        - id: ClothingNeckBling
-          prob: 0.005
-        - id: ClothingNeckHeadphones
-          prob: 0.005
-        - id: ClothingNeckRedTie
-          prob: 0.005
-        - id: ClothingNeckStethoscope
-          prob: 0.005
-        - id: PlushieBee
-          prob: 0.005
-        - id: PlushieCarp
-          prob: 0.005
-        - id: PlushieLizard
-          prob: 0.005
-        - id: PlushieVox
-          prob: 0.005
-        - id: PlushieSnake
-          prob: 0.005
-        - id: PlushieSlime
-          prob: 0.005
-        - id: PlushieLamp
-          prob: 0.005
-        - id: BirdToyInstrument
-          prob: 0.005
-        - id: HelicopterInstrument
-          prob: 0.005
-        - id: ToyAi
-          prob: 0.05
-        - id: ToyIan
-          prob: 0.005
-        - id: ToyMouse
-          prob: 0.005
-        - id: ToyNuke
-          prob: 0.005
-        - id: ToySword
-          prob: 0.005
-        - id: PonderingOrb
-          prob: 0.005
-        - id: PlushieSharkBlue
-          prob: 0.005
-        - id: PlushieSharkGrey
-          prob: 0.005
-        - id: PlushieSharkPink
-          prob: 0.005
-        - id: PlushieAtmosian
-          prob: 0.0025
-        - id: PlushieNuke
-          prob: 0.0025
-        - id: PlushieNar
-          prob: 0.0025
-        - id: PlushieRouny
-          prob: 0.0025
-        - id: PlushieSpaceLizard
-          prob: 0.0025
-        - id: ToyAmongPequeno
-          prob: 0.0025
-        - id: ClothingNeckLGBTQPin
-          prob: 0.0025
-        - id: ClothingNeckAromanticPin
-          prob: 0.0025
-        - id: ClothingNeckAsexualPin
-          prob: 0.0025
-        - id: ClothingNeckIntersexPin
-          prob: 0.0025
-        - id: ClothingNeckLesbianPin
-          prob: 0.0025
-        - id: ClothingNeckNonBinaryPin
-          prob: 0.0025
-        - id: ClothingNeckPansexualPin
-          prob: 0.0025
-        - id: ClothingNeckBisexualPin
-          prob: 0.0025
-        - id: ClothingNeckTransPin
-          prob: 0.0025
-        - id: ClothingNeckCloakTrans
-          prob: 0.0025
-#Instruments
-        - id: AcousticGuitarInstrument
-          prob: 0.0025
-        - id: ViolinInstrument
-          prob: 0.0025
-        - id: TrumpetInstrument
-          prob: 0.0025
-        - id: ElectricGuitarInstrument
-          prob: 0.0025
-        - id: AccordionInstrument
-          prob: 0.0025
-        - id: HarmonicaInstrument
-          prob: 0.0025
-        - id: TromboneInstrument
-          prob: 0.0025
-        - id: FrenchHornInstrument
-          prob: 0.0025
-        - id: EuphoniumInstrument
-          prob: 0.0025
-        - id: SaxophoneInstrument
-          prob: 0.0025
-        - id: BanjoInstrument
-          prob: 0.0025
-        - id: GlockenspielInstrument
-          prob: 0.0025
-        - id: XylophoneInstrument
-          prob: 0.0025
-        - id: BikeHornInstrument
-          prob: 0.0025
-        - id: RecorderInstrument
-          prob: 0.0025
-        - id: FluteInstrument
-          prob: 0.0025
-        - id: ClarinetInstrument
-          prob: 0.0025
-        - id: CelloInstrument
-          prob: 0.0025
-        - id: KalimbaInstrument
-          prob: 0.0025
-        - id: MicrophoneInstrument
-          prob: 0.0025
-        - id: OcarinaInstrument
-          prob: 0.0025
-        - id: BassGuitarInstrument
-          prob: 0.0025
-        - id: PanFluteInstrument
-          prob: 0.0025
-#Common
-        - id: Crowbar #Everyone neds a crowbar, so it is substansially more common than every other piece of loot
-          prob: 0.2
-        - id: FlashlightLantern
-          prob: 0.050
-        - id: ClothingMaskGas
-          prob: 0.050
-        - id: ClothingHeadHatWelding
-          prob: 0.050
-        - id: SheetSteel
-          prob: 0.025
-        - id: SheetGlass
-          prob: 0.025
-        - id: PartRodMetal
-          prob: 0.05
-        - id: SheetPlastic
-          prob: 0.025
-        - id: ClothingMaskSterile
-          prob: 0.025
-        - id: FoodTinPeachesMaint
-          prob: 0.025
-        - id: ClothingHandsGlovesColorYellowBudget
-          prob: 0.011
-        - id: ClothingHandsGlovesColorBlack
-          prob: 0.011
-        - id: ClothingHandsGlovesFingerless
-          prob: 0.011
-        - id: CableApcStack
-          prob: 0.075
-        - id: Wirecutter
-          prob: 0.075
-        - id: Screwdriver
-          prob: 0.075
-        - id: Wrench
-          prob: 0.075
-        - id: Welder
-          prob: 0.0375
-        - id: WelderMini
-          prob: 0.0375
-        - id: GeigerCounter
-          prob: 0.075
-        - id: trayScanner
-          prob: 0.050
-        - id: SprayBottleSpaceCleaner
-          prob: 0.011
-#Uncommon
-        - id: GasAnalyzer
-          prob: 0.05
-        - id: HandheldGPSBasic
-          prob: 0.05
-        - id: Multitool
-          prob: 0.05
-        - id: ClothingBeltUtility
-          prob: 0.05
-        - id: DrinkCanPack
-          prob: 0.033
-        - id: BriefcaseBrownFilled
-          prob: 0.033
-        - id: SimpleXenoArtifactItem
-          prob: 0.033
-        - id: MopItem
-          prob: 0.033
-        - id: Bucket
-          prob: 0.33
-        - id: lantern
-          prob: 0.025
-        - id: CrayonBox
-          prob: 0.025
-        - id: Soap
-          prob: 0.025
-        - id: ClothingOuterCoatGentle
-          prob: 0.005
-        - id: ClothingOuterCoatJensen
-          prob: 0.005
-        - id: ClothingOuterWinterCoat
-          prob: 0.005
-        - id: ClothingOuterCoatLab
-          prob: 0.005
-        - id: ClothingOuterHoodieGrey
-          prob: 0.005
-        - id: ClothingOuterHoodieBlack
-          prob: 0.005
-        - id: HandLabeler
-          prob: 0.025
-        - id: ClothingEyesGlassesMeson
-          prob: 0.025
-        - id: OxygenTankFilled
-          prob: 0.025
-        - id: EmergencyMedipen
-          prob: 0.025
-#Rare
-        - id: ClothingShoesBootsJack  
-          prob: 0.010
-        - id: SheetPlasma1
-          prob: 0.010
-        - id: BoxMRE
-          prob: 0.010
-        - id: MediumXenoArtifactItem
-          prob: 0.010
-        - id: CableMVStack
-          prob: 0.010
-        - id: CableHVStack
-          prob: 0.010
-        - id: DiceBag
-          prob: 0.005
-        - id: ClothingOuterSuitEmergency
-          prob: 0.005
-        - id: HandheldHealthAnalyzer
-          prob: 0.010          
-        - id: SpaceMedipen
-          prob: 0.010
-        - id: Beaker
-          prob: 0.010
-        - id: ResearchDisk
-          prob: 0.010
-        - id: PowerCellHigh
-          prob: 0.005
-        - id: SheetUranium1
-          prob: 0.005
-        - id: SoapHomemade
-          prob: 0.005
-        - id: SoapNT
-          prob: 0.005
-        - id: Shovel
-          prob: 0.005
-        - id: ClothingHeadHatCake
-          prob: 0.005
-        - id: ClothingHeadHatUshanka
-          prob: 0.005
-        - id: WeaponFlareGun
-          prob: 0.020
-        - id: ResearchDisk5000
-          prob: 0.010
-        - id: SoapDeluxe
-          prob: 0.005
-        - id: WelderIndustrial
-          prob: 0.010
-        - id: ClothingHeadHelmetHelmetOld
-          prob: 0.020
-        - id: MonkeyCubeBox
-          prob: 0.020
-        - id: NotekeeperCartridge
-          prob: 0.010
-        - id: NetProbeCartridge
-          prob: 0.010
-        - id: BoxLightbulb
-          prob: 0.010
-        - id: BoxLighttube
-          prob: 0.010
-        - id: ClothingHeadHelmetCosmonaut
-          prob: 0.010
-        - id: ClothingHeadHelmetScaf
-          prob: 0.010
-        - id: ClothingOuterArmorScaf
-          prob: 0.010
-        - id: ClothingOuterVestKevlar
-          prob: 0.010
-        - id: LargeBeaker
-          prob: 0.010
-        - id: SoapSyndie
-          prob: 0.010
-        - id: CigarCaseGold
-          prob: 0.010
-        - id: ComplexXenoArtifactItem
-          prob: 0.010
-        - id: Flash
-          prob: 0.010
-        - id: Spear
-          prob: 0.010
-        - id: ClothingHandsGlovesColorYellow
-          prob: 0.010
-        - id: HydroponicsToolSpade
-          prob: 0.005
-        - id: HydroponicsToolHatchet
-          prob: 0.005
-        - id: HydroponicsToolMiniHoe
-          prob: 0.005
-        - id: HydroponicsToolClippers
-          prob: 0.005
-        - id: HydroponicsToolScythe
-          prob: 0.005
-#Very Rare
-        - id: ClothingHeadHatWeldingMaskPainted
-          prob: 0.005
-        - id: ClothingHeadHatWeldingMaskPainted
-          prob: 0.005
-        - id: WelderIndustrialAdvanced
-          prob: 0.005
-        - id: PowerCellHyper
-          prob: 0.005
-        - id: YellowOxygenTankFilled
-          prob: 0.005
-        - id: ClothingHandsGlovesCombat
-          prob: 0.005
-        - id: WeaponMakeshiftLaser
-          prob: 0.005
-        - id: WeaponPistolHandmade
-          prob: 0.005
-        - id: SurvivalKnife
-          prob: 0.005
-        - id: FlashlightSeclite
-          prob: 0.005
-        - id: ClothingShoesBootsCombat
-          prob: 0.005
-        - id: ClothingShoesBootsCombatFilled
-          prob: 0.001
-        - id: CowToolboxFilled
-          prob: 0.001
-        - id: EnergyDagger
-          prob: 0.001
-        - id: Machete
-          prob: 0.001
-        - id: MagicDiceBag
-          prob: 0.0001
-        - id: PlushieRGBee
-          prob: 0.001
-        - id: PowerCellMicroreactor
-          prob: 0.00075
-        - id: ResearchDisk10000
-          prob: 0.00075
-        - id: SoapOmega
-          prob: 0.00075
-        - id: SingularityToy
-          prob: 0.0001
-        - id: WeaponWandPolymorphMonkey
-          prob: 0.0001
-         - id: PowerCellAntiqueProto
-          prob: 0.0001
+#This list is intentionally short to avoid locker bloat
+      - id: ClothingNeckHeadphones
+        prob: 0.003
+      - id: ClothingNeckRedTie
+        prob: 0.003
+      - id: ClothingNeckLGBTPin
+        prob: 0.003
+      - id: ClothingNeckAromanticPin
+        prob: 0.003
+      - id: ClothingNeckAsexualPin
+        prob: 0.003
+      - id: ClothingNeckIntersexPin
+        prob: 0.003
+      - id: ClothingNeckLesbianPin
+        prob: 0.003
+      - id: ClothingNeckNonBinaryPin
+        prob: 0.003
+      - id: ClothingNeckPansexualPin
+        prob: 0.003
+      - id: ClothingNeckBisexualPin
+        prob: 0.003
+      - id: ClothingNeckTransPin
+        prob: 0.003
+      - id: PlushieSpaceLizard
+        prob: 0.0025
+      - id: ToyAmongPequeno
+        prob: 0.0025
+      - id: ClothingNeckCloakTrans
+        prob: 0.0025
+      - id: ClothingNeckStethoscope
+        prob: 0.0025
+      - id: ClothingSocksUnderCoder
+        prob: 0.0025
+        
