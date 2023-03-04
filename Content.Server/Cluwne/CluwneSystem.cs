@@ -39,7 +39,7 @@ public sealed class CluwneSystem : EntitySystem
     }
 
     /// <summary>
-    /// Removes autoemotecomp and cluwnecomp on death.
+    /// On death removes active comps and gives genetic damage to prevent cloning.
     /// </summary>
     private void OnMobState(EntityUid uid, CluwneComponent component, MobStateChangedEvent args)
     {
