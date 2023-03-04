@@ -9,10 +9,11 @@
     sprite: Structures/Machines/Anomaly/anomaly_vessel.rsi
     layers:
     - state: base
-    - state: powered
+    - state: powered-1
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
-    - state: anomaly
+    - state: anomaly-1
+      visible: false
       shader: unshaded
       map: ["enum.AnomalyVesselVisualLayers.Base"]
     - state: panel
@@ -54,6 +55,15 @@
         enum.AnomalyVesselVisualLayers.Base:
           True: { visible: true }
           False: { visible: false }
+      enum.AnomalyVesselVisuals.AnomalyState:
+        enum.PowerDeviceVisualLayers.Powered:
+          1: { state: powered-1 }
+          2: { state: powered-2 }
+          3: { state: powered-3 }
+        enum.AnomalyVesselVisualLayers.Base:
+          1: { state: anomaly-1 }
+          2: { state: anomaly-2 }
+          3: { state: anomaly-3 }
       enum.WiresVisuals.MaintenancePanelState:
         enum.WiresVisualLayers.MaintenancePanel:
           True: { visible: false }
@@ -111,7 +121,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      density: 190
+      density: 50
       mask:
       - MachineMask
       layer:
@@ -186,6 +196,10 @@
     - state: inserting
       visible: false
       map: ["enum.MaterialStorageVisualLayers.Inserting"]
+    - state: generating
+      visible: false
+      shader: unshaded
+      map: ["enum.AnomalyGeneratorVisualLayers.Base"]
   - type: Transform
     anchored: true
   - type: ApcPowerReceiver
@@ -193,12 +207,16 @@
   - type: ExtensionCableReceiver
   - type: AmbientSound
     range: 5
-    volume: -3
+    volume: -6
     sound:
       path: /Audio/Ambience/Objects/anomaly_generator.ogg
   - type: Physics
     bodyType: Static
   - type: AnomalyGenerator
+    generatingSound:
+      path: /Audio/Machines/anomaly_generate.ogg
+    generatingFinishedSound:
+      path: /Audio/Machines/beep.ogg
   - type: MaterialStorage
     whitelist:
       tags:
@@ -237,10 +255,17 @@
       - key: enum.AnomalyGeneratorUiKey.Key
         type: AnomalyGeneratorBoundUserInterface
   - type: Appearance
+  - type: ActiveRadio
+    channels:
+    - Science
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+      enum.AnomalyGeneratorVisuals.Generating:
+        enum.AnomalyGeneratorVisualLayers.Base:
           True: { visible: true }
           False: { visible: false }
   - type: WiresVisuals

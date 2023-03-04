@@ -7,6 +7,7 @@ using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Clothing.Systems;
 
@@ -47,7 +48,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         args.Verbs.Add(new InteractionVerb()
         {
             Text = Loc.GetString("chameleon-component-verb-text"),
-            IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png",
+            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
             Act = () => TryOpenUi(uid, args.User, component)
         });
     }

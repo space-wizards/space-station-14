@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.Cargo.Systems;
 using Content.Server.Examine;
 using Content.Server.Interaction;
@@ -35,8 +36,9 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly PricingSystem _pricing = default!;
     [Dependency] private readonly StaminaSystem _stamina = default!;
     [Dependency] private readonly StunSystem _stun = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
-    public const float DamagePitchVariation = MeleeWeaponSystem.DamagePitchVariation;
+    public const float DamagePitchVariation = SharedMeleeWeaponSystem.DamagePitchVariation;
     public const float GunClumsyChance = 0.5f;
 
     public override void Initialize()
@@ -79,6 +81,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     Audio.PlayPvs(new SoundPathSpecifier("/Audio/Items/bikehorn.ogg"), gun.Owner);
 
                     PopupSystem.PopupEntity(Loc.GetString("gun-clumsy"), user.Value);
+                    _adminLogger.Add(LogType.EntityDelete, LogImpact.Medium, $"Clumsy fire by {ToPrettyString(user.Value)} deleted {ToPrettyString(gun.Owner)}");
                     Del(gun.Owner);
                     return;
                 }

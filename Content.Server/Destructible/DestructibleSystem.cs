@@ -51,7 +51,7 @@ namespace Content.Server.Destructible
                 {
                     RaiseLocalEvent(uid, new DamageThresholdReached(component, threshold), true);
 
-                    threshold.Execute(uid, this, EntityManager);
+                    threshold.Execute(uid, this, EntityManager, args.Origin);
                 }
 
                 // if destruction behavior (or some other deletion effect) occurred, don't run other triggers.

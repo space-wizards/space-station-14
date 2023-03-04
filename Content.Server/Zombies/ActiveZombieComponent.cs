@@ -1,34 +1,33 @@
 namespace Content.Server.Zombies;
 
+/// <summary>
+/// Indicates a zombie that is "alive", i.e not crit/dead.
+/// Causes it to emote when damaged.
+/// TODO: move this to generic EmoteWhenDamaged comp/system.
+/// </summary>
 [RegisterComponent]
 public sealed class ActiveZombieComponent : Component
 {
     /// <summary>
-    /// The chance that on a random attempt
-    /// that a zombie will do a groan
+    /// What emote to preform.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public float GroanChance = 0.2f;
-
-    /// <summary>
-    /// Minimum time between groans
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public float GroanCooldown = 2;
-
-    /// <summary>
-    /// The length of time between each zombie's random groan
-    /// attempt.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public float RandomGroanAttempt = 5;
-
     [ViewVariables(VVAccess.ReadWrite)]
     public string GroanEmoteId = "Scream";
 
+    /// <summary>
+    /// Minimum time between groans.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public float LastDamageGroanCooldown = 0f;
+    public TimeSpan DamageGroanCooldown = TimeSpan.FromSeconds(2);
 
+    /// <summary>
+    /// Chance to groan.
+    /// </summary>
+    public float DamageGroanChance = 0.5f;
+
+    /// <summary>
+    /// The last time the zombie groaned from taking damage.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public float Accumulator = 0f;
+    public TimeSpan LastDamageGroan = TimeSpan.Zero;
 }
