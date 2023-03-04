@@ -159,7 +159,7 @@
   name: emp grenade
   description: Releases electromagnetic pulses that disrupt or damage many electronic devices or drain power cells.
   parent: GrenadeBase
-  id: GrenadeEmp
+  id: EmpGrenade
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/empgrenade.rsi
