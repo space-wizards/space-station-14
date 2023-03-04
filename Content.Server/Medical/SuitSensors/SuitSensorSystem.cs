@@ -288,7 +288,26 @@ namespace Content.Server.Medical.SuitSensors
                 case SuitSensorMode.SensorCords:
                     status.IsAlive = isAlive;
                     status.TotalDamage = totalDamage;
-                    status.Coordinates = _transform.GetMoverCoordinates(transform, GetEntityQuery<TransformComponent>());
+                    EntityCoordinates coordinates;
+                    var xformQuery = GetEntityQuery<TransformComponent>();
+
+                    if (transform.GridUid != null)
+                    {
+                        coordinates = new EntityCoordinates(transform.GridUid.Value,
+                            _transform.GetInvWorldMatrix(xformQuery.GetComponent(transform.GridUid.Value), xformQuery)
+                            .Transform(_transform.GetWorldPosition(transform, xformQuery)));
+                    }
+                    else if (transform.MapUid != null)
+                    {
+                        coordinates = new EntityCoordinates(transform.MapUid.Value,
+                            _transform.GetWorldPosition(transform, xformQuery));
+                    }
+                    else
+                    {
+                        coordinates = EntityCoordinates.Invalid;
+                    }
+
+                    status.Coordinates = coordinates;
                     break;
             }
 

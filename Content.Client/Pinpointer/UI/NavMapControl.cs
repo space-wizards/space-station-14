@@ -1,3 +1,4 @@
+using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Pinpointer;
 using Robust.Client.Graphics;
@@ -32,10 +33,11 @@ public sealed class NavMapControl : MapGridControl
 
     private float _recenterMinimum = 0.05f;
 
+    // TODO: https://github.com/space-wizards/RobustToolbox/issues/3818
     private readonly Label _zoom = new()
     {
         VerticalAlignment = VAlignment.Top,
-        Margin = new Thickness(8f, 2f),
+        Margin = new Thickness(8f, 8f),
     };
 
     private readonly Button _recenter = new()
@@ -43,7 +45,7 @@ public sealed class NavMapControl : MapGridControl
         Text = "Recentre",
         VerticalAlignment = VAlignment.Top,
         HorizontalAlignment = HAlignment.Right,
-        Margin = new Thickness(4f, 2f),
+        Margin = new Thickness(8f, 4f),
         Disabled = true,
     };
 
@@ -53,9 +55,40 @@ public sealed class NavMapControl : MapGridControl
         RectClipContent = true;
         HorizontalExpand = true;
         VerticalExpand = true;
-        AddChild(_zoom);
-        AddChild(new Control());
-        AddChild(_recenter);
+
+        var topPanel = new PanelContainer()
+        {
+            PanelOverride = new StyleBoxFlat()
+            {
+                BackgroundColor = StyleNano.ButtonColorContext.WithAlpha(1f),
+                BorderColor = StyleNano.PanelDark
+            },
+            VerticalExpand = false,
+            Children =
+            {
+                _zoom,
+                _recenter,
+            }
+        };
+
+        var topContainer = new BoxContainer()
+        {
+            Orientation = BoxContainer.LayoutOrientation.Vertical,
+            Children =
+            {
+                topPanel,
+                new Control()
+                {
+                    Name = "DrawingControl",
+                    VerticalExpand = true,
+                    Margin = new Thickness(5f, 5f)
+                }
+            }
+        };
+
+        AddChild(topContainer);
+        topPanel.Measure(Vector2.Infinity);
+
         _recenter.OnPressed += args =>
         {
             _recentering = true;

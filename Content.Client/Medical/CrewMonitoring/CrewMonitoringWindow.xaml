@@ -25,6 +25,7 @@
                 <!-- Table rows are filled by code -->
             </GridContainer>
         </ScrollContainer>
-        <ui:NavMapControl Name="NavMap"/>
+        <ui:NavMapControl Name="NavMap"
+                          Margin="5 5 5 5"/>
     </BoxContainer>
 </controls:FancyWindow>
