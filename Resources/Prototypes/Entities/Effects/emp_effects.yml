@@ -8,7 +8,6 @@
     netsync: false
     drawdepth: Effects
     noRot: true
-    scale: "2, 2"
     layers:
       - shader: unshaded
         map: ["enum.EffectLayers.Unshaded"]
