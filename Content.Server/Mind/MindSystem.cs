@@ -203,24 +203,6 @@ public sealed class MindSystem : EntitySystem
         return null;
     }
 
-    public void TransferTo(EntityUid uid, EntityUid? target, MindComponent? mind = null)
-    {
-        if (!Resolve(uid, ref mind))
-            return;
-
-        if (!mind.HasMind)
-            return;
-
-        TransferTo(mind.Mind!, target);
-    }
-
-    public Mind CreateMind(NetUserId userId, IPlayerManager? playerManager = null)
-    {
-        var mind = new Mind(userId);
-        ChangeOwningPlayer(mind, userId, playerManager);
-        return mind;
-    }
-
     public bool TryCreateMind(NetUserId? userId, [NotNullWhen(true)]out Mind? mind, IPlayerManager? playerManager = null)
     {
         mind = new Mind(userId);
@@ -563,10 +545,10 @@ public sealed class MindSystem : EntitySystem
     /// Gets a mind from uid and/or MindComponent. Used for null checks.
     /// </summary>
     /// <param name="uid">Entity UID that owns the mind.</param>
-    /// <param name="mindComponent">Mind component on <paramref name="uid"/> to get the mind from.</param>
     /// <param name="mind">The returned mind.</param>
+    /// <param name="mindComponent">Mind component on <paramref name="uid"/> to get the mind from.</param>
     /// <returns>True if mind found. False if not.</returns>
-    public bool TryGetMind(EntityUid uid, MindComponent? mindComponent, [NotNullWhen(true)] out Mind? mind)
+    public bool TryGetMind(EntityUid uid, [NotNullWhen(true)] out Mind? mind, MindComponent? mindComponent = null)
     {
         mind = null;
         if (!Resolve(uid, ref mindComponent))

@@ -3,9 +3,12 @@ using System;
 using System.Threading.Tasks;
 using Content.Server.Mind;
 using Content.Server.Mind.Components;
+using Content.Server.Roles;
+using Content.Server.Traitor;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
+using Content.Shared.Roles;
 using NUnit.Framework;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -17,7 +20,7 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests.Minds;
 
 [TestFixture]
-public sealed partial class MindTests
+public sealed class MindTests
 {
     private const string Prototypes = @"
 - type: entity
@@ -54,7 +57,7 @@ public sealed partial class MindTests
     // Can be removed when Players can be mocked.
     private Mind CreateMind(NetUserId? userId, MindSystem mindSystem, IPlayerManager? playerManager = null)
     {
-        Mind? mind = null;
+        Mind? mind;
 
         mindSystem.TryCreateMind(userId, out mind, playerManager);
         Assert.NotNull(mind);
@@ -82,9 +85,9 @@ public sealed partial class MindTests
     }
 
     [Test]
-    public async Task TestCreateAndTransferMind()
+    public async Task TestCreateAndTransferMindToNewEntity()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ NoClient = true });
         var server = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -154,30 +157,6 @@ public sealed partial class MindTests
         {
             Assert.That(mindSystem.IsCharacterDeadPhysically(mind));
         });
-
-        await pairTracker.CleanReturnAsync();
-    }
-
-    public async Task TestGetPlayerFromEntity()
-    {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ NoClient = true });
-        var server = pairTracker.Pair.Server;
-
-        var entMan = server.ResolveDependency<IServerEntityManager>();
-
-        await server.WaitAssertion(() =>
-        {
-            // var playerSession = new PlayerSession();
-
-            var entity = entMan.SpawnEntity(null, new MapCoordinates());
-
-            var mindSys = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
-
-            var mindComp = entMan.GetComponent<MindComponent>(entity);
-            // mindComp.Mind?.Session;
-        });
-
-        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
 
         await pairTracker.CleanReturnAsync();
     }

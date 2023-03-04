@@ -42,7 +42,7 @@ public sealed class BodySystem : SharedBodySystem
 
     private void OnRelayMoveInput(EntityUid uid, BodyComponent component, ref MoveInputEvent args)
     {
-        if (_mobState.IsDead(uid) && _mindSystem.TryGetMind(uid, null, out var mind))
+        if (_mobState.IsDead(uid) && _mindSystem.TryGetMind(uid, out var mind))
         {
             if (!mind.TimeOfDeath.HasValue)
             {
