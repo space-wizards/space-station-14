@@ -113,8 +113,8 @@ namespace Content.Server.Administration.Commands
             {
                 targetPlayer.ConnectedClient.Disconnect(banDef.DisconnectMessage);
             }
-
-            RaiseLocalEvent(new BanEvent(target, expires, reason));
+            var admin = shell.Player;
+            RaiseLocalEvent(new BanEvent(target, expires, reason, admin is null ? null : admin.Name));
         }
 
         public CompletionResult GetCompletion(IConsoleShell shell, string[] args)

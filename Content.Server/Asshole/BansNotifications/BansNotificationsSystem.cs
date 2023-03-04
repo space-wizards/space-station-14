@@ -1,4 +1,4 @@
-﻿using Content.Shared.CCVar;
+using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Robust.Shared.Configuration;
 using System.Net.Http;
@@ -47,7 +47,13 @@ public sealed class BansNotificationsSystem : EntitySystem {
             return;
 
         var payload = new WebhookPayload();
-        var text = Loc.GetString("discord-ban-msg",
+        var text = e.AdminName is not null ?
+            Loc.GetString("discord-ban-msg-admin",
+            ("admin", e.AdminName),
+            ("username", e.Username),
+            ("expires", e.Expires == null ? "навсегда" : $"до {e.Expires}"),
+            ("reason", e.Reason)) :
+            Loc.GetString("discord-ban-msg",
             ("username", e.Username),
             ("expires", e.Expires == null ? "навсегда" : $"до {e.Expires}"),
             ("reason", e.Reason));
