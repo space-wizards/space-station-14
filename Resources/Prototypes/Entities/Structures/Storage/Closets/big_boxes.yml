@@ -102,7 +102,7 @@
     - type: EntityStorage
       isCollidableWhenOpen: false
       openOnMove: false
-      airtight: true #whoever's inside should probably breath
+      airtight: false
 
 #Exclamation effect for box opening
 - type: entity
