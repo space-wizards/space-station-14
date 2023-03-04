@@ -92,3 +92,15 @@ public sealed class HandcuffComponentState : ComponentState
         IconState = iconState;
     }
 }
+
+/// <summary>
+/// Event fired on the User when the User attempts to cuff the Target.
+/// Should generate popups on the User.
+/// </summary>
+[ByRefEvent]
+public record struct UncuffAttemptEvent(EntityUid User, EntityUid Target)
+{
+    public readonly EntityUid User = User;
+    public readonly EntityUid Target = Target;
+    public bool Cancelled = false;
+}

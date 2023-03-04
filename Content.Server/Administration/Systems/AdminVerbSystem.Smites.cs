@@ -24,6 +24,7 @@ using Content.Server.Tabletop;
 using Content.Server.Tabletop.Components;
 using Content.Server.Tools.Systems;
 using Content.Shared.Administration;
+using Content.Shared.Administration.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Clothing.Components;

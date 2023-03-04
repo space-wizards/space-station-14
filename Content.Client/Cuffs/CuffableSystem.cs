@@ -46,11 +46,10 @@ public sealed class CuffableSystem : SharedCuffableSystem
     private void OnCuffableHandleState(EntityUid uid, CuffableComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not CuffableComponentState cuffState)
-        {
             return;
-        }
 
         component.CanStillInteract = cuffState.CanStillInteract;
+        component.Uncuffing = cuffState.Uncuffing;
         _actionBlocker.UpdateCanMove(uid);
 
         if (TryComp<SpriteComponent>(uid, out var sprite))

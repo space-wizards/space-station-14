@@ -11,6 +11,7 @@ using Content.Server.Contests;
 using Content.Server.Examine;
 using Content.Server.Hands.Components;
 using Content.Server.Movement.Systems;
+using Content.Shared.Administration.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage;
 using Content.Shared.Database;
