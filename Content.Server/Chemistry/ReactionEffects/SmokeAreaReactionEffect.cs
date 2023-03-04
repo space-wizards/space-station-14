@@ -20,24 +20,26 @@ namespace Content.Server.Chemistry.ReactionEffects
         public static void SpawnSmoke(string entityPrototype, EntityCoordinates coords, Solution? contents, int amount, float duration, float spreadDelay,
             float removeDelay, SoundSpecifier? sound = null, IEntityManager? entityManager = null)
         {
-            entityManager ??= IoCManager.Resolve<IEntityManager>();
+            IoCManager.Resolve(ref entityManager);
             var ent = entityManager.SpawnEntity(entityPrototype, coords.SnapToGrid());
 
-            var areaEffectComponent = entityManager.GetComponentOrNull<SmokeSolutionAreaEffectComponent>(ent);
+            if (entityManager.TryGetComponent<SmokeSolutionAreaEffectComponent>(ent, out var areaEffectComponent))
+            {
+                if (contents != null)
+                {
+                    areaEffectComponent.TryAddSolution(contents);
+                }
+                areaEffectComponent.Start(amount, duration, spreadDelay, removeDelay);
 
-            if (areaEffectComponent == null)
+                entityManager.EntitySysManager.GetEntitySystem<AudioSystem>()
+                    .PlayPvs(sound, ent, AudioParams.Default.WithVariation(0.125f));
+            }
+            else
             {
                 Logger.Error("Couldn't get AreaEffectComponent from " + entityPrototype);
-                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(ent);
+                entityManager.QueueDeleteEntity(ent);
                 return;
             }
-
-            if (contents != null)
-                areaEffectComponent.TryAddSolution(contents);
-            areaEffectComponent.Start(amount, duration, spreadDelay, removeDelay);
-
-            entityManager.EntitySysManager.GetEntitySystem<AudioSystem>()
-                .PlayPvs(sound, ent, AudioParams.Default.WithVariation(0.125f));
         }
     }
 }
