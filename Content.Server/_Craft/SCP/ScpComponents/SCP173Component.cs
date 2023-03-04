@@ -2,6 +2,7 @@ using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.Utility;
 using Robust.Shared.Audio;
 using Content.Shared.SCP.ConcreteSlab;
+using Content.Shared.Actions;
 
 namespace Content.Server.SCP.ConcreteSlab
 {
@@ -34,6 +35,7 @@ namespace Content.Server.SCP.ConcreteSlab
         {
             UseDelay = TimeSpan.FromSeconds(32),
             Icon = new SpriteSpecifier.Texture(new("Interface/Actions/malfunction.png")),
+            ItemIconStyle = ItemActionIconStyle.NoItem,
             DisplayName = "scp-173-shart",
             Description = "scp-173-shart-desc",
             Priority = -1,
@@ -45,6 +47,7 @@ namespace Content.Server.SCP.ConcreteSlab
             Enabled = false,
             UseDelay = TimeSpan.FromSeconds(90),
             Icon = new SpriteSpecifier.Texture(new("Interface/Actions/malfunction.png")),
+            ItemIconStyle = ItemActionIconStyle.NoItem,
             DisplayName = "scp-173-blind",
             Description = "scp-173-blind-desc",
             Priority = -1,
@@ -55,6 +58,7 @@ namespace Content.Server.SCP.ConcreteSlab
         {
             UseDelay = TimeSpan.FromSeconds(20),
             Icon = new SpriteSpecifier.Texture(new("Interface/Actions/malfunction.png")),
+            ItemIconStyle = ItemActionIconStyle.NoItem,
             DisplayName = "scp-173-dooropen",
             Description = "scp-173-dooropen-desc",
             Priority = -1,
