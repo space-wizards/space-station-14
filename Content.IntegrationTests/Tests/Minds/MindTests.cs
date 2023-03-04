@@ -57,9 +57,7 @@ public sealed class MindTests
     // Can be removed when Players can be mocked.
     private Mind CreateMind(NetUserId? userId, MindSystem mindSystem, IPlayerManager? playerManager = null)
     {
-        Mind? mind;
-
-        mindSystem.TryCreateMind(userId, out mind, playerManager);
+        mindSystem.TryCreateMind(userId, out var mind, playerManager);
         Assert.NotNull(mind);
         return mind!;
     }

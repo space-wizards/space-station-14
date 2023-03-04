@@ -159,9 +159,11 @@ public sealed class MindSystem : EntitySystem
 
         var dead = _mobStateSystem.IsDead(uid);
 
+        var hasSession = mind.Mind?.Session;
+
         if (dead)
         {
-            if (mind.Mind?.Session == null)
+            if (hasSession == null)
             {
                 // Player has no session attached and dead
                 args.PushMarkup($"[color=yellow]{Loc.GetString("mind-component-no-mind-and-dead-text", ("ent", uid))}[/color]");
@@ -176,7 +178,7 @@ public sealed class MindSystem : EntitySystem
         {
             args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-catatonic", ("ent", uid))}[/color]");
         }
-        else if (mind.Mind?.Session == null)
+        else if (hasSession == null)
         {
             args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", uid))}[/color]");
         }
@@ -362,7 +364,7 @@ public sealed class MindSystem : EntitySystem
         if (mind.OwnedComponent != null)
             InternalAssignMind(mind.OwnedEntity!.Value, mind, mind.OwnedComponent);
 
-        // Don't do the full deletion cleanup if we're transferring to our visitingentity
+        // Don't do the full deletion cleanup if we're transferring to our VisitingEntity
         if (alreadyAttached)
         {
             // Set VisitingEntity null first so the removal of VisitingMind doesn't get through Unvisit() and delete what we're visiting.
@@ -567,7 +569,7 @@ public sealed class MindSystem : EntitySystem
     /// <param name="mind">Mind to set OwnedComponent and OwnedEntity on</param>
     /// <param name="uid">Entity owned by <paramref name="mind"/></param>
     /// <param name="mindComponent">MindComponent owned by <paramref name="mind"/></param>
-    public void SetOwnedEntity(Mind mind, EntityUid? uid, MindComponent? mindComponent)
+    private void SetOwnedEntity(Mind mind, EntityUid? uid, MindComponent? mindComponent)
     {
         if (uid != null)
             Resolve(uid.Value, ref mindComponent);
@@ -581,7 +583,7 @@ public sealed class MindSystem : EntitySystem
     /// </summary>
     /// <param name="mind"></param>
     /// <param name="userId"></param>
-    public void SetUserId(Mind mind, NetUserId? userId)
+    private void SetUserId(Mind mind, NetUserId? userId)
     {
         mind.UserId = userId;
         
@@ -593,7 +595,7 @@ public sealed class MindSystem : EntitySystem
     }
     
     /// <summary>
-    ///     True if this Mind is 'sufficiently dead' IC (objectives, endtext).
+    ///     True if this Mind is 'sufficiently dead' IC (Objectives, EndText).
     ///     Note that this is *IC logic*, it's not necessarily tied to any specific truth.
     ///     "If administrators decide that zombies are dead, this returns true for zombies."
     ///     (Maybe you were looking for the action blocker system?)
