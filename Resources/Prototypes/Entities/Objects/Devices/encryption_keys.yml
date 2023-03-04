@@ -1,0 +1,286 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: EncryptionKey
+  name: encryption key
+  description: A small cypher chip for headsets.
+  components:
+  - type: EncryptionKey
+  - type: Item
+    sprite: Objects/Devices/encryption_keys.rsi
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+    state: cypherkey
+    netsync: false
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyCommon
+  name: passenger encryption key
+  description: An encryption key used by anyone.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Common
+    defaultChannel: Common
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+    state: cypherkey
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyCargo
+  name: cargo encryption key
+  description: An encryption key used by supply employees.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Common
+    - Supply
+    defaultChannel: Supply
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+    state: cargo_cypherkey
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyQM
+  name: quartermaster's encryption key
+  description: An encryption key used by the boss of cargo.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Common
+    - Command
+    - Supply
+    defaultChannel: Supply
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+    state: qm_cypherkey
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyCentCom
+  name: central command encryption key
+  description: An encryption key used by captain's bosses.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Common
+    - Command
+    - CentCom
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+    defaultChannel: CentCom
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+    state: bin_cypherkey
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyCommand
+  name: command encryption key
+  description: An encryption key used by crew's bosses.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Common
+    - Command
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+    defaultChannel: Command
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+    state: com_cypherkey
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyEngineering
+  name: engineering encryption key
+  description: An encryption key used by the engineers.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Common
+    - Engineering
+    defaultChannel: Engineering
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+    state: eng_cypherkey
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyCE
+  name: chief engineer's encryption key
+  description: An encryption key used by the boss of the real men.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Common
+    - Command
+    - Engineering
+    defaultChannel: Engineering
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+    state: ce_cypherkey
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyMedical
+  name: medical encryption key
+  description: An encryption key used by those who save lives.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Common
+    - Medical
+    defaultChannel: Medical
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+    state: med_cypherkey
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyCMO
+  name: chief medical officer encryption key
+  description: An encryption key used by the head of the medical department.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Common
+    - Command
+    - Medical
+    defaultChannel: Medical
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+    state: cmo_cypherkey
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyMedicalScience
+  name: med-sci encryption key
+  description: An encryption key used by someone who hasn't decided which side to take.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Common
+    - Medical
+    - Science
+    defaultChannel: Science
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+    state: medsci_cypherkey
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyScience
+  name: science encryption key
+  description: An encryption key used by scientists. Maybe it is plasmaproof?
+  components:
+  - type: EncryptionKey
+    channels:
+    - Common
+    - Science
+    defaultChannel: Science
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+    state: sci_cypherkey
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyRobo
+  name: robotech encryption key
+  description: An encryption key used by robototech engineers. Maybe it has a LAH-6000 on it?
+  components:
+  - type: EncryptionKey
+    channels:
+    - Common
+    - Science
+    defaultChannel: Science
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+    state: rob_cypherkey
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyRD
+  name: research director's encryption key
+  description: An encryption key used by the head of the science department. Looks like it's been chewed on.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Common
+    - Command
+    - Science
+    defaultChannel: Science
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+    state: rd_cypherkey
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeySecurity
+  name: security encryption key
+  description: An encryption key used by security.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Common
+    - Security
+    defaultChannel: Security
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+    state: sec_cypherkey
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyHOS
+  name: head of security encryption key
+  description: An encryption key used by the boss of security.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Common
+    - Command
+    - Security
+    defaultChannel: Security
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+    state: hos_cypherkey
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyService
+  name: service encryption key
+  description: An encryption key used by the service staff, tasked with keeping the station full, happy and clean.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Common
+    - Service
+    defaultChannel: Service
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+    state: srv_cypherkey
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeySyndie
+  name: blood-red encryption key
+  description: An encryption key used by... wait... Who is owner of this chip?
+  components:
+  - type: EncryptionKey
+    channels:
+    - Syndicate
+    defaultChannel: Syndicate
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+    state: syn_cypherkey

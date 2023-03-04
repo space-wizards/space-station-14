@@ -37,6 +37,15 @@ public sealed class NPCSteeringComponent : Component
     #endregion
 
     /// <summary>
+    /// Next time we can change our steering direction.
+    /// </summary>
+    public TimeSpan NextSteer = TimeSpan.Zero;
+
+    public Vector2 LastSteerDirection = Vector2.Zero;
+
+    public const int SteeringFrequency = 10;
+
+    /// <summary>
     /// Have we currently requested a path.
     /// </summary>
     [ViewVariables]

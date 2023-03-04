@@ -105,7 +105,7 @@ public abstract partial class InventorySystem
     /// </summary>
     private void OnUseSlot(UseSlotNetworkMessage ev, EntitySessionEventArgs eventArgs)
     {
-        if (eventArgs.SenderSession.AttachedEntity is not EntityUid { Valid: true } actor)
+        if (eventArgs.SenderSession.AttachedEntity is not { Valid: true } actor)
             return;
 
         if (!TryComp(actor, out InventoryComponent? inventory) || !TryComp<SharedHandsComponent>(actor, out var hands))
@@ -243,8 +243,8 @@ public abstract partial class InventorySystem
         // that requires server/client specific code.
         // Uhhh TODO, fix this. This doesn't even fucking check if the target item is IN the targets inventory.
         return actor != target &&
-            HasComp<SharedStrippableComponent>(target) &&
-            HasComp<SharedStrippingComponent>(actor) &&
+            HasComp<StrippableComponent>(target) &&
+            HasComp<StrippingComponent>(actor) &&
             HasComp<SharedHandsComponent>(actor);
     }
 

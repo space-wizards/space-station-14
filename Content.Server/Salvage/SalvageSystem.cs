@@ -141,8 +141,22 @@ namespace Content.Server.Salvage
 
         private void OnExamined(EntityUid uid, SalvageMagnetComponent component, ExaminedEvent args)
         {
+            var gotGrid = false;
+            var remainingTime = TimeSpan.Zero;
+
             if (!args.IsInDetailsRange)
                 return;
+
+            if (Transform(uid).GridUid is EntityUid gridId &&
+                _salvageGridStates.TryGetValue(gridId, out var salvageGridState))
+            {
+                remainingTime = component.MagnetState.Until - salvageGridState.CurrentTime;
+                gotGrid = true;
+            }
+            else
+            {
+                Logger.WarningS("salvage", "Failed to load salvage grid state, can't display remaining time");
+            }
             switch (component.MagnetState.StateType)
             {
                 case MagnetStateType.Inactive:
@@ -155,19 +169,12 @@ namespace Content.Server.Salvage
                     args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-releasing"));
                     break;
                 case MagnetStateType.CoolingDown:
-                    args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-cooling-down"));
+                    if (gotGrid)
+                        args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-cooling-down", ("timeLeft", Math.Ceiling(remainingTime.TotalSeconds))));
                     break;
                 case MagnetStateType.Holding:
-                    var magnetTransform = EntityManager.GetComponent<TransformComponent>(component.Owner);
-                    if (magnetTransform.GridUid is EntityUid gridId && _salvageGridStates.TryGetValue(gridId, out var salvageGridState))
-                    {
-                        var remainingTime = component.MagnetState.Until - salvageGridState.CurrentTime;
+                    if (gotGrid)
                         args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-active", ("timeLeft", Math.Ceiling(remainingTime.TotalSeconds))));
-                    }
-                    else
-                    {
-                        Logger.WarningS("salvage", "Failed to load salvage grid state, can't display remaining time");
-                    }
                     break;
                 default:
                     throw new NotImplementedException("Unexpected magnet state type");
@@ -233,7 +240,6 @@ namespace Content.Server.Salvage
                 return;
             }
 
-            var parentTransform = salvageTransform.Parent!;
             foreach (var player in Filter.Empty().AddInGrid(salvageTransform.GridUid.Value, EntityManager).Recipients)
             {
                 if (player.AttachedEntity.HasValue)
@@ -244,7 +250,7 @@ namespace Content.Server.Salvage
                         // Salvage mobs are NEVER immune (even if they're from a different salvage, they shouldn't be here)
                         continue;
                     }
-                    Transform(playerEntityUid).AttachParent(parentTransform);
+                    Transform(playerEntityUid).AttachParent(salvageTransform.ParentUid);
                 }
             }
 
@@ -272,7 +278,7 @@ namespace Content.Server.Salvage
         {
             TryGetSalvagePlacementLocation(component, out var spl, out var spAngle);
 
-            var forcedSalvage = _configurationManager.GetCVar<string>(CCVars.SalvageForced);
+            var forcedSalvage = _configurationManager.GetCVar(CCVars.SalvageForced);
             List<SalvageMapPrototype> allSalvageMaps;
             if (string.IsNullOrWhiteSpace(forcedSalvage))
             {

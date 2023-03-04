@@ -123,7 +123,7 @@ namespace Content.Server.Database
                 return true;
             }
 
-            if (hwId is { } hwIdVar && hwIdVar.AsSpan().SequenceEqual(ban.HWId))
+            if (hwId is { } hwIdVar && hwIdVar.Length > 0 && hwIdVar.AsSpan().SequenceEqual(ban.HWId))
             {
                 return true;
             }
@@ -224,7 +224,7 @@ namespace Content.Server.Database
                 return true;
             }
 
-            if (hwId is { } hwIdVar && hwIdVar.AsSpan().SequenceEqual(ban.HWId))
+            if (hwId is { } hwIdVar && hwIdVar.Length > 0 && hwIdVar.AsSpan().SequenceEqual(ban.HWId))
             {
                 return true;
             }

@@ -231,6 +231,9 @@
         visible: false
       - state: syringe_base0
         map: ["enum.SolutionContainerLayers.Base"]
+  - type: Icon
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    state: "syringe_base0"
   - type: Item
     sprite: Objects/Specific/Chemistry/syringe.rsi
     heldPrefix: 0
@@ -248,6 +251,9 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 4
     fillBaseName: syringe
+  - type: Tag
+    tags:
+    - Syringe
 
 - type: entity
   parent: BaseSyringe
@@ -255,6 +261,7 @@
   components:
   - type: Tag
     tags:
+    - Syringe
     - Trash
 
 - type: entity
@@ -315,3 +322,4 @@
     whitelist:
       tags:
         - Pill
+  - type: Dumpable

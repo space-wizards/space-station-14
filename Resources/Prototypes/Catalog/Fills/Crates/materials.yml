@@ -17,6 +17,17 @@
         amount: 3
 
 - type: entity
+  id: CrateMaterialTextiles
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: MaterialCloth
+        amount: 2
+      - id: MaterialDurathread
+        amount: 1
+
+- type: entity
   id: CrateMaterialPlastic
   parent: CrateGenericSteel
   components:

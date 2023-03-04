@@ -1,0 +1,48 @@
+﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                Title="{Loc 'anomaly-generator-ui-title'}"
+                MinSize="270 180"
+                SetSize="360 180">
+    <BoxContainer Margin="10 0 10 0"
+                  Orientation="Vertical"
+                  HorizontalExpand="True"
+                  VerticalExpand="True">
+        <BoxContainer Orientation="Horizontal">
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                <BoxContainer Orientation="Horizontal"
+                              HorizontalExpand="True"
+                              VerticalExpand="True"
+                              Margin="0 0 0 0"
+                              VerticalAlignment="Center">
+                    <Label Text="{Loc 'anomaly-generator-fuel-display'}" StyleClasses="StatusFieldTitle" />
+                    <ProgressBar Name="FuelBar"
+                                 HorizontalExpand="True"
+                                 MaxValue="1"
+                                 MinValue="0"
+                                 SetHeight="25"
+                                 Margin="10 0 10 0"
+                                 VerticalAlignment="Center">
+                        <Label Name="FuelText"
+                               Margin="4 0"
+                               Text="0 %" />
+                    </ProgressBar>
+                </BoxContainer>
+                <RichTextLabel Name="CooldownLabel" StyleClasses="StatusFieldTitle" />
+                <RichTextLabel Name="ReadyLabel" StyleClasses="StatusFieldTitle" />
+            </BoxContainer>
+            <PanelContainer Margin="12 0 0 0"
+                            StyleClasses="Inset"
+                            VerticalAlignment="Center">
+                <SpriteView Name="EntityView"
+                            SetSize="96 96"
+                            OverrideDirection="South" />
+            </PanelContainer>
+        </BoxContainer>
+        <BoxContainer VerticalExpand="True"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center">
+            <Button Name="GenerateButton"
+                    Text="{Loc 'anomaly-generator-generate'}"></Button>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>

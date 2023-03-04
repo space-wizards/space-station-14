@@ -39,7 +39,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         public void UpdateTags(TrashOnEmptyComponent component, Solution solution)
         {
-            if (solution.DrainAvailable <= 0)
+            if (solution.Volume <= 0)
             {
                 _tagSystem.AddTag(component.Owner, "Trash");
                 return;

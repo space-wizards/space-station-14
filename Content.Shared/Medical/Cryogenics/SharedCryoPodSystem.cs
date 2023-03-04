@@ -1,8 +1,10 @@
-﻿using Content.Server.Medical.Components;
-using Content.Shared.Destructible;
+using Content.Server.Medical.Components;
+using Content.Shared.DoAfter;
+using Content.Shared.Body.Components;
+using Content.Shared.DragDrop;
 using Content.Shared.Emag.Systems;
-using Content.Shared.MobState.Components;
-using Content.Shared.MobState.EntitySystems;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Standing;
 using Content.Shared.Stunnable;
@@ -16,7 +18,7 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly StandingStateSystem _standingStateSystem = default!;
-    [Dependency] private readonly SharedMobStateSystem _mobStateSystem = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
@@ -25,6 +27,12 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
         base.Initialize();
 
         InitializeInsideCryoPod();
+    }
+
+    protected void OnCryoPodCanDropOn(EntityUid uid, SharedCryoPodComponent component, ref CanDropTargetEvent args)
+    {
+        args.CanDrop = args.CanDrop && HasComp<BodyComponent>(args.Dragged);
+        args.Handled = true;
     }
 
     protected void OnComponentInit(EntityUid uid, SharedCryoPodComponent cryoPodComponent, ComponentInit args)
@@ -124,7 +132,7 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
         }
     }
 
-    protected void OnEmagged(EntityUid uid, SharedCryoPodComponent? cryoPodComponent, GotEmaggedEvent args)
+    protected void OnEmagged(EntityUid uid, SharedCryoPodComponent? cryoPodComponent, ref GotEmaggedEvent args)
     {
         if (!Resolve(uid, ref cryoPodComponent))
         {
@@ -134,17 +142,6 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
         cryoPodComponent.PermaLocked = true;
         cryoPodComponent.Locked = true;
         args.Handled = true;
-    }
-
-    protected void DoInsertCryoPod(EntityUid uid, SharedCryoPodComponent cryoPodComponent, DoInsertCryoPodEvent args)
-    {
-        cryoPodComponent.DragDropCancelToken = null;
-        InsertBody(uid, args.ToInsert, cryoPodComponent);
-    }
-
-    protected void DoInsertCancelCryoPod(EntityUid uid, SharedCryoPodComponent cryoPodComponent, DoInsertCancelledCryoPodEvent args)
-    {
-        cryoPodComponent.DragDropCancelToken = null;
     }
 
     protected void OnCryoPodPryFinished(EntityUid uid, SharedCryoPodComponent cryoPodComponent, CryoPodPryFinished args)
@@ -160,8 +157,6 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
 
     #region Event records
 
-    protected record DoInsertCryoPodEvent(EntityUid ToInsert);
-    protected record DoInsertCancelledCryoPodEvent;
     protected record CryoPodPryFinished;
     protected record CryoPodPryInterrupted;
 

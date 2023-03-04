@@ -1,10 +1,10 @@
 using Content.Server.Interaction.Components;
-using Content.Server.MobState;
 using Content.Server.Popups;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -33,6 +33,8 @@ public sealed class InteractionPopupSystem : EntitySystem
         //Handling does nothing and this thing annoyingly plays way too often.
         if (HasComp<SleepingComponent>(uid))
             return;
+
+        args.Handled = true;
 
         var curTime = _gameTiming.CurTime;
 
@@ -85,6 +87,5 @@ public sealed class InteractionPopupSystem : EntitySystem
         }
 
         component.LastInteractTime = curTime;
-        args.Handled = true;
     }
 }

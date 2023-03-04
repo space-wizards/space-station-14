@@ -12,7 +12,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockBoozeFilled
-  cost: 3200
+  cost: 3500
   category: Service
   group: market
 
@@ -22,7 +22,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockClothesFilled
-  cost: 4000
+  cost: 4200
   category: Service
   group: market
 
@@ -52,7 +52,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockGamesFilled
-  cost: 650
+  cost: 750
   category: Service
   group: market
 
@@ -92,7 +92,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockPTechFilled
-  cost: 800
+  cost: 1200
   category: Service
   group: market
 
@@ -132,7 +132,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockSeedsFilled
-  cost: 2000
+  cost: 2200
   category: Hydroponics
   group: market
 
@@ -157,6 +157,16 @@
   group: market
 
 - type: cargoProduct
+  id: CrateVendingMachineRestockVendomat
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockVendomatFilled
+  cost: 1200
+  category: Service
+  group: market
+
+- type: cargoProduct
   id: CrateVendingMachineRestockTankDispenser
   icon:
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
@@ -164,4 +174,14 @@
   product: CrateVendingMachineRestockTankDispenserFilled
   cost: 1000
   category: Atmospherics
+  group: market
+
+- type: cargoProduct
+  id: CrateVendingMachineRestockHappyHonk
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockHappyHonkFilled
+  cost: 2100
+  category: Service
   group: market

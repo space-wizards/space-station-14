@@ -3,12 +3,13 @@ using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.DoAfter;
-using Content.Server.Doors.Components;
+using Content.Server.Doors.Systems;
 using Content.Server.Magic.Events;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Body.Components;
+using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction.Events;
@@ -18,9 +19,7 @@ using Content.Shared.Spawners.Components;
 using Content.Shared.Storage;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -38,6 +37,7 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly AirlockSystem _airlock = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
@@ -46,6 +46,7 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly GunSystem _gunSystem = default!;
     [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -53,8 +54,7 @@ public sealed class MagicSystem : EntitySystem
 
         SubscribeLocalEvent<SpellbookComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<SpellbookComponent, UseInHandEvent>(OnUse);
-        SubscribeLocalEvent<SpellbookComponent, LearnDoAfterComplete>(OnLearnComplete);
-        SubscribeLocalEvent<SpellbookComponent, LearnDoAfterCancel>(OnLearnCancel);
+        SubscribeLocalEvent<SpellbookComponent, DoAfterEvent>(OnDoAfter);
 
         SubscribeLocalEvent<InstantSpawnSpellEvent>(OnInstantSpawn);
         SubscribeLocalEvent<TeleportSpellEvent>(OnTeleportSpell);
@@ -63,6 +63,15 @@ public sealed class MagicSystem : EntitySystem
         SubscribeLocalEvent<WorldSpawnSpellEvent>(OnWorldSpawn);
         SubscribeLocalEvent<ProjectileSpellEvent>(OnProjectileSpell);
         SubscribeLocalEvent<ChangeComponentsSpellEvent>(OnChangeComponentsSpell);
+    }
+
+    private void OnDoAfter(EntityUid uid, SpellbookComponent component, DoAfterEvent args)
+    {
+        if (args.Handled || args.Cancelled)
+            return;
+
+        _actionsSystem.AddActions(args.Args.User, component.Spells, uid);
+        args.Handled = true;
     }
 
     private void OnInit(EntityUid uid, SpellbookComponent component, ComponentInit args)
@@ -102,33 +111,16 @@ public sealed class MagicSystem : EntitySystem
 
     private void AttemptLearn(EntityUid uid, SpellbookComponent component, UseInHandEvent args)
     {
-        if (component.CancelToken != null) return;
-
-        component.CancelToken = new CancellationTokenSource();
-
-        var doAfterEventArgs = new DoAfterEventArgs(args.User, component.LearnTime, component.CancelToken.Token, uid)
+        var doAfterEventArgs = new DoAfterEventArgs(args.User, component.LearnTime, target:uid)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
             BreakOnDamage = true,
             BreakOnStun = true,
-            NeedHand = true, //What, are you going to read with your eyes only??
-            TargetFinishedEvent = new LearnDoAfterComplete(args.User),
-            TargetCancelledEvent = new LearnDoAfterCancel(),
+            NeedHand = true //What, are you going to read with your eyes only??
         };
 
         _doAfter.DoAfter(doAfterEventArgs);
-    }
-
-    private void OnLearnComplete(EntityUid uid, SpellbookComponent component, LearnDoAfterComplete ev)
-    {
-        component.CancelToken = null;
-        _actionsSystem.AddActions(ev.User, component.Spells, uid);
-    }
-
-    private void OnLearnCancel(EntityUid uid, SpellbookComponent component, LearnDoAfterCancel args)
-    {
-        component.CancelToken = null;
     }
 
     #region Spells
@@ -272,7 +264,7 @@ public sealed class MagicSystem : EntitySystem
 
         _transformSystem.SetCoordinates(args.Performer, args.Target);
         transform.AttachToGridOrMap();
-        SoundSystem.Play(args.BlinkSound.GetSound(), Filter.Pvs(args.Target), args.Performer, AudioParams.Default.WithVolume(args.BlinkVolume));
+        _audio.PlayPvs(args.BlinkSound, args.Performer, AudioParams.Default.WithVolume(args.BlinkVolume));
         args.Handled = true;
     }
 
@@ -289,13 +281,13 @@ public sealed class MagicSystem : EntitySystem
         var transform = Transform(args.Performer);
         var coords = transform.Coordinates;
 
-        SoundSystem.Play(args.KnockSound.GetSound(), Filter.Pvs(coords), args.Performer, AudioParams.Default.WithVolume(args.KnockVolume));
+        _audio.PlayPvs(args.KnockSound, args.Performer, AudioParams.Default.WithVolume(args.KnockVolume));
 
         //Look for doors and don't open them if they're already open.
         foreach (var entity in _lookup.GetEntitiesInRange(coords, args.Range))
         {
             if (TryComp<AirlockComponent>(entity, out var airlock))
-                airlock.BoltsDown = false;
+                _airlock.SetBoltsDown(entity, airlock, false);
 
             if (TryComp<DoorComponent>(entity, out var doorComp) && doorComp.State is not DoorState.Open)
                 _doorSystem.StartOpening(doorComp.Owner);
@@ -311,7 +303,8 @@ public sealed class MagicSystem : EntitySystem
 
         var direction = Transform(ev.Target).MapPosition.Position - Transform(ev.Performer).MapPosition.Position;
         var impulseVector = direction * 10000;
-        Comp<PhysicsComponent>(ev.Target).ApplyLinearImpulse(impulseVector);
+
+        _physics.ApplyLinearImpulse(ev.Target, impulseVector);
 
         if (!TryComp<BodyComponent>(ev.Target, out var body))
             return;
@@ -380,22 +373,6 @@ public sealed class MagicSystem : EntitySystem
             }
         }
     }
-
-    #endregion
-
-    #region DoAfterClasses
-
-    private sealed class LearnDoAfterComplete : EntityEventArgs
-    {
-        public readonly EntityUid User;
-
-        public LearnDoAfterComplete(EntityUid uid)
-        {
-            User = uid;
-        }
-    }
-
-    private sealed class LearnDoAfterCancel : EntityEventArgs { }
 
     #endregion
 }

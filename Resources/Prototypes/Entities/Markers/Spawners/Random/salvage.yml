@@ -50,6 +50,52 @@
       offset: 0.0
 
 - type: entity
+  name: Salvage T2 Machine Parts Spawner
+  id: SalvagePartsT2Spawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Misc/stock_parts.rsi
+          state: advanced_matter_bin
+    - type: RandomSpawner
+      prototypes:
+        - AdvancedCapacitorStockPart
+        - AdvancedScanningModuleStockPart
+        - NanoManipulatorStockPart
+        - HighPowerMicroLaserStockPart
+        - AdvancedMatterBinStockPart
+      offset: 0.0
+
+- type: entity
+  name: Salvage T3/4 Machine Parts Spawner
+  id: SalvagePartsT3Spawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Misc/stock_parts.rsi
+          state: super_matter_bin
+    - type: RandomSpawner
+      rarePrototypes:
+        - QuadraticCapacitorStockPart
+        - TriphasicScanningModuleStockPart
+        - FemtoManipulatorStockPart
+        - QuadUltraMicroLaserStockPart
+        - BluespaceMatterBinStockPart
+      rareChance: 0.05
+      prototypes:
+        - SuperCapacitorStockPart
+        - PhasicScanningModuleStockPart
+        - PicoManipulatorStockPart
+        - UltraHighPowerMicroLaserStockPart
+        - SuperMatterBinStockPart
+      chance: 0.95
+      offset: 0.0
+
+- type: entity
   name: Salvage Mob Spawner
   id: SalvageMobSpawner
   parent: MarkerBase

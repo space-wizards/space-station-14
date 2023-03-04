@@ -3,6 +3,7 @@ using Content.Shared.Electrocution;
 using Content.Shared.Explosion;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Radio;
 using Content.Shared.Slippery;
 using Content.Shared.Strip.Components;
 using Content.Shared.Temperature;
@@ -21,6 +22,7 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, BeforeStripEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, SeeIdentityAttemptEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, ModifyChangedTemperatureEvent>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, GetDefaultRadioChannelEvent>(RelayInventoryEvent);
     }
 
     protected void RelayInventoryEvent<T>(EntityUid uid, InventoryComponent component, T args) where T : EntityEventArgs, IInventoryRelayEvent
@@ -45,7 +47,7 @@ public partial class InventorySystem
 ///      This avoids nested inventory relays, and makes it easy to have certain events only handled by the initial
 ///      target entity. E.g. health based movement speed modifiers should not be handled by a hat, even if that hat
 ///      happens to be a dead mouse. Clothing that wishes to modify movement speed must subscribe to
-///      InventoryRelayedEvent<RefreshMovementSpeedModifiersEvent>
+///      InventoryRelayedEvent&lt;RefreshMovementSpeedModifiersEvent&gt;
 /// </remarks>
 public sealed class InventoryRelayedEvent<TEvent> : EntityEventArgs where TEvent : EntityEventArgs, IInventoryRelayEvent
 {

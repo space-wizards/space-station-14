@@ -30,15 +30,15 @@ namespace Content.Server.Fluids.EntitySystems
 
                 evaporationComponent.Accumulator -= evaporationComponent.EvaporateTime;
 
-                if (evaporationComponent.EvaporationToggle == true)
+                if (evaporationComponent.EvaporationToggle)
                 {
                     _solutionContainerSystem.SplitSolution(uid, solution,
-                        FixedPoint2.Min(FixedPoint2.New(1), solution.CurrentVolume)); // removes 1 unit, or solution current volume, whichever is lower.
+                        FixedPoint2.Min(FixedPoint2.New(1), solution.Volume)); // removes 1 unit, or solution current volume, whichever is lower.
                 }
 
                 evaporationComponent.EvaporationToggle =
-                    solution.CurrentVolume > evaporationComponent.LowerLimit
-                    && solution.CurrentVolume < evaporationComponent.UpperLimit;
+                    solution.Volume > evaporationComponent.LowerLimit
+                    && solution.Volume < evaporationComponent.UpperLimit;
             }
         }
 

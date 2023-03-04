@@ -1,8 +1,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.NPC.Components;
-using Content.Shared.MobState;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Robust.Shared.Audio;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Ranged;
@@ -21,7 +21,7 @@ public sealed class RangedOperator : HTNOperator
     /// Minimum damage state that the target has to be in for us to consider attacking.
     /// </summary>
     [DataField("targetState")]
-    public DamageState TargetState = DamageState.Alive;
+    public MobState TargetState = MobState.Alive;
 
     // Like movement we add a component and pass it off to the dedicated system.
 

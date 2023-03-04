@@ -3,9 +3,7 @@ using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind;
 using Content.Server.Mind.Components;
-using Content.Server.MobState;
 using Content.Server.Players;
-using Content.Server.Storage.Components;
 using Content.Server.Visible;
 using Content.Server.Warps;
 using Content.Shared.Actions;
@@ -13,13 +11,16 @@ using Content.Shared.Administration;
 using Content.Shared.Examine;
 using Content.Shared.Follower;
 using Content.Shared.Ghost;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
+using Content.Shared.Storage.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Ghost
@@ -36,6 +37,7 @@ namespace Content.Server.Ghost
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
         public override void Initialize()
         {
@@ -226,7 +228,7 @@ namespace Content.Server.Ghost
             xform.Coordinates = Transform(msg.Target).Coordinates;
             xform.AttachToGridOrMap();
             if (TryComp(attached, out PhysicsComponent? physics))
-                physics.LinearVelocity = Vector2.Zero;
+                _physics.SetLinearVelocity(attached, Vector2.Zero, body: physics);
         }
 
         private void DeleteEntity(EntityUid uid)
@@ -268,9 +270,9 @@ namespace Content.Server.Ghost
             }
         }
 
-        private void OnEntityStorageInsertAttempt(EntityUid uid, GhostComponent comp, InsertIntoEntityStorageAttemptEvent args)
+        private void OnEntityStorageInsertAttempt(EntityUid uid, GhostComponent comp, ref InsertIntoEntityStorageAttemptEvent args)
         {
-            args.Cancel();
+            args.Cancelled = true;
         }
 
         /// <summary>

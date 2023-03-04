@@ -14,7 +14,7 @@ namespace Content.Shared.Chemistry.Reaction
     public sealed class ReactionPrototype : IPrototype, IComparable<ReactionPrototype>
     {
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
         [DataField("name")]
@@ -94,7 +94,7 @@ namespace Content.Shared.Chemistry.Reaction
             if (Products.Count != other.Products.Count)
                 return Products.Count - other.Products.Count;
 
-            return ID.CompareTo(other.ID);
+            return string.Compare(ID, other.ID, StringComparison.Ordinal);
         }
     }
 

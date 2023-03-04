@@ -1,8 +1,8 @@
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.Cargo.Systems;
 using Content.Server.Examine;
 using Content.Server.Interaction;
-using Content.Server.Interaction.Components;
 using Content.Server.Stunnable;
 using Content.Server.Weapons.Melee;
 using Content.Server.Weapons.Ranged.Components;
@@ -10,6 +10,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged;
@@ -35,8 +36,9 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly PricingSystem _pricing = default!;
     [Dependency] private readonly StaminaSystem _stamina = default!;
     [Dependency] private readonly StunSystem _stun = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
-    public const float DamagePitchVariation = MeleeWeaponSystem.DamagePitchVariation;
+    public const float DamagePitchVariation = SharedMeleeWeaponSystem.DamagePitchVariation;
     public const float GunClumsyChance = 0.5f;
 
     public override void Initialize()
@@ -79,6 +81,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     Audio.PlayPvs(new SoundPathSpecifier("/Audio/Items/bikehorn.ogg"), gun.Owner);
 
                     PopupSystem.PopupEntity(Loc.GetString("gun-clumsy"), user.Value);
+                    _adminLogger.Add(LogType.EntityDelete, LogImpact.Medium, $"Clumsy fire by {ToPrettyString(user.Value)} deleted {ToPrettyString(gun.Owner)}");
                     Del(gun.Owner);
                     return;
                 }
@@ -243,12 +246,12 @@ public sealed partial class GunSystem : SharedGunSystem
     public void ShootProjectile(EntityUid uid, Vector2 direction, Vector2 gunVelocity, EntityUid? user = null, float speed = 20f)
     {
         var physics = EnsureComp<PhysicsComponent>(uid);
-        physics.BodyStatus = BodyStatus.InAir;
+        Physics.SetBodyStatus(physics, BodyStatus.InAir);
 
         var targetMapVelocity = gunVelocity + direction.Normalized * speed;
         var currentMapVelocity = Physics.GetMapLinearVelocity(uid, physics);
         var finalLinear = physics.LinearVelocity + targetMapVelocity - currentMapVelocity;
-        Physics.SetLinearVelocity(physics, finalLinear);
+        Physics.SetLinearVelocity(uid, finalLinear, body: physics);
 
         if (user != null)
         {

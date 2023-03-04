@@ -176,7 +176,39 @@
         ScanningModule: 1
         Capacitor: 2
       materialRequirements:
-        Steel: 5 
+        Steel: 5
+        Cable: 1
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: AnomalyVesselCircuitboard
+  name: anomaly vessel machine board
+  description: A machine printed circuit board for an anomaly vessel
+  components:
+    - type: Sprite
+      state: science
+    - type: MachineBoard
+      prototype: MachineAnomalyVessel
+      requirements:
+        ScanningModule: 5
+      materialRequirements:
+        Cable: 1
+        PlasmaGlass: 10
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: APECircuitboard
+  name: A.P.E. machine board
+  description: A machine printed circuit board for an A.P.E.
+  components:
+    - type: Sprite
+      state: science
+    - type: MachineBoard
+      prototype: MachineAPE
+      requirements:
+        Capacitor: 1
+        Laser: 3
+      materialRequirements:
         Cable: 1
 
 - type: entity
@@ -195,6 +227,7 @@
     materialRequirements:
       Cable: 5
   - type: Construction
+    deconstructionTarget: null
     graph: ThermomachineBoard
     node: freezer
 
@@ -215,6 +248,7 @@
       Cable: 5
   - type: Construction
     graph: ThermomachineBoard
+    deconstructionTarget: null
     node: heater
 
 - type: entity
@@ -267,6 +301,21 @@
       materialRequirements:
         Glass: 5
         Cable: 1
+
+- type: entity
+  id: CrewMonitoringServerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: crew monitoring server machine board
+  description: A machine printed circuit board for a crew monitoring server
+  components:
+    - type: MachineBoard
+      prototype: CrewMonitoringServer
+      requirements:
+        Capacitor: 1
+        ScanningModule: 2
+      materialRequirements:
+        Steel: 1
+        Cable: 2
 
 - type: entity
   id: CryoPodMachineCircuitboard
@@ -677,3 +726,39 @@
     materialRequirements:
       Steel: 10
       Plasma: 5
+      
+- type: entity
+  id: BoozeDispenserMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: booze dispenser machine board
+  description: A machine printed circuit board for a booze dispenser
+  components:
+    - type: Sprite
+      state: service
+    - type: MachineBoard
+      prototype: BoozeDispenser
+      materialRequirements:
+        Steel: 5
+      tagRequirements:
+          GlassBeaker:
+            Amount: 1
+            DefaultPrototype: Beaker
+            ExamineName: Glass Beaker
+
+- type: entity
+  id: SodaDispenserMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: soda dispenser machine board
+  description: A machine printed circuit board for a soda dispenser
+  components:
+    - type: Sprite
+      state: service
+    - type: MachineBoard
+      prototype: soda_dispenser
+      materialRequirements:
+        Steel: 5
+      tagRequirements:
+          GlassBeaker:
+            Amount: 1
+            DefaultPrototype: Beaker
+            ExamineName: Glass Beaker

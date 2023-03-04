@@ -40,7 +40,8 @@ public sealed class ExamineButton : ContainerButton
             Disabled = true;
         }
 
-        ToolTip = verb.Message;
+        ToolTip = verb.Message ?? verb.Text;
+        TooltipDelay = 0.3f; // if you're hovering over these icons, you probably want to know what they do.
 
         Icon = new TextureRect
         {
@@ -48,11 +49,9 @@ public sealed class ExamineButton : ContainerButton
             SetHeight = ElementHeight
         };
 
-        if (verb.IconTexture != null)
+        if (verb.Icon != null)
         {
-            var icon = new SpriteSpecifier.Texture(new ResourcePath(verb.IconTexture));
-
-            Icon.Texture = icon.Frame0();
+            Icon.Texture = verb.Icon.Frame0();
             Icon.Stretch = TextureRect.StretchMode.KeepAspectCentered;
 
             AddChild(Icon);

@@ -13,7 +13,7 @@ namespace Content.Server.MagicMirror;
 public sealed class MagicMirrorSystem : EntitySystem
 {
     [Dependency] private readonly MarkingManager _markings = default!;
-    [Dependency] private readonly HumanoidSystem _humanoid = default!;
+    [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
 
@@ -30,14 +30,14 @@ public sealed class MagicMirrorSystem : EntitySystem
 
     private void OnOpenUIAttempt(EntityUid uid, MagicMirrorComponent mirror, ActivatableUIOpenAttemptEvent args)
     {
-        if (!HasComp<HumanoidComponent>(args.User))
+        if (!HasComp<HumanoidAppearanceComponent>(args.User))
             args.Cancel();
     }
 
     private void OnMagicMirrorSelect(EntityUid uid, MagicMirrorComponent component,
         MagicMirrorSelectMessage message)
     {
-        if (message.Session.AttachedEntity == null || !TryComp<HumanoidComponent>(message.Session.AttachedEntity.Value, out var humanoid))
+        if (message.Session.AttachedEntity == null || !TryComp<HumanoidAppearanceComponent>(message.Session.AttachedEntity.Value, out var humanoid))
         {
             return;
         }
@@ -63,7 +63,7 @@ public sealed class MagicMirrorSystem : EntitySystem
     private void OnMagicMirrorChangeColor(EntityUid uid, MagicMirrorComponent component,
         MagicMirrorChangeColorMessage message)
     {
-        if (message.Session.AttachedEntity == null || !TryComp<HumanoidComponent>(message.Session.AttachedEntity.Value, out var humanoid))
+        if (message.Session.AttachedEntity == null || !TryComp<HumanoidAppearanceComponent>(message.Session.AttachedEntity.Value, out var humanoid))
         {
             return;
         }
@@ -90,7 +90,7 @@ public sealed class MagicMirrorSystem : EntitySystem
     private void OnMagicMirrorRemoveSlot(EntityUid uid, MagicMirrorComponent component,
         MagicMirrorRemoveSlotMessage message)
     {
-        if (message.Session.AttachedEntity == null || !TryComp<HumanoidComponent>(message.Session.AttachedEntity.Value, out var humanoid))
+        if (message.Session.AttachedEntity == null || !TryComp<HumanoidAppearanceComponent>(message.Session.AttachedEntity.Value, out var humanoid))
         {
             return;
         }
@@ -116,7 +116,7 @@ public sealed class MagicMirrorSystem : EntitySystem
     private void OnMagicMirrorAddSlot(EntityUid uid, MagicMirrorComponent component,
         MagicMirrorAddSlotMessage message)
     {
-        if (message.Session.AttachedEntity == null || !TryComp<HumanoidComponent>(message.Session.AttachedEntity.Value, out var humanoid))
+        if (message.Session.AttachedEntity == null || !TryComp<HumanoidAppearanceComponent>(message.Session.AttachedEntity.Value, out var humanoid))
         {
             return;
         }
@@ -145,34 +145,34 @@ public sealed class MagicMirrorSystem : EntitySystem
         UpdateInterface(uid, message.Session.AttachedEntity.Value, message.Session);
     }
 
-    private void UpdateInterface(EntityUid uid, EntityUid playerUid, ICommonSession session, HumanoidComponent? humanoid = null)
+    private void UpdateInterface(EntityUid uid, EntityUid playerUid, ICommonSession session, HumanoidAppearanceComponent? humanoid = null)
     {
         if (!Resolve(playerUid, ref humanoid) || session is not IPlayerSession player)
         {
             return;
         }
 
-        var hair = humanoid.CurrentMarkings.TryGetCategory(MarkingCategories.Hair, out var hairMarkings)
+        var hair = humanoid.MarkingSet.TryGetCategory(MarkingCategories.Hair, out var hairMarkings)
             ? new List<Marking>(hairMarkings)
             : new();
 
-        var facialHair = humanoid.CurrentMarkings.TryGetCategory(MarkingCategories.FacialHair, out var facialHairMarkings)
+        var facialHair = humanoid.MarkingSet.TryGetCategory(MarkingCategories.FacialHair, out var facialHairMarkings)
             ? new List<Marking>(facialHairMarkings)
             : new();
 
         var msg = new MagicMirrorUiData(
             humanoid.Species,
             hair,
-            humanoid.CurrentMarkings.PointsLeft(MarkingCategories.Hair) + hair.Count,
+            humanoid.MarkingSet.PointsLeft(MarkingCategories.Hair) + hair.Count,
             facialHair,
-            humanoid.CurrentMarkings.PointsLeft(MarkingCategories.FacialHair) + facialHair.Count);
+            humanoid.MarkingSet.PointsLeft(MarkingCategories.FacialHair) + facialHair.Count);
 
         _uiSystem.TrySendUiMessage(uid, MagicMirrorUiKey.Key, msg, player);
     }
 
     private void AfterUIOpen(EntityUid uid, MagicMirrorComponent component, AfterActivatableUIOpenEvent args)
     {
-        var looks = Comp<HumanoidComponent>(args.User);
+        var looks = Comp<HumanoidAppearanceComponent>(args.User);
         var actor = Comp<ActorComponent>(args.User);
 
         UpdateInterface(uid, args.User, args.Session);

@@ -9,8 +9,6 @@ namespace Content.Server.Medical.BiomassReclaimer
     [RegisterComponent]
     public sealed class BiomassReclaimerComponent : Component
     {
-        public CancellationTokenSource? CancelToken;
-
         /// <summary>
         /// This gets set for each mob it processes.
         /// When it hits 0, there is a chance for the reclaimer to either spill blood or throw an item.
@@ -54,12 +52,6 @@ namespace Content.Server.Medical.BiomassReclaimer
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public float YieldPerUnitMass = default;
-
-        /// <summary>
-        /// The entity that is output by the reclaimer
-        /// </summary>
-        [DataField("outputEntityId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-        public string OutputEntityId = "MaterialBiomass";
 
         /// <summary>
         /// The base yield per mass unit when no components are upgraded.
