@@ -1,6 +1,6 @@
 status = [ 
-  "Build & Test Debug",
-  "Build & Test Release",
+  "Build & Test Debug (%)",
+  "Build & Test Release (%)",
   "Test Packaging",
   "YAML Linter",
   "YAML RGA schema validator",
