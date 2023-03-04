@@ -33,30 +33,21 @@ public sealed class SolarFlare : StationEventSystem
         _event.EndAfter = RobustRandom.Next(ev.MinEndAfter, ev.MaxEndAfter);
     }
 
-    public override void Started()
-    {
-        base.Started();
-        MessLights();
-    }
-
-    private void MessLights()
-    {
-        foreach (var comp in EntityQuery<PoweredLightComponent>())
-        {
-            if (RobustRandom.Prob(_event.LightBreakChance))
-            {
-                var uid = comp.Owner;
-                _poweredLight.TryDestroyBulb(uid, comp);
-            }
-        }
-    }
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
         if (!RuleStarted)
             return;
+
+        foreach (var comp in EntityQuery<PoweredLightComponent>())
+        {
+            if (RobustRandom.Prob(frameTime * _event.LightBreakChancePerSecond))
+            {
+                var uid = comp.Owner;
+                _poweredLight.TryDestroyBulb(uid, comp);
+            }
+        }
 
         if (Elapsed > _event.EndAfter)
         {

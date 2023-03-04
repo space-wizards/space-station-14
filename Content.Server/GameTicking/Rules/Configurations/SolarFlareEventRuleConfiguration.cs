@@ -33,8 +33,8 @@ public sealed class SolarFlareEventRuleConfiguration : StationEventRuleConfigura
     public readonly HashSet<string> AffectedChannels = new();
 
     /// <summary>
-    ///     Chance any given light bulb breaks due to event
+    ///     Chance light bulb breaks per second during event
     /// </summary>
-    [DataField("lightBreakChance")]
-    public float LightBreakChance;
+    [DataField("lightBreakChancePerSecond")]
+    public float LightBreakChancePerSecond;
 }
