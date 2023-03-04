@@ -1,17 +1,6 @@
 Entries:
 - author: Nairod
   changes:
-  - {message: Changed the laser crate to now require armory access., type: Tweak}
-  id: 2594
-  time: '2022-11-08T02:37:08.0000000+00:00'
-- author: BurninDreamer
-  changes:
-  - {message: Nanotrasen has finally ditched the paper helmet scheme! Expect your
-      old-school security helmets to protect you now!, type: Tweak}
-  id: 2595
-  time: '2022-11-08T02:38:39.0000000+00:00'
-- author: Nairod
-  changes:
   - {message: Added flashlights to the YouTool and SecTech, type: Add}
   id: 2596
   time: '2022-11-08T02:41:00.0000000+00:00'
@@ -2912,3 +2901,14 @@ Entries:
   - {message: Changed the name of planet-related tiles to be more readable., type: Tweak}
   id: 3093
   time: '2023-03-04T04:50:43.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Cardboard boxes now have airholes to prevent suffocation., type: Fix}
+  id: 3094
+  time: '2023-03-04T19:45:31.0000000+00:00'
+- author: 08A
+  changes:
+  - {message: Added the pipe layer in construction mode for the majority of atmos
+      utilities, type: Add}
+  id: 3095
+  time: '2023-03-04T20:31:47.0000000+00:00'
