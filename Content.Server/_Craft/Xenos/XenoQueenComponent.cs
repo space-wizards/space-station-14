@@ -1,4 +1,5 @@
 using Content.Server.Abilities.Mime;
+using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
@@ -31,6 +32,7 @@ namespace Content.Server.Abilities.Xeno
         {
             UseDelay = TimeSpan.FromSeconds(120),
             Icon = new SpriteSpecifier.Texture(new ResourcePath("Interface\\Actions\\malfunction.png")),
+            ItemIconStyle = ItemActionIconStyle.NoItem,
             DisplayName = "xeno-queen-birth",
             Description = "xeno-queen-birth-desc",
             Priority = -1,

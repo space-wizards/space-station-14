@@ -64,7 +64,6 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
   - type: Physics
-    bodyType: Dynamic
   - type: Fixtures
     fixtures:
     - shape:
@@ -83,7 +82,15 @@
   - type: Stamina
     excess: 200
   - type: Bloodstream
-    bloodMaxVolume: 1.5
+    bloodMaxVolume: 200
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -0.25
   - type: MeleeWeapon
     hidden: true
     angle: 0
@@ -129,8 +136,6 @@
       - CannotSuicide
       - DoorBumpOpener
       - FootstepSound
-  - type: Perishable
-    molsPerSecondPerUnitMass: 0.0005
   #- type: NoSlip
 
 ####### Zergling #######
@@ -188,5 +193,10 @@
       - MobMask
       layer:
       - MobLayer
+  - type: Stamina
+    excess: 150
+  - type: StatusEffects
+    allowed:
+    - KnockedDown
   - type: StaticPrice
     price: 1250
