@@ -15,9 +15,11 @@ using Robust.Server.GameObjects;
 using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Ensnaring.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Strip;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Strip
 {
@@ -56,7 +58,7 @@ namespace Content.Server.Strip
                 if (!TryComp<EnsnaringComponent>(entity, out var ensnaring))
                     continue;
 
-                _ensnaring.TryFree(component.Owner, ensnaring, user);
+                _ensnaring.TryFree(uid, entity, ensnaring, user);
                 return;
             }
         }
@@ -131,7 +133,7 @@ namespace Content.Server.Strip
             Verb verb = new()
             {
                 Text = Loc.GetString("strip-verb-get-data-text"),
-                IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png",
+                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
                 Act = () => StartOpeningStripper(args.User, component, true),
             };
             args.Verbs.Add(verb);
@@ -148,7 +150,7 @@ namespace Content.Server.Strip
             ExamineVerb verb = new()
             {
                 Text = Loc.GetString("strip-verb-get-data-text"),
-                IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png",
+                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
                 Act = () => StartOpeningStripper(args.User, component, true),
                 Category = VerbCategory.Examine,
             };

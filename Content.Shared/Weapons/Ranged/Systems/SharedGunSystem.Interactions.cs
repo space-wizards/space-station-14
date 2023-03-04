@@ -35,7 +35,7 @@ public abstract partial class SharedGunSystem
         {
             Act = () => SelectFire(component, nextMode, args.User),
             Text = Loc.GetString("gun-selector-verb", ("mode", GetLocSelector(nextMode))),
-            IconTexture = "/Textures/Interface/VerbIcons/fold.svg.192dpi.png",
+            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/fold.svg.192dpi.png")),
         };
 
         args.Verbs.Add(verb);
