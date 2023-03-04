@@ -1,7 +1,7 @@
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Physics;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -30,15 +30,16 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var comp in _activePressures)
             {
+                var uid = comp.Owner;
                 MetaDataComponent? metadata = null;
 
-                if (Deleted(comp.Owner, metadata))
+                if (Deleted(uid, metadata))
                 {
                     toRemove.Add(comp);
                     continue;
                 }
 
-                if (Paused(comp.Owner, metadata)) continue;
+                if (Paused(uid, metadata)) continue;
 
                 comp.Accumulator += frameTime;
 
@@ -48,17 +49,17 @@ namespace Content.Server.Atmos.EntitySystems
                 comp.Accumulator = 0f;
                 toRemove.Add(comp);
 
-                if (HasComp<MobStateComponent>(comp.Owner) &&
-                    TryComp<PhysicsComponent>(comp.Owner, out var body))
+                if (HasComp<MobStateComponent>(uid) &&
+                    TryComp<PhysicsComponent>(uid, out var body))
                 {
-                    body.BodyStatus = BodyStatus.OnGround;
+                    _physics.SetBodyStatus(body, BodyStatus.OnGround);
                 }
 
-                if (TryComp<FixturesComponent>(comp.Owner, out var fixtures))
+                if (TryComp<FixturesComponent>(uid, out var fixtures))
                 {
-                    foreach (var (_, fixture) in fixtures.Fixtures)
+                    foreach (var fixture in fixtures.Fixtures.Values)
                     {
-                        _physics.AddCollisionMask(fixtures, fixture, (int) CollisionGroup.TableLayer);
+                        _physics.AddCollisionMask(uid, fixture, (int) CollisionGroup.TableLayer, manager: fixtures);
                     }
                 }
             }
@@ -73,11 +74,11 @@ namespace Content.Server.Atmos.EntitySystems
         {
             if (!TryComp<FixturesComponent>(component.Owner, out var fixtures)) return;
 
-            body.BodyStatus = BodyStatus.InAir;
+            _physics.SetBodyStatus(body, BodyStatus.InAir);
 
             foreach (var fixture in fixtures.Fixtures.Values)
             {
-                _physics.RemoveCollisionMask(fixtures, fixture, (int) CollisionGroup.TableLayer);
+                _physics.RemoveCollisionMask(body.Owner, fixture, (int) CollisionGroup.TableLayer, manager: fixtures);
             }
 
             // TODO: Make them dynamic type? Ehh but they still want movement so uhh make it non-predicted like weightless?
@@ -124,7 +125,7 @@ namespace Content.Server.Atmos.EntitySystems
                 // We step through tiles according to the pressure direction on the current tile.
                 // The goal is to get a general direction of the airflow in the area.
                 // 3 is the magic number - enough to go around corners, but not U-turns.
-                var curTile = tile!;
+                var curTile = tile;
                 for (var i = 0; i < 3; i++)
                 {
                     if (curTile.PressureDirection == AtmosDirection.Invalid
@@ -188,10 +189,12 @@ namespace Content.Server.Atmos.EntitySystems
             TransformComponent? xform = null,
             PhysicsComponent? physics = null)
         {
-            if (!Resolve(component.Owner, ref physics, false))
+            var uid = component.Owner;
+
+            if (!Resolve(uid, ref physics, false))
                 return;
 
-            if (!Resolve(component.Owner, ref xform)) return;
+            if (!Resolve(uid, ref xform)) return;
 
             // TODO ATMOS stuns?
 
@@ -209,7 +212,7 @@ namespace Content.Server.Atmos.EntitySystems
                                                                           && (maxForce >= (component.MoveResist * MovedByPressureComponent.MoveForcePushRatio)))
                 || (physics.BodyType == BodyType.Static && (maxForce >= (component.MoveResist * MovedByPressureComponent.MoveForceForcePushRatio))))
             {
-                if (HasComp<MobStateComponent>(physics.Owner))
+                if (HasComp<MobStateComponent>(uid))
                 {
                     AddMobMovedByPressure(component, physics);
                 }
@@ -231,13 +234,12 @@ namespace Content.Server.Atmos.EntitySystems
                     if (throwTarget != EntityCoordinates.Invalid)
                     {
                         var pos = ((throwTarget.ToMap(EntityManager).Position - xform.WorldPosition).Normalized + dirVec).Normalized;
-                        physics.ApplyLinearImpulse(pos * moveForce);
+                        _physics.ApplyLinearImpulse(uid, pos * moveForce, body: physics);
                     }
-
                     else
                     {
                         moveForce = MathF.Min(moveForce, SpaceWindMaxPushForce);
-                        physics.ApplyLinearImpulse(dirVec * moveForce);
+                        _physics.ApplyLinearImpulse(uid, dirVec * moveForce, body: physics);
                     }
 
                     component.LastHighPressureMovementAirCycle = cycle;

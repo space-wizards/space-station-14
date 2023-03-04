@@ -2,6 +2,7 @@
 using Content.Shared.Body.Organ;
 using Content.Shared.Prototypes;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Sequence;
@@ -117,7 +118,7 @@ public sealed class BodyPrototypeSerializer : ITypeReader<BodyPrototype, Mapping
 
     public BodyPrototype Read(ISerializationManager serializationManager, MappingDataNode node,
         IDependencyCollection dependencies,
-        bool skipHook, ISerializationContext? context = null,
+        SerializationHookContext hookCtx, ISerializationContext? context = null,
         ISerializationManager.InstantiationDelegate<BodyPrototype>? instanceProvider = null)
     {
         var id = node.Get<ValueDataNode>("id").Value;

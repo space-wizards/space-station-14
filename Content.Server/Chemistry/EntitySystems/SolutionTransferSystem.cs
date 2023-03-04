@@ -1,9 +1,9 @@
 using Content.Server.Administration.Logs;
 using Content.Shared.Verbs;
-using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
@@ -15,7 +15,9 @@ namespace Content.Server.Chemistry.EntitySystems
     [UsedImplicitly]
     public sealed class SolutionTransferSystem : EntitySystem
     {
-        [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         /// <summary>
@@ -29,6 +31,16 @@ namespace Content.Server.Chemistry.EntitySystems
 
             SubscribeLocalEvent<SolutionTransferComponent, GetVerbsEvent<AlternativeVerb>>(AddSetTransferVerbs);
             SubscribeLocalEvent<SolutionTransferComponent, AfterInteractEvent>(OnAfterInteract);
+            SubscribeLocalEvent<SolutionTransferComponent, TransferAmountSetValueMessage>(OnTransferAmountSetValueMessage);
+        }
+
+        private void OnTransferAmountSetValueMessage(EntityUid uid, SolutionTransferComponent solutionTransfer, TransferAmountSetValueMessage message)
+        {
+            var newTransferAmount = FixedPoint2.Clamp(message.Value, solutionTransfer.MinimumTransferAmount, solutionTransfer.MaximumTransferAmount);
+            solutionTransfer.TransferAmount = newTransferAmount;
+
+            if (message.Session.AttachedEntity is {Valid: true} user)
+                _popupSystem.PopupEntity(Loc.GetString("comp-solution-transfer-set-amount", ("amount", newTransferAmount)), uid, user);
         }
 
         private void AddSetTransferVerbs(EntityUid uid, SolutionTransferComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -43,7 +55,7 @@ namespace Content.Server.Chemistry.EntitySystems
             AlternativeVerb custom = new();
             custom.Text = Loc.GetString("comp-solution-transfer-verb-custom-amount");
             custom.Category = VerbCategory.SetTransferAmount;
-            custom.Act = () => component.UserInterface?.Open(actor.PlayerSession);
+            custom.Act = () => _userInterfaceSystem.TryOpen(args.Target, TransferAmountUiKey.Key, actor.PlayerSession);
             custom.Priority = 1;
             args.Verbs.Add(custom);
 
@@ -60,7 +72,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 verb.Act = () =>
                 {
                     component.TransferAmount = FixedPoint2.New(amount);
-                    args.User.PopupMessage(Loc.GetString("comp-solution-transfer-set-amount", ("amount", amount)));
+                    _popupSystem.PopupEntity(Loc.GetString("comp-solution-transfer-set-amount", ("amount", amount)), uid, args.User);
                 };
 
                 // we want to sort by size, not alphabetically by the verb text.
@@ -80,9 +92,9 @@ namespace Content.Server.Chemistry.EntitySystems
 
             //Special case for reagent tanks, because normally clicking another container will give solution, not take it.
             if (component.CanReceive  && !EntityManager.HasComponent<RefillableSolutionComponent>(target) // target must not be refillable (e.g. Reagent Tanks)
-                                      && _solutionContainer.TryGetDrainableSolution(target, out var targetDrain) // target must be drainable
+                                      && _solutionContainerSystem.TryGetDrainableSolution(target, out var targetDrain) // target must be drainable
                                       && EntityManager.TryGetComponent(uid, out RefillableSolutionComponent? refillComp)
-                                      && _solutionContainer.TryGetRefillableSolution(uid, out var ownerRefill, refillable: refillComp))
+                                      && _solutionContainerSystem.TryGetRefillableSolution(uid, out var ownerRefill, refillable: refillComp))
 
             {
 
@@ -101,8 +113,7 @@ namespace Content.Server.Chemistry.EntitySystems
                         ? "comp-solution-transfer-fill-fully"
                         : "comp-solution-transfer-fill-normal";
 
-                    target.PopupMessage(args.User,
-                        Loc.GetString(msg, ("owner", args.Target), ("amount", transferred), ("target", uid)));
+                    _popupSystem.PopupEntity(Loc.GetString(msg, ("owner", args.Target), ("amount", transferred), ("target", uid)), uid, args.User);
 
                     args.Handled = true;
                     return;
@@ -110,8 +121,8 @@ namespace Content.Server.Chemistry.EntitySystems
             }
 
             // if target is refillable, and owner is drainable
-            if (component.CanSend && _solutionContainer.TryGetRefillableSolution(target, out var targetRefill)
-                                  && _solutionContainer.TryGetDrainableSolution(uid, out var ownerDrain))
+            if (component.CanSend && _solutionContainerSystem.TryGetRefillableSolution(target, out var targetRefill)
+                                  && _solutionContainerSystem.TryGetDrainableSolution(uid, out var ownerDrain))
             {
                 var transferAmount = component.TransferAmount;
 
@@ -124,13 +135,10 @@ namespace Content.Server.Chemistry.EntitySystems
 
                 if (transferred > 0)
                 {
-                    uid.PopupMessage(args.User,
-                        Loc.GetString("comp-solution-transfer-transfer-solution",
-                            ("amount", transferred),
-                            ("target", target)));
+                    var message = Loc.GetString("comp-solution-transfer-transfer-solution", ("amount", transferred), ("target", target));
+                    _popupSystem.PopupEntity(message, uid, args.User);
 
                     args.Handled = true;
-                    return;
                 }
             }
         }
@@ -149,40 +157,37 @@ namespace Content.Server.Chemistry.EntitySystems
             var transferAttempt = new SolutionTransferAttemptEvent(sourceEntity, targetEntity);
 
             // Check if the source is cancelling the transfer
-            RaiseLocalEvent(sourceEntity, transferAttempt, true);
+            RaiseLocalEvent(sourceEntity, transferAttempt, broadcast: true);
             if (transferAttempt.Cancelled)
             {
-                sourceEntity.PopupMessage(user, transferAttempt.CancelReason!);
+                _popupSystem.PopupEntity(transferAttempt.CancelReason!, sourceEntity, user);
                 return FixedPoint2.Zero;
             }
 
-            if (source.DrainAvailable == 0)
+            if (source.Volume == 0)
             {
-                sourceEntity.PopupMessage(user,
-                    Loc.GetString("comp-solution-transfer-is-empty", ("target", sourceEntity)));
+                _popupSystem.PopupEntity(Loc.GetString("comp-solution-transfer-is-empty", ("target", sourceEntity)), sourceEntity, user);
                 return FixedPoint2.Zero;
             }
 
             // Check if the target is cancelling the transfer
-            RaiseLocalEvent(targetEntity, transferAttempt, true);
+            RaiseLocalEvent(targetEntity, transferAttempt, broadcast: true);
             if (transferAttempt.Cancelled)
             {
-                sourceEntity.PopupMessage(user, transferAttempt.CancelReason!);
+                _popupSystem.PopupEntity(transferAttempt.CancelReason!, sourceEntity, user);
                 return FixedPoint2.Zero;
             }
 
             if (target.AvailableVolume == 0)
             {
-                targetEntity.PopupMessage(user,
-                    Loc.GetString("comp-solution-transfer-is-full", ("target", targetEntity)));
+                _popupSystem.PopupEntity(Loc.GetString("comp-solution-transfer-is-full", ("target", targetEntity)), targetEntity, user);
                 return FixedPoint2.Zero;
             }
 
-            var actualAmount = FixedPoint2.Min(amount, FixedPoint2.Min(source.DrainAvailable, target.AvailableVolume));
+            var actualAmount = FixedPoint2.Min(amount, FixedPoint2.Min(source.Volume, target.AvailableVolume));
 
-            var solutionSystem = Get<SolutionContainerSystem>();
-            var solution = solutionSystem.Drain(sourceEntity, source, actualAmount);
-            solutionSystem.Refill(targetEntity, target, solution);
+            var solution = _solutionContainerSystem.Drain(sourceEntity, source, actualAmount);
+            _solutionContainerSystem.Refill(targetEntity, target, solution);
 
             _adminLogger.Add(LogType.Action, LogImpact.Medium,
                 $"{EntityManager.ToPrettyString(user):player} transferred {string.Join(", ", solution.Contents)} to {EntityManager.ToPrettyString(targetEntity):entity}, which now contains {string.Join(", ", target.Contents)}");

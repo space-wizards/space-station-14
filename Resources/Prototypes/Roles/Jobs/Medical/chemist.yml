@@ -1,6 +1,7 @@
 - type: job
   id: Chemist
   name: job-name-chemist
+  description: job-description-chemist
   playTimeTracker: JobChemist
   requirements:
     - !type:DepartmentTimeRequirement
@@ -23,7 +24,7 @@
     outerClothing: ClothingOuterCoatLabChem
     id: ChemistryPDA
     ears: ClothingHeadsetMedical
-    belt: ClothingBeltMedical
+    belt: ChemBag
     pocket1: HandLabeler
     # the purple glasses?
   innerclothingskirt: ClothingUniformJumpskirtChemistry

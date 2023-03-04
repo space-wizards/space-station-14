@@ -254,7 +254,10 @@ namespace Content.Server.Atmos.EntitySystems
                     continue;
 
                 if (mixture != null)
-                    gases.Add(new GasEntry(gas.Name, mixture.Moles[i], gas.Color));
+                {
+                    var gasName = Loc.GetString(gas.Name);
+                    gases.Add(new GasEntry(gasName, mixture.Moles[i], gas.Color));
+                }
             }
 
             return gases.ToArray();

@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Chat.Systems;
-using Content.Server.Communications;
 using Content.Server.Fax;
 using Content.Server.Paper;
 using Content.Server.Station.Components;
@@ -46,8 +45,8 @@ namespace Content.Server.Nuke
                 return false;
             }
 
-            var wasSent = false;
             var faxes = EntityManager.EntityQuery<FaxMachineComponent>();
+            var wasSent = false;
             foreach (var fax in faxes)
             {
                 if (!fax.ReceiveNukeCodes || !TryGetRelativeNukeCode(fax.Owner, out var paperContent, station))
@@ -55,7 +54,12 @@ namespace Content.Server.Nuke
                     continue;
                 }
 
-                var printout = new FaxPrintout(paperContent, Loc.GetString("nuke-codes-fax-paper-name"));
+                var printout = new FaxPrintout(
+                    paperContent,
+                    Loc.GetString("nuke-codes-fax-paper-name"),
+                    null,
+                    "paper_stamp-cent",
+                    new() { Loc.GetString("stamp-component-stamped-name-centcom") });
                 _faxSystem.Receive(fax.Owner, printout, null, fax);
 
                 wasSent = true;
@@ -81,9 +85,9 @@ namespace Content.Server.Nuke
             {
                 return false;
             }
-            
+
             var owningStation = station ?? _station.GetOwningStation(uid);
-            
+
             // Find the first nuke that matches the passed location.
             foreach (var nuke in EntityQuery<NukeComponent>())
             {

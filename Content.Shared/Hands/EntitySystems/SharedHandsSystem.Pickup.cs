@@ -60,9 +60,14 @@ public abstract partial class SharedHandsSystem : EntitySystem
         // animation
         var xform = Transform(uid);
         var coordinateEntity = xform.ParentUid.IsValid() ? xform.ParentUid : uid;
-        var initialPosition = EntityCoordinates.FromMap(EntityManager, coordinateEntity, Transform(entity).MapPosition);
 
-        PickupAnimation(entity, initialPosition, xform.LocalPosition, animateUser ? null : uid);
+        var itemPos = Transform(entity).MapPosition;
+        if (itemPos.MapId == xform.MapID)
+        {
+            // TODO max range for animation?
+            var initialPosition = EntityCoordinates.FromMap(coordinateEntity, itemPos, EntityManager);
+            PickupAnimation(entity, initialPosition, xform.LocalPosition, animateUser ? null : uid);
+        }
         DoPickup(uid, hand, entity, handsComp);
 
         return true;
@@ -134,7 +139,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
 
         if (!handContainer.Insert(entity, EntityManager))
         {
-            Logger.Error($"{nameof(SharedHandsComponent)} on {uid} could not insert {entity} into {handContainer}.");
+            Logger.Error($"Failed to insert {ToPrettyString(entity)} into users hand container when picking up. User: {ToPrettyString(uid)}. Hand: {hand.Name}.");
             return;
         }
 

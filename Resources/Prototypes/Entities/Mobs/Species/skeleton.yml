@@ -5,7 +5,7 @@
   id: BaseMobSkeletonPerson
   abstract: true
   components:
-  - type: Humanoid
+  - type: HumanoidAppearance
     species: Skeleton
   - type: Icon
     sprite: Mobs/Species/Skeleton/parts.rsi
@@ -31,6 +31,7 @@
       types:
         Bloodloss: 0
   - type: MobState
+  - type: MobThresholds
     thresholds:
       0: Alive
       100: Critical
@@ -48,6 +49,11 @@
       60: 0.9
       80: 0.7
   - type: Speech
+  - type: Vocal
+    sounds:
+      Male: Skeleton
+      Female: Skeleton
+      Unsexed: Skeleton
   - type: SkeletonAccent
   - type: Fixtures
     fixtures:
@@ -69,5 +75,5 @@
   noSpawn: true
   description: A dummy skeleton meant to be used in character setup.
   components:
-    - type: Humanoid
+    - type: HumanoidAppearance
       species: Skeleton

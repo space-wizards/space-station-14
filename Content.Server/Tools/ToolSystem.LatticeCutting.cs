@@ -1,5 +1,5 @@
-﻿using System.Threading;
-using Content.Server.Administration.Logs;
+﻿using Content.Server.Administration.Logs;
+using Content.Server.Maps;
 using Content.Server.Tools.Components;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
@@ -12,22 +12,16 @@ namespace Content.Server.Tools;
 public sealed partial class ToolSystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly TileSystem _tile = default!;
 
     private void InitializeLatticeCutting()
     {
         SubscribeLocalEvent<LatticeCuttingComponent, AfterInteractEvent>(OnLatticeCuttingAfterInteract);
         SubscribeLocalEvent<LatticeCuttingComponent, LatticeCuttingCompleteEvent>(OnLatticeCutComplete);
-        SubscribeLocalEvent<LatticeCuttingComponent, LatticeCuttingCancelledEvent>(OnLatticeCutCancelled);
-    }
-
-    private void OnLatticeCutCancelled(EntityUid uid, LatticeCuttingComponent component, LatticeCuttingCancelledEvent args)
-    {
-        component.CancelTokenSource = null;
     }
 
     private void OnLatticeCutComplete(EntityUid uid, LatticeCuttingComponent component, LatticeCuttingCompleteEvent args)
     {
-        component.CancelTokenSource = null;
         var gridUid = args.Coordinates.GetGridUid(EntityManager);
         if (gridUid == null)
             return;
@@ -40,7 +34,7 @@ public sealed partial class ToolSystem
             || tile.IsBlockedTurf(true))
             return;
 
-        tile.CutTile(_mapManager, _tileDefinitionManager, EntityManager);
+        _tile.CutTile(tile);
         _adminLogger.Add(LogType.LatticeCut, LogImpact.Medium, $"{ToPrettyString(args.User):user} cut the lattice at {args.Coordinates:target}");
     }
 
@@ -50,17 +44,14 @@ public sealed partial class ToolSystem
         if (args.Handled || !args.CanReach || args.Target != null)
             return;
 
-        if (TryCut(args.User, component, args.ClickLocation))
+        if (TryCut(uid, args.User, component, args.ClickLocation))
             args.Handled = true;
     }
 
-    private bool TryCut(EntityUid user, LatticeCuttingComponent component, EntityCoordinates clickLocation)
+    private bool TryCut(EntityUid toolEntity, EntityUid user, LatticeCuttingComponent component, EntityCoordinates clickLocation)
     {
-        if (component.CancelTokenSource != null)
-            return true;
-
         ToolComponent? tool = null;
-        if (component.ToolComponentNeeded && !TryComp<ToolComponent?>(component.Owner, out tool))
+        if (component.ToolComponentNeeded && !TryComp<ToolComponent?>(toolEntity, out tool))
             return false;
 
         if (!_mapManager.TryGetGrid(clickLocation.GetGridUid(EntityManager), out var mapGrid))
@@ -80,17 +71,10 @@ public sealed partial class ToolSystem
             || tile.IsBlockedTurf(true))
             return false;
 
-        var tokenSource = new CancellationTokenSource();
-        component.CancelTokenSource = tokenSource;
+        var toolEvData = new ToolEventData(new LatticeCuttingCompleteEvent(clickLocation, user), targetEntity: toolEntity);
 
-        if (!UseTool(component.Owner, user, null, 0f, component.Delay, new[] {component.QualityNeeded},
-                new LatticeCuttingCompleteEvent
-                {
-                    Coordinates = clickLocation,
-                    User = user
-                }, new LatticeCuttingCancelledEvent(), toolComponent: tool, doAfterEventTarget: component.Owner,
-                cancelToken: tokenSource.Token))
-            component.CancelTokenSource = null;
+        if (!UseTool(toolEntity, user, null, component.Delay, new[] {component.QualityNeeded}, toolEvData, toolComponent: tool))
+            return false;
 
         return true;
     }
@@ -99,10 +83,12 @@ public sealed partial class ToolSystem
     {
         public EntityCoordinates Coordinates;
         public EntityUid User;
-    }
 
-    private sealed class LatticeCuttingCancelledEvent : EntityEventArgs
-    {
+        public LatticeCuttingCompleteEvent(EntityCoordinates coordinates, EntityUid user)
+        {
+            Coordinates = coordinates;
+            User = user;
+        }
     }
 }
 

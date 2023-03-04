@@ -57,6 +57,7 @@
       proper: true
       gender: male
 
+
 - type: entity
   name: Lisa
   parent: MobCorgi
@@ -362,6 +363,16 @@
       gender: female
 
 - type: entity
+  name: Alexander
+  parent: MobPig
+  id: MobAlexander
+  description: Chef's finest colleague.
+  components:
+  - type: Grammar
+    attributes:
+      gender: male
+      
+- type: entity
   name: Renault
   parent: MobFox
   id: MobFoxRenault
@@ -394,8 +405,6 @@
     description: ghost-role-information-hamlet-description
   - type: InteractionPopup
     successChance: 1
-  - type: Puller
-    needsHands: false
   - type: Butcherable
     spawned:
     - id: FoodMeat

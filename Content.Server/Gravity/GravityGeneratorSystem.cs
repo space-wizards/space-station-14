@@ -1,13 +1,18 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Audio;
 using Content.Server.Power.Components;
+using Content.Shared.Database;
 using Content.Shared.Gravity;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
+using Robust.Shared.Players;
 
 namespace Content.Server.Gravity
 {
     public sealed class GravityGeneratorSystem : EntitySystem
     {
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly AmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private readonly GravitySystem _gravitySystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -124,10 +129,14 @@ namespace Content.Server.Gravity
             }
         }
 
-        private void SetSwitchedOn(EntityUid uid, GravityGeneratorComponent component, bool on, ApcPowerReceiverComponent? powerReceiver = null)
+        private void SetSwitchedOn(EntityUid uid, GravityGeneratorComponent component, bool on,
+            ApcPowerReceiverComponent? powerReceiver = null, ICommonSession? session = null)
         {
             if (!Resolve(uid, ref powerReceiver))
                 return;
+
+            if (session is { AttachedEntity: { } })
+                _adminLogger.Add(LogType.Action, on ? LogImpact.Medium : LogImpact.High, $"{ToPrettyString(session.AttachedEntity.Value):player} set ${ToPrettyString(uid):target} to {(on ? "on" : "off")}");
 
             component.SwitchedOn = on;
             UpdatePowerState(component, powerReceiver);
@@ -279,7 +288,7 @@ namespace Content.Server.Gravity
             GravityGeneratorComponent component,
             SharedGravityGeneratorComponent.SwitchGeneratorMessage args)
         {
-            SetSwitchedOn(uid, component, args.On);
+            SetSwitchedOn(uid, component, args.On, session:args.Session);
         }
     }
 }

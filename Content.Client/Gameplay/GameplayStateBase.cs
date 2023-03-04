@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Clickable;
 using Content.Client.ContextMenu.UI;
+using Robust.Client.ComponentTrees;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -49,7 +50,7 @@ namespace Content.Client.Gameplay
 
             EntityUid? uid = null;
             if (UserInterfaceManager.CurrentlyHovered is IViewportControl vp && _inputManager.MouseScreenPosition.IsValid)
-                uid = GetEntityUnderPosition(vp.ScreenToMap(_inputManager.MouseScreenPosition.Position));
+                uid = GetClickedEntity(vp.ScreenToMap(_inputManager.MouseScreenPosition.Position));
             else if (UserInterfaceManager.CurrentlyHovered is EntityMenuElement element)
                 uid = element.Entity;
 
@@ -74,48 +75,47 @@ namespace Content.Client.Gameplay
             _inputManager.KeyBindStateChanged -= OnKeyBindStateChanged;
         }
 
-        public EntityUid? GetEntityUnderPosition(MapCoordinates coordinates)
+        public EntityUid? GetClickedEntity(MapCoordinates coordinates)
         {
-            var entitiesUnderPosition = GetEntitiesUnderPosition(coordinates);
-            return entitiesUnderPosition.Count > 0 ? entitiesUnderPosition[0] : null;
+            var first = GetClickableEntities(coordinates).FirstOrDefault();
+            return first.IsValid() ? first : null;
         }
 
-        public IList<EntityUid> GetEntitiesUnderPosition(EntityCoordinates coordinates)
+        public IEnumerable<EntityUid> GetClickableEntities(EntityCoordinates coordinates)
         {
-            return GetEntitiesUnderPosition(coordinates.ToMap(_entityManager));
+            return GetClickableEntities(coordinates.ToMap(_entityManager));
         }
 
-        public IList<EntityUid> GetEntitiesUnderPosition(MapCoordinates coordinates)
+        public IEnumerable<EntityUid> GetClickableEntities(MapCoordinates coordinates)
         {
             // Find all the entities intersecting our click
-            var entities = _entityManager.EntitySysManager.GetEntitySystem<EntityLookupSystem>().GetEntitiesIntersecting(coordinates.MapId,
-                Box2.CenteredAround(coordinates.Position, (1, 1)), LookupFlags.Uncontained | LookupFlags.Approximate);
+            var spriteTree = _entityManager.EntitySysManager.GetEntitySystem<SpriteTreeSystem>();
+            var entities = spriteTree.QueryAabb(coordinates.MapId, Box2.CenteredAround(coordinates.Position, (1, 1)), true);
 
             // Check the entities against whether or not we can click them
-            var foundEntities = new List<(EntityUid clicked, int drawDepth, uint renderOrder, float bottom)>();
+            var foundEntities = new List<(EntityUid, int, uint, float)>(entities.Count);
             var clickQuery = _entityManager.GetEntityQuery<ClickableComponent>();
-            var metaQuery = _entityManager.GetEntityQuery<MetaDataComponent>();
-            var spriteQuery = _entityManager.GetEntityQuery<SpriteComponent>();
             var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
+
             // TODO: Smelly
             var eye = _eyeManager.CurrentEye;
 
             foreach (var entity in entities)
             {
-                if (clickQuery.TryGetComponent(entity, out var component) &&
-                    spriteQuery.TryGetComponent(entity, out var sprite) &&
-                    component.CheckClick(sprite, xformQuery, coordinates.Position, eye,  out var drawDepthClicked, out var renderOrder, out var bottom))
+                if (clickQuery.TryGetComponent(entity.Uid, out var component) &&
+                    component.CheckClick(entity.Component, entity.Transform, xformQuery, coordinates.Position, eye,  out var drawDepthClicked, out var renderOrder, out var bottom))
                 {
-                    foundEntities.Add((entity, drawDepthClicked, renderOrder, bottom));
+                    foundEntities.Add((entity.Uid, drawDepthClicked, renderOrder, bottom));
                 }
             }
 
             if (foundEntities.Count == 0)
                 return Array.Empty<EntityUid>();
 
+            // Do drawdepth & y-sorting. First index is the top-most sprite (opposite of normal render order).
             foundEntities.Sort(_comparer);
-            // 0 is the top element.
-            return foundEntities.Select(a => a.clicked).ToList();
+
+            return foundEntities.Select(a => a.Item1);
         }
 
         private sealed class ClickableEntityComparer : IComparer<(EntityUid clicked, int depth, uint renderOrder, float bottom)>
@@ -166,7 +166,7 @@ namespace Content.Client.Gameplay
             if (args.Viewport is IViewportControl vp)
             {
                 var mousePosWorld = vp.ScreenToMap(kArgs.PointerLocation.Position);
-                entityToClick = GetEntityUnderPosition(mousePosWorld);
+                entityToClick = GetClickedEntity(mousePosWorld);
 
                 coordinates = _mapManager.TryFindGridAt(mousePosWorld, out var grid) ? grid.MapToGrid(mousePosWorld) :
                     EntityCoordinates.FromMap(_mapManager, mousePosWorld);

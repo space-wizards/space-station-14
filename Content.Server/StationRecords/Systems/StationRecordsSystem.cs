@@ -1,9 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.Access.Systems;
+using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.Station.Systems;
-using Content.Server.StationRecords;
-using Content.Server.StationRecords.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
@@ -12,6 +10,8 @@ using Content.Shared.Roles;
 using Content.Shared.StationRecords;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
+
+namespace Content.Server.StationRecords.Systems;
 
 /// <summary>
 ///     Station records.
@@ -116,7 +116,7 @@ public sealed class StationRecordsSystem : EntitySystem
         {
             Name = name,
             Age = age,
-            JobTitle = jobPrototype.Name,
+            JobTitle = jobPrototype.LocalizedName,
             JobIcon = jobPrototype.Icon,
             JobPrototype = jobId,
             Species = species,

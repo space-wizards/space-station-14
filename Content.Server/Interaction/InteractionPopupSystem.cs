@@ -3,7 +3,8 @@ using Content.Server.Popups;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -15,6 +16,7 @@ public sealed class InteractionPopupSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     public override void Initialize()
@@ -32,13 +34,15 @@ public sealed class InteractionPopupSystem : EntitySystem
         if (HasComp<SleepingComponent>(uid))
             return;
 
+        args.Handled = true;
+
         var curTime = _gameTiming.CurTime;
 
         if (curTime < component.LastInteractTime + component.InteractDelay)
             return;
 
         if (TryComp<MobStateComponent>(uid, out var state) // if it has a MobStateComponent,
-            && !state.IsAlive())                           // AND if that state is not Alive (e.g. dead/incapacitated/critical)
+            && !_mobStateSystem.IsAlive(uid, state))                           // AND if that state is not Alive (e.g. dead/incapacitated/critical)
             return;
 
         // TODO: Should be an attempt event
@@ -83,6 +87,5 @@ public sealed class InteractionPopupSystem : EntitySystem
         }
 
         component.LastInteractTime = curTime;
-        args.Handled = true;
     }
 }

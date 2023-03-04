@@ -9,14 +9,17 @@ using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Weapons.Melee.Events;
+using Content.Shared.Timing;
 using Robust.Shared.Player;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
     public sealed partial class ChemistrySystem
     {
+        [Dependency] private readonly UseDelaySystem _useDelay = default!;
+
         private void InitializeHypospray()
         {
             SubscribeLocalEvent<HyposprayComponent, AfterInteractEvent>(OnAfterInteract);
@@ -65,6 +68,10 @@ namespace Content.Server.Chemistry.EntitySystems
             if (!EligibleEntity(target, _entMan))
                 return false;
 
+            if (TryComp(uid, out UseDelayComponent? delayComp))
+                if (_useDelay.ActiveDelay(uid, delayComp))
+                    return false;
+
             string? msgFormat = null;
 
             if (target == user)
@@ -77,7 +84,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             _solutions.TryGetSolution(uid, component.SolutionName, out var hypoSpraySolution);
 
-            if (hypoSpraySolution == null || hypoSpraySolution.CurrentVolume == 0)
+            if (hypoSpraySolution == null || hypoSpraySolution.Volume == 0)
             {
                 _popup.PopupCursor(Loc.GetString("hypospray-component-empty-message"), user);
                 return true;
@@ -101,6 +108,11 @@ namespace Content.Server.Chemistry.EntitySystems
             }
 
             _audio.PlayPvs(component.InjectSound, user);
+
+            // Medipens and such use this system and don't have a delay, requiring extra checks
+            // BeginDelay function returns if item is already on delay
+            if (delayComp is not null)
+                _useDelay.BeginDelay(uid, delayComp);
 
             // Get transfer amount. May be smaller than component.TransferAmount if not enough room
             var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetSolution.AvailableVolume);

@@ -118,7 +118,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
         UpdateDrawDepth(uid, 2);
 
         // This code should be purged anyway but with that being said this doesn't handle components being changed.
-        if (TryComp<SharedStrapComponent>(uid, out var strap))
+        if (TryComp<StrapComponent>(uid, out var strap))
         {
             component.BaseBuckleOffset = strap.BuckleOffset;
             strap.BuckleOffsetUnclamped = Vector2.Zero;
@@ -159,7 +159,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
     /// </summary>
     protected void UpdateBuckleOffset(TransformComponent xform, VehicleComponent component)
     {
-        if (!TryComp<SharedStrapComponent>(component.Owner, out var strap))
+        if (!TryComp<StrapComponent>(component.Owner, out var strap))
             return;
 
         // TODO: Strap should handle this but buckle E/C moment.

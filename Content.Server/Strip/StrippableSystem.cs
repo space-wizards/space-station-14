@@ -1,7 +1,6 @@
 using Content.Server.Cuffs.Components;
 using Content.Server.DoAfter;
 using Content.Server.Ensnaring;
-using Content.Server.Ensnaring.Components;
 using Content.Server.Hands.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Hands.Components;
@@ -13,14 +12,18 @@ using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
+using Content.Shared.Ensnaring.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Strip;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Strip
 {
-    public sealed class StrippableSystem : EntitySystem
+    public sealed class StrippableSystem : SharedStrippableSystem
     {
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
@@ -38,6 +41,7 @@ namespace Content.Server.Strip
 
             SubscribeLocalEvent<StrippableComponent, GetVerbsEvent<Verb>>(AddStripVerb);
             SubscribeLocalEvent<StrippableComponent, GetVerbsEvent<ExamineVerb>>(AddStripExamineVerb);
+            SubscribeLocalEvent<StrippableComponent, ActivateInWorldEvent>(OnActivateInWorld);
 
             // BUI
             SubscribeLocalEvent<StrippableComponent, StrippingSlotButtonPressed>(OnStripButtonPressed);
@@ -54,7 +58,7 @@ namespace Content.Server.Strip
                 if (!TryComp<EnsnaringComponent>(entity, out var ensnaring))
                     continue;
 
-                _ensnaring.TryFree(component.Owner, ensnaring, user);
+                _ensnaring.TryFree(uid, entity, ensnaring, user);
                 return;
             }
         }
@@ -103,8 +107,10 @@ namespace Content.Server.Strip
                 TakeItemFromHands(user, handId, component);
         }
 
-        public void StartOpeningStripper(EntityUid user, StrippableComponent component, bool openInCombat = false)
+        public override void StartOpeningStripper(EntityUid user, StrippableComponent component, bool openInCombat = false)
         {
+            base.StartOpeningStripper(user, component, openInCombat);
+
             if (TryComp<SharedCombatModeComponent>(user, out var mode) && mode.IsInCombatMode && !openInCombat)
                 return;
 
@@ -127,7 +133,7 @@ namespace Content.Server.Strip
             Verb verb = new()
             {
                 Text = Loc.GetString("strip-verb-get-data-text"),
-                IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png",
+                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
                 Act = () => StartOpeningStripper(args.User, component, true),
             };
             args.Verbs.Add(verb);
@@ -144,12 +150,23 @@ namespace Content.Server.Strip
             ExamineVerb verb = new()
             {
                 Text = Loc.GetString("strip-verb-get-data-text"),
-                IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png",
+                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
                 Act = () => StartOpeningStripper(args.User, component, true),
                 Category = VerbCategory.Examine,
             };
 
             args.Verbs.Add(verb);
+        }
+
+        private void OnActivateInWorld(EntityUid uid, StrippableComponent component, ActivateInWorldEvent args)
+        {
+            if (args.Target == args.User)
+                return;
+
+            if (!TryComp<ActorComponent>(args.User, out var actor))
+                return;
+
+            StartOpeningStripper(args.User, component);
         }
 
         /// <summary>
@@ -433,26 +450,6 @@ namespace Content.Server.Strip
             _handsSystem.PickupOrDrop(user, held, handsComp: userHands);
             // hand update will trigger strippable update
             _adminLogger.Add(LogType.Stripping, LogImpact.Medium, $"{ToPrettyString(user):user} has stripped the item {ToPrettyString(held):item} from {ToPrettyString(component.Owner):target}");
-        }
-
-        private sealed class OpenStrippingCompleteEvent
-        {
-            public readonly EntityUid User;
-
-            public OpenStrippingCompleteEvent(EntityUid user)
-            {
-                User = user;
-            }
-        }
-
-        private sealed class OpenStrippingCancelledEvent
-        {
-            public readonly EntityUid User;
-
-            public OpenStrippingCancelledEvent(EntityUid user)
-            {
-                User = user;
-            }
         }
     }
 }

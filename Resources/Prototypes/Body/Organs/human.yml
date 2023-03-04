@@ -141,7 +141,7 @@
   - type: SolutionContainerManager
     solutions:
       stomach:
-        maxVol: 250
+        maxVol: 50
   - type: Stomach
   # The stomach metabolizes stuff like foods and drinks.
   # TODO: Have it work off of the ent's solution container, and move this

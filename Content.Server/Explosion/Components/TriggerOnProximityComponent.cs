@@ -14,10 +14,10 @@ namespace Content.Server.Explosion.Components
     {
         public const string FixtureID  = "trigger-on-proximity-fixture";
 
-        public HashSet<PhysicsComponent> Colliding = new();
+        public readonly HashSet<PhysicsComponent> Colliding = new();
 
         [DataField("shape", required: true)]
-        public IPhysShape Shape { get; set; } = new PhysShapeCircle {Radius = 2};
+        public IPhysShape Shape { get; set; } = new PhysShapeCircle(2f);
 
         /// <summary>
         /// How long the the proximity trigger animation plays for.

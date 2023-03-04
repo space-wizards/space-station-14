@@ -21,7 +21,7 @@
         - ReagentId: Nutriment
           Quantity: 11
         - ReagentId: Vitamin
-          Quanity: 5
+          Quantity: 5
   - type: SliceableFood
     count: 4
   - type: Tag
@@ -141,6 +141,19 @@
     - state: tin
     - state: plain
   - type: CreamPie
+  - type: ContainerContainer
+    containers:
+      payloadSlot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      payloadSlot:
+        whitelist:
+          components:
+          - OnUseTimerTrigger
+        insertSound: 
+          path: /Audio/Weapons/Guns/Empty/empty.ogg
+        ejectSound: 
+          path: /Audio/Weapons/Guns/Empty/empty.ogg
 # Tastes like pie, cream, banana.
 
 - type: entity

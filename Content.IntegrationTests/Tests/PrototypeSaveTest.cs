@@ -11,6 +11,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
@@ -35,42 +36,6 @@ public sealed class PrototypeSaveTest
     {
         "Singularity", // physics collision uses "AllMask" (-1). The flag serializer currently fails to save this because this features un-named bits.
         "constructionghost",
-
-        // TODO fix more prototypes
-        // The rest of these prototypes (probably) shouldn't be getting ignored.
-        // There should be an issue up tracking all of these prototypes, indicating that still need to get fixed.
-        "HeadSkeleton",
-        // The followjng are all fixture-less phsyics entities that set can-collide to false on init.
-        "CarpRift",
-        "GasMinerOxygen",
-        "GasMinerNitrogen",
-        "GasMinerCarbonDioxide",
-        "GasMinerPlasma",
-        "GasMinerTritium",
-        "GasMinerWaterVapor",
-        "GasMinerMiasma",
-        "GasMinerNitrousOxide",
-        "SignalSwitch",
-        "SignalButton",
-        "ApcNetSwitch",
-        "TetherEntity",
-        "SignalButtonExt1",
-        "SignalButtonExt2",
-        "SignalButtonExt3",
-        "SignalButtonBridge",
-        "SignalButtonWindows",
-        "GrilleBroken",
-        "BaseGeneratorWallmountFrame",
-        "GeneratorWallmountBasic",
-        "GeneratorWallmountAPU",
-        "Lightning",
-        "LightningRevenant",
-        "ChargedLightning",
-        "SuperchargedLightning",
-        "HyperchargedLightning",
-        "BaseSubstationWall",
-        "SubstationWallBasic",
-        "BaseSubstationWallFrame"
     };
 
     [Test]
@@ -240,7 +205,7 @@ public sealed class PrototypeSaveTest
         EntityUid ITypeReader<EntityUid, ValueDataNode>.Read(ISerializationManager serializationManager,
             ValueDataNode node,
             IDependencyCollection dependencies,
-            bool skipHook,
+            SerializationHookContext hookCtx,
             ISerializationContext? context, ISerializationManager.InstantiationDelegate<EntityUid>? instanceProvider = null)
         {
             return EntityUid.Invalid;

@@ -76,6 +76,9 @@
     damage:
       types:
         Piercing: 5
+  - type: DeleteOnTrigger
+  - type: StaticPrice
+    price: 0
 
 - type: entity
   parent: ShardBase

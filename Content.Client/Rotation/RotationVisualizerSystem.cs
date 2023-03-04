@@ -1,73 +1,82 @@
-using Robust.Client.GameObjects;
-using Robust.Client.Animations;
 using Content.Shared.Rotation;
+using Robust.Client.Animations;
+using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
 
 namespace Content.Client.Rotation;
 
 public sealed class RotationVisualizerSystem : VisualizerSystem<RotationVisualsComponent>
 {
+    public void SetHorizontalAngle(EntityUid uid, Angle angle, RotationVisualsComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        if (component.HorizontalRotation.Equals(angle))
+            return;
+
+        component.HorizontalRotation = angle;
+        Dirty(component);
+    }
+
     protected override void OnAppearanceChange(EntityUid uid, RotationVisualsComponent component, ref AppearanceChangeEvent args)
     {
         base.OnAppearanceChange(uid, component, ref args);
 
-        if (args.Sprite != null)
+        if (!AppearanceSystem.TryGetData<RotationState>(uid, RotationVisuals.RotationState, out var state, args.Component) ||
+            args.Sprite == null)
         {
-            // if TryGetData fails, state defaults to RotationState.Vertical.
-            args.Component.TryGetData<RotationState>(RotationVisuals.RotationState, out var state);
+            return;
+        }
 
-            switch (state)
-            {
-                case RotationState.Vertical:
-                    AnimateSpriteRotation(args.Sprite, component.VerticalRotation, component.AnimationTime);
-                    break;
-                case RotationState.Horizontal:
-                    AnimateSpriteRotation(args.Sprite, component.HorizontalRotation, component.AnimationTime);
-                    break;
-            }
+        switch (state)
+        {
+            case RotationState.Vertical:
+                AnimateSpriteRotation(uid, args.Sprite, component.VerticalRotation, component.AnimationTime);
+                break;
+            case RotationState.Horizontal:
+                AnimateSpriteRotation(uid, args.Sprite, component.HorizontalRotation, component.AnimationTime);
+                break;
         }
     }
 
     /// <summary>
     ///     Rotates a sprite between two animated keyframes given a certain time.
     /// </summary>
-    public void AnimateSpriteRotation(SpriteComponent sprite, Angle rotation, float animationTime)
+    public void AnimateSpriteRotation(EntityUid uid, SpriteComponent spriteComp, Angle rotation, float animationTime)
     {
-        var entMan = IoCManager.Resolve<IEntityManager>();
-
-        if (sprite.Rotation.Equals(rotation))
+        if (spriteComp.Rotation.Equals(rotation))
         {
             return;
         }
 
-        if (!entMan.TryGetComponent(sprite.Owner, out AnimationPlayerComponent? animation))
+        var animationComp = EnsureComp<AnimationPlayerComponent>(uid);
+        const string animationKey = "rotate";
+        // Stop the current rotate animation and then start a new one
+        if (AnimationSystem.HasRunningAnimation(animationComp, animationKey))
         {
-            sprite.Rotation = rotation;
-            return;
+            AnimationSystem.Stop(animationComp, animationKey);
         }
 
-        if (animation.HasRunningAnimation("rotate"))
-        {
-            animation.Stop("rotate");
-        }
-
-        animation.Play(new Animation
+        var animation = new Animation
         {
             Length = TimeSpan.FromSeconds(animationTime),
             AnimationTracks =
             {
                 new AnimationTrackComponentProperty
                 {
-                    ComponentType = typeof(ISpriteComponent),
-                    Property = nameof(ISpriteComponent.Rotation),
+                    ComponentType = typeof(SpriteComponent),
+                    Property = nameof(SpriteComponent.Rotation),
                     InterpolationMode = AnimationInterpolationMode.Linear,
                     KeyFrames =
                     {
-                        new AnimationTrackProperty.KeyFrame(sprite.Rotation, 0),
+                        new AnimationTrackProperty.KeyFrame(spriteComp.Rotation, 0),
                         new AnimationTrackProperty.KeyFrame(rotation, animationTime)
                     }
                 }
             }
-        }, "rotate");
+        };
+
+        AnimationSystem.Play(animationComp, animation, animationKey);
     }
 }

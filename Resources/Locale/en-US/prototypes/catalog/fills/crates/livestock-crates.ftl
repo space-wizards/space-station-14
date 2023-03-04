@@ -40,5 +40,8 @@ ent-CrateNPCParrot = Parrot crate
 ent-CrateNPCPenguin = Penguin crate
     .desc = A crate containing two penguins.
 
+ent-CrateNPCPig = Pig crate
+    .desc = A crate containing a single pig.
+
 ent-CrateNPCSnake = Snake crate
     .desc = A crate containing three snakes.

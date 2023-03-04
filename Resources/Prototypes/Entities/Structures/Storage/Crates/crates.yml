@@ -22,6 +22,8 @@
     node: crateplastic
     containers:
     - entity_storage
+  - type: StaticPrice
+    price: 150
 
 - type: entity
   parent: CrateBaseWeldable
@@ -280,6 +282,8 @@
     node: cratelivestock
     containers:
     - entity_storage
+  - type: StaticPrice
+    price: 125
 
 - type: entity
   parent: CrateGeneric
@@ -312,6 +316,9 @@
         acts: [ "Destruction" ]
   - type: Physics
     bodyType: Dynamic
+  - type: EntityStorage
+    capacity: 500
+    airtight: false
   - type: Fixtures
     fixtures:
     - shape:
@@ -319,7 +326,9 @@
         bounds: "-0.4,-0.4,0.4,0.29"
       density: 80
       mask:
-      - SmallMobMask
+      - LargeMobMask
       layer:
-      - SmallMobLayer
+      - LargeMobLayer
+  - type: StaticPrice
+    price: 60
 

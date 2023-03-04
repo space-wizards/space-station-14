@@ -37,16 +37,13 @@ public sealed class NPCSteeringComponent : Component
     #endregion
 
     /// <summary>
-    /// How many times per second we're allowed to update our steering frequency.
+    /// Next time we can change our steering direction.
     /// </summary>
-    public const byte SteerFrequency = 10;
+    public TimeSpan NextSteer = TimeSpan.Zero;
 
-    /// <summary>
-    /// Last time the NPC steered.
-    /// </summary>
-    public TimeSpan LastTimeSteer;
+    public Vector2 LastSteerDirection = Vector2.Zero;
 
-    public Vector2 LastSteer;
+    public const int SteeringFrequency = 10;
 
     /// <summary>
     /// Have we currently requested a path.

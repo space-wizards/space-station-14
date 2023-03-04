@@ -48,7 +48,7 @@
         CarbonDioxide: stationCO2
         Plasma: danger # everything below is usually bad
         Tritium: danger
-        WaterVapor: danger
+        WaterVapor: stationWaterVapor
         Miasma: stationMiasma
         NitrousOxide: stationNO
         Frezon: danger
@@ -139,7 +139,7 @@
         CarbonDioxide: stationCO2
         Plasma: danger # everything below is usually bad
         Tritium: danger
-        WaterVapor: danger
+        WaterVapor: stationWaterVapor
         Miasma: stationMiasma
         NitrousOxide: stationNO
         Frezon: danger
@@ -230,6 +230,7 @@
     - type: Sprite
       netsync: false
       sprite: Structures/Piping/Atmospherics/thermomachine.rsi
+      noRot: true
     - type: Appearance
     - type: PipeColorVisuals
     - type: Rotatable
@@ -254,6 +255,8 @@
           pipeDirection: South
     - type: StaticPrice
       price: 500
+    - type: Transform
+      noRot: false
 
 - type: entity
   parent: BaseGasThermoMachine

@@ -8,7 +8,9 @@
     FoodPlateSmall: 10
     FoodPlateTin: 5
     FoodKebabSkewer: 5
-    DrinkGlass: 10
+    DrinkGlass: 5
+    Beaker: 5
+    LargeBeaker: 5
     DrinkMug: 5
     DrinkMugBlack: 2
     DrinkMugBlue: 2

@@ -54,7 +54,7 @@ namespace Content.Shared.Access.Systems
         /// <summary>
         ///     Replaces the set of access tags we have with the provided set.
         /// </summary>
-        /// <param name="newTags">The new access tags</param>
+        /// <param name="access">The new access tags</param>
         public bool TrySetTags(EntityUid uid, IEnumerable<string> newTags, AccessComponent? access = null)
         {
             if (!Resolve(uid, ref access))
@@ -65,6 +65,15 @@ namespace Content.Shared.Access.Systems
             Dirty(access);
 
             return true;
+        }
+
+        /// <summary>
+        ///     Gets the set of access tags.
+        /// </summary>
+        /// <param name="access">The new access tags</param>
+        public IEnumerable<string>? TryGetTags(EntityUid uid, AccessComponent? access = null)
+        {
+            return !Resolve(uid, ref access) ? null : access.Tags;
         }
 
         public bool TryAddGroups(EntityUid uid, IEnumerable<string> newGroups, AccessComponent? access = null)

@@ -4,20 +4,17 @@
         "x": 32,
         "y": 32
     },
-    "license": "AGPL v3",
+    "license": "CC-BY-SA-3.0",
     "copyright": "Taken from https://github.com/discordia-space/CEV-Eris",
     "states": [
         {
             "name": "mw"
-
         },
         {
             "name": "mw_unlit"
-
         },
         {
             "name": "mw0"
-
         },
         {
             "name": "mw_running_unlit",
@@ -30,15 +27,12 @@
         },
         {
             "name": "mwb"
-
         },
         {
             "name": "mwbloody"
-
         },
         {
             "name": "mwbloody0"
-
         },
         {
             "name": "mwbloody1",

@@ -1,32 +1,53 @@
 - type: entity
-  id: Present
-  parent: BaseStorageItem
+  id: PresentBase
   name: Present
-  suffix: Empty
   description: A little box with incredible surprises inside.
+  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Decoration/present.rsi
     netsync: false
     layers:
       - state: present
+
+- type: entity
+  id: Present
+  parent: [PresentBase, BaseStorageItem]
+  suffix: Empty
+  components:
   - type: Item
     size: 30
   - type: Storage
     capacity: 30
 
 - type: entity
-  id: PresentRandom
-  parent: BaseItem
-  name: Present
-  suffix: Filled Random
-  description: A little box with incredible surprises inside.
+  id: PresentRandomUnsafe
+  parent: [PresentBase, BaseItem]
+  suffix: Filled Unsafe
   components:
-  - type: Sprite
-    sprite: Objects/Decoration/present.rsi
-    netsync: false
-    layers:
-      - state: present
+  - type: RandomGift
+    wrapper: PresentTrash
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+    insaneMode: false
+    contentsViewers:
+      components:
+      - Ghost
+      - Santa
+
+- type: entity
+  id: PresentRandomInsane
+  parent: PresentRandomUnsafe
+  suffix: Filled Insane
+  components:
+    - type: RandomGift
+      insaneMode: true
+
+- type: entity
+  id: PresentRandom
+  parent: [PresentBase, BaseItem]
+  suffix: Filled Safe
+  components:
   - type: SpawnItemsOnUse
     items:
       - id: PresentTrash
@@ -330,6 +351,8 @@
         orGroup: GiftPool
       - id: WeaponPulseCarbine
         prob: .001
+        orGroup: GiftPool
+      - id: RGBStaff
         orGroup: GiftPool
     sound:
       path: /Audio/Effects/unwrap.ogg

@@ -6,7 +6,7 @@
   components:
   - type: Rotatable
   - type: Sprite
-    sprite: Structures/dispensers.rsi
+    sprite: Structures/smalldispensers.rsi
     drawdepth: SmallObjects
     state: booze
     netsync: false
@@ -14,4 +14,9 @@
     pack: BoozeDispenserInventory
     emagPack: BoozeDispenserEmagInventory
   - type: Transform
-    noRot: false 
+    noRot: false
+  - type: Machine
+    board: BoozeDispenserMachineCircuitboard
+  - type: Wires
+    BoardName: "BoozeDispenser"
+    LayoutId: BoozeDispenser

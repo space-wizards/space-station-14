@@ -3,8 +3,10 @@ using Content.Shared.CCVar;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Log;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -20,12 +22,15 @@ namespace Content.Client.Audio
     /// </summary>
     public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
     {
-        [Dependency] private readonly EntityLookupSystem _lookup = default!;
+        [Dependency] private readonly AmbientSoundTreeSystem _treeSys = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+
+        protected override void QueueUpdate(EntityUid uid, AmbientSoundComponent ambience)
+            => _treeSys.QueueTreeUpdate(uid, ambience);
 
         private AmbientSoundOverlay? _overlay;
         private int _maxAmbientCount;
@@ -35,15 +40,8 @@ namespace Content.Client.Audio
         private TimeSpan _targetTime = TimeSpan.Zero;
         private float _ambienceVolume = 0.0f;
 
-        // Note that except for some rare exceptions, every ambient sound source appears to be static. So:
-        // TODO AMBIENT SOUND Use only static queries
-        // This would make all the lookups significantly faster. There are some rare exceptions, like flies, vehicles,
-        // and the singularity. But those can just play sounds via some other system. Alternatively: give ambient sound
-        // its own client-side tree to avoid this issue altogether.
-        private static LookupFlags _flags = LookupFlags.Static | LookupFlags.Dynamic | LookupFlags.Sundries;
-
         private static AudioParams _params = AudioParams.Default.WithVariation(0.01f).WithLoop(true).WithAttenuation(Attenuation.LinearDistance);
-            
+
         /// <summary>
         /// How many times we can be playing 1 particular sound at once.
         /// </summary>
@@ -88,6 +86,7 @@ namespace Content.Client.Audio
         {
             base.Initialize();
             UpdatesOutsidePrediction = true;
+            UpdatesAfter.Add(typeof(AmbientSoundTreeSystem));
 
             _cfg.OnValueChanged(CCVars.AmbientCooldown, SetCooldown, true);
             _cfg.OnValueChanged(CCVars.MaxAmbientSources, SetAmbientCount, true);
@@ -172,40 +171,48 @@ namespace Content.Client.Audio
             _playingCount.Clear();
         }
 
-        private Dictionary<string, List<(float Importance, AmbientSoundComponent)>> GetNearbySources(TransformComponent playerXform, MapCoordinates coords, EntityQuery<TransformComponent> xformQuery)
+        private readonly struct QueryState
         {
-            var sourceDict = new Dictionary<string, List<(float, AmbientSoundComponent)>>(16);
-            var ambientQuery = GetEntityQuery<AmbientSoundComponent>();
+            public readonly Dictionary<string, List<(float Importance, AmbientSoundComponent)>> SourceDict = new();
+            public readonly Vector2 MapPos;
+            public readonly TransformComponent Player;
+            public readonly EntityQuery<TransformComponent> Query;
 
-            // TODO add variant of GetComponentsInRange that also returns the transform component.
-            foreach (var entity in _lookup.GetEntitiesInRange(coords, _maxAmbientRange, flags: _flags))
+            public QueryState(Vector2 mapPos, TransformComponent player, EntityQuery<TransformComponent> query)
             {
-                if (!ambientQuery.TryGetComponent(entity, out var ambientComp) || !ambientComp.Enabled)
-                    continue;
-
-                var xform = xformQuery.GetComponent(entity);
-                var delta = xform.ParentUid == playerXform.ParentUid
-                    ? xform.LocalPosition - playerXform.LocalPosition
-                    : xform.WorldPosition - coords.Position;
-
-                var range = delta.Length;
-                if (range >= ambientComp.Range)
-                    continue;
-
-                string key;
-
-                if (ambientComp.Sound is SoundPathSpecifier path)
-                    key = path.Path?.ToString() ?? string.Empty;
-                else
-                    key = ((SoundCollectionSpecifier) ambientComp.Sound).Collection ?? string.Empty;
-
-                var list = sourceDict.GetOrNew(key);
-
-                // Prioritize far away & loud sounds.
-                list.Add((range * (ambientComp.Volume + 32), ambientComp));
+                MapPos = mapPos;
+                Player = player;
+                Query = query;
             }
+        }
 
-            return sourceDict;
+        private static bool Callback(
+            ref QueryState state,
+            in ComponentTreeEntry<AmbientSoundComponent> value)
+        {
+            var (ambientComp, xform) = value;
+
+            DebugTools.Assert(ambientComp.Enabled);
+
+            var delta = xform.ParentUid == state.Player.ParentUid
+                ? xform.LocalPosition - state.Player.LocalPosition
+                : xform.WorldPosition - state.MapPos;
+
+            var range = delta.Length;
+            if (range >= ambientComp.Range)
+                return true;
+
+            string key;
+
+            if (ambientComp.Sound is SoundPathSpecifier path)
+                key = path.Path?.ToString() ?? string.Empty;
+            else
+                key = ((SoundCollectionSpecifier) ambientComp.Sound).Collection ?? string.Empty;
+
+            // Prioritize far away & loud sounds.
+            var importance = range * (ambientComp.Volume + 32);
+            state.SourceDict.GetOrNew(key).Add((importance, ambientComp));
+            return true;
         }
 
         /// <summary>
@@ -214,13 +221,18 @@ namespace Content.Client.Audio
         private void ProcessNearbyAmbience(TransformComponent playerXform)
         {
             var query = GetEntityQuery<TransformComponent>();
+            var metaQuery = GetEntityQuery<MetaDataComponent>();
             var mapPos = playerXform.MapPosition;
 
             // Remove out-of-range ambiences
             foreach (var (comp, sound) in _playingSounds)
             {
                 var entity = comp.Owner;
-                if (comp.Enabled && query.TryGetComponent(entity, out var xform) && xform.MapID == playerXform.MapID)
+
+                if (comp.Enabled &&
+                    query.TryGetComponent(entity, out var xform) &&
+                    xform.MapID == playerXform.MapID &&
+                    !metaQuery.GetComponent(entity).EntityPaused)
                 {
                     var distance = (xform.ParentUid == playerXform.ParentUid)
                         ? xform.LocalPosition - playerXform.LocalPosition
@@ -240,8 +252,13 @@ namespace Content.Client.Audio
             if (_playingSounds.Count >= _maxAmbientCount)
                 return;
 
+            var pos = mapPos.Position;
+            var state = new QueryState(pos, playerXform, query);
+            var worldAabb = new Box2(pos - _maxAmbientRange, pos + _maxAmbientRange);
+            _treeSys.QueryAabb(ref state, Callback, mapPos.MapId, worldAabb);
+
             // Add in range ambiences
-            foreach (var (key, sources) in GetNearbySources(playerXform, mapPos, query))
+            foreach (var (key, sources) in state.SourceDict)
             {
                 if (_playingSounds.Count >= _maxAmbientCount)
                     break;
@@ -253,7 +270,10 @@ namespace Content.Client.Audio
 
                 foreach (var (_, comp) in sources)
                 {
-                    if (_playingSounds.ContainsKey(comp))
+                    var uid = comp.Owner;
+
+                    if (_playingSounds.ContainsKey(comp) ||
+                        metaQuery.GetComponent(uid).EntityPaused)
                         continue;
 
                     var audioParams = _params
@@ -262,7 +282,7 @@ namespace Content.Client.Audio
                         .WithPlayOffset(_random.NextFloat(0.0f, 100.0f))
                         .WithMaxDistance(comp.Range);
 
-                    var stream = _audio.PlayPvs(comp.Sound, comp.Owner, audioParams);
+                    var stream = _audio.PlayPvs(comp.Sound, uid, audioParams);
                     if (stream == null)
                         continue;
 

@@ -295,17 +295,17 @@ namespace Content.Server.Administration.Systems
             return new WebhookPayload
             {
                 Username = username,
-                AvatarUrl = _avatarUrl,
+                AvatarUrl = string.IsNullOrWhiteSpace(_avatarUrl) ? null : _avatarUrl,
                 Embeds = new List<Embed>
                 {
-                    new Embed
+                    new()
                     {
                         Description = messages,
                         Color = color,
                         Footer = new EmbedFooter
                         {
                             Text = $"{serverName} ({round})",
-                            IconUrl = _footerIconUrl,
+                            IconUrl = string.IsNullOrWhiteSpace(_footerIconUrl) ? null : _footerIconUrl
                         },
                     },
                 },
@@ -438,7 +438,7 @@ namespace Content.Server.Administration.Systems
             public string Username { get; set; } = "";
 
             [JsonPropertyName("avatar_url")]
-            public string AvatarUrl { get; set; } = "";
+            public string? AvatarUrl { get; set; } = "";
 
             [JsonPropertyName("embeds")]
             public List<Embed>? Embeds { get; set; } = null;
@@ -479,7 +479,7 @@ namespace Content.Server.Administration.Systems
             public string Text { get; set; } = "";
 
             [JsonPropertyName("icon_url")]
-            public string IconUrl { get; set; } = "";
+            public string? IconUrl { get; set; }
 
             public EmbedFooter()
             {

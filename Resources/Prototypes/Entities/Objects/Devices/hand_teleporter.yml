@@ -1,0 +1,11 @@
+﻿- type: entity
+  id: HandTeleporter
+  parent: BaseItem
+  name: hand teleporter
+  description: "A Nanotrasen signature item--only the finest bluespace tech. Instructions: Use once to create a portal which teleports at random. Use again to link it to a portal at your current location. Use again to clear all portals."
+  components:
+  - type: Sprite
+    sprite: /Textures/Objects/Devices/hand_teleporter.rsi
+    layers:
+    - state: icon
+  - type: HandTeleporter

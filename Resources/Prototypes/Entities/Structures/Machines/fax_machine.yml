@@ -6,6 +6,7 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/fax_machine.rsi
+    drawdepth: SmallObjects
     netsync: false
     layers:
     - state: icon
@@ -23,9 +24,9 @@
         bounds: "-0.25,-0.25,0.25,0.25"
       density: 25
       mask:
-      - MachineMask
+      - TabletopMachineMask
       layer:
-      - MachineLayer
+      - TabletopMachineLayer
   - type: ActivatableUI
     key: enum.FaxUiKey.Key
   - type: ActivatableUIRequiresPower
@@ -99,7 +100,7 @@
   parent: FaxMachineBase
   id: FaxMachineCaptain
   name: captain long range fax machine
-  suffix: Centcom
+  suffix: NukeCodes
   components:
     - type: FaxMachine
       name: "Captain's Office"
