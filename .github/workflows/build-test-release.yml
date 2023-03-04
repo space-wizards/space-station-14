@@ -28,6 +28,7 @@ on:
 
 jobs:
   build:
+    name: Build & Test Release
     if: github.actor != 'PJBot' && github.event.pull_request.draft == false
     strategy:
       matrix:
