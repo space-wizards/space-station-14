@@ -121,6 +121,8 @@ public sealed class EncryptionKeySystem : EntitySystem
 
         if (!TryComp<ToolComponent>(args.Used, out var tool) || !tool.Qualities.Contains(component.KeysExtractionMethod))
             return;
+        
+        args.Handled = true;
 
         if (component.KeyContainer.ContainedEntities.Count == 0)
         {
@@ -131,7 +133,6 @@ public sealed class EncryptionKeySystem : EntitySystem
 
         //This is honestly the poor mans fix because the InteractUsingEvent fires off 12 times
         component.Removing = true;
-        args.Handled = true;
 
         var toolEvData = new ToolEventData(new EncryptionRemovalFinishedEvent(args.User), cancelledEv: new EncryptionRemovalCancelledEvent(), targetEntity: uid);
 
