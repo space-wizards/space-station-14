@@ -1,0 +1,20 @@
+- type: vendingMachineInventory
+  id: PrideDrobeInventory
+  startingInventory:
+       ClothingNeckLGBTPin: 3
+       ClothingNeckAromanticPin: 3
+       ClothingNeckAsexualPin: 3
+       ClothingNeckBisexualPin: 3
+       ClothingNeckIntersexPin: 3
+       ClothingNeckLesbianPin: 3
+       ClothingNeckNonBinaryPin: 3
+       ClothingNeckPansexualPin: 3
+       ClothingNeckTransPin: 3
+       PlushieSharkBlue: 2
+       PlushieSharkPink: 2
+       PlushieSharkGrey: 2
+       ClothingNeckCloakTrans: 2
+       ClothingHeadHatXmasCrown: 2
+       BedsheetRainbow: 2
+       ClothingUniformColorRainbow: 2
+       ClothingUnderSocksCoder: 1

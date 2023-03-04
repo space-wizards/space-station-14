@@ -1,0 +1,6 @@
+﻿- type: advertisementsPack
+  id: PrideDrobeAds
+  advertisements:
+  - advertisement-pride-1
+  - advertisement-pride-2
+  - advertisement-pride-3
