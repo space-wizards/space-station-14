@@ -47,7 +47,7 @@ public sealed class ParacusiaSystem : SharedParacusiaSystem
 
     private void PlayParacusiaSounds(EntityUid uid, ParacusiaComponent? paracusia = null)
     {
-        if (!Resolve(uid, ref paracusia))
+        if (!Resolve(uid, ref paracusia, false))
             return;
 
         if (_timing.CurTime <= paracusia.NextIncidentTime)
