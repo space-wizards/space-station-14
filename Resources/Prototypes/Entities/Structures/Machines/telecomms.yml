@@ -56,6 +56,23 @@
   - type: EncryptionKeyHolder
     keysUnlocked: false
     keysExtractionMethod: Prying
-    keySlots: 8
+    keySlots: 10
     canChangeDefaultChannel: false
   - type: TelecomServer
+
+- type: entity
+  parent: TelecomServer
+  id: TelecomServerFilled
+  suffix: Filled
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCommon
+      - EncryptionKeyCargo
+      - EncryptionKeyEngineering
+      - EncryptionKeyMedical
+      - EncryptionKeyScience
+      - EncryptionKeySecurity
+      - EncryptionKeyService
+      - EncryptionKeyCommand
