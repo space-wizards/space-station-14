@@ -92,13 +92,13 @@ namespace Content.Server.Ghost
             if (EntityManager.HasComponent<VisitingMindComponent>(uid))
                 return;
 
-            if (!EntityManager.TryGetComponent<MindComponent>(uid, out var mind) || !mind.HasMind || mind.Mind!.IsVisitingEntity)
+            if (!EntityManager.TryGetComponent<MindComponent>(uid, out var mind) || !mind.HasMind || mind.Mind.IsVisitingEntity)
                 return;
 
             if (component.MustBeDead && (_mobState.IsAlive(uid) || _mobState.IsCritical(uid)))
                 return;
 
-            _ticker.OnGhostAttempt(mind.Mind!, component.CanReturn);
+            _ticker.OnGhostAttempt(mind.Mind, component.CanReturn);
         }
 
         private void OnGhostStartup(EntityUid uid, GhostComponent component, ComponentStartup args)

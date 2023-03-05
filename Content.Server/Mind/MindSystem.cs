@@ -173,7 +173,7 @@ public sealed class MindSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (component.HasMind && component.Mind!.PreventSuicide)
+        if (component.HasMind && component.Mind.PreventSuicide)
         {
             args.BlockSuicideAttempt(true);
         }
@@ -324,7 +324,7 @@ public sealed class MindSystem : EntitySystem
             }
             else if (component.HasMind)
             {
-                _gameTicker.OnGhostAttempt(component.Mind!, false);
+                _gameTicker.OnGhostAttempt(component.Mind, false);
             }
 
             if (TryComp<ActorComponent>(entity.Value, out var actor))
@@ -543,7 +543,7 @@ public sealed class MindSystem : EntitySystem
         if (!mindComponent.HasMind)
             return false;
 
-        mind = mindComponent.Mind!;
+        mind = mindComponent.Mind;
         return true;
     }
 

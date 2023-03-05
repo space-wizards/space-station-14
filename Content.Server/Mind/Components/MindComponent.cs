@@ -1,3 +1,6 @@
+using System.Diagnostics.CodeAnalysis;
+using YamlDotNet.Core.Tokens;
+
 namespace Content.Server.Mind.Components
 {
     /// <summary>
@@ -17,6 +20,7 @@ namespace Content.Server.Mind.Components
         ///     True if we have a mind, false otherwise.
         /// </summary>
         [ViewVariables]
+        [MemberNotNullWhen(true, nameof(Mind))]
         public bool HasMind => Mind != null;
 
         /// <summary>

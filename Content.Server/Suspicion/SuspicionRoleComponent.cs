@@ -73,7 +73,7 @@ namespace Content.Server.Suspicion
                 return;
             }
 
-            Role = mind.Mind!.AllRoles.First(role => role is SuspicionRole);
+            Role = mind.Mind.AllRoles.First(role => role is SuspicionRole);
         }
 
         public void AddAlly(SuspicionRoleComponent ally)
