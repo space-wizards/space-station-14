@@ -10,4 +10,4 @@ grid_splitting = false
 # Wastes startup time
 cargo = false
 emergency_enabled = false
-
+shipyard = false

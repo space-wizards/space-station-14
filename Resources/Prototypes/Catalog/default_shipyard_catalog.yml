@@ -1,0 +1,17 @@
+- type: vessel
+  id: Barge
+  name: The Barge
+  description: A large shipping vessel repurposed into a salvage bar.
+  price: 65000
+  category: Medium
+  group: Civilian
+  shuttlePath: /Maps/Shuttles/barge.yml
+
+- type: vessel
+  id: Prospecter
+  name: NT-7 Prospecter
+  description: A small mining vessel designed to assist salvage operations.
+  price: 29000
+  category: Small
+  group: Civilian
+  shuttlePath: /Maps/Shuttles/prospecter.yml
