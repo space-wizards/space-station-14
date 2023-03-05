@@ -259,7 +259,7 @@ public sealed partial class CargoSystem
         if (component == null || shuttle == null || component.Orders.Count == 0)
             return orders;
 
-        var spaceRemaining = GetCargoSpace(shuttle);
+        var spaceRemaining = GetCargoSpace(shuttle.Owner);
         for( var i = 0; i < component.Orders.Count && spaceRemaining > 0; i++)
         {
             var order = component.Orders[i];
@@ -474,7 +474,7 @@ public sealed partial class CargoSystem
     {
         var xformQuery = GetEntityQuery<TransformComponent>();
 
-        var pads = GetCargoPallets(shuttle);
+        var pads = GetCargoPallets(shuttle.Owner);
         while (pads.Count > 0)
         {
             var coordinates = new EntityCoordinates(shuttle.Owner, xformQuery.GetComponent(_random.PickAndTake(pads).Owner).LocalPosition);
