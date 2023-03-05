@@ -74,7 +74,10 @@ public sealed class EncryptionKeySystem : EntitySystem
             if (TryComp<EncryptionKeyComponent>(ent, out var key))
             {
                 component.Channels.UnionWith(key.Channels);
-                component.DefaultChannel ??= key.DefaultChannel;
+                if (component.CanChangeDefaultChannel)
+                {
+                    component.DefaultChannel ??= key.DefaultChannel;
+                }
             }
         }
 
@@ -175,14 +178,14 @@ public sealed class EncryptionKeySystem : EntitySystem
 
         if (component.KeyContainer.ContainedEntities.Count == 0)
         {
-            args.PushMarkup(Loc.GetString("examine-headset-no-keys"));
+            args.PushMarkup(Loc.GetString("encryption-keys-no-keys"));
             return;
         }
 
         if (component.Channels.Count > 0)
         {
-            args.PushMarkup(Loc.GetString("examine-headset-channels-prefix"));
-            AddChannelsExamine(component.Channels, component.DefaultChannel, args, _protoManager, "examine-headset-channel");
+            args.PushMarkup(Loc.GetString("examine-encryption-channels-prefix"));
+            AddChannelsExamine(component.Channels, component.DefaultChannel, args, _protoManager, "examine-encryption-channel");
         }
     }
 
@@ -193,8 +196,8 @@ public sealed class EncryptionKeySystem : EntitySystem
 
         if(component.Channels.Count > 0)
         {
-            args.PushMarkup(Loc.GetString("examine-encryption-key-channels-prefix"));
-            AddChannelsExamine(component.Channels, component.DefaultChannel, args, _protoManager, "examine-headset-channel");
+            args.PushMarkup(Loc.GetString("examine-encryption-channels-prefix"));
+            AddChannelsExamine(component.Channels, component.DefaultChannel, args, _protoManager, "examine-encryption-channel");
         }
     }
 
@@ -224,10 +227,20 @@ public sealed class EncryptionKeySystem : EntitySystem
 
         if (defaultChannel != null && _protoManager.TryIndex(defaultChannel, out proto))
         {
-            var msg = Loc.GetString("examine-default-channel",
+            var msg = "";
+            if (HasComp<HeadsetComponent>(examineEvent.Examined))
+            {
+                Loc.GetString("examine-headset-default-channel",
                 ("prefix", SharedChatSystem.DefaultChannelPrefix),
                 ("channel", defaultChannel),
                 ("color", proto.Color));
+            }
+            else
+            {
+                Loc.GetString("examine-encryption-default-channel",
+                ("channel", defaultChannel),
+                ("color", proto.Color));
+            }
             examineEvent.PushMarkup(msg);
         }
     }

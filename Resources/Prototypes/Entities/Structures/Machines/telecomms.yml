@@ -57,4 +57,5 @@
     keysUnlocked: false
     keysExtractionMethod: Prying
     keySlots: 8
+    canChangeDefaultChannel: false
   - type: TelecomServer
