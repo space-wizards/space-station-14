@@ -856,7 +856,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         var query = EntityQuery<NukeOperativeComponent, MindComponent>(true);
         foreach (var (_, mindComp) in query)
         {
-            if (mindComp.HasMind || !_mindSystem.TryGetSession(mindComp.Mind!, out var session))
+            if (!mindComp.HasMind || !_mindSystem.TryGetSession(mindComp.Mind, out var session))
                 continue;
             var name = MetaData(mindComp.Owner).EntityName;
             _operativePlayers.Add(name, session);
