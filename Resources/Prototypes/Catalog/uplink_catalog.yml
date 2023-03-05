@@ -141,6 +141,16 @@
   categories:
   - UplinkExplosives
 
+- type: listing
+  id: UplinkExplodingPen
+  name: uplink-exploding-pen-name
+  description: uplink-exploding-pen-desc
+  productEntity: PenExploding
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkExplosives
+
 # Ammo
 
 - type: listing

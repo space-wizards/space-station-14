@@ -1,0 +1,17 @@
+- type: entity
+  name: pen
+  suffix: Exploding
+  parent: Pen
+  description: A dark ink pen.
+  id: PenExploding
+  components:
+  - type: OnUseTimerTrigger
+    delay: 4
+    examinable: false
+  - type: Explosive # Decent explosion in a very small radius. Doesn't break underplating.
+    explosionType: DemolitionCharge
+    totalIntensity: 45
+    intensitySlope: 5
+    maxIntensity: 30
+    canCreateVacuum: false
+  - type: ExplodeOnTrigger
