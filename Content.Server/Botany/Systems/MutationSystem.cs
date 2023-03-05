@@ -51,11 +51,11 @@ public class MutationSystem : EntitySystem
         MutateBool(ref seed.Sentient       , true  , 10 , totalbits , severity);
         MutateBool(ref seed.Ligneous       , true  , 10 , totalbits , severity);
         MutateBool(ref seed.Bioluminescent , true  , 10 , totalbits , severity);
-        MutateBool(ref seed.TurnIntoKudzu , true  , 10 , totalbits , severity);
-        MutateBool(ref seed.Screaming , true  , 10 , totalbits , severity);
+        MutateBool(ref seed.TurnIntoKudzu  , true  , 10 , totalbits , severity);
+        MutateBool(ref seed.CanScream      , true  , 10 , totalbits , severity);
         seed.BioluminescentColor = RandomColor(seed.BioluminescentColor, 10, totalbits, severity);
         // ConstantUpgade (10)
-        MutateUpgrade(ref seed.HarvestRepeat,10,totalbits,severity);
+        MutateHarvestType(ref seed.HarvestRepeat   , 10 , totalbits , severity);
     }
 
     public SeedData Cross(SeedData a, SeedData b)
@@ -90,7 +90,7 @@ public class MutationSystem : EntitySystem
         CrossBool(ref result.Ligneous, a.Ligneous);
         CrossBool(ref result.Bioluminescent, a.Bioluminescent);
         CrossBool(ref result.TurnIntoKudzu, a.TurnIntoKudzu);
-        CrossBool(ref result.Screaming, a.Screaming);
+        CrossBool(ref result.CanScream, a.CanScream);
         result.BioluminescentColor = random(0.5f) ? a.BioluminescentColor : result.BioluminescentColor;
 
         // Hybrids have a high chance of being seedless. Balances very
@@ -177,22 +177,17 @@ public class MutationSystem : EntitySystem
         val = polarity;
     }
 
-    private void MutateUpgrade(ref HarvestType val, int bits, int totalbits, float mult)
+    private void MutateHarvestType(ref HarvestType val, int bits, int totalbits, float mult)
     {
-        float p = mult*bits/totalbits;
+        float p = mult * bits/totalbits;
         if (!random(p))
-        {
             return;
-        }
 
         if (val == HarvestType.NoRepeat)
-        {
             val = HarvestType.Repeat;
-        }
+
         else if (val == HarvestType.Repeat)
-        {
             val = HarvestType.SelfHarvest;
-        }
     }
 
     private Color RandomColor(Color color, int bits, int totalbits, float mult)

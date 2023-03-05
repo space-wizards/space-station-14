@@ -23,7 +23,7 @@ using Robust.Shared.Timing;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-
+using Content.Server.Coordinates.Helpers;
 
 namespace Content.Server.Botany.Systems
 {
@@ -40,8 +40,6 @@ namespace Content.Server.Botany.Systems
         [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-
-
 
         public const float HydroponicsSpeedMultiplier = 1f;
         public const float HydroponicsConsumptionMultiplier = 4f;
@@ -259,10 +257,12 @@ namespace Content.Server.Botany.Systems
                 _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",
                     ("seedName", displayName)), args.User);
                 component.Health -= (_random.Next(3, 5) * 10);
-                if (component.Seed != null && component.Seed.Screaming)
+
+                if (component.Seed != null && component.Seed.CanScream)
                 {
-                    _audio.PlayPvs(component.Seed.ScreamSound.GetSound(), uid,AudioParams.Default.WithVolume(-2));
+                    _audio.PlayPvs(component.Seed.ScreamSound, uid, AudioParams.Default.WithVolume(-2));
                 }
+
                 if (_random.Prob(0.3f))
                     component.Sampled = true;
 
@@ -342,16 +342,18 @@ namespace Content.Server.Botany.Systems
             {
                 if (component.Seed != null && component.Seed.TurnIntoKudzu)
                     component.WeedLevel += 5 * HydroponicsSpeedMultiplier * component.WeedCoefficient;
-                else if(_random.Prob(component.Seed == null ? 0.05f : 0.01f))
+
+                else if (_random.Prob(component.Seed == null ? 0.05f : 0.01f))
                     component.WeedLevel += 1 * HydroponicsSpeedMultiplier * component.WeedCoefficient;
 
                 if (component.DrawWarnings)
                     component.UpdateSpriteAfterUpdate = true;
             }
 
-            if (component.Seed != null && component.Seed.TurnIntoKudzu && component.WeedLevel >= component.Seed.WeedHighLevelThreshold)
+            if (component.Seed != null && component.Seed.TurnIntoKudzu
+                && component.WeedLevel >= component.Seed.WeedHighLevelThreshold)
             {
-                Spawn(component.Seed.kudzu, Transform(uid).Coordinates);
+                Spawn(component.Seed.KudzuPrototype, Transform(uid).Coordinates.SnapToGrid(EntityManager));
                 component.Seed.TurnIntoKudzu = false;
                 component.Health = 0;
             }
@@ -684,12 +686,13 @@ namespace Content.Server.Botany.Systems
         {
             if (!Resolve(uid, ref component))
                 return;
+
             component.Harvest = false;
             component.LastProduce = component.Age;
-            if (component.Seed != null && component.Seed.Screaming)
-            {
-                _audio.PlayPvs(component.Seed.ScreamSound.GetSound(), uid,AudioParams.Default.WithVolume(-2));
-            }
+
+            if (component.Seed != null && component.Seed.CanScream)
+                _audio.PlayPvs(component.Seed.ScreamSound, uid, AudioParams.Default.WithVolume(-2));
+
             if (component.Seed?.HarvestRepeat == HarvestType.NoRepeat)
                 RemovePlant(uid, component);
 
@@ -876,8 +879,7 @@ namespace Content.Server.Botany.Systems
                 else
                 {
                     _appearance.SetData(uid, PlantHolderVisuals.PlantRsi, component.Seed.PlantRsi.ToString(), app);
-                    _appearance.SetData(uid, PlantHolderVisuals.PlantState, $"stage-{component.Seed.GrowthStages}",
-                        app);
+                    _appearance.SetData(uid, PlantHolderVisuals.PlantState, $"stage-{component.Seed.GrowthStages}", app);
                 }
             }
             else

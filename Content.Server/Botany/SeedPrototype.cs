@@ -1,20 +1,14 @@
-using System.Collections.Generic;
-using System.ComponentModel;
 using Content.Server.Botany.Components;
 using Content.Server.Botany.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Botany;
-
-
 
 [Prototype("seed")]
 public sealed class SeedPrototype : SeedData, IPrototype
@@ -220,14 +214,14 @@ public class SeedData
     public SoundSpecifier ScreamSound = new SoundPathSpecifier("/Audio/Voice/Human/malescream_1.ogg");
 
 
-    [DataField("screaming")] public bool Screaming;
+    [DataField("screaming")] public bool CanScream;
 
     [DataField("bioluminescent")] public bool Bioluminescent;
     [DataField("bioluminescentColor")] public Color BioluminescentColor { get; set; } = Color.White;
 
     public float BioluminescentRadius = 2f;
 
-    [DataField("kudzu", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))] public string kudzu = "Kudzu";
+    [DataField("kudzuPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))] public string KudzuPrototype = "Kudzu";
 
     [DataField("turnIntoKudzu")] public bool TurnIntoKudzu;
     [DataField("splatPrototype")] public string? SplatPrototype { get; set; }
@@ -281,7 +275,7 @@ public class SeedData
             PlantRsi = PlantRsi,
             PlantIconState = PlantIconState,
             Bioluminescent = Bioluminescent,
-            Screaming = Screaming,
+            CanScream = CanScream,
             TurnIntoKudzu = TurnIntoKudzu,
             BioluminescentColor = BioluminescentColor,
             SplatPrototype = SplatPrototype,
@@ -292,6 +286,4 @@ public class SeedData
 
         return newSeed;
     }
-
-
 }
