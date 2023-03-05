@@ -58,19 +58,19 @@
     keySlots: 10
   - type: TelecomServer
 
-# - type: entity
-#   parent: TelecomServer
-#   id: TelecomServerFilled
-#   suffix: Filled
-#   components:
-#   - type: ContainerFill
-#     containers:
-#       key_slots:
-#       - EncryptionKeyCommon
-#       - EncryptionKeyCargo
-#       - EncryptionKeyEngineering
-#       - EncryptionKeyMedical
-#       - EncryptionKeyScience
-#       - EncryptionKeySecurity
-#       - EncryptionKeyService
-#       - EncryptionKeyCommand
+- type: entity
+  parent: TelecomServer
+  id: TelecomServerFilled
+  suffix: Filled
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCommon
+      - EncryptionKeyCargo
+      - EncryptionKeyEngineering
+      - EncryptionKeyMedical
+      - EncryptionKeyScience
+      - EncryptionKeySecurity
+      - EncryptionKeyService
+      - EncryptionKeyCommand
