@@ -769,6 +769,7 @@ namespace Content.Shared.Interaction
                 return;
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
+            //TODO: See why this is firing off multiple times
             var interactUsingEvent = new InteractUsingEvent(user, used, target, clickLocation);
             RaiseLocalEvent(target, interactUsingEvent, true);
             DoContactInteraction(user, used, interactUsingEvent);

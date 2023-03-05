@@ -103,6 +103,10 @@ public abstract class SharedDoAfterSystem : EntitySystem
 
         foreach (var (_, comp) in EntityManager.EntityQuery<ActiveDoAfterComponent, DoAfterComponent>())
         {
+            //Don't run the doafter if its comp or owner is deleted.
+            if (EntityManager.Deleted(comp.Owner) || comp.Deleted)
+                continue;
+
             foreach (var doAfter in comp.DoAfters.Values.ToArray())
             {
                 Run(comp.Owner, comp, doAfter);
