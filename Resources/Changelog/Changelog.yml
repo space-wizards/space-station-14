@@ -1,10 +1,4 @@
 Entries:
-- author: Mervill
-  changes:
-  - {message: Lawyers and Librarians can spawn with the Satchel and Duffelbag variants.,
-    type: Fix}
-  id: 2601
-  time: '2022-11-08T20:11:39.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: The coughing sounds are shorter., type: Tweak}
@@ -2914,3 +2908,9 @@ Entries:
   - {message: Alcohol is now slightly more effective., type: Tweak}
   id: 3100
   time: '2023-03-05T03:44:13.0000000+00:00'
+- author: Cripes
+  changes:
+  - {message: Fixed bug where cargo orders would only half-fill the shuttle capacity.,
+    type: Fix}
+  id: 3101
+  time: '2023-03-05T04:27:30.0000000+00:00'
