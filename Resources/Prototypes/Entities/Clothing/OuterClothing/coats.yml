@@ -105,6 +105,17 @@
 
 - type: entity
   parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatLabViro
+  name: lab coat (viro)
+  description: A suit that protects against bacteria and viruses. Has an green stripe on the shoulder.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/labcoat_viro.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/labcoat_viro.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
   id: ClothingOuterCoatLabCmo
   name: chief medical officer's lab coat
   description: Bluer than the standard model.
@@ -142,3 +153,26 @@
         Slash: 0.8
         Piercing: 0.4
         Heat: 0.8
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterDameDane
+  name: dame dane coat
+  description: Friday...
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/damedanecoat.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/damedanecoat.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterClownPriest
+  name: robes of the honkmother
+  description: Meant for a clown of the cloth.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/clownpriest.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/clownpriest.rsi
+    

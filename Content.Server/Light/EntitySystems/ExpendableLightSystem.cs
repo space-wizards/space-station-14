@@ -11,6 +11,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Light.EntitySystems
 {
@@ -21,6 +22,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly ClothingSystem _clothing = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {
@@ -107,20 +109,20 @@ namespace Content.Server.Light.EntitySystems
         {
             if (!Resolve(component.Owner, ref appearance, false)) return;
 
-            appearance.SetData(ExpendableLightVisuals.State, component.CurrentState);
+            _appearance.SetData(appearance.Owner, ExpendableLightVisuals.State, component.CurrentState, appearance);
 
             switch (component.CurrentState)
             {
                 case ExpendableLightState.Lit:
-                    appearance.SetData(ExpendableLightVisuals.Behavior, component.TurnOnBehaviourID);
+                    _appearance.SetData(appearance.Owner, ExpendableLightVisuals.Behavior, component.TurnOnBehaviourID, appearance);
                     break;
 
                 case ExpendableLightState.Fading:
-                    appearance.SetData(ExpendableLightVisuals.Behavior, component.FadeOutBehaviourID);
+                    _appearance.SetData(appearance.Owner, ExpendableLightVisuals.Behavior, component.FadeOutBehaviourID, appearance);
                     break;
 
                 case ExpendableLightState.Dead:
-                    appearance.SetData(ExpendableLightVisuals.Behavior, string.Empty);
+                    _appearance.SetData(appearance.Owner, ExpendableLightVisuals.Behavior, string.Empty, appearance);
                     var isHotEvent = new IsHotEvent() {IsHot = true};
                     RaiseLocalEvent(component.Owner, isHotEvent);
                     break;
@@ -182,7 +184,7 @@ namespace Content.Server.Light.EntitySystems
             ActivationVerb verb = new()
             {
                 Text = Loc.GetString("expendable-light-start-verb"),
-                IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png",
+                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/light.svg.192dpi.png")),
                 Act = () => TryActivate(component)
             };
             args.Verbs.Add(verb);

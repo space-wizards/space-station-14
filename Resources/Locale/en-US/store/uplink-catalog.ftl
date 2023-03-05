@@ -76,7 +76,10 @@ uplink-stealth-box-name = Stealth Box
 uplink-stealth-box-desc = A box outfitted with stealth technology, sneak around with this and don't move too fast now!
 
 uplink-headset-name = Syndicate Over-ear Headset
-uplink-headset-desc = A headset that allows you to listen in on departmental channels, or contact other traitors.
+uplink-headset-desc = A headset that allows you to communicate with other syndicate operatives. Has 4 slots for encryption keys.
+
+uplink-encryption-key-name = Syndicate Encryption Key
+uplink-encryption-key-desc = An encryption key for access to the secret frequency of our special agents. No one will know about your special channel with friends... or rivals.
 
 uplink-hypopen-name = Hypopen
 uplink-hypopen-desc = A chemical hypospray disguised as a pen, capable of instantly injecting up to 15u of reagents. Starts empty.
@@ -138,6 +141,9 @@ uplink-gatfruit-seeds-desc = And who says guns don't grow on trees?
 
 uplink-necronomicon-name = Necronomicon
 uplink-necronomicon-desc = An unholy book capable of summoning a demonic familiar.
+
+uplink-revolver-cap-gun-fake-name = Fake Cap Gun
+uplink-revolver-cap-gun-fake-desc = Fool your enemy! It can use both cap and magnum bullets. Comes loaded with magnum bullets.
 
 # Armor
 uplink-chameleon-name = Chameleon Kit

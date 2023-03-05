@@ -8,10 +8,10 @@ namespace Content.Shared.Cargo.Events;
 [Serializable, NetSerializable]
 public sealed class CargoConsoleApproveOrderMessage : BoundUserInterfaceMessage
 {
-    public int OrderIndex;
+    public int OrderId;
 
-    public CargoConsoleApproveOrderMessage(int orderIndex)
+    public CargoConsoleApproveOrderMessage(int orderId)
     {
-        OrderIndex = orderIndex;
+        OrderId = orderId;
     }
 }

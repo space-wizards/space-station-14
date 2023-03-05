@@ -231,9 +231,9 @@
     Tricordrazine: 2
 
 - type: reaction
-  id: HeartbreakerToxin #heat to 37C once temperatures supported
+  id: HeartbreakerToxin
   reactants:
-    Dexalin:
+    DexalinPlus:
       amount: 1
     MindbreakerToxin:
       amount: 1
@@ -256,7 +256,7 @@
   id: Lexorin
   impact: High
   reactants:
-    Ammonia:
+    HeartbreakerToxin:
       amount: 1
     Plasma:
       amount: 1
@@ -277,6 +277,7 @@
 
 - type: reaction
   id: MindbreakerToxin
+  minTemp: 370
   reactants:
     Silicon:
       amount: 1
