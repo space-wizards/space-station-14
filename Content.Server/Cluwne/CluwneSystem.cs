@@ -44,18 +44,19 @@ public sealed class CluwneSystem : EntitySystem
     private void OnMobState(EntityUid uid, CluwneComponent component, MobStateChangedEvent args)
     {
         if (args.NewMobState == MobState.Dead)
-
+		{
             RemComp<CluwneComponent>(uid);
+            RemComp<ClumsyComponent>(uid);
             RemComp<AutoEmoteComponent>(uid);
-            _autoEmote.RemoveEmote(uid, "CluwneGiggle");
             var damageSpec = new DamageSpecifier(_prototypeManager.Index<DamageGroupPrototype>("Genetic"), 300);
             _damageableSystem.TryChangeDamage(uid, damageSpec);
+		}
     }
 
     public EmoteSoundsPrototype? EmoteSounds;
 
     /// <summary>
-    /// OnStartup gives the cluwne outfit, ensures clumsy,gives name prefix and makes sure emote sounds are laugh.
+    /// OnStartup gives the cluwne outfit, ensures clumsy, gives name prefix and makes sure emote sounds are laugh.
     /// </summary>
     private void OnComponentStartup(EntityUid uid, CluwneComponent component, ComponentStartup args)
     {
