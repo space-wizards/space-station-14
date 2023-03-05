@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix damage effect persisting indefinitely., type: Fix}
-  id: 2598
-  time: '2022-11-08T19:58:21.0000000+00:00'
 - author: juliangiebel
   changes:
   - {message: a fancy new PDA UI, type: Add}
@@ -2913,3 +2908,9 @@ Entries:
   - {message: Fix breaking planet tiles leading to the void., type: Fix}
   id: 3097
   time: '2023-03-05T01:11:19.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Tiles now support edges. For now this support has been added to grass.,
+    type: Add}
+  id: 3098
+  time: '2023-03-05T01:19:50.0000000+00:00'
