@@ -340,11 +340,16 @@ namespace Content.Server.Botany.Systems
             // Weeds like water and nutrients! They may appear even if there's not a seed planted.
             if (component.WaterLevel > 10 && component.NutritionLevel > 2)
             {
-                if (component.Seed != null && component.Seed.TurnIntoKudzu)
-                    component.WeedLevel += 5 * HydroponicsSpeedMultiplier * component.WeedCoefficient;
+                var chance = 0f;
+                if (component.Seed == null)
+                    chance = 0.05f;
+                else if (component.Seed.TurnIntoKudzu)
+                    chance = 1f;
+                else
+                    chance = 0.01f;
 
-                else if (_random.Prob(component.Seed == null ? 0.05f : 0.01f))
-                    component.WeedLevel += 1 * HydroponicsSpeedMultiplier * component.WeedCoefficient;
+                if (_random.Prob(chance))
+                    component.WeedLevel += 1 + HydroponicsSpeedMultiplier * component.WeedCoefficient;
 
                 if (component.DrawWarnings)
                     component.UpdateSpriteAfterUpdate = true;
