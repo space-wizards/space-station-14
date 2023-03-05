@@ -53,12 +53,12 @@
   - type: Transform
     anchored: true
   - type: Pullable
-  - type: EncryptionKeyHolder
-    keysExtractionMethod: Prying
-    keySlots: 10
   - type: ContainerContainer
     containers:
       key_slots: !type:Container
+  - type: EncryptionKeyHolder
+    keysExtractionMethod: Prying
+    keySlots: 10
   - type: TelecomServer
 
 - type: entity
