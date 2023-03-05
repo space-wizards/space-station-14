@@ -1,3 +1,16 @@
+- type: tile
+  id: FloorPlanetDirt
+  name: tiles-dirt-floor
+  sprite: /Textures/Tiles/dirt.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  isSubfloor: true
+  canCrowbar: false
+  footstepSounds:
+    collection: FootstepAsteroid
+  heatCapacity: 10000
+  weather: true
+
 # Desert
 - type: tile
   id: FloorDesert
@@ -9,8 +22,6 @@
   canCrowbar: false
   footstepSounds:
     collection: FootstepAsteroid
-  friction: 0.30
-  thermalConductivity: 0.04
   heatCapacity: 10000
   weather: true
 
@@ -24,8 +35,6 @@
   canCrowbar: false
   footstepSounds:
     collection: FootstepAsteroid
-  friction: 0.30
-  thermalConductivity: 0.04
   heatCapacity: 10000
   weather: true
 
@@ -36,19 +45,22 @@
   sprite: /Textures/Tiles/Planet/Grass/grass.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
-  cornerSprites:
-  - /Textures/Tiles/Planet/Grass/single_edge.png
-  cardinalSprites:
-  - /Textures/Tiles/Planet/Grass/double_edge.png
+  edgeSprites:
+    SouthEast: /Textures/Tiles/Planet/Grass/single_edge.png
+    NorthEast: /Textures/Tiles/Planet/Grass/single_edge.png
+    NorthWest: /Textures/Tiles/Planet/Grass/single_edge.png
+    SouthWest: /Textures/Tiles/Planet/Grass/single_edge.png
+    South: /Textures/Tiles/Planet/Grass/double_edge.png
+    East: /Textures/Tiles/Planet/Grass/double_edge.png
+    North: /Textures/Tiles/Planet/Grass/double_edge.png
+    West: /Textures/Tiles/Planet/Grass/double_edge.png
   baseTurfs:
-  - FloorDirt
+  - FloorPlanetDirt
   isSubfloor: true
   canCrowbar: false
   footstepSounds:
     collection: FootstepGrass
-  friction: 0.30
   itemDrop: FloorTileItemGrass
-  thermalConductivity: 0.04
   heatCapacity: 10000
   weather: true
 
@@ -61,8 +73,6 @@
   canCrowbar: false
   footstepSounds:
     collection: FootstepAsteroid
-  friction: 0.30
-  thermalConductivity: 0.04
   heatCapacity: 10000
   weather: true
 
@@ -82,7 +92,6 @@
   footstepSounds:
     collection: FootstepSnow
   friction: 0.20
-  thermalConductivity: 0.04
   heatCapacity: 10000
   weather: true
 

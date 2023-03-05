@@ -97,7 +97,7 @@
     # Fill remainder with sand.
     - !type:BiomeTileLayer
       threshold: 0
-      tile: FloorAsteroidSand
+      tile: FloorPlanetDirt
     - !type:BiomeTileLayer
       threshold: 0.5
       tile: FloorPlanetGrass
