@@ -1,9 +1,4 @@
 Entries:
-- author: Cripes
-  changes:
-  - {message: Added gas miners to Pillar. Crew can now enjoy breathing!, type: Tweak}
-  id: 2603
-  time: '2022-11-08T20:12:52.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The reagent grinder can now be upgraded. Revel in the blessed efficiency
@@ -2915,3 +2910,13 @@ Entries:
   - {message: NPCs have rudimentary stuck detection., type: Fix}
   id: 3102
   time: '2023-03-05T05:13:09.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: You no longer can rapidly eat food, type: Tweak}
+  - {message: You no longer can chug drinks, type: Tweak}
+  - {message: Fixes cancelling fixing a window instantly fixes it, type: Fix}
+  - {message: Fixes doafters being spammed on headset encryption key removal, type: Fix}
+  - {message: Cancelling a butcher attempt on clothes will no longer brick it, type: Fix}
+  - {message: Fixes players not being able to dump trash into a bin, type: Fix}
+  id: 3103
+  time: '2023-03-05T05:26:03.0000000+00:00'
