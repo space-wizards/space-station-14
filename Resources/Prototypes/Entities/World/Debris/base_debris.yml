@@ -1,0 +1,6 @@
+﻿- type: entity
+  id: CitadelBaseDebris
+  abstract: true
+  components:
+    - type: OwnedDebris
+    - type: LocalityLoader

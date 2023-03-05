@@ -1,0 +1,21 @@
+﻿- type: citadelBiome
+  id: CitadelFailsafe
+  priority: -999999 # This DEFINITELY shouldn't get selected!
+  noiseRanges: {}
+
+- type: citadelBiome
+  id: CitadelAsteroidsFallback
+  priority: -999998 # This probably shouldn't get selected.
+  noiseRanges: {}
+  chunkComponents:
+    - type: DebrisFeaturePlacerController
+      densityNoiseChannel: Density
+    - type: SimpleDebrisSelector
+      debrisTable:
+        - id: CitadelAsteroidDebrisSmall
+        - id: CitadelAsteroidDebrisMedium
+        - id: CitadelAsteroidDebrisLarge
+          prob: 0.7
+        - id: CitadelAsteroidDebrisLarger
+          prob: 0.4
+

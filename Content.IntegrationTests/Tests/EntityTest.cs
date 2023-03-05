@@ -35,6 +35,7 @@ namespace Content.IntegrationTests.Tests
                 var protoIds = prototypeMan
                     .EnumeratePrototypes<EntityPrototype>()
                     .Where(p=>!p.Abstract)
+                    .Where(p => !p.Components.ContainsKey("MapGrid")) // CITADEL EDIT (did you know spawning fucktons of grids in one spot breaks things)
                     .Select(p => p.ID)
                     .ToList();
                 foreach (var protoId in protoIds)
@@ -79,6 +80,7 @@ namespace Content.IntegrationTests.Tests
                 var protoIds = prototypeMan
                     .EnumeratePrototypes<EntityPrototype>()
                     .Where(p=>!p.Abstract)
+                    .Where(p => !p.Components.ContainsKey("MapGrid")) // CITADEL EDIT (did you know spawning fucktons of grids in one spot breaks things)
                     .Select(p => p.ID)
                     .ToList();
                 foreach (var protoId in protoIds)
@@ -121,6 +123,7 @@ namespace Content.IntegrationTests.Tests
                 var protoIds = prototypeMan
                     .EnumeratePrototypes<EntityPrototype>()
                     .Where(p => !p.Abstract)
+                    .Where(p => !p.Components.ContainsKey("MapGrid")) // CITADEL EDIT (did you know spawning fucktons of grids in one spot breaks things)
                     .Select(p => p.ID)
                     .ToList();
                 foreach (var protoId in protoIds)
@@ -161,6 +164,13 @@ namespace Content.IntegrationTests.Tests
                 "MapGrid",
                 "StationData", // errors when removed mid-round
                 "Actor", // We aren't testing actor components, those need their player session set.
+
+                //CITADEL EDIT
+                "BlobFloorPlanBuilder", // Flat does not work without configuration.
+                "DebrisFeaturePlacerController", // Above.
+                "LoadedChunk",
+                "BiomeSelection",
+                //END CITADEL EDIT
             };
 
             var testEntity = @"
@@ -256,6 +266,13 @@ namespace Content.IntegrationTests.Tests
                 "MapGrid",
                 "StationData", // errors when deleted mid-round
                 "Actor", // We aren't testing actor components, those need their player session set.
+
+                //CITADEL EDIT
+                "BlobFloorPlanBuilder", // Flat does not work without configuration.
+                "DebrisFeaturePlacerController", // Above.
+                "LoadedChunk",
+                "BiomeSelection",
+                //END CITADEL EDIT
             };
 
             var testEntity = @"
