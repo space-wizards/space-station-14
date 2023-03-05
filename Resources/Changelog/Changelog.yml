@@ -1,10 +1,4 @@
 Entries:
-- author: juliangiebel
-  changes:
-  - {message: a fancy new PDA UI, type: Add}
-  - {message: cartridges containing Programs for your PDA, type: Add}
-  id: 2599
-  time: '2022-11-08T20:00:21.0000000+00:00'
 - author: ashtronaut
   changes:
   - {message: Added a current readied player count to the lobby info during the pre-game
@@ -2914,3 +2908,8 @@ Entries:
     type: Add}
   id: 3098
   time: '2023-03-05T01:19:50.0000000+00:00'
+- author: CaptainSqrBeard
+  changes:
+  - {message: Default marking colors now can be applied differently, type: Tweak}
+  id: 3099
+  time: '2023-03-05T02:59:08.0000000+00:00'
