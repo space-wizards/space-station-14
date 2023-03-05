@@ -105,10 +105,10 @@ public sealed class EncryptionKeySystem : EntitySystem
     {
         args.Handled = true;
 
-        var attemptEv = new EncryptionKeyInsertAttempt();
-        RaiseLocalEvent(uid, ref attemptEv);
+        var ev = new EncryptionKeyInsertEvent(component);
+        RaiseLocalEvent(uid, ref ev);
 
-        if (!component.KeysUnlocked || attemptEv.Cancelled)
+        if (!component.KeysUnlocked)
         {
             if (_timing.IsFirstTimePredicted)
                 _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-are-locked"), uid, Filter.Local(), false);
@@ -137,10 +137,10 @@ public sealed class EncryptionKeySystem : EntitySystem
 
         args.Handled = true;
 
-        var attemptEv = new EncryptionKeyRemovalAttempt();
-        RaiseLocalEvent(uid, ref attemptEv);
+        var ev = new EncryptionKeyRemovalEvent(component);
+        RaiseLocalEvent(uid, ref ev);
 
-        if (!component.KeysUnlocked || attemptEv.Cancelled)
+        if (!component.KeysUnlocked)
         {
             if (_timing.IsFirstTimePredicted)
                 _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-are-locked"), uid, Filter.Local(), false);

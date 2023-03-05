@@ -62,7 +62,7 @@ public sealed class EncryptionKeyHolderComponent : Component
 }
 
 [ByRefEvent]
-public record struct EncryptionKeyInsertAttempt(bool Cancelled);
+public readonly record struct EncryptionKeyInsertEvent(EncryptionKeyHolderComponent KeyHolder);
 
 [ByRefEvent]
-public record struct EncryptionKeyRemovalAttempt(bool Cancelled);
+public readonly record struct EncryptionKeyRemovalEvent(EncryptionKeyHolderComponent KeyHolder);

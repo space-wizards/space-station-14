@@ -8,19 +8,23 @@ public sealed class TelecomSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<TelecomServerComponent, EncryptionKeyInsertAttempt>(OnKeyInsertAttempt);
-        SubscribeLocalEvent<TelecomServerComponent, EncryptionKeyRemovalAttempt>(OnKeyRemovalAttempt);
+        SubscribeLocalEvent<TelecomServerComponent, EncryptionKeyInsertEvent>(OnKeyInsert);
+        SubscribeLocalEvent<TelecomServerComponent, EncryptionKeyRemovalEvent>(OnKeyRemoval);
     }
 
-    private void OnKeyInsertAttempt(EntityUid uid, TelecomServerComponent component, ref EncryptionKeyInsertAttempt args)
+    private void OnKeyInsert(EntityUid uid, TelecomServerComponent component, ref EncryptionKeyInsertEvent args)
     {
-        if (TryComp<WiresComponent>(uid, out var wires) && !wires.IsPanelOpen)
-            args.Cancelled = true;
+        if (TryComp<WiresComponent>(uid, out var wires))
+        {
+            args.KeyHolder.KeysUnlocked = wires.IsPanelOpen;
+        }
     }
 
-    private void OnKeyRemovalAttempt(EntityUid uid, TelecomServerComponent component, ref EncryptionKeyRemovalAttempt args)
+    private void OnKeyRemoval(EntityUid uid, TelecomServerComponent component, ref EncryptionKeyRemovalEvent args)
     {
-        if (TryComp<WiresComponent>(uid, out var wires) && !wires.IsPanelOpen)
-            args.Cancelled = true;
+        if (TryComp<WiresComponent>(uid, out var wires))
+        {
+            args.KeyHolder.KeysUnlocked = wires.IsPanelOpen;
+        }
     }
 }
