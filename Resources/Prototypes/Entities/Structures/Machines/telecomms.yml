@@ -53,3 +53,7 @@
   - type: Transform
     anchored: true
   - type: Pullable
+  - type: EncryptionKeyHolder
+    keysExtractionMethod: Prying
+    keySlots: 8
+  - type: TelecomServer

@@ -89,40 +89,63 @@ public sealed class EncryptionKeySystem : EntitySystem
 
     private void OnInteractUsing(EntityUid uid, EncryptionKeyHolderComponent component, InteractUsingEvent args)
     {
-        if (!TryComp<ContainerManagerComponent>(uid, out var storage) || args.Handled || component.Removing)
+        if (!TryComp<ContainerManagerComponent>(uid, out var _) || args.Handled || component.Removing)
             return;
-
         if (TryComp<EncryptionKeyComponent>(args.Used, out var key))
         {
-            args.Handled = true;
+            TryInsertKey(uid, component, args);
+        }
+        else
+        {
+            TryRemoveKey(uid, component, args);
+        }
+    }
 
-            if (!component.KeysUnlocked)
-            {
-                if (_timing.IsFirstTimePredicted)
-                    _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-are-locked"), uid, Filter.Local(), false);
-                return;
-            }
+    private void TryInsertKey(EntityUid uid, EncryptionKeyHolderComponent component, InteractUsingEvent args)
+    {
+        args.Handled = true;
 
-            if (component.KeySlots <= component.KeyContainer.ContainedEntities.Count)
-            {
-                if (_timing.IsFirstTimePredicted)
-                    _popupSystem.PopupEntity(Loc.GetString("headset-encryption-key-slots-already-full"), uid, Filter.Local(), false);
-                return;
-            }
+        var attemptEv = new EncryptionKeyInsertAttempt();
+        RaiseLocalEvent(uid, ref attemptEv);
 
-            if (component.KeyContainer.Insert(args.Used))
-            {
-                if (_timing.IsFirstTimePredicted)
-                    _popupSystem.PopupEntity(Loc.GetString("headset-encryption-key-successfully-installed"), uid, Filter.Local(), false);
-                _audio.PlayPredicted(component.KeyInsertionSound, args.Target, args.User);
-                return;
-            }
+        if (!component.KeysUnlocked || attemptEv.Cancelled)
+        {
+            if (_timing.IsFirstTimePredicted)
+                _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-are-locked"), uid, Filter.Local(), false);
+            return;
+        }
+        if (component.KeySlots <= component.KeyContainer.ContainedEntities.Count)
+        {
+            if (_timing.IsFirstTimePredicted)
+                _popupSystem.PopupEntity(Loc.GetString("headset-encryption-key-slots-already-full"), uid, Filter.Local(), false);
+            return;
         }
 
+        if (component.KeyContainer.Insert(args.Used))
+        {
+            if (_timing.IsFirstTimePredicted)
+                _popupSystem.PopupEntity(Loc.GetString("headset-encryption-key-successfully-installed"), uid, Filter.Local(), false);
+            _audio.PlayPredicted(component.KeyInsertionSound, args.Target, args.User);
+            return;
+        }
+    }
+
+    private void TryRemoveKey(EntityUid uid, EncryptionKeyHolderComponent component, InteractUsingEvent args)
+    {
         if (!TryComp<ToolComponent>(args.Used, out var tool) || !tool.Qualities.Contains(component.KeysExtractionMethod))
             return;
-        
+
         args.Handled = true;
+
+        var attemptEv = new EncryptionKeyRemovalAttempt();
+        RaiseLocalEvent(uid, ref attemptEv);
+
+        if (!component.KeysUnlocked || attemptEv.Cancelled)
+        {
+            if (_timing.IsFirstTimePredicted)
+                _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-are-locked"), uid, Filter.Local(), false);
+            return;
+        }
 
         if (component.KeyContainer.ContainedEntities.Count == 0)
         {
@@ -136,8 +159,7 @@ public sealed class EncryptionKeySystem : EntitySystem
 
         var toolEvData = new ToolEventData(new EncryptionRemovalFinishedEvent(args.User), cancelledEv: new EncryptionRemovalCancelledEvent(), targetEntity: uid);
 
-        if(!_toolSystem.UseTool(args.Used, args.User, uid, 1f, new[] { component.KeysExtractionMethod }, toolEvData, toolComponent: tool))
-            return;
+        _toolSystem.UseTool(args.Used, args.User, uid, 1f, new[] { component.KeysExtractionMethod }, toolEvData, toolComponent: tool);
     }
 
     private void OnStartup(EntityUid uid, EncryptionKeyHolderComponent component, ComponentStartup args)

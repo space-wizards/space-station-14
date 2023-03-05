@@ -60,3 +60,9 @@ public sealed class EncryptionKeyHolderComponent : Component
     [ViewVariables]
     public string? DefaultChannel;
 }
+
+[ByRefEvent]
+public record struct EncryptionKeyInsertAttempt(bool Cancelled);
+
+[ByRefEvent]
+public record struct EncryptionKeyRemovalAttempt(bool Cancelled);
