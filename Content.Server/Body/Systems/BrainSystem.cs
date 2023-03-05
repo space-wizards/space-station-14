@@ -47,7 +47,10 @@ namespace Content.Server.Body.Systems
             // TODO: This is an awful solution.
             EnsureComp<InputMoverComponent>(newEntity);
 
-            _mindSystem.TransferTo(oldMind.Mind, newEntity);
+            if (!_mindSystem.TryGetMind(oldEntity, out var mind, oldMind))
+                return;
+            
+            _mindSystem.TransferTo(mind, newEntity);
         }
     }
 }

@@ -240,8 +240,9 @@ public sealed class MindTests
             Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind));
 
             var newUserId = new NetUserId(Guid.NewGuid());
+            Assert.That(mindComp.HasMind);
             CatchPlayerDataException(() =>
-                mindSystem.ChangeOwningPlayer(entity, newUserId, mindComp));
+                mindSystem.ChangeOwningPlayer(mindComp.Mind!, newUserId));
 
             Assert.That(mind.UserId, Is.EqualTo(newUserId));
         });

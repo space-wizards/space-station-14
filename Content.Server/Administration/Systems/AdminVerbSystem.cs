@@ -231,7 +231,12 @@ namespace Content.Server.Administration.Systems
                     Act = () =>
                     {
                         MakeSentientCommand.MakeSentient(args.Target, EntityManager);
-                        _mindSystem.TransferTo(player.ContentData()?.Mind, args.Target, ghostCheckOverride: true);
+                        
+                        var mind = player.ContentData()?.Mind;
+                        if (mind == null)
+                            return;
+                        
+                        _mindSystem.TransferTo(mind, args.Target, ghostCheckOverride: true);
                     },
                     Impact = LogImpact.High,
                     ConfirmationPopup = true

@@ -40,10 +40,13 @@ namespace Content.Server.Players
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var mindSystem = entityManager.System<MindSystem>();
-            mindSystem.TransferTo(Mind, null);
+            
             // This will ensure Mind == null
-            if (Mind != null)
-                mindSystem.ChangeOwningPlayer(Mind, null);
+            if (Mind == null)
+                return;
+
+            mindSystem.TransferTo(Mind, null);
+            mindSystem.ChangeOwningPlayer(Mind, null);
         }
 
         /// <summary>

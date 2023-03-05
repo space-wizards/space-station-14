@@ -28,7 +28,8 @@ namespace Content.IntegrationTests.Tests.Minds
             Mind mind = null;
             await server.WaitAssertion(() =>
             {
-                var player = IoCManager.Resolve<IPlayerManager>().ServerSessions.Single();
+                var playerManager = IoCManager.Resolve<IPlayerManager>();
+                var player = playerManager.ServerSessions.Single();
 
                 var mapMan = IoCManager.Resolve<IMapManager>();
                 
@@ -40,8 +41,7 @@ namespace Content.IntegrationTests.Tests.Minds
                 playerEnt = entMan.SpawnEntity(null, pos);
                 visitEnt = entMan.SpawnEntity(null, pos);
 
-                mind = new Mind(player.UserId);
-                mindSystem.ChangeOwningPlayer(mind, player.UserId);
+                Assert.That(mindSystem.TryCreateMind(player.UserId, out mind, playerManager));
 
                 mindSystem.TransferTo(mind, playerEnt);
                 mindSystem.Visit(mind, visitEnt);
@@ -87,7 +87,8 @@ namespace Content.IntegrationTests.Tests.Minds
             Mind mind = null;
             await server.WaitAssertion(() =>
             {
-                var player = IoCManager.Resolve<IPlayerManager>().ServerSessions.Single();
+                var playerManager = IoCManager.Resolve<IPlayerManager>();
+                var player = playerManager.ServerSessions.Single();
 
                 var mapMan = IoCManager.Resolve<IMapManager>();
                 
@@ -98,8 +99,7 @@ namespace Content.IntegrationTests.Tests.Minds
 
                 playerEnt = entMan.SpawnEntity(null, pos);
 
-                mind = new Mind(player.UserId);
-                mindSystem.ChangeOwningPlayer(mind, player.UserId);
+                Assert.That(mindSystem.TryCreateMind(player.UserId, out mind, playerManager));
 
                 mindSystem.TransferTo(mind, playerEnt);
 
@@ -135,15 +135,15 @@ namespace Content.IntegrationTests.Tests.Minds
             Mind mind = null;
             await server.WaitAssertion(() =>
             {
-                var player = IoCManager.Resolve<IPlayerManager>().ServerSessions.Single();
+                var playerManager = IoCManager.Resolve<IPlayerManager>();
+                var player = playerManager.ServerSessions.Single();
 
                 var entMgr = IoCManager.Resolve<IServerEntityManager>();
                 
                 var mindSystem = entMgr.EntitySysManager.GetEntitySystem<MindSystem>();
                 
                 playerEnt = entMgr.SpawnEntity(null, coordinates);
-                mind = new Mind(player.UserId);
-                mindSystem.ChangeOwningPlayer(mind, player.UserId);
+                Assert.That(mindSystem.TryCreateMind(player.UserId, out mind, playerManager));
 
                 mindSystem.TransferTo(mind, playerEnt);
 

@@ -84,69 +84,66 @@ public sealed class MindSystem : EntitySystem
         mind.Mind = null;
     }
 
-    private void OnShutdown(EntityUid uid, MindComponent mind, ComponentShutdown args)
+    private void OnShutdown(EntityUid uid, MindComponent mindComp, ComponentShutdown args)
     {
         // Let's not create ghosts if not in the middle of the round.
         if (_gameTicker.RunLevel != GameRunLevel.InRound)
             return;
 
-        if (mind.HasMind)
+        if (!TryGetMind(uid, out var mind, mindComp))
+            return;
+        
+        if (mind.VisitingEntity is {Valid: true} visiting)
         {
-            if (mind.Mind?.VisitingEntity is {Valid: true} visiting)
+            if (TryComp(visiting, out GhostComponent? ghost))
             {
-                if (TryComp(visiting, out GhostComponent? ghost))
+                _ghostSystem.SetCanReturnToBody(ghost, false);
+            }
+
+            TransferTo(mind, visiting);
+        }
+        else if (mindComp.GhostOnShutdown)
+        {
+            // Changing an entities parents while deleting is VERY sus. This WILL throw exceptions.
+            // TODO: just find the applicable spawn position directly without actually updating the transform's parent.
+            Transform(uid).AttachToGridOrMap();
+            var spawnPosition = Transform(uid).Coordinates;
+
+            // Use a regular timer here because the entity has probably been deleted.
+            Timer.Spawn(0, () =>
+            {
+                // Make extra sure the round didn't end between spawning the timer and it being executed.
+                if (_gameTicker.RunLevel != GameRunLevel.InRound)
+                    return;
+
+                // Async this so that we don't throw if the grid we're on is being deleted.
+                var gridId = spawnPosition.GetGridUid(EntityManager);
+                if (!spawnPosition.IsValid(EntityManager) || gridId == EntityUid.Invalid || !_mapManager.GridExists(gridId))
                 {
-                    _ghostSystem.SetCanReturnToBody(ghost, false);
+                    spawnPosition = _gameTicker.GetObserverSpawnPoint();
                 }
 
-                TransferTo(mind.Mind, visiting);
-            }
-            else if (mind.GhostOnShutdown)
-            {
-                // Changing an entities parents while deleting is VERY sus. This WILL throw exceptions.
-                // TODO: just find the applicable spawn position directly without actually updating the transform's parent.
-                Transform(uid).AttachToGridOrMap();
-                var spawnPosition = Transform(uid).Coordinates;
-
-                // Use a regular timer here because the entity has probably been deleted.
-                Timer.Spawn(0, () =>
+                // TODO refactor observer spawning.
+                // please.
+                if (!spawnPosition.IsValid(EntityManager))
                 {
-                    // Make extra sure the round didn't end between spawning the timer and it being executed.
-                    if (_gameTicker.RunLevel != GameRunLevel.InRound)
-                        return;
+                    // This should be an error, if it didn't cause tests to start erroring when they delete a player.
+                    Logger.WarningS("mind", $"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, and no applicable spawn location is available.");
+                    TransferTo(mind, null);
+                    return;
+                }
 
-                    // Async this so that we don't throw if the grid we're on is being deleted.
-                    var gridId = spawnPosition.GetGridUid(EntityManager);
-                    if (!spawnPosition.IsValid(EntityManager) || gridId == EntityUid.Invalid || !_mapManager.GridExists(gridId))
-                    {
-                        spawnPosition = _gameTicker.GetObserverSpawnPoint();
-                    }
+                var ghost = Spawn("MobObserver", spawnPosition);
+                var ghostComponent = Comp<GhostComponent>(ghost);
+                _ghostSystem.SetCanReturnToBody(ghostComponent, false);
 
-                    // TODO refactor observer spawning.
-                    // please.
-                    if (!spawnPosition.IsValid(EntityManager))
-                    {
-                        // This should be an error, if it didn't cause tests to start erroring when they delete a player.
-                        Logger.WarningS("mind", $"Entity \"{ToPrettyString(uid)}\" for {mind.Mind?.CharacterName} was deleted, and no applicable spawn location is available.");
-                        TransferTo(mind.Mind, null);
-                        return;
-                    }
+                // Log these to make sure they're not causing the GameTicker round restart bugs...
+                Logger.DebugS("mind", $"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, spawned \"{ToPrettyString(ghost)}\".");
 
-                    var ghost = Spawn("MobObserver", spawnPosition);
-                    var ghostComponent = Comp<GhostComponent>(ghost);
-                    _ghostSystem.SetCanReturnToBody(ghostComponent, false);
-
-                    // Log these to make sure they're not causing the GameTicker round restart bugs...
-                    Logger.DebugS("mind", $"Entity \"{ToPrettyString(uid)}\" for {mind.Mind?.CharacterName} was deleted, spawned \"{ToPrettyString(ghost)}\".");
-
-                    if (mind.Mind == null)
-                        return;
-
-                    var val = mind.Mind.CharacterName ?? string.Empty;
-                    MetaData(ghost).EntityName = val;
-                    TransferTo(mind.Mind, ghost);
-                });
-            }
+                var val = mind.CharacterName ?? string.Empty;
+                MetaData(ghost).EntityName = val;
+                TransferTo(mind, ghost);
+            });
         }
     }
 
@@ -192,21 +189,8 @@ public sealed class MindSystem : EntitySystem
     public bool TryCreateMind(NetUserId? userId, [NotNullWhen(true)]out Mind? mind, IPlayerManager? playerManager = null)
     {
         mind = new Mind(userId);
-        ChangeOwningPlayer(mind, userId, playerManager);
+        ChangeOwningPlayer(mind, userId);
         return true;
-    }
-
-    public void ChangeOwningPlayer(EntityUid uid, NetUserId? netUserId, MindComponent? mindComp = null, IPlayerManager? playerManager = null)
-    {
-        if (!Resolve(uid, ref mindComp))
-            return;
-
-        if (!mindComp.HasMind)
-            return;
-
-        var mind = mindComp.Mind;
-        if (mind != null)
-            ChangeOwningPlayer(mind, netUserId, playerManager);
     }
 
     /// <summary>
@@ -262,10 +246,11 @@ public sealed class MindSystem : EntitySystem
         mind.Session?.AttachToEntity(mind.OwnedEntity);
         RemoveVisitingEntity(mind);
 
-        if (mind.Session != null && mind.OwnedEntity != null && mind.OwnedEntity != currentEntity)
+        var owned = mind.OwnedEntity;
+        if (mind.Session != null && owned != null && owned != currentEntity)
         {
             _adminLogger.Add(LogType.Mind, LogImpact.Low,
-                $"{mind.Session.Name} returned to {ToPrettyString(mind.OwnedEntity.Value)}");
+                $"{mind.Session.Name} returned to {ToPrettyString(owned.Value)}");
         }
     }
 
@@ -301,11 +286,8 @@ public sealed class MindSystem : EntitySystem
     /// <exception cref="ArgumentException">
     ///     Thrown if <paramref name="entity"/> is already owned by another mind.
     /// </exception>
-    public void TransferTo(Mind? mind, EntityUid? entity, bool ghostCheckOverride = false)
+    public void TransferTo(Mind mind, EntityUid? entity, bool ghostCheckOverride = false)
     {
-        if (mind == null)
-            return;
-        
         // Looks like caller just wants us to go back to normal.
         if (entity == mind.OwnedEntity)
         {
@@ -372,17 +354,15 @@ public sealed class MindSystem : EntitySystem
         }
     }
 
-    public void ChangeOwningPlayer(Mind mind, NetUserId? newOwner, IPlayerManager? playerMgr = null)
+    public void ChangeOwningPlayer(Mind mind, NetUserId? newOwner)
     {
-        IoCManager.Resolve(ref playerMgr);
-    
         // Make sure to remove control from our old owner if they're logged in.
         var oldSession = mind.Session;
         oldSession?.AttachToEntity(null);
     
         if (mind.UserId.HasValue)
         {
-            if (playerMgr.TryGetPlayerData(mind.UserId.Value, out var oldUncast))
+            if (_playerManager.TryGetPlayerData(mind.UserId.Value, out var oldUncast))
             {
                 var data = oldUncast.ContentData();
                 DebugTools.AssertNotNull(data);
@@ -400,7 +380,7 @@ public sealed class MindSystem : EntitySystem
             return;
         }
     
-        if (!playerMgr.TryGetPlayerData(newOwner.Value, out var uncast))
+        if (!_playerManager.TryGetPlayerData(newOwner.Value, out var uncast))
         {
             // This restriction is because I'm too lazy to initialize the player data
             // for a client that hasn't logged in yet.
