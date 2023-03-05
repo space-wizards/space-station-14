@@ -47,6 +47,7 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         }
 
         LoadProfile(uid, startingSet.Profile, humanoid);
+        
     }
 
     private void OnExamined(EntityUid uid, HumanoidAppearanceComponent component, ExaminedEvent args)
@@ -79,16 +80,56 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
 
         humanoid.MarkingSet.Clear();
 
-        // Hair/facial hair - this may eventually be deprecated.
-
-        AddMarking(uid, profile.Appearance.HairStyleId, profile.Appearance.HairColor, false);
-        AddMarking(uid, profile.Appearance.FacialHairStyleId, profile.Appearance.FacialHairColor, false);
-
+        // Add markings that doesn't need coloring. We store them until we add all other markings that doesn't need it.
+        var markingFColored = new Dictionary<Marking, MarkingPrototype>();
         foreach (var marking in profile.Appearance.Markings)
         {
-            AddMarking(uid, marking.MarkingId, marking.MarkingColors, false);
+            if (_markingManager.TryGetMarking(marking, out var prototype))
+            {
+                if (!prototype.ForcedColoring)
+                {
+                    AddMarking(uid, marking.MarkingId, marking.MarkingColors, false);
+                }
+                else
+                {
+                    markingFColored.Add(marking, prototype);
+                }
+            }
         }
 
+        // Hair/facial hair - this may eventually be deprecated.
+        // We need to ensure hair before applying it or coloring can try depend on markings that can be invalid
+        var hairColor = _markingManager.MustMatchSkin(profile.Species, HumanoidVisualLayers.Hair, _prototypeManager)
+            ? profile.Appearance.SkinColor : profile.Appearance.HairColor;
+        var facialHairColor = _markingManager.MustMatchSkin(profile.Species, HumanoidVisualLayers.FacialHair, _prototypeManager)
+            ? profile.Appearance.SkinColor : profile.Appearance.FacialHairColor;
+        
+        if (_markingManager.Markings.TryGetValue(profile.Appearance.HairStyleId, out var hairPrototype) &&
+            _markingManager.CanBeApplied(profile.Species, hairPrototype, _prototypeManager))
+        {
+            AddMarking(uid, profile.Appearance.HairStyleId, hairColor, false);
+        }
+        
+        if (_markingManager.Markings.TryGetValue(profile.Appearance.FacialHairStyleId, out var facialHairPrototype) &&
+            _markingManager.CanBeApplied(profile.Species, facialHairPrototype, _prototypeManager))
+        {
+            AddMarking(uid, profile.Appearance.FacialHairStyleId, facialHairColor, false); 
+        }
+
+        humanoid.MarkingSet.EnsureSpecies(profile.Species, profile.Appearance.SkinColor, _markingManager, _prototypeManager);
+
+        // Finally adding marking with forced colors
+        foreach (var (marking, prototype) in markingFColored)
+        {
+            var markingColors = MarkingColoring.GetMarkingLayerColors(
+                prototype,
+                profile.Appearance.SkinColor,
+                profile.Appearance.EyeColor,
+                humanoid.MarkingSet
+            );
+            AddMarking(uid, marking.MarkingId, markingColors, false);
+        }
+        
         EnsureDefaultMarkings(uid, humanoid);
 
         humanoid.Gender = profile.Gender;
@@ -121,6 +162,8 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
 
         targetHumanoid.Species = sourceHumanoid.Species;
         targetHumanoid.SkinColor = sourceHumanoid.SkinColor;
+        targetHumanoid.EyeColor = sourceHumanoid.EyeColor;
+        targetHumanoid.Age = sourceHumanoid.Age;
         SetSex(target, sourceHumanoid.Sex, false, targetHumanoid);
         targetHumanoid.CustomBaseLayers = new(sourceHumanoid.CustomBaseLayers);
         targetHumanoid.MarkingSet = new(sourceHumanoid.MarkingSet);
@@ -334,7 +377,6 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         {
             return;
         }
-
-        humanoid.MarkingSet.EnsureDefault(humanoid.SkinColor, _markingManager);
+        humanoid.MarkingSet.EnsureDefault(humanoid.SkinColor, humanoid.EyeColor, _markingManager);
     }
 }

@@ -1,11 +1,13 @@
-using Content.Server.Storage.Components;
+using System.Threading;
 using Content.Server.DoAfter;
-using Robust.Shared.Containers;
 using Content.Server.Popups;
-using Content.Shared.Movement.Events;
+using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
+using Content.Shared.DoAfter;
 using Content.Shared.Lock;
+using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Resist;
 
@@ -20,9 +22,8 @@ public sealed class ResistLockerSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<ResistLockerComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
-        SubscribeLocalEvent<ResistLockerComponent, ResistDoAfterComplete>(OnDoAfterComplete);
-        SubscribeLocalEvent<ResistLockerComponent, ResistDoAfterCancelled>(OnDoAfterCancelled);
-        SubscribeLocalEvent<ResistLockerComponent, EntRemovedFromContainerMessage>(OnRemovedFromContainer);
+        SubscribeLocalEvent<ResistLockerComponent, DoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<ResistLockerComponent, EntRemovedFromContainerMessage>(OnRemoved);
     }
 
     private void OnRelayMovement(EntityUid uid, ResistLockerComponent component, ref ContainerRelayMovementEntityEvent args)
@@ -44,16 +45,15 @@ public sealed class ResistLockerSystem : EntitySystem
         if (!Resolve(target, ref storageComponent, ref resistLockerComponent))
             return;
 
-        resistLockerComponent.CancelToken = new();
-        var doAfterEventArgs = new DoAfterEventArgs(user, resistLockerComponent.ResistTime, resistLockerComponent.CancelToken.Token, target)
+        resistLockerComponent.CancelToken = new CancellationTokenSource();
+
+        var doAfterEventArgs = new DoAfterEventArgs(user, resistLockerComponent.ResistTime, cancelToken:resistLockerComponent.CancelToken.Token, target:target)
         {
             BreakOnTargetMove = false,
             BreakOnUserMove = true,
             BreakOnDamage = true,
             BreakOnStun = true,
-            NeedHand = false, //No hands 'cause we be kickin'
-            TargetFinishedEvent = new ResistDoAfterComplete(user, target),
-            TargetCancelledEvent = new ResistDoAfterCancelled(user)
+            NeedHand = false //No hands 'cause we be kickin'
         };
 
         resistLockerComponent.IsResisting = true;
@@ -61,8 +61,25 @@ public sealed class ResistLockerSystem : EntitySystem
         _doAfterSystem.DoAfter(doAfterEventArgs);
     }
 
-    private void OnDoAfterComplete(EntityUid uid, ResistLockerComponent component, ResistDoAfterComplete ev)
+    private void OnRemoved(EntityUid uid, ResistLockerComponent component, EntRemovedFromContainerMessage args)
     {
+        component.CancelToken?.Cancel();
+        component.CancelToken = null;
+    }
+
+    private void OnDoAfter(EntityUid uid, ResistLockerComponent component, DoAfterEvent args)
+    {
+        if (args.Cancelled)
+        {
+            component.IsResisting = false;
+            component.CancelToken = null;
+            _popupSystem.PopupEntity(Loc.GetString("resist-locker-component-resist-interrupted"), args.Args.User, args.Args.User, PopupType.Medium);
+            return;
+        }
+
+        if (args.Handled || args.Args.Target == null)
+            return;
+
         component.IsResisting = false;
 
         if (TryComp<EntityStorageComponent>(uid, out var storageComponent))
@@ -70,44 +87,13 @@ public sealed class ResistLockerSystem : EntitySystem
             if (storageComponent.IsWeldedShut)
                 storageComponent.IsWeldedShut = false;
 
-            if (TryComp<LockComponent>(ev.Target, out var lockComponent))
-                _lockSystem.Unlock(uid, ev.User, lockComponent);
+            if (TryComp<LockComponent>(args.Args.Target.Value, out var lockComponent))
+                _lockSystem.Unlock(uid, args.Args.User, lockComponent);
 
-            component.CancelToken = null;
-            _entityStorage.TryOpenStorage(ev.User, storageComponent.Owner);
+            _entityStorage.TryOpenStorage(args.Args.User, uid);
         }
-    }
 
-    private void OnDoAfterCancelled(EntityUid uid, ResistLockerComponent component, ResistDoAfterCancelled ev)
-    {
-        component.IsResisting = false;
         component.CancelToken = null;
-        _popupSystem.PopupEntity(Loc.GetString("resist-locker-component-resist-interrupted"), ev.User, ev.User, PopupType.Medium);
-    }
-
-    private void OnRemovedFromContainer(EntityUid uid, ResistLockerComponent component, EntRemovedFromContainerMessage message)
-    {
-        component.CancelToken?.Cancel();
-    }
-
-    private sealed class ResistDoAfterComplete : EntityEventArgs
-    {
-        public readonly EntityUid User;
-        public readonly EntityUid Target;
-        public ResistDoAfterComplete(EntityUid userUid, EntityUid target)
-        {
-            User = userUid;
-            Target = target;
-        }
-    }
-
-    private sealed class ResistDoAfterCancelled : EntityEventArgs
-    {
-        public readonly EntityUid User;
-
-        public ResistDoAfterCancelled(EntityUid userUid)
-        {
-            User = userUid;
-        }
+        args.Handled = true;
     }
 }

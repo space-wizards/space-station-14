@@ -12,6 +12,7 @@
   - type: Sprite
     sprite: Structures/Walls/asteroid_rock.rsi
     state: full
+    netsync: false
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
