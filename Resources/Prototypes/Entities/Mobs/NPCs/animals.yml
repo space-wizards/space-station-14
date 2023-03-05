@@ -63,6 +63,8 @@
       types:
         Piercing: 5
   - type: NoSlip
+  - type: Puller
+    needsHands: true
 
 - type: entity
   name: bee
@@ -121,6 +123,8 @@
   - type: NoSlip
   - type: MobPrice
     price: 50
+  - type: Puller
+    needsHands: true
 
 - type: entity
   name: bee
@@ -203,6 +207,8 @@
     accent: chicken
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
+  - type: Puller
+    needsHands: true
 
 - type: entity
   name: mallard duck #Quack
@@ -350,6 +356,8 @@
   - type: NoSlip
   - type: MobPrice
     price: 50
+  - type: Puller
+    needsHands: true
 
 - type: entity
   name: cow
@@ -862,6 +870,8 @@
   - type: CanEscapeInventory
   - type: MobPrice
     price: 50
+  - type: Puller
+    needsHands: true
 
 - type: entity
   parent: MobMouse
@@ -965,6 +975,9 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Scale
+  - type: Puller
+    needsHands: true
+
 
 - type: entity
   name: slug
@@ -1059,6 +1072,8 @@
       path: /Audio/Animals/frog_ribbit.ogg
   - type: Bloodstream
     bloodMaxVolume: 50
+  - type: Puller
+    needsHands: true
 
 # Would be cool to have some functionality for the parrot to be able to sit on stuff
 - type: entity
@@ -1272,6 +1287,8 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Scale
+  - type: Puller
+    needsHands: true
 
 # Code unique spider prototypes or combine them all into one spider and get a
 # random sprite state when you spawn it.
@@ -1337,8 +1354,6 @@
     successChance: 0.5
     interactSuccessString: petting-success-tarantula
     interactFailureString: petting-failure-generic
-  - type: Puller
-    needsHands: false
   - type: NoSlip
   - type: Spider
   - type: IgnoreSpiderWeb
@@ -1644,7 +1659,7 @@
     damageContainer: Biological
     damageModifierSet: Infernal
   - type: Temperature
-    heatDamageThreshold: 4000 #They come from hell, so...
+    heatDamageThreshold: 4000 #They come from hell, so..
     coldDamageThreshold: 260
     currentTemperature: 310.15
     coldDamage:

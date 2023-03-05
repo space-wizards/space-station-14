@@ -4,6 +4,8 @@ using Content.Client.Strip;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Hands.Controls;
+using Content.Client.Verbs;
+using Content.Client.Verbs.UI;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Ensnaring.Components;
 using Content.Shared.Hands.Components;
@@ -11,6 +13,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Inventory;
 using Content.Shared.Strip.Components;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
@@ -18,6 +21,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 using static Content.Client.Inventory.ClientInventorySystem;
 using static Robust.Client.UserInterface.Control;
 
@@ -30,6 +34,7 @@ namespace Content.Client.Inventory
 
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private readonly IUserInterfaceManager _ui = default!;
         private ExamineSystem _examine = default!;
         private InventorySystem _inv = default!;
 
@@ -169,15 +174,16 @@ namespace Content.Client.Inventory
             if (ev.Function == EngineKeyFunctions.Use)
             {
                 SendMessage(new StrippingSlotButtonPressed(slot.SlotName, slot is HandButton));
-            }
-            else if (ev.Function == ContentKeyFunctions.ExamineEntity && slot.Entity != null)
-            {
-                _examine.DoExamine(slot.Entity.Value);
                 return;
             }
 
-            if (ev.Function != EngineKeyFunctions.Use)
+            if (slot.Entity == null)
                 return;
+
+            if (ev.Function == ContentKeyFunctions.ExamineEntity)
+                _examine.DoExamine(slot.Entity.Value);
+            else if (ev.Function == EngineKeyFunctions.UseSecondary)
+                _ui.GetUIController<VerbMenuUIController>().OpenVerbMenu(slot.Entity.Value);
         }
 
         private void AddInventoryButton(string slotId, InventoryTemplatePrototype template, InventoryComponent inv)
