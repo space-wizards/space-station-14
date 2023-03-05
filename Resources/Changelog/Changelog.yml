@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The reagent grinder can now be upgraded. Revel in the blessed efficiency
-      of your blender., type: Add}
-  - {message: Decreased how many items can fit in a reagent grinder., type: Tweak}
-  id: 2604
-  time: '2022-11-08T20:15:50.0000000+00:00'
 - author: civilCornball
   changes:
   - {message: Allowed Proto-Kinetic Accelerators to be stored in the belt slot., type: Tweak}
@@ -2920,3 +2913,9 @@ Entries:
   - {message: Fixes players not being able to dump trash into a bin, type: Fix}
   id: 3103
   time: '2023-03-05T05:26:03.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Verbs are now usable in the stripping menu., type: Add}
+  - {message: Added a new verb for toggling hardsuit helmets., type: Add}
+  id: 3104
+  time: '2023-03-05T17:12:09.0000000+00:00'
