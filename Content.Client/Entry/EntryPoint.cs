@@ -120,6 +120,13 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("nukeopsRole");
             _prototypeManager.RegisterIgnore("flavor");
 
+            // BEGIN CITADEL EDITS
+            _prototypeManager.RegisterIgnore("noiseChannel");
+            _prototypeManager.RegisterIgnore("worldgenConfig");
+            _prototypeManager.RegisterIgnore("citadelBiome");
+            _prototypeManager.RegisterIgnore("gcQueue");
+            // END CITADEL EDITS
+
             _componentFactory.GenerateNetIds();
             _adminManager.Initialize();
             _stylesheetManager.Initialize();

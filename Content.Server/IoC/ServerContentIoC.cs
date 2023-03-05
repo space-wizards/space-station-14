@@ -1,3 +1,4 @@
+using Content.Server._Citadel.Worldgen.Tools;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
@@ -59,6 +60,9 @@ namespace Content.Server.IoC
             IoCManager.Register<PlayTimeTrackingManager>();
             IoCManager.Register<UserDbDataManager>();
             IoCManager.Register<ServerInfoManager>();
+
+            // Citadel IoCs
+            IoCManager.Register<PoissonDiskSampler>();
         }
     }
 }

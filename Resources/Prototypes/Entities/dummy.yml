@@ -1,0 +1,12 @@
+﻿- type: entity
+  id: CitadelDummy
+  parent: MarkerBase
+  name: Dummy
+  description: If you're seeing this, someone forgot some debug code.
+  noSpawn: true
+  components:
+    - type: Sprite
+      sprite: Markers/cross.rsi
+      netsync: false
+      layers:
+        - state: blue
