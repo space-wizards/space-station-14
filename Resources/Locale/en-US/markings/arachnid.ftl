@@ -8,4 +8,13 @@ marking-ArachnidAppendagesSharp-web = Web
 
 
 marking-ArachnidTorsoStripes = Stripes
-marking-ArachnidTorsoStripes-torso_stripes = Stripe
+marking-ArachnidTorsoStripes-stripes = Design
+
+marking-ArachnidTorsoSlashes = Slashes
+marking-ArachnidTorsoSlashes-slashes = Design
+
+marking-ArachnidTorsoCross = Cross
+marking-ArachnidTorsoCross-cross = Design
+
+marking-ArachnidTorsoX = X
+marking-ArachnidTorsoX-x = Design
