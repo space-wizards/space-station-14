@@ -63,9 +63,3 @@ public sealed class EncryptionKeyHolderComponent : Component
     [DataField("canChangeDefaultChannel"), ViewVariables(VVAccess.ReadWrite)]
     public bool CanChangeDefaultChannel = true;
 }
-
-[ByRefEvent]
-public readonly record struct EncryptionKeyInsertEvent(EncryptionKeyHolderComponent KeyHolder);
-
-[ByRefEvent]
-public readonly record struct EncryptionKeyRemovalEvent(EncryptionKeyHolderComponent KeyHolder);

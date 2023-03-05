@@ -54,7 +54,6 @@
     anchored: true
   - type: Pullable
   - type: EncryptionKeyHolder
-    keysUnlocked: false
     keysExtractionMethod: Prying
     keySlots: 10
     canChangeDefaultChannel: false

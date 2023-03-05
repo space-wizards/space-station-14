@@ -108,9 +108,6 @@ public sealed class EncryptionKeySystem : EntitySystem
     {
         args.Handled = true;
 
-        var ev = new EncryptionKeyInsertEvent(component);
-        RaiseLocalEvent(uid, ref ev);
-
         if (!component.KeysUnlocked)
         {
             if (_timing.IsFirstTimePredicted)
@@ -139,9 +136,6 @@ public sealed class EncryptionKeySystem : EntitySystem
             return;
 
         args.Handled = true;
-
-        var ev = new EncryptionKeyRemovalEvent(component);
-        RaiseLocalEvent(uid, ref ev);
 
         if (!component.KeysUnlocked)
         {
