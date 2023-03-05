@@ -45,10 +45,15 @@
   sprite: /Textures/Tiles/Planet/Grass/grass.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
-  cornerSprites:
-  - /Textures/Tiles/Planet/Grass/single_edge.png
-  cardinalSprites:
-  - /Textures/Tiles/Planet/Grass/double_edge.png
+  edgeSprites:
+    SouthEast: /Textures/Tiles/Planet/Grass/single_edge.png
+    NorthEast: /Textures/Tiles/Planet/Grass/single_edge.png
+    NorthWest: /Textures/Tiles/Planet/Grass/single_edge.png
+    SouthWest: /Textures/Tiles/Planet/Grass/single_edge.png
+    South: /Textures/Tiles/Planet/Grass/double_edge.png
+    East: /Textures/Tiles/Planet/Grass/double_edge.png
+    North: /Textures/Tiles/Planet/Grass/double_edge.png
+    West: /Textures/Tiles/Planet/Grass/double_edge.png
   baseTurfs:
   - FloorPlanetDirt
   isSubfloor: true
