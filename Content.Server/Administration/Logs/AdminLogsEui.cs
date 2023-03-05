@@ -119,8 +119,10 @@ public sealed class AdminLogsEui : BaseEui
                     Impacts = request.Impacts,
                     Before = request.Before,
                     After = request.After,
+                    IncludePlayers = request.IncludePlayers,
                     AnyPlayers = request.AnyPlayers,
                     AllPlayers = request.AllPlayers,
+                    IncludeNonPlayers = request.IncludeNonPlayers,
                     LastLogId = 0,
                     Limit = _clientBatchSize
                 };

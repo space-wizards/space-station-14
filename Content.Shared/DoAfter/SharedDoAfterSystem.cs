@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Shared.Damage;
@@ -115,6 +115,10 @@ public abstract class SharedDoAfterSystem : EntitySystem
 
         foreach (var (_, comp) in EntityManager.EntityQuery<ActiveDoAfterComponent, DoAfterComponent>())
         {
+            //Don't run the doafter if its comp or owner is deleted.
+            if (EntityManager.Deleted(comp.Owner) || comp.Deleted)
+                continue;
+
             foreach (var doAfter in comp.DoAfters.Values.ToArray())
             {
                 Run(comp.Owner, comp, doAfter);
@@ -194,16 +198,13 @@ public abstract class SharedDoAfterSystem : EntitySystem
     public DoAfter DoAfter(DoAfterEventArgs eventArgs)
     {
         var doAfter = CreateDoAfter(eventArgs);
-
         doAfter.Done = cancelled => { Send(cancelled, eventArgs, doAfter.ID); };
-
         return doAfter;
     }
 
     private DoAfter CreateDoAfter(DoAfterEventArgs eventArgs)
     {
         // Setup
-        eventArgs.CancelToken = new CancellationToken();
         var doAfter = new DoAfter(eventArgs, EntityManager);
         // Caller's gonna be responsible for this I guess
         var doAfterComponent = Comp<DoAfterComponent>(eventArgs.User);

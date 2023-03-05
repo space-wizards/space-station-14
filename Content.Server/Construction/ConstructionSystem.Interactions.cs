@@ -582,6 +582,7 @@ namespace Content.Server.Construction
             {
                 RaiseLocalEvent(args.Args.Target.Value, args.AdditionalData.CancelEvent);
                 args.Handled = true;
+                return;
             }
 
             RaiseLocalEvent(args.Args.Target.Value, args.AdditionalData.CompleteEvent);

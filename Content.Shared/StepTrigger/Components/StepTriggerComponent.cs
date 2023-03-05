@@ -26,19 +26,19 @@ public sealed class StepTriggerComponent : Component
     ///     Whether or not this component will currently try to trigger for entities.
     /// </summary>
     [DataField("active")]
-    public bool Active { get; set; } = true;
+    public bool Active = true;
 
     /// <summary>
     ///     Ratio of shape intersection for a trigger to occur.
     /// </summary>
     [DataField("intersectRatio")]
-    public float IntersectRatio { get; set; } = 0.3f;
+    public float IntersectRatio = 0.3f;
 
     /// <summary>
     ///     Entities will only be triggered if their speed exceeds this limit.
     /// </summary>
     [DataField("requiredTriggeredSpeed")]
-    public float RequiredTriggerSpeed { get; set; } = 3.5f;
+    public float RequiredTriggerSpeed = 3.5f;
 }
 
 [RegisterComponent]
