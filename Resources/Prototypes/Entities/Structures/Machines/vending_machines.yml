@@ -242,6 +242,7 @@
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: BeEmagged
 
 - type: entity
   parent: VendingMachine
@@ -926,6 +927,7 @@
     radius: 1.5
     energy: 1.6
     color: "#d4ab33"
+  - type: BeEmagged
 
 # wallmounted machines
 
