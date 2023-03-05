@@ -159,8 +159,9 @@ public sealed partial class CargoSystem
 
         if (!TryComp<TransformComponent>(uid, out var xform) || xform.GridUid == null)
             return;
-
         var gridUid = xform.GridUid;
+        _sawmill.Debug($"console updated");
+
         GetPalletGoods((EntityUid) gridUid, out var toSell, out var amount);
         _uiSystem.SetUiState(bui,
             new CargoPalletConsoleInterfaceState((int) amount, toSell.Count));
@@ -169,7 +170,7 @@ public sealed partial class CargoSystem
     private void OnPalletUIOpen(EntityUid uid, CargoPalletConsoleComponent component, BoundUIOpenedEvent args)
     {
         var player = args.Session.AttachedEntity;
-
+        _sawmill.Debug($"UI opened");
         if (player == null)
             return;
 
@@ -187,7 +188,7 @@ public sealed partial class CargoSystem
     private void OnPalletAppraise(EntityUid uid, CargoPalletConsoleComponent component, CargoPalletAppraiseMessage args)
     {
         var player = args.Session.AttachedEntity;
-
+        _sawmill.Debug($"appraise message sent");
         if (player == null)
             return;
 
@@ -488,14 +489,14 @@ public sealed partial class CargoSystem
     private void OnPalletSale(EntityUid uid, CargoPalletConsoleComponent component, CargoPalletSellMessage args)
     {
         var player = args.Session.AttachedEntity;
-
+        _sawmill.Debug($"sell message sent");
         if (player == null)
             return;
 
         if (!TryComp<TransformComponent>(uid, out var xform) || xform.GridUid == null)
             return;
-
         var gridUid = xform.GridUid;
+
         SellPallets((EntityUid) gridUid, out var price);
         var stackPrototype = _prototypeManager.Index<StackPrototype>("Credit");
         _stack.Spawn((int)price, stackPrototype, uid.ToCoordinates());
