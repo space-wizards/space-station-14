@@ -56,6 +56,9 @@
   - type: EncryptionKeyHolder
     keysExtractionMethod: Prying
     keySlots: 10
+  - type: ContainerContainer
+    containers:
+      key_slots: !type:Container
   - type: TelecomServer
 
 - type: entity
