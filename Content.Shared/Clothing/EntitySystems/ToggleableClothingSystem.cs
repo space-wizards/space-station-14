@@ -134,13 +134,6 @@ public sealed class ToggleableClothingSystem : EntitySystem
     private void OnDoAfterComplete(EntityUid uid, ToggleableClothingComponent component, DoAfterEvent<ToggleClothingEvent> args)
     {
         DebugTools.Assert(component.DoAfterId == args.Id);
-
-        if (component.DoAfterId != args.Id)
-        {
-            DebugTools.Assert("Mismatched do after IDs?");
-            return;
-        }
-
         component.DoAfterId = null;
 
         if (args.Cancelled)
