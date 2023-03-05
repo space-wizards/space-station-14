@@ -77,8 +77,14 @@ public sealed class SharpSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, SharpComponent component, DoAfterEvent args)
     {
-        if (args.Handled || args.Cancelled || !TryComp<ButcherableComponent>(args.Args.Target, out var butcher))
+        if (args.Handled || !TryComp<ButcherableComponent>(args.Args.Target, out var butcher))
             return;
+
+        if (args.Cancelled)
+        {
+            component.Butchering.Remove(args.Args.Target.Value);
+            return;
+        }
 
         component.Butchering.Remove(args.Args.Target.Value);
 
@@ -117,13 +123,13 @@ public sealed class SharpSystem : EntitySystem
 
     private void OnGetInteractionVerbs(EntityUid uid, ButcherableComponent component, GetVerbsEvent<InteractionVerb> args)
     {
-        if (component.Type != ButcheringType.Knife || args.Hands == null)
+        if (component.Type != ButcheringType.Knife || args.Hands == null || !args.CanAccess || !args.CanInteract)
             return;
 
         bool disabled = false;
         string? message = null;
 
-        if (args.Using is null || !HasComp<SharpComponent>(args.Using))
+        if (!HasComp<SharpComponent>(args.Using))
         {
             disabled = true;
             message = Loc.GetString("butcherable-need-knife",

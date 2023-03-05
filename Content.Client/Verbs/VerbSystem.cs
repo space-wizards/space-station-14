@@ -1,11 +1,9 @@
-using Content.Client.CombatMode;
-using Content.Client.ContextMenu.UI;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Client.Examine;
 using Content.Client.Gameplay;
 using Content.Client.Popups;
-using Content.Client.Verbs.UI;
 using Content.Shared.Examine;
-using Content.Shared.GameTicking;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
@@ -15,16 +13,12 @@ using Robust.Client.Player;
 using Robust.Client.State;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using Robust.Client.UserInterface;
 
 namespace Content.Client.Verbs
 {
     [UsedImplicitly]
     public sealed class VerbSystem : SharedVerbSystem
     {
-        [Dependency] private readonly CombatModeSystem _combatMode = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly ExamineSystem _examineSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
