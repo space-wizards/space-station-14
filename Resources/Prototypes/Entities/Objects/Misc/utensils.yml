@@ -48,7 +48,11 @@
     - Fork
     breakChance: 0.20
   - type: Tag
-    tags: [ Plastic ]
+    tags:
+      - Plastic
+      - Trash
+  - type: StaticPrice
+    price: 0
 
 - type: entity
   parent: UtensilBase
@@ -81,6 +85,7 @@
   - type: Tag
     tags:
     - Plastic
+    - Trash
   - type: Sprite
     state: plastic_spoon
   - type: Item
@@ -99,6 +104,7 @@
   - type: Tag
     tags:
     - Plastic
+    - Trash
   - type: Sprite
     state: plastic_knife
   - type: Item
@@ -106,3 +112,5 @@
     types:
     - Knife
     breakChance: 0.20
+  - type: StaticPrice
+    price: 0

@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from infinity baystation 12, https://github.com/infinitystation/Baystation12/blob/073f678cdce92edb8fcd55f9ffc9f0523bf31506/icons/obj/radio.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {"name": "cypherkey"},
+    {"name": "bin_cypherkey"},
+    {"name": "cap_cypherkey"},
+    {"name": "cargo_cypherkey"},
+    {"name": "ce_cypherkey"},
+    {"name": "cmo_cypherkey"},
+    {"name": "com_cypherkey"},
+    {"name": "eng_cypherkey"},
+    {"name": "hop_cypherkey"},
+    {"name": "hos_cypherkey"},
+    {"name": "medsci_cypherkey"},
+    {"name": "med_cypherkey"},
+    {"name": "mine_cypherkey"},
+    {"name": "nt_cypherkey"},
+    {"name": "qm_cypherkey"},
+    {"name": "rd_cypherkey"},
+    {"name": "rob_cypherkey"},
+    {"name": "sci_cypherkey"},
+    {"name": "sec_cypherkey"},
+    {"name": "srv_cypherkey"},
+    {"name": "syn_cypherkey"}
+  ]
+}

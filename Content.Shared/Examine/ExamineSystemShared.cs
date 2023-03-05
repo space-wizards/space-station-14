@@ -162,7 +162,8 @@ namespace Content.Shared.Examine
             var length = dir.Length;
 
             // If range specified also check it
-            if (range > 0f && length > range) return false;
+            // TODO: This rounding check is here because the API is kinda eh
+            if (range > 0f && length > range + 0.01f) return false;
 
             if (MathHelper.CloseTo(length, 0)) return true;
 
@@ -318,7 +319,7 @@ namespace Content.Shared.Examine
         /// <seealso cref="PushText"/>
         public void PushMessage(FormattedMessage message)
         {
-            if (message.Tags.Count == 0)
+            if (message.Nodes.Count == 0)
                 return;
 
             if (_doNewLine)

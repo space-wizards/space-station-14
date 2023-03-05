@@ -57,12 +57,14 @@ namespace Content.Shared.APC
     public sealed class ApcBoundInterfaceState : BoundUserInterfaceState
     {
         public readonly bool MainBreaker;
+        public readonly int Power;
         public readonly ApcExternalPowerState ApcExternalPower;
         public readonly float Charge;
 
-        public ApcBoundInterfaceState(bool mainBreaker, ApcExternalPowerState apcExternalPower, float charge)
+        public ApcBoundInterfaceState(bool mainBreaker, int power, ApcExternalPowerState apcExternalPower, float charge)
         {
             MainBreaker = mainBreaker;
+            Power = power;
             ApcExternalPower = apcExternalPower;
             Charge = charge;
         }

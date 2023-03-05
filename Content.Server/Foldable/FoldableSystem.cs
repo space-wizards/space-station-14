@@ -3,17 +3,19 @@ using Content.Server.Buckle.Systems;
 using Content.Server.Storage.Components;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Foldable;
+using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Foldable
 {
     [UsedImplicitly]
     public sealed class FoldableSystem : SharedFoldableSystem
     {
-        [Dependency] private BuckleSystem _buckle = default!;
-        [Dependency] private SharedContainerSystem _container = default!;
+        [Dependency] private readonly BuckleSystem _buckle = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
 
         public override void Initialize()
         {
@@ -25,15 +27,15 @@ namespace Content.Server.Foldable
 
         }
 
-        private void OnFoldableOpenAttempt(EntityUid uid, FoldableComponent component, StorageOpenAttemptEvent args)
+        private void OnFoldableOpenAttempt(EntityUid uid, FoldableComponent component, ref StorageOpenAttemptEvent args)
         {
             if (component.IsFolded)
-                args.Cancel();
+                args.Cancelled = true;
         }
 
-        public bool TryToggleFold(FoldableComponent comp)
+        public bool TryToggleFold(EntityUid uid, FoldableComponent comp)
         {
-            return TrySetFolded(comp, !comp.IsFolded);
+            return TrySetFolded(uid, comp, !comp.IsFolded);
         }
 
         public bool CanToggleFold(EntityUid uid, FoldableComponent? fold = null)
@@ -61,18 +63,15 @@ namespace Content.Server.Foldable
         /// <summary>
         /// Try to fold/unfold
         /// </summary>
-        /// <param name="comp"></param>
-        /// <param name="state">Folded state we want</param>
-        /// <returns>True if successful</returns>
-        public bool TrySetFolded(FoldableComponent comp, bool state)
+        public bool TrySetFolded(EntityUid uid, FoldableComponent comp, bool state)
         {
             if (state == comp.IsFolded)
                 return false;
 
-            if (!CanToggleFold(comp.Owner, comp))
+            if (!CanToggleFold(uid, comp))
                 return false;
 
-            SetFolded(comp, state);
+            SetFolded(uid, comp, state);
             return true;
         }
 
@@ -81,20 +80,20 @@ namespace Content.Server.Foldable
         /// </summary>
         /// <param name="component"></param>
         /// <param name="folded">If true, the component will become folded, else unfolded</param>
-        public override void SetFolded(FoldableComponent component, bool folded)
+        public override void SetFolded(EntityUid uid, FoldableComponent component, bool folded)
         {
-            base.SetFolded(component, folded);
+            base.SetFolded(uid, component, folded);
 
             // You can't buckle an entity to a folded object
-            _buckle.StrapSetEnabled(component.Owner, !component.IsFolded);
+            _buckle.StrapSetEnabled(uid, !component.IsFolded);
         }
 
-        public void OnStoreThisAttempt(EntityUid uid, FoldableComponent comp, StoreMobInItemContainerAttemptEvent args)
+        public void OnStoreThisAttempt(EntityUid uid, FoldableComponent comp, ref StoreMobInItemContainerAttemptEvent args)
         {
             args.Handled = true;
 
             if (comp.IsFolded)
-                args.Cancel();
+                args.Cancelled = true;
         }
 
         #region Verb
@@ -106,9 +105,9 @@ namespace Content.Server.Foldable
 
             AlternativeVerb verb = new()
             {
-                Act = () => TryToggleFold(component),
+                Act = () => TryToggleFold(uid, component),
                 Text = component.IsFolded ? Loc.GetString("unfold-verb") : Loc.GetString("fold-verb"),
-                IconTexture = "/Textures/Interface/VerbIcons/fold.svg.192dpi.png",
+                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/fold.svg.192dpi.png")),
 
                 // If the object is unfolded and they click it, they want to fold it, if it's folded, they want to pick it up
                 Priority = component.IsFolded ? 0 : 2,

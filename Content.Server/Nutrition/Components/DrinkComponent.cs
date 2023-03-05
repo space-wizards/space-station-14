@@ -1,4 +1,3 @@
-using System.Threading;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
@@ -36,6 +35,13 @@ namespace Content.Server.Nutrition.Components
         public SoundSpecifier BurstSound = new SoundPathSpecifier("/Audio/Effects/flash_bang.ogg");
 
         /// <summary>
+        /// Is this drink being forced on someone else?
+        /// </summary>
+        /// <returns></returns>
+        [DataField("forceDrink")]
+        public bool ForceDrink;
+
+        /// <summary>
         /// How long it takes to drink this yourself.
         /// </summary>
         [DataField("delay")]
@@ -46,11 +52,5 @@ namespace Content.Server.Nutrition.Components
         /// </summary>
         [DataField("forceFeedDelay")]
         public float ForceFeedDelay = 3;
-
-        /// <summary>
-        ///     Token for interrupting a do-after action (e.g., force feeding). If not null, implies component is
-        ///     currently "in use".
-        /// </summary>
-        public CancellationTokenSource? CancelToken;
     }
 }

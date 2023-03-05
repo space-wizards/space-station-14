@@ -3,6 +3,7 @@ using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Tools.Components;
+using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
@@ -108,8 +109,17 @@ namespace Content.Server.Tools
 
             welder.Lit = true;
 
+            // Logging
+            if (user != null)
+                _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user.Value):user} toggled {ToPrettyString(uid):welder} on");
+            else
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(uid):welder} toggled on");
+
             var ev = new WelderToggledEvent(true);
             RaiseLocalEvent(welder.Owner, ev, false);
+
+            var hotEvent = new IsHotEvent() {IsHot = true};
+            RaiseLocalEvent(uid, hotEvent);
 
             _appearanceSystem.SetData(uid, WelderVisuals.Lit, true);
             _appearanceSystem.SetData(uid, ToggleableLightVisuals.Enabled, true);
@@ -122,7 +132,7 @@ namespace Content.Server.Tools
             if (transform.GridUid is {} gridUid)
             {
                 var position = _transformSystem.GetGridOrMapTilePosition(uid, transform);
-                _atmosphereSystem.HotspotExpose(gridUid, position, 700, 50, true);
+                _atmosphereSystem.HotspotExpose(gridUid, position, 700, 50, uid, true);
             }
 
             _entityManager.Dirty(welder);
@@ -144,6 +154,12 @@ namespace Content.Server.Tools
             Resolve(uid, ref item, ref light, ref appearance, false);
 
             welder.Lit = false;
+
+            // Logging
+            if (user != null)
+                _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user.Value):user} toggled {ToPrettyString(uid):welder} off");
+            else
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(uid):welder} toggled off");
 
             var ev = new WelderToggledEvent(false);
             RaiseLocalEvent(welder.Owner, ev, false);
@@ -207,8 +223,8 @@ namespace Content.Server.Tools
         private void OnWelderActivate(EntityUid uid, WelderComponent welder, ActivateInWorldEvent args)
         {
             args.Handled = TryToggleWelder(uid, args.User, welder);
-            var hotEvent = new IsHotEvent() {IsHot = true};
-            RaiseLocalEvent(uid, hotEvent);
+            if (args.Handled)
+                args.WasLogged = true;
         }
 
         private void OnWelderAfterInteract(EntityUid uid, WelderComponent welder, AfterInteractEvent args)
