@@ -1,12 +1,6 @@
 # Chat window radio wrap (prefix and postfix)
 chat-radio-message-wrap = [color={$color}]{$channel} {$name} says: "{$message}"[/color]
 
-headset-encryption-key-successfully-installed = You put the key into the headset.
-headset-encryption-key-slots-already-full = There is no place for another key.
-headset-encryption-keys-all-extracted = You pop out the encryption keys from the headset!
-headset-encryption-keys-no-keys = This headset has no encryption keys!
-headset-encryption-keys-are-locked = The headset's key slots are locked, you cannot add or remove any keys.
-
 examine-encryption-key-channels-prefix = It is providing these frequencies to the headset:
 
 examine-radio-frequency = It's set to broadcast over the {$frequency} frequency.

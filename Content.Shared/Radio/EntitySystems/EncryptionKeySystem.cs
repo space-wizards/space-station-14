@@ -56,7 +56,7 @@ public sealed class EncryptionKeySystem : EntitySystem
         }
 
         // if tool use ever gets predicted this needs changing.
-        _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-all-extracted"), uid, args.User);
+        _popupSystem.PopupEntity(Loc.GetString("encryption-keys-all-extracted"), uid, args.User);
         _audio.PlayPvs(component.KeyExtractionSound, uid);
         component.Removing = false;
     }
@@ -111,20 +111,20 @@ public sealed class EncryptionKeySystem : EntitySystem
         if (!component.KeysUnlocked)
         {
             if (_timing.IsFirstTimePredicted)
-                _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-are-locked"), uid, Filter.Local(), false);
+                _popupSystem.PopupEntity(Loc.GetString("encryption-keys-are-locked"), uid, Filter.Local(), false);
             return;
         }
         if (component.KeySlots <= component.KeyContainer.ContainedEntities.Count)
         {
             if (_timing.IsFirstTimePredicted)
-                _popupSystem.PopupEntity(Loc.GetString("headset-encryption-key-slots-already-full"), uid, Filter.Local(), false);
+                _popupSystem.PopupEntity(Loc.GetString("encryption-key-slots-already-full"), uid, Filter.Local(), false);
             return;
         }
 
         if (component.KeyContainer.Insert(args.Used))
         {
             if (_timing.IsFirstTimePredicted)
-                _popupSystem.PopupEntity(Loc.GetString("headset-encryption-key-successfully-installed"), uid, Filter.Local(), false);
+                _popupSystem.PopupEntity(Loc.GetString("encryption-key-successfully-installed"), uid, Filter.Local(), false);
             _audio.PlayPredicted(component.KeyInsertionSound, args.Target, args.User);
             return;
         }
@@ -143,14 +143,14 @@ public sealed class EncryptionKeySystem : EntitySystem
         if (!component.KeysUnlocked)
         {
             if (_timing.IsFirstTimePredicted)
-                _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-are-locked"), uid, Filter.Local(), false);
+                _popupSystem.PopupEntity(Loc.GetString("encryption-keys-are-locked"), uid, Filter.Local(), false);
             return;
         }
 
         if (component.KeyContainer.ContainedEntities.Count == 0)
         {
             if (_timing.IsFirstTimePredicted)
-                _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-no-keys"), uid, Filter.Local(), false);
+                _popupSystem.PopupEntity(Loc.GetString("encryption-keys-no-keys"), uid, Filter.Local(), false);
             return;
         }
 
