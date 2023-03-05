@@ -1,9 +1,4 @@
 Entries:
-- author: Nairod
-  changes:
-  - {message: 'Added forensic pads, zipties and glasses to the secfab', type: Add}
-  id: 2597
-  time: '2022-11-08T02:42:29.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix damage effect persisting indefinitely., type: Fix}
@@ -2913,3 +2908,8 @@ Entries:
       them in hazardous environments or space.', type: Fix}
   id: 3096
   time: '2023-03-04T23:08:44.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix breaking planet tiles leading to the void., type: Fix}
+  id: 3097
+  time: '2023-03-05T01:11:19.0000000+00:00'
