@@ -59,7 +59,4 @@ public sealed class EncryptionKeyHolderComponent : Component
     /// </summary>
     [ViewVariables]
     public string? DefaultChannel;
-
-    [DataField("canChangeDefaultChannel"), ViewVariables(VVAccess.ReadWrite)]
-    public bool CanChangeDefaultChannel = true;
 }

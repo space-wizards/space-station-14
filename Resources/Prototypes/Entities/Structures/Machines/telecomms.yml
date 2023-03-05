@@ -56,7 +56,6 @@
   - type: EncryptionKeyHolder
     keysExtractionMethod: Prying
     keySlots: 10
-    canChangeDefaultChannel: false
   - type: TelecomServer
 
 - type: entity

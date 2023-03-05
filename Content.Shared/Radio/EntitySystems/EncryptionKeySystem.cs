@@ -74,10 +74,7 @@ public sealed class EncryptionKeySystem : EntitySystem
             if (TryComp<EncryptionKeyComponent>(ent, out var key))
             {
                 component.Channels.UnionWith(key.Channels);
-                if (component.CanChangeDefaultChannel)
-                {
-                    component.DefaultChannel ??= key.DefaultChannel;
-                }
+                component.DefaultChannel ??= key.DefaultChannel;
             }
         }
 
@@ -206,7 +203,7 @@ public sealed class EncryptionKeySystem : EntitySystem
         RadioChannelPrototype? proto;
         foreach (var id in channels)
         {
-            proto = protoManager.Index<RadioChannelPrototype>(id);
+            proto = _protoManager.Index<RadioChannelPrototype>(id);
 
             var key = id == SharedChatSystem.CommonChannel
                 ? SharedChatSystem.RadioCommonPrefix.ToString()
@@ -221,21 +218,21 @@ public sealed class EncryptionKeySystem : EntitySystem
 
         if (defaultChannel != null && _protoManager.TryIndex(defaultChannel, out proto))
         {
-            var msg = "";
             if (HasComp<HeadsetComponent>(examineEvent.Examined))
             {
-                Loc.GetString("examine-headset-default-channel",
+                var msg = Loc.GetString("examine-headset-default-channel",
                 ("prefix", SharedChatSystem.DefaultChannelPrefix),
                 ("channel", defaultChannel),
                 ("color", proto.Color));
+                examineEvent.PushMarkup(msg);
             }
-            else
+            if (HasComp<EncryptionKeyComponent>(examineEvent.Examined))
             {
-                Loc.GetString("examine-encryption-default-channel",
+                var msg = Loc.GetString("examine-encryption-default-channel",
                 ("channel", defaultChannel),
                 ("color", proto.Color));
+                examineEvent.PushMarkup(msg);
             }
-            examineEvent.PushMarkup(msg);
         }
     }
 
