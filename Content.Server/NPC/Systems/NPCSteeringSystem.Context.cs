@@ -48,7 +48,6 @@ public sealed partial class NPCSteeringSystem
         float frameTime,
         ref bool forceSteer)
     {
-        forceSteer = false;
         var ourCoordinates = xform.Coordinates;
         var destinationCoordinates = steering.Coordinates;
 
@@ -88,7 +87,7 @@ public sealed partial class NPCSteeringSystem
             arrivalDistance = steering.Range;
         }
         // If next node is a free tile then get within its bounds.
-        // This is to avoid popping it too early potentially
+        // This is to avoid popping it too early
         else if (steering.CurrentPath.TryPeek(out var node) && node.Data.IsFreeSpace)
         {
             arrivalDistance = MathF.Min(node.Box.Width, node.Box.Height) - 0.01f;
@@ -101,8 +100,8 @@ public sealed partial class NPCSteeringSystem
         }
 
         // Check if mapids match.
-        var targetMap = targetCoordinates.ToMap(EntityManager);
-        var ourMap = ourCoordinates.ToMap(EntityManager);
+        var targetMap = targetCoordinates.ToMap(EntityManager, _transform);
+        var ourMap = ourCoordinates.ToMap(EntityManager, _transform);
 
         if (targetMap.MapId != ourMap.MapId)
         {
@@ -138,7 +137,7 @@ public sealed partial class NPCSteeringSystem
                         steering.Status = SteeringStatus.NoPath;
                         return false;
                     case SteeringObstacleStatus.Continuing:
-                        CheckPath(steering, xform, needsPath, distance);
+                        CheckPath(uid, steering, xform, needsPath, distance);
                         return true;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -155,7 +154,7 @@ public sealed partial class NPCSteeringSystem
                 // Alright just adjust slightly and grab the next node so we don't stop moving for a tick.
                 // TODO: If it's the last node just grab the target instead.
                 targetCoordinates = GetTargetCoordinates(steering);
-                targetMap = targetCoordinates.ToMap(EntityManager);
+                targetMap = targetCoordinates.ToMap(EntityManager, _transform);
 
                 // Can't make it again.
                 if (ourMap.MapId != targetMap.MapId)
@@ -209,7 +208,7 @@ public sealed partial class NPCSteeringSystem
         }
 
         // TODO: Probably need partial planning support i.e. patch from the last node to where the target moved to.
-        CheckPath(steering, xform, needsPath, distance);
+        CheckPath(uid, steering, xform, needsPath, distance);
 
         // If we don't have a path yet then do nothing; this is to avoid stutter-stepping if it turns out there's no path
         // available but we assume there was.
@@ -235,10 +234,10 @@ public sealed partial class NPCSteeringSystem
         // Prefer our current direction
         if (weight > 0f && body.LinearVelocity.LengthSquared > 0f)
         {
-            const float SameDirectionWeight = 0.1f;
+            const float sameDirectionWeight = 0.1f;
             norm = body.LinearVelocity.Normalized;
 
-            ApplySeek(interest, norm, SameDirectionWeight);
+            ApplySeek(interest, norm, sameDirectionWeight);
         }
 
         return true;
@@ -250,7 +249,7 @@ public sealed partial class NPCSteeringSystem
         component.LastStuckTime = _timing.CurTime;
     }
 
-    private void CheckPath(NPCSteeringComponent steering, TransformComponent xform, bool needsPath, float targetDistance)
+    private void CheckPath(EntityUid uid, NPCSteeringComponent steering, TransformComponent xform, bool needsPath, float targetDistance)
     {
         if (!_pathfinding)
         {
@@ -275,7 +274,7 @@ public sealed partial class NPCSteeringSystem
         // Request the new path.
         if (needsPath)
         {
-            RequestPath(steering, xform, targetDistance);
+            RequestPath(uid, steering, xform, targetDistance);
         }
     }
 
@@ -295,7 +294,7 @@ public sealed partial class NPCSteeringSystem
             if (!node.Data.IsFreeSpace)
                 break;
 
-            var nodeMap = node.Coordinates.ToMap(EntityManager);
+            var nodeMap = node.Coordinates.ToMap(EntityManager, _transform);
 
             // If any nodes are 'behind us' relative to the target we'll prune them.
             // This isn't perfect but should fix most cases of stutter stepping.
@@ -353,7 +352,6 @@ public sealed partial class NPCSteeringSystem
         Angle offsetRot,
         Vector2 worldPos,
         float agentRadius,
-        float moveSpeed,
         int layer,
         int mask,
         TransformComponent xform,
@@ -456,7 +454,7 @@ public sealed partial class NPCSteeringSystem
 
             var xformB = xformQuery.GetComponent(ent);
 
-            if (!_physics.TryGetNearestPoints(uid, ent, out var pointA, out var pointB, xform, xformB))
+            if (!_physics.TryGetNearestPoints(uid, ent, out _, out var pointB, xform, xformB))
             {
                 continue;
             }
