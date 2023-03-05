@@ -64,7 +64,8 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyQM
+      - EncryptionKeyCargo
+      - EncryptionKeyCommand
 
 - type: entity
   parent: ClothingHeadset
@@ -76,6 +77,7 @@
     containers:
       key_slots:
       - EncryptionKeyCentCom
+      - EncryptionKeyAllAccess
   - type: Sprite
     sprite: Clothing/Ears/Headsets/centcom.rsi
   - type: Clothing
@@ -90,7 +92,7 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyCommand
+      - EncryptionKeyAllAccess
   - type: Sprite
     sprite: Clothing/Ears/Headsets/command.rsi
   - type: Clothing
@@ -120,7 +122,8 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyCE
+      - EncryptionKeyEngineering
+      - EncryptionKeyCommand
 
 - type: entity
   parent: ClothingHeadset
@@ -191,7 +194,8 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyRD
+      - EncryptionKeyScience
+      - EncryptionKeyCommand
 
 - type: entity
   parent: ClothingHeadset
