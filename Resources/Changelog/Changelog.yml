@@ -1,10 +1,4 @@
 Entries:
-- author: ashtronaut
-  changes:
-  - {message: Added a current readied player count to the lobby info during the pre-game
-      phase., type: Add}
-  id: 2600
-  time: '2022-11-08T20:02:07.0000000+00:00'
 - author: Mervill
   changes:
   - {message: Lawyers and Librarians can spawn with the Satchel and Duffelbag variants.,
@@ -2913,3 +2907,10 @@ Entries:
   - {message: Default marking colors now can be applied differently, type: Tweak}
   id: 3099
   time: '2023-03-05T02:59:08.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: 'Three new traits have been added Lightweight Drunk, Paracusia, and
+      Muted! Check their descriptions to see what they do.', type: Add}
+  - {message: Alcohol is now slightly more effective., type: Tweak}
+  id: 3100
+  time: '2023-03-05T03:44:13.0000000+00:00'
