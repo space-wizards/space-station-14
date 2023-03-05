@@ -96,10 +96,10 @@
     #    - FloraTreeLarge06
     # Fill remainder with sand.
     - !type:BiomeTileLayer
-      threshold: -1
+      threshold: -1.0
       tile: FloorAsteroidSand
     - !type:BiomeTileLayer
-      threshold: -0.7
+      threshold: -0.90
       tile: FloorPlanetGrass
       frequency: 0.02
 
