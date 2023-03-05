@@ -195,7 +195,7 @@ namespace Content.Server.NPC.Systems
             if (!Resolve(uid, ref component, false))
                 return;
 
-            if (EntityManager.TryGetComponent(component.Owner, out InputMoverComponent? controller))
+            if (EntityManager.TryGetComponent(uid, out InputMoverComponent? controller))
             {
                 controller.CurTickSprintMovement = Vector2.Zero;
             }
@@ -238,10 +238,10 @@ namespace Content.Server.NPC.Systems
             {
                 var data = new List<NPCSteeringDebugData>(npcs.Length);
 
-                foreach (var (_, steering, mover, _) in npcs)
+                foreach (var (uid, steering, mover, _) in npcs)
                 {
                     data.Add(new NPCSteeringDebugData(
-                        mover.Owner,
+                        uid,
                         mover.CurTickSprintMovement,
                         steering.Interest,
                         steering.Danger,
