@@ -19,7 +19,7 @@ namespace Content.IntegrationTests.Tests.Minds
         [Test]
         public async Task TestDeleteVisiting()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
             var server = pairTracker.Pair.Server;
 
             var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -79,7 +79,7 @@ namespace Content.IntegrationTests.Tests.Minds
         {
             // Has to be a non-dummy ticker so we have a proper map.
 
-            await using var pairTracker = await PoolManager.GetServerClient();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
             var server = pairTracker.Pair.Server;
 
             var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -126,7 +126,7 @@ namespace Content.IntegrationTests.Tests.Minds
         [Test]
         public async Task TestGhostOnDeleteMap()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
             var server = pairTracker.Pair.Server;
             var testMap = await PoolManager.CreateTestMap(pairTracker);
             var coordinates = testMap.GridCoords;
@@ -137,7 +137,6 @@ namespace Content.IntegrationTests.Tests.Minds
             {
                 var player = IoCManager.Resolve<IPlayerManager>().ServerSessions.Single();
 
-                var mapMan = IoCManager.Resolve<IMapManager>();
                 var entMgr = IoCManager.Resolve<IServerEntityManager>();
                 
                 var mindSystem = entMgr.EntitySysManager.GetEntitySystem<MindSystem>();
