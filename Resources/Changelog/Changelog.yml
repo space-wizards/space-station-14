@@ -1,9 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: The coughing sounds are shorter., type: Tweak}
-  id: 2602
-  time: '2022-11-08T20:11:54.0000000+00:00'
 - author: Cripes
   changes:
   - {message: Added gas miners to Pillar. Crew can now enjoy breathing!, type: Tweak}
@@ -2914,3 +2909,9 @@ Entries:
     type: Fix}
   id: 3101
   time: '2023-03-05T04:27:30.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix some more instances of NPCs dancing., type: Fix}
+  - {message: NPCs have rudimentary stuck detection., type: Fix}
+  id: 3102
+  time: '2023-03-05T05:13:09.0000000+00:00'
