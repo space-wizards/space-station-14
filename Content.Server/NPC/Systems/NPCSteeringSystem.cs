@@ -56,9 +56,6 @@ namespace Content.Server.NPC.Systems
         [Dependency] private readonly SharedMoverController _mover = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
-        // This will likely get moved onto an abstract pathfinding node that specifies the max distance allowed from the coordinate.
-        private const float TileTolerance = 0.40f;
-
         private bool _enabled;
 
         private bool _pathfinding = true;
@@ -69,9 +66,17 @@ namespace Content.Server.NPC.Systems
 
         private object _obstacles = new();
 
+        private ISawmill _sawmill = default!;
+
         public override void Initialize()
         {
             base.Initialize();
+            _sawmill = Logger.GetSawmill("npc.steering");
+#if DEBUG
+            _sawmill.Level = LogLevel.Warning;
+#else
+            _sawmill.Level = LogLevel.Debug;
+#endif
 
             for (var i = 0; i < InterestDirections; i++)
             {
@@ -83,6 +88,7 @@ namespace Content.Server.NPC.Systems
             _configManager.OnValueChanged(CCVars.NPCPathfinding, SetNPCPathfinding, true);
 
             SubscribeLocalEvent<NPCSteeringComponent, ComponentShutdown>(OnSteeringShutdown);
+            SubscribeLocalEvent<NPCSteeringComponent, EntityUnpausedEvent>(OnSteeringUnpaused);
             SubscribeNetworkEvent<RequestNPCSteeringDebugEvent>(OnDebugRequest);
         }
 
@@ -140,6 +146,12 @@ namespace Content.Server.NPC.Systems
             component.PathfindToken = null;
         }
 
+        private void OnSteeringUnpaused(EntityUid uid, NPCSteeringComponent component, ref EntityUnpausedEvent args)
+        {
+            component.LastStuckTime += args.PausedTime;
+            component.NextSteer += args.PausedTime;
+        }
+
         /// <summary>
         /// Adds the AI to the steering system to move towards a specific target
         /// </summary>
@@ -157,6 +169,7 @@ namespace Content.Server.NPC.Systems
                 component.Flags = _pathfindingSystem.GetFlags(uid);
             }
 
+            ResetStuck(component, Transform(uid).Coordinates);
             component.Coordinates = coordinates;
             return component;
         }
@@ -291,16 +304,6 @@ namespace Content.Server.NPC.Systems
                 return;
             }
 
-            /* If you wish to not steer every tick A) Add pause support B) fix overshoots to prevent dancing
-            var nextSteer = steering.LastTimeSteer + TimeSpan.FromSeconds(1f / NPCSteeringComponent.SteerFrequency);
-
-            if (nextSteer > _timing.CurTime)
-            {
-                SetDirection(mover, steering, steering.LastSteer, false);
-                return;
-            }
-            */
-
             var uid = mover.Owner;
             var interest = steering.Interest;
             var danger = steering.Danger;
@@ -324,8 +327,10 @@ namespace Content.Server.NPC.Systems
 
             var ev = new NPCSteeringEvent(steering, interest, danger, agentRadius, offsetRot, worldPos);
             RaiseLocalEvent(uid, ref ev);
+            // If seek has arrived at the target node for example then immediately re-steer.
+            var forceSteer = true;
 
-            if (steering.CanSeek && !TrySeek(uid, mover, steering, body, xform, offsetRot, moveSpeed, interest, bodyQuery,  frameTime))
+            if (steering.CanSeek && !TrySeek(uid, mover, steering, body, xform, offsetRot, moveSpeed, interest, bodyQuery, frameTime, ref forceSteer))
             {
                 SetDirection(mover, steering, Vector2.Zero);
                 return;
@@ -365,7 +370,7 @@ namespace Content.Server.NPC.Systems
             // I think doing this after all the ops above is best?
             // Originally I had it way above but sometimes mobs would overshoot their tile targets.
 
-            if (steering.NextSteer > curTime)
+            if (!forceSteer && steering.NextSteer > curTime)
             {
                 SetDirection(mover, steering, steering.LastSteerDirection, false);
                 return;

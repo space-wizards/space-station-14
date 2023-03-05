@@ -45,8 +45,10 @@ public sealed partial class NPCSteeringSystem
         float moveSpeed,
         float[] interest,
         EntityQuery<PhysicsComponent> bodyQuery,
-        float frameTime)
+        float frameTime,
+        ref bool forceSteer)
     {
+        forceSteer = false;
         var ourCoordinates = xform.Coordinates;
         var destinationCoordinates = steering.Coordinates;
 
@@ -72,6 +74,7 @@ public sealed partial class NPCSteeringSystem
                 // Try to get the next node temporarily.
                 targetCoordinates = GetTargetCoordinates(steering);
                 needsPath = true;
+                ResetStuck(steering, ourCoordinates);
             }
         }
 
@@ -84,6 +87,14 @@ public sealed partial class NPCSteeringSystem
             // If it's a pathfinding node it might be different to the destination.
             arrivalDistance = steering.Range;
         }
+        // If next node is a free tile then get within its bounds.
+        // This is to avoid popping it too early potentially
+        else if (steering.CurrentPath.TryPeek(out var node) && node.Data.IsFreeSpace)
+        {
+            arrivalDistance = MathF.Min(node.Box.Width, node.Box.Height) - 0.01f;
+        }
+        // Try getting into blocked range I guess?
+        // TODO: Consider melee range or the likes.
         else
         {
             arrivalDistance = SharedInteractionSystem.InteractionRange - 0.65f;
@@ -107,6 +118,8 @@ public sealed partial class NPCSteeringSystem
             // Node needs some kind of special handling like access or smashing.
             if (steering.CurrentPath.TryPeek(out var node) && !node.Data.IsFreeSpace)
             {
+                // Ignore stuck while handling obstacles.
+                ResetStuck(steering, ourCoordinates);
                 SteeringObstacleStatus status;
 
                 // Breaking behaviours and the likes.
@@ -132,37 +145,61 @@ public sealed partial class NPCSteeringSystem
                 }
             }
 
-            // Otherwise it's probably regular pathing so just keep going a bit more to get to tile centre
-            if (direction.Length <= TileTolerance)
+            // Distance should already be handled above.
+            // It was just a node, not the target, so grab the next destination (either the target or next node).
+            if (steering.CurrentPath.Count > 0)
             {
-                // It was just a node, not the target, so grab the next destination (either the target or next node).
-                if (steering.CurrentPath.Count > 0)
+                forceSteer = true;
+                steering.CurrentPath.Dequeue();
+
+                // Alright just adjust slightly and grab the next node so we don't stop moving for a tick.
+                // TODO: If it's the last node just grab the target instead.
+                targetCoordinates = GetTargetCoordinates(steering);
+                targetMap = targetCoordinates.ToMap(EntityManager);
+
+                // Can't make it again.
+                if (ourMap.MapId != targetMap.MapId)
                 {
-                    steering.CurrentPath.Dequeue();
-
-                    // Alright just adjust slightly and grab the next node so we don't stop moving for a tick.
-                    // TODO: If it's the last node just grab the target instead.
-                    targetCoordinates = GetTargetCoordinates(steering);
-                    targetMap = targetCoordinates.ToMap(EntityManager);
-
-                    // Can't make it again.
-                    if (ourMap.MapId != targetMap.MapId)
-                    {
-                        SetDirection(mover, steering, Vector2.Zero);
-                        steering.Status = SteeringStatus.NoPath;
-                        return false;
-                    }
-
-                    // Gonna resume now business as usual
-                    direction = targetMap.Position - ourMap.Position;
-                }
-                else
-                {
-                    // This probably shouldn't happen as we check above but eh.
+                    SetDirection(mover, steering, Vector2.Zero);
                     steering.Status = SteeringStatus.NoPath;
                     return false;
                 }
+
+                // Gonna resume now business as usual
+                direction = targetMap.Position - ourMap.Position;
+                ResetStuck(steering, ourCoordinates);
             }
+            else
+            {
+                // This probably shouldn't happen as we check above but eh.
+                steering.Status = SteeringStatus.NoPath;
+                return false;
+            }
+        }
+        // Stuck detection
+        // Check if we have moved further than the movespeed * stuck time.
+        else if (ourCoordinates.TryDistance(EntityManager, steering.LastStuckCoordinates, out var stuckDistance) &&
+                 stuckDistance < NPCSteeringComponent.StuckDistance)
+        {
+            var stuckTime = _timing.CurTime - steering.LastStuckTime;
+            // Either 1 second or how long it takes to move the stuck distance + buffer if we're REALLY slow.
+            var maxStuckTime = Math.Max(1, NPCSteeringComponent.StuckDistance / moveSpeed * 1.2f);
+
+            if (stuckTime.TotalSeconds > maxStuckTime)
+            {
+                // TODO: Blacklist nodes (pathfinder factor wehn)
+                // TODO: This should be a warning but
+                // A) NPCs get stuck on non-anchored static bodies still (e.g. closets)
+                // B) NPCs still try to move in locked containers (e.g. cow, hamster)
+                // and I don't want to spam grafana even harder than it gets spammed rn.
+                _sawmill.Debug($"NPC {ToPrettyString(uid)} found stuck at {ourCoordinates}");
+                steering.Status = SteeringStatus.NoPath;
+                return false;
+            }
+        }
+        else
+        {
+            ResetStuck(steering, ourCoordinates);
         }
 
         // Do we have no more nodes to follow OR has the target moved sufficiently? If so then re-path.
@@ -207,6 +244,11 @@ public sealed partial class NPCSteeringSystem
         return true;
     }
 
+    private void ResetStuck(NPCSteeringComponent component, EntityCoordinates ourCoordinates)
+    {
+        component.LastStuckCoordinates = ourCoordinates;
+        component.LastStuckTime = _timing.CurTime;
+    }
 
     private void CheckPath(NPCSteeringComponent steering, TransformComponent xform, bool needsPath, float targetDistance)
     {
