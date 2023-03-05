@@ -32,7 +32,7 @@ public sealed partial class DefaultGameScreen : InGameScreen
     {
         var marginBottom = Chat.GetValue<float>(MarginBottomProperty);
         var marginLeft = Chat.GetValue<float>(MarginLeftProperty);
-        OnChatResized!(new Vector2(marginBottom, marginLeft));
+        OnChatResized?.Invoke(new Vector2(marginBottom, marginLeft));
     }
 
     private void ChatOnResized()

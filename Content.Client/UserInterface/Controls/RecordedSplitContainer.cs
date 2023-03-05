@@ -71,6 +71,6 @@ public sealed class RecordedSplitContainer : SplitContainer
         var first = GetChild(0);
         var second = GetChild(1);
 
-        OnSplitResizeFinish!(first.Size, second.Size);
+        OnSplitResizeFinish?.Invoke(first.Size, second.Size);
     }
 }

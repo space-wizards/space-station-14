@@ -76,7 +76,7 @@ public sealed class ResizableChatBox : ChatBox
                 // If this is done in MouseDown, Godot won't fire MouseUp as you need focus to receive MouseUps.
                 UserInterfaceManager.KeyboardFocused?.ReleaseKeyboardFocus();
 
-                OnChatResizeFinish!(Size);
+                OnChatResizeFinish?.Invoke(Size);
             }
 
             base.KeyBindUp(args);

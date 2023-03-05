@@ -24,7 +24,7 @@ public sealed partial class SeparatedChatGameScreen : InGameScreen
         SetAnchorAndMarginPreset(Alerts, LayoutPreset.CenterRight, margin: 10);
 
         ScreenContainer.OnSplitResizeFinish += (first, second) =>
-            OnChatResized!(new Vector2(ScreenContainer.SplitFraction, 0));
+            OnChatResized?.Invoke(new Vector2(ScreenContainer.SplitFraction, 0));
     }
 
     public override ChatBox ChatBox => GetWidget<ChatBox>()!;
