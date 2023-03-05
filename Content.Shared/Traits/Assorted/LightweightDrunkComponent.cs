@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Content.Shared.Drunk;
 
 namespace Content.Shared.Traits.Assorted;
 
@@ -6,8 +7,9 @@ namespace Content.Shared.Traits.Assorted;
 /// Used for the lightweight trait. DrunkSystem will check for this component and modify the boozePower accordingly if it finds it.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
+[Access(typeof(SharedDrunkSystem))]
 public sealed class LightweightDrunkComponent : Component
 {
-    [DataField("boozeMultiplier"), ViewVariables(VVAccess.ReadWrite)]
-    public float BoozeMultiplier = 2f;
+    [DataField("boozeStrengthMultiplier"), ViewVariables(VVAccess.ReadWrite)]
+    public float BoozeStrengthMultiplier = 4f;
 }

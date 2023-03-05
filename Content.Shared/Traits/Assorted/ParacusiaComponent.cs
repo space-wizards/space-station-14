@@ -10,14 +10,18 @@ namespace Content.Shared.Traits.Assorted;
 /// This component is used for paracusia, which causes auditory hallucinations.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
+[Access(typeof(SharedParacusiaSystem))]
 public sealed class ParacusiaComponent : Component
 {
     /// <summary>
-    /// The random time between incidents, (min, max).
+    /// The maximum time between incidents in seconds
     /// </summary>
     [DataField("maxTimeBetweenIncidents", required: true), ViewVariables(VVAccess.ReadWrite)]
     public float MaxTimeBetweenIncidents = 30f;
 
+    /// <summary>
+    /// The minimum time between incidents in seconds
+    /// </summary>
     [DataField("minTimeBetweenIncidents", required: true), ViewVariables(VVAccess.ReadWrite)]
     public float MinTimeBetweenIncidents = 60f;
 
@@ -42,10 +46,10 @@ public sealed class ParacusiaComponent : Component
 [Serializable, NetSerializable]
 public sealed class ParacusiaComponentState : ComponentState
 {
-    public float MaxTimeBetweenIncidents;
-    public float MinTimeBetweenIncidents;
-    public float MaxSoundDistance;
-    public SoundSpecifier Sounds = default!;
+    public readonly float MaxTimeBetweenIncidents;
+    public readonly float MinTimeBetweenIncidents;
+    public readonly float MaxSoundDistance;
+    public readonly SoundSpecifier Sounds = default!;
 
     public ParacusiaComponentState(float maxTimeBetweenIncidents, float minTimeBetweenIncidents, float maxSoundDistance, SoundSpecifier sounds)
     {

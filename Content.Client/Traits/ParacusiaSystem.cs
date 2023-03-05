@@ -18,18 +18,8 @@ public sealed class ParacusiaSystem : SharedParacusiaSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ParacusiaComponent, ComponentStartup>(OnCompStartup);
+        SubscribeLocalEvent<ParacusiaComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<ParacusiaComponent, PlayerDetachedEvent>(OnPlayerDetach);
-    }
-
-    private void OnPlayerDetach(EntityUid uid, ParacusiaComponent component, PlayerDetachedEvent args)
-    {
-        component.Stream?.Stop();
-    }
-
-    private void OnCompStartup(EntityUid uid, ParacusiaComponent component, ComponentStartup args)
-    {
-        component.NextIncidentTime += TimeSpan.FromSeconds(_random.NextFloat(component.MinTimeBetweenIncidents, component.MaxTimeBetweenIncidents));
     }
 
     public override void Update(float frameTime)
@@ -39,19 +29,33 @@ public sealed class ParacusiaSystem : SharedParacusiaSystem
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        var localPlayer = _player.LocalPlayer?.ControlledEntity;
-
-        if (!TryComp<ParacusiaComponent>(localPlayer, out var paracusia))
+        if (_player.LocalPlayer?.ControlledEntity is not EntityUid localPlayer)
             return;
 
-        var curTime = _timing.CurTime;
+        PlayParacusiaSounds(localPlayer);
+    }
 
-        if (curTime < paracusia.NextIncidentTime)
+    private void OnComponentStartup(EntityUid uid, ParacusiaComponent component, ComponentStartup args)
+    {
+        component.NextIncidentTime = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(component.MinTimeBetweenIncidents, component.MaxTimeBetweenIncidents));
+    }
+
+    private void OnPlayerDetach(EntityUid uid, ParacusiaComponent component, PlayerDetachedEvent args)
+    {
+        component.Stream?.Stop();
+    }
+
+    private void PlayParacusiaSounds(EntityUid uid, ParacusiaComponent? paracusia = null)
+    {
+        if (!Resolve(uid, ref paracusia))
+            return;
+
+        if (_timing.CurTime <= paracusia.NextIncidentTime)
             return;
 
         // Set the new time.
-        paracusia.NextIncidentTime = _timing.CurTime +
-                                     TimeSpan.FromSeconds(_random.NextFloat(paracusia.MinTimeBetweenIncidents, paracusia.MaxTimeBetweenIncidents));
+        var timeInterval = _random.NextFloat(paracusia.MinTimeBetweenIncidents, paracusia.MaxTimeBetweenIncidents);
+        paracusia.NextIncidentTime += TimeSpan.FromSeconds(timeInterval);
 
         // Offset position where the sound is played
         var randomOffset =
@@ -61,10 +65,10 @@ public sealed class ParacusiaSystem : SharedParacusiaSystem
                 _random.NextFloat(-paracusia.MaxSoundDistance, paracusia.MaxSoundDistance)
             );
 
-        var newCoords = Transform(localPlayer.Value).Coordinates
-            .Offset(randomOffset);
+        var newCoords = Transform(uid).Coordinates.Offset(randomOffset);
 
         // Play the sound
-        paracusia.Stream = _audio.PlayStatic(paracusia.Sounds, localPlayer.Value, newCoords);
+        paracusia.Stream = _audio.PlayStatic(paracusia.Sounds, uid, newCoords);
     }
+
 }
