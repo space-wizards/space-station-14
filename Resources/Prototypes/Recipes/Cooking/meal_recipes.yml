@@ -743,20 +743,18 @@
   name: orange cake recipe
   result: FoodCakeOrange
   time: 5
-  reagents:
-    JuiceOrange: 30
   solids:
     FoodCakePlain: 1
+    FoodOrange: 3
 
 - type: microwaveMealRecipe
   id: RecipeLimeCake
   name: lime cake recipe
   result: FoodCakeLime
   time: 5
-  reagents:
-    JuiceLime: 30
   solids:
     FoodCakePlain: 1
+    FoodLime: 3
 
 - type: microwaveMealRecipe
   id: RecipeCheeseCake
@@ -1024,6 +1022,17 @@
     FoodBreadPlainSlice: 1
     FoodCheeseSlice: 1
     FoodCabbage: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCitrusSalad
+  name: citrus salad recipe
+  result: FoodSaladCitrus
+  time: 5
+  solids:
+    FoodBowlBig: 1
+    FoodOrange: 1
+    FoodLemon: 1
+    FoodLime: 1
 
 - type: microwaveMealRecipe
   id: RecipeKimchiSalad
