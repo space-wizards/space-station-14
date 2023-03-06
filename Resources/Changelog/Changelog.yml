@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Added the Diona species. This is a group of slow-moving plant people
-      who just want to help out. Be kind to them on the station and keep them away
-      from fires., type: Add}
-  id: 2610
-  time: '2022-11-08T20:27:00.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Melee effect animations have been tweaked to be more accurate to range.,
@@ -2919,3 +2912,10 @@ Entries:
   - {message: Extracting seeds now tries to put the packets in your hands., type: Tweak}
   id: 3109
   time: '2023-03-06T02:37:57.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: 'Added soybeans (juiceable into soy milk) and rice, along with soy sauce
+      and tofu and tofu bread recipes.', type: Add}
+  - {message: Adjusted soy milk and oat milk colors, type: Tweak}
+  id: 3110
+  time: '2023-03-06T02:52:03.0000000+00:00'
