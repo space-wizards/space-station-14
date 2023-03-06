@@ -963,6 +963,19 @@
         Piercing: 0.8
 
 - type: entity
+  parent: ClothingUniformJumpsuitClown
+  id: ClothingUniformJumpsuitCluwne
+  name: cluwne suit
+  suffix: Unremoveable
+  description: Cursed cluwne suit.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/cluwne.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/cluwne.rsi
+  - type: Unremoveable
+  
+- type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitDameDane
   name: dame dane outfit

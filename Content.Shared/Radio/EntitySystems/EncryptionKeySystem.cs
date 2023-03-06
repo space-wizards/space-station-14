@@ -37,6 +37,28 @@ public sealed class EncryptionKeySystem : EntitySystem
         SubscribeLocalEvent<EncryptionKeyHolderComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<EncryptionKeyHolderComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
         SubscribeLocalEvent<EncryptionKeyHolderComponent, EntRemovedFromContainerMessage>(OnContainerModified);
+        SubscribeLocalEvent<EncryptionKeyHolderComponent, EncryptionRemovalFinishedEvent>(OnKeyRemoval);
+        SubscribeLocalEvent<EncryptionKeyHolderComponent, EncryptionRemovalCancelledEvent>(OnKeyCancelled);
+    }
+
+    private void OnKeyCancelled(EntityUid uid, EncryptionKeyHolderComponent component, EncryptionRemovalCancelledEvent args)
+    {
+        component.Removing = false;
+    }
+
+    private void OnKeyRemoval(EntityUid uid, EncryptionKeyHolderComponent component, EncryptionRemovalFinishedEvent args)
+    {
+        var contained = component.KeyContainer.ContainedEntities.ToArray();
+        _container.EmptyContainer(component.KeyContainer, entMan: EntityManager);
+        foreach (var ent in contained)
+        {
+            _hands.PickupOrDrop(args.User, ent);
+        }
+
+        // if tool use ever gets predicted this needs changing.
+        _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-all-extracted"), uid, args.User);
+        _audio.PlayPvs(component.KeyExtractionSound, uid);
+        component.Removing = false;
     }
 
     public void UpdateChannels(EntityUid uid, EncryptionKeyHolderComponent component)
@@ -67,7 +89,7 @@ public sealed class EncryptionKeySystem : EntitySystem
 
     private void OnInteractUsing(EntityUid uid, EncryptionKeyHolderComponent component, InteractUsingEvent args)
     {
-        if (!TryComp<ContainerManagerComponent>(uid, out var storage))
+        if (!TryComp<ContainerManagerComponent>(uid, out var storage) || args.Handled || component.Removing)
             return;
 
         if (TryComp<EncryptionKeyComponent>(args.Used, out var key))
@@ -99,7 +121,7 @@ public sealed class EncryptionKeySystem : EntitySystem
 
         if (!TryComp<ToolComponent>(args.Used, out var tool) || !tool.Qualities.Contains(component.KeysExtractionMethod))
             return;
-
+        
         args.Handled = true;
 
         if (component.KeyContainer.ContainedEntities.Count == 0)
@@ -109,21 +131,13 @@ public sealed class EncryptionKeySystem : EntitySystem
             return;
         }
 
-        var toolEvData = new ToolEventData(null);
+        //This is honestly the poor mans fix because the InteractUsingEvent fires off 12 times
+        component.Removing = true;
 
-        if(!_toolSystem.UseTool(args.Used, args.User, uid, 0f, new[] { component.KeysExtractionMethod }, toolEvData, toolComponent: tool))
+        var toolEvData = new ToolEventData(new EncryptionRemovalFinishedEvent(args.User), cancelledEv: new EncryptionRemovalCancelledEvent(), targetEntity: uid);
+
+        if(!_toolSystem.UseTool(args.Used, args.User, uid, 1f, new[] { component.KeysExtractionMethod }, toolEvData, toolComponent: tool))
             return;
-
-        var contained = component.KeyContainer.ContainedEntities.ToArray();
-        _container.EmptyContainer(component.KeyContainer, entMan: EntityManager);
-        foreach (var ent in contained)
-        {
-            _hands.PickupOrDrop(args.User, ent);
-        }
-
-        // if tool use ever gets predicted this needs changing.
-        _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-all-extracted"), uid, args.User);
-        _audio.PlayPvs(component.KeyExtractionSound, args.Target);
     }
 
     private void OnStartup(EntityUid uid, EncryptionKeyHolderComponent component, ComponentStartup args)
@@ -194,5 +208,20 @@ public sealed class EncryptionKeySystem : EntitySystem
                 ("color", proto.Color));
             examineEvent.PushMarkup(msg);
         }
+    }
+
+    public sealed class EncryptionRemovalFinishedEvent : EntityEventArgs
+    {
+        public EntityUid User;
+
+        public EncryptionRemovalFinishedEvent(EntityUid user)
+        {
+            User = user;
+        }
+    }
+
+    public sealed class EncryptionRemovalCancelledEvent : EntityEventArgs
+    {
+
     }
 }
