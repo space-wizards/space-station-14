@@ -5,6 +5,7 @@ using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Paper;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
@@ -31,6 +32,8 @@ namespace Content.Server.Paper
             SubscribeLocalEvent<PaperComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<PaperComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<PaperComponent, PaperInputTextMessage>(OnInputTextMessage);
+
+            SubscribeLocalEvent<ActivateOnWriteComponent, PaperWriteEvent>(OnWrittenWith);
         }
 
         private void OnInit(EntityUid uid, PaperComponent paperComp, ComponentInit args)
@@ -81,6 +84,8 @@ namespace Content.Server.Paper
         {
             if (_tagSystem.HasTag(args.Used, "Write"))
             {
+                var writeEvent = new PaperWriteEvent(uid, args.User);
+                RaiseLocalEvent(args.Used, ref writeEvent);
                 if (!TryComp<ActorComponent>(args.User, out var actor))
                     return;
 
@@ -122,6 +127,11 @@ namespace Content.Server.Paper
                     $"{ToPrettyString(args.Session.AttachedEntity.Value):player} has written on {ToPrettyString(uid):entity} the following text: {args.Text}");
 
             UpdateUserInterface(uid, paperComp);
+        }
+
+        private void OnWrittenWith(EntityUid uid, ActivateOnWriteComponent comp, ref PaperWriteEvent args)
+        {
+            RaiseLocalEvent(uid, new UseInHandEvent(args.User));
         }
 
         /// <summary>
@@ -170,4 +180,10 @@ namespace Content.Server.Paper
             _uiSystem.GetUiOrNull(uid, PaperUiKey.Key)?.SetState(new PaperBoundUserInterfaceState(paperComp.Content, paperComp.StampedBy, paperComp.Mode));
         }
     }
+
+    /// <summary>
+    /// Event fired when using a pen on paper, opening the UI.
+    /// </summary>
+    [ByRefEvent]
+    public record struct PaperWriteEvent(EntityUid User, EntityUid Paper);
 }
