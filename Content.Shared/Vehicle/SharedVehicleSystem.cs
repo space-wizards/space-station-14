@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Vehicle.Components;
@@ -12,9 +11,6 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Containers;
 using Content.Shared.Tag;
 using Content.Shared.Audio;
-using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Inventory;
-using Serilog;
 
 namespace Content.Shared.Vehicle;
 
