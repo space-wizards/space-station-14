@@ -35,67 +35,74 @@
 - type: biome
   id: Grasslands
   layers:
-    #- !type:BiomeDecalLayer
-    #  allowedTiles:
-    #    - FloorPlanetGrass
-    #  seedOffset: 2
-    #  divisions: 2
-    #  threshold: -0.50
-    #  frequency: 1
-    #  fractalLacunarity: 0.50
-    #  decals:
-    #    - BushDOne
-    #    - BushDTwo
-    #    - BushDThree
-    #- !type:BiomeDecalLayer
-    #  allowedTiles:
-    #    - FloorPlanetGrass
-    #  noise:
-    #    seed: 3
-    #    noiseType: OpenSimplex2
-    #    frequency: 0.003
-    #    lacunarity: 1.50
-    #    fractalType: Ridged
-    #    octaves: 1
-    #  divisions: 1
-    #  threshold: 0.90
-    #  decals:
-    #    - FlowersBROne
-    #    - FlowersBRTwo
-    #    - FlowersBRThree
-    #- !type:BiomeDecalLayer
-    #  allowedTiles:
-    #  - FloorPlanetGrass
-    #  divisions: 1
-    #  threshold: -0.80
-    #  frequency: 0.1
-    #  fractalLacunarity: 2.0
-    #  decals:
-    #    - BushAOne
-    #    - BushATwo
-    #    - BushAThree
-    #    - BushCOne
-    #    - BushCTwo
-    #    - BushCThree
-    #- !type:BiomeEntityLayer
-    #  threshold: -0.80
-    #  frequency: 0.1
-    #  fractalLacunarity: 2.0
-    #  allowedTiles:
-    #    - FloorPlanetGrass
-    #  entities:
-    #    - FloraTree01
-    #    - FloraTree02
-    #    - FloraTree03
-    #    - FloraTree04
-    #    - FloraTree05
-    #    - FloraTree06
-    #    - FloraTreeLarge01
-    #    - FloraTreeLarge02
-    #    - FloraTreeLarge03
-    #    - FloraTreeLarge04
-    #    - FloraTreeLarge05
-    #    - FloraTreeLarge06
+    # Sparse vegetation
+    - !type:BiomeDecalLayer
+      allowedTiles:
+        - FloorPlanetGrass
+      divisions: 2
+      threshold: -0.50
+      noise:
+        noiseType: Cellular
+        frequency: 1
+      decals:
+        - BushDOne
+        - BushDTwo
+        - BushDThree
+    - !type:BiomeDecalLayer
+      allowedTiles:
+        - FloorPlanetGrass
+      noise:
+        noiseType: OpenSimplex2
+        frequency: 1
+      divisions: 1
+      threshold: 0.8
+      decals:
+        - FlowersBROne
+        - FlowersBRTwo
+        - FlowersBRThree
+    # Dense vegetation
+    - !type:BiomeDecalLayer
+      allowedTiles:
+      - FloorPlanetGrass
+      divisions: 1
+      threshold: -0.35
+      noise:
+        noiseType: Cellular
+        frequency: 0.2
+        fractalType: FBm
+        octaves: 5
+        lacunarity: 2
+        gain: 1
+        cellularDistanceFunction: Euclidean
+        cellularReturnType: Distance2
+      decals:
+        - BushAOne
+        - BushATwo
+        - BushAThree
+        - BushCOne
+        - BushCTwo
+        - BushCThree
+    - !type:BiomeEntityLayer
+      threshold: 0.5
+      noise:
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 2
+      allowedTiles:
+        - FloorPlanetGrass
+      entities:
+        - FloraTree01
+        - FloraTree02
+        - FloraTree03
+        - FloraTree04
+        - FloraTree05
+        - FloraTree06
+        - FloraTreeLarge01
+        - FloraTreeLarge02
+        - FloraTreeLarge03
+        - FloraTreeLarge04
+        - FloraTreeLarge05
+        - FloraTreeLarge06
     # Water
     - !type:BiomeEntityLayer
       allowedTiles:
@@ -120,6 +127,7 @@
       tile: FloorPlanetGrass
       noise:
         frequency: 0.02
+        fractalType: None
 
 # Lava
 - type: biome

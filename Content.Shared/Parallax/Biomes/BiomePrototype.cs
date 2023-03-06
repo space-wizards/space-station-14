@@ -70,7 +70,9 @@ public sealed class BiomeDecalLayer : IBiomeWorldLayer
     /// </summary>
     [DataField("divisions")]
     public float Divisions = 1f;
-    [DataField("noise")] public FastNoiseLite Noise { get; } = new(0);
+
+    [DataField("noise")]
+    public FastNoiseLite Noise { get; } = new(0);
 
     /// <inheritdoc/>
     [DataField("threshold")]
