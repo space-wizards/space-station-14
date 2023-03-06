@@ -1,11 +1,6 @@
 Entries:
 - author: Rane
   changes:
-  - {message: You can no longer use machines which require vision while blind., type: Fix}
-  id: 2623
-  time: '2022-11-08T21:10:14.0000000+00:00'
-- author: Rane
-  changes:
   - {message: Animals are no longer immune to shoving., type: Fix}
   - {message: You now shove people rather than "disarm" them if they aren't holding
       anything., type: Fix}
@@ -2915,3 +2910,9 @@ Entries:
   - {message: (Construction Menu) Reset ghost preview when selecting a craft, type: Fix}
   id: 3122
   time: '2023-03-06T18:08:54.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: 'Added lime, orange; and citrus salad recipe.', type: Add}
+  - {message: Lime and orange cakes now require fruits instead of juice, type: Tweak}
+  id: 3123
+  time: '2023-03-06T18:45:39.0000000+00:00'
