@@ -1,9 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Names show during the join announcement again., type: Fix}
-  id: 2627
-  time: '2022-11-09T00:04:51.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'Hopefully fixed an issue that was causing entities to sometimes not
@@ -2917,3 +2912,9 @@ Entries:
     type: Add}
   id: 3126
   time: '2023-03-06T19:05:12.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: Chat size storage. Now you don't have to resize the chat constantly
+      every time you start up the game!, type: Add}
+  id: 3127
+  time: '2023-03-06T19:06:57.0000000+00:00'
