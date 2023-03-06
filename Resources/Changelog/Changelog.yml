@@ -1,16 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'Hopefully fixed an issue that was causing entities to sometimes not
-      appear (e.g., "invisible walls"). Please re-report if it reoccurs on updated
-      servers.', type: Fix}
-  id: 2628
-  time: '2022-11-09T00:41:26.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed vehicles not working., type: Fix}
-  id: 2629
-  time: '2022-11-09T06:31:43.0000000+00:00'
 - author: checkraze
   changes:
   - {message: Added XenoSci things and a mass scanner for salvage crew to Lighthouse,
@@ -2918,3 +2906,14 @@ Entries:
       every time you start up the game!, type: Add}
   id: 3127
   time: '2023-03-06T19:06:57.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: 'Fix incorrect access denied popup when trying to open a locker with
+      a remote in hand,', type: Fix}
+  id: 3128
+  time: '2023-03-06T19:10:35.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Catwalks allow you to pass over lava unharmed., type: Add}
+  id: 3129
+  time: '2023-03-06T19:11:28.0000000+00:00'
