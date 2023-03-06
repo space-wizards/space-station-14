@@ -57,4 +57,19 @@ public sealed class ToggleableClothingComponent : Component
     /// </summary>
     [DataField("clothingUid")]
     public EntityUid? ClothingUid;
+
+    /// <summary>
+    ///     Time it takes for this clothing to be toggled via the stripping menu verbs. Null prevents the verb from even showing up.
+    /// </summary>
+    [DataField("stripDelay")]
+    public TimeSpan? StripDelay = TimeSpan.FromSeconds(3);
+
+    /// <summary>
+    ///     Text shown in the toggle-clothing verb. Defaults to using the name of the <see cref="ToggleAction"/> action.
+    /// </summary>
+    [DataField("verbText")]
+    public string? VerbText;
+
+    // prevent duplicate doafters
+    public byte? DoAfterId;
 }

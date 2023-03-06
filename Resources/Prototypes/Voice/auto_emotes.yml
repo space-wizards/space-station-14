@@ -1,0 +1,7 @@
+# Zombie
+- type: autoEmote
+  id: ZombieGroan
+  emote: Scream
+  interval: 5.0
+  chance: 0.1
+  withChat: false

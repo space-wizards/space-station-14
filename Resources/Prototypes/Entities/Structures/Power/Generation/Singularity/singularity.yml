@@ -47,3 +47,6 @@
   - type: Appearance
   - type: GuideHelp
     guides: [ Singularity, Power ]
+  - type: WarpPoint
+    follow: true
+    location: singularity

@@ -25,6 +25,8 @@
   id: FoodBreadSliceBase
   abstract: true
   components:
+  - type: Item
+    size: 1
   - type: FlavorProfile
     flavors:
       - bread
@@ -475,6 +477,10 @@
   id: FoodBreadGarlicSlice
   description: Alas, it is limited.
   components:
+  - type: FlavorProfile
+    flavors:
+      - bread
+      - garlic
   - type: Sprite
     layers:
     - state: garlic-slice

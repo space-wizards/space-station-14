@@ -65,6 +65,16 @@
 
 - type: entity
   parent: SeedBase
+  name: packet of garlic seeds
+  id: GarlicSeeds
+  components:
+    - type: Seed
+      seedId: garlic
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/garlic.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of lemon seeds
   id: LemonSeeds
   components:
