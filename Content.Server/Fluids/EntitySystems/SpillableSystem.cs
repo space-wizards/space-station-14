@@ -235,7 +235,7 @@ public sealed class SpillableSystem : EntitySystem
             return;
         }
         solution.RemoveAllSolution();
-        _audioSystem.Play(sink.EmptySound, Filter.Pvs(user), user, false);
+        _audioSystem.PlayPvs(sink.EmptySound, user);
     }
 
     public PuddleComponent? SpillAt(TileRef tileRef, Solution solution, string prototype,
