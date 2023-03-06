@@ -271,6 +271,31 @@
     seedId: cabbage
 
 - type: entity
+  name: garlic
+  parent: FoodProduceBase
+  id: FoodGarlic
+  description: Delicious, but with a potentially overwhelming odor.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - garlic
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 18
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 4
+        - ReagentId: Allicin
+          Quantity: 4
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/garlic.rsi
+  - type: Produce
+    seedId: garlic
+
+- type: entity
   name: lemon
   parent: FoodProduceBase
   id: FoodLemon

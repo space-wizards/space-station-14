@@ -232,6 +232,15 @@
     FoodBreadPlainSlice: 1
     FoodFlyAmanita: 1
 
+- type: microwaveMealRecipe
+  id: RecipeGarlicBread
+  name: garlic bread slice recipe
+  result: FoodBreadGarlicSlice
+  time: 5
+  solids:
+    FoodBreadPlainSlice: 1
+    FoodGarlic: 1
+
 #Pizzas
 - type: microwaveMealRecipe
   id: RecipeMargheritaPizza
@@ -988,8 +997,7 @@
   result: FoodSaladColeslaw
   time: 5
   reagents:
-    Vinegar: 5
-    OilOlive: 5
+    Vinaigrette: 5
   solids:
     FoodBowlBig: 1
     FoodOnionRed: 1
@@ -1020,6 +1028,7 @@
     FoodBowlBig: 1
     FoodCarrot: 1
     FoodCabbage: 1
+    FoodGarlic: 1
 
 # NOT ACTUAL FOOD
 

@@ -168,6 +168,18 @@
     Vinegar: 10
 
 - type: reaction
+  id: CookingVinaigrette
+  reactants:
+    Vinegar:
+      amount: 5
+    OilOlive:
+      amount: 5
+    Blackpepper:
+      amount: 5
+  products:
+    Vinaigrette: 15
+
+- type: reaction
   id: CreateMeatball
   impact: Low
   quantized: true
