@@ -202,8 +202,9 @@ namespace Content.Shared.Verbs
             return string.Compare(Icon?.ToString(), otherVerb.Icon?.ToString(), StringComparison.CurrentCulture);
         }
 
+        // I hate this. Please somebody allow generics to be networked.
         /// <summary>
-        ///     Collection of all verb types, along with string keys.
+        ///     Collection of all verb types,
         /// </summary>
         /// <remarks>
         ///     Useful when iterating over verb types, though maybe this should be obtained and stored via reflection or
@@ -212,13 +213,14 @@ namespace Content.Shared.Verbs
         /// </remarks>
         public static List<Type> VerbTypes = new()
         {
-            { typeof(Verb) },
-            { typeof(InteractionVerb) },
-            { typeof(UtilityVerb) },
-            { typeof(InnateVerb)},
-            { typeof(AlternativeVerb) },
-            { typeof(ActivationVerb) },
-            { typeof(ExamineVerb) }
+            typeof(Verb),
+            typeof(InteractionVerb),
+            typeof(UtilityVerb),
+            typeof(InnateVerb),
+            typeof(AlternativeVerb),
+            typeof(ActivationVerb),
+            typeof(ExamineVerb),
+            typeof(EquipmentVerb) 
         };
     }
 
@@ -332,5 +334,16 @@ namespace Content.Shared.Verbs
         public override bool CloseMenuDefault => false; // for examine verbs, this will close the examine tooltip.
 
         public bool ShowOnExamineTooltip = true;
+    }
+
+    /// <summary>
+    ///     Verbs specifically for interactions that occur with equipped entities. These verbs should be accessible via
+    ///     the stripping UI, and may optionally also be accessible via a verb on the equipee if the via inventory relay
+    ///     events.get-verbs event.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class EquipmentVerb : Verb
+    {
+        public override int TypePriority => 5;
     }
 }

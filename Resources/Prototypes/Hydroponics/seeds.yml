@@ -1,4 +1,4 @@
-﻿- type: seed
+- type: seed
   id: wheat
   name: seeds-wheat-name
   noun: seeds-noun-seeds
@@ -298,6 +298,34 @@
     Vitamin:
       Min: 1
       Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: garlic
+  name: seeds-garlic-name
+  noun: seeds-noun-seeds
+  displayName: seeds-garlic-display-name
+  plantRsi: Objects/Specific/Hydroponics/garlic.rsi
+  productPrototypes:
+    - FoodGarlic
+  lifespan: 25
+  maturation: 3
+  production: 5
+  yield: 6
+  potency: 25
+  growthStages: 3
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+    Allicin:
+      Min: 1
+      Max: 8
       PotencyDivisor: 25
 
 - type: seed
@@ -737,6 +765,54 @@
       Max: 5
       PotencyDivisor: 20
     Sulfur:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+
+- type: seed
+  id: rice
+  name: seeds-rice-name
+  noun: seeds-noun-seeds
+  displayName: seeds-rice-display-name
+  plantRsi: Objects/Specific/Hydroponics/rice.rsi
+  productPrototypes:
+    - RiceBushel
+  lifespan: 25
+  maturation: 6
+  production: 1
+  yield: 4
+  potency: 5
+  growthStages: 4
+  idealLight: 5
+  nutrientConsumption: 0.15
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 20
+    Rice:
+      Min: 5
+      Max: 20
+      PotencyDivisor: 20
+
+- type: seed
+  id: soybeans
+  name: seeds-soybeans-name
+  noun: seeds-noun-seeds
+  displayName: seeds-soybeans-display-name
+  plantRsi: Objects/Specific/Hydroponics/soybeans.rsi
+  productPrototypes:
+    - FoodSoybeans
+  growthStages: 4
+  lifespan: 25
+  maturation: 4
+  production: 4
+  yield: 3
+  potency: 5
+  idealLight: 7
+  nutrientConsumption: 0.15
+  chemicals:
+    Nutriment:
       Min: 1
       Max: 5
       PotencyDivisor: 20

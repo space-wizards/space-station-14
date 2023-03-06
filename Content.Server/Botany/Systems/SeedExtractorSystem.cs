@@ -50,7 +50,7 @@ public sealed class SeedExtractorSystem : EntitySystem
 
         for (var i = 0; i < amount; i++)
         {
-            _botanySystem.SpawnSeedPacket(seed, coords);
+            _botanySystem.SpawnSeedPacket(seed, coords, args.User);
         }
     }
 

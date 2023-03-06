@@ -235,6 +235,8 @@
           Quantity: 8
         - ReagentId: Vitamin
           Quantity: 2
+        - ReagentId: Allicin
+          Quantity: 2
 # Tastes like spicy cabbage, carrots.
 
 - type: entity

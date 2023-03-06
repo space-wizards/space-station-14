@@ -179,10 +179,14 @@ namespace Content.Client.Construction
             _ghosts.Add(comp.GhostId, comp);
             var sprite = EntityManager.GetComponent<SpriteComponent>(ghost);
             sprite.Color = new Color(48, 255, 48, 128);
-            sprite.AddBlankLayer(0); // There is no way to actually check if this already exists, so we blindly insert a new one
-            sprite.LayerSetSprite(0, prototype.Icon);
-            sprite.LayerSetShader(0, "unshaded");
-            sprite.LayerSetVisible(0, true);
+
+            for (int i = 0; i < prototype.Layers.Count; i++)
+            {
+                sprite.AddBlankLayer(i); // There is no way to actually check if this already exists, so we blindly insert a new one
+                sprite.LayerSetSprite(i, prototype.Layers[i]);
+                sprite.LayerSetShader(i, "unshaded");
+                sprite.LayerSetVisible(i, true);
+            }
 
             if (prototype.CanBuildInImpassable)
                 EnsureComp<WallMountComponent>(ghost).Arc = new(Math.Tau);
