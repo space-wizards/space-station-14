@@ -1,9 +1,4 @@
 Entries:
-- author: checkraze
-  changes:
-  - {message: Added a practice disabler, type: Add}
-  id: 2606
-  time: '2022-11-08T20:21:14.0000000+00:00'
 - author: JustinTrotter
   changes:
   - {message: fixed windoor hacking, type: Tweak}
@@ -2919,3 +2914,9 @@ Entries:
   - {message: 3 new mutations for botany, type: Add}
   id: 3105
   time: '2023-03-06T01:11:13.0000000+00:00'
+- author: FluffiestFloof
+  changes:
+  - {message: Garlic and Garlic Bread slice recipe., type: Add}
+  - {message: Kimchi Salad recipe now use Garlic and Coleslaw uses Vinaigrette., type: Tweak}
+  id: 3106
+  time: '2023-03-06T01:50:09.0000000+00:00'
