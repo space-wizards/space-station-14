@@ -40,3 +40,6 @@ ent-RandomHumanoidSpawnerSyndicateAgent = Syndicate Agent
 ent-RandomHumanoidSpawnerNukeOp = Nuclear Operative
     .desc = { "" }
     .suffix = { "" }
+ent-RandomHumanoidSpawnerCluwne = Cluwne
+    .suffix = spawns a cluwne
+    .desc = { "" }

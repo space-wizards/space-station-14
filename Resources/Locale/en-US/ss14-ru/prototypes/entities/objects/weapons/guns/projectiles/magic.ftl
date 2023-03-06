@@ -19,3 +19,6 @@ ent-ProjectileHealingBolt = healing bolt
 ent-BulletInstakillMagic = magical lead cylinder
     .desc = This looks familiar.
     .suffix = { "" }
+ent-ProjectilePolyboltCluwne = cluwne polybolt
+    .desc = knoH KnoH!
+    .suffix = { "" }

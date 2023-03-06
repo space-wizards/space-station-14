@@ -7,3 +7,6 @@ ent-MobSpirate = Spirate
 ent-SalvageHumanCorpse = unidentified human
     .desc = We barely knew ye.
     .suffix = Dead
+ent-MobCluwne = person
+    .desc = A polymorphed unfortunate.
+    .suffix = { "" }

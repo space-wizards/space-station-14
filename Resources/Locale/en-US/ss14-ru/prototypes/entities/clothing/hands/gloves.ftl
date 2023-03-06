@@ -43,3 +43,6 @@ ent-ClothingHandsGlovesFingerless = fingerless gloves
 ent-ThievingGloves = black gloves
     .desc = Seemingly regular black gloves. The fingertips are outfitted with nanotech that makes stealing a breeze.
     .suffix = Thieving
+ent-ClothingHandsGlovesCluwne = cluwne hands
+    .desc = A cursed pair of cluwne hands.
+    .suffix = Unremoveable
