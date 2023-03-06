@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Melee effect animations have been tweaked to be more accurate to range.,
-    type: Tweak}
-  id: 2611
-  time: '2022-11-08T20:28:50.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: The puking noise has been removed., type: Tweak}
@@ -2919,3 +2913,9 @@ Entries:
   - {message: Adjusted soy milk and oat milk colors, type: Tweak}
   id: 3110
   time: '2023-03-06T02:52:03.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Added the function to put appraisal tools in your belt slot or inside
+      belts., type: Tweak}
+  id: 3111
+  time: '2023-03-06T04:23:02.0000000+00:00'
