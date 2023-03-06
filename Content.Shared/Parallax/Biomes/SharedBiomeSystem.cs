@@ -121,7 +121,7 @@ public abstract class SharedBiomeSystem : EntitySystem
             if (layer is not BiomeTileLayer tileLayer)
                 continue;
 
-            SetNoise(noise, oldSeed, layer);
+            SetNoise(noise, oldSeed, layer.Noise);
 
             if (TryGetTile(indices, noise, tileLayer.Threshold, ProtoManager.Index<ContentTileDefinition>(tileLayer.Tile), tileLayer.Variants, out tile))
             {
@@ -193,12 +193,12 @@ public abstract class SharedBiomeSystem : EntitySystem
                     if (!worldLayer.AllowedTiles.Contains(tileId))
                         continue;
 
-                    SetNoise(noise, oldSeed, layer);
                     break;
                 default:
                     continue;
             }
 
+            SetNoise(noise, oldSeed, layer.Noise);
             var value = noise.GetNoise(indices.X, indices.Y);
 
             if (value < layer.Threshold)
@@ -241,8 +241,6 @@ public abstract class SharedBiomeSystem : EntitySystem
         for (var i = prototype.Layers.Count - 1; i >= 0; i--)
         {
             var layer = prototype.Layers[i];
-            int offset;
-            SetNoise(noise, oldSeed, layer);
 
             // Entities might block decal so need to check if there's one in front of us.
             switch (layer)
@@ -251,12 +249,12 @@ public abstract class SharedBiomeSystem : EntitySystem
                     if (!worldLayer.AllowedTiles.Contains(tileId))
                         continue;
 
-                    offset = worldLayer.SeedOffset;
-                    noise.SetSeed(oldSeed + offset);
                     break;
                 default:
                     continue;
             }
+
+            SetNoise(noise, oldSeed, layer.Noise);
 
             // Check if the other layer should even render, if not then keep going.
             if (layer is not BiomeDecalLayer decalLayer)
@@ -281,17 +279,15 @@ public abstract class SharedBiomeSystem : EntitySystem
                     if (decalValue < decalLayer.Threshold)
                         continue;
 
-                    DebugTools.Assert(decalValue is <= 1f and >= 0f);
                     decals.Add((Pick(decalLayer.Decals, (noise.GetNoise(indices.X, indices.Y, x + y * decalLayer.Divisions) + 1f) / 2f), index));
                 }
             }
-
-            noise.SetSeed(oldSeed);
 
             // Check other layers
             if (decals.Count == 0)
                 continue;
 
+            noise.SetSeed(oldSeed);
             return true;
         }
 
@@ -300,12 +296,26 @@ public abstract class SharedBiomeSystem : EntitySystem
         return false;
     }
 
-    private void SetNoise(FastNoiseLite noise, int oldSeed, IBiomeLayer layer)
+    private void SetNoise(FastNoiseLite noise, int oldSeed, FastNoiseLite data)
     {
-        noise.SetFractalType(layer.FractalType);
-        noise.SetSeed(oldSeed + layer.SeedOffset);
-        noise.SetFrequency(layer.Frequency);
-        noise.SetNoiseType(layer.NoiseType);
+        // General
+        noise.SetSeed(oldSeed + data.GetSeed());
+        noise.SetFrequency(data.GetFrequency());
+        noise.SetNoiseType(data.GetNoiseType());
+
+        noise.GetRotationType3D();
+
+        // Fractal
+        noise.SetFractalType(data.GetFractalType());
+        noise.SetFractalOctaves(data.GetFractalOctaves());
+        noise.SetFractalLacunarity(data.GetFractalLacunarity());
+
+        // Cellular
+        noise.SetCellularDistanceFunction(data.GetCellularDistanceFunction());
+        noise.SetCellularReturnType(data.GetCellularReturnType());
+        noise.SetCellularJitter(data.GetCellularJitter());
+
+        // Domain warps require separate noise
     }
 
     [Serializable, NetSerializable]

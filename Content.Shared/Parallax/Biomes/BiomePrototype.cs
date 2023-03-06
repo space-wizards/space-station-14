@@ -4,7 +4,6 @@ using Robust.Shared.Noise;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Parallax.Biomes;
 
@@ -20,44 +19,24 @@ public sealed class BiomePrototype : IPrototype
 [ImplicitDataDefinitionForInheritors]
 public interface IBiomeLayer
 {
-    public FastNoiseLite.NoiseType NoiseType { get; }
-
-    public FastNoiseLite.FractalType FractalType { get; }
+    /// <summary>
+    /// Also includes the seed offset.
+    /// </summary>
+    FastNoiseLite Noise { get; }
 
     /// <summary>
     /// Threshold for this layer to be present. If set to 0 forces it for every tile.
     /// </summary>
     float Threshold { get; }
-
-    /// <summary>
-    /// Offset the seed by the specified amount for this layer.
-    /// Useful if you have 2 similar layers but don't want them to match exactly.
-    /// </summary>
-    int SeedOffset { get; }
-
-    /// <summary>
-    /// Frequency for noise: lower values create larger blobs.
-    /// </summary>
-    float Frequency { get; }
 }
 
 public sealed class BiomeTileLayer : IBiomeLayer
 {
-    [DataField("noiseType")] public FastNoiseLite.NoiseType NoiseType { get; } = FastNoiseLite.NoiseType.Cellular;
-
-    [DataField("fractalType")] public FastNoiseLite.FractalType FractalType { get; } = FastNoiseLite.FractalType.FBm;
+    [DataField("noise")] public FastNoiseLite Noise { get; } = new(0);
 
     /// <inheritdoc/>
     [DataField("threshold")]
     public float Threshold { get; } = 0.5f;
-
-    /// <inheritdoc/>
-    [DataField("seedOffset")]
-    public int SeedOffset { get; } = 0;
-
-    /// <inheritdoc/>
-    [DataField("frequency")]
-    public float Frequency { get; } = 0.1f;
 
     /// <summary>
     /// Which tile variants to use for this layer. Uses all of the tile's variants if none specified
@@ -82,10 +61,6 @@ public interface IBiomeWorldLayer : IBiomeLayer
 
 public sealed class BiomeDecalLayer : IBiomeWorldLayer
 {
-    [DataField("noiseType")] public FastNoiseLite.NoiseType NoiseType { get; } = FastNoiseLite.NoiseType.Cellular;
-
-    [DataField("fractalType")] public FastNoiseLite.FractalType FractalType { get; } = FastNoiseLite.FractalType.FBm;
-
     /// <inheritdoc/>
     [DataField("allowedTiles", customTypeSerializer:typeof(PrototypeIdListSerializer<ContentTileDefinition>))]
     public List<string> AllowedTiles { get; } = new();
@@ -95,14 +70,7 @@ public sealed class BiomeDecalLayer : IBiomeWorldLayer
     /// </summary>
     [DataField("divisions")]
     public float Divisions = 1f;
-
-    /// <inheritdoc/>
-    [DataField("seedOffset")]
-    public int SeedOffset { get; } = 0;
-
-    /// <inheritdoc/>
-    [DataField("frequency")]
-    public float Frequency { get; } = 0.25f;
+    [DataField("noise")] public FastNoiseLite Noise { get; } = new(0);
 
     /// <inheritdoc/>
     [DataField("threshold")]
@@ -114,25 +82,15 @@ public sealed class BiomeDecalLayer : IBiomeWorldLayer
 
 public sealed class BiomeEntityLayer : IBiomeWorldLayer
 {
-    [DataField("noiseType")] public FastNoiseLite.NoiseType NoiseType { get; } = FastNoiseLite.NoiseType.Cellular;
-
-    [DataField("fractalType")] public FastNoiseLite.FractalType FractalType { get; } = FastNoiseLite.FractalType.FBm;
-
     /// <inheritdoc/>
     [DataField("allowedTiles", customTypeSerializer:typeof(PrototypeIdListSerializer<ContentTileDefinition>))]
     public List<string> AllowedTiles { get; } = new();
 
+    [DataField("noise")] public FastNoiseLite Noise { get; } = new(0);
+
     /// <inheritdoc/>
     [DataField("threshold")]
     public float Threshold { get; } = 0.5f;
-
-    /// <inheritdoc/>
-    [DataField("seedOffset")]
-    public int SeedOffset { get; } = 0;
-
-    /// <inheritdoc/>
-    [DataField("frequency")]
-    public float Frequency { get; } = 0.1f;
 
     [DataField("entities", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
     public List<string> Entities = new();

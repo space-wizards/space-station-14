@@ -38,47 +38,49 @@
     #- !type:BiomeDecalLayer
     #  allowedTiles:
     #    - FloorPlanetGrass
-    #  seedOffset: 3
-    #  threshold: 0.98
-    #  divisions: 1
-    #  frequency: 1
-    #  decals:
-    #    - FlowersBROne
-    #    - FlowersBRTwo
-    #    - FlowersBRThree
-    #- !type:BiomeDecalLayer
-    #  allowedTiles:
-    #    - FloorPlanetGrass
     #  seedOffset: 2
-    #  threshold: 0.95
     #  divisions: 2
+    #  threshold: -0.50
     #  frequency: 1
+    #  fractalLacunarity: 0.50
     #  decals:
     #    - BushDOne
     #    - BushDTwo
     #    - BushDThree
-    #- !type:BiomeDecalLayer
-    #  allowedTiles:
-    #    - FloorPlanetGrass
-    #  seedOffset: 1
-    #  threshold: 0.8
-    #  divisions: 1
-    #  frequency: 0.05
-    #  decals:
-    #    - BushCOne
-    #    - BushCTwo
-    #    - BushCThree
+    - !type:BiomeDecalLayer
+      allowedTiles:
+        - FloorPlanetGrass
+      noise:
+        seed: 3
+        noiseType: OpenSimplex2
+        frequency: 0.003
+        lacunarity: 1.50
+        fractalType: Ridged
+        octaves: 1
+      divisions: 1
+      threshold: 0.90
+      decals:
+        - FlowersBROne
+        - FlowersBRTwo
+        - FlowersBRThree
     #- !type:BiomeDecalLayer
     #  allowedTiles:
     #  - FloorPlanetGrass
     #  divisions: 1
+    #  threshold: -0.80
+    #  frequency: 0.1
+    #  fractalLacunarity: 2.0
     #  decals:
     #    - BushAOne
     #    - BushATwo
     #    - BushAThree
+    #    - BushCOne
+    #    - BushCTwo
+    #    - BushCThree
     #- !type:BiomeEntityLayer
-    #  threshold: 0.9
-    #  frequency: 1
+    #  threshold: -0.80
+    #  frequency: 0.1
+    #  fractalLacunarity: 2.0
     #  allowedTiles:
     #    - FloorPlanetGrass
     #  entities:
@@ -94,6 +96,18 @@
     #    - FloraTreeLarge04
     #    - FloraTreeLarge05
     #    - FloraTreeLarge06
+    # Water
+    - !type:BiomeDecalLayer
+      threshold: 0.95
+      noise:
+        frequency: 0.003
+        noiseType: OpenSimplex2
+        fractalType: PingPong
+      allowedTiles:
+        - FloorPlanetGrass
+        - FloorAsteroidSand
+      decals:
+        - BushDOne
     # Fill remainder with sand.
     - !type:BiomeTileLayer
       threshold: -1.0
@@ -101,7 +115,8 @@
     - !type:BiomeTileLayer
       threshold: -0.90
       tile: FloorPlanetGrass
-      frequency: 0.02
+      noise:
+        frequency: 0.02
 
 # Lava
 - type: biome
