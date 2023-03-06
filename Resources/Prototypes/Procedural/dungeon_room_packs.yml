@@ -33,55 +33,250 @@
 
 # Rooms
 # Large
+# - 17x5
 - type: dungeonRoom
-  id: Test17x5
+  id: Science17x5a
   size: 17,5
-  atlas: /Maps/Dungeon/Test.yml
+  atlas: /Maps/Dungeon/expgrass.yml
   offset: 0,0
 
-# Medium
 - type: dungeonRoom
-  id: Test11x5
+  id: Science17x5b
+  size: 17,5
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 18,0
+
+- type: dungeonRoom
+  id: Science17x5c
+  size: 17,5
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 36,0
+
+# - 7x7
+- type: dungeonRoom
+  id: Science7x7a
+  size: 7,7
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 0,42
+
+- type: dungeonRoom
+  id: Science7x7b
+  size: 7,7
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 8,42
+
+- type: dungeonRoom
+  id: Science7x7c
+  size: 7,7
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 16,42
+
+# Medium
+# - 11x5
+- type: dungeonRoom
+  id: Science11x5a
   size: 11,5
-  atlas: /Maps/Dungeon/Test.yml
+  atlas: /Maps/Dungeon/expgrass.yml
   offset: 0,6
 
 - type: dungeonRoom
-  id: Test7x5
+  id: Science11x5b
+  size: 11,5
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 12,6
+
+- type: dungeonRoom
+  id: Science11x5c
+  size: 11,5
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 24,6
+
+# - 7x5
+- type: dungeonRoom
+  id: Science7x5a
   size: 7,5
-  atlas: /Maps/Dungeon/Test.yml
+  atlas: /Maps/Dungeon/expgrass.yml
   offset: 0,12
 
 - type: dungeonRoom
-  id: Test13x3
+  id: Science7x5b
+  size: 7,5
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 8,12
+
+- type: dungeonRoom
+  id: Science7x5c
+  size: 7,5
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 16,12
+
+- type: dungeonRoom
+  id: Science7x5d
+  size: 7,5
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 24,12
+
+- type: dungeonRoom
+  id: Science7x5e
+  size: 7,5
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 32,12
+
+- type: dungeonRoom
+  id: Science7x5f
+  size: 7,5
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 40,12
+
+# - 13x3
+- type: dungeonRoom
+  id: Science13x3a
   size: 13,3
-  atlas: /Maps/Dungeon/Test.yml
+  atlas: /Maps/Dungeon/expgrass.yml
   offset: 0,30
 
 - type: dungeonRoom
-  id: Test11x3
+  id: Science13x3b
+  size: 13,3
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 14,30
+
+- type: dungeonRoom
+  id: Science13x3c
+  size: 13,3
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 28,30
+
+# - 11x3
+- type: dungeonRoom
+  id: Science11x3a
   size: 11,3
-  atlas: /Maps/Dungeon/Test.yml
+  atlas: /Maps/Dungeon/expgrass.yml
   offset: 0,34
 
 - type: dungeonRoom
-  id: Test7x3
+  id: Science11x3b
+  size: 11,3
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 12,34
+
+- type: dungeonRoom
+  id: Science11x3c
+  size: 11,3
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 24,34
+
+# - 7x3
+- type: dungeonRoom
+  id: Science7x3a
   size: 7,3
-  atlas: /Maps/Dungeon/Test.yml
+  atlas: /Maps/Dungeon/expgrass.yml
   offset: 0,38
 
-# Small
 - type: dungeonRoom
-  id: Test5x5
+  id: Science7x3b
+  size: 7,3
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 8,38
+
+- type: dungeonRoom
+  id: Science7x3c
+  size: 7,3
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 16,38
+
+- type: dungeonRoom
+  id: Science7x3d
+  size: 7,3
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 24,38
+
+- type: dungeonRoom
+  id: Science7x3e
+  size: 7,3
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 32,38
+
+- type: dungeonRoom
+  id: Science7x3f
+  size: 7,3
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 40,38
+
+# Small
+# - 5x5
+- type: dungeonRoom
+  id: Science5x5a
   size: 5,5
-  atlas: /Maps/Dungeon/Test.yml
+  atlas: /Maps/Dungeon/expgrass.yml
   offset: 0,18
 
 - type: dungeonRoom
-  id: Test3x5
+  id: Science5x5b
+  size: 5,5
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 6,18
+
+- type: dungeonRoom
+  id: Science5x5c
+  size: 5,5
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 12,18
+
+- type: dungeonRoom
+  id: Science5x5d
+  size: 5,5
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 18,18
+
+- type: dungeonRoom
+  id: Science5x5e
+  size: 5,5
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 24,18
+
+- type: dungeonRoom
+  id: Science5x5f
+  size: 5,5
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 30,18
+
+# - 3x5
+- type: dungeonRoom
+  id: Science3x5a
   size: 3,5
-  atlas: /Maps/Dungeon/Test.yml
+  atlas: /Maps/Dungeon/expgrass.yml
   offset: 0,24
+
+- type: dungeonRoom
+  id: Science3x5b
+  size: 3,5
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 4,24
+
+- type: dungeonRoom
+  id: Science3x5c
+  size: 3,5
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 8,24
+
+- type: dungeonRoom
+  id: Science3x5d
+  size: 3,5
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 12,24
+
+- type: dungeonRoom
+  id: Science3x5e
+  size: 3,5
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 16,24
+
+- type: dungeonRoom
+  id: Science3x5f
+  size: 3,5
+  atlas: /Maps/Dungeon/expgrass.yml
+  offset: 20,24
 
 # Room packs
 # Large
@@ -129,18 +324,18 @@
     - 0,11,5,16
     - 6,11,11,16
 
-# Corridor from botleft to topright with 3 rooms in top left
+# Corridor from botleft to topright with 2 rooms in top left
 - type: dungeonRoomPack
   id: LargeArea5
   size: 17,17
   rooms:
     # Corridor (with fat bot-left)
-    - 0,0,5,5
-    - 5,1,16,4
-    - 13,4,16,17
+    - 0,1,11,4
+    - 12,0,17,5
+    - 13,6,16,17
     # Rooms (5x7)
-    - 7,5,12,12
-    - 1,6,6,13
+    - 7,9,12,16
+    - 1,5,6,12
 
 # Medium
 # Whole area room

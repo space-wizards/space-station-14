@@ -135,9 +135,12 @@ public sealed class NewDungeonSystem : EntitySystem
         // 952532317 (no hook and top bit???)
         // 200682996 (left is so fucking far)
 
+        // 1551527853 (lights fucked, right side fucked
+
         Logger.Info($"Generating dungeon for seed {seed}");
         var dungeonTransform = Matrix3.CreateTranslation(Vector2.Zero);
-        var random = new Random();
+        var dungeonRotation = Angle.Zero;
+        var random = new Random(1551527853);
         // TODO: API for this
         var roomPackProtos = new Dictionary<Vector2i, List<DungeonRoomPackPrototype>>();
         var externalNodes = new Dictionary<DungeonRoomPackPrototype, HashSet<Vector2i>>();
@@ -333,6 +336,8 @@ public sealed class NewDungeonSystem : EntitySystem
             packTransforms[i] = packTransform;
         }
 
+        // TODO: Need a test that none of the rooms touch each other.
+
         // Grab all of the room bounds
         // Then, work out connections between them
         // TODO: Could use arrays given we do know room count up front
@@ -503,6 +508,7 @@ public sealed class NewDungeonSystem : EntitySystem
                 }
 
                 var roomTransform = Matrix3.CreateTransform(roomSize.Center - packCenter, roomRotation);
+                var finalRoomRotation = roomRotation + packRotation + dungeonRotation;
 
                 Matrix3.Multiply(roomTransform, packTransform, out matty);
                 Matrix3.Multiply(matty, dungeonTransform, out matty);
@@ -539,6 +545,7 @@ public sealed class NewDungeonSystem : EntitySystem
                 {
                     var templateXform = xformQuery.GetComponent(templateEnt);
                     var childPos = matty.Transform(templateXform.LocalPosition - roomCenter);
+                    var childRot = templateXform.LocalRotation + finalRoomRotation;
 
                     var ent = Spawn(metaQuery.GetComponent(templateEnt).EntityPrototype?.ID,
                         new EntityCoordinates(gridUid, childPos));
@@ -549,6 +556,8 @@ public sealed class NewDungeonSystem : EntitySystem
 
                     if (anchored && !childXform.Anchored)
                         _transform.AnchorEntity(ent, childXform, grid);
+                    else
+                        _transform.SetLocalRotation(ent, childRot, childXform);
                 }
 
                 // Load decals
