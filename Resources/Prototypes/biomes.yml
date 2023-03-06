@@ -115,6 +115,23 @@
         - FloraTreeLarge04
         - FloraTreeLarge05
         - FloraTreeLarge06
+    # Rock formations
+    - !type:BiomeEntityLayer
+      allowedTiles:
+        - FloorPlanetGrass
+        - FloorAsteroidSand
+      threshold: -0.15
+      noise:
+        noiseType: Cellular
+        frequency: 0.05
+        lacunarity: 2
+        fractalType: FBm
+        octaves: 5
+        gain: 1
+        cellularDistanceFunction: Euclidean
+        cellularReturnType: Distance2
+      entities:
+        - WallRock
     # Water
     - !type:BiomeEntityLayer
       allowedTiles:
