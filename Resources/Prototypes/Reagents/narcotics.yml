@@ -97,7 +97,7 @@
   name: reagent-name-stimulants
   group: Narcotics
   desc: reagent-desc-stimulants
-  physicalDesc: reagant-physical-desc-energized
+  physicalDesc: reagant-physical-desc-energizing
   flavor: sharp
   color: "#9A040E"
   boilingPoint: 212.0
@@ -160,11 +160,17 @@
       - !type:MovespeedModifier # nyoom
         walkSpeedModifier: 1.8
         sprintSpeedModifier: 1.8
+      - !type:MovespeedModifier # antinyoom
+        walkSpeedModifier: 0.7
+        sprintSpeedModifier: 0.7
+        conditions:
+          - !type:ReagentThreshold
+            max: 10 # ghetto withdrawal
       - !type:Electrocute
         conditions:
           - !type:ReagentThreshold
             max: 10 # ghetto withdrawal effect
-        probability: 0.3 # get stunlocked nerd
+        probability: 0.05 # get stunlocked nerd
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
@@ -175,6 +181,15 @@
           max: 10 # ghetto withdrawal
         key: Stutter
         component: StutteringAccent
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          max: 10 # ghetto withdrawal
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 1.5
+        refresh: false
       - !type:HealthChange
         conditions:
           - !type:ReagentThreshold
@@ -185,7 +200,7 @@
       - !type:HealthChange
         conditions:
           - !type:ReagentThreshold
-            min: 60.1 #so nukies don't take a tick of 8 poison damage when it first gets injected
+            min: 60
         damage:
           types:
             Poison: 8 # TODO this should ideally kill your liver instead
