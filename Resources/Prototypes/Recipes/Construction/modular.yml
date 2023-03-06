@@ -23,3 +23,16 @@
     sprite: Objects/Misc/uglymine.rsi
     state: uglymine
   objectType: Item
+
+- type: construction
+  name: banana modular mine
+  id: BananaModularMineRecipe
+  graph: BananaModularMineGraph
+  startNode: start
+  targetNode: mine
+  category: construction-category-weapons
+  description: Construct a banana landmine using a payload.
+  icon:
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    state: peel
+  objectType: Item
