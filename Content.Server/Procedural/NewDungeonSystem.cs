@@ -545,10 +545,10 @@ public sealed class NewDungeonSystem : EntitySystem
 
                     var childXform = xformQuery.GetComponent(ent);
                     var anchored = childXform.Anchored;
-                    _transform.SetCoordinates(childXform, new EntityCoordinates(gridUid, childPos));
+                    _transform.SetCoordinates(ent, childXform, new EntityCoordinates(gridUid, childPos));
 
                     if (anchored && !childXform.Anchored)
-                        _transform.AnchorEntity(childXform, grid);
+                        _transform.AnchorEntity(ent, childXform, grid);
                 }
 
                 // Load decals
