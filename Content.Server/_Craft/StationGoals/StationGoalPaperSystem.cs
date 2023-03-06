@@ -1,5 +1,7 @@
 using System.Linq;
+using Content.Server._Craft.StationGoals.Scipts;
 using Content.Server.Fax;
+using Content.Server.Station.Systems;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.GameTicking;
 using Content.Shared.Random.Helpers;
@@ -12,8 +14,9 @@ public sealed class StationGoalPaperSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly FaxSystem _faxSystem = default!;
-
     public List<CargoProductPrototype> advancedPrototypes = new();
+
+    private StationGoalPrototype? currentGoal = null;
     public override void Initialize()
     {
         base.Initialize();
@@ -30,11 +33,25 @@ public sealed class StationGoalPaperSystem : EntitySystem
     private void OnRoundEnded(RoundEndedEvent ev)
     {
         advancedPrototypes.Clear();
+
+        var goal = currentGoal;
+        if (goal == null)
+            return;
+
+        foreach (var script in goal.Scripts)
+        {
+            script.Cleanup();
+        }
+
+        currentGoal = null;
     }
 
     public bool SendRandomGoal()
     {
-        var availableGoals = _prototypeManager.EnumeratePrototypes<StationGoalPrototype>().ToList();
+        var availableGoals = _prototypeManager.EnumeratePrototypes<StationGoalPrototype>()
+            .Where(prototype => prototype.CanStartAutomatic)
+            .ToList();
+
         var goal = _random.Pick(availableGoals);
 
         return SendStationGoal(goal);
@@ -60,6 +77,8 @@ public sealed class StationGoalPaperSystem : EntitySystem
 
     public bool SendStationGoal(StationGoalPrototype goal)
     {
+        advancedPrototypes.Clear();
+
         var faxes = EntityManager.EntityQuery<FaxMachineComponent>();
         var wasSent = false;
         foreach (var fax in faxes)
@@ -77,11 +96,23 @@ public sealed class StationGoalPaperSystem : EntitySystem
             wasSent = true;
         }
 
-        if (wasSent && goal.CargoAdvancedProductsIDs.Count > 0)
+        SetupGoal(goal);
+
+        return wasSent;
+    }
+
+    private void SetupGoal(StationGoalPrototype goal)
+    {
+        if (goal.CargoAdvancedProductsIDs.Count > 0)
         {
             AddAdvancedProductsToCargo(goal.CargoAdvancedProductsIDs);
         }
 
-        return wasSent;
+        foreach (var script in goal.Scripts)
+        {
+            script.PerformAction(goal, _prototypeManager, this);
+        }
+
+        currentGoal = goal;
     }
 }

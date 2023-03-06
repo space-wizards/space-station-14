@@ -4,30 +4,40 @@
   text: station-goal-shuttle
   cargoAdvancedProductsIDs:
     - ShuttleMiniGravitation
+  scripts:
+    - !type:StationGoalAnnouncement
 
 - type: stationGoal
   id: StationGoalSecurityShuttle
   text: station-goal-security-shuttle
   cargoAdvancedProductsIDs:
     - ShuttleMiniGravitation
+  scripts:
+    - !type:StationGoalAnnouncement
 
 - type: stationGoal
   id: StationGoalScienceShuttle
   text: station-goal-science-shuttle
   cargoAdvancedProductsIDs:
     - ShuttleMiniGravitation
+  scripts:
+    - !type:StationGoalAnnouncement
 
 - type: stationGoal
   id: StationGoalMedicalShuttle
   text: station-goal-medical-shuttle
   cargoAdvancedProductsIDs:
     - ShuttleMiniGravitation
+  scripts:
+    - !type:StationGoalAnnouncement
 
 - type: stationGoal
   id: StationGoalZooShuttle
   text: station-goal-zoo-shuttle
   cargoAdvancedProductsIDs:
     - ShuttleMiniGravitation
+  scripts:
+    - !type:StationGoalAnnouncement
 
 # - type: stationGoal
 #   id: StationGoalEvacShuttle
@@ -39,27 +49,43 @@
 - type: stationGoal
   id: StationGoalZoo
   text: station-goal-zoo
+  scripts:
+    - !type:StationGoalAnnouncement
 
 - type: stationGoal
   id: StationGoalSolarPanels
-  text: station-goal-solar-
+  text: station-goal-solar-panels
+  scripts:
+    - !type:StationGoalAnnouncement
 
 - type: stationGoal
   id: StationGoalBank
   text: station-goal-bank
+  scripts:
+    - !type:StationGoalAnnouncement
 
 - type: stationGoal
   id: StationGoalAutonomousSecurity
   text: station-goal-autonomous-security
+  scripts:
+    - !type:StationGoalAnnouncement
 
 - type: stationGoal
   id: StationGoalAutonomousMedical
   text: station-goal-autonomous-medical
+  scripts:
+    - !type:StationGoalAnnouncement
 
 - type: stationGoal
   id: StationGoalAutonomousScience
   text: station-goal-autonomous-science
+  scripts:
+    - !type:StationGoalAnnouncement
+
 #Science
 - type: stationGoal
   id: StationGoalArtifacts
   text: station-goal-artifacts
+  scripts:
+    - !type:SecretObjectResearch
+    - !type:StationGoalAnnouncement
