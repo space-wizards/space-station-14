@@ -201,3 +201,14 @@
     equippedPrefix: holding
   - type: Storage
     capacity: 9999
+
+- type: entity
+  parent: ClothingBackpackClown
+  id: ClothingBackpackCluwne
+  name: cursed giggles von honkerton
+  suffix: Unremoveable
+  description: Cursed giggles von honkerton backpack.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/cluwne.rsi
+  - type: Unremoveable

@@ -1,3 +1,4 @@
+using Content.Server.Emp;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Shared.Access.Components;
@@ -44,6 +45,8 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<ApcToolFinishedEvent>(OnToolFinished);
             SubscribeLocalEvent<ApcComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<ApcComponent, ExaminedEvent>(OnExamine);
+
+            SubscribeLocalEvent<ApcComponent, EmpPulseEvent>(OnEmpPulse);
         }
 
         // Change the APC's state only when the battery state changes, or when it's first created.
@@ -246,6 +249,15 @@ namespace Content.Server.Power.EntitySystems
             args.PushMarkup(Loc.GetString(component.IsApcOpen
                 ? "apc-component-on-examine-panel-open"
                 : "apc-component-on-examine-panel-closed"));
+        }
+
+        private void OnEmpPulse(EntityUid uid, ApcComponent component, ref EmpPulseEvent args)
+        {
+            if (component.MainBreakerEnabled)
+            {
+                args.Affected = true;
+                ApcToggleBreaker(uid, component);
+            }
         }
     }
 }

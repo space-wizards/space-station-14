@@ -42,6 +42,28 @@
 
 - type: entity
   parent: BikeHorn
+  id: CluwneHorn
+  name: broken bike horn
+  description: A broken horn off of a bicycle.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/cluwnehorn.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Fun/cluwnehorn.rsi
+    size: 5
+  - type: Clothing
+    sprite: Objects/Fun/cluwnehorn.rsi
+    slots: [Belt]
+    quickEquip: false
+  - type: EmitSoundOnUse
+    sound:
+      collection: CluwneHorn
+      params:
+        variation: 0.246
+
+- type: entity
+  parent: BikeHorn
   id: GoldenBikeHorn
   name: golden honker
   suffix: not to be mapped.
