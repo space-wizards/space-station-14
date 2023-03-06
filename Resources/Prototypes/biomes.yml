@@ -208,33 +208,42 @@
 
 # Snow
 - type: biome
-  id: Snow
+  id: Snow # Similar to Grasslands... but snow
   layers:
+    # Sparse vegetation
     - !type:BiomeDecalLayer
       allowedTiles:
         - FloorSnow
-      seedOffset: 4
-      threshold: 0.95
-      divisions: 1
-      frequency: 1
+      divisions: 2
+      threshold: -0.50
+      noise:
+        noiseType: Cellular
+        frequency: 1
       decals:
         - grasssnowa1
-        - grasssnowa2
-        - grasssnowa3
+        - grassnowa2
+        - grassnowa3
         - grasssnowb1
         - grasssnowb2
         - grasssnowb3
         - grasssnowc1
         - grasssnowc2
         - grasssnowc3
-    # The main grass texture, this one blends in very well
+    # Dense, bland grass
     - !type:BiomeDecalLayer
       allowedTiles:
         - FloorSnow
       divisions: 1
-      seedOffset: 3
-      threshold: 0.8
-      frequency: 0.05
+      threshold: -0.35
+      noise:
+        noiseType: Cellular
+        frequency: 0.2
+        fractalType: FBm
+        octaves: 5
+        lacunarity: 2
+        gain: 1
+        cellularDistanceFunction: Euclidean
+        cellularReturnType: Distance2
       decals:
         - grasssnow
         - grasssnow01
@@ -250,24 +259,31 @@
         - grasssnow11
         - grasssnow12
         - grasssnow13
+    # Little bit of coloured grass
     - !type:BiomeDecalLayer
       allowedTiles:
         - FloorSnow
-      seedOffset: 2
-      threshold: 0.99
       divisions: 1
-      frequency: 1
+      threshold: -0.0
+      noise:
+        noiseType: Cellular
+        frequency: 1
+        fractalType: None
+        cellularDistanceFunction: Euclidean
+        cellularReturnType: Distance2
       decals:
         - bushsnowa1
         - bushsnowa2
         - bushsnowa3
-        - bushsnowb1
+        - bushsnowb3
         - bushsnowb2
         - bushsnowb3
     - !type:BiomeEntityLayer
-      seedOffset: 1
-      threshold: 0.95
-      frequency: 1
+      threshold: 0.5
+      noise:
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 2
       allowedTiles:
         - FloorSnow
       entities:
@@ -278,11 +294,11 @@
         - FloraTreeSnow05
         - FloraTreeSnow06
     - !type:BiomeTileLayer
-      threshold: 0
-      variants:
-        - 0
+      threshold: -1.0
       tile: FloorSnow
     - !type:BiomeTileLayer
-      threshold: 0.6
+      threshold: -0.50
       tile: FloorSnow
-      frequency: 0.1
+      noise:
+        frequency: 0.02
+        fractalType: None
