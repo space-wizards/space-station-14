@@ -97,3 +97,7 @@
         amount: 1
       - id: OnionRedSeeds
         amount: 1
+      - id: RiceSeeds
+        amount: 1
+      - id: SoybeanSeeds
+        amount: 1

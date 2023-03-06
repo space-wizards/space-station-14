@@ -295,12 +295,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 45
+        maxVol: 48
         reagents:
         - ReagentId: Nutriment
           Quantity: 30
-        - ReagentId: Vitamin
-          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 12
 # Tastes like bread, tofu.
 
 - type: entity
@@ -321,7 +321,7 @@
         - ReagentId: Nutriment
           Quantity: 6
         - ReagentId: Vitamin
-          Quantity: 1.2
+          Quantity: 2.4
 
 - type: entity
   name: cream cheese bread

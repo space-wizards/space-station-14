@@ -1,47 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Added the Diona species. This is a group of slow-moving plant people
-      who just want to help out. Be kind to them on the station and keep them away
-      from fires., type: Add}
-  id: 2610
-  time: '2022-11-08T20:27:00.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Melee effect animations have been tweaked to be more accurate to range.,
-    type: Tweak}
-  id: 2611
-  time: '2022-11-08T20:28:50.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: The puking noise has been removed., type: Tweak}
-  id: 2612
-  time: '2022-11-08T20:33:06.0000000+00:00'
-- author: Vordenburg
-  changes:
-  - {message: Clarified machine missing messages for the cloner., type: Tweak}
-  id: 2613
-  time: '2022-11-08T20:35:09.0000000+00:00'
-- author: Nairod
-  changes:
-  - {message: Tweaked the HoP's starting access to be more uniform., type: Tweak}
-  id: 2614
-  time: '2022-11-08T20:39:49.0000000+00:00'
-- author: Bright0
-  changes:
-  - {message: pill containers now have unique sfx, type: Add}
-  id: 2615
-  time: '2022-11-08T20:53:10.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Resprited the Detective's Coat., type: Tweak}
-  id: 2616
-  time: '2022-11-08T20:56:14.0000000+00:00'
-- author: notafet
-  changes:
-  - {message: Ore processors and lathes require power to process materials., type: Fix}
-  id: 2617
-  time: '2022-11-08T20:56:53.0000000+00:00'
 - author: Rane
   changes:
   - {message: You can inject all animals with syringes now. Veterinarians rejoice!,
@@ -2919,3 +2876,49 @@ Entries:
   - {message: Extracting seeds now tries to put the packets in your hands., type: Tweak}
   id: 3109
   time: '2023-03-06T02:37:57.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: 'Added soybeans (juiceable into soy milk) and rice, along with soy sauce
+      and tofu and tofu bread recipes.', type: Add}
+  - {message: Adjusted soy milk and oat milk colors, type: Tweak}
+  id: 3110
+  time: '2023-03-06T02:52:03.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Added the function to put appraisal tools in your belt slot or inside
+      belts., type: Tweak}
+  id: 3111
+  time: '2023-03-06T04:23:02.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Changed comfy chair and pilot seat crafting cost and yield., type: Tweak}
+  id: 3112
+  time: '2023-03-06T04:29:26.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added small margins to the round summary window., type: Tweak}
+  id: 3113
+  time: '2023-03-06T04:30:07.0000000+00:00'
+- author: eclips_e
+  changes:
+  - {message: Slimes can now get drunk, type: Tweak}
+  id: 3114
+  time: '2023-03-06T04:32:22.0000000+00:00'
+- author: eclips_e
+  changes:
+  - {message: Pins no longer weigh as much as a crowbar, type: Fix}
+  id: 3115
+  time: '2023-03-06T04:33:41.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: grenades emit sound on trigger again, type: Fix}
+  id: 3116
+  time: '2023-03-06T04:34:08.0000000+00:00'
+- author: GoodWheatley
+  changes:
+  - {message: Stimpacks are now available in the uplink for 8 TC., type: Add}
+  - {message: Stimkits are now available in the uplink for 12 TC., type: Add}
+  - {message: Experimental Stimpacks are now available in operative uplinks for 15
+      TC., type: Add}
+  id: 3117
+  time: '2023-03-06T05:28:15.0000000+00:00'
