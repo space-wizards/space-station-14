@@ -56,6 +56,7 @@
         doAfter: 0.5
 
   - node: mine
+    entity: LandMineModular
     actions:
     - !type:PlaySound
       sound: /Audio/Machines/button.ogg
@@ -69,83 +70,21 @@
         completed:
         - !type:EmptyContainer
           container: payload
-
-- type: constructionGraph
-  id: BananaModularMineGraph
-  start: start
-  graph:
-
-  - node: start
-    edges:
-    - to: emptyCase
+    - to: bananaPeel
       steps:
-      - material: Steel
-        amount: 5
-        doAfter: 1
       - tag: TrashBananaPeel
         icon:
           sprite: Objects/Specific/Hydroponics/banana.rsi
           state: peel
         name: banana peel
 
-  - node: emptyCase
+  - node: bananaPeel
     entity: LandMineModularBanana
     edges:
-    - to: wiredCase
-      steps:
-      - material: Cable
-        doAfter: 0.5
-      - tag: ProximitySensor
-        icon:
-          sprite: Objects/Misc/proximity_sensor.rsi
-          state: icon
-        name: proximity sensor
-    - to: start
-      completed:
-      - !type:SpawnPrototype
-        prototype: SheetSteel1
-        amount: 5
-      - !type:SpawnPrototype
-        prototype: TrashBananaPeel
-        amount: 1
-      - !type:DeleteEntity
-      steps:
-      - tool: Welding
-        doAfter: 2
-
-  - node: wiredCase
-    entity: LandMineModularBanana
-    actions:
-    - !type:PlaySound
-      sound: /Audio/Machines/button.ogg
-    edges:
-    - to: emptyCase
-      steps:
-      - tool: Cutting
-        doAfter: 0.5
-        completed:
-        - !type:SpawnPrototype
-          prototype: CableApcStack1
-        - !type:SpawnPrototype
-          prototype: ProximitySensor
     - to: mine
-      steps:
-      - tag: Payload
-        store: payload
-        name: Payload
-        doAfter: 0.5
-
-  - node: mine
-    actions:
-    - !type:PlaySound
-      sound: /Audio/Machines/button.ogg
-    - !type:AdminLog
-      message: "A mine was crafted"
-    edges:
-    - to: wiredCase
       steps:
       - tool: Prying
         doAfter: 0.5
         completed:
-        - !type:EmptyContainer
-          container: payload
+        - !type:SpawnPrototype
+          prototype: TrashBananaPeel

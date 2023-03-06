@@ -27,9 +27,9 @@
 - type: construction
   name: banana modular mine
   id: BananaModularMineRecipe
-  graph: BananaModularMineGraph
+  graph: ModularMineGraph
   startNode: start
-  targetNode: mine
+  targetNode: bananaPeel
   category: construction-category-weapons
   description: Construct a banana landmine using a payload.
   icon:

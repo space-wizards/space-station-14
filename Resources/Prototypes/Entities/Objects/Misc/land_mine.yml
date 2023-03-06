@@ -56,7 +56,7 @@
   - type: PayloadCase
   - type: Construction
     graph: ModularMineGraph
-    node: wiredCase
+    node: emptyCase
 
 - type: entity
   name: banana peel
@@ -70,7 +70,7 @@
     state: peel
   - type: Construction
     graph: BananaModularMineGraph
-    node: wiredCase
+    node: bananaPeel
   - type: Slippery
     launchForwardsMultiplier: 1.5
 
