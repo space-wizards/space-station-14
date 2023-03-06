@@ -107,15 +107,14 @@
     FoodBreadBun: 1
     ClothingHeadHatBeret: 1
 
-# - type: microwaveMealRecipe
-#   id: RecipeTofuBurger
-#   name: tofu burger recipe
-#   result: FoodBurgerTofu
-#   time: 5
-#   reagents:
-#     Flour: 15
-#   solids:
-#     FoodTofu: 1
+- type: microwaveMealRecipe
+  id: RecipeTofuBurger
+  name: tofu burger recipe
+  result: FoodBurgerTofu
+  time: 5
+  solids:
+    FoodBreadBun: 1
+    FoodTofuSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeXenoburger
@@ -231,6 +230,15 @@
   solids:
     FoodBreadPlainSlice: 1
     FoodFlyAmanita: 1
+
+- type: microwaveMealRecipe
+  id: RecipeTofuBread
+  name: tofu bread recipe
+  result: FoodBreadTofu
+  time: 20
+  solids:
+    FoodDough: 1
+    FoodTofu: 1
 
 - type: microwaveMealRecipe
   id: RecipeGarlicBread

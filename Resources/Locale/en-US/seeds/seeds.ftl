@@ -63,3 +63,7 @@ seeds-flyamanita-name = fly amanita
 seeds-flyamanita-display-name = fly amanita
 seeds-gatfruit-name = gatfruit
 seeds-gatfruit-display-name = gatfruit tree
+seeds-rice-name = rice
+seeds-rice-display-name = rice stalks
+seeds-soybeans-name = soybeans
+seeds-soybeans-display-name = soy plant

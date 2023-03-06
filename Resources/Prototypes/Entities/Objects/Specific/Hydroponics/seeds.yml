@@ -317,6 +317,26 @@
 
 - type: entity
   parent: SeedBase
+  name: packet of rice seeds
+  id: RiceSeeds
+  components:
+    - type: Seed
+      seedId: rice
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/rice.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of soybean seeds
+  id: SoybeanSeeds
+  components:
+    - type: Seed
+      seedId: soybeans
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/soybeans.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of red onion seeds
   description: "Purple despite the name."
   id: OnionRedSeeds

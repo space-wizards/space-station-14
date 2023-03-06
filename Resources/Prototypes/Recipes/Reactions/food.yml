@@ -70,7 +70,7 @@
       entity: FoodDoughPie
 
 # TG has a cake recipe that uses soy milk instead of eggs.
-# but afaik it spawns the exact same cake batter entity. 
+# but afaik it spawns the exact same cake batter entity.
 # Maybe change this if you want to do allergies or something
 - type: reaction
   id: CreateVeganCakeBatter
@@ -86,6 +86,19 @@
   effects:
     - !type:CreateEntityReactionEffect
       entity: FoodCakeBatter
+
+- type: reaction
+  id: CreateTofu
+  impact: Low
+  quantized: true
+  reactants:
+    MilkSoy:
+      amount: 30
+    Enzyme:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodTofu
 
 # Condiments
 
@@ -132,7 +145,7 @@
       amount: 5
   products:
     Ketchunaise: 10
-    
+
 - type: reaction
   id: CookingBbqSauce
   reactants:
@@ -141,10 +154,10 @@
     Vinegar:
       amount: 5
     Sugar:
-      amount: 5   
+      amount: 5
   products:
     BbqSauce: 15
-    
+
 - type: reaction
   id: CookingHotsauce
   reactants:
@@ -166,6 +179,16 @@
       amount: 5
   products:
     Vinegar: 10
+
+- type: reaction
+  id: CookingSoysauce
+  reactants:
+    MilkSoy:
+      amount: 10
+    SulfuricAcid:
+      amount: 5
+  products:
+    Soysauce: 15
 
 - type: reaction
   id: CookingVinaigrette
