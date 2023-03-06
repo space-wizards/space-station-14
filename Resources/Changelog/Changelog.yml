@@ -1,9 +1,4 @@
 Entries:
-- author: Nairod
-  changes:
-  - {message: Added a armory door remote for the warden., type: Add}
-  id: 2625
-  time: '2022-11-08T21:13:56.0000000+00:00'
 - author: Scribbles0
   changes:
   - {message: 'Heterochromia is now available through the markings tab, located under
@@ -2915,3 +2910,9 @@ Entries:
     type: Tweak}
   id: 3124
   time: '2023-03-06T18:54:22.0000000+00:00'
+- author: MagnusCrowe
+  changes:
+  - {message: 'Added paramedic hat and jacket, at the medidrobe while supplies last',
+    type: Add}
+  id: 3125
+  time: '2023-03-06T19:04:12.0000000+00:00'
