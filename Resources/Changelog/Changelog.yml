@@ -1,9 +1,4 @@
 Entries:
-- author: notafet
-  changes:
-  - {message: Ore processors and lathes require power to process materials., type: Fix}
-  id: 2617
-  time: '2022-11-08T20:56:53.0000000+00:00'
 - author: Rane
   changes:
   - {message: You can inject all animals with syringes now. Veterinarians rejoice!,
@@ -2919,3 +2914,11 @@ Entries:
   - {message: grenades emit sound on trigger again, type: Fix}
   id: 3116
   time: '2023-03-06T04:34:08.0000000+00:00'
+- author: GoodWheatley
+  changes:
+  - {message: Stimpacks are now available in the uplink for 8 TC., type: Add}
+  - {message: Stimkits are now available in the uplink for 12 TC., type: Add}
+  - {message: Experimental Stimpacks are now available in operative uplinks for 15
+      TC., type: Add}
+  id: 3117
+  time: '2023-03-06T05:28:15.0000000+00:00'
