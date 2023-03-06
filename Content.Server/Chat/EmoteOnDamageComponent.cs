@@ -25,6 +25,19 @@ public sealed class EmoteOnDamageComponent : Component
     public HashSet<string> Emotes = new();
 
     /// <summary>
+    /// Also send the emote in chat.
+    /// <summary>
+    [DataField("withChat"), ViewVariables(VVAccess.ReadWrite)]
+    public bool WithChat = false;
+
+    /// <summary>
+    /// Hide the chat message from the chat window, only showing the popup.
+    /// This does nothing if WithChat is false.
+    /// <summary>
+    [DataField("hiddenFromChatWindow")]
+    public bool HiddenFromChatWindow = false;
+
+    /// <summary>
     /// The simulation time of the last emote preformed due to taking damage.
     /// </summary>
     [DataField("lastEmoteTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]

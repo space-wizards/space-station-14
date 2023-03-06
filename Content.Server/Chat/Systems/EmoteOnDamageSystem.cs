@@ -42,7 +42,15 @@ public sealed class EmoteOnDamageSystem : EntitySystem
             return;
 
         var emote = _random.Pick(emoteOnDamage.Emotes);
-        _chatSystem.TryEmoteWithoutChat(uid, emote);
+        if (emoteOnDamage.WithChat)
+        {
+            _chatSystem.TryEmoteWithChat(uid, emote, emoteOnDamage.HiddenFromChatWindow);
+        }
+        else
+        {
+            _chatSystem.TryEmoteWithoutChat(uid,emote);
+        }
+
         emoteOnDamage.LastEmoteTime = _gameTiming.CurTime;
     }
 
