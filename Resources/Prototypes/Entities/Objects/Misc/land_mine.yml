@@ -56,8 +56,23 @@
   - type: PayloadCase
   - type: Construction
     graph: ModularMineGraph
-    node: emptyCase
-  - type: LandMine
+    node: wiredCase
+
+- type: entity
+  name: banana peel
+  description: ""
+  suffix: Modular Mine
+  parent: LandMineModular
+  id: LandMineModularBanana
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    state: peel
+  - type: Construction
+    graph: BananaModularMineGraph
+    node: wiredCase
+  - type: Slippery
+    launchForwardsMultiplier: 1.5
 
 - type: entity
   name: explosive mine

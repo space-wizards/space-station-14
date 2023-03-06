@@ -145,8 +145,8 @@ uplink-necronomicon-desc = An unholy book capable of summoning a demonic familia
 uplink-revolver-cap-gun-fake-name = Fake Cap Gun
 uplink-revolver-cap-gun-fake-desc = Fool your enemy! It can use both cap and magnum bullets. Comes loaded with magnum bullet
 
-uplink-banana-peel-explosive-name = Explosive Banana Peel
-uplink-banana-peel-explosive-desc = They will burst into laughter when they slip on it!
+uplink-modular-mine-banana-name = Modular Banana Peel
+uplink-modular-mine-banana-desc = They will burst into laughter when they slip on it! Just fill payload first.
 
 # Armor
 uplink-chameleon-name = Chameleon Kit

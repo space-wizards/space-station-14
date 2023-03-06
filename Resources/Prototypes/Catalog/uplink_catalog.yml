@@ -576,9 +576,9 @@
 
 - type: listing
   id: uplinkBananaPeelExplosive
-  name: uplink-banana-peel-explosive-name
-  description: uplink-banana-peel-explosive-desc
-  productEntity: TrashBananaPeelExplosive
+  name: uplink-modular-mine-banana-name
+  description: uplink-modular-mine-banana-desc
+  productEntity: LandMineModularBanana
   cost:
     Telecrystal: 2
   categories:
