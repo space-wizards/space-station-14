@@ -4,7 +4,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Stacks;
-using Content.Shared.Wall;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -23,6 +22,7 @@ namespace Content.Server.Tiles
         [Dependency] private readonly StackSystem _stackSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         public override void Initialize()
         {
@@ -54,7 +54,7 @@ namespace Content.Server.Tiles
                     {
                         // e.g. you can place tile under directional windows
                         var gridUid = location.GetGridUid(EntityManager);
-                        var floorPos = location.ToMapPos(EntityManager);
+                        var floorPos = location.ToMapPos(EntityManager, _transform);
                         var floorBox = Box2.UnitCentered.Translated(floorPos);
                         if (TryComp<MapGridComponent>(gridUid, out var comp))
                         {
@@ -62,13 +62,13 @@ namespace Content.Server.Tiles
                         }
                         if (!TryComp<FixturesComponent>(ent, out var fixtures) || !TryComp<TransformComponent>(ent, out var transform))
                             return;
-                        var wallPos = transform.Coordinates.ToMapPos(EntityManager);
+                        var wallPos = transform.Coordinates.ToMapPos(EntityManager, _transform);
                         var wallBox = fixtures.GetAABB(new Transform(wallPos, 0));
                         if (Box2.Area(floorBox.Intersect(wallBox)) > 0.75 * Box2.Area(floorBox))
                             return;
                     }
             }
-            var locationMap = location.ToMap(EntityManager);
+            var locationMap = location.ToMap(EntityManager, _transform);
             if (locationMap.MapId == MapId.Nullspace)
                 return;
             _mapManager.TryGetGrid(location.EntityId, out var mapGrid);
