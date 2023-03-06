@@ -82,9 +82,11 @@
       - material: Steel
         amount: 5
         doAfter: 1
-      - material: TrashBananaPeel
-        amount: 1
-        doAfter: 1
+      - tag: TrashBananaPeel
+        icon:
+          sprite: Objects/Specific/Hydroponics/banana.rsi
+          state: peel
+        name: banana peel
 
   - node: emptyCase
     entity: LandMineModularBanana
