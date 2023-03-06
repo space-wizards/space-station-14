@@ -33,6 +33,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<BiomeComponent, ComponentStartup>(OnBiomeStartup);
         SubscribeLocalEvent<BiomeComponent, MapInitEvent>(OnBiomeMapInit);
         _configManager.OnValueChanged(CVars.NetMaxUpdateRange, SetLoadRange, true);
     }
@@ -50,9 +51,15 @@ public sealed class BiomeSystem : SharedBiomeSystem
         _loadArea = new Box2(-_loadRange, -_loadRange, _loadRange, _loadRange);
     }
 
+    private void OnBiomeStartup(EntityUid uid, BiomeComponent component, ComponentStartup args)
+    {
+        component.Noise.SetSeed(component.Seed);
+    }
+
     private void OnBiomeMapInit(EntityUid uid, BiomeComponent component, MapInitEvent args)
     {
         component.Seed = _random.Next();
+        component.Noise.SetSeed(component.Seed);
         Dirty(component);
     }
 
@@ -97,7 +104,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
 
         while (loadBiomes.MoveNext(out var biome, out var grid))
         {
-            var noise = new FastNoiseLite(biome.Seed);
+            var noise = biome.Noise;
             var gridUid = grid.Owner;
 
             // Load new chunks
@@ -206,7 +213,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
                 // At least for now unless we do lookups or smth, only work with anchoring.
                 if (xformQuery.TryGetComponent(ent, out var xform) && !xform.Anchored)
                 {
-                    _transform.AnchorEntity(xform, grid, indices);
+                    _transform.AnchorEntity(ent, xform, grid, indices);
                 }
 
                 loadedEntities.Add(ent);

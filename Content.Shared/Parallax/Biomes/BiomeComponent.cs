@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Noise;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Parallax.Biomes;
@@ -6,6 +7,8 @@ namespace Content.Shared.Parallax.Biomes;
 [RegisterComponent, NetworkedComponent]
 public sealed class BiomeComponent : Component
 {
+    public FastNoiseLite Noise = new();
+
     [ViewVariables(VVAccess.ReadWrite), DataField("seed")]
     public int Seed;
 
@@ -34,7 +37,7 @@ public sealed class BiomeComponent : Component
     /// <summary>
     /// Currently active chunks
     /// </summary>
-    [ViewVariables]
+    [DataField("loadedChunks")]
     public readonly HashSet<Vector2i> LoadedChunks = new();
 
     /// <summary>

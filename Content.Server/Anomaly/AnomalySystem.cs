@@ -7,6 +7,7 @@ using Content.Server.Materials;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
+using Content.Shared.DoAfter;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Events;

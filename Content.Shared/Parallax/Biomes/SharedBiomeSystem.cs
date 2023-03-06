@@ -1,8 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using Content.Shared.Decals;
 using Content.Shared.Maps;
-using Robust.Shared.Console;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -20,8 +17,6 @@ public abstract class SharedBiomeSystem : EntitySystem
 
     protected const byte ChunkSize = 8;
 
-    // TODO: After I wrote all of this FastNoiseLite got ported so this needs updating for that don't @ me
-
     public override void Initialize()
     {
         base.Initialize();
@@ -35,6 +30,8 @@ public abstract class SharedBiomeSystem : EntitySystem
             return;
 
         component.Seed = state.Seed;
+        component.BiomePrototype = state.Prototype;
+        component.Noise.SetSeed(component.Seed);
     }
 
     private void OnBiomeGetState(EntityUid uid, BiomeComponent component, ref ComponentGetState args)
@@ -101,13 +98,13 @@ public abstract class SharedBiomeSystem : EntitySystem
         }
 
         return TryGetBiomeTile(indices, ProtoManager.Index<BiomePrototype>(biome.BiomePrototype),
-            noise, grid, out tile);
+            biome.Noise, grid, out tile);
     }
 
     /// <summary>
     /// Tries to get the tile, real or otherwise, for the specified indices.
     /// </summary>
-    public bool TryGetBiomeTile(Vector2i indices, BiomePrototype prototype, FastNoiseLite seed, MapGridComponent? grid, [NotNullWhen(true)] out Tile? tile)
+    public bool TryGetBiomeTile(Vector2i indices, BiomePrototype prototype, FastNoiseLite noise, MapGridComponent? grid, [NotNullWhen(true)] out Tile? tile)
     {
         if (grid?.TryGetTileRef(indices, out var tileRef) == true && !tileRef.Tile.IsEmpty)
         {
@@ -115,7 +112,7 @@ public abstract class SharedBiomeSystem : EntitySystem
             return true;
         }
 
-        var oldFrequency = seed.GetFrequency();
+        var oldSeed = noise.GetSeed();
 
         for (var i = prototype.Layers.Count - 1; i >= 0; i--)
         {
@@ -124,18 +121,50 @@ public abstract class SharedBiomeSystem : EntitySystem
             if (layer is not BiomeTileLayer tileLayer)
                 continue;
 
-            seed.SetFrequency(tileLayer.Frequency);
+            SetNoise(noise, oldSeed, layer.Noise);
 
-            if (TryGetTile(indices, seed, tileLayer.Threshold, ProtoManager.Index<ContentTileDefinition>(tileLayer.Tile), tileLayer.Variants, out tile))
+            if (TryGetTile(indices, noise, tileLayer.Threshold, ProtoManager.Index<ContentTileDefinition>(tileLayer.Tile), tileLayer.Variants, out tile))
             {
-                seed.SetFrequency(oldFrequency);
+                noise.SetSeed(oldSeed);
                 return true;
             }
         }
 
-        seed.SetFrequency(oldFrequency);
+        noise.SetSeed(oldSeed);
         tile = null;
         return false;
+    }
+
+    /// <summary>
+    /// Gets the underlying biome tile, ignoring any existing tile that may be there.
+    /// </summary>
+    private bool TryGetTile(Vector2i indices, FastNoiseLite seed, float threshold, ContentTileDefinition tileDef, List<byte>? variants, [NotNullWhen(true)] out Tile? tile)
+    {
+        var found = seed.GetNoise(indices.X, indices.Y);
+
+        if (found < threshold)
+        {
+            tile = null;
+            return false;
+        }
+
+        byte variant = 0;
+        var variantCount = variants?.Count ?? tileDef.Variants;
+
+        // Pick a variant tile if they're available as well
+        if (variantCount > 1)
+        {
+            var variantValue = (seed.GetNoise(indices.X * 8, indices.Y * 8, variantCount) + 1f) / 2f;
+            variant = (byte) Pick(variantCount, variantValue);
+
+            if (variants != null)
+            {
+                variant = variants[variant];
+            }
+        }
+
+        tile = new Tile(tileDef.TileId, 0, variant);
+        return true;
     }
 
     /// <summary>
@@ -151,13 +180,11 @@ public abstract class SharedBiomeSystem : EntitySystem
         }
 
         var tileId = TileDefManager[tileRef.Value.TypeId].ID;
-        var oldFrequency = noise.GetFrequency();
-        var seed = noise.GetSeed();
+        var oldSeed = noise.GetSeed();
 
         for (var i = prototype.Layers.Count - 1; i >= 0; i--)
         {
             var layer = prototype.Layers[i];
-            var offset = 0;
 
             // Decals might block entity so need to check if there's one in front of us.
             switch (layer)
@@ -166,40 +193,32 @@ public abstract class SharedBiomeSystem : EntitySystem
                     if (!worldLayer.AllowedTiles.Contains(tileId))
                         continue;
 
-                    offset = worldLayer.SeedOffset;
-                    noise.SetSeed(seed + offset);
-                    noise.SetFrequency(worldLayer.Frequency);
                     break;
                 default:
                     continue;
             }
 
-            noise.SetNoiseType(FastNoiseLite.NoiseType.Cellular);
-            var value = (noise.GetNoise(indices.X, indices.Y) + 1f) / 2f;
+            SetNoise(noise, oldSeed, layer.Noise);
+            var value = noise.GetNoise(indices.X, indices.Y);
 
             if (value < layer.Threshold)
             {
-                DebugTools.Assert(value is <= 1f and >= 0f);
                 continue;
             }
 
             if (layer is not BiomeEntityLayer biomeLayer)
             {
                 entity = null;
-                noise.SetFrequency(oldFrequency);
-                noise.SetSeed(seed);
+                noise.SetSeed(oldSeed);
                 return false;
             }
 
-            noise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2);
-            entity = Pick(biomeLayer.Entities, (noise.GetNoise(indices.X, indices.Y) + 1f) / 2f);
-            noise.SetFrequency(oldFrequency);
-            noise.SetSeed(seed);
+            entity = Pick(biomeLayer.Entities, (noise.GetNoise(indices.X, indices.Y, i) + 1f) / 2f);
+            noise.SetSeed(oldSeed);
             return true;
         }
 
-        noise.SetFrequency(oldFrequency);
-        noise.SetSeed(seed);
+        noise.SetSeed(oldSeed);
         entity = null;
         return false;
     }
@@ -217,13 +236,11 @@ public abstract class SharedBiomeSystem : EntitySystem
         }
 
         var tileId = TileDefManager[tileRef.Value.TypeId].ID;
-        var oldFrequency = noise.GetFrequency();
-        var seed = noise.GetSeed();
+        var oldSeed = noise.GetSeed();
 
         for (var i = prototype.Layers.Count - 1; i >= 0; i--)
         {
             var layer = prototype.Layers[i];
-            var offset = 0;
 
             // Entities might block decal so need to check if there's one in front of us.
             switch (layer)
@@ -232,99 +249,73 @@ public abstract class SharedBiomeSystem : EntitySystem
                     if (!worldLayer.AllowedTiles.Contains(tileId))
                         continue;
 
-                    offset = worldLayer.SeedOffset;
-                    noise.SetSeed(seed + offset);
-                    noise.SetFrequency(worldLayer.Frequency);
                     break;
                 default:
                     continue;
             }
 
+            SetNoise(noise, oldSeed, layer.Noise);
+
             // Check if the other layer should even render, if not then keep going.
             if (layer is not BiomeDecalLayer decalLayer)
             {
-                noise.SetNoiseType(FastNoiseLite.NoiseType.Cellular);
-
-                if ((noise.GetNoise(indices.X, indices.Y) + 1f) / 2f < layer.Threshold)
+                if (noise.GetNoise(indices.X, indices.Y) < layer.Threshold)
                     continue;
 
                 decals = null;
-                noise.SetFrequency(oldFrequency);
-                noise.SetSeed(seed);
+                noise.SetSeed(oldSeed);
                 return false;
             }
 
             decals = new List<(string ID, Vector2 Position)>();
-            noise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2);
 
             for (var x = 0; x < decalLayer.Divisions; x++)
             {
                 for (var y = 0; y < decalLayer.Divisions; y++)
                 {
                     var index = new Vector2(indices.X + x * 1f / decalLayer.Divisions, indices.Y + y * 1f / decalLayer.Divisions);
-                    var decalValue = (noise.GetNoise(index.X, index.Y) + 1f) / 2f;
+                    var decalValue = noise.GetNoise(index.X, index.Y);
 
                     if (decalValue < decalLayer.Threshold)
                         continue;
 
-                    DebugTools.Assert(decalValue is <= 1f and >= 0f);
-                    decals.Add((Pick(decalLayer.Decals, (noise.GetNoise(index.X, index.Y) + 1f) / 2f), index));
+                    decals.Add((Pick(decalLayer.Decals, (noise.GetNoise(indices.X, indices.Y, x + y * decalLayer.Divisions) + 1f) / 2f), index));
                 }
             }
-
-            noise.SetFrequency(oldFrequency);
-            noise.SetSeed(seed);
 
             // Check other layers
             if (decals.Count == 0)
                 continue;
 
+            noise.SetSeed(oldSeed);
             return true;
         }
 
-        noise.SetFrequency(oldFrequency);
-        noise.SetSeed(seed);
+        noise.SetSeed(oldSeed);
         decals = null;
         return false;
     }
 
-    /// <summary>
-    /// Gets the underlying biome tile, ignoring any existing tile that may be there.
-    /// </summary>
-    public bool TryGetTile(Vector2i indices, FastNoiseLite seed, float threshold, ContentTileDefinition tileDef, List<byte>? variants, [NotNullWhen(true)] out Tile? tile)
+    private void SetNoise(FastNoiseLite noise, int oldSeed, FastNoiseLite data)
     {
-        seed.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2);
+        // General
+        noise.SetSeed(oldSeed + data.GetSeed());
+        noise.SetFrequency(data.GetFrequency());
+        noise.SetNoiseType(data.GetNoiseType());
 
-        if (threshold > 0f)
-        {
-            seed.SetFractalType(FastNoiseLite.FractalType.FBm);
+        noise.GetRotationType3D();
 
-            var found = (seed.GetNoise(indices.X, indices.Y) + 1f) / 2f;
+        // Fractal
+        noise.SetFractalType(data.GetFractalType());
+        noise.SetFractalOctaves(data.GetFractalOctaves());
+        noise.SetFractalLacunarity(data.GetFractalLacunarity());
 
-            if (found < threshold)
-            {
-                tile = null;
-                return false;
-            }
-        }
+        // Cellular
+        noise.SetCellularDistanceFunction(data.GetCellularDistanceFunction());
+        noise.SetCellularReturnType(data.GetCellularReturnType());
+        noise.SetCellularJitter(data.GetCellularJitter());
 
-        byte variant = 0;
-        var variantCount = variants?.Count ?? tileDef.Variants;
-
-        // Pick a variant tile if they're available as well
-        if (variantCount > 1)
-        {
-            var variantValue = (seed.GetNoise(indices.X * 2f, indices.Y * 2f) + 1f) / 2f;
-            variant = (byte) Pick(variantCount, variantValue);
-
-            if (variants != null)
-            {
-                variant = variants[variant];
-            }
-        }
-
-        tile = new Tile(tileDef.TileId, 0, variant);
-        return true;
+        // Domain warps require separate noise
     }
 
     [Serializable, NetSerializable]
