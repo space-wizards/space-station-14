@@ -285,7 +285,7 @@
   - type: StaticPrice
     price: 125
   - type: EntityStorage
-    airtight: false
+    capacity: 5000
 
 - type: entity
   parent: CrateGeneric
