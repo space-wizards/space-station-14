@@ -14,6 +14,7 @@ using Content.Shared.Tag;
 using Content.Shared.Audio;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
+using Serilog;
 
 namespace Content.Shared.Vehicle;
 
@@ -192,7 +193,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
 
         args.Entities.Add(rider);
         _access.FindAccessItemsInventory(rider, out var items);
-        args.Entities = args.Entities.Union(items).ToHashSet();
+        args.Entities.UnionWith(items);
     }
 
     /// <summary>
