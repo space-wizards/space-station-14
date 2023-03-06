@@ -80,7 +80,7 @@
     containers:
       key_slots:
       - EncryptionKeyCentCom
-      - EncryptionKeyAllAccess
+      - EncryptionKeyStationMaster
   - type: Sprite
     sprite: Clothing/Ears/Headsets/centcom.rsi
   - type: Clothing
@@ -95,7 +95,7 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyAllAccess
+      - EncryptionKeyStationMaster
   - type: Sprite
     sprite: Clothing/Ears/Headsets/command.rsi
   - type: Clothing

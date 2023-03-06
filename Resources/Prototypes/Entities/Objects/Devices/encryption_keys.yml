@@ -57,9 +57,9 @@
 
 - type: entity
   parent: EncryptionKey
-  id: EncryptionKeyAllAccess
-  name: all access encryption key
-  description: All access encryption key.
+  id: EncryptionKeyStationMaster
+  name: station master encryption key
+  description: An encryption key used by station's bosses.
   components:
   - type: EncryptionKey
     channels:
