@@ -19,3 +19,6 @@ ent-ProjectileHealingBolt = исцеляющий заряд
 ent-BulletInstakillMagic = волшебный свинцовый цилиндр
     .desc = Выглядит знакомо.
     .suffix = { "" }
+ent-ProjectilePolyboltCluwne = полиболт клувна
+    .desc = кноХ КноХ!
+    .suffix = { "" }
