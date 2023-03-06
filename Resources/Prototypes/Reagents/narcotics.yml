@@ -158,14 +158,17 @@
       metabolismRate: 0.25 # lasts for 4 minutes instead of 5
       effects:
       - !type:MovespeedModifier # nyoom
+        conditions:
+          - !type:ReagentThreshold
+            min: 10
         walkSpeedModifier: 1.8
         sprintSpeedModifier: 1.8
       - !type:MovespeedModifier # antinyoom
-        walkSpeedModifier: 0.7
-        sprintSpeedModifier: 0.7
         conditions:
           - !type:ReagentThreshold
             max: 10 # ghetto withdrawal
+        walkSpeedModifier: 0.7
+        sprintSpeedModifier: 0.7
       - !type:Electrocute
         conditions:
           - !type:ReagentThreshold
@@ -232,7 +235,7 @@
           - !type:ReagentThreshold
             min: 10
           damage:
-            types:
+            groups:
               Brute: -4
               Burn: -4
         # stops CMOs from hypoing you with lexorin and sec from filling you with tranq shells
