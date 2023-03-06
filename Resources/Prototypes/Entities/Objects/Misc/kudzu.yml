@@ -79,6 +79,14 @@
       sprintSpeedModifier: 0.2
 
 - type: entity
+  id: WeakKudzu
+  parent: Kudzu
+  components:
+    - type: Spreader
+      growthResult: WeakKudzu
+      chance: 0.3
+
+- type: entity
   id: FleshKudzu
   name: tendons
   description: A rapidly growing cluster of meaty tendons. WHY ARE YOU STOPPING TO LOOK AT IT?!

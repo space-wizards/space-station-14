@@ -107,15 +107,14 @@
     FoodBreadBun: 1
     ClothingHeadHatBeret: 1
 
-# - type: microwaveMealRecipe
-#   id: RecipeTofuBurger
-#   name: tofu burger recipe
-#   result: FoodBurgerTofu
-#   time: 5
-#   reagents:
-#     Flour: 15
-#   solids:
-#     FoodTofu: 1
+- type: microwaveMealRecipe
+  id: RecipeTofuBurger
+  name: tofu burger recipe
+  result: FoodBurgerTofu
+  time: 5
+  solids:
+    FoodBreadBun: 1
+    FoodTofuSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeXenoburger
@@ -231,6 +230,24 @@
   solids:
     FoodBreadPlainSlice: 1
     FoodFlyAmanita: 1
+
+- type: microwaveMealRecipe
+  id: RecipeTofuBread
+  name: tofu bread recipe
+  result: FoodBreadTofu
+  time: 20
+  solids:
+    FoodDough: 1
+    FoodTofu: 1
+
+- type: microwaveMealRecipe
+  id: RecipeGarlicBread
+  name: garlic bread slice recipe
+  result: FoodBreadGarlicSlice
+  time: 5
+  solids:
+    FoodBreadPlainSlice: 1
+    FoodGarlic: 1
 
 #Pizzas
 - type: microwaveMealRecipe
@@ -988,8 +1005,7 @@
   result: FoodSaladColeslaw
   time: 5
   reagents:
-    Vinegar: 5
-    OilOlive: 5
+    Vinaigrette: 5
   solids:
     FoodBowlBig: 1
     FoodOnionRed: 1
@@ -1020,6 +1036,7 @@
     FoodBowlBig: 1
     FoodCarrot: 1
     FoodCabbage: 1
+    FoodGarlic: 1
 
 # NOT ACTUAL FOOD
 

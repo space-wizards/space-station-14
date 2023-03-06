@@ -1,22 +1,18 @@
 using Content.Server.Polymorph.Components;
 using Content.Shared.Projectiles;
 using Robust.Shared.Audio;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
-using Robust.Shared.Player;
 
 namespace Content.Server.Polymorph.Systems;
 
-public partial class PolymorphableSystem
+public partial class PolymorphSystem
 {
     // Need to do this so we don't get a collection enumeration error in physics by polymorphing
     // an entity we're colliding with
     private Queue<PolymorphQueuedData> _queuedPolymorphUpdates = new();
 
-    public override void Update(float frameTime)
+    public void UpdateCollide()
     {
-        base.Update(frameTime);
-
         while (_queuedPolymorphUpdates.TryDequeue(out var data))
         {
             if (Deleted(data.Ent))
@@ -25,8 +21,7 @@ public partial class PolymorphableSystem
             var ent = PolymorphEntity(data.Ent, data.Polymorph);
             if (ent != null)
             {
-                SoundSystem.Play(data.Sound.GetSound(), Filter.Pvs(ent.Value, entityManager: EntityManager),
-                    ent.Value, data.Sound.Params);
+                _audio.PlayPvs(data.Sound, ent.Value);
             }
         }
     }
@@ -50,7 +45,7 @@ public partial class PolymorphableSystem
     }
 }
 
-struct PolymorphQueuedData
+public struct PolymorphQueuedData
 {
     public EntityUid Ent;
     public SoundSpecifier Sound;
