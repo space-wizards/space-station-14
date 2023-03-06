@@ -90,7 +90,7 @@ public sealed class ConsciousnessSystem : EntitySystem
 
     public bool AddToThreshold(EntityUid entity, FixedPoint2 threshold, ConsciousnessComponent? consciousness = null)
     {
-        if (!Resolve(entity, ref consciousness))
+        if (threshold == 0 || !Resolve(entity, ref consciousness))
             return false;
         var ev = new UpdateConsciousnessThresholdEvent()
         {
@@ -126,7 +126,7 @@ public sealed class ConsciousnessSystem : EntitySystem
 
     public bool AddToClamp(EntityUid entity, FixedPoint2 clamp, ConsciousnessComponent? consciousness = null)
     {
-        if (!Resolve(entity, ref consciousness))
+        if (clamp == 0 ||  !Resolve(entity, ref consciousness))
             return false;
         var ev = new UpdateConsciousnessClampEvent()
         {
@@ -162,7 +162,7 @@ public sealed class ConsciousnessSystem : EntitySystem
 
     public bool AddToDamage(EntityUid entity, FixedPoint2 damage, ConsciousnessComponent? consciousness = null)
     {
-        if (!Resolve(entity, ref consciousness))
+        if (damage == 0 || !Resolve(entity, ref consciousness))
             return false;
         var ev = new UpdateConsciousnessDamageEvent()
         {
@@ -198,7 +198,7 @@ public sealed class ConsciousnessSystem : EntitySystem
 
     public bool AddToModifier(EntityUid entity, FixedPoint2 modifier, ConsciousnessComponent? consciousness = null)
     {
-        if (!Resolve(entity, ref consciousness))
+        if (modifier == 0 || !Resolve(entity, ref consciousness))
             return false;
         var ev = new UpdateConsciousnessModifierEvent()
         {
