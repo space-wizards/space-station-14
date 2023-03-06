@@ -4,7 +4,7 @@ namespace Content.Server.Emp;
 /// Upon being triggered will EMP area around it.
 /// </summary>
 [RegisterComponent]
-sealed class EmpOnTriggerComponent : Component
+public sealed class EmpOnTriggerComponent : Component
 {
     [DataField("range"), ViewVariables(VVAccess.ReadWrite)]
     public float Range = 1.0f;
