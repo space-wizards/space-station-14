@@ -204,6 +204,7 @@
     tags:
     - Recyclable
     - Trash
+    - TrashBananaPeel
   - type: SolutionContainerManager
     solutions:
       food:

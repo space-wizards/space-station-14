@@ -321,6 +321,9 @@
 - type: Tag
   id: Machete
 
+- type: Tag
+  id: TrashBananaPeel
+
 # Magazines ordered by slot then caliber
 
 - type: Tag
