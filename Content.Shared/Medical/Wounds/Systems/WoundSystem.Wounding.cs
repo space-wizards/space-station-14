@@ -10,7 +10,6 @@ using Robust.Shared.Random;
 
 namespace Content.Shared.Medical.Wounds.Systems;
 
-//TODO: Convert to use entity hierarchies instead of containers to store wounds
 public sealed partial class WoundSystem
 {
 
@@ -66,7 +65,7 @@ public sealed partial class WoundSystem
         if (bodyId.HasValue)
         {
             var ev2 = new WoundRemovedEvent(woundableId, woundable, woundId, wound);
-            RaiseLocalEvent(bodyId.Value, ev2, true);
+            RaiseLocalEvent(bodyId.Value, ref ev2, true);
         }
 
         //clients cannot delete entities, that causes mispredicts!
@@ -221,12 +220,12 @@ public sealed partial class WoundSystem
         woundable.HealthCapDamage += healthCapDamageDelta;
         wound.Severity = newSeverity;
         var ev = new WoundSeverityChangedEvent(woundableId, woundId, wound);
-        RaiseLocalEvent(woundableId, ev, true);
+        RaiseLocalEvent(woundableId, ref ev, true);
         if (!bodyId.HasValue)
             return;
         //propagate this event to bodyEntity if we are a bodyPart
         var ev2 = new WoundSeverityChangedEvent(woundableId, woundId, wound);
-        RaiseLocalEvent(bodyId.Value, ev2, true);
+        RaiseLocalEvent(bodyId.Value, ref ev2, true);
     }
 
     private void DestroyWoundable(EntityUid woundableId, WoundableComponent? woundable = null)
@@ -249,7 +248,7 @@ public sealed partial class WoundSystem
         }
 
         var ev = new WoundableDestroyedEvent();
-        RaiseLocalEvent(woundableId, ev);
+        RaiseLocalEvent(woundableId, ref ev);
     }
 
     private (EntityUid Target, WoundableComponent Woundable)? GetValidWoundable(EntityUid target, string traumaType)

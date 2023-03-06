@@ -97,7 +97,7 @@ public sealed class ConsciousnessSystem : EntitySystem
     {
         var isConscious = IsConscious(entity, out var consciousnessValue, consciousness);
         var ev = new ConsciousnessUpdatedEvent(isConscious, consciousnessValue);
-        RaiseLocalEvent(entity, ev, true);
+        RaiseLocalEvent(entity, ref ev, true);
         _mobStateSystem.UpdateMobState(entity);
     }
 }
