@@ -1,5 +1,4 @@
 ﻿using Robust.Shared.Audio;
-
 namespace Content.Server.Fluids.Components;
 
 /// <summary>
