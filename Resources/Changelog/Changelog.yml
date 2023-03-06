@@ -1,11 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Animals are no longer immune to shoving., type: Fix}
-  - {message: You now shove people rather than "disarm" them if they aren't holding
-      anything., type: Fix}
-  id: 2624
-  time: '2022-11-08T21:11:00.0000000+00:00'
 - author: Nairod
   changes:
   - {message: Added a armory door remote for the warden., type: Add}
@@ -2916,3 +2909,9 @@ Entries:
   - {message: Lime and orange cakes now require fruits instead of juice, type: Tweak}
   id: 3123
   time: '2023-03-06T18:45:39.0000000+00:00'
+- author: pofitlo
+  changes:
+  - {message: Cigarettes vending machine can be emagged for a new inventory entry,
+    type: Tweak}
+  id: 3124
+  time: '2023-03-06T18:54:22.0000000+00:00'
