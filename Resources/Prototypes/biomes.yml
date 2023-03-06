@@ -157,6 +157,19 @@
       noise:
         frequency: 0.02
         fractalType: None
+    # Rock formation sand
+    - !type:BiomeTileLayer
+      threshold: -0.15
+      noise:
+        noiseType: Cellular
+        frequency: 0.05
+        lacunarity: 2
+        fractalType: FBm
+        octaves: 5
+        gain: 1
+        cellularDistanceFunction: Euclidean
+        cellularReturnType: Distance2
+      tile: FloorAsteroidSand
 
 # Lava
 - type: biome
