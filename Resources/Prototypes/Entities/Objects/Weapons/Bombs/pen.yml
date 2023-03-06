@@ -8,7 +8,7 @@
   - type: OnUseTimerTrigger
     delay: 4
     examinable: false
-  - type: Explosive # Decent explosion in a very small radius. Doesn't break underplating.
+  - type: Explosive # Decent explosion in a very small radius. Doesn't break plating.
     explosionType: DemolitionCharge
     totalIntensity: 45
     intensitySlope: 5
