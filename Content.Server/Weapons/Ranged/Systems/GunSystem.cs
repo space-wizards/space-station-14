@@ -38,7 +38,7 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly StunSystem _stun = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
-    public const float DamagePitchVariation = MeleeWeaponSystem.DamagePitchVariation;
+    public const float DamagePitchVariation = SharedMeleeWeaponSystem.DamagePitchVariation;
     public const float GunClumsyChance = 0.5f;
 
     public override void Initialize()
