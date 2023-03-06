@@ -289,7 +289,7 @@
         - ReagentId: Vitamin
           Quantity: 4
         - ReagentId: Allicin
-          Quantity: 8
+          Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/garlic.rsi
   - type: Produce
