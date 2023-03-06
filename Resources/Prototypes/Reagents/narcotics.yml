@@ -93,6 +93,150 @@
           min: 30
 
 - type: reagent
+  id: Stimulants
+  name: reagent-name-stimulants
+  group: Narcotics
+  desc: reagent-desc-stimulants
+  physicalDesc: reagant-physical-desc-energized
+  flavor: sharp
+  color: "#9A040E"
+  boilingPoint: 212.0
+  meltingPoint: 170.0
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.2
+      effects:
+      - !type:MovespeedModifier
+        walkSpeedModifier: 1.3
+        sprintSpeedModifier: 1.3
+      - !type:HealthChange
+        conditions:
+          - !type:ReagentThreshold
+            min: 80 #please wait 3 minutes before using another stimpack
+        damage:
+          types:
+            Poison: 1
+      - !type:GenericStatusEffect
+        key: Stun
+        time: 3
+        type: Remove
+      - !type:GenericStatusEffect
+        key: KnockedDown
+        time: 3
+        type: Remove
+    Medicine:
+      metabolismRate: 0.2
+      effects:
+        - !type:ResetNarcolepsy
+        - !type:SatiateHunger
+          factor: 1
+        - !type:SatiateThirst
+          factor: 1
+        - !type:HealthChange
+          conditions:
+          - !type:TotalDamage
+            min: 70
+            max: 120 # you've got a chance to get out of crit
+          damage: # heals at the same rate as tricordrazine, doesn't heal poison because if you OD'd I'm not giving you a safety net
+            groups:
+              Burn: -1
+              Brute: -1
+
+# a chemical prototype to surpass epinephrine
+- type: reagent
+  id: ExperimentalStimulants
+  name: reagent-name-experimental-stimulants
+  group: Narcotics
+  desc: reagent-desc-experimental-stimulants
+  physicalDesc: reagent-physical-desc-exhilarating
+  flavor: bottled lightning
+  color: "#AE0101"
+  boilingPoint: 212.0
+  meltingPoint: 170.0
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.25 # lasts for 4 minutes instead of 5
+      effects:
+      - !type:MovespeedModifier # nyoom
+        walkSpeedModifier: 1.8
+        sprintSpeedModifier: 1.8
+      - !type:Electrocute
+        conditions:
+          - !type:ReagentThreshold
+            max: 10 # ghetto withdrawal effect
+        probability: 0.3 # get stunlocked nerd
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          max: 10 # ghetto withdrawal
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          max: 10 # ghetto withdrawal
+        key: Stutter
+        component: StutteringAccent
+      - !type:HealthChange
+        conditions:
+          - !type:ReagentThreshold
+            min: 10
+        damage:
+          types:
+            Poison: 1 # You will be laying on the floor in crit in 100 seconds if you don't have antitoxin meds (Ideally this should deal twice as much damage but since nukies don't have access to stellbinin it would kill them)
+      - !type:HealthChange
+        conditions:
+          - !type:ReagentThreshold
+            min: 60.1 #so nukies don't take a tick of 8 poison damage when it first gets injected
+        damage:
+          types:
+            Poison: 8 # TODO this should ideally kill your liver instead
+      # effectively negates stamcrits
+      - !type:GenericStatusEffect
+        conditions:
+          - !type:ReagentThreshold
+            min: 10
+        key: Stun
+        time: 6
+        type: Remove
+      - !type:GenericStatusEffect
+        conditions:
+          - !type:ReagentThreshold
+            min: 10
+        key: KnockedDown
+        time: 6
+        type: Remove
+    Medicine:
+      metabolismRate: 0.25
+      effects:
+        - !type:ResetNarcolepsy
+        - !type:SatiateHunger
+          factor: 1
+        - !type:SatiateThirst
+          factor: 1
+        - !type:HealthChange
+          conditions:
+          - !type:ReagentThreshold
+            min: 10
+          damage:
+            types:
+              Brute: -4
+              Burn: -4
+        # stops CMOs from hypoing you with lexorin and sec from filling you with tranq shells
+        - !type:AdjustReagent
+          conditions:
+          - !type:ReagentThreshold
+            reagent: Lexorin
+            min: 1
+          reagent: Lexorin
+          amount: -3
+        - !type:AdjustReagent
+          conditions:
+          - !type:ReagentThreshold
+            reagent: ChloralHydrate
+            min: 1
+          reagent: ChloralHydrate
+          amount: -3
+
+- type: reagent
   id: THC
   name: reagent-name-thc
   group: Narcotics
