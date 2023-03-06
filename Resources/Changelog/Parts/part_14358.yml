@@ -1,0 +1,4 @@
+﻿author: Menshin
+changes:
+- type: Add # One of the following: Add, Remove, Tweak, Fix
+  message: The flip verb now has a icon and can be found under the rotation category.

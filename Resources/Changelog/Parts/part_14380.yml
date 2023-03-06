@@ -1,0 +1,4 @@
+﻿author: eclips_e
+changes:
+- type: Fix # One of the following: Add, Remove, Tweak, Fix
+  message: Male and female slimes now scream and laugh properly
