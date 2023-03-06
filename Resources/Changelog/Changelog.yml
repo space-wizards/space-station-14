@@ -1,12 +1,6 @@
 Entries:
 - author: checkraze
   changes:
-  - {message: Added XenoSci things and a mass scanner for salvage crew to Lighthouse,
-    type: Add}
-  id: 2630
-  time: '2022-11-09T07:06:34.0000000+00:00'
-- author: checkraze
-  changes:
   - {message: Added target dummies and some practice weapons to Kettle, type: Add}
   id: 2631
   time: '2022-11-09T07:11:00.0000000+00:00'
@@ -2917,3 +2911,11 @@ Entries:
   - {message: Catwalks allow you to pass over lava unharmed., type: Add}
   id: 3129
   time: '2023-03-06T19:11:28.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Added a new alternate jumpsuit for Atmospheric Technicians, type: Add}
+  - {message: 'Added a new alternate jumpsuit for Scientists, along with a matching
+      tie', type: Add}
+  - {message: Changed the tie sprites to look slightly less weird, type: Tweak}
+  id: 3130
+  time: '2023-03-06T19:42:10.0000000+00:00'
