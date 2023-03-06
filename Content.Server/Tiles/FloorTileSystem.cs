@@ -53,8 +53,13 @@ namespace Content.Server.Tiles
                     (phys.CollisionLayer & (int) CollisionGroup.Impassable) != 0) 
                     {
                         // e.g. you can place tile under directional windows
+                        var gridUid = location.GetGridUid(EntityManager);
                         var floorPos = location.ToMapPos(EntityManager);
                         var floorBox = Box2.UnitCentered.Translated(floorPos);
+                        if (TryComp<MapGridComponent>(gridUid, out var comp))
+                        {
+                            floorBox.Scale(comp.TileSize);
+                        }
                         if (!TryComp<FixturesComponent>(ent, out var fixtures) || !TryComp<TransformComponent>(ent, out var transform))
                             return;
                         var wallPos = transform.Coordinates.ToMapPos(EntityManager);
