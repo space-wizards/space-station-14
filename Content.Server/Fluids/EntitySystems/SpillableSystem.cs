@@ -131,13 +131,16 @@ public sealed class SpillableSystem : EntitySystem
         if (!_solutionContainerSystem.TryGetDrainableSolution(args.Using.Value, out var solution))
             return;
 
-        Verb verb = new();
-        verb.Text = Loc.GetString("empty-inhand-verb", ("object", "" + Name(args.Using.Value)));
-        verb.Act = () =>
+        Verb verb = new()
         {
-            Empty(solution, component, args.Using.Value);
+            Text = Loc.GetString("empty-inhand-verb", ("object", "" + Name(args.Using.Value))),
+            Act = () =>
+            {
+                Empty(solution, component, args.Using.Value);
+            },
+            Impact = LogImpact.Low,
+
         };
-        verb.Impact = LogImpact.Low;
         args.Verbs.Add(verb);
     }
 
@@ -231,8 +234,6 @@ public sealed class SpillableSystem : EntitySystem
             _popupSystem.PopupEntity(Loc.GetString("spill-target-verb-activate-is-empty-message", ("owner", user)), user);
             return;
         }
-
-
         solution.RemoveAllSolution();
         _audioSystem.Play(sink.EmptySound, Filter.Pvs(user), user, false);
     }

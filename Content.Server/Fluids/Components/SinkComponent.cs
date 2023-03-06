@@ -8,5 +8,6 @@ namespace Content.Server.Fluids.Components;
 [RegisterComponent]
 public sealed class SinkComponent : Component
 {
-    [DataField("emptySound")] public SoundSpecifier EmptySound = new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg");
+    [DataField("emptySound"), ViewVariables(VVAccess.ReadOnly)]
+    public SoundSpecifier EmptySound = new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg");
 }
