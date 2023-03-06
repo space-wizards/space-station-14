@@ -47,22 +47,22 @@
     #    - BushDOne
     #    - BushDTwo
     #    - BushDThree
-    - !type:BiomeDecalLayer
-      allowedTiles:
-        - FloorPlanetGrass
-      noise:
-        seed: 3
-        noiseType: OpenSimplex2
-        frequency: 0.003
-        lacunarity: 1.50
-        fractalType: Ridged
-        octaves: 1
-      divisions: 1
-      threshold: 0.90
-      decals:
-        - FlowersBROne
-        - FlowersBRTwo
-        - FlowersBRThree
+    #- !type:BiomeDecalLayer
+    #  allowedTiles:
+    #    - FloorPlanetGrass
+    #  noise:
+    #    seed: 3
+    #    noiseType: OpenSimplex2
+    #    frequency: 0.003
+    #    lacunarity: 1.50
+    #    fractalType: Ridged
+    #    octaves: 1
+    #  divisions: 1
+    #  threshold: 0.90
+    #  decals:
+    #    - FlowersBROne
+    #    - FlowersBRTwo
+    #    - FlowersBRThree
     #- !type:BiomeDecalLayer
     #  allowedTiles:
     #  - FloorPlanetGrass
@@ -97,17 +97,20 @@
     #    - FloraTreeLarge05
     #    - FloraTreeLarge06
     # Water
-    - !type:BiomeDecalLayer
-      threshold: 0.95
-      noise:
-        frequency: 0.003
-        noiseType: OpenSimplex2
-        fractalType: PingPong
+    - !type:BiomeEntityLayer
       allowedTiles:
         - FloorPlanetGrass
         - FloorAsteroidSand
-      decals:
-        - BushDOne
+      threshold: 0.95
+      noise:
+        seed: 3
+        noiseType: OpenSimplex2
+        frequency: 0.003
+        lacunarity: 1.50
+        fractalType: Ridged
+        octaves: 1
+      entities:
+        - FloorWaterEntity
     # Fill remainder with sand.
     - !type:BiomeTileLayer
       threshold: -1.0
