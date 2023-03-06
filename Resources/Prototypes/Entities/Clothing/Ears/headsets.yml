@@ -13,7 +13,7 @@
       key_slots:
       - EncryptionKeyCommon
   - type: Headset
-    keysExtractionMethod: Screwing
+  - type: EncryptionKeyHolder
   - type: Sprite
     state: icon
   - type: Clothing

@@ -295,6 +295,11 @@
   description: flavor-complex-carrot
 
 - type: flavor
+  id: cabbage
+  flavorType: Complex
+  description: flavor-complex-cabbage
+
+- type: flavor
   id: potatoes
   flavorType: Complex
   description: flavor-complex-potatoes
@@ -648,3 +653,8 @@
   id: watermelon
   flavorType: Complex
   description: flavor-complex-watermelon
+
+- type: flavor
+  id: garlic
+  flavorType: Complex
+  description: flavor-complex-garlic

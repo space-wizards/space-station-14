@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Content.Server.Administration.Logs;
-using Content.Server.Storage.Components;
 using Content.Shared.Alert;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Buckle.Components;
@@ -11,10 +10,12 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Storage.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Vehicle.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.GameStates;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Buckle.Systems;
 
@@ -31,8 +32,8 @@ public sealed partial class BuckleSystem
         SubscribeLocalEvent<BuckleComponent, InteractHandEvent>(HandleInteractHand);
         SubscribeLocalEvent<BuckleComponent, GetVerbsEvent<InteractionVerb>>(AddUnbuckleVerb);
         SubscribeLocalEvent<BuckleComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
-        SubscribeLocalEvent<BuckleComponent, CanDropEvent>(OnBuckleCanDrop);
-        SubscribeLocalEvent<BuckleComponent, DragDropEvent>(OnBuckleDragDrop);
+        SubscribeLocalEvent<BuckleComponent, CanDropDraggedEvent>(OnBuckleCanDrop);
+        SubscribeLocalEvent<BuckleComponent, DragDropDraggedEvent>(OnBuckleDragDrop);
     }
 
     private void AddUnbuckleVerb(EntityUid uid, BuckleComponent component, GetVerbsEvent<InteractionVerb> args)
@@ -44,7 +45,7 @@ public sealed partial class BuckleSystem
         {
             Act = () => TryUnbuckle(uid, args.User, buckle: component),
             Text = Loc.GetString("verb-categories-unbuckle"),
-            IconTexture = "/Textures/Interface/VerbIcons/unbuckle.svg.192dpi.png"
+            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/unbuckle.svg.192dpi.png"))
         };
 
         if (args.Target == args.User && args.Using == null)
@@ -76,7 +77,8 @@ public sealed partial class BuckleSystem
 
     private void HandleInteractHand(EntityUid uid, BuckleComponent component, InteractHandEvent args)
     {
-        args.Handled = TryUnbuckle(uid, args.User, buckle: component);
+        if (TryUnbuckle(uid, args.User, buckle: component))
+            args.Handled = true;
     }
 
     private void MoveEvent(EntityUid uid, BuckleComponent buckle, ref MoveEvent ev)
@@ -98,18 +100,18 @@ public sealed partial class BuckleSystem
         TryUnbuckle(uid, buckle.Owner, true, buckle);
     }
 
-    private void OnEntityStorageInsertAttempt(EntityUid uid, BuckleComponent comp, InsertIntoEntityStorageAttemptEvent args)
+    private void OnEntityStorageInsertAttempt(EntityUid uid, BuckleComponent comp, ref InsertIntoEntityStorageAttemptEvent args)
     {
         if (comp.Buckled)
-            args.Cancel();
+            args.Cancelled = true;
     }
 
-    private void OnBuckleCanDrop(EntityUid uid, BuckleComponent component, CanDropEvent args)
+    private void OnBuckleCanDrop(EntityUid uid, BuckleComponent component, ref CanDropDraggedEvent args)
     {
         args.Handled = HasComp<StrapComponent>(args.Target);
     }
 
-    private void OnBuckleDragDrop(EntityUid uid, BuckleComponent component, DragDropEvent args)
+    private void OnBuckleDragDrop(EntityUid uid, BuckleComponent component, ref DragDropDraggedEvent args)
     {
         args.Handled = TryBuckle(uid, args.User, args.Target, component);
     }

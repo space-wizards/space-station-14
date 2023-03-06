@@ -26,7 +26,7 @@ public sealed class RadioDeviceSystem : EntitySystem
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
     [Dependency] private readonly InteractionSystem _interaction = default!;
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     // Used to prevent a shitter from using a bunch of radios to spam chat.
     private HashSet<(string, EntityUid)> _recentlySent = new();
@@ -194,7 +194,7 @@ public sealed class RadioDeviceSystem : EntitySystem
             return; // no feedback loops please.
 
         if (_recentlySent.Add((args.Message, args.Source)))
-            _radio.SendRadioMessage(args.Source, args.Message, _protoMan.Index<RadioChannelPrototype>(component.BroadcastChannel));
+            _radio.SendRadioMessage(args.Source, args.Message, _protoMan.Index<RadioChannelPrototype>(component.BroadcastChannel), uid);
     }
 
     private void OnAttemptListen(EntityUid uid, RadioMicrophoneComponent component, ListenAttemptEvent args)
