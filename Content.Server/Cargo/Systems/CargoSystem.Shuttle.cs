@@ -156,14 +156,16 @@ public sealed partial class CargoSystem
     private void UpdatePalletConsoleInterface(EntityUid uid, CargoPalletConsoleComponent component)
     {
         var bui = _uiSystem.GetUi(component.Owner, CargoPalletConsoleUiKey.Sale);
-
-        if (!TryComp<TransformComponent>(uid, out var xform) || xform.GridUid == null)
+        var gridUid = Transform(uid).GridUid;
+        if (gridUid == null)
+        {
+            _uiSystem.SetUiState(bui,
+            new CargoPalletConsoleInterfaceState(0, 0, false));
             return;
-
-        var gridUid = xform.GridUid;
+        }
         GetPalletGoods((EntityUid) gridUid, out var toSell, out var amount);
         _uiSystem.SetUiState(bui,
-            new CargoPalletConsoleInterfaceState((int) amount, toSell.Count));
+            new CargoPalletConsoleInterfaceState((int) amount, toSell.Count, true));
     }
 
     private void OnPalletUIOpen(EntityUid uid, CargoPalletConsoleComponent component, BoundUIOpenedEvent args)
@@ -492,10 +494,15 @@ public sealed partial class CargoSystem
         if (player == null)
             return;
 
-        if (!TryComp<TransformComponent>(uid, out var xform) || xform.GridUid == null)
+        var bui = _uiSystem.GetUi(component.Owner, CargoPalletConsoleUiKey.Sale);
+        var gridUid = Transform(uid).GridUid;
+        if (gridUid == null)
+        {
+            _uiSystem.SetUiState(bui,
+            new CargoPalletConsoleInterfaceState(0, 0, false));
             return;
+        }
 
-        var gridUid = xform.GridUid;
         SellPallets((EntityUid) gridUid, out var price);
         var stackPrototype = _prototypeManager.Index<StackPrototype>("Credit");
         _stack.Spawn((int)price, stackPrototype, uid.ToCoordinates());

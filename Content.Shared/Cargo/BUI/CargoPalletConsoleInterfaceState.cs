@@ -15,9 +15,15 @@ public sealed class CargoPalletConsoleInterfaceState : BoundUserInterfaceState
     /// </summary>
     public int Count;
 
-    public CargoPalletConsoleInterfaceState(int appraisal, int count)
+    /// <summary>
+    /// are the buttons enabled
+    /// </summary>
+    public bool Enabled;
+
+    public CargoPalletConsoleInterfaceState(int appraisal, int count, bool enabled)
     {
         Appraisal = appraisal;
         Count = count;
+        Enabled = enabled;
     }
 }
