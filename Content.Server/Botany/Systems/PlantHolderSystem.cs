@@ -251,7 +251,7 @@ namespace Content.Server.Botany.Systems
                 }
 
                 component.Seed.Unique = false;
-                var seed = _botanySystem.SpawnSeedPacket(component.Seed, Transform(args.User).Coordinates);
+                var seed = _botanySystem.SpawnSeedPacket(component.Seed, Transform(args.User).Coordinates, args.User);
                 seed.RandomOffset(0.25f);
                 var displayName = Loc.GetString(component.Seed.DisplayName);
                 _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",
@@ -572,7 +572,8 @@ namespace Content.Server.Botany.Systems
             }
             else if (component.Age < 0) // Revert back to seed packet!
             {
-                _botanySystem.SpawnSeedPacket(component.Seed, Transform(uid).Coordinates);
+                // will put it in the trays hands if it has any, please do not try doing this
+                _botanySystem.SpawnSeedPacket(component.Seed, Transform(uid).Coordinates, uid);
                 RemovePlant(uid, component);
                 component.ForceUpdate = true;
                 Update(uid, component);
