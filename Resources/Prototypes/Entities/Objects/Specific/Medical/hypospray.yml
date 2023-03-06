@@ -170,6 +170,11 @@
         reagents:
         - ReagentId: Stimulants
           Quantity: 60
+  - type: Hypospray
+    solutionName: pen
+    transferAmount: 60
+  - type: StaticPrice
+    price: 500
   - type: Tag
     tags: []
     
@@ -189,6 +194,8 @@
         reagents:
         - ReagentId: Stimulants
           Quantity: 15
+  - type: StaticPrice
+    price: 100
   - type: Tag
     tags: []
     
@@ -208,6 +215,11 @@
         reagents:
         - ReagentId: ExperimentalStimulants
           Quantity: 60
+  - type: Hypospray
+    solutionName: pen
+    transferAmount: 60
+  - type: StaticPrice
+    price: 1000
   - type: Tag
     tags: []
 
