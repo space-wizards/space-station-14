@@ -25,15 +25,15 @@ namespace Content.Server.Speech.EntitySystems
                 return Loc.GetString($"accent-scrambled-words-{pick}");
             }
 
-            //Scramble the words
+            // Scramble the words
             var scrambled = words.OrderBy(x => _random.Next()).ToArray();
 
-            var msg = String.Join(" ", scrambled);
+            var msg = string.Join(" ", scrambled);
 
-            //First letter should be capital
+            // First letter should be capital
             msg = msg[0].ToString().ToUpper() + msg.Remove(0, 1);
 
-            //Capitalize lone i's
+            // Capitalize lone i's
             msg = Regex.Replace(msg, @"(?<=\ )i(?=[\ \.\?]|$)", "I");
             return msg;
         }

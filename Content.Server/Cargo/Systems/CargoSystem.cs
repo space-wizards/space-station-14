@@ -1,7 +1,6 @@
 using Content.Server.Cargo.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Cargo;
-using Content.Shared.Cargo.Components;
 using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.Prototypes;
 

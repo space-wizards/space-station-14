@@ -19,6 +19,8 @@ shell-argument-must-be-boolean = Argument must be a boolean.
 shell-wrong-arguments-number = Wrong number of arguments.
 shell-need-between-arguments = Need {$lower} to {$upper} arguments!
 
+shell-argument-uid = EntityUid
+
 ## Guards
 
 shell-entity-is-not-mob = Target entity is not a mob!

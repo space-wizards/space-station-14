@@ -70,6 +70,18 @@ public sealed class HumanoidAppearanceComponent : Component
 
     [DataField("eyeColor")]
     public Color EyeColor = Color.Brown;
+
+    /// <summary>
+    ///     Hair color of this humanoid. Used to avoid looping through all markings
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public Color? CachedHairColor;
+
+    /// <summary>
+    ///     Facial Hair color of this humanoid. Used to avoid looping through all markings
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public Color? CachedFacialHairColor;
 }
 
 [Serializable, NetSerializable]
@@ -114,9 +126,9 @@ public sealed class HumanoidAppearanceState : ComponentState
     [Serializable, NetSerializable]
     public readonly struct CustomBaseLayerInfo
     {
-        public CustomBaseLayerInfo(string id, Color? color = null)
+        public CustomBaseLayerInfo(string? id, Color? color = null)
         {
-            DebugTools.Assert(IoCManager.Resolve<IPrototypeManager>().HasIndex<HumanoidSpeciesSpriteLayer>(id));
+            DebugTools.Assert(id == null || IoCManager.Resolve<IPrototypeManager>().HasIndex<HumanoidSpeciesSpriteLayer>(id));
             ID = id;
             Color = color;
         }
@@ -124,11 +136,11 @@ public sealed class HumanoidAppearanceState : ComponentState
         /// <summary>
         ///     ID of this custom base layer. Must be a <see cref="HumanoidSpeciesSpriteLayer"/>.
         /// </summary>
-        [DataField("id", customTypeSerializer: typeof(PrototypeIdSerializer<HumanoidSpeciesSpriteLayer>), required: true)]
-        public string ID { init; get; }
+        [DataField("id", customTypeSerializer: typeof(PrototypeIdSerializer<HumanoidSpeciesSpriteLayer>))]
+        public string? ID { init; get; }
 
         /// <summary>
-        ///     Color of this custom base layer. Null implies skin colour.
+        ///     Color of this custom base layer. Null implies skin colour if the corresponding <see cref="HumanoidSpeciesSpriteLayer"/> is set to match skin.
         /// </summary>
         [DataField("color")]
         public Color? Color { init; get; }

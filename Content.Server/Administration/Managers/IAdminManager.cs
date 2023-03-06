@@ -1,4 +1,5 @@
-﻿using Content.Shared.Administration;
+using Content.Shared.Administration;
+using Content.Shared.Administration.Managers;
 using Robust.Server.Player;
 
 
@@ -7,7 +8,7 @@ namespace Content.Server.Administration.Managers
     /// <summary>
     ///     Manages server administrators and their permission flags.
     /// </summary>
-    public interface IAdminManager
+    public interface IAdminManager : ISharedAdminManager
     {
         /// <summary>
         ///     Fired when the permissions of an admin on the server changed.

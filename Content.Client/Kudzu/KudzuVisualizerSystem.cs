@@ -1,22 +1,20 @@
 using Content.Shared.Kudzu;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.Kudzu
+namespace Content.Client.Kudzu;
+
+public sealed class KudzuVisualsSystem : VisualizerSystem<KudzuVisualsComponent>
 {
-
-    public sealed class KudzuVisualsSystem : VisualizerSystem<KudzuVisualsComponent>
+    protected override void OnAppearanceChange(EntityUid uid, KudzuVisualsComponent component, ref AppearanceChangeEvent args)
     {
-        protected override void OnAppearanceChange(EntityUid uid, KudzuVisualsComponent component, ref AppearanceChangeEvent args)
-        {
 
-            if (args.Sprite == null)
-                return;
-            if (args.Component.TryGetData(KudzuVisuals.Variant, out int var)
-                && args.Component.TryGetData(KudzuVisuals.GrowthLevel, out int level))
-            {
-                var index = args.Sprite.LayerMapReserveBlank(component.Layer);
-                args.Sprite.LayerSetState(index, $"kudzu_{level}{var}");
-            }
+        if (args.Sprite == null)
+            return;
+        if (AppearanceSystem.TryGetData<int>(uid, KudzuVisuals.Variant, out var var, args.Component)
+            && AppearanceSystem.TryGetData<int>(uid, KudzuVisuals.GrowthLevel, out var level, args.Component))
+        {
+            var index = args.Sprite.LayerMapReserveBlank(component.Layer);
+            args.Sprite.LayerSetState(index, $"kudzu_{level}{var}");
         }
     }
 }
