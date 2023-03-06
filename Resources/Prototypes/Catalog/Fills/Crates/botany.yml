@@ -79,6 +79,10 @@
         amount: 1
       - id: CarrotSeeds
         amount: 1
+      - id: CabbageSeeds
+        amount: 1
+      - id: GarlicSeeds
+        amount: 1
       - id: ChanterelleSeeds
         amount: 1
       - id: PotatoSeeds
@@ -90,4 +94,10 @@
       - id: OatSeeds
         amount: 1
       - id: OnionSeeds
+        amount: 1
+      - id: OnionRedSeeds
+        amount: 1
+      - id: RiceSeeds
+        amount: 1
+      - id: SoybeanSeeds
         amount: 1

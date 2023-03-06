@@ -142,6 +142,9 @@ uplink-gatfruit-seeds-desc = And who says guns don't grow on trees?
 uplink-necronomicon-name = Necronomicon
 uplink-necronomicon-desc = An unholy book capable of summoning a demonic familiar.
 
+uplink-revolver-cap-gun-fake-name = Fake Cap Gun
+uplink-revolver-cap-gun-fake-desc = Fool your enemy! It can use both cap and magnum bullets. Comes loaded with magnum bullets.
+
 # Armor
 uplink-chameleon-name = Chameleon Kit
 uplink-chameleon-desc = A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!
@@ -185,6 +188,15 @@ uplink-ultrabright-lantern-desc = Blinding.
 
 uplink-nocturine-chemistry-bottle-name = Nocturine Bottle
 uplink-nocturine-chemistry-bottle-desc = A chemical that makes it very hard for your target to stand up.
+
+uplink-stimpack-name = Stimpack
+uplink-stimpack-desc = The legendary chemical produced by Donk Co. for the Syndicate. Injecting yourself with this will increase your run speed and let you recover from stuns faster for 5 minutes.
+
+uplink-stimkit-name = Stimkit
+uplink-stimkit-desc = A medkit containing 6 stimulant microinjectors, which each inject you with enough stimulants to last for a minute.
+
+uplink-experimental-stimpack-name = Experimental Stimpack
+uplink-experimental-stimpack-desc = A prototype version of the Stimpack pulled from the market due to extreme side effects. Effects include virtual immunity to stuns, massively increased movement speed, and rapid tissue regeneration, but the chemical will constantly poison you while in your bloodstream.
 
 uplink-syndicate-segway-crate-name = Syndicate Segway
 uplink-syndicate-segway-crate-desc = Be an enemy of the corporation, in style!

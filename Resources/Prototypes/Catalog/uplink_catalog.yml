@@ -1,3 +1,4 @@
+# TODO: make more categories
 # Guns
 
 - type: listing
@@ -268,7 +269,7 @@
   categories:
     - UplinkUtility
 
-#TODO: Increase the price to 4 when flashbang prof.
+#TODO: Remove this from the uplink
 - type: listing
   id: UplinkHeadset
   name: uplink-headset-name
@@ -557,6 +558,21 @@
     blacklist:
       components:
       - SurplusBundle
+  
+- type: listing
+  id: uplinkRevolverCapGunFake
+  name: uplink-revolver-cap-gun-fake-name
+  description: uplink-revolver-cap-gun-fake-desc
+  productEntity: RevolverCapGunFake
+  cost:
+    Telecrystal: 10
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Mime
+    - Clown
 
 # Armor
 
@@ -714,6 +730,41 @@
     Telecrystal: 5
   categories:
   - UplinkMisc
+
+- type: listing
+  id: UplinkStimpack
+  name: uplink-stimpack-name
+  description: uplink-stimpack-desc
+  productEntity: Stimpack
+  cost:
+    Telecrystal: 8
+  categories:
+  - UplinkMisc
+  
+- type: listing
+  id: UplinkStimkit
+  name: uplink-stimkit-name
+  description: uplink-stimkit-desc
+  productEntity: StimkitFilled
+  cost:
+    Telecrystal: 12
+  categories:
+  - UplinkMisc
+  
+- type: listing
+  id: UplinkStimpackExperimental
+  name: uplink-experimental-stimpack-name
+  description: uplink-experimental-stimpack-desc
+  productEntity: StimpackExperimental
+  cost:
+    Telecrystal: 15
+  categories:
+  - UplinkMisc
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
 
 - type: listing
   id: UplinkSyndicateSegwayCrate

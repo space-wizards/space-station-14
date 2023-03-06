@@ -1,5 +1,7 @@
-using Content.Server.Lock;
-using Content.Server.Storage.Components;
+using Content.Server.Pulling;
+using Content.Server.Security.Components;
+using Content.Shared.Lock;
+using Content.Shared.Pulling.Components;
 using Content.Shared.Security;
 using Robust.Server.GameObjects;
 
@@ -8,6 +10,7 @@ namespace Content.Server.Security.Systems
     public sealed class DeployableBarrierSystem : EntitySystem
     {
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly PullingSystem _pulling = default!;
 
         public override void Initialize()
         {
@@ -18,28 +21,28 @@ namespace Content.Server.Security.Systems
 
         private void OnStartup(EntityUid uid, DeployableBarrierComponent component, ComponentStartup args)
         {
-            if (!EntityManager.TryGetComponent(component.Owner, out LockComponent? lockComponent))
+            if (!TryComp(uid, out LockComponent? lockComponent))
                 return;
 
-            ToggleBarrierDeploy(uid, component, lockComponent.Locked);
+            ToggleBarrierDeploy(uid, lockComponent.Locked);
         }
 
-        private void OnLockToggled(EntityUid uid, DeployableBarrierComponent component, LockToggledEvent args)
+        private void OnLockToggled(EntityUid uid, DeployableBarrierComponent component, ref LockToggledEvent args)
         {
-            ToggleBarrierDeploy(uid, component, args.Locked);
+            ToggleBarrierDeploy(uid, args.Locked);
         }
 
-        private void ToggleBarrierDeploy(EntityUid uid, DeployableBarrierComponent component, bool isDeployed)
+        private void ToggleBarrierDeploy(EntityUid uid, bool isDeployed)
         {
-            EntityManager.GetComponent<TransformComponent>(component.Owner).Anchored = isDeployed;
-
-            if (!EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearance))
-                return;
+            Transform(uid).Anchored = isDeployed;
 
             var state = isDeployed ? DeployableBarrierState.Deployed : DeployableBarrierState.Idle;
-            _appearance.SetData(uid, DeployableBarrierVisuals.State, state, appearance);
+            _appearance.SetData(uid, DeployableBarrierVisuals.State, state);
 
-            if (EntityManager.TryGetComponent(component.Owner, out PointLightComponent? light))
+            if (TryComp<SharedPullableComponent>(uid, out var pullable))
+                _pulling.TryStopPull(pullable);
+
+            if (TryComp(uid, out PointLightComponent? light))
                 light.Enabled = isDeployed;
         }
     }
