@@ -1,9 +1,4 @@
 Entries:
-- author: Bright0
-  changes:
-  - {message: internals tanks with air no longer flash warning, type: Fix}
-  id: 2634
-  time: '2022-11-10T01:02:15.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed being unable to interact with items held in hands unless the hand
@@ -2919,3 +2914,9 @@ Entries:
   - {message: Male and female slimes now scream and laugh properly, type: Fix}
   id: 3133
   time: '2023-03-06T19:45:47.180167+00:00'
+- author: Slava0135
+  changes:
+  - {message: Removed heads encryption keys. Heads get second key in headsets (command
+      encryption key) to access command channel., type: Remove}
+  id: 3134
+  time: '2023-03-06T21:05:42.0000000+00:00'
