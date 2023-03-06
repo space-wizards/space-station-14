@@ -229,8 +229,8 @@ public sealed partial class ChemistrySystem
 
         var actualDelay = MathF.Max(component.Delay, 1f);
 
-        // Injections take 1 second longer per additional 5u
-        actualDelay += (float) component.TransferAmount / component.Delay - 1;
+        // Injections take 0.5 seconds longer per additional 5u
+        actualDelay += (float) component.TransferAmount / component.Delay - 0.5F;
 
         var isTarget = user != target;
 
@@ -244,7 +244,7 @@ public sealed partial class ChemistrySystem
             // Check if the target is incapacitated or in combat mode and modify time accordingly.
             if (_mobState.IsIncapacitated(target))
             {
-                actualDelay /= 2;
+                actualDelay /= 2.5;
             }
             else if (_combat.IsInCombatMode(target))
             {
@@ -262,8 +262,8 @@ public sealed partial class ChemistrySystem
         }
         else
         {
-            // Self-injections take half as long.
-            actualDelay /= 2;
+            // Self-injections take twice as long, to go in line with brute pack changes.
+            actualDelay *= 2;
 
             if (component.ToggleState == SharedInjectorComponent.InjectorToggleMode.Inject)
                 _adminLogger.Add(LogType.Ingestion, $"{EntityManager.ToPrettyString(user):user} is attempting to inject themselves with a solution {SolutionContainerSystem.ToPrettyString(solution):solution}.");
