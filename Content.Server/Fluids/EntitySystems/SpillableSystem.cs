@@ -125,7 +125,7 @@ public sealed class SpillableSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract || args.Using == null)
             return;
 
-        if (!EntityManager.TryGetComponent<SpillableComponent>(args.Using, out var spillable))
+        if (TryComp<SpillableComponent>(args.Using, out var spillable))
             return;
 
         if (!_solutionContainerSystem.TryGetDrainableSolution(args.Using.Value, out var solution))
@@ -216,7 +216,7 @@ public sealed class SpillableSystem : EntitySystem
     {
         foreach (var entity in _entityLookup.GetEntitiesIntersecting(tileRef))
         {
-            if (EntityManager.TryGetComponent(entity, out PuddleComponent? p))
+            if (TryComp(entity, out PuddleComponent? p))
             {
                 puddle = p;
                 return true;
@@ -278,7 +278,7 @@ public sealed class SpillableSystem : EntitySystem
 
             foreach (var spillEntity in spillEntities)
             {
-                if (!EntityManager.TryGetComponent(spillEntity, out puddleComponent)) continue;
+                if (!TryComp(spillEntity, out puddleComponent)) continue;
 
                 if (!overflow && _puddleSystem.WouldOverflow(puddleComponent.Owner, solution, puddleComponent))
                     return null;
