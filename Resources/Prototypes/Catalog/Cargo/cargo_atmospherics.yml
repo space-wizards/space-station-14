@@ -73,3 +73,25 @@
 #  cost: 15500
 #  category: Atmospherics
 #  group: market
+
+- type: cargoProduct
+  id: AtmosphericsGasMinerNitrousOxide
+  icon:
+    sprite: Structures/Piping/Atmospherics/miners.rsi
+    state: miner
+  product: GasMinerNitrousOxide
+  cost: 5800
+  category: Atmospherics
+  group: market
+  enabled: false
+
+- type: cargoProduct
+  id: AtmosphericsGasMinerOxygen
+  icon:
+    sprite: Structures/Piping/Atmospherics/miners.rsi
+    state: miner
+  product: GasMinerOxygen
+  cost: 5800
+  category: Atmospherics
+  group: market
+  enabled: false

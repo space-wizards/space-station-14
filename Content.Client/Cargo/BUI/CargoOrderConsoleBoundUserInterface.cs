@@ -99,10 +99,11 @@ namespace Content.Client.Cargo.BUI
             _menu.OpenCentered();
         }
 
-        private void Populate(List<CargoOrderData> orders)
+        private void Populate(List<CargoOrderData> orders, List<CargoProductPrototype> advancedProducts)
         {
             if (_menu == null) return;
 
+            _menu.SetupAdvancedProducts(advancedProducts);
             _menu.PopulateProducts();
             _menu.PopulateCategories();
             _menu.PopulateOrders(orders);
@@ -121,7 +122,7 @@ namespace Content.Client.Cargo.BUI
 
             AccountName = cState.Name;
 
-            Populate(cState.Orders);
+            Populate(cState.Orders, cState.AdvancedPrototypes);
             _menu?.UpdateCargoCapacity(OrderCount, OrderCapacity);
             _menu?.UpdateBankData(AccountName, BankBalance);
         }
