@@ -262,7 +262,7 @@ public sealed partial class ChemistrySystem
         }
         else
         {
-            // Self-injections take twice as long, to go in line with brute pack changes.
+            // Self-injections take twice as long, to go in line with brute pack changes. //
             actualDelay *= 2;
 
             if (component.ToggleState == SharedInjectorComponent.InjectorToggleMode.Inject)
