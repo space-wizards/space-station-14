@@ -1,35 +1,47 @@
 # Desert
-# TODO: Water in grasslands
-# TODO: Water in desert / grass?
+# TODO: Water in desert
 - type: biome
   id: LowDesert
   layers:
     - !type:BiomeEntityLayer
-      threshold: 0.99
-      frequency: 1
-      seedOffset: 1
+      threshold: 0.95
+      noise:
+        frequency: 2
+        noiseType: OpenSimplex2
       allowedTiles:
         - FloorLowDesert
       entities:
         - FloraRockSolid01
         - FloraRockSolid02
         - FloraRockSolid03
+    # Large rock areas
     - !type:BiomeEntityLayer
-      threshold: 0.9
-      frequency: 0.2
+      threshold: -0.20
+      noise:
+        frequency: 0.04
+        noiseType: Cellular
+        fractalType: FBm
+        octaves: 5
+        lacunarity: 2
+        gain: 1
+        cellularDistanceFunction: Euclidean
+        cellularReturnType: Distance2
       allowedTiles:
         - FloorLowDesert
       entities:
         - AsteroidRock
+    # Fill layer
     - !type:BiomeTileLayer
-      threshold: 0
+      threshold: -1
       variants:
         - 0
       tile: FloorLowDesert
     - !type:BiomeTileLayer
       threshold: 0.6
       tile: FloorLowDesert
-      frequency: 0.1
+      noise:
+        noiseType: Cellular
+        frequency: 0.1
 
 # Grass
 - type: biome
@@ -133,54 +145,60 @@
 - type: biome
   id: Lava
   layers:
+    #- !type:BiomeEntityLayer
+    #  threshold: 0.9
+    #  frequency: 1
+    #  seedOffset: 3
+    #  allowedTiles:
+    #    - FloorBasalt
+    #  entities:
+    #    - BasaltOne
+    #    - BasaltTwo
+    #    - BasaltThree
+    #    - BasaltFour
+    #    - BasaltFive
+    #- !type:BiomeDecalLayer
+    #  allowedTiles:
+    #    - FloorBasalt
+    #  seedOffset: 2
+    #  threshold: 0.9
+    #  divisions: 1
+    #  frequency: 1
+    #  decals:
+    #    - Basalt1
+    #    - Basalt2
+    #    - Basalt3
+    #    - Basalt4
+    #    - Basalt5
+    #    - Basalt6
+    #    - Basalt7
+    #    - Basalt8
+    #    - Basalt9
+    #- !type:BiomeEntityLayer
+    #  threshold: 0.99
+    #  frequency: 1
+    #  seedOffset: 1
+    #  allowedTiles:
+    #    - FloorBasalt
+    #  entities:
+    #    - FloraRockSolid01
+    #    - FloraRockSolid02
+    #    - FloraRockSolid03
     - !type:BiomeEntityLayer
-      threshold: 0.9
-      frequency: 1
-      seedOffset: 3
-      allowedTiles:
-        - FloorBasalt
-      entities:
-        - BasaltOne
-        - BasaltTwo
-        - BasaltThree
-        - BasaltFour
-        - BasaltFive
-    - !type:BiomeDecalLayer
-      allowedTiles:
-        - FloorBasalt
-      seedOffset: 2
-      threshold: 0.9
-      divisions: 1
-      frequency: 1
-      decals:
-        - Basalt1
-        - Basalt2
-        - Basalt3
-        - Basalt4
-        - Basalt5
-        - Basalt6
-        - Basalt7
-        - Basalt8
-        - Basalt9
-    - !type:BiomeEntityLayer
-      threshold: 0.99
-      frequency: 1
-      seedOffset: 1
-      allowedTiles:
-        - FloorBasalt
-      entities:
-        - FloraRockSolid01
-        - FloraRockSolid02
-        - FloraRockSolid03
-    - !type:BiomeEntityLayer
-      threshold: 0.7
-      frequency: 0.2
+      threshold: 0.2
+      noise:
+        frequency: 0.02
+        fractalType: FBm
+        octaves: 5
+        lacunarity: 2
+        gain: 0.4
       allowedTiles:
         - FloorBasalt
       entities:
         - FloorLavaEntity
+    # Fill basalt
     - !type:BiomeTileLayer
-      threshold: 0
+      threshold: -1
       variants:
         - 0
       tile: FloorBasalt
