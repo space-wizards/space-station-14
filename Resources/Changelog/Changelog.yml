@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed being unable to interact with items held in hands unless the hand
-      is currently selected., type: Fix}
-  id: 2635
-  time: '2022-11-10T01:04:47.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Gas recyclers can now be upgrades to reduce the minimum required temperature
@@ -2920,3 +2914,10 @@ Entries:
       encryption key) to access command channel., type: Remove}
   id: 3134
   time: '2023-03-06T21:05:42.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: added telecommunication server. You can put encryption keys there. In
+      the future will be necessary to transmit radio messages., type: Add}
+  - {message: encryption key insert/remove popups now always appear, type: Fix}
+  id: 3135
+  time: '2023-03-06T21:11:37.0000000+00:00'
