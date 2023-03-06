@@ -1,9 +1,4 @@
 Entries:
-- author: JustinTrotter
-  changes:
-  - {message: fixed windoor hacking, type: Tweak}
-  id: 2607
-  time: '2022-11-08T20:22:00.0000000+00:00'
 - author: Mervill
   changes:
   - {message: Docking ports on shuttles no longer force welded doors open. Have fun
@@ -2920,3 +2915,9 @@ Entries:
   - {message: Kimchi Salad recipe now use Garlic and Coleslaw uses Vinaigrette., type: Tweak}
   id: 3106
   time: '2023-03-06T01:50:09.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Lockers of heads of staff were supplied with encryption key boxes.,
+    type: Add}
+  id: 3107
+  time: '2023-03-06T02:32:08.0000000+00:00'
