@@ -68,7 +68,7 @@ namespace Content.Server.Cloning.Components
         /// amount of biomass needed to clone.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float BiomassRequirementMultiplier = 2;
+        public float BiomassRequirementMultiplier = 1.25F;
 
         /// <summary>
         /// The machine part that decreases the amount of material needed for cloning

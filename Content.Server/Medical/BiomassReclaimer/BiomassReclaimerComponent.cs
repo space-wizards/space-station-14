@@ -57,7 +57,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         /// The base yield per mass unit when no components are upgraded.
         /// </summary>
         [DataField("baseYieldPerUnitMass")]
-        public float BaseYieldPerUnitMass = 0.2f; // changed this
+        public float BaseYieldPerUnitMass = 0.35f;
 
         /// <summary>
         /// Machine part whose rating modifies the yield per mass.
