@@ -1,9 +1,4 @@
 Entries:
-- author: PixelTK
-  changes:
-  - {message: 'After a very long time, speed loaders have finally been fixed.', type: Fix}
-  id: 2622
-  time: '2022-11-08T21:09:38.0000000+00:00'
 - author: Rane
   changes:
   - {message: You can no longer use machines which require vision while blind., type: Fix}
@@ -2915,3 +2910,8 @@ Entries:
   - {message: Fixed bugs with clothing getting stuck after a polymorph., type: Fix}
   id: 3121
   time: '2023-03-06T17:37:18.0000000+00:00'
+- author: 08A
+  changes:
+  - {message: (Construction Menu) Reset ghost preview when selecting a craft, type: Fix}
+  id: 3122
+  time: '2023-03-06T18:08:54.0000000+00:00'
