@@ -39,7 +39,7 @@ public sealed class CluwneSystem : EntitySystem
     }
 
     /// <summary>
-    /// On death removes active comps and gives genetic damage to prevent cloning.
+    /// On death removes active comps and gives genetic damage to prevent cloning, reduce this to allow cloning.
     /// </summary>
     private void OnMobState(EntityUid uid, CluwneComponent component, MobStateChangedEvent args)
     {
