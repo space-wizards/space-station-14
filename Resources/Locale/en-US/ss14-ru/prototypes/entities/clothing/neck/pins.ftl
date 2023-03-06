@@ -1,3 +1,6 @@
+ent-ClothingNeckPinBase = pin
+    .desc = be nothing do crime
+    .suffix = { "" }
 ent-ClothingNeckLGBTPin = LGBT pin
     .desc = be gay do crime
     .suffix = { "" }
