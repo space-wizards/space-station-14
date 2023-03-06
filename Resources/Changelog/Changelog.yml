@@ -1,11 +1,4 @@
 Entries:
-- author: Vordenburg
-  changes:
-  - {message: The forensic scanner prints properly if it's not in your active hand.,
-    type: Fix}
-  - {message: The forensic scanner makes a sound when printing., type: Add}
-  id: 2621
-  time: '2022-11-08T21:06:09.0000000+00:00'
 - author: PixelTK
   changes:
   - {message: 'After a very long time, speed loaders have finally been fixed.', type: Fix}
@@ -2917,3 +2910,8 @@ Entries:
   - {message: Body parts can now be put in trash bags. Viscera Cleanup Detail!, type: Add}
   id: 3120
   time: '2023-03-06T17:33:54.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed bugs with clothing getting stuck after a polymorph., type: Fix}
+  id: 3121
+  time: '2023-03-06T17:37:18.0000000+00:00'
