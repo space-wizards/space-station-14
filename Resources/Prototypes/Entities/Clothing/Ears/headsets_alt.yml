@@ -18,8 +18,7 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyCargo
-      - EncryptionKeyCommand
+      - EncryptionKeyQM
   - type: Sprite
     sprite: Clothing/Ears/Headsets/cargo.rsi
   - type: Clothing
@@ -34,7 +33,6 @@
     containers:
       key_slots:
       - EncryptionKeyCentCom
-      - EncryptionKeyAllAccess
   - type: Sprite
     sprite: Clothing/Ears/Headsets/centcom.rsi
   - type: Clothing
@@ -48,7 +46,7 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyAllAccess
+      - EncryptionKeyCommand
   - type: Sprite
     sprite: Clothing/Ears/Headsets/command.rsi
   - type: Clothing
@@ -62,8 +60,7 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyEngineering
-      - EncryptionKeyCommand
+      - EncryptionKeyCE
   - type: Sprite
     sprite: Clothing/Ears/Headsets/engineering.rsi
   - type: Clothing
@@ -77,8 +74,7 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyMedical
-      - EncryptionKeyCommand
+      - EncryptionKeyCMO
   - type: Sprite
     sprite: Clothing/Ears/Headsets/medical.rsi
   - type: Clothing
@@ -92,8 +88,7 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeySecurity
-      - EncryptionKeyCommand
+      - EncryptionKeyHOS
   - type: Sprite
     sprite: Clothing/Ears/Headsets/security.rsi
   - type: Clothing
@@ -107,8 +102,7 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyScience
-      - EncryptionKeyCommand
+      - EncryptionKeyRD
   - type: Sprite
     sprite: Clothing/Ears/Headsets/science.rsi
   - type: Clothing
