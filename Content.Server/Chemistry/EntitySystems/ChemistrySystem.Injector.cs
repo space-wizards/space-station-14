@@ -230,7 +230,7 @@ public sealed partial class ChemistrySystem
         var actualDelay = MathF.Max(component.Delay, 1f);
 
         // Injections take 0.5 seconds longer per additional 5u
-        actualDelay += (float) component.TransferAmount / component.Delay - 0.5F;
+        actualDelay += (float) component.TransferAmount / component.Delay - 0.5f;
 
         var isTarget = user != target;
 
