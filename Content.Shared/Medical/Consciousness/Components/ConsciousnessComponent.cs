@@ -6,33 +6,34 @@ namespace Content.Shared.Medical.Consciousness.Components;
 [RegisterComponent]
 public sealed class ConsciousnessComponent : Component
 {
-    [DataField("passOutThreshold")] public FixedPoint2 PassOutThreshold = 30;
-    [DataField("base")] public FixedPoint2 Base = 100;
-    public FixedPoint2 Modifier;
-    public FixedPoint2 Offset;
-    public FixedPoint2 Cap;
+    [DataField("threshold", required: true)]
+    public FixedPoint2 Threshold = 30;
+    [DataField("capacity")] public FixedPoint2 Capacity = 100;
+    [DataField("damage")] public FixedPoint2 Damage = 0;
+    public FixedPoint2 Modifier = 1.0;
+    public FixedPoint2 Clamp = 100;
 }
 
 [NetSerializable, Serializable]
 public sealed class ConsciousnessComponentState : ComponentState
 {
-    public FixedPoint2 PassOutThreshold;
-    public FixedPoint2 Base;
+    public FixedPoint2 Threshold;
+    public FixedPoint2 Damage;
     public FixedPoint2 Modifier;
-    public FixedPoint2 Offset;
-    public FixedPoint2 Cap;
+    public FixedPoint2 Capacity;
+    public FixedPoint2 Clamp;
 
     public ConsciousnessComponentState(
-        FixedPoint2 passOutThreshold,
-        FixedPoint2 baseValue,
+        FixedPoint2 threshold,
+        FixedPoint2 damage,
         FixedPoint2 modifier,
-        FixedPoint2 offset,
-        FixedPoint2 cap)
+        FixedPoint2 clamp,
+        FixedPoint2 capacity)
     {
-        PassOutThreshold = passOutThreshold;
-        Base = baseValue;
+        Threshold = threshold;
+        Damage = damage;
         Modifier = modifier;
-        Offset = offset;
-        Cap = cap;
+        Clamp = clamp;
+        Capacity = capacity;
     }
 }
