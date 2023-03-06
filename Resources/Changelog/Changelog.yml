@@ -1,14 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: The puking noise has been removed., type: Tweak}
-  id: 2612
-  time: '2022-11-08T20:33:06.0000000+00:00'
-- author: Vordenburg
-  changes:
-  - {message: Clarified machine missing messages for the cloner., type: Tweak}
-  id: 2613
-  time: '2022-11-08T20:35:09.0000000+00:00'
 - author: Nairod
   changes:
   - {message: Tweaked the HoP's starting access to be more uniform., type: Tweak}
@@ -2919,3 +2909,13 @@ Entries:
       belts., type: Tweak}
   id: 3111
   time: '2023-03-06T04:23:02.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Changed comfy chair and pilot seat crafting cost and yield., type: Tweak}
+  id: 3112
+  time: '2023-03-06T04:29:26.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added small margins to the round summary window., type: Tweak}
+  id: 3113
+  time: '2023-03-06T04:30:07.0000000+00:00'
