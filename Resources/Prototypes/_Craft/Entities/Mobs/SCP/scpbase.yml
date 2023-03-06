@@ -32,20 +32,12 @@
     netsync: false
   - type: Clickable
   - type: MobState
-  - type: CombatMode
   - type: StatusEffects
     allowed:
     - SlowedDown
     - Stutter
     - Pacified
   - type: Examiner
-  - type: MeleeWeapon
-    hidden: true
-    angle: 0
-    animation: WeaponArcBite
-    damage:
-      groups:
-        Brute: 5
   - type: Appearance
   - type: RotationVisuals
   - type: Actions

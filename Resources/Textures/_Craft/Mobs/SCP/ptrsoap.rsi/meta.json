@@ -1,0 +1,15 @@
+{
+    "version": 1,
+    "license": "CC BY-SA",
+    "copyright": "Discord Rysskiy<@410474801350574080>, GitHub @DeffOS",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "scp_soap",
+            "directions": 4
+        }
+    ]
+}

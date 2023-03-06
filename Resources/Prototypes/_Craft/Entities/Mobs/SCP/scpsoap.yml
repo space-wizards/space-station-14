@@ -1,0 +1,61 @@
+- type: entity
+  name: Странное Мыло
+  parent: SCPMobBase
+  id: MobSCPSoap
+  description: Странное существо выглядащее как мыло, кажется вполне безобидным.
+  components:
+  - type: SCPSoap
+    slipActionForce: 15
+    slipActionStun: 4
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      sprite: _Craft/Mobs/SCP/ptrsoap.rsi
+      state: scp_soap
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.45
+      id: "slips"
+      hard: false
+      layer:
+      - SlipLayer
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.3
+      density: 50
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+  - type: Slippery
+    paralyzeTime: 1
+    launchForwardsMultiplier: 3
+  - type: StepTrigger
+    intersectRatio: 0.2
+
+  - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      1000: Dead
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: SCP173
+  - type: NoSlip
+  - type: DiseaseProtection
+    protection: 1
+  - type: Insulated
+  - type: Tag
+    tags:
+      - CannotSuicide
+      - DoorBumpOpener
