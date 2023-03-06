@@ -1,9 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: Events are now quieter., type: Tweak}
-  id: 2593
-  time: '2022-11-08T02:35:11.0000000+00:00'
 - author: Nairod
   changes:
   - {message: Changed the laser crate to now require armory access., type: Tweak}
@@ -2912,3 +2907,8 @@ Entries:
   - {message: Salvage magnet shows remaining cooldown time when examined., type: Tweak}
   id: 3092
   time: '2023-03-03T16:25:43.0000000+00:00'
+- author: Nylux
+  changes:
+  - {message: Changed the name of planet-related tiles to be more readable., type: Tweak}
+  id: 3093
+  time: '2023-03-04T04:50:43.0000000+00:00'
