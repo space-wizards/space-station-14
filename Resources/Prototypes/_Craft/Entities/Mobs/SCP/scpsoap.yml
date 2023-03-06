@@ -1,3 +1,11 @@
+- type: accent
+  id: boubly
+  words:
+  - Бульк.
+  - Буль!
+  - Буль-буль.
+  - Блаб.
+
 - type: entity
   name: Странное Мыло
   parent: SCPMobBase
@@ -39,7 +47,15 @@
     launchForwardsMultiplier: 3
   - type: StepTrigger
     intersectRatio: 0.2
-
+  - type: ReplacementAccent
+    accent: boubly
+  - type: GhostTakeoverAvailable
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: false
+    name: Странное Мыло
+    description: Вы разумное мыло, порождёние таинственного космоса. Как ни странно вы всё такой же скользкий как и обычное мыло.
+    rules: Будучи дружелюбным обьектом веселите экипаж!
   - type: MobState
     allowedStates:
       - Alive
@@ -59,3 +75,17 @@
     tags:
       - CannotSuicide
       - DoorBumpOpener
+
+- type: entity
+  name: Спавнер Странного Мыла
+  id: SpawnMobSCPSoap
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: _Craft/Mobs/SCP/ptrsoap.rsi
+        state: scp_soap
+  - type: ConditionalSpawner
+    prototypes:
+      - MobSCPSoap
