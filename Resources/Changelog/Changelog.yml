@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Gas recyclers can now be upgrades to reduce the minimum required temperature
-      and pressure., type: Add}
-  id: 2636
-  time: '2022-11-10T01:11:23.0000000+00:00'
 - author: keronshb
   changes:
   - {message: Mousetraps no longer autokill cardboard box users, type: Fix}
@@ -2921,3 +2915,10 @@ Entries:
   - {message: encryption key insert/remove popups now always appear, type: Fix}
   id: 3135
   time: '2023-03-06T21:11:37.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: during solar flare doors can toggle randomly., type: Add}
+  - {message: powered lights can break during solar flare and not just at start.,
+    type: Tweak}
+  id: 3136
+  time: '2023-03-06T23:35:59.0000000+00:00'
