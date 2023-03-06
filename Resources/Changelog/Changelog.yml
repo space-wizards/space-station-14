@@ -1,9 +1,4 @@
 Entries:
-- author: Nairod
-  changes:
-  - {message: Tweaked the HoP's starting access to be more uniform., type: Tweak}
-  id: 2614
-  time: '2022-11-08T20:39:49.0000000+00:00'
 - author: Bright0
   changes:
   - {message: pill containers now have unique sfx, type: Add}
@@ -2919,3 +2914,8 @@ Entries:
   - {message: Added small margins to the round summary window., type: Tweak}
   id: 3113
   time: '2023-03-06T04:30:07.0000000+00:00'
+- author: eclips_e
+  changes:
+  - {message: Slimes can now get drunk, type: Tweak}
+  id: 3114
+  time: '2023-03-06T04:32:22.0000000+00:00'
