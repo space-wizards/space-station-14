@@ -1,20 +1,4 @@
 Entries:
-- author: checkraze
-  changes:
-  - {message: Added target dummies and some practice weapons to Kettle, type: Add}
-  id: 2631
-  time: '2022-11-09T07:11:00.0000000+00:00'
-- author: juliangiebel
-  changes:
-  - {message: "An update to Robust#OS\u2122 now prevents deinstalling preinstalled\
-      \ programs.", type: Tweak}
-  id: 2632
-  time: '2022-11-10T00:59:16.0000000+00:00'
-- author: JustinTrotter
-  changes:
-  - {message: Droppers behave more like injectors., type: Tweak}
-  id: 2633
-  time: '2022-11-10T00:59:54.0000000+00:00'
 - author: Bright0
   changes:
   - {message: internals tanks with air no longer flash warning, type: Fix}
@@ -2919,3 +2903,19 @@ Entries:
   - {message: Changed the tie sprites to look slightly less weird, type: Tweak}
   id: 3130
   time: '2023-03-06T19:42:10.0000000+00:00'
+- author: Menshin
+  changes:
+  - {message: The flip verb now has a icon and can be found under the rotation category.,
+    type: Add}
+  id: 3131
+  time: '2023-03-06T19:45:47.178629+00:00'
+- author: crazybrain
+  changes:
+  - {message: Space bears can now fit through doorsz, type: Tweak}
+  id: 3132
+  time: '2023-03-06T19:45:47.179430+00:00'
+- author: eclips_e
+  changes:
+  - {message: Male and female slimes now scream and laugh properly, type: Fix}
+  id: 3133
+  time: '2023-03-06T19:45:47.180167+00:00'
