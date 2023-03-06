@@ -1,66 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: You can no longer use machines which require vision while blind., type: Fix}
-  id: 2623
-  time: '2022-11-08T21:10:14.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Animals are no longer immune to shoving., type: Fix}
-  - {message: You now shove people rather than "disarm" them if they aren't holding
-      anything., type: Fix}
-  id: 2624
-  time: '2022-11-08T21:11:00.0000000+00:00'
-- author: Nairod
-  changes:
-  - {message: Added a armory door remote for the warden., type: Add}
-  id: 2625
-  time: '2022-11-08T21:13:56.0000000+00:00'
-- author: Scribbles0
-  changes:
-  - {message: 'Heterochromia is now available through the markings tab, located under
-      the head section.', type: Add}
-  id: 2626
-  time: '2022-11-08T21:16:13.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Names show during the join announcement again., type: Fix}
-  id: 2627
-  time: '2022-11-09T00:04:51.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Hopefully fixed an issue that was causing entities to sometimes not
-      appear (e.g., "invisible walls"). Please re-report if it reoccurs on updated
-      servers.', type: Fix}
-  id: 2628
-  time: '2022-11-09T00:41:26.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed vehicles not working., type: Fix}
-  id: 2629
-  time: '2022-11-09T06:31:43.0000000+00:00'
-- author: checkraze
-  changes:
-  - {message: Added XenoSci things and a mass scanner for salvage crew to Lighthouse,
-    type: Add}
-  id: 2630
-  time: '2022-11-09T07:06:34.0000000+00:00'
-- author: checkraze
-  changes:
-  - {message: Added target dummies and some practice weapons to Kettle, type: Add}
-  id: 2631
-  time: '2022-11-09T07:11:00.0000000+00:00'
-- author: juliangiebel
-  changes:
-  - {message: "An update to Robust#OS\u2122 now prevents deinstalling preinstalled\
-      \ programs.", type: Tweak}
-  id: 2632
-  time: '2022-11-10T00:59:16.0000000+00:00'
-- author: JustinTrotter
-  changes:
-  - {message: Droppers behave more like injectors., type: Tweak}
-  id: 2633
-  time: '2022-11-10T00:59:54.0000000+00:00'
 - author: Bright0
   changes:
   - {message: internals tanks with air no longer flash warning, type: Fix}
@@ -2915,3 +2853,69 @@ Entries:
   - {message: (Construction Menu) Reset ghost preview when selecting a craft, type: Fix}
   id: 3122
   time: '2023-03-06T18:08:54.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: 'Added lime, orange; and citrus salad recipe.', type: Add}
+  - {message: Lime and orange cakes now require fruits instead of juice, type: Tweak}
+  id: 3123
+  time: '2023-03-06T18:45:39.0000000+00:00'
+- author: pofitlo
+  changes:
+  - {message: Cigarettes vending machine can be emagged for a new inventory entry,
+    type: Tweak}
+  id: 3124
+  time: '2023-03-06T18:54:22.0000000+00:00'
+- author: MagnusCrowe
+  changes:
+  - {message: 'Added paramedic hat and jacket, at the medidrobe while supplies last',
+    type: Add}
+  id: 3125
+  time: '2023-03-06T19:04:12.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: 'Added Emp Grenade to uplink (4 TC). Drains power from nearby batteries
+      (laser gun, stun baton and etc.), turns off APCs and breaks lights around.',
+    type: Add}
+  id: 3126
+  time: '2023-03-06T19:05:12.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: Chat size storage. Now you don't have to resize the chat constantly
+      every time you start up the game!, type: Add}
+  id: 3127
+  time: '2023-03-06T19:06:57.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: 'Fix incorrect access denied popup when trying to open a locker with
+      a remote in hand,', type: Fix}
+  id: 3128
+  time: '2023-03-06T19:10:35.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Catwalks allow you to pass over lava unharmed., type: Add}
+  id: 3129
+  time: '2023-03-06T19:11:28.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Added a new alternate jumpsuit for Atmospheric Technicians, type: Add}
+  - {message: 'Added a new alternate jumpsuit for Scientists, along with a matching
+      tie', type: Add}
+  - {message: Changed the tie sprites to look slightly less weird, type: Tweak}
+  id: 3130
+  time: '2023-03-06T19:42:10.0000000+00:00'
+- author: Menshin
+  changes:
+  - {message: The flip verb now has a icon and can be found under the rotation category.,
+    type: Add}
+  id: 3131
+  time: '2023-03-06T19:45:47.178629+00:00'
+- author: crazybrain
+  changes:
+  - {message: Space bears can now fit through doorsz, type: Tweak}
+  id: 3132
+  time: '2023-03-06T19:45:47.179430+00:00'
+- author: eclips_e
+  changes:
+  - {message: Male and female slimes now scream and laugh properly, type: Fix}
+  id: 3133
+  time: '2023-03-06T19:45:47.180167+00:00'
