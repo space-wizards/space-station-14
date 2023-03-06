@@ -1,14 +1,4 @@
 Entries:
-- author: Bright0
-  changes:
-  - {message: pill containers now have unique sfx, type: Add}
-  id: 2615
-  time: '2022-11-08T20:53:10.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Resprited the Detective's Coat., type: Tweak}
-  id: 2616
-  time: '2022-11-08T20:56:14.0000000+00:00'
 - author: notafet
   changes:
   - {message: Ore processors and lathes require power to process materials., type: Fix}
@@ -2919,3 +2909,13 @@ Entries:
   - {message: Slimes can now get drunk, type: Tweak}
   id: 3114
   time: '2023-03-06T04:32:22.0000000+00:00'
+- author: eclips_e
+  changes:
+  - {message: Pins no longer weigh as much as a crowbar, type: Fix}
+  id: 3115
+  time: '2023-03-06T04:33:41.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: grenades emit sound on trigger again, type: Fix}
+  id: 3116
+  time: '2023-03-06T04:34:08.0000000+00:00'
