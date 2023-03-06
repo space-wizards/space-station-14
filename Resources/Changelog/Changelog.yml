@@ -1,11 +1,4 @@
 Entries:
-- author: JustinTrotter
-  changes:
-  - {message: You can toggle other crew's internals via right click menu, type: Add}
-  - {message: Pets can wear breath/medical masks and air tanks. Save those pets!,
-    type: Add}
-  id: 2620
-  time: '2022-11-08T21:04:07.0000000+00:00'
 - author: Vordenburg
   changes:
   - {message: The forensic scanner prints properly if it's not in your active hand.,
@@ -2919,3 +2912,8 @@ Entries:
   - {message: Fixed entity spawn menu preview for pipes, type: Fix}
   id: 3119
   time: '2023-03-06T17:01:36.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Body parts can now be put in trash bags. Viscera Cleanup Detail!, type: Add}
+  id: 3120
+  time: '2023-03-06T17:33:54.0000000+00:00'
