@@ -10,6 +10,9 @@
   id: AirSensor
 
 - type: Tag
+  id: AppraisalTool
+
+- type: Tag
   id: ATVKeys
 
 - type: Tag

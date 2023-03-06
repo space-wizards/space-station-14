@@ -217,7 +217,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private bool TryDrink(EntityUid user, EntityUid target, DrinkComponent drink, EntityUid item)
         {
-            if (!EntityManager.HasComponent<BodyComponent>(target) || drink.ForceDrink)
+            if (!EntityManager.HasComponent<BodyComponent>(target) || drink.Drinking)
                 return false;
 
             if (!drink.Opened)
@@ -241,6 +241,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!_interactionSystem.InRangeUnobstructed(user, item, popup: true))
                 return true;
 
+            drink.Drinking = true;
             drink.ForceDrink = user != target;
 
             if (drink.ForceDrink)
@@ -286,11 +287,10 @@ namespace Content.Server.Nutrition.EntitySystems
         /// </summary>
         private void OnDoAfter(EntityUid uid, DrinkComponent component, DoAfterEvent<DrinkData> args)
         {
-            //Special cancel if they're force feeding someone.
-            //Allows self to drink multiple times but prevents force feeding drinks to others rapidly.
-            if (args.Cancelled && component.ForceDrink)
+            if (args.Cancelled)
             {
                 component.ForceDrink = false;
+                component.Drinking = false;
                 return;
             }
 
@@ -374,6 +374,7 @@ namespace Content.Server.Nutrition.EntitySystems
             //TODO: Grab the stomach UIDs somehow without using Owner
             _stomachSystem.TryTransferSolution(firstStomach.Value.Comp.Owner, drained, firstStomach.Value.Comp);
 
+            component.Drinking = false;
             component.ForceDrink = false;
             args.Handled = true;
         }
