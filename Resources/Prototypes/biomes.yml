@@ -145,45 +145,48 @@
 - type: biome
   id: Lava
   layers:
-    #- !type:BiomeEntityLayer
-    #  threshold: 0.9
-    #  frequency: 1
-    #  seedOffset: 3
-    #  allowedTiles:
-    #    - FloorBasalt
-    #  entities:
-    #    - BasaltOne
-    #    - BasaltTwo
-    #    - BasaltThree
-    #    - BasaltFour
-    #    - BasaltFive
-    #- !type:BiomeDecalLayer
-    #  allowedTiles:
-    #    - FloorBasalt
-    #  seedOffset: 2
-    #  threshold: 0.9
-    #  divisions: 1
-    #  frequency: 1
-    #  decals:
-    #    - Basalt1
-    #    - Basalt2
-    #    - Basalt3
-    #    - Basalt4
-    #    - Basalt5
-    #    - Basalt6
-    #    - Basalt7
-    #    - Basalt8
-    #    - Basalt9
-    #- !type:BiomeEntityLayer
-    #  threshold: 0.99
-    #  frequency: 1
-    #  seedOffset: 1
-    #  allowedTiles:
-    #    - FloorBasalt
-    #  entities:
-    #    - FloraRockSolid01
-    #    - FloraRockSolid02
-    #    - FloraRockSolid03
+    - !type:BiomeEntityLayer
+      threshold: 0.9
+      noise:
+        frequency: 1
+        seed: 2
+      allowedTiles:
+        - FloorBasalt
+      entities:
+        - BasaltOne
+        - BasaltTwo
+        - BasaltThree
+        - BasaltFour
+        - BasaltFive
+    - !type:BiomeDecalLayer
+      allowedTiles:
+        - FloorBasalt
+      threshold: 0.9
+      divisions: 1
+      noise:
+        seed: 1
+        frequency: 1
+      decals:
+        - Basalt1
+        - Basalt2
+        - Basalt3
+        - Basalt4
+        - Basalt5
+        - Basalt6
+        - Basalt7
+        - Basalt8
+        - Basalt9
+    - !type:BiomeEntityLayer
+      threshold: 0.95
+      noise:
+        noiseType: OpenSimplex2
+        frequency: 1
+      allowedTiles:
+        - FloorBasalt
+      entities:
+        - FloraRockSolid01
+        - FloraRockSolid02
+        - FloraRockSolid03
     - !type:BiomeEntityLayer
       threshold: 0.2
       noise:
