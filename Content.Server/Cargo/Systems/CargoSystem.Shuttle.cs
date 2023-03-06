@@ -504,7 +504,7 @@ public sealed partial class CargoSystem
         }
 
         SellPallets((EntityUid) gridUid, out var price);
-        var stackPrototype = _prototypeManager.Index<StackPrototype>("Credit");
+        var stackPrototype = _prototypeManager.Index<StackPrototype>(component.CashType);
         _stack.Spawn((int)price, stackPrototype, uid.ToCoordinates());
         UpdatePalletConsoleInterface(uid, component);
     }
