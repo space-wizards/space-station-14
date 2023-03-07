@@ -15,6 +15,7 @@ using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Communications;
 using Content.Shared.Database;
+using Content.Shared.Emag.Components;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
@@ -175,7 +176,7 @@ namespace Content.Server.Communications
             if (!_interaction.InRangeUnobstructed(console, user))
                 return false;
 
-            if (TryComp<AccessReaderComponent>(console, out var accessReaderComponent) && accessReaderComponent.Enabled)
+            if (TryComp<AccessReaderComponent>(console, out var accessReaderComponent) && !HasComp<EmaggedComponent>(console))
             {
                 return _accessReaderSystem.IsAllowed(user, accessReaderComponent);
             }

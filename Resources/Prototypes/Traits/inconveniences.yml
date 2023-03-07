@@ -12,3 +12,11 @@
         params:
           variation: 0.2
       timeBetweenIncidents: 0.3, 300
+
+- type: trait
+  id: LightweightDrunk
+  name: trait-lightweight-name
+  description: trait-lightweight-desc
+  components:
+    - type: LightweightDrunk
+      boozeStrengthMultiplier: 2

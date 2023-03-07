@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Humanoid.Markings;
 
@@ -105,6 +106,22 @@ public sealed class MarkingSet
     }
 
     /// <summary>
+    ///     Construct a MarkingSet only with a points dictionary.
+    /// </summary>
+    /// <param name="pointsPrototype">The ID of the points dictionary prototype.</param>
+    public MarkingSet(string pointsPrototype, MarkingManager? markingManager = null, IPrototypeManager? prototypeManager = null)
+    {
+        IoCManager.Resolve(ref markingManager, ref prototypeManager);
+
+        if (!prototypeManager.TryIndex(pointsPrototype, out MarkingPointsPrototype? points))
+        {
+            return;
+        }
+
+        Points = MarkingPoints.CloneMarkingPointDictionary(points.Points);
+    }
+
+    /// <summary>
     ///     Construct a MarkingSet by deep cloning another set.
     /// </summary>
     /// <param name="other">The other marking set.</param>
@@ -122,12 +139,13 @@ public sealed class MarkingSet
     }
 
     /// <summary>
-    ///     Filters markings based on species restrictions in the marking's prototype from this marking set.
+    ///     Filters and colors markings based on species and it's restrictions in the marking's prototype from this marking set.
     /// </summary>
     /// <param name="species">The species to filter.</param>
+    /// <param name="skinColor">The skin color for recoloring (i.e. slimes). Use null if you want only filter markings</param>
     /// <param name="markingManager">Marking manager.</param>
     /// <param name="prototypeManager">Prototype manager.</param>
-    public void FilterSpecies(string species, MarkingManager? markingManager = null, IPrototypeManager? prototypeManager = null)
+    public void EnsureSpecies(string species, Color? skinColor, MarkingManager? markingManager = null, IPrototypeManager? prototypeManager = null)
     {
         IoCManager.Resolve(ref markingManager);
         IoCManager.Resolve(ref prototypeManager);
@@ -162,6 +180,22 @@ public sealed class MarkingSet
         foreach (var remove in toRemove)
         {
             Remove(remove.category, remove.id);
+        }
+
+        // Re-color left markings them into skin color if needed (i.e. for slimes)
+        if (skinColor != null)
+        {
+            foreach (var (category, list) in Markings)
+            {
+                foreach (var marking in list)
+                {
+                    if (markingManager.TryGetMarking(marking, out var prototype) &&
+                        markingManager.MustMatchSkin(species, prototype.BodyPart, prototypeManager))
+                    {
+                        marking.SetColor(skinColor.Value);
+                    }
+                }
+            }
         }
     }
 
@@ -200,9 +234,11 @@ public sealed class MarkingSet
     /// <summary>
     ///     Ensures that the default markings as defined by the marking point set in this marking set are applied.
     /// </summary>
-    /// <param name="skinColor">Color to apply.</param>
+    /// <param name="skinColor">Skin color for marking coloring.</param>
+    /// <param name="eyeColor">Eye color for marking coloring.</param>
+    /// <param name="hairColor">Hair color for marking coloring.</param>
     /// <param name="markingManager">Marking manager.</param>
-    public void EnsureDefault(Color? skinColor = null, MarkingManager? markingManager = null)
+    public void EnsureDefault(Color? skinColor = null, Color? eyeColor = null, MarkingManager? markingManager = null)
     {
         IoCManager.Resolve(ref markingManager);
 
@@ -218,22 +254,13 @@ public sealed class MarkingSet
             {
                 if (markingManager.Markings.TryGetValue(points.DefaultMarkings[index], out var prototype))
                 {
-                    Marking marking;
-                    if (skinColor == null)
-                    {
-                        marking = new Marking(points.DefaultMarkings[index], prototype.Sprites.Count);
-                    }
-                    else
-                    {
-                        var colors = new List<Color>();
-
-                        for (var i = 0; i < prototype.Sprites.Count; i++)
-                        {
-                            colors.Add(skinColor.Value);
-                        }
-
-                        marking = new Marking(points.DefaultMarkings[index], colors);
-                    }
+                    var colors = MarkingColoring.GetMarkingLayerColors(
+                            prototype,
+                            skinColor,
+                            eyeColor,
+                            this
+                        );
+                    var marking = new Marking(points.DefaultMarkings[index], colors);
 
                     AddBack(category, marking);
                 }
