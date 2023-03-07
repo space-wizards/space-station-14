@@ -49,12 +49,12 @@ namespace Content.Server.Tiles
             
             // for checks to allow placing tile under some static entities (e.g. directional windows)
             var gridUid = location.GetGridUid(EntityManager);
-            var floorBox = Box2.UnitCentered;
+            var tileBox = Box2.UnitCentered;
             if (_mapManager.TryGetGrid(location.EntityId, out var mapGrid))
             {
-                floorBox.Scale(mapGrid.TileSize);
+                tileBox.Scale(mapGrid.TileSize);
             }
-            var floorArea = Box2.Area(floorBox);
+            var tileArea = Box2.Area(tileBox);
 
             foreach (var ent in location.GetEntitiesInTile(lookupSystem: _lookup))
             {
@@ -70,11 +70,11 @@ namespace Content.Server.Tiles
                         {
                             return;
                         }
-                        var floorPos = mapGrid.LocalToGrid(location);
-                        var wallPos = mapGrid.LocalToGrid(transform.Coordinates) - floorPos;
-                        var wallBox = fixtures.GetAABB(new Transform(wallPos, 0));
+                        var tilePos = mapGrid.LocalToGrid(location);
+                        var bodyPos = mapGrid.LocalToGrid(transform.Coordinates) - tilePos;
+                        var bodyBox = fixtures.GetAABB(new Transform(bodyPos, 0));
                         var threshold = 0.75;
-                        if (Box2.Area(floorBox.Intersect(wallBox)) / floorArea > threshold)
+                        if (Box2.Area(tileBox.Intersect(bodyBox)) / tileArea > threshold)
                             return;
                     }
             }
