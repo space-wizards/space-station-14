@@ -59,8 +59,6 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
             }
         }
 
-        component.Mover = null;
-
         // If this box has a stealth/chameleon effect, disable the stealth effect while the box is open.
         _stealth.SetEnabled(uid, false);
     }
