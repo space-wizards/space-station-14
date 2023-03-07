@@ -1,28 +1,19 @@
-# Dungeon configs
 - type: dungeonConfig
-  id: SandDungeon
-  rooms:
-    - !type:NoiseRoomGen
-      tile: FloorAsteroidSand
-      wall: WallRock
-  paths:
-    - !type:SimplePathGen
-      tile: FloorAsteroidSand
-      wall: WallRock
-
-- type: dungeonConfig
-  id: Structures
-  rooms:
-    - !type:RoomPackGen
-      roomPacks:
-        - -8,0,4,8
-        - -2,6,2,10
-        - -8,12,8,16
-        - -2,18,2,34
-        - -20,18,-4,34
-        - 4,18,20,34
-        - -2,36,2,52
-
+  id: ExperimentGrass
+  generator: !type:PrefabDunGen
+    roomWhitelist:
+      - Experiment
+    presets:
+      - Cross
+  postGeneration:
+    - !type:PoweredAirlockPostGen
+      door: AirlockGlass
+    - !type:EntrancePostGen
+      count: 2
+    # - !type:WindowPostGen
+    - !type:BoundaryWallPostGen
+      tile: FloorSteel
+      wall: WallSolid
 
 # Loot configs
 - type: weightedRandom

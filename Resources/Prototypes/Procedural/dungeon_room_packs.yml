@@ -1,6 +1,6 @@
 # Dungeon presets
 - type: dungeonPreset
-  id: Weh
+  id: Cross
   roomPacks:
     - -8,0,9,5
     - -2,6,3,11

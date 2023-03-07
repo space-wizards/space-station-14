@@ -1,5 +1,5 @@
-using Content.Shared.Procedural.Paths;
-using Content.Shared.Procedural.RoomGens;
+using Content.Shared.Procedural.DungeonGenerators;
+using Content.Shared.Procedural.PostGeneration;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Procedural;
@@ -10,17 +10,12 @@ public sealed class DungeonConfigPrototype : IPrototype
     [IdDataField]
     public string ID { get; } = default!;
 
-    // Also per-dungeon data is radius and seed.
+    [DataField("generator", required: true)]
+    public IDunGen Generator = default!;
 
     /// <summary>
-    /// Room generators
+    /// Ran after the main dungeon is created.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("rooms", required: true)]
-    public List<RoomGen> Rooms = new();
-
-    /// <summary>
-    /// Path generators between rooms.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("paths")]
-    public List<PathGen> Paths = new();
+    [DataField("postGeneration")]
+    public List<IPostDunGen> PostGeneration = new();
 }
