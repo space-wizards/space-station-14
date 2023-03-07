@@ -43,7 +43,9 @@ namespace Content.Server.Tiles
 
             // this looks a bit sussy but it might be because it needs to be able to place off of grids and expand them
             var location = args.ClickLocation.AlignWithClosestGridTile();
-            var physics = GetEntityQuery<PhysicsComponent>();
+            var physicQuery = GetEntityQuery<PhysicsComponent>();
+            var fixtureQuery = GetEntityQuery<FixturesComponent>();
+            var transformQuery = GetEntityQuery<TransformComponent>();
             
             // for checks to allow placing tile under some static entities (e.g. directional windows)
             var gridUid = location.GetGridUid(EntityManager);
@@ -57,13 +59,17 @@ namespace Content.Server.Tiles
             foreach (var ent in location.GetEntitiesInTile(lookupSystem: _lookup))
             {
                 // check that we the tile we're trying to access isn't blocked by a wall or something
-                if (physics.TryGetComponent(ent, out var phys) &&
+                if (physicQuery.TryGetComponent(ent, out var phys) &&
                     phys.BodyType == BodyType.Static &&
                     phys.Hard &&
                     (phys.CollisionLayer & (int) CollisionGroup.Impassable) != 0) 
                     {
-                        if (mapGrid == null || !TryComp<FixturesComponent>(ent, out var fixtures) || !TryComp<TransformComponent>(ent, out var transform))
+                        if (mapGrid == null || 
+                            !fixtureQuery.TryGetComponent(ent, out var fixtures) || 
+                            !transformQuery.TryGetComponent(ent, out var transform))
+                        {
                             return;
+                        }
                         var floorPos = mapGrid.LocalToGrid(location);
                         var wallPos = mapGrid.LocalToGrid(transform.Coordinates) - floorPos;
                         var wallBox = fixtures.GetAABB(new Transform(wallPos, 0));
