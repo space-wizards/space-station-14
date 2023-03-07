@@ -1,4 +1,4 @@
-﻿- type: reagent
+- type: reagent
   id: Desoxyephedrine
   name: reagent-name-desoxyephedrine
   group: Narcotics
@@ -97,7 +97,7 @@
   name: reagent-name-stimulants
   group: Narcotics
   desc: reagent-desc-stimulants
-  physicalDesc: reagant-physical-desc-energized
+  physicalDesc: reagent-physical-desc-energizing
   flavor: sharp
   color: "#9A040E"
   boilingPoint: 212.0
