@@ -68,10 +68,8 @@ public sealed class NewDungeonSystem : EntitySystem
         var query = AllEntityQuery<DungeonAtlasTemplateComponent>();
         DungeonAtlasTemplateComponent? comp;
 
-        while (query.MoveNext(out comp))
+        while (query.MoveNext(out var uid, out comp))
         {
-            var uid = comp.Owner;
-
             // Exists
             if (comp.Path?.Equals(proto.AtlasPath) == true)
                 return Transform(uid).MapID;
@@ -135,11 +133,13 @@ public sealed class NewDungeonSystem : EntitySystem
         // 952532317 (no hook and top bit???)
         // 200682996 (left is so fucking far)
 
-        // 1551527853 (lights fucked, right side fucked
+        // 1452611895 (wall gap, rotation fucked, anchoring?)
 
-        var dungeonRotation = new Angle(Math.PI / 2);
+        seed = 1452611895;
+        // Mask 0 | 1 for rotation seed
+        var dungeonRotationSeed = 3 & seed;
+        var dungeonRotation = Math.PI / 2 * dungeonRotationSeed;
         var dungeonTransform = Matrix3.CreateTransform(Vector2.Zero, dungeonRotation);
-        seed = 1551527853;
         var random = new Random(seed);
         Logger.Info($"Generating dungeon for seed {seed}");
         // TODO: API for this
@@ -557,11 +557,10 @@ public sealed class NewDungeonSystem : EntitySystem
                     var childXform = xformQuery.GetComponent(ent);
                     var anchored = childXform.Anchored;
                     _transform.SetCoordinates(ent, childXform, new EntityCoordinates(gridUid, childPos));
+                    _transform.SetLocalRotation(ent, childRot, childXform);
 
                     if (anchored && !childXform.Anchored)
                         _transform.AnchorEntity(ent, childXform, grid);
-                    else
-                        _transform.SetLocalRotation(ent, childRot, childXform);
                 }
 
                 // Load decals
