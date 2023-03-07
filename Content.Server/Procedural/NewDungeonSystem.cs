@@ -162,6 +162,13 @@ public sealed class NewDungeonSystem : EntitySystem
             }
         }
 
+        // Need to sort to make the RNG deterministic (at least without prototype changes).
+        foreach (var roomA in roomPackProtos.Values)
+        {
+            roomA.Sort((x, y) =>
+                string.Compare(x.ID, y.ID, StringComparison.Ordinal));
+        }
+
         var roomProtos = new Dictionary<Vector2i, List<DungeonRoomPrototype>>();
 
         foreach (var proto in _prototype.EnumeratePrototypes<DungeonRoomPrototype>())
@@ -169,6 +176,12 @@ public sealed class NewDungeonSystem : EntitySystem
             var size = proto.Size;
             var sizeRooms = roomProtos.GetOrNew(size);
             sizeRooms.Add(proto);
+        }
+
+        foreach (var roomA in roomProtos.Values)
+        {
+            roomA.Sort((x, y) =>
+                string.Compare(x.ID, y.ID, StringComparison.Ordinal));
         }
 
         // First we gather all of the edges for each roompack in the preset
@@ -246,8 +259,6 @@ public sealed class NewDungeonSystem : EntitySystem
                     availablePacks.AddRange(roomPacks);
                 }
             }
-
-            availablePacks.Sort((x, y) => x.ID.CompareTo(y.ID));
 
             // Iterate every pack
             // To be valid it needs its edge nodes to overlap with every edge group
