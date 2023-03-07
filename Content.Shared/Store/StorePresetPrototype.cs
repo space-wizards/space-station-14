@@ -42,6 +42,7 @@ public sealed class StorePresetPrototype : IPrototype
     /// <summary>
     /// Is this store a hidden traitor uplink (not nukie), if it is then only traitors can insert currency to prevent valid checking pdas with renault's help.
     /// </summary>
+    // TODO HACK: replace with antagWhitelist or something when mind is refactored
     [DataField("traitor")]
     public bool Traitor;
 }
