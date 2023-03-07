@@ -33,10 +33,7 @@ public sealed class PricingSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<StaticPriceComponent, PriceCalculationEvent>(CalculateStaticPrice);
-        SubscribeLocalEvent<StackPriceComponent, PriceCalculationEvent>(CalculateStackPrice);
         SubscribeLocalEvent<MobPriceComponent, PriceCalculationEvent>(CalculateMobPrice);
-        SubscribeLocalEvent<SolutionContainerManagerComponent, PriceCalculationEvent>(CalculateSolutionPrice);
 
         _consoleHost.RegisterCommand("appraisegrid",
             "Calculates the total value of the given grids.",
@@ -87,6 +84,7 @@ public sealed class PricingSystem : EntitySystem
 
     private void CalculateMobPrice(EntityUid uid, MobPriceComponent component, ref PriceCalculationEvent args)
     {
+        // TODO: Estimated pricing.
         if (args.Handled)
             return;
 
@@ -106,31 +104,9 @@ public sealed class PricingSystem : EntitySystem
         args.Price += (component.Price - partPenalty) * (_mobStateSystem.IsAlive(uid, state) ? 1.0 : component.DeathPenalty);
     }
 
-    private void CalculateStackPrice(EntityUid uid, StackPriceComponent component, ref PriceCalculationEvent args)
+    private double GetSolutionPrice(SolutionContainerManagerComponent component)
     {
-        if (args.Handled)
-            return;
-
-        if (!TryComp<StackComponent>(uid, out var stack))
-        {
-            Logger.ErrorS("pricing", $"Tried to get the stack price of {ToPrettyString(uid)}, which has no {nameof(StackComponent)}.");
-            return;
-        }
-
-        args.Price += stack.Count * component.Price;
-    }
-
-    private void CalculateSolutionPrice(EntityUid uid, SolutionContainerManagerComponent component, ref PriceCalculationEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        args.Price += GetSolutionPrice(component);
-    }
-
-    public float GetSolutionPrice(SolutionContainerManagerComponent component)
-    {
-        var price = 0f;
+        var price = 0.0;
 
         foreach (var solution in component.Solutions.Values)
         {
@@ -145,15 +121,7 @@ public sealed class PricingSystem : EntitySystem
         return price;
     }
 
-    private void CalculateStaticPrice(EntityUid uid, StaticPriceComponent component, ref PriceCalculationEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        args.Price += component.Price;
-    }
-
-    public double GetMaterialPrice(MaterialComponent component)
+    private double GetMaterialPrice(MaterialComponent component)
     {
         double price = 0;
         foreach (var (id, quantity) in component.Materials)
@@ -179,47 +147,12 @@ public sealed class PricingSystem : EntitySystem
             return ev.Price;
 
         var price = ev.Price;
+        price += GetMaterialsPrice(prototype);
+        price += GetSolutionsPrice(prototype);
+        price += GetStackPrice(prototype);
+        price += GetStaticPrice(prototype);
 
-        if (prototype.Components.TryGetValue(_factory.GetComponentName(typeof(SolutionContainerManagerComponent)),
-                out var solManager))
-        {
-            var solManagerComp = (SolutionContainerManagerComponent) solManager.Component;
-            price += GetSolutionPrice(solManagerComp);
-        }
-
-        EntityPrototype.ComponentRegistryEntry? stackProto;
-
-        if (prototype.Components.TryGetValue(_factory.GetComponentName(typeof(MaterialComponent)), out var materials) &&
-            !prototype.Components.ContainsKey(_factory.GetComponentName(typeof(StackPriceComponent))))
-        {
-            var materialsComp = (MaterialComponent) materials.Component;
-            var matPrice = GetMaterialPrice(materialsComp);
-
-            if (prototype.Components.TryGetValue(_factory.GetComponentName(typeof(StackComponent)), out stackProto))
-            {
-                matPrice *= ((StackComponent) stackProto.Component).Count;
-            }
-
-            price += matPrice;
-        }
-
-        if (prototype.Components.TryGetValue(_factory.GetComponentName(typeof(StaticPriceComponent)),
-                out var staticPriceProto))
-        {
-            var staticComp = (StaticPriceComponent) staticPriceProto.Component;
-
-            price += staticComp.Price;
-        }
-
-        if (prototype.Components.TryGetValue(_factory.GetComponentName(typeof(StackPriceComponent)), out var stackpriceProto) &&
-            prototype.Components.TryGetValue(_factory.GetComponentName(typeof(StackComponent)), out stackProto))
-        {
-            var stackPrice = (StackPriceComponent) stackpriceProto.Component;
-            var stack = (StackComponent) stackProto.Component;
-            price += stack.Count * stackPrice.Price;
-        }
-
-        // TODO: Containers
+        // TODO: Proper container support.
 
         return price;
     }
@@ -241,18 +174,13 @@ public sealed class PricingSystem : EntitySystem
         if (ev.Handled)
             return ev.Price;
 
+        var price = ev.Price;
         //TODO: Add an OpaqueToAppraisal component or similar for blocking the recursive descent into containers, or preventing material pricing.
-
-        // NOTE:
-        // IF YOU TOUCH THIS THEN ALSO TOUCH GETESTIMATEDPRICE UNTIL THIS IS REFACTORED.
-        if (TryComp<MaterialComponent>(uid, out var material) && !HasComp<StackPriceComponent>(uid))
-        {
-            var matPrice = GetMaterialPrice(material);
-            if (TryComp<StackComponent>(uid, out var stack))
-                matPrice *= stack.Count;
-
-            ev.Price += matPrice;
-        }
+        // DO NOT FORGET TO UPDATE ESTIMATED PRICING
+        price += GetMaterialsPrice(uid);
+        price += GetSolutionsPrice(uid);
+        price += GetStackPrice(uid);
+        price += GetStaticPrice(uid);
 
         if (TryComp<ContainerManagerComponent>(uid, out var containers))
         {
@@ -260,12 +188,127 @@ public sealed class PricingSystem : EntitySystem
             {
                 foreach (var ent in container.ContainedEntities)
                 {
-                    ev.Price += GetPrice(ent);
+                    price += GetPrice(ent);
                 }
             }
         }
 
-        return ev.Price;
+        return price;
+    }
+
+    private double GetMaterialsPrice(EntityUid uid)
+    {
+        double price = 0;
+
+        if (TryComp<MaterialComponent>(uid, out var material) && !HasComp<StackPriceComponent>(uid))
+        {
+            var matPrice = GetMaterialPrice(material);
+            if (TryComp<StackComponent>(uid, out var stack))
+                matPrice *= stack.Count;
+
+            price += matPrice;
+        }
+
+        return price;
+    }
+
+    private double GetMaterialsPrice(EntityPrototype prototype)
+    {
+        double price = 0;
+
+        if (prototype.Components.TryGetValue(_factory.GetComponentName(typeof(MaterialComponent)), out var materials) &&
+            !prototype.Components.ContainsKey(_factory.GetComponentName(typeof(StackPriceComponent))))
+        {
+            var materialsComp = (MaterialComponent) materials.Component;
+            var matPrice = GetMaterialPrice(materialsComp);
+
+            if (prototype.Components.TryGetValue(_factory.GetComponentName(typeof(StackComponent)), out var stackProto))
+            {
+                matPrice *= ((StackComponent) stackProto.Component).Count;
+            }
+
+            price += matPrice;
+        }
+
+        return price;
+    }
+
+    private double GetSolutionsPrice(EntityUid uid)
+    {
+        var price = 0.0;
+
+        if (TryComp<SolutionContainerManagerComponent>(uid, out var solComp))
+        {
+            price += GetSolutionPrice(solComp);
+        }
+
+        return price;
+    }
+
+    private double GetSolutionsPrice(EntityPrototype prototype)
+    {
+        var price = 0.0;
+
+        if (prototype.Components.TryGetValue(_factory.GetComponentName(typeof(SolutionContainerManagerComponent)), out var solManager))
+        {
+            var solComp = (SolutionContainerManagerComponent) solManager.Component;
+            price += GetSolutionPrice(solComp);
+        }
+
+        return price;
+    }
+
+    private double GetStackPrice(EntityUid uid)
+    {
+        var price = 0.0;
+
+        if (TryComp<StackPriceComponent>(uid, out var stackPrice) &&
+            TryComp<StackComponent>(uid, out var stack))
+        {
+            price += stack.Count * stackPrice.Price;
+        }
+
+        return price;
+    }
+
+    private double GetStackPrice(EntityPrototype prototype)
+    {
+        var price = 0.0;
+
+        if (prototype.Components.TryGetValue(_factory.GetComponentName(typeof(StackPriceComponent)), out var stackpriceProto) &&
+            prototype.Components.TryGetValue(_factory.GetComponentName(typeof(StackComponent)), out var stackProto))
+        {
+            var stackPrice = (StackPriceComponent) stackpriceProto.Component;
+            var stack = (StackComponent) stackProto.Component;
+            price += stack.Count * stackPrice.Price;
+        }
+
+        return price;
+    }
+
+    private double GetStaticPrice(EntityUid uid)
+    {
+        var price = 0.0;
+
+        if (TryComp<StaticPriceComponent>(uid, out var staticPrice))
+        {
+            price += staticPrice.Price;
+        }
+
+        return price;
+    }
+
+    private double GetStaticPrice(EntityPrototype prototype)
+    {
+        var price = 0.0;
+
+        if (prototype.Components.TryGetValue(_factory.GetComponentName(typeof(StaticPriceComponent)), out var staticProto))
+        {
+            var staticPrice = (StaticPriceComponent) staticProto.Component;
+            price += staticPrice.Price;
+        }
+
+        return price;
     }
 
     /// <summary>
