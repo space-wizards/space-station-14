@@ -29,7 +29,7 @@
   equipment:
     head: ClothingHeadHatQMsoft
     jumpsuit: ClothingUniformJumpsuitQM
-    back: ClothingBackpackFilled
+    back: ClothingBackpackQuartermasterFilled
     shoes: ClothingShoesColorBrown
     id: QuartermasterPDA
     ears: ClothingHeadsetQM

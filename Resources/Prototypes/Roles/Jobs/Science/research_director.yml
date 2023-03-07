@@ -24,7 +24,7 @@
   id: ResearchDirectorGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitResearchDirector
-    back: ClothingBackpackScienceFilled
+    back: ClothingBackpackResearchDirectorFilled
     shoes: ClothingShoesColorBrown
     outerClothing: ClothingOuterCoatLab
     id: RnDPDA

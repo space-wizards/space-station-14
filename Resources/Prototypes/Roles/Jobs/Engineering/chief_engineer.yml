@@ -31,7 +31,7 @@
   equipment:
     head: ClothingHeadHatHardhatWhite
     jumpsuit: ClothingUniformJumpsuitChiefEngineer
-    back: ClothingBackpackEngineeringFilled
+    back: ClothingBackpackChiefEngineerFilled
     shoes: ClothingShoesColorBrown
     id: CEPDA
     eyes: ClothingEyesGlassesMeson

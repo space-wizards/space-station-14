@@ -27,7 +27,7 @@
   id: CMOGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitCMO
-    back: ClothingBackpackMedicalFilled
+    back: ClothingBackpackCMOFilled
     shoes: ClothingShoesColorBrown
     outerClothing: ClothingOuterCoatLabCmo
     id: CMOPDA

@@ -39,7 +39,7 @@
   id: HoPGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitHoP
-    back: ClothingBackpackFilled
+    back: ClothingBackpackHOPFilled
     shoes: ClothingShoesColorBrown
     head: ClothingHeadHatHopcap
     id: HoPPDA
