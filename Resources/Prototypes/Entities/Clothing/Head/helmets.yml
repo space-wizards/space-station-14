@@ -140,7 +140,6 @@
     sprite: Clothing/Head/Helmets/spaceninja.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/spaceninja.rsi
-  - type: IngestionBlocker
   - type: Tag
     tags:
     - HidesHair
