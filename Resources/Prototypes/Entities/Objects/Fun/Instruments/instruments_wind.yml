@@ -58,6 +58,8 @@
   components:
   - type: Instrument
     program: 22
+  - type: ActivatableUI
+    inHandsOnly: false
   - type: Sprite
     sprite: Objects/Fun/Instruments/harmonica.rsi
     state: icon
@@ -67,6 +69,16 @@
   - type: Tag
     tags:
     - WoodwindInstrument
+  - type: Clothing
+    slots: [ mask ]
+  - type: IngestionBlocker
+  - type: Mask
+    toggleAction:
+      name: action-name-mask
+      description: action-description-mask-toggle
+      icon: { sprite: Clothing/Mask/gas.rsi, state: icon }
+      iconOn: Interface/Default/blocked.png
+      event: !type:ToggleMaskEvent
 
 - type: entity
   parent: BaseHandheldInstrument
