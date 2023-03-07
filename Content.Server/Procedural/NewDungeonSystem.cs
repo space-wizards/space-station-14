@@ -137,10 +137,11 @@ public sealed class NewDungeonSystem : EntitySystem
 
         // 1551527853 (lights fucked, right side fucked
 
+        var dungeonRotation = new Angle(Math.PI);
+        var dungeonTransform = Matrix3.CreateTransform(Vector2.Zero, dungeonRotation);
+        seed = 1551527853;
+        var random = new Random(seed);
         Logger.Info($"Generating dungeon for seed {seed}");
-        var dungeonTransform = Matrix3.CreateTranslation(Vector2.Zero);
-        var dungeonRotation = Angle.Zero;
-        var random = new Random(1551527853);
         // TODO: API for this
         var roomPackProtos = new Dictionary<Vector2i, List<DungeonRoomPackPrototype>>();
         var externalNodes = new Dictionary<DungeonRoomPackPrototype, HashSet<Vector2i>>();
@@ -405,8 +406,9 @@ public sealed class NewDungeonSystem : EntitySystem
                 {
                     foreach (var node in flipp)
                     {
-                        grid.SetTile(node, new Tile(_tileDefManager["FloorSteel"].TileId));
-                        Spawn("AirlockGlass", grid.GridTileToLocal(node));
+                        var dungeonNode = dungeonTransform.Transform(node);
+                        grid.SetTile(dungeonNode, new Tile(_tileDefManager["FloorSteel"].TileId));
+                        Spawn("AirlockGlass", grid.GridTileToLocal(dungeonNode));
                     }
                 }
                 else
