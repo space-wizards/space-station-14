@@ -48,7 +48,8 @@ namespace Content.Client.RoundEnd
 
             var roundEndSummaryContainerScrollbox = new ScrollContainer
             {
-                VerticalExpand = true
+                VerticalExpand = true,
+                Margin = new Thickness(10)
             };
             var roundEndSummaryContainer = new BoxContainer
             {
@@ -96,7 +97,8 @@ namespace Content.Client.RoundEnd
 
             var playerInfoContainerScrollbox = new ScrollContainer
             {
-                VerticalExpand = true
+                VerticalExpand = true,
+                Margin = new Thickness(10)
             };
             var playerInfoContainer = new BoxContainer
             {
