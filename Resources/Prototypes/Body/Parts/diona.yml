@@ -18,6 +18,9 @@
     sprite: Mobs/Species/Diona/parts.rsi
   - type: StaticPrice
     price: 100
+  - type: Tag
+    tags:
+      - Trash
 
 - type: entity
   id: TorsoDiona

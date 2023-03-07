@@ -51,6 +51,7 @@ public sealed class ParallaxManager : IParallaxManager
 
     public async void LoadDefaultParallax()
     {
+        _sawmill.Level = LogLevel.Info;
         await LoadParallaxByName("Default");
     }
 
@@ -64,7 +65,7 @@ public sealed class ParallaxManager : IParallaxManager
         var cancel = token.Token;
 
         // Begin (for real)
-        _sawmill.Info($"Loading parallax {name}");
+        _sawmill.Debug($"Loading parallax {name}");
 
         try
         {
@@ -91,8 +92,6 @@ public sealed class ParallaxManager : IParallaxManager
 
             _parallaxesLQ[name] = layers[1];
             _parallaxesHQ[name] = layers[0];
-
-            _sawmill.Info($"Loaded parallax {name}");
 
         }
         catch (Exception ex)
