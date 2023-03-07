@@ -6,6 +6,7 @@
     - !type:BiomeEntityLayer
       threshold: 0.95
       noise:
+        seed: 0
         frequency: 2
         noiseType: OpenSimplex2
       allowedTiles:
@@ -18,6 +19,7 @@
     - !type:BiomeEntityLayer
       threshold: -0.20
       noise:
+        seed: 0
         frequency: 0.04
         noiseType: Cellular
         fractalType: FBm
@@ -40,6 +42,7 @@
       threshold: 0.6
       tile: FloorLowDesert
       noise:
+        seed: 0
         noiseType: Cellular
         frequency: 0.1
 
@@ -54,6 +57,7 @@
       divisions: 2
       threshold: -0.50
       noise:
+        seed: 0
         noiseType: Cellular
         frequency: 1
       decals:
@@ -64,6 +68,7 @@
       allowedTiles:
         - FloorPlanetGrass
       noise:
+        seed: 0
         noiseType: OpenSimplex2
         frequency: 1
       divisions: 1
@@ -79,6 +84,7 @@
       divisions: 1
       threshold: -0.35
       noise:
+        seed: 0
         noiseType: Cellular
         frequency: 0.2
         fractalType: FBm
@@ -97,6 +103,7 @@
     - !type:BiomeEntityLayer
       threshold: 0.5
       noise:
+        seed: 0
         noiseType: OpenSimplex2
         fractalType: FBm
         frequency: 2
@@ -122,6 +129,7 @@
         - FloorAsteroidSand
       threshold: -0.15
       noise:
+        seed: 0
         noiseType: Cellular
         frequency: 0.05
         lacunarity: 2
@@ -155,6 +163,7 @@
       threshold: -0.90
       tile: FloorPlanetGrass
       noise:
+        seed: 0
         frequency: 0.02
         fractalType: None
     # Water sand
@@ -173,6 +182,7 @@
       tile: FloorAsteroidSand
       threshold: -0.15
       noise:
+        seed: 0
         noiseType: Cellular
         frequency: 0.05
         lacunarity: 2
@@ -220,6 +230,7 @@
     - !type:BiomeEntityLayer
       threshold: 0.95
       noise:
+        seed: 0
         noiseType: OpenSimplex2
         frequency: 1
       allowedTiles:
@@ -231,6 +242,7 @@
     - !type:BiomeEntityLayer
       threshold: 0.2
       noise:
+        seed: 0
         frequency: 0.02
         fractalType: FBm
         octaves: 5
@@ -258,6 +270,7 @@
       divisions: 2
       threshold: -0.50
       noise:
+        seed: 0
         noiseType: Cellular
         frequency: 1
       decals:
@@ -277,6 +290,7 @@
       divisions: 1
       threshold: -0.35
       noise:
+        seed: 0
         noiseType: Cellular
         frequency: 0.2
         fractalType: FBm
@@ -307,6 +321,7 @@
       divisions: 1
       threshold: -0.0
       noise:
+        seed: 0
         noiseType: Cellular
         frequency: 1
         fractalType: None
@@ -322,6 +337,7 @@
     - !type:BiomeEntityLayer
       threshold: 0.5
       noise:
+        seed: 0
         noiseType: OpenSimplex2
         fractalType: FBm
         frequency: 2
@@ -341,5 +357,6 @@
       threshold: -0.50
       tile: FloorSnow
       noise:
+        seed: 0
         frequency: 0.02
         fractalType: None

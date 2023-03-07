@@ -20,7 +20,7 @@ public sealed class BiomePrototype : IPrototype
 public interface IBiomeLayer
 {
     /// <summary>
-    /// Also includes the seed offset.
+    /// Seed is used an offset from the relevant BiomeComponent's seed.
     /// </summary>
     FastNoiseLite Noise { get; }
 
