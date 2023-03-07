@@ -9,6 +9,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
+  - type: Anchorable
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
