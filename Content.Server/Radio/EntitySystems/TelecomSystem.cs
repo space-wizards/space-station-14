@@ -6,7 +6,7 @@ namespace Content.Server.Radio.EntitySystems;
 
 public sealed class TelecomSystem : EntitySystem
 {
-    public readonly HashSet<string> IgnoreChannelIds = new() { "CentCom", "Syndicate" };
+    public readonly HashSet<string> IgnoreChannels = new() { "CentCom", "Syndicate" };
 
     public override void Initialize()
     {
@@ -16,10 +16,15 @@ public sealed class TelecomSystem : EntitySystem
 
     private void OnRadioReceiveAttempt(ref RadioReceiveAttemptEvent args)
     {
-        if (IgnoreChannelIds.Contains(args.Channel.ID))
+        if (IgnoreChannels.Contains(args.Channel.ID))
             return;
         if (HasComp<RadioMicrophoneComponent>(args.RadioSource) && HasComp<RadioSpeakerComponent>(args.RadioReceiver))
             return;
+        if (Transform(args.RadioSource).MapID != Transform(args.RadioReceiver).MapID)
+        {
+            args.Cancelled = true;
+            return;
+        }
         foreach (var (power, keys, _) in EntityQuery<ApcPowerReceiverComponent, EncryptionKeyHolderComponent, TelecomServerComponent>())
         {
             if (power.Powered && keys.Channels.Contains(args.Channel.ID))
