@@ -573,3 +573,17 @@
   - type: Item
     heldPrefix: gold
     
+
+- type: entity
+  parent: IDCardStandard
+  id: CluwneIDCard
+  name: cluwne ID card
+  suffix: Unremoveable
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idcluwne
+  - type: IdCard
+    jobTitle: Cluwne
+  - type: Unremoveable
