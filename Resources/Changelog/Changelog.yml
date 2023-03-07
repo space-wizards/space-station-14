@@ -1,9 +1,4 @@
 Entries:
-- author: notafet
-  changes:
-  - {message: CentCom now calls the shuttle automatically after a long round., type: Add}
-  id: 2638
-  time: '2022-11-10T04:20:36.0000000+00:00'
 - author: Mervill
   changes:
   - {message: 'Some common objects that where indestructible now have proper  destructible
@@ -2923,3 +2918,8 @@ Entries:
     type: Fix}
   id: 3137
   time: '2023-03-07T00:08:04.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Added custom parallax to Aspid, type: Add}
+  id: 3138
+  time: '2023-03-07T00:33:03.0000000+00:00'
