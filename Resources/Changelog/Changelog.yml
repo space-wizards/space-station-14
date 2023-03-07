@@ -1,9 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Mousetraps no longer autokill cardboard box users, type: Fix}
-  id: 2637
-  time: '2022-11-10T01:18:37.0000000+00:00'
 - author: notafet
   changes:
   - {message: CentCom now calls the shuttle automatically after a long round., type: Add}
@@ -2922,3 +2917,9 @@ Entries:
     type: Tweak}
   id: 3136
   time: '2023-03-06T23:35:59.0000000+00:00'
+- author: Menshin
+  changes:
+  - {message: Trinary atmos devices connectors will now properly align with pipes,
+    type: Fix}
+  id: 3137
+  time: '2023-03-07T00:08:04.0000000+00:00'
