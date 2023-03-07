@@ -10,31 +10,29 @@ public struct RadioReceiveEvent
     public readonly EntityUid MessageSource;
     public readonly RadioChannelPrototype Channel;
     public readonly MsgChatMessage ChatMsg;
-    public readonly EntityUid RadioSource;
 
-    public RadioReceiveEvent(string message, EntityUid messageSource, RadioChannelPrototype channel, MsgChatMessage chatMsg, EntityUid radioSource)
+    public RadioReceiveEvent(string message, EntityUid messageSource, RadioChannelPrototype channel, MsgChatMessage chatMsg)
     {
         Message = message;
         MessageSource = messageSource;
         Channel = channel;
         ChatMsg = chatMsg;
-        RadioSource = radioSource;
     }
 }
 
 [ByRefEvent]
 public struct RadioReceiveAttemptEvent
 {
-    public readonly EntityUid MessageSource;
     public readonly RadioChannelPrototype Channel;
     public readonly EntityUid RadioSource;
+    public readonly EntityUid RadioReceiver;
 
     public bool Cancelled = false;
 
-    public RadioReceiveAttemptEvent(EntityUid messageSource, RadioChannelPrototype channel, EntityUid radioSource)
+    public RadioReceiveAttemptEvent(RadioChannelPrototype channel, EntityUid radioSource, EntityUid radioReceiver)
     {
-        MessageSource = messageSource;
         Channel = channel;
         RadioSource = radioSource;
+        RadioReceiver = radioReceiver;
     }
 }

@@ -1,4 +1,5 @@
 using Content.Server.Power.Components;
+using Content.Server.Radio.Components;
 using Content.Shared.Radio.Components;
 
 namespace Content.Server.Radio.EntitySystems;
@@ -16,6 +17,8 @@ public sealed class TelecomSystem : EntitySystem
     private void OnRadioReceiveAttempt(ref RadioReceiveAttemptEvent args)
     {
         if (IgnoreChannelIds.Contains(args.Channel.ID))
+            return;
+        if (HasComp<RadioMicrophoneComponent>(args.RadioSource) && HasComp<RadioSpeakerComponent>(args.RadioReceiver))
             return;
         foreach (var (power, keys, _) in EntityQuery<ApcPowerReceiverComponent, EncryptionKeyHolderComponent, TelecomServerComponent>())
         {

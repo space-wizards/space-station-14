@@ -69,30 +69,26 @@ public sealed class RadioSystem : EntitySystem
             EntityUid.Invalid);
         var chatMsg = new MsgChatMessage { Message = chat };
 
-        var ev = new RadioReceiveEvent(message, messageSource, channel, chatMsg, radioSource);
-        var attemptEv = new RadioReceiveAttemptEvent(messageSource, channel, radioSource);
+        var ev = new RadioReceiveEvent(message, messageSource, channel, chatMsg);
         var sentAtLeastOnce = false;
 
-        RaiseLocalEvent(ref attemptEv);
-        if (!attemptEv.Cancelled)
+        foreach (var radio in EntityQuery<ActiveRadioComponent>())
         {
-            foreach (var radio in EntityQuery<ActiveRadioComponent>())
+            var receiver = radio.Owner;
+            // TODO map/station/range checks?
+
+            if (!radio.Channels.Contains(channel.ID))
+                continue;
+
+            var attemptEv = new RadioReceiveAttemptEvent(channel, radioSource, receiver);
+            RaiseLocalEvent(ref attemptEv);
+            if (attemptEv.Cancelled)
             {
-                var ent = radio.Owner;
-                // TODO map/station/range checks?
-
-                if (!radio.Channels.Contains(channel.ID))
-                    continue;
-
-                RaiseLocalEvent(ent, ref attemptEv);
-                if (attemptEv.Cancelled)
-                {
-                    attemptEv.Cancelled = false;
-                    continue;
-                }
-                sentAtLeastOnce = true;
-                RaiseLocalEvent(ent, ref ev);
+                attemptEv.Cancelled = false;
+                continue;
             }
+            sentAtLeastOnce = true;
+            RaiseLocalEvent(receiver, ref ev);
         }
         if (!sentAtLeastOnce)
             _popupSystem.PopupEntity(Loc.GetString("failed-to-send-message"), messageSource, messageSource, PopupType.MediumCaution);
