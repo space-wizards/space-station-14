@@ -7,7 +7,7 @@ namespace Content.Shared.Chemistry
     /// <summary>
     /// This class holds constants that are shared between client and server.
     /// </summary>
-    public sealed class SharedCentrifuge
+    public static class SharedCentrifuge
     {
         public const string BufferSolutionName = "buffer";
         public const string InputSlotName = "Centrifuge-beakerSlot";
