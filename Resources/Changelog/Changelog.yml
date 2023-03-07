@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: 'NPCs will now try to stay ~1m away from you for melee rather than 0.2m,
-      meaning rat servants will no longer sit under you in combat.', type: Tweak}
-  id: 2642
-  time: '2022-11-13T09:57:14.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: Fixed rich text wrapping., type: Fix}
@@ -2922,3 +2916,8 @@ Entries:
   - {message: Changed the war announcement sound to be shorter., type: Tweak}
   id: 3141
   time: '2023-03-07T02:49:55.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Changed held toolbox sprites to be more robust, type: Tweak}
+  id: 3142
+  time: '2023-03-07T13:48:34.0000000+00:00'
