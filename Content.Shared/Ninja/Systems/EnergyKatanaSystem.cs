@@ -130,7 +130,7 @@ public sealed class EnergyKatanaSystem : EntitySystem
 
         // TODO: check that target is not dense
         var origin = Transform(user).MapPosition;
-        var target = args.Target.ToMap(EntityManager);
+        var target = args.Target.ToMap(EntityManager, _transform);
         // prevent collision with the user duh
         if (!_interaction.InRangeUnobstructed(origin, target, 0f, CollisionGroup.Opaque, uid => uid == user))
         {

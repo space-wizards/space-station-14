@@ -1,4 +1,5 @@
 using Content.Server.Actions;
+using Content.Server.Emp;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.PowerCell;
@@ -14,6 +15,7 @@ namespace Content.Server.Ninja.Systems;
 public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
 {
     [Dependency] private readonly ActionsSystem _actions = default!;
+    [Dependency] private readonly EmpSystem _emp = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly new NinjaSystem _ninja = default!;
     [Dependency] private readonly PopupSystem _popups = default!;
@@ -29,6 +31,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         SubscribeLocalEvent<NinjaSuitComponent, TogglePhaseCloakEvent>(OnTogglePhaseCloak);
         SubscribeLocalEvent<NinjaSuitComponent, CreateSoapEvent>(OnCreateSoap);
         SubscribeLocalEvent<NinjaSuitComponent, RecallKatanaEvent>(OnRecallKatana);
+        SubscribeLocalEvent<NinjaSuitComponent, NinjaEmpEvent>(OnEmp);
     }
 
     /// <summary>
@@ -64,13 +67,13 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         if (!TryComp<ActionsComponent>(user, out var actions))
             return;
 
-        // TODO: do actions like with gloves are now
+        // TODO: do actions like with gloves are now (before merge)
         _actions.AddAction(user, comp.TogglePhaseCloakAction, uid, actions);
         _actions.AddAction(user, comp.RecallKatanaAction, uid, actions);
         // TODO: ninja stars instead of soap, when embedding is a thing
         _actions.AddAction(user, comp.CreateSoapAction, uid, actions);
         _actions.AddAction(user, comp.KatanaDashAction, uid, actions);
-        // TODO: emp ability
+        _actions.AddAction(user, comp.EmpAction, uid, actions);
     }
 
     // TODO: put in shared so client properly predicts insertion, but it uses powercell so how???
@@ -116,17 +119,17 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
 
     private void OnCreateSoap(EntityUid uid, NinjaSuitComponent comp, CreateSoapEvent args)
     {
-    	args.Handled = true;
-    	var user = args.Performer;
-    	if (!_ninja.TryUseCharge(user, comp.SoapCharge))
-    	{
-    		_popups.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
-    		return;
-    	}
+        args.Handled = true;
+        var user = args.Performer;
+        if (!_ninja.TryUseCharge(user, comp.SoapCharge))
+        {
+            _popups.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
+            return;
+        }
 
-		// try to put soap in hand, otherwise it goes on the ground
+        // try to put soap in hand, otherwise it goes on the ground
         var soap = Spawn(comp.SoapPrototype, Transform(user).Coordinates);
-    	_hands.TryPickupAnyHand(user, soap);
+        _hands.TryPickupAnyHand(user, soap);
     }
 
     private void OnRecallKatana(EntityUid uid, NinjaSuitComponent comp, RecallKatanaEvent args)
@@ -152,5 +155,20 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
             ? "ninja-katana-recalled"
             : "ninja-hands-full";
         _popups.PopupEntity(Loc.GetString(message), user, user);
+    }
+
+    private void OnEmp(EntityUid uid, NinjaSuitComponent comp, NinjaEmpEvent args)
+    {
+        args.Handled = true;
+        var user = args.Performer;
+        if (!_ninja.TryUseCharge(user, comp.EmpCharge))
+        {
+            _popups.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
+            return;
+        }
+
+        // I don't think this affects the suit battery, but if it ever does in the future add a blacklist for it
+        var coords = Transform(user).Coordinates.ToMap(EntityManager, _transform);
+        _emp.EmpPulse(coords, comp.EmpRange, comp.EmpConsumption);
     }
 }

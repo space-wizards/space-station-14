@@ -11,6 +11,9 @@ action-desc-create-soap = Channels suit power into creating a bar of ninja soap.
 action-name-recall-katana = Recall katana
 action-desc-recall-katana = Teleports the Energy Katana linked to this suit to its wearer, cost based on distance.
 
+action-name-em-burst = EM Burst
+action-desc-em-burst = Disable any nearby technology with an electro-magnetic pulse.
+
 ninja-full-power = Suit battery is already full
 ninja-drain-empty = {CAPITALIZE(THE($battery))} does not have enough power to drain
 ninja-drain-success = You drain power from {THE($battery)}!

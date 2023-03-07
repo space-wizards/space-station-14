@@ -3,6 +3,7 @@ using Content.Server.Sticky.Events;
 using Content.Server.Popups;
 using Content.Shared.Interaction;
 using Content.Shared.Ninja.Components;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.Ninja.Systems;
 
@@ -10,6 +11,7 @@ public sealed class SpiderChargeSystem : EntitySystem
 {
     [Dependency] private readonly NinjaSystem _ninja = default!;
     [Dependency] private readonly PopupSystem _popups = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -36,7 +38,8 @@ public sealed class SpiderChargeSystem : EntitySystem
         {
             // assumes warp point still exists
             var target = Transform(ninja.SpiderChargeTarget.Value).MapPosition;
-            if (!args.ClickLocation.ToMap(EntityManager).InRange(target, comp.Range))
+            var coords = args.ClickLocation.ToMap(EntityManager, _transform);
+            if (!coords.InRange(target, comp.Range))
             {
                 _popups.PopupEntity(Loc.GetString("spider-charge-too-far"), user, user);
                 args.Handled = true;
