@@ -109,6 +109,8 @@ entities:
   - type: PhysicsMap
   - type: Broadphase
   - type: OccluderTree
+  - parallax: AspidParallax
+    type: Parallax
 - uid: 1
   components:
   - type: MetaData
