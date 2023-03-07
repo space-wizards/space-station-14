@@ -2,7 +2,7 @@
   parent: [ BaseMachinePowered, ConstructibleMachine ]
   id: TelecomServer
   name: telecommunication server
-  description: When powered and filled with encryption keys it allows radio headset communication
+  description: When powered and filled with encryption keys it allows radio headset communication.
   components:
   - type: Sprite
     sprite: Structures/Machines/telecomms.rsi
