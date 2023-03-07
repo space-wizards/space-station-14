@@ -11,6 +11,7 @@
     intersectRatio: 0.1
   - type: Transform
     anchored: true
+  - type: Clickable
   - type: SyncSprite
   - type: Sprite
     sprite: Tiles/Planet/water.rsi
