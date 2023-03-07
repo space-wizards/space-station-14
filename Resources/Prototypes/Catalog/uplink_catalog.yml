@@ -113,7 +113,7 @@
   description: uplink-supermatter-grenade-desc
   productEntity: SupermatterGrenade
   cost:
-    Telecrystal: 8
+    Telecrystal: 6
   categories:
     - UplinkExplosives
 
@@ -123,7 +123,7 @@
   description: uplink-whitehole-grenade-desc
   productEntity: WhiteholeGrenade
   cost:
-    Telecrystal: 2
+    Telecrystal: 3
   categories:
     - UplinkExplosives
 
