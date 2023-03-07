@@ -153,6 +153,63 @@
             Quantity: 20
   - type: Tag
     tags: []
+    
+- type: entity
+  name: stimulant injector
+  parent: ChemicalMedipen
+  id: Stimpack
+  description: Contains enough stimulants for you to have the chemical's effect for 5 minutes. Use it when you're sure you're ready to throw down.
+  components:
+  - type: Item
+    sprite: Objects/Specific/Medical/medipen.rsi
+    size: 10
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 60
+        reagents:
+        - ReagentId: Stimulants
+          Quantity: 60
+  - type: Tag
+    tags: []
+    
+- type: entity
+  name: stimulant microinjector
+  parent: ChemicalMedipen
+  id: StimpackMini
+  description: A microinjector of stimulants that give you about one minute of the chemical's effects.
+  components:
+  - type: Item
+    sprite: Objects/Specific/Medical/medipen.rsi
+    size: 5
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 15
+        reagents:
+        - ReagentId: Stimulants
+          Quantity: 15
+  - type: Tag
+    tags: []
+    
+- type: entity
+  name: experimental stimulant injector
+  parent: ChemicalMedipen
+  id: StimpackExperimental
+  description: There's a red label on the side of it. It says "PRODUCT HAS EXTREME SIDE EFFECTS, PRODUCTION HALTED. DO NOT DISTRIBUTE."
+  components:
+  - type: Item
+    sprite: Objects/Specific/Medical/medipen.rsi
+    size: 10
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 60
+        reagents:
+        - ReagentId: ExperimentalStimulants
+          Quantity: 60
+  - type: Tag
+    tags: []
 
 - type: entity
   name: pen
