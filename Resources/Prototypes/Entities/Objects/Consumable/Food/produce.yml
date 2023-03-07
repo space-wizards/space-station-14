@@ -222,6 +222,9 @@
   parent: TrashBananaPeel
   id: TrashBananaPeelExplosive
   components:
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/banana.rsi
+      state: primed
     - type: TriggerOnSlip
     - type: ExplodeOnTrigger
     - type: Explosive
@@ -230,6 +233,7 @@
       totalIntensity: 10
       canCreateVacuum: false
     - type: DeleteOnTrigger
+    - type: AnimationPlayer
 
 - type: entity
   name: carrot
