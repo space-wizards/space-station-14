@@ -235,8 +235,6 @@ namespace Content.Shared.Humanoid
             {
                 markingSet = new MarkingSet(appearance.Markings, speciesProto.MarkingPoints, markingManager, proto);
                 markingSet.EnsureValid(markingManager);
-                markingSet.FilterSpecies(species, markingManager);
-                markingSet.FilterSponsor(sponsorMarkings, markingManager); // Corvax-Sponsors
 
                 switch (speciesProto.SkinColoration)
                 {
@@ -255,6 +253,8 @@ namespace Content.Shared.Humanoid
 
                         break;
                 }
+                markingSet.EnsureSpecies(species, skinColor, markingManager);
+                markingSet.FilterSponsor(sponsorMarkings, markingManager); // Corvax-Sponsors
             }
 
             return new HumanoidCharacterAppearance(

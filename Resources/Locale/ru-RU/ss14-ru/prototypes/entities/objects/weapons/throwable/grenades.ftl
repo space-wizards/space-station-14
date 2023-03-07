@@ -16,3 +16,6 @@ ent-NuclearGrenade = критическая масса
 ent-ModularGrenade = модульная граната
     .desc = Корпус гранаты. Требуется триггер и заряд.
     .suffix = { "" }
+ent-EmpGrenade = emp grenade
+    .desc = Releases electromagnetic pulses that disrupt or damage many electronic devices or drain power cells.
+    .suffix = { "" }

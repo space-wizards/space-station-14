@@ -16,3 +16,6 @@ ent-WeaponWandDeath = magical wand of instant death
 ent-WeaponWandPolymorphDoor = wand of entrance
     .desc = For when you need a get-away route.
     .suffix = { "" }
+ent-WeaponWandCluwne = wand of cluwning
+    .desc = Make their situation worse by turning them into a cluwne.
+    .suffix = { "" }

@@ -52,3 +52,6 @@ ent-CrateNPCHamster = { ent-CrateRodentCage }
 ent-CrateNPCHamlet = { ent-CrateRodentCage }
     .desc = { ent-CrateRodentCage.desc }
     .suffix = Гамлет
+ent-CrateNPCLizard = { ent-CrateLivestock }
+    .desc = { ent-CrateLivestock.desc }
+    .suffix = { "" }

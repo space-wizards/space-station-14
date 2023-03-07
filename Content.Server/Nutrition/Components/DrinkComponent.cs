@@ -42,6 +42,12 @@ namespace Content.Server.Nutrition.Components
         public bool ForceDrink;
 
         /// <summary>
+        /// Is the entity currently drinking or trying to make someone else drink?
+        /// </summary>
+        [DataField("drinking")]
+        public bool Drinking;
+
+        /// <summary>
         /// How long it takes to drink this yourself.
         /// </summary>
         [DataField("delay")]

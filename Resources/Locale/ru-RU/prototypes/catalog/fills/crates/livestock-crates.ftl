@@ -30,3 +30,5 @@ ent-CrateNPCPig = ящик со свиньёй
     .desc = Ящик, содержащий одну свинью.
 ent-CrateNPCSnake = ящик змей
     .desc = Ящик, содержащий трёх змей.
+ent-CrateNPCLizard = Lizard crate
+    .desc = A crate containing a lizard.

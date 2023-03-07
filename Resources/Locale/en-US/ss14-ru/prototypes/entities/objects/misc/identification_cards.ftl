@@ -133,3 +133,6 @@ ent-DetectiveIDCard = detective ID card
 ent-CBURNIDcard = CBURN ID card
     .desc = { ent-CentcomIDCard.desc }
     .suffix = { "" }
+ent-CluwneIDCard = cluwne ID card
+    .suffix = Unremoveable
+    .desc = { ent-IDCardStandard.desc }

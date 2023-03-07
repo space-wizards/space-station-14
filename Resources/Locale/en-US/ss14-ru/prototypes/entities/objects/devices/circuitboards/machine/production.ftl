@@ -133,3 +133,6 @@ ent-BoozeDispenserMachineCircuitboard = booze dispenser machine board
 ent-SodaDispenserMachineCircuitboard = soda dispenser machine board
     .desc = A machine printed circuit board for a soda dispenser
     .suffix = { "" }
+ent-TelecomServerCircuitboard = telecommunication server machine board
+    .desc = A machine printed circuit board for an telecommunication server
+    .suffix = { "" }

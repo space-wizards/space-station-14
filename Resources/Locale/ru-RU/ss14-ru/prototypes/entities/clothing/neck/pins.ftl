@@ -1,3 +1,6 @@
+ent-ClothingNeckPinBase = pin
+    .desc = be nothing do crime
+    .suffix = { "" }
 ent-ClothingNeckLGBTPin = нагрудный значок
     .desc = Разноцветный металлический значок с булавкой.
     .suffix = { "" }

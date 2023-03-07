@@ -22,3 +22,6 @@ ent-MedkitAdvancedFilled = { ent-MedkitAdvanced }
 ent-MedkitCombatFilled = { ent-MedkitCombat }
     .suffix = Filled
     .desc = { ent-MedkitCombat.desc }
+ent-StimkitFilled = { ent-Medkit }
+    .suffix = Stimkit, Filled
+    .desc = { ent-Medkit.desc }
