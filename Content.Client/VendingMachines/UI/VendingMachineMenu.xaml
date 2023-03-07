@@ -15,7 +15,7 @@
             <Button Disabled="True">
                 <BoxContainer Orientation="Vertical">
                     <!-- This gets filled with information about the currently selected item -->
-                    <BoxContainer Name="VendingInfo" Orientation="Vertical" VerticalExpand="True" Margin="8" />
+                    <BoxContainer Name="VendingInfo" Orientation="Vertical" HorizontalExpand="False" VerticalExpand="True" Margin="8" />
 
                     <Control VerticalExpand="True" VerticalAlignment="Stretch" />
 
