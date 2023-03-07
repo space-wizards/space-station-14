@@ -1,7 +1,9 @@
+using System.Linq;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Procedural;
@@ -12,109 +14,108 @@ public sealed partial class DungeonSystem
      * Run after the main dungeon generation
      */
 
-    private void PostGen(BoundaryWallPostGen gen, Dungeon dungeon, Random random)
+    private void PostGen(BoundaryWallPostGen gen, Dungeon dungeon, MapGridComponent grid, Random random)
     {
+        var tile = new Tile(_tileDefManager[gen.Tile].TileId);
+        var tiles = new List<(Vector2i Index, Tile Tile)>();
+
+        // Spawn wall outline
+        // - Tiles first
         foreach (var room in dungeon.Rooms)
         {
-            // Spawn wall outline
-            // - Tiles first
-
-            for (var x = -1; x <= room.Size.X; x++)
+            foreach (var index in room.Tiles)
             {
-                for (var y = -1; y <= room.Size.Y; y++)
+                for (var x = -1; x <= 1; x++)
                 {
-                    if (x != -1 && y != -1 && x != room.Size.X && y != room.Size.Y)
+                    for (var y = -1; y <= 1; y++)
                     {
-                        continue;
+                        var neighbor = new Vector2i(x + index.X, y + index.Y);
+
+                        if (dungeon.RoomTiles.Contains(neighbor))
+                            continue;
+
+                        var anchoredEnts = grid.GetAnchoredEntitiesEnumerator(neighbor);
+
+                        // Occupied tile.
+                        if (anchoredEnts.MoveNext(out _))
+                            continue;
+
+                        tiles.Add((neighbor, tile));
                     }
-
-                    var indices = new Vector2i(x + room.Offset.X, y + room.Offset.Y);
-                    var tilePos = dungeonMatty.Transform((Vector2) indices + grid.TileSize / 2f - roomCenter).Floored();
-
-                    var anchoredEnts = grid.GetAnchoredEntitiesEnumerator(tilePos);
-
-                    // Occupied tile.
-                    if (anchoredEnts.MoveNext(out _))
-                        continue;
-
-                    tiles.Add((tilePos, new Tile(_tileDefManager["FloorSteel"].TileId)));
-                }
-            }
-
-            grid.SetTiles(tiles);
-            tiles.Clear();
-
-            // Double iteration coz we bulk set tiles for speed.
-            for (var x = -1; x <= room.Size.X; x++)
-            {
-                for (var y = -1; y <= room.Size.Y; y++)
-                {
-                    if (x != -1 && y != -1 && x != room.Size.X && y != room.Size.Y)
-                    {
-                        continue;
-                    }
-
-                    var indices = new Vector2i(x + room.Offset.X, y + room.Offset.Y);
-                    var tilePos = dungeonMatty.Transform((Vector2) indices + grid.TileSize / 2f - roomCenter).Floored();
-
-                    var anchoredEnts = grid.GetAnchoredEntitiesEnumerator(tilePos);
-
-                    // Occupied tile.
-                    if (anchoredEnts.MoveNext(out _))
-                        continue;
-
-                    Spawn("WallSolid", grid.GridTileToLocal(tilePos));
                 }
             }
         }
+
+        grid.SetTiles(tiles);
+
+        // Double iteration coz we bulk set tiles for speed.
+        foreach (var index in tiles)
+        {
+            var anchoredEnts = grid.GetAnchoredEntitiesEnumerator(index.Index);
+
+            // Occupied tile.
+            if (anchoredEnts.MoveNext(out _))
+                continue;
+
+            Spawn(gen.Wall, grid.GridTileToLocal(index.Index));
+        }
     }
 
-    private void PostGen(EntrancePostGen gen, Dungeon dungeon, Random random)
+    private void PostGen(EntrancePostGen gen, Dungeon dungeon, MapGridComponent grid, Random random)
     {
         // TODO:
     }
 
-    private void PostGen(PoweredAirlockPostGen gen, Dungeon dungeon, Random random)
+    private void PostGen(PoweredAirlockPostGen gen, Dungeon dungeon, MapGridComponent grid, Random random)
     {
-        // TODO: Need a test that none of the rooms touch each other.
+        // TODO: split this out to triple / single gens and genericise it for entities.
 
         // Grab all of the room bounds
         // Then, work out connections between them
-        // TODO: Could use arrays given we do know room count up front
-        var rooms = new ValueList<Box2i>(chosenPacks.Length);
-        var roomBorders = new Dictionary<Box2i, HashSet<Vector2i>>(chosenPacks.Length);
+        var roomBorders = new Dictionary<DungeonRoom, HashSet<Vector2i>>(dungeon.Rooms.Count);
 
-        for (var i = 0; i < chosenPacks.Length; i++)
+        foreach (var room in dungeon.Rooms)
         {
-            var pack = chosenPacks[i];
-            var transform = packTransforms[i];
+            var roomEdges = new HashSet<Vector2i>();
 
-            foreach (var room in pack!.Rooms)
+            foreach (var index in room.Tiles)
             {
-                // Rooms are at 0,0, need them offset from center
-                var offRoom = ((Box2) room).Translated(-pack.Size / 2f);
-
-                var dRoom = (Box2i) transform.TransformBox(offRoom);
-                rooms.Add(dRoom);
-                DebugTools.Assert(dRoom.Size.X * dRoom.Size.Y == room.Size.X * room.Size.Y);
-                var roomEdges = new HashSet<Vector2i>();
-                var rator = new Box2iEdgeEnumerator(dRoom, false);
-
-                while (rator.MoveNext(out var edge))
+                for (var x = -1; x <= 1; x++)
                 {
-                    roomEdges.Add(edge);
-                }
+                    for (var y = -1; y <= 1; y++)
+                    {
+                        // Cardinals only
+                        if (x != 0 && y != 0 ||
+                            x == 0 && y == 0)
+                        {
+                            continue;
+                        }
 
-                roomBorders.Add(dRoom, roomEdges);
+                        var neighbor = new Vector2i(index.X + x, index.Y + y);
+
+                        if (dungeon.RoomTiles.Contains(neighbor))
+                            continue;
+
+                        var anc = grid.GetAnchoredEntitiesEnumerator(neighbor);
+
+                        // Occupied
+                        if (anc.MoveNext(out _))
+                            continue;
+
+                        roomEdges.Add(neighbor);
+                    }
+                }
             }
+
+            roomBorders.Add(room, roomEdges);
         }
 
         // Do pathfind from first room to work out graph.
         // TODO: Optional loops
 
-        var roomConnections = new Dictionary<Box2i, List<Box2i>>();
-        var frontier = new Queue<Box2i>();
-        frontier.Enqueue(rooms[0]);
+        var roomConnections = new Dictionary<DungeonRoom, List<DungeonRoom>>();
+        var frontier = new Queue<DungeonRoom>();
+        frontier.Enqueue(dungeon.Rooms.First());
 
         while (frontier.TryDequeue(out var room))
         {
@@ -143,9 +144,8 @@ public sealed partial class DungeonSystem
                 {
                     foreach (var node in flipp)
                     {
-                        var dungeonNode = dungeonTransform.Transform((Vector2) node + grid.TileSize / 2f).Floored();
-                        grid.SetTile(dungeonNode, new Tile(_tileDefManager["FloorSteel"].TileId));
-                        Spawn("AirlockGlass", grid.GridTileToLocal(dungeonNode));
+                        grid.SetTile(node, new Tile(_tileDefManager["FloorSteel"].TileId));
+                        Spawn("AirlockGlass", grid.GridTileToLocal(node));
                     }
                 }
                 else
@@ -175,9 +175,8 @@ public sealed partial class DungeonSystem
                     {
                         width--;
                         var node = nodeDistances[i].Node;
-                        var adjustedNode = dungeonTransform.Transform((Vector2) node + grid.TileSize / 2f).Floored();
-                        grid.SetTile(adjustedNode, new Tile(_tileDefManager["FloorSteel"].TileId));
-                        Spawn("AirlockGlass", grid.GridTileToLocal(adjustedNode));
+                        grid.SetTile(node, new Tile(_tileDefManager["FloorSteel"].TileId));
+                        Spawn("AirlockGlass", grid.GridTileToLocal(node));
 
                         if (width == 0)
                             break;

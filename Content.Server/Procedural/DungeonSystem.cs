@@ -148,6 +148,11 @@ public sealed partial class DungeonSystem : EntitySystem
                 throw new NotImplementedException();
         }
 
+        foreach (var room in dungeon.Rooms)
+        {
+            dungeon.RoomTiles.UnionWith(room.Tiles);
+        }
+
         // To make it slightly more deterministic treat this RNG as separate ig.
         var random = new Random();
 
@@ -156,13 +161,13 @@ public sealed partial class DungeonSystem : EntitySystem
             switch (post)
             {
                 case PoweredAirlockPostGen powair:
-                    PostGen(powair, dungeon, random);
+                    PostGen(powair, dungeon, grid, random);
                     break;
                 case EntrancePostGen entrance:
-                    PostGen(entrance, dungeon, random);
+                    PostGen(entrance, dungeon, grid, random);
                     break;
                 case BoundaryWallPostGen boundary:
-                    PostGen(boundary, dungeon, random);
+                    PostGen(boundary, dungeon, grid, random);
                     break;
                 default:
                     throw new NotImplementedException();
