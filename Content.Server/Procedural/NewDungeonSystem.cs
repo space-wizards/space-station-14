@@ -129,12 +129,6 @@ public sealed class NewDungeonSystem : EntitySystem
 
     public Dungeon GetRoomPackDungeon(DungeonPresetPrototype gen, EntityUid gridUid, MapGridComponent grid, int seed)
     {
-        // Naughty seeds
-        // 952532317 (no hook and top bit???)
-        // 200682996 (left is so fucking far)
-
-        // 1452611895 (wall gap, rotation fucked, anchoring?)
-
         seed = 1452611895;
         // Mask 0 | 1 for rotation seed
         var dungeonRotationSeed = 3 & seed;
@@ -252,6 +246,8 @@ public sealed class NewDungeonSystem : EntitySystem
                     availablePacks.AddRange(roomPacks);
                 }
             }
+
+            availablePacks.Sort((x, y) => x.ID.CompareTo(y.ID));
 
             // Iterate every pack
             // To be valid it needs its edge nodes to overlap with every edge group
@@ -550,17 +546,21 @@ public sealed class NewDungeonSystem : EntitySystem
                     var templateXform = xformQuery.GetComponent(templateEnt);
                     var childPos = dungeonMatty.Transform(templateXform.LocalPosition - roomCenter);
                     var childRot = templateXform.LocalRotation + finalRoomRotation;
+                    var protoId = metaQuery.GetComponent(templateEnt).EntityPrototype?.ID;
 
-                    var ent = Spawn(metaQuery.GetComponent(templateEnt).EntityPrototype?.ID,
+                    // TODO: Copy the templated entity as is with serv
+                    var ent = Spawn(protoId,
                         new EntityCoordinates(gridUid, childPos));
 
                     var childXform = xformQuery.GetComponent(ent);
-                    var anchored = childXform.Anchored;
-                    _transform.SetCoordinates(ent, childXform, new EntityCoordinates(gridUid, childPos));
+                    var anchored = templateXform.Anchored;
                     _transform.SetLocalRotation(ent, childRot, childXform);
 
+                    // If the templated entity was anchored then anchor us too.
                     if (anchored && !childXform.Anchored)
                         _transform.AnchorEntity(ent, childXform, grid);
+                    else if (!anchored && childXform.Anchored)
+                        _transform.Unanchor(ent, childXform);
                 }
 
                 // Load decals
