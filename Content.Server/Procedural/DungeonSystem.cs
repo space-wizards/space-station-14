@@ -1,16 +1,13 @@
 using Content.Server.Decals;
 using Content.Server.GameTicking.Events;
-using Content.Shared.Decals;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonGenerators;
+using Content.Shared.Procedural.PostGeneration;
 using Robust.Server.GameObjects;
-using Robust.Shared.Collections;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Procedural;
 
@@ -25,9 +22,12 @@ public sealed partial class DungeonSystem : EntitySystem
     [Dependency] private readonly MapLoaderSystem _loader = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
+    private ISawmill _sawmill = default!;
+
     public override void Initialize()
     {
         base.Initialize();
+        _sawmill = Logger.GetSawmill("dungen");
         _console.RegisterCommand("dungen", GenerateDungeon, CompletionCallback);
         _console.RegisterCommand("dungen_vis", VisualizeDungeon);
         _prototype.PrototypesReloaded += PrototypeReload;
@@ -137,6 +137,7 @@ public sealed partial class DungeonSystem : EntitySystem
     public void GenerateDungeon(DungeonConfigPrototype gen, EntityUid gridUid, MapGridComponent grid, int seed)
     {
         Dungeon dungeon;
+        _sawmill.Info($"Generating dungeon {gen.ID} with seed {seed} on {ToPrettyString(gridUid)}");
 
         switch (gen.Generator)
         {
@@ -147,9 +148,25 @@ public sealed partial class DungeonSystem : EntitySystem
                 throw new NotImplementedException();
         }
 
+        // To make it slightly more deterministic treat this RNG as separate ig.
+        var random = new Random();
+
         foreach (var post in gen.PostGeneration)
         {
-            // TODO:
+            switch (post)
+            {
+                case PoweredAirlockPostGen powair:
+                    PostGen(powair, dungeon, random);
+                    break;
+                case EntrancePostGen entrance:
+                    PostGen(entrance, dungeon, random);
+                    break;
+                case BoundaryWallPostGen boundary:
+                    PostGen(boundary, dungeon, random);
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
         }
     }
 
