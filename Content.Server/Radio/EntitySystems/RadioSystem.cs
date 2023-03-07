@@ -81,6 +81,7 @@ public sealed class RadioSystem : EntitySystem
             if (!radio.Channels.Contains(channel.ID))
                 continue;
 
+            RaiseLocalEvent(attemptEv);
             RaiseLocalEvent(ent, attemptEv);
             if (attemptEv.Cancelled)
             {
