@@ -75,7 +75,7 @@ namespace Content.Server.SCP.Soap
 
             var velocity = physics.LinearVelocity;
 
-            if (velocity.Length < 0.00001)
+            if (velocity.Length < 0.1)
                 return;
 
             _physics.SetLinearVelocity(uid, velocity.Normalized * force, body: physics);

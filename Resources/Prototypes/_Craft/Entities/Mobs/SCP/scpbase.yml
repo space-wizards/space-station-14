@@ -14,6 +14,7 @@
     tags:
     - DoorBumpOpener
   - type: InputMover
+  - type: Mind
   - type: MobMover
   - type: HTN
     rootTask: IdleCompound
@@ -63,3 +64,32 @@
       - MobMask
       layer:
       - MobLayer
+
+- type: entity
+  abstract: true
+  name: Спавнер SCP
+  id: SpawnMobSCP
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: _Craft/Mobs/SCP/scp173.rsi
+        state: standing
+  - type: ConditionalSpawner
+    prototypes:
+      - MobSCP173
+
+- type: antag
+  id: SafeSCP
+  name: scp-roles-safe-name
+  antagonist: true
+  setPreference: true
+  objective: scp-roles-safe-objective
+
+- type: antag
+  id: HostileSCP
+  name: scp-roles-hostile-name
+  antagonist: true
+  setPreference: true
+  objective: scp-roles-hostile-objective

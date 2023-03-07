@@ -146,8 +146,6 @@
     accent: mute
   - type: GhostTakeoverAvailable
     allowMovement: true
-    allowSpeech: false
-    makeSentient: false
     name: SCP-173
     description: Вы SCP-173, неуязвимая статуя которая не может двигаться пока на неё смотрят! Используя свои способности вы можете убить весь экипаж на станции.
     rules: Будучи агрессивным обьектом SCP убейте всех живых на станции.
@@ -187,7 +185,7 @@
 - type: entity
   name: Спавнер SCP-173
   id: SpawnMobSCP173
-  parent: MarkerBase
+  parent: SpawnMobSCP
   components:
   - type: Sprite
     layers:

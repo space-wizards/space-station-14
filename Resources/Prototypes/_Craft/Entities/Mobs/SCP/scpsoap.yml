@@ -29,7 +29,7 @@
     fixtures:
     - shape:
         !type:PhysShapeCircle
-        radius: 0.45
+        radius: 0.1
       id: "slips"
       hard: false
       layer:
@@ -52,7 +52,6 @@
   - type: GhostTakeoverAvailable
     allowMovement: true
     allowSpeech: true
-    makeSentient: false
     name: Странное Мыло
     description: Вы разумное мыло, порождёние таинственного космоса. Как ни странно вы всё такой же скользкий как и обычное мыло.
     rules: Будучи дружелюбным обьектом веселите экипаж!
@@ -63,7 +62,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      1000: Dead
+      500: Dead
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: SCP173
@@ -79,7 +78,7 @@
 - type: entity
   name: Спавнер Странного Мыла
   id: SpawnMobSCPSoap
-  parent: MarkerBase
+  parent: SpawnMobSCP
   components:
   - type: Sprite
     layers:
