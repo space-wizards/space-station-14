@@ -226,8 +226,8 @@
     - type: ExplodeOnTrigger
     - type: Explosive
       explosionType: Default
-      maxIntensity: 3
-      totalIntensity: 20
+      maxIntensity: 2
+      totalIntensity: 10
       canCreateVacuum: false
     - type: DeleteOnTrigger
 
