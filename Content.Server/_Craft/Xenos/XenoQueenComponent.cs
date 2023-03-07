@@ -31,7 +31,7 @@ namespace Content.Server.Abilities.Xeno
         public InstantAction XenoBirthAction = new()
         {
             UseDelay = TimeSpan.FromSeconds(120),
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("Interface\\Actions\\malfunction.png")),
+            Icon = new SpriteSpecifier.Texture(new ResourcePath("Interface/Actions/malfunction.png")),
             ItemIconStyle = ItemActionIconStyle.NoItem,
             DisplayName = "xeno-queen-birth",
             Description = "xeno-queen-birth-desc",
