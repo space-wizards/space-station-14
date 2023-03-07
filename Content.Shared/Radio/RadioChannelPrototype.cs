@@ -24,5 +24,13 @@ namespace Content.Shared.Radio
         [ViewVariables]
         [IdDataField]
         public string ID { get; } = default!;
+
+        /// <summary>
+        /// If channel is long range it doesn't require telecommunication server 
+        /// and messages can be sent across different maps
+        /// </summary>
+        [ViewVariables]
+        [DataField("longRange")]
+        public bool longRange { get; } = false;
     }
 }

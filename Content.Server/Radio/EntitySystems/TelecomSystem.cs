@@ -6,8 +6,6 @@ namespace Content.Server.Radio.EntitySystems;
 
 public sealed class TelecomSystem : EntitySystem
 {
-    public readonly HashSet<string> IgnoreChannels = new() { "CentCom", "Syndicate" };
-
     public override void Initialize()
     {
         base.Initialize();
@@ -16,7 +14,7 @@ public sealed class TelecomSystem : EntitySystem
 
     private void OnRadioReceiveAttempt(ref RadioReceiveAttemptEvent args)
     {
-        if (IgnoreChannels.Contains(args.Channel.ID))
+        if (args.Channel.longRange)
             return;
         if (HasComp<RadioMicrophoneComponent>(args.RadioSource) && HasComp<RadioSpeakerComponent>(args.RadioReceiver))
             return;
