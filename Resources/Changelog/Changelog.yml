@@ -1,12 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The artifact analyzer now reports the amount of points an artifact is
-      worth rather than how much of it is completed., type: Tweak}
-  - {message: Artifacts and artifact containers are now easier to drag., type: Tweak}
-  - {message: Increased the likelihood of seeing certain rare artifact effects., type: Tweak}
-  id: 2640
-  time: '2022-11-11T04:18:51.0000000+00:00'
 - author: keronshb
   changes:
   - {message: You can no longer sleepwalk from slipping while tired., type: Fix}
@@ -2923,3 +2915,10 @@ Entries:
   - {message: Weather can now transition from one state to another., type: Tweak}
   id: 3139
   time: '2023-03-07T01:28:51.0000000+00:00'
+- author: jamessimo
+  changes:
+  - {message: APC UI gets a visual update, type: Tweak}
+  - {message: APC will now disable its toggle and show a tooltip if you don't have
+      access., type: Tweak}
+  id: 3140
+  time: '2023-03-07T01:55:35.0000000+00:00'
