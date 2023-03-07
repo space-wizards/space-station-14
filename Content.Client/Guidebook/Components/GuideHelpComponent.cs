@@ -13,11 +13,17 @@ public sealed class GuideHelpComponent : Component
     ///     selected guidebook.
     /// </summary>
     [DataField("guides", customTypeSerializer: typeof(PrototypeIdListSerializer<GuideEntryPrototype>), required: true)]
+    [ViewVariables]
     public List<string> Guides = new();
 
     /// <summary>
     ///     Whether or not to automatically include the children of the given guides.
     /// </summary>
     [DataField("includeChildren")]
+    [ViewVariables(VVAccess.ReadWrite)]
     public bool IncludeChildren = true;
+
+    [DataField("openOnInteraction")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool OpenOnInteraction;
 }

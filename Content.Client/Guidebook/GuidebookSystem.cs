@@ -28,7 +28,9 @@ public sealed class GuidebookSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly VerbSystem _verbSystem = default!;
     [Dependency] private readonly RgbLightControllerSystem _rgbLightControllerSystem = default!;
+    [Dependency] private readonly SharedPointLightSystem _pointLightSystem = default!;
     [Dependency] private readonly TagSystem _tags = default!;
+
     private GuidebookWindow _guideWindow = default!;
 
     public const string GuideEmbedTag = "GuideEmbeded";
@@ -43,6 +45,9 @@ public sealed class GuidebookSystem : EntitySystem
         _guideWindow = new GuidebookWindow();
 
         SubscribeLocalEvent<GuideHelpComponent, GetVerbsEvent<ExamineVerb>>(OnGetVerbs);
+        SubscribeLocalEvent<GuideHelpComponent, InteractHandEvent>(OnInteract);
+        SubscribeLocalEvent<GuideHelpComponent, ActivateInWorldEvent>(OnInteract);
+
         SubscribeLocalEvent<GuidebookControlsTestComponent, InteractHandEvent>(OnGuidebookControlsTestInteractHand);
         SubscribeLocalEvent<GuidebookControlsTestComponent, ActivateInWorldEvent>(OnGuidebookControlsTestActivateInWorld);
         SubscribeLocalEvent<GuidebookControlsTestComponent, GetVerbsEvent<AlternativeVerb>>(
@@ -64,6 +69,14 @@ public sealed class GuidebookSystem : EntitySystem
         });
     }
 
+    private void OnInteract(EntityUid uid, GuideHelpComponent component, HandledEntityEventArgs args)
+    {
+        if (!component.OpenOnInteraction)
+            return;
+
+        OpenGuidebook(component.Guides, includeChildren: component.IncludeChildren, selected: component.Guides[0]);
+    }
+
     private void OnGuidebookControlsTestGetAlternateVerbs(EntityUid uid, GuidebookControlsTestComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
         args.Verbs.Add(new AlternativeVerb()
@@ -81,8 +94,8 @@ public sealed class GuidebookSystem : EntitySystem
         {
             Act = () =>
             {
-                var light = EnsureComp<PointLightComponent>(uid); // RGB demands this.
-                light.Enabled = false;
+                EnsureComp<PointLightComponent>(uid); // RGB demands this.
+                _pointLightSystem.SetEnabled(uid, false);
                 var rgb = EnsureComp<RgbLightControllerComponent>(uid);
 
                 var sprite = EnsureComp<SpriteComponent>(uid);
