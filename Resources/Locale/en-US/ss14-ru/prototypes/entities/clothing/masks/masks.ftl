@@ -46,3 +46,6 @@ ent-ClothingMaskMuzzle = muzzle
 ent-ClothingMaskPlague = plague doctor mask
     .desc = A bad omen.
     .suffix = { "" }
+ent-ClothingMaskCluwne = cluwne face and hair
+    .desc = Cursed cluwne face and hair.
+    .suffix = Unremoveable

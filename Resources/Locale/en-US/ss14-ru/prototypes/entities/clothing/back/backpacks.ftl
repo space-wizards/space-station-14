@@ -55,3 +55,6 @@ ent-ClothingBackpackERTClown = ERT clown backpack
 ent-ClothingBackpackHolding = bag of holding
     .desc = A backpack that opens into a localized pocket of bluespace.
     .suffix = { "" }
+ent-ClothingBackpackCluwne = cursed giggles von honkerton
+    .desc = Cursed giggles von honkerton backpack.
+    .suffix = Unremoveable

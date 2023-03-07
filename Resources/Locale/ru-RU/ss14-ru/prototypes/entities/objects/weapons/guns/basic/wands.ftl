@@ -16,3 +16,6 @@ ent-WeaponWandDeath = волшебная палочка мгновенной с�
 ent-WeaponWandPolymorphDoor = волшебная палочка входа
     .desc = На случай, когда нужен маршрут для побега.
     .suffix = { "" }
+ent-WeaponWandCluwne = wand of cluwning
+    .desc = Make their situation worse by turning them into a cluwne.
+    .suffix = { "" }

@@ -133,3 +133,6 @@ ent-BoozeDispenserMachineCircuitboard = раздатчик алкоголя (м�
 ent-SodaDispenserMachineCircuitboard = раздатчик безалкоголя (машинная плата)
     .desc = Печатная плата раздатчика безалкоголя.
     .suffix = { "" }
+ent-TelecomServerCircuitboard = telecommunication server machine board
+    .desc = A machine printed circuit board for an telecommunication server
+    .suffix = { "" }

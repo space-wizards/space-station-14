@@ -31,3 +31,6 @@ ent-ClothingShoesChameleonNoSlips = black shoes
 ent-ClothingShoesJester = jester shoes
     .desc = A court jester's shoes, updated with modern squeaking technology.
     .suffix = { "" }
+ent-ClothingShoesCluwne = cluwne shoes
+    .desc = Cursed pair of cluwne shoes.
+    .suffix = Unremoveable

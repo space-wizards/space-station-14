@@ -16,3 +16,6 @@ ent-NuclearGrenade = the nuclear option
 ent-ModularGrenade = modular grenade
     .desc = A grenade casing. Requires a trigger and a payload.
     .suffix = { "" }
+ent-EmpGrenade = emp grenade
+    .desc = Releases electromagnetic pulses that disrupt or damage many electronic devices or drain power cells.
+    .suffix = { "" }

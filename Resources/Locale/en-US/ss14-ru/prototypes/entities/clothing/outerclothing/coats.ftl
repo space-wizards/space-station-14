@@ -40,3 +40,6 @@ ent-ClothingOuterDameDane = dame dane coat
 ent-ClothingOuterClownPriest = robes of the honkmother
     .desc = Meant for a clown of the cloth.
     .suffix = { "" }
+ent-ClothingOuterCoatParamedicWB = paramedic windbreaker
+    .desc = A paramedic's trusty windbreaker, for all the space wind.
+    .suffix = { "" }

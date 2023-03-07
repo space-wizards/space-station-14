@@ -31,3 +31,6 @@ ent-ClothingShoesChameleonNoSlips = чёрные туфли
 ent-ClothingShoesJester = шутовские туфли
     .desc = Туфли придворного шута, усовершенствованные с помощью современной технологии скрипа.
     .suffix = { "" }
+ent-ClothingShoesCluwne = cluwne shoes
+    .desc = Cursed pair of cluwne shoes.
+    .suffix = Unremoveable

@@ -40,3 +40,6 @@ ent-ClothingOuterDameDane = пальто dame dane
 ent-ClothingOuterClownPriest = роба Хонкоматери
     .desc = Предназначена для клоунов-культистов.
     .suffix = { "" }
+ent-ClothingOuterCoatParamedicWB = paramedic windbreaker
+    .desc = A paramedic's trusty windbreaker, for all the space wind.
+    .suffix = { "" }

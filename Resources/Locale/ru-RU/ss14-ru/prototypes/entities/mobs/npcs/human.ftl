@@ -7,3 +7,6 @@ ent-MobSpirate = Космопират
 ent-SalvageHumanCorpse = неизвестный человек
     .desc = Мы едва тебя узнали.
     .suffix = Мертвый
+ent-MobCluwne = person
+    .desc = A polymorphed unfortunate.
+    .suffix = { "" }

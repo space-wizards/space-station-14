@@ -127,3 +127,6 @@ ent-BoxerPDA = boxer PDA
 ent-DetectivePDA = detective PDA
     .desc = Smells like rain... pouring down the rooftops...
     .suffix = { "" }
+ent-CluwnePDA = cluwne PDA
+    .desc = Cursed cluwne PDA.
+    .suffix = Unremoveable
