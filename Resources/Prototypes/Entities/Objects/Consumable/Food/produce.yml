@@ -222,7 +222,7 @@
   parent: TrashBananaPeel
   id: TrashBananaPeelExplosive
   components:
-    - type: TriggerOnStepTrigger
+    - type: TriggerOnSlip
     - type: ExplodeOnTrigger
     - type: Explosive
       explosionType: Default
