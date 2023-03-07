@@ -20,15 +20,17 @@ public sealed class TelecomSystem : EntitySystem
             return;
         if (HasComp<RadioMicrophoneComponent>(args.RadioSource) && HasComp<RadioSpeakerComponent>(args.RadioReceiver))
             return;
-        if (Transform(args.RadioSource).MapID != Transform(args.RadioReceiver).MapID)
+        var mapSource = Transform(args.RadioSource).MapID;
+        var mapReceiver = Transform(args.RadioReceiver).MapID;
+        if (mapSource == mapReceiver)
         {
-            args.Cancelled = true;
-            return;
-        }
-        foreach (var (power, keys, _) in EntityQuery<ApcPowerReceiverComponent, EncryptionKeyHolderComponent, TelecomServerComponent>())
-        {
-            if (power.Powered && keys.Channels.Contains(args.Channel.ID))
-                return;
+            var map = mapSource;
+            var servers = EntityQuery<ApcPowerReceiverComponent, EncryptionKeyHolderComponent, TransformComponent, TelecomServerComponent>();
+            foreach (var (power, keys, transform, _) in servers)
+            {
+                if (transform.MapID == map && power.Powered && keys.Channels.Contains(args.Channel.ID))
+                    return;
+            }
         }
         args.Cancelled = true;
     }
