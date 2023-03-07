@@ -44,6 +44,16 @@ namespace Content.Server.Tiles
             // this looks a bit sussy but it might be because it needs to be able to place off of grids and expand them
             var location = args.ClickLocation.AlignWithClosestGridTile();
             var physics = GetEntityQuery<PhysicsComponent>();
+            
+            // for checks to allow placing tile under some static entities (e.g. directional windows)
+            var gridUid = location.GetGridUid(EntityManager);
+            var floorBox = Box2.UnitCentered;
+            if (_mapManager.TryGetGrid(location.EntityId, out var mapGrid))
+            {
+                floorBox.Scale(mapGrid.TileSize);
+            }
+            var floorArea = Box2.Area(floorBox);
+
             foreach (var ent in location.GetEntitiesInTile(lookupSystem: _lookup))
             {
                 // check that we the tile we're trying to access isn't blocked by a wall or something
@@ -52,26 +62,19 @@ namespace Content.Server.Tiles
                     phys.Hard &&
                     (phys.CollisionLayer & (int) CollisionGroup.Impassable) != 0) 
                     {
-                        // e.g. you can place tile under directional windows
-                        var gridUid = location.GetGridUid(EntityManager);
-                        var floorPos = location.ToMapPos(EntityManager, _transform);
-                        var floorBox = Box2.UnitCentered.Translated(floorPos);
-                        if (TryComp<MapGridComponent>(gridUid, out var comp))
-                        {
-                            floorBox.Scale(comp.TileSize);
-                        }
-                        if (!TryComp<FixturesComponent>(ent, out var fixtures) || !TryComp<TransformComponent>(ent, out var transform))
+                        if (mapGrid == null || !TryComp<FixturesComponent>(ent, out var fixtures) || !TryComp<TransformComponent>(ent, out var transform))
                             return;
-                        var wallPos = transform.Coordinates.ToMapPos(EntityManager, _transform);
+                        var floorPos = mapGrid.LocalToGrid(location);
+                        var wallPos = mapGrid.LocalToGrid(transform.Coordinates) - floorPos;
                         var wallBox = fixtures.GetAABB(new Transform(wallPos, 0));
-                        if (Box2.Area(floorBox.Intersect(wallBox)) > 0.75 * Box2.Area(floorBox))
+                        var threshold = 0.75;
+                        if (Box2.Area(floorBox.Intersect(wallBox)) / floorArea > threshold)
                             return;
                     }
             }
             var locationMap = location.ToMap(EntityManager, _transform);
             if (locationMap.MapId == MapId.Nullspace)
                 return;
-            _mapManager.TryGetGrid(location.EntityId, out var mapGrid);
 
             foreach (var currentTile in component.OutputTiles)
             {
