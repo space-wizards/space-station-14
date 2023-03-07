@@ -95,6 +95,7 @@ flavor-complex-bungo = like bungo
 flavor-complex-raisins = like dried grapes
 flavor-complex-orange = like oranges
 flavor-complex-watermelon = like watermelon
+flavor-complex-garlic = like garlic
 
 ## Complex foodstuffs (cooked foods, joke flavors, etc)
 
