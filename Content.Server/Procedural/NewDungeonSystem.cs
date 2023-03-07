@@ -406,7 +406,7 @@ public sealed class NewDungeonSystem : EntitySystem
                 {
                     foreach (var node in flipp)
                     {
-                        var dungeonNode = dungeonTransform.Transform(node);
+                        var dungeonNode = dungeonTransform.Transform((Vector2) node + grid.TileSize / 2f).Floored();
                         grid.SetTile(dungeonNode, new Tile(_tileDefManager["FloorSteel"].TileId));
                         Spawn("AirlockGlass", grid.GridTileToLocal(dungeonNode));
                     }
@@ -437,8 +437,10 @@ public sealed class NewDungeonSystem : EntitySystem
                     for (var i = 0; i < nodeDistances.Count; i++)
                     {
                         width--;
-                        grid.SetTile(nodeDistances[i].Node, new Tile(_tileDefManager["FloorSteel"].TileId));
-                        Spawn("AirlockGlass", grid.GridTileToLocal(nodeDistances[i].Node));
+                        var node = nodeDistances[i].Node;
+                        var adjustedNode = dungeonTransform.Transform((Vector2) node + grid.TileSize / 2f).Floored();
+                        grid.SetTile(adjustedNode, new Tile(_tileDefManager["FloorSteel"].TileId));
+                        Spawn("AirlockGlass", grid.GridTileToLocal(adjustedNode));
 
                         if (width == 0)
                             break;
@@ -578,7 +580,7 @@ public sealed class NewDungeonSystem : EntitySystem
                             new EntityCoordinates(gridUid, position),
                             out _,
                             decal.Color,
-                            decal.Angle + roomRotation + packRotation,
+                            decal.Angle + roomRotation + packRotation + dungeonRotation,
                             decal.ZIndex,
                             decal.Cleanable);
                     }
