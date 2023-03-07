@@ -11,6 +11,7 @@ using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Construction
 {
@@ -149,6 +150,78 @@ namespace Content.Client.Construction
             return true;
         }
 
+        private string? GetTargetNodeEntity(ConstructionPrototype prototype)
+        {
+            if (!_prototypeManager.TryIndex(prototype.Graph, out ConstructionGraphPrototype? graph))
+                return null;
+
+            var targetNode = graph.Nodes[prototype.TargetNode];
+            if (string.IsNullOrEmpty(targetNode.Entity))
+                return null;
+
+            return targetNode.Entity;
+        }
+
+        // Don't use the sprite component it isn't associated to any entity
+        public SpriteComponent? GetTargetNodeSprite(ConstructionPrototype prototype)
+        {
+            var targetNode = GetTargetNodeEntity(prototype);
+            if (targetNode == null)
+                return null;
+
+            if (!_prototypeManager.TryIndex<EntityPrototype>(targetNode, out EntityPrototype? entityPrototype))
+                return null;
+
+            if (!entityPrototype.TryGetComponent("Sprite", out SpriteComponent? sprite))
+                return null;
+
+            return sprite;
+        }
+
+        private void SetSpriteFromIcon(SpriteSpecifier icon, SpriteComponent sprite)
+        {
+            sprite.AddBlankLayer(0); // There is no way to actually check if this already exists, so we blindly insert a new one
+            sprite.LayerSetSprite(0, icon);
+            sprite.LayerSetVisible(0, true);
+        }
+
+        private bool SetSpriteFromTargetNode(ConstructionPrototype prototype, SpriteComponent sprite)
+        {
+            var spritePrototype = GetTargetNodeSprite(prototype);
+            if (spritePrototype == null) {
+                return false;
+            }
+
+            sprite.CopyFrom(spritePrototype);
+            sprite.Visible = true;
+
+            return true;
+        }
+
+        private bool SetSprite(ConstructionPrototype prototype, SpriteComponent sprite)
+        {
+            if (SetSpriteFromTargetNode(prototype, sprite))
+            {
+                return true;
+            }
+
+            SetSpriteFromIcon(prototype.Icon, sprite);
+            return false;
+        }
+
+        private void SetGhostSprite(ConstructionPrototype prototype, SpriteComponent sprite)
+        {
+            // Save previous color
+            var color = sprite.Color;
+
+            // If the target node sprite is used, the default color is reset.
+            if (SetSprite(prototype, sprite))
+            {
+                // Set back the default color
+                sprite.Color = color;
+            }
+        }
+
         /// <summary>
         /// Creates a construction ghost at the given location.
         /// </summary>
@@ -181,15 +254,7 @@ namespace Content.Client.Construction
             EntityManager.GetComponent<TransformComponent>(ghost).LocalRotation = dir.ToAngle();
             _ghosts.Add(comp.GhostId, ghost);
             var sprite = EntityManager.GetComponent<SpriteComponent>(ghost);
-            sprite.Color = new Color(48, 255, 48, 128);
-
-            for (int i = 0; i < prototype.Layers.Count; i++)
-            {
-                sprite.AddBlankLayer(i); // There is no way to actually check if this already exists, so we blindly insert a new one
-                sprite.LayerSetSprite(i, prototype.Layers[i]);
-                sprite.LayerSetShader(i, "unshaded");
-                sprite.LayerSetVisible(i, true);
-            }
+            SetGhostSprite(prototype, sprite);
 
             if (prototype.CanBuildInImpassable)
                 EnsureComp<WallMountComponent>(ghost).Arc = new(Math.Tau);
