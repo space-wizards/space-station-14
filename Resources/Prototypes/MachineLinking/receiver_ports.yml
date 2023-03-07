@@ -67,3 +67,8 @@
   id: ArtifactAnalyzerReceiver
   name: signal-port-name-artifact-analyzer-receiver
   description: signal-port-description-artifact-analyzer-receiver
+
+- type: receiverPort
+  id: OperatingTableReceiver
+  name: signal-port-name-operating-table-receiver
+  description: signal-port-description-operating-table-receiver

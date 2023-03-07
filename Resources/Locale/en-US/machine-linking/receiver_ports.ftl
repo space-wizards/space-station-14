@@ -51,3 +51,9 @@ signal-port-description-artifact-analyzer-sender = Analysis console signal sende
 
 signal-port-name-artifact-analyzer-receiver = Pad
 signal-port-description-artifact-analyzer-receiver = Artifact analyzer signal receiver
+
+signal-port-name-operating-table-sender = Body Scanner
+signal-port-description-operating-table-sender = Body scanner signal sender
+
+signal-port-name-operating-table-receiver = Operating Table
+signal-port-description-operating-table-receiver = Body scanner signal receiver

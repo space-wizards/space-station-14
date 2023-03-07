@@ -53,3 +53,9 @@
             max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: DeviceList
+  - type: DeviceNetwork
+    deviceNetId: Wired
+  - type: SignalReceiver
+    inputs:
+      OperatingTableReceiver: []
