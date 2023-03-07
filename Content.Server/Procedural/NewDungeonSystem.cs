@@ -138,7 +138,7 @@ public sealed class NewDungeonSystem : EntitySystem
         seed = 1452611895;
         // Mask 0 | 1 for rotation seed
         var dungeonRotationSeed = 3 & seed;
-        var dungeonRotation = Angle.Zero;//Math.PI / 2 * dungeonRotationSeed;
+        var dungeonRotation = Math.PI / 2 * dungeonRotationSeed;
         var dungeonTransform = Matrix3.CreateTransform(Vector2.Zero, dungeonRotation);
         var random = new Random(seed);
         Logger.Info($"Generating dungeon for seed {seed}");
@@ -600,7 +600,7 @@ public sealed class NewDungeonSystem : EntitySystem
                         var indices = new Vector2i(x + room.Offset.X, y + room.Offset.Y);
                         var tilePos = dungeonMatty.Transform((Vector2) indices + grid.TileSize / 2f - roomCenter).Floored();
 
-                        var anchoredEnts = grid.GetAnchoredEntitiesEnumerator(indices);
+                        var anchoredEnts = grid.GetAnchoredEntitiesEnumerator(tilePos);
 
                         // Occupied tile.
                         if (anchoredEnts.MoveNext(out _))
@@ -626,7 +626,7 @@ public sealed class NewDungeonSystem : EntitySystem
                         var indices = new Vector2i(x + room.Offset.X, y + room.Offset.Y);
                         var tilePos = dungeonMatty.Transform((Vector2) indices + grid.TileSize / 2f - roomCenter).Floored();
 
-                        var anchoredEnts = grid.GetAnchoredEntitiesEnumerator(indices);
+                        var anchoredEnts = grid.GetAnchoredEntitiesEnumerator(tilePos);
 
                         // Occupied tile.
                         if (anchoredEnts.MoveNext(out _))
