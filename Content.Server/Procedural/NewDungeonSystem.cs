@@ -137,7 +137,7 @@ public sealed class NewDungeonSystem : EntitySystem
 
         // 1551527853 (lights fucked, right side fucked
 
-        var dungeonRotation = new Angle(Math.PI);
+        var dungeonRotation = new Angle(Math.PI / 2);
         var dungeonTransform = Matrix3.CreateTransform(Vector2.Zero, dungeonRotation);
         seed = 1551527853;
         var random = new Random(seed);
@@ -515,7 +515,7 @@ public sealed class NewDungeonSystem : EntitySystem
                 var finalRoomRotation = roomRotation + packRotation + dungeonRotation;
 
                 Matrix3.Multiply(roomTransform, packTransform, out matty);
-                Matrix3.Multiply(matty, dungeonTransform, out matty);
+                Matrix3.Multiply(matty, dungeonTransform, out var dungeonMatty);
 
                 var room = roomProto[random.Next(roomProto.Count)];
                 var roomMap = GetOrCreateTemplate(room);
@@ -531,7 +531,7 @@ public sealed class NewDungeonSystem : EntitySystem
                         var indices = new Vector2i(x + room.Offset.X, y + room.Offset.Y);
                         var tileRef = templateGrid.GetTileRef(indices);
 
-                        var tilePos = matty.Transform((Vector2) indices + grid.TileSize / 2f - roomCenter);
+                        var tilePos = dungeonMatty.Transform((Vector2) indices + grid.TileSize / 2f - roomCenter);
                         tiles.Add((tilePos.Floored(), tileRef.Tile));
                     }
                 }
@@ -548,7 +548,7 @@ public sealed class NewDungeonSystem : EntitySystem
                 foreach (var templateEnt in _lookup.GetEntitiesIntersecting(templateMapUid, bounds, LookupFlags.Uncontained))
                 {
                     var templateXform = xformQuery.GetComponent(templateEnt);
-                    var childPos = matty.Transform(templateXform.LocalPosition - roomCenter);
+                    var childPos = dungeonMatty.Transform(templateXform.LocalPosition - roomCenter);
                     var childRot = templateXform.LocalRotation + finalRoomRotation;
 
                     var ent = Spawn(metaQuery.GetComponent(templateEnt).EntityPrototype?.ID,
@@ -573,7 +573,7 @@ public sealed class NewDungeonSystem : EntitySystem
                     {
                         // Offset by 0.5 because decals are offset from bot-left corner
                         // So we convert it to center of tile then convert it back again after transform.
-                        var position = matty.Transform(decal.Coordinates + 0.5f - roomCenter);
+                        var position = dungeonMatty.Transform(decal.Coordinates + 0.5f - roomCenter);
                         position -= 0.5f;
                         _decals.TryAddDecal(
                             decal.Id,
@@ -586,40 +586,55 @@ public sealed class NewDungeonSystem : EntitySystem
                     }
                 }
 
-                Matrix3.Multiply(packTransform, dungeonTransform, out matty);
-
                 // Spawn wall outline
                 // - Tiles first
-                var rator = new Box2iEdgeEnumerator(roomSize, true);
 
-                while (rator.MoveNext(out var index))
+                for (var x = -1; x <= room.Size.X; x++)
                 {
-                    index = matty.Transform((Vector2) index + grid.TileSize / 2f - packCenter).Floored();
-                    var anchoredEnts = grid.GetAnchoredEntitiesEnumerator(index);
+                    for (var y = -1; y <= room.Size.Y; y++)
+                    {
+                        if (x != -1 && y != -1 && x != room.Size.X && y != room.Size.Y)
+                        {
+                            continue;
+                        }
 
-                    // Occupied tile.
-                    if (anchoredEnts.MoveNext(out _))
-                        continue;
+                        var indices = new Vector2i(x + room.Offset.X, y + room.Offset.Y);
+                        var tilePos = dungeonMatty.Transform((Vector2) indices + grid.TileSize / 2f - roomCenter).Floored();
 
-                    tiles.Add((index, new Tile(_tileDefManager["FloorSteel"].TileId)));
+                        var anchoredEnts = grid.GetAnchoredEntitiesEnumerator(indices);
+
+                        // Occupied tile.
+                        if (anchoredEnts.MoveNext(out _))
+                            continue;
+
+                        tiles.Add((tilePos, new Tile(_tileDefManager["FloorSteel"].TileId)));
+                    }
                 }
 
                 grid.SetTiles(tiles);
                 tiles.Clear();
 
                 // Double iteration coz we bulk set tiles for speed.
-                rator = new Box2iEdgeEnumerator(roomSize, true);
-
-                while (rator.MoveNext(out var index))
+                for (var x = -1; x <= room.Size.X; x++)
                 {
-                    index = matty.Transform((Vector2) index + grid.TileSize / 2f - packCenter).Floored();
-                    var anchoredEnts = grid.GetAnchoredEntitiesEnumerator(index);
+                    for (var y = -1; y <= room.Size.Y; y++)
+                    {
+                        if (x != -1 && y != -1 && x != room.Size.X && y != room.Size.Y)
+                        {
+                            continue;
+                        }
 
-                    // Occupied tile.
-                    if (anchoredEnts.MoveNext(out _))
-                        continue;
+                        var indices = new Vector2i(x + room.Offset.X, y + room.Offset.Y);
+                        var tilePos = dungeonMatty.Transform((Vector2) indices + grid.TileSize / 2f - roomCenter).Floored();
 
-                    Spawn("WallSolid", grid.GridTileToLocal(index));
+                        var anchoredEnts = grid.GetAnchoredEntitiesEnumerator(indices);
+
+                        // Occupied tile.
+                        if (anchoredEnts.MoveNext(out _))
+                            continue;
+
+                        Spawn("WallSolid", grid.GridTileToLocal(tilePos));
+                    }
                 }
             }
         }
