@@ -54,7 +54,6 @@ public sealed class AccessWireAction : ComponentWireAction<AccessReaderComponent
     {
         if (!wire.IsCut)
         {
-            // check is still here incase you somehow TOCTOU it into unemagging something it shouldn't
             if (EntityManager.TryGetComponent<AccessReaderComponent>(wire.Owner, out var access))
             {
                 access.Enabled = true;
