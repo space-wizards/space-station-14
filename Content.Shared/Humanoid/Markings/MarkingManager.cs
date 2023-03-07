@@ -166,10 +166,9 @@ namespace Content.Shared.Humanoid.Markings
             return true;
         }
 
-        public bool MustMatchSkin(string species, HumanoidVisualLayers layer, IPrototypeManager? prototypeManager = null)
+        public bool MustMatchSkin(out float alpha, string species, HumanoidVisualLayers layer, IPrototypeManager? prototypeManager = null)
         {
             IoCManager.Resolve(ref prototypeManager);
-
             var speciesProto = prototypeManager.Index<SpeciesPrototype>(species);
             if (
                 !prototypeManager.TryIndex(speciesProto.SpriteSet, out HumanoidSpeciesBaseSpritesPrototype? baseSprites) ||
@@ -179,9 +178,11 @@ namespace Content.Shared.Humanoid.Markings
                 !sprite.MarkingsMatchSkin
             )
             {
+                alpha = 1f;
                 return false;
             }
             
+            alpha = sprite.LayerAlpha;
             return true;
         }
     }
