@@ -10,3 +10,5 @@ apc-menu-charge-label = Заряд:{ " " }
 apc-menu-power-state-good = Хорошее
 apc-menu-power-state-low = Слабое
 apc-menu-power-state-none = Отсутствует
+apc-menu-flavor-left = Свяжитесь с инженером для помощи.
+apc-menu-flavor-right = v1.1
