@@ -39,12 +39,9 @@ public sealed class SupermatterGrenadeSystem : EntitySystem
     {
         if (component.IsExploded)
         {
-            if (component.IsGravityPulling)
-            {
-                if (component.GravityPullEndSound != null)
-                    _audio.PlayPvs(component.GravityPullEndSound, uid,
-                        AudioParams.Default.WithVolume(component.GravityPullEndSoundVolume));
-            }
+            if (component.IsGravityPulling && component.GravityPullEndSound != null)
+                _audio.PlayPvs(component.GravityPullEndSound, uid,
+                    AudioParams.Default.WithVolume(component.GravityPullEndSoundVolume));
             return;
         }
         _container.TryRemoveFromContainer(uid, true);
@@ -78,10 +75,13 @@ public sealed class SupermatterGrenadeSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        foreach (var component in EntityQuery<SupermatterGrenadeComponent>())
+
+        var enumerator = EntityQueryEnumerator<SupermatterGrenadeComponent>();
+        while (enumerator.MoveNext(out var component))
         {
             if (!component.IsGravityPulling)
-                return;
+                continue;
+
             #pragma warning disable
             var uid = component.Owner;
             #pragma warning enable
