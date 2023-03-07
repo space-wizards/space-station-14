@@ -66,7 +66,7 @@ public sealed partial class DungeonSystem
         // TODO:
     }
 
-    private void PostGen(PoweredAirlockPostGen gen, Dungeon dungeon, MapGridComponent grid, Random random)
+    private void PostGen(MiddleConnectionPostGen gen, Dungeon dungeon, MapGridComponent grid, Random random)
     {
         // TODO: split this out to triple / single gens and genericise it for entities.
 
@@ -116,6 +116,7 @@ public sealed partial class DungeonSystem
         var roomConnections = new Dictionary<DungeonRoom, List<DungeonRoom>>();
         var frontier = new Queue<DungeonRoom>();
         frontier.Enqueue(dungeon.Rooms.First());
+        var tile = new Tile(_tileDefManager[gen.Tile].TileId);
 
         while (frontier.TryDequeue(out var room))
         {
@@ -133,54 +134,50 @@ public sealed partial class DungeonSystem
                 var flipp = new HashSet<Vector2i>(border);
                 flipp.IntersectWith(otherBorders);
 
-                if (flipp.Count == 0)
+                if (flipp.Count == 0 ||
+                    gen.OverlapCount != -1 && flipp.Count != gen.OverlapCount)
                     continue;
 
-                // Spawn the edge airlocks
-                // Weight towards center of the group but not always.
+                var center = Vector2.Zero;
 
-                // If there's 3 overlaps just do a 3x1
-                if (flipp.Count == 3)
+                foreach (var node in flipp)
                 {
-                    foreach (var node in flipp)
-                    {
-                        grid.SetTile(node, new Tile(_tileDefManager["FloorSteel"].TileId));
-                        Spawn("AirlockGlass", grid.GridTileToLocal(node));
-                    }
+                    center += (Vector2) node + grid.TileSize / 2f;
                 }
-                else
+
+                center /= flipp.Count;
+                // Weight airlocks towards center more.
+                var nodeDistances = new List<(Vector2i Node, float Distance)>(flipp.Count);
+
+                foreach (var node in flipp)
                 {
-                    // Pick a random one weighted towards the center
-                    var center = Vector2.Zero;
+                    nodeDistances.Add((node, ((Vector2) node + grid.TileSize / 2f - center).LengthSquared));
+                }
 
-                    foreach (var node in flipp)
+                nodeDistances.Sort((x, y) => x.Distance.CompareTo(y.Distance));
+
+                var width = gen.Count;
+
+                for (var i = 0; i < nodeDistances.Count; i++)
+                {
+                    var node = nodeDistances[i].Node;
+                    var gridPos = grid.GridTileToLocal(node);
+                    var anc = grid.GetAnchoredEntitiesEnumerator(node);
+
+                    // Occupado
+                    if (anc.MoveNext(out _))
+                        continue;
+
+                    width--;
+                    grid.SetTile(node, tile);
+
+                    foreach (var ent in gen.Entities)
                     {
-                        center += (Vector2) node + grid.TileSize / 2f;
+                        Spawn(ent, gridPos);
                     }
 
-                    center /= flipp.Count;
-                    // Weight airlocks towards center more.
-                    var nodeDistances = new List<(Vector2i Node, float Distance)>(flipp.Count);
-
-                    foreach (var node in flipp)
-                    {
-                        nodeDistances.Add((node, ((Vector2) node + grid.TileSize / 2f - center).LengthSquared));
-                    }
-
-                    nodeDistances.Sort((x, y) => x.Distance.CompareTo(y.Distance));
-
-                    var width = 1;
-
-                    for (var i = 0; i < nodeDistances.Count; i++)
-                    {
-                        width--;
-                        var node = nodeDistances[i].Node;
-                        grid.SetTile(node, new Tile(_tileDefManager["FloorSteel"].TileId));
-                        Spawn("AirlockGlass", grid.GridTileToLocal(node));
-
-                        if (width == 0)
-                            break;
-                    }
+                    if (width == 0)
+                        break;
                 }
 
                 conns.Add(otherRoom);

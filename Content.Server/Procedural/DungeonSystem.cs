@@ -134,7 +134,7 @@ public sealed partial class DungeonSystem : EntitySystem
         return CompletionResult.Empty;
     }
 
-    public void GenerateDungeon(DungeonConfigPrototype gen, EntityUid gridUid, MapGridComponent grid, int seed)
+    public Dungeon GenerateDungeon(DungeonConfigPrototype gen, EntityUid gridUid, MapGridComponent grid, int seed)
     {
         Dungeon dungeon;
         _sawmill.Info($"Generating dungeon {gen.ID} with seed {seed} on {ToPrettyString(gridUid)}");
@@ -160,8 +160,8 @@ public sealed partial class DungeonSystem : EntitySystem
         {
             switch (post)
             {
-                case PoweredAirlockPostGen powair:
-                    PostGen(powair, dungeon, grid, random);
+                case MiddleConnectionPostGen dordor:
+                    PostGen(dordor, dungeon, grid, random);
                     break;
                 case EntrancePostGen entrance:
                     PostGen(entrance, dungeon, grid, random);
@@ -173,6 +173,8 @@ public sealed partial class DungeonSystem : EntitySystem
                     throw new NotImplementedException();
             }
         }
+
+        return dungeon;
     }
 
     private Angle GetDungeonRotation(int seed)

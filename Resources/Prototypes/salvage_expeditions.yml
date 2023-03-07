@@ -6,11 +6,22 @@
     presets:
       - Cross
   postGeneration:
-    - !type:PoweredAirlockPostGen
-      door: AirlockGlass
+    - !type:MiddleConnectionPostGen
+      overlapCount: 3
+      count: 3
+      entities:
+        - CableApcExtension
+        - AirlockGlass
+    - !type:MiddleConnectionPostGen
+      count: 1
+      entities:
+        - CableApcExtension
+        - AirlockGlass
     - !type:EntrancePostGen
       count: 2
-    # - !type:WindowPostGen
+      entities:
+        - AirlockGlass
+  # - !type:WindowPostGen
     - !type:BoundaryWallPostGen
       tile: FloorSteel
       wall: WallSolid
