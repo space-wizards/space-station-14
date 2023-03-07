@@ -160,7 +160,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
             }
 
-            if (args.Cancelled || args.Handled || component.Deleted || args.Args.Target == null)
+            if (args.Handled || component.Deleted || args.Args.Target == null)
                 return;
 
             if (!TryComp<BodyComponent>(args.Args.Target.Value, out var body))
@@ -202,6 +202,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
                 // log successful force feed
                 _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(uid):user} forced {ToPrettyString(args.Args.User):target} to eat {ToPrettyString(uid):food}");
+                component.ForceFeed = false;
             }
             else
             {
