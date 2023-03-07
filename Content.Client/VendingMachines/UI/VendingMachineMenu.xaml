@@ -1,26 +1,28 @@
-﻿<DefaultWindow xmlns="https://spacestation14.io"
-    MinSize="650 250"
-    SetSize="675 250">
-    <BoxContainer Orientation="Horizontal">
+﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:style="clr-namespace:Content.Client.Stylesheets"
+    MinSize="750 500">
+    <BoxContainer Orientation="Horizontal" Margin="8">
         <!-- List of vendable items -->
-        <ItemList Name="VendingContents" MinWidth="350" SizeFlagsStretchRatio="8" HorizontalExpand="True" VerticalExpand="True" />
+        <ScrollContainer MinWidth="225" MinHeight="175" SizeFlagsStretchRatio="9" HorizontalExpand="True" VerticalExpand="True">
+            <BoxContainer Name="VendingContents" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" />
+        </ScrollContainer>
 
-        <Control MinSize="10 10" />
+        <Control MinSize="8 8" />
 
-        <BoxContainer Orientation="Vertical" MinWidth="275" MaxWidth="275" SizeFlagsStretchRatio="2" HorizontalExpand="True" VerticalExpand="True">
+        <!-- Item Information -->
+        <BoxContainer Orientation="Vertical" MinWidth="175" SizeFlagsStretchRatio="1" HorizontalExpand="True" VerticalExpand="True">
             <Button Disabled="True">
                 <BoxContainer Orientation="Vertical">
-                    <Control MinSize="5 5" />
-
                     <!-- This gets filled with information about the currently selected item -->
-                    <BoxContainer Name="VendingInfo" Orientation="Vertical" />
+                    <BoxContainer Name="VendingInfo" Orientation="Vertical" VerticalExpand="True" Margin="8" />
+
+                    <Control VerticalExpand="True" VerticalAlignment="Stretch" />
 
                     <!-- Gets enabled if an item is selected -->
-                    <Button Name="VendButton" Text="Vend" Disabled="True" />
-
-                    <Control MinSize="5 5" />
+                    <Button Name="VendButton" Text="Vend" Disabled="True" VerticalAlignment="Bottom" Margin="8" />
                 </BoxContainer>
             </Button>
         </BoxContainer>
     </BoxContainer>
-</DefaultWindow>
+</controls:FancyWindow>

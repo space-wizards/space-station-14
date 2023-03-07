@@ -9,11 +9,14 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Robust.Shared.Map;
 using Robust.Client.UserInterface;
+using Content.Client.UserInterface.Controls;
+using Content.Client.Stylesheets;
+using System.Linq;
 
 namespace Content.Client.VendingMachines.UI
 {
     [GenerateTypedNameReferences]
-    public sealed partial class VendingMachineMenu : DefaultWindow
+    public sealed partial class VendingMachineMenu : FancyWindow
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -25,31 +28,31 @@ namespace Content.Client.VendingMachines.UI
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
 
-            VendingContents.OnItemSelected += args =>
-            {
-                onItemSelected(args);
-            };
+            // VendingContents.OnItemSelected += args =>
+            // {
+            //     onItemSelected(args);
+            // };
 
-            VendButton.OnPressed += _ =>
-            {
-                // Stupid solution... but it works.
+            // VendButton.OnPressed += _ =>
+            // {
+            //     // Stupid solution... but it works.
 
-                int pos = 0;
-                int finalPos = 0;
-                foreach (var item in VendingContents)
-                {
-                    if (item.Selected)
-                    {
-                        finalPos = pos;
-                        pos++;
-                        break;
-                    }
-                    pos++;
-                }
+            //     int pos = 0;
+            //     int finalPos = 0;
+            //     foreach (var item in VendingContents)
+            //     {
+            //         if (item.Selected)
+            //         {
+            //             finalPos = pos;
+            //             pos++;
+            //             break;
+            //         }
+            //         pos++;
+            //     }
 
-                if (finalPos != 0 && finalPos < pos)
-                    OnItemSelected?.Invoke(new ItemList.ItemListSelectedEventArgs(finalPos, VendingContents));
-            };
+            //     if (finalPos != 0 && finalPos < pos)
+            //         OnItemSelected?.Invoke(new ItemList.ItemListSelectedEventArgs(finalPos, VendingContents));
+            // };
 
 
             // Placeholder VendingInfo
@@ -81,48 +84,48 @@ namespace Content.Client.VendingMachines.UI
             VendButton.Disabled = true;
         }
 
-        private void onItemSelected(ItemList.ItemListSelectedEventArgs args)
-        {
-            ItemList.Item selected = VendingContents[args.ItemIndex];
-            VendingMachineInventoryEntry? entry = (VendingMachineInventoryEntry?) selected.Metadata!;
+        // private void onItemSelected(ItemList.ItemListSelectedEventArgs args)
+        // {
+        //     ItemList.Item selected = VendingContents[args.ItemIndex];
+        //     VendingMachineInventoryEntry? entry = (VendingMachineInventoryEntry?) selected.Metadata!;
 
-            VendingInfo.Children.Clear();
+        //     VendingInfo.Children.Clear();
 
-            var ent = _entityManager.SpawnEntity(entry.ID ?? "VendingMachineCola", MapCoordinates.Nullspace);
+        //     var ent = _entityManager.SpawnEntity(entry.ID ?? "VendingMachineCola", MapCoordinates.Nullspace);
 
-            var metaData = _entityManager.GetComponent<MetaDataComponent>(ent);
-            _entityManager.TryGetComponent<SpriteComponent>(ent, out var sprite);
-            if (sprite != null)
-            {
-                VendingInfo.AddChild(new SpriteView
-                {
-                    Scale = (3f, 3f),
-                    Sprite = sprite
-                });
-            }
+        //     var metaData = _entityManager.GetComponent<MetaDataComponent>(ent);
+        //     _entityManager.TryGetComponent<SpriteComponent>(ent, out var sprite);
+        //     if (sprite != null)
+        //     {
+        //         VendingInfo.AddChild(new SpriteView
+        //         {
+        //             Scale = (3f, 3f),
+        //             Sprite = sprite
+        //         });
+        //     }
 
-            VendingInfo.AddChild(new Control { MinSize = (10, 10) });
+        //     VendingInfo.AddChild(new Control { MinSize = (10, 10) });
 
-            var message = new FormattedMessage();
+        //     var message = new FormattedMessage();
 
-            message.AddMarkup(metaData.EntityName);
-            var VendingName = new RichTextLabel();
-            VendingName.SetMessage(message);
-            VendingInfo.AddChild(VendingName);
+        //     message.AddMarkup(metaData.EntityName);
+        //     var VendingName = new RichTextLabel();
+        //     VendingName.SetMessage(message);
+        //     VendingInfo.AddChild(VendingName);
 
-            if (metaData.EntityDescription != null)
-            {
-                VendingInfo.AddChild(new Control { MinSize = (10, 10) });
+        //     if (metaData.EntityDescription != null)
+        //     {
+        //         VendingInfo.AddChild(new Control { MinSize = (10, 10) });
 
-                message = new FormattedMessage();
-                message.AddMarkup(metaData.EntityDescription);
-                var VendingDescription = new RichTextLabel();
-                VendingDescription.SetMessage(message);
-                VendingInfo.AddChild(VendingDescription);
-            }
+        //         message = new FormattedMessage();
+        //         message.AddMarkup(metaData.EntityDescription);
+        //         var VendingDescription = new RichTextLabel();
+        //         VendingDescription.SetMessage(message);
+        //         VendingInfo.AddChild(VendingDescription);
+        //     }
 
-            VendButton.Disabled = false;
-        }
+        //     VendButton.Disabled = false;
+        // }
 
 
         /// <summary>
@@ -131,47 +134,90 @@ namespace Content.Client.VendingMachines.UI
         /// </summary>
         public void Populate(List<VendingMachineInventoryEntry> inventory)
         {
+            VendingContents.Children.Clear();
+
             if (inventory.Count == 0)
             {
-                VendingContents.Clear();
                 var outOfStockText = Loc.GetString("vending-machine-component-try-eject-out-of-stock");
-                VendingContents.AddItem(outOfStockText);
+                VendingContents.AddChild(new Label() { Text = outOfStockText });
+
                 SetSizeAfterUpdate(outOfStockText.Length);
+
                 return;
             }
 
-            while (inventory.Count != VendingContents.Count)
-            {
-                if (inventory.Count > VendingContents.Count)
-                    VendingContents.AddItem(string.Empty);
-                else
-                    VendingContents.RemoveAt(VendingContents.Count - 1);
-            }
+            // while (inventory.Count != VendingContents.Count)
+            // {
+            //     if (inventory.Count > VendingContents.Count)
+            //         VendingContents.AddItem(string.Empty);
+            //     else
+            //         VendingContents.RemoveAt(VendingContents.Count - 1);
+            // }
 
             var longestEntry = string.Empty;
             var spriteSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SpriteSystem>();
+            var group = new ButtonGroup();
 
-            for (var i = 0; i < inventory.Count; i++)
+            foreach (var entry in inventory)
             {
-                var entry = inventory[i];
-                var vendingItem = VendingContents[i];
-                vendingItem.Text = string.Empty;
-                vendingItem.Icon = null;
-
                 var itemName = entry.ID;
-                Texture? icon = null;
-                if (_prototypeManager.TryIndex<EntityPrototype>(entry.ID, out var prototype))
+                if (itemName == null)
+                    continue;
+
+
+                var entity = _entityManager.SpawnEntity(itemName ?? "VendingMachineCola", MapCoordinates.Nullspace);
+                var metaData = _entityManager.GetComponent<MetaDataComponent>(entity);
+                _entityManager.TryGetComponent<SpriteComponent>(entity, out var sprite);
+
+                if (metaData.EntityName.Length > longestEntry.Length)
+                    longestEntry = metaData.EntityName;
+
+
+                var itemIcon = new SpriteView
                 {
-                    itemName = prototype.Name;
-                    icon = spriteSystem.GetPrototypeIcon(prototype).Default;
-                }
+                    Scale = (2f, 2f),
+                    Sprite = sprite
+                };
 
-                if (itemName.Length > longestEntry.Length)
-                    longestEntry = itemName;
+                var itemLabel = new Label()
+                {
+                    Text = metaData.EntityName,
+                    HorizontalAlignment = HAlignment.Left,
+                    StyleClasses = { StyleNano.StyleClassLabelBig }
+                };
+                var space = new Control() { HorizontalExpand = true, HorizontalAlignment = HAlignment.Stretch };
+                var itemCount = new Label()
+                {
+                    Text = $"[{entry.Amount}]",
+                    HorizontalAlignment = HAlignment.Right,
+                    StyleClasses = { StyleNano.StyleClassLabelBig }
+                };
 
-                vendingItem.Text = $" [{entry.Amount}] {itemName}";
-                vendingItem.Icon = icon;
-                vendingItem.Metadata = entry;
+                var itemBox = new BoxContainer
+                {
+                    Orientation = BoxContainer.LayoutOrientation.Horizontal,
+                    HorizontalExpand = true,
+                    Children =
+                    {
+                        itemIcon,
+                        itemLabel,
+                        space,
+                        itemCount
+                    }
+                };
+
+                var itemButton = new Button()
+                {
+                    ToggleMode = true,
+                    Group = group,
+                    HorizontalExpand = true,
+                    Children =
+                    {
+                        itemBox
+                    }
+                };
+
+                VendingContents.AddChild(itemButton);
             }
 
             SetSizeAfterUpdate(longestEntry.Length);
@@ -179,7 +225,7 @@ namespace Content.Client.VendingMachines.UI
 
         private void SetSizeAfterUpdate(int longestEntryLength)
         {
-            SetSize = (Math.Clamp((longestEntryLength + 2) * 12, 500, 600), Math.Clamp(VendingContents.Count * 50, 250, 450));
+            SetSize = (Math.Clamp((longestEntryLength + 2) * 16, 750, 900), 500f);
         }
     }
 }
