@@ -1,6 +1,6 @@
-﻿using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.DoAfter;
+using Content.Shared.DoAfter;
 using Content.Shared.Database;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Teleportation.Components;
@@ -24,19 +24,17 @@ public sealed class HandTeleporterSystem : EntitySystem
     {
         SubscribeLocalEvent<HandTeleporterComponent, UseInHandEvent>(OnUseInHand);
 
-        SubscribeLocalEvent<HandTeleporterComponent, HandTeleporterSuccessEvent>(OnPortalSuccess);
-        SubscribeLocalEvent<HandTeleporterComponent, HandTeleporterCancelledEvent>(OnPortalCancelled);
+        SubscribeLocalEvent<HandTeleporterComponent, DoAfterEvent>(OnDoAfter);
     }
 
-    private void OnPortalSuccess(EntityUid uid, HandTeleporterComponent component, HandTeleporterSuccessEvent args)
+    private void OnDoAfter(EntityUid uid, HandTeleporterComponent component, DoAfterEvent args)
     {
-        component.CancelToken = null;
-        HandlePortalUpdating(uid, component, args.User);
-    }
+        if (args.Cancelled || args.Handled)
+            return;
 
-    private void OnPortalCancelled(EntityUid uid, HandTeleporterComponent component, HandTeleporterCancelledEvent args)
-    {
-        component.CancelToken = null;
+        HandlePortalUpdating(uid, component, args.Args.User);
+
+        args.Handled = true;
     }
 
     private void OnUseInHand(EntityUid uid, HandTeleporterComponent component, UseInHandEvent args)
@@ -46,12 +44,6 @@ public sealed class HandTeleporterSystem : EntitySystem
 
         if (Deleted(component.SecondPortal))
             component.SecondPortal = null;
-
-        if (component.CancelToken != null)
-        {
-            component.CancelToken.Cancel();
-            return;
-        }
 
         if (component.FirstPortal != null && component.SecondPortal != null)
         {
@@ -64,16 +56,12 @@ public sealed class HandTeleporterSystem : EntitySystem
             if (xform.ParentUid != xform.GridUid)
                 return;
 
-            component.CancelToken = new CancellationTokenSource();
-            var doafterArgs = new DoAfterEventArgs(args.User, component.PortalCreationDelay,
-                component.CancelToken.Token, used: uid)
+            var doafterArgs = new DoAfterEventArgs(args.User, component.PortalCreationDelay, used: uid)
             {
                 BreakOnDamage = true,
                 BreakOnStun = true,
                 BreakOnUserMove = true,
                 MovementThreshold = 0.5f,
-                UsedCancelledEvent = new HandTeleporterCancelledEvent(),
-                UsedFinishedEvent = new HandTeleporterSuccessEvent(args.User)
             };
 
             _doafter.DoAfter(doafterArgs);

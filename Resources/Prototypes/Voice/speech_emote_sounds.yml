@@ -88,3 +88,10 @@
     path: /Audio/Animals/mouse_squeak.ogg
     params:
       variation: 0.125
+
+- type: emoteSounds
+  id: Cluwne
+  sound:
+    collection: CluwneScreams
+    params:
+      variation: 0.125
