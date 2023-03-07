@@ -40,6 +40,8 @@ namespace Content.Server.Database
                 profiles[profile.Slot] = ConvertProfiles(profile);
             }
 
+            Console.WriteLine(Thread.CurrentThread.Name);
+
             return new PlayerPreferences(profiles, prefs.SelectedCharacterSlot, Color.FromHex(prefs.AdminOOCColor));
         }
 
@@ -701,7 +703,7 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync();
         }
 
-        private async Task<IQueryable<AdminLog>> GetAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
+        private static IQueryable<AdminLog> GetAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
         {
             IQueryable<AdminLog> query = db.AdminLog;
 
@@ -796,7 +798,7 @@ namespace Content.Server.Database
         public async IAsyncEnumerable<string> GetAdminLogMessages(LogFilter? filter = null)
         {
             await using var db = await GetDb();
-            var query = await GetAdminLogsQuery(db.DbContext, filter);
+            var query = GetAdminLogsQuery(db.DbContext, filter);
 
             await foreach (var log in query.Select(log => log.Message).AsAsyncEnumerable())
             {
@@ -807,7 +809,7 @@ namespace Content.Server.Database
         public async IAsyncEnumerable<SharedAdminLog> GetAdminLogs(LogFilter? filter = null)
         {
             await using var db = await GetDb();
-            var query = await GetAdminLogsQuery(db.DbContext, filter);
+            var query = GetAdminLogsQuery(db.DbContext, filter);
             query = query.Include(log => log.Players);
 
             await foreach (var log in query.AsAsyncEnumerable())
@@ -825,7 +827,7 @@ namespace Content.Server.Database
         public async IAsyncEnumerable<JsonDocument> GetAdminLogsJson(LogFilter? filter = null)
         {
             await using var db = await GetDb();
-            var query = await GetAdminLogsQuery(db.DbContext, filter);
+            var query = GetAdminLogsQuery(db.DbContext, filter);
 
             await foreach (var json in query.Select(log => log.Json).AsAsyncEnumerable())
             {
