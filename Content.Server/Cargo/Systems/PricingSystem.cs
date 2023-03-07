@@ -23,12 +23,12 @@ namespace Content.Server.Cargo.Systems;
 /// </summary>
 public sealed class PricingSystem : EntitySystem
 {
+    [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IConsoleHost _consoleHost = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
     [Dependency] private readonly BodySystem _bodySystem = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -125,6 +125,11 @@ public sealed class PricingSystem : EntitySystem
         if (args.Handled)
             return;
 
+        args.Price += GetSolutionPrice(component);
+    }
+
+    public float GetSolutionPrice(SolutionContainerManagerComponent component)
+    {
         var price = 0f;
 
         foreach (var solution in component.Solutions.Values)
@@ -136,7 +141,8 @@ public sealed class PricingSystem : EntitySystem
                 price += (float) reagent.Quantity * reagentProto.PricePerUnit;
             }
         }
-        args.Price += price;
+
+        return price;
     }
 
     private void CalculateStaticPrice(EntityUid uid, StaticPriceComponent component, ref PriceCalculationEvent args)
@@ -147,33 +153,6 @@ public sealed class PricingSystem : EntitySystem
         args.Price += component.Price;
     }
 
-    /// <summary>
-    /// Get a rough price for an entityprototype. Does not consider contained entities.
-    /// </summary>
-    public double GetEstimatedPrice(EntityPrototype prototype, IComponentFactory? factory = null)
-    {
-        IoCManager.Resolve(ref factory);
-        var price = 0.0;
-
-        if (prototype.Components.TryGetValue(factory.GetComponentName(typeof(StaticPriceComponent)),
-                out var staticPriceProto))
-        {
-            var staticComp = (StaticPriceComponent) staticPriceProto.Component;
-
-            price += staticComp.Price;
-        }
-
-        if (prototype.Components.TryGetValue(factory.GetComponentName(typeof(StackPriceComponent)), out var stackpriceProto) &&
-            prototype.Components.TryGetValue(factory.GetComponentName(typeof(StackComponent)), out var stackProto))
-        {
-            var stackPrice = (StackPriceComponent) stackpriceProto.Component;
-            var stack = (StackComponent) stackProto.Component;
-            price += stack.Count * stackPrice.Price;
-        }
-
-        return price;
-    }
-
     public double GetMaterialPrice(MaterialComponent component)
     {
         double price = 0;
@@ -181,6 +160,67 @@ public sealed class PricingSystem : EntitySystem
         {
             price += _prototypeManager.Index<MaterialPrototype>(id).Price * quantity;
         }
+        return price;
+    }
+
+    /// <summary>
+    /// Get a rough price for an entityprototype. Does not consider contained entities.
+    /// </summary>
+    public double GetEstimatedPrice(EntityPrototype prototype)
+    {
+        var ev = new EstimatedPriceCalculationEvent()
+        {
+            Prototype = prototype,
+        };
+
+        RaiseLocalEvent(ref ev);
+
+        if (ev.Handled)
+            return ev.Price;
+
+        var price = ev.Price;
+
+        if (prototype.Components.TryGetValue(_factory.GetComponentName(typeof(SolutionContainerManagerComponent)),
+                out var solManager))
+        {
+            var solManagerComp = (SolutionContainerManagerComponent) solManager.Component;
+            price += GetSolutionPrice(solManagerComp);
+        }
+
+        EntityPrototype.ComponentRegistryEntry? stackProto;
+
+        if (prototype.Components.TryGetValue(_factory.GetComponentName(typeof(MaterialComponent)), out var materials) &&
+            !prototype.Components.ContainsKey(_factory.GetComponentName(typeof(StackPriceComponent))))
+        {
+            var materialsComp = (MaterialComponent) materials.Component;
+            var matPrice = GetMaterialPrice(materialsComp);
+
+            if (prototype.Components.TryGetValue(_factory.GetComponentName(typeof(StackComponent)), out stackProto))
+            {
+                matPrice *= ((StackComponent) stackProto.Component).Count;
+            }
+
+            price += matPrice;
+        }
+
+        if (prototype.Components.TryGetValue(_factory.GetComponentName(typeof(StaticPriceComponent)),
+                out var staticPriceProto))
+        {
+            var staticComp = (StaticPriceComponent) staticPriceProto.Component;
+
+            price += staticComp.Price;
+        }
+
+        if (prototype.Components.TryGetValue(_factory.GetComponentName(typeof(StackPriceComponent)), out var stackpriceProto) &&
+            prototype.Components.TryGetValue(_factory.GetComponentName(typeof(StackComponent)), out stackProto))
+        {
+            var stackPrice = (StackPriceComponent) stackpriceProto.Component;
+            var stack = (StackComponent) stackProto.Component;
+            price += stack.Count * stackPrice.Price;
+        }
+
+        // TODO: Containers
+
         return price;
     }
 
@@ -203,6 +243,8 @@ public sealed class PricingSystem : EntitySystem
 
         //TODO: Add an OpaqueToAppraisal component or similar for blocking the recursive descent into containers, or preventing material pricing.
 
+        // NOTE:
+        // IF YOU TOUCH THIS THEN ALSO TOUCH GETESTIMATEDPRICE UNTIL THIS IS REFACTORED.
         if (TryComp<MaterialComponent>(uid, out var material) && !HasComp<StackPriceComponent>(uid))
         {
             var matPrice = GetMaterialPrice(material);
@@ -214,9 +256,9 @@ public sealed class PricingSystem : EntitySystem
 
         if (TryComp<ContainerManagerComponent>(uid, out var containers))
         {
-            foreach (var container in containers.Containers)
+            foreach (var container in containers.Containers.Values)
             {
-                foreach (var ent in container.Value.ContainedEntities)
+                foreach (var ent in container.ContainedEntities)
                 {
                     ev.Price += GetPrice(ent);
                 }
@@ -256,7 +298,7 @@ public sealed class PricingSystem : EntitySystem
 /// A directed by-ref event fired on an entity when something needs to know it's price. This value is not cached.
 /// </summary>
 [ByRefEvent]
-public struct PriceCalculationEvent
+public record struct PriceCalculationEvent()
 {
     /// <summary>
     /// The total price of the entity.
@@ -267,6 +309,23 @@ public struct PriceCalculationEvent
     /// Whether this event was already handled.
     /// </summary>
     public bool Handled = false;
+}
 
-    public PriceCalculationEvent() { }
+/// <summary>
+/// Raised broadcast for an entity prototype to determine its estimated price.
+/// </summary>
+[ByRefEvent]
+public record struct EstimatedPriceCalculationEvent()
+{
+    public EntityPrototype Prototype;
+
+    /// <summary>
+    /// The total price of the entity.
+    /// </summary>
+    public double Price = 0;
+
+    /// <summary>
+    /// Whether this event was already handled.
+    /// </summary>
+    public bool Handled = false;
 }
