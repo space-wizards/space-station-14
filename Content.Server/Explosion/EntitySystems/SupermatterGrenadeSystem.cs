@@ -77,14 +77,10 @@ public sealed class SupermatterGrenadeSystem : EntitySystem
         base.Update(frameTime);
 
         var enumerator = EntityQueryEnumerator<SupermatterGrenadeComponent>();
-        while (enumerator.MoveNext(out var component))
+        while (enumerator.MoveNext(out var uid, out var component))
         {
             if (!component.IsGravityPulling)
                 continue;
-
-            #pragma warning disable
-            var uid = component.Owner;
-            #pragma warning enable
             if (!component.IsGravitySoundBegan && component.GravityPullWillOccurIn <= _timing.CurTime)
             {
                 component.IsGravitySoundBegan = true;
