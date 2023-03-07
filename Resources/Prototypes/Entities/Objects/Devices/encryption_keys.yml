@@ -120,6 +120,21 @@
 
 - type: entity
   parent: EncryptionKey
+  id: EncryptionKeyMedicalScience
+  name: med-sci encryption key
+  description: An encryption key used by someone who hasn't decided which side to take.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Medical
+    - Science
+    defaultChannel: Science
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+    state: medsci_cypherkey
+
+- type: entity
+  parent: EncryptionKey
   id: EncryptionKeyScience
   name: science encryption key
   description: An encryption key used by scientists. Maybe it is plasmaproof?
@@ -132,20 +147,19 @@
     sprite: Objects/Devices/encryption_keys.rsi
     state: sci_cypherkey
 
-# this can be added back when robotics exists, probably
-# - type: entity
-  # parent: EncryptionKey
-  # id: EncryptionKeyRobo
-  # name: robotech encryption key
-  # description: An encryption key used by robototech engineers. Maybe it has a LAH-6000 on it?
-  # components:
-  # - type: EncryptionKey
-    # channels:
-    # - Science
-    # defaultChannel: Science
-  # - type: Sprite
-    # sprite: Objects/Devices/encryption_keys.rsi
-    # state: rob_cypherkey
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyRobo
+  name: robotech encryption key
+  description: An encryption key used by robototech engineers. Maybe it has a LAH-6000 on it?
+  components:
+  - type: EncryptionKey
+    channels:
+    - Science
+    defaultChannel: Science
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+    state: rob_cypherkey
 
 - type: entity
   parent: EncryptionKey
