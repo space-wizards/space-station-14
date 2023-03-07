@@ -1,140 +1,24 @@
-using System.Linq;
-using Content.Server.Decals;
 using Content.Shared.Decals;
 using Content.Shared.Procedural;
-using Robust.Server.GameObjects;
-using Robust.Server.Maps;
+using Content.Shared.Procedural.DungeonGenerators;
 using Robust.Shared.Collections;
-using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Procedural;
 
-public sealed class NewDungeonSystem : EntitySystem
+public sealed partial class DungeonSystem
 {
-    [Dependency] private readonly IConsoleHost _console = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
-    [Dependency] private readonly DecalSystem _decals = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly MapLoaderSystem _loader = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-
-    public override void Initialize()
+    public Dungeon GeneratePrefabDungeon(PrefabDunGen prefab, EntityUid gridUid, MapGridComponent grid, int seed)
     {
-        base.Initialize();
-        _console.RegisterCommand("weh", GetRoomPack, CompletionCallback);
-        _prototype.PrototypesReloaded += PrototypeReload;
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        _prototype.PrototypesReloaded -= PrototypeReload;
-    }
-
-    private void PrototypeReload(PrototypesReloadedEventArgs obj)
-    {
-        if (!obj.ByType.TryGetValue(typeof(DungeonRoomPrototype), out var rooms))
-        {
-            return;
-        }
-
-        foreach (var proto in rooms.Modified.Values)
-        {
-            var roomProto = (DungeonRoomPrototype) proto;
-            var query = AllEntityQuery<DungeonAtlasTemplateComponent>();
-
-            while (query.MoveNext(out var comp))
-            {
-                var uid = comp.Owner;
-
-                if (!roomProto.AtlasPath.Equals(comp.Path))
-                    continue;
-
-                QueueDel(uid);
-                return;
-            }
-        }
-    }
-
-    private MapId GetOrCreateTemplate(DungeonRoomPrototype proto)
-    {
-        var query = AllEntityQuery<DungeonAtlasTemplateComponent>();
-        DungeonAtlasTemplateComponent? comp;
-
-        while (query.MoveNext(out var uid, out comp))
-        {
-            // Exists
-            if (comp.Path?.Equals(proto.AtlasPath) == true)
-                return Transform(uid).MapID;
-        }
-
-        var mapId = _mapManager.CreateMap();
-        _loader.Load(mapId, proto.AtlasPath.ToString());
-        comp = AddComp<DungeonAtlasTemplateComponent>(_mapManager.GetMapEntityId(mapId));
-        comp.Path = proto.AtlasPath;
-        return mapId;
-    }
-
-    private CompletionResult CompletionCallback(IConsoleShell shell, string[] args)
-    {
-        if (args.Length == 1)
-        {
-            return CompletionResult.FromHintOptions(CompletionHelper.MapIds(EntityManager), "Map Id");
-        }
-
-        if (args.Length == 2)
-        {
-            return CompletionResult.FromHintOptions(CompletionHelper.PrototypeIDs<DungeonPresetPrototype>(proto: _prototype), $"Dungeon preset");
-        }
-
-        return CompletionResult.Empty;
-    }
-
-    private void GetRoomPack(IConsoleShell shell, string argstr, string[] args)
-    {
-        if (args.Length != 2)
-        {
-            return;
-        }
-
-        if (!int.TryParse(args[0], out var mapInt))
-        {
-            return;
-        }
-
-        var mapId = new MapId(mapInt);
-        var mapUid = _mapManager.GetMapEntityId(mapId);
-
-        if (!TryComp<MapGridComponent>(mapUid, out var mapGrid))
-        {
-            return;
-        }
-
-        if (!_prototype.TryIndex<DungeonPresetPrototype>(args[1], out var dungeon))
-        {
-            return;
-        }
-
-        var random = new Random();
-
-        GetRoomPackDungeon(dungeon, mapUid, mapGrid, random.Next());
-    }
-
-    public Dungeon GetRoomPackDungeon(DungeonPresetPrototype gen, EntityUid gridUid, MapGridComponent grid, int seed)
-    {
-        seed = 1452611895;
-        // Mask 0 | 1 for rotation seed
-        var dungeonRotationSeed = 3 & seed;
-        var dungeonRotation = Math.PI / 2 * dungeonRotationSeed;
-        var dungeonTransform = Matrix3.CreateTransform(Vector2.Zero, dungeonRotation);
         var random = new Random(seed);
+        var preset = prefab.Presets[random.Next(prefab.Presets.Count)];
+        var gen = _prototype.Index<DungeonPresetPrototype>(preset);
+
+        var dungeonRotation = GetDungeonRotation(seed);
+        var dungeonTransform = Matrix3.CreateTransform(Vector2.Zero, dungeonRotation);
         Logger.Info($"Generating dungeon for seed {seed}");
         // TODO: API for this
         var roomPackProtos = new Dictionary<Vector2i, List<DungeonRoomPackPrototype>>();

@@ -1,116 +1,162 @@
+using Content.Server.Decals;
+using Content.Server.GameTicking.Events;
+using Content.Shared.Decals;
 using Content.Shared.Procedural;
-using Content.Shared.Procedural.RoomGens;
+using Content.Shared.Procedural.DungeonGenerators;
+using Robust.Server.GameObjects;
+using Robust.Shared.Collections;
+using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Procedural;
 
 public sealed partial class DungeonSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly ITileDefinitionManager _tileDef = default!;
+    [Dependency] private readonly IConsoleHost _console = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
+    [Dependency] private readonly DecalSystem _decals = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly MapLoaderSystem _loader = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-    public void SpawnDungeonTiles(Vector2i position, Dungeon dungeon, MapGridComponent grid, Random random, List<Vector2i> reservedTiles)
+    public override void Initialize()
     {
-        var tiles = new List<(Vector2i, Tile)>();
-
-        foreach (var room in dungeon.Rooms)
-        {
-            var tileDef = _tileDef[room.Tile];
-            var tileId = tileDef.TileId;
-
-            foreach (var tile in room.Tiles)
-            {
-                var adjustedTilePos = tile + position;
-
-                if (reservedTiles.Contains(adjustedTilePos))
-                    continue;
-
-                tiles.Add((adjustedTilePos, new Tile(tileId, variant: (byte) random.Next(tileDef.Variants))));
-            }
-
-            foreach (var tile in room.Walls)
-            {
-                var adjustedTilePos = tile + position;
-
-                if (reservedTiles.Contains(adjustedTilePos))
-                    continue;
-
-                tiles.Add((adjustedTilePos, new Tile(tileId, variant: (byte) random.Next(tileDef.Variants))));
-            }
-        }
-
-        foreach (var path in dungeon.Paths)
-        {
-            var tileDef = _tileDef[path.Tile];
-            var tileId = tileDef.TileId;
-
-            foreach (var tile in path.Tiles)
-            {
-                var adjustedTilePos = tile + position;
-
-                if (reservedTiles.Contains(adjustedTilePos))
-                    continue;
-
-                tiles.Add((adjustedTilePos, new Tile(tileId, variant: (byte) random.Next(tileDef.Variants))));
-            }
-        }
-
-        grid.SetTiles(tiles);
+        base.Initialize();
+        _console.RegisterCommand("dungen", GenerateDungeon, CompletionCallback);
+        _console.RegisterCommand("dungen_vis", VisualizeDungeon);
+        _prototype.PrototypesReloaded += PrototypeReload;
+        SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
     }
 
-    public Dungeon GetDungeon(DungeonConfigPrototype config, float radius, Random random)
+    private void OnRoundStart(RoundStartingEvent ev)
     {
-        var dungeon = new Dungeon();
+        var query = AllEntityQuery<DungeonAtlasTemplateComponent>();
 
-        foreach (var roomConfig in config.Rooms)
+        while (query.MoveNext(out var uid, out _))
         {
-            List<DungeonRoom> rooms;
-
-            switch (roomConfig)
-            {
-                case BSPRoomGen bsp:
-                    rooms = GetBSPRooms(bsp, radius, random);
-                    break;
-                case NoiseRoomGen noisey:
-                    rooms = GetNoiseRooms(noisey, radius, random);
-                    break;
-                case RandomWalkRoomGen walkies:
-                    rooms = GetRandomWalkDungeon(walkies, radius, random);
-                    break;
-                case WormRoomGen worm:
-                    rooms = GetWormRooms(worm, radius, random);
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
-
-            foreach (var room in rooms)
-            {
-                room.Tile = roomConfig.Tile;
-                room.Wall = roomConfig.Wall;
-            }
-
-            dungeon.Rooms.AddRange(rooms);
+            QueueDel(uid);
         }
 
-        if (dungeon.Rooms.Count > 1)
+        // Force all templates to be setup.
+        foreach (var room in _prototype.EnumeratePrototypes<DungeonRoomPrototype>())
         {
-            foreach (var pathConfig in config.Paths)
+            GetOrCreateTemplate(room);
+        }
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _prototype.PrototypesReloaded -= PrototypeReload;
+    }
+
+    private void PrototypeReload(PrototypesReloadedEventArgs obj)
+    {
+        if (!obj.ByType.TryGetValue(typeof(DungeonRoomPrototype), out var rooms))
+        {
+            return;
+        }
+
+        foreach (var proto in rooms.Modified.Values)
+        {
+            var roomProto = (DungeonRoomPrototype) proto;
+            var query = AllEntityQuery<DungeonAtlasTemplateComponent>();
+
+            while (query.MoveNext(out var uid, out var comp))
             {
-                var paths = GetPaths(dungeon, pathConfig, random);
+                if (!roomProto.AtlasPath.Equals(comp.Path))
+                    continue;
 
-                foreach (var path in paths)
-                {
-                    path.Tile = pathConfig.Tile;
-                    path.Wall = pathConfig.Wall;
-                }
-
-                dungeon.Paths.AddRange(paths);
+                QueueDel(uid);
+                break;
             }
         }
 
-        return dungeon;
+        foreach (var proto in rooms.Modified.Values)
+        {
+            var roomProto = (DungeonRoomPrototype) proto;
+            var query = AllEntityQuery<DungeonAtlasTemplateComponent>();
+            var found = false;
+
+            while (query.MoveNext(out var comp))
+            {
+                if (!roomProto.AtlasPath.Equals(comp.Path))
+                    continue;
+
+                found = true;
+                break;
+            }
+
+            if (!found)
+            {
+                GetOrCreateTemplate(roomProto);
+            }
+        }
+    }
+
+    private MapId GetOrCreateTemplate(DungeonRoomPrototype proto)
+    {
+        var query = AllEntityQuery<DungeonAtlasTemplateComponent>();
+        DungeonAtlasTemplateComponent? comp;
+
+        while (query.MoveNext(out var uid, out comp))
+        {
+            // Exists
+            if (comp.Path?.Equals(proto.AtlasPath) == true)
+                return Transform(uid).MapID;
+        }
+
+        var mapId = _mapManager.CreateMap();
+        _loader.Load(mapId, proto.AtlasPath.ToString());
+        comp = AddComp<DungeonAtlasTemplateComponent>(_mapManager.GetMapEntityId(mapId));
+        comp.Path = proto.AtlasPath;
+        return mapId;
+    }
+
+    private CompletionResult CompletionCallback(IConsoleShell shell, string[] args)
+    {
+        if (args.Length == 1)
+        {
+            return CompletionResult.FromHintOptions(CompletionHelper.MapIds(EntityManager), "Map Id");
+        }
+
+        if (args.Length == 2)
+        {
+            return CompletionResult.FromHintOptions(CompletionHelper.PrototypeIDs<DungeonConfigPrototype>(proto: _prototype), $"Dungeon preset");
+        }
+
+        return CompletionResult.Empty;
+    }
+
+    public void GenerateDungeon(DungeonConfigPrototype gen, EntityUid gridUid, MapGridComponent grid, int seed)
+    {
+        Dungeon dungeon;
+
+        switch (gen.Generator)
+        {
+            case PrefabDunGen prefab:
+                dungeon = GeneratePrefabDungeon(prefab, gridUid, grid, seed);
+                break;
+            default:
+                throw new NotImplementedException();
+        }
+
+        foreach (var post in gen.PostGeneration)
+        {
+            // TODO:
+        }
+    }
+
+    private Angle GetDungeonRotation(int seed)
+    {
+        // Mask 0 | 1 for rotation seed
+        var dungeonRotationSeed = 3 & seed;
+        return Math.PI / 2 * dungeonRotationSeed;
     }
 }
