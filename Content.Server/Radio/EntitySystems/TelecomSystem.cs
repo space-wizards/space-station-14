@@ -1,3 +1,4 @@
+using Content.Server.Power.Components;
 using Content.Shared.Radio.Components;
 
 namespace Content.Server.Radio.EntitySystems;
@@ -16,9 +17,9 @@ public sealed class TelecomSystem : EntitySystem
     {
         if (IgnoreChannelIds.Contains(args.Channel.ID))
             return;
-        foreach (var (_, keys) in EntityQuery<TelecomServerComponent, EncryptionKeyHolderComponent>())
+        foreach (var (power, keys, _) in EntityQuery<ApcPowerReceiverComponent, EncryptionKeyHolderComponent, TelecomServerComponent>())
         {
-            if (keys.Channels.Contains(args.Channel.ID))
+            if (power.Powered && keys.Channels.Contains(args.Channel.ID))
                 return;
         }
         args.Cancelled = true;
