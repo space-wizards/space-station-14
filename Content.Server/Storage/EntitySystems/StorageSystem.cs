@@ -33,6 +33,9 @@ using Content.Shared.DoAfter;
 using Content.Shared.Implants.Components;
 using Content.Shared.Lock;
 using Content.Shared.Movement.Events;
+using Content.Server.Ghost.Components;
+using Content.Server.Administration.Managers;
+using Content.Shared.Administration;
 
 namespace Content.Server.Storage.EntitySystems
 {
@@ -41,6 +44,7 @@ namespace Content.Server.Storage.EntitySystems
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IAdminManager _admin = default!;
         [Dependency] private readonly ContainerSystem _containerSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
@@ -94,8 +98,17 @@ namespace Content.Server.Storage.EntitySystems
 
         private void AddOpenUiVerb(EntityUid uid, ServerStorageComponent component, GetVerbsEvent<ActivationVerb> args)
         {
+            bool silent = false;
             if (!args.CanAccess || !args.CanInteract || TryComp<LockComponent>(uid, out var lockComponent) && lockComponent.Locked)
-                return;
+            {
+                // we allow admins to open the storage anyways
+                if (!_admin.HasAdminFlag(args.User, AdminFlags.Admin))
+                    return;
+
+                silent = true;
+            }
+
+            silent |= HasComp<GhostComponent>(args.User);
 
             // Get the session for the user
             if (!TryComp<ActorComponent>(args.User, out var actor))
@@ -106,7 +119,7 @@ namespace Content.Server.Storage.EntitySystems
 
             ActivationVerb verb = new()
             {
-                Act = () => OpenStorageUI(uid, args.User, component)
+                Act = () => OpenStorageUI(uid, args.User, component, silent)
             };
             if (uiOpen)
             {
@@ -583,13 +596,13 @@ namespace Content.Server.Storage.EntitySystems
         ///     Opens the storage UI for an entity
         /// </summary>
         /// <param name="entity">The entity to open the UI for</param>
-        public void OpenStorageUI(EntityUid uid, EntityUid entity, ServerStorageComponent? storageComp = null)
+        public void OpenStorageUI(EntityUid uid, EntityUid entity, ServerStorageComponent? storageComp = null, bool silent = false)
         {
             if (!Resolve(uid, ref storageComp) || !TryComp(entity, out ActorComponent? player))
                 return;
 
-            if (storageComp.StorageOpenSound is not null)
-                _audio.Play(storageComp.StorageOpenSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, storageComp.StorageOpenSound.Params);
+            if (!silent)
+                _audio.PlayPvs(storageComp.StorageOpenSound, uid);
 
             Logger.DebugS(storageComp.LoggerName, $"Storage (UID {uid}) \"used\" by player session (UID {player.PlayerSession.AttachedEntity}).");
 
