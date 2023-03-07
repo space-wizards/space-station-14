@@ -1,9 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: You can no longer sleepwalk from slipping while tired., type: Fix}
-  id: 2641
-  time: '2022-11-13T03:36:33.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: 'NPCs will now try to stay ~1m away from you for melee rather than 0.2m,
@@ -2922,3 +2917,8 @@ Entries:
       access., type: Tweak}
   id: 3140
   time: '2023-03-07T01:55:35.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Changed the war announcement sound to be shorter., type: Tweak}
+  id: 3141
+  time: '2023-03-07T02:49:55.0000000+00:00'
