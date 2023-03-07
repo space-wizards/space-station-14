@@ -85,5 +85,5 @@ reagent-physical-desc-volatile = нестабильное
 reagent-physical-desc-inky = чернильное
 reagent-physical-desc-enigmatic = загадочное
 reagent-physical-desc-exotic-smelling = экзотично пахнущее
-reagent-physical-desc-energizing = energizing
-reagent-physical-desc-exhilarating = exhilarating
+reagent-physical-desc-energizing = заряжающее энергией
+reagent-physical-desc-exhilarating = бодрящее

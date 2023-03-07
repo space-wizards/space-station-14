@@ -97,7 +97,7 @@ flavor-complex-bungo = как бунго
 flavor-complex-raisins = как сушеный виноград
 flavor-complex-orange = как апельсины
 flavor-complex-watermelon = как арбуз
-flavor-complex-garlic = like garlic
+flavor-complex-garlic = как чеснок
 
 ## Complex foodstuffs (cooked foods, joke flavors, etc)
 
