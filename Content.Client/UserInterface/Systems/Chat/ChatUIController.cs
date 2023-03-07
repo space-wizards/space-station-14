@@ -234,7 +234,7 @@ public sealed class ChatUIController : UIController
             return;
         }
 
-        var split = sizing.Split("|");
+        var split = sizing.Split(",");
 
         var chatSize = new Vector2(
             float.Parse(split[0], CultureInfo.InvariantCulture),
