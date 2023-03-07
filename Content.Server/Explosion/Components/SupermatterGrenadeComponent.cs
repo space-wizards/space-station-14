@@ -10,6 +10,7 @@ namespace Content.Server.Explosion.Components;
 [RegisterComponent]
 public sealed class SupermatterGrenadeComponent : Component
 {
+    #region DataFields
     /// <summary>
     /// true => After grenade pull things in heap it will explode. Require ExplosiveComponent.
     /// false => Grenade will just pull things in heap and delete it self.
@@ -25,6 +26,32 @@ public sealed class SupermatterGrenadeComponent : Component
     [DataField("timeTillExplosion")]
     public float TimeTillExplosion = 0f;
 
+    /// <summary>
+    /// true => After activation by timer grenade will be immovable.
+    /// false => Grenade will just pull things in heap  
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("anchorOnGravityPull")]
+    public bool AnchorOnGravityPull = true;
+
+    /// <summary>
+    /// This variable is getting data from attached GravityWell component on startup.
+    /// And then used to turn on/off effect of SingularityDistortion.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("distortionIntensity")]
+    public float DistortionIntensity = 1;
+
+    /// <summary>
+    /// This variable is getting data from attached GravityWell component on startup.
+    /// And then used to turn on/off GravityWell.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("baseRadialAcceleration")]
+    public float BaseRadialAcceleration = 10f;
+    #endregion
+
+    #region Sound
     /// <summary>
     /// GravityPullStart is event when grenade enables GravityWell. 
     /// </summary>
@@ -47,15 +74,9 @@ public sealed class SupermatterGrenadeComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("gravityPullEndSoundVolume")]
     public float GravityPullEndSoundVolume = 5f;
+    #endregion
 
-    /// <summary>
-    /// true => After activation by timer grenade will be immovable.
-    /// false => Grenade will just pull things in heap  
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("anchorOnGravityPull")]
-    public bool AnchorOnGravityPull = true;
-
+    #region Timings
     [ViewVariables(VVAccess.ReadOnly)]
     public bool IsGravityPulling = false;
 
@@ -68,29 +89,13 @@ public sealed class SupermatterGrenadeComponent : Component
 
     [ViewVariables(VVAccess.ReadOnly)]
     public TimeSpan ExplosionWillOccurIn = TimeSpan.Zero;
+
     [ViewVariables(VVAccess.ReadOnly)]
     public TimeSpan GravityPullWillOccurIn = TimeSpan.Zero;
-
-    #region GravityWell
-    /// <summary>
-    /// This variable is getting data from attached GravityWell component on startup.
-    /// And then used to turn on/off GravityWell.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("baseRadialAcceleration")]
-    public float BaseRadialAcceleration = 10f;
-
-    public GravityWellComponent? GravityWell;
     #endregion
 
-    #region SingularityDistortion
-    /// <summary>
-    /// This variable is getting data from attached GravityWell component on startup.
-    /// And then used to turn on/off effect of SingularityDistortion.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("distortionIntensity")]
-    public float DistortionIntensity = 1;
+    #region ExternalComponents
+    public GravityWellComponent? GravityWell;
 
     public SingularityDistortionComponent? Distortion;
     #endregion
