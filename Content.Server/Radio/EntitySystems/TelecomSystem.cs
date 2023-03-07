@@ -12,7 +12,7 @@ public sealed class TelecomSystem : EntitySystem
         SubscribeLocalEvent<RadioReceiveAttemptEvent>(OnRadioReceiveAttempt);
     }
 
-    private void OnRadioReceiveAttempt(RadioReceiveAttemptEvent args)
+    private void OnRadioReceiveAttempt(ref RadioReceiveAttemptEvent args)
     {
         if (IgnoreChannelIds.Contains(args.Channel.ID))
             return;
@@ -21,6 +21,6 @@ public sealed class TelecomSystem : EntitySystem
             if (keys.Channels.Contains(args.Channel.ID))
                 return;
         }
-        args.Cancel();
+        args.Cancelled = true;
     }
 }

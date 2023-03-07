@@ -206,10 +206,10 @@ public sealed class RadioDeviceSystem : EntitySystem
         }
     }
 
-    private void OnReceiveRadio(EntityUid uid, RadioSpeakerComponent component, RadioReceiveEvent args)
+    private void OnReceiveRadio(EntityUid uid, RadioSpeakerComponent component, ref RadioReceiveEvent args)
     {
-        var nameEv = new TransformSpeakerNameEvent(args.Source, Name(args.Source));
-        RaiseLocalEvent(args.Source, nameEv);
+        var nameEv = new TransformSpeakerNameEvent(args.MessageSource, Name(args.MessageSource));
+        RaiseLocalEvent(args.MessageSource, nameEv);
 
         var name = Loc.GetString("speech-name-relay", ("speaker", Name(uid)),
             ("originalName", nameEv.Name));

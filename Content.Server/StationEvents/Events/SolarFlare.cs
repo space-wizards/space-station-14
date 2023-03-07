@@ -68,10 +68,10 @@ public sealed class SolarFlare : StationEventSystem
         }
     }
 
-    private void OnRadioSendAttempt(EntityUid uid, ActiveRadioComponent component, RadioReceiveAttemptEvent args)
+    private void OnRadioSendAttempt(EntityUid uid, ActiveRadioComponent component, ref RadioReceiveAttemptEvent args)
     {
         if (RuleStarted && _event.AffectedChannels.Contains(args.Channel.ID))
             if (!_event.OnlyJamHeadsets || (HasComp<HeadsetComponent>(uid) || HasComp<HeadsetComponent>(args.RadioSource)))
-                args.Cancel();
+                args.Cancelled = true;
     }
 }

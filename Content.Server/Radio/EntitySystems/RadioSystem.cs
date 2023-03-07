@@ -38,26 +38,26 @@ public sealed class RadioSystem : EntitySystem
     {
         if (args.Channel != null && component.Channels.Contains(args.Channel.ID))
         {
-            SendRadioMessage(uid, args.Message, args.Channel);
+            SendRadioMessage(uid, args.Message, args.Channel, uid);
             args.Channel = null; // prevent duplicate messages from other listeners.
         }
     }
 
-    private void OnIntrinsicReceive(EntityUid uid, IntrinsicRadioReceiverComponent component, RadioReceiveEvent args)
+    private void OnIntrinsicReceive(EntityUid uid, IntrinsicRadioReceiverComponent component, ref RadioReceiveEvent args)
     {
         if (TryComp(uid, out ActorComponent? actor))
             _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.ConnectedClient);
     }
 
-    public void SendRadioMessage(EntityUid source, string message, RadioChannelPrototype channel, EntityUid? radioSource = null)
+    public void SendRadioMessage(EntityUid messageSource, string message, RadioChannelPrototype channel, EntityUid radioSource)
     {
         // TODO if radios ever garble / modify messages, feedback-prevention needs to be handled better than this.
         if (!_messages.Add(message))
             return;
 
-        var name = TryComp(source, out VoiceMaskComponent? mask) && mask.Enabled
+        var name = TryComp(messageSource, out VoiceMaskComponent? mask) && mask.Enabled
             ? mask.VoiceName
-            : MetaData(source).EntityName;
+            : MetaData(messageSource).EntityName;
 
         name = FormattedMessage.EscapeText(name);
 
@@ -69,35 +69,38 @@ public sealed class RadioSystem : EntitySystem
             EntityUid.Invalid);
         var chatMsg = new MsgChatMessage { Message = chat };
 
-        var ev = new RadioReceiveEvent(message, source, channel, chatMsg, radioSource);
-        var attemptEv = new RadioReceiveAttemptEvent(message, source, channel, radioSource);
+        var ev = new RadioReceiveEvent(message, messageSource, channel, chatMsg, radioSource);
+        var attemptEv = new RadioReceiveAttemptEvent(messageSource, channel, radioSource);
         var sentAtLeastOnce = false;
 
-        foreach (var radio in EntityQuery<ActiveRadioComponent>())
+        RaiseLocalEvent(ref attemptEv);
+        if (!attemptEv.Cancelled)
         {
-            var ent = radio.Owner;
-            // TODO map/station/range checks?
-
-            if (!radio.Channels.Contains(channel.ID))
-                continue;
-
-            RaiseLocalEvent(attemptEv);
-            RaiseLocalEvent(ent, attemptEv);
-            if (attemptEv.Cancelled)
+            foreach (var radio in EntityQuery<ActiveRadioComponent>())
             {
-                attemptEv.Uncancel();
-                continue;
+                var ent = radio.Owner;
+                // TODO map/station/range checks?
+
+                if (!radio.Channels.Contains(channel.ID))
+                    continue;
+
+                RaiseLocalEvent(ent, ref attemptEv);
+                if (attemptEv.Cancelled)
+                {
+                    attemptEv.Cancelled = false;
+                    continue;
+                }
+                sentAtLeastOnce = true;
+                RaiseLocalEvent(ent, ref ev);
             }
-            sentAtLeastOnce = true;
-            RaiseLocalEvent(ent, ev);
         }
         if (!sentAtLeastOnce)
-            _popupSystem.PopupEntity(Loc.GetString("failed-to-send-message"), source, source, PopupType.MediumCaution);
+            _popupSystem.PopupEntity(Loc.GetString("failed-to-send-message"), messageSource, messageSource, PopupType.MediumCaution);
 
-        if (name != Name(source))
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {ToPrettyString(source):user} as {name} on {channel.LocalizedName}: {message}");
+        if (name != Name(messageSource))
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {ToPrettyString(messageSource):user} as {name} on {channel.LocalizedName}: {message}");
         else
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {ToPrettyString(source):user} on {channel.LocalizedName}: {message}");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {ToPrettyString(messageSource):user} on {channel.LocalizedName}: {message}");
 
         _replay.QueueReplayMessage(chat);
         _messages.Remove(message);

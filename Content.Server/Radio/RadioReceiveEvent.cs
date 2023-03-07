@@ -3,35 +3,37 @@ using Content.Shared.Radio;
 
 namespace Content.Server.Radio;
 
-public sealed class RadioReceiveEvent : EntityEventArgs
+[ByRefEvent]
+public struct RadioReceiveEvent
 {
     public readonly string Message;
-    public readonly EntityUid Source;
+    public readonly EntityUid MessageSource;
     public readonly RadioChannelPrototype Channel;
     public readonly MsgChatMessage ChatMsg;
-    public readonly EntityUid? RadioSource;
+    public readonly EntityUid RadioSource;
 
-    public RadioReceiveEvent(string message, EntityUid source, RadioChannelPrototype channel, MsgChatMessage chatMsg, EntityUid? radioSource)
+    public RadioReceiveEvent(string message, EntityUid messageSource, RadioChannelPrototype channel, MsgChatMessage chatMsg, EntityUid radioSource)
     {
         Message = message;
-        Source = source;
+        MessageSource = messageSource;
         Channel = channel;
         ChatMsg = chatMsg;
         RadioSource = radioSource;
     }
 }
 
-public sealed class RadioReceiveAttemptEvent : CancellableEntityEventArgs
+[ByRefEvent]
+public struct RadioReceiveAttemptEvent
 {
-    public readonly string Message;
-    public readonly EntityUid Source;
+    public readonly EntityUid MessageSource;
     public readonly RadioChannelPrototype Channel;
-    public readonly EntityUid? RadioSource;
+    public readonly EntityUid RadioSource;
 
-    public RadioReceiveAttemptEvent(string message, EntityUid source, RadioChannelPrototype channel, EntityUid? radioSource)
+    public bool Cancelled = false;
+
+    public RadioReceiveAttemptEvent(EntityUid messageSource, RadioChannelPrototype channel, EntityUid radioSource)
     {
-        Message = message;
-        Source = source;
+        MessageSource = messageSource;
         Channel = channel;
         RadioSource = radioSource;
     }
