@@ -16,6 +16,25 @@
     layers:
       - state: internals
       - state: emergencytank
+      
+- type: entity
+  name: alternative survival box
+  parent: BoxCardboard
+  id: AltBoxSurvival
+  description: It's a box with basic internals inside. specially reassembled for slimes.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingMaskBreath
+      - id: EmergencyNitrogenTankFilled
+      - id: SpaceMedipen
+      - id: EmergencyMedipen
+      - id: Flare
+      - id: FoodTinMRE
+  - type: Sprite
+    layers:
+      - state: internals
+      - state: emergencytank
 
 - type: entity
   name: extended-capacity survival box

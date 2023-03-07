@@ -111,6 +111,32 @@
         Blunt: 5
 
 - type: entity
+  parent: OxygenTank
+  id: EmergencyNitrogenTank
+  name: Emergency Nitrogen Tank
+  description: Used for emergencies. Contains very little Nitrogen, so try to conserve it until you actually need it. now and for slimes
+  components:
+  - type: Sprite
+    sprite: Objects/Tanks/emergency_red.rsi
+  - type: GasTank
+    outputPressure: 21.27825
+    air:
+      volume: 3
+      temperature: 293.15
+  - type: Item
+    size: 10
+  - type: Clothing
+    sprite: Objects/Tanks/emergency.rsi
+    slots:
+    - Pocket
+    - Belt
+    - suitStorage
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 5
+
+- type: entity
   parent: EmergencyOxygenTank
   id: ExtendedEmergencyOxygenTank
   name: extended-capacity emergency oxygen tank
