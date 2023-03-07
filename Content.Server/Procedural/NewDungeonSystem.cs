@@ -138,7 +138,7 @@ public sealed class NewDungeonSystem : EntitySystem
         seed = 1452611895;
         // Mask 0 | 1 for rotation seed
         var dungeonRotationSeed = 3 & seed;
-        var dungeonRotation = Math.PI / 2 * dungeonRotationSeed;
+        var dungeonRotation = Angle.Zero;//Math.PI / 2 * dungeonRotationSeed;
         var dungeonTransform = Matrix3.CreateTransform(Vector2.Zero, dungeonRotation);
         var random = new Random(seed);
         Logger.Info($"Generating dungeon for seed {seed}");
