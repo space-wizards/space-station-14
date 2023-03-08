@@ -43,6 +43,8 @@ public sealed class WiresSystem : SharedWiresSystem
     #region Initialization
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
 
         // this is a broadcast event
