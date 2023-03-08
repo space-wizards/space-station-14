@@ -7,6 +7,7 @@ using Content.Shared.Popups;
 using Content.Shared.Radio.Components;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
+using Content.Shared.Wires;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -90,7 +91,7 @@ public sealed class EncryptionKeySystem : EntitySystem
     {
         if (!TryComp<ContainerManagerComponent>(uid, out var _) || args.Handled || component.Removing)
             return;
-        if (!component.KeysUnlocked)
+        if (!component.KeysUnlocked || TryComp<WiresPanelComponent>(uid, out var panel) && panel.IsPanelOpen)
         {
             if (_timing.IsFirstTimePredicted)
                 _popupSystem.PopupEntity(Loc.GetString("encryption-keys-are-locked"), uid, args.User);
