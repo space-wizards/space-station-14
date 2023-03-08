@@ -498,7 +498,7 @@
 
 - type: artifactEffect
   id: EffectEmp
-  targetDepth: 2
+  targetDepth: 3
   effectHint: artifact-effect-hint-electrical-interference
   components:
   - type: EmpArtifact
