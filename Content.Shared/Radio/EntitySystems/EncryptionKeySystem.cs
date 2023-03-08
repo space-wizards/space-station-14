@@ -91,7 +91,7 @@ public sealed class EncryptionKeySystem : EntitySystem
     {
         if (!TryComp<ContainerManagerComponent>(uid, out var _) || args.Handled || component.Removing)
             return;
-        if (!component.KeysUnlocked || TryComp<WiresPanelComponent>(uid, out var panel) && panel.IsPanelOpen)
+        if (!component.KeysUnlocked || TryComp<WiresPanelComponent>(uid, out var panel) && !panel.IsPanelOpen)
         {
             if (_timing.IsFirstTimePredicted)
                 _popupSystem.PopupEntity(Loc.GetString("encryption-keys-are-locked"), uid, args.User);
