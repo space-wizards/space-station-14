@@ -243,6 +243,7 @@
   - type: FlavorProfile
     flavors:
       - meaty
+      - cabbage
   - type: Sprite
     state: cornedbeef
   - type: SolutionContainerManager
