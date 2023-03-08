@@ -1,5 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
+using Content.Shared.CombatMode;
 using Content.Shared.Communications;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
@@ -28,6 +29,7 @@ namespace Content.Shared.Ninja.Systems;
 public abstract class SharedNinjaGlovesSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] protected readonly SharedDoAfterSystem _doafter = default!;
     [Dependency] private readonly SharedElectrocutionSystem _electrocution = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
@@ -138,12 +140,13 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
     }
 
     /// <summary>
-    /// Helper for glove ability handlers, checks gloves and range
+    /// Helper for glove ability handlers, checks gloves, range, combat mode and stuff.
     /// </summary>
     protected bool GloveCheck(EntityUid uid, InteractionAttemptEvent args, [NotNullWhen(true)] out NinjaGlovesComponent? gloves,
         out EntityUid user, out EntityUid target)
     {
-        if (args.Target != null && TryComp<NinjaGlovesComponent>(uid, out gloves) && gloves.User != null && _timing.IsFirstTimePredicted)
+        if (args.Target != null && TryComp<NinjaGlovesComponent>(uid, out gloves) && gloves.User != null
+            && !_combatMode.IsInCombatMode(gloves.User) && _timing.IsFirstTimePredicted)
         {
             user = gloves.User.Value;
             target = args.Target.Value;
