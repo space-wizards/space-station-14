@@ -9,6 +9,7 @@ public abstract class SharedWiresSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<WiresPanelComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<WiresPanelComponent, ComponentGetState>(OnGetState);
     }
 
     private void OnExamine(EntityUid uid, WiresPanelComponent component, ExaminedEvent args)

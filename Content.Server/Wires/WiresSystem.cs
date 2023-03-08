@@ -237,7 +237,7 @@ public sealed class WiresSystem : SharedWiresSystem
 
     private void OnWiresStartup(EntityUid uid, WiresComponent component, ComponentStartup args)
     {
-        EnsureComp<WiresPanelComponent>(uid);
+        var panel = EnsureComp<WiresPanelComponent>(uid);
         if (!String.IsNullOrEmpty(component.LayoutId))
             SetOrCreateWireLayout(uid, component);
 
