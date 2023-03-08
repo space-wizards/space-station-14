@@ -23,7 +23,7 @@ CHANGELOG_FILE = "Resources/Changelog/Changelog.yml"
 
 TYPES_TO_EMOJI = {
     "Fix":    "🐛",
-    "Add":    "🆕",
+    "Add":    "✨", # Corvax: Use gitmoji 💥
     "Remove": "❌",
     "Tweak":  "⚒️"
 }
@@ -127,17 +127,18 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
                 # Corvax-Localization-End
                 content.write(f"{emoji} {message}\n")
 
-    body = {
-        "content": content.getvalue(),
-        # Do not allow any mentions.
-        "allowed_mentions": {
-            "parse": []
-        },
-        # SUPPRESS_EMBEDS
-        "flags": 1 << 2
-    }
+    for chunk in iter(lambda: content.read(2000), '') # Corvax: Split big changelogs messages
+        body = {
+            "content": chunk
+            # Do not allow any mentions.
+            "allowed_mentions": {
+                "parse": []
+            },
+            # SUPPRESS_EMBEDS
+            "flags": 1 << 2
+        }
 
-    requests.post(DISCORD_WEBHOOK_URL, json=body)
+        requests.post(DISCORD_WEBHOOK_URL, json=body)
 
 
 main()
