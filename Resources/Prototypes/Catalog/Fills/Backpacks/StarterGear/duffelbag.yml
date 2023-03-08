@@ -50,7 +50,7 @@
 
 - type: entity
   noSpawn: true
-  parent: ClothingBackpackEngineeringDuffel
+  parent: ClothingBackpackDuffelEngineering
   id: ClothingBackpackDuffelChiefEngineerFilled
   components:
   - type: StorageFill
@@ -61,7 +61,7 @@
 
 - type: entity
   noSpawn: true
-  parent: ClothingBackpackScienceDuffel
+  parent: ClothingBackpackDuffelScience
   id: ClothingBackpackDuffelResearchDirectorFilled
   components:
   - type: StorageFill
@@ -83,7 +83,7 @@
 
 - type: entity
   noSpawn: true
-  parent: ClothingBackpackMedicalDuffel
+  parent: ClothingBackpackDuffelMedical
   id: ClothingBackpackDuffelCMOFilled
   components:
   - type: StorageFill
