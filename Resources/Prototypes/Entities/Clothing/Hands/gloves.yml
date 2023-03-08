@@ -80,13 +80,13 @@
   name: blue boxing gloves
   description: Blue gloves for competitive boxing. Feels like they're heavier than usual...
   components:
-    - type: StaminaDamageOnHit
-      damage: 30
-    - type: MeleeWeapon
-      attackRate: 1.5
-      damage:
-        types:
-          Blunt: 8
+  - type: StaminaDamageOnHit
+    damage: 30
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 8
 
 - type: entity
   parent: ClothingHandsBase
