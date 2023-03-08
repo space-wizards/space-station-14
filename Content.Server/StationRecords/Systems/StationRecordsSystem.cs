@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Components;
+using Content.Server.Forensics;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
@@ -112,6 +113,9 @@ public sealed class StationRecordsSystem : EntitySystem
             throw new ArgumentException($"Invalid job prototype ID: {jobId}");
         }
 
+        if (!EntityManager.TryGetComponent(idUid, out FingerprintComponent? fingerprintComponent))
+            return;
+
         var record = new GeneralStationRecord()
         {
             Name = name,
@@ -121,7 +125,8 @@ public sealed class StationRecordsSystem : EntitySystem
             JobPrototype = jobId,
             Species = species,
             Gender = gender,
-            DisplayPriority = jobPrototype.Weight
+            DisplayPriority = jobPrototype.Weight,
+            Fingerprints = fingerprintComponent.Fingerprint
         };
 
         var key = AddRecord(station, records);
