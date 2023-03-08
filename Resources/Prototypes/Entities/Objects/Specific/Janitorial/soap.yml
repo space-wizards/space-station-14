@@ -111,6 +111,9 @@
   components:
   - type: Item
     heldPrefix: ninja
+  # despawn to prevent ninja killing server
+  - type: TimedDespawn
+    lifetime: 60
   # no holding ninja hostage and forcing him to make infinite money for cargo
   - type: StaticPrice
     price: 0
