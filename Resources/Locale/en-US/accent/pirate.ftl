@@ -26,6 +26,7 @@ accent-pirate-word-24 = dying
 accent-pirate-word-25 = spaced
 accent-pirate-word-26 = dead
 accent-pirate-word-27 = men
+accent-pirate-word-28 = station
 
 # Pirate Response
 accent-pirate-response-1 = Ahoy!
@@ -53,3 +54,4 @@ accent-pirate-response-22 = feeding the fish
 accent-pirate-response-23 = shark baited
 accent-pirate-response-24 = in davy jones' locker
 accent-pirate-response-25 = sea dogs
+accent-pirate-response-26 = docks

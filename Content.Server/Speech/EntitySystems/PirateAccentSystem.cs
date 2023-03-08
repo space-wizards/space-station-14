@@ -35,6 +35,7 @@ public sealed class PirateAccentSystem : EntitySystem
         { (Loc.GetString($"accent-pirate-word-25")), (Loc.GetString($"accent-pirate-response-23")) },
         { (Loc.GetString($"accent-pirate-word-26")), (Loc.GetString($"accent-pirate-response-24")) },
         { (Loc.GetString($"accent-pirate-word-27")), (Loc.GetString($"accent-pirate-response-25")) },
+        { (Loc.GetString($"accent-pirate-word-28")), (Loc.GetString($"accent-pirate-response-26")) },
     };
 
     public override void Initialize()
