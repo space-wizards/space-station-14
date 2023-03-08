@@ -28,6 +28,7 @@ public sealed partial class DungeonJob : Job<Dungeon>
 
         private readonly DungeonConfigPrototype _gen;
         private readonly int _seed;
+        private readonly Vector2 _position;
 
         private readonly MapGridComponent _grid;
         private readonly EntityUid _gridUid;
@@ -47,6 +48,7 @@ public sealed partial class DungeonJob : Job<Dungeon>
             MapGridComponent grid,
             EntityUid gridUid,
             int seed,
+            Vector2 position,
             CancellationToken cancellation = default) : base(maxTime, cancellation)
         {
             _entManager = entManager;
@@ -64,6 +66,7 @@ public sealed partial class DungeonJob : Job<Dungeon>
             _grid = grid;
             _gridUid = gridUid;
             _seed = seed;
+            _position = position;
         }
 
         protected override async Task<Dungeon?> Process()
@@ -97,6 +100,12 @@ public sealed partial class DungeonJob : Job<Dungeon>
                         break;
                     case EntrancePostGen entrance:
                         await PostGen(entrance, dungeon, _gridUid, _grid, random);
+                        break;
+                    case ExternalWindowPostGen externalWindow:
+                        await PostGen(externalWindow, dungeon, _gridUid, _grid, random);
+                        break;
+                    case InternalWindowPostGen internalWindow:
+                        await PostGen(internalWindow, dungeon, _gridUid, _grid, random);
                         break;
                     case BoundaryWallPostGen boundary:
                         await PostGen(boundary, dungeon, _gridUid,_grid, random);

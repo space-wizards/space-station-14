@@ -31,14 +31,13 @@ public sealed partial class DungeonSystem : EntitySystem
     private const double DungeonJobTime = 0.005;
 
     private readonly JobQueue _dungeonJobQueue = new(DungeonJobTime);
-    private Dictionary<DungeonJob, CancellationTokenSource> _dungeonJobs = new();
+    private readonly Dictionary<DungeonJob, CancellationTokenSource> _dungeonJobs = new();
 
     public override void Initialize()
     {
         base.Initialize();
         _sawmill = Logger.GetSawmill("dungen");
         _console.RegisterCommand("dungen", GenerateDungeon, CompletionCallback);
-        _console.RegisterCommand("dungen_vis", VisualizeDungeon);
         _prototype.PrototypesReloaded += PrototypeReload;
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
     }
@@ -147,27 +146,12 @@ public sealed partial class DungeonSystem : EntitySystem
         return mapId;
     }
 
-    private CompletionResult CompletionCallback(IConsoleShell shell, string[] args)
-    {
-        if (args.Length == 1)
-        {
-            return CompletionResult.FromHintOptions(CompletionHelper.MapIds(EntityManager), "Map Id");
-        }
-
-        if (args.Length == 2)
-        {
-            return CompletionResult.FromHintOptions(CompletionHelper.PrototypeIDs<DungeonConfigPrototype>(proto: _prototype), $"Dungeon preset");
-        }
-
-        return CompletionResult.Empty;
-    }
-
-    public void GenerateDungeon(DungeonConfigPrototype gen, EntityUid gridUid, MapGridComponent grid,
+    public void GenerateDungeon(DungeonConfigPrototype gen,
+        EntityUid gridUid,
+        MapGridComponent grid,
+        Vector2 position,
         int seed)
     {
-        if (!TryComp<BiomeComponent>(gridUid, out var biome))
-            return;
-
         var cancelToken = new CancellationTokenSource();
         var job = new DungeonJob(DungeonJobTime,
             EntityManager,
@@ -183,6 +167,7 @@ public sealed partial class DungeonSystem : EntitySystem
             grid,
             gridUid,
             seed,
+            position,
             cancelToken.Token);
 
         _dungeonJobs.Add(job, cancelToken);
@@ -190,12 +175,13 @@ public sealed partial class DungeonSystem : EntitySystem
         job.Run();
     }
 
-    public async Task<Dungeon> GenerateDungeonAsync(DungeonConfigPrototype gen, EntityUid gridUid, MapGridComponent grid,
+    public async Task<Dungeon> GenerateDungeonAsync(
+        DungeonConfigPrototype gen,
+        EntityUid gridUid,
+        MapGridComponent grid,
+        Vector2 position,
         int seed)
     {
-        if (!TryComp<BiomeComponent>(gridUid, out var biome))
-            throw new InvalidOperationException($"Dungeons required to be on biomes at this time");
-
         var cancelToken = new CancellationTokenSource();
         var job = new DungeonJob(DungeonJobTime,
             EntityManager,
@@ -211,6 +197,7 @@ public sealed partial class DungeonSystem : EntitySystem
             grid,
             gridUid,
             seed,
+            position,
             cancelToken.Token);
 
         _dungeonJobs.Add(job, cancelToken);

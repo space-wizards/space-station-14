@@ -18,7 +18,7 @@ public sealed partial class DungeonJob
         var gen = _prototype.Index<DungeonPresetPrototype>(preset);
 
         var dungeonRotation = _dungeon.GetDungeonRotation(seed);
-        var dungeonTransform = Matrix3.CreateTransform(Vector2.Zero, dungeonRotation);
+        var dungeonTransform = Matrix3.CreateTransform(_position, dungeonRotation);
         var roomPackProtos = new Dictionary<Vector2i, List<DungeonRoomPackPrototype>>();
         var externalNodes = new Dictionary<DungeonRoomPackPrototype, HashSet<Vector2i>>();
 
@@ -55,6 +55,20 @@ public sealed partial class DungeonJob
 
         foreach (var proto in _prototype.EnumeratePrototypes<DungeonRoomPrototype>())
         {
+            var whitelisted = false;
+
+            foreach (var tag in prefab.RoomWhitelist)
+            {
+                if (proto.Tags.Contains(tag))
+                {
+                    whitelisted = true;
+                    break;
+                }
+            }
+
+            if (!whitelisted)
+                continue;
+
             var size = proto.Size;
             var sizeRooms = roomProtos.GetOrNew(size);
             sizeRooms.Add(proto);

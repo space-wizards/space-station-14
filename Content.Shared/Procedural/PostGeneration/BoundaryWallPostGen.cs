@@ -14,4 +14,10 @@ public sealed class BoundaryWallPostGen : IPostDunGen
 
     [DataField("wall", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Wall = "WallSolid";
+
+    /// <summary>
+    /// Walls to use in corners if applicable.
+    /// </summary>
+    [DataField("cornerWall", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string? CornerWall;
 }

@@ -31,4 +31,9 @@ public sealed class MiddleConnectionPostGen : IPostDunGen
         "CableApcExtension",
         "AirlockGlass"
     };
+
+    /// <summary>
+    /// If overlap > 1 then what should spawn on the edges.
+    /// </summary>
+    [DataField("edgeEntities")] public List<string>? EdgeEntities;
 }

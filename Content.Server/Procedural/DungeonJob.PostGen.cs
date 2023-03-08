@@ -61,7 +61,41 @@ public sealed partial class DungeonJob
             if (anchoredEnts.MoveNext(out _))
                 continue;
 
-            _entManager.SpawnEntity(gen.Wall, grid.GridTileToLocal(index.Index));
+            // If no cardinal neighbors in dungeon then we're a corner.
+            var isCorner = false;
+
+            if (gen.CornerWall != null)
+            {
+                isCorner = true;
+
+                for (var x = -1; x <= 1; x++)
+                {
+                    for (var y = -1; y <= 1; y++)
+                    {
+                        if (x != 0 && y != 0)
+                        {
+                            continue;
+                        }
+
+                        var neighbor = new Vector2i(index.Index.X + x, index.Index.Y + y);
+
+                        if (dungeon.RoomTiles.Contains(neighbor))
+                        {
+                            isCorner = false;
+                            break;
+                        }
+                    }
+
+                    if (!isCorner)
+                        break;
+                }
+
+                if (isCorner)
+                    _entManager.SpawnEntity(gen.CornerWall, grid.GridTileToLocal(index.Index));
+            }
+
+            if (!isCorner)
+                _entManager.SpawnEntity(gen.Wall, grid.GridTileToLocal(index.Index));
 
             if (i % 10 == 0)
             {
@@ -101,12 +135,12 @@ public sealed partial class DungeonJob
                 var direction = (tile - room.Center).ToAngle().GetCardinalDir().ToAngle().ToVec();
                 var isValid = true;
 
-                for (var j = 0; j < 4; j++)
+                for (var j = 1; j < 4; j++)
                 {
-                    var neighbor = (tile + direction).Floored();
+                    var neighbor = (tile + direction * j).Floored();
 
                     // If it's an interior tile or blocked.
-                    if (dungeon.RoomTiles.Contains(neighbor) || grid.GetAnchoredEntitiesEnumerator(neighbor).MoveNext(out _))
+                    if (dungeon.RoomTiles.Contains(neighbor) || _lookup.GetEntitiesIntersecting(gridUid, neighbor, LookupFlags.Dynamic | LookupFlags.Static).Any())
                     {
                         isValid = false;
                         break;
@@ -138,6 +172,167 @@ public sealed partial class DungeonJob
             }
 
             roomTiles.Clear();
+        }
+    }
+
+    private async Task PostGen(ExternalWindowPostGen gen, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid,
+        Random random)
+    {
+        // Iterate every room with N chance to spawn windows on that wall per cardinal dir.
+        var chance = 0.10;
+        var distance = 10;
+
+        foreach (var room in dungeon.Rooms)
+        {
+            var validTiles = new List<Vector2i>();
+
+            for (var i = 0; i < 4; i++)
+            {
+                var dir = (DirectionFlag) Math.Pow(2, i);
+                var dirVec = dir.AsDir().ToIntVec();
+
+                foreach (var tile in room.Tiles)
+                {
+                    var tileAngle = ((Vector2) tile + grid.TileSize / 2f - room.Center).ToAngle();
+                    var roundedAngle = Math.Round(tileAngle.Theta / (Math.PI / 2)) * (Math.PI / 2);
+
+                    var tileVec = (Vector2i) new Angle(roundedAngle).ToVec().Rounded();
+
+                    if (!tileVec.Equals(dirVec))
+                        continue;
+
+                    var valid = true;
+
+                    for (var j = 1; j < distance; j++)
+                    {
+                        var edgeNeighbor = tile + dirVec * j;
+
+                        if (dungeon.RoomTiles.Contains(edgeNeighbor))
+                        {
+                            valid = false;
+                            break;
+                        }
+                    }
+
+                    if (!valid)
+                        continue;
+
+                    var windowTile = tile + dirVec;
+
+                    if (grid.GetAnchoredEntitiesEnumerator(windowTile).MoveNext(out _))
+                        continue;
+
+                    validTiles.Add(windowTile);
+                }
+
+                if (validTiles.Count == 0 || random.NextDouble() > chance)
+                    continue;
+
+                validTiles.Sort((x, y) => ((Vector2) x + grid.TileSize / 2f - room.Center).LengthSquared.CompareTo(((Vector2) y + grid.TileSize / 2f - room.Center).LengthSquared));
+
+                for (var j = 0; j < Math.Min(validTiles.Count, 3); j++)
+                {
+                    var tile = validTiles[j];
+                    var gridPos = grid.GridTileToLocal(tile);
+                    grid.SetTile(tile, new Tile(_tileDefManager[gen.Tile].TileId));
+
+                    foreach (var ent in gen.Entities)
+                    {
+                        _entManager.SpawnEntity(ent, gridPos);
+                    }
+                }
+
+                if (validTiles.Count > 0)
+                {
+                    await SuspendIfOutOfTime();
+                    ValidateResume();
+                }
+
+                validTiles.Clear();
+            }
+        }
+    }
+
+    /*
+     * You may be wondering why these are different.
+     * It's because for internals we want to force it as it looks nicer and not leave it up to chance.
+     */
+
+    private async Task PostGen(InternalWindowPostGen gen, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid,
+        Random random)
+    {
+        // Iterate every room and check if there's a gap beyond it that leads to another room within N tiles
+        // If so then consider windows
+        var minDistance = 4;
+        var maxDistance = 6;
+
+        foreach (var room in dungeon.Rooms)
+        {
+            var validTiles = new List<Vector2i>();
+
+            for (var i = 0; i < 4; i++)
+            {
+                var dir = (DirectionFlag) Math.Pow(2, i);
+                var dirVec = dir.AsDir().ToIntVec();
+
+                foreach (var tile in room.Tiles)
+                {
+                    var tileAngle = ((Vector2) tile + grid.TileSize / 2f - room.Center).ToAngle();
+                    var roundedAngle = Math.Round(tileAngle.Theta / (Math.PI / 2)) * (Math.PI / 2);
+
+                    var tileVec = (Vector2i) new Angle(roundedAngle).ToVec().Rounded();
+
+                    if (!tileVec.Equals(dirVec))
+                        continue;
+
+                    var valid = false;
+
+                    for (var j = 1; j < maxDistance; j++)
+                    {
+                        var edgeNeighbor = tile + dirVec * j;
+
+                        if (dungeon.RoomTiles.Contains(edgeNeighbor))
+                        {
+                            if (j < minDistance)
+                            {
+                                valid = false;
+                            }
+                            else
+                            {
+                                valid = true;
+                            }
+
+                            break;
+                        }
+                    }
+
+                    if (!valid)
+                        continue;
+
+                    var windowTile = tile + dirVec;
+
+                    if (grid.GetAnchoredEntitiesEnumerator(windowTile).MoveNext(out _))
+                        continue;
+
+                    validTiles.Add(windowTile);
+                }
+
+                validTiles.Sort((x, y) => ((Vector2) x + grid.TileSize / 2f - room.Center).LengthSquared.CompareTo(((Vector2) y + grid.TileSize / 2f - room.Center).LengthSquared));
+
+                for (var j = 0; j < Math.Min(validTiles.Count, 3); j++)
+                {
+                    var tile = validTiles[j];
+                    var gridPos = grid.GridTileToLocal(tile);
+                    grid.SetTile(tile, new Tile(_tileDefManager[gen.Tile].TileId));
+
+                    foreach (var ent in gen.Entities)
+                    {
+                        _entManager.SpawnEntity(ent, gridPos);
+                    }
+                }
+
+                validTiles.Clear();
+            }
         }
     }
 
@@ -193,10 +388,9 @@ public sealed partial class DungeonJob
         frontier.Enqueue(dungeon.Rooms.First());
         var tile = new Tile(_tileDefManager[gen.Tile].TileId);
 
-        while (frontier.TryDequeue(out var room))
+        foreach (var (room, border) in roomBorders)
         {
             var conns = roomConnections.GetOrNew(room);
-            var border = roomBorders[room];
 
             foreach (var (otherRoom, otherBorders) in roomBorders)
             {
@@ -246,9 +440,19 @@ public sealed partial class DungeonJob
                     width--;
                     grid.SetTile(node, tile);
 
-                    foreach (var ent in gen.Entities)
+                    if (gen.EdgeEntities != null && (nodeDistances.Count - i <= 2))
                     {
-                        _entManager.SpawnEntity(ent, gridPos);
+                        foreach (var ent in gen.EdgeEntities)
+                        {
+                            _entManager.SpawnEntity(ent, gridPos);
+                        }
+                    }
+                    else
+                    {
+                        foreach (var ent in gen.Entities)
+                        {
+                            _entManager.SpawnEntity(ent, gridPos);
+                        }
                     }
 
                     if (width == 0)
@@ -258,7 +462,6 @@ public sealed partial class DungeonJob
                 conns.Add(otherRoom);
                 var otherConns = roomConnections.GetOrNew(otherRoom);
                 otherConns.Add(room);
-                frontier.Enqueue(otherRoom);
             }
         }
     }

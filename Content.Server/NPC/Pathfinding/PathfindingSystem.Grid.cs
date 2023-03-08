@@ -232,11 +232,6 @@ public sealed partial class PathfindingSystem
 
             comp.DirtyChunks.Clear();
         }
-
-#if DEBUG
-        if (updateCount > 0)
-            _sawmill.Debug($"Updated {updateCount} nav chunks in {_stopwatch.Elapsed.TotalMilliseconds:0.000}ms");
-#endif
     }
 
     private bool IsBodyRelevant(PhysicsComponent body)

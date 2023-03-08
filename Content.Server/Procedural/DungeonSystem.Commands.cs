@@ -1,3 +1,6 @@
+using System.Threading.Tasks;
+using Content.Server.Administration;
+using Content.Shared.Administration;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonGenerators;
 using Robust.Shared.Console;
@@ -8,66 +11,21 @@ namespace Content.Server.Procedural;
 
 public sealed partial class DungeonSystem
 {
-    private void VisualizeDungeon(IConsoleShell shell, string argstr, string[] args)
-    {
-        if (args.Length < 3)
-        {
-            return;
-        }
-
-        if (!int.TryParse(args[0], out var mapInt))
-        {
-            return;
-        }
-
-        var mapId = new MapId(mapInt);
-        var mapUid = _mapManager.GetMapEntityId(mapId);
-
-        if (!TryComp<MapGridComponent>(mapUid, out var mapGrid))
-        {
-            return;
-        }
-
-        if (!_prototype.TryIndex<DungeonConfigPrototype>(args[1], out var dungeon))
-        {
-            return;
-        }
-
-        if (!int.TryParse(args[2], out var seed))
-        {
-            return;
-        }
-
-        if (dungeon.Generator is not PrefabDunGen prefab)
-        {
-            return;
-        }
-
-        var rand = new Random(seed);
-        var preset = prefab.Presets[rand.Next(prefab.Presets.Count)];
-        var config = _prototype.Index<DungeonPresetPrototype>(preset);
-        var rotation = GetDungeonRotation(seed);
-        var dungeonMatrix = Matrix3.CreateRotation(rotation);
-
-        foreach (var pack in config.RoomPacks)
-        {
-            // TODO: Finish this previs
-            // var box =
-        }
-    }
-
     /// <summary>
     /// Generates a dungeon via command.
     /// </summary>
-    private void GenerateDungeon(IConsoleShell shell, string argstr, string[] args)
+    [AdminCommand(AdminFlags.Fun)]
+    private async void GenerateDungeon(IConsoleShell shell, string argstr, string[] args)
     {
-        if (args.Length < 2)
+        if (args.Length < 4)
         {
+            shell.WriteError("cmd-dungen-arg-count");
             return;
         }
 
         if (!int.TryParse(args[0], out var mapInt))
         {
+            shell.WriteError("cmd-dungen-map-parse");
             return;
         }
 
@@ -76,20 +34,30 @@ public sealed partial class DungeonSystem
 
         if (!TryComp<MapGridComponent>(mapUid, out var mapGrid))
         {
+            shell.WriteError(Loc.GetString("cmd-dungen-mapgrid"));
             return;
         }
 
         if (!_prototype.TryIndex<DungeonConfigPrototype>(args[1], out var dungeon))
         {
+            shell.WriteError(Loc.GetString("cmd-dungen-config"));
             return;
         }
 
+        if (!int.TryParse(args[2], out var posX) || !int.TryParse(args[3], out var posY))
+        {
+            shell.WriteError(Loc.GetString("cmd-dungen-pos"));
+            return;
+        }
+
+        var position = new Vector2(posX, posY);
         int seed;
 
-        if (args.Length >= 3)
+        if (args.Length >= 5)
         {
-            if (!int.TryParse(args[2], out seed))
+            if (!int.TryParse(args[4], out seed))
             {
+                shell.WriteError(Loc.GetString("cmd-dungen-seed"));
                 return;
             }
         }
@@ -98,7 +66,37 @@ public sealed partial class DungeonSystem
             seed = new Random().Next();
         }
 
-        seed = 92959802;
-        GenerateDungeon(dungeon, mapUid, mapGrid, seed);
+        shell.WriteLine(Loc.GetString("cmd-dungen-start", ("seed", seed)));
+        GenerateDungeon(dungeon, mapUid, mapGrid, position, seed);
+    }
+
+    private CompletionResult CompletionCallback(IConsoleShell shell, string[] args)
+    {
+        if (args.Length == 1)
+        {
+            return CompletionResult.FromHintOptions(CompletionHelper.MapIds(EntityManager), Loc.GetString("cmd-dungen-hint-map"));
+        }
+
+        if (args.Length == 2)
+        {
+            return CompletionResult.FromHintOptions(CompletionHelper.PrototypeIDs<DungeonConfigPrototype>(proto: _prototype), Loc.GetString("cmd-dungen-hint-config"));
+        }
+
+        if (args.Length == 3)
+        {
+            return CompletionResult.FromHint(Loc.GetString("cmd-dungen-hint-posx"));
+        }
+
+        if (args.Length == 4)
+        {
+            return CompletionResult.FromHint(Loc.GetString("cmd-dungen-hint-posy"));
+        }
+
+        if (args.Length == 5)
+        {
+            return CompletionResult.FromHint(Loc.GetString("cmd-dungen-hint-seed"));
+        }
+
+        return CompletionResult.Empty;
     }
 }
