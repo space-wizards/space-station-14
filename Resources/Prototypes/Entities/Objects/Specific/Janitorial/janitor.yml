@@ -259,7 +259,6 @@
       bodyType: Static
       canCollide: false
     - type: Drain
-    - type: Sink
     - type: AmbientSound
       enabled: false
       volume: -8

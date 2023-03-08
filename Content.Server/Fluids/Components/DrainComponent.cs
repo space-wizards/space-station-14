@@ -1,3 +1,5 @@
+using Robust.Shared.Audio;
+
 namespace Content.Server.Fluids.Components
 {
     [RegisterComponent]
@@ -7,6 +9,16 @@ namespace Content.Server.Fluids.Components
 
         [DataField("accumulator")]
         public float Accumulator = 0f;
+
+        /// <summary>
+        /// Does this drain automatically absorb surrouding puddles? Or is it a drain designed to empty
+        /// solutions in it manually?
+        /// </summary>
+        [DataField("autoDrain")]
+        public bool AutoDrain = true;
+
+        [DataField("manualDrainSound"), ViewVariables(VVAccess.ReadOnly)]
+        public SoundSpecifier ManualDrainSound = new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg");
 
         /// <summary>
         /// How many units per second the drain can absorb from the surrounding puddles.

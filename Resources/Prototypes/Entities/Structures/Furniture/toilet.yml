@@ -31,7 +31,8 @@
     graph: Toilet
     node: toilet
   - type: Appearance
-  - type: Sink
+  - type: Drain
+    autoDrain: false
 
 - type: entity
   id: ToiletDirtyWater

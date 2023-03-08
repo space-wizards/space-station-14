@@ -33,7 +33,8 @@
           - !type:PlaySoundBehavior
             sound:
               path: /Audio/Effects/metalbreak.ogg
-  - type: Sink
+  - type: Drain
+    autoDrain: false
 
 - type: entity
   name: sink
