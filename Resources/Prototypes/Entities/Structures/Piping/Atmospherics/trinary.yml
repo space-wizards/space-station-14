@@ -32,14 +32,12 @@
   placement:
     mode: SnapgridCenter
   components:
-    # TODO ATMOS Improve this sprite and appearance...
     - type: Sprite
       netsync: false
       sprite: Structures/Piping/Atmospherics/gasfilter.rsi
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
-          state: pipeTJunction
-          rotation: -90 # fuck you!!! who cares
+          state: pipeTrinaryConnectors
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: gasFilter
           map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
@@ -82,8 +80,7 @@
     sprite: Structures/Piping/Atmospherics/gasfilter.rsi
     layers:
     - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeTJunction
-      rotation: -90
+      state: pipeTrinaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: gasFilterF
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
@@ -125,8 +122,7 @@
       sprite: Structures/Piping/Atmospherics/gasmixer.rsi
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
-          state: pipeTJunction
-          rotation: -90
+          state: pipeTrinaryConnectors
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: gasMixer
           map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
@@ -171,8 +167,7 @@
     sprite: Structures/Piping/Atmospherics/gasmixer.rsi
     layers:
     - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeTJunction
-      rotation: -90
+      state: pipeTrinaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: gasMixerF
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
@@ -232,8 +227,7 @@
       sprite: Structures/Piping/Atmospherics/pneumaticvalve.rsi
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
-          state: pipeTJunction
-          rotation: -90
+          state: pipeTrinaryConnectors
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: off
           map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
