@@ -77,9 +77,7 @@ public sealed class ResistLockerSystem : EntitySystem
             return;
         }
 
-        if (args.Args.User != uid)
-            return;
-        if (args.Handled || args.Args.Target == null)
+        if (args.Handled || args.Args.Target == null || args.Args.Used != null) //if using something (like a forensic scanner) it doesn't break the door
             return;
 
         component.IsResisting = false;
