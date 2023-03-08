@@ -74,8 +74,7 @@ namespace Content.Server.Doors.Systems
             // Only show the maintenance panel if the airlock is closed
             if (TryComp<WiresPanelComponent>(uid, out var wiresPanel))
             {
-                wiresPanel.IsPanelVisible = component.OpenPanelVisible || args.State != DoorState.Open;
-                Dirty(wiresPanel);
+                _wiresSystem.ChangePanelVisibility(wiresPanel, component.OpenPanelVisible || args.State != DoorState.Open);
             }
             // If the door is closed, we should look if the bolt was locked while closing
             UpdateBoltLightStatus(uid, component);

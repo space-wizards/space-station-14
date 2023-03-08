@@ -635,6 +635,18 @@ public sealed class WiresSystem : SharedWiresSystem
         }
     }
 
+    public void ChangePanelVisibility(WiresPanelComponent component, bool visible)
+    {
+        component.IsPanelVisible = visible;
+        Dirty(component);
+    }
+
+    public void TogglePanel(WiresPanelComponent component, bool open)
+    {
+        component.IsPanelOpen = open;
+        Dirty(component);
+    }
+
     private void TryDoWireAction(EntityUid used, EntityUid user, EntityUid toolEntity, int id, WiresAction action, WiresComponent? wires = null, ToolComponent? tool = null)
     {
         if (!Resolve(used, ref wires)

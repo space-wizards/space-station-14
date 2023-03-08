@@ -14,6 +14,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.VendingMachines;
 using Content.Shared.Wires;
+using Content.Server.Wires;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -215,8 +216,9 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(systemRestock.TryAccessMachine(packageRight, restockRightComponent, machineComponent, user, machine), Is.False, "Right package is able to restock without opened access panel");
                 Assert.That(systemRestock.TryAccessMachine(packageWrong, restockWrongComponent, machineComponent, user, machine), Is.False, "Wrong package is able to restock without opened access panel");
 
+                var systemWires = entitySystemManager.GetEntitySystem<WiresSystem>();
                 // Open the panel.
-                machineWiresPanel.IsPanelOpen = true;
+                systemWires.TogglePanel(machineWiresPanel, true);
 
                 // Test that the right package works for the right machine.
                 Assert.That(systemRestock.TryAccessMachine(packageRight, restockRightComponent, machineComponent, user, machine), Is.True, "Correct package is unable to restock with access panel opened");
