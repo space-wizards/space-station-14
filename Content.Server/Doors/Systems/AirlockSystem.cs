@@ -7,6 +7,7 @@ using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
+using Content.Shared.Wires;
 
 namespace Content.Server.Doors.Systems
 {
@@ -71,11 +72,10 @@ namespace Content.Server.Doors.Systems
             // means that sometimes the panels & bolt lights may be visible despite a door being completely open.
 
             // Only show the maintenance panel if the airlock is closed
-            if (TryComp<WiresComponent>(uid, out var wiresComponent))
+            if (TryComp<WiresPanelComponent>(uid, out var wiresPanel))
             {
-                wiresComponent.IsPanelVisible =
-                    component.OpenPanelVisible
-                    ||  args.State != DoorState.Open;
+                wiresPanel.IsPanelVisible = component.OpenPanelVisible || args.State != DoorState.Open;
+                Dirty(wiresPanel);
             }
             // If the door is closed, we should look if the bolt was locked while closing
             UpdateBoltLightStatus(uid, component);
@@ -144,8 +144,8 @@ namespace Content.Server.Doors.Systems
 
         private void OnActivate(EntityUid uid, AirlockComponent component, ActivateInWorldEvent args)
         {
-            if (TryComp<WiresComponent>(uid, out var wiresComponent) && wiresComponent.IsPanelOpen &&
-                EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
+            if (TryComp<WiresPanelComponent>(uid, out var panel) && panel.IsPanelOpen &&
+                TryComp<ActorComponent>(args.User, out var actor))
             {
                 _wiresSystem.OpenUserInterface(uid, actor.PlayerSession);
                 args.Handled = true;
