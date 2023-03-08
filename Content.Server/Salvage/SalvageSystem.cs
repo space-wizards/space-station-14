@@ -62,9 +62,6 @@ namespace Content.Server.Salvage
 
             // Can't use RoundRestartCleanupEvent, I need to clean up before the grid, and components are gone to prevent the announcements
             SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRoundEnd);
-
-            InitializeExpeditions();
-            InitializeRunner();
         }
 
         private void OnRoundEnd(GameRunLevelChangedEvent ev)
@@ -452,9 +449,6 @@ namespace Content.Server.Salvage
                     state.ActiveMagnets.Remove(magnet);
                 }
             }
-
-            UpdateExpeditions();
-            UpdateRunner();
         }
     }
 

@@ -1,0 +1,27 @@
+- type: dungeonConfig
+  id: ExperimentGrass
+  generator: !type:PrefabDunGen
+    roomWhitelist:
+      - SalvageExperiment
+    presets:
+      - Cross
+  postGeneration:
+    - !type:MiddleConnectionPostGen
+      overlapCount: 3
+      count: 3
+      entities:
+        - CableApcExtension
+        - AirlockGlass
+    - !type:MiddleConnectionPostGen
+      count: 1
+      entities:
+        - CableApcExtension
+        - AirlockGlass
+    - !type:EntrancePostGen
+      count: 2
+      entities:
+        - AirlockGlass
+    # - !type:WindowPostGen
+    - !type:BoundaryWallPostGen
+      tile: FloorSteel
+      wall: WallSolid

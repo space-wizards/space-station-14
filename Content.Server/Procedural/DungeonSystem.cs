@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Content.Server.CPUJob.JobQueues.Queues;
 using Content.Server.Decals;
 using Content.Server.GameTicking.Events;
+using Content.Server.Parallax;
+using Content.Shared.Parallax.Biomes;
 using Content.Shared.Procedural;
 using Robust.Server.GameObjects;
 using Robust.Shared.Console;
@@ -18,6 +20,7 @@ public sealed partial class DungeonSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
+    [Dependency] private readonly BiomeSystem _biome = default!;
     [Dependency] private readonly DecalSystem _decals = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly MapLoaderSystem _loader = default!;
@@ -162,12 +165,16 @@ public sealed partial class DungeonSystem : EntitySystem
     public void GenerateDungeon(DungeonConfigPrototype gen, EntityUid gridUid, MapGridComponent grid,
         int seed)
     {
+        if (!TryComp<BiomeComponent>(gridUid, out var biome))
+            return;
+
         var cancelToken = new CancellationTokenSource();
         var job = new DungeonJob(DungeonJobTime,
             EntityManager,
             _mapManager,
             _prototype,
             _tileDefManager,
+            _biome,
             _decals,
             this,
             _lookup,
@@ -186,12 +193,16 @@ public sealed partial class DungeonSystem : EntitySystem
     public async Task<Dungeon> GenerateDungeonAsync(DungeonConfigPrototype gen, EntityUid gridUid, MapGridComponent grid,
         int seed)
     {
+        if (!TryComp<BiomeComponent>(gridUid, out var biome))
+            throw new InvalidOperationException($"Dungeons required to be on biomes at this time");
+
         var cancelToken = new CancellationTokenSource();
-        var job = new DungeonJob(0.005,
+        var job = new DungeonJob(DungeonJobTime,
             EntityManager,
             _mapManager,
             _prototype,
             _tileDefManager,
+            _biome,
             _decals,
             this,
             _lookup,

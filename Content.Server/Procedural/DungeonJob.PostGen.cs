@@ -1,5 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Parallax;
+using Content.Shared.Parallax.Biomes;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
 using Robust.Shared.Map;
@@ -15,7 +17,7 @@ public sealed partial class DungeonJob
      * Run after the main dungeon generation
      */
 
-    private async Task PostGen(BoundaryWallPostGen gen, Dungeon dungeon, MapGridComponent grid, Random random)
+    private async Task PostGen(BoundaryWallPostGen gen, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid, Random random)
     {
         var tile = new Tile(_tileDefManager[gen.Tile].TileId);
         var tiles = new List<(Vector2i Index, Tile Tile)>();
@@ -62,16 +64,18 @@ public sealed partial class DungeonJob
         }
     }
 
-    private async Task PostGen(EntrancePostGen gen, Dungeon dungeon, MapGridComponent grid, Random random)
+    private async Task PostGen(EntrancePostGen gen, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid, Random random)
     {
         var rooms = new List<DungeonRoom>(dungeon.Rooms);
         var roomTiles = new List<Vector2i>();
         var tileData = new Tile(_tileDefManager[gen.Tile].TileId);
+        var count = gen.Count;
 
-        for (var i = 0; i < gen.Count; i++)
+        while (count > 0 && rooms.Count > 0)
         {
             var roomIndex = random.Next(rooms.Count);
             var room = rooms[roomIndex];
+            rooms.RemoveAt(roomIndex);
 
             // Move out 3 tiles in a direction away from center of the room
             // If none of those intersect another tile it's probably external
@@ -81,14 +85,21 @@ public sealed partial class DungeonJob
 
             foreach (var tile in roomTiles)
             {
+                // Check the interior node is at least accessible?
+                // Can't do anchored because it might be a locker or something.
+                // TODO: Better collision mask check
+                if (_lookup.GetEntitiesIntersecting(gridUid, tile, LookupFlags.Dynamic | LookupFlags.Static).Any())
+                    continue;
+
                 var direction = (tile - room.Center).ToAngle().GetCardinalDir().ToAngle().ToVec();
                 var isValid = true;
 
-                for (var j = 0; j < 5; j++)
+                for (var j = 0; j < 4; j++)
                 {
                     var neighbor = (tile + direction).Floored();
 
-                    if (dungeon.RoomTiles.Contains(neighbor))
+                    // If it's an interior tile or blocked.
+                    if (dungeon.RoomTiles.Contains(neighbor) || grid.GetAnchoredEntitiesEnumerator(neighbor).MoveNext(out _))
                     {
                         isValid = false;
                         break;
@@ -102,9 +113,20 @@ public sealed partial class DungeonJob
 
                 // Entrance wew
                 grid.SetTile(entrancePos, tileData);
+                var gridCoords = grid.GridTileToLocal(entrancePos);
                 // Need to offset the spawn to avoid spawning in the room.
-                _entManager.SpawnEntity(gen.Door, grid.GridTileToLocal(entrancePos));
-                rooms.RemoveAt(roomIndex);
+                _entManager.SpawnEntity(gen.Door, gridCoords);
+                count--;
+
+                // Clear out any biome tiles nearby to avoid blocking it
+                foreach (var nearTile in grid.GetTilesIntersecting(new Circle(gridCoords.Position, 3f)))
+                {
+                    if (dungeon.RoomTiles.Contains(nearTile.GridIndices))
+                        continue;
+
+                    grid.SetTile(nearTile.GridIndices, tileData);
+                }
+
                 break;
             }
 
@@ -112,7 +134,7 @@ public sealed partial class DungeonJob
         }
     }
 
-    private async Task PostGen(MiddleConnectionPostGen gen, Dungeon dungeon, MapGridComponent grid, Random random)
+    private async Task PostGen(MiddleConnectionPostGen gen, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid, Random random)
     {
         // TODO: Need a minimal spanning tree version tbh
 
