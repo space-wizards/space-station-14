@@ -127,7 +127,7 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
                 # Corvax-Localization-End
                 content.write(f"{emoji} {message}\n")
 
-    for chunk in iter(lambda: content.read(2000), '') # Corvax: Split big changelogs messages
+    for chunk in iter(lambda: content.read(2000), ''): # Corvax: Split big changelogs messages
         body = {
             "content": chunk
             # Do not allow any mentions.
