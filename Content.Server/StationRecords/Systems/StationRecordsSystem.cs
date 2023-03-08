@@ -5,6 +5,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.Access.Components;
 using Content.Server.Forensics;
 using Content.Shared.Inventory;
+using Content.Shared.Nuke;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
@@ -72,11 +73,10 @@ public sealed class StationRecordsSystem : EntitySystem
             return;
         }
 
-        if (!EntityManager.TryGetComponent(player, out FingerprintComponent? fingerprintComponent))
-            return;
+        TryComp<FingerprintComponent>(player, out var fingerprintComponent);
 
 
-        CreateGeneralRecord(station, idUid.Value, profile.Name, profile.Age, profile.Species, profile.Gender, jobId, fingerprintComponent.Fingerprint, profile, records);
+        CreateGeneralRecord(station, idUid.Value, profile.Name, profile.Age, profile.Species, profile.Gender, jobId, fingerprintComponent?.Fingerprint, profile, records);
     }
 
 

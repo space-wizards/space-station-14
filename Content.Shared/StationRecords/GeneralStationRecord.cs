@@ -58,7 +58,8 @@ public sealed class GeneralStationRecord
     public int DisplayPriority;
 
     /// <summary>
-    ///     Fingerprints of the person.
+    ///     Fingerprint of the person.
     /// </summary>
-    [ViewVariables] public string Fingerprint = string.Empty;
+    [ViewVariables]
+    public string? Fingerprint = string.Empty;
 }
