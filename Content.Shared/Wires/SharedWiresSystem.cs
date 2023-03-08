@@ -15,7 +15,7 @@ public abstract class SharedWiresSystem : EntitySystem
 
     private void OnExamine(EntityUid uid, WiresPanelComponent component, ExaminedEvent args)
     {
-        args.PushMarkup(Loc.GetString(component.IsPanelOpen
+        args.PushMarkup(Loc.GetString(component.Open
             ? "wires-panel-component-on-examine-open"
             : "wires-panel-component-on-examine-closed"));
     }
@@ -24,8 +24,8 @@ public abstract class SharedWiresSystem : EntitySystem
     {
         args.State = new WiresPanelComponentState
         {
-            IsPanelOpen = component.IsPanelOpen,
-            IsPanelVisible = component.IsPanelVisible
+            Open = component.Open,
+            Visible = component.Visible
         };
     }
 
@@ -33,7 +33,7 @@ public abstract class SharedWiresSystem : EntitySystem
     {
         if (args.Current is not WiresPanelComponentState state)
             return;
-        component.IsPanelOpen = state.IsPanelOpen;
-        component.IsPanelVisible = state.IsPanelVisible;
+        component.Open = state.Open;
+        component.Visible = state.Visible;
     }
 }

@@ -103,7 +103,7 @@ public sealed class PartExchangerSystem : EntitySystem
         if (!HasComp<MachineComponent>(args.Target))
             return;
 
-        if (TryComp<WiresPanelComponent>(args.Target, out var panel) && !panel.IsPanelOpen)
+        if (TryComp<WiresPanelComponent>(args.Target, out var panel) && !panel.Open)
         {
             _popup.PopupEntity(Loc.GetString("construction-step-condition-wire-panel-open"),
                 args.Target.Value);

@@ -72,7 +72,7 @@ public sealed class MechSystem : SharedMechSystem
     }
     private void OnInteractUsing(EntityUid uid, MechComponent component, InteractUsingEvent args)
     {
-        if (TryComp<WiresPanelComponent>(uid, out var panel) && !panel.IsPanelOpen)
+        if (TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
             return;
 
         if (component.BatterySlot.ContainedEntity == null && TryComp<BatteryComponent>(args.Used, out var battery))

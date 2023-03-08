@@ -12,13 +12,13 @@ public sealed class WiresPanelComponent : Component
     ///     Is the panel open for this entity's wires?
     /// </summary>
     [ViewVariables]
-    public bool IsPanelOpen;
+    public bool Open;
 
     /// <summary>
     ///     Should this entity's wires panel be visible at all?
     /// </summary>
     [ViewVariables]
-    public bool IsPanelVisible = true;
+    public bool Visible = true;
 
     /// <summary>
     ///     Marks if maintenance panel being open/closed by someone with a screwdriver.
@@ -36,6 +36,6 @@ public sealed class WiresPanelComponent : Component
 [Serializable, NetSerializable]
 public sealed class WiresPanelComponentState : ComponentState
 {
-    public bool IsPanelOpen;
-    public bool IsPanelVisible;
+    public bool Open;
+    public bool Visible;
 }

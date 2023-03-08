@@ -35,7 +35,7 @@ namespace Content.Server.VendingMachines.Restock
             EntityUid user,
             EntityUid target)
         {
-            if (!TryComp<WiresPanelComponent>(target, out var panel) || !panel.IsPanelOpen)
+            if (!TryComp<WiresPanelComponent>(target, out var panel) || !panel.Open)
             {
                 _popupSystem.PopupCursor(Loc.GetString("vending-machine-restock-needs-panel-open",
                         ("this", uid),

@@ -229,7 +229,7 @@ public sealed class AirAlarmSystem : EntitySystem
         if (!TryComp<ActorComponent>(args.User, out var actor))
             return;
 
-        if (TryComp<WiresPanelComponent>(uid, out var panel) && panel.IsPanelOpen)
+        if (TryComp<WiresPanelComponent>(uid, out var panel) && panel.Open)
         {
             args.Handled = false;
             return;

@@ -17,7 +17,7 @@ namespace Content.Server.Construction.Conditions
             if (!entityManager.TryGetComponent<WiresPanelComponent>(uid, out var wires))
                 return true;
 
-            return wires.IsPanelOpen == Open;
+            return wires.Open == Open;
         }
 
         public bool DoExamine(ExaminedEvent args)
@@ -27,10 +27,10 @@ namespace Content.Server.Construction.Conditions
 
             switch (Open)
             {
-                case true when !panel.IsPanelOpen:
+                case true when !panel.Open:
                     args.PushMarkup(Loc.GetString("construction-examine-condition-wire-panel-open"));
                     return true;
-                case false when panel.IsPanelOpen:
+                case false when panel.Open:
                     args.PushMarkup(Loc.GetString("construction-examine-condition-wire-panel-close"));
                     return true;
             }

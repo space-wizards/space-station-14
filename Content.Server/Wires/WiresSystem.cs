@@ -454,7 +454,7 @@ public sealed class WiresSystem : SharedWiresSystem
     {
         if (!TryComp<ToolComponent>(args.Used, out var tool) || !TryComp<WiresPanelComponent>(uid, out var panel))
             return;
-        if (panel.IsPanelOpen &&
+        if (panel.Open &&
             (_toolSystem.HasQuality(args.Used, "Cutting", tool) ||
             _toolSystem.HasQuality(args.Used, "Pulsing", tool)))
         {
@@ -474,7 +474,7 @@ public sealed class WiresSystem : SharedWiresSystem
             args.Handled = panel.IsScrewing;
 
             // Log attempt
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):user} is screwing {ToPrettyString(uid):target}'s {(panel.IsPanelOpen ? "open" : "closed")} maintenance panel at {Transform(uid).Coordinates:targetlocation}");
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):user} is screwing {ToPrettyString(uid):target}'s {(panel.Open ? "open" : "closed")} maintenance panel at {Transform(uid).Coordinates:targetlocation}");
         }
     }
 
@@ -484,12 +484,12 @@ public sealed class WiresSystem : SharedWiresSystem
             return;
 
         panel.IsScrewing = false;
-        TogglePanel(args.Target, panel, !panel.IsPanelOpen);
+        TogglePanel(args.Target, panel, !panel.Open);
 
         // Log success
-        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):user} screwed {ToPrettyString(args.Target):target}'s maintenance panel {(panel.IsPanelOpen ? "open" : "closed")}");
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):user} screwed {ToPrettyString(args.Target):target}'s maintenance panel {(panel.Open ? "open" : "closed")}");
 
-        if (panel.IsPanelOpen)
+        if (panel.Open)
         {
             _audio.PlayPvs(panel.ScrewdriverOpenSound, args.Target);
         }
@@ -640,14 +640,14 @@ public sealed class WiresSystem : SharedWiresSystem
 
     public void ChangePanelVisibility(EntityUid uid, WiresPanelComponent component, bool visible)
     {
-        component.IsPanelVisible = visible;
+        component.Visible = visible;
         UpdateAppearance(uid, component);
         Dirty(component);
     }
 
     public void TogglePanel(EntityUid uid, WiresPanelComponent component, bool open)
     {
-        component.IsPanelOpen = open;
+        component.Open = open;
         UpdateAppearance(uid, component);
         Dirty(component);
     }
@@ -655,7 +655,7 @@ public sealed class WiresSystem : SharedWiresSystem
     private void UpdateAppearance(EntityUid uid, WiresPanelComponent panel)
     {
         if (TryComp<AppearanceComponent>(uid, out var appearance))
-            _appearance.SetData(uid, WiresVisuals.MaintenancePanelState, panel.IsPanelOpen && panel.IsPanelVisible, appearance);
+            _appearance.SetData(uid, WiresVisuals.MaintenancePanelState, panel.Open && panel.Visible, appearance);
     }
 
     private void TryDoWireAction(EntityUid used, EntityUid user, EntityUid toolEntity, int id, WiresAction action, WiresComponent? wires = null, ToolComponent? tool = null)
