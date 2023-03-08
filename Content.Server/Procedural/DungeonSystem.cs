@@ -1,5 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.Construction;
 using Content.Server.CPUJob.JobQueues.Queues;
 using Content.Server.Decals;
 using Content.Server.GameTicking.Events;
@@ -20,7 +21,7 @@ public sealed partial class DungeonSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
-    [Dependency] private readonly BiomeSystem _biome = default!;
+    [Dependency] private readonly AnchorableSystem _anchorable = default!;
     [Dependency] private readonly DecalSystem _decals = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly MapLoaderSystem _loader = default!;
@@ -158,7 +159,7 @@ public sealed partial class DungeonSystem : EntitySystem
             _mapManager,
             _prototype,
             _tileDefManager,
-            _biome,
+            _anchorable,
             _decals,
             this,
             _lookup,
@@ -188,7 +189,7 @@ public sealed partial class DungeonSystem : EntitySystem
             _mapManager,
             _prototype,
             _tileDefManager,
-            _biome,
+            _anchorable,
             _decals,
             this,
             _lookup,

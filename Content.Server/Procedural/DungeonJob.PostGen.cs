@@ -1,9 +1,9 @@
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.Parallax;
-using Content.Shared.Parallax.Biomes;
+using Content.Shared.Physics;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
+using Content.Shared.Storage;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
@@ -16,6 +16,9 @@ public sealed partial class DungeonJob
     /*
      * Run after the main dungeon generation
      */
+
+    private const int CollisionMask = (int) CollisionGroup.Impassable;
+    private const int CollisionLayer = (int) CollisionGroup.Impassable;
 
     private async Task PostGen(BoundaryWallPostGen gen, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid, Random random)
     {
@@ -37,10 +40,7 @@ public sealed partial class DungeonJob
                         if (dungeon.RoomTiles.Contains(neighbor))
                             continue;
 
-                        var anchoredEnts = grid.GetAnchoredEntitiesEnumerator(neighbor);
-
-                        // Occupied tile.
-                        if (anchoredEnts.MoveNext(out _))
+                        if (!_anchorable.TileFree(grid, neighbor, CollisionLayer, CollisionMask))
                             continue;
 
                         tiles.Add((neighbor, tile));
@@ -55,10 +55,7 @@ public sealed partial class DungeonJob
         for (var i = 0; i < tiles.Count; i++)
         {
             var index = tiles[i];
-            var anchoredEnts = grid.GetAnchoredEntitiesEnumerator(index.Index);
-
-            // Occupied tile.
-            if (anchoredEnts.MoveNext(out _))
+            if (!_anchorable.TileFree(grid, index.Index, CollisionLayer, CollisionMask))
                 continue;
 
             // If no cardinal neighbors in dungeon then we're a corner.
@@ -179,7 +176,7 @@ public sealed partial class DungeonJob
         Random random)
     {
         // Iterate every room with N chance to spawn windows on that wall per cardinal dir.
-        var chance = 0.10;
+        var chance = 0.25;
         var distance = 10;
 
         foreach (var room in dungeon.Rooms)
@@ -219,7 +216,7 @@ public sealed partial class DungeonJob
 
                     var windowTile = tile + dirVec;
 
-                    if (grid.GetAnchoredEntitiesEnumerator(windowTile).MoveNext(out _))
+                    if (!_anchorable.TileFree(grid, windowTile, CollisionLayer, CollisionMask))
                         continue;
 
                     validTiles.Add(windowTile);
@@ -257,6 +254,8 @@ public sealed partial class DungeonJob
      * You may be wondering why these are different.
      * It's because for internals we want to force it as it looks nicer and not leave it up to chance.
      */
+
+    // TODO: Can probably combine these a bit, their differences are in really annoying to pull out spots.
 
     private async Task PostGen(InternalWindowPostGen gen, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid,
         Random random)
@@ -311,7 +310,7 @@ public sealed partial class DungeonJob
 
                     var windowTile = tile + dirVec;
 
-                    if (grid.GetAnchoredEntitiesEnumerator(windowTile).MoveNext(out _))
+                    if (!_anchorable.TileFree(grid, windowTile, CollisionLayer, CollisionMask))
                         continue;
 
                     validTiles.Add(windowTile);
@@ -366,10 +365,7 @@ public sealed partial class DungeonJob
                         if (dungeon.RoomTiles.Contains(neighbor))
                             continue;
 
-                        var anc = grid.GetAnchoredEntitiesEnumerator(neighbor);
-
-                        // Occupied
-                        if (anc.MoveNext(out _))
+                        if (!_anchorable.TileFree(grid, neighbor, CollisionLayer, CollisionMask))
                             continue;
 
                         roomEdges.Add(neighbor);
@@ -431,10 +427,7 @@ public sealed partial class DungeonJob
                 {
                     var node = nodeDistances[i].Node;
                     var gridPos = grid.GridTileToLocal(node);
-                    var anc = grid.GetAnchoredEntitiesEnumerator(node);
-
-                    // Occupado
-                    if (anc.MoveNext(out _))
+                    if (!_anchorable.TileFree(grid, node, CollisionLayer, CollisionMask))
                         continue;
 
                     width--;
@@ -462,6 +455,47 @@ public sealed partial class DungeonJob
                 conns.Add(otherRoom);
                 var otherConns = roomConnections.GetOrNew(otherRoom);
                 otherConns.Add(room);
+            }
+        }
+    }
+
+    private async Task PostGen(WallMountPostGen gen, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid,
+        Random random)
+    {
+        var tileDef = new Tile(_tileDefManager[gen.Tile].TileId);
+        var checkedTiles = new HashSet<Vector2i>();
+
+        foreach (var room in dungeon.Rooms)
+        {
+            foreach (var tile in room.Tiles)
+            {
+                for (var x = -1; x <= 1; x++)
+                {
+                    for (var y = -1; y <= 1; y++)
+                    {
+                        if (x != 0 && y != 0)
+                        {
+                            continue;
+                        }
+
+                        var neighbor = new Vector2i(tile.X + x, tile.Y + y);
+
+                        // Occupado
+                        if (dungeon.RoomTiles.Contains(neighbor) || checkedTiles.Contains(neighbor) || !_anchorable.TileFree(grid, neighbor, CollisionLayer, CollisionMask))
+                            continue;
+
+                        if (!random.Prob(gen.Prob) || !checkedTiles.Add(neighbor))
+                            continue;
+
+                        grid.SetTile(neighbor, tileDef);
+                        var gridPos = grid.GridTileToLocal(neighbor);
+
+                        foreach (var ent in EntitySpawnCollection.GetSpawns(gen.Spawns, random))
+                        {
+                            _entManager.SpawnEntity(ent, gridPos);
+                        }
+                    }
+                }
             }
         }
     }
