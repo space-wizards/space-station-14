@@ -373,6 +373,7 @@ public sealed partial class DungeonJob
                 }
 
                 await SuspendIfOutOfTime();
+                ValidateResume();
             }
         }
 

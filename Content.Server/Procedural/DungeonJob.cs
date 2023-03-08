@@ -104,6 +104,9 @@ public sealed partial class DungeonJob : Job<Dungeon>
                     default:
                         throw new NotImplementedException();
                 }
+
+                await SuspendIfOutOfTime();
+                ValidateResume();
             }
 
             return dungeon;
@@ -111,7 +114,7 @@ public sealed partial class DungeonJob : Job<Dungeon>
 
         private bool ValidateResume()
         {
-            if (_entManager.Deleted(_gridUid) || !_entManager.HasComponent<BiomeComponent>(_gridUid))
+            if (_entManager.Deleted(_gridUid))
                 return false;
 
             return true;

@@ -52,8 +52,9 @@ public sealed partial class DungeonJob
         grid.SetTiles(tiles);
 
         // Double iteration coz we bulk set tiles for speed.
-        foreach (var index in tiles)
+        for (var i = 0; i < tiles.Count; i++)
         {
+            var index = tiles[i];
             var anchoredEnts = grid.GetAnchoredEntitiesEnumerator(index.Index);
 
             // Occupied tile.
@@ -61,6 +62,12 @@ public sealed partial class DungeonJob
                 continue;
 
             _entManager.SpawnEntity(gen.Wall, grid.GridTileToLocal(index.Index));
+
+            if (i % 10 == 0)
+            {
+                await SuspendIfOutOfTime();
+                ValidateResume();
+            }
         }
     }
 
@@ -119,7 +126,7 @@ public sealed partial class DungeonJob
                 count--;
 
                 // Clear out any biome tiles nearby to avoid blocking it
-                foreach (var nearTile in grid.GetTilesIntersecting(new Circle(gridCoords.Position, 3f)))
+                foreach (var nearTile in grid.GetTilesIntersecting(new Circle(gridCoords.Position, 1.5f), false))
                 {
                     if (dungeon.RoomTiles.Contains(nearTile.GridIndices))
                         continue;
