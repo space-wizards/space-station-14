@@ -19,6 +19,14 @@ public abstract class SharedNinjaSystem : EntitySystem
     }
 
     /// <summary>
+    /// Sets the station grid entity that the ninja was spawned near.
+    /// </summary>
+    public void SetStationGrid(NinjaComponent comp, EntityUid? grid)
+    {
+        comp.StationGrid = grid;
+    }
+
+    /// <summary>
     /// Set the ninja's worn suit entity
     /// </summary>
     public void AssignSuit(NinjaComponent comp, EntityUid? suit)

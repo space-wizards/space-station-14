@@ -46,6 +46,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -239,10 +240,23 @@ public sealed class NinjaSystem : SharedNinjaSystem
         mind.AddRole(role);
         _traitorRule.Traitors.Add(role);
         foreach (var objective in config.Objectives)
+        {
             AddObjective(mind, objective);
+        }
 
-        _chatMan.DispatchServerMessage(session, Loc.GetString("ninja-role-greeting"));
         _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);
+        _chatMan.DispatchServerMessage(session, Loc.GetString("ninja-role-greeting"));
+
+        if (TryComp<NinjaComponent>(mind.OwnedEntity, out var ninja) && ninja.StationGrid != null)
+        {
+            var gridPos = _transform.GetWorldPosition(ninja.StationGrid.Value);
+            var ninjaPos = _transform.GetWorldPosition(mind.OwnedEntity.Value);
+            var vector = gridPos - ninjaPos;
+            var direction = vector.GetDir();
+            var position = $"({(int) gridPos.X}, {(int) gridPos.Y})";
+            var msg = Loc.GetString("ninja-role-greeting-direction", ("direction", direction), ("position", position));
+            _chatMan.DispatchServerMessage(session, msg);
+        }
     }
 
     private void OnDoorEmagged(EntityUid uid, DoorComponent door, ref DoorEmaggedEvent args)

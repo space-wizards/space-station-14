@@ -1,8 +1,12 @@
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
+using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.StationEvents.Components;
+using Content.Server.Station.Components;
 using Content.Shared.Ninja.Components;
+using Content.Shared.Ninja.Systems;
 using Robust.Server.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -15,9 +19,11 @@ namespace Content.Server.StationEvents.Events;
 /// </summary>
 public sealed class SpaceNinjaSpawn : StationEventSystem
 {
-    [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private readonly SharedNinjaSystem _ninja = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override string Prototype => "SpaceNinjaSpawn";
 
@@ -25,18 +31,45 @@ public sealed class SpaceNinjaSpawn : StationEventSystem
     {
         base.Started();
 
-        // TODO: spawn outside station with a direction
-        var spawnLocations = EntityManager.EntityQuery<MapGridComponent, TransformComponent>().ToList();
-
-        if (spawnLocations.Count == 0)
+        if (StationSystem.Stations.Count == 0)
         {
-            Sawmill.Error($"No locations for space ninja to spawn!");
+            Sawmill.Error("No stations exist, cannot spawn space ninja!");
             return;
         }
 
-        var location = _random.Pick(spawnLocations).Item2.MapPosition;
-        Sawmill.Info($"Spawning space ninja at {location}");
-        Spawn("MobHumanSpaceNinja", location);
+        var station = _random.Pick(StationSystem.Stations);
+        if (!TryComp<StationDataComponent>(station, out var stationData))
+        {
+            Sawmill.Error("Chosen station isn't a station, cannot spawn space ninja!");
+            return;
+        }
+
+        // find a station grid
+        var gridUid = StationSystem.GetLargestGrid(stationData);
+        if (gridUid == null || !TryComp<MapGridComponent>(gridUid, out var grid))
+        {
+            Sawmill.Error("Chosen station has no grids, cannot spawn space ninja!");
+            return;
+        }
+
+        // figure out its AABB size and use that as a guide to how far ninja should be
+        var config = (NinjaRuleConfiguration) Configuration;
+        var size = grid.LocalAABB.Size.Length / 2;
+        var distance = size + config.SpawnDistance;
+        var angle = _random.NextAngle();
+        // position relative to station center
+        var location = angle.ToVec() * distance;
+
+        // spawn it!
+        var xform = Transform(gridUid.Value);
+        var position = _transform.GetWorldPosition(xform) + location;
+        var coords = new MapCoordinates(position, xform.MapID);
+        Sawmill.Info($"Spawning space ninja at {coords}");
+        var uid = Spawn("MobHumanSpaceNinja", coords);
+
+        // tell the player where station is when picking the role
+        if (TryComp<NinjaComponent>(uid, out var ninja))
+            _ninja.SetStationGrid(ninja, gridUid);
 
         // start traitor rule incase it isn't, for the sweet greentext
         var rule = _proto.Index<GameRulePrototype>("Traitor");
@@ -45,6 +78,6 @@ public sealed class SpaceNinjaSpawn : StationEventSystem
 
     public override void Added()
     {
-        Sawmill.Info("sus among us");
+        Sawmill.Info("Added space ninja spawn rule");
     }
 }

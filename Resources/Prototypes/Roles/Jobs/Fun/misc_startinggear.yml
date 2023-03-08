@@ -68,6 +68,7 @@
     id: AgentIDCard
     ears: ClothingHeadsetGrey
     pocket1: SpiderCharge
+    pocket2: HandheldGPSBasic
     belt: EnergyKatana
     suitstorage: YellowOxygenTankFilled
   innerclothingskirt: ClothingUniformJumpskirtColorBlack

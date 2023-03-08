@@ -1,6 +1,7 @@
 using Content.Shared.Ninja.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+//using Robust.Shared.Maths.Direction;
 
 namespace Content.Shared.Ninja.Components;
 
@@ -13,35 +14,56 @@ namespace Content.Shared.Ninja.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed class NinjaComponent : Component
 {
+    /// <summary>
+    /// Grid entity of the station the ninja was spawned around. Set if spawned naturally by the event.
+    /// </summary>
+    public EntityUid? StationGrid;
+
+    /// <summary>
     /// Currently worn suit
+    /// </summary>
     [ViewVariables]
     public EntityUid? Suit = null;
 
+    /// <summary>
     /// Currently worn gloves
+    /// </summary>
     [ViewVariables]
     public EntityUid? Gloves = null;
 
+    /// <summary>
     /// Bound katana, set once picked up and never removed
+    /// </summary>
     [ViewVariables]
     public EntityUid? Katana = null;
 
+    /// <summary>
     /// Number of doors that have been doorjacked, used for objective
+    /// </summary>
     [ViewVariables]
     public int DoorsJacked = 0;
 
+    /// <summary>
     /// Research nodes that have been downloaded, used for objective
+    /// </summary>
     [ViewVariables]
     public HashSet<string> DownloadedNodes = new();
 
+    /// <summary>
     /// Warp point that the spider charge has to target
+    /// </summary>
     [ViewVariables]
     public EntityUid? SpiderChargeTarget = null;
 
+    /// <summary>
     /// Whether the spider charge has been detonated on the target, used for objective
+    /// </summary>
     [ViewVariables]
     public bool SpiderChargeDetonated;
 
+    /// <summary>
     /// Whether the comms console has been hacked, used for objective
+    /// </summary>
     [ViewVariables]
     public bool CalledInThreat;
 }

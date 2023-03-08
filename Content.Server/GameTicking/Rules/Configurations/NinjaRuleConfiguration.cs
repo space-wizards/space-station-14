@@ -36,6 +36,12 @@ public sealed class NinjaRuleConfiguration : StationEventRuleConfiguration
     /// </summary>
     [DataField("greetingSound", customTypeSerializer: typeof(SoundSpecifierTypeSerializer))]
     public SoundSpecifier? GreetingSound = new SoundPathSpecifier("/Audio/Misc/ninja_greeting.ogg");
+
+    /// <summary>
+    /// Distance that the ninja spawns from the station's half AABB radius
+    /// </summary>
+    [DataField("spawnDistance")]
+    public float SpawnDistance = 20f;
 }
 
 /// <summary>
