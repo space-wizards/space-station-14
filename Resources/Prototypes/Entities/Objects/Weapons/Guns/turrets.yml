@@ -134,7 +134,7 @@
         SoundTargetInLOS: !type:SoundPathSpecifier
           path: /Audio/Animals/snake_hiss.ogg
     - type: Damageable
-      damageContainer: Organic
+      damageContainer: Biological
     - type: Destructible
       thresholds:
         - trigger:
