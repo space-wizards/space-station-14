@@ -72,7 +72,11 @@ public sealed class StationRecordsSystem : EntitySystem
             return;
         }
 
-        CreateGeneralRecord(station, idUid.Value, profile.Name, profile.Age, profile.Species, profile.Gender, jobId, profile, records);
+        if (!EntityManager.TryGetComponent(player, out FingerprintComponent? fingerprintComponent))
+            return;
+
+
+        CreateGeneralRecord(station, idUid.Value, profile.Name, profile.Age, profile.Species, profile.Gender, jobId, fingerprintComponent.Fingerprint, profile, records);
     }
 
 
@@ -100,7 +104,7 @@ public sealed class StationRecordsSystem : EntitySystem
     ///     Optional - other systems should anticipate this.
     /// </param>
     /// <param name="records">Station records component.</param>
-    public void CreateGeneralRecord(EntityUid station, EntityUid? idUid, string name, int age, string species, Gender gender, string jobId, HumanoidCharacterProfile? profile = null,
+    public void CreateGeneralRecord(EntityUid station, EntityUid? idUid, string name, int age, string species, Gender gender, string jobId, string? mobFingerprint, HumanoidCharacterProfile? profile = null,
         StationRecordsComponent? records = null)
     {
         if (!Resolve(station, ref records))
@@ -113,9 +117,6 @@ public sealed class StationRecordsSystem : EntitySystem
             throw new ArgumentException($"Invalid job prototype ID: {jobId}");
         }
 
-        if (!EntityManager.TryGetComponent(idUid, out FingerprintComponent? fingerprintComponent))
-            return;
-
         var record = new GeneralStationRecord()
         {
             Name = name,
@@ -126,7 +127,7 @@ public sealed class StationRecordsSystem : EntitySystem
             Species = species,
             Gender = gender,
             DisplayPriority = jobPrototype.Weight,
-            Fingerprints = fingerprintComponent.Fingerprint
+            Fingerprint = mobFingerprint
         };
 
         var key = AddRecord(station, records);

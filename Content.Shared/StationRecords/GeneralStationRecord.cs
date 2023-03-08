@@ -60,6 +60,5 @@ public sealed class GeneralStationRecord
     /// <summary>
     ///     Fingerprints of the person.
     /// </summary>
-    [ViewVariables]
-    public string? Fingerprints;
+    [ViewVariables] public string Fingerprint = string.Empty;
 }
