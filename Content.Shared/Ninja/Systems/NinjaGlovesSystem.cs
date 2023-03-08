@@ -108,8 +108,6 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         {
             comp.User = null;
             _ninja.AssignGloves(ninja, null);
-            RemComp<InteractionRelayComponent>(user);
-            _interaction.SetRelay(user, uid, null);
         }
     }
 

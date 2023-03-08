@@ -23,7 +23,6 @@ using Content.Shared.Roles;
 using Content.Shared.Popups;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Rounding;
-using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
@@ -46,7 +45,6 @@ public sealed class NinjaSystem : SharedNinjaSystem
     [Dependency] private readonly PopupSystem _popups = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly NinjaSuitSystem _suit = default!;
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
 
     public override void Initialize()
@@ -55,7 +53,6 @@ public sealed class NinjaSystem : SharedNinjaSystem
 
         SubscribeLocalEvent<NinjaComponent, ComponentStartup>(OnNinjaStartup);
         SubscribeLocalEvent<NinjaComponent, MindAddedMessage>(OnNinjaMindAdded);
-        SubscribeLocalEvent<NinjaComponent, AttackedEvent>(OnNinjaAttacked);
 
         SubscribeLocalEvent<DoorComponent, DoorEmaggedEvent>(OnDoorEmagged);
     }
@@ -248,15 +245,6 @@ public sealed class NinjaSystem : SharedNinjaSystem
         _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);
     }
 
-    private void OnNinjaAttacked(EntityUid uid, NinjaComponent comp, AttackedEvent args)
-    {
-        if (comp.Suit != null && TryComp<NinjaSuitComponent>(comp.Suit, out var suit))
-        {
-            _suit.RevealNinja(suit, uid);
-            // TODO: disable abilities for 5 seconds
-        }
-    }
-
     private void OnDoorEmagged(EntityUid uid, DoorComponent door, ref DoorEmaggedEvent args)
     {
         // make sure it's a ninja doorjacking it
@@ -266,7 +254,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
 
     private void UpdateNinja(EntityUid uid, NinjaComponent ninja, float frameTime)
     {
-        if (ninja.Suit == null || !TryComp<NinjaSuitComponent>(ninja.Suit.Value, out var suit))
+        if (ninja.Suit == null || !TryComp<NinjaSuitComponent>(ninja.Suit, out var suit))
             return;
 
         float wattage = _suit.SuitWattage(suit);
@@ -275,7 +263,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
         if (!TryUseCharge(uid, wattage * frameTime))
         {
             // ran out of power, reveal ninja
-            _suit.RevealNinja(suit, uid);
+            _suit.RevealNinja(ninja.Suit.Value, suit, uid);
         }
     }
 

@@ -2,16 +2,20 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
+using Content.Shared.Timing;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Ninja.Systems;
 
 public abstract class SharedNinjaSuitSystem : EntitySystem
 {
-    [Dependency] protected readonly SharedNinjaGlovesSystem _gloves = default!;
+    [Dependency] private readonly SharedNinjaGlovesSystem _gloves = default!;
     [Dependency] protected readonly SharedNinjaSystem _ninja = default!;
-    [Dependency] protected readonly SharedStealthSystem _stealth = default!;
+    [Dependency] private readonly SharedStealthSystem _stealth = default!;
+    [Dependency] protected readonly UseDelaySystem _useDelay = default!;
 
     public override void Initialize()
     {
@@ -21,6 +25,8 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
         SubscribeLocalEvent<NinjaSuitComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<NinjaSuitComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<NinjaSuitComponent, GotUnequippedEvent>(OnUnequipped);
+
+        SubscribeNetworkEvent<SetCloakedMessage>(OnSetCloakedMessage);
     }
 
     private void OnEquipped(EntityUid uid, NinjaSuitComponent comp, GotEquippedEvent args)
@@ -60,8 +66,35 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
         _ninja.AssignSuit(ninja, uid);
 
         // initialize phase cloak
-        AddComp<StealthComponent>(user);
+        EnsureComp<StealthComponent>(user);
         SetCloaked(user, comp.Cloaked);
+    }
+
+    /// <summary>
+    /// Force uncloak the user, disables suit abilities if the bool is set.
+    /// </summary>
+    public void RevealNinja(EntityUid uid, NinjaSuitComponent comp, EntityUid user, bool disableAbilities = false)
+    {
+        if (comp.Cloaked)
+        {
+            comp.Cloaked = false;
+            SetCloaked(user, false);
+            // TODO: add the box open thing its funny
+
+            if (disableAbilities)
+                _useDelay.BeginDelay(uid);
+        }
+    }
+
+    /// <summary>
+    /// Returns the power used by a suit
+    /// </summary>
+    public float SuitWattage(NinjaSuitComponent suit)
+    {
+        float wattage = suit.PassiveWattage;
+        if (suit.Cloaked)
+            wattage += suit.CloakWattage;
+        return wattage;
     }
 
     /// <summary>
@@ -70,7 +103,7 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
     /// </summary>
     protected void SetCloaked(EntityUid user, bool cloaked)
     {
-        if (!TryComp<StealthComponent>(user, out var stealth))
+        if (!TryComp<StealthComponent>(user, out var stealth) || stealth.Deleted)
             return;
 
         // slightly visible, but doesn't change when moving so it's ok
@@ -99,4 +132,23 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
         SetCloaked(user, false);
         RemComp<StealthComponent>(user);
     }
+
+    private void OnSetCloakedMessage(SetCloakedMessage msg)
+    {
+        if (TryComp<NinjaComponent>(msg.User, out var ninja) && TryComp<NinjaSuitComponent>(ninja.Suit, out var suit))
+        {
+            suit.Cloaked = msg.Cloaked;
+            SetCloaked(msg.User, msg.Cloaked);
+        }
+    }
+}
+
+/// <summary>
+/// Calls SetCloaked on the client from the server, along with updating the suit Cloaked bool.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class SetCloakedMessage : EntityEventArgs
+{
+    public EntityUid User;
+    public bool Cloaked;
 }

@@ -1,4 +1,5 @@
 using Content.Shared.Ninja.Components;
+using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 
@@ -6,12 +7,15 @@ namespace Content.Shared.Ninja.Systems;
 
 public abstract class SharedNinjaSystem : EntitySystem
 {
+    [Dependency] protected readonly SharedNinjaSuitSystem _suit = default!;
+
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<NinjaComponent, ComponentGetState>(OnNinjaGetState);
         SubscribeLocalEvent<NinjaComponent, ComponentHandleState>(OnNinjaHandleState);
+        SubscribeLocalEvent<NinjaComponent, AttackedEvent>(OnNinjaAttacked);
     }
 
     /// <summary>
@@ -96,5 +100,13 @@ public abstract class SharedNinjaSystem : EntitySystem
         comp.SpiderChargeTarget = state.SpiderChargeTarget;
         comp.SpiderChargeDetonated = state.SpiderChargeDetonated;
         comp.CalledInThreat = state.CalledInThreat;
+    }
+
+    private void OnNinjaAttacked(EntityUid uid, NinjaComponent comp, AttackedEvent args)
+    {
+        if (comp.Suit != null && TryComp<NinjaSuitComponent>(comp.Suit, out var suit) && suit.Cloaked)
+        {
+            _suit.RevealNinja(comp.Suit.Value, suit, uid, true);
+        }
     }
 }

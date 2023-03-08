@@ -17,6 +17,7 @@ namespace Content.Shared.Ninja.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed class NinjaSuitComponent : Component
 {
+    [ViewVariables]
     public bool Cloaked = false;
 
     /// <summary>
