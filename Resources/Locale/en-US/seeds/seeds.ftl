@@ -71,3 +71,7 @@ seeds-rice-name = rice
 seeds-rice-display-name = rice stalks
 seeds-soybeans-name = soybeans
 seeds-soybeans-display-name = soy plant
+seeds-watermelon-name = watermelon
+seeds-watermelon-display-name = watermelon plant
+seeds-grape-name = grape
+seeds-grape-display-name = grape plant

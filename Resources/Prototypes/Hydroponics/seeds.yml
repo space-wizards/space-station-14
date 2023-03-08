@@ -866,3 +866,55 @@
       Min: 1
       Max: 5
       PotencyDivisor: 20
+
+- type: seed
+  id: grape
+  name: seeds-grape-name
+  noun: seeds-noun-seeds
+  displayName: seeds-grape-display-name
+  plantRsi: Objects/Specific/Hydroponics/grape.rsi
+  productPrototypes:
+    - FoodGrape
+  lifespan: 50
+  maturation: 3
+  production: 5
+  yield: 4
+  potency: 10
+  growthStages: 2
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: watermelon
+  name: seeds-watermelon-name
+  noun: seeds-noun-seeds
+  displayName: seeds-watermelon-display-name
+  plantRsi: Objects/Specific/Hydroponics/watermelon.rsi
+  productPrototypes:
+    - FoodWatermelon
+  lifespan: 55
+  maturation: 15
+  production: 1
+  yield: 1
+  potency: 1
+  idealLight: 8
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Water:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20

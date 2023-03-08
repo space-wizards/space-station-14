@@ -1047,6 +1047,43 @@
     FoodCabbage: 1
     FoodGarlic: 1
 
+- type: microwaveMealRecipe
+  id: RecipeFruitSalad
+  name: fruit salad recipe
+  result: FoodSaladFruit
+  time: 5
+  solids:
+    FoodBowlBig: 1
+    FoodOrange: 1
+    FoodApple: 1
+    FoodGrape: 1
+    FoodWatermelonSlice: 2
+
+- type: microwaveMealRecipe
+  id: RecipeJungleSalad
+  name: jungle salad recipe
+  result: FoodSaladJungle
+  time: 5
+  solids:
+    FoodBowlBig: 1
+    FoodBanana: 1
+    FoodApple: 1
+    FoodGrape: 1
+    FoodWatermelonSlice: 2
+
+- type: microwaveMealRecipe
+  id: RecipeWatermelonFruitBowlSalad
+  name: watermelon fruit bowl recipe
+  result: FoodSaladWatermelonFruitBowl
+  time: 5
+  solids:
+    FoodWatermelon: 1
+    FoodApple: 1
+    FoodBanana: 1
+    FoodLemon: 1
+    FoodOrange: 1
+    FoodAmbrosiaVulgaris: 1
+
 # NOT ACTUAL FOOD
 
 - type: microwaveMealRecipe
