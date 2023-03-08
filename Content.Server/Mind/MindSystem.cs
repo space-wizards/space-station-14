@@ -186,11 +186,12 @@ public sealed class MindSystem : EntitySystem
         return null;
     }
 
-    public bool TryCreateMind(NetUserId? userId, [NotNullWhen(true)]out Mind? mind, IPlayerManager? playerManager = null)
+    public Mind CreateMind(NetUserId? userId, string? name = null)
     {
-        mind = new Mind(userId);
+        var mind = new Mind(userId);
+        mind.CharacterName = name;
         ChangeOwningPlayer(mind, userId);
-        return true;
+        return mind;
     }
 
     /// <summary>

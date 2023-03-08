@@ -11,7 +11,6 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Roles;
 using NUnit.Framework;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -53,15 +52,6 @@ public sealed class MindTests
         - !type:GibBehavior { }
 ";
 
-    // Exception handling for PlayerData and NetUserId invalid due to testing.
-    // Can be removed when Players can be mocked.
-    private Mind CreateMind(NetUserId? userId, MindSystem mindSystem, IPlayerManager? playerManager = null)
-    {
-        mindSystem.TryCreateMind(userId, out var mind, playerManager);
-        Assert.NotNull(mind);
-        return mind!;
-    }
-
     /// <summary>
     ///     Exception handling for PlayerData and NetUserId invalid due to testing.
     ///     Can be removed when Players can be mocked.
@@ -97,7 +87,7 @@ public sealed class MindTests
             var entity = entMan.SpawnEntity(null, new MapCoordinates());
             var mindComp = entMan.EnsureComponent<MindComponent>(entity);
 
-            var mind = CreateMind(null, mindSystem);
+            var mind = mindSystem.CreateMind(null);
 
             Assert.That(mind.UserId, Is.EqualTo(null));
 
@@ -123,11 +113,11 @@ public sealed class MindTests
             var entity = entMan.SpawnEntity(null, new MapCoordinates());
             var mindComp = entMan.EnsureComponent<MindComponent>(entity);
 
-            var mind = CreateMind(null, mindSystem);
+            var mind = mindSystem.CreateMind(null);
             mindSystem.TransferTo(mind, entity);
             Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind));
             
-            var mind2 = CreateMind(null, mindSystem);
+            var mind2 = mindSystem.CreateMind(null);
             mindSystem.TransferTo(mind2, entity);
             Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind2));
             Assert.That(mind.OwnedEntity != entity);
@@ -156,7 +146,7 @@ public sealed class MindTests
             entity = entMan.SpawnEntity("MindTestEntityDamageable", new MapCoordinates());
             mindComp = entMan.EnsureComponent<MindComponent>(entity);
 
-            mind = CreateMind(null, mindSystem);
+            mind = mindSystem.CreateMind(null);
 
             mindSystem.TransferTo(mind, entity);
             Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind));
@@ -204,7 +194,7 @@ public sealed class MindTests
             var mindComp = entMan.EnsureComponent<MindComponent>(entity);
             entMan.EnsureComponent<MindComponent>(targetEntity);
 
-            var mind = CreateMind(null, mindSystem);
+            var mind = mindSystem.CreateMind(null);
 
             mindSystem.TransferTo(mind, entity);
 
@@ -233,7 +223,7 @@ public sealed class MindTests
             var entity = entMan.SpawnEntity(null, new MapCoordinates());
             var mindComp = entMan.EnsureComponent<MindComponent>(entity);
 
-            var mind = CreateMind(null, mindSystem);
+            var mind = mindSystem.CreateMind(null);
 
             mindSystem.TransferTo(mind, entity);
 
@@ -265,7 +255,7 @@ public sealed class MindTests
             var entity = entMan.SpawnEntity(null, new MapCoordinates());
             var mindComp = entMan.EnsureComponent<MindComponent>(entity);
 
-            var mind = CreateMind(null, mindSystem);
+            var mind = mindSystem.CreateMind(null);
 
             Assert.That(mind.UserId, Is.EqualTo(null));
 

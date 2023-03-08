@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Mind;
-using Content.Shared.Coordinates;
 using NUnit.Framework;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -41,8 +40,7 @@ namespace Content.IntegrationTests.Tests.Minds
                 playerEnt = entMan.SpawnEntity(null, pos);
                 visitEnt = entMan.SpawnEntity(null, pos);
 
-                Assert.That(mindSystem.TryCreateMind(player.UserId, out mind, playerManager));
-
+                mind = mindSystem.CreateMind(player.UserId);
                 mindSystem.TransferTo(mind, playerEnt);
                 mindSystem.Visit(mind, visitEnt);
 
@@ -99,8 +97,7 @@ namespace Content.IntegrationTests.Tests.Minds
 
                 playerEnt = entMan.SpawnEntity(null, pos);
 
-                Assert.That(mindSystem.TryCreateMind(player.UserId, out mind, playerManager));
-
+                mind = mindSystem.CreateMind(player.UserId);
                 mindSystem.TransferTo(mind, playerEnt);
 
                 Assert.That(mind.CurrentEntity, Is.EqualTo(playerEnt));
@@ -139,12 +136,12 @@ namespace Content.IntegrationTests.Tests.Minds
                 var player = playerManager.ServerSessions.Single();
 
                 var entMgr = IoCManager.Resolve<IServerEntityManager>();
-                
-                var mindSystem = entMgr.EntitySysManager.GetEntitySystem<MindSystem>();
-                
-                playerEnt = entMgr.SpawnEntity(null, coordinates);
-                Assert.That(mindSystem.TryCreateMind(player.UserId, out mind, playerManager));
 
+                var mindSystem = entMgr.EntitySysManager.GetEntitySystem<MindSystem>();
+
+                playerEnt = entMgr.SpawnEntity(null, coordinates);
+
+                mind = mindSystem.CreateMind(player.UserId);
                 mindSystem.TransferTo(mind, playerEnt);
 
                 Assert.That(mind.CurrentEntity, Is.EqualTo(playerEnt));

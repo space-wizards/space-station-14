@@ -171,10 +171,7 @@ namespace Content.Server.GameTicking
             DebugTools.AssertNotNull(data);
 
             data!.WipeMind();
-            var newMind = new Mind.Mind(data.UserId)
-            {
-                CharacterName = character.Name
-            };
+            var newMind = _mindSystem.CreateMind(data.UserId, character.Name);
             _mindSystem.ChangeOwningPlayer(newMind, data.UserId);
 
             var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
@@ -270,7 +267,7 @@ namespace Content.Server.GameTicking
             DebugTools.AssertNotNull(data);
 
             data!.WipeMind();
-            var newMind = new Mind.Mind(data.UserId);
+            var newMind = _mindSystem.CreateMind(data.UserId);
             _mindSystem.ChangeOwningPlayer(newMind, data.UserId);
             _mindSystem.AddRole(newMind, new ObserverRole(newMind));
 

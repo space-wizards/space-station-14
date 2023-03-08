@@ -206,10 +206,8 @@ namespace Content.Server.Ghost.Roles
 
             DebugTools.AssertNotNull(contentData);
 
-            var newMind = new Mind.Mind(player.UserId)
-            {
-                CharacterName = EntityManager.GetComponent<MetaDataComponent>(mob).EntityName
-            };
+            var newMind = _mindSystem.CreateMind(player.UserId,
+                EntityManager.GetComponent<MetaDataComponent>(mob).EntityName);
             _mindSystem.AddRole(newMind, new GhostRoleMarkerRole(newMind, role.RoleName));
 
             _mindSystem.ChangeOwningPlayer(newMind, player.UserId);

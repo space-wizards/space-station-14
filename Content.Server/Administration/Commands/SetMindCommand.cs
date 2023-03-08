@@ -64,12 +64,12 @@ namespace Content.Server.Administration.Commands
             var mindSystem = entityManager.System<MindSystem>();
             
             var mind = playerCData.Mind;
-            if (mind == null && mindSystem.TryCreateMind(session.UserId, out mind))
-                mind.CharacterName = entityManager.GetComponent<MetaDataComponent>(eUid).EntityName;
-
             if (mind == null)
-                return;
-            
+            {
+                mind = mindSystem.CreateMind(session.UserId);
+                mind.CharacterName = entityManager.GetComponent<MetaDataComponent>(eUid).EntityName;
+            }
+
             mindSystem.TransferTo(mind, eUid);
         }
     }

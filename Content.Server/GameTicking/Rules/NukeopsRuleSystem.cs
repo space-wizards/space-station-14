@@ -749,10 +749,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                 var profile = _prefs.GetPreferences(session.UserId).SelectedCharacter as HumanoidCharacterProfile;
                 SetupOperativeEntity(mob, spawnDetails.Name, spawnDetails.Gear, profile);
 
-                var newMind = new Mind.Mind(session.UserId)
-                {
-                    CharacterName = spawnDetails.Name
-                };
+                var newMind = _mindSystem.CreateMind(session.UserId, spawnDetails.Name);
                 _mindSystem.ChangeOwningPlayer(newMind, session.UserId);
                 _mindSystem.AddRole(newMind, new TraitorRole(newMind, nukeOpsAntag));
 
