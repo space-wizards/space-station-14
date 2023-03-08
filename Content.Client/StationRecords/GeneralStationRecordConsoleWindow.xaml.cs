@@ -118,7 +118,7 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
             },
             new Label()
             {
-                Text = Loc.GetString("general-station-record-console-record-fingerprint", ("fingerprint", record.Fingerprint is null ? "N/A" : record.Fingerprint))
+                Text = Loc.GetString("general-station-record-console-record-fingerprint", ("fingerprint", record.Fingerprint is null ? Loc.GetString("generic-not-available-shorthand") : record.Fingerprint))
             }
         };
 
