@@ -37,6 +37,7 @@ namespace Content.Server.Power.EntitySystems
 
             UpdatesAfter.Add(typeof(PowerNetSystem));
 
+            SubscribeLocalEvent<ApcComponent, BoundUIOpenedEvent>(OnBoundUiOpen);
             SubscribeLocalEvent<ApcComponent, MapInitEvent>(OnApcInit);
             SubscribeLocalEvent<ApcComponent, ChargeChangedEvent>(OnBatteryChargeChanged);
             SubscribeLocalEvent<ApcComponent, ApcToggleMainBreakerMessage>(OnToggleMainBreaker);
@@ -58,6 +59,22 @@ namespace Content.Server.Power.EntitySystems
         private void OnApcInit(EntityUid uid, ApcComponent component, MapInitEvent args)
         {
             UpdateApcState(uid, component);
+        }
+        //Update the HasAccess var for UI to read
+        private void OnBoundUiOpen(EntityUid uid, ApcComponent component, BoundUIOpenedEvent args)
+        {
+            TryComp<AccessReaderComponent>(uid, out var access);
+            if (args.Session.AttachedEntity == null)
+                return;
+
+            if (access == null || _accessReader.IsAllowed(args.Session.AttachedEntity.Value, access))
+            {
+                component.HasAccess = true;
+            }
+            else
+            {
+                component.HasAccess = false;
+            }
         }
         private void OnToggleMainBreaker(EntityUid uid, ApcComponent component, ApcToggleMainBreakerMessage args)
         {
@@ -141,7 +158,7 @@ namespace Content.Server.Power.EntitySystems
 
             if (_userInterfaceSystem.GetUiOrNull(uid, ApcUiKey.Key, ui) is { } bui)
             {
-                bui.SetState(new ApcBoundInterfaceState(apc.MainBreakerEnabled, (int)MathF.Ceiling(power), apc.LastExternalState, battery.CurrentCharge / battery.MaxCharge));
+                bui.SetState(new ApcBoundInterfaceState(apc.MainBreakerEnabled, apc.HasAccess, (int)MathF.Ceiling(power), apc.LastExternalState, battery.CurrentCharge / battery.MaxCharge));
             }
         }
 
