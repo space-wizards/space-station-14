@@ -13,7 +13,7 @@ namespace Content.Server.Administration.Commands
         
         public string Command => "setmind";
 
-        public string Description => Loc.GetString("set-mind-command-description", ("requiredComponent", nameof(MindComponent)));
+        public string Description => Loc.GetString("set-mind-command-description", ("requiredComponent", nameof(MindContainerComponent)));
 
         public string Help => Loc.GetString("set-mind-command-help-text", ("command", Command));
 
@@ -41,7 +41,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (!entityManager.HasComponent<MindComponent>(eUid))
+            if (!entityManager.HasComponent<MindContainerComponent>(eUid))
             {
                 shell.WriteLine(Loc.GetString("set-mind-command-target-has-no-mind-message"));
                 return;

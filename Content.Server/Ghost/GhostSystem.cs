@@ -92,7 +92,7 @@ namespace Content.Server.Ghost
             if (EntityManager.HasComponent<VisitingMindComponent>(uid))
                 return;
 
-            if (!EntityManager.TryGetComponent<MindComponent>(uid, out var mind) || !mind.HasMind || mind.Mind.IsVisitingEntity)
+            if (!EntityManager.TryGetComponent<MindContainerComponent>(uid, out var mind) || !mind.HasMind || mind.Mind.IsVisitingEntity)
                 return;
 
             if (component.MustBeDead && (_mobState.IsAlive(uid) || _mobState.IsCritical(uid)))
@@ -236,7 +236,7 @@ namespace Content.Server.Ghost
             if (Deleted(uid) || Terminating(uid))
                 return;
 
-            if (EntityManager.TryGetComponent<MindComponent?>(uid, out var mind))
+            if (EntityManager.TryGetComponent<MindContainerComponent?>(uid, out var mind))
                 _mindSystem.SetGhostOnShutdown(uid, false, mind);
             EntityManager.DeleteEntity(uid);
         }
@@ -260,7 +260,7 @@ namespace Content.Server.Ghost
                 {
                     if (attached == except) continue;
 
-                    TryComp<MindComponent>(attached, out var mind);
+                    TryComp<MindContainerComponent>(attached, out var mind);
 
                     string playerInfo = $"{EntityManager.GetComponent<MetaDataComponent>(attached).EntityName} ({mind?.Mind?.CurrentJob?.Name ?? "Unknown"})";
 

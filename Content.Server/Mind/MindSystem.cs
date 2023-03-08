@@ -35,9 +35,9 @@ public sealed class MindSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<MindComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<MindComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<MindComponent, SuicideEvent>(OnSuicide);
+        SubscribeLocalEvent<MindContainerComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<MindContainerComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<MindContainerComponent, SuicideEvent>(OnSuicide);
         SubscribeLocalEvent<VisitingMindComponent, ComponentRemove>(OnVisitingMindRemoved);
     }
 
@@ -46,7 +46,7 @@ public sealed class MindSystem : EntitySystem
         UnVisit(component.Mind);
     }
 
-    public void SetGhostOnShutdown(EntityUid uid, bool value, MindComponent? mind = null)
+    public void SetGhostOnShutdown(EntityUid uid, bool value, MindContainerComponent? mind = null)
     {
         if (!Resolve(uid, ref mind))
             return;
@@ -59,7 +59,7 @@ public sealed class MindSystem : EntitySystem
     ///     Use <see cref="MindSystem.TransferTo(Mind,System.Nullable{Robust.Shared.GameObjects.EntityUid},bool)"/> instead.
     ///     If that doesn't cover it, make something to cover it.
     /// </summary>
-    private void InternalAssignMind(EntityUid uid, Mind value, MindComponent? mind = null)
+    private void InternalAssignMind(EntityUid uid, Mind value, MindContainerComponent? mind = null)
     {
         if (!Resolve(uid, ref mind))
             return;
@@ -73,7 +73,7 @@ public sealed class MindSystem : EntitySystem
     ///     Use <see cref="MindSystem.TransferTo(Mind,System.Nullable{Robust.Shared.GameObjects.EntityUid},bool)"/> instead.
     ///     If that doesn't cover it, make something to cover it.
     /// </summary>
-    private void InternalEjectMind(EntityUid uid, MindComponent? mind = null)
+    private void InternalEjectMind(EntityUid uid, MindContainerComponent? mind = null)
     {
         if (!Resolve(uid, ref mind))
             return;
@@ -84,13 +84,13 @@ public sealed class MindSystem : EntitySystem
         mind.Mind = null;
     }
 
-    private void OnShutdown(EntityUid uid, MindComponent mindComp, ComponentShutdown args)
+    private void OnShutdown(EntityUid uid, MindContainerComponent mindContainerComp, ComponentShutdown args)
     {
         // Let's not create ghosts if not in the middle of the round.
         if (_gameTicker.RunLevel != GameRunLevel.InRound)
             return;
 
-        if (!TryGetMind(uid, out var mind, mindComp))
+        if (!TryGetMind(uid, out var mind, mindContainerComp))
             return;
         
         if (mind.VisitingEntity is {Valid: true} visiting)
@@ -102,7 +102,7 @@ public sealed class MindSystem : EntitySystem
 
             TransferTo(mind, visiting);
         }
-        else if (mindComp.GhostOnShutdown)
+        else if (mindContainerComp.GhostOnShutdown)
         {
             // Changing an entities parents while deleting is VERY sus. This WILL throw exceptions.
             // TODO: just find the applicable spawn position directly without actually updating the transform's parent.
@@ -147,25 +147,25 @@ public sealed class MindSystem : EntitySystem
         }
     }
 
-    private void OnExamined(EntityUid uid, MindComponent mind, ExaminedEvent args)
+    private void OnExamined(EntityUid uid, MindContainerComponent mindContainer, ExaminedEvent args)
     {
-        if (!mind.ShowExamineInfo || !args.IsInDetailsRange)
+        if (!mindContainer.ShowExamineInfo || !args.IsInDetailsRange)
             return;
 
         var dead = _mobStateSystem.IsDead(uid);
-        var hasSession = mind.Mind?.Session;
+        var hasSession = mindContainer.Mind?.Session;
 
         if (dead && hasSession == null)
             args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-dead-and-ssd", ("ent", uid))}[/color]");
         else if (dead)
             args.PushMarkup($"[color=red]{Loc.GetString("comp-mind-examined-dead", ("ent", uid))}[/color]");
-        else if (!mind.HasMind)
+        else if (!mindContainer.HasMind)
             args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-catatonic", ("ent", uid))}[/color]");
         else if (hasSession == null)
             args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", uid))}[/color]");
     }
 
-    private void OnSuicide(EntityUid uid, MindComponent component, SuicideEvent args)
+    private void OnSuicide(EntityUid uid, MindContainerComponent component, SuicideEvent args)
     {
         if (args.Handled)
             return;
@@ -176,7 +176,7 @@ public sealed class MindSystem : EntitySystem
         }
     }
 
-    public Mind? GetMind(EntityUid uid, MindComponent? mind = null)
+    public Mind? GetMind(EntityUid uid, MindContainerComponent? mind = null)
     {
         if (!Resolve(uid, ref mind))
             return null;
@@ -296,14 +296,14 @@ public sealed class MindSystem : EntitySystem
             return;
         }
 
-        MindComponent? component = null;
+        MindContainerComponent? component = null;
         var alreadyAttached = false;
 
         if (entity != null)
         {
             if (!TryComp(entity.Value, out component))
             {
-                component = AddComp<MindComponent>(entity.Value);
+                component = AddComp<MindContainerComponent>(entity.Value);
             }
             else if (component.HasMind)
             {
@@ -515,7 +515,7 @@ public sealed class MindSystem : EntitySystem
     /// <param name="mind">The returned mind.</param>
     /// <param name="mindComponent">Mind component on <paramref name="uid"/> to get the mind from.</param>
     /// <returns>True if mind found. False if not.</returns>
-    public bool TryGetMind(EntityUid uid, [NotNullWhen(true)] out Mind? mind, MindComponent? mindComponent = null)
+    public bool TryGetMind(EntityUid uid, [NotNullWhen(true)] out Mind? mind, MindContainerComponent? mindComponent = null)
     {
         mind = null;
         if (!Resolve(uid, ref mindComponent))
@@ -534,7 +534,7 @@ public sealed class MindSystem : EntitySystem
     /// <param name="mind">Mind to set OwnedComponent and OwnedEntity on</param>
     /// <param name="uid">Entity owned by <paramref name="mind"/></param>
     /// <param name="mindComponent">MindComponent owned by <paramref name="mind"/></param>
-    private void SetOwnedEntity(Mind mind, EntityUid? uid, MindComponent? mindComponent)
+    private void SetOwnedEntity(Mind mind, EntityUid? uid, MindContainerComponent? mindComponent)
     {
         if (uid != null)
             Resolve(uid.Value, ref mindComponent);

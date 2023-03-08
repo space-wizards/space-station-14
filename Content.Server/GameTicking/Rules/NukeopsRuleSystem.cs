@@ -168,7 +168,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     private void OnComponentInit(EntityUid uid, NukeOperativeComponent component, ComponentInit args)
     {
         // If entity has a prior mind attached, add them to the players list.
-        if (!TryComp<MindComponent>(uid, out var mindComponent) || !RuleAdded)
+        if (!TryComp<MindContainerComponent>(uid, out var mindComponent) || !RuleAdded)
             return;
 
         var session = mindComponent.Mind?.Session;
@@ -573,7 +573,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void OnMindAdded(EntityUid uid, NukeOperativeComponent component, MindAddedMessage args)
     {
-        if (!TryComp<MindComponent>(uid, out var mindComponent) || mindComponent.Mind == null)
+        if (!TryComp<MindContainerComponent>(uid, out var mindComponent) || mindComponent.Mind == null)
             return;
 
         var mind = mindComponent.Mind;
@@ -850,7 +850,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
 
         // Add pre-existing nuke operatives to the credit list.
-        var query = EntityQuery<NukeOperativeComponent, MindComponent>(true);
+        var query = EntityQuery<NukeOperativeComponent, MindContainerComponent>(true);
         foreach (var (_, mindComp) in query)
         {
             if (!mindComp.HasMind || !_mindSystem.TryGetSession(mindComp.Mind, out var session))

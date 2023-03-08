@@ -45,7 +45,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (!_entities.HasComponent<MindComponent>(target))
+            if (!_entities.HasComponent<MindContainerComponent>(target))
             {
                 shell.WriteLine(Loc.GetString("shell-entity-is-not-mob"));
                 return;

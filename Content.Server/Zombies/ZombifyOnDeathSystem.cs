@@ -177,7 +177,7 @@ namespace Content.Server.Zombies
             _identity.QueueIdentityUpdate(target);
 
             //He's gotta have a mind
-            var mindComp = EnsureComp<MindComponent>(target);
+            var mindComp = EnsureComp<MindContainerComponent>(target);
             if (_mindSystem.TryGetMind(target, out var mind, mindComp) && _mindSystem.TryGetSession(mind, out var session))
             {
                 //Zombie role for player manifest

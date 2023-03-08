@@ -37,8 +37,8 @@ namespace Content.Server.Body.Systems
 
         private void HandleMind(EntityUid newEntity, EntityUid oldEntity)
         {
-            EntityManager.EnsureComponent<MindComponent>(newEntity);
-            var oldMind = EntityManager.EnsureComponent<MindComponent>(oldEntity);
+            EntityManager.EnsureComponent<MindContainerComponent>(newEntity);
+            var oldMind = EntityManager.EnsureComponent<MindContainerComponent>(oldEntity);
 
             EnsureComp<GhostOnMoveComponent>(newEntity);
             if (HasComp<BodyComponent>(newEntity))

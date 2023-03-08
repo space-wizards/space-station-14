@@ -25,7 +25,7 @@ public sealed class TransferMindOnGibSystem : EntitySystem
 
     private void OnGib(EntityUid uid, TransferMindOnGibComponent component, BeingGibbedEvent args)
     {
-        if (!TryComp<MindComponent>(uid, out var mindcomp) || mindcomp.Mind == null)
+        if (!TryComp<MindContainerComponent>(uid, out var mindcomp) || mindcomp.Mind == null)
             return;
 
         var validParts = args.GibbedParts.Where(p => _tag.HasTag(p, component.TargetTag)).ToHashSet();

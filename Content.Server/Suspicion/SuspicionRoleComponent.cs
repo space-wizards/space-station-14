@@ -67,7 +67,7 @@ namespace Content.Server.Suspicion
 
         public void SyncRoles()
         {
-            if (!_entMan.TryGetComponent(Owner, out MindComponent? mind) ||
+            if (!_entMan.TryGetComponent(Owner, out MindContainerComponent? mind) ||
                 !mind.HasMind)
             {
                 return;

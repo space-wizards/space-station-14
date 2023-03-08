@@ -35,7 +35,7 @@ namespace Content.Server.Ghost.Roles
                 return;
             }
 
-            if (entityManager.TryGetComponent(uid, out MindComponent? mind) &&
+            if (entityManager.TryGetComponent(uid, out MindContainerComponent? mind) &&
                 mind.HasMind)
             {
                 shell.WriteLine($"Entity {metaData.EntityName} with id {uid} already has a mind.");

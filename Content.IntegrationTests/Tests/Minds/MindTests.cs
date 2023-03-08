@@ -85,7 +85,7 @@ public sealed class MindTests
             var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
 
             var entity = entMan.SpawnEntity(null, new MapCoordinates());
-            var mindComp = entMan.EnsureComponent<MindComponent>(entity);
+            var mindComp = entMan.EnsureComponent<MindContainerComponent>(entity);
 
             var mind = mindSystem.CreateMind(null);
 
@@ -111,7 +111,7 @@ public sealed class MindTests
             var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
 
             var entity = entMan.SpawnEntity(null, new MapCoordinates());
-            var mindComp = entMan.EnsureComponent<MindComponent>(entity);
+            var mindComp = entMan.EnsureComponent<MindContainerComponent>(entity);
 
             var mind = mindSystem.CreateMind(null);
             mindSystem.TransferTo(mind, entity);
@@ -136,7 +136,7 @@ public sealed class MindTests
         var protoMan = server.ResolveDependency<IPrototypeManager>();
 
         EntityUid entity = default!;
-        MindComponent mindComp = default!;
+        MindContainerComponent mindContainerComp = default!;
         Mind mind = default!;
         var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
         var damageableSystem = entMan.EntitySysManager.GetEntitySystem<DamageableSystem>();
@@ -144,12 +144,12 @@ public sealed class MindTests
         await server.WaitAssertion(() =>
         {
             entity = entMan.SpawnEntity("MindTestEntityDamageable", new MapCoordinates());
-            mindComp = entMan.EnsureComponent<MindComponent>(entity);
+            mindContainerComp = entMan.EnsureComponent<MindContainerComponent>(entity);
 
             mind = mindSystem.CreateMind(null);
 
             mindSystem.TransferTo(mind, entity);
-            Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind));
+            Assert.That(mindSystem.GetMind(entity, mindContainerComp), Is.EqualTo(mind));
             Assert.That(!mindSystem.IsCharacterDeadPhysically(mind));
         });
 
@@ -164,7 +164,7 @@ public sealed class MindTests
             }
 
             damageableSystem.SetDamage(damageable, new DamageSpecifier(prototype, FixedPoint2.New(401)));
-            Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind));
+            Assert.That(mindSystem.GetMind(entity, mindContainerComp), Is.EqualTo(mind));
         });
 
         await PoolManager.RunTicksSync(pairTracker.Pair, 5);
@@ -191,8 +191,8 @@ public sealed class MindTests
 
             var entity = entMan.SpawnEntity(null, new MapCoordinates());
             var targetEntity = entMan.SpawnEntity(null, new MapCoordinates());
-            var mindComp = entMan.EnsureComponent<MindComponent>(entity);
-            entMan.EnsureComponent<MindComponent>(targetEntity);
+            var mindComp = entMan.EnsureComponent<MindContainerComponent>(entity);
+            entMan.EnsureComponent<MindContainerComponent>(targetEntity);
 
             var mind = mindSystem.CreateMind(null);
 
@@ -221,7 +221,7 @@ public sealed class MindTests
             var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
 
             var entity = entMan.SpawnEntity(null, new MapCoordinates());
-            var mindComp = entMan.EnsureComponent<MindComponent>(entity);
+            var mindComp = entMan.EnsureComponent<MindContainerComponent>(entity);
 
             var mind = mindSystem.CreateMind(null);
 
@@ -253,7 +253,7 @@ public sealed class MindTests
             var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
 
             var entity = entMan.SpawnEntity(null, new MapCoordinates());
-            var mindComp = entMan.EnsureComponent<MindComponent>(entity);
+            var mindComp = entMan.EnsureComponent<MindContainerComponent>(entity);
 
             var mind = mindSystem.CreateMind(null);
 

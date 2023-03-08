@@ -48,7 +48,7 @@ namespace Content.Server.Ghost.Roles.Components
             if (MakeSentient)
                 MakeSentientCommand.MakeSentient(mob, _entMan, AllowMovement, AllowSpeech);
 
-            mob.EnsureComponent<MindComponent>();
+            mob.EnsureComponent<MindContainerComponent>();
 
             var ghostRoleSystem = EntitySystem.Get<GhostRoleSystem>();
             ghostRoleSystem.GhostRoleInternalCreateMindAndTransfer(session, Owner, mob, this);

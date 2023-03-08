@@ -104,7 +104,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
             {
                 var meta = MetaData(survivor);
                 var username = string.Empty;
-                if (TryComp<MindComponent>(survivor, out var mindcomp))
+                if (TryComp<MindContainerComponent>(survivor, out var mindcomp))
                     if (mindcomp.Mind != null && mindcomp.Mind.Session != null)
                         username = mindcomp.Mind.Session.Name;
 

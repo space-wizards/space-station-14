@@ -270,7 +270,7 @@ namespace Content.Server.Administration.Systems
             // Make Sentient verb
             if (_groupController.CanCommand(player, "makesentient") &&
                 args.User != args.Target &&
-                !EntityManager.HasComponent<MindComponent>(args.Target))
+                !EntityManager.HasComponent<MindContainerComponent>(args.Target))
             {
                 Verb verb = new()
                 {
@@ -333,7 +333,7 @@ namespace Content.Server.Administration.Systems
 
             // Make ghost role verb
             if (_groupController.CanCommand(player, "makeghostrole") &&
-                !(EntityManager.GetComponentOrNull<MindComponent>(args.Target)?.HasMind ?? false))
+                !(EntityManager.GetComponentOrNull<MindContainerComponent>(args.Target)?.HasMind ?? false))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("make-ghost-role-verb-get-data-text");

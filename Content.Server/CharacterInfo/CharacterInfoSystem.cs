@@ -26,7 +26,7 @@ public sealed class CharacterInfoSystem : EntitySystem
         var conditions = new Dictionary<string, List<ConditionInfo>>();
         var jobTitle = "No Profession";
         var briefing = "!!ERROR: No Briefing!!"; //should never show on the UI unless there's a bug
-        if (EntityManager.TryGetComponent(entity, out MindComponent? mindComponent) && mindComponent.Mind != null)
+        if (EntityManager.TryGetComponent(entity, out MindContainerComponent? mindComponent) && mindComponent.Mind != null)
         {
             var mind = mindComponent.Mind;
 

@@ -73,7 +73,7 @@ namespace Content.Server.Mind
         ///     Can be null.
         /// </summary>
         [ViewVariables]
-        public MindComponent? OwnedComponent { get; internal set; }
+        public MindContainerComponent? OwnedComponent { get; internal set; }
 
         /// <summary>
         ///     The entity currently owned by this mind.

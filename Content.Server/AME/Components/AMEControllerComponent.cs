@@ -173,7 +173,7 @@ namespace Content.Server.AME.Components
             }
 
             // Logging
-            _entities.TryGetComponent(player, out MindComponent? mindComponent);
+            _entities.TryGetComponent(player, out MindContainerComponent? mindComponent);
             if (mindComponent != null)
             {
                 var humanReadableState = _injecting ? "Inject" : "Not inject";

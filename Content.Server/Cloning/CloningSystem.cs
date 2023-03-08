@@ -99,7 +99,7 @@ namespace Content.Server.Cloning
         {
             if (!ClonesWaitingForMind.TryGetValue(mind, out var entity) ||
                 !EntityManager.EntityExists(entity) ||
-                !TryComp<MindComponent>(entity, out var mindComp) ||
+                !TryComp<MindContainerComponent>(entity, out var mindComp) ||
                 mindComp.Mind != null)
                 return;
 
@@ -159,7 +159,7 @@ namespace Content.Server.Cloning
             {
                 if (EntityManager.EntityExists(clone) &&
                     !_mobStateSystem.IsDead(clone) &&
-                    TryComp<MindComponent>(clone, out var cloneMindComp) &&
+                    TryComp<MindContainerComponent>(clone, out var cloneMindComp) &&
                     (cloneMindComp.Mind == null || cloneMindComp.Mind == mind))
                     return false; // Mind already has clone
 

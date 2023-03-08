@@ -48,7 +48,7 @@ public sealed class RenameCommand : IConsoleCommand
 
         var entSysMan = IoCManager.Resolve<IEntitySystemManager>();
 
-        if (entMan.TryGetComponent(entityUid, out MindComponent? mind) && mind.Mind != null)
+        if (entMan.TryGetComponent(entityUid, out MindContainerComponent? mind) && mind.Mind != null)
         {
             // Mind
             mind.Mind.CharacterName = name;

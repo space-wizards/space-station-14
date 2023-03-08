@@ -127,7 +127,7 @@ namespace Content.Server.PDA
                     continue;
 
                 if (storeComponent.AccountOwner == user
-                    || (TryComp<MindComponent>(session.AttachedEntity, out var mindComp)
+                    || (TryComp<MindContainerComponent>(session.AttachedEntity, out var mindComp)
                         && mindComp.Mind != null
                         && _mindSystem.HasRole<TraitorRole>(mindComp.Mind)))
                     _cartridgeLoaderSystem?.UpdateUiState(pda.Owner, uplinkState, session);
@@ -186,7 +186,7 @@ namespace Content.Server.PDA
                 return;
 
             if (storeComp.AccountOwner != args.User
-                && !(TryComp<MindComponent>(args.User, out var mindComp)
+                && !(TryComp<MindContainerComponent>(args.User, out var mindComp)
                      && mindComp.Mind != null
                      && _mindSystem.HasRole<TraitorRole>(mindComp.Mind))) return;
 
