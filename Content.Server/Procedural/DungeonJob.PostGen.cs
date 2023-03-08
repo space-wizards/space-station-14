@@ -1,14 +1,13 @@
 using System.Linq;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
-using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Procedural;
 
-public sealed partial class DungeonSystem
+public sealed partial class DungeonJob
 {
     /*
      * Run after the main dungeon generation

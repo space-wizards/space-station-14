@@ -1,7 +1,7 @@
+using System.Threading.Tasks;
 using Content.Shared.Decals;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonGenerators;
-using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
@@ -9,9 +9,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Procedural;
 
-public sealed partial class DungeonSystem
+public sealed partial class DungeonJob
 {
-    private Dungeon GeneratePrefabDungeon(PrefabDunGen prefab, EntityUid gridUid, MapGridComponent grid, int seed)
+    private async Task<Dungeon> GeneratePrefabDungeon(PrefabDunGen prefab, EntityUid gridUid, MapGridComponent grid, int seed)
     {
         var random = new Random(seed);
         var preset = prefab.Presets[random.Next(prefab.Presets.Count)];

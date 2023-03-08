@@ -73,9 +73,6 @@ public sealed class SalvageExpeditionPrototype : IPrototype
     [DataField("loot", customTypeSerializer: typeof(PrototypeIdListSerializer<WeightedRandomPrototype>))]
     public List<string> Loots = new();
 
-    [DataField("dungeonRadius")]
-    public float DungeonRadius = 50f;
-
     [DataField("dungeonPosition")]
     public Vector2i DungeonPosition = new(80, -25);
 }

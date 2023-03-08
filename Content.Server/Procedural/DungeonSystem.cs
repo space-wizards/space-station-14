@@ -1,8 +1,9 @@
+using System.Threading;
+using System.Threading.Tasks;
+using Content.Server.CPUJob.JobQueues.Queues;
 using Content.Server.Decals;
 using Content.Server.GameTicking.Events;
 using Content.Shared.Procedural;
-using Content.Shared.Procedural.DungeonGenerators;
-using Content.Shared.Procedural.PostGeneration;
 using Robust.Server.GameObjects;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
@@ -24,6 +25,9 @@ public sealed partial class DungeonSystem : EntitySystem
 
     private ISawmill _sawmill = default!;
 
+    private readonly JobQueue _dungeonJobQueue = new(0.005);
+    private Dictionary<DungeonJob, CancellationTokenSource> _dungeonJobs = new();
+
     public override void Initialize()
     {
         base.Initialize();
@@ -34,8 +38,20 @@ public sealed partial class DungeonSystem : EntitySystem
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
     }
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+        _dungeonJobQueue.Process();
+    }
+
     private void OnRoundStart(RoundStartingEvent ev)
     {
+        foreach (var token in _dungeonJobs.Values)
+        {
+            token.Cancel();
+        }
+
+        _dungeonJobs.Clear();
         var query = AllEntityQuery<DungeonAtlasTemplateComponent>();
 
         while (query.MoveNext(out var uid, out _))
@@ -134,47 +150,22 @@ public sealed partial class DungeonSystem : EntitySystem
         return CompletionResult.Empty;
     }
 
-    public Dungeon GenerateDungeon(DungeonConfigPrototype gen, EntityUid gridUid, MapGridComponent grid, int seed)
+    public async Task<Dungeon> GenerateDungeon(DungeonConfigPrototype gen, EntityUid gridUid, MapGridComponent grid,
+        int seed)
     {
-        Dungeon dungeon;
-        _sawmill.Info($"Generating dungeon {gen.ID} with seed {seed} on {ToPrettyString(gridUid)}");
+        var cancelToken = new CancellationTokenSource();
+        var job = new DungeonJob();
+        _dungeonJobs.Add(job, cancelToken);
+        _dungeonJobQueue.EnqueueJob(job);
+        job.Run();
+        await job.AsTask;
 
-        switch (gen.Generator)
+        if (job.Exception != null)
         {
-            case PrefabDunGen prefab:
-                dungeon = GeneratePrefabDungeon(prefab, gridUid, grid, seed);
-                break;
-            default:
-                throw new NotImplementedException();
+            throw job.Exception;
         }
 
-        foreach (var room in dungeon.Rooms)
-        {
-            dungeon.RoomTiles.UnionWith(room.Tiles);
-        }
-
-        // To make it slightly more deterministic treat this RNG as separate ig.
-        var random = new Random();
-
-        foreach (var post in gen.PostGeneration)
-        {
-            switch (post)
-            {
-                case MiddleConnectionPostGen dordor:
-                    PostGen(dordor, dungeon, grid, random);
-                    break;
-                case EntrancePostGen entrance:
-                    PostGen(entrance, dungeon, grid, random);
-                    break;
-                case BoundaryWallPostGen boundary:
-                    PostGen(boundary, dungeon, grid, random);
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
-        }
-
-        return dungeon;
+        return job.Result!;
     }
 
     private Angle GetDungeonRotation(int seed)

@@ -1,4 +1,3 @@
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,7 +10,6 @@ using Content.Server.Parallax;
 using Content.Server.Procedural;
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Structure;
-using Content.Server.Shuttles.Events;
 using Content.Server.Station.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Dataset;
@@ -19,9 +17,6 @@ using Content.Shared.Gravity;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.Loot;
-using Content.Shared.Procedural.Rewards;
-using Content.Shared.Random;
-using Content.Shared.Random.Helpers;
 using Content.Shared.Salvage;
 using Content.Shared.Salvage.Expeditions;
 using Content.Shared.Salvage.Expeditions.Extraction;
@@ -310,12 +305,9 @@ public sealed partial class SalvageSystem
             var landingPadRadius = 24;
             var radiusThickness = 2;
             var dungeonOffset = config.DungeonPosition;
-            var dungeonRadius = config.DungeonRadius;
             var dungeonConfig = _prototypeManager.Index<DungeonConfigPrototype>(config.DungeonConfigPrototype);
 
-            var dungeon = _dungeon.GenerateDungeon(dungeonConfig, mapUid, grid, missionSeed);
-
-            await SuspendIfOutOfTime();
+            var dungeon = await _dungeon.GenerateDungeon(dungeonConfig, mapUid, grid, missionSeed);
 
             // Aborty
             if (dungeon.Rooms.Count == 0)
@@ -323,7 +315,7 @@ public sealed partial class SalvageSystem
                 return false;
             }
 
-            var adjustedDungeonAllTiles = new HashSet<Vector2i>(dungeon.AllTiles.Count);
+            var adjustedDungeonAllTiles = new HashSet<Vector2i>(dungeon.RoomTiles.Count);
 
             foreach (var room in dungeon.Rooms)
             {
@@ -351,15 +343,11 @@ public sealed partial class SalvageSystem
             var start = Vector2i.Zero;
             var reservedTiles = _pathfinding.GetPath(start, closestTile);
 
-            _dungeon.SpawnDungeonTiles(dungeonOffset, dungeon, grid, random, reservedTiles);
-
             // Handle loot
             foreach (var loot in GetLoot(config.Loots, missionSeed, _prototypeManager))
             {
-                await SpawnDungeonLoot(dungeonOffset, dungeon, loot, grid, random, reservedTiles);
+                // await SpawnDungeonLoot(dungeonOffset, dungeon, loot, grid, random, reservedTiles);
             }
-
-            await SpawnDungeonWalls(dungeonOffset, dungeon, grid, reservedTiles);
 
             // Setup the landing pad
             var landingPadExtents = new Vector2i(landingPadRadius, landingPadRadius);
