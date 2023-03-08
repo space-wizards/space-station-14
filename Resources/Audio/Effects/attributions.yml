@@ -2,7 +2,14 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "Amateur foley and audio editing by Bright0."
   source: "https://github.com/Bright0"
+
 - files: ["teleport_arrival.ogg", "teleport_departure.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "tgstation"
   source: "https://github.com/tgstation/tgstation/commit/906fb0682bab6a0975b45036001c54f021f58ae7"
+
+- files:
+    - "throw.ogg"
+  license: "CC-BY-NC-SA-4.0"
+  copyright: "TGMC"
+  source: "https://github.com/tgstation/TerraGov-Marine-Corps/blob/233891d0e19a002d8307299bfe15206591172784/sound/effects/throw.ogg"

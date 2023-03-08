@@ -2,6 +2,7 @@ using Content.Shared.Gravity;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
 using Content.Shared.Tag;
+using Robust.Shared.Audio;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
@@ -19,6 +20,7 @@ public sealed class ThrowingSystem : EntitySystem
     /// </summary>
     public const float FlyTime = 0.15f;
 
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
@@ -38,6 +40,7 @@ public sealed class ThrowingSystem : EntitySystem
         float strength = 1.0f,
         EntityUid? user = null,
         float pushbackRatio = 5.0f,
+        bool playSound = false,
         PhysicsComponent? physics = null,
         TransformComponent? transform = null,
         EntityQuery<PhysicsComponent>? physicsQuery = null,
@@ -104,10 +107,16 @@ public sealed class ThrowingSystem : EntitySystem
             _gravity.IsWeightless(user.Value, userPhysics))
         {
             var msg = new ThrowPushbackAttemptEvent();
-            RaiseLocalEvent(physics.Owner, msg);
+            RaiseLocalEvent(uid, msg);
 
             if (!msg.Cancelled)
                 _physics.ApplyLinearImpulse(user.Value, -impulseVector * pushbackRatio, body: userPhysics);
+        }
+
+        // Hands prediction when
+        if (playSound)
+        {
+            _audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/punchmiss.ogg"), uid, AudioParams.Default.WithVolume(-3f));
         }
     }
 }
