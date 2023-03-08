@@ -25,7 +25,9 @@ public sealed partial class DungeonSystem : EntitySystem
 
     private ISawmill _sawmill = default!;
 
-    private readonly JobQueue _dungeonJobQueue = new(0.005);
+    private const double DungeonJobTime = 0.005;
+
+    private readonly JobQueue _dungeonJobQueue = new(DungeonJobTime);
     private Dictionary<DungeonJob, CancellationTokenSource> _dungeonJobs = new();
 
     public override void Initialize()
@@ -70,6 +72,13 @@ public sealed partial class DungeonSystem : EntitySystem
     {
         base.Shutdown();
         _prototype.PrototypesReloaded -= PrototypeReload;
+
+        foreach (var token in _dungeonJobs.Values)
+        {
+            token.Cancel();
+        }
+
+        _dungeonJobs.Clear();
     }
 
     private void PrototypeReload(PrototypesReloadedEventArgs obj)
@@ -116,7 +125,7 @@ public sealed partial class DungeonSystem : EntitySystem
         }
     }
 
-    private MapId GetOrCreateTemplate(DungeonRoomPrototype proto)
+    public MapId GetOrCreateTemplate(DungeonRoomPrototype proto)
     {
         var query = AllEntityQuery<DungeonAtlasTemplateComponent>();
         DungeonAtlasTemplateComponent? comp;
@@ -150,11 +159,49 @@ public sealed partial class DungeonSystem : EntitySystem
         return CompletionResult.Empty;
     }
 
-    public async Task<Dungeon> GenerateDungeon(DungeonConfigPrototype gen, EntityUid gridUid, MapGridComponent grid,
+    public void GenerateDungeon(DungeonConfigPrototype gen, EntityUid gridUid, MapGridComponent grid,
         int seed)
     {
         var cancelToken = new CancellationTokenSource();
-        var job = new DungeonJob();
+        var job = new DungeonJob(DungeonJobTime,
+            EntityManager,
+            _mapManager,
+            _prototype,
+            _tileDefManager,
+            _decals,
+            this,
+            _lookup,
+            _transform,
+            gen,
+            grid,
+            gridUid,
+            seed,
+            cancelToken.Token);
+
+        _dungeonJobs.Add(job, cancelToken);
+        _dungeonJobQueue.EnqueueJob(job);
+        job.Run();
+    }
+
+    public async Task<Dungeon> GenerateDungeonAsync(DungeonConfigPrototype gen, EntityUid gridUid, MapGridComponent grid,
+        int seed)
+    {
+        var cancelToken = new CancellationTokenSource();
+        var job = new DungeonJob(0.005,
+            EntityManager,
+            _mapManager,
+            _prototype,
+            _tileDefManager,
+            _decals,
+            this,
+            _lookup,
+            _transform,
+            gen,
+            grid,
+            gridUid,
+            seed,
+            cancelToken.Token);
+
         _dungeonJobs.Add(job, cancelToken);
         _dungeonJobQueue.EnqueueJob(job);
         job.Run();
@@ -168,7 +215,7 @@ public sealed partial class DungeonSystem : EntitySystem
         return job.Result!;
     }
 
-    private Angle GetDungeonRotation(int seed)
+    public Angle GetDungeonRotation(int seed)
     {
         // Mask 0 | 1 for rotation seed
         var dungeonRotationSeed = 3 & seed;

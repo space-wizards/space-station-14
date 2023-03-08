@@ -1,17 +1,27 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.CPUJob.JobQueues;
+using Content.Server.Decals;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonGenerators;
 using Content.Shared.Procedural.PostGeneration;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Procedural;
 
 public sealed partial class DungeonJob : Job<Dungeon>
     {
         private IEntityManager _entManager;
+        private IMapManager _mapManager;
+        private IPrototypeManager _prototype;
+        private ITileDefinitionManager _tileDefManager;
+
+        private DecalSystem _decals;
         private DungeonSystem _dungeon;
+        private EntityLookupSystem _lookup;
+        private SharedTransformSystem _transform;
 
         private DungeonConfigPrototype _gen;
         private int _seed;
@@ -21,7 +31,13 @@ public sealed partial class DungeonJob : Job<Dungeon>
         public DungeonJob(
             double maxTime,
             IEntityManager entManager,
+            IMapManager mapManager,
+            IPrototypeManager prototype,
+            ITileDefinitionManager tileDefManager,
+            DecalSystem decals,
             DungeonSystem dungeon,
+            EntityLookupSystem lookup,
+            SharedTransformSystem transform,
             DungeonConfigPrototype gen,
             MapGridComponent grid,
             EntityUid gridUid,
@@ -29,7 +45,15 @@ public sealed partial class DungeonJob : Job<Dungeon>
             CancellationToken cancellation = default) : base(maxTime, cancellation)
         {
             _entManager = entManager;
+            _mapManager = mapManager;
+            _prototype = prototype;
+            _tileDefManager = tileDefManager;
+
+            _decals = decals;
             _dungeon = dungeon;
+            _lookup = lookup;
+            _transform = transform;
+
             _gen = gen;
             _grid = grid;
             _gridUid = gridUid;

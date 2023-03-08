@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
 using Robust.Shared.Map;
@@ -13,7 +14,7 @@ public sealed partial class DungeonJob
      * Run after the main dungeon generation
      */
 
-    private void PostGen(BoundaryWallPostGen gen, Dungeon dungeon, MapGridComponent grid, Random random)
+    private async Task PostGen(BoundaryWallPostGen gen, Dungeon dungeon, MapGridComponent grid, Random random)
     {
         var tile = new Tile(_tileDefManager[gen.Tile].TileId);
         var tiles = new List<(Vector2i Index, Tile Tile)>();
@@ -56,16 +57,16 @@ public sealed partial class DungeonJob
             if (anchoredEnts.MoveNext(out _))
                 continue;
 
-            Spawn(gen.Wall, grid.GridTileToLocal(index.Index));
+            _entManager.SpawnEntity(gen.Wall, grid.GridTileToLocal(index.Index));
         }
     }
 
-    private void PostGen(EntrancePostGen gen, Dungeon dungeon, MapGridComponent grid, Random random)
+    private async Task PostGen(EntrancePostGen gen, Dungeon dungeon, MapGridComponent grid, Random random)
     {
         // TODO:
     }
 
-    private void PostGen(MiddleConnectionPostGen gen, Dungeon dungeon, MapGridComponent grid, Random random)
+    private async Task PostGen(MiddleConnectionPostGen gen, Dungeon dungeon, MapGridComponent grid, Random random)
     {
         // TODO: Need a minimal spanning tree version tbh
 
@@ -172,7 +173,7 @@ public sealed partial class DungeonJob
 
                     foreach (var ent in gen.Entities)
                     {
-                        Spawn(ent, gridPos);
+                        _entManager.SpawnEntity(ent, gridPos);
                     }
 
                     if (width == 0)

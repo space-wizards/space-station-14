@@ -17,7 +17,7 @@ public sealed partial class DungeonJob
         var preset = prefab.Presets[random.Next(prefab.Presets.Count)];
         var gen = _prototype.Index<DungeonPresetPrototype>(preset);
 
-        var dungeonRotation = GetDungeonRotation(seed);
+        var dungeonRotation = _dungeon.GetDungeonRotation(seed);
         var dungeonTransform = Matrix3.CreateTransform(Vector2.Zero, dungeonRotation);
         var roomPackProtos = new Dictionary<Vector2i, List<DungeonRoomPackPrototype>>();
         var externalNodes = new Dictionary<DungeonRoomPackPrototype, HashSet<Vector2i>>();
@@ -289,9 +289,9 @@ public sealed partial class DungeonJob
                 Matrix3.Multiply(matty, dungeonTransform, out var dungeonMatty);
 
                 var room = roomProto[random.Next(roomProto.Count)];
-                var roomMap = GetOrCreateTemplate(room);
+                var roomMap = _dungeon.GetOrCreateTemplate(room);
                 var templateMapUid = _mapManager.GetMapEntityId(roomMap);
-                var templateGrid = Comp<MapGridComponent>(templateMapUid);
+                var templateGrid = _entManager.GetComponent<MapGridComponent>(templateMapUid);
                 var roomCenter = (room.Offset + room.Size / 2f) * grid.TileSize;
                 var roomTiles = new HashSet<Vector2i>(room.Size.X * room.Size.Y);
 
@@ -313,8 +313,8 @@ public sealed partial class DungeonJob
                 dungeon.Rooms.Add(new DungeonRoom(roomTiles));
                 grid.SetTiles(tiles);
                 tiles.Clear();
-                var xformQuery = GetEntityQuery<TransformComponent>();
-                var metaQuery = GetEntityQuery<MetaDataComponent>();
+                var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
+                var metaQuery = _entManager.GetEntityQuery<MetaDataComponent>();
 
                 // Load entities
                 // TODO: I don't think engine supports full entity copying so we do this piece of shit.
@@ -328,7 +328,7 @@ public sealed partial class DungeonJob
                     var protoId = metaQuery.GetComponent(templateEnt).EntityPrototype?.ID;
 
                     // TODO: Copy the templated entity as is with serv
-                    var ent = Spawn(protoId,
+                    var ent = _entManager.SpawnEntity(protoId,
                         new EntityCoordinates(gridUid, childPos));
 
                     var childXform = xformQuery.GetComponent(ent);
@@ -343,9 +343,9 @@ public sealed partial class DungeonJob
                 }
 
                 // Load decals
-                if (TryComp<DecalGridComponent>(templateMapUid, out var loadedDecals))
+                if (_entManager.TryGetComponent<DecalGridComponent>(templateMapUid, out var loadedDecals))
                 {
-                    EnsureComp<DecalGridComponent>(gridUid);
+                    _entManager.EnsureComponent<DecalGridComponent>(gridUid);
 
                     foreach (var (_, decal) in _decals.GetDecalsIntersecting(templateMapUid, bounds, loadedDecals))
                     {
@@ -363,6 +363,8 @@ public sealed partial class DungeonJob
                             decal.Cleanable);
                     }
                 }
+
+                await SuspendIfOutOfTime();
             }
         }
 

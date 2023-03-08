@@ -39,7 +39,7 @@ public sealed partial class SalvageSystem
 
     private readonly JobQueue _salvageQueue = new();
     private List<(SpawnSalvageMissionJob Job, CancellationTokenSource CancelToken)> _salvageJobs = new();
-    private const double SalvageJobTime = 0.005;
+    private const double SalvageJobTime = 0.002;
 
     private void InitializeExpeditions()
     {
@@ -303,45 +303,16 @@ public sealed partial class SalvageSystem
             }
 
             var landingPadRadius = 24;
-            var radiusThickness = 2;
             var dungeonOffset = config.DungeonPosition;
             var dungeonConfig = _prototypeManager.Index<DungeonConfigPrototype>(config.DungeonConfigPrototype);
 
-            var dungeon = await _dungeon.GenerateDungeon(dungeonConfig, mapUid, grid, missionSeed);
+            var dungeon = await _dungeon.GenerateDungeonAsync(dungeonConfig, mapUid, grid, missionSeed);
 
             // Aborty
             if (dungeon.Rooms.Count == 0)
             {
                 return false;
             }
-
-            var adjustedDungeonAllTiles = new HashSet<Vector2i>(dungeon.RoomTiles.Count);
-
-            foreach (var room in dungeon.Rooms)
-            {
-                foreach (var tile in room.Tiles)
-                {
-                    adjustedDungeonAllTiles.Add(tile + dungeonOffset);
-                }
-            }
-
-            // To ensure they can get from the landing area to the dungeon we'll path to the closest tile.
-            var closestTile = Vector2i.Zero;
-            var closestDistance = float.MaxValue;
-
-            foreach (var tile in adjustedDungeonAllTiles)
-            {
-                var length = tile.Length;
-
-                if (length < closestDistance)
-                {
-                    closestDistance = length;
-                    closestTile = tile;
-                }
-            }
-
-            var start = Vector2i.Zero;
-            var reservedTiles = _pathfinding.GetPath(start, closestTile);
 
             // Handle loot
             foreach (var loot in GetLoot(config.Loots, missionSeed, _prototypeManager))
@@ -352,183 +323,23 @@ public sealed partial class SalvageSystem
             // Setup the landing pad
             var landingPadExtents = new Vector2i(landingPadRadius, landingPadRadius);
             var tiles = new List<(Vector2i Indices, Tile Tile)>(landingPadExtents.X * landingPadExtents.Y * 2);
-            var landingFloor = new HashSet<Vector2i>();
 
             // Set the tiles themselves
             var seed = new FastNoiseLite(_mission.Seed);
-            var testBox1 = new Box2();
-            var testBox2 = new Box2();
 
-            foreach (var tile in grid.GetTilesIntersecting(new Circle(Vector2.Zero, landingPadRadius + radiusThickness), false))
+            foreach (var tile in grid.GetTilesIntersecting(new Circle(Vector2.Zero, landingPadRadius), false))
             {
                 if (!_biome.TryGetBiomeTile(mapUid, grid, seed, tile.GridIndices, out var tileRef))
                     continue;
 
-                testBox1 = testBox1.Union(Box2.UnitCentered.Translated((Vector2) tile.GridIndices + 0.5f));
                 // TODO: Force load API or smth
                 tiles.Add((tile.GridIndices, tileRef.Value));
-                landingFloor.Add(tile.GridIndices);
             }
 
             grid.SetTiles(tiles);
 
-            // Set the outline as enclosed for the landing pad.
-            for (var i = 1f; i < radiusThickness + 1f; i += 0.5f)
-            {
-                foreach (var tile in grid.GetTilesOutline(new Circle(Vector2.Zero, landingPadRadius + i), false))
-                {
-                    if (reservedTiles.Contains(tile.GridIndices))
-                        continue;
-
-                    var anchored = grid.GetAnchoredEntitiesEnumerator(tile.GridIndices);
-
-                    // Don't overlap for whatever reason.
-                    if (anchored.MoveNext(out _))
-                        continue;
-
-                    await SuspendIfOutOfTime();
-                    _entManager.SpawnEntity("WallRock", grid.GridTileToLocal(tile.GridIndices));
-                    landingFloor.Add(tile.GridIndices);
-                    testBox2 = testBox2.Union(Box2.UnitCentered.Translated((Vector2) tile.GridIndices + 0.5f));
-                }
-            }
-
-            // Alright now we'll enclose the reserved tiles
-            foreach (var tile in reservedTiles)
-            {
-                var isValid = true;
-
-                for (var i = 0; i < 4; i++)
-                {
-                    var direction = (DirectionFlag) Math.Pow(2, i);
-                    var neighbor = tile + direction.AsDir().ToIntVec();
-
-                    // We hit the dungeon so exit out.
-                    if (adjustedDungeonAllTiles.Contains(neighbor))
-                    {
-                        isValid = false;
-                        break;
-                    }
-
-                    if (reservedTiles.Contains(neighbor) ||
-                        landingFloor.Contains(neighbor))
-                    {
-                        continue;
-                    }
-
-                    if (!_biome.TryGetBiomeTile(mapUid, grid, seed, neighbor, out var tileRef))
-                        continue;
-
-                    // There shouldn't be many of these so we won't bulk them.
-                    await SuspendIfOutOfTime();
-                    grid.SetTile(neighbor, tileRef.Value);
-                    _entManager.SpawnEntity("WallRock", grid.GridTileToLocal(neighbor));
-                }
-
-                if (!isValid)
-                    break;
-            }
-
             await SetupMission(config, dungeonOffset, dungeon, grid, random, seed.GetSeed());
             return true;
-        }
-
-        #region Loot
-
-        private async Task SpawnDungeonLoot(
-            Vector2i position,
-            Dungeon dungeon,
-            SalvageLootPrototype salvageLootPrototype,
-            MapGridComponent grid,
-            Random random,
-            List<Vector2i> reservedTiles)
-        {
-            foreach (var rule in salvageLootPrototype.LootRules)
-            {
-                switch (rule)
-                {
-                    case ClusterLoot cluster:
-                        await SpawnClusterLoot(position, dungeon, cluster, grid, random, reservedTiles);
-                        break;
-                    default:
-                        throw new NotImplementedException();
-                }
-            }
-        }
-
-        private async Task SpawnClusterLoot(
-            Vector2i position,
-            Dungeon dungeon,
-            ClusterLoot loot,
-            MapGridComponent grid,
-            Random random,
-            List<Vector2i> reservedTiles)
-        {
-            var spawnTiles = new HashSet<Vector2i>();
-
-            for (var i = 0; i < loot.Points; i++)
-            {
-                var room = dungeon.Rooms[random.Next(dungeon.Rooms.Count)];
-                var spawnOrigin = room.Walls.ElementAt(random.Next(room.Walls.Count));
-
-                // Spread out from the wall
-                var frontier = new List<Vector2i> {spawnOrigin};
-                var clusterAmount = random.Next(loot.MinClusterAmount, loot.MaxClusterAmount);
-
-                for (var j = 0; j < clusterAmount; j++)
-                {
-                    var nodeIndex = random.Next(frontier.Count);
-                    var node = frontier[nodeIndex];
-                    frontier.RemoveSwap(nodeIndex);
-
-                    if (reservedTiles.Contains(node + position))
-                        continue;
-
-                    room.Walls.Remove(node);
-                    spawnTiles.Add(node);
-
-                    for (var k = 0; k < 4; k++)
-                    {
-                        var direction = (Direction) (k * 2);
-                        var neighbor = node + direction.ToIntVec();
-
-                        // If no walls on neighbor then don't propagate.
-                        if (!room.Walls.Contains(neighbor) || spawnTiles.Contains(neighbor))
-                            continue;
-
-                        frontier.Add(neighbor);
-                    }
-
-                    if (frontier.Count == 0)
-                        break;
-                }
-            }
-
-            foreach (var tile in spawnTiles)
-            {
-                await SuspendIfOutOfTime();
-                var adjustedTile = tile + position;
-                _entManager.SpawnEntity(loot.Prototype, grid.GridTileToLocal(adjustedTile));
-            }
-        }
-
-        #endregion
-
-        private async Task SpawnDungeonWalls(Vector2i position, Dungeon dungeon, MapGridComponent grid, List<Vector2i> reservedTiles)
-        {
-            foreach (var room in dungeon.Rooms)
-            {
-                foreach (var tile in room.Walls)
-                {
-                    var adjustedTilePos = tile + position;
-
-                    if (reservedTiles.Contains(adjustedTilePos))
-                        continue;
-
-                    await SuspendIfOutOfTime();
-                    _entManager.SpawnEntity(room.Wall, grid.GridTileToLocal(tile + position));
-                }
-            }
         }
 
         #region Mission Specific
