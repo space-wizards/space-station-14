@@ -35,5 +35,5 @@
     ears: ClothingHeadsetQM
     pocket1: AppraisalTool
   innerclothingskirt: ClothingUniformJumpskirtQM
-  satchel: ClothingBackpackSatchelFilled
-  duffelbag: ClothingBackpackDuffelFilled
+  satchel: ClothingBackpackSatchelQuartermasterFilled
+  duffelbag: ClothingBackpackDuffelQuartermasterFilled
