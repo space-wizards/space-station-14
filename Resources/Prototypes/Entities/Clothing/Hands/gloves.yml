@@ -212,6 +212,9 @@
   - type: NinjaTerror
   # not actually electrified, just used to make stun ability work
   - type: Electrified
+  # delay for stunning to prevent instant stunlocking
+  - type: UseDelay
+    delay: 1
 
 - type: entity
   parent: ClothingHandsBase

@@ -17,6 +17,7 @@ using Content.Shared.Ninja.Components;
 using Content.Shared.Popups;
 using Content.Shared.Research.Components;
 using Content.Shared.Tag;
+using Content.Shared.Timing;
 using Content.Shared.Toggleable;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
@@ -36,6 +37,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popups = default!;
     [Dependency] private readonly TagSystem _tags = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
     public override void Initialize()
     {
@@ -168,14 +170,17 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         if (!handled)
             return;
 
-        _popups.PopupEntity(Loc.GetString("ninja-doorjack-success", ("target", Identity.Entity(target, EntityManager))), user,
-            user, PopupType.Medium);
+        ClientPopup(Loc.GetString("ninja-doorjack-success", ("target", Identity.Entity(target, EntityManager))), user, PopupType.Medium);
         _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(user):player} doorjacked {ToPrettyString(target):target}");
     }
 
     private void OnStun(EntityUid uid, NinjaStunComponent comp, InteractionAttemptEvent args)
     {
         if (!GloveCheck(uid, args, out var gloves, out var user, out var target))
+            return;
+
+        // short cooldown to prevent instant stunlocking
+        if (_useDelay.ActiveDelay(uid))
             return;
 
         // battery can't be predicted since it's serverside
@@ -191,6 +196,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
 
         // not holding hands with target so insuls don't matter
         _electrocution.TryDoElectrocution(target, uid, comp.StunDamage, comp.StunTime, false, ignoreInsulation: true);
+        _useDelay.BeginDelay(uid);
     }
 
     // can't predict PNBC existing so only done on server.
@@ -218,7 +224,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         // fail fast if theres no tech right now
         if (database.TechnologyIds.Count == 0)
         {
-            _popups.PopupEntity(Loc.GetString("ninja-download-fail"), user, user);
+            ClientPopup(Loc.GetString("ninja-download-fail"), user);
             return;
         }
 
@@ -303,9 +309,9 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         _ninja.CallInThreat(ninja);
     }
 
-    private void ClientPopup(string msg, EntityUid user)
+    private void ClientPopup(string msg, EntityUid user, PopupType type = PopupType.Small)
     {
         if (_net.IsClient)
-            _popups.PopupEntity(msg, user, user);
+            _popups.PopupEntity(msg, user, user, type);
     }
 }
