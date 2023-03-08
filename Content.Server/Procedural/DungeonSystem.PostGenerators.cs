@@ -68,7 +68,7 @@ public sealed partial class DungeonSystem
 
     private void PostGen(MiddleConnectionPostGen gen, Dungeon dungeon, MapGridComponent grid, Random random)
     {
-        // TODO: split this out to triple / single gens and genericise it for entities.
+        // TODO: Need a minimal spanning tree version tbh
 
         // Grab all of the room bounds
         // Then, work out connections between them

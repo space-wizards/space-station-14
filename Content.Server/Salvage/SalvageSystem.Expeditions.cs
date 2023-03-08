@@ -313,7 +313,7 @@ public sealed partial class SalvageSystem
             var dungeonRadius = config.DungeonRadius;
             var dungeonConfig = _prototypeManager.Index<DungeonConfigPrototype>(config.DungeonConfigPrototype);
 
-            var dungeon = _dungeon.GetDungeon(dungeonConfig, dungeonRadius, random);
+            var dungeon = _dungeon.GenerateDungeon(dungeonConfig, mapUid, grid, missionSeed);
 
             await SuspendIfOutOfTime();
 
