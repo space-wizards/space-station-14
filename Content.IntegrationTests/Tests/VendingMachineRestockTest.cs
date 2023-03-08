@@ -218,7 +218,7 @@ namespace Content.IntegrationTests.Tests
 
                 var systemWires = entitySystemManager.GetEntitySystem<WiresSystem>();
                 // Open the panel.
-                systemWires.TogglePanel(machineWiresPanel, true);
+                systemWires.TogglePanel(machine, machineWiresPanel, true);
 
                 // Test that the right package works for the right machine.
                 Assert.That(systemRestock.TryAccessMachine(packageRight, restockRightComponent, machineComponent, user, machine), Is.True, "Correct package is unable to restock with access panel opened");

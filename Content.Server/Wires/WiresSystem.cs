@@ -30,6 +30,7 @@ public sealed class WiresSystem : SharedWiresSystem
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     private IRobustRandom _random = new RobustRandom();
 
@@ -481,7 +482,7 @@ public sealed class WiresSystem : SharedWiresSystem
             return;
 
         panel.IsScrewing = false;
-        panel.IsPanelOpen = !panel.IsPanelOpen;
+        TogglePanel(args.Target, panel, !panel.IsPanelOpen);
 
         // Log success
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):user} screwed {ToPrettyString(args.Target):target}'s maintenance panel {(panel.IsPanelOpen ? "open" : "closed")}");
@@ -635,16 +636,24 @@ public sealed class WiresSystem : SharedWiresSystem
         }
     }
 
-    public void ChangePanelVisibility(WiresPanelComponent component, bool visible)
+    public void ChangePanelVisibility(EntityUid uid, WiresPanelComponent component, bool visible)
     {
         component.IsPanelVisible = visible;
+        UpdateAppearance(uid, component);
         Dirty(component);
     }
 
-    public void TogglePanel(WiresPanelComponent component, bool open)
+    public void TogglePanel(EntityUid uid, WiresPanelComponent component, bool open)
     {
         component.IsPanelOpen = open;
+        UpdateAppearance(uid, component);
         Dirty(component);
+    }
+
+    private void UpdateAppearance(EntityUid uid, WiresPanelComponent panel)
+    {
+        if (TryComp<AppearanceComponent>(uid, out var appearance))
+            _appearance.SetData(uid, WiresVisuals.MaintenancePanelState, panel.IsPanelOpen && panel.IsPanelVisible, appearance);
     }
 
     private void TryDoWireAction(EntityUid used, EntityUid user, EntityUid toolEntity, int id, WiresAction action, WiresComponent? wires = null, ToolComponent? tool = null)

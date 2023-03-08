@@ -10,6 +10,7 @@ public abstract class SharedWiresSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<WiresPanelComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<WiresPanelComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<WiresPanelComponent, ComponentHandleState>(OnHandleState);
     }
 
     private void OnExamine(EntityUid uid, WiresPanelComponent component, ExaminedEvent args)
@@ -26,5 +27,13 @@ public abstract class SharedWiresSystem : EntitySystem
             IsPanelOpen = component.IsPanelOpen,
             IsPanelVisible = component.IsPanelVisible
         };
+    }
+
+    private void OnHandleState(EntityUid uid, WiresPanelComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not WiresPanelComponentState state)
+            return;
+        component.IsPanelOpen = state.IsPanelOpen;
+        component.IsPanelVisible = state.IsPanelVisible;
     }
 }
