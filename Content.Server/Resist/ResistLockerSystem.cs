@@ -69,7 +69,7 @@ public sealed class ResistLockerSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, ResistLockerComponent component, DoAfterEvent args)
     {
-        if (args.Cancelled)
+        if (args.Cancelled || args.Args.User == uid)
         {
             component.IsResisting = false;
             component.CancelToken = null;
@@ -77,6 +77,8 @@ public sealed class ResistLockerSystem : EntitySystem
             return;
         }
 
+        if (args.Args.User != uid)
+            return;
         if (args.Handled || args.Args.Target == null)
             return;
 
