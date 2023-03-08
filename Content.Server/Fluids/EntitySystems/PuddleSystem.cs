@@ -266,17 +266,15 @@ namespace Content.Server.Fluids.EntitySystems
             return CurrentVolume(uid, puddle) > puddle.OverflowVolume;
         }
 
-        public PuddleComponent SpawnPuddle(EntityUid srcUid, EntityCoordinates pos, PuddleComponent? srcPuddleComponent = null)
+        public void SpawnPuddle(EntityUid srcUid, EntityCoordinates pos, PuddleComponent srcPuddleComponent, out EntityUid uid, out PuddleComponent component)
         {
             MetaDataComponent? metadata = null;
-            Resolve(srcUid, ref srcPuddleComponent, ref metadata);
+            Resolve(srcUid, ref metadata);
 
             var prototype = metadata?.EntityPrototype?.ID ?? "PuddleSmear"; // TODO Spawn a entity based on another entity
 
-            var destUid = EntityManager.SpawnEntity(prototype, pos);
-            var destPuddle = EntityManager.EnsureComponent<PuddleComponent>(destUid);
-
-            return destPuddle;
+            uid = EntityManager.SpawnEntity(prototype, pos);
+            component = EntityManager.EnsureComponent<PuddleComponent>(uid);
         }
     }
 }
