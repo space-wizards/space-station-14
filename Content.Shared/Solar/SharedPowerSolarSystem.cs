@@ -8,19 +8,29 @@ public abstract class SharedPowerSolarSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming GameTiming = default!;
 
+    // Needed for the server's system variables (bad).
+    public bool IsPaused = false;
+
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<SolarPanelComponent, EntityPausedEvent>(OnPaused);
         SubscribeLocalEvent<SolarPanelComponent, EntityUnpausedEvent>(OnUnpause);
         SubscribeLocalEvent<SolarPanelComponent, ComponentGetState>(GetSolarPanelState);
         SubscribeLocalEvent<SolarPanelComponent, ComponentHandleState>(HandleSolarPanelState);
+    }
+
+    private void OnPaused(EntityUid uid, SolarPanelComponent component, ref EntityPausedEvent args)
+    {
+        IsPaused = true; // bad bad bad
     }
 
     private void OnUnpause(EntityUid uid, SolarPanelComponent component, ref EntityUnpausedEvent args)
     {
         component.LastUpdate += args.PausedTime;
         Dirty(component);
+        IsPaused = false; // bad bad bad
     }
 
     private void GetSolarPanelState(EntityUid uid, SolarPanelComponent component, ref ComponentGetState args)

@@ -31,8 +31,8 @@ namespace Content.Server.Solar.EntitySystems
             if (_updateTimer >= 1)
             {
                 _updateTimer -= 1;
-                var state = new SolarControlConsoleBoundInterfaceState(_powerSolarSystem.TargetPanelRotation, _powerSolarSystem.TargetPanelVelocity, _powerSolarSystem.TotalPanelPower, _powerSolarSystem.TowardsSun);
-                foreach (var component in EntityManager.EntityQuery<SolarControlConsoleComponent>())
+                var state = new SolarControlConsoleBoundInterfaceState(_powerSolarSystem.TargetPanelRotation, _powerSolarSystem.TargetPanelVelocity, _powerSolarSystem.TotalPanelPower, _powerSolarSystem.TowardsSun, _powerSolarSystem.IsPaused);
+                foreach (var component in EntityManager.EntityQuery<SolarControlConsoleComponent>(true))
                 {
                     component.Owner.GetUIOrNull(SolarControlConsoleUiKey.Key)?.SetState(state);
                 }

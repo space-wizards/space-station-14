@@ -18,7 +18,7 @@ namespace Content.Client.Power
     [GenerateTypedNameReferences]
     public sealed partial class SolarControlWindow : DefaultWindow, IComputerWindow<SolarControlConsoleBoundInterfaceState>
     {
-        private SolarControlConsoleBoundInterfaceState _lastState = new(0, 0, 0, 0);
+        private SolarControlConsoleBoundInterfaceState _lastState = new(0, 0, 0, 0, false);
 
         public SolarControlWindow()
         {
@@ -93,7 +93,7 @@ namespace Content.Client.Power
         // This makes the display feel a lot smoother.
         private IGameTiming _gameTiming = IoCManager.Resolve<IGameTiming>();
 
-        private SolarControlConsoleBoundInterfaceState _lastState = new(0, 0, 0, 0);
+        private SolarControlConsoleBoundInterfaceState _lastState = new(0, 0, 0, 0, false);
 
         private TimeSpan _lastStateTime = TimeSpan.Zero;
 
@@ -113,7 +113,7 @@ namespace Content.Client.Power
             _lastStateTime = _gameTiming.CurTime;
         }
 
-        public Angle PredictedPanelRotation => _lastState.Rotation + (_lastState.AngularVelocity * ((_gameTiming.CurTime - _lastStateTime).TotalSeconds));
+        public Angle PredictedPanelRotation => _lastState.Rotation + (_lastState.AngularVelocity * ((_gameTiming.CurTime - _lastStateTime).TotalSeconds)) * (_lastState.IsPaused ? 0f : 1f);
 
         protected override void Draw(DrawingHandleScreen handle)
         {

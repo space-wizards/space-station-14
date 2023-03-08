@@ -25,12 +25,18 @@ namespace Content.Shared.Solar
         /// </summary>
         public Angle TowardsSun;
 
-        public SolarControlConsoleBoundInterfaceState(Angle r, Angle vm, float p, Angle tw)
+        /// <summary>
+        /// Whether the system is paused. *bad*
+        /// </summary>
+        public bool IsPaused;
+
+        public SolarControlConsoleBoundInterfaceState(Angle r, Angle vm, float p, Angle tw, bool isPaused)
         {
             Rotation = r;
             AngularVelocity = vm;
             OutputPower = p;
             TowardsSun = tw;
+            IsPaused = isPaused;
         }
     }
 

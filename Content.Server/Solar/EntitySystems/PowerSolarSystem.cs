@@ -107,11 +107,14 @@ namespace Content.Server.Solar.EntitySystems
 
         public override void Update(float frameTime)
         {
-            TowardsSun += SunAngularVelocity * frameTime;
-            TowardsSun = TowardsSun.Reduced();
+            if (!IsPaused)
+            {
+                TowardsSun += SunAngularVelocity * frameTime;
+                TowardsSun = TowardsSun.Reduced();
 
-            TargetPanelRotation += TargetPanelVelocity * frameTime;
-            TargetPanelRotation = TargetPanelRotation.Reduced();
+                TargetPanelRotation += TargetPanelVelocity * frameTime;
+                TargetPanelRotation = TargetPanelRotation.Reduced();
+            }
 
             TotalPanelPower = 0;
             foreach (var (panel, xform) in EntityQuery<SolarPanelComponent, TransformComponent>())
