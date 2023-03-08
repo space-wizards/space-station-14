@@ -5,6 +5,7 @@ using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Actions;
 using Content.Client.UserInterface.Systems.Alerts;
 using Content.Client.UserInterface.Systems.Chat;
+using Content.Client.UserInterface.Systems.Chat.Widgets;
 using Content.Client.UserInterface.Systems.Ghost;
 using Content.Client.UserInterface.Systems.Hands;
 using Content.Client.UserInterface.Systems.Hotbar;
@@ -127,6 +128,7 @@ namespace Content.Client.Gameplay
             {
                 case ScreenType.Default:
                     _uiManager.LoadScreen<DefaultGameScreen>();
+
                     break;
                 case ScreenType.Separated:
                     _uiManager.LoadScreen<SeparatedChatGameScreen>();

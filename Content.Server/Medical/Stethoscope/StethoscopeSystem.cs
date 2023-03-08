@@ -11,6 +11,7 @@ using Content.Shared.Verbs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.DoAfter;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Medical
 {
@@ -82,7 +83,7 @@ namespace Content.Server.Medical
                     StartListening(component.Stethoscope, uid, args.Target, stetho); // start doafter
                 },
                 Text = Loc.GetString("stethoscope-verb"),
-                IconTexture = "Clothing/Neck/Misc/stethoscope.rsi/icon.png",
+                Icon = new SpriteSpecifier.Rsi(new ResourcePath("Clothing/Neck/Misc/stethoscope.rsi"), "icon"),
                 Priority = 2
             };
             args.Verbs.Add(verb);

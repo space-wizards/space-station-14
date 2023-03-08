@@ -708,3 +708,27 @@
     borderColor: "#774705"
   - type: Icon
     state: pda-detective
+
+- type: entity
+  parent: ClownPDA
+  id: CluwnePDA
+  name: cluwne PDA
+  suffix: Unremoveable
+  description: Cursed cluwne PDA.
+  components:
+  - type: PDA
+    id: CluwneIDCard
+    state: pda-cluwne
+  - type: PDABorderColor
+    borderColor: "#1c8f4d"
+  - type: Icon
+    state: pda-cluwne
+    penSlot:
+      startingItem: CrayonGreen
+      ejectSound: /Audio/Items/bikehorn.ogg
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+  - type: Unremoveable
+

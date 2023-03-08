@@ -1,3 +1,4 @@
+using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Systems;
 using Content.Server.DoAfter;
@@ -40,6 +41,12 @@ public sealed class HealingSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, DamageableComponent component, DoAfterEvent<HealingData> args)
     {
+        if (args.Cancelled)
+        {
+            args.AdditionalData.HealingComponent.CancelToken = null;
+            return;
+        }
+
         if (args.Handled || args.Cancelled || _mobStateSystem.IsDead(uid) || args.Args.Used == null)
             return;
 
@@ -67,6 +74,7 @@ public sealed class HealingSystem : EntitySystem
         if (args.AdditionalData.HealingComponent.HealingEndSound != null)
             _audio.PlayPvs(args.AdditionalData.HealingComponent.HealingEndSound, uid, AudioHelpers.WithVariation(0.125f, _random).WithVolume(-5f));
 
+        args.AdditionalData.HealingComponent.CancelToken = null;
         args.Handled = true;
     }
 
@@ -90,7 +98,7 @@ public sealed class HealingSystem : EntitySystem
 
     private bool TryHeal(EntityUid uid, EntityUid user, EntityUid target, HealingComponent component)
     {
-        if (_mobStateSystem.IsDead(target) || !TryComp<DamageableComponent>(target, out var targetDamage))
+        if (_mobStateSystem.IsDead(target) || !TryComp<DamageableComponent>(target, out var targetDamage) || component.CancelToken != null)
             return false;
 
         if (targetDamage.TotalDamage == 0)
@@ -108,14 +116,21 @@ public sealed class HealingSystem : EntitySystem
         if (component.HealingBeginSound != null)
             _audio.PlayPvs(component.HealingBeginSound, uid, AudioHelpers.WithVariation(0.125f, _random).WithVolume(-5f));
 
-        var delay = user != target
+        var isNotSelf = user != target;
+
+        var delay = isNotSelf
             ? component.Delay
             : component.Delay * GetScaledHealingPenalty(user, component);
 
+        component.CancelToken = new CancellationTokenSource();
+
         var healingData = new HealingData(component, stack);
 
-        var doAfterEventArgs = new DoAfterEventArgs(user, delay, target: target, used: uid)
+        var doAfterEventArgs = new DoAfterEventArgs(user, delay, cancelToken: component.CancelToken.Token,target: target, used: uid)
         {
+            //Raise the event on the target if it's not self, otherwise raise it on self.
+            RaiseOnTarget = isNotSelf,
+            RaiseOnUser = !isNotSelf,
             BreakOnUserMove = true,
             BreakOnTargetMove = true,
             // Didn't break on damage as they may be trying to prevent it and
