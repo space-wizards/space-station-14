@@ -5,7 +5,7 @@
   save: false
   description: Boo!
   components:
-  - type: Mind
+  - type: MindContainer
   - type: Clickable
   - type: InteractionOutline
   - type: Physics

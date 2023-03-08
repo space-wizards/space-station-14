@@ -25,7 +25,7 @@ public sealed class MindTests
 - type: entity
   id: MindTestEntity
   components:
-  - type: Mind
+  - type: MindContainer
 
 - type: entity
   parent: MindTestEntity
