@@ -19,6 +19,7 @@ using Content.Shared.Research.Components;
 using Content.Shared.Tag;
 using Content.Shared.Toggleable;
 using Robust.Shared.Network;
+using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Ninja.Systems;
@@ -34,6 +35,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
     [Dependency] private readonly SharedNinjaSystem _ninja = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
     [Dependency] private readonly TagSystem _tags = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -78,7 +80,8 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
 
     private void OnToggleAction(EntityUid uid, NinjaGlovesComponent comp, ToggleActionEvent args)
     {
-        if (args.Handled)
+        // client prediction desyncs it hard
+        if (args.Handled || !_timing.IsFirstTimePredicted)
             return;
 
         args.Handled = true;
@@ -89,13 +92,13 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
             || ninja.Suit == null
             || !HasComp<NinjaSuitComponent>(ninja.Suit.Value))
         {
-            _popups.PopupEntity(Loc.GetString("ninja-gloves-not-wearing-suit"), user, user);
+            ClientPopup(Loc.GetString("ninja-gloves-not-wearing-suit"), user);
             return;
         }
 
         var enabling = comp.User == null;
         var message = Loc.GetString(enabling ? "ninja-gloves-on" : "ninja-gloves-off");
-        _popups.PopupEntity(message, user, user);
+        ClientPopup(message, user);
 
         if (enabling)
         {
@@ -108,6 +111,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         {
             comp.User = null;
             _ninja.AssignGloves(ninja, null);
+            RemComp<InteractionRelayComponent>(user);
         }
     }
 
@@ -137,7 +141,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
     protected bool GloveCheck(EntityUid uid, InteractionAttemptEvent args, [NotNullWhen(true)] out NinjaGlovesComponent? gloves,
         out EntityUid user, out EntityUid target)
     {
-        if (args.Target != null && TryComp<NinjaGlovesComponent>(uid, out gloves) && gloves.User != null)
+        if (args.Target != null && TryComp<NinjaGlovesComponent>(uid, out gloves) && gloves.User != null && _timing.IsFirstTimePredicted)
         {
             user = gloves.User.Value;
             target = args.Target.Value;
@@ -190,8 +194,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
     }
 
     // can't predict PNBC existing so only done on server.
-    protected virtual void OnDrain(EntityUid uid, NinjaDrainComponent comp, InteractionAttemptEvent args)
-    { }
+    protected virtual void OnDrain(EntityUid uid, NinjaDrainComponent comp, InteractionAttemptEvent args) { }
 
     private void OnDrainDoAfter(EntityUid uid, NinjaDrainComponent comp, DoAfterEvent args)
     {
@@ -298,5 +301,11 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
             return;
 
         _ninja.CallInThreat(ninja);
+    }
+
+    private void ClientPopup(string msg, EntityUid user)
+    {
+        if (_net.IsClient)
+            _popups.PopupEntity(msg, user, user);
     }
 }
