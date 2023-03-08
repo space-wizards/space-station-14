@@ -98,6 +98,7 @@ public sealed partial class DungeonSystem
             seed = new Random().Next();
         }
 
+        seed = 92959802;
         GenerateDungeon(dungeon, mapUid, mapGrid, seed);
     }
 }

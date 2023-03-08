@@ -4,6 +4,7 @@ using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Procedural;
@@ -63,7 +64,52 @@ public sealed partial class DungeonJob
 
     private async Task PostGen(EntrancePostGen gen, Dungeon dungeon, MapGridComponent grid, Random random)
     {
-        // TODO:
+        var rooms = new List<DungeonRoom>(dungeon.Rooms);
+        var roomTiles = new List<Vector2i>();
+        var tileData = new Tile(_tileDefManager[gen.Tile].TileId);
+
+        for (var i = 0; i < gen.Count; i++)
+        {
+            var roomIndex = random.Next(rooms.Count);
+            var room = rooms[roomIndex];
+
+            // Move out 3 tiles in a direction away from center of the room
+            // If none of those intersect another tile it's probably external
+            // TODO: Maybe need to take top half of furthest rooms in case there's interior exits?
+            roomTiles.AddRange(room.Tiles);
+            random.Shuffle(roomTiles);
+
+            foreach (var tile in roomTiles)
+            {
+                var direction = (tile - room.Center).ToAngle().GetCardinalDir().ToAngle().ToVec();
+                var isValid = true;
+
+                for (var j = 0; j < 5; j++)
+                {
+                    var neighbor = (tile + direction).Floored();
+
+                    if (dungeon.RoomTiles.Contains(neighbor))
+                    {
+                        isValid = false;
+                        break;
+                    }
+                }
+
+                if (!isValid)
+                    continue;
+
+                var entrancePos = (tile + direction).Floored();
+
+                // Entrance wew
+                grid.SetTile(entrancePos, tileData);
+                // Need to offset the spawn to avoid spawning in the room.
+                _entManager.SpawnEntity(gen.Door, grid.GridTileToLocal(entrancePos));
+                rooms.RemoveAt(roomIndex);
+                break;
+            }
+
+            roomTiles.Clear();
+        }
     }
 
     private async Task PostGen(MiddleConnectionPostGen gen, Dungeon dungeon, MapGridComponent grid, Random random)

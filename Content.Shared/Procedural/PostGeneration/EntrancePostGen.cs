@@ -1,3 +1,4 @@
+using Content.Shared.Maps;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -16,4 +17,7 @@ public sealed class EntrancePostGen : IPostDunGen
 
     [DataField("door", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Door = "AirlockGlass";
+
+    [DataField("tile", customTypeSerializer:typeof(PrototypeIdSerializer<ContentTileDefinition>))]
+    public string Tile = "FloorSteel";
 }

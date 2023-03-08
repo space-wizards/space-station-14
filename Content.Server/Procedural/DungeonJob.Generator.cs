@@ -309,7 +309,16 @@ public sealed partial class DungeonJob
                     }
                 }
 
-                dungeon.Rooms.Add(new DungeonRoom(roomTiles));
+                var center = Vector2.Zero;
+
+                foreach (var tile in roomTiles)
+                {
+                    center += ((Vector2) tile + grid.TileSize / 2f);
+                }
+
+                center /= roomTiles.Count;
+
+                dungeon.Rooms.Add(new DungeonRoom(roomTiles, center));
                 grid.SetTiles(tiles);
                 tiles.Clear();
                 var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
