@@ -5,7 +5,7 @@ namespace Content.Shared.Procedural;
 [Prototype("dungeonPreset")]
 public sealed class DungeonPresetPrototype : IPrototype
 {
-    [IdDataField] public string ID { get; } = string.Empty;
+    [IdDataField] public string ID { get; } = default!;
 
     /// <summary>
     /// The room pack bounds we need to fill.

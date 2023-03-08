@@ -11,26 +11,6 @@
     - -20,18,-3,35
     - 4,18,21,35
 
-# TODO: Need to have a command to clear all of the preloaded maps
-
-# Store roomconnections (vector2i) on dungeonroompack
-# Have test validating it
-
-# Okay so
-# Pack just grabs any others we are adjacent too and creates edge groups
-# Then it iterates every available template to find one with a room that intersects at least 1 of the nodes in the edge group
-# When we have that template style than iterate rooms that have at least 1 connection to that edge then fulfil every other internal node
-
-# Store connections on dungeonroompack
-# Do room by room on the build and for the new pack validate it connects to the old one exactly.
-# Need to be outside of the bounds
-# - Check if connection count matches
-# - Rotate the thing until A) it matches its own pack bounds and B) a connection matches what we need
-
-# Rooms need airlock markers and when selecting room need to validate it matches the expected room connections.
-
-# For presets I don't think we care about specifics of where they connect, just that they connect.
-
 # Rooms
 # Large
 # - 17x5
@@ -39,18 +19,24 @@
   size: 17,5
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 0,0
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science17x5b
   size: 17,5
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 18,0
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science17x5c
   size: 17,5
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 36,0
+  tags:
+    - SalvageExperiment
 
 # - 7x7
 - type: dungeonRoom
@@ -58,18 +44,24 @@
   size: 7,7
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 0,42
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science7x7b
   size: 7,7
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 8,42
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science7x7c
   size: 7,7
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 16,42
+  tags:
+    - SalvageExperiment
 
 # Medium
 # - 11x5
@@ -78,18 +70,24 @@
   size: 11,5
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 0,6
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science11x5b
   size: 11,5
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 12,6
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science11x5c
   size: 11,5
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 24,6
+  tags:
+    - SalvageExperiment
 
 # - 7x5
 - type: dungeonRoom
@@ -97,36 +95,48 @@
   size: 7,5
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 0,12
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science7x5b
   size: 7,5
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 8,12
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science7x5c
   size: 7,5
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 16,12
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science7x5d
   size: 7,5
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 24,12
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science7x5e
   size: 7,5
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 32,12
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science7x5f
   size: 7,5
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 40,12
+  tags:
+    - SalvageExperiment
 
 # - 13x3
 - type: dungeonRoom
@@ -134,18 +144,24 @@
   size: 13,3
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 0,30
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science13x3b
   size: 13,3
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 14,30
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science13x3c
   size: 13,3
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 28,30
+  tags:
+    - SalvageExperiment
 
 # - 11x3
 - type: dungeonRoom
@@ -153,18 +169,24 @@
   size: 11,3
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 0,34
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science11x3b
   size: 11,3
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 12,34
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science11x3c
   size: 11,3
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 24,34
+  tags:
+    - SalvageExperiment
 
 # - 7x3
 - type: dungeonRoom
@@ -172,36 +194,48 @@
   size: 7,3
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 0,38
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science7x3b
   size: 7,3
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 8,38
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science7x3c
   size: 7,3
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 16,38
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science7x3d
   size: 7,3
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 24,38
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science7x3e
   size: 7,3
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 32,38
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science7x3f
   size: 7,3
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 40,38
+  tags:
+    - SalvageExperiment
 
 # Small
 # - 5x5
@@ -210,36 +244,48 @@
   size: 5,5
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 0,18
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science5x5b
   size: 5,5
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 6,18
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science5x5c
   size: 5,5
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 12,18
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science5x5d
   size: 5,5
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 18,18
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science5x5e
   size: 5,5
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 24,18
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science5x5f
   size: 5,5
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 30,18
+  tags:
+    - SalvageExperiment
 
 # - 3x5
 - type: dungeonRoom
@@ -247,53 +293,50 @@
   size: 3,5
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 0,24
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science3x5b
   size: 3,5
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 4,24
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science3x5c
   size: 3,5
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 8,24
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science3x5d
   size: 3,5
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 12,24
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science3x5e
   size: 3,5
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 16,24
+  tags:
+    - SalvageExperiment
 
 - type: dungeonRoom
   id: Science3x5f
   size: 3,5
   atlas: /Maps/Dungeon/expgrass.yml
   offset: 20,24
+  tags:
+    - SalvageExperiment
 
 # Room packs
-# Large
-# Three-by-three of 5x5 rooms
-#- type: dungeonRoomPack
-#  id: LargeArea1
-#  size: 17,17
-#  rooms:
-#    - 0,0,5,5
-#    - 6,0,11,5
-#    - 12,0,17,5
-#    - 0,6,5,11
-#    - 6,6,11,11
-#    - 12,6,17,11
-#    - 0,12,5,17
-#    - 6,12,11,17
-#    - 12,12,17,17
 
 # Hook
 - type: dungeonRoomPack

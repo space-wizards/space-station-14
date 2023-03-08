@@ -1,4 +1,3 @@
-using Content.Shared.Procedural.PostGeneration;
 using Content.Shared.Tag;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
@@ -19,6 +18,6 @@ public sealed class PrefabDunGen : IDunGen
     /// <summary>
     /// Room pack presets we can use for this prefab.
     /// </summary>
-    [DataField("presets", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<DungeonPresetPrototype>))]
+    [DataField("presets", required: true, customTypeSerializer:typeof(PrototypeIdListSerializer<DungeonPresetPrototype>))]
     public List<string> Presets = new();
 }

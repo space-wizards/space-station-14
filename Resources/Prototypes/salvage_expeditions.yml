@@ -2,7 +2,7 @@
   id: ExperimentGrass
   generator: !type:PrefabDunGen
     roomWhitelist:
-      - Experiment
+      - SalvageExperiment
     presets:
       - Cross
   postGeneration:
