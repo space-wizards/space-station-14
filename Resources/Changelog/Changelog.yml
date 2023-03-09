@@ -1,9 +1,4 @@
 Entries:
-- author: juliangiebel
-  changes:
-  - {message: 'added a new PDA cartridge: The NetProbe cartridge.', type: Add}
-  id: 2645
-  time: '2022-11-13T21:36:00.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fixed a rounding error which would cause certain parts in machine upgrades
@@ -2920,3 +2915,9 @@ Entries:
   - {message: added emp artifact effect., type: Add}
   id: 3144
   time: '2023-03-09T08:30:01.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Mop indicator is now fixed, type: Fix}
+  - {message: Fixes drinking from bricking if you were full before drinking, type: Fix}
+  id: 3145
+  time: '2023-03-09T08:45:19.0000000+00:00'
