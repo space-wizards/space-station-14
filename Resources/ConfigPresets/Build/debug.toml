@@ -6,8 +6,5 @@ enabled = false
 # Makes physics etc debugging easier.
 enabled = false
 
-[procgen]
-preload = false
-
 [shuttle]
 auto_call_time = 0
