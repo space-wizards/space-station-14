@@ -1,11 +1,14 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Light.Components;
 using Content.Shared.Physics;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
 using Content.Shared.Storage;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -151,6 +154,7 @@ public sealed partial class DungeonJob
 
                 // Entrance wew
                 grid.SetTile(entrancePos, tileData);
+                ClearDoor(dungeon, grid, entrancePos);
                 var gridCoords = grid.GridTileToLocal(entrancePos);
                 // Need to offset the spawn to avoid spawning in the room.
                 _entManager.SpawnEntity(gen.Door, gridCoords);
@@ -433,7 +437,7 @@ public sealed partial class DungeonJob
                     width--;
                     grid.SetTile(node, tile);
 
-                    if (gen.EdgeEntities != null && (nodeDistances.Count - i <= 2))
+                    if (gen.EdgeEntities != null && nodeDistances.Count - i <= 2)
                     {
                         foreach (var ent in gen.EdgeEntities)
                         {
@@ -442,6 +446,9 @@ public sealed partial class DungeonJob
                     }
                     else
                     {
+                        // Iterate neighbors and check for blockers, if so bulldoze
+                        ClearDoor(dungeon, grid, node);
+
                         foreach (var ent in gen.Entities)
                         {
                             _entManager.SpawnEntity(ent, gridPos);
@@ -455,6 +462,43 @@ public sealed partial class DungeonJob
                 conns.Add(otherRoom);
                 var otherConns = roomConnections.GetOrNew(otherRoom);
                 otherConns.Add(room);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Removes any unwanted obstacles around a door tile.
+    /// </summary>
+    private void ClearDoor(Dungeon dungeon, MapGridComponent grid, Vector2i indices, bool strict = false)
+    {
+        var flags = strict
+            ? LookupFlags.Dynamic | LookupFlags.Static | LookupFlags.StaticSundries
+            : LookupFlags.Dynamic | LookupFlags.Static;
+        var physicsQuery = _entManager.GetEntityQuery<PhysicsComponent>();
+
+        for (var x = -1; x <= 1; x++)
+        {
+            for (var y = -1; y <= 1; y++)
+            {
+                if (x != 0 && y != 0)
+                    continue;
+
+                var neighbor = new Vector2i(indices.X + x, indices.Y + y);
+
+                if (!dungeon.RoomTiles.Contains(neighbor))
+                    continue;
+
+                foreach (var ent in _lookup.GetEntitiesIntersecting(_gridUid, neighbor, flags))
+                {
+                    if (!physicsQuery.TryGetComponent(ent, out var physics) ||
+                        (CollisionMask & physics.CollisionLayer) == 0x0 &&
+                        (CollisionLayer & physics.CollisionMask) == 0x0)
+                    {
+                        continue;
+                    }
+
+                    _entManager.DeleteEntity(ent);
+                }
             }
         }
     }

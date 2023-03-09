@@ -21,6 +21,7 @@ public sealed partial class DungeonJob
         var dungeonTransform = Matrix3.CreateTransform(_position, dungeonRotation);
         var roomPackProtos = new Dictionary<Vector2i, List<DungeonRoomPackPrototype>>();
         var externalNodes = new Dictionary<DungeonRoomPackPrototype, HashSet<Vector2i>>();
+        var fallbackTile = new Tile(_tileDefManager[prefab.Tile].TileId);
 
         foreach (var pack in _prototype.EnumeratePrototypes<DungeonRoomPackPrototype>())
         {
@@ -373,16 +374,47 @@ public sealed partial class DungeonJob
                     {
                         // Offset by 0.5 because decals are offset from bot-left corner
                         // So we convert it to center of tile then convert it back again after transform.
+                        // Do these shenanigans because 32x32 decals assume as they are centered on bottom-left of tiles.
                         var position = dungeonMatty.Transform(decal.Coordinates + 0.5f - roomCenter);
                         position -= 0.5f;
-                        _decals.TryAddDecal(
+
+                        // Umm uhh I love decals so uhhhh idk what to do about this
+                        var angle = (decal.Angle + finalRoomRotation).Reduced();
+
+                        // Adjust because 32x32 so we can't rotate cleanly
+                        if (angle.Equals(Math.PI))
+                        {
+                            position += new Vector2(-1f / 32f, 1f / 32f);
+                        }
+                        // Okay this one I didn't actually verify but I think this is it.
+                        else if (angle.Equals(Math.PI * 1.5))
+                        {
+                            position += new Vector2(1f / 32f, 1f / 32f);
+                        }
+                        else if (angle.Equals(Math.PI / 2f))
+                        {
+                            position += new Vector2(0f, 1f / 32f);
+                        }
+
+                        var tilePos = position.Floored();
+
+                        // Fallback because uhhhhhhhh yeah, a corner tile might look valid on the original
+                        // but place 1 nanometre off grid and fail the add.
+                        if (!grid.TryGetTileRef(tilePos, out var tileRef) || tileRef.Tile.IsEmpty)
+                        {
+                            grid.SetTile(tilePos, fallbackTile);
+                        }
+
+                        var result = _decals.TryAddDecal(
                             decal.Id,
                             new EntityCoordinates(gridUid, position),
                             out _,
                             decal.Color,
-                            decal.Angle + roomRotation + packRotation + dungeonRotation,
+                            angle,
                             decal.ZIndex,
                             decal.Cleanable);
+
+                        DebugTools.Assert(result);
                     }
                 }
 
