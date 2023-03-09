@@ -38,6 +38,8 @@ public sealed class MedibotInjectOperator : HTNOperator
                 return HTNOperatorStatus.Failed;
         }
 
+        medibot.InjectTarget = null;
+
         return HTNOperatorStatus.Finished;
     }
 }

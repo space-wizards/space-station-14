@@ -93,8 +93,7 @@ namespace Content.Server.Silicons.Bots
                 BroadcastFinishedEvent = new TargetInjectSuccessfulEvent(performer, target, injectable, drug, injectAmount),
                 BroadcastCancelledEvent = new InjectCancelledEvent(performer, target),
                 BreakOnTargetMove = true,
-                BreakOnUserMove = false,
-                DistanceThreshold = 2f,
+                BreakOnUserMove = true,
                 BreakOnStun = true,
                 NeedHand = false
             });
@@ -113,8 +112,6 @@ namespace Content.Server.Silicons.Bots
             _solution.TryAddReagent(ev.Target, ev.Injectable, ev.Drug, ev.Amount, out var acceptedQuantity);
             _popups.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), ev.Target, ev.Target);
             EnsureComp<NPCRecentlyInjectedComponent>(ev.Target);
-
-            medibot.InjectTarget = null;
         }
 
         private void OnInjectCancelled(InjectCancelledEvent ev)
@@ -123,7 +120,6 @@ namespace Content.Server.Silicons.Bots
                 return;
 
             medibot.CancelToken = null;
-            medibot.InjectTarget = null;
         }
 
         private bool SharedInjectChecks(EntityUid uid, EntityUid target, [NotNullWhen(true)] out Solution? injectable)
