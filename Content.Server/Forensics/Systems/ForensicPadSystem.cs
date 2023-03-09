@@ -87,8 +87,7 @@ namespace Content.Server.Forensics
                 BreakOnUserMove = true,
                 BreakOnStun = true,
                 NeedHand = true,
-                RaiseOnTarget = (user != target),
-                RaiseOnUser = (user == target)
+                RaiseOnUser = false
             };
 
             _doAfterSystem.DoAfter(doAfterEventArgs, padData);
