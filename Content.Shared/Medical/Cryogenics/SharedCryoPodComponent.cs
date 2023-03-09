@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using Content.Shared.Body.Components;
+﻿using Content.Shared.Body.Components;
 using Content.Shared.DragDrop;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -9,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.Medical.Cryogenics;
 
 [NetworkedComponent]
-public abstract class SharedCryoPodComponent: Component, IDragDropOn
+public abstract class SharedCryoPodComponent: Component
 {
     /// <summary>
     /// Specifies the name of the atmospherics port to draw gas from.
@@ -79,27 +78,10 @@ public abstract class SharedCryoPodComponent: Component, IDragDropOn
 
     public bool IsPrying { get; set; }
 
-    public CancellationTokenSource? DragDropCancelToken;
-
     [Serializable, NetSerializable]
     public enum CryoPodVisuals : byte
     {
         ContainsEntity,
         IsOn
-    }
-
-    public bool CanInsert(EntityUid entity)
-    {
-        return IoCManager.Resolve<IEntityManager>().HasComponent<BodyComponent>(entity);
-    }
-
-    bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)
-    {
-        return CanInsert(eventArgs.Dragged);
-    }
-
-    bool IDragDropOn.DragDropOn(DragDropEvent eventArgs)
-    {
-        return false;
     }
 }

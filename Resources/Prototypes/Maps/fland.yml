@@ -1,0 +1,48 @@
+- type: gameMap
+  id: Fland
+  mapName: 'Fland Installation'
+  mapPath: /Maps/fland.yml
+  minPlayers: 60
+  stations:
+    Fland:
+      mapNameTemplate: '{0} Fland Installation {1}'
+      emergencyShuttlePath: /Maps/Shuttles/emergency_courser.yml
+      nameGenerator:
+        !type:NanotrasenNameGenerator
+        prefixCreator: 'B'
+      overflowJobs:
+        - Passenger
+      availableJobs:
+        CargoTechnician: [ 4, 4 ]
+        Passenger: [ -1, -1 ]
+        Bartender: [ 2, 2 ]
+        Botanist: [ 4, 4 ]
+        Chef: [ 2, 2 ]
+        Clown: [ 1, 1 ]
+        Janitor: [ 3, 3 ]
+        Mime: [ 1, 1 ]
+        Captain: [ 1, 1 ]
+        HeadOfPersonnel: [ 1, 1 ]
+        ChiefEngineer: [ 1, 1 ]
+        StationEngineer: [ 6, 6 ]
+        ChiefMedicalOfficer: [ 1, 1 ]
+        MedicalDoctor: [ 6, 6 ]
+        Chemist: [ 3, 3 ]
+        ResearchDirector: [ 1, 1 ]
+        Scientist: [ 4, 4 ]
+        HeadOfSecurity: [ 1, 1 ]
+        SecurityOfficer: [ 7, 7 ]
+        Chaplain: [ 1, 1 ]
+        Warden: [ 1, 1 ]
+        Librarian: [ 1, 1 ]
+        Lawyer: [ 2, 2 ]
+        Quartermaster: [ 1, 1 ]
+        SalvageSpecialist: [ 3, 3 ]
+        Musician: [ 1, 1 ]
+        AtmosphericTechnician: [ 3, 3 ]
+        TechnicalAssistant: [ 2, 2 ]
+        MedicalIntern: [ 2, 2 ]
+        ServiceWorker: [ 2, 2 ]
+        SecurityCadet: [ 2, 2 ]
+        Detective: [ 1, 1 ]
+        ResearchAssistant: [ 3, 3 ]

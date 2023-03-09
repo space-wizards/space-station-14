@@ -1314,8 +1314,7 @@ entities:
 - uid: 155
   type: CableMV
   components:
-  - rot: 3.141592653589793 rad
-    pos: -8.5,6.5
+  - pos: -8.5,6.5
     parent: 104
     type: Transform
 - uid: 156

@@ -28,6 +28,21 @@ public static class AdminLogsEuiMsg
     }
 
     [Serializable, NetSerializable]
+    public sealed class SetLogFilter : EuiMessageBase
+    {
+        public SetLogFilter(string? search = null, bool invertTypes = false, HashSet<LogType>? types = null)
+        {
+            Search = search;
+            InvertTypes = invertTypes;
+            Types = types;
+        }
+
+        public string? Search { get; set; }
+        public bool InvertTypes { get; set; }
+        public HashSet<LogType>? Types { get; set; }
+    }
+
+    [Serializable, NetSerializable]
     public sealed class NewLogs : EuiMessageBase
     {
         public NewLogs(List<SharedAdminLog> logs, bool replace, bool hasNext)
@@ -52,8 +67,10 @@ public static class AdminLogsEuiMsg
             HashSet<LogImpact>? impacts,
             DateTime? before,
             DateTime? after,
+            bool includePlayers,
             Guid[]? anyPlayers,
             Guid[]? allPlayers,
+            bool includeNonPlayers,
             int? lastLogId,
             DateOrder dateOrder)
         {
@@ -63,8 +80,10 @@ public static class AdminLogsEuiMsg
             Impacts = impacts;
             Before = before;
             After = after;
+            IncludePlayers = includePlayers;
             AnyPlayers = anyPlayers is { Length: > 0 } ? anyPlayers : null;
             AllPlayers = allPlayers is { Length: > 0 } ? allPlayers : null;
+            IncludeNonPlayers = includeNonPlayers;
             LastLogId = lastLogId;
             DateOrder = dateOrder;
         }
@@ -75,8 +94,10 @@ public static class AdminLogsEuiMsg
         public HashSet<LogImpact>? Impacts { get; set; }
         public DateTime? Before { get; set; }
         public DateTime? After { get; set; }
+        public bool IncludePlayers { get; set; }
         public Guid[]? AnyPlayers { get; set; }
         public Guid[]? AllPlayers { get; set; }
+        public bool IncludeNonPlayers { get; set; }
         public int? LastLogId { get; set; }
         public DateOrder DateOrder { get; set; }
     }

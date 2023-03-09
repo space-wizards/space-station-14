@@ -60,7 +60,7 @@
     sentMessage: prayer-popup-notify-centcom-sent
     notifiactionPrefix: prayer-chat-notify-centcom
     verb: prayer-verbs-call
-    verbImage: ""
+    verbImage: null
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -168,4 +168,4 @@
     sentMessage: prayer-popup-notify-honkmother-sent
     notifiactionPrefix: prayer-chat-notify-honkmother
     verb: prayer-verbs-call
-    verbImage: ""
+    verbImage: null

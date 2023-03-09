@@ -139,7 +139,7 @@ namespace Content.Server.StationEvents.Events
 
                 // Don't want it to be so obnoxious as to instantly murder anyone in the area but enough that
                 // it COULD start potentially start a bigger fire.
-                _atmosphere.HotspotExpose(_targetGrid, _targetTile, 700f, 50f, true);
+                _atmosphere.HotspotExpose(_targetGrid, _targetTile, 700f, 50f, null, true);
                 SoundSystem.Play("/Audio/Effects/sparks4.ogg", Filter.Pvs(_targetCoords), _targetCoords);
             }
         }

@@ -3,9 +3,11 @@
   mapName: 'Barratry'
   mapPath: /Maps/barratry.yml
   minPlayers: 35
+  maxPlayers: 70
   stations:
     Barratry:
       mapNameTemplate: '{0} Barratry {1}'
+      emergencyShuttlePath: /Maps/Shuttles/emergency_raven.yml
       nameGenerator:
         !type:NanotrasenNameGenerator
         prefixCreator: '14'

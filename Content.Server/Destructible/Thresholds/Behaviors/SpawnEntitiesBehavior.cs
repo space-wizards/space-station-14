@@ -19,7 +19,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         [DataField("offset")]
         public float Offset { get; set; } = 0.5f;
 
-        public void Execute(EntityUid owner, DestructibleSystem system)
+        public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
         {
             var position = system.EntityManager.GetComponent<TransformComponent>(owner).MapPosition;
 
