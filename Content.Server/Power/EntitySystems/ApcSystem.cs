@@ -78,6 +78,13 @@ namespace Content.Server.Power.EntitySystems
         }
         private void OnToggleMainBreaker(EntityUid uid, ApcComponent component, ApcToggleMainBreakerMessage args)
         {
+            if (HasComp<EmpDisabledComponent>(uid))
+            {
+                _popupSystem.PopupCursor(Loc.GetString("apc-component-on-emp-disabled"),
+                    args.Session, PopupType.Medium);
+                return;
+            }
+
             TryComp<AccessReaderComponent>(uid, out var access);
             if (args.Session.AttachedEntity == null)
                 return;
@@ -273,6 +280,7 @@ namespace Content.Server.Power.EntitySystems
             if (component.MainBreakerEnabled)
             {
                 args.Affected = true;
+                args.Disabled = true;
                 ApcToggleBreaker(uid, component);
             }
         }
