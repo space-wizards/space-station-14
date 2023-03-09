@@ -1,4 +1,5 @@
 using Content.Server.Cargo.Systems;
+using Content.Server.Emp;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -49,6 +50,7 @@ namespace Content.Server.VendingMachines
             SubscribeLocalEvent<VendingMachineComponent, GotEmaggedEvent>(OnEmagged);
             SubscribeLocalEvent<VendingMachineComponent, DamageChangedEvent>(OnDamage);
             SubscribeLocalEvent<VendingMachineComponent, PriceCalculationEvent>(OnVendingPrice);
+            SubscribeLocalEvent<VendingMachineComponent, EmpPulseEvent>(OnEmpPulse);
 
             SubscribeLocalEvent<VendingMachineComponent, ActivatableUIOpenAttemptEvent>(OnActivatableUIOpenAttempt);
             SubscribeLocalEvent<VendingMachineComponent, BoundUIOpenedEvent>(OnBoundUIOpened);
@@ -436,6 +438,10 @@ namespace Content.Server.VendingMachines
                     }
                 }
             }
+            foreach (var (comp, _) in EntityQuery<VendingMachineComponent, EmpDisabledComponent>())
+            {
+                EjectRandom(comp.Owner, true, false, comp);
+            }
         }
 
         public void TryRestockInventory(EntityUid uid, VendingMachineComponent? vendComponent = null)
@@ -447,6 +453,12 @@ namespace Content.Server.VendingMachines
 
             UpdateVendingMachineInterfaceState(vendComponent);
             TryUpdateVisualState(uid, vendComponent);
+        }
+
+        private void OnEmpPulse(EntityUid uid, VendingMachineComponent component, ref EmpPulseEvent args)
+        {
+            args.Affected = !component.Broken;
+            args.Disabled = !component.Broken;
         }
     }
 }
