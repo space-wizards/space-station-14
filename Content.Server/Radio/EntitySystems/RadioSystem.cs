@@ -83,10 +83,8 @@ public sealed class RadioSystem : EntitySystem
             var attemptEv = new RadioReceiveAttemptEvent(channel, radioSource, receiver);
             RaiseLocalEvent(ref attemptEv);
             if (attemptEv.Cancelled)
-            {
-                attemptEv.Cancelled = false;
                 continue;
-            }
+
             sentAtLeastOnce = true;
             RaiseLocalEvent(receiver, ref ev);
         }
