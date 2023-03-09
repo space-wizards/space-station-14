@@ -4,8 +4,10 @@ using Content.Server.Construction;
 using Content.Server.CPUJob.JobQueues.Queues;
 using Content.Server.Decals;
 using Content.Server.GameTicking.Events;
+using Content.Shared.CCVar;
 using Content.Shared.Procedural;
 using Robust.Server.GameObjects;
+using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -15,6 +17,7 @@ namespace Content.Server.Procedural;
 
 public sealed partial class DungeonSystem : EntitySystem
 {
+    [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IConsoleHost _console = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
@@ -62,6 +65,9 @@ public sealed partial class DungeonSystem : EntitySystem
             QueueDel(uid);
         }
 
+        if (!_configManager.GetCVar(CCVars.ProcgenPreload))
+            return;
+
         // Force all templates to be setup.
         foreach (var room in _prototype.EnumeratePrototypes<DungeonRoomPrototype>())
         {
@@ -103,6 +109,9 @@ public sealed partial class DungeonSystem : EntitySystem
                 break;
             }
         }
+
+        if (!_configManager.GetCVar(CCVars.ProcgenPreload))
+            return;
 
         foreach (var proto in rooms.Modified.Values)
         {
