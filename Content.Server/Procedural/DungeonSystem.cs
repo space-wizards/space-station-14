@@ -142,7 +142,9 @@ public sealed partial class DungeonSystem : EntitySystem
 
         var mapId = _mapManager.CreateMap();
         _loader.Load(mapId, proto.AtlasPath.ToString());
-        comp = AddComp<DungeonAtlasTemplateComponent>(_mapManager.GetMapEntityId(mapId));
+        var mapUid = _mapManager.GetMapEntityId(mapId);
+        _mapManager.SetMapPaused(mapId, true);
+        comp = AddComp<DungeonAtlasTemplateComponent>(mapUid);
         comp.Path = proto.AtlasPath;
         return mapId;
     }
