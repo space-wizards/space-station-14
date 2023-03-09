@@ -10,6 +10,9 @@
   id: AirSensor
 
 - type: Tag
+  id: AppraisalTool
+
+- type: Tag
   id: ATVKeys
 
 - type: Tag
@@ -107,6 +110,10 @@
 
 - type: Tag
   id: CartridgeRocket
+
+# Allows you to walk over tile entities such as lava without steptrigger
+- type: Tag
+  id: Catwalk
 
 - type: Tag
   id: Cigarette
