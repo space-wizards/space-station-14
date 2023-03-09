@@ -69,7 +69,7 @@ public sealed class ResistLockerSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, ResistLockerComponent component, DoAfterEvent args)
     {
-        if (args.Cancelled)
+        if (args.Cancelled & component.IsResisting == true)
         {
             component.IsResisting = false;
             component.CancelToken = null;
