@@ -2,9 +2,9 @@ using Content.Shared.GameTicking;
 
 namespace Content.Server.Polymorph.Systems
 {
-    public sealed partial class PolymorphableSystem : EntitySystem
+    public sealed partial class PolymorphSystem
     {
-        public EntityUid? PausedMap { get; private set; } = null;
+        public EntityUid? PausedMap { get; private set; }
 
         /// <summary>
         /// Used to subscribe to the round restart event
@@ -30,7 +30,7 @@ namespace Content.Server.Polymorph.Systems
         {
             if (PausedMap != null && Exists(PausedMap))
                 return;
-            
+
             var newmap = _mapManager.CreateMap();
             _mapManager.SetMapPaused(newmap, true);
             PausedMap = _mapManager.GetMapEntityId(newmap);
