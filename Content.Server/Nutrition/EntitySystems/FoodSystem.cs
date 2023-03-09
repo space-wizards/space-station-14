@@ -134,7 +134,7 @@ namespace Content.Server.Nutrition.EntitySystems
             var doAfterEventArgs = new DoAfterEventArgs(user, foodComp.ForceFeed ? foodComp.ForceFeedDelay : foodComp.Delay, target: target, used: food)
             {
                 RaiseOnTarget = foodComp.ForceFeed,
-                RaiseOnUser = !foodComp.ForceFeed,
+                RaiseOnUser = false, //causes a crash if mice eat if true
                 BreakOnUserMove = foodComp.ForceFeed,
                 BreakOnDamage = true,
                 BreakOnStun = true,
