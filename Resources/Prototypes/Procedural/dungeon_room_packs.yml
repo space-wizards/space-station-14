@@ -19,13 +19,13 @@
     - 0,1,5,4
 
 # Long horizontal corridor with rooms above
-- type: dungeonRoomPack
-  id: LargeArea4
-  size: 17,17
-  rooms:
-    - 0,7,17,10
-    - 0,11,5,16
-    - 6,11,11,16
+#- type: dungeonRoomPack
+#  id: LargeArea4
+#  size: 17,17
+#  rooms:
+#    - 0,7,17,10
+#    - 0,11,5,16
+#    - 6,11,11,16
 
 # Corridor from botleft to topright with 2 rooms in top left
 - type: dungeonRoomPack

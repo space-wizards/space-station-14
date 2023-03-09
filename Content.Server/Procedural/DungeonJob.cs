@@ -32,7 +32,10 @@ public sealed partial class DungeonJob : Job<Dungeon>
     private readonly MapGridComponent _grid;
     private readonly EntityUid _gridUid;
 
+    private readonly ISawmill _sawmill;
+
     public DungeonJob(
+        ISawmill sawmill,
         double maxTime,
         IEntityManager entManager,
         IMapManager mapManager,
@@ -50,6 +53,7 @@ public sealed partial class DungeonJob : Job<Dungeon>
         Vector2 position,
         CancellationToken cancellation = default) : base(maxTime, cancellation)
     {
+        _sawmill = sawmill;
         _entManager = entManager;
         _mapManager = mapManager;
         _prototype = prototype;
@@ -71,7 +75,7 @@ public sealed partial class DungeonJob : Job<Dungeon>
     protected override async Task<Dungeon?> Process()
     {
         Dungeon dungeon;
-        Logger.Info($"Generating dungeon {_gen.ID} with seed {_seed} on {_entManager.ToPrettyString(_gridUid)}");
+        _sawmill.Info($"Generating dungeon {_gen.ID} with seed {_seed} on {_entManager.ToPrettyString(_gridUid)}");
 
         switch (_gen.Generator)
         {
@@ -92,6 +96,8 @@ public sealed partial class DungeonJob : Job<Dungeon>
 
         foreach (var post in _gen.PostGeneration)
         {
+            _sawmill.Debug($"Doing postgen {post.GetType()} for {_gen.ID} with seed {_seed}");
+
             switch (post)
             {
                 case MiddleConnectionPostGen dordor:

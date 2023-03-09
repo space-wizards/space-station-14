@@ -4,8 +4,6 @@ using Content.Server.Construction;
 using Content.Server.CPUJob.JobQueues.Queues;
 using Content.Server.Decals;
 using Content.Server.GameTicking.Events;
-using Content.Server.Parallax;
-using Content.Shared.Parallax.Biomes;
 using Content.Shared.Procedural;
 using Robust.Server.GameObjects;
 using Robust.Shared.Console;
@@ -38,7 +36,7 @@ public sealed partial class DungeonSystem : EntitySystem
     {
         base.Initialize();
         _sawmill = Logger.GetSawmill("dungen");
-        _console.RegisterCommand("dungen", GenerateDungeon, CompletionCallback);
+        _console.RegisterCommand("dungen", Loc.GetString("cmd-dungen-desc"), Loc.GetString("cmd-dungen-help"), GenerateDungeon, CompletionCallback);
         _prototype.PrototypesReloaded += PrototypeReload;
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
     }
@@ -156,7 +154,9 @@ public sealed partial class DungeonSystem : EntitySystem
         int seed)
     {
         var cancelToken = new CancellationTokenSource();
-        var job = new DungeonJob(DungeonJobTime,
+        var job = new DungeonJob(
+            _sawmill,
+            DungeonJobTime,
             EntityManager,
             _mapManager,
             _prototype,
@@ -186,7 +186,9 @@ public sealed partial class DungeonSystem : EntitySystem
         int seed)
     {
         var cancelToken = new CancellationTokenSource();
-        var job = new DungeonJob(DungeonJobTime,
+        var job = new DungeonJob(
+            _sawmill,
+            DungeonJobTime,
             EntityManager,
             _mapManager,
             _prototype,

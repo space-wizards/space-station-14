@@ -53,7 +53,7 @@ public sealed class DungeonTests
                     // Assert that anything exists at this size
                     var rotated = new Vector2i(room.Size.Y, room.Size.X);
 
-                    Assert.That(sizes.Contains(room.Size) || sizes.Contains(rotated), $"Didn't find any dungeon room prototypes for {room.Size}");
+                    Assert.That(sizes.Contains(room.Size) || sizes.Contains(rotated), $"Didn't find any dungeon room prototypes for {room.Size} on {pack.ID} index {i}");
                 }
             }
         });

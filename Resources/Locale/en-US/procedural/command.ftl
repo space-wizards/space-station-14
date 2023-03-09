@@ -1,3 +1,5 @@
+cmd-dungen-desc = Generates a procedural dungeon with the specified preset, position, and seed.
+cmd-dungen-help = dungen <MapId> <DungeonPreset> <PosX> <PosY> [seed]
 cmd-dungen-arg-count = Require 4 args.
 cmd-dungen-map-parse = Unable to parse MapId.
 cmd-dungen-mapgrid = Unable to find MapGrid.
