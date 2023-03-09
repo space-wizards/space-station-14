@@ -95,7 +95,7 @@ public sealed class EncryptionKeySystem : EntitySystem
             return;
         if (!component.KeysUnlocked)
         {
-            if (_net.IsClient)
+            if (_net.IsClient && _timing.IsFirstTimePredicted)
                 _popup.PopupEntity(Loc.GetString("encryption-keys-are-locked"), uid, args.User);
             return;
         }
