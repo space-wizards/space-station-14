@@ -1,9 +1,4 @@
 Entries:
-- author: PJB3005
-  changes:
-  - {message: Fixed rich text wrapping., type: Fix}
-  id: 2643
-  time: '2022-11-13T15:07:48.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Melee sounds and effects are now predicted and the client should generally
@@ -2921,3 +2916,8 @@ Entries:
   - {message: Changed held toolbox sprites to be more robust, type: Tweak}
   id: 3142
   time: '2023-03-07T13:48:34.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix toy bap sounds., type: Fix}
+  id: 3143
+  time: '2023-03-09T08:28:57.0000000+00:00'
