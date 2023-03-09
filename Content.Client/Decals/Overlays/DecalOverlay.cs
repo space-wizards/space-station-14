@@ -35,7 +35,6 @@ namespace Content.Client.Decals.Overlays
 
             foreach (var (decalGrid, xform) in _entManager.EntityQuery<DecalGridComponent, TransformComponent>(true))
             {
-                var gridId = decalGrid.Owner;
                 var zIndexDictionary = decalGrid.DecalRenderIndex;
 
                 if (zIndexDictionary.Count == 0)
@@ -57,6 +56,12 @@ namespace Content.Client.Decals.Overlays
                             cache = (_sprites.Frame0(decalProto.Sprite), decalProto.SnapCardinals);
                             _cachedTextures[decal.Id] = cache;
                         }
+
+                        var extent = Math.Max(cache.Texture.Height / EyeManager.PixelsPerMeter, cache.Texture.Width / EyeManager.PixelsPerMeter);
+                        var worldPos = worldMatrix.Transform(decal.Coordinates);
+
+                        if (!args.WorldAABB.Enlarged(extent).Contains(worldPos))
+                            continue;
 
                         var cardinal = Angle.Zero;
 
