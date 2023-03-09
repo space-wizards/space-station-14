@@ -1,6 +1,7 @@
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.Emp;
 using Content.Server.Power.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DeviceNetwork;
@@ -57,6 +58,8 @@ public sealed class SurveillanceCameraSystem : EntitySystem
         SubscribeLocalEvent<SurveillanceCameraComponent, SurveillanceCameraSetupSetName>(OnSetName);
         SubscribeLocalEvent<SurveillanceCameraComponent, SurveillanceCameraSetupSetNetwork>(OnSetNetwork);
         SubscribeLocalEvent<SurveillanceCameraComponent, GetVerbsEvent<AlternativeVerb>>(AddVerbs);
+        
+        SubscribeLocalEvent<SurveillanceCameraComponent, EmpPulseEvent>(OnEmpPulse);
     }
 
     private void OnPacketReceived(EntityUid uid, SurveillanceCameraComponent component, DeviceNetworkPacketEvent args)
@@ -269,6 +272,11 @@ public sealed class SurveillanceCameraSystem : EntitySystem
             return;
         }
 
+        if (HasComp<EmpDisabledComponent>(camera))
+        {
+            return;
+        }
+
         if (setting)
         {
             component.Active = setting;
@@ -391,6 +399,16 @@ public sealed class SurveillanceCameraSystem : EntitySystem
         }
 
         _appearance.SetData(uid, SurveillanceCameraVisualsKey.Key, key, appearance);
+    }
+
+    private void OnEmpPulse(EntityUid uid, SurveillanceCameraComponent component, ref EmpPulseEvent args)
+    {
+        if (component.Active)
+        {
+            args.Affected = true;
+            args.Disabled = true;
+            SetActive(uid, false);
+        }
     }
 }
 
