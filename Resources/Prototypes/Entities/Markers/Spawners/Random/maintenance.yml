@@ -34,6 +34,7 @@
         - ClothingNeckNonBinaryPin
         - ClothingNeckPansexualPin
         - ClothingNeckTransPin
+        - CluwneHorn
       rareChance: 0.01
       prototypes:
         - Lighter
