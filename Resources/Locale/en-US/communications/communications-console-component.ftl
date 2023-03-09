@@ -7,6 +7,7 @@ comms-console-menu-recall-shuttle = Recall emergency shuttle
 
 # Popup
 comms-console-permission-denied = Permission denied
+comms-console-shuttle-unavailable = Shuttle is currently unavailable
 
 # Placeholder values
 comms-console-announcement-sent-by = Sent by

@@ -2,6 +2,7 @@ shuttle-pilot-start = Piloting ship
 shuttle-pilot-end = Stopped piloting
 
 shuttle-console-in-ftl = Can't FTL while in FTL!
+shuttle-console-unavailable = FTL is currently unavailable
 shuttle-console-proximity = Too close to nearby objects
 
 # Display

@@ -33,7 +33,7 @@ namespace Content.Server.NukeOps
 
         private void OnComponentInit(EntityUid uid, WarDeclaratorComponent comp, ComponentInit args)
         {
-            comp.Message = comp.DefaultMessage;
+            comp.Message = Loc.GetString(comp.DefaultMessage);
             DirtyUI(uid, comp);
         }
 
@@ -90,15 +90,34 @@ namespace Content.Server.NukeOps
         {
             if (!Resolve(uid, ref warDeclarator))
                 return;
+            var condition = _nukeopsRuleSystem.GetWarCondition();
+
+            TimeSpan timeStamp;
+            TimeSpan endTime;
+            switch(condition)
+            {
+                case WarConditionStatus.YES_WAR:
+                    timeStamp = _nukeopsRuleSystem.GameruleStartTime;
+                    endTime = _nukeopsRuleSystem.Config.WarDeclarationTimeWindow;
+                    break;
+                case WarConditionStatus.WAR_DELAY:
+                    timeStamp = _nukeopsRuleSystem.DeclarationTime;
+                    endTime = _nukeopsRuleSystem.Config.WarNukieArriveDelay;
+                    break;
+                default:
+                    timeStamp = TimeSpan.Zero;
+                    endTime = TimeSpan.Zero;
+                    break;
+            }
 
             _userInterfaceSystem.TrySetUiState(uid, WarDeclaratorUiKey.Key,
                 new WarDeclaratorBoundUserInterfaceState
                 (
                     warDeclarator.Message,
-                    _nukeopsRuleSystem.GetWarCondition(),
-                    _nukeopsRuleSystem.NukeopsRuleConfig.WarMinCrewSize,
-                    _nukeopsRuleSystem.NukeopsRuleConfig.WarTimeLimit,
-                    _nukeopsRuleSystem.GameruleStartTime
+                    condition,
+                    _nukeopsRuleSystem.Config.WarMinCrewSize,
+                    endTime,
+                    timeStamp
                 )
             );
         }

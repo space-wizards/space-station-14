@@ -21,3 +21,4 @@
         - key: enum.WarDeclaratorUiKey.Key
           type: WarDeclaratorBoundUserInterface
     - type: WarDeclarator
+      defaultMessage: war-declarator-default-message

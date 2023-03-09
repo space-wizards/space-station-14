@@ -81,6 +81,14 @@ namespace Content.Server.Shuttles.Systems
                 return;
             }
 
+            var ev = new ShuttleConsoleFTLTravelAttemptEvent(uid, component, args.Destination);
+            RaiseLocalEvent(ev);
+            if (ev.Cancelled)
+            {
+                _popup.PopupCursor(ev.Reason ?? Loc.GetString("shuttle-console-unavailable"), args.Session);
+                return;
+            }
+
             _shuttle.FTLTravel(shuttle, args.Destination, hyperspaceTime: _shuttle.TransitTime);
         }
 
@@ -397,5 +405,19 @@ namespace Content.Server.Shuttles.Systems
                 RemovePilot(pilot);
             }
         }
+    }
+}
+
+public sealed class ShuttleConsoleFTLTravelAttemptEvent : CancellableEntityEventArgs
+{
+    public EntityUid Uid;
+    public ShuttleConsoleComponent Component;
+    public EntityUid Destination;
+    public string? Reason;
+    public ShuttleConsoleFTLTravelAttemptEvent(EntityUid uid, ShuttleConsoleComponent component, EntityUid dest)
+    {
+        Uid = uid;
+        Component = component;
+        Destination = dest;
     }
 }

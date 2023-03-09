@@ -14,8 +14,9 @@ namespace Content.Shared.NukeOps
 
     public enum WarConditionStatus : byte
     {
+        WAR_READY,
+        WAR_DELAY,
         YES_WAR,
-        TC_DISTRIBUTED,
         NO_WAR_UNKNOWN,
         NO_WAR_TIMEOUT,
         NO_WAR_SMALL_CREW,
@@ -31,16 +32,16 @@ namespace Content.Shared.NukeOps
         public string Message { get; }
         public WarConditionStatus Status;
         public int MinCrew;
-        public TimeSpan WindowDuration;
-        public TimeSpan GameruleStartTime;
+        public TimeSpan EndTime;
+        public TimeSpan TimeStamp;
 
-        public WarDeclaratorBoundUserInterfaceState(string msg, WarConditionStatus status, int minCrew, TimeSpan windowDuration, TimeSpan gameruleStartTime)
+        public WarDeclaratorBoundUserInterfaceState(string msg, WarConditionStatus status, int minCrew, TimeSpan endTime, TimeSpan timeStamp)
         {
             Message = msg;
             Status = status;
             MinCrew = minCrew;
-            WindowDuration = windowDuration;
-            GameruleStartTime = gameruleStartTime;
+            EndTime = endTime;
+            TimeStamp = timeStamp;
         }
     }
 

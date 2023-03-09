@@ -27,19 +27,37 @@ public sealed class NukeopsRuleConfiguration : GameRuleConfiguration
     public int MaxOperatives = 5;
     
     /// <summary>
+    ///     Enables opportunity to get extra TC for war declaration
+    /// </summary>
+    [DataField("enableWarOps")]
+    public bool EnableWarOps = true;
+    
+    /// <summary>
+    ///     Prevent calling shuttle in delay between declaration of war and enabling FTL at outpost map
+    /// </summary>
+    [DataField("preventShuttleInDelay")]
+    public bool PreventShuttleInDelay = true;
+
+    /// <summary>
     ///     This amount of TC will be given to each nukie
     /// </summary>
     [DataField("warTCAmount")]
     public int WarTCAmountPerNukie = 40;
 
     /// <summary>
-    ///     Amount of time given to get extra TC for war declare. 
+    ///     Time window given to get extra TC for war declaration. 
     /// </summary>
-    [DataField("warTimeLimit")]
-    public TimeSpan WarTimeLimit = TimeSpan.FromMinutes(6);
+    [DataField("warDeclarationTimeWindow")]
+    public TimeSpan WarDeclarationTimeWindow = TimeSpan.FromMinutes(2); // 6
 
     /// <summary>
-    ///     Minimal crew size for war extra TC
+    ///     Delay between war declaration and nuke ops arrival on station map. Gives crew time to prepare
+    /// </summary>
+    [DataField("warNukieArriveDelay")]
+    public TimeSpan WarNukieArriveDelay = TimeSpan.FromMinutes(2); // 15
+
+    /// <summary>
+    ///     Minimal crew size for war
     /// </summary>
     [DataField("warMinCrewSize")]
     public int WarMinCrewSize = 0; // 4

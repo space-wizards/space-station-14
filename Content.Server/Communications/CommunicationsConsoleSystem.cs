@@ -278,6 +278,15 @@ namespace Content.Server.Communications
                 _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, message.Session);
                 return;
             }
+            
+            var ev = new CommunicationConsoleCallShuttleAttemptEvent(uid, comp, mob);
+            RaiseLocalEvent(ev);
+            if (ev.Cancelled)
+            {
+                _popupSystem.PopupEntity(ev.Reason ?? Loc.GetString("comms-console-shuttle-unavailable"), uid, message.Session);
+                return;
+            }
+
             _roundEndSystem.RequestRoundEnd(uid);
             _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(mob):player} has called the shuttle.");
         }
@@ -309,6 +318,21 @@ namespace Content.Server.Communications
             Uid = uid;
             Component = comp;
             Text = text;
+            Sender = sender;
+        }
+    }
+
+    public sealed class CommunicationConsoleCallShuttleAttemptEvent : CancellableEntityEventArgs
+    {
+        public EntityUid Uid;
+        public CommunicationsConsoleComponent Component;
+        public EntityUid? Sender;
+        public string? Reason;
+
+        public CommunicationConsoleCallShuttleAttemptEvent(EntityUid uid, CommunicationsConsoleComponent comp, EntityUid? sender)
+        {
+            Uid = uid;
+            Component = comp;
             Sender = sender;
         }
     }

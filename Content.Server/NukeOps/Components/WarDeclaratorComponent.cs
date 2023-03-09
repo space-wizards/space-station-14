@@ -1,4 +1,3 @@
-using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 
 namespace Content.Server.NukeOps
@@ -11,7 +10,7 @@ namespace Content.Server.NukeOps
         public string Message { get; set; } = string.Empty;
         
         /// <summary>
-        /// Default message to send
+        /// Fluent ID for default message
         /// </summary>
         [DataField("defaultMessage")]
         public string DefaultMessage { get; set; } = string.Empty;
