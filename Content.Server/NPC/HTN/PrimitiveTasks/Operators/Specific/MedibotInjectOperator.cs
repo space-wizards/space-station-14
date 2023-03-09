@@ -27,7 +27,7 @@ public sealed class MedibotInjectOperator : HTNOperator
         if (!_entManager.TryGetComponent<MedibotComponent>(owner, out var medibot))
             return HTNOperatorStatus.Failed;
 
-        if (medibot.CancelToken != null)
+        if (medibot.IsInjecting)
             return HTNOperatorStatus.Continuing;
 
         if (medibot.InjectTarget == null)

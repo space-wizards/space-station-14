@@ -1,4 +1,3 @@
-using System.Threading;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -8,12 +7,16 @@ namespace Content.Server.Silicons.Bots
     [RegisterComponent]
     public sealed class MedibotComponent : Component
     {
-        public CancellationTokenSource? CancelToken;
-
         /// <summary>
-        /// Used in NPC logic.
+        /// Used in NPC logic, reset by NPC logic.
+        /// Don't use this for player stuff.
         /// </summary>
         public EntityUid? InjectTarget;
+
+        /// <summary>
+        /// Whether we're in the middle of the inject doafter.
+        /// </summary>
+        public bool IsInjecting;
 
         /// <summary>
         /// Med the bot will inject when UNDER the standard med damage threshold.

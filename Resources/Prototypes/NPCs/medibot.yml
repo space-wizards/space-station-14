@@ -10,6 +10,7 @@
   id: InjectNearbyCompound
   branches:
     - tasks:
+        # I haven't been able to successfully integrate speech into an HTN compound without it getting spammed / skipped / etc
         - id: PickNearbyInjectablePrimitive
         - id: MoveToAccessiblePrimitive
         # - id: MedibotSpeakPrimitive // TODO: some sort of CD?
