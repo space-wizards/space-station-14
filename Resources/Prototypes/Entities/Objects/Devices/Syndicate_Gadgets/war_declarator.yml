@@ -2,7 +2,7 @@
   parent: BaseItem
   id: NukeOpsTheDeclarationOfWar
   name: the declaration of war
-  description: Use to send a declaration of hostilities to the target. Will supply your team with a massive amount of bonus telecrystals. Must be used in the beginning of preparation, or the boost will expire.
+  description: Use to send a declaration of hostilities to the target, delaying your shuttle departure for 15 minutes while they prepare for your assault. Such a brazen move will supply your team with a massive amount of bonus telecrystals. Must be used within six minutes, or opportunity will expire.
   components:
     - type: Sprite
       sprite: Objects/Devices/door_remote.rsi
@@ -22,3 +22,4 @@
           type: WarDeclaratorBoundUserInterface
     - type: WarDeclarator
       defaultMessage: war-declarator-default-message
+    - type: WarConditionOnExamine
