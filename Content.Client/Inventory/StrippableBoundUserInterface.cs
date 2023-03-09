@@ -1,3 +1,5 @@
+using System.Linq;
+using Content.Client.Cuffs;
 using Content.Client.Examine;
 using Content.Client.Hands;
 using Content.Client.Strip;
@@ -6,6 +8,7 @@ using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Hands.Controls;
 using Content.Client.Verbs;
 using Content.Client.Verbs.UI;
+using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Ensnaring.Components;
 using Content.Shared.Hands.Components;
@@ -37,6 +40,7 @@ namespace Content.Client.Inventory
         [Dependency] private readonly IUserInterfaceManager _ui = default!;
         private ExamineSystem _examine = default!;
         private InventorySystem _inv = default!;
+        private readonly SharedCuffableSystem _cuffable;
 
         [ViewVariables]
         private StrippingMenu? _strippingMenu;
@@ -49,6 +53,7 @@ namespace Content.Client.Inventory
             IoCManager.InjectDependencies(this);
             _examine = _entMan.EntitySysManager.GetEntitySystem<ExamineSystem>();
             _inv = _entMan.EntitySysManager.GetEntitySystem<InventorySystem>();
+            _cuffable = _entMan.System<SharedCuffableSystem>();
             var title = Loc.GetString("strippable-bound-user-interface-stripping-menu-title", ("ownerName", Identity.Name(Owner.Owner, _entMan)));
             _strippingMenu = new StrippingMenu(title, this);
             _strippingMenu.OnClose += Close;
@@ -158,7 +163,7 @@ namespace Content.Client.Inventory
             if (_entMan.TryGetComponent(hand.HeldEntity, out HandVirtualItemComponent? virt))
             {
                 button.Blocked = true;
-                if (_entMan.TryGetComponent(Owner.Owner, out CuffableComponent? cuff) && cuff.Container.Contains(virt.BlockingEntity))
+                if (_entMan.TryGetComponent(Owner.Owner, out CuffableComponent? cuff) && _cuffable.GetAllCuffs(cuff).Contains(virt.BlockingEntity))
                     button.BlockedRect.MouseFilter = MouseFilterMode.Ignore;
             }
 

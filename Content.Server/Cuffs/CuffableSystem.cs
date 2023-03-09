@@ -18,7 +18,7 @@ namespace Content.Server.Cuffs
 
         private void OnHandcuffGetState(EntityUid uid, HandcuffComponent component, ref ComponentGetState args)
         {
-            args.State = new HandcuffComponentState(component.OverlayIconState);
+            args.State = new HandcuffComponentState(component.OverlayIconState, component.Cuffing);
         }
 
         private void OnCuffableGetState(EntityUid uid, CuffableComponent component, ref ComponentGetState args)
@@ -28,23 +28,15 @@ namespace Content.Server.Cuffs
             // 2 - allow for several different player overlays for each different cuff type.
             // approach #2 would be more difficult/time consuming to do and the payoff doesn't make it worth it.
             // right now we're doing approach #1.
-            if (component.CuffedHandCount <= 0 || !TryComp<HandcuffComponent>(component.LastAddedCuffs, out var cuffs))
-            {
-                args.State = new CuffableComponentState(component.CuffedHandCount,
-                    component.CanStillInteract,
-                    component.Uncuffing,
-                    "/Objects/Misc/handcuffs.rsi",
-                    "body-overlay-2",
-                    Color.White);
-                return;
-            }
-
+            HandcuffComponent? cuffs = null;
+            if (component.CuffedHandCount > 0)
+                TryComp(component.LastAddedCuffs, out cuffs);
             args.State = new CuffableComponentState(component.CuffedHandCount,
                 component.CanStillInteract,
                 component.Uncuffing,
-                cuffs.CuffedRSI,
-                $"{cuffs.OverlayIconState}-{component.CuffedHandCount}",
-                cuffs.Color);
+                cuffs?.CuffedRSI,
+                $"{cuffs?.OverlayIconState}-{component.CuffedHandCount}",
+                cuffs?.Color);
             // the iconstate is formatted as blah-2, blah-4, blah-6, etc.
             // the number corresponds to how many hands are cuffed.
         }

@@ -3,9 +3,7 @@ using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Humanoid;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
 using Robust.Shared.GameStates;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Cuffs;
 
@@ -33,13 +31,14 @@ public sealed class CuffableSystem : SharedCuffableSystem
         if (args.Current is not HandcuffComponentState state)
             return;
 
+        component.Cuffing = state.Cuffing;
+
         if (state.IconState == string.Empty)
             return;
 
         if (TryComp<SpriteComponent>(uid, out var sprite))
         {
-            // TODO: safety check to see if RSI contains the state?
-            sprite.LayerSetState(0, new RSI.StateId(state.IconState));
+            sprite.LayerSetState(HumanoidVisualLayers.Handcuffs, state.IconState);
         }
     }
 
@@ -52,32 +51,29 @@ public sealed class CuffableSystem : SharedCuffableSystem
         component.Uncuffing = cuffState.Uncuffing;
         _actionBlocker.UpdateCanMove(uid);
 
-        if (TryComp<SpriteComponent>(uid, out var sprite))
-        {
-            sprite.LayerSetVisible(HumanoidVisualLayers.Handcuffs, cuffState.NumHandsCuffed > 0);
-            sprite.LayerSetColor(HumanoidVisualLayers.Handcuffs, cuffState.Color);
-
-            if (cuffState.NumHandsCuffed > 0)
-            {
-                if (component.CurrentRSI != cuffState.RSI) // we don't want to keep loading the same RSI
-                {
-                    component.CurrentRSI = cuffState.RSI;
-
-                    if (component.CurrentRSI != null)
-                    {
-                        sprite.LayerSetState(HumanoidVisualLayers.Handcuffs, new RSI.StateId(cuffState.IconState), new ResourcePath(component.CurrentRSI));
-                    }
-                }
-                else
-                {
-                    // TODO: safety check to see if RSI contains the state?
-                    sprite.LayerSetState(HumanoidVisualLayers.Handcuffs, new RSI.StateId(cuffState.IconState));
-                }
-            }
-        }
-
         var ev = new CuffedStateChangeEvent();
         RaiseLocalEvent(uid, ref ev);
+
+        if (!TryComp<SpriteComponent>(uid, out var sprite))
+            return;
+        var cuffed = cuffState.NumHandsCuffed > 0;
+        sprite.LayerSetVisible(HumanoidVisualLayers.Handcuffs, cuffed);
+
+        // if they are not cuffed, that means that we didn't get a valid color,
+        // iconstate, or RSI. that also means we don't need to update the sprites.
+        if (!cuffed)
+            return;
+        sprite.LayerSetColor(HumanoidVisualLayers.Handcuffs, cuffState.Color!.Value);
+
+        if (!Equals(component.CurrentRSI, cuffState.RSI) && cuffState.RSI != null) // we don't want to keep loading the same RSI
+        {
+            component.CurrentRSI = cuffState.RSI;
+            sprite.LayerSetState(HumanoidVisualLayers.Handcuffs, cuffState.IconState, component.CurrentRSI.RsiPath);
+        }
+        else
+        {
+            sprite.LayerSetState(HumanoidVisualLayers.Handcuffs, cuffState.IconState);
+        }
     }
 }
 
