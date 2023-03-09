@@ -1,4 +1,5 @@
 using Content.Server.Explosion.EntitySystems;
+using Content.Shared.Examine;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -18,6 +19,7 @@ public sealed class EmpSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<EmpOnTriggerComponent, TriggerEvent>(HandleEmpTrigger);
+        SubscribeLocalEvent<EmpDisabledComponent, ExaminedEvent>(OnExamine);
     }
 
     public void EmpPulse(MapCoordinates coordinates, float range, float energyConsumption, float duration)
@@ -55,6 +57,11 @@ public sealed class EmpSystem : EntitySystem
                 Spawn(EmpDisabledEffectPrototype, transform.Coordinates);
             }
         }
+    }
+
+    private void OnExamine(EntityUid uid, EmpDisabledComponent component, ExaminedEvent args)
+    {
+        args.PushMarkup(Loc.GetString("emp-disabled-comp-on-examine"));
     }
 
     private void HandleEmpTrigger(EntityUid uid, EmpOnTriggerComponent comp, TriggerEvent args)
