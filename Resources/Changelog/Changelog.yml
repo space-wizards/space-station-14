@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed a rounding error which would cause certain parts in machine upgrades
-      to not work. This has mostly affected the artifact analyzer., type: Fix}
-  id: 2646
-  time: '2022-11-13T23:42:35.0000000+00:00'
 - author: JustinTrotter
   changes:
   - {message: The savage magnet now has functional LED lights., type: Add}
@@ -2921,3 +2915,9 @@ Entries:
   - {message: Fixes drinking from bricking if you were full before drinking, type: Fix}
   id: 3145
   time: '2023-03-09T08:45:19.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Separated HUD mode now expands the game viewport instead of the chat
+      window when resizing the game window., type: Tweak}
+  id: 3146
+  time: '2023-03-09T13:56:44.0000000+00:00'
