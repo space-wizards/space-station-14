@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Shared.Damage;
@@ -7,6 +7,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Stunnable;
 using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.DoAfter;
 
@@ -23,6 +24,17 @@ public abstract class SharedDoAfterSystem : EntitySystem
         SubscribeLocalEvent<DoAfterComponent, DamageChangedEvent>(OnDamage);
         SubscribeLocalEvent<DoAfterComponent, MobStateChangedEvent>(OnStateChanged);
         SubscribeLocalEvent<DoAfterComponent, ComponentGetState>(OnDoAfterGetState);
+    }
+
+    public bool DoAfterExists(EntityUid uid, DoAfter doAFter, DoAfterComponent? component = null)
+        => DoAfterExists(uid, doAFter.ID, component);
+
+    public bool DoAfterExists(EntityUid uid, byte id, DoAfterComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return false;
+
+        return component.DoAfters.ContainsKey(id);
     }
 
     private void Add(EntityUid entity, DoAfterComponent component, DoAfter doAfter)
@@ -170,11 +182,11 @@ public abstract class SharedDoAfterSystem : EntitySystem
     /// </summary>
     /// <param name="eventArgs">The DoAfterEventArgs</param>
     /// <param name="data">The extra data sent over </param>
-    public void DoAfter<T>(DoAfterEventArgs eventArgs, T data)
+    public DoAfter DoAfter<T>(DoAfterEventArgs eventArgs, T data)
     {
         var doAfter = CreateDoAfter(eventArgs);
-
-        doAfter.Done = cancelled => { Send(data, cancelled, eventArgs); };
+        doAfter.Done = cancelled => { Send(data, cancelled, eventArgs, doAfter.ID); };
+        return doAfter;
     }
 
     /// <summary>
@@ -183,11 +195,11 @@ public abstract class SharedDoAfterSystem : EntitySystem
     ///     Use this if you don't have any extra data to send with the DoAfter
     /// </summary>
     /// <param name="eventArgs">The DoAfterEventArgs</param>
-    public void DoAfter(DoAfterEventArgs eventArgs)
+    public DoAfter DoAfter(DoAfterEventArgs eventArgs)
     {
         var doAfter = CreateDoAfter(eventArgs);
-
-        doAfter.Done = cancelled => { Send(cancelled, eventArgs); };
+        doAfter.Done = cancelled => { Send(cancelled, eventArgs, doAfter.ID); };
+        return doAfter;
     }
 
     private DoAfter CreateDoAfter(DoAfterEventArgs eventArgs)
@@ -351,9 +363,9 @@ public abstract class SharedDoAfterSystem : EntitySystem
     /// </summary>
     /// <param name="cancelled"></param>
     /// <param name="args"></param>
-    private void Send(bool cancelled, DoAfterEventArgs args)
+    private void Send(bool cancelled, DoAfterEventArgs args, byte Id)
     {
-        var ev = new DoAfterEvent(cancelled, args);
+        var ev = new DoAfterEvent(cancelled, args, Id);
 
         RaiseDoAfterEvent(ev, args);
     }
@@ -365,22 +377,29 @@ public abstract class SharedDoAfterSystem : EntitySystem
     /// <param name="cancelled"></param>
     /// <param name="args"></param>
     /// <typeparam name="T"></typeparam>
-    private void Send<T>(T data, bool cancelled, DoAfterEventArgs args)
+    private void Send<T>(T data, bool cancelled, DoAfterEventArgs args, byte id)
     {
-        var ev = new DoAfterEvent<T>(data, cancelled, args);
+        var ev = new DoAfterEvent<T>(data, cancelled, args, id);
 
         RaiseDoAfterEvent(ev, args);
     }
 
     private void RaiseDoAfterEvent<TEvent>(TEvent ev, DoAfterEventArgs args) where TEvent : notnull
     {
-        if (EntityManager.EntityExists(args.User) && args.RaiseOnUser)
+        if (args.RaiseOnUser && Exists(args.User))
             RaiseLocalEvent(args.User, ev, args.Broadcast);
 
-        if (args.Target is { } target && EntityManager.EntityExists(target) && args.RaiseOnTarget)
+        if (args.RaiseOnTarget && args.Target is { } target && Exists(target))
+        {
+            DebugTools.Assert(!args.RaiseOnUser || args.Target != args.User);
+            DebugTools.Assert(!args.RaiseOnUsed || args.Target != args.Used);
             RaiseLocalEvent(target, ev, args.Broadcast);
+        }
 
-        if (args.Used is { } used && EntityManager.EntityExists(used) && args.RaiseOnUsed)
+        if (args.RaiseOnUsed && args.Used is { } used && Exists(used))
+        {
+            DebugTools.Assert(!args.RaiseOnUser || args.Used != args.User);
             RaiseLocalEvent(used, ev, args.Broadcast);
+        }
     }
 }

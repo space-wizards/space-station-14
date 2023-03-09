@@ -58,6 +58,15 @@
   revertOnCrit: false
   revertOnDeath: false
 
+- type: polymorph
+  id: WizardForcedCluwne
+  entity: MobCluwne
+  forced: true
+  transferName: true
+  transferHumanoidAppearance: true
+  inventory: Transfer
+  revertOnDeath: true
+
 # this is a test for transferring some visual appearance stuff
 - type: polymorph
   id: TestHumanMorph
