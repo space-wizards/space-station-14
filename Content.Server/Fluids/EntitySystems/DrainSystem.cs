@@ -5,6 +5,7 @@ using Content.Server.Popups;
 using Content.Shared.FixedPoint;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Coordinates;
 using Content.Shared.Database;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -17,9 +18,9 @@ namespace Content.Server.Fluids.EntitySystems
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
-        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly AudioSystem _audioSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SpillableSystem _spillableSystem = default!;
 
         public override void Initialize()
         {
@@ -32,18 +33,16 @@ namespace Content.Server.Fluids.EntitySystems
             if (!args.CanAccess || !args.CanInteract || args.Using == null)
                 return;
 
-            if (!TryComp(args.Using, out SpillableComponent? spillable))
-                return;
-
-            if (!_solutionContainerSystem.TryGetDrainableSolution(args.Using.Value, out var solution))
+            if (!TryComp(args.Using, out SpillableComponent? spillable) ||
+                !TryComp(args.Target, out DrainComponent? drain))
                 return;
 
             Verb verb = new()
             {
-                Text = Loc.GetString("empty-inhand-verb", ("object", "" + Name(args.Using.Value))),
+                Text = Loc.GetString("drain-component-empty-verb-inhand", ("object", "" + Name(args.Using.Value))),
                 Act = () =>
                 {
-                    Empty(solution, component, args.Using.Value);
+                    Empty(args.Using.Value, spillable, args.Target, drain);
                 },
                 Impact = LogImpact.Low,
 
@@ -51,15 +50,47 @@ namespace Content.Server.Fluids.EntitySystems
             args.Verbs.Add(verb);
         }
 
-        private void Empty(Solution solution, DrainComponent drain, EntityUid user)
+        private void Empty(EntityUid container, SpillableComponent spillable, EntityUid target, DrainComponent drain)
         {
-            if (solution.Volume == FixedPoint2.Zero)
+            // Find the solution in the container that is emptied
+            if (!_solutionSystem.TryGetDrainableSolution(container, out var containerSolution) ||
+                containerSolution.Volume == FixedPoint2.Zero)
             {
-                _popupSystem.PopupEntity(Loc.GetString("spill-target-verb-activate-is-empty-message", ("owner", user)), user);
+                _popupSystem.PopupEntity(
+                    Loc.GetString("drain-component-empty-verb-using-is-empty-message", ("object", container)),
+                    container);
                 return;
             }
-            solution.RemoveAllSolution();
-            _audioSystem.PlayPvs(drain.ManualDrainSound, user);
+
+            // try to find the drain's solution
+            if (!_solutionSystem.TryGetSolution(target, DrainComponent.SolutionName, out var drainSolution))
+            {
+                // If can't find, just destroy the solution
+                containerSolution.RemoveAllSolution();
+                _audioSystem.PlayPvs(drain.ManualDrainSound, target);
+                _ambientSoundSystem.SetAmbience(target, true);
+                return;
+            }
+
+            // Try to transfer as much solution as possible to the drain
+
+            var transferSolution = _solutionSystem.SplitSolution(container, containerSolution,
+                FixedPoint2.Min(containerSolution.Volume, drainSolution.AvailableVolume));
+
+            _solutionSystem.TryAddSolution(target, drainSolution, transferSolution);
+
+            _audioSystem.PlayPvs(drain.ManualDrainSound, target);
+            _ambientSoundSystem.SetAmbience(target, true);
+
+            // If drain is full, spill
+
+            if (drainSolution.MaxVolume == drainSolution.Volume)
+            {
+                _spillableSystem.SpillAt(containerSolution, Transform(target).Coordinates, "PuddleSmear");
+                _popupSystem.PopupEntity(
+                    Loc.GetString("drain-component-empty-verb-target-is-full-message", ("object", target)),
+                    container);
+            }
         }
 
         public override void Update(float frameTime)
@@ -72,14 +103,19 @@ namespace Content.Server.Fluids.EntitySystems
 
             foreach (var drain in EntityQuery<DrainComponent>())
             {
-                if (!drain.AutoDrain) { return; }
-
                 drain.Accumulator += frameTime;
                 if (drain.Accumulator < drain.DrainFrequency)
                 {
                     continue;
                 }
                 drain.Accumulator -= drain.DrainFrequency;
+
+                // Disable ambient sound from emptying manually
+                if (!drain.AutoDrain)
+                {
+                    _ambientSoundSystem.SetAmbience(drain.Owner, false);
+                    return;
+                }
 
                 if (!managerQuery.TryGetComponent(drain.Owner, out var manager))
                     continue;

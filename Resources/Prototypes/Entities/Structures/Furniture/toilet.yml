@@ -32,6 +32,8 @@
     node: toilet
   - type: Appearance
   - type: Drain
+    drainBuffer:
+      maxVol: 500
     autoDrain: false
 
 - type: entity
