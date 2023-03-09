@@ -7,6 +7,15 @@
       - Cross
   postGeneration:
     - !type:MiddleConnectionPostGen
+      overlapCount: 3
+      count: 3
+      entities:
+        - CableApcExtension
+        - AirlockGlass
+      edgeEntities:
+        - Grille
+        - Window
+    - !type:MiddleConnectionPostGen
       count: 1
       entities:
         - CableApcExtension

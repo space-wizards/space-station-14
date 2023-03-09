@@ -379,10 +379,11 @@ public sealed partial class DungeonJob
         // Do pathfind from first room to work out graph.
         // TODO: Optional loops
 
-        var roomConnections = new Dictionary<DungeonRoom, Dictionary<DungeonRoom, int>>();
-        var flipp = new HashSet<Vector2i>();
+        var roomConnections = new Dictionary<DungeonRoom, List<DungeonRoom>>();
+        var frontier = new Queue<DungeonRoom>();
+        frontier.Enqueue(dungeon.Rooms.First());
+        var tile = new Tile(_tileDefManager[gen.Tile].TileId);
 
-        // Edges built
         foreach (var (room, border) in roomBorders)
         {
             var conns = roomConnections.GetOrNew(room);
@@ -390,167 +391,71 @@ public sealed partial class DungeonJob
             foreach (var (otherRoom, otherBorders) in roomBorders)
             {
                 if (room.Equals(otherRoom) ||
-                    conns.ContainsKey(otherRoom))
+                    conns.Contains(otherRoom))
                 {
                     continue;
                 }
 
-                flipp.UnionWith(border);
+                var flipp = new HashSet<Vector2i>(border);
                 flipp.IntersectWith(otherBorders);
 
-                if (flipp.Count == 0)
+                if (flipp.Count == 0 ||
+                    gen.OverlapCount != -1 && flipp.Count != gen.OverlapCount)
                     continue;
 
-                var weighted = (int) (otherRoom.Center - room.Center).LengthSquared;
+                var center = Vector2.Zero;
 
-                conns.Add(otherRoom, weighted);
+                foreach (var node in flipp)
+                {
+                    center += (Vector2) node + grid.TileSize / 2f;
+                }
+
+                center /= flipp.Count;
+                // Weight airlocks towards center more.
+                var nodeDistances = new List<(Vector2i Node, float Distance)>(flipp.Count);
+
+                foreach (var node in flipp)
+                {
+                    nodeDistances.Add((node, ((Vector2) node + grid.TileSize / 2f - center).LengthSquared));
+                }
+
+                nodeDistances.Sort((x, y) => x.Distance.CompareTo(y.Distance));
+
+                var width = gen.Count;
+
+                for (var i = 0; i < nodeDistances.Count; i++)
+                {
+                    var node = nodeDistances[i].Node;
+                    var gridPos = grid.GridTileToLocal(node);
+                    if (!_anchorable.TileFree(grid, node, CollisionLayer, CollisionMask))
+                        continue;
+
+                    width--;
+                    grid.SetTile(node, tile);
+
+                    if (gen.EdgeEntities != null && (nodeDistances.Count - i <= 2))
+                    {
+                        foreach (var ent in gen.EdgeEntities)
+                        {
+                            _entManager.SpawnEntity(ent, gridPos);
+                        }
+                    }
+                    else
+                    {
+                        foreach (var ent in gen.Entities)
+                        {
+                            _entManager.SpawnEntity(ent, gridPos);
+                        }
+                    }
+
+                    if (width == 0)
+                        break;
+                }
+
+                conns.Add(otherRoom);
                 var otherConns = roomConnections.GetOrNew(otherRoom);
-                otherConns.Add(room, weighted);
-                flipp.Clear();
+                otherConns.Add(room);
             }
-        }
-
-        // TODO: Fix decal rounding
-
-        // TODO: Screw this, garbage code
-        // 1. Connect all rooms
-        // 2. Work out invalid connections (e.g. blocked on all nodes)
-        // 3. Iterate every edge and check if we can safely remove it; if we can then prob(0.25) to keep it
-        // 4. Build edges, pick unblocked node first (checking distance then expand from there) (windows or not, prob for windows)
-        var startIndex = random.Next(dungeon.Rooms.Count);
-        var startRoom = dungeon.Rooms[startIndex];
-
-        var tree = new MinimumSpanningTree<DungeonRoom>(roomConnections, startRoom);
-        var graph = tree.GetTree();
-        var tile = new Tile(_tileDefManager[gen.Tile].TileId);
-
-        for (var i = 0; i < graph.Count - 1; i++)
-        {
-            var room = graph[i];
-            var next = graph[i + 1];
-            flipp.Clear();
-            flipp.UnionWith(roomBorders[room]);
-            flipp.IntersectWith(roomBorders[next]);
-
-            // If it's at the end of a tunnel for example can be no overlap.
-            if (flipp.Count == 0)
-                continue;
-
-            var center = Vector2.Zero;
-            foreach (var node in flipp)
-            {
-                center += (Vector2) node + grid.TileSize / 2f;
-            }
-
-            center /= flipp.Count;
-            // Weight airlocks towards center more.
-            var nodeDistances = new List<(Vector2i Node, float Distance)>(flipp.Count);
-
-            foreach (var node in flipp)
-            {
-                nodeDistances.Add((node, ((Vector2) node + grid.TileSize / 2f - center).LengthSquared));
-            }
-
-            nodeDistances.Sort((x, y) => x.Distance.CompareTo(y.Distance));
-            var width = gen.Count;
-
-            for (var j = 0; j < nodeDistances.Count; j++)
-            {
-                var node = nodeDistances[j].Node;
-                var gridPos = grid.GridTileToLocal(node);
-                if (!_anchorable.TileFree(grid, node, CollisionLayer, CollisionMask))
-                    continue;
-
-                width--;
-                grid.SetTile(node, tile);
-
-                if (gen.EdgeEntities != null && (nodeDistances.Count - i <= 2))
-                {
-                    foreach (var ent in gen.EdgeEntities)
-                    {
-                        _entManager.SpawnEntity(ent, gridPos);
-                    }
-                }
-                else
-                {
-                    foreach (var ent in gen.Entities)
-                    {
-                        _entManager.SpawnEntity(ent, gridPos);
-                    }
-                }
-
-                if (width == 0)
-                    break;
-            }
-        }
-    }
-
-    private sealed class MinimumSpanningTree<T> where T : notnull
-    {
-        private readonly Dictionary<T, Dictionary<T, int>> _nodes;
-
-        private List<T> _connected = new();
-        private List<T> _unconnected = new();
-        private SortedDictionary<int, List<(T NodeA, T NodeB)>> _edges = new();
-        private T _startNode;
-
-        public MinimumSpanningTree(Dictionary<T, Dictionary<T, int>> nodes, T startNode)
-        {
-            if (!nodes.ContainsKey(startNode))
-            {
-                throw new InvalidOperationException($"Unable to find start node in MST!");
-            }
-
-            _unconnected.AddRange(nodes.Keys);
-            _startNode = startNode;
-            _nodes = nodes;
-        }
-
-        public List<T> GetTree()
-        {
-            _connected.Add(_startNode);
-            _unconnected.Remove(_startNode);
-            UpdateEdges(_startNode);
-
-            while (_unconnected.Count > 0)
-            {
-                var leastExpensive = GetLeastExpensiveNode();
-                _connected.Add(leastExpensive);
-                _unconnected.Remove(leastExpensive);
-                UpdateEdges(leastExpensive);
-            }
-
-            return _connected;
-        }
-
-        private void UpdateEdges(T node)
-        {
-            foreach (var neighbor in _nodes[node])
-            {
-                if (!_edges.TryGetValue(neighbor.Value, out var edges))
-                {
-                    edges = new List<(T NodeA, T NodeB)>();
-                    _edges[neighbor.Value] = edges;
-                }
-
-                edges.Add(new ValueTuple<T, T>(node, neighbor.Key));
-            }
-        }
-
-        private T GetLeastExpensiveNode()
-        {
-            foreach (var edges in _edges.Values)
-            {
-                foreach (var edge in edges)
-                {
-                    if (_connected.Contains(edge.NodeA) && _unconnected.Contains(edge.NodeB))
-                    {
-                        return edge.NodeB;
-                    }
-                }
-            }
-
-            throw new InvalidOperationException();
         }
     }
 
