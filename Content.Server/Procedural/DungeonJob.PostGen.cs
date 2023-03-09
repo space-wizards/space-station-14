@@ -334,6 +334,12 @@ public sealed partial class DungeonJob
                     }
                 }
 
+                if (validTiles.Count > 0)
+                {
+                    await SuspendIfOutOfTime();
+                    ValidateResume();
+                }
+
                 validTiles.Clear();
             }
         }
@@ -462,6 +468,8 @@ public sealed partial class DungeonJob
                 conns.Add(otherRoom);
                 var otherConns = roomConnections.GetOrNew(otherRoom);
                 otherConns.Add(room);
+                await SuspendIfOutOfTime();
+                ValidateResume();
             }
         }
     }
