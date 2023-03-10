@@ -79,7 +79,7 @@ public sealed class FluidSpreaderSystem : EntitySystem
                 foreach (var direction in exploreDirections)
                 {
                     var newPos = pos.Offset(direction);
-                    if (CheckTile(puddleUid, puddle, newPos, mapGrid, out var uid, out var component))
+                    if (CheckTile(puddleUid, puddle, newPos, mapGrid, puddleQuery, out var uid, out var component))
                     {
                         puddles.Add(component);
                         totalVolume += _puddleSystem.CurrentVolume(uid.Value, component);
@@ -105,7 +105,8 @@ public sealed class FluidSpreaderSystem : EntitySystem
     /// <param name="mapGrid">helper param needed to extract entities</param>
     /// <param name="newPuddleUid">either found or newly created PuddleComponent.</param>
     /// <returns>true if tile is empty or occupied by a non-overflowing puddle (or a puddle close to being overflowing)</returns>
-    private bool CheckTile(EntityUid srcUid, PuddleComponent srcPuddle, EntityCoordinates dstPos, MapGridComponent mapGrid,
+    private bool CheckTile(EntityUid srcUid, PuddleComponent srcPuddle, EntityCoordinates dstPos, 
+        MapGridComponent mapGrid, EntityQuery<PuddleComponent> puddleQuery,
         [NotNullWhen(true)] out EntityUid? newPuddleUid, [NotNullWhen(true)] out PuddleComponent? newPuddleComp)
     {
         if (!mapGrid.TryGetTileRef(dstPos, out var tileRef)
@@ -133,7 +134,7 @@ public sealed class FluidSpreaderSystem : EntitySystem
         var puddleCurrentVolume = _puddleSystem.CurrentVolume(srcUid, srcPuddle);
         foreach (var entity in dstPos.GetEntitiesInTile())
         {
-            if (TryComp<PuddleComponent>(entity, out var existingPuddle))
+            if (puddleQuery.TryGetComponent(entity, out var existingPuddle))
             {
                 if (_puddleSystem.CurrentVolume(entity, existingPuddle) >= puddleCurrentVolume)
                 {
