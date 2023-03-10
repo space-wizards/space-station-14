@@ -15,23 +15,28 @@
       edgeEntities:
         - Grille
         - Window
+
     - !type:MiddleConnectionPostGen
       count: 1
       entities:
         - CableApcExtension
         - AirlockGlass
+
     - !type:EntrancePostGen
       count: 2
       entities:
         - AirlockGlass
+
     - !type:InternalWindowPostGen
       entities:
         - Grille
         - Window
+
     - !type:ExternalWindowPostGen
       entities:
         - Grille
         - Window
+
     - !type:WallMountPostGen
       spawns:
         # Posters
