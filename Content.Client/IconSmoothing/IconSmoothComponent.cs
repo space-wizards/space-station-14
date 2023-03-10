@@ -1,4 +1,6 @@
 using JetBrains.Annotations;
+using Robust.Client.Graphics;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Client.IconSmoothing
 {
@@ -26,6 +28,9 @@ namespace Content.Client.IconSmoothing
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite), DataField("base")]
         public string StateBase { get; } = string.Empty;
+
+        [DataField("shader", customTypeSerializer:typeof(PrototypeIdSerializer<ShaderPrototype>))]
+        public string? Shader;
 
         /// <summary>
         ///     Mode that controls how the icon should be selected.

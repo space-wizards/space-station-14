@@ -16,7 +16,5 @@ namespace Content.Server.Body.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("delay")]
         public float Delay = 3;
-
-        public CancellationTokenSource? CancelToken = null;
     }
 }

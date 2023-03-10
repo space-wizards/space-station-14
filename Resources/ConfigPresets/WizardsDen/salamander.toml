@@ -1,0 +1,16 @@
+﻿# Configuration preset used on Wizard's Den Salamander
+
+[game]
+desc = "Official English Space Station 14 servers. Roleplay required, you must be whitelisted through Discord to play."
+hostname = "[EN] Wizard's Den Salamander [US West RP]"
+
+[server]
+rules_file = "RP_Rules.txt"
+rules_header = "ui-rules-header-rp"
+
+[whitelist]
+enabled = true
+reason = "whitelist-not-whitelisted-rp"
+
+[ic]
+flavor_text = true
