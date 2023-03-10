@@ -313,34 +313,6 @@
 # Tastes like sourness, leaves.
 
 - type: entity
-  name: melon fruit bowl
-  parent: FoodBase
-  id: FoodSaladWatermelonFruitBowl
-  description: The only salad where you can eat the bowl.
-  components:
-  - type: FlavorProfile
-    flavors:
-      - fruity
-      - sour
-  - type: Sprite
-    - state: melonfruitbowl
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxvol: 65
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 30
-        - ReagentId: Vitamin
-          Quantity: 15
-        - ReagentId: Water
-          Quantity: 5
-        - ReagentId: Bicaridine
-          Quantity: 5
-        - ReagentId: Kelotane
-          Quantity: 5
-
-- type: entity
   name: salad of eden
   parent: FoodBowlBase
   id: FoodSaladEden
