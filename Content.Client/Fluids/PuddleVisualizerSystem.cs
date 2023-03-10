@@ -53,7 +53,10 @@ namespace Content.Client.Fluids
 
             var newColor = component.Recolor ? solutionColor.WithAlpha(cappedScale) : args.Sprite.Color.WithAlpha(cappedScale);
 
-            args.Sprite.LayerSetColor(0, newColor);
+            for (var i = 0; i <= 5; i++)
+            {
+                args.Sprite.LayerSetColor(i, newColor);
+            }
 
             // Don't consider wet floor effects if we're using a custom sprite.
             if (component.CustomPuddleSprite)
@@ -89,17 +92,23 @@ namespace Content.Client.Fluids
 
         private void RandomizeState(SpriteComponent sprite, RSI? rsi)
         {
-            var maxStates = rsi?.ToArray();
-            if (maxStates is not { Length: > 0 }) return;
+            if (!sprite.NoRotation)
+            {
+                var maxStates = rsi?.ToArray();
+                if (maxStates is not { Length: > 0 }) return;
 
-            var selectedState = _random.Next(0, maxStates.Length - 1); //randomly select an index for which RSI state to use.
-            sprite.LayerSetState(0, maxStates[selectedState].StateId, rsi); // sets the sprite's state via our randomly selected index.
+                var selectedState = _random.Next(0, maxStates.Length - 1); //randomly select an index for which RSI state to use.
+                sprite.LayerSetState(0, maxStates[selectedState].StateId, rsi); // sets the sprite's state via our randomly selected index.
+            }
         }
 
         private void RandomizeRotation(SpriteComponent sprite)
         {
-            float rotationDegrees = _random.Next(0, 359); // randomly select a rotation for our puddle sprite.
-            sprite.Rotation = Angle.FromDegrees(rotationDegrees); // sets the sprite's rotation to the one we randomly selected.
+            if (!sprite.NoRotation)
+            {
+                float rotationDegrees = _random.Next(0, 359); // randomly select a rotation for our puddle sprite.
+                sprite.Rotation = Angle.FromDegrees(rotationDegrees); // sets the sprite's rotation to the one we randomly selected.
+            }
         }
     }
 }
