@@ -746,11 +746,7 @@ public sealed class PoolSettings
 
     // Prototype hot reload is not available outside TOOLS builds,
     // so we can't pool test instances that use ExtraPrototypes without TOOLS.
-#if TOOLS
     private bool NoToolsExtraPrototypes => false;
-#else
-    private bool NoToolsExtraPrototypes => !string.IsNullOrEmpty(ExtraPrototypes);
-#endif
 }
 
 /// <summary>
