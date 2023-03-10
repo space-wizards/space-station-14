@@ -112,10 +112,10 @@ public sealed class FluidSpreaderSystem : EntitySystem
         foreach(var (appearance, puddle) in EntityQuery<AppearanceComponent, PuddleComponent>())
         {
             var uid = appearance.Owner;
-            _appearance.SetData(uid, PuddleVisuals.South, (puddle.Flow & DirectionFlag.South) != 0, appearance);
-            _appearance.SetData(uid, PuddleVisuals.East, (puddle.Flow & DirectionFlag.East) != 0, appearance);
-            _appearance.SetData(uid, PuddleVisuals.North, (puddle.Flow & DirectionFlag.North) != 0, appearance);
-            _appearance.SetData(uid, PuddleVisuals.West, (puddle.Flow & DirectionFlag.West) != 0, appearance);
+            _appearance.SetData(uid, PuddleVisuals.SouthEast, (puddle.Flow & DirectionFlag.SouthEast) != 0, appearance);
+            _appearance.SetData(uid, PuddleVisuals.NorthEast, (puddle.Flow & DirectionFlag.NorthEast) != 0, appearance);
+            _appearance.SetData(uid, PuddleVisuals.SouthWest, (puddle.Flow & DirectionFlag.SouthWest) != 0, appearance);
+            _appearance.SetData(uid, PuddleVisuals.NorthWest, (puddle.Flow & DirectionFlag.NorthWest) != 0, appearance);
         }
     }
 
