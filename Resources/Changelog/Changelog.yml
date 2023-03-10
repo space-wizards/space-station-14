@@ -1,9 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Adds SSXIV lobby screen., type: Add}
-  id: 2651
-  time: '2022-11-14T19:09:38.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Added the Rapid Parts Exchange Device. Just load it up with parts and
@@ -2922,3 +2917,9 @@ Entries:
   - {message: Changed space bears visually. Growr., type: Tweak}
   id: 3150
   time: '2023-03-10T13:45:44.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Changed Paperwork to no longer be a demon sent from hell. Old one will
+      be adapted into a zombie sprite instead..., type: Tweak}
+  id: 3151
+  time: '2023-03-10T14:34:46.0000000+00:00'
