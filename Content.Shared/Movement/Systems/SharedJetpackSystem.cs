@@ -117,7 +117,7 @@ public abstract class SharedJetpackSystem : EntitySystem
 
         if (!_gravity.IsWeightless(uid))
         {
-            if (_timing.IsFirstTimePredicted && _network.IsClient)
+            if (_timing.IsFirstTimePredicted)
                 _popups.PopupEntity(Loc.GetString("jetpack-no-station"), uid, args.Performer);
 
             return;
