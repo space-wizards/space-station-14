@@ -55,7 +55,7 @@ public abstract class SharedJetpackSystem : EntitySystem
                 jetpackQuery.TryGetComponent(user.Jetpack, out var jetpack))
             {
                 if (_timing.IsFirstTimePredicted && _network.IsClient)
-                    _popups.PopupEntity(Loc.GetString("jetpack-to-grid"), user.Jetpack, user.Owner);
+                    _popups.PopupEntity(Loc.GetString("jetpack-turn-off"), user.Jetpack, user.Owner);
 
                 SetEnabled(jetpack, false, user.Owner);
             }
@@ -93,7 +93,7 @@ public abstract class SharedJetpackSystem : EntitySystem
             SetEnabled(jetpack, false, uid);
 
             if (_timing.IsFirstTimePredicted && _network.IsClient)
-                _popups.PopupEntity(Loc.GetString("jetpack-to-grid"), uid, uid);
+                _popups.PopupEntity(Loc.GetString("jetpack-turn-off"), uid, uid);
         }
     }
 
@@ -119,7 +119,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         if (!CanEnable(Transform(uid).Coordinates))
         {
             if (_timing.IsFirstTimePredicted)
-                _popups.PopupEntity(Loc.GetString("jetpack-no-station"), uid, args.Performer);
+                _popups.PopupEntity(Loc.GetString("jetpack-under-gravity"), uid, args.Performer);
 
             return;
         }
