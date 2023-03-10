@@ -95,3 +95,10 @@
     collection: CluwneScreams
     params:
       variation: 0.125
+
+- type: emoteSounds
+  id: Bear
+  sound:
+    path: /Audio/Animals/bear.ogg
+    params:
+      variation: 0.125
