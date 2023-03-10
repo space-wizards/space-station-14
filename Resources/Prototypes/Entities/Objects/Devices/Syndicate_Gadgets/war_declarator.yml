@@ -5,13 +5,9 @@
   description: Use to send a declaration of hostilities to the target, delaying your shuttle departure for 15 minutes while they prepare for your assault. Such a brazen move will supply your team with a massive amount of bonus telecrystals. Must be used within six minutes, or opportunity will expire.
   components:
     - type: Sprite
-      sprite: Objects/Devices/door_remote.rsi
+      sprite: Objects/Devices/declaration_of_war.rsi
       layers:
-      - state: door_remotebase
-      - state: door_remotelightscolour
-        color: "#cb0000"
-      - state: door_remotescreencolour
-        color: "#830000"
+      - state: declaration_of_war
       netsync: false
     - type: Item
     - type: UseDelay
