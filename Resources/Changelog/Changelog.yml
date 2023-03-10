@@ -1,9 +1,4 @@
 Entries:
-- author: JustinTrotter
-  changes:
-  - {message: The savage magnet now has functional LED lights., type: Add}
-  id: 2647
-  time: '2022-11-14T07:45:45.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Grids should no longer clip constantly (engine change)., type: Fix}
@@ -2921,3 +2916,9 @@ Entries:
       window when resizing the game window., type: Tweak}
   id: 3146
   time: '2023-03-09T13:56:44.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Admins can now spawn dungeons with procedurally generated layouts.,
+    type: Add}
+  id: 3147
+  time: '2023-03-10T05:41:23.0000000+00:00'
