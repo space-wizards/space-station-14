@@ -15,13 +15,13 @@ public sealed class NukeopsRuleConfiguration : GameRuleConfiguration
     public override string Id => "Nukeops";
 
     [DataField("minPlayers")]
-    public int MinPlayers = 0; //15
+    public int MinPlayers = 15;
 
     /// <summary>
     ///     This INCLUDES the operatives. So a value of 3 is satisfied by 2 players & 1 operative
     /// </summary>
     [DataField("playersPerOperative")]
-    public int PlayersPerOperative = 1; //5
+    public int PlayersPerOperative = 5;
 
     [DataField("maxOps")]
     public int MaxOperatives = 5;
@@ -48,19 +48,19 @@ public sealed class NukeopsRuleConfiguration : GameRuleConfiguration
     ///     Time window given to get extra TC for war declaration. 
     /// </summary>
     [DataField("warDeclarationTimeWindow")]
-    public TimeSpan WarDeclarationTimeWindow = TimeSpan.FromMinutes(2); // 6
+    public TimeSpan WarDeclarationTimeWindow = TimeSpan.FromMinutes(6);
 
     /// <summary>
     ///     Delay between war declaration and nuke ops arrival on station map. Gives crew time to prepare
     /// </summary>
     [DataField("warNukieArriveDelay")]
-    public TimeSpan WarNukieArriveDelay = TimeSpan.FromMinutes(2); // 15
+    public TimeSpan WarNukieArriveDelay = TimeSpan.FromMinutes(15);
 
     /// <summary>
     ///     Minimal crew size for war
     /// </summary>
     [DataField("warMinCrewSize")]
-    public int WarMinCrewSize = 0; // 4
+    public int WarMinCrewSize = 4;
 
     [DataField("randomHumanoidSettings", customTypeSerializer: typeof(PrototypeIdSerializer<RandomHumanoidSettingsPrototype>))]
     public string RandomHumanoidSettingsPrototype = "NukeOp";
