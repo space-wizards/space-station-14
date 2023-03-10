@@ -9,6 +9,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Electrocution;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
+using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
@@ -145,8 +146,12 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
     protected bool GloveCheck(EntityUid uid, InteractionAttemptEvent args, [NotNullWhen(true)] out NinjaGlovesComponent? gloves,
         out EntityUid user, out EntityUid target)
     {
-        if (args.Target != null && TryComp<NinjaGlovesComponent>(uid, out gloves) && gloves.User != null
-            && !_combatMode.IsInCombatMode(gloves.User) && _timing.IsFirstTimePredicted)
+        if (args.Target != null && TryComp<NinjaGlovesComponent>(uid, out gloves)
+            && gloves.User != null
+            && !_combatMode.IsInCombatMode(gloves.User)
+            && _timing.IsFirstTimePredicted
+            && TryComp<SharedHandsComponent>(gloves.User, out var hands)
+            && hands.ActiveHandEntity == null)
         {
             user = gloves.User.Value;
             target = args.Target.Value;
