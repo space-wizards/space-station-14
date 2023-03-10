@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.Fluids.Components;
 using Content.Shared;
 using Content.Shared.Directions;
+using Content.Shared.Fluids;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
@@ -25,6 +26,7 @@ public sealed class FluidSpreaderSystem : EntitySystem
     [Dependency] private readonly PuddleSystem _puddleSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     /// <summary>
     /// Adds an overflow component to the map data component tracking overflowing puddles
@@ -97,6 +99,14 @@ public sealed class FluidSpreaderSystem : EntitySystem
             fluidMapData.Puddles.Clear();
             fluidMapData.Puddles.UnionWith(newIteration);
             fluidMapData.UpdateGoal(_gameTiming.CurTime);
+        }
+
+        foreach(var (appearance, puddle) in EntityQuery<AppearanceComponent, PuddleComponent>())
+        {
+            _appearance.SetData(appearance.Owner, PuddleVisuals.South, (puddle.Flow & DirectionFlag.South) != 0, appearance);
+            _appearance.SetData(appearance.Owner, PuddleVisuals.East, (puddle.Flow & DirectionFlag.East) != 0, appearance);
+            _appearance.SetData(appearance.Owner, PuddleVisuals.North, (puddle.Flow & DirectionFlag.North) != 0, appearance);
+            _appearance.SetData(appearance.Owner, PuddleVisuals.West, (puddle.Flow & DirectionFlag.West) != 0, appearance);
         }
     }
 

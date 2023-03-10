@@ -30,6 +30,12 @@
   - type: Appearance
   - type: PuddleVisualizer
     wetFloorEffectThreshold: 0 # non-evaporating puddles don't become sparkles.
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
 
 - type: entity
   id: EvaporatingPuddle
@@ -69,8 +75,17 @@
   components:
   - type: Sprite
     sprite: Fluids/smear.rsi # Placeholder
-    state: smear-0
     netsync: false
+    layers:
+    - state: smear-0
+    - map: [ "south" ]
+      state: smear-1
+    - map: [ "east" ]
+      state: smear-2
+    - map: [ "north" ]
+      state: smear-3
+    - map: [ "west" ]
+      state: smear-4
   - type: Puddle
     slipThreshold: 3
   - type: Appearance
@@ -78,6 +93,24 @@
   - type: Slippery
     launchForwardsMultiplier: 2.0
   - type: StepTrigger
+  - type: GenericVisualizer
+    visuals:
+      enum.PuddleVisuals.South:
+        south:
+          True: { visible: True }
+          False: { visible: False }
+      enum.PuddleVisuals.East:
+        east:
+          True: { visible: True }
+          False: { visible: False }
+      enum.PuddleVisuals.North:
+        north:
+          True: { visible: True }
+          False: { visible: False }
+      enum.PuddleVisuals.West:
+        west:
+          True: { visible: True }
+          False: { visible: False }    
 
 - type: entity
   name: puddle
