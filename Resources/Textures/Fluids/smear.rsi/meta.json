@@ -29,16 +29,16 @@
             "name": "center"
         },
         {
-            "name": "southeast"
+            "name": "north"
         },
         {
-            "name": "northeast"
+            "name": "south"
         },
         {
-            "name": "southwest"
+            "name": "west"
         },
         {
-            "name": "northwest"
+            "name": "east"
         }
     ]
 }

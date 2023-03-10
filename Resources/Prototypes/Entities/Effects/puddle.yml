@@ -79,14 +79,14 @@
     noRot: true
     layers:
     - state: center
-    - map: [ "southeast" ]
-      state: southeast
-    - map: [ "northeast" ]
-      state: northeast
-    - map: [ "southwest" ]
-      state: southwest
-    - map: [ "northwest" ]
-      state: northwest
+    - map: [ "south" ]
+      state: south
+    - map: [ "east" ]
+      state: east
+    - map: [ "north" ]
+      state: north
+    - map: [ "west" ]
+      state: west
   - type: Puddle
     slipThreshold: 3
   - type: Appearance
@@ -96,20 +96,20 @@
   - type: StepTrigger
   - type: GenericVisualizer
     visuals:
-      enum.PuddleVisuals.SouthEast:
-        southeast:
+      enum.PuddleVisuals.South:
+        south:
           True: { visible: True }
           False: { visible: False }
-      enum.PuddleVisuals.NorthEast:
-        northeast:
+      enum.PuddleVisuals.East:
+        east:
           True: { visible: True }
           False: { visible: False }
-      enum.PuddleVisuals.SouthWest:
-        southwest:
+      enum.PuddleVisuals.North:
+        north:
           True: { visible: True }
           False: { visible: False }
-      enum.PuddleVisuals.NorthWest:
-        northwest:
+      enum.PuddleVisuals.West:
+        west:
           True: { visible: True }
           False: { visible: False }    
 

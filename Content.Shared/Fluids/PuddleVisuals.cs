@@ -9,9 +9,9 @@ namespace Content.Shared.Fluids
         CurrentVolume,
         SolutionColor,
         IsEvaporatingVisual,
-        SouthEast,
-        SouthWest,
-        NorthEast,
-        NorthWest
+        South,
+        East,
+        North,
+        West
     }
 }
