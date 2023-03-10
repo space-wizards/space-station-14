@@ -83,10 +83,18 @@ public sealed class FluidSpreaderSystem : EntitySystem
                     var newPos = pos.Offset(direction);
                     if (CheckTile(puddleUid, puddle, newPos, mapGrid, out var uid, out var component))
                     {
-                        puddles.Add(component);
-                        totalVolume += _puddleSystem.CurrentVolume(uid.Value, component);
-                        puddle.Flow |= direction.AsFlag();
-                        component.Flow |= direction.GetOpposite().AsFlag();
+                        if (_puddleSystem.CurrentVolume(uid.Value, component) <= _puddleSystem.CurrentVolume(puddleUid, puddle))
+                        {
+                            puddles.Add(component);
+                            totalVolume += _puddleSystem.CurrentVolume(uid.Value, component);
+                            puddle.Flow |= direction.AsFlag();
+                            component.Flow |= direction.GetOpposite().AsFlag();
+                        } 
+                        else 
+                        {
+                            puddle.Flow &= ~direction.AsFlag();
+                            component.Flow &= ~direction.GetOpposite().AsFlag();
+                        }
                     } 
                     else
                     {
@@ -146,17 +154,10 @@ public sealed class FluidSpreaderSystem : EntitySystem
             return false;
         }
 
-        var puddleCurrentVolume = _puddleSystem.CurrentVolume(srcUid, srcPuddle);
         foreach (var entity in dstPos.GetEntitiesInTile())
         {
             if (TryComp<PuddleComponent>(entity, out var existingPuddle))
             {
-                if (_puddleSystem.CurrentVolume(entity, existingPuddle) >= puddleCurrentVolume)
-                {
-                    newPuddleUid = null;
-                    newPuddleComp = null;
-                    return false;
-                }
                 newPuddleUid = entity;
                 newPuddleComp = existingPuddle;
                 return true;

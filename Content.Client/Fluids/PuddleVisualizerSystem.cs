@@ -53,10 +53,7 @@ namespace Content.Client.Fluids
 
             var newColor = component.Recolor ? solutionColor.WithAlpha(cappedScale) : args.Sprite.Color.WithAlpha(cappedScale);
 
-            for (var i = 0; i <= 5; i++)
-            {
-                args.Sprite.LayerSetColor(i, newColor);
-            }
+            args.Sprite.Color = newColor;
 
             // Don't consider wet floor effects if we're using a custom sprite.
             if (component.CustomPuddleSprite)
