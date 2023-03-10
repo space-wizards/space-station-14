@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Added the Rapid Parts Exchange Device. Just load it up with parts and
-      click on a machine to instantly upgrade it., type: Add}
-  id: 2652
-  time: '2022-11-14T19:36:14.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix melee sounds getting spammed in some instances., type: Fix}
@@ -2923,3 +2917,8 @@ Entries:
       be adapted into a zombie sprite instead..., type: Tweak}
   id: 3151
   time: '2023-03-10T14:34:46.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Flora decals will now always face upright to the camera., type: Tweak}
+  id: 3152
+  time: '2023-03-10T18:29:29.0000000+00:00'
