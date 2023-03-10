@@ -53,7 +53,7 @@ public abstract class SharedJetpackSystem : EntitySystem
             if (transform.GridUid == ev.ChangedGridIndex && ev.HasGravity &&
                 jetpackQuery.TryGetComponent(user.Jetpack, out var jetpack))
             {
-                if (_timing.IsFirstTimePredicted)
+                if (_timing.IsFirstTimePredicted && _network.IsClient)
                     _popups.PopupEntity(Loc.GetString("jetpack-to-grid"), user.Jetpack, user.Owner);
 
                 SetEnabled(jetpack, false, user.Owner);
@@ -87,8 +87,7 @@ public abstract class SharedJetpackSystem : EntitySystem
 
     private void OnJetpackUserEntParentChanged(EntityUid uid, JetpackUserComponent component, ref EntParentChangedMessage args)
     {
-        if (TryComp<JetpackComponent>(component.Jetpack, out var jetpack) &&
-            _gravity.IsWeightless(uid))
+        if (TryComp<JetpackComponent>(component.Jetpack, out var jetpack) && !_gravity.IsWeightless(uid))
         {
             SetEnabled(jetpack, false, uid);
 
@@ -118,7 +117,7 @@ public abstract class SharedJetpackSystem : EntitySystem
 
         if (!_gravity.IsWeightless(uid))
         {
-            if (_timing.IsFirstTimePredicted)
+            if (_timing.IsFirstTimePredicted && _network.IsClient)
                 _popups.PopupEntity(Loc.GetString("jetpack-no-station"), uid, args.Performer);
 
             return;
