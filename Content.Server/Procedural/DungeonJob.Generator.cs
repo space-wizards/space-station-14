@@ -382,6 +382,8 @@ public sealed partial class DungeonJob
                         var angle = (decal.Angle + finalRoomRotation).Reduced();
 
                         // Adjust because 32x32 so we can't rotate cleanly
+                        // Yeah idk about the uhh vectors here but it looked visually okay but they may still be off by 1.
+                        // Also EyeManager.PixelsPerMeter should really be in shared.
                         if (angle.Equals(Math.PI))
                         {
                             position += new Vector2(-1f / 32f, 1f / 32f);
