@@ -323,16 +323,21 @@
       - fruity
       - sour
   - type: Sprite
-    layers:
     - state: melonfruitbowl
   - type: SolutionContainerManager
     solutions:
       food:
-        maxvol: 15
+        maxvol: 65
         reagents:
         - ReagentId: Nutriment
-          Quantity: 7
+          Quantity: 30
         - ReagentId: Vitamin
+          Quantity: 15
+        - ReagentId: Water
+          Quantity: 5
+        - ReagentId: Bicaridine
+          Quantity: 5
+        - ReagentId: Kelotane
           Quantity: 5
 
 - type: entity
