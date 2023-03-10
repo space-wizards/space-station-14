@@ -127,3 +127,6 @@ ent-BoxerPDA = КПК боксёра
 ent-DetectivePDA = КПК детектива
     .desc = Пахнет дождём... хлещущим по крышам...
     .suffix = { "" }
+ent-CluwnePDA = КПК клувеня
+    .desc = Проклятый КПК клувеня.
+    .suffix = Неснимаемый

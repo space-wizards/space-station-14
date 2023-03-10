@@ -1,5 +1,5 @@
-ent-BasaltOne = basalt
-    .desc = Rock
+ent-BasaltOne = базальт
+    .desc = Камень
     .suffix = { "" }
 ent-BasaltTwo = { ent-BasaltOne }
     .desc = { ent-BasaltOne.desc }
@@ -14,5 +14,5 @@ ent-BasaltFive = { ent-BasaltOne }
     .desc = { ent-BasaltOne.desc }
     .suffix = { "" }
 ent-BasaltRandom = { ent-BasaltOne }
-    .suffix = Random
+    .suffix = Случайный
     .desc = { ent-BasaltOne.desc }

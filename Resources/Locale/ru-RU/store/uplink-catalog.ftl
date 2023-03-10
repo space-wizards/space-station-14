@@ -26,6 +26,8 @@ uplink-c4-name = C-4
 uplink-c4-desc = Используйте её, чтобы разрушать стены, шлюзы или саботировать оборудование. Её можно прикрепить практически к любому объекту, а таймер можно изменять, минимальное значение - 10 секунд.
 uplink-c4-bundle-name = набор C-4
 uplink-c4-bundle-desc = Иногда количество - это качество. Содержит 8 штук взрывчатки C-4.
+uplink-emp-grenade-name = { ent-EmpGrenade }
+uplink-emp-grenade-desc = { ent-EmpGrenade.desc }
 # Ammo
 uplink-pistol-magazine-name = пистолетный магазин (.35 авто)
 uplink-pistol-magazine-desc = Пистолетный магазин на 10 патронов. Совместим с "Гадюкой".
@@ -98,6 +100,8 @@ uplink-gatfruit-seeds-name = { ent-GatfruitSeeds }
 uplink-gatfruit-seeds-desc = И кто сказал, что пушки не растут на деревьях?
 uplink-necronomicon-name = некрономикон
 uplink-necronomicon-desc = Нечестивая книга, позволяющая призвать демонического фамильяра.
+uplink-revolver-cap-gun-fake-name = Фальшивый игрушечный пистолет
+uplink-revolver-cap-gun-fake-desc = Одурачьте своих врагов! Использует как пистоны, так и патроны калибра .45 магнум. Последними и будет заряжен при покупке.
 # Armor
 uplink-chameleon-name = набор "Хамелеон"
 uplink-chameleon-desc = Рюкзак, полный вещей, оснащенных технологией хамелеона, позволяющих вам маскироваться под кого угодно на станции, и даже больше!
@@ -127,6 +131,12 @@ uplink-ultrabright-lantern-name = сверхъяркий светильник
 uplink-ultrabright-lantern-desc = Ослепительно.
 uplink-nocturine-chemistry-bottle-name = { ent-NocturineChemistryBottle }
 uplink-nocturine-chemistry-bottle-desc = Химическое вещество, от которого ваша цель не устоит (на ногах).
+uplink-stimpack-name = стимпак
+uplink-stimpack-desc = Легендарный химический коктейль, производимый компанией Donk Co. для Синдиката. Одна инъекция этого вещества увеличивает скорость бега и позволяет быстрее восстанавливаться после оглушения в течение 5 минут.
+uplink-stimkit-name = набор стимпаков
+uplink-stimkit-desc = Аптечка, содержащая 6 микро-стимпаков, каждый из которых содержит минутную дозу стимулятора.
+uplink-experimental-stimpack-name = экспериментальный стимпак
+uplink-experimental-stimpack-desc = Усиленный прототип стимпака, снятый с рынка из-за крайне тяжелых побочных эффектов. Основными же эффектами являются практически полная невосприимчивость к оглушающему оружию, ускоренная регенерация ран, огромную скорость передвижения, но при этом химикат будет постоянно отравлять вас, пока находится в вашей крови.
 uplink-syndicate-segway-crate-name = { ent-VehicleSyndicateSegway }
 uplink-syndicate-segway-crate-desc = { ent-VehicleSyndicateSegway.desc }
 # Pointless

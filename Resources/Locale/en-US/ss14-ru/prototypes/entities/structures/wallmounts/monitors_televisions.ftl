@@ -1,3 +1,6 @@
+ent-ComputerTelevision = wooden television
+    .desc = Finally, some decent reception around here...
+    .suffix = { "" }
 ent-WallmountTelescreenFrame = telescreen frame
     .desc = Finally, some decent reception around here...
     .suffix = { "" }

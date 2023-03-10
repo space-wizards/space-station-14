@@ -1,4 +1,4 @@
-ent-IDCardStandard = идентификационная карта
+ent-IDCardStandard = ID карта
     .desc = Карта, необходимая для доступа в различные области станции.
     .suffix = { "" }
 ent-PassengerIDCard = ID карта пассажира
@@ -133,3 +133,6 @@ ent-DetectiveIDCard = ID карта детектива
 ent-CBURNIDcard = ID карта РХБЗЗ
     .desc = { ent-CentcomIDCard.desc }
     .suffix = { "" }
+ent-CluwneIDCard = ID карта клувеня
+    .suffix = Неснимаемый
+    .desc = { ent-IDCardStandard.desc }

@@ -1,3 +1,6 @@
+ent-GrenadeBase = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
+    .suffix = { "" }
 ent-ExGrenade = explosive grenade
     .desc = Grenade that creates a small but devastating explosion.
     .suffix = { "" }
@@ -12,4 +15,7 @@ ent-NuclearGrenade = the nuclear option
     .suffix = { "" }
 ent-ModularGrenade = modular grenade
     .desc = A grenade casing. Requires a trigger and a payload.
+    .suffix = { "" }
+ent-EmpGrenade = emp grenade
+    .desc = Releases electromagnetic pulses that disrupt or damage many electronic devices or drain power cells.
     .suffix = { "" }

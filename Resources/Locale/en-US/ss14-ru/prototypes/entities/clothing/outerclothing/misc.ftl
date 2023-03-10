@@ -58,3 +58,6 @@ ent-ClothingOuterPlagueSuit = plague doctor suit
 ent-ClothingOuterNunRobe = nun robe
     .desc = Maximum piety in this star system.
     .suffix = { "" }
+ent-ClothingOuterGhostSheet = ghost sheet
+    .desc = Spooky!!!
+    .suffix = { "" }

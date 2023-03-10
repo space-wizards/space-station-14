@@ -17,4 +17,8 @@ salvage-system-magnet-examined-active =
        *[other] { $timeLeft } секунд.
     }
 salvage-system-magnet-examined-releasing = Магнит перестаёт удерживать обломки.
-salvage-system-magnet-examined-cooling-down = Магнит остывает.
+salvage-system-magnet-examined-cooling-down = Магнит остывает. Он будет снова готов через { $timeLeft ->
+        [one] 1 секунду.
+        [few] { $timeLeft } секунды.
+       *[other] { $timeLeft } секунд.
+    }.

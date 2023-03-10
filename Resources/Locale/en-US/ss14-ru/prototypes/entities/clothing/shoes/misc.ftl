@@ -13,3 +13,6 @@ ent-ClothingShoeSlippersDuck = ducky slippers
 ent-ClothingShoesTourist = tourist shoes
     .desc = These cheap sandals don't look very comfortable.
     .suffix = { "" }
+ent-ClothingShoesDameDane = dame dane shoes
+    .desc = At last...
+    .suffix = { "" }

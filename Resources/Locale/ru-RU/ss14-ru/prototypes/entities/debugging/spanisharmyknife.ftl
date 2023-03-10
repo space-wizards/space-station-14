@@ -1,3 +1,3 @@
-ent-ToolDebug = spanish army knife
-    .desc = The pain of using this is almost too great to bear.
+ent-ToolDebug = испанский армейский нож
+    .desc = Боль от его использования почти невыносима.
     .suffix = DEBUG

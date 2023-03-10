@@ -55,3 +55,6 @@ ent-ClothingBackpackERTClown = рюкзак клоуна ОБР
 ent-ClothingBackpackHolding = блюспейс рюкзак
     .desc = Рюкзак, открывающийся в локальный карман блюспейса.
     .suffix = { "" }
+ent-ClothingBackpackCluwne = проклятый хихишкин фон хонкертон
+    .desc = Проклятый рюкзак хихишкин фон хонкертон.
+    .suffix = Неснимаемый

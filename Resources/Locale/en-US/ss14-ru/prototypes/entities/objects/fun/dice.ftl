@@ -1,7 +1,7 @@
 ent-BaseDice = { ent-BaseItem }
     .desc = { ent-BaseItem.desc }
     .suffix = { "" }
-ent-d100Dice = d100
+ent-PercentileDie = Percentile Die
     .desc = A die with ten sides. Works better for d100 rolls than a golf ball.
     .suffix = { "" }
 ent-d20Dice = d20

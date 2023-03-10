@@ -70,3 +70,6 @@ ent-LockerEvidence = evidence locker
 ent-LockerSyndicatePersonal = armory closet
     .desc = It's a personal storage unit for operative gear.
     .suffix = { "" }
+ent-LockerBluespaceStation = bluespace locker
+    .desc = Advanced locker technology.
+    .suffix = once to station

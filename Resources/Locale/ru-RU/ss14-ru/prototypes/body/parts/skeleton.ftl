@@ -1,4 +1,4 @@
-ent-PartSkeleton = часть тела скелет
+ent-PartSkeleton = часть тела скелета
     .desc = { ent-BaseItem.desc }
     .suffix = { "" }
 ent-TorsoSkeleton = туловище скелета

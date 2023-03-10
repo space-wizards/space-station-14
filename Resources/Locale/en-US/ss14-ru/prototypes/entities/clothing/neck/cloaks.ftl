@@ -37,3 +37,6 @@ ent-ClothingNeckCloakMiner = miner's cloak
 ent-ClothingNeckCloakTrans = vampire cloak
     .desc = Worn by high ranking vampires of the transylvanian society of vampires.
     .suffix = { "" }
+ent-ClothingNeckCloakGoliathCloak = goliath cloak
+    .desc = A cloak made from the hide of resilient fauna from a distant planet, though its protective value has faded with its age.
+    .suffix = { "" }

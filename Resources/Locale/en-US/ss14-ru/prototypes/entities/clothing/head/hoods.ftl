@@ -28,3 +28,6 @@ ent-ClothingHeadHatHoodNunHood = nun hood
 ent-ClothingHeadHatHoodRad = radiation hood
     .desc = A hood of the hazmat suit, designed for protection from high radioactivity.
     .suffix = { "" }
+ent-ClothingHeadHatHoodGoliathCloak = goliath cloak hood
+    .desc = A hood of a goliath cloak, it is made from the hide of resilient fauna from a distant planet.
+    .suffix = { "" }
