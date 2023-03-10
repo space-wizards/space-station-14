@@ -77,15 +77,15 @@
     sprite: Fluids/smear.rsi # Placeholder
     netsync: false
     layers:
-    - state: smear-0
+    - state: center
     - map: [ "south" ]
-      state: smear-1
+      state: south
     - map: [ "east" ]
-      state: smear-2
+      state: east
     - map: [ "north" ]
-      state: smear-3
+      state: north
     - map: [ "west" ]
-      state: smear-4
+      state: west
   - type: Puddle
     slipThreshold: 3
   - type: Appearance

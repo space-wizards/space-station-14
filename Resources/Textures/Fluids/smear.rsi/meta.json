@@ -26,7 +26,19 @@
             "name": "smear-5"
         },
         {
-            "name": "smear-6"
+            "name": "center"
+        },
+        {
+            "name": "north"
+        },
+        {
+            "name": "south"
+        },
+        {
+            "name": "west"
+        },
+        {
+            "name": "east"
         }
     ]
 }
