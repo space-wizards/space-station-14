@@ -271,7 +271,7 @@ public sealed partial class DungeonJob
                         {
                             for (var y = roomSize.Bottom; y < roomSize.Top; y++)
                             {
-                                var index = (Vector2i) matty.Transform(new Vector2(x, y) + grid.TileSize / 2f - packCenter);
+                                var index = matty.Transform(new Vector2(x, y) + grid.TileSize / 2f - packCenter).Floored();
                                 tiles.Add((index, new Tile(_tileDefManager["FloorPlanetGrass"].TileId)));
                             }
                         }
