@@ -157,7 +157,12 @@ public sealed partial class DungeonJob
                 ClearDoor(dungeon, grid, entrancePos);
                 var gridCoords = grid.GridTileToLocal(entrancePos);
                 // Need to offset the spawn to avoid spawning in the room.
-                _entManager.SpawnEntity(gen.Door, gridCoords);
+
+                foreach (var ent in gen.Entities)
+                {
+                    _entManager.SpawnEntity(ent, gridCoords);
+                }
+
                 count--;
 
                 // Clear out any biome tiles nearby to avoid blocking it
