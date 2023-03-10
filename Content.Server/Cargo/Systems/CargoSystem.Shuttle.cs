@@ -156,14 +156,13 @@ public sealed partial class CargoSystem
     private void UpdatePalletConsoleInterface(EntityUid uid, CargoPalletConsoleComponent component)
     {
         var bui = _uiSystem.GetUi(component.Owner, CargoPalletConsoleUiKey.Sale);
-        var gridUid = Transform(uid).GridUid;
-        if (gridUid == null)
+        if (Transform(uid).GridUid is not EntityUid gridUid)
         {
             _uiSystem.SetUiState(bui,
             new CargoPalletConsoleInterfaceState(0, 0, false));
             return;
         }
-        GetPalletGoods((EntityUid) gridUid, out var toSell, out var amount);
+        GetPalletGoods(gridUid, out var toSell, out var amount);
         _uiSystem.SetUiState(bui,
             new CargoPalletConsoleInterfaceState((int) amount, toSell.Count, true));
     }
@@ -495,15 +494,14 @@ public sealed partial class CargoSystem
             return;
 
         var bui = _uiSystem.GetUi(component.Owner, CargoPalletConsoleUiKey.Sale);
-        var gridUid = Transform(uid).GridUid;
-        if (gridUid == null)
+        if (Transform(uid).GridUid is not EntityUid gridUid)
         {
             _uiSystem.SetUiState(bui,
             new CargoPalletConsoleInterfaceState(0, 0, false));
             return;
         }
 
-        SellPallets((EntityUid) gridUid, out var price);
+        SellPallets(gridUid, out var price);
         var stackPrototype = _prototypeManager.Index<StackPrototype>(component.CashType);
         _stack.Spawn((int)price, stackPrototype, uid.ToCoordinates());
         UpdatePalletConsoleInterface(uid, component);
