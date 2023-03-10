@@ -163,3 +163,11 @@
     - type: StorageFill
       contents:
         - id: MobHamsterHamlet
+
+- type: entity
+  id: CrateNPCLizard
+  parent: CrateLivestock
+  components:
+    - type: StorageFill
+      contents:
+        - id: MobLizard

@@ -7,6 +7,11 @@ namespace Content.Server.CPUJob.JobQueues.Queues
     {
         private readonly IStopwatch _stopwatch;
 
+        public JobQueue(double maxTime) : this(new Stopwatch())
+        {
+            MaxTime = maxTime;
+        }
+
         public JobQueue() : this(new Stopwatch()) {}
 
         public JobQueue(IStopwatch stopwatch)
