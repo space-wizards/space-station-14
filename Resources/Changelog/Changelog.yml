@@ -1,31 +1,4 @@
 Entries:
-- author: PJB3005
-  changes:
-  - {message: Fixed rich text wrapping., type: Fix}
-  id: 2643
-  time: '2022-11-13T15:07:48.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Melee sounds and effects are now predicted and the client should generally
-      match the server due to lag compensation., type: Tweak}
-  id: 2644
-  time: '2022-11-13T21:33:54.0000000+00:00'
-- author: juliangiebel
-  changes:
-  - {message: 'added a new PDA cartridge: The NetProbe cartridge.', type: Add}
-  id: 2645
-  time: '2022-11-13T21:36:00.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed a rounding error which would cause certain parts in machine upgrades
-      to not work. This has mostly affected the artifact analyzer., type: Fix}
-  id: 2646
-  time: '2022-11-13T23:42:35.0000000+00:00'
-- author: JustinTrotter
-  changes:
-  - {message: The savage magnet now has functional LED lights., type: Add}
-  id: 2647
-  time: '2022-11-14T07:45:45.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Grids should no longer clip constantly (engine change)., type: Fix}
@@ -2921,3 +2894,31 @@ Entries:
   - {message: Changed held toolbox sprites to be more robust, type: Tweak}
   id: 3142
   time: '2023-03-07T13:48:34.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix toy bap sounds., type: Fix}
+  id: 3143
+  time: '2023-03-09T08:28:57.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: added emp artifact effect., type: Add}
+  id: 3144
+  time: '2023-03-09T08:30:01.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Mop indicator is now fixed, type: Fix}
+  - {message: Fixes drinking from bricking if you were full before drinking, type: Fix}
+  id: 3145
+  time: '2023-03-09T08:45:19.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Separated HUD mode now expands the game viewport instead of the chat
+      window when resizing the game window., type: Tweak}
+  id: 3146
+  time: '2023-03-09T13:56:44.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Admins can now spawn dungeons with procedurally generated layouts.,
+    type: Add}
+  id: 3147
+  time: '2023-03-10T05:41:23.0000000+00:00'
