@@ -1,9 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Cell charger is destructible and doesn't block mobs movement., type: Tweak}
-  id: 2649
-  time: '2022-11-14T14:57:59.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Added ban list window for admins., type: Add}
@@ -2922,3 +2917,8 @@ Entries:
   - {message: Eyes will now still lerp on paused maps., type: Fix}
   id: 3148
   time: '2023-03-10T07:12:22.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: 'Xeno turrets have been added, and they have a nasty acid!', type: Add}
+  id: 3149
+  time: '2023-03-10T13:25:34.0000000+00:00'
