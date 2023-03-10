@@ -1,10 +1,10 @@
 using System.Threading;
-using Content.Server.Nutrition.Vape;
+using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Damage;
 
 namespace Content.Server.Nutrition.Components
 {
-    [RegisterComponent, Access(typeof(VapeSystem))] 
+    [RegisterComponent, Access(typeof(SmokingSystem))] 
     public sealed class VapeComponent : Component
     {
         [DataField("delay")]
@@ -33,6 +33,13 @@ namespace Content.Server.Nutrition.Components
 
         [DataField("smokePrototype")]
         public string SmokePrototype = "VapeSmoke";
+
+        [DataField("explodableSolutions")]
+        public List<string> ExplodableSolutions { get; set; } = new(){
+            "Water",
+            "Plasma",
+            "WeldingFuel"
+        };
 
         public CancellationTokenSource? CancelToken;
     }

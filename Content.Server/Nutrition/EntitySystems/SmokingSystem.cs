@@ -46,6 +46,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             InitializeCigars();
             InitializePipes();
+            InitializeVapes();
         }
 
         public void SetSmokableState(EntityUid uid, SmokableState state, SmokableComponent? smokable = null,

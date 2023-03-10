@@ -4,43 +4,40 @@ using Content.Server.Body.Components;
 using Content.Shared.Interaction;
 using Content.Server.DoAfter;
 using System.Threading;
-using Content.Server.Body.Systems;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Explosion.EntitySystems;
-using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Damage;
 using Content.Server.Chemistry.ReactionEffects;
 using Content.Server.Popups;
 using Content.Shared.IdentityManagement;
 using Content.Shared.DoAfter;
+using Content.Shared.Emag.Systems;
+using Content.Shared.Emag.Components;
 
-namespace Content.Server.Nutrition.Vape
+namespace Content.Server.Nutrition.EntitySystems
 {
-    public sealed class VapeSystem : EntitySystem
+    public sealed partial class SmokingSystem
     {
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private readonly FoodSystem _foodSystem = default!;
         [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly FlavorProfileSystem _flavorProfileSystem = default!;
 
-        public override void Initialize()
+        private void InitializeVapes()
         {
-            base.Initialize();
-
-            SubscribeLocalEvent<VapeComponent, AfterInteractEvent>(OnInteraction);
-            SubscribeLocalEvent<VapeComponent, DoAfterEvent<VapingData>>(OnDoAfter);
+            SubscribeLocalEvent<VapeComponent, AfterInteractEvent>(OnVapeInteraction);
+            SubscribeLocalEvent<VapeComponent, DoAfterEvent<VapingData>>(OnVapeDoAfter);
+            SubscribeLocalEvent<VapeComponent, GotEmaggedEvent>(OnEmagged);
         }
 
-        private void OnInteraction(EntityUid uid, VapeComponent comp, AfterInteractEvent args) 
+        private void OnVapeInteraction(EntityUid uid, VapeComponent comp, AfterInteractEvent args) 
         {
             _solutionContainerSystem.TryGetRefillableSolution(uid, out var solution);
 
             var delay = comp.Delay;
             var forced = true;
+            var exploded = false;
 
             if (!args.CanReach
             || solution == null
@@ -49,16 +46,30 @@ namespace Content.Server.Nutrition.Vape
             || _foodSystem.IsMouthBlocked(args.Target.Value, args.User))
                 return;
 
-            if (args.Target == args.User){
+            if (args.Target == args.User)
+            {
                 delay = comp.UserDelay;
                 forced = false;
             }
 
-            //Always read the description.
-            if (solution.ContainsReagent("Water") || comp.ExplodeOnUse)
+            if (comp.ExplodeOnUse || HasComp<EmaggedComponent>(uid))
             {
                 _explosionSystem.QueueExplosion(uid, "Default", comp.ExplosionIntensity, 0.5f, 3, canCreateVacuum: false);
                 EntityManager.DeleteEntity(uid);
+                exploded = true;
+            }
+            else
+            {
+                foreach (var name in comp.ExplodableSolutions)
+                {
+                    if (solution.ContainsReagent(name))
+                    {
+                        exploded = true;
+                        _explosionSystem.QueueExplosion(uid, "Default", comp.ExplosionIntensity, 0.5f, 3, canCreateVacuum: false);
+                        EntityManager.DeleteEntity(uid);
+                        break;
+                    }
+                }
             }
 
             if (forced)
@@ -83,19 +94,24 @@ namespace Content.Server.Nutrition.Vape
             
             var vapingData = new VapingData(solution, bloodstream, forced);
 
-            comp.CancelToken = new CancellationTokenSource();
-            var doAfterArgs = new DoAfterEventArgs(args.User, delay, comp.CancelToken.Token, args.Target, uid)
+            if (!exploded)
             {
-                BreakOnTargetMove = true,
-                BreakOnUserMove = false,
-                BreakOnDamage = true,
-                BreakOnStun = true
-            };
-            _doAfterSystem.DoAfter(doAfterArgs, vapingData);
+                comp.CancelToken = new CancellationTokenSource();
+
+                var doAfterArgs = new DoAfterEventArgs(args.User, delay, comp.CancelToken.Token, args.Target, uid)
+                {
+                    BreakOnTargetMove = true,
+                    BreakOnUserMove = false,
+                    BreakOnDamage = true,
+                    BreakOnStun = true
+                };
+
+                _doAfterSystem.DoAfter(doAfterArgs, vapingData);
+            }
             args.Handled = true;
 		}
 
-        private void OnDoAfter(EntityUid uid, VapeComponent comp, DoAfterEvent<VapingData> args)
+        private void OnVapeDoAfter(EntityUid uid, VapeComponent comp, DoAfterEvent<VapingData> args)
         {
             if (args.Cancelled)
             {
@@ -107,7 +123,7 @@ namespace Content.Server.Nutrition.Vape
 
             if (args.Handled || args.Args.Target == null)
                 return;
-
+            
             var flavors = _flavorProfileSystem.GetLocalizedFlavorsMessage(args.Args.User, args.AdditionalData.Solution);
 
             if (args.AdditionalData.Solution.Volume != 0)
@@ -142,6 +158,10 @@ namespace Content.Server.Nutrition.Vape
                     Loc.GetString("vape-component-vape-success-taste", ("flavors", flavors)), args.Args.Target.Value,
                     args.Args.Target.Value);
             }
+        }
+        private void OnEmagged(EntityUid uid, VapeComponent component, ref GotEmaggedEvent args)
+        {
+            args.Handled = true;
         }
 
         private record struct VapingData(Solution Solution, BloodstreamComponent Bloodstream, bool Forced)
