@@ -386,10 +386,9 @@ public sealed partial class DungeonJob
                         {
                             position += new Vector2(-1f / 32f, 1f / 32f);
                         }
-                        // Okay this one I didn't actually verify but I think this is it.
                         else if (angle.Equals(Math.PI * 1.5))
                         {
-                            position += new Vector2(1f / 32f, 1f / 32f);
+                            position += new Vector2(-1f / 32f, 0f);
                         }
                         else if (angle.Equals(Math.PI / 2f))
                         {
