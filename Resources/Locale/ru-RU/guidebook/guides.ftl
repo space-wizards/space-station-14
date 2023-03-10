@@ -1,6 +1,7 @@
 guide-entry-engineering = Инженерия
 guide-entry-construction = Строительство
 guide-entry-atmospherics = Атмосфера
+guide-entry-botany = Ботаника
 guide-entry-fires = Пожары & Космос
 guide-entry-shuttle-craft = Шаттло-строй
 guide-entry-power = Электроснабжение
