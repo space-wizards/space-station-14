@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Grids should no longer clip constantly (engine change)., type: Fix}
-  id: 2648
-  time: '2022-11-14T11:17:34.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Cell charger is destructible and doesn't block mobs movement., type: Tweak}
@@ -2922,3 +2917,8 @@ Entries:
     type: Add}
   id: 3147
   time: '2023-03-10T05:41:23.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Eyes will now still lerp on paused maps., type: Fix}
+  id: 3148
+  time: '2023-03-10T07:12:22.0000000+00:00'
