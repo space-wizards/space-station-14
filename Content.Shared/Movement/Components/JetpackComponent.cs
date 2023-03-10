@@ -11,13 +11,4 @@ public sealed class JetpackComponent : Component
 
     [DataField("toggleAction", required: true)]
     public InstantAction ToggleAction = new();
-
-    [ViewVariables(VVAccess.ReadWrite), DataField("acceleration")]
-    public float Acceleration = 1f;
-
-    [ViewVariables(VVAccess.ReadWrite), DataField("friction")]
-    public float Friction = 0.3f;
-
-    [ViewVariables(VVAccess.ReadWrite), DataField("weightlessModifier")]
-    public float WeightlessModifier = 1.2f;
 }
