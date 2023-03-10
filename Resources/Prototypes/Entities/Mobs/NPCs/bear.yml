@@ -31,6 +31,10 @@
       - MobMask
       layer:
       - MobLayer
+  - type: PointLight
+    radius: 1.2
+    energy: 2
+    color: "#4faffb"
   - type: MovementAlwaysTouching
   - type: MobState
     allowedStates:
