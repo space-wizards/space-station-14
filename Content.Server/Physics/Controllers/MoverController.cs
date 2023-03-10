@@ -95,7 +95,8 @@ namespace Content.Server.Physics.Controllers
                 {
                     continue;
                 }
-                HandleMobMovement(mob, mover, mobBody, xformMover, frameTime, xformQuery, moverQuery, relayTargetQuery);
+                var speedMod = CompOrNull<MovementSpeedModifierComponent>(uid);
+                HandleMobMovement(mob, mover, mobBody, xformMover, frameTime, xformQuery, moverQuery, relayTargetQuery, speedMod);
             }
 
             HandleShuttleMovement(frameTime);

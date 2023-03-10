@@ -130,7 +130,10 @@ namespace Content.Client.Physics.Controllers
 
             // Server-side should just be handled on its own so we'll just do this shizznit
             if (body.Predict && !UseMobMovement(player))
-                HandleMobMovement(player, mover, body, xformMover, frameTime, xformQuery, moverQuery, relayTargetQuery);
+            {
+                var speedMod = CompOrNull<MovementSpeedModifierComponent>(player);
+                HandleMobMovement(player, mover, body, xformMover, frameTime, xformQuery, moverQuery, relayTargetQuery, speedMod);
+            }
         }
 
         protected override bool CanSound()

@@ -29,9 +29,7 @@
     - type: InputMover
       toParent: true
     - type: MovementSpeedModifier
-      weightlessAcceleration: 1
-      weightlessFriction: 0.3
-      weightlessModifier: 1.2
+      weightlessModifier: 1.5
     - type: Sprite
       sprite: Objects/Tanks/Jetpacks/blue.rsi
       state: icon

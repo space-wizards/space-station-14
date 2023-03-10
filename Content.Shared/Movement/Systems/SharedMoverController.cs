@@ -107,7 +107,8 @@ namespace Content.Shared.Movement.Systems
             float frameTime,
             EntityQuery<TransformComponent> xformQuery,
             EntityQuery<InputMoverComponent> moverQuery,
-            EntityQuery<MovementRelayTargetComponent> relayTargetQuery)
+            EntityQuery<MovementRelayTargetComponent> relayTargetQuery,
+            MovementSpeedModifierComponent? speedMod)
         {
             DebugTools.Assert(!UsedMobMovement.ContainsKey(uid));
 
@@ -255,7 +256,7 @@ namespace Content.Shared.Movement.Systems
             // Regular movement.
             // Target velocity.
             // This is relative to the map / grid we're on.
-            var moveSpeedComponent = CompOrNull<MovementSpeedModifierComponent>(uid);
+            var moveSpeedComponent = speedMod ?? CompOrNull<MovementSpeedModifierComponent>(uid);
 
             var walkSpeed = moveSpeedComponent?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
             var sprintSpeed = moveSpeedComponent?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
