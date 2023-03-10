@@ -273,11 +273,21 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     private void OnFTLTravel(ShuttleFTLTravelEvent ev)
     {
         var shuttle = ev.Shuttle.Owner;
-    	if (!RuleAdded || !TryComp<NukeOpsShuttleComponent>(shuttle, out var nukeShuttleComponent))
+    	if (!RuleAdded)
             return;
-        
-        _leftOutpost = true;
-        _warDeclaratorSystem.RefreshAllDeclaratorsUI();
+
+        if (_nukieOutpost == null)
+        {
+            return;
+        }
+        var map_outpost = _entityManager.GetComponent<TransformComponent>(_nukieOutpost.Value).MapID;
+        var map_shuttle = _entityManager.GetComponent<TransformComponent>(shuttle).MapID;
+
+        if (map_outpost == map_shuttle)
+        {
+            _leftOutpost = true;
+            _warDeclaratorSystem.RefreshAllDeclaratorsUI();
+        }
     }
     
     private void OnCommsAnnouncement(CommunicationConsoleAnnouncementEvent ev)
@@ -306,26 +316,22 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     /// </summary>
     public void DistributeExtraTC()
     {
-    	if (!RuleAdded || _declarationMade)
+    	if (!RuleAdded)
         {
             return;
         }
 
-        var uplinkList = new List<StoreComponent>();
-
-        foreach (var uplink in EntityQuery<StoreComponent>())
+        var enumerator = EntityQueryEnumerator<StoreComponent>();
+        while (enumerator.MoveNext(out var uid, out var component))
         {
-            if (_tag.HasTag(uplink.Owner, "NukeOpsUplink")) uplinkList.Add(uplink);
-        }
+            if (_tag.HasTag(uid, "NukeOpsUplink"))
+            {
+                _storeSystem.TryAddCurrency(
+                    new() { { TelecrystalCurrencyPrototype, _nukeopsRuleConfig.WarTCAmountPerNukie} }, uid, component);
 
-        foreach (var uplink in uplinkList)
-        {
-            var owner = uplink.Owner;
-            _storeSystem.TryAddCurrency(
-                new() { { TelecrystalCurrencyPrototype, _nukeopsRuleConfig.WarTCAmountPerNukie} }, owner, uplink);
-
-            var msg = Loc.GetString("store-currency-war-boost-given", ("target", owner));
-            _popupSystem.PopupEntity(msg, owner);
+                var msg = Loc.GetString("store-currency-war-boost-given", ("target", uid));
+                _popupSystem.PopupEntity(msg, uid);
+            }
         }
     }
 
@@ -836,7 +842,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         {
             _shuttleSystem.TryFTLDock(shuttle, _nukieOutpost.Value);
         }
-        var component = AddComp<NukeOpsShuttleComponent>(shuttleId);
 
         _nukiePlanet = mapId;
         _nukieShuttle = shuttleId;
@@ -1005,7 +1010,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         _leftOutpost = false;
         _declarationMade = false;
         _gameruleStartTime = _gameTiming.CurTime;
-        _warDeclaratorSystem.RefreshAllDeclaratorsUI();
 
         _startingGearPrototypes.Clear();
         _operativeNames.Clear();

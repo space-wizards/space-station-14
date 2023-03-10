@@ -5,7 +5,7 @@ war-declarator-ui-war-button = WAR!
 war-declarator-conditions-small-crew = Less than { $min_size } operatives
 war-declarator-conditions-left-outpost = Shuttle left the syndicate outpost
 war-declarator-conditions-time-out = War declaration window passed
-war-declarator-conditions-delay = Shuttle departure temporarily disabled
+war-declarator-conditions-delay = Shuttle departure temporarily unavailable
 war-declarator-conditions-ready = Shuttle can leave the outpost!
 war-declarator-conditions-unknown = Unknown
 

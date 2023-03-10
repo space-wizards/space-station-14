@@ -146,7 +146,6 @@ namespace Content.Client.NukeOps
                 default:
                     _window.StatusLabel.Text = Loc.GetString("war-declarator-boost-impossible");
                     _window.InfoLabel.Text = Loc.GetString("war-declarator-conditions-unknown");
-                    _window.InfoLabel.Text = String.Empty;
                     _window.StatusLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateNone);
                     break;
             }
