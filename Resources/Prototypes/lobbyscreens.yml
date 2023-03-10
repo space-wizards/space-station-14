@@ -1,6 +1,6 @@
 ﻿- type: lobbyBackground
   id: Jaga
-  background: /Textures/LobbyScreens/jaga.png
+  background: /Textures/LobbyScreens/jaga1.png
 
 - type: lobbyBackground
   id: Jagat
@@ -17,11 +17,3 @@
 - type: lobbyBackground
   id: Jagafi
   background: /Textures/LobbyScreens/jaga5.png
-
-- type: lobbyBackground
-  id: Jagas
-  background: /Textures/LobbyScreens/jaga6.png
-
-- type: lobbyBackground
-  id: Jagase
-  background: /Textures/LobbyScreens/jaga7.png
