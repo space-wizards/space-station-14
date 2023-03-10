@@ -4,8 +4,10 @@
   text: "/Server Info/Guidebook/Jobs.xml"
   children:
   - Botany
+  - Civilian
   - Engineering
   - Science
+
 
 - type: guideEntry
   id: Survival

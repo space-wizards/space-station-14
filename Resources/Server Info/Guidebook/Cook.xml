@@ -1,0 +1,98 @@
+﻿<Document>
+  # Cook
+
+  ## Objectives
+  As the chef, your goal is to [color=#a4885c]provide food[/color] for the hungry masses.
+  Depending on the shift, some of the time you'll have almost no customers, while others you'll be overwhelmed.\n
+  Your job is to coordinate with the [color=#a4885c]Bartender[/color] and the other chefs and manage food distribution
+  and rationing.\n
+  Ask [color=#a4885c]botany[/color] for the required plants or stick to animal products.
+
+  ## Tools
+  To do this, you have a couple of tools at your disposal to help you out.
+
+  <Box>
+    <GuideEntityEmbed Entity="ButchCleaver"/>
+    <GuideEntityEmbed Entity="KitchenKnife"/>
+  </Box>
+
+  \n
+  The [color=#a4885c]knives[/color] are your best friends as a chef.\n
+  They allow you to both [color=#a4885c]kill[/color] any animal you come accross as well as
+  [color=#a4885c]butcher[/color] them when the deed is done.\n
+  They are also used to [color=#a4885c]slice[/color] various ingredients, like dough for example.\n
+  The [color=#a4885c]cleaver[/color] is also quite the effective [color=#a4885c]weapon[/color] in case of trouble and
+  its deadliness is not to be underestimated.
+  <Box>
+    <GuideEntityEmbed Entity="Beaker"/>
+  </Box>
+  The [color=#a4885c]beaker[/color] is useful for recipes where you need [color=#a4885c]condiments[/color] or other
+  [color=#a4885c]liquid ingredients[/color].
+
+  ## Machines
+  But tools aren't the only things a chef needs, and we can guarantee you that this raw pizza isn't going to cook
+  itself.
+
+  <Box>
+    <GuideEntityEmbed Entity="KitchenMicrowave"/>
+  </Box>
+
+  \n
+  [color=#a4885c]95%[/color] of your recipes are going to require the use of the [color=#a4885c]microwave[/color].\n
+  To use it, simply [color=#a4885c]put the correct ingredients[/color] in it, and pick the right
+  [color=#a4885c]cooking time[/color].\n
+  Once the time is up, your food should [color=#a4885c]pop out[/color] of the microwave, hopefully cooked.\n
+  If you mess up, ingredients will either pop out [color=#a4885c]uncooked[/color] or as a
+  [color=#a4885c]burnt mess[/color].
+  <Box>
+    <GuideEntityEmbed Entity="KitchenReagentGrinder"/>
+  </Box>
+  The [color=#a4885c]reagent grinder[/color] allows objects to be ground or liquified.\n
+  It needs to be used together with a [color=#a4885c]beaker[/color] to contain the processed ingredients.
+
+  ## Supplies and Procurement
+  Cooking is great fun but to get started you will need [color=#a4885c]ingredients[/color].
+  Fortunately, your kitchen comes with a few things to make your life easier.
+  <Box>
+    <GuideEntityEmbed Entity="SinkStemlessWater"/>
+    <GuideEntityEmbed Entity="VendingMachineCondiments"/>
+    <GuideEntityEmbed Entity="VendingMachineChefvend"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="LockerFreezer"/>
+    <GuideEntityEmbed Entity="CrateFoodCooking"/>
+    <GuideEntityEmbed Entity="CrateNPCCow"/>
+  </Box>
+  \n
+  Most of those are rather self-explanatory.\n
+  The [color=#a4885c]Chefvend[/color] contains a few ingredients that can be useful, but most of your
+  ingredients will be found in [color=#a4885c]Kitchen Supplies Crates[/color], [color=#a4885c]Freezers[/color] or
+  [color=#a4885c]laying around[/color] in the kitchen and in your [color=#a4885c]walk-in freezer[/color].\n
+  If you get a hold of a [color=#a4885c]bucket[/color], you can [color=#a4885c]milk the cow[/color] contained in the
+  crate for [color=#a4885c]free milk[/color] !
+  \n\n
+  Now as you may have noticed, quite a few ingredients [color=#a4885c]aren't in the kitchen[/color] and for those,
+  you will have to [color=#a4885c]reach out[/color] either to [color=#a4885c]Botany[/color] or
+  [color=#a4885c]Cargo[/color], depending on what it is you're trying to procure.
+  \n\n
+  If no botanist is around, don't be afraid to [color=#a4885c]get your hands dirty[/color] but make sure to ask your
+  [color=#a4885c]Head of Personel[/color] for authorization, as per protocol.\n
+  As a last resort, and if you're morally capable of such a thing, you can [color=#a4885c]strike a deal[/color] with
+  Medical and/or Cargo to get a hold of some [color=#a4885c]corpses[/color] for meat.\n
+  We're preeeetty sure it's what they would have wanted anyway.
+
+  ## Walk-In Freezer
+  <Box>
+    <GuideEntityEmbed Entity="AirlockFreezerKitchenHydroLocked"/>
+    <GuideEntityEmbed Entity="KitchenSpike"/>
+  </Box>
+  Behind this unassuming airlock is your [color=#a4885c]walk-in freezer[/color].\n
+  It is the best place to store all of your meat and corpses to [color=#a4885c]avoid rot and smells.[/color]
+  It usually comes equipped with [color=#a4885c]Meat Spikes[/color], where you can
+  [color=#a4885c]store corpses[/color] for butchering.
+
+  ## Recipes
+  All recipes can be found on the [color=#a4885c]official Space Station 14 wiki[/color].\n
+  At some point in the future they will be accessible in-game.
+
+</Document>
