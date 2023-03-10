@@ -118,11 +118,12 @@ public sealed class FluidSpreaderSystem : EntitySystem
         }
 
         // check if puddle can spread there at all
-        var dst = dstPos.ToMapPos(EntityManager, _transform);
+        var dstMap = dstPos.ToMap(EntityManager, _transform);
+        var dst = dstMap.Position;
         var src = Transform(srcUid).Coordinates.ToMapPos(EntityManager, _transform);
         var dir = src - dst;
         var ray = new CollisionRay(dst, dir.Normalized, (int) CollisionGroup.MobMask);
-        var mapId = dstPos.ToMap(EntityManager, _transform).MapId;
+        var mapId = dstMap.MapId;
         var results = _physics.IntersectRay(mapId, ray, dir.Length, returnOnFirstHit: true);
         if (results.Count() > 0)
         {
