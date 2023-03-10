@@ -17,7 +17,15 @@
       "name": "bananium"
     },
     {
-      "name": "bearpelt"
+      "name": "bearpelt",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
     },
     {
       "name": "cathide"

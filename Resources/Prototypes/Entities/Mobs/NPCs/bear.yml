@@ -13,10 +13,14 @@
     - SimpleHostile
   - type: Sprite
     drawdepth: Mobs
+    netsync: false
+    sprite: Mobs/Animals/bear.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: bear
-      sprite: Mobs/Animals/bear.rsi
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: glow
+      shader: unshaded
   - type: Fixtures
     fixtures:
     - shape:
@@ -43,6 +47,7 @@
     states:
       Alive:
         Base: bear
+        BaseUnshaded: glow
       Critical:
         Base: bear_dead
       Dead:

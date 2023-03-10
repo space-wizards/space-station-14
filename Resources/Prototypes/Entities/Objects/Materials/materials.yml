@@ -151,8 +151,10 @@
   name: bear hide
   components:
   - type: Sprite
+    netsync: false
     sprite: Objects/Materials/materials.rsi
-    state: bearpelt
+    layers:
+    - state: bearpelt
   - type: Item
     sprite: Clothing/Head/Misc/hides.rsi
     heldPrefix: bear
