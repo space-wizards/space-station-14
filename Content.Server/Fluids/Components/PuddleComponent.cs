@@ -8,7 +8,7 @@ namespace Content.Server.Fluids.Components
     /// Puddle on a floor
     /// </summary>
     [RegisterComponent]
-    [Access(typeof(PuddleSystem))]
+    [Access(typeof(PuddleSystem), typeof(FluidSpreaderSystem))]
     public sealed class PuddleComponent : Component
     {
         public const string DefaultSolutionName = "puddle";
@@ -46,5 +46,11 @@ namespace Content.Server.Fluids.Components
         [DataField("opacityModifier")] public float OpacityModifier = 1.0f;
 
         [DataField("solution")] public string SolutionName { get; set; } = DefaultSolutionName;
+
+        /// <summary>
+        /// Directions puddle liquid flows in or out
+        /// </summary>
+        [ViewVariables]
+        public DirectionFlag Flow;
     }
 }

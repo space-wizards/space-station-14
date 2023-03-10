@@ -83,9 +83,14 @@ public sealed class FluidSpreaderSystem : EntitySystem
                     {
                         puddles.Add(component);
                         totalVolume += _puddleSystem.CurrentVolume(uid.Value, component);
+                        puddle.Flow |= direction.AsFlag();
+                        component.Flow |= direction.GetOpposite().AsFlag();
+                    } 
+                    else
+                    {
+                        puddle.Flow &= ~direction.AsFlag();
                     }
                 }
-
                 _puddleSystem.EqualizePuddles(puddleUid, puddles, totalVolume, newIteration, puddle);
             }
 
