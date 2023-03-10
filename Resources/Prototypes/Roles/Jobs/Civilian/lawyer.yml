@@ -18,7 +18,7 @@
     back: ClothingBackpackFilled
     shoes: ClothingShoesBootsLaceup
     id: LawyerPDA
-    ears: ClothingHeadsetSecurity
+    ears: ClothingHeadsetLawyer
     # TODO add copy of space law
   inhand:
     right hand: BriefcaseBrownFilled
