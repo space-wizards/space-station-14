@@ -77,23 +77,21 @@ namespace Content.Server.Physics.Controllers
                     continue;
                 }
 
-                PhysicsComponent? body;
                 var xformMover = xform;
 
                 if (mover.ToParent && relayQuery.HasComponent(xform.ParentUid))
                 {
-                    if (!bodyQuery.TryGetComponent(xform.ParentUid, out body) ||
-                        !TryComp(xform.ParentUid, out xformMover))
+                    if (!UseMobMovement(xform.ParentUid) &&
+                        bodyQuery.TryGetComponent(xform.ParentUid, out var body) &&
+                        TryComp(xform.ParentUid, out xformMover))
                     {
-                        continue;
+                        HandleMobMovement(xform.ParentUid, mover, body, xformMover, frameTime, xformQuery, moverQuery, relayTargetQuery);
                     }
                 }
-                else if (!bodyQuery.TryGetComponent(uid, out body))
+                else if (!UseMobMovement(uid) && bodyQuery.TryGetComponent(uid, out var body))
                 {
-                    continue;
+                    HandleMobMovement(uid, mover, body, xformMover, frameTime, xformQuery, moverQuery, relayTargetQuery);
                 }
-
-                HandleMobMovement(uid, mover, body, xformMover, frameTime, xformQuery, moverQuery, relayTargetQuery);
             }
 
             HandleShuttleMovement(frameTime);

@@ -85,6 +85,7 @@ namespace Content.Client.Physics.Controllers
                 {
                     return;
                 }
+                player = xform.ParentUid;
             }
             else if (!TryComp(player, out body))
             {
@@ -128,7 +129,8 @@ namespace Content.Client.Physics.Controllers
             }
 
             // Server-side should just be handled on its own so we'll just do this shizznit
-            HandleMobMovement(player, mover, body, xformMover, frameTime, xformQuery, moverQuery, relayTargetQuery);
+            if (!UseMobMovement(player))
+                HandleMobMovement(player, mover, body, xformMover, frameTime, xformQuery, moverQuery, relayTargetQuery);
         }
 
         protected override bool CanSound()

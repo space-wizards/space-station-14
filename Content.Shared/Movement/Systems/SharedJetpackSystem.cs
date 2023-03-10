@@ -7,7 +7,6 @@ using Content.Shared.Popups;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
-using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -22,6 +21,7 @@ public abstract class SharedJetpackSystem : EntitySystem
     [Dependency] protected readonly SharedContainerSystem Container = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
     [Dependency] private readonly SharedMoverController _mover = default!;
+    [Dependency] private readonly SharedGravitySystem _gravity = default!;
 
     public override void Initialize()
     {
@@ -46,12 +46,11 @@ public abstract class SharedJetpackSystem : EntitySystem
 
     private void OnJetpackUserGravityChanged(ref GravityChangedEvent ev)
     {
-        var gridUid = ev.ChangedGridIndex;
         var jetpackQuery = GetEntityQuery<JetpackComponent>();
 
         foreach (var (user, transform) in EntityQuery<JetpackUserComponent, TransformComponent>(true))
         {
-            if (transform.GridUid == gridUid && ev.HasGravity &&
+            if (transform.GridUid == ev.ChangedGridIndex && ev.HasGravity &&
                 jetpackQuery.TryGetComponent(user.Jetpack, out var jetpack))
             {
                 if (_timing.IsFirstTimePredicted)
@@ -89,7 +88,7 @@ public abstract class SharedJetpackSystem : EntitySystem
     private void OnJetpackUserEntParentChanged(EntityUid uid, JetpackUserComponent component, ref EntParentChangedMessage args)
     {
         if (TryComp<JetpackComponent>(component.Jetpack, out var jetpack) &&
-            !CanEnableOnGrid(args.Transform.GridUid))
+            _gravity.IsWeightless(uid))
         {
             SetEnabled(jetpack, false, uid);
 
@@ -117,7 +116,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (TryComp<TransformComponent>(uid, out var xform) && !CanEnableOnGrid(xform.GridUid))
+        if (!_gravity.IsWeightless(uid))
         {
             if (_timing.IsFirstTimePredicted)
                 _popups.PopupEntity(Loc.GetString("jetpack-no-station"), uid, args.Performer);
@@ -126,12 +125,6 @@ public abstract class SharedJetpackSystem : EntitySystem
         }
 
         SetEnabled(component, !IsEnabled(uid));
-    }
-
-    private bool CanEnableOnGrid(EntityUid? gridUid)
-    {
-        return gridUid == null ||
-               (!HasComp<GravityComponent>(gridUid));
     }
 
     private void OnJetpackGetAction(EntityUid uid, JetpackComponent component, GetItemActionsEvent args)
