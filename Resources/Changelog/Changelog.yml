@@ -1,9 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Added ban list window for admins., type: Add}
-  id: 2650
-  time: '2022-11-14T19:06:55.0000000+00:00'
 - author: keronshb
   changes:
   - {message: Adds SSXIV lobby screen., type: Add}
@@ -2922,3 +2917,8 @@ Entries:
   - {message: 'Xeno turrets have been added, and they have a nasty acid!', type: Add}
   id: 3149
   time: '2023-03-10T13:25:34.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Changed space bears visually. Growr., type: Tweak}
+  id: 3150
+  time: '2023-03-10T13:45:44.0000000+00:00'
