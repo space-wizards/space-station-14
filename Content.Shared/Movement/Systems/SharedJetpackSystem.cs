@@ -1,11 +1,13 @@
 using Content.Shared.Actions;
 using Content.Shared.Gravity;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Maps;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
@@ -21,7 +23,6 @@ public abstract class SharedJetpackSystem : EntitySystem
     [Dependency] protected readonly SharedContainerSystem Container = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
     [Dependency] private readonly SharedMoverController _mover = default!;
-    [Dependency] private readonly SharedGravitySystem _gravity = default!;
 
     public override void Initialize()
     {
@@ -87,7 +88,7 @@ public abstract class SharedJetpackSystem : EntitySystem
 
     private void OnJetpackUserEntParentChanged(EntityUid uid, JetpackUserComponent component, ref EntParentChangedMessage args)
     {
-        if (TryComp<JetpackComponent>(component.Jetpack, out var jetpack) && !_gravity.IsWeightless(uid))
+        if (TryComp<JetpackComponent>(component.Jetpack, out var jetpack) && !CanEnable(Transform(uid).Coordinates))
         {
             SetEnabled(jetpack, false, uid);
 
@@ -115,7 +116,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (!_gravity.IsWeightless(uid))
+        if (!CanEnable(Transform(uid).Coordinates))
         {
             if (_timing.IsFirstTimePredicted)
                 _popups.PopupEntity(Loc.GetString("jetpack-no-station"), uid, args.Performer);
@@ -124,6 +125,13 @@ public abstract class SharedJetpackSystem : EntitySystem
         }
 
         SetEnabled(component, !IsEnabled(uid));
+    }
+
+    private bool CanEnable(EntityCoordinates location)
+    {
+        var tile = location.GetTileRef();
+        return tile == null || tile.Value.IsSpace() ||
+               !HasComp<GravityComponent>(location.GetGridUid(EntityManager));
     }
 
     private void OnJetpackGetAction(EntityUid uid, JetpackComponent component, GetItemActionsEvent args)
