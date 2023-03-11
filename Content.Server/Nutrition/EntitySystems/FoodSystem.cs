@@ -86,8 +86,8 @@ namespace Content.Server.Nutrition.EntitySystems
             if (food == user || EntityManager.TryGetComponent<MobStateComponent>(food, out var mobState) && _mobStateSystem.IsAlive(food, mobState)) // Suppresses eating alive mobs
                 return false;
 
-            // Target can't be fed or they're already forcefeeding
-            if (!EntityManager.HasComponent<BodyComponent>(target) || foodComp.ForceFeed)
+            // Target can't be fed or they're already eating
+            if (!EntityManager.HasComponent<BodyComponent>(target) || foodComp.Eating)
                 return false;
 
             if (!_solutionContainerSystem.TryGetSolution(food, foodComp.SolutionName, out var foodSolution))
@@ -111,6 +111,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!_interactionSystem.InRangeUnobstructed(user, food, popup: true))
                 return true;
 
+            foodComp.Eating = true;
             foodComp.ForceFeed = user != target;
 
             if (foodComp.ForceFeed)
@@ -133,7 +134,7 @@ namespace Content.Server.Nutrition.EntitySystems
             var doAfterEventArgs = new DoAfterEventArgs(user, foodComp.ForceFeed ? foodComp.ForceFeedDelay : foodComp.Delay, target: target, used: food)
             {
                 RaiseOnTarget = foodComp.ForceFeed,
-                RaiseOnUser = !foodComp.ForceFeed,
+                RaiseOnUser = false, //causes a crash if mice eat if true
                 BreakOnUserMove = foodComp.ForceFeed,
                 BreakOnDamage = true,
                 BreakOnStun = true,
@@ -152,13 +153,14 @@ namespace Content.Server.Nutrition.EntitySystems
         private void OnDoAfter(EntityUid uid, FoodComponent component, DoAfterEvent<FoodData> args)
         {
             //Prevents the target from being force fed food but allows the user to chow down
-            if (args.Cancelled && component.ForceFeed)
+            if (args.Cancelled)
             {
+                component.Eating = false;
                 component.ForceFeed = false;
                 return;
             }
 
-            if (args.Cancelled || args.Handled || component.Deleted || args.Args.Target == null)
+            if (args.Handled || component.Deleted || args.Args.Target == null)
                 return;
 
             if (!TryComp<BodyComponent>(args.Args.Target.Value, out var body))
@@ -166,6 +168,8 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (!_bodySystem.TryGetBodyOrganComponents<StomachComponent>(args.Args.Target.Value, out var stomachs, body))
                 return;
+
+            component.Eating = false;
 
             var transferAmount = component.TransferAmount != null ? FixedPoint2.Min((FixedPoint2) component.TransferAmount, args.AdditionalData.FoodSolution.Volume) : args.AdditionalData.FoodSolution.Volume;
 
@@ -198,10 +202,11 @@ namespace Content.Server.Nutrition.EntitySystems
 
                 // log successful force feed
                 _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(uid):user} forced {ToPrettyString(args.Args.User):target} to eat {ToPrettyString(uid):food}");
+                component.ForceFeed = false;
             }
             else
             {
-                _popupSystem.PopupEntity(Loc.GetString(component.EatMessage, ("foodComp", uid), ("flavors", flavors)), args.Args.User, args.Args.User);
+                _popupSystem.PopupEntity(Loc.GetString(component.EatMessage, ("food", uid), ("flavors", flavors)), args.Args.User, args.Args.User);
 
                 // log successful voluntary eating
                 _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(args.Args.User):target} ate {ToPrettyString(uid):food}");
