@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix melee sounds getting spammed in some instances., type: Fix}
-  id: 2653
-  time: '2022-11-15T00:56:10.0000000+00:00'
 - author: Interrobang01
   changes:
   - {message: Cognizine now needs Acetone instead of Unstable Mutagen in its recipe,
@@ -2922,3 +2917,9 @@ Entries:
   - {message: Flora decals will now always face upright to the camera., type: Tweak}
   id: 3152
   time: '2023-03-10T18:29:29.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix weather being blocked by trees and tile entities such as puddles.,
+    type: Fix}
+  id: 3153
+  time: '2023-03-11T03:11:19.0000000+00:00'
