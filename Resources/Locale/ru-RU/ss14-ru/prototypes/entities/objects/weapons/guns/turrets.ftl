@@ -13,3 +13,6 @@ ent-WeaponTurretNanoTrasen = { ent-BaseWeaponTurret }
 ent-WeaponTurretHostile = { ent-BaseWeaponTurret }
     .suffix = Враждебная
     .desc = { ent-BaseWeaponTurret.desc }
+ent-WeaponTurretXeno = xeno turret
+    .desc = Shoots 9mm acid projectiles
+    .suffix = Xeno

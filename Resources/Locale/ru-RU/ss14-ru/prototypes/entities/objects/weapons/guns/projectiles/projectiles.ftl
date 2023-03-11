@@ -61,3 +61,6 @@ ent-BulletGrenadeFrag = frag grenade
 ent-BulletCap = cap bullet
     .desc = { ent-BaseBullet.desc }
     .suffix = { "" }
+ent-BulletAcid = acid spit
+    .desc = { ent-BaseBullet.desc }
+    .suffix = { "" }
