@@ -1,10 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: Origin station has been pulled temporarily due to needing re-review.,
-    type: Remove}
-  id: 2657
-  time: '2022-11-15T05:12:32.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Combat mode no longer disables alt-clicking., type: Tweak}
@@ -2919,3 +2913,8 @@ Entries:
   - {message: 'Changed space bears to glow, and resprited their hide.', type: Tweak}
   id: 3156
   time: '2023-03-11T14:35:53.0000000+00:00'
+- author: CaptainSqrBeard
+  changes:
+  - {message: Fixed slime hair was not translucent, type: Fix}
+  id: 3157
+  time: '2023-03-11T21:04:58.0000000+00:00'
