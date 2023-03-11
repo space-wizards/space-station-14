@@ -36,7 +36,6 @@ namespace Content.Shared.Movement.Systems
         [Dependency] protected readonly IGameTiming Timing = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
-        [Dependency] private readonly SharedBiomeSystem _biome = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;

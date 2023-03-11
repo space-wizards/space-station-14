@@ -1,70 +1,4 @@
 Entries:
-- author: PJB3005
-  changes:
-  - {message: Fixed rich text wrapping., type: Fix}
-  id: 2643
-  time: '2022-11-13T15:07:48.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Melee sounds and effects are now predicted and the client should generally
-      match the server due to lag compensation., type: Tweak}
-  id: 2644
-  time: '2022-11-13T21:33:54.0000000+00:00'
-- author: juliangiebel
-  changes:
-  - {message: 'added a new PDA cartridge: The NetProbe cartridge.', type: Add}
-  id: 2645
-  time: '2022-11-13T21:36:00.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed a rounding error which would cause certain parts in machine upgrades
-      to not work. This has mostly affected the artifact analyzer., type: Fix}
-  id: 2646
-  time: '2022-11-13T23:42:35.0000000+00:00'
-- author: JustinTrotter
-  changes:
-  - {message: The savage magnet now has functional LED lights., type: Add}
-  id: 2647
-  time: '2022-11-14T07:45:45.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Grids should no longer clip constantly (engine change)., type: Fix}
-  id: 2648
-  time: '2022-11-14T11:17:34.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Cell charger is destructible and doesn't block mobs movement., type: Tweak}
-  id: 2649
-  time: '2022-11-14T14:57:59.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Added ban list window for admins., type: Add}
-  id: 2650
-  time: '2022-11-14T19:06:55.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: Adds SSXIV lobby screen., type: Add}
-  id: 2651
-  time: '2022-11-14T19:09:38.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added the Rapid Parts Exchange Device. Just load it up with parts and
-      click on a machine to instantly upgrade it., type: Add}
-  id: 2652
-  time: '2022-11-14T19:36:14.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix melee sounds getting spammed in some instances., type: Fix}
-  id: 2653
-  time: '2022-11-15T00:56:10.0000000+00:00'
-- author: Interrobang01
-  changes:
-  - {message: Cognizine now needs Acetone instead of Unstable Mutagen in its recipe,
-    type: Tweak}
-  - {message: Monkeys can talk when brought to life via Cognizine, type: Tweak}
-  - {message: Cognizine has a taste now, type: Fix}
-  id: 2654
-  time: '2022-11-15T02:02:46.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Science passive research point generation is no longer capped at 30000,
@@ -2921,3 +2855,69 @@ Entries:
   - {message: Changed held toolbox sprites to be more robust, type: Tweak}
   id: 3142
   time: '2023-03-07T13:48:34.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix toy bap sounds., type: Fix}
+  id: 3143
+  time: '2023-03-09T08:28:57.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: added emp artifact effect., type: Add}
+  id: 3144
+  time: '2023-03-09T08:30:01.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Mop indicator is now fixed, type: Fix}
+  - {message: Fixes drinking from bricking if you were full before drinking, type: Fix}
+  id: 3145
+  time: '2023-03-09T08:45:19.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Separated HUD mode now expands the game viewport instead of the chat
+      window when resizing the game window., type: Tweak}
+  id: 3146
+  time: '2023-03-09T13:56:44.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Admins can now spawn dungeons with procedurally generated layouts.,
+    type: Add}
+  id: 3147
+  time: '2023-03-10T05:41:23.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Eyes will now still lerp on paused maps., type: Fix}
+  id: 3148
+  time: '2023-03-10T07:12:22.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: 'Xeno turrets have been added, and they have a nasty acid!', type: Add}
+  id: 3149
+  time: '2023-03-10T13:25:34.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Changed space bears visually. Growr., type: Tweak}
+  id: 3150
+  time: '2023-03-10T13:45:44.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Changed Paperwork to no longer be a demon sent from hell. Old one will
+      be adapted into a zombie sprite instead..., type: Tweak}
+  id: 3151
+  time: '2023-03-10T14:34:46.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Flora decals will now always face upright to the camera., type: Tweak}
+  id: 3152
+  time: '2023-03-10T18:29:29.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix weather being blocked by trees and tile entities such as puddles.,
+    type: Fix}
+  id: 3153
+  time: '2023-03-11T03:11:19.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: 'HOP will always have a spare ID in his locker, rather than a 90% chance.',
+    type: Fix}
+  id: 3154
+  time: '2023-03-11T03:27:11.0000000+00:00'
