@@ -1,4 +1,4 @@
-name: YAML schema validator
+name: Map file schema validator
 on:
   push:
     branches: [ master, staging, trying ]
