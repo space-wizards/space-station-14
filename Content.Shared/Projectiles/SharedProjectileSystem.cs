@@ -1,5 +1,5 @@
+using Content.Shared.Projectiles;
 using Robust.Shared.Map;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Serialization;
 
@@ -17,10 +17,15 @@ namespace Content.Shared.Projectiles
 
         private void PreventCollision(EntityUid uid, ProjectileComponent component, ref PreventCollideEvent args)
         {
-            if (component.IgnoreShooter && args.BodyB.Owner == component.Shooter)
+            var target = args.BodyB.Owner;
+            if (component.IgnoreShooter && target == component.Shooter)
             {
                 args.Cancelled = true;
+                return;
             }
+            var attemptEv = new PreventProjectileCollideEvent(uid, component, false);
+            RaiseLocalEvent(target, ref attemptEv);
+            args.Cancelled = attemptEv.Cancelled;
         }
 
         public void SetShooter(ProjectileComponent component, EntityUid uid)
@@ -58,3 +63,6 @@ namespace Content.Shared.Projectiles
         }
     }
 }
+
+[ByRefEvent]
+public record struct PreventProjectileCollideEvent(EntityUid ProjUid, ProjectileComponent ProjComp, bool Cancelled);

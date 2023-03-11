@@ -41,12 +41,6 @@ public sealed class ProjectileSystem : SharedProjectileSystem
             return;
 
         var otherEntity = args.OtherFixture.Body.Owner;
-
-        var attemptEv = new ProjectileCollideAttemptEvent(otherEntity, false); 
-        RaiseLocalEvent(uid, ref attemptEv);
-        if (attemptEv.Cancelled)
-            return;
-
         var otherName = ToPrettyString(otherEntity);
         var direction = args.OurFixture.Body.LinearVelocity.Normalized;
         var modifiedDamage = _damageableSystem.TryChangeDamage(otherEntity, component.Damage, component.IgnoreResistances, origin: component.Shooter);
@@ -82,6 +76,3 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         }
     }
 }
-
-[ByRefEvent]
-public record struct ProjectileCollideAttemptEvent(EntityUid Target, bool Cancelled);
