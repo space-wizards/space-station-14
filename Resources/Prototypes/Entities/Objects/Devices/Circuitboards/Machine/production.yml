@@ -762,3 +762,18 @@
             Amount: 1
             DefaultPrototype: Beaker
             ExamineName: Glass Beaker
+
+- type: entity
+  id: TelecomServerCircuitboard
+  parent: BaseMachineCircuitboard
+  name: telecommunication server machine board 
+  description: A machine printed circuit board for an telecommunication server
+  components:
+    - type: MachineBoard
+      prototype: TelecomServer
+      requirements:
+        Capacitor: 1
+        ScanningModule: 2
+      materialRequirements:
+        Steel: 1
+        Cable: 2

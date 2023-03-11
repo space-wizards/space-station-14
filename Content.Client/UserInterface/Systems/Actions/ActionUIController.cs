@@ -10,6 +10,7 @@ using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Actions.Controls;
 using Content.Client.UserInterface.Systems.Actions.Widgets;
 using Content.Client.UserInterface.Systems.Actions.Windows;
+using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Input;
@@ -85,6 +86,25 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             var page = new ActionPage(buttonCount);
             _pages.Add(page);
         }
+    }
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        var gameplayStateLoad = UIManager.GetUIController<GameplayStateLoadController>();
+        gameplayStateLoad.OnScreenLoad += OnScreenLoad;
+        gameplayStateLoad.OnScreenUnload += OnScreenUnload;
+    }
+
+    private void OnScreenLoad()
+    {
+       LoadGui();
+    }
+
+    private void OnScreenUnload()
+    {
+        UnloadGui();
     }
 
     public void OnStateEntered(GameplayState state)

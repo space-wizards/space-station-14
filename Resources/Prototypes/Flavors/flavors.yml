@@ -653,3 +653,8 @@
   id: watermelon
   flavorType: Complex
   description: flavor-complex-watermelon
+
+- type: flavor
+  id: garlic
+  flavorType: Complex
+  description: flavor-complex-garlic

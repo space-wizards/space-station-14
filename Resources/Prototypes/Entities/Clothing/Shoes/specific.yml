@@ -141,3 +141,16 @@
       sprite: Clothing/Shoes/Specific/jester.rsi
     - type: Clothing
       sprite: Clothing/Shoes/Specific/jester.rsi
+
+- type: entity
+  parent: ClothingShoesClown
+  id: ClothingShoesCluwne
+  name: cluwne shoes
+  suffix: Unremoveable
+  description: "Cursed pair of cluwne shoes."
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/cluwne.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/cluwne.rsi
+  - type: Unremoveable

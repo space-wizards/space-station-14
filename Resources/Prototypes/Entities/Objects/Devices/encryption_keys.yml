@@ -35,28 +35,11 @@
   components:
   - type: EncryptionKey
     channels:
-    - Common
     - Supply
     defaultChannel: Supply
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
     state: cargo_cypherkey
-
-- type: entity
-  parent: EncryptionKey
-  id: EncryptionKeyQM
-  name: quartermaster's encryption key
-  description: An encryption key used by the boss of cargo.
-  components:
-  - type: EncryptionKey
-    channels:
-    - Common
-    - Command
-    - Supply
-    defaultChannel: Supply
-  - type: Sprite
-    sprite: Objects/Devices/encryption_keys.rsi
-    state: qm_cypherkey
 
 - type: entity
   parent: EncryptionKey
@@ -66,15 +49,7 @@
   components:
   - type: EncryptionKey
     channels:
-    - Common
-    - Command
     - CentCom
-    - Engineering
-    - Medical
-    - Science
-    - Security
-    - Service
-    - Supply
     defaultChannel: CentCom
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
@@ -82,9 +57,9 @@
 
 - type: entity
   parent: EncryptionKey
-  id: EncryptionKeyCommand
-  name: command encryption key
-  description: An encryption key used by crew's bosses.
+  id: EncryptionKeyStationMaster
+  name: station master encryption key
+  description: An encryption key used by station's bosses.
   components:
   - type: EncryptionKey
     channels:
@@ -99,6 +74,20 @@
     defaultChannel: Command
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
+    state: cap_cypherkey
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyCommand
+  name: command encryption key
+  description: An encryption key used by crew's bosses.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Command
+    defaultChannel: Command
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
     state: com_cypherkey
 
 - type: entity
@@ -109,28 +98,11 @@
   components:
   - type: EncryptionKey
     channels:
-    - Common
     - Engineering
     defaultChannel: Engineering
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
     state: eng_cypherkey
-
-- type: entity
-  parent: EncryptionKey
-  id: EncryptionKeyCE
-  name: chief engineer's encryption key
-  description: An encryption key used by the boss of the real men.
-  components:
-  - type: EncryptionKey
-    channels:
-    - Common
-    - Command
-    - Engineering
-    defaultChannel: Engineering
-  - type: Sprite
-    sprite: Objects/Devices/encryption_keys.rsi
-    state: ce_cypherkey
 
 - type: entity
   parent: EncryptionKey
@@ -140,28 +112,11 @@
   components:
   - type: EncryptionKey
     channels:
-    - Common
     - Medical
     defaultChannel: Medical
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
     state: med_cypherkey
-
-- type: entity
-  parent: EncryptionKey
-  id: EncryptionKeyCMO
-  name: chief medical officer encryption key
-  description: An encryption key used by the head of the medical department.
-  components:
-  - type: EncryptionKey
-    channels:
-    - Common
-    - Command
-    - Medical
-    defaultChannel: Medical
-  - type: Sprite
-    sprite: Objects/Devices/encryption_keys.rsi
-    state: cmo_cypherkey
 
 - type: entity
   parent: EncryptionKey
@@ -171,7 +126,6 @@
   components:
   - type: EncryptionKey
     channels:
-    - Common
     - Medical
     - Science
     defaultChannel: Science
@@ -187,7 +141,6 @@
   components:
   - type: EncryptionKey
     channels:
-    - Common
     - Science
     defaultChannel: Science
   - type: Sprite
@@ -202,28 +155,11 @@
   components:
   - type: EncryptionKey
     channels:
-    - Common
     - Science
     defaultChannel: Science
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
     state: rob_cypherkey
-
-- type: entity
-  parent: EncryptionKey
-  id: EncryptionKeyRD
-  name: research director's encryption key
-  description: An encryption key used by the head of the science department. Looks like it's been chewed on.
-  components:
-  - type: EncryptionKey
-    channels:
-    - Common
-    - Command
-    - Science
-    defaultChannel: Science
-  - type: Sprite
-    sprite: Objects/Devices/encryption_keys.rsi
-    state: rd_cypherkey
 
 - type: entity
   parent: EncryptionKey
@@ -233,28 +169,11 @@
   components:
   - type: EncryptionKey
     channels:
-    - Common
     - Security
     defaultChannel: Security
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
     state: sec_cypherkey
-
-- type: entity
-  parent: EncryptionKey
-  id: EncryptionKeyHOS
-  name: head of security encryption key
-  description: An encryption key used by the boss of security.
-  components:
-  - type: EncryptionKey
-    channels:
-    - Common
-    - Command
-    - Security
-    defaultChannel: Security
-  - type: Sprite
-    sprite: Objects/Devices/encryption_keys.rsi
-    state: hos_cypherkey
 
 - type: entity
   parent: EncryptionKey
@@ -264,7 +183,6 @@
   components:
   - type: EncryptionKey
     channels:
-    - Common
     - Service
     defaultChannel: Service
   - type: Sprite
