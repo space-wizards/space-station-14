@@ -52,9 +52,9 @@ public static class PoolManager
         (CCVars.NPCMaxUpdates.Name,           "999999"),
         (CVars.ThreadParallelCount.Name,      "1"),
         (CCVars.GameRoleTimers.Name,          "false"),
-        (CCVars.CargoShuttles.Name, "false", false),
-        (CCVars.EmergencyShuttleEnabled.Name, "false", false),
-        (CCVars.ProcgenPreload.Name, "false", false),
+        (CCVars.CargoShuttles.Name,           "false"),
+        (CCVars.EmergencyShuttleEnabled.Name, "false"),
+        (CCVars.ProcgenPreload.Name,          "false"),
         // @formatter:on
     };
 
