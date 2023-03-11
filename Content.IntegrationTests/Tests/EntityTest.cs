@@ -67,36 +67,45 @@ namespace Content.IntegrationTests.Tests
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, Destructive = true});
             var server = pairTracker.Pair.Server;
+            var entManager = server.ResolveDependency<IEntityManager>();
+            var protoManager = server.ResolveDependency<IPrototypeManager>();
+
             var map = await PoolManager.CreateTestMap(pairTracker);
-            IEntityManager entityMan = null;
+            EntityUid uid;
 
             await server.WaitPost(() =>
             {
-                entityMan = IoCManager.Resolve<IEntityManager>();
-                var mapManager = IoCManager.Resolve<IMapManager>();
-
-                var prototypeMan = IoCManager.Resolve<IPrototypeManager>();
-                var protoIds = prototypeMan
+                var protoIds = protoManager
                     .EnumeratePrototypes<EntityPrototype>()
                     .Where(p=>!p.Abstract)
                     .Select(p => p.ID)
                     .ToList();
+
+                protoIds.Sort();
+
                 foreach (var protoId in protoIds)
                 {
-                    entityMan.SpawnEntity(protoId, map.GridCoords);
+                    var ent = entManager.SpawnEntity(protoId, map.GridCoords);
+
+                    if (entManager.GetComponent<MetaDataComponent>(ent).EntityPrototype?.ID
+                            .Equals("AMEControllerUnanchored") == true)
+                    {
+                        uid = ent;
+                    }
+
                 }
             });
             await server.WaitRunTicks(15);
             await server.WaitPost(() =>
             {
-                var entityMetas = entityMan.EntityQuery<MetaDataComponent>(true).ToList();
+                var entityMetas = entManager.EntityQuery<MetaDataComponent>(true).ToList();
                 foreach (var meta in entityMetas)
                 {
                     if(!meta.EntityDeleted)
-                        entityMan.DeleteEntity(meta.Owner);
+                        entManager.DeleteEntity(meta.Owner);
                 }
 
-                Assert.That(entityMan.EntityCount, Is.Zero);
+                Assert.That(entManager.EntityCount, Is.Zero);
             });
             await pairTracker.CleanReturnAsync();
         }

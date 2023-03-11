@@ -67,6 +67,7 @@ namespace Content.Server.Power.NodeGroups
             supplier.NetworkSupply.LinkedNetwork = default;
             Suppliers.Add(supplier);
             _powerNetSystem?.QueueReconnectPowerNet(this);
+            Logger.Info($"Added supplier {_entMan?.ToPrettyString(supplier.Owner)}");
         }
 
         public void RemoveSupplier(PowerSupplierComponent supplier)
@@ -75,6 +76,7 @@ namespace Content.Server.Power.NodeGroups
             supplier.NetworkSupply.LinkedNetwork = default;
             Suppliers.Remove(supplier);
             _powerNetSystem?.QueueReconnectPowerNet(this);
+            Logger.Info($"Removed supplier {_entMan?.ToPrettyString(supplier.Owner)}");
         }
 
         public void AddConsumer(PowerConsumerComponent consumer)
@@ -83,6 +85,7 @@ namespace Content.Server.Power.NodeGroups
             consumer.NetworkLoad.LinkedNetwork = default;
             Consumers.Add(consumer);
             _powerNetSystem?.QueueReconnectPowerNet(this);
+            Logger.Info($"Added consume {_entMan?.ToPrettyString(consumer.Owner)}");
         }
 
         public void RemoveConsumer(PowerConsumerComponent consumer)
@@ -91,6 +94,7 @@ namespace Content.Server.Power.NodeGroups
             consumer.NetworkLoad.LinkedNetwork = default;
             Consumers.Remove(consumer);
             _powerNetSystem?.QueueReconnectPowerNet(this);
+            Logger.Info($"Removed consume {_entMan?.ToPrettyString(consumer.Owner)}");
         }
 
         public void AddDischarger(BatteryDischargerComponent discharger)
@@ -103,6 +107,7 @@ namespace Content.Server.Power.NodeGroups
             battery.NetworkBattery.LinkedNetworkDischarging = default;
             Dischargers.Add(discharger);
             _powerNetSystem?.QueueReconnectPowerNet(this);
+            Logger.Info($"Added discharger {_entMan?.ToPrettyString(discharger.Owner)}");
         }
 
         public void RemoveDischarger(BatteryDischargerComponent discharger)
@@ -119,6 +124,7 @@ namespace Content.Server.Power.NodeGroups
 
             Dischargers.Remove(discharger);
             _powerNetSystem?.QueueReconnectPowerNet(this);
+            Logger.Info($"Removed discharger {_entMan?.ToPrettyString(discharger.Owner)}");
         }
 
         public void AddCharger(BatteryChargerComponent charger)
@@ -131,6 +137,7 @@ namespace Content.Server.Power.NodeGroups
             battery.NetworkBattery.LinkedNetworkCharging = default;
             Chargers.Add(charger);
             _powerNetSystem?.QueueReconnectPowerNet(this);
+            Logger.Info($"Added charger {_entMan?.ToPrettyString(charger.Owner)}");
         }
 
         public void RemoveCharger(BatteryChargerComponent charger)
@@ -147,6 +154,7 @@ namespace Content.Server.Power.NodeGroups
 
             Chargers.Remove(charger);
             _powerNetSystem?.QueueReconnectPowerNet(this);
+            Logger.Info($"Removed charger {_entMan?.ToPrettyString(charger.Owner)}");
         }
 
         public override string? GetDebugData()
