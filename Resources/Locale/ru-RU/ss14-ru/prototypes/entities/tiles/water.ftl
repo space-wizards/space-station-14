@@ -1,3 +1,3 @@
-ent-FloorWaterEntity = water
+ent-FloorWaterEntity = вода
     .desc = { "" }
     .suffix = { "" }

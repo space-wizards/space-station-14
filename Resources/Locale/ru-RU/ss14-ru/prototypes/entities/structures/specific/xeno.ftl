@@ -1,3 +1,3 @@
-ent-XenoWardingTower = Xeno warding tower
-    .desc = a
+ent-XenoWardingTower = охранная башня ксено
+    .desc = { "" }
     .suffix = { "" }
