@@ -5,6 +5,8 @@ using Robust.Shared.Random;
 using Robust.Shared.Physics.Systems;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Hands.Components;
+using Robust.Shared.GameStates;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Weapons.Reflect;
 
@@ -13,6 +15,7 @@ namespace Content.Shared.Weapons.Reflect;
 /// </summary>
 public abstract class SharedReflectSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
@@ -25,6 +28,21 @@ public abstract class SharedReflectSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<SharedHandsComponent, PreventProjectileCollideEvent>(TryReflectProjectile);
         SubscribeLocalEvent<SharedHandsComponent, HitScanReflectAttempt>(TryReflectHitScan);
+        SubscribeLocalEvent<ReflectComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<ReflectComponent, ComponentGetState>(OnGetState);
+    }
+
+    private static void OnHandleState(EntityUid uid, ReflectComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not ReflectComponentState state) return;
+        component.Enabled = state.Enabled;
+        component.Chance = state.Chance;
+        component.Spread = state.Spread;
+    }
+
+    private static void OnGetState(EntityUid uid, ReflectComponent component, ref ComponentGetState args)
+    {
+        args.State = new ReflectComponentState(component.Enabled, component.Chance, component.Spread);
     }
 
     private void TryReflectProjectile(EntityUid uid, SharedHandsComponent hands, ref PreventProjectileCollideEvent args)

@@ -1,13 +1,14 @@
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weapons.Reflect;
 
 /// <summary>
 /// Entities with this component have a chance to reflect projectiles and hitscan shots
 /// </summary>
-[RegisterComponent]
-public class ReflectComponent : Component
+[RegisterComponent, NetworkedComponent]
+public sealed class ReflectComponent : Component
 {
     /// <summary>
     /// Can only reflect when enabled
@@ -23,4 +24,18 @@ public class ReflectComponent : Component
 
     [DataField("onReflect")]
     public SoundSpecifier? OnReflect;
+}
+
+[Serializable, NetSerializable]
+public sealed class ReflectComponentState : ComponentState
+{
+    public bool Enabled;
+    public float Chance;
+    public Angle Spread;
+    public ReflectComponentState(bool enabled, float chance, Angle spread)
+    {
+        Enabled = enabled;
+        Chance = chance;
+        Spread = spread;
+    }
 }
