@@ -98,12 +98,12 @@ namespace Content.Shared.Sound
 
             if (predict)
             {
-                _audioSystem.PlayPredicted(component.Sound, component.Owner, user, component.Sound.Params.AddVolume(-2f));
+                _audioSystem.PlayPredicted(component.Sound, component.Owner, user);
             }
             else if (_netMan.IsServer)
             {
                 // don't predict sounds that client couldn't have played already
-                _audioSystem.PlayPvs(component.Sound, component.Owner, component.Sound.Params.AddVolume(-2f));
+                _audioSystem.PlayPvs(component.Sound, component.Owner);
             }
         }
     }
