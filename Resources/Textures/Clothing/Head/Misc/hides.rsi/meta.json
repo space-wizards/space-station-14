@@ -9,10 +9,6 @@
   "states": [
     {
       "name": "bear-equipped-HELMET",
-      "directions": 4
-    },
-    {
-      "name": "bearglow-equipped-HELMET",
       "directions": 4,
       "delays": [
         [

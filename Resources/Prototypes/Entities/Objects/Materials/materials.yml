@@ -168,6 +168,11 @@
     equippedPrefix: bear
     slots:
       - HEAD
+  - type: PointLight
+    radius: 1.2
+    energy: 1.5
+    color: "#4faffb"
+    slots:
 
 - type: entity
   parent: MaterialBase
