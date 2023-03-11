@@ -82,6 +82,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
             // If we don't have a nearest node don't play any sound.
             EntityCoordinates? nearestNode = null;
             var bodyQuery = GetEntityQuery<PhysicsComponent>();
+            var weatherIgnoreQuery = GetEntityQuery<IgnoreWeatherComponent>();
             var visited = new HashSet<Vector2i>();
 
             while (frontier.TryDequeue(out var node))
@@ -89,7 +90,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
                 if (!visited.Add(node.GridIndices))
                     continue;
 
-                if (!CanWeatherAffect(grid, node, bodyQuery))
+                if (!CanWeatherAffect(grid, node, weatherIgnoreQuery, bodyQuery))
                 {
                     // Add neighbors
                     // TODO: Ideally we pick some deterministically random direction and use that
