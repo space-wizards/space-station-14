@@ -177,43 +177,39 @@ public sealed partial class GunSystem : SharedGunSystem
                     ShootProjectile(ent.Value, mapDirection, gunVelocity, user, gun.ProjectileSpeed);
                     break;
                 case HitscanPrototype hitscan:
-                    var ray = new CollisionRay(fromMap.Position, mapDirection.Normalized, hitscan.CollisionMask);
-
-                    var rayCastResults =
-                        Physics.IntersectRay(fromMap.MapId, ray, hitscan.MaxLength, user, false).ToList();
 
                     EntityUid? lastHit = null;
 
-                    if (rayCastResults.Count >= 1)
+                    var from = fromMap;
+                    var fromEffect = fromCoordinates; // can't use map coords above because funny FireEffects
+                    var dir = mapDirection.Normalized;
+                    var lastUser = user;
+                    for (var reflectAttempt = 0; reflectAttempt < 3; reflectAttempt++)
                     {
+                        var ray = new CollisionRay(from.Position, dir, hitscan.CollisionMask);
+                        var rayCastResults =
+                            Physics.IntersectRay(from.MapId, ray, hitscan.MaxLength, lastUser, false).ToList();
+                        if (rayCastResults.Count() == 0)
+                            break;
+
                         var result = rayCastResults[0];
                         var hit = result.HitEntity;
-                        var distance = result.Distance;
-                        var direction = mapDirection.ToAngle();
-                        FireEffects(fromCoordinates, distance, direction, hitscan, hit);
+                        lastHit = hit;
 
-                        var ev = new HitScanReflectAttempt(mapDirection.Normalized, false);
+                        FireEffects(fromEffect, result.Distance, dir.Normalized.ToAngle(), hitscan, hit);
+
+                        var ev = new HitScanReflectAttempt(dir, false);
                         RaiseLocalEvent(hit, ref ev);
 
                         if (ev.Reflected)
                         {
-                            var pos = _transform.GetWorldPosition(Transform(hit));
-                            ray = new CollisionRay(pos, ev.Direction, ray.CollisionMask);
-                            rayCastResults = Physics.IntersectRay(Transform(hit).MapID, ray, hitscan.MaxLength, hit, false).ToList();
-                            if (rayCastResults.Count >= 1)
-                            {
-                                result = rayCastResults[0];
-                                distance = result.Distance;
-                                FireEffects(Transform(hit).Coordinates, distance, ev.Direction.ToAngle(), hitscan, hit);
-                                hit = result.HitEntity;
-                            }
-                            else
-                            {
-                                FireEffects(Transform(hit).Coordinates, hitscan.MaxLength, ev.Direction.ToAngle(), hitscan);
-                            }
+                            from = Transform(hit).MapPosition;
+                            fromEffect = Transform(hit).Coordinates;
+                            dir = ev.Direction;
+                            lastUser = hit;
+                        } else {
+                            break;
                         }
-
-                        lastHit = hit;
                     }
 
                     if (lastHit != null)
@@ -254,7 +250,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     }
                     else
                     {
-                        FireEffects(fromCoordinates, hitscan.MaxLength, mapDirection.ToAngle(), hitscan);
+                        FireEffects(fromEffect, hitscan.MaxLength, dir.ToAngle(), hitscan);
                     }
 
                     Audio.PlayPredicted(gun.SoundGunshot, gunUid, user);
