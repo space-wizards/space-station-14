@@ -824,7 +824,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeAmanitaPie
-  name: amanita pie
+  name: amanita pie recipe
   result: FoodPieAmanita
   time: 15
   solids:
@@ -841,6 +841,18 @@
     Slime: 15
   solids:
     FoodCakePlain: 1
+
+- type: microwaveMealRecipe
+  id: RecipeGrapeTart
+  name: grape tart recipe
+  result: FoodTartGrape
+  time: 15
+  reagents:
+    Sugar: 5
+    Milk: 5
+  solids:
+    FoodDoughPie: 1
+    FoodGrape: 3
 
 #Donks i guess
 - type: microwaveMealRecipe
