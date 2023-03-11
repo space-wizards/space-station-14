@@ -21,8 +21,8 @@
     fixtures:
     - shape:
         !type:PhysShapeCircle
-        radius: 0.48
-      density: 400
+        radius: 0.40
+      density: 100
       mask:
       - MobMask
       layer:
@@ -56,6 +56,12 @@
       prob: 0.3
   - type: Bloodstream
     bloodMaxVolume: 500
+    bloodReagent: Cryoxadone
+  - type: Vocal
+    sounds:
+      Male: Bear
+      Female: Bear
+      Unsexed: Bear
   - type: CombatMode
     disarmAction:
       enabled: false
