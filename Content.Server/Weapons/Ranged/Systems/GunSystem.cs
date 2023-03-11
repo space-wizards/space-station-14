@@ -30,13 +30,13 @@ namespace Content.Server.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem : SharedGunSystem
 {
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly ExamineSystem _examine = default!;
     [Dependency] private readonly InteractionSystem _interaction = default!;
     [Dependency] private readonly PricingSystem _pricing = default!;
     [Dependency] private readonly StaminaSystem _stamina = default!;
     [Dependency] private readonly StunSystem _stun = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public const float DamagePitchVariation = SharedMeleeWeaponSystem.DamagePitchVariation;
