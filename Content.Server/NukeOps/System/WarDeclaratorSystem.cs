@@ -115,7 +115,7 @@ namespace Content.Server.NukeOps
                 (
                     warDeclarator.Message,
                     condition,
-                    _nukeopsRuleSystem.Config.WarMinCrewSize,
+                    _nukeopsRuleSystem.Config.WarDeclarationMinOpsSize,
                     endTime,
                     timeStamp
                 )

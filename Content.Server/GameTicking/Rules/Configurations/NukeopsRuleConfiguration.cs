@@ -54,13 +54,13 @@ public sealed class NukeopsRuleConfiguration : GameRuleConfiguration
     ///     Delay between war declaration and nuke ops arrival on station map. Gives crew time to prepare
     /// </summary>
     [DataField("warNukieArriveDelay")]
-    public TimeSpan WarNukieArriveDelay = TimeSpan.FromMinutes(15);
+    public TimeSpan WarNukieArriveDelay = TimeSpan.FromMinutes(20);
 
     /// <summary>
-    ///     Minimal crew size for war
+    ///     Minimal operatives amount for war declaration
     /// </summary>
-    [DataField("warMinCrewSize")]
-    public int WarMinCrewSize = 4;
+    [DataField("warDeclarationMinOpsSize")]
+    public int WarDeclarationMinOpsSize = 4;
 
     [DataField("randomHumanoidSettings", customTypeSerializer: typeof(PrototypeIdSerializer<RandomHumanoidSettingsPrototype>))]
     public string RandomHumanoidSettingsPrototype = "NukeOp";

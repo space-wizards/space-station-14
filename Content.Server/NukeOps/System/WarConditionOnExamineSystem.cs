@@ -25,7 +25,7 @@ namespace Content.Server.NukeOps
 
         private void OnExamine(EntityUid uid, WarConditionOnExamineComponent component, ExaminedEvent args)
         {
-            // This component applied to comms console so we must check is it have power to work
+            // This component can be applied to something that must be powered
             if (!_nukeopsRuleSystem.RuleAdded || !_powerReceiverSystem.IsPowered(uid))
             {
                 return;
@@ -44,7 +44,7 @@ namespace Content.Server.NukeOps
                     args.PushMarkup($"{Loc.GetString("war-ops-examine-status-unable")}\n{Loc.GetString("war-ops-examine-conditions-time-out")}");
                     break;
                 case WarConditionStatus.NO_WAR_SMALL_CREW:
-                    args.PushMarkup($"{Loc.GetString("war-ops-examine-status-unable")}\n{Loc.GetString("war-ops-examine-conditions-small-crew", ("min_size", _nukeopsRuleSystem.Config.WarMinCrewSize))}");
+                    args.PushMarkup($"{Loc.GetString("war-ops-examine-status-unable")}\n{Loc.GetString("war-ops-examine-conditions-small-crew", ("min_size", _nukeopsRuleSystem.Config.WarDeclarationMinOpsSize))}");
                     break;
                 case WarConditionStatus.YES_WAR:
                     var gameruleTime = _gameTiming.CurTime.Subtract(_nukeopsRuleSystem.GameruleStartTime);

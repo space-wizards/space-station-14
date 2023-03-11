@@ -72,7 +72,6 @@
     preset: StorePresetUplink
     balance:
       Telecrystal: 0
-  - type: WarConditionOnExamine
 
 - type: entity
   parent: BaseUplinkRadio
@@ -107,6 +106,7 @@
   - type: Tag
     tags:
     - NukeOpsUplink
+  - type: WarConditionOnExamine
 
 - type: entity
   parent: BaseUplinkRadio

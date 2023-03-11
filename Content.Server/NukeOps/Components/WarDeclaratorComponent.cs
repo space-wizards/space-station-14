@@ -2,6 +2,9 @@ using Robust.Shared.Audio;
 
 namespace Content.Server.NukeOps
 {
+    /// <summary>
+    /// War declarator that used in NukeOps game rule for declaring war
+    /// </summary>
     [RegisterComponent]
     public sealed class WarDeclaratorComponent : Component
     {
@@ -17,7 +20,7 @@ namespace Content.Server.NukeOps
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("maxMessageLength")]
-        public int MaxMessageLength { get; set; } = 255;
+        public int MaxMessageLength { get; set; } = 512;
         
         /// <summary>
         /// War declarement text color

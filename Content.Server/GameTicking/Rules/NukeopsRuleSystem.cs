@@ -220,7 +220,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
         else
         {
-            if (_operativePlayers.Count < _nukeopsRuleConfig.WarMinCrewSize) return WarConditionStatus.NO_WAR_SMALL_CREW;
+            if (_operativePlayers.Count < _nukeopsRuleConfig.WarDeclarationMinOpsSize) return WarConditionStatus.NO_WAR_SMALL_CREW;
             if (_leftOutpost) return WarConditionStatus.NO_WAR_SHUTTLE_DEPARTED;
     
             var gameruleTime = _gameTiming.CurTime.Subtract(_gameruleStartTime);
@@ -302,7 +302,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         if (
             _declarationMade == false &&
             !_leftOutpost && 
-            _operativePlayers.Count >= _nukeopsRuleConfig.WarMinCrewSize &&
+            _operativePlayers.Count >= _nukeopsRuleConfig.WarDeclarationMinOpsSize &&
             _gameTiming.CurTime.Subtract(_gameruleStartTime) < _nukeopsRuleConfig.WarDeclarationTimeWindow
         )
         {
