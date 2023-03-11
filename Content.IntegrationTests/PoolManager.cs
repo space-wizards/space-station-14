@@ -52,6 +52,9 @@ public static class PoolManager
         (CCVars.NPCMaxUpdates.Name,           "999999"),
         (CVars.ThreadParallelCount.Name,      "1"),
         (CCVars.GameRoleTimers.Name,          "false"),
+        (CCVars.CargoShuttles.Name, "false", false),
+        (CCVars.EmergencyShuttleEnabled.Name, "false", false),
+        (CCVars.ProcgenPreload.Name, "false", false),
         // @formatter:on
     };
 
@@ -233,10 +236,7 @@ public static class PoolManager
             options.CVarOverrides[CCVars.GameDummyTicker.Name] = "true";
         }
 
-        if (poolSettings.InLobby)
-        {
-            options.CVarOverrides[CCVars.GameLobbyEnabled.Name] = "true";
-        }
+        options.CVarOverrides[CCVars.GameLobbyEnabled.Name] = poolSettings.InLobby.ToString();
 
         if (poolSettings.DisableInterpolate)
         {
@@ -247,6 +247,8 @@ public static class PoolManager
         {
             options.CVarOverrides[CCVars.GameMap.Name] = poolSettings.Map;
         }
+
+        options.CVarOverrides[CCVars.ConfigPresetDevelopment.Name] = "false";
 
         // This breaks some tests.
         // TODO: Figure out which tests this breaks.
@@ -675,12 +677,12 @@ public sealed class PoolSettings
     /// <summary>
     /// If the returned pair must not be reused
     /// </summary>
-    public bool MustNotBeReused => Destructive || NoLoadContent || DisableInterpolate || DummyTicker;
+    public bool MustNotBeReused => Destructive || NoLoadContent || DisableInterpolate || DummyTicker || NoToolsExtraPrototypes;
 
     /// <summary>
     /// If the given pair must be brand new
     /// </summary>
-    public bool MustBeNew => Fresh || NoLoadContent || DisableInterpolate || DummyTicker;
+    public bool MustBeNew => Fresh || NoLoadContent || DisableInterpolate || DummyTicker || NoToolsExtraPrototypes;
 
     /// <summary>
     /// If the given pair must not be connected
@@ -772,6 +774,14 @@ public sealed class PoolSettings
         if (ExtraPrototypes != nextSettings.ExtraPrototypes) return false;
         return true;
     }
+
+    // Prototype hot reload is not available outside TOOLS builds,
+    // so we can't pool test instances that use ExtraPrototypes without TOOLS.
+#if TOOLS
+    private bool NoToolsExtraPrototypes => false;
+#else
+    private bool NoToolsExtraPrototypes => !string.IsNullOrEmpty(ExtraPrototypes);
+#endif
 }
 
 /// <summary>
