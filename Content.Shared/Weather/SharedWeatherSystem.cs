@@ -3,10 +3,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Weather;
 
@@ -15,8 +13,8 @@ public abstract class SharedWeatherSystem : EntitySystem
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] protected readonly IMapManager MapManager = default!;
     [Dependency] protected readonly IPrototypeManager ProtoMan = default!;
-    [Dependency] private   readonly IRobustRandom _random = default!;
     [Dependency] private   readonly ITileDefinitionManager _tileDefManager = default!;
+    [Dependency] private   readonly MetaDataSystem _metadata = default!;
 
     protected ISawmill Sawmill = default!;
 
@@ -29,10 +27,20 @@ public abstract class SharedWeatherSystem : EntitySystem
 
     private void OnWeatherUnpaused(EntityUid uid, WeatherComponent component, ref EntityUnpausedEvent args)
     {
-        component.EndTime += args.PausedTime;
+        foreach (var weather in component.Weather.Values)
+        {
+            weather.StartTime += args.PausedTime;
+
+            if (weather.EndTime != null)
+                weather.EndTime = weather.EndTime.Value + args.PausedTime;
+        }
     }
 
-    public bool CanWeatherAffect(MapGridComponent grid, TileRef tileRef, EntityQuery<PhysicsComponent> bodyQuery)
+    public bool CanWeatherAffect(
+        MapGridComponent grid,
+        TileRef tileRef,
+        EntityQuery<IgnoreWeatherComponent> weatherIgnoreQuery,
+        EntityQuery<PhysicsComponent> bodyQuery)
     {
         if (tileRef.Tile.IsEmpty)
             return true;
@@ -46,7 +54,10 @@ public abstract class SharedWeatherSystem : EntitySystem
 
         while (anchoredEnts.MoveNext(out var ent))
         {
-            if (bodyQuery.TryGetComponent(ent, out var body) && body.CanCollide)
+            if (!weatherIgnoreQuery.HasComponent(ent.Value) &&
+                bodyQuery.TryGetComponent(ent, out var body) &&
+                body.Hard &&
+                body.CanCollide)
             {
                 return false;
             }
@@ -55,6 +66,31 @@ public abstract class SharedWeatherSystem : EntitySystem
         return true;
 
     }
+
+    public float GetPercent(WeatherData component, EntityUid mapUid)
+    {
+        var pauseTime = _metadata.GetPauseTime(mapUid);
+        var elapsed = Timing.CurTime - (component.StartTime + pauseTime);
+        var duration = component.Duration;
+        var remaining = duration - elapsed;
+        float alpha;
+
+        if (remaining < WeatherComponent.ShutdownTime)
+        {
+            alpha = (float) (remaining / WeatherComponent.ShutdownTime);
+        }
+        else if (elapsed < WeatherComponent.StartupTime)
+        {
+            alpha = (float) (elapsed / WeatherComponent.StartupTime);
+        }
+        else
+        {
+            alpha = 1f;
+        }
+
+        return alpha;
+    }
+
 
     public override void Update(float frameTime)
     {
@@ -65,103 +101,141 @@ public abstract class SharedWeatherSystem : EntitySystem
 
         var curTime = Timing.CurTime;
 
-        foreach (var (comp, metadata) in EntityQuery<WeatherComponent, MetaDataComponent>())
+        foreach (var comp in EntityQuery<WeatherComponent>())
         {
-            if (comp.Weather == null)
+            if (comp.Weather.Count == 0)
                 continue;
 
             var uid = comp.Owner;
-            var endTime = comp.EndTime;
 
-            // Ended
-            if (endTime < curTime)
+            foreach (var (proto, weather) in comp.Weather)
             {
-                EndWeather(comp);
-                continue;
-            }
+                var endTime = weather.EndTime;
 
-            // Admin messed up or the likes.
-            if (!ProtoMan.TryIndex<WeatherPrototype>(comp.Weather, out var weatherProto))
-            {
-                Sawmill.Error($"Unable to find weather prototype for {comp.Weather}, ending!");
-                EndWeather(comp);
-                continue;
-            }
-
-            var remainingTime = endTime - curTime;
-
-            // Shutting down
-            if (remainingTime < weatherProto.ShutdownTime)
-            {
-                SetState(uid, comp, WeatherState.Ending, weatherProto);
-            }
-            // Starting up
-            else
-            {
-                var startTime = comp.StartTime;
-                var elapsed = Timing.CurTime - startTime;
-
-                if (elapsed < weatherProto.StartupTime)
+                // Ended
+                if (endTime != null && endTime < curTime)
                 {
-                    SetState(uid, comp, WeatherState.Starting, weatherProto);
+                    EndWeather(uid, comp, proto);
+                    continue;
                 }
-            }
 
-            // Run whatever code we need.
-            Run(uid, comp, weatherProto, comp.State, frameTime);
+                var remainingTime = endTime - curTime;
+
+                // Admin messed up or the likes.
+                if (!ProtoMan.TryIndex<WeatherPrototype>(proto, out var weatherProto))
+                {
+                    Sawmill.Error($"Unable to find weather prototype for {comp.Weather}, ending!");
+                    EndWeather(uid, comp, proto);
+                    continue;
+                }
+
+                // Shutting down
+                if (endTime != null && remainingTime < WeatherComponent.ShutdownTime)
+                {
+                    SetState(WeatherState.Ending, comp, weather, weatherProto);
+                }
+                // Starting up
+                else
+                {
+                    var startTime = weather.StartTime;
+                    var elapsed = Timing.CurTime - startTime;
+
+                    if (elapsed < WeatherComponent.StartupTime)
+                    {
+                        SetState(WeatherState.Starting, comp, weather, weatherProto);
+                    }
+                }
+
+                // Run whatever code we need.
+                Run(uid, weather, weatherProto, frameTime);
+            }
         }
     }
 
-    public void SetWeather(MapId mapId, WeatherPrototype? weather)
+    /// <summary>
+    /// Shuts down all existing weather and starts the new one if applicable.
+    /// </summary>
+    public void SetWeather(MapId mapId, WeatherPrototype? proto, TimeSpan? endTime)
     {
         var weatherComp = EnsureComp<WeatherComponent>(MapManager.GetMapEntityId(mapId));
-        EndWeather(weatherComp);
 
-        if (weather != null)
-            StartWeather(weatherComp, weather);
+        foreach (var (eProto, weather) in weatherComp.Weather)
+        {
+            // Reset cooldown if it's an existing one.
+            if (eProto == proto?.ID)
+            {
+                weather.EndTime = endTime;
+
+                if (weather.State == WeatherState.Ending)
+                    weather.State = WeatherState.Running;
+
+                Dirty(weatherComp);
+                continue;
+            }
+
+            // Speedrun
+            var end = Timing.CurTime + WeatherComponent.ShutdownTime;
+
+            if (weather.EndTime == null || weather.EndTime > end)
+            {
+                weather.EndTime = end;
+                Dirty(weatherComp);
+            }
+        }
+
+        if (proto != null)
+            StartWeather(weatherComp, proto, endTime);
     }
 
     /// <summary>
     /// Run every tick when the weather is running.
     /// </summary>
-    protected virtual void Run(EntityUid uid, WeatherComponent component, WeatherPrototype weather, WeatherState state, float frameTime) {}
+    protected virtual void Run(EntityUid uid, WeatherData weather, WeatherPrototype weatherProto, float frameTime) {}
 
-    protected void StartWeather(WeatherComponent component, WeatherPrototype weather)
+    protected void StartWeather(WeatherComponent component, WeatherPrototype weather, TimeSpan? endTime)
     {
-        component.Weather = weather.ID;
-        // TODO: ENGINE PR
-        var duration = _random.NextDouble(weather.DurationMinimum.TotalSeconds, weather.DurationMaximum.TotalSeconds);
-        component.EndTime = Timing.CurTime + TimeSpan.FromSeconds(duration);
-        component.StartTime = Timing.CurTime;
-        DebugTools.Assert(component.State == WeatherState.Invalid);
+        if (component.Weather.ContainsKey(weather.ID))
+            return;
+
+        var data = new WeatherData()
+        {
+            StartTime = Timing.CurTime,
+            EndTime = endTime,
+        };
+
+        component.Weather.Add(weather.ID, data);
         Dirty(component);
     }
 
-    protected virtual void EndWeather(WeatherComponent component)
+    protected virtual void EndWeather(EntityUid uid, WeatherComponent component, string proto)
     {
-        component.Stream?.Stop();
-        component.Stream = null;
-        component.Weather = null;
-        component.StartTime = TimeSpan.Zero;
-        component.EndTime = TimeSpan.Zero;
-        component.State = WeatherState.Invalid;
+        if (!component.Weather.TryGetValue(proto, out var data))
+            return;
+
+        data.Stream?.Stop();
+        data.Stream = null;
+        component.Weather.Remove(proto);
         Dirty(component);
     }
 
-    protected virtual bool SetState(EntityUid uid, WeatherComponent component, WeatherState state, WeatherPrototype prototype)
+    protected virtual bool SetState(WeatherState state, WeatherComponent component, WeatherData weather, WeatherPrototype weatherProto)
     {
-        if (component.State.Equals(state))
+        if (weather.State.Equals(state))
             return false;
 
-        component.State = state;
+        weather.State = state;
+        Dirty(component);
         return true;
     }
 
     [Serializable, NetSerializable]
     protected sealed class WeatherComponentState : ComponentState
     {
-        public string? Weather;
-        public TimeSpan StartTime;
-        public TimeSpan EndTime;
+        public Dictionary<string, WeatherData> Weather;
+
+        public WeatherComponentState(Dictionary<string, WeatherData> weather)
+        {
+            Weather = weather;
+        }
     }
 }

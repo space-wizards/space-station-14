@@ -12,7 +12,6 @@ namespace Content.Server.Storage.Components
         /// <summary>
         ///     The list of entities to spawn, with amounts and orGroups.
         /// </summary>
-        /// <returns></returns>
         [DataField("items", required: true)]
         public List<EntitySpawnEntry> Items = new();
 
@@ -25,7 +24,6 @@ namespace Content.Server.Storage.Components
         /// <summary>
         ///     How many uses before the item should delete itself.
         /// </summary>
-        /// <returns></returns>
         [DataField("uses")]
         public int Uses = 1;
     }
