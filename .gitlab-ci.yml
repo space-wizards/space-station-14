@@ -13,10 +13,10 @@ test-debug:
     - mkdir .git/hooks -p
     - python3 RUN_THIS.py
     - dotnet restore
-    - dotnet build --configuration Debug --no-restore /p:WarningsAsErrors=nullable /m
-    - pwsh -Command "dotnet test --no-build Content.Tests/Content.Tests.csproj -- NUnit.ConsoleOut=0"
+    - dotnet build --configuration DebugOpt --no-restore /p:WarningsAsErrors=nullable /m
+    - pwsh -Command "dotnet test --configuration DebugOpt --no-build Content.Tests/Content.Tests.csproj -- NUnit.ConsoleOut=0"
     - export DOTNET_gcServer=1
-    - pwsh -Command "dotnet test --no-build Content.IntegrationTests/Content.IntegrationTests.csproj -- NUnit.ConsoleOut=0"
+    - pwsh -Command "dotnet test --configuration DebugOpt --no-build Content.IntegrationTests/Content.IntegrationTests.csproj -- NUnit.ConsoleOut=0"
 
 test-release:
   stage: test
@@ -27,10 +27,10 @@ test-release:
     - mkdir .git/hooks -p
     - python3 RUN_THIS.py
     - dotnet restore
-    - dotnet build --configuration Release --no-restore /p:WarningsAsErrors=nullable /m
-    - pwsh -Command "dotnet test --no-build Content.Tests/Content.Tests.csproj -- NUnit.ConsoleOut=0"
+    - dotnet build --configuration Tools --no-restore /p:WarningsAsErrors=nullable /m
+    - pwsh -Command "dotnet test --configuration Tools --no-build Content.Tests/Content.Tests.csproj -- NUnit.ConsoleOut=0"
     - export DOTNET_gcServer=1
-    - pwsh -Command "dotnet test --no-build Content.IntegrationTests/Content.IntegrationTests.csproj -- NUnit.ConsoleOut=0"
+    - pwsh -Command "dotnet test --configuration Tools --no-build Content.IntegrationTests/Content.IntegrationTests.csproj -- NUnit.ConsoleOut=0"
 
 publish:
   stage: publish
