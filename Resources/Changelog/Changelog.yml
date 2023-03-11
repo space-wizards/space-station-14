@@ -1,12 +1,4 @@
 Entries:
-- author: Interrobang01
-  changes:
-  - {message: Cognizine now needs Acetone instead of Unstable Mutagen in its recipe,
-    type: Tweak}
-  - {message: Monkeys can talk when brought to life via Cognizine, type: Tweak}
-  - {message: Cognizine has a taste now, type: Fix}
-  id: 2654
-  time: '2022-11-15T02:02:46.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Science passive research point generation is no longer capped at 30000,
@@ -2923,3 +2915,9 @@ Entries:
     type: Fix}
   id: 3153
   time: '2023-03-11T03:11:19.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: 'HOP will always have a spare ID in his locker, rather than a 90% chance.',
+    type: Fix}
+  id: 3154
+  time: '2023-03-11T03:27:11.0000000+00:00'
