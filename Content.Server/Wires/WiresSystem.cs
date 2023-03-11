@@ -51,7 +51,6 @@ public sealed class WiresSystem : SharedWiresSystem
         SubscribeLocalEvent<WireToolFinishedEvent>(OnToolFinished);
         SubscribeLocalEvent<WireToolCanceledEvent>(OnToolCanceled);
         SubscribeLocalEvent<WiresComponent, ComponentStartup>(OnWiresStartup);
-        SubscribeLocalEvent<WiresComponent, MapInitEvent>(OnWiresMapInit);
         SubscribeLocalEvent<WiresComponent, WiresActionMessage>(OnWiresActionMessage);
         SubscribeLocalEvent<WiresComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<WiresComponent, MapInitEvent>(OnMapInit);
@@ -245,11 +244,6 @@ public sealed class WiresSystem : SharedWiresSystem
             SetOrCreateWireLayout(uid, component);
 
         UpdateUserInterface(uid);
-    }
-
-    private void OnWiresMapInit(EntityUid uid, WiresComponent component, MapInitEvent args)
-    {
-        EnsureComp<WiresPanelComponent>(uid);
     }
     #endregion
 
@@ -521,6 +515,7 @@ public sealed class WiresSystem : SharedWiresSystem
 
     private void OnMapInit(EntityUid uid, WiresComponent component, MapInitEvent args)
     {
+        EnsureComp<WiresPanelComponent>(uid);
         if (component.SerialNumber == null)
         {
             GenerateSerialNumber(uid, component);
