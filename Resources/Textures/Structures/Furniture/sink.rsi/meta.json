@@ -18,6 +18,14 @@
         {
             "name": "sink_stem",
             "directions": 4
+        },
+		{
+            "name": "sink-fill-1",
+            "directions": 4
+        },
+        {
+            "name": "sink_wide-fill-1",
+            "directions": 4
         }
     ]
 }

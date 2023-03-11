@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Fluids.Components;
 using Content.Server.Chemistry.EntitySystems;
@@ -7,6 +8,7 @@ using Content.Shared.Audio;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Coordinates;
 using Content.Shared.Database;
+using Content.Shared.Examine;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Collections;
@@ -26,6 +28,7 @@ namespace Content.Server.Fluids.EntitySystems
         {
             base.Initialize();
             SubscribeLocalEvent<DrainComponent, GetVerbsEvent<Verb>>(AddEmptyVerb);
+            SubscribeLocalEvent<DrainComponent, ExaminedEvent>(OnExamined);
         }
 
         private void AddEmptyVerb(EntityUid uid, DrainComponent component, GetVerbsEvent<Verb> args)
@@ -78,6 +81,8 @@ namespace Content.Server.Fluids.EntitySystems
                 FixedPoint2.Min(containerSolution.Volume, drainSolution.AvailableVolume));
 
             _solutionSystem.TryAddSolution(target, drainSolution, transferSolution);
+            _solutionSystem.UpdateAppearance(target, drainSolution);
+            _solutionSystem.UpdateAppearance(container, containerSolution);
 
             _audioSystem.PlayPvs(drain.ManualDrainSound, target);
             _ambientSoundSystem.SetAmbience(target, true);
@@ -125,6 +130,12 @@ namespace Content.Server.Fluids.EntitySystems
 
                 if (drainSolution is null)
                     continue;
+
+                if (drainSolution.AvailableVolume <= 0)
+                {
+                    _ambientSoundSystem.SetAmbience(drain.Owner, false);
+                    continue;
+                }
 
                 // Remove a bit from the buffer
                 _solutionSystem.SplitSolution(drain.Owner, drainSolution, (drain.UnitsDestroyedPerSecond * drain.DrainFrequency));
@@ -182,6 +193,18 @@ namespace Content.Server.Fluids.EntitySystems
                     }
                 }
             }
+        }
+
+        private void OnExamined(EntityUid uid, DrainComponent component, ExaminedEvent args)
+        {
+            if (!args.IsInDetailsRange) { return; }
+            if (!TryComp(uid, out SolutionContainerManagerComponent? solutionComp)) { return; }
+            if (!_solutionSystem.TryGetSolution(uid, DrainComponent.SolutionName, out var drainSolution)) { return; }
+
+            var text = drainSolution.AvailableVolume != 0 ?
+                Loc.GetString("drain-component-examine-volume", ("volume", drainSolution.AvailableVolume)) :
+                Loc.GetString("drain-component-examine-hint-full");
+            args.Message.AddMarkup($"\n\n{text}");
         }
     }
 }

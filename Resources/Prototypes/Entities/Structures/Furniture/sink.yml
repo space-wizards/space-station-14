@@ -10,12 +10,21 @@
   - type: InteractionOutline
   - type: Sprite
     sprite: Structures/Furniture/sink.rsi
-    state: sink_stem
+    layers:
+      - state: sink_stem
+      - map: [ "enum.SolutionContainerLayers.Fill" ]
+        state: sink-fill-1
+        visible: false
     netsync: false
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    fillBaseName: sink-fill-
+    solutionName: drainBuffer
   - type: SolutionContainerManager
     solutions:
       drainBuffer:
-        maxVol: 500
+        maxVol: 100
       tank:
         maxVol: 500
   - type: DrainableSolution
@@ -37,6 +46,12 @@
           - !type:PlaySoundBehavior
             sound:
               path: /Audio/Effects/metalbreak.ogg
+  - type: AmbientSound
+    enabled: false
+    volume: -8
+    range: 8
+    sound:
+      path: /Audio/Ambience/Objects/drain.ogg
 
 
 - type: entity
@@ -48,7 +63,7 @@
   - type: SolutionContainerManager
     solutions:
       drainBuffer:
-        maxVol: 500
+        maxVol: 10
       tank:
         reagents:
         - ReagentId: Water
@@ -59,10 +74,17 @@
   id: SinkWide
   parent: Sink
   components:
-  - type: Sprite
-    sprite: Structures/Furniture/sink.rsi
-    state: sink_wide
-    netsync: false
+    - type: Sprite
+      sprite: Structures/Furniture/sink.rsi
+      layers:
+        - state: sink_wide
+        - map: [ "enum.SolutionContainerLayers.Fill" ]
+          state: sink_wide-fill-1
+          visible: false
+    - type: SolutionContainerVisuals
+      maxFillLevels: 1
+      fillBaseName: sink_wide-fill-
+      solutionName: drainBuffer
 
 #Stemless Sink
 
@@ -73,8 +95,11 @@
   components:
   - type: Sprite
     sprite: Structures/Furniture/sink.rsi
-    state: sink
-    netsync: false
+    layers:
+      - state: sink
+      - map: [ "enum.SolutionContainerLayers.Fill" ]
+        state: sink-fill-1
+        visible: false
 
 - type: entity
   name: sink
@@ -85,7 +110,7 @@
   - type: SolutionContainerManager
     solutions:
       drainBuffer:
-        maxVol: 500
+        maxVol: 10
       tank:
         reagents:
         - ReagentId: Water

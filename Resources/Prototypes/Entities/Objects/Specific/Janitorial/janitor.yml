@@ -250,7 +250,11 @@
       netsync: false
       drawdepth: FloorObjects
       sprite: Objects/Specific/Janitorial/drain.rsi
-      state: icon
+      layers:
+      - state: icon
+      - map: [ "enum.SolutionContainerLayers.Fill" ]
+        state: fill-1
+        visible: false
     - type: InteractionOutline
     - type: Clickable
     - type: Transform
@@ -258,17 +262,22 @@
     - type: Physics
       bodyType: Static
       canCollide: false
-    - type: Drain
     - type: AmbientSound
       enabled: false
       volume: -8
       range: 8
       sound:
         path: /Audio/Ambience/Objects/drain.ogg
+    - type: Drain
+    - type: Appearance
+    - type: SolutionContainerVisuals
+      maxFillLevels: 1
+      fillBaseName: fill-
+      solutionName: drainBuffer
     - type: SolutionContainerManager
       solutions:
         drainBuffer:
-          maxVol: 500
+          maxVol: 100
     - type: DrainableSolution
       solution: drainBuffer
     - type: Damageable

@@ -20,6 +20,9 @@ namespace Content.Server.Fluids.Components
         [DataField("manualDrainSound"), ViewVariables(VVAccess.ReadOnly)]
         public SoundSpecifier ManualDrainSound = new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg");
 
+        [DataField("stateFull")]
+        public string StateFull = "";
+
         /// <summary>
         /// How many units per second the drain can absorb from the surrounding puddles.
         /// Divided by puddles, so if there are 5 puddles this will take 1/5 from each puddle.

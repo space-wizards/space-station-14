@@ -36,6 +36,13 @@ namespace Content.Client.Chemistry.Visualizers
         [DataField("metamorphicNameFull")]
         public string MetamorphicNameFull = "transformable-container-component-glass";
 
+        /// <summary>
+        /// Which solution of the SolutionContainerManagerComponent to represent.
+        /// If not set, will work as default.
+        /// </summary>
+        [DataField("solutionName")]
+        public string SolutionName = "";
+
         public string InitialName = string.Empty;
         public string InitialDescription = string.Empty;
     }
