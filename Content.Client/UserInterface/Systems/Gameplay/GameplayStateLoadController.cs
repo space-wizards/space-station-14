@@ -20,11 +20,11 @@ public sealed class GameplayStateLoadController : UIController, IOnStateChanged<
 
     public void UnloadScreen()
     {
-        OnScreenUnload!();
+        OnScreenUnload?.Invoke();
     }
 
     public void LoadScreen()
     {
-        OnScreenLoad!();
+        OnScreenLoad?.Invoke();
     }
 }
