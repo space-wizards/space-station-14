@@ -1,4 +1,5 @@
-﻿using Content.Client.UserInterface.Systems.Hands;
+﻿using Content.Client.UserInterface.Systems.Gameplay;
+using Content.Client.UserInterface.Systems.Hands;
 using Content.Client.UserInterface.Systems.Hands.Controls;
 using Content.Client.UserInterface.Systems.Hotbar.Widgets;
 using Content.Client.UserInterface.Systems.Inventory;
@@ -12,6 +13,19 @@ public sealed class HotbarUIController : UIController
 {
     private InventoryUIController? _inventory;
     private HandsUIController? _hands;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        var gameplayStateLoad = UIManager.GetUIController<GameplayStateLoadController>();
+        gameplayStateLoad.OnScreenLoad += OnScreenLoad;
+    }
+
+    private void OnScreenLoad()
+    {
+        ReloadHotbar();
+    }
 
     public void Setup(HandsContainer handsContainer, ItemSlotButtonContainer inventoryBar, ItemStatusPanel handStatus)
     {
