@@ -110,7 +110,7 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
 
     content = io.StringIO()
     for name, group in itertools.groupby(entries, lambda x: x["author"]):
-        content.write(f"**{name}** обновил:\n")
+        content.write(f"**{name}** обновил(а):\n")
         for entry in group:
             for change in entry["changes"]:
                 emoji = TYPES_TO_EMOJI.get(change['type'], "❓")
