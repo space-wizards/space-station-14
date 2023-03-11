@@ -129,7 +129,7 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
 
     for chunk in iter(lambda: content.read(2000), ''): # Corvax: Split big changelogs messages
         body = {
-            "content": chunk
+            "content": chunk,
             # Do not allow any mentions.
             "allowed_mentions": {
                 "parse": []
