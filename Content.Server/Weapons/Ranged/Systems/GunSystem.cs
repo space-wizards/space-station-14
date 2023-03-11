@@ -37,6 +37,7 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly StaminaSystem _stamina = default!;
     [Dependency] private readonly StunSystem _stun = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public const float DamagePitchVariation = SharedMeleeWeaponSystem.DamagePitchVariation;
     public const float GunClumsyChance = 0.5f;
@@ -189,14 +190,30 @@ public sealed partial class GunSystem : SharedGunSystem
                         var result = rayCastResults[0];
                         var hit = result.HitEntity;
                         var distance = result.Distance;
-                        FireEffects(fromCoordinates, distance, mapDirection.ToAngle(), hitscan, hit);
-                        if (user != null)
+                        var direction = mapDirection.ToAngle();
+                        FireEffects(fromCoordinates, distance, direction, hitscan, hit);
+
+                        var ev = new HitScanReflectAttempt(mapDirection.Normalized, false);
+                        RaiseLocalEvent(hit, ref ev);
+
+                        if (ev.Reflected)
                         {
-                            var ev = new HitScanReflectAttempt();
-                            RaiseLocalEvent(hit, ref ev);
-                            if (ev.Reflected)
-                                hit = user.Value;
+                            var pos = _transform.GetWorldPosition(Transform(hit));
+                            ray = new CollisionRay(pos, ev.Direction, ray.CollisionMask);
+                            rayCastResults = Physics.IntersectRay(Transform(hit).MapID, ray, hitscan.MaxLength, hit, false).ToList();
+                            if (rayCastResults.Count >= 1)
+                            {
+                                result = rayCastResults[0];
+                                distance = result.Distance;
+                                FireEffects(Transform(hit).Coordinates, distance, ev.Direction.ToAngle(), hitscan, hit);
+                                hit = result.HitEntity;
+                            }
+                            else
+                            {
+                                FireEffects(Transform(hit).Coordinates, hitscan.MaxLength, ev.Direction.ToAngle(), hitscan);
+                            }
                         }
+
                         lastHit = hit;
                     }
 

@@ -78,6 +78,8 @@ public abstract class SharedReflectSystem : EntitySystem
                 _popup.PopupEntity(Loc.GetString("reflect-shot"), uid, PopupType.Small);
                 _audio.PlayPvs(reflect.OnReflect, uid, AudioHelpers.WithVariation(0.05f, _random));
                 args.Reflected = true;
+                var spread = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2);
+                args.Direction = -spread.RotateVec(args.Direction);
                 return;
             }
         }
