@@ -1,87 +1,26 @@
-using Content.Server.Administration.Logs;
-using Content.Server.Hands.Components;
-using Content.Shared.Audio;
-using Content.Shared.Database;
-using Content.Shared.Popups;
-using Content.Shared.Projectiles;
-using Robust.Shared.Random;
-using Robust.Shared.Physics.Systems;
-using Content.Server.Weapons.Reflect;
-using Content.Shared.Weapons.Ranged;
 using Content.Server.Weapons.Melee.EnergySword;
+using Content.Shared.Weapons.Reflect;
 
-namespace Server.Content.Weapons.Reflect;
+namespace Content.Server.Weapons.Reflect;
 
-/// <summary>
-/// This handles reflecting projectiles and hitscan shots.
-/// </summary>
-public sealed class ReflectSystem : EntitySystem
+public sealed class ReflectSystem : SharedReflectSystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedProjectileSystem _projectile = default!;
-
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<HandsComponent, PreventProjectileCollideEvent>(TryReflectProjectile);
-        SubscribeLocalEvent<HandsComponent, HitScanReflectAttempt>(TryReflectHitScan);
-
         SubscribeLocalEvent<ReflectComponent, EnergySwordActivatedEvent>(EnableReflect);
         SubscribeLocalEvent<ReflectComponent, EnergySwordDeactivatedEvent>(DisableReflect);
-    }
-
-    private void TryReflectProjectile(EntityUid uid, HandsComponent hands, ref PreventProjectileCollideEvent args)
-    {
-        foreach (var (_, hand) in hands.Hands)
-        {
-            if (TryComp<ReflectComponent>(hand.HeldEntity, out var reflect) &&
-                reflect.Enabled && 
-                _random.Prob(reflect.Chance))
-            {
-                var vel = _physics.GetMapLinearVelocity(uid) - _physics.GetMapLinearVelocity(args.ProjUid);
-                var spread = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2);
-                vel = spread.RotateVec(vel);
-                _physics.SetLinearVelocity(args.ProjUid, vel);
-                _transform.SetWorldRotation(args.ProjUid, vel.ToWorldAngle());
-                _projectile.SetShooter(args.ProjComp, uid);
-                _popup.PopupEntity(Loc.GetString("reflect-shot"), uid, PopupType.Small);
-                _audio.PlayPvs(reflect.OnReflect, uid, AudioHelpers.WithVariation(0.05f, _random));
-                _adminLogger.Add(LogType.ShotReflected, $"{ToPrettyString(uid):user} reflected projectile {ToPrettyString(args.ProjUid):projectile}");
-                args.Cancelled = true;
-                return;
-            }
-        }
-    }
-
-    private void TryReflectHitScan(EntityUid uid, HandsComponent hands, ref HitScanReflectAttempt args)
-    {
-        foreach (var (_, hand) in hands.Hands)
-        {
-            if (TryComp<ReflectComponent>(hand.HeldEntity, out var reflect)
-                && reflect.Enabled
-                && _random.Prob(reflect.Chance))
-            {
-                _popup.PopupEntity(Loc.GetString("reflect-shot"), uid, PopupType.Small);
-                _audio.PlayPvs(reflect.OnReflect, uid, AudioHelpers.WithVariation(0.05f, _random));
-                _adminLogger.Add(LogType.ShotReflected, $"{ToPrettyString(uid):entity} reflected hitscan shot");
-                args.Reflected = true;
-                return;
-            }
-        }
     }
 
     private void EnableReflect(EntityUid uid, ReflectComponent comp, ref EnergySwordActivatedEvent args)
     {
         comp.Enabled = true;
+        Dirty(comp);
     }
 
     private void DisableReflect(EntityUid uid, ReflectComponent comp, ref EnergySwordDeactivatedEvent args)
     {
         comp.Enabled = false;
+        Dirty(comp);
     }
 }

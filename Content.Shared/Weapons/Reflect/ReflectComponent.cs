@@ -1,12 +1,13 @@
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Weapons.Reflect;
+namespace Content.Shared.Weapons.Reflect;
 
 /// <summary>
 /// Entities with this component have a chance to reflect projectiles and hitscan shots
 /// </summary>
 [RegisterComponent]
-public sealed class ReflectComponent : Component
+public class ReflectComponent : Component
 {
     /// <summary>
     /// Can only reflect when enabled
