@@ -13,6 +13,7 @@ guide-entry-jobs = Jobs
 guide-entry-survival = Survival
 guide-entry-ss14 = Space Station 14
 
+# SCIENCE
 guide-entry-science = Science
 guide-entry-anomalous-research = Anomalous Research
 guide-entry-scanners-and-vessels = Scanners and Vessels
@@ -22,5 +23,10 @@ guide-entry-artifact-reports = Artifact Reports
 guide-entry-traversal-distorter = Traversal Distorter
 guide-entry-machine-upgrading = Machine Upgrading
 
+# SERVICE
 guide-entry-service = Service
 guide-entry-cook = Cook
+
+# CARGO
+guide-entry-cargo = Cargo
+guide-entry-cargo-tech = Cargo Technician

@@ -1,0 +1,160 @@
+﻿<Document>
+  # Cargo Technician
+
+  ## Objectives
+  As a Cargo Technician, you have several responsibilities :
+  - [color=#a4885c]Receiving[/color] and [color=#a4885c]placing orders[/color] for the rest of the crew,
+  - [color=#a4885c]Calling[/color] and [color=#a4885c]recalling the shuttle[/color], and
+  [color=#a4885c]piloting it[/color] to or away from the station [color=red]if your QM allows it[/color],
+  - [color=#a4885c]Loading[/color] and [color=#a4885c]unloading[/color] the shuttle,
+  - [color=#a4885c]Delivering[/color] or [color=#a4885c]asking the crew member[/color] who placed the order to come pick it up.
+
+  ## Tools
+  To help with those, you have a couple of tools at your disposal.
+
+  <Box>
+    <GuideEntityEmbed Entity="ComputerCargoOrders"/>
+  </Box>
+  \n
+  The [color=#a4885c]Cargo Request Computer[/color] is the device you will interact with
+  [color=#a4885c]the most[/color] as a Cargo Technician.
+  \n
+  You can use this computer to [color=#a4885c]put in orders[/color] for the shuttle to [color=#a4885c]buy[/color] from
+  other stations.
+  \n
+  When you [color=#a4885c]open the UI[/color] you should see a vast [color=#a4885c]list of crates[/color] you can
+  [color=#a4885c]order[/color]; anything from dice games to firearms.
+  \n\n
+  When someone at the [color=#a4885c]front desk[/color] asks for something it's your job to [color=#a4885c]input what
+  they asked for[/color] into the computer, preferably under their [color=#a4885c]name[/color].
+  \n\n
+  You can [color=#a4885c]click[/color] on anything from the list to view its [color=#a4885c]description[/color] and
+  [color=#a4885c]price[/color].
+  \n
+  Just below that is the [color=#a4885c]quantity[/color] you are ordering and the [color=#a4885c]name[/color] of the
+  person who ordered it as well as the [color=#a4885c]reason[/color] it's being ordered.
+  \n\n
+  After you input what you want and are ready to get the cargo shuttle to bring it in, you need to
+  [color=#a4885c]accept[/color] the order from the [color=#a4885c]Cargo Shuttle Computer[/color], which will
+  [color=#a4885c]deduct[/color] the funds from the cargo-wide bank account.
+  <Box>
+    <GuideEntityEmbed Entity="ComputerCargoShuttle"/>
+  </Box>
+  \n
+  The [color=#a4885c]Cargo Shuttle Computer[/color] is what you use to [color=#a4885c]call[/color] and
+  [color=#a4885c]recall[/color] the [color=#a4885c]cargo shuttle[/color].
+  It is rather simple to learn however if you screw up it can easily mess up [color=#a4885c]several orders[/color].
+  \n\n
+  Once you have some [color=#a4885c]accepted orders[/color] you are going to want to call the shuttle meaning you
+  should [color=#a4885c]open the UI[/color] and find the [color=#a4885c]call shuttle[/color] button.
+  \n
+  You should also see all the [color=#a4885c]accepted orders[/color] under the button, these are the orders that will
+  be [color=#a4885c]delivered[/color] on the [color=#a4885c]shuttle[/color].
+  \n\n
+  After you [color=#a4885c]dock[/color] the shuttle with the [color=#a4885c]Cargo Shuttle Console[/color] (as explained below) and
+  [color=#a4885c]unload[/color] it you are going to want to [color=#a4885c]recall[/color] it.
+  \n\n
+  Once you move the shuttle 250m, (again through the use of the [color=#a4885c]Cargo Shuttle Console[/color]) away from
+  the station you can press the [color=#a4885c]recall button[/color] which will have replaced the
+  [color=#a4885c]call button[/color].
+  \n\n
+  [color=#a4885c]Recalling[/color] the shuttle when there is anything on the [color=#a4885c]cargo pallets[/color] will
+  [color=green]sell those objects[/color].
+  \n
+  Try to [color=#a4885c]avoid[/color] calling the shuttle and then [color=#a4885c]immediately recalling it[/color] as
+  it will sell all the orders you just called in.
+  \n
+  [color=red]At a loss[/color].
+  \n\n
+  Before you can [color=#a4885c]call the shuttle again[/color] you will have to [color=#a4885c]wait[/color] a short time.
+
+  <Box>
+    <GuideEntityEmbed Entity="ComputerShuttleCargo"/>
+  </Box>
+
+  This is what you use to actually [color=#a4885c]pilot[/color] the shuttle.
+  \n
+  Once the shuttle is called it will appear a [color=#a4885c]short distance out[/color] from the station.
+  \n\n
+  It's your job to [color=#a4885c]locate[/color] the [color=#a4885c]cargo docking ports[/color] and
+  [color=#a4885c]dock[/color] while avoiding [color=#a4885c]punting the salvagers[/color] into deep space.
+  \n
+  Usually, salvage is nearby cargo, which means that the [color=#a4885c]'unknown objects'[/color] that salvage draws
+  in are usually nearby your [color=#a4885c]docking area[/color].
+
+  Once you have [color=#a4885c]unloaded[/color] the shuttle and have put all the items you wish to
+  [color=#a4885c]sell[/color] on, you will want to [color=#a4885c]undock[/color] with the station and
+  [color=#a4885c]fly 250m away[/color] from it.
+
+  \n
+  Controls are:
+  - [color=green]WASD[/color] to [color=#a4885c]strafe[/color] forward, left, backwards and right,
+  - [color=green]Q[/color] and [color=green]E[/color] to [color=#a4885c]spin[/color] left and right respectfully,
+  - [color=green]Spacebar[/color] to [color=#a4885c]brake[/color]. When in doubt, [color=#a4885c]hold the brakes[/color].
+  \n\n
+  You can always check your keybinds for this in the [color=#a4885c]Shuttle[/color] category here :
+
+  <Box Orientation="Vertical"><CommandButton Text="ui-options-tab-controls" Command="options 1"/></Box>
+
+  \n
+  To [color=#a4885c]dock[/color], simply [color=#a4885c]approach[/color] the station's port you want to dock at with
+  the shuttle, then pick a [color=#a4885c]docking port[/color] on the [color=#a4885c]top left corner[/color] of the UI
+  to get a [color=#a4885c]close-up[/color].
+  \n
+  Once you get [color=#a4885c]close enough[/color], the shuttle will [color=#a4885c]lock into place[/color] and you
+  will be [color=#a4885c]docked[/color].
+  \n\n
+  To [color=#a4885c]undock[/color], click on the docked port and then click on the [color=#a4885c]undock button[/color].
+  \n\n
+  [color=red]IMPORTANT NOTE[/color]: Currently docking is [color=#a4885c]finicky[/color] and will not always be
+  [color=#a4885c]airtight[/color]. Open with caution.
+
+  ## Making Cash
+  As a Cargo Technician, you should start with an [color=#a4885c]Appraisal Tool[/color].
+  <Box>
+    <GuideEntityEmbed Entity="AppraisalTool"/>
+  </Box>
+  When you hold it in your hand you can [color=#a4885c]left click[/color] on most things to find their
+  [color=#a4885c]value[/color].
+  \n
+  Be aware that clicking on a [color=#a4885c]container[/color] will give you the value of both
+  [color=#a4885c]itself[/color] and the items [color=#a4885c]contained inside of it[/color].
+  \n\n
+  When in [color=#a4885c]need of cash[/color], feel free to [color=#a4885c]roam around[/color] to
+  [color=#a4885c]find items[/color] to sell.
+  \n\n
+  The general rule of thumb is to [color=#a4885c]not take anything that someone may need[/color], like the chairs from
+  the bar, or the AME fuel that supplies the station.
+  \n
+  When in [color=#a4885c]doubt[/color] on wether or not it's okay to take something to sell it,
+  [color=#a4885c]ask around[/color].
+  \n\n
+  It's generally more profitable to [color=#a4885c]not sell resources as is[/color] but [color=#a4885c]make things out
+  of them[/color] instead, like for instance, a [color=#a4885c]steel chair[/color] will sell for more than its cost in
+  [color=#a4885c]steel[/color].
+  \n
+  In general just make sure your actions won't [color=#a4885c]jeopardize the integrity of the station[/color] and you
+  will (probably) be fine.
+  \n\n
+  Your [color=#a4885c]main source of income[/color] will be [color=green]salvage[/color] coming from your fellow cargo
+  crewmates but you can always [color=#a4885c]strike a deal[/color] with
+  [color=#a4885c]Botany[/color], [color=#a4885c]Chemistry[/color] or even the [color=#a4885c]Chef[/color] to acquire
+  things to sell.
+
+  ## Must Haves
+  Here is a short list of items that you may want to [color=#a4885c]stock up[/color] on :
+  - [color=#a4885c]AME fuel[/color] and [color=#a4885c]parts[/color],
+  - [color=#a4885c]Steel[/color],
+  - [color=#a4885c]Plastic[/color],
+  - [color=#a4885c]Glass[/color],
+  - [color=#a4885c]Medical Supplies[/color],
+  - [color=#a4885c]Internals crate[/color] (suits and breathing equipment),
+  - [color=#a4885c]Vending machine restock[/color] (e.g. the Bar-O-Matic, drinks, food),
+  - In a nukie round, get [color=#a4885c]Shotguns[/color] / [color=#a4885c]Lasers[/color] and
+  [color=#a4885c]lots of ammo[/color].
+
+  ## Final Note
+  Try to avoid wasting money on non-essentials, don't sell what belongs to others and follow the orders of your
+  quartermaster and you will have a nice shift.
+
+</Document>

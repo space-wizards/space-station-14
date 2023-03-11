@@ -1,0 +1,11 @@
+﻿- type: guideEntry
+  id: Cargo
+  name: guide-entry-cargo
+  text: "/Server Info/Guidebook/Cargo.xml"
+  children:
+    - Cargo-Tech
+
+- type: guideEntry
+  id: Cargo-Tech
+  name: guide-entry-cargo-tech
+  text: "/Server Info/Guidebook/CargoTech.xml"

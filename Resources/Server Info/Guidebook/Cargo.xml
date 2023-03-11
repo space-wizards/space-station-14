@@ -1,0 +1,26 @@
+﻿<Document>
+  # Cargo
+
+  [color=#a4885c]Cargo workers[/color] are the ones responsible for [color=#a4885c]supplying[/color] the entire
+  station with whatever it is that they may require, and [color=#a4885c]turning a profit[/color] while doing it.
+  \n\n
+  Their jobs are the [color=#a4885c]Cargo Technicians[/color],
+  [color=#a4885c]Salvage Specialists[/color] and their department head, the [color=#a4885c]Quartermaster[/color].
+
+  <Box>
+    <GuideEntityEmbed Entity="SignDirectionalSupply"/>
+    <GuideEntityEmbed Entity="BannerCargo"/>
+    <GuideEntityEmbed Entity="SignCargo"/>
+    <GuideEntityEmbed Entity="AirlockCargoLocked"/>
+  </Box>
+
+  \n
+  They handle everything from [color=#a4885c]buying and selling[/color] supplies to
+  [color=#a4885c]mining resources[/color] in space, and [color=#a4885c]take orders[/color] from the crew.
+  \n\n
+  Occasionally, they also found [color=#a4885c]The Great Cargonia[/color], an independant nation, and then
+  [color=#a4885c]build their own ship[/color] and fly off into space.
+  \n\n
+  (Note : [color=red]ALWAYS seek admins' approval before doing this [/color]!)
+
+</Document>
