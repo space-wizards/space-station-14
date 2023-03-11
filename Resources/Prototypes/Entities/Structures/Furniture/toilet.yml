@@ -24,7 +24,7 @@
   - type: SolutionContainerManager
     solutions:
       drainBuffer:
-        maxVol: 100
+        maxVol: 500
       toilet:
         maxVol: 250
   - type: Transform
