@@ -3,7 +3,6 @@ using Content.Server.Administration;
 using Content.Server.Body.Systems;
 using Content.Server.Cargo.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.Stack;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -88,6 +87,9 @@ public sealed class PricingSystem : EntitySystem
 
     private void CalculateMobPrice(EntityUid uid, MobPriceComponent component, ref PriceCalculationEvent args)
     {
+        if (args.Handled)
+            return;
+
         if (!TryComp<BodyComponent>(uid, out var body) || !TryComp<MobStateComponent>(uid, out var state))
         {
             Logger.ErrorS("pricing", $"Tried to get the mob price of {ToPrettyString(uid)}, which has no {nameof(BodyComponent)} and no {nameof(MobStateComponent)}.");
@@ -106,6 +108,9 @@ public sealed class PricingSystem : EntitySystem
 
     private void CalculateStackPrice(EntityUid uid, StackPriceComponent component, ref PriceCalculationEvent args)
     {
+        if (args.Handled)
+            return;
+
         if (!TryComp<StackComponent>(uid, out var stack))
         {
             Logger.ErrorS("pricing", $"Tried to get the stack price of {ToPrettyString(uid)}, which has no {nameof(StackComponent)}.");
@@ -117,6 +122,9 @@ public sealed class PricingSystem : EntitySystem
 
     private void CalculateSolutionPrice(EntityUid uid, SolutionContainerManagerComponent component, ref PriceCalculationEvent args)
     {
+        if (args.Handled)
+            return;
+
         var price = 0f;
 
         foreach (var solution in component.Solutions.Values)
@@ -133,6 +141,9 @@ public sealed class PricingSystem : EntitySystem
 
     private void CalculateStaticPrice(EntityUid uid, StaticPriceComponent component, ref PriceCalculationEvent args)
     {
+        if (args.Handled)
+            return;
+
         args.Price += component.Price;
     }
 
@@ -186,6 +197,9 @@ public sealed class PricingSystem : EntitySystem
     {
         var ev = new PriceCalculationEvent();
         RaiseLocalEvent(uid, ref ev);
+
+        if (ev.Handled)
+            return ev.Price;
 
         //TODO: Add an OpaqueToAppraisal component or similar for blocking the recursive descent into containers, or preventing material pricing.
 
@@ -248,6 +262,11 @@ public struct PriceCalculationEvent
     /// The total price of the entity.
     /// </summary>
     public double Price = 0;
+
+    /// <summary>
+    /// Whether this event was already handled.
+    /// </summary>
+    public bool Handled = false;
 
     public PriceCalculationEvent() { }
 }

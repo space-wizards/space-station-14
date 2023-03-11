@@ -1,4 +1,4 @@
-using Content.Server.Body.Systems;
+﻿using Content.Server.Body.Systems;
 using Content.Server.DoAfter;
 using Content.Server.Kitchen.Components;
 using Content.Shared.Body.Components;
@@ -13,6 +13,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Server.Containers;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Kitchen.EntitySystems;
 
@@ -76,8 +77,14 @@ public sealed class SharpSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, SharpComponent component, DoAfterEvent args)
     {
-        if (args.Handled || args.Cancelled || !TryComp<ButcherableComponent>(args.Args.Target, out var butcher))
+        if (args.Handled || !TryComp<ButcherableComponent>(args.Args.Target, out var butcher))
             return;
+
+        if (args.Cancelled)
+        {
+            component.Butchering.Remove(args.Args.Target.Value);
+            return;
+        }
 
         component.Butchering.Remove(args.Args.Target.Value);
 
@@ -116,13 +123,13 @@ public sealed class SharpSystem : EntitySystem
 
     private void OnGetInteractionVerbs(EntityUid uid, ButcherableComponent component, GetVerbsEvent<InteractionVerb> args)
     {
-        if (component.Type != ButcheringType.Knife || args.Hands == null)
+        if (component.Type != ButcheringType.Knife || args.Hands == null || !args.CanAccess || !args.CanInteract)
             return;
 
         bool disabled = false;
         string? message = null;
 
-        if (args.Using is null || !HasComp<SharpComponent>(args.Using))
+        if (!HasComp<SharpComponent>(args.Using))
         {
             disabled = true;
             message = Loc.GetString("butcherable-need-knife",
@@ -149,7 +156,7 @@ public sealed class SharpSystem : EntitySystem
             },
             Message = message,
             Disabled = disabled,
-            IconTexture = "/Textures/Interface/VerbIcons/cutlery.svg.192dpi.png",
+            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/cutlery.svg.192dpi.png")),
             Text = Loc.GetString("butcherable-verb-name"),
         };
 

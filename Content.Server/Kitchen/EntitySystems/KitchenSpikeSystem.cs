@@ -17,6 +17,8 @@ using Content.Shared.Kitchen;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
+using Robust.Server.GameObjects;
+using Content.Server.Body.Systems;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
@@ -27,6 +29,8 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly IAdminLogManager _logger = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly TransformSystem _transform = default!;
+        [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
 
@@ -73,12 +77,19 @@ namespace Content.Server.Kitchen.EntitySystems
             if (TryComp<ButcherableComponent>(args.Args.Target.Value, out var butcherable))
                 butcherable.BeingButchered = false;
 
-            if (args.Handled || args.Cancelled)
+            if (args.Cancelled)
+            {
+                component.InUse = false;
+                return;
+            }
+
+            if (args.Handled)
                 return;
 
             if (Spikeable(uid, args.Args.User, args.Args.Target.Value, component, butcherable))
                 Spike(uid, args.Args.User, args.Args.Target.Value, component);
 
+            component.InUse = false;
             args.Handled = true;
         }
 
@@ -133,9 +144,13 @@ namespace Content.Server.Kitchen.EntitySystems
 
             _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-kill", ("user", Identity.Entity(userUid, EntityManager)), ("victim", victimUid)), uid, PopupType.LargeCaution);
 
+            _transform.SetCoordinates(victimUid, Transform(uid).Coordinates);
             // THE WHAT?
             // TODO: Need to be able to leave them on the spike to do DoT, see ss13.
-            EntityManager.QueueDeleteEntity(victimUid);
+            var gibs = _bodySystem.GibBody(victimUid);
+            foreach (var gib in gibs) {
+                QueueDel(gib);
+            }
 
             _audio.Play(component.SpikeSound, Filter.Pvs(uid), uid, true);
         }
