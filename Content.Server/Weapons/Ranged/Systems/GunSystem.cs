@@ -182,22 +182,27 @@ public sealed partial class GunSystem : SharedGunSystem
                     var rayCastResults =
                         Physics.IntersectRay(fromMap.MapId, ray, hitscan.MaxLength, user, false).ToList();
 
+                    EntityUid? lastHit = null;
+
                     if (rayCastResults.Count >= 1)
                     {
                         var result = rayCastResults[0];
-                        var hitEntity = result.HitEntity;
-
+                        var hit = result.HitEntity;
+                        var distance = result.Distance;
+                        FireEffects(fromCoordinates, distance, mapDirection.ToAngle(), hitscan, hit);
                         if (user != null)
                         {
                             var ev = new HitScanReflectAttempt();
-                            RaiseLocalEvent(hitEntity, ref ev);
+                            RaiseLocalEvent(hit, ref ev);
                             if (ev.Reflected)
-                                hitEntity = user.Value;
+                                hit = user.Value;
                         }
+                        lastHit = hit;
+                    }
 
-                        var distance = result.Distance;
-                        FireEffects(fromCoordinates, distance, mapDirection.ToAngle(), hitscan, hitEntity);
-
+                    if (lastHit != null)
+                    {
+                        EntityUid hitEntity = lastHit.Value;
                         if (hitscan.StaminaDamage > 0f)
                             _stamina.TakeStaminaDamage(hitEntity, hitscan.StaminaDamage, source:user);
 
