@@ -52,12 +52,6 @@ namespace Content.Server.Communications
         public bool AnnounceGlobal = false;
 
         /// <summary>
-        /// Used for war announcement. Gives extra TC for nukies
-        /// </summary>
-        [DataField("warAnnouncement")]
-        public bool WarAnnouncement = false;
-
-        /// <summary>
         /// Announce sound file path
         /// </summary>
         [DataField("sound")]

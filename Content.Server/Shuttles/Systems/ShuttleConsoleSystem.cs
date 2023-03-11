@@ -95,7 +95,7 @@ namespace Content.Server.Shuttles.Systems
             }
 
             var ev = new ShuttleConsoleFTLTravelAttemptEvent(uid, component, args.Destination);
-            RaiseLocalEvent(ev);
+            RaiseLocalEvent(ref ev);
             if (ev.Cancelled)
             {
                 _popup.PopupCursor(ev.Reason ?? Loc.GetString("shuttle-console-unavailable"), args.Session);
@@ -420,8 +420,10 @@ namespace Content.Server.Shuttles.Systems
     }
 }
 
-public sealed class ShuttleConsoleFTLTravelAttemptEvent : CancellableEntityEventArgs
+[ByRefEvent]
+public record struct ShuttleConsoleFTLTravelAttemptEvent
 {
+    public bool Cancelled = false;
     public EntityUid Uid;
     public ShuttleConsoleComponent Component;
     public EntityUid Destination;

@@ -171,7 +171,8 @@ public sealed partial class ShuttleSystem
         hyperspace.Dock = dock;
         _console.RefreshShuttleConsoles();
 
-        RaiseLocalEvent(new ShuttleFTLTravelEvent(component, target, hyperspace));
+        var ev = new ShuttleFTLTravelEvent(component, target, hyperspace);
+        RaiseLocalEvent(ref ev);
     }
 
     private bool TrySetupFTL(ShuttleComponent shuttle, [NotNullWhen(true)] out FTLComponent? component)
@@ -573,7 +574,9 @@ public sealed partial class ShuttleSystem
         return true;
     }
 }
-public sealed class ShuttleFTLTravelEvent : EntityEventArgs
+
+[ByRefEvent]
+public record struct ShuttleFTLTravelEvent
 {
     public ShuttleComponent Shuttle;
     public EntityUid Destination;

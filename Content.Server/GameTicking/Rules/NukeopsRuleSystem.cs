@@ -68,7 +68,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly EntityManager _entityManager = default!;
 
     public const string TelecrystalCurrencyPrototype = "Telecrystal";
 
@@ -191,7 +190,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         SubscribeLocalEvent<NukeOperativeComponent, ComponentRemove>(OnComponentRemove);
         
         SubscribeLocalEvent<CommunicationConsoleCallShuttleAttemptEvent>(OnShuttleCallAttempt);
-        SubscribeLocalEvent<CommunicationConsoleAnnouncementEvent>(OnCommsAnnouncement);
         SubscribeLocalEvent<ShuttleFTLTravelEvent>(OnFTLTravel);
         SubscribeLocalEvent<ShuttleConsoleFTLTravelAttemptEvent>(OnFTLTravelAttempt);
     }
@@ -230,31 +228,31 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }  
     }
     
-    private void OnFTLTravelAttempt(ShuttleConsoleFTLTravelAttemptEvent ev)
+    private void OnFTLTravelAttempt(ref ShuttleConsoleFTLTravelAttemptEvent ev)
     {
         if (!RuleAdded)
             return;
         
-        if (_nukieOutpost == null)
+        if (!_declarationMade || _nukieOutpost == null)
         {
             return;
         }
-        var map_outpost = _entityManager.GetComponent<TransformComponent>(_nukieOutpost.Value).MapID;
-        var map_shuttle = _entityManager.GetComponent<TransformComponent>(ev.Uid).MapID;
+        var mapOutpost = EntityManager.GetComponent<TransformComponent>(_nukieOutpost.Value).MapID;
+        var mapShuttle = EntityManager.GetComponent<TransformComponent>(ev.Uid).MapID;
 
-        if (_declarationMade && map_outpost == map_shuttle)
+        if (mapOutpost == mapShuttle)
         {
             var timeAfterDeclaration = _gameTiming.CurTime.Subtract(_declarationTime);
             var timeRemain = _nukeopsRuleConfig.WarNukieArriveDelay.Subtract(timeAfterDeclaration);
             if (timeRemain > TimeSpan.Zero)
             {
-                ev.Cancel();
+                ev.Cancelled = true;
                 ev.Reason = Loc.GetString("war-ops-infiltrator-unavailable", ("minutes", timeRemain.Minutes), ("seconds", timeRemain.Seconds));
             }
         }
     }
 
-    private void OnShuttleCallAttempt(CommunicationConsoleCallShuttleAttemptEvent ev)
+    private void OnShuttleCallAttempt(ref CommunicationConsoleCallShuttleAttemptEvent ev)
     {
         if (!RuleAdded || _nukeopsRuleConfig.PreventShuttleInDelay == false)
             return;
@@ -264,13 +262,13 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             var gameruleTime = _gameTiming.CurTime.Subtract(_declarationTime);
             if (gameruleTime <= _nukeopsRuleConfig.WarNukieArriveDelay)
             {
-                ev.Cancel();
+                ev.Cancelled = true;
                 ev.Reason = Loc.GetString("war-ops-shuttle-call-unavailable");
             }
         }
     }
 
-    private void OnFTLTravel(ShuttleFTLTravelEvent ev)
+    private void OnFTLTravel(ref ShuttleFTLTravelEvent ev)
     {
         var shuttle = ev.Shuttle.Owner;
     	if (!RuleAdded)
@@ -280,33 +278,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         {
             return;
         }
-        var map_outpost = _entityManager.GetComponent<TransformComponent>(_nukieOutpost.Value).MapID;
-        var map_shuttle = _entityManager.GetComponent<TransformComponent>(shuttle).MapID;
+        var mapOutpost = EntityManager.GetComponent<TransformComponent>(_nukieOutpost.Value).MapID;
+        var mapShuttle = EntityManager.GetComponent<TransformComponent>(shuttle).MapID;
 
-        if (map_outpost == map_shuttle)
+        if (mapOutpost == mapShuttle)
         {
             _leftOutpost = true;
-            _warDeclaratorSystem.RefreshAllDeclaratorsUI();
-        }
-    }
-    
-    private void OnCommsAnnouncement(CommunicationConsoleAnnouncementEvent ev)
-    {
-    	if (!RuleAdded || !ev.Component.WarAnnouncement)
-            return;
-
-        _declarationMade = true;
-        _declarationTime = _gameTiming.CurTime;
-        Logger.DebugS("nukes", "War announcement");
-
-        if (
-            _declarationMade == false &&
-            !_leftOutpost && 
-            _operativePlayers.Count >= _nukeopsRuleConfig.WarDeclarationMinOpsSize &&
-            _gameTiming.CurTime.Subtract(_gameruleStartTime) < _nukeopsRuleConfig.WarDeclarationTimeWindow
-        )
-        {
-            DistributeExtraTC();
             _warDeclaratorSystem.RefreshAllDeclaratorsUI();
         }
     }

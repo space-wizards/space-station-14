@@ -247,7 +247,8 @@ namespace Content.Server.Communications
             comp.AnnouncementCooldownRemaining = comp.DelayBetweenAnnouncements;
             UpdateCommsConsoleInterface(comp);
 
-            RaiseLocalEvent(new CommunicationConsoleAnnouncementEvent(uid, comp, msg, message.Session.AttachedEntity));
+            var ev = new CommunicationConsoleAnnouncementEvent(uid, comp, msg, message.Session.AttachedEntity);
+            RaiseLocalEvent(ref ev);
 
             // allow admemes with vv
             Loc.TryGetString(comp.AnnouncementDisplayName, out var title);
@@ -280,7 +281,7 @@ namespace Content.Server.Communications
             }
             
             var ev = new CommunicationConsoleCallShuttleAttemptEvent(uid, comp, mob);
-            RaiseLocalEvent(ev);
+            RaiseLocalEvent(ref ev);
             if (ev.Cancelled)
             {
                 _popupSystem.PopupEntity(ev.Reason ?? Loc.GetString("comms-console-shuttle-unavailable"), uid, message.Session);
@@ -306,7 +307,8 @@ namespace Content.Server.Communications
         }
     }
 
-    public sealed class CommunicationConsoleAnnouncementEvent : EntityEventArgs
+    [ByRefEvent]
+    public record struct CommunicationConsoleAnnouncementEvent
     {
         public EntityUid Uid;
         public CommunicationsConsoleComponent Component;
@@ -322,8 +324,10 @@ namespace Content.Server.Communications
         }
     }
 
-    public sealed class CommunicationConsoleCallShuttleAttemptEvent : CancellableEntityEventArgs
+    [ByRefEvent]
+    public record struct CommunicationConsoleCallShuttleAttemptEvent
     {
+        public bool Cancelled = false;
         public EntityUid Uid;
         public CommunicationsConsoleComponent Component;
         public EntityUid? Sender;
