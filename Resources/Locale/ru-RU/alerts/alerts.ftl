@@ -46,9 +46,9 @@ alerts-parched-name = [color=red]Мучение жаждой[/color]
 alerts-parched-desc = Вы очень хотите пить. Жажда делает передвижение сложным.
 alerts-muted-name = Приглушены
 alerts-muted-desc = Вы потеряли способность говорить.
-alerts-vow-silence-name = Клятва молчания
+alerts-vow-silence-name = Обет молчания
 alerts-vow-silence-desc = Вы дали клятву молчания в рамках инициации в Мистико Тагма Мимон. Нажмите, чтобы нарушить свою клятву.
-alerts-vow-broken-name = Клятва нарушена
+alerts-vow-broken-name = Обет нарушен
 alerts-vow-broken-desc = Вы нарушили свою клятву, данную Мимам. Ты можешь говорить, но ты потерял свои силы как минимум на целых 5 минут!!! Нажмите, чтобы попытаться повторить свою клятву.
 alerts-pulled-name = Вас тянут
 alerts-pulled-desc = Вас тянут за собой. Двигайтесь, чтобы освободиться.
