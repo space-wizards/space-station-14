@@ -30,7 +30,7 @@ public sealed class EmpSystem : EntitySystem
 
     private void HandleEmpTrigger(EntityUid uid, EmpOnTriggerComponent comp, TriggerEvent args)
     {
-        EmpPulse(Transform(uid).Coordinates.ToMap(EntityManager), comp.Range, comp.EnergyConsumption);
+        EmpPulse(Transform(uid).MapPosition, comp.Range, comp.EnergyConsumption);
         args.Handled = true;
     }
 }

@@ -23,17 +23,18 @@ namespace Content.IntegrationTests.Tests
             var server = pairTracker.Pair.Server;
 
             var entMan = server.ResolveDependency<IServerEntityManager>();
+            var playerMan = server.ResolveDependency<IPlayerManager>();
+            var mapManager = server.ResolveDependency<IMapManager>();
+
             EntityUid playerEnt = default;
             EntityUid visitEnt = default;
             Mind mind = null;
+            var map = await PoolManager.CreateTestMap(pairTracker);
+
             await server.WaitAssertion(() =>
             {
-                var player = IoCManager.Resolve<IPlayerManager>().ServerSessions.Single();
-
-                var mapMan = IoCManager.Resolve<IMapManager>();
-
-                var mapId = mapMan.GetAllMapIds().Last();
-                var pos = new MapCoordinates(Vector2.Zero, mapId);
+                var player = playerMan.ServerSessions.Single();
+                var pos = new MapCoordinates(Vector2.Zero, map.MapId);
 
                 playerEnt = entMan.SpawnEntity(null, pos);
                 visitEnt = entMan.SpawnEntity(null, pos);
@@ -47,6 +48,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(player.AttachedEntity, Is.EqualTo(visitEnt));
                 Assert.That(mind.VisitingEntity, Is.EqualTo(visitEnt));
             });
+
             await PoolManager.RunTicksSync(pairTracker.Pair, 5);
 
             await server.WaitAssertion(() =>
@@ -67,7 +69,13 @@ namespace Content.IntegrationTests.Tests
                 // This used to throw so make sure it doesn't.
                 entMan.DeleteEntity(playerEnt);
             });
+
             await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+
+            await server.WaitPost(() =>
+            {
+                mapManager.DeleteMap(map.MapId);
+            });
 
             await pairTracker.CleanReturnAsync();
         }
@@ -81,16 +89,17 @@ namespace Content.IntegrationTests.Tests
             var server = pairTracker.Pair.Server;
 
             var entMan = server.ResolveDependency<IServerEntityManager>();
+            var playerMan = server.ResolveDependency<IPlayerManager>();
+            var mapManager = server.ResolveDependency<IMapManager>();
+            var map = await PoolManager.CreateTestMap(pairTracker);
+
             EntityUid playerEnt = default;
             Mind mind = null;
             await server.WaitAssertion(() =>
             {
-                var player = IoCManager.Resolve<IPlayerManager>().ServerSessions.Single();
+                var player = playerMan.ServerSessions.Single();
 
-                var mapMan = IoCManager.Resolve<IMapManager>();
-
-                var mapId = mapMan.GetAllMapIds().Last();
-                var pos = new MapCoordinates(Vector2.Zero, mapId);
+                var pos = new MapCoordinates(Vector2.Zero, map.MapId);
 
                 playerEnt = entMan.SpawnEntity(null, pos);
 
@@ -116,6 +125,11 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(entMan.EntityExists(mind.CurrentEntity!.Value), Is.True);
             });
 
+            await server.WaitPost(() =>
+            {
+                mapManager.DeleteMap(map.MapId);
+            });
+
             await pairTracker.CleanReturnAsync();
         }
 
@@ -127,15 +141,18 @@ namespace Content.IntegrationTests.Tests
             var testMap = await PoolManager.CreateTestMap(pairTracker);
             var coordinates = testMap.GridCoords;
 
+            var entMan = server.ResolveDependency<IServerEntityManager>();
+            var playerMan = server.ResolveDependency<IPlayerManager>();
+            var mapManager = server.ResolveDependency<IMapManager>();
+            var map = await PoolManager.CreateTestMap(pairTracker);
+
             EntityUid playerEnt = default;
             Mind mind = null;
             await server.WaitAssertion(() =>
             {
-                var player = IoCManager.Resolve<IPlayerManager>().ServerSessions.Single();
+                var player = playerMan.ServerSessions.Single();
 
-                var mapMan = IoCManager.Resolve<IMapManager>();
-                var entMgr = IoCManager.Resolve<IServerEntityManager>();
-                playerEnt = entMgr.SpawnEntity(null, coordinates);
+                playerEnt = entMan.SpawnEntity(null, coordinates);
                 mind = new Mind(player.UserId);
                 mind.ChangeOwningPlayer(player.UserId);
 
@@ -148,16 +165,20 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitPost(() =>
             {
-                var mapMan = IoCManager.Resolve<IMapManager>();
-                mapMan.DeleteMap(testMap.MapId);
+                mapManager.DeleteMap(testMap.MapId);
             });
 
             await PoolManager.RunTicksSync(pairTracker.Pair, 5);
 
             await server.WaitAssertion(() =>
             {
-                Assert.That(IoCManager.Resolve<IEntityManager>().EntityExists(mind.CurrentEntity!.Value), Is.True);
+                Assert.That(entMan.EntityExists(mind.CurrentEntity!.Value), Is.True);
                 Assert.That(mind.CurrentEntity, Is.Not.EqualTo(playerEnt));
+            });
+
+            await server.WaitPost(() =>
+            {
+                mapManager.DeleteMap(map.MapId);
             });
 
             await pairTracker.CleanReturnAsync();
