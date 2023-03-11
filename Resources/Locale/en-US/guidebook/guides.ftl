@@ -22,5 +22,5 @@ guide-entry-artifact-reports = Artifact Reports
 guide-entry-traversal-distorter = Traversal Distorter
 guide-entry-machine-upgrading = Machine Upgrading
 
-guide-entry-civilian = Civilian
+guide-entry-service = Service
 guide-entry-cook = Cook

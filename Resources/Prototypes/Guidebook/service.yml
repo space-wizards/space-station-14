@@ -1,9 +1,10 @@
 ﻿- type: guideEntry
-  id: Civilian
-  name: guide-entry-civilian
-  text: "/Server Info/Guidebook/Civilian.xml"
+  id: Service
+  name: guide-entry-service
+  text: "/Server Info/Guidebook/Service.xml"
   children:
     - Cook
+    - Botany
 
 - type: guideEntry
   id: Cook
