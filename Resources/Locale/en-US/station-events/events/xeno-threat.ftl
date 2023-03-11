@@ -1,0 +1,1 @@
+station-event-xeno-threat-announcement = We have detected an unknown alien lifeform aboard the station. All personnel should remain in their departments whilst security has time to access the situation. Please report unusual activity to your superiors. Stay tuned for further announcements. 

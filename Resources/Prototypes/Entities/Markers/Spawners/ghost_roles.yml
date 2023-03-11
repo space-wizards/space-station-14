@@ -70,4 +70,20 @@
       - sprite: Structures/Wallmounts/signs.rsi
         state: radiation
 
-
+- type: entity
+  id: SpawnPointGhostCluwneBeast
+  name: ghost role spawn point
+  suffix: cluwne beast
+  parent: MarkerBase
+  components:
+  - type: GhostRoleMobSpawner
+    prototype: MobCluwneBeast
+    name: Cluwne Beast
+    description: Hide in the shadows, attack anything that moves and turn the crew into cluwnes.
+    rules: You are an antagonist, stalk your prey and turn the crew into friendly cluwnes!
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: Mobs/Aliens/Xenos/cluwne_beast.rsi
+        state: icon

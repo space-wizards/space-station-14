@@ -222,3 +222,16 @@
     earliestStart: 50
     weight: 2.5
     endAfter: 1
+
+- type: gameRule
+  id: CluwneBeastSpawn
+  config:
+    !type:StationEventRuleConfiguration
+    id: CluwneBeastSpawn
+    startAnnouncement: station-event-xeno-threat-announcement
+    startAudio:
+      path: /Audio/Announcements/aliens.ogg
+    weight: 2.5
+    endAfter: 1
+    earliestStart: 45
+    minimumPlayers: 30
