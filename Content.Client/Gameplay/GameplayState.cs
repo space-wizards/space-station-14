@@ -1,29 +1,15 @@
-using Content.Client.Construction.UI;
 using Content.Client.Hands;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Screens;
-using Content.Client.UserInterface.Systems.Actions;
-using Content.Client.UserInterface.Systems.Alerts;
-using Content.Client.UserInterface.Systems.Chat;
-using Content.Client.UserInterface.Systems.Chat.Widgets;
-using Content.Client.UserInterface.Systems.Ghost;
-using Content.Client.UserInterface.Systems.Hands;
-using Content.Client.UserInterface.Systems.Hotbar;
-using Content.Client.UserInterface.Systems.Hotbar.Widgets;
-using Content.Client.UserInterface.Systems.Inventory;
-using Content.Client.UserInterface.Systems.MenuBar;
-using Content.Client.UserInterface.Systems.Viewport;
+using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
-using Robust.Client.Player;
-using Robust.Client.GameObjects;
 
 namespace Content.Client.Gameplay
 {
@@ -39,25 +25,13 @@ namespace Content.Client.Gameplay
 
         public MainViewport Viewport => _uiManager.ActiveScreen!.GetWidget<MainViewport>()!;
 
-        private readonly GhostUIController _ghostController;
-        private readonly ActionUIController _actionController;
-        private readonly AlertsUIController _alertsController;
-        private readonly HotbarUIController _hotbarController;
-        private readonly ChatUIController _chatController;
-        private readonly ViewportUIController _viewportController;
-        private readonly GameTopMenuBarUIController _menuController;
+        private readonly GameplayStateLoadController _loadController;
 
         public GameplayState()
         {
             IoCManager.InjectDependencies(this);
 
-            _ghostController = _uiManager.GetUIController<GhostUIController>();
-            _actionController = _uiManager.GetUIController<ActionUIController>();
-            _alertsController = _uiManager.GetUIController<AlertsUIController>();
-            _hotbarController = _uiManager.GetUIController<HotbarUIController>();
-            _chatController = _uiManager.GetUIController<ChatUIController>();
-            _viewportController = _uiManager.GetUIController<ViewportUIController>();
-            _menuController = _uiManager.GetUIController<GameTopMenuBarUIController>();
+            _loadController = _uiManager.GetUIController<GameplayStateLoadController>();
         }
 
         protected override void Startup()
@@ -109,10 +83,7 @@ namespace Content.Client.Gameplay
 
         private void UnloadMainScreen()
         {
-            _chatController.SetMainChat(false);
-            _menuController.UnloadButtons();
-            _ghostController.UnloadGui();
-            _actionController.UnloadGui();
+            _loadController.UnloadScreen();
             _uiManager.UnloadScreen();
         }
 
@@ -128,28 +99,14 @@ namespace Content.Client.Gameplay
             {
                 case ScreenType.Default:
                     _uiManager.LoadScreen<DefaultGameScreen>();
-
                     break;
                 case ScreenType.Separated:
                     _uiManager.LoadScreen<SeparatedChatGameScreen>();
                     break;
             }
 
-            _chatController.SetMainChat(true);
-            _viewportController.ReloadViewport();
-            _menuController.LoadButtons();
-
-            // TODO: This could just be like, the equivalent of an event or something
-            _ghostController.LoadGui();
-            _actionController.LoadGui();
-            _alertsController.SyncAlerts();
-            _hotbarController.ReloadHotbar();
-
-            var viewportContainer = _uiManager.ActiveScreen!.FindControl<LayoutContainer>("ViewportContainer");
-            _chatController.SetSpeechBubbleRoot(viewportContainer);
+            _loadController.LoadScreen();
         }
-
-
 
         protected override void OnKeyBindStateChanged(ViewportBoundKeyEventArgs args)
         {
