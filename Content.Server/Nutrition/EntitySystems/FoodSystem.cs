@@ -134,7 +134,7 @@ namespace Content.Server.Nutrition.EntitySystems
             var doAfterEventArgs = new DoAfterEventArgs(user, foodComp.ForceFeed ? foodComp.ForceFeedDelay : foodComp.Delay, target: target, used: food)
             {
                 RaiseOnTarget = foodComp.ForceFeed,
-                RaiseOnUser = !foodComp.ForceFeed,
+                RaiseOnUser = false, //causes a crash if mice eat if true
                 BreakOnUserMove = foodComp.ForceFeed,
                 BreakOnDamage = true,
                 BreakOnStun = true,
@@ -160,7 +160,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
             }
 
-            if (args.Cancelled || args.Handled || component.Deleted || args.Args.Target == null)
+            if (args.Handled || component.Deleted || args.Args.Target == null)
                 return;
 
             if (!TryComp<BodyComponent>(args.Args.Target.Value, out var body))
@@ -202,6 +202,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
                 // log successful force feed
                 _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(uid):user} forced {ToPrettyString(args.Args.User):target} to eat {ToPrettyString(uid):food}");
+                component.ForceFeed = false;
             }
             else
             {

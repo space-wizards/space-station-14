@@ -51,6 +51,9 @@ public static class PoolManager
         (CCVars.SysWinTickPeriod.Name, "0", true),
         (CCVars.ThreadParallelCount.Name, "1", true),
         (CCVars.GameRoleTimers.Name, "false", false),
+        (CCVars.CargoShuttles.Name, "false", false),
+        (CCVars.EmergencyShuttleEnabled.Name, "false", false),
+        (CCVars.ProcgenPreload.Name, "false", false),
     };
 
     private static int PairId;
