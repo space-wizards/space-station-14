@@ -30,3 +30,8 @@
     - /Audio/Voice/Cluwne/cluwnelaugh1.ogg
     - /Audio/Voice/Cluwne/cluwnelaugh2.ogg
     - /Audio/Voice/Cluwne/cluwnelaugh3.ogg
+
+- type: soundCollection
+  id: CluwneBeastScreams
+  files:
+    - /Audio/Voice/Cluwne/cluwnebeastlaugh1.ogg
