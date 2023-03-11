@@ -11,6 +11,7 @@
         - state: basalt1
           shader: unshaded
       drawdepth: LowFloors
+    - type: SyncSprite
     - type: RequiresTile
     - type: Transform
       anchored: true
