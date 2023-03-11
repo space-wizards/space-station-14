@@ -29,7 +29,7 @@ public sealed class ReflectSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<HandsComponent, PreventProjectileCollideEvent>(TryReflectProjectile);
-        SubscribeLocalEvent<HitScanShotEvent>(TryReflectHitScan);
+        SubscribeLocalEvent<HandsComponent, HitScanReflectAttempt>(TryReflectHitScan);
 
         SubscribeLocalEvent<ReflectComponent, EnergySwordActivatedEvent>(EnableReflect);
         SubscribeLocalEvent<ReflectComponent, EnergySwordDeactivatedEvent>(DisableReflect);
@@ -58,24 +58,19 @@ public sealed class ReflectSystem : EntitySystem
         }
     }
 
-    private void TryReflectHitScan(ref HitScanShotEvent args)
+    private void TryReflectHitScan(EntityUid uid, HandsComponent hands, ref HitScanReflectAttempt args)
     {
-        if (args.User == null)
-            return;
-        if (TryComp<HandsComponent>(args.Target, out var hands))
+        foreach (var (_, hand) in hands.Hands)
         {
-            foreach (var (_, hand) in hands.Hands)
+            if (TryComp<ReflectComponent>(hand.HeldEntity, out var reflect)
+                && reflect.Enabled
+                && _random.Prob(reflect.Chance))
             {
-                if (TryComp<ReflectComponent>(hand.HeldEntity, out var reflect)
-                    && reflect.Enabled
-                    && _random.Prob(reflect.Chance))
-                {
-                    _popup.PopupEntity(Loc.GetString("reflect-shot"), args.Target, PopupType.Small);
-                    _audio.PlayPvs(reflect.OnReflect, args.Target, AudioHelpers.WithVariation(0.05f, _random));
-                    _adminLogger.Add(LogType.ShotReflected, $"{ToPrettyString(args.Target):entity} reflected hitscan shot");
-                    args.Target = args.User.Value;
-                    return;
-                }
+                _popup.PopupEntity(Loc.GetString("reflect-shot"), uid, PopupType.Small);
+                _audio.PlayPvs(reflect.OnReflect, uid, AudioHelpers.WithVariation(0.05f, _random));
+                _adminLogger.Add(LogType.ShotReflected, $"{ToPrettyString(uid):entity} reflected hitscan shot");
+                args.Reflected = true;
+                return;
             }
         }
     }

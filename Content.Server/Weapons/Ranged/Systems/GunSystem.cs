@@ -184,9 +184,13 @@ public sealed partial class GunSystem : SharedGunSystem
                         var result = rayCastResults[0];
                         var hitEntity = result.HitEntity;
 
-                        var ev = new HitScanShotEvent(user, hitEntity);
-                        RaiseLocalEvent(ref ev);
-                        hitEntity = ev.Target;
+                        if (user != null)
+                        {
+                            var ev = new HitScanReflectAttempt();
+                            RaiseLocalEvent(hitEntity, ref ev);
+                            if (ev.Reflected)
+                                hitEntity = user.Value;
+                        }
 
                         var distance = result.Distance;
                         FireEffects(fromCoordinates, distance, mapDirection.ToAngle(), hitscan, hitEntity);
