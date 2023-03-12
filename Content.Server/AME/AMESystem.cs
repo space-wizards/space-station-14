@@ -16,7 +16,7 @@ using JetBrains.Annotations;
 namespace Content.Server.AME
 {
     [UsedImplicitly]
-    public sealed class AntimatterEngineSystem : EntitySystem
+    public sealed partial class AMESystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;

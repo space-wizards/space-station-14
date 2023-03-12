@@ -6,7 +6,7 @@ namespace Content.Shared.AME.Systems;
 /// <summary>
 /// Adds fuel level info to examine on fuel jars and handles network state.
 /// </summary>
-public sealed class AMEFuelContainerSystem : EntitySystem
+public sealed partial class AMESystem
 {
     public override void Initialize()
     {
