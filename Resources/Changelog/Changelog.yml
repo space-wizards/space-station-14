@@ -1,11 +1,4 @@
 Entries:
-- author: Ygg01
-  changes:
-  - {message: Fluids no longer leak through micropores in concrete, type: Fix}
-  - {message: 'Fluids now spill slowly, rather than quantum tunneling to optimal size',
-    type: Fix}
-  id: 2661
-  time: '2022-11-15T11:31:00.0000000+00:00'
 - author: corentt
   changes:
   - {message: the price of food now depends on its nutritional capacity, type: Add}
@@ -2920,3 +2913,8 @@ Entries:
       5 key slots., type: Fix}
   id: 3160
   time: '2023-03-12T13:51:28.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: grille can now be built on all tiles and in space, type: Tweak}
+  id: 3161
+  time: '2023-03-12T20:46:44.0000000+00:00'
