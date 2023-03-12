@@ -74,11 +74,10 @@ public sealed class RadioSystem : EntitySystem
 
         foreach (var radio in EntityQuery<ActiveRadioComponent>())
         {
-            var receiver = radio.Owner;
-            // TODO map/station/range checks?
-
             if (!radio.Channels.Contains(channel.ID))
                 continue;
+
+            var receiver = radio.Owner;
 
             var attemptEv = new RadioReceiveAttemptEvent(channel, radioSource, receiver);
             RaiseLocalEvent(ref attemptEv);

@@ -20,6 +20,9 @@ public struct RadioReceiveEvent
     }
 }
 
+/// <summary>
+/// Use this event to cancel sending messages by doing various checks (e.g. range)
+/// </summary>
 [ByRefEvent]
 public struct RadioReceiveAttemptEvent
 {
