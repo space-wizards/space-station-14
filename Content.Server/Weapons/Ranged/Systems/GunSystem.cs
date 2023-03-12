@@ -204,8 +204,8 @@ public sealed partial class GunSystem : SharedGunSystem
                         if (!ev.Reflected)
                             break;
 
-                        from = Transform(hit).MapPosition;
                         fromEffect = Transform(hit).Coordinates;
+                        from = fromEffect.ToMap(EntityManager, _transform);
                         dir = ev.Direction;
                         lastUser = hit;
                     }
