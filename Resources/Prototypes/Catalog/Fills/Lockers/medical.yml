@@ -18,6 +18,7 @@
 
 - type: entity
   id: LockerWallMedicalFilled
+  name: medicine wall locker
   suffix: Filled
   parent: LockerWallMedical
   components:
@@ -69,6 +70,12 @@
       - id: NitrousOxideTankFilled
         prob: 0.3
       - id: ClothingMaskSterile
+
+- type: entity
+  id: LockerWallMedicalDoctorFilled
+  name: medical doctor's wall locker
+  suffix: Filled
+  parent: ["LockerWallMedical", "LockerMedicalFilled"]
 
 - type: entity
   id: LockerChemistryFilled

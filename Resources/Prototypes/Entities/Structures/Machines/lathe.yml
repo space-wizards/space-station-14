@@ -205,6 +205,11 @@
       - HighPowerMicroLaserStockPart
       - NanoManipulatorStockPart
       - AdvancedScanningModuleStockPart
+      - SuperCapacitorStockPart
+      - SuperMatterBinStockPart
+      - UltraHighPowerMicroLaserStockPart
+      - PicoManipulatorStockPart
+      - PhasicScanningModuleStockPart
       - FirelockElectronics
       - DoorElectronics
       - APCElectronics
@@ -321,6 +326,7 @@
       - TraversalDistorterMachineCircuitboard
       - BoozeDispenserMachineCircuitboard
       - SodaDispenserMachineCircuitboard
+      - TelecomServerCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:
