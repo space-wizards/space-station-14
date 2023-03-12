@@ -22,21 +22,15 @@ public sealed class ChaosDiceSystem : EntitySystem
         var power = 1.0f * args.Die.CurrentValue / (args.Die.Sides * args.Die.Multiplier);
         if (TryComp<IgniteArtifactComponent>(uid, out var igniteEffect))
         {
-            igniteEffect.Range = 3 * power;
+            igniteEffect.Range = 2 * power;
             igniteEffect.MinFireStack = (int) (2 * power);
             igniteEffect.MaxFireStack = (int) (4 * power);
         }
         if (TryComp<ThrowArtifactComponent>(uid, out var throwEffect))
         {
-            throwEffect.Range = 3 * power;
+            throwEffect.Range = 2 * power;
             throwEffect.TilePryChance = power;
             throwEffect.ThrowStrength = 8 * power;
-        }
-        if (TryComp<DamageNearbyArtifactComponent>(uid, out var damageEffect))
-        {
-            damageEffect.Radius = 3 * power;
-            damageEffect.DamageChance = power;
-            damageEffect.Damage.Clamp(10 * power, 10 * power);
         }
         var ev = new ArtifactActivatedEvent();
         RaiseLocalEvent(uid, ev);

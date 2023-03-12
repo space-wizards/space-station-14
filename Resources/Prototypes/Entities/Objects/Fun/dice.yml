@@ -31,17 +31,6 @@
     state: percentile_0
 
 - type: entity
-  parent: PercentileDie
-  id: PercentileDieChaos
-  suffix: Chaos
-  components:
-  - type: ChaosDice
-  - type: DamageNearbyArtifact
-    damage:
-      types:
-        Blunt: 10
-
-- type: entity
   parent: BaseDice
   id: d20Dice
   name: d20
