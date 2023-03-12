@@ -103,7 +103,7 @@
         Heat: 0.95
 
 - type: entity
-  parent: ClothingMaskGas
+  parent: ClothingMaskGasChameleon
   id: ClothingMaskGasVoiceMasker
   name: gas mask
   suffix: Voice Mask
@@ -244,6 +244,6 @@
     sprite: Clothing/Mask/cluwne.rsi
   - type: Clothing
     sprite: Clothing/Mask/cluwne.rsi
-  - type: Unremoveable 
+  - type: Unremoveable
   - type: AddAccentClothing
     accent: StutteringAccent

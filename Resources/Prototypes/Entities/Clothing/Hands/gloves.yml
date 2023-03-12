@@ -238,7 +238,7 @@
     fiberColor: fibers-black
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsChameleon
   id: ThievingGloves
   suffix: Thieving
   name: black gloves #Intentionally named after regular gloves, they're meant to be sneaky.
