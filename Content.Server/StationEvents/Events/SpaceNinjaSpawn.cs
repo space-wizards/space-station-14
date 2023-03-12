@@ -1,10 +1,9 @@
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Configurations;
+using Content.Server.Ninja.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Server.Station.Components;
-using Content.Shared.Ninja.Components;
-using Content.Shared.Ninja.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -19,7 +18,7 @@ namespace Content.Server.StationEvents.Events;
 /// </summary>
 public sealed class SpaceNinjaSpawn : StationEventSystem
 {
-    [Dependency] private readonly SharedNinjaSystem _ninja = default!;
+    [Dependency] private readonly NinjaSystem _ninja = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
@@ -60,16 +59,15 @@ public sealed class SpaceNinjaSpawn : StationEventSystem
         // position relative to station center
         var location = angle.ToVec() * distance;
 
-        // spawn it!
+        // create the spawner, the ninja will appear when a ghost has picked the role
         var xform = Transform(gridUid.Value);
         var position = _transform.GetWorldPosition(xform) + location;
         var coords = new MapCoordinates(position, xform.MapID);
-        Sawmill.Info($"Spawning space ninja at {coords}");
-        var uid = Spawn("MobHumanSpaceNinja", coords);
+        Sawmill.Info($"Creating ninja spawnpoint at {coords}");
+        var spawner = Spawn("SpawnPointGhostSpaceNinja", coords);
 
-        // tell the player where station is when picking the role
-        if (TryComp<NinjaComponent>(uid, out var ninja))
-            _ninja.SetStationGrid(ninja, gridUid);
+        // tell the player where the station is when they pick the role
+        _ninja.SetTargetGrid(spawner, gridUid.Value);
 
         // start traitor rule incase it isn't, for the sweet greentext
         var rule = _proto.Index<GameRulePrototype>("Traitor");

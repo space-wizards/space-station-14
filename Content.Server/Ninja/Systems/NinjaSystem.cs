@@ -6,7 +6,9 @@ using Content.Server.Doors.Systems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Configurations;
+using Content.Server.Ghost.Roles.Events;
 using Content.Server.Mind.Components;
+using Content.Server.Ninja.Components;
 using Content.Server.Objectives;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
@@ -53,6 +55,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
         base.Initialize();
 
         SubscribeLocalEvent<NinjaComponent, ComponentStartup>(OnNinjaStartup);
+        SubscribeLocalEvent<NinjaComponent, GhostRoleSpawnerUsedEvent>(OnNinjaSpawned);
         SubscribeLocalEvent<NinjaComponent, MindAddedMessage>(OnNinjaMindAdded);
 
         SubscribeLocalEvent<DoorComponent, DoorEmaggedEvent>(OnDoorEmagged);
@@ -113,6 +116,16 @@ public sealed class NinjaSystem : SharedNinjaSystem
         {
             _alerts.ClearAlert(uid, AlertType.SuitPower);
         }
+    }
+
+    /// <summary>
+    /// Set the target grid on an entity.
+    /// Used to tell a ghost that takes ninja role where the station is.
+    /// </summary>
+    public void SetTargetGrid(EntityUid uid, EntityUid grid)
+    {
+        var target = EnsureComp<TargetGridComponent>(uid);
+        target.Grid = grid;
     }
 
     /// <summary>
@@ -224,6 +237,13 @@ public sealed class NinjaSystem : SharedNinjaSystem
             comp.SpiderChargeTarget = _random.Pick(warps);
     }
 
+    private void OnNinjaSpawned(EntityUid uid, NinjaComponent comp, GhostRoleSpawnerUsedEvent args)
+    {
+        // inherit spawner's target grid
+        if (TryComp<TargetGridComponent>(args.Spawner, out var target))
+            SetTargetGrid(uid, target.Grid);
+    }
+
     private void OnNinjaMindAdded(EntityUid uid, NinjaComponent comp, MindAddedMessage args)
     {
         if (TryComp<MindComponent>(uid, out var mind) && mind.Mind != null)
@@ -247,9 +267,9 @@ public sealed class NinjaSystem : SharedNinjaSystem
         _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);
         _chatMan.DispatchServerMessage(session, Loc.GetString("ninja-role-greeting"));
 
-        if (TryComp<NinjaComponent>(mind.OwnedEntity, out var ninja) && ninja.StationGrid != null)
+        if (TryComp<TargetGridComponent>(mind.OwnedEntity, out var target))
         {
-            var gridPos = _transform.GetWorldPosition(ninja.StationGrid.Value);
+            var gridPos = _transform.GetWorldPosition(target.Grid);
             var ninjaPos = _transform.GetWorldPosition(mind.OwnedEntity.Value);
             var vector = gridPos - ninjaPos;
             var direction = vector.GetDir();

@@ -66,9 +66,6 @@
   parent: MobHuman
   id: MobHumanSpaceNinja
   components:
-  - type: GhostTakeoverAvailable
-    name: Space ninja
-    description: Use stealth and deception to sabotage the station.
   - type: Loadout
     prototype: SpaceNinjaGear
     prototypes: [SpaceNinjaGear]
