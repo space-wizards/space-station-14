@@ -537,6 +537,9 @@
   id: Smokable
 
 - type: Tag
+  id: Smokes
+
+- type: Tag
   id: Soap
 
 - type: Tag
