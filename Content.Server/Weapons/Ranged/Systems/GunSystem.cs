@@ -189,7 +189,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         var ray = new CollisionRay(from.Position, dir, hitscan.CollisionMask);
                         var rayCastResults =
                             Physics.IntersectRay(from.MapId, ray, hitscan.MaxLength, lastUser, false).ToList();
-                        if (rayCastResults.Count() == 0)
+                        if (!rayCastResults.Any())
                             break;
 
                         var result = rayCastResults[0];
