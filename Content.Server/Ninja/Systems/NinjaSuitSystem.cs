@@ -4,6 +4,7 @@ using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.PowerCell;
 using Content.Shared.Actions;
+using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
@@ -28,6 +29,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
 
         // TODO: maybe have suit activation stuff
         SubscribeLocalEvent<NinjaSuitComponent, ContainerIsInsertingAttemptEvent>(OnSuitInsertAttempt);
+        SubscribeLocalEvent<NinjaSuitComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<NinjaSuitComponent, TogglePhaseCloakEvent>(OnTogglePhaseCloak);
         SubscribeLocalEvent<NinjaSuitComponent, CreateSoapEvent>(OnCreateSoap);
         SubscribeLocalEvent<NinjaSuitComponent, RecallKatanaEvent>(OnRecallKatana);
@@ -65,6 +67,12 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         {
             args.Cancel();
         }
+    }
+
+    private void OnExamined(EntityUid uid, NinjaSuitComponent comp, ExaminedEvent args)
+    {
+        if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
+            RaiseLocalEvent(battery.Owner, args);
     }
 
     protected override void UserUnequippedSuit(EntityUid uid, NinjaSuitComponent comp, EntityUid user)
