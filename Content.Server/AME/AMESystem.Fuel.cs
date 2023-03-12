@@ -8,14 +8,12 @@ namespace Content.Shared.AME.Systems;
 /// </summary>
 public sealed partial class AMESystem
 {
-    public override void Initialize()
+    private void InitializeFuel()
     {
-        base.Initialize();
-
-        SubscribeLocalEvent<AMEFuelContainerComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<AMEFuelContainerComponent, ExaminedEvent>(OnFuelExamined);
     }
 
-    private void OnExamined(EntityUid uid, AMEFuelContainerComponent comp, ExaminedEvent args)
+    private void OnFuelExamined(EntityUid uid, AMEFuelContainerComponent comp, ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
             return;

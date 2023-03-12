@@ -29,9 +29,12 @@ namespace Content.Server.AME
         public override void Initialize()
         {
             base.Initialize();
+
             SubscribeLocalEvent<AMEControllerComponent, PowerChangedEvent>(OnAMEPowerChange);
             SubscribeLocalEvent<AMEControllerComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<AMEPartComponent, InteractUsingEvent>(OnPartInteractUsing);
+
+            InitializeFuel();
         }
 
         public override void Update(float frameTime)
