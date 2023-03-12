@@ -51,8 +51,8 @@
   - type: DisarmMalus
     malus: 0
   - type: Reflect
-    chance: 0.5
-    spread: 30
+    chance: 0.25
+    spread: 45
     onReflect:
       path: /Audio/Weapons/Guns/Hits/laser_sear_wall.ogg
 
