@@ -4,7 +4,6 @@ using Robust.Shared.Random;
 using Robust.Shared.Physics.Systems;
 using Content.Shared.Hands.Components;
 using Robust.Shared.GameStates;
-using Robust.Shared.Timing;
 using Content.Shared.Weapons.Ranged.Events;
 using System.Diagnostics.CodeAnalysis;
 
@@ -15,7 +14,6 @@ namespace Content.Shared.Weapons.Reflect;
 /// </summary>
 public abstract class SharedReflectSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
@@ -26,7 +24,8 @@ public abstract class SharedReflectSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<SharedHandsComponent, ProjectileReflectAttemptEvent>(OnHandReflectProjectile);
-        SubscribeLocalEvent<SharedHandsComponent, HitScanReflectAttemptEvent>(OnHandsReflectHitScan);
+        SubscribeLocalEvent<SharedHandsComponent, HitScanReflectAttemptEvent>(OnHandsReflectHitscan);
+
         SubscribeLocalEvent<ReflectComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<ReflectComponent, ComponentGetState>(OnGetState);
     }
@@ -76,18 +75,18 @@ public abstract class SharedReflectSystem : EntitySystem
         return false;
     }
 
-    private void OnHandsReflectHitScan(EntityUid uid, SharedHandsComponent hands, ref HitScanReflectAttemptEvent args)
+    private void OnHandsReflectHitscan(EntityUid uid, SharedHandsComponent hands, ref HitScanReflectAttemptEvent args)
     {
         if (args.Reflected)
             return;
-        if (TryReflectHitScan(uid, hands.ActiveHandEntity, args.Direction, out var dir))
+        if (TryReflectHitscan(uid, hands.ActiveHandEntity, args.Direction, out var dir))
         {
             args.Direction = dir.Value;
             args.Reflected = true;
         }
     }
 
-    public bool TryReflectHitScan(EntityUid user, EntityUid? reflector, Vector2 direction, [NotNullWhen(true)] out Vector2? newDirection)
+    public bool TryReflectHitscan(EntityUid user, EntityUid? reflector, Vector2 direction, [NotNullWhen(true)] out Vector2? newDirection)
     {
         if (TryComp<ReflectComponent>(reflector, out var reflect) &&
             reflect.Enabled &&

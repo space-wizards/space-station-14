@@ -14,7 +14,7 @@ public sealed class ReflectComponent : Component
     /// Can only reflect when enabled
     /// </summary>
     [DataField("enabled"), ViewVariables(VVAccess.ReadWrite)]
-    public bool Enabled;
+    public bool Enabled = true;
 
     [DataField("hitscanChance"), ViewVariables(VVAccess.ReadWrite)]
     public float HitscanChance;
@@ -26,7 +26,7 @@ public sealed class ReflectComponent : Component
     public Angle Spread = Angle.FromDegrees(5);
 
     [DataField("onReflect")]
-    public SoundSpecifier? OnReflect;
+    public SoundSpecifier? OnReflect = new SoundPathSpecifier("/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg");
 }
 
 [Serializable, NetSerializable]
