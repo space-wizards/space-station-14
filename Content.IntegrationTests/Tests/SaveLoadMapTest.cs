@@ -24,6 +24,7 @@ namespace Content.IntegrationTests.Tests
             var mapManager = server.ResolveDependency<IMapManager>();
             var sEntities = server.ResolveDependency<IEntityManager>();
             var mapLoader = sEntities.System<MapLoaderSystem>();
+            var xformSystem = sEntities.EntitySysManager.GetEntitySystem<SharedTransformSystem>();
             var resManager = server.ResolveDependency<IResourceManager>();
 
             await server.WaitPost(() =>
@@ -36,13 +37,13 @@ namespace Content.IntegrationTests.Tests
                 {
                     var mapGrid = mapManager.CreateGrid(mapId);
                     var mapGridEnt = mapGrid.Owner;
-                    sEntities.GetComponent<TransformComponent>(mapGridEnt).WorldPosition = new Vector2(10, 10);
+                    xformSystem.SetWorldPosition(mapGridEnt, new Vector2(10, 10));
                     mapGrid.SetTile(new Vector2i(0,0), new Tile(1, (TileRenderFlag)1, 255));
                 }
                 {
                     var mapGrid = mapManager.CreateGrid(mapId);
                     var mapGridEnt = mapGrid.Owner;
-                    sEntities.GetComponent<TransformComponent>(mapGridEnt).WorldPosition = new Vector2(-8, -8);
+                    xformSystem.SetWorldPosition(mapGridEnt, new Vector2(-8, -8));
                     mapGrid.SetTile(new Vector2i(0, 0), new Tile(2, (TileRenderFlag)1, 254));
                 }
 
@@ -67,7 +68,7 @@ namespace Content.IntegrationTests.Tests
                         return;
                     }
 
-                    Assert.That(gridXform.WorldPosition, Is.EqualTo(new Vector2(10, 10)));
+                    Assert.That(xformSystem.GetWorldPosition(gridXform), Is.EqualTo(new Vector2(10, 10)));
 
                     Assert.That(mapGrid.GetTileRef(new Vector2i(0, 0)).Tile, Is.EqualTo(new Tile(1, (TileRenderFlag)1, 255)));
                 }
@@ -79,7 +80,7 @@ namespace Content.IntegrationTests.Tests
                         return;
                     }
 
-                    Assert.That(gridXform.WorldPosition, Is.EqualTo(new Vector2(-8, -8)));
+                    Assert.That(xformSystem.GetWorldPosition(gridXform), Is.EqualTo(new Vector2(-8, -8)));
                     Assert.That(mapGrid.GetTileRef(new Vector2i(0, 0)).Tile, Is.EqualTo(new Tile(2, (TileRenderFlag)1, 254)));
                 }
             });
