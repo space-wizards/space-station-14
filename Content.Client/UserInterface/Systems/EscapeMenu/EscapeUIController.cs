@@ -98,7 +98,11 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
             _uri.OpenUri(_cfg.GetCVar(CCVars.InfoLinksWiki));
         };
 
-        _escapeWindow.GuidebookButton.OnPressed += _ => _guidebook.ToggleGuidebook();
+        _escapeWindow.GuidebookButton.OnPressed += args =>
+        {
+             args.Button.Pressed = !_guidebook.IsGuidebookWindowOpen();
+            _guidebook.ToggleGuidebook();
+        };
 
         // Hide wiki button if we don't have a link for it.
         _escapeWindow.WikiButton.Visible = _cfg.GetCVar(CCVars.InfoLinksWiki) != "";

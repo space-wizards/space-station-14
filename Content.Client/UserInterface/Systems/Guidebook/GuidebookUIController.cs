@@ -5,8 +5,6 @@ using Content.Client.Guidebook.Controls;
 using Content.Client.Lobby;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Input;
-using Robust.Client.Graphics;
-using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using static Robust.Client.UserInterface.Controls.BaseButton;
@@ -105,11 +103,6 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
         ToggleGuidebook();
     }
 
-    private void OnButtonToggled()
-    {
-        args.Button.Pressed = !IsGuidebookWindowOpen();
-    }
-
     private void OnWindowClosed()
     {
         if (GuidebookButton != null)
@@ -124,10 +117,7 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
 
     public bool IsGuidebookWindowOpen()
     {
-        if (_guideWindow == null)
-            return false;
-
-        return _guideWindow.IsOpen;
+        return _guideWindow is { IsOpen: true };
     }
 
     /// <summary>
