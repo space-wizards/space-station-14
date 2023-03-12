@@ -16,15 +16,15 @@ public sealed class ChaosDiceSystem : EntitySystem
 
     private void OnDiceRoll(EntityUid uid, ChaosDiceComponent component, ref DiceRollEvent args)
     {
-        if (_timing.CurTime > component.lastActivated + TimeSpan.FromSeconds(component.Cooldown))
+        if (_timing.CurTime < component.lastActivated + TimeSpan.FromSeconds(component.Cooldown))
             return;
         component.lastActivated = _timing.CurTime;
         var power = 1.0f * args.Die.CurrentValue / (args.Die.Sides * args.Die.Multiplier);
         if (TryComp<IgniteArtifactComponent>(uid, out var igniteEffect))
         {
             igniteEffect.Range = 3 * power;
-            igniteEffect.MinFireStack = 2 * (int) power;
-            igniteEffect.MaxFireStack = 4 * (int) power;
+            igniteEffect.MinFireStack = (int) (2 * power);
+            igniteEffect.MaxFireStack = (int) (4 * power);
         }
         if (TryComp<ThrowArtifactComponent>(uid, out var throwEffect))
         {
