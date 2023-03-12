@@ -22,11 +22,10 @@ public sealed class TelecomSystem : EntitySystem
         var mapReceiver = Transform(args.RadioReceiver).MapID;
         if (mapSource == mapReceiver)
         {
-            var map = mapSource;
             var servers = EntityQuery<TelecomServerComponent, EncryptionKeyHolderComponent, ApcPowerReceiverComponent, TransformComponent>();
             foreach (var (_, keys, power, transform) in servers)
             {
-                if (transform.MapID == map && power.Powered && keys.Channels.Contains(args.Channel.ID))
+                if (transform.MapID == mapSource && power.Powered && keys.Channels.Contains(args.Channel.ID))
                     return;
             }
         }
