@@ -1,10 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Removed duplicate disarm popup when disarming someone with an item in
-      their hands., type: Fix}
-  id: 2660
-  time: '2022-11-15T07:48:00.0000000+00:00'
 - author: Ygg01
   changes:
   - {message: Fluids no longer leak through micropores in concrete, type: Fix}
@@ -2918,3 +2912,11 @@ Entries:
   - {message: Fixed vehicles and mechs not properly inheriting access., type: Fix}
   id: 3159
   time: '2023-03-12T12:55:02.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Upgraded all headsets to 4 slots. Head staff headsets will now have
+      a free slot on their headset., type: Add}
+  - {message: Fixed blood-red over-ear headset description to match it's actual stats;
+      5 key slots., type: Fix}
+  id: 3160
+  time: '2023-03-12T13:51:28.0000000+00:00'
