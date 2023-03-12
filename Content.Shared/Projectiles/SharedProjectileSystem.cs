@@ -25,7 +25,8 @@ namespace Content.Shared.Projectiles
             }
             var attemptEv = new PreventProjectileCollideEvent(uid, component, false);
             RaiseLocalEvent(target, ref attemptEv);
-            args.Cancelled = attemptEv.Cancelled;
+            if (attemptEv.Cancelled)
+                args.Cancelled = true;
         }
 
         public void SetShooter(ProjectileComponent component, EntityUid uid)
@@ -64,5 +65,8 @@ namespace Content.Shared.Projectiles
     }
 }
 
+/// <summary>
+/// Raised when entity is about to be hit with projectile and they are not shooter or shooter is ignored
+/// </summary>
 [ByRefEvent]
 public record struct PreventProjectileCollideEvent(EntityUid ProjUid, ProjectileComponent ProjComp, bool Cancelled);
