@@ -51,11 +51,16 @@ public abstract class SharedReflectSystem : EntitySystem
             reflect.Enabled && 
             _random.Prob(reflect.Chance))
         {
-            var vel = _physics.GetMapLinearVelocity(uid) - _physics.GetMapLinearVelocity(args.ProjUid);
-            var spread = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2);
-            vel = spread.RotateVec(vel);
-            _physics.SetLinearVelocity(args.ProjUid, vel);
-            _transform.SetWorldRotation(args.ProjUid, vel.ToWorldAngle());
+            var rotation = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2).Opposite();
+
+            var relVel = _physics.GetMapLinearVelocity(args.ProjUid) - _physics.GetMapLinearVelocity(uid);
+            var newVel = rotation.RotateVec(relVel);
+            _physics.SetLinearVelocity(args.ProjUid, newVel);
+
+            var locRot = Transform(args.ProjUid).LocalRotation;
+            var newRot = rotation.RotateVec(locRot.ToVec());
+            _transform.SetLocalRotation(args.ProjUid, newRot.ToAngle());
+
             _popup.PopupEntity(Loc.GetString("reflect-shot"), uid, PopupType.Small);
             _audio.PlayPvs(reflect.OnReflect, uid, AudioHelpers.WithVariation(0.05f, _random));
             args.Cancelled = true;
