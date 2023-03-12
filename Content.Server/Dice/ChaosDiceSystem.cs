@@ -4,7 +4,6 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Dice;
 
-[RegisterComponent]
 public sealed class ChaosDiceSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;

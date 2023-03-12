@@ -32,6 +32,8 @@
 
 - type: entity
   parent: PercentileDie
+  id: PercentileDieChaos
+  suffix: Chaos
   components:
   - type: ChaosDice
   - type: DamageNearbyArtifact
@@ -65,6 +67,8 @@
 
 - type: entity
   parent: d12Dice
+  id: d12DiceChaos
+  suffix: Chaos
   components:
   - type: ChaosDice
   - type: IgniteArtifact
@@ -95,9 +99,11 @@
 
 - type: entity
   parent: d8Dice
+  id: d8DiceChaos
+  suffix: Chaos
   components:
   - type: ChaosDice
-  - type: ThrowArtifactComponent
+  - type: ThrowArtifact
 
 - type: entity
   parent: BaseDice
