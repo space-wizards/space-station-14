@@ -21,6 +21,8 @@ network-configurator-start-link = Start link
 network-configurator-link = Link
 
 # ui
+network-configurator-title-saved-devices = Saved Devices
+network-configurator-title-device-configuration = Device Configuration
 network-configurator-ui-clear-button = Clear
 network-configurator-ui-count-label = {$count} Devices
 network-configurator-clear-network-link-overlays = Clear network link overlays
