@@ -40,20 +40,6 @@ namespace Content.Shared.Entry
 
             InitTileDefinitions();
             IoCManager.Resolve<MarkingManager>().Initialize();
-
-            var configMan = IoCManager.Resolve<IConfigurationManager>();
-#if DEBUG
-            configMan.OverrideDefault(CVars.NetFakeLagMin, 0.075f);
-            configMan.OverrideDefault(CVars.NetFakeLoss, 0.005f);
-            configMan.OverrideDefault(CVars.NetFakeDuplicates, 0.005f);
-
-            // fake lag rand leads to messages arriving out of order. Sadly, networking is not robust enough, so for now
-            // just leaving this disabled.
-            // configMan.OverrideDefault(CVars.NetFakeLagRand, 0.01f);
-
-            if (IoCManager.Resolve<INetManager>().IsServer)
-                configMan.OverrideDefault(CCVars.GameMap, "Dev");
-#endif
         }
 
         private void InitTileDefinitions()
