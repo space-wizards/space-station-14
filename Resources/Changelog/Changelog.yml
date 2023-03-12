@@ -1,9 +1,4 @@
 Entries:
-- author: corentt
-  changes:
-  - {message: the price of food now depends on its nutritional capacity, type: Add}
-  id: 2662
-  time: '2022-11-15T11:51:31.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fixed a broken inhand for the fire extinguisher., type: Fix}
@@ -2918,3 +2913,9 @@ Entries:
   - {message: grille can now be built on all tiles and in space, type: Tweak}
   id: 3161
   time: '2023-03-12T20:46:44.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Reduced cost of bottles in the medical techfab. 200 glass to 50 glass.,
+    type: Tweak}
+  id: 3162
+  time: '2023-03-12T23:37:00.0000000+00:00'
