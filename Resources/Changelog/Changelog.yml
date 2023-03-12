@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Combat mode no longer disables alt-clicking., type: Tweak}
-  id: 2658
-  time: '2022-11-15T06:34:47.0000000+00:00'
 - author: keronshb
   changes:
   - {message: Lightning is fixed to properly collide, type: Fix}
@@ -2918,3 +2913,8 @@ Entries:
   - {message: Fixed slime hair was not translucent, type: Fix}
   id: 3157
   time: '2023-03-11T21:04:58.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: AME fuel jars now show their fuel level when examined., type: Tweak}
+  id: 3158
+  time: '2023-03-12T12:39:11.0000000+00:00'
