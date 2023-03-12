@@ -47,41 +47,39 @@ public abstract class SharedReflectSystem : EntitySystem
 
     private void TryReflectProjectile(EntityUid uid, SharedHandsComponent hands, ref PreventProjectileCollideEvent args)
     {
-        foreach (var (_, hand) in hands.Hands)
+        if (args.Cancelled)
+            return;
+        if (TryComp<ReflectComponent>(hands.ActiveHandEntity, out var reflect) &&
+            reflect.Enabled && 
+            _random.Prob(reflect.Chance))
         {
-            if (TryComp<ReflectComponent>(hand.HeldEntity, out var reflect) &&
-                reflect.Enabled && 
-                _random.Prob(reflect.Chance))
-            {
-                var vel = _physics.GetMapLinearVelocity(uid) - _physics.GetMapLinearVelocity(args.ProjUid);
-                var spread = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2);
-                vel = spread.RotateVec(vel);
-                _physics.SetLinearVelocity(args.ProjUid, vel);
-                _transform.SetWorldRotation(args.ProjUid, vel.ToWorldAngle());
-                _projectile.SetShooter(args.ProjComp, uid);
-                _popup.PopupEntity(Loc.GetString("reflect-shot"), uid, PopupType.Small);
-                _audio.PlayPvs(reflect.OnReflect, uid, AudioHelpers.WithVariation(0.05f, _random));
-                args.Cancelled = true;
-                return;
-            }
+            var vel = _physics.GetMapLinearVelocity(uid) - _physics.GetMapLinearVelocity(args.ProjUid);
+            var spread = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2);
+            vel = spread.RotateVec(vel);
+            _physics.SetLinearVelocity(args.ProjUid, vel);
+            _transform.SetWorldRotation(args.ProjUid, vel.ToWorldAngle());
+            _projectile.SetShooter(args.ProjComp, uid);
+            _popup.PopupEntity(Loc.GetString("reflect-shot"), uid, PopupType.Small);
+            _audio.PlayPvs(reflect.OnReflect, uid, AudioHelpers.WithVariation(0.05f, _random));
+            args.Cancelled = true;
+            return;
         }
     }
 
     private void TryReflectHitScan(EntityUid uid, SharedHandsComponent hands, ref HitScanReflectAttemptEvent args)
     {
-        foreach (var (_, hand) in hands.Hands)
+        if (args.Reflected)
+            return;
+        if (TryComp<ReflectComponent>(hands.ActiveHandEntity, out var reflect) &&
+            reflect.Enabled &&
+            _random.Prob(reflect.Chance))
         {
-            if (TryComp<ReflectComponent>(hand.HeldEntity, out var reflect)
-                && reflect.Enabled
-                && _random.Prob(reflect.Chance))
-            {
-                _popup.PopupEntity(Loc.GetString("reflect-shot"), uid, PopupType.Small);
-                _audio.PlayPvs(reflect.OnReflect, uid, AudioHelpers.WithVariation(0.05f, _random));
-                args.Reflected = true;
-                var spread = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2);
-                args.Direction = -spread.RotateVec(args.Direction);
-                return;
-            }
+            _popup.PopupEntity(Loc.GetString("reflect-shot"), uid, PopupType.Small);
+            _audio.PlayPvs(reflect.OnReflect, uid, AudioHelpers.WithVariation(0.05f, _random));
+            args.Reflected = true;
+            var spread = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2);
+            args.Direction = -spread.RotateVec(args.Direction);
+            return;
         }
     }
 }
