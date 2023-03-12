@@ -20,7 +20,7 @@ public sealed class DiceSystem : SharedDiceSystem
         var roll = _random.Next(1, die.Sides + 1);
         SetCurrentSide(uid, roll, die);
 
-        var ev = new DiceRollEvent(roll);
+        var ev = new DiceRollEvent(die);
         RaiseLocalEvent(uid, ref ev);
 
         _popup.PopupEntity(Loc.GetString("dice-component-on-roll-land", ("die", uid), ("currentSide", die.CurrentValue)), uid);
@@ -29,4 +29,4 @@ public sealed class DiceSystem : SharedDiceSystem
 }
 
 [ByRefEvent]
-public readonly record struct DiceRollEvent(int CurrentValue);
+public readonly record struct DiceRollEvent(DiceComponent Die);

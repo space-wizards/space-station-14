@@ -31,6 +31,12 @@
     state: percentile_0
 
 - type: entity
+  parent: PercentileDie
+  components:
+  - type: ChaosDice
+  - type: DamageNearbyArtifact
+
+- type: entity
   parent: BaseDice
   id: d20Dice
   name: d20
@@ -55,6 +61,12 @@
     state: d12_12
 
 - type: entity
+  parent: d12Dice
+  components:
+  - type: ChaosDice
+  - type: IgniteArtifact
+
+- type: entity
   parent: BaseDice
   id: d10Dice
   name: d10
@@ -77,6 +89,12 @@
     currentValue: 8
   - type: Sprite
     state: d8_8
+
+- type: entity
+  parent: d8Dice
+  components:
+  - type: ChaosDice
+  - type: ThrowArtifactComponent
 
 - type: entity
   parent: BaseDice
