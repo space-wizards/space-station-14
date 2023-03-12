@@ -63,7 +63,7 @@
   - type: SolutionContainerManager
     solutions:
       drainBuffer:
-        maxVol: 10
+        maxVol: 100
       tank:
         reagents:
         - ReagentId: Water
@@ -110,7 +110,7 @@
   - type: SolutionContainerManager
     solutions:
       drainBuffer:
-        maxVol: 10
+        maxVol: 100
       tank:
         reagents:
         - ReagentId: Water

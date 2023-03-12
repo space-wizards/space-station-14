@@ -294,3 +294,21 @@
             - !type:PlaySoundBehavior
               sound:
                 path: /Audio/Effects/metalbreak.ogg
+
+- type: entity
+  name: plunger
+  id: Plunger
+  parent: BaseItem
+  description: A plunger with a red plastic suction-cup and a wooden handle. Used to unclog drains.
+  components:
+    - type: Tag
+      tags:
+        - Plunger
+    - type: Sprite
+      netsync: false
+      sprite: Objects/Specific/Janitorial/janitorial.rsi
+      state: plunger
+    - type: Item
+      sprite: Objects/Specific/Janitorial/janitorial.rsi
+      heldPrefix: plunger_
+    - type: ItemCooldown

@@ -2,16 +2,22 @@ using System.Linq;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Fluids.Components;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Server.DoAfter;
 using Content.Server.Popups;
+using Content.Server.Sprite;
 using Content.Shared.FixedPoint;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Coordinates;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Examine;
+using Content.Shared.Interaction;
+using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Collections;
+using Robust.Shared.Random;
 
 namespace Content.Server.Fluids.EntitySystems
 {
@@ -23,12 +29,17 @@ namespace Content.Server.Fluids.EntitySystems
         [Dependency] private readonly AudioSystem _audioSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SpillableSystem _spillableSystem = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<DrainComponent, GetVerbsEvent<Verb>>(AddEmptyVerb);
             SubscribeLocalEvent<DrainComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<DrainComponent, AfterInteractUsingEvent>(OnInteract);
+            SubscribeLocalEvent<DrainComponent, DoAfterEvent>(OnDoAfter);
         }
 
         private void AddEmptyVerb(EntityUid uid, DrainComponent component, GetVerbsEvent<Verb> args)
@@ -205,6 +216,54 @@ namespace Content.Server.Fluids.EntitySystems
                 Loc.GetString("drain-component-examine-volume", ("volume", drainSolution.AvailableVolume)) :
                 Loc.GetString("drain-component-examine-hint-full");
             args.Message.AddMarkup($"\n\n{text}");
+        }
+
+        private void OnInteract(EntityUid uid, DrainComponent component, InteractEvent args)
+        {
+            if (!args.CanReach || args.Target == null) { return; }
+
+            if (!_tagSystem.HasTag(args.Used, "Plunger")) { return; }
+
+            if (!_solutionSystem.TryGetSolution(args.Target.Value, DrainComponent.SolutionName, out var drainSolution)) { return; }
+
+            if (drainSolution.AvailableVolume > 0 && args.User.IsValid())
+            {
+                _popupSystem.PopupEntity(Loc.GetString("drain-component-unclog-notapplicable", ("object", args.Target.Value)), args.Target.Value);
+                return;
+            }
+
+            _audioSystem.PlayPvs(component.PlungerSound, uid);
+
+            var doAfterArgs = new DoAfterEventArgs(args.User, component.UnclogDuration, target: uid, used: args.Used)
+            {
+                BreakOnTargetMove = true,
+                BreakOnUserMove = true,
+                BreakOnDamage = true,
+                BreakOnStun = true
+            };
+
+            _doAfterSystem.DoAfter(doAfterArgs);
+        }
+
+        private void OnDoAfter(EntityUid uid, DrainComponent component, DoAfterEvent args)
+        {
+            if (args.Args.Target == null)
+                return;
+
+            if (!(_random.NextFloat() <= component.unclogProbability))
+            {
+                _popupSystem.PopupEntity(Loc.GetString("drain-component-unclog-fail", ("object", args.Args.Target.Value)), args.Args.Target.Value);
+                return;
+            }
+
+
+            if (_solutionSystem.TryGetSolution(args.Args.Target.Value, DrainComponent.SolutionName, out var drainSolution))
+            {
+                drainSolution.RemoveAllSolution();
+                _audioSystem.PlayPvs(component.UnclogSound, args.Args.Target.Value);
+                _popupSystem.PopupEntity(Loc.GetString("drain-component-unclog-success", ("object", args.Args.Target.Value)), args.Args.Target.Value);
+                _solutionSystem.UpdateAppearance(args.Args.Target.Value, drainSolution);
+            }
         }
     }
 }
