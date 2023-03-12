@@ -1,4 +1,4 @@
-name: YAML schema validator
+name: RGA schema validator
 on:
   push:
     branches: [ master, staging, trying ]
