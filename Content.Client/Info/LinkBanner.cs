@@ -37,9 +37,8 @@ namespace Content.Client.Info
 
             var guidebookController = UserInterfaceManager.GetUIController<GuidebookUIController>();
             var guidebookButton = new Button() { Text = Loc.GetString("server-info-guidebook-button") };
-            guidebookButton.OnPressed += args =>
+            guidebookButton.OnPressed += _ =>
             {
-                args.Button.Pressed = !guidebookController.IsGuidebookWindowOpen();
                 guidebookController.ToggleGuidebook();
             };
             buttons.AddChild(guidebookButton);

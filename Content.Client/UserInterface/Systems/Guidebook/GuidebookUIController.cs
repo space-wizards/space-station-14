@@ -115,11 +115,6 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
             GuidebookButton.Pressed = true;
     }
 
-    public bool IsGuidebookWindowOpen()
-    {
-        return _guideWindow is { IsOpen: true };
-    }
-
     /// <summary>
     ///     Opens the guidebook.
     /// </summary>
@@ -143,14 +138,14 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
         if (_guideWindow == null)
             return;
 
-        if (GuidebookButton != null)
-            GuidebookButton.Pressed = !_guideWindow.IsOpen;
-
         if (_guideWindow.IsOpen)
         {
             _guideWindow.Close();
             return;
         }
+
+        if (GuidebookButton != null)
+            GuidebookButton.Pressed = !_guideWindow.IsOpen;
 
         if (guides == null)
         {
@@ -172,8 +167,8 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
             }
         }
 
-        _guideWindow?.UpdateGuides(guides, rootEntries, forceRoot, selected);
-        _guideWindow?.OpenCenteredRight();
+        _guideWindow.UpdateGuides(guides, rootEntries, forceRoot, selected);
+        _guideWindow.OpenCenteredRight();
     }
 
     public void ToggleGuidebook(
