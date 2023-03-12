@@ -3,10 +3,10 @@ using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Robust.Shared.Random;
 using Robust.Shared.Physics.Systems;
-using Content.Shared.Weapons.Ranged;
 using Content.Shared.Hands.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
+using Content.Shared.Weapons.Ranged.Events;
 
 namespace Content.Shared.Weapons.Reflect;
 
@@ -27,7 +27,7 @@ public abstract class SharedReflectSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<SharedHandsComponent, PreventProjectileCollideEvent>(TryReflectProjectile);
-        SubscribeLocalEvent<SharedHandsComponent, HitScanReflectAttempt>(TryReflectHitScan);
+        SubscribeLocalEvent<SharedHandsComponent, HitScanReflectAttemptEvent>(TryReflectHitScan);
         SubscribeLocalEvent<ReflectComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<ReflectComponent, ComponentGetState>(OnGetState);
     }
@@ -67,7 +67,7 @@ public abstract class SharedReflectSystem : EntitySystem
         }
     }
 
-    private void TryReflectHitScan(EntityUid uid, SharedHandsComponent hands, ref HitScanReflectAttempt args)
+    private void TryReflectHitScan(EntityUid uid, SharedHandsComponent hands, ref HitScanReflectAttemptEvent args)
     {
         foreach (var (_, hand) in hands.Hands)
         {

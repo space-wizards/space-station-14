@@ -198,7 +198,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
                         FireEffects(fromEffect, result.Distance, dir.Normalized.ToAngle(), hitscan, hit);
 
-                        var ev = new HitScanReflectAttempt(dir, false);
+                        var ev = new HitScanReflectAttemptEvent(dir, false);
                         RaiseLocalEvent(hit, ref ev);
 
                         if (!ev.Reflected)
