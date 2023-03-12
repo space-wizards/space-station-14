@@ -11,6 +11,9 @@ action-desc-create-soap = Channels suit power into creating a bar of ninja soap.
 action-name-recall-katana = Recall katana
 action-desc-recall-katana = Teleports the Energy Katana linked to this suit to its wearer, cost based on distance.
 
+action-name-katana-dash = Katana dash
+action-desc-katana-dash = Teleport to anywhere you can see, if your Energy Katana is in your hand.
+
 action-name-em-burst = EM Burst
 action-desc-em-burst = Disable any nearby technology with an electro-magnetic pulse.
 

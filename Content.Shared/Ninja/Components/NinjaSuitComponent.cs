@@ -51,7 +51,7 @@ public sealed class NinjaSuitComponent : Component
     [DataField("createSoapAction")]
     public InstantAction CreateSoapAction = new()
     {
-        UseDelay = TimeSpan.FromSeconds(1),
+        UseDelay = TimeSpan.FromSeconds(10),
         Icon = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Specific/Janitorial/soap.rsi"), "soap"),
         ItemIconStyle = ItemActionIconStyle.NoItem,
         DisplayName = "action-name-create-soap",
