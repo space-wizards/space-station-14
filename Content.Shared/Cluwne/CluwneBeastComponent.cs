@@ -6,8 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Cluwne;
 
-[RegisterComponent]
-[NetworkedComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed class CluwneBeastComponent : Component
 {
     /// <summary>

@@ -25,3 +25,27 @@
       uiWindowPos: 0,1
       strippingWindowPos: 0,1
       displayName: Neck
+    - name: mask
+      slotTexture: mask
+      slotFlags: MASK
+      uiWindowPos: 1,1
+      strippingWindowPos: 1,1
+      displayName: Mask
+      whitelist:
+        tags:
+          - PetWearable
+    - name: id
+      slotTexture: id
+      slotFlags: IDCARD
+      slotGroup: SecondHotbar
+      stripTime: 6
+      uiWindowPos: 2,1
+      strippingWindowPos: 2,4
+      displayName: ID
+    - name: ears
+      slotTexture: ears
+      slotFlags: EARS
+      stripTime: 3
+      uiWindowPos: 2,0
+      strippingWindowPos: 2,0
+      displayName: Ears
