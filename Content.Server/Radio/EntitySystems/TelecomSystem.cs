@@ -23,8 +23,8 @@ public sealed class TelecomSystem : EntitySystem
         if (mapSource == mapReceiver)
         {
             var map = mapSource;
-            var servers = EntityQuery<ApcPowerReceiverComponent, EncryptionKeyHolderComponent, TransformComponent, TelecomServerComponent>();
-            foreach (var (power, keys, transform, _) in servers)
+            var servers = EntityQuery<TelecomServerComponent, EncryptionKeyHolderComponent, ApcPowerReceiverComponent, TransformComponent>();
+            foreach (var (_, keys, power, transform) in servers)
             {
                 if (transform.MapID == map && power.Powered && keys.Channels.Contains(args.Channel.ID))
                     return;
