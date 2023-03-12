@@ -24,7 +24,7 @@ namespace Content.Client.Construction
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
-        private readonly Dictionary<int, ConstructionGhostComponent> _ghosts = new();
+        private readonly Dictionary<int, EntityUid> _ghosts = new();
         private readonly Dictionary<string, ConstructionGuide> _guideCache = new();
 
         private int _nextId;
@@ -176,7 +176,7 @@ namespace Content.Client.Construction
             comp.Prototype = prototype;
             comp.GhostId = _nextId++;
             EntityManager.GetComponent<TransformComponent>(ghost).LocalRotation = dir.ToAngle();
-            _ghosts.Add(comp.GhostId, comp);
+            _ghosts.Add(comp.GhostId, ghost);
             var sprite = EntityManager.GetComponent<SpriteComponent>(ghost);
             sprite.Color = new Color(48, 255, 48, 128);
 
@@ -199,7 +199,7 @@ namespace Content.Client.Construction
         {
             foreach (var ghost in _ghosts)
             {
-                if (EntityManager.GetComponent<TransformComponent>(ghost.Value.Owner).Coordinates.Equals(loc)) return true;
+                if (EntityManager.GetComponent<TransformComponent>(ghost.Value).Coordinates.Equals(loc)) return true;
             }
 
             return false;
@@ -208,14 +208,15 @@ namespace Content.Client.Construction
         private void TryStartConstruction(int ghostId)
         {
             var ghost = _ghosts[ghostId];
+            var comp = EntityManager.GetComponent<ConstructionGhostComponent>(ghost);
 
-            if (ghost.Prototype == null)
+            if (comp.Prototype == null)
             {
                 throw new ArgumentException($"Can't start construction for a ghost with no prototype. Ghost id: {ghostId}");
             }
 
-            var transform = EntityManager.GetComponent<TransformComponent>(ghost.Owner);
-            var msg = new TryStartStructureConstructionMessage(transform.Coordinates, ghost.Prototype.ID, transform.LocalRotation, ghostId);
+            var transform = EntityManager.GetComponent<TransformComponent>(ghost);
+            var msg = new TryStartStructureConstructionMessage(transform.Coordinates, comp.Prototype.ID, transform.LocalRotation, ghostId);
             RaiseNetworkEvent(msg);
         }
 
@@ -234,7 +235,7 @@ namespace Content.Client.Construction
         {
             if (_ghosts.TryGetValue(ghostId, out var ghost))
             {
-                EntityManager.QueueDeleteEntity(ghost.Owner);
+                EntityManager.QueueDeleteEntity(ghost);
                 _ghosts.Remove(ghostId);
             }
         }
@@ -246,7 +247,7 @@ namespace Content.Client.Construction
         {
             foreach (var (_, ghost) in _ghosts)
             {
-                EntityManager.QueueDeleteEntity(ghost.Owner);
+                EntityManager.QueueDeleteEntity(ghost);
             }
 
             _ghosts.Clear();
