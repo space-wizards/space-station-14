@@ -38,11 +38,11 @@
       "directions": 4
     },
 	{
-      "name": "plunger_inhand-left",
+      "name": "plunger-inhand-left",
 	  "directions": 4
     },
 	{
-      "name": "plunger_inhand-right",
+      "name": "plunger-inhand-right",
 	  "directions": 4
     }
   ]

@@ -310,5 +310,5 @@
       state: plunger
     - type: Item
       sprite: Objects/Specific/Janitorial/janitorial.rsi
-      heldPrefix: plunger_
+      heldPrefix: plunger
     - type: ItemCooldown
