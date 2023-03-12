@@ -59,8 +59,6 @@ public sealed class CluwneBeastSystem : EntitySystem
         }
     }
 
-    public EmoteSoundsPrototype? EmoteSounds;
-
     /// <summary>
     /// OnStartup gives the cluwne outfit, ensures clumsy, gives name prefix and makes sure emote sounds are laugh.
     /// </summary>
@@ -69,9 +67,9 @@ public sealed class CluwneBeastSystem : EntitySystem
         if (component.EmoteSoundsId == null)
             return;
 
-        _prototypeManager.TryIndex(component.EmoteSoundsId, out EmoteSounds);
+        _prototypeManager.TryIndex(component.EmoteSoundsId, out component.EmoteSounds);
         EnsureComp<AutoEmoteComponent>(uid);
-        _autoEmote.AddEmote(uid, "CluwneGiggle");
+        _autoEmote.AddEmote(uid, "CluwneBeastGiggle");
         EnsureComp<ClumsyComponent>(uid);
         Spawn(component.BlueSpaceId, Transform(uid).Coordinates);
     }
@@ -83,7 +81,7 @@ public sealed class CluwneBeastSystem : EntitySystem
     {
         if (args.Handled)
             return;
-        args.Handled = _chat.TryPlayEmoteSound(uid, EmoteSounds, args.Emote);
+        args.Handled = _chat.TryPlayEmoteSound(uid, component.EmoteSounds, args.Emote);
 
         if (_robustRandom.Prob(component.GiggleRandomChance))
         {
@@ -106,6 +104,7 @@ public sealed class CluwneBeastSystem : EntitySystem
                 && !_mobStateSystem.IsDead(entity)
                 && _robustRandom.Prob(component.Cluwinification))
             {
+                _audio.PlayPvs(component.CluwneSound, uid);
                 EnsureComp<CluwneComponent>(entity);
             }
         }

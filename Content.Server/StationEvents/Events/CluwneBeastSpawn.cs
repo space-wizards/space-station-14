@@ -15,16 +15,16 @@ public sealed class CluwneBeastSpawn : StationEventSystem
 
         var mod = Math.Sqrt(GetSeverityModifier());
 
-        var spawnAmount = (1);
-        Sawmill.Info($"Spawning {spawnAmount} of cluwnebeasts");
+        var spawnAmount = 1;
+        Sawmill.Info($"Spawning {spawnAmount} cluwnebeast(s)");
         foreach (var location in spawnLocations)
         {
             if (spawnAmount-- == 0)
                 break;
 
-            var coords = EntityManager.GetComponent<TransformComponent>(location.Owner);
+            var coords = Transform(location.Owner);
 
-            EntityManager.SpawnEntity("SpawnPointGhostCluwneBeast", coords.Coordinates);
+            Spawn("SpawnPointGhostCluwneBeast", coords.Coordinates);
         }
     }
 }

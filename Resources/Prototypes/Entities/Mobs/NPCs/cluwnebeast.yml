@@ -51,6 +51,7 @@
       types:
         Slash: 10
         Piercing: 4
+        Structural: 10
   - type: Body
     prototype: Human
     requiredLegs: 2
@@ -86,7 +87,7 @@
       - FootstepSound
   - type: Stealth
   - type: StealthOnMove
-    passiveVisibilityRate: -0.10
+    passiveVisibilityRate: -0.1
     movementVisibilityRate: 0.6
   - type: Vocal
     sounds:
