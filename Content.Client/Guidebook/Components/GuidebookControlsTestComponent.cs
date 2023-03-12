@@ -1,4 +1,4 @@
-﻿namespace Content.Client.Guidebook;
+﻿namespace Content.Client.Guidebook.Components;
 
 /// <summary>
 /// This is used for the guidebook monkey.
