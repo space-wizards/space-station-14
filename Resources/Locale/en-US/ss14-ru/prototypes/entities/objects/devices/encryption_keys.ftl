@@ -1,7 +1,7 @@
 ent-EncryptionKey = encryption key
     .desc = A small cypher chip for headsets.
     .suffix = { "" }
-ent-EncryptionKeyCommon = passenger encryption key
+ent-EncryptionKeyCommon = common encryption key
     .desc = An encryption key used by anyone.
     .suffix = { "" }
 ent-EncryptionKeyCargo = cargo encryption key
