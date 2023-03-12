@@ -1,4 +1,3 @@
-using Content.Shared.Projectiles;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Serialization;
@@ -17,8 +16,7 @@ namespace Content.Shared.Projectiles
 
         private void PreventCollision(EntityUid uid, ProjectileComponent component, ref PreventCollideEvent args)
         {
-            var target = args.BodyB.Owner;
-            if (component.IgnoreShooter && target == component.Shooter)
+            if (component.IgnoreShooter && args.BodyB.Owner == component.Shooter)
             {
                 args.Cancelled = true;
             }
