@@ -1,9 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Lightning is fixed to properly collide, type: Fix}
-  id: 2659
-  time: '2022-11-15T06:35:23.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: Removed duplicate disarm popup when disarming someone with an item in
@@ -2918,3 +2913,8 @@ Entries:
   - {message: AME fuel jars now show their fuel level when examined., type: Tweak}
   id: 3158
   time: '2023-03-12T12:39:11.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed vehicles and mechs not properly inheriting access., type: Fix}
+  id: 3159
+  time: '2023-03-12T12:55:02.0000000+00:00'
