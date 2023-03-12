@@ -142,6 +142,16 @@
   categories:
   - UplinkExplosives
 
+- type: listing
+  id: UplinkEmpGrenade
+  name: uplink-emp-grenade-name
+  description: uplink-emp-grenade-desc
+  productEntity: EmpGrenade
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkExplosives
+
 # Ammo
 
 - type: listing
