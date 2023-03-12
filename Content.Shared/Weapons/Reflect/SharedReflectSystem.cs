@@ -35,13 +35,14 @@ public abstract class SharedReflectSystem : EntitySystem
     {
         if (args.Current is not ReflectComponentState state) return;
         component.Enabled = state.Enabled;
-        component.Chance = state.Chance;
+        component.HitscanChance = state.HitscanChance;
+        component.ProjectileChance = state.ProjectileChance;
         component.Spread = state.Spread;
     }
 
     private static void OnGetState(EntityUid uid, ReflectComponent component, ref ComponentGetState args)
     {
-        args.State = new ReflectComponentState(component.Enabled, component.Chance, component.Spread);
+        args.State = new ReflectComponentState(component.Enabled, component.HitscanChance, component.ProjectileChance, component.Spread);
     }
 
     private void OnHandReflectProjectile(EntityUid uid, SharedHandsComponent hands, ref ProjectileReflectAttemptEvent args)
@@ -56,7 +57,7 @@ public abstract class SharedReflectSystem : EntitySystem
     {
         if (TryComp<ReflectComponent>(reflector, out var reflect) &&
             reflect.Enabled && 
-            _random.Prob(reflect.Chance))
+            _random.Prob(reflect.ProjectileChance))
         {
             var rotation = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2).Opposite();
 
@@ -90,7 +91,7 @@ public abstract class SharedReflectSystem : EntitySystem
     {
         if (TryComp<ReflectComponent>(reflector, out var reflect) &&
             reflect.Enabled &&
-            _random.Prob(reflect.Chance))
+            _random.Prob(reflect.HitscanChance))
         {
             _popup.PopupEntity(Loc.GetString("reflect-shot"), user, PopupType.Small);
             _audio.PlayPvs(reflect.OnReflect, user, AudioHelpers.WithVariation(0.05f, _random));
