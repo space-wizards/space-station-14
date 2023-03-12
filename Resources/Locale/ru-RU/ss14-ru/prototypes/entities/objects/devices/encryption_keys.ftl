@@ -1,7 +1,7 @@
 ent-EncryptionKey = ключ шифрования
     .desc = Небольшой шифровальный чип для гарнитур.
     .suffix = { "" }
-ent-EncryptionKeyCommon = ключ шифрования пассажира
+ent-EncryptionKeyCommon = ключ шифрования общий
     .desc = Ключ шифрования используемый всеми.
     .suffix = { "" }
 ent-EncryptionKeyCargo = ключ шифрования карго
