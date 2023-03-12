@@ -73,6 +73,7 @@ public sealed class CluwneBeastSystem : EntitySystem
         EnsureComp<AutoEmoteComponent>(uid);
         _autoEmote.AddEmote(uid, "CluwneGiggle");
         EnsureComp<ClumsyComponent>(uid);
+        Spawn(component.BlueSpaceId, Transform(uid).Coordinates);
     }
 
     /// <summary>
