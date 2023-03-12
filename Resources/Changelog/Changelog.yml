@@ -1,11 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Fixed a broken inhand for the fire extinguisher., type: Fix}
-  id: 2663
-  time: '2022-11-16T05:24:35.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Hydroponics trays and soil now properly rotate with the player perspective.,
     type: Fix}
   id: 2664
@@ -2919,3 +2914,8 @@ Entries:
     type: Tweak}
   id: 3162
   time: '2023-03-12T23:37:00.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: ID card console sorts jobs now., type: Tweak}
+  id: 3163
+  time: '2023-03-12T23:40:17.0000000+00:00'
