@@ -1,9 +1,4 @@
 Entries:
-- author: GoodWheatley
-  changes:
-  - {message: Eswords can damage windows now., type: Tweak}
-  id: 2665
-  time: '2022-11-16T14:20:42.0000000+00:00'
 - author: BurninDreamear
   changes:
   - {message: 'All sorts of corporations now supply higher caliber bullets, revolver
@@ -2919,3 +2914,9 @@ Entries:
       syndicate commander's hardsuit., type: Tweak}
   id: 3164
   time: '2023-03-12T23:42:42.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: 'Changed meat kudzu spread by half, but it deals additional piercing
+      damage.', type: Tweak}
+  id: 3165
+  time: '2023-03-12T23:45:01.0000000+00:00'
