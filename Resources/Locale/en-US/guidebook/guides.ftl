@@ -23,6 +23,10 @@ guide-entry-artifact-reports = Artifact Reports
 guide-entry-traversal-distorter = Traversal Distorter
 guide-entry-machine-upgrading = Machine Upgrading
 
+# MEDICAL
+guide-entry-medical = Medical
+guide-entry-chemist = Chemist
+
 # SERVICE
 guide-entry-service = Service
 guide-entry-cook = Cook

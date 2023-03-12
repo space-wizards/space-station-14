@@ -1,0 +1,189 @@
+﻿<Document>
+  # Chemist
+
+  ## Objectives
+  As a [color=#a4885c]Chemist[/color], your role is to [color=#a4885c]produce[/color] the
+  [color=#a4885c]chemicals[/color] needed around the station.
+  \n\n
+  These can include but are not limited to :
+  - [color=#a4885c]Medicine[/color] for the rest of the [color=#a4885c]Medical staff[/color],
+  - Anything the [color=#a4885c]Botanists[/color] may require to help with weeds and accelerate plant growth,
+  - [color=#a4885c]Space Cleaner[/color], [color=#a4885c]Bleach[/color] or [color=#a4885c]Rat Poison[/color] for the
+  janitor,
+  - [color=#a4885c]Condiments[/color] for the [color=#a4885c]Chef[/color],
+  - [color=#a4885c]Weaponized chemicals[/color] for the [color=#a4885c]Security[/color] department or the
+  [color=#a4885c]Cargo's Salvage Specialists[/color] to fight off space carps,
+  - [color=#a4885c]Iron[/color] or [color=#a4885c]Tricordrazine[/color] for the Bartender's drinks,
+  - [color=#a4885c]Questionnably Legal Drugs[/color] (Space Drugs / Meth / LSD) for your bored colleagues,
+  - Anything a crew member could ask.
+  \n\n
+  It is your job as the [color=#a4885c]Chemist[/color] to [color=#a4885c]accept[/color] or [color=#a4885c]deny[/color]
+  requests and [color=#a4885c]prioritize[/color] which drugs to produce.
+
+
+  ## Tools
+  Your work will mostly revolve around these [color=#a4885c]devices[/color] :
+
+  <Box>
+    <GuideEntityEmbed Entity="chem_dispenser"/>
+  </Box>
+  \n
+  The [color=#a4885c]Chem Dispenser[/color] is the device you will interact with
+  [color=#a4885c]the most[/color] as a Chemist.
+  \n
+  Its main purpose is to [color=#a4885c]acquire[/color] and [color=#a4885c]mix[/color] chemicals.
+  \n\n
+  You have an [color=#a4885c]infinite supply[/color] of chemicals but require [color=#a4885c]power[/color] to use it.
+  \n\n
+  In order to use it, you will need to :
+  - [color=#a4885c]Click[/color] on it with a [color=#a4885c]beaker[/color] to put it in.
+  - [color=#a4885c]Open[/color] the chemical dispenser's [color=#a4885c]GUI[/color],
+  - Select the [color=#a4885c]amount (u)[/color] to add to the [color=#a4885c]beaker[/color],
+  - Select the [color=#a4885c]chemical[/color] you want to add to the [color=#a4885c]beaker[/color],
+  \n
+  (Note that the [color=#a4885c]chemicals[/color] will [color=#a4885c]react instantly[/color])
+  - Click [color=#a4885c]Eject[/color] to retrieve your [color=#a4885c]beaker[/color].
+  \n\n
+  When some specific [color=#a4885c]chemicals[/color] end up in the [color=#a4885c]same beaker[/color] as other
+  specific [color=#a4885c]chemicals[/color] in the right [color=#a4885c]quantities[/color], may that be through the
+  use of the chemical dispenser or manually transfering the two, they [color=#a4885c]mix[/color]
+  and form a [color=#a4885c]new, different chemical[/color].
+  \n\n
+  For instance, mixing :
+  - [color=#a4885c]1u[/color] of [color=#a4885c]oxygen[/color],
+  - [color=#a4885c]1u[/color] of [color=#a4885c]sugar[/color],
+  - [color=#a4885c]1u[/color] of [color=#a4885c]carbon[/color]
+  \n\n
+  Will give you [color=#a4885c]3u[/color] of [color=#a4885c]Inaprovaline[/color].
+  \n
+  Obviously, you can very well take [color=#a4885c]30u[/color] of each to produce [color=#a4885c]90u[/color] of
+  [color=#a4885c]Inaprovaline[/color] right away, the recipe will [color=#a4885c]still work[/color] as long as the
+  [color=#a4885c]proportions are respected[/color].
+
+  <Box>
+    <GuideEntityEmbed Entity="chem_master"/>
+  </Box>
+  \n
+  The [color=#a4885c]ChemMaster4000[/color] is what you use to produce [color=#a4885c]pills[/color] and
+  [color=#a4885c]bottles[/color] of the [color=#a4885c]chemical[/color] of your choosing.
+  \n\n
+  In order to use it, you will need to :
+  - [color=#a4885c]Load[/color] a [color=#a4885c]container[/color] into it, like a
+  [color=#a4885c]pill cannister[/color] or a [color=#a4885c]bottle[/color],
+  - [color=#a4885c]Load[/color] a [color=#a4885c]beaker[/color] of the [color=#a4885c]chemicals[/color] you wish to
+  turn into [color=#a4885c]pills[/color] or a [color=#a4885c]bottle[/color].
+  - Click the [color=#a4885c]Transfer[/color] button in the [color=#a4885c]center[/color] of the [color=#a4885c]UI[/color].
+  - In the [color=#a4885c]Input tab[/color], select the [color=#a4885c]quantity[/color] of each
+  [color=#a4885c]chemical[/color] you wish to transfer into the [color=#a4885c]buffer[/color].
+  \n
+  (Note: the numbers are in (u), 'all' transfers the entirety of the chemical)
+  - In the [color=#a4885c]Output tab[/color], make sure you see your [color=#a4885c]container[/color]
+  ([color=#a4885c]pill cannister[/color] or [color=#a4885c]bottle[/color]) at the [color=#a4885c]top[/color], and name
+  your [color=#a4885c]pill[/color] / [color=#a4885c]bottle[/color] with a [color=#a4885c]label[/color].
+  - Once that is done, change the [color=#a4885c]dose[/color] (in (u)) to put into your
+  [color=#a4885c]pill[/color]/[color=#a4885c]bottle[/color].
+  \n
+  (Note: the dose in (u) is for [color=#a4885c]each individual pill[/color]).
+  - Finally, press the [color=#a4885c]Eject[/color] button at the [color=#a4885c]top right[/color] of the
+  [color=#a4885c]UI[/color] to [color=#a4885c]retrieve[/color] your [color=#a4885c]bottle[/color] /
+  [color=#a4885c]pill cannister[/color].
+
+  <Box>
+    <GuideEntityEmbed Entity="KitchenReagentGrinder"/>
+  </Box>
+
+  The [color=#a4885c]Reagent Grinder[/color] enables objects to be [color=#a4885c]ground[/color] or
+  [color=#a4885c]liquified[/color].
+  A [color=#a4885c]Large Beaker[/color] must be loaded into the [color=#a4885c]Reagent Grinder[/color] in order
+  to use it.
+  \n\n
+  A chemist will need to grind [color=#a4885c]1 object of plasma[/color] in order to make some medication like
+  [color=#a4885c]Dexalin[/color].
+  \n
+  Only [color=#a4885c]one object[/color] can be ground at a time so if you insert a [color=#a4885c]stack of
+  objects[/color] it will [color=#a4885c]not work[/color].
+  \n\n
+  The [color=#a4885c]Reagent Grinder[/color] can also be used to [color=#a4885c]test the contents[/color] of
+  [color=#a4885c]pills[/color] :
+  \n
+  Insert the [color=#a4885c]pill[/color] and a [color=#a4885c]beaker[/color] and then click
+  [color=#a4885c]Grind[/color] in order to [color=#a4885c]return the contents[/color] of the
+  [color=#a4885c]pill[/color] to the [color=#a4885c]beaker[/color] in [color=#a4885c]liquid form[/color].
+
+
+  ## Getting Supplies
+  A Chemistry lab typically starts off with several supplies including :
+  - [color=#a4885c]Beaker Boxes[/color] (with [color=#a4885c]beakers[/color] and [color=#a4885c]large beakers[/color]),
+  - [color=#a4885c]Pill Cannister Boxes[/color] (with [color=#a4885c]pill cannisters[/color]),
+  - [color=#a4885c]Bottle Boxes[/color], (with [color=#a4885c]bottles[/color]),
+  - [color=#a4885c]Syringe Boxes[/color] (with, you guessed it, [color=#a4885c]syringes[/color]).
+
+  <Box>
+    <GuideEntityEmbed Entity="CrateChemistrySupplies"/>
+  </Box>
+  On some maps, there will also be [color=#a4885c]plasma[/color] available.
+  \n
+  To acquire [color=#a4885c]more supplies[/color], you can always try going to these different
+  [color=#a4885c]departments[/color] :
+  - [color=#a4885c]Cargo[/color], to request a [color=#a4885c]Chemistry Supplies Crate[/color] (it will contain several
+  boxes of supplies therein),
+  - [color=#a4885c]Salvage[/color], to request [color=#a4885c]Plasma[/color] from their journeys in space,
+  - [color=#a4885c]Science[/color], to request [color=#a4885c]bottles[/color], [color=#a4885c]beakers[/color],
+  [color=#a4885c]pill cannisters[/color] or [color=#a4885c]droppers[/color] to be produced,
+  - [color=#a4885c]Science[/color], to request [color=#a4885c]machines[/color] to be [color=#a4885c]made[/color],
+  [color=#a4885c]replaced[/color] or even [color=#a4885c]upgraded[/color],
+  - [color=#a4885c]Science[/color], to request [color=#a4885c]grenade components[/color] so that a
+  [color=#a4885c]heal grenade[/color] can be made,
+  - [color=#a4885c]Botany[/color], to request [color=#a4885c]medical plants[/color] or
+  [color=#a4885c]aloe cream[/color],
+  - [color=#a4885c]Bartender[/color], to Request a [color=#a4885c]100u Shaker[/color] in case of
+  [color=#a4885c]utter emergency[/color].
+
+
+  ## Basic Recipes
+  Here is a short, [color=#a4885c]non exhaustive list[/color] of the chemicals that you may want to [color=#a4885c]produce[/color] :
+  - Name \n[color=green]What it cures[/color] \nNotes, \n[color=orange]Recomended Dose[/color] \n[color=cyan]Recipe (to fill up a beaker)
+  - Bicardine \n[color=green]Brute[/color] \nN/A \n[color=orange]25u[/color] \n[color=cyan]15 oxygen, 15 sugar, 60 carbon[/color]
+  - Dermalin \n[color=green]Burn/Shock[/color] \nN/A \n[color=orange]25u[/color] \n[color=cyan]15 carbon, 15 silicone, 30 oxygen, 30 phosphorous[/color]
+  - Spaceacillin \n[color=green]Diseases[/color] \nWill cause cancer, make Phalanx \n[color=orange]10u[/color] \n[color=cyan]30 oxygen, 30 sugar, 15 carbon, 15 potassium[/color]
+  - Dylovene \n[color=green]Poison[/color] \nN/A \n[color=orange]25u[/color] \n[color=cyan]30 potassium, 30 silicone, 30 nitrogen[/color]
+  - Dexalin Plus \n[color=green]Airloss[/color] \nPlasma isn't used up \n[color=orange]25u[/color] \n[color=cyan]5 plasma, 20 oxygen, 30 iron, 30 carbon[/color]
+  - Tricordazine \n[color=green]Low amount of most damage types[/color] \nMix small amounts in normal pills \n[color=orange]5u[/color] \n[color=cyan]15 potassium, 15 silicone, 15 nitrogen, 15 oxygen, 15 sugar, 15 carbon[/color]
+  - Inaprovaline \n[color=green]Airloss above 100 units[/color] \nKeep in Syringe/Bottles \n[color=orange]N/A[/color] \n[color=cyan]30 oxygen 30 sugar 30 carbon[/color]
+  - Arithrazine	\n[color=green]Radation[/color] \nCauses brute damage \n[color=orange]25u[/color] \n[color=cyan]10 potassium 10 silicone 10 nitrogen 30 radium 30 hydrogen[/color]
+  - Phalanximine \n[color=green]Cellular[/color] \nMakes you throw up and deals radiation damage \n[color=orange]N/A[/color] \n[color=cyan]30 ethanol 10 phosphorus 10 chlorine 10 radium 5 silicon 5 potassium 5 nitrogen 15 radium[/color]
+  - Space Drugs \n[color=green]Boredom[/color] \nMake this last or beware \n[color=orange]50u[/color] \n[color=cyan]30 lithium 30 mercury 30 sugar[/color]
+
+
+  ## Final Tips
+  - Since the [color=#a4885c]4 most common damage types[/color] are [color=#a4885c]Brute[/color],
+  [color=#a4885c]Burn[/color], [color=#a4885c]Airloss[/color] and [color=#a4885c]Toxin[/color], you will need to
+  produce medicine for all of them as well as for [color=#a4885c]blood loss[/color].
+  - It is [color=#a4885c]strongly recommended[/color] to specify the (u) in pills in the [color=#a4885c]label[/color] in
+  order to avoid [color=#a4885c]overdoses[/color].
+  - Some chemicals like [color=#a4885c]Dexalin Plus[/color] and [color=#a4885c]Epinephrine[/color] can be served as
+  either a [color=#a4885c]pill[/color] or [color=#a4885c]liquid[/color] in a beaker / bottle.
+  \n
+  As they are used to treat [color=#a4885c]critical conditions[/color] (often in people with a
+  [color=#a4885c]suit[/color] or [color=#a4885c]breathe[/color] mask on), consider delivering the liquid in a
+  [color=#a4885c]bottle[/color] and [color=#a4885c]injecting it into the patient[/color].
+  \n\n
+  As [color=#a4885c]Dexalin Plus[/color] is not only for critical situations though, having it both in
+  [color=#a4885c]bottles[/color] and as [color=#a4885c]pills[/color] can be handy.
+  \n
+  In contrast [color=#a4885c]non-critical on-demand chemicals[/color] like [color=#a4885c]Spaceacillin[/color] can be
+  offered as pills as crew have a tendency to either smash or steal the beakers.
+  \n\n
+  Also, Medical staff may get [color=#a4885c]demand for bruise packs[/color] by crewmembers that go into space as they
+  can apply it in space [color=#a4885c]without taking off their helmet[/color].
+  \n
+  As a chemist, [color=#a4885c]don't get insulted by this[/color]!
+  -For a more in-depth look at the Chemist's job and a [color=#a4885c]complete list[/color] of chemicals and their
+  [color=#a4885c]recipes[/color], visit the [color=#a4885c]official Space Station 14 Wiki[/color].
+
+
+  ## Special Thanks
+  This guide was written using [color=#a4885c]Xenon Delacour's (Yggdrasil#3243)[/color] spreadsheet for the recipes,
+  big thanks to him for his help !
+
+</Document>

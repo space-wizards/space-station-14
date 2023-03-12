@@ -1,0 +1,21 @@
+﻿<Document>
+  # Medical
+
+  [color=#a4885c]The Medical department[/color] is responsible for keeping the rest of the crew alive and healthy.
+  \n\n
+  Their jobs are the [color=#a4885c]Medical Doctors[/color] and the [color=#a4885c]Chemists[/color] as well as their
+  apprentices, the [color=#a4885c]Medical Interns[/color].
+
+  <Box>
+    <GuideEntityEmbed Entity="SignDirectionalMed"/>
+    <GuideEntityEmbed Entity="BannerMedical"/>
+    <GuideEntityEmbed Entity="SignSurgery"/>
+    <GuideEntityEmbed Entity="AirlockMedicalLocked"/>
+  </Box>
+
+  \n
+  They take care of the [color=#a4885c]production[/color] and [color=#a4885c]distribution[/color] of
+  [color=#a4885c]medicine[/color] and [color=#a4885c]chemicals[/color], as well as the handling of
+  [color=#a4885c]wounded[/color] (or worse) patients.
+
+</Document>

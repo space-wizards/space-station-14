@@ -1,0 +1,11 @@
+﻿- type: guideEntry
+  id: Medical
+  name: guide-entry-medical
+  text: "/Server Info/Guidebook/Medical.xml"
+  children:
+    - Chemist
+
+- type: guideEntry
+  id: Chemist
+  name: guide-entry-chemist
+  text: "/Server Info/Guidebook/Chemist.xml"
