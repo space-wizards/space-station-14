@@ -1,3 +1,4 @@
+using Content.Shared.CCVar;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Humanoid.Markings;
@@ -8,6 +9,7 @@ using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Entry
@@ -48,6 +50,9 @@ namespace Content.Shared.Entry
             // fake lag rand leads to messages arriving out of order. Sadly, networking is not robust enough, so for now
             // just leaving this disabled.
             // configMan.OverrideDefault(CVars.NetFakeLagRand, 0.01f);
+
+            if (IoCManager.Resolve<INetManager>().IsServer)
+                configMan.OverrideDefault(CCVars.GameMap, "Dev");
 #endif
         }
 
