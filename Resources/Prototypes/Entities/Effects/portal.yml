@@ -49,3 +49,30 @@
     color: SkyBlue
     radius: 3
     energy: 3
+
+- type: entity
+  id: PortalGreen
+  name: bluespace portal
+  description: A mysterious green portal!
+  components:
+  - type: InteractionOutline
+  - type: Clickable
+  - type: TimedDespawn
+    lifetime: 5
+  - type: Physics
+    bodyType: Static
+  - type: Sprite
+    sprite: /Textures/Effects/portal.rsi
+    layers:
+    - state: portal-green
+  - type: Fixtures
+    fixtures:
+    - id: portalFixture
+      shape:
+        !type:PhysShapeAabb
+        bounds: "-0.25,-0.48,0.25,0.48"
+      mask:
+      - FullTileMask
+      layer:
+      - WallLayer
+      hard: false

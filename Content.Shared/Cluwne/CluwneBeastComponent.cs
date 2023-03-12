@@ -1,6 +1,7 @@
 using Robust.Shared.Audio;
 using Content.Shared.Chat.Prototypes;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Cluwne;
@@ -22,7 +23,7 @@ public sealed class CluwneBeastComponent : Component
     public float GiggleRandomChance = 0.1f;
 
     [ViewVariables(VVAccess.ReadWrite)]
-    public float Cluwinification = 0.2f;
+    public float Cluwinification = 0.1f;
 
     [DataField("emoteId", customTypeSerializer: typeof(PrototypeIdSerializer<EmoteSoundsPrototype>))]
     public string? EmoteSoundsId = "CluwneBeast";
@@ -32,6 +33,9 @@ public sealed class CluwneBeastComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public float ParalyzeTime = 2f;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("blueSpaceId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string BlueSpaceId = "PortalGreen";
 
     /// <summary>
     /// Sound specifiers for honk and knock.
