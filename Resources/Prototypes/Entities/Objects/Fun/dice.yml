@@ -35,6 +35,9 @@
   components:
   - type: ChaosDice
   - type: DamageNearbyArtifact
+    damage:
+      types:
+        Blunt: 10
 
 - type: entity
   parent: BaseDice
