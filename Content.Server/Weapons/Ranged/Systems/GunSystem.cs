@@ -201,15 +201,13 @@ public sealed partial class GunSystem : SharedGunSystem
                         var ev = new HitScanReflectAttempt(dir, false);
                         RaiseLocalEvent(hit, ref ev);
 
-                        if (ev.Reflected)
-                        {
-                            from = Transform(hit).MapPosition;
-                            fromEffect = Transform(hit).Coordinates;
-                            dir = ev.Direction;
-                            lastUser = hit;
-                        } else {
+                        if (!ev.Reflected)
                             break;
-                        }
+
+                        from = Transform(hit).MapPosition;
+                        fromEffect = Transform(hit).Coordinates;
+                        dir = ev.Direction;
+                        lastUser = hit;
                     }
 
                     if (lastHit != null)
