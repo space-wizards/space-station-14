@@ -58,7 +58,7 @@ namespace Content.Server.Disease
             // Handling stuff from other systems
             SubscribeLocalEvent<DiseaseCarrierComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
             // Private events stuff
-            SubscribeLocalEvent<DiseaseVaccineComponent, DoAfterEvent>(OnDoAfter);
+            SubscribeLocalEvent<DiseaseVaccineComponent, VaccineDoAfterEvent>(OnDoAfter);
         }
 
         private Queue<EntityUid> AddQueue = new();
@@ -276,8 +276,10 @@ namespace Content.Server.Disease
         /// </summary>
         private void OnAfterInteract(EntityUid uid, DiseaseVaccineComponent vaxx, AfterInteractEvent args)
         {
-            if (args.Target == null || !args.CanReach)
+            if (args.Target == null || !args.CanReach || args.Handled)
                 return;
+
+            args.Handled = true;
 
             if (vaxx.Used)
             {
@@ -285,11 +287,10 @@ namespace Content.Server.Disease
                 return;
             }
 
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, vaxx.InjectDelay, target: args.Target, used:uid)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(args.User, vaxx.InjectDelay, new VaccineDoAfterEvent(), uid, target: args.Target, used: uid)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
-                BreakOnStun = true,
                 NeedHand = true
             });
         }
@@ -477,6 +478,10 @@ namespace Content.Server.Disease
             Vaccinate(carrier, component.Disease);
             EntityManager.DeleteEntity(uid);
             args.Handled = true;
+        }
+
+        private sealed class VaccineDoAfterEvent : SimpleDoAfterEvent
+        {
         }
     }
 

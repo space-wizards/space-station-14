@@ -43,7 +43,7 @@ namespace Content.Server.Kitchen.EntitySystems
             SubscribeLocalEvent<KitchenSpikeComponent, DragDropTargetEvent>(OnDragDrop);
 
             //DoAfter
-            SubscribeLocalEvent<KitchenSpikeComponent, DoAfterEvent>(OnDoAfter);
+            SubscribeLocalEvent<KitchenSpikeComponent, SpikeDoAfterEvent>(OnDoAfter);
 
             SubscribeLocalEvent<KitchenSpikeComponent, SuicideEvent>(OnSuicide);
 
@@ -251,18 +251,21 @@ namespace Content.Server.Kitchen.EntitySystems
             butcherable.BeingButchered = true;
             component.InUse = true;
 
-            var doAfterArgs = new DoAfterEventArgs(userUid, component.SpikeDelay + butcherable.ButcherDelay, target:victimUid, used:uid)
+            var doAfterArgs = new DoAfterArgs(userUid, component.SpikeDelay + butcherable.ButcherDelay, new SpikeDoAfterEvent(), uid, target: victimUid, used: uid)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 BreakOnDamage = true,
-                BreakOnStun = true,
                 NeedHand = true
             };
 
-            _doAfter.DoAfter(doAfterArgs);
+            _doAfter.TryStartDoAfter(doAfterArgs);
 
             return true;
+        }
+
+        private sealed class SpikeDoAfterEvent : SimpleDoAfterEvent
+        {
         }
     }
 }

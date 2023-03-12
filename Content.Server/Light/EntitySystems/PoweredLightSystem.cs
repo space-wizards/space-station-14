@@ -63,8 +63,7 @@ namespace Content.Server.Light.EntitySystems
 
             SubscribeLocalEvent<PoweredLightComponent, PowerChangedEvent>(OnPowerChanged);
 
-            SubscribeLocalEvent<PoweredLightComponent, DoAfterEvent>(OnDoAfter);
-
+            SubscribeLocalEvent<PoweredLightComponent, PoweredLightDoAfterEvent>(OnDoAfter);
             SubscribeLocalEvent<PoweredLightComponent, EmpPulseEvent>(OnEmpPulse);
         }
 
@@ -140,11 +139,10 @@ namespace Content.Server.Light.EntitySystems
             }
 
             // removing a working bulb, so require a delay
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(userUid, light.EjectBulbDelay, target:uid)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(userUid, light.EjectBulbDelay, new PoweredLightDoAfterEvent(), uid, target: uid)
             {
                 BreakOnUserMove = true,
                 BreakOnDamage = true,
-                BreakOnStun = true
             });
 
             args.Handled = true;
@@ -428,7 +426,11 @@ namespace Content.Server.Light.EntitySystems
         private void OnEmpPulse(EntityUid uid, PoweredLightComponent component, ref EmpPulseEvent args)
         {
             args.Affected = true;
-            TryDestroyBulb(uid, component);  
+            TryDestroyBulb(uid, component);
+        }
+
+        private sealed class PoweredLightDoAfterEvent : SimpleDoAfterEvent
+        {
         }
     }
 }

@@ -32,7 +32,7 @@ public sealed class EscapeInventorySystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<CanEscapeInventoryComponent, MoveInputEvent>(OnRelayMovement);
-        SubscribeLocalEvent<CanEscapeInventoryComponent, DoAfterEvent<EscapeInventoryEvent>>(OnEscape);
+        SubscribeLocalEvent<CanEscapeInventoryComponent, EscapeInventoryEvent>(OnEscape);
         SubscribeLocalEvent<CanEscapeInventoryComponent, DroppedEvent>(OnDropped);
     }
 
@@ -69,50 +69,41 @@ public sealed class EscapeInventorySystem : EntitySystem
         if (component.IsEscaping)
             return;
 
-        component.CancelToken = new CancellationTokenSource();
-        component.IsEscaping = true;
-        var escapeEvent = new EscapeInventoryEvent();
-        var doAfterEventArgs = new DoAfterEventArgs(user, component.BaseResistTime * multiplier, cancelToken: component.CancelToken.Token, target:container)
+        var doAfterEventArgs = new DoAfterArgs(user, component.BaseResistTime * multiplier, new EscapeInventoryEvent(), user, target: container)
         {
             BreakOnTargetMove = false,
             BreakOnUserMove = true,
             BreakOnDamage = true,
-            BreakOnStun = true,
             NeedHand = false
         };
 
+        if (!_doAfterSystem.TryStartDoAfter(doAfterEventArgs, out component.DoAfter))
+            return;
+
+        Dirty(component);
         _popupSystem.PopupEntity(Loc.GetString("escape-inventory-component-start-resisting"), user, user);
         _popupSystem.PopupEntity(Loc.GetString("escape-inventory-component-start-resisting-target"), container, container);
-        _doAfterSystem.DoAfter(doAfterEventArgs, escapeEvent);
     }
 
-    private void OnEscape(EntityUid uid, CanEscapeInventoryComponent component, DoAfterEvent<EscapeInventoryEvent> args)
+    private void OnEscape(EntityUid uid, CanEscapeInventoryComponent component, EscapeInventoryEvent args)
     {
-        if (args.Cancelled)
-        {
-            component.CancelToken = null;
-            component.IsEscaping = false;
-            return;
-        }
+        component.DoAfter = null;
+        Dirty(component);
 
-        if (args.Handled)
+        if (args.Handled || args.Cancelled)
             return;
 
         Transform(uid).AttachParentToContainerOrGrid(EntityManager);
-
-        component.CancelToken = null;
-        component.IsEscaping = false;
         args.Handled = true;
     }
 
     private void OnDropped(EntityUid uid, CanEscapeInventoryComponent component, DroppedEvent args)
     {
-        component.CancelToken?.Cancel();
-        component.CancelToken = null;
+        if (component.DoAfter != null)
+            _doAfterSystem.Cancel(component.DoAfter);
     }
 
-    private sealed class EscapeInventoryEvent : EntityEventArgs
+    private sealed class EscapeInventoryEvent : SimpleDoAfterEvent
     {
-
     }
 }

@@ -40,7 +40,7 @@ namespace Content.Server.Tools
             SubscribeLocalEvent<WelderComponent, ActivateInWorldEvent>(OnWelderActivate);
             SubscribeLocalEvent<WelderComponent, AfterInteractEvent>(OnWelderAfterInteract);
             SubscribeLocalEvent<WelderComponent, ToolUseAttemptEvent>(OnWelderToolUseAttempt);
-            SubscribeLocalEvent<WelderComponent, ToolUseFinishAttemptEvent>(OnWelderToolUseFinishAttempt);
+            SubscribeLocalEvent<WelderComponent, ToolDoAfterEvent>(OnWelderDoAfter);
             SubscribeLocalEvent<WelderComponent, ComponentShutdown>(OnWelderShutdown);
             SubscribeLocalEvent<WelderComponent, ComponentGetState>(OnWelderGetState);
             SubscribeLocalEvent<WelderComponent, MeleeHitEvent>(OnMeleeHit);
@@ -284,34 +284,15 @@ namespace Content.Server.Tools
             }
         }
 
-        private void OnWelderToolUseFinishAttempt(EntityUid uid, WelderComponent welder, ToolUseFinishAttemptEvent args)
+        private void OnWelderDoAfter(EntityUid uid, WelderComponent welder, ToolDoAfterEvent args)
         {
             if (args.Cancelled)
                 return;
 
-            if (!welder.Lit)
-            {
-                _popupSystem.PopupEntity(Loc.GetString("welder-component-welder-not-lit-message"), uid, args.User);
-                args.Cancel();
-                return;
-            }
-
-            var (fuel, _) = GetWelderFuelAndCapacity(uid, welder);
-
-            var neededFuel = FixedPoint2.New(args.Fuel);
-
-            if (neededFuel > fuel)
-            {
-                args.Cancel();
-            }
-
             if (!_solutionContainerSystem.TryGetSolution(uid, welder.FuelSolution, out var solution))
-            {
-                args.Cancel();
                 return;
-            }
 
-            solution.RemoveReagent(welder.FuelReagent, neededFuel);
+            solution.RemoveReagent(welder.FuelReagent, FixedPoint2.New(args.Fuel));
             _entityManager.Dirty(welder);
         }
 

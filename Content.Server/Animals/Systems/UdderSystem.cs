@@ -26,7 +26,7 @@ namespace Content.Server.Animals.Systems
             base.Initialize();
 
             SubscribeLocalEvent<UdderComponent, GetVerbsEvent<AlternativeVerb>>(AddMilkVerb);
-            SubscribeLocalEvent<UdderComponent, DoAfterEvent>(OnDoAfter);
+            SubscribeLocalEvent<UdderComponent, MilkingDoAfterEvent>(OnDoAfter);
         }
         public override void Update(float frameTime)
         {
@@ -64,38 +64,21 @@ namespace Content.Server.Animals.Systems
             if (!Resolve(uid, ref udder))
                 return;
 
-            if (udder.BeingMilked)
-            {
-                _popupSystem.PopupEntity(Loc.GetString("udder-system-already-milking"), uid, userUid);
-                return;
-            }
-
-            udder.BeingMilked = true;
-
-            var doargs = new DoAfterEventArgs(userUid, 5, target:uid, used:containerUid)
+            var doargs = new DoAfterArgs(userUid, 5, new MilkingDoAfterEvent(), uid, uid, used: containerUid)
             {
                 BreakOnUserMove = true,
                 BreakOnDamage = true,
-                BreakOnStun = true,
                 BreakOnTargetMove = true,
-                MovementThreshold = 1.0f
+                MovementThreshold = 1.0f,
             };
 
-            _doAfterSystem.DoAfter(doargs);
+            _doAfterSystem.TryStartDoAfter(doargs);
         }
 
-        private void OnDoAfter(EntityUid uid, UdderComponent component, DoAfterEvent args)
+        private void OnDoAfter(EntityUid uid, UdderComponent component, MilkingDoAfterEvent args)
         {
-            if (args.Cancelled)
-            {
-                component.BeingMilked = false;
+            if (args.Cancelled || args.Handled || args.Args.Used == null)
                 return;
-            }
-
-            if (args.Handled || args.Args.Used == null)
-                return;
-
-            component.BeingMilked = false;
 
             if (!_solutionContainerSystem.TryGetSolution(uid, component.TargetSolutionName, out var solution))
                 return;
@@ -103,6 +86,7 @@ namespace Content.Server.Animals.Systems
             if (!_solutionContainerSystem.TryGetRefillableSolution(args.Args.Used.Value, out var targetSolution))
                 return;
 
+            args.Handled = true;
             var quantity = solution.Volume;
             if(quantity == 0)
             {
@@ -118,8 +102,6 @@ namespace Content.Server.Animals.Systems
 
             _popupSystem.PopupEntity(Loc.GetString("udder-system-success", ("amount", quantity), ("target", Identity.Entity(args.Args.Used.Value, EntityManager))), uid,
                 args.Args.User, PopupType.Medium);
-
-            args.Handled = true;
         }
 
         private void AddMilkVerb(EntityUid uid, UdderComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -139,6 +121,10 @@ namespace Content.Server.Animals.Systems
                 Priority = 2
             };
             args.Verbs.Add(verb);
+        }
+
+        private sealed class MilkingDoAfterEvent : SimpleDoAfterEvent
+        {
         }
     }
 }

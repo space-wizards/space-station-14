@@ -35,7 +35,7 @@ namespace Content.Server.Guardian
             SubscribeLocalEvent<GuardianCreatorComponent, UseInHandEvent>(OnCreatorUse);
             SubscribeLocalEvent<GuardianCreatorComponent, AfterInteractEvent>(OnCreatorInteract);
             SubscribeLocalEvent<GuardianCreatorComponent, ExaminedEvent>(OnCreatorExamine);
-            SubscribeLocalEvent<GuardianCreatorComponent, DoAfterEvent>(OnDoAfter);
+            SubscribeLocalEvent<GuardianCreatorComponent, GuardianCreatorDoAfterEvent>(OnDoAfter);
 
             SubscribeLocalEvent<GuardianComponent, MoveEvent>(OnGuardianMove);
             SubscribeLocalEvent<GuardianComponent, DamageChangedEvent>(OnGuardianDamaged);
@@ -161,12 +161,7 @@ namespace Content.Server.Guardian
                 return;
             }
 
-            if (component.Injecting)
-                return;
-
-            component.Injecting = true;
-
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, component.InjectionDelay, target: target, used: injector)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(user, component.InjectionDelay, new GuardianCreatorDoAfterEvent(), injector, target: target, used: injector)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true
@@ -179,10 +174,7 @@ namespace Content.Server.Guardian
                 return;
 
             if (args.Cancelled || component.Deleted || component.Used || !_handsSystem.IsHolding(args.Args.User, uid, out _) || HasComp<GuardianHostComponent>(args.Args.Target))
-            {
-                component.Injecting = false;
                 return;
-            }
 
             var hostXform = Transform(args.Args.Target.Value);
             var host = EnsureComp<GuardianHostComponent>(args.Args.Target.Value);
@@ -340,6 +332,10 @@ namespace Content.Server.Guardian
             DebugTools.Assert(hostComponent.GuardianContainer.Contains(guardian));
             _popupSystem.PopupEntity(Loc.GetString("guardian-entity-recall"), host);
             guardianComponent.GuardianLoose = false;
+        }
+
+        private sealed class GuardianCreatorDoAfterEvent : SimpleDoAfterEvent
+        {
         }
     }
 }

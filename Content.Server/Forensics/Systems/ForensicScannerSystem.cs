@@ -39,7 +39,7 @@ namespace Content.Server.Forensics
             SubscribeLocalEvent<ForensicScannerComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
             SubscribeLocalEvent<ForensicScannerComponent, ForensicScannerPrintMessage>(OnPrint);
             SubscribeLocalEvent<ForensicScannerComponent, ForensicScannerClearMessage>(OnClear);
-            SubscribeLocalEvent<ForensicScannerComponent, DoAfterEvent>(OnDoAfter);
+            SubscribeLocalEvent<ForensicScannerComponent, ForensicScannerDoAfterEvent>(OnDoAfter);
         }
 
         private void UpdateUserInterface(EntityUid uid, ForensicScannerComponent component)
@@ -88,11 +88,10 @@ namespace Content.Server.Forensics
         /// </remarks>
         private void StartScan(EntityUid uid, ForensicScannerComponent component, EntityUid user, EntityUid target)
         {
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, component.ScanDelay, target: target, used: uid)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(user, component.ScanDelay, new ForensicScannerDoAfterEvent(), uid, target: target, used: uid)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
-                BreakOnStun = true,
                 NeedHand = true
             });
         }
@@ -233,6 +232,10 @@ namespace Content.Server.Forensics
             component.LastScannedName = string.Empty;
 
             UpdateUserInterface(uid, component);
+        }
+
+        private sealed class ForensicScannerDoAfterEvent : SimpleDoAfterEvent
+        {
         }
     }
 }

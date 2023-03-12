@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.DoAfter;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -70,8 +71,6 @@ public sealed class ImplanterComponent : Component
     public ItemSlot ImplanterSlot = new();
 
     public bool UiUpdateNeeded;
-
-    public CancellationTokenSource? CancelToken;
 }
 
 [Serializable, NetSerializable]

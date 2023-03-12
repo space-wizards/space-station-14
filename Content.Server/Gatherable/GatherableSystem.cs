@@ -28,7 +28,7 @@ public sealed class GatherableSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<GatherableComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<GatherableComponent, DoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<GatherableComponent, GatherableDoAfterEvent>(OnDoAfter);
     }
 
     private void OnInteractUsing(EntityUid uid, GatherableComponent component, InteractUsingEvent args)
@@ -44,33 +44,29 @@ public sealed class GatherableSystem : EntitySystem
         var damageTime = (damageRequired / tool.Damage.Total).Float();
         damageTime = Math.Max(1f, damageTime);
 
-        var doAfter = new DoAfterEventArgs(args.User, damageTime, target: uid, used: args.Used)
+        var doAfter = new DoAfterArgs(args.User, damageTime, new GatherableDoAfterEvent(), uid, target: uid, used: args.Used)
         {
             BreakOnDamage = true,
-            BreakOnStun = true,
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
             MovementThreshold = 0.25f,
         };
 
-        _doAfterSystem.DoAfter(doAfter);
+        _doAfterSystem.TryStartDoAfter(doAfter);
     }
 
-    private void OnDoAfter(EntityUid uid, GatherableComponent component, DoAfterEvent args)
+    private void OnDoAfter(EntityUid uid, GatherableComponent component, GatherableDoAfterEvent args)
     {
         if(!TryComp<GatheringToolComponent>(args.Args.Used, out var tool) || args.Args.Target == null)
             return;
 
+        tool.GatheringEntities.Remove(args.Args.Target.Value);
         if (args.Handled || args.Cancelled)
-        {
-            tool.GatheringEntities.Remove(args.Args.Target.Value);
             return;
-        }
 
         // Complete the gathering process
         _destructible.DestroyEntity(args.Args.Target.Value);
         _audio.PlayPvs(tool.GatheringSound, args.Args.Target.Value);
-        tool.GatheringEntities.Remove(args.Args.Target.Value);
 
         // Spawn the loot!
         if (component.MappedLoot == null)
@@ -91,6 +87,10 @@ public sealed class GatherableSystem : EntitySystem
             Spawn(spawnLoot[0], spawnPos);
         }
         args.Handled = true;
+    }
+
+    private sealed class GatherableDoAfterEvent : SimpleDoAfterEvent
+    {
     }
 }
 

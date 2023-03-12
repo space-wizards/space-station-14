@@ -57,7 +57,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         SubscribeLocalEvent<ClimbableComponent, GetVerbsEvent<AlternativeVerb>>(AddClimbableVerb);
         SubscribeLocalEvent<ClimbableComponent, DragDropTargetEvent>(OnClimbableDragDrop);
 
-        SubscribeLocalEvent<ClimbingComponent, DoAfterEvent<ClimbExtraEvent>>(OnDoAfter);
+        SubscribeLocalEvent<ClimbingComponent, ClimbDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<ClimbingComponent, EndCollideEvent>(OnClimbEndCollide);
         SubscribeLocalEvent<ClimbingComponent, BuckleChangeEvent>(OnBuckleChange);
         SubscribeLocalEvent<ClimbingComponent, ComponentGetState>(OnClimbingGetState);
@@ -114,22 +114,17 @@ public sealed class ClimbSystem : SharedClimbSystem
         if (_bonkSystem.TryBonk(entityToMove, climbable))
             return;
 
-        var ev = new ClimbExtraEvent();
-
-        var args = new DoAfterEventArgs(user, component.ClimbDelay, target: climbable, used: entityToMove)
+        var args = new DoAfterArgs(user, component.ClimbDelay, new ClimbDoAfterEvent(), climbable, target: climbable, used: entityToMove)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
-            BreakOnDamage = true,
-            BreakOnStun = true,
-            RaiseOnUser = user == entityToMove,
-            RaiseOnTarget = user != entityToMove
+            BreakOnDamage = true
         };
 
-        _doAfterSystem.DoAfter(args, ev);
+        _doAfterSystem.TryStartDoAfter(args);
     }
 
-    private void OnDoAfter(EntityUid uid, ClimbingComponent component, DoAfterEvent<ClimbExtraEvent> args)
+    private void OnDoAfter(EntityUid uid, ClimbingComponent component, ClimbDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null)
             return;
@@ -436,9 +431,8 @@ public sealed class ClimbSystem : SharedClimbSystem
         _fixtureRemoveQueue.Clear();
     }
 
-    private sealed class ClimbExtraEvent : EntityEventArgs
+    private sealed class ClimbDoAfterEvent : SimpleDoAfterEvent
     {
-        //Honestly this is only here because otherwise this activates on every single doafter on a human
     }
 }
 

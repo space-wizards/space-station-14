@@ -41,7 +41,7 @@ public sealed class MechGrabberSystem : EntitySystem
         SubscribeLocalEvent<MechGrabberComponent, AttemptRemoveMechEquipmentEvent>(OnAttemptRemove);
 
         SubscribeLocalEvent<MechGrabberComponent, InteractNoHandEvent>(OnInteract);
-        SubscribeLocalEvent<MechGrabberComponent, DoAfterEvent>(OnMechGrab);
+        SubscribeLocalEvent<MechGrabberComponent, GrabberDoAfterEvent>(OnMechGrab);
     }
 
     private void OnGrabberMessage(EntityUid uid, MechGrabberComponent component, MechEquipmentUiMessageRelayEvent args)
@@ -150,7 +150,7 @@ public sealed class MechGrabberSystem : EntitySystem
 
         args.Handled = true;
         component.AudioStream = _audio.PlayPvs(component.GrabSound, uid);
-        _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.GrabDelay, target:target, used:uid)
+        _doAfter.TryStartDoAfter(new DoAfterArgs(args.User, component.GrabDelay, new GrabberDoAfterEvent(), uid, target: target, used: uid)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true
@@ -177,5 +177,9 @@ public sealed class MechGrabberSystem : EntitySystem
         _mech.UpdateUserInterface(equipmentComponent.EquipmentOwner.Value);
 
         args.Handled = true;
+    }
+
+    private sealed class GrabberDoAfterEvent : SimpleDoAfterEvent
+    {
     }
 }

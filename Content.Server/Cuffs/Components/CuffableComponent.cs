@@ -32,8 +32,6 @@ namespace Content.Server.Cuffs.Components
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
-        private bool _uncuffing;
-
         protected override void Initialize()
         {
             base.Initialize();
@@ -160,8 +158,6 @@ namespace Content.Server.Cuffs.Components
         /// <param name="cuffsToRemove">Optional param for the handcuff entity to remove from the cuffed entity. If null, uses the most recently added handcuff entity.</param>
         public async void TryUncuff(EntityUid user, EntityUid? cuffsToRemove = null)
         {
-            if (_uncuffing) return;
-
             var isOwner = user == Owner;
 
             if (cuffsToRemove == null)
@@ -213,21 +209,18 @@ namespace Content.Server.Cuffs.Components
             }
 
             var uncuffTime = isOwner ? cuff.BreakoutTime : cuff.UncuffTime;
-            var doAfterEventArgs = new DoAfterEventArgs(user, uncuffTime, target: Owner)
+            var doAfterEventArgs = new DoAfterArgs(user, uncuffTime, new AwaitedDoAfterEvent(), null, target: Owner)
             {
                 BreakOnUserMove = true,
                 BreakOnTargetMove = true,
                 BreakOnDamage = true,
-                BreakOnStun = true,
                 NeedHand = true
             };
 
             var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
-            _uncuffing = true;
 
             var result = await doAfterSystem.WaitDoAfter(doAfterEventArgs);
 
-            _uncuffing = false;
 
             if (result != DoAfterStatus.Cancelled)
             {

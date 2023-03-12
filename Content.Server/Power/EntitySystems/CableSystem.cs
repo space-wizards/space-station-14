@@ -3,6 +3,7 @@ using Content.Server.Electrocution;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
@@ -26,7 +27,7 @@ public sealed partial class CableSystem : EntitySystem
         InitializeCablePlacer();
 
         SubscribeLocalEvent<CableComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<CableComponent, CuttingFinishedEvent>(OnCableCut);
+        SubscribeLocalEvent<CableComponent, CableCuttingFinishedEvent>(OnCableCut);
         // Shouldn't need re-anchoring.
         SubscribeLocalEvent<CableComponent, AnchorStateChangedEvent>(OnAnchorChanged);
     }
@@ -36,12 +37,14 @@ public sealed partial class CableSystem : EntitySystem
         if (args.Handled)
             return;
 
-        var toolEvData = new ToolEventData(new CuttingFinishedEvent(args.User), targetEntity: uid);
-        args.Handled = _toolSystem.UseTool(args.Used, args.User, uid, cable.CuttingDelay, new[] { cable.CuttingQuality }, toolEvData);
+        args.Handled = _toolSystem.UseTool(args.Used, args.User, uid, cable.CuttingDelay, cable.CuttingQuality, new CableCuttingFinishedEvent());
     }
 
-    private void OnCableCut(EntityUid uid, CableComponent cable, CuttingFinishedEvent args)
+    private void OnCableCut(EntityUid uid, CableComponent cable, DoAfterEvent args)
     {
+        if (args.Cancelled)
+            return;
+
         if (_electrocutionSystem.TryDoElectrifiedAct(uid, args.User))
             return;
 
@@ -65,15 +68,5 @@ public sealed partial class CableSystem : EntitySystem
         // etc). In that case: behave as if the cable had been cut.
         Spawn(cable.CableDroppedOnCutPrototype, Transform(uid).Coordinates);
         QueueDel(uid);
-    }
-}
-
-public sealed class CuttingFinishedEvent : EntityEventArgs
-{
-    public EntityUid User;
-
-    public CuttingFinishedEvent(EntityUid user)
-    {
-        User = user;
     }
 }

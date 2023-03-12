@@ -25,7 +25,7 @@ namespace Content.Server.Medical
             base.Initialize();
             SubscribeLocalEvent<HealthAnalyzerComponent, ActivateInWorldEvent>(HandleActivateInWorld);
             SubscribeLocalEvent<HealthAnalyzerComponent, AfterInteractEvent>(OnAfterInteract);
-            SubscribeLocalEvent<HealthAnalyzerComponent, DoAfterEvent>(OnDoAfter);
+            SubscribeLocalEvent<HealthAnalyzerComponent, HealthAnalyzerDoAfterEvent>(OnDoAfter);
         }
 
         private void HandleActivateInWorld(EntityUid uid, HealthAnalyzerComponent healthAnalyzer, ActivateInWorldEvent args)
@@ -40,11 +40,10 @@ namespace Content.Server.Medical
 
             _audio.PlayPvs(healthAnalyzer.ScanningBeginSound, uid);
 
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, healthAnalyzer.ScanDelay, target: args.Target, used:uid)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(args.User, healthAnalyzer.ScanDelay, new HealthAnalyzerDoAfterEvent(), uid, target: args.Target, used: uid)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
-                BreakOnStun = true,
                 NeedHand = true
             });
         }
@@ -105,6 +104,10 @@ namespace Content.Server.Medical
 
             OpenUserInterface(user, healthAnalyzer);
             _uiSystem.SendUiMessage(healthAnalyzer.UserInterface, new HealthAnalyzerScannedUserMessage(target));
+        }
+
+        private sealed class HealthAnalyzerDoAfterEvent : SimpleDoAfterEvent
+        {
         }
     }
 }

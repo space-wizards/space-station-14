@@ -43,16 +43,14 @@ namespace Content.Server.Engineering.EntitySystems
 
             if (component.DoAfterTime > 0 && TryGet<DoAfterSystem>(out var doAfterSystem))
             {
-                var doAfterArgs = new DoAfterEventArgs(user, component.DoAfterTime, component.TokenSource.Token)
+                var doAfterArgs = new DoAfterArgs(user, component.DoAfterTime, new AwaitedDoAfterEvent(), null)
                 {
                     BreakOnUserMove = true,
-                    BreakOnStun = true,
                 };
                 var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
 
                 if (result != DoAfterStatus.Finished)
                     return;
-                component.TokenSource.Cancel();
             }
 
             if (component.Deleted || Deleted(component.Owner))

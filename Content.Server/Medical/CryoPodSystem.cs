@@ -57,9 +57,8 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
         SubscribeLocalEvent<CryoPodComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<CryoPodComponent, GetVerbsEvent<AlternativeVerb>>(AddAlternativeVerbs);
         SubscribeLocalEvent<CryoPodComponent, GotEmaggedEvent>(OnEmagged);
-        SubscribeLocalEvent<CryoPodComponent, DoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<CryoPodComponent, CryoPodDragFinished>(OnDragFinished);
         SubscribeLocalEvent<CryoPodComponent, CryoPodPryFinished>(OnCryoPodPryFinished);
-        SubscribeLocalEvent<CryoPodComponent, CryoPodPryInterrupted>(OnCryoPodPryInterrupted);
 
         SubscribeLocalEvent<CryoPodComponent, AtmosDeviceUpdateEvent>(OnCryoPodUpdateAtmosphere);
         SubscribeLocalEvent<CryoPodComponent, DragDropTargetEvent>(HandleDragDropOn);
@@ -131,25 +130,23 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
         if (cryoPodComponent.BodyContainer.ContainedEntity != null)
             return;
 
-        var doAfterArgs = new DoAfterEventArgs(args.User, cryoPodComponent.EntryDelay, target:args.Dragged, used:uid)
+        var doAfterArgs = new DoAfterArgs(args.User, cryoPodComponent.EntryDelay, new CryoPodDragFinished(), uid, target: args.Dragged, used: uid)
         {
             BreakOnDamage = true,
-            BreakOnStun = true,
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
             NeedHand = false,
         };
-        _doAfterSystem.DoAfter(doAfterArgs);
+        _doAfterSystem.TryStartDoAfter(doAfterArgs);
         args.Handled = true;
     }
 
-    private void OnDoAfter(EntityUid uid, CryoPodComponent component, DoAfterEvent args)
+    private void OnDragFinished(EntityUid uid, CryoPodComponent component, CryoPodDragFinished args)
     {
         if (args.Cancelled || args.Handled || args.Args.Target == null)
             return;
 
         InsertBody(uid, args.Args.Target.Value, component);
-
         args.Handled = true;
     }
 
@@ -180,18 +177,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
         if (args.Handled || !cryoPodComponent.Locked || cryoPodComponent.BodyContainer.ContainedEntity == null)
             return;
 
-        if (TryComp(args.Used, out ToolComponent? tool)
-            && tool.Qualities.Contains("Prying")) // Why aren't those enums?
-        {
-            if (cryoPodComponent.IsPrying)
-                return;
-            cryoPodComponent.IsPrying = true;
-
-            var toolEvData = new ToolEventData(new CryoPodPryFinished(), targetEntity:uid);
-            _toolSystem.UseTool(args.Used, args.User, uid, cryoPodComponent.PryDelay, new [] {"Prying"}, toolEvData);
-
-            args.Handled = true;
-        }
+        args.Handled = _toolSystem.UseTool(args.Used, args.User, uid, cryoPodComponent.PryDelay, "Prying", new CryoPodPryFinished());
     }
 
     private void OnExamined(EntityUid uid, CryoPodComponent component, ExaminedEvent args)

@@ -1,5 +1,7 @@
+using Content.Shared.DoAfter;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Tools.Components
@@ -43,45 +45,36 @@ namespace Content.Shared.Tools.Components
     [ByRefEvent]
     public struct ToolUserAttemptUseEvent
     {
-        public EntityUid User;
         public EntityUid? Target;
         public bool Cancelled = false;
 
-        public ToolUserAttemptUseEvent(EntityUid user, EntityUid? target)
+        public ToolUserAttemptUseEvent(EntityUid? target)
         {
-            User = user;
             Target = target;
         }
     }
 
     /// <summary>
-    ///     Attempt event called *after* any do afters to see if the tool usage should succeed or not.
-    ///     You can use this event to consume any fuel needed.
+    ///     Event raised before the tool do after starts and just before it completes.
     /// </summary>
-    public sealed class ToolUseFinishAttemptEvent : CancellableEntityEventArgs
+    [Serializable, NetSerializable]
+    public sealed class ToolFuelCheckEvent : DoAfterAttemptEvent
     {
-        public float Fuel { get; }
-        public EntityUid User { get; }
+        [DataField("fuel", required: true)]
+        public readonly float Fuel;
 
-        public ToolUseFinishAttemptEvent(float fuel, EntityUid user)
+        public ToolFuelCheckEvent()
+        {
+        }
+
+        public ToolFuelCheckEvent(float fuel)
         {
             Fuel = fuel;
         }
-    }
 
-    public sealed class ToolEventData
-    {
-        public readonly Object? Ev;
-        public readonly Object? CancelledEv;
-        public readonly float Fuel;
-        public readonly EntityUid? TargetEntity;
-
-        public ToolEventData(Object? ev, float fuel = 0f, Object? cancelledEv = null, EntityUid? targetEntity = null)
+        public override ToolFuelCheckEvent Clone()
         {
-            Ev = ev;
-            CancelledEv = cancelledEv;
-            Fuel = fuel;
-            TargetEntity = targetEntity;
+            return new ToolFuelCheckEvent(Fuel);
         }
     }
 }

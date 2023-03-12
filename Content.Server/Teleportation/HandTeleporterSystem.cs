@@ -24,7 +24,7 @@ public sealed class HandTeleporterSystem : EntitySystem
     {
         SubscribeLocalEvent<HandTeleporterComponent, UseInHandEvent>(OnUseInHand);
 
-        SubscribeLocalEvent<HandTeleporterComponent, DoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<HandTeleporterComponent, TeleporterDoAfterEvent>(OnDoAfter);
     }
 
     private void OnDoAfter(EntityUid uid, HandTeleporterComponent component, DoAfterEvent args)
@@ -56,15 +56,14 @@ public sealed class HandTeleporterSystem : EntitySystem
             if (xform.ParentUid != xform.GridUid)
                 return;
 
-            var doafterArgs = new DoAfterEventArgs(args.User, component.PortalCreationDelay, used: uid)
+            var doafterArgs = new DoAfterArgs(args.User, component.PortalCreationDelay, new TeleporterDoAfterEvent(), uid, used: uid)
             {
                 BreakOnDamage = true,
-                BreakOnStun = true,
                 BreakOnUserMove = true,
                 MovementThreshold = 0.5f,
             };
 
-            _doafter.DoAfter(doafterArgs);
+            _doafter.TryStartDoAfter(doafterArgs);
         }
     }
 
@@ -120,5 +119,9 @@ public sealed class HandTeleporterSystem : EntitySystem
             component.SecondPortal = null;
             _audio.PlayPvs(component.ClearPortalsSound, uid);
         }
+    }
+
+    private sealed class TeleporterDoAfterEvent : SimpleDoAfterEvent
+    {
     }
 }

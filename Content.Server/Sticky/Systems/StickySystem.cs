@@ -28,7 +28,7 @@ public sealed class StickySystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<StickyComponent, DoAfterEvent>(OnStickSuccessful);
+        SubscribeLocalEvent<StickyComponent, StickyDoAfterEvent>(OnStickFinished);
         SubscribeLocalEvent<StickyComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<StickyComponent, GetVerbsEvent<Verb>>(AddUnstickVerb);
     }
@@ -88,9 +88,8 @@ public sealed class StickySystem : EntitySystem
             component.Stick = true;
 
             // start sticking object to target
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, delay, target: target, used: uid)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(user, delay, new StickyDoAfterEvent(), uid, target: target, used: uid)
             {
-                BreakOnStun = true,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 NeedHand = true
@@ -105,14 +104,13 @@ public sealed class StickySystem : EntitySystem
         return true;
     }
 
-    private void OnStickSuccessful(EntityUid uid, StickyComponent component, DoAfterEvent args)
+    private void OnStickFinished(EntityUid uid, StickyComponent component, DoAfterEvent args)
     {
         if (args.Handled || args.Cancelled || args.Args.Target == null)
             return;
 
         if (component.Stick)
             StickToEntity(uid, args.Args.Target.Value, args.Args.User, component);
-
         else
             UnstickFromEntity(uid, args.Args.User, component);
 
@@ -137,9 +135,8 @@ public sealed class StickySystem : EntitySystem
             component.Stick = false;
 
             // start unsticking object
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, delay, target: uid)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(user, delay, new StickyDoAfterEvent(), uid, target: uid)
             {
-                BreakOnStun = true,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 NeedHand = true
@@ -213,5 +210,9 @@ public sealed class StickySystem : EntitySystem
 
         component.StuckTo = null;
         RaiseLocalEvent(uid, new EntityUnstuckEvent(target, user), true);
+    }
+
+    private sealed class StickyDoAfterEvent : SimpleDoAfterEvent
+    {
     }
 }

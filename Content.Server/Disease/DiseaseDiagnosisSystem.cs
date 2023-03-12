@@ -47,7 +47,7 @@ namespace Content.Server.Disease
             // Private Events
             SubscribeLocalEvent<DiseaseDiagnoserComponent, DiseaseMachineFinishedEvent>(OnDiagnoserFinished);
             SubscribeLocalEvent<DiseaseVaccineCreatorComponent, DiseaseMachineFinishedEvent>(OnVaccinatorFinished);
-            SubscribeLocalEvent<DiseaseSwabComponent, DoAfterEvent>(OnSwabDoAfter);
+            SubscribeLocalEvent<DiseaseSwabComponent, SwabDoAfterEvent>(OnSwabDoAfter);
         }
 
         private Queue<EntityUid> AddQueue = new();
@@ -116,15 +116,10 @@ namespace Content.Server.Disease
                 return;
             }
 
-            var isTarget = args.User != args.Target;
-
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, swab.SwabDelay, target: args.Target, used: uid)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(args.User, swab.SwabDelay, new SwabDoAfterEvent(), uid, target: args.Target, used: uid)
             {
-                RaiseOnTarget = isTarget,
-                RaiseOnUser = !isTarget,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
-                BreakOnStun = true,
                 NeedHand = true
             });
         }

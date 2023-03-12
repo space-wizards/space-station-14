@@ -86,11 +86,6 @@ namespace Content.Server.Cuffs.Components
         public Color Color { get; set; } = Color.White;
 
         /// <summary>
-        ///     Used to prevent DoAfter getting spammed.
-        /// </summary>
-        public bool Cuffing;
-
-        /// <summary>
         /// Update the cuffed state of an entity
         /// </summary>
         public async void TryUpdateCuff(EntityUid user, EntityUid target, CuffableComponent cuffs)
@@ -105,21 +100,15 @@ namespace Content.Server.Cuffs.Components
             if (_entities.HasComponent<DisarmProneComponent>(target))
                 cuffTime = 0.0f; // cuff them instantly.
 
-            var doAfterEventArgs = new DoAfterEventArgs(user, cuffTime, default, target)
+            var doAfterEventArgs = new DoAfterArgs(user, cuffTime, new AwaitedDoAfterEvent(), null, target: target, used: Owner)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 BreakOnDamage = true,
-                BreakOnStun = true,
                 NeedHand = true
             };
 
-            Cuffing = true;
-
             var result = await EntitySystem.Get<DoAfterSystem>().WaitDoAfter(doAfterEventArgs);
-
-            Cuffing = false;
-
             // TODO these pop-ups need third-person variants (i.e. {$user} is cuffing {$target}!
 
             if (result != DoAfterStatus.Cancelled)

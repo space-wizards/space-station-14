@@ -59,14 +59,6 @@ namespace Content.Server.RCD.Systems
             if (args.Handled || !args.CanReach)
                 return;
 
-            if (rcd.CancelToken != null)
-            {
-                rcd.CancelToken?.Cancel();
-                rcd.CancelToken = null;
-                args.Handled = true;
-                return;
-            }
-
             if (!args.ClickLocation.IsValid(EntityManager)) return;
 
             var clickLocationMod = args.ClickLocation;
@@ -96,18 +88,14 @@ namespace Content.Server.RCD.Systems
             var user = args.User;
 
             //Using an RCD isn't instantaneous
-            rcd.CancelToken = new CancellationTokenSource();
-            var doAfterEventArgs = new DoAfterEventArgs(user, rcd.Delay, rcd.CancelToken.Token, args.Target)
+            var doAfterEventArgs = new DoAfterArgs(user, rcd.Delay, new AwaitedDoAfterEvent(), null, target: args.Target)
             {
                 BreakOnDamage = true,
-                BreakOnStun = true,
                 NeedHand = true,
                 ExtraCheck = () => IsRCDStillValid(rcd, args, mapGrid, tile, startingMode) //All of the sanity checks are here
             };
 
             var result = await _doAfterSystem.WaitDoAfter(doAfterEventArgs);
-
-            rcd.CancelToken = null;
 
             if (result == DoAfterStatus.Cancelled)
                 return;

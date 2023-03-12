@@ -67,7 +67,7 @@ namespace Content.Server.Nuke
             SubscribeLocalEvent<NukeComponent, NukeKeypadEnterMessage>(OnEnterButtonPressed);
 
             // Doafter events
-            SubscribeLocalEvent<NukeComponent, DoAfterEvent>(OnDoAfter);
+            SubscribeLocalEvent<NukeComponent, NukeDisarmDoAfterEvent>(OnDoAfter);
         }
 
         private void OnInit(EntityUid uid, NukeComponent component, ComponentInit args)
@@ -559,16 +559,17 @@ namespace Content.Server.Nuke
 
         private void DisarmBombDoafter(EntityUid uid, EntityUid user, NukeComponent nuke)
         {
-            var doafter = new DoAfterEventArgs(user, nuke.DisarmDoafterLength, target: uid)
+            var doafter = new DoAfterArgs(user, nuke.DisarmDoafterLength, new NukeDisarmDoAfterEvent(), uid, target: uid)
             {
                 BreakOnDamage = true,
-                BreakOnStun = true,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 NeedHand = true
             };
 
-            _doAfterSystem.DoAfter(doafter);
+            if (!_doAfterSystem.TryStartDoAfter(doafter))
+                return;
+
             _popups.PopupEntity(Loc.GetString("nuke-component-doafter-warning"), user,
                 user, PopupType.LargeCaution);
         }
@@ -586,5 +587,9 @@ namespace Content.Server.Nuke
     public sealed class NukeDisarmSuccessEvent : EntityEventArgs
     {
 
+    }
+
+    public sealed class NukeDisarmDoAfterEvent : SimpleDoAfterEvent
+    {
     }
 }

@@ -1,6 +1,6 @@
-using System.Threading;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.DoAfter;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -38,12 +38,6 @@ namespace Content.Server.Medical.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("delay")]
         public float Delay = 3f;
-
-        /// <summary>
-        /// Cancel token to prevent rapid healing
-        /// </summary>
-        [DataField("cancelToken")]
-        public CancellationTokenSource? CancelToken;
 
         /// <summary>
         /// Delay multiplier when healing yourself.

@@ -1,12 +1,17 @@
-using System.Threading;
+using System;
+using System.Reflection;
 using System.Threading.Tasks;
 using Content.Server.DoAfter;
 using Content.Shared.DoAfter;
+using Content.Shared.IoC;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Reflection;
+using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests.DoAfter
 {
@@ -26,19 +31,54 @@ namespace Content.IntegrationTests.Tests.DoAfter
         {
             public override void Initialize()
             {
-                SubscribeLocalEvent<DoAfterEvent<TestDoAfterData>>(OnTestDoAfterFinishEvent);
+                SubscribeLocalEvent<TestDoAfterEvent>(OnTestDoAfterFinishEvent);
             }
 
-            private void OnTestDoAfterFinishEvent(DoAfterEvent<TestDoAfterData> ev)
+            private void OnTestDoAfterFinishEvent(TestDoAfterEvent ev)
             {
-                ev.AdditionalData.Cancelled = ev.Cancelled;
+                ev.Cancelled = ev.Cancelled;
             }
         }
 
-        private sealed class TestDoAfterData
+        private sealed class TestDoAfterEvent : DoAfterEvent
         {
             public bool Cancelled;
+            public override DoAfterEvent Clone()
+            {
+                return this;
+            }
         };
+
+        [Test]
+        public async Task TestSerializable()
+        {
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            var server = pairTracker.Pair.Server;
+            await server.WaitIdleAsync();
+            var refMan = server.ResolveDependency<IReflectionManager>();
+
+            await server.WaitPost(() =>
+            {
+                Assert.Multiple(() =>
+                {
+                    foreach (var type in refMan.GetAllChildren<DoAfterEvent>(true))
+                    {
+                        Assert.That(type.HasCustomAttribute<NetSerializableAttribute>()
+                                    && type.HasCustomAttribute<SerializableAttribute>(),
+                            $"{nameof(DoAfterEvent)} is not NetSerializable. Event: {type.Name}");
+                    }
+
+                    foreach (var type in refMan.GetAllChildren<DoAfterAttemptEvent>(true))
+                    {
+                        Assert.That(type.HasCustomAttribute<NetSerializableAttribute>()
+                                    && type.HasCustomAttribute<SerializableAttribute>(),
+                            $"{nameof(DoAfterAttemptEvent)} is not NetSerializable. Event: {type.Name}");
+                    }
+                });
+            });
+
+            await pairTracker.CleanReturnAsync();
+        }
 
         [Test]
         public async Task TestFinished()
@@ -49,16 +89,16 @@ namespace Content.IntegrationTests.Tests.DoAfter
 
             var entityManager = server.ResolveDependency<IEntityManager>();
             var doAfterSystem = entityManager.EntitySysManager.GetEntitySystem<DoAfterSystem>();
-            var data = new TestDoAfterData();
+            var data = new TestDoAfterEvent();
 
             // That it finishes successfully
             await server.WaitPost(() =>
             {
                 var tickTime = 1.0f / IoCManager.Resolve<IGameTiming>().TickRate;
                 var mob = entityManager.SpawnEntity("Dummy", MapCoordinates.Nullspace);
-                var cancelToken = new CancellationTokenSource();
-                var args = new DoAfterEventArgs(mob, tickTime / 2, cancelToken.Token) { Broadcast = true };
-                doAfterSystem.DoAfter(args, data);
+                var args = new DoAfterArgs(mob, tickTime / 2, new TestDoAfterEvent(), null) { Broadcast = true };
+                Assert.That(doAfterSystem.TryStartDoAfter(args));
+                Assert.That(data.Cancelled, Is.False);
             });
 
             await server.WaitRunTicks(1);
@@ -74,21 +114,31 @@ namespace Content.IntegrationTests.Tests.DoAfter
             var server = pairTracker.Pair.Server;
             var entityManager = server.ResolveDependency<IEntityManager>();
             var doAfterSystem = entityManager.EntitySysManager.GetEntitySystem<DoAfterSystem>();
-            var data = new TestDoAfterData();
+            DoAfterId? id = default;
+            var ev = new TestDoAfterEvent();
+
 
             await server.WaitPost(() =>
             {
                 var tickTime = 1.0f / IoCManager.Resolve<IGameTiming>().TickRate;
 
                 var mob = entityManager.SpawnEntity("Dummy", MapCoordinates.Nullspace);
-                var cancelToken = new CancellationTokenSource();
-                var args = new DoAfterEventArgs(mob, tickTime * 2, cancelToken.Token) { Broadcast = true };
-                doAfterSystem.DoAfter(args, data);
-                cancelToken.Cancel();
+                var args = new DoAfterArgs(mob, tickTime * 2, ev, null) { Broadcast = true };
+
+                if (!doAfterSystem.TryStartDoAfter(args, out id))
+                {
+                    Assert.Fail();
+                    return;
+                }
+
+                Assert.That(!ev.Cancelled);
+                doAfterSystem.Cancel(id);
+                Assert.That(ev.Cancelled);
+
             });
 
             await server.WaitRunTicks(3);
-            Assert.That(data.Cancelled, Is.True);
+            Assert.That(ev.Cancelled);
 
             await pairTracker.CleanReturnAsync();
         }

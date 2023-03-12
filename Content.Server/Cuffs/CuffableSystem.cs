@@ -83,7 +83,7 @@ namespace Content.Server.Cuffs
 
         private void TryCuffing(EntityUid handcuff, EntityUid user, EntityUid target, HandcuffComponent component)
         {
-            if (component.Cuffing || !EntityManager.TryGetComponent<CuffableComponent>(target, out var cuffed))
+            if (!EntityManager.TryGetComponent<CuffableComponent>(target, out var cuffed))
                 return;
 
             if (!EntityManager.TryGetComponent<HandsComponent?>(target, out var hands))

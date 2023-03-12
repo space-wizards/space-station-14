@@ -17,7 +17,7 @@ public sealed partial class AnomalySystem
     {
         SubscribeLocalEvent<AnomalyScannerComponent, BoundUIOpenedEvent>(OnScannerUiOpened);
         SubscribeLocalEvent<AnomalyScannerComponent, AfterInteractEvent>(OnScannerAfterInteract);
-        SubscribeLocalEvent<AnomalyScannerComponent, DoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<AnomalyScannerComponent, ScannerDoAfterEvent>(OnDoAfter);
 
         SubscribeLocalEvent<AnomalyShutdownEvent>(OnScannerAnomalyShutdown);
         SubscribeLocalEvent<AnomalySeverityChangedEvent>(OnScannerAnomalySeverityChanged);
@@ -77,7 +77,7 @@ public sealed partial class AnomalySystem
         if (!HasComp<AnomalyComponent>(target))
             return;
 
-        _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.ScanDoAfterDuration, target:target, used:uid)
+        _doAfter.TryStartDoAfter(new DoAfterArgs(args.User, component.ScanDoAfterDuration, new ScannerDoAfterEvent(), uid, target: target, used: uid)
         {
             DistanceThreshold = 2f
         });
@@ -155,5 +155,9 @@ public sealed partial class AnomalySystem
 
         //The timer at the end here is actually added in the ui itself.
         return msg;
+    }
+
+    private sealed class ScannerDoAfterEvent : SimpleDoAfterEvent
+    {
     }
 }

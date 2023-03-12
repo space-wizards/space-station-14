@@ -1,4 +1,4 @@
-using System.Threading;
+using Content.Shared.DoAfter;
 
 namespace Content.Server.Resist;
 
@@ -11,8 +11,8 @@ public sealed class CanEscapeInventoryComponent : Component
     [DataField("baseResistTime")]
     public float BaseResistTime = 5f;
 
-    [DataField("isEscaping")]
-    public bool IsEscaping;
+    public bool IsEscaping => DoAfter != null;
 
-    public CancellationTokenSource? CancelToken;
+    [DataField("doAfter")]
+    public DoAfterId? DoAfter;
 }

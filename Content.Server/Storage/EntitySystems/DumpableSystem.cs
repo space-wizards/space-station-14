@@ -28,7 +28,7 @@ namespace Content.Server.Storage.EntitySystems
             SubscribeLocalEvent<DumpableComponent, AfterInteractEvent>(OnAfterInteract, after: new[]{ typeof(StorageSystem) });
             SubscribeLocalEvent<DumpableComponent, GetVerbsEvent<AlternativeVerb>>(AddDumpVerb);
             SubscribeLocalEvent<DumpableComponent, GetVerbsEvent<UtilityVerb>>(AddUtilityVerbs);
-            SubscribeLocalEvent<DumpableComponent, DoAfterEvent>(OnDoAfter);
+            SubscribeLocalEvent<DumpableComponent, DumpableDoAfterEvent>(OnDoAfter);
         }
 
         private void OnAfterInteract(EntityUid uid, DumpableComponent component, AfterInteractEvent args)
@@ -104,12 +104,10 @@ namespace Content.Server.Storage.EntitySystems
 
             float delay = storage.StoredEntities.Count * (float) dumpable.DelayPerItem.TotalSeconds * dumpable.Multiplier;
 
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(userUid, delay, target: targetUid, used: storageUid)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(userUid, delay, new DumpableDoAfterEvent(), storageUid, target: targetUid, used: storageUid)
             {
-                RaiseOnTarget = false,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
-                BreakOnStun = true,
                 NeedHand = true
             });
         }
@@ -152,6 +150,10 @@ namespace Content.Server.Storage.EntitySystems
                     Transform(entity).LocalPosition = Transform(args.Args.Target.Value).LocalPosition + _random.NextVector2Box() / 4;
                 }
             }
+        }
+
+        private sealed class DumpableDoAfterEvent : SimpleDoAfterEvent
+        {
         }
     }
 }

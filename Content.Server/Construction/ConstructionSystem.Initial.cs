@@ -227,10 +227,9 @@ namespace Content.Server.Construction
                 return null;
             }
 
-            var doAfterArgs = new DoAfterEventArgs(user, doAfterTime)
+            var doAfterArgs = new DoAfterArgs(user, doAfterTime, new AwaitedDoAfterEvent(), null)
             {
                 BreakOnDamage = true,
-                BreakOnStun = true,
                 BreakOnTargetMove = false,
                 BreakOnUserMove = true,
                 NeedHand = false,

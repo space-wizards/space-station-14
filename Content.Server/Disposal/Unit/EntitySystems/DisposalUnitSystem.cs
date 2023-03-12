@@ -79,7 +79,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             SubscribeLocalEvent<DisposalUnitComponent, GetVerbsEvent<Verb>>(AddClimbInsideVerb);
 
             // Units
-            SubscribeLocalEvent<DisposalUnitComponent, DoAfterEvent>(OnDoAfter);
+            SubscribeLocalEvent<DisposalUnitComponent, DisposalDoAfterEvent>(OnDoAfter);
 
             //UI
             SubscribeLocalEvent<DisposalUnitComponent, SharedDisposalUnitComponent.UiButtonPressedMessage>(OnUiButtonPressed);
@@ -489,16 +489,15 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             // Can't check if our target AND disposals moves currently so we'll just check target.
             // if you really want to check if disposals moves then add a predicate.
-            var doAfterArgs = new DoAfterEventArgs(userId.Value, delay, target:toInsertId, used:unitId)
+            var doAfterArgs = new DoAfterArgs(userId.Value, delay, new DisposalDoAfterEvent(), unitId, target: toInsertId, used: unitId)
             {
                 BreakOnDamage = true,
-                BreakOnStun = true,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 NeedHand = false,
             };
 
-            _doAfterSystem.DoAfter(doAfterArgs);
+            _doAfterSystem.TryStartDoAfter(doAfterArgs);
             return true;
         }
 
@@ -736,6 +735,10 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
 
             UpdateVisualState(uid, component);
+        }
+
+        private sealed class DisposalDoAfterEvent : SimpleDoAfterEvent
+        {
         }
     }
 

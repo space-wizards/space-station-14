@@ -31,7 +31,7 @@ namespace Content.Server.Wieldable
             base.Initialize();
 
             SubscribeLocalEvent<WieldableComponent, UseInHandEvent>(OnUseInHand);
-            SubscribeLocalEvent<WieldableComponent, DoAfterEvent>(OnDoAfter);
+            SubscribeLocalEvent<WieldableComponent, WieldableDoAfterEvent>(OnDoAfter);
             SubscribeLocalEvent<WieldableComponent, ItemUnwieldedEvent>(OnItemUnwielded);
             SubscribeLocalEvent<WieldableComponent, GotUnequippedHandEvent>(OnItemLeaveHand);
             SubscribeLocalEvent<WieldableComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
@@ -126,15 +126,14 @@ namespace Content.Server.Wieldable
             if (ev.Cancelled)
                 return;
 
-            var doargs = new DoAfterEventArgs(user, component.WieldTime, used:used)
+            var doargs = new DoAfterArgs(user, component.WieldTime, new WieldableDoAfterEvent(), used, used: used)
             {
                 BreakOnUserMove = false,
                 BreakOnDamage = true,
-                BreakOnStun = true,
                 BreakOnTargetMove = true
             };
 
-            _doAfter.DoAfter(doargs);
+            _doAfter.TryStartDoAfter(doargs);
         }
 
         /// <summary>
@@ -232,6 +231,10 @@ namespace Content.Server.Wieldable
                 return;
 
             args.BonusDamage += component.BonusDamage;
+        }
+
+        private sealed class WieldableDoAfterEvent : SimpleDoAfterEvent
+        {
         }
     }
 

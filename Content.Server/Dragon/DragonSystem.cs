@@ -63,7 +63,7 @@ namespace Content.Server.Dragon
             SubscribeLocalEvent<DragonComponent, DragonSpawnRiftActionEvent>(OnDragonRift);
             SubscribeLocalEvent<DragonComponent, RefreshMovementSpeedModifiersEvent>(OnDragonMove);
 
-            SubscribeLocalEvent<DragonComponent, DoAfterEvent>(OnDoAfter);
+            SubscribeLocalEvent<DragonComponent, DragonDevourDoAfterEvent>(OnDoAfter);
 
             SubscribeLocalEvent<DragonComponent, MobStateChangedEvent>(OnMobStateChanged);
 
@@ -75,7 +75,7 @@ namespace Content.Server.Dragon
             SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRiftRoundEnd);
         }
 
-        private void OnDoAfter(EntityUid uid, DragonComponent component, DoAfterEvent args)
+        private void OnDoAfter(EntityUid uid, DragonComponent component, DragonDevourDoAfterEvent args)
         {
             if (args.Handled || args.Cancelled)
                 return;
@@ -95,8 +95,7 @@ namespace Content.Server.Dragon
             else if (args.Args.Target != null)
                 EntityManager.QueueDeleteEntity(args.Args.Target.Value);
 
-            if (component.SoundDevour != null)
-                _audioSystem.PlayPvs(component.SoundDevour, uid, component.SoundDevour.Params);
+            _audioSystem.PlayPvs(component.SoundDevour, uid);
         }
 
         public override void Update(float frameTime)
@@ -355,11 +354,10 @@ namespace Content.Server.Dragon
                     case MobState.Critical:
                     case MobState.Dead:
 
-                        _doAfterSystem.DoAfter(new DoAfterEventArgs(uid, component.DevourTime, target:target)
+                        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(uid, component.DevourTime, new DragonDevourDoAfterEvent(), uid, target: target, used: uid)
                         {
                             BreakOnTargetMove = true,
                             BreakOnUserMove = true,
-                            BreakOnStun = true,
                         });
                         break;
                     default:
@@ -375,12 +373,15 @@ namespace Content.Server.Dragon
             if (component.SoundStructureDevour != null)
                 _audioSystem.PlayPvs(component.SoundStructureDevour, uid, component.SoundStructureDevour.Params);
 
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(uid, component.StructureDevourTime, target:target)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(uid, component.StructureDevourTime, new DragonDevourDoAfterEvent(), uid, target: target, used: uid)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
-                BreakOnStun = true,
             });
+        }
+
+        private sealed class DragonDevourDoAfterEvent : SimpleDoAfterEvent
+        {
         }
     }
 }

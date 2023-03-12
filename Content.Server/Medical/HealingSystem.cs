@@ -8,6 +8,7 @@ using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs;
@@ -36,45 +37,41 @@ public sealed class HealingSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<HealingComponent, UseInHandEvent>(OnHealingUse);
         SubscribeLocalEvent<HealingComponent, AfterInteractEvent>(OnHealingAfterInteract);
-        SubscribeLocalEvent<DamageableComponent, DoAfterEvent<HealingData>>(OnDoAfter);
+        SubscribeLocalEvent<DamageableComponent, HealingDoAfterEvent>(OnDoAfter);
     }
 
-    private void OnDoAfter(EntityUid uid, DamageableComponent component, DoAfterEvent<HealingData> args)
+    private void OnDoAfter(EntityUid uid, DamageableComponent component, HealingDoAfterEvent args)
     {
-        if (args.Cancelled)
-        {
-            args.AdditionalData.HealingComponent.CancelToken = null;
+        if (!TryComp(args.Used, out HealingComponent? healing))
             return;
-        }
 
-        if (args.Handled || args.Cancelled || _mobStateSystem.IsDead(uid) || args.Args.Used == null)
+        if (args.Handled || args.Cancelled || _mobStateSystem.IsDead(uid))
             return;
 
         if (component.DamageContainerID is not null && !component.DamageContainerID.Equals(component.DamageContainerID))
             return;
 
         // Heal some bloodloss damage.
-        if (args.AdditionalData.HealingComponent.BloodlossModifier != 0)
-            _bloodstreamSystem.TryModifyBleedAmount(uid, args.AdditionalData.HealingComponent.BloodlossModifier);
+        if (healing.BloodlossModifier != 0)
+            _bloodstreamSystem.TryModifyBleedAmount(uid, healing.BloodlossModifier);
 
-        var healed = _damageable.TryChangeDamage(uid, args.AdditionalData.HealingComponent.Damage, true, origin: args.Args.User);
+        var healed = _damageable.TryChangeDamage(uid, healing.Damage, true, origin: args.Args.User);
 
-        if (healed == null)
+        if (healed == null && healing.BloodlossModifier != 0)
             return;
 
+        var total = healed?.Total ?? FixedPoint2.Zero;
+
         // Reverify that we can heal the damage.
-        _stacks.Use(args.Args.Used.Value, 1, args.AdditionalData.Stack);
+        _stacks.Use(args.Used.Value, 1);
 
-        if (uid != args.Args.User)
-            _adminLogger.Add(LogType.Healed, $"{EntityManager.ToPrettyString(args.Args.User):user} healed {EntityManager.ToPrettyString(uid):target} for {healed.Total:damage} damage");
-
+        if (uid != args.User)
+            _adminLogger.Add(LogType.Healed, $"{EntityManager.ToPrettyString(args.User):user} healed {EntityManager.ToPrettyString(uid):target} for {total:damage} damage");
         else
-            _adminLogger.Add(LogType.Healed, $"{EntityManager.ToPrettyString(args.Args.User):user} healed themselves for {healed.Total:damage} damage");
+            _adminLogger.Add(LogType.Healed, $"{EntityManager.ToPrettyString(args.User):user} healed themselves for {total:damage} damage");
 
-        if (args.AdditionalData.HealingComponent.HealingEndSound != null)
-            _audio.PlayPvs(args.AdditionalData.HealingComponent.HealingEndSound, uid, AudioHelpers.WithVariation(0.125f, _random).WithVolume(-5f));
+        _audio.PlayPvs(healing.HealingEndSound, uid, AudioHelpers.WithVariation(0.125f, _random).WithVolume(-5f));
 
-        args.AdditionalData.HealingComponent.CancelToken = null;
         args.Handled = true;
     }
 
@@ -98,7 +95,7 @@ public sealed class HealingSystem : EntitySystem
 
     private bool TryHeal(EntityUid uid, EntityUid user, EntityUid target, HealingComponent component)
     {
-        if (_mobStateSystem.IsDead(target) || !TryComp<DamageableComponent>(target, out var targetDamage) || component.CancelToken != null)
+        if (_mobStateSystem.IsDead(target) || !TryComp<DamageableComponent>(target, out var targetDamage))
             return false;
 
         if (targetDamage.TotalDamage == 0)
@@ -122,27 +119,17 @@ public sealed class HealingSystem : EntitySystem
             ? component.Delay
             : component.Delay * GetScaledHealingPenalty(user, component);
 
-        component.CancelToken = new CancellationTokenSource();
-
-        var healingData = new HealingData(component, stack);
-
-        var doAfterEventArgs = new DoAfterEventArgs(user, delay, cancelToken: component.CancelToken.Token,target: target, used: uid)
+        var doAfterEventArgs = new DoAfterArgs(user, delay, new HealingDoAfterEvent(), target, target: target, used: uid)
         {
             //Raise the event on the target if it's not self, otherwise raise it on self.
-            RaiseOnTarget = isNotSelf,
-            RaiseOnUser = !isNotSelf,
             BreakOnUserMove = true,
             BreakOnTargetMove = true,
             // Didn't break on damage as they may be trying to prevent it and
             // not being able to heal your own ticking damage would be frustrating.
-            BreakOnStun = true,
             NeedHand = true,
-            // Juusstt in case damageble gets removed it avoids having to re-cancel the token. Won't need this when DoAfterEvent<T> gets added.
-            PostCheck = () => true
         };
 
-        _doAfter.DoAfter(doAfterEventArgs, healingData);
-
+        _doAfter.TryStartDoAfter(doAfterEventArgs);
         return true;
     }
 
@@ -166,9 +153,7 @@ public sealed class HealingSystem : EntitySystem
         return Math.Max(modifier, 1);
     }
 
-    private record struct HealingData(HealingComponent HealingComponent, StackComponent Stack)
+    private sealed class HealingDoAfterEvent : SimpleDoAfterEvent
     {
-        public HealingComponent HealingComponent = HealingComponent;
-        public StackComponent Stack = Stack;
     }
 }

@@ -74,40 +74,35 @@ public sealed partial class EnsnareableSystem
     /// <summary>
     /// Used where you want to try to free an entity with the <see cref="EnsnareableComponent"/>
     /// </summary>
-    /// <param name="target">The entity that will be free</param>
+    /// <param name="target">The entity that will be freed</param>
+    /// <param name="user">The entity that is freeing the target</param>
     /// <param name="ensnare">The entity used to ensnare</param>
     /// <param name="component">The ensnaring component</param>
-    public void TryFree(EntityUid target, EntityUid ensnare, EnsnaringComponent component, EntityUid? user = null)
+    public void TryFree(EntityUid target,  EntityUid user, EntityUid ensnare, EnsnaringComponent component)
     {
         //Don't do anything if they don't have the ensnareable component.
         if (!HasComp<EnsnareableComponent>(target))
             return;
 
-        var isOwner = !(user != null && target != user);
-        var freeTime = isOwner ? component.BreakoutTime : component.FreeTime;
-        bool breakOnMove;
+        var freeTime = user == target ? component.BreakoutTime : component.FreeTime;
+        var breakOnMove = user != target || !component.CanMoveBreakout;
 
-        if (isOwner)
-            breakOnMove = !component.CanMoveBreakout;
-        else
-            breakOnMove = true;
-
-        var doAfterEventArgs = new DoAfterEventArgs(target, freeTime, target: target, used:ensnare)
+        var doAfterEventArgs = new DoAfterArgs(user, freeTime, new EnsnareableDoAfterEvent(), target, target: target, used: ensnare)
         {
             BreakOnUserMove = breakOnMove,
             BreakOnTargetMove = breakOnMove,
             BreakOnDamage = false,
-            BreakOnStun = true,
-            NeedHand = true
+            NeedHand = true,
+            BlockDuplicate = true,
         };
 
-        _doAfter.DoAfter(doAfterEventArgs);
+        if (!_doAfter.TryStartDoAfter(doAfterEventArgs))
+            return;
 
-        if (isOwner)
+        if (user == target)
             _popup.PopupEntity(Loc.GetString("ensnare-component-try-free", ("ensnare", ensnare)), target, target);
-
-        if (!isOwner && user != null)
-            _popup.PopupEntity(Loc.GetString("ensnare-component-try-free-other", ("ensnare", ensnare), ("user", Identity.Entity(target, EntityManager))), user.Value, user.Value);
+        else
+            _popup.PopupEntity(Loc.GetString("ensnare-component-try-free-other", ("ensnare", ensnare), ("user", Identity.Entity(target, EntityManager))), user, user);
     }
 
     /// <summary>

@@ -1,6 +1,7 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Tools.Components;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Tools;
@@ -19,7 +20,6 @@ public sealed class WeldableSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<WeldableComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<WeldableComponent, WeldFinishedEvent>(OnWeldFinished);
-        SubscribeLocalEvent<WeldableComponent, WeldCancelledEvent>(OnWeldCanceled);
         SubscribeLocalEvent<WeldableComponent, ExaminedEvent>(OnExamine);
     }
 
@@ -43,9 +43,7 @@ public sealed class WeldableSystem : EntitySystem
             return false;
 
         // Basic checks
-        if (!component.Weldable || component.BeingWelded)
-            return false;
-        if (!_toolSystem.HasQuality(tool, component.WeldingQuality))
+        if (!component.Weldable)
             return false;
 
         // Other component systems
@@ -65,8 +63,7 @@ public sealed class WeldableSystem : EntitySystem
         if (!CanWeld(uid, tool, user, component))
             return false;
 
-        var toolEvData = new ToolEventData(new WeldFinishedEvent(user, tool), targetEntity: uid);
-        component.BeingWelded = _toolSystem.UseTool(tool, user, uid, component.WeldingTime.Seconds, new[] { component.WeldingQuality }, toolEvData, fuel: component.FuelConsumption);
+        _toolSystem.UseTool(tool, user, uid, component.WeldingTime.Seconds, component.WeldingQuality, new WeldFinishedEvent(), fuel: component.FuelConsumption);
 
         // Log attempt
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):user} is {(component.IsWelded ? "un" : "")}welding {ToPrettyString(uid):target} at {Transform(uid).Coordinates:targetlocation}");
@@ -76,10 +73,11 @@ public sealed class WeldableSystem : EntitySystem
 
     private void OnWeldFinished(EntityUid uid, WeldableComponent component, WeldFinishedEvent args)
     {
-        component.BeingWelded = false;
+        if (args.Cancelled || args.Used == null)
+            return;
 
         // Check if target is still valid
-        if (!CanWeld(uid, args.Tool, args.User, component))
+        if (!CanWeld(uid, args.Used.Value, args.User, component))
             return;
 
         component.IsWelded = !component.IsWelded;
@@ -89,11 +87,6 @@ public sealed class WeldableSystem : EntitySystem
 
         // Log success
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):user} {(!component.IsWelded ? "un" : "")}welded {ToPrettyString(uid):target}");
-    }
-
-    private void OnWeldCanceled(EntityUid uid, WeldableComponent component, WeldCancelledEvent args)
-    {
-        component.BeingWelded = false;
     }
 
     private void UpdateAppearance(EntityUid uid, WeldableComponent? component = null)
@@ -129,24 +122,8 @@ public sealed class WeldableSystem : EntitySystem
     ///     Raised after welding do_after has finished. It doesn't guarantee success,
     ///     use <see cref="WeldableChangedEvent"/> to get updated status.
     /// </summary>
-    private sealed class WeldFinishedEvent : EntityEventArgs
+    private sealed class WeldFinishedEvent : SimpleDoAfterEvent
     {
-        public readonly EntityUid User;
-        public readonly EntityUid Tool;
-
-        public WeldFinishedEvent(EntityUid user, EntityUid tool)
-        {
-            User = user;
-            Tool = tool;
-        }
-    }
-
-    /// <summary>
-    ///     Raised when entity welding has failed.
-    /// </summary>
-    private sealed class WeldCancelledEvent : EntityEventArgs
-    {
-
     }
 }
 

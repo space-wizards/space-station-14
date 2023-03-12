@@ -97,7 +97,7 @@ namespace Content.Server.Medical.BiomassReclaimer
             SubscribeLocalEvent<BiomassReclaimerComponent, UpgradeExamineEvent>(OnUpgradeExamine);
             SubscribeLocalEvent<BiomassReclaimerComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<BiomassReclaimerComponent, SuicideEvent>(OnSuicide);
-            SubscribeLocalEvent<BiomassReclaimerComponent, DoAfterEvent>(OnDoAfter);
+            SubscribeLocalEvent<BiomassReclaimerComponent, ReclaimerDoAfterEvent>(OnDoAfter);
         }
 
         private void OnSuicide(EntityUid uid, BiomassReclaimerComponent component, SuicideEvent args)
@@ -152,11 +152,10 @@ namespace Content.Server.Medical.BiomassReclaimer
             if (!HasComp<MobStateComponent>(args.Used) || !CanGib(uid, args.Used, component))
                 return;
 
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, 7f, target:args.Target, used:args.Used)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(args.User, 7f, new ReclaimerDoAfterEvent(), uid, target: args.Target, used: args.Used)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
-                BreakOnStun = true,
                 NeedHand = true
             });
         }
@@ -253,6 +252,10 @@ namespace Content.Server.Medical.BiomassReclaimer
             }
 
             return true;
+        }
+
+        private sealed class ReclaimerDoAfterEvent : SimpleDoAfterEvent
+        {
         }
     }
 }

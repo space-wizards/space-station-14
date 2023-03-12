@@ -54,7 +54,7 @@ public sealed class MagicSystem : EntitySystem
 
         SubscribeLocalEvent<SpellbookComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<SpellbookComponent, UseInHandEvent>(OnUse);
-        SubscribeLocalEvent<SpellbookComponent, DoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<SpellbookComponent, SpellbookDoAfterEvent>(OnDoAfter);
 
         SubscribeLocalEvent<InstantSpawnSpellEvent>(OnInstantSpawn);
         SubscribeLocalEvent<TeleportSpellEvent>(OnTeleportSpell);
@@ -111,16 +111,19 @@ public sealed class MagicSystem : EntitySystem
 
     private void AttemptLearn(EntityUid uid, SpellbookComponent component, UseInHandEvent args)
     {
-        var doAfterEventArgs = new DoAfterEventArgs(args.User, component.LearnTime, target:uid)
+        var doAfterEventArgs = new DoAfterArgs(args.User, component.LearnTime, new SpellbookDoAfterEvent(), uid, target: uid)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
             BreakOnDamage = true,
-            BreakOnStun = true,
             NeedHand = true //What, are you going to read with your eyes only??
         };
 
-        _doAfter.DoAfter(doAfterEventArgs);
+        _doAfter.TryStartDoAfter(doAfterEventArgs);
+    }
+
+    private sealed class SpellbookDoAfterEvent : SimpleDoAfterEvent
+    {
     }
 
     #region Spells

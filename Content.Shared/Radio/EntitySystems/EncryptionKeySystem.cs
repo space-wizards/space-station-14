@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Chat;
+using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
@@ -9,6 +10,7 @@ using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Radio.EntitySystems;
@@ -37,16 +39,13 @@ public sealed class EncryptionKeySystem : EntitySystem
         SubscribeLocalEvent<EncryptionKeyHolderComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
         SubscribeLocalEvent<EncryptionKeyHolderComponent, EntRemovedFromContainerMessage>(OnContainerModified);
         SubscribeLocalEvent<EncryptionKeyHolderComponent, EncryptionRemovalFinishedEvent>(OnKeyRemoval);
-        SubscribeLocalEvent<EncryptionKeyHolderComponent, EncryptionRemovalCancelledEvent>(OnKeyCancelled);
-    }
-
-    private void OnKeyCancelled(EntityUid uid, EncryptionKeyHolderComponent component, EncryptionRemovalCancelledEvent args)
-    {
-        component.Removing = false;
     }
 
     private void OnKeyRemoval(EntityUid uid, EncryptionKeyHolderComponent component, EncryptionRemovalFinishedEvent args)
     {
+        if (args.Cancelled)
+            return;
+
         var contained = component.KeyContainer.ContainedEntities.ToArray();
         _container.EmptyContainer(component.KeyContainer, entMan: EntityManager);
         foreach (var ent in contained)
@@ -57,7 +56,6 @@ public sealed class EncryptionKeySystem : EntitySystem
         // if tool use ever gets predicted this needs changing.
         _popupSystem.PopupEntity(Loc.GetString("encryption-keys-all-extracted"), uid, args.User);
         _audio.PlayPvs(component.KeyExtractionSound, uid);
-        component.Removing = false;
     }
 
     public void UpdateChannels(EntityUid uid, EncryptionKeyHolderComponent component)
@@ -88,14 +86,18 @@ public sealed class EncryptionKeySystem : EntitySystem
 
     private void OnInteractUsing(EntityUid uid, EncryptionKeyHolderComponent component, InteractUsingEvent args)
     {
-        if (!TryComp<ContainerManagerComponent>(uid, out var _) || args.Handled || component.Removing)
+        if ( args.Handled || !TryComp<ContainerManagerComponent>(uid, out var storage))
             return;
+
+        args.Handled = true;
+
         if (!component.KeysUnlocked)
         {
             if (_timing.IsFirstTimePredicted)
                 _popupSystem.PopupEntity(Loc.GetString("encryption-keys-are-locked"), uid, args.User);
             return;
         }
+
         if (TryComp<EncryptionKeyComponent>(args.Used, out var key))
         {
             TryInsertKey(uid, component, args);
@@ -140,12 +142,7 @@ public sealed class EncryptionKeySystem : EntitySystem
             return;
         }
 
-        //This is honestly the poor mans fix because the InteractUsingEvent fires off 12 times
-        component.Removing = true;
-
-        var toolEvData = new ToolEventData(new EncryptionRemovalFinishedEvent(args.User), cancelledEv: new EncryptionRemovalCancelledEvent(), targetEntity: uid);
-
-        _toolSystem.UseTool(args.Used, args.User, uid, 1f, new[] { component.KeysExtractionMethod }, toolEvData, toolComponent: tool);
+        _toolSystem.UseTool(args.Used, args.User, uid, 1f, component.KeysExtractionMethod, new EncryptionRemovalFinishedEvent(), toolComponent: tool);
     }
 
     private void OnStartup(EntityUid uid, EncryptionKeyHolderComponent component, ComponentStartup args)
@@ -228,18 +225,8 @@ public sealed class EncryptionKeySystem : EntitySystem
         }
     }
 
-    public sealed class EncryptionRemovalFinishedEvent : EntityEventArgs
+    [Serializable, NetSerializable]
+    public sealed class EncryptionRemovalFinishedEvent : SimpleDoAfterEvent
     {
-        public EntityUid User;
-
-        public EncryptionRemovalFinishedEvent(EntityUid user)
-        {
-            User = user;
-        }
-    }
-
-    public sealed class EncryptionRemovalCancelledEvent : EntityEventArgs
-    {
-
     }
 }

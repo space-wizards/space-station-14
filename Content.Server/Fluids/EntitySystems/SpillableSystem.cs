@@ -38,7 +38,7 @@ public sealed class SpillableSystem : EntitySystem
         SubscribeLocalEvent<SpillableComponent, GetVerbsEvent<Verb>>(AddSpillVerb);
         SubscribeLocalEvent<SpillableComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<SpillableComponent, SolutionSpikeOverflowEvent>(OnSpikeOverflow);
-        SubscribeLocalEvent<SpillableComponent, DoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<SpillableComponent, SpillDoAfterEvent>(OnDoAfter);
     }
 
     private void OnSpikeOverflow(EntityUid uid, SpillableComponent component, SolutionSpikeOverflowEvent args)
@@ -128,29 +128,17 @@ public sealed class SpillableSystem : EntitySystem
         Verb verb = new();
         verb.Text = Loc.GetString("spill-target-verb-get-data-text");
         // TODO VERB ICONS spill icon? pouring out a glass/beaker?
-        if (component.SpillDelay == null)
+
+        verb.Act = () =>
         {
-            verb.Act = () =>
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(args.User, component.SpillDelay ?? 0, new SpillDoAfterEvent(), uid, target: uid)
             {
-                var puddleSolution = _solutionContainerSystem.SplitSolution(args.Target,
-                    solution, solution.Volume);
-                SpillAt(puddleSolution, Transform(args.Target).Coordinates, "PuddleSmear");
-            };
-        }
-        else
-        {
-            verb.Act = () =>
-            {
-                _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, component.SpillDelay.Value, target:uid)
-                {
-                    BreakOnTargetMove = true,
-                    BreakOnUserMove = true,
-                    BreakOnDamage = true,
-                    BreakOnStun = true,
-                    NeedHand = true
-                });
-            };
-        }
+                BreakOnTargetMove = true,
+                BreakOnUserMove = true,
+                BreakOnDamage = true,
+                NeedHand = true,
+            });
+        };
         verb.Impact = LogImpact.Medium; // dangerous reagent reaction are logged separately.
         verb.DoContactInteraction = true;
         args.Verbs.Add(verb);
@@ -270,5 +258,9 @@ public sealed class SpillableSystem : EntitySystem
         SpillAt(puddleSolution, Transform(uid).Coordinates, "PuddleSmear");
 
         args.Handled = true;
+    }
+
+    private sealed class SpillDoAfterEvent : SimpleDoAfterEvent
+    {
     }
 }

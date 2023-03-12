@@ -33,7 +33,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
         SubscribeLocalEvent<BluespaceLockerComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<BluespaceLockerComponent, StorageBeforeOpenEvent>(PreOpen);
         SubscribeLocalEvent<BluespaceLockerComponent, StorageAfterCloseEvent>(PostClose);
-        SubscribeLocalEvent<BluespaceLockerComponent, DoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<BluespaceLockerComponent, BluespaceLockerDoAfterEvent>(OnDoAfter);
     }
 
     private void OnStartup(EntityUid uid, BluespaceLockerComponent component, ComponentStartup args)
@@ -284,7 +284,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
         {
             EnsureComp<DoAfterComponent>(uid);
 
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(uid, component.BehaviorProperties.Delay));
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(uid, component.BehaviorProperties.Delay, new BluespaceLockerDoAfterEvent(), uid));
             return;
         }
 
@@ -390,5 +390,9 @@ public sealed class BluespaceLockerSystem : EntitySystem
                 RemComp<BluespaceLockerComponent>(uid);
                 break;
         }
+    }
+
+    private sealed class BluespaceLockerDoAfterEvent : SimpleDoAfterEvent
+    {
     }
 }

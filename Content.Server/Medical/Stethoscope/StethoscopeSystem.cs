@@ -29,7 +29,7 @@ namespace Content.Server.Medical
             SubscribeLocalEvent<WearingStethoscopeComponent, GetVerbsEvent<InnateVerb>>(AddStethoscopeVerb);
             SubscribeLocalEvent<StethoscopeComponent, GetItemActionsEvent>(OnGetActions);
             SubscribeLocalEvent<StethoscopeComponent, StethoscopeActionEvent>(OnStethoscopeAction);
-            SubscribeLocalEvent<StethoscopeComponent, DoAfterEvent>(OnDoAfter);
+            SubscribeLocalEvent<StethoscopeComponent, StethoscopeDoAfterEvent>(OnDoAfter);
         }
 
         /// <summary>
@@ -103,11 +103,10 @@ namespace Content.Server.Medical
         // construct the doafter and start it
         private void StartListening(EntityUid scope, EntityUid user, EntityUid target, StethoscopeComponent comp)
         {
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, comp.Delay, target: target, used:scope)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(user, comp.Delay, new StethoscopeDoAfterEvent(), scope, target: target, used: scope)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
-                BreakOnStun = true,
                 NeedHand = true
             });
         }
@@ -155,6 +154,10 @@ namespace Content.Server.Medical
                 _ => "stethoscope-fucked"
             };
             return msg;
+        }
+
+        private sealed class StethoscopeDoAfterEvent : SimpleDoAfterEvent
+        {
         }
     }
 

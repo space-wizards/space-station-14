@@ -9,6 +9,7 @@ using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.VendingMachines.Restock
 {
@@ -65,7 +66,7 @@ namespace Content.Server.VendingMachines.Restock
 
         private void OnAfterInteract(EntityUid uid, VendingMachineRestockComponent component, AfterInteractEvent args)
         {
-            if (args.Target == null || !args.CanReach)
+            if (args.Target == null || !args.CanReach || args.Handled)
                 return;
 
             if (!TryComp<VendingMachineComponent>(args.Target, out var machineComponent))
@@ -77,14 +78,19 @@ namespace Content.Server.VendingMachines.Restock
             if (!TryAccessMachine(uid, component, machineComponent, args.User, args.Target.Value))
                 return;
 
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, (float) component.RestockDelay.TotalSeconds, target:args.Target, used:uid)
+            args.Handled = true;
+
+            var doAfterArgs = new DoAfterArgs(args.User, (float) component.RestockDelay.TotalSeconds, new RestockDoAfterEvent(), args.Target,
+                target: args.Target, used: uid)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
-                BreakOnStun = true,
                 BreakOnDamage = true,
                 NeedHand = true
-            });
+            };
+
+            if (!_doAfterSystem.TryStartDoAfter(doAfterArgs))
+                return;
 
             _popupSystem.PopupEntity(Loc.GetString("vending-machine-restock-start", ("this", uid), ("user", args.User), ("target", args.Target)),
                 args.User,

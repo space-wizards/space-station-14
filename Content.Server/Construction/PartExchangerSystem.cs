@@ -26,18 +26,14 @@ public sealed class PartExchangerSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<PartExchangerComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<PartExchangerComponent, DoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<PartExchangerComponent, ExchangerDoAfterEvent>(OnDoAfter);
     }
 
     private void OnDoAfter(EntityUid uid, PartExchangerComponent component, DoAfterEvent args)
     {
-        if (args.Cancelled || args.Handled || args.Args.Target == null)
-        {
-            component.AudioStream?.Stop();
-            return;
-        }
-
         component.AudioStream?.Stop();
+        if (args.Cancelled || args.Handled || args.Args.Target == null)
+            return;
 
         if (!TryComp<MachineComponent>(args.Args.Target.Value, out var machine))
             return;
@@ -112,11 +108,14 @@ public sealed class PartExchangerSystem : EntitySystem
 
         component.AudioStream = _audio.PlayPvs(component.ExchangeSound, uid);
 
-        _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.ExchangeDuration, target:args.Target, used:args.Used)
+        _doAfter.TryStartDoAfter(new DoAfterArgs(args.User, component.ExchangeDuration, new ExchangerDoAfterEvent(), uid, target: args.Target, used: uid)
         {
             BreakOnDamage = true,
-            BreakOnStun = true,
             BreakOnUserMove = true
         });
+    }
+
+    private sealed class ExchangerDoAfterEvent : SimpleDoAfterEvent
+    {
     }
 }
