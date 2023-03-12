@@ -226,7 +226,7 @@
 - type: gameRule
   id: CluwneBeastSpawn
   config:
-    !type:StationEventRuleConfiguration
+    !type:CluwneBeastRuleConfiguration
     id: CluwneBeastSpawn
     startAnnouncement: station-event-xeno-threat-announcement
     startAudio:

@@ -35,12 +35,15 @@
       layer:
       - MobLayer
   - type: MobState
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: CluwneBeast
   - type: Hands
   - type: MobThresholds
     thresholds:
       0: Alive
-      180: Critical
-      230: Dead
+      150: Critical
+      200: Dead
   - type: MeleeWeapon
     hidden: true
     soundHit:
