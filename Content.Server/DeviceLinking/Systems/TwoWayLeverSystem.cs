@@ -1,14 +1,15 @@
 using Content.Server.DeviceLinking.Components;
-using Content.Server.MachineLinking.System;
 using Content.Shared.DeviceLinking;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
+using Robust.Shared.Utility;
 
 namespace Content.Server.DeviceLinking.Systems
 {
     public sealed class TwoWayLeverSystem : EntitySystem
     {
         [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         const string _leftToggleImage = "rotate_ccw.svg.192dpi.png";
         const string _rightToggleImage = "rotate_cw.svg.192dpi.png";
@@ -64,7 +65,7 @@ namespace Content.Server.DeviceLinking.Systems
                 Category = VerbCategory.Lever,
                 Message = Loc.GetString("two-way-lever-cant"),
                 Disabled = component.State == TwoWayLeverState.Left,
-                IconTexture = $"/Textures/Interface/VerbIcons/{_leftToggleImage}",
+                Icon = new SpriteSpecifier.Texture(new ResourcePath($"/Textures/Interface/VerbIcons/{_leftToggleImage}")),
                 Text = Loc.GetString("two-way-lever-left"),
             };
 
@@ -85,7 +86,7 @@ namespace Content.Server.DeviceLinking.Systems
                 Category = VerbCategory.Lever,
                 Message = Loc.GetString("two-way-lever-cant"),
                 Disabled = component.State == TwoWayLeverState.Right,
-                IconTexture = $"/Textures/Interface/VerbIcons/{_rightToggleImage}",
+                Icon = new SpriteSpecifier.Texture(new ResourcePath($"/Textures/Interface/VerbIcons/{_rightToggleImage}")),
                 Text = Loc.GetString("two-way-lever-right"),
             };
 
@@ -97,8 +98,8 @@ namespace Content.Server.DeviceLinking.Systems
             if (component.State == TwoWayLeverState.Middle)
                 component.NextSignalLeft = !component.NextSignalLeft;
 
-            if (TryComp(uid, out AppearanceComponent? appearanceComponent))
-                appearanceComponent.SetData(TwoWayLeverVisuals.State, component.State);
+            if (TryComp(uid, out AppearanceComponent? appearance))
+                _appearance.SetData(uid, TwoWayLeverVisuals.State, component.State, appearance);
 
             var port = component.State switch
             {

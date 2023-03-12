@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Server.DeviceLinking;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.UserInterface;
@@ -19,6 +18,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.DeviceNetwork.Systems;
 
@@ -69,14 +69,16 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 
         foreach (var component in EntityManager.EntityQuery<NetworkConfiguratorComponent>())
         {
+            var uid = component.Owner;
+
             if (component.ActiveDeviceList != null && EntityManager.EntityExists(component.ActiveDeviceList.Value) &&
-                _interactionSystem.InRangeUnobstructed(component.Owner, component.ActiveDeviceList.Value))
+                _interactionSystem.InRangeUnobstructed(uid, component.ActiveDeviceList.Value))
             {
-                return;
+                continue;
             }
 
             //The network configurator is a handheld device. There can only ever be an ui session open for the player holding the device.
-            _uiSystem.TryCloseAll(component.Owner, NetworkConfiguratorUiKey.Configure);
+            _uiSystem.TryCloseAll(uid, NetworkConfiguratorUiKey.Configure);
         }
     }
 
@@ -291,13 +293,15 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         {
             var linkStarted = configurator.ActiveDeviceLink.HasValue;
             verb.Text = Loc.GetString(linkStarted ? "network-configurator-link" : "network-configurator-start-link");
-            verb.IconTexture = "/Textures/Interface/VerbIcons/in.svg.192dpi.png";
+            verb.Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/in.svg.192dpi.png"));
         }
         else if (!HasComp<DeviceNetworkComponent>(args.Target))
         {
             var isDeviceList = HasComp<DeviceListComponent>(args.Target);
             verb.Text = Loc.GetString(isDeviceList ? "network-configurator-configure" : "network-configurator-save-device");
-            verb.IconTexture = isDeviceList ? "/Textures/Interface/VerbIcons/settings.svg.192dpi.png" : "/Textures/Interface/VerbIcons/in.svg.192dpi.png";
+            verb.Icon = isDeviceList
+                ? new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png"))
+                : new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/in.svg.192dpi.png"));
         }
 
         args.Verbs.Add(verb);
@@ -320,7 +324,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             AlternativeVerb verb = new()
             {
                 Text = Loc.GetString("network-configurator-save-device"),
-                IconTexture = "/Textures/Interface/VerbIcons/in.svg.192dpi.png",
+                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/in.svg.192dpi.png")),
                 Act = () => TryAddNetworkDevice(args.Target, args.Using.Value, args.User),
                 Impact = LogImpact.Low
             };
@@ -333,7 +337,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             AlternativeVerb verb = new()
             {
                 Text = Loc.GetString("network-configurator-link-defaults"),
-                IconTexture = "/Textures/Interface/VerbIcons/in.svg.192dpi.png",
+                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/in.svg.192dpi.png")),
                 Act = () => TryLinkDefaults(args.Using.Value, configurator, args.Target, args.User),
                 Impact = LogImpact.Low
             };
@@ -349,13 +353,12 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         AlternativeVerb verb = new()
         {
             Text = Loc.GetString("network-configurator-switch-mode"),
-            IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png",
+            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
             Act = () => SwitchMode(args.User, args.Target, configurator),
             Impact = LogImpact.Low
         };
         args.Verbs.Add(verb);
     }
-
 
     #endregion
 
