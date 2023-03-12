@@ -64,4 +64,4 @@ namespace Content.Shared.Projectiles
 /// Raised when entity is just about to be hit with projectile but can reflect it
 /// </summary>
 [ByRefEvent]
-public record struct ProjectileReflectAttemptEvent(EntityUid ProjUid, ProjectileComponent ProjComp, bool Cancelled);
+public record struct ProjectileReflectAttemptEvent(EntityUid ProjUid, bool Cancelled);
