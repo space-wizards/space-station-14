@@ -43,6 +43,7 @@ using Content.Shared.Popups;
 using Content.Shared.Tabletop.Components;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Server.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -51,7 +52,9 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Robust.Shared.Audio;
 using Timer = Robust.Shared.Timing.Timer;
+using Content.Shared.Cluwne;
 
 namespace Content.Server.Administration.Systems;
 
@@ -557,25 +560,21 @@ public sealed partial class AdminVerbSystem
             };
             args.Verbs.Add(killSign);
 
-            // TODO: Port cluwne outfit.
-            Verb clown = new()
+            Verb cluwne = new()
             {
-                Text = "Clown",
+                Text = "Cluwne",
                 Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Objects/Fun/bikehorn.rsi"), "icon"),
+
+                Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Clothing/Mask/cluwne.rsi"), "icon"),
+
                 Act = () =>
                 {
-                    SetOutfitCommand.SetOutfit(args.Target, "ClownGear", EntityManager, (_, clothing) =>
-                    {
-                        if (HasComp<ClothingComponent>(clothing))
-                            EnsureComp<UnremoveableComponent>(clothing);
-                        EnsureComp<ClumsyComponent>(args.Target);
-                    });
+                    EnsureComp<CluwneComponent>(args.Target);
                 },
                 Impact = LogImpact.Extreme,
-                Message = Loc.GetString("admin-smite-clown-description")
+                Message = Loc.GetString("admin-smite-cluwne-description")
             };
-            args.Verbs.Add(clown);
+            args.Verbs.Add(cluwne);
 
             Verb maiden = new()
             {

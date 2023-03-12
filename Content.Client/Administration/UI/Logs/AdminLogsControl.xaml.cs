@@ -75,7 +75,7 @@ public sealed partial class AdminLogsControl : Control
         UpdateResetButton();
     }
 
-    private void RoundSpinBoxChanged(object? sender, ValueChangedEventArgs args)
+    private void RoundSpinBoxChanged(ValueChangedEventArgs args)
     {
         UpdateResetButton();
     }

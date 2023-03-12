@@ -283,3 +283,25 @@
     sprite: Clothing/Head/Soft/bizarresoft_flipped.rsi
   - type: Clothing
     sprite: Clothing/Head/Soft/bizarresoft_flipped.rsi
+    
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatParamedicsoft
+  name: paramedic cap
+  description: "It's a paramedic's baseball hat with a medical logo."
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Soft/paramedicsoft.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Soft/paramedicsoft.rsi
+    
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatParamedicsoftFlipped
+  name: paramedic cap flipped
+  description: "It's a paramedic's baseball hat with a medical logo. Flipped."
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Soft/paramedicsoft_flipped.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Soft/paramedicsoft_flipped.rsi
