@@ -22,18 +22,24 @@ public sealed class CluwneBeastComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public float GiggleRandomChance = 0.1f;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    public float Cluwinification = 0.1f;
-
     [DataField("emoteId", customTypeSerializer: typeof(PrototypeIdSerializer<EmoteSoundsPrototype>))]
     public string? EmoteSoundsId = "CluwneBeast";
 
     /// <summary>
-    /// Amount of time cluwne is paralyzed for when falling over.
+    /// Chance to turn humanoid into a cluwne with melee.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float Cluwinification = 0.15f;
+
+    /// <summary>
+    /// Amount of time cluwne beast is paralyzed for when falling over.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public float ParalyzeTime = 2f;
 
+    /// <summary>
+    /// Spawner for mysterious portal.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("blueSpaceId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string BlueSpaceId = "PortalGreen";
 
@@ -45,4 +51,9 @@ public sealed class CluwneBeastComponent : Component
 
     [DataField("knocksound")]
     public SoundSpecifier KnockSound = new SoundPathSpecifier("/Audio/Items/airhorn.ogg");
+
+    [DataField("cluwnesound")]
+    public SoundSpecifier CluwneSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/Magic/staff_animation.ogg");
+
+    public EmoteSoundsPrototype? EmoteSounds;
 }
