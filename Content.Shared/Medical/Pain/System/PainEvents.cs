@@ -5,7 +5,7 @@ namespace Content.Shared.Medical.Pain.System;
 
 [ByRefEvent]
 public readonly record struct InflictPainEvent(
-    PainThresholdsComponent PainThresholds,
+    PainReceiverComponent painReceiver,
     FixedPoint2 Pain,
     EntityUid? Inflicter = null,
     bool Canceled = false);

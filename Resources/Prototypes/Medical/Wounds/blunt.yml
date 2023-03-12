@@ -16,6 +16,8 @@
       baseHealingRate: 0.05
       healingModifier: 0
       healingMultiplier: 1.0
+    - type: PainInflicter
+      pain: 10
 
 - type: entity
   id: JointDislocation

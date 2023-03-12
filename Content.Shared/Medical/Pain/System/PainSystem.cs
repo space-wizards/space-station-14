@@ -10,16 +10,21 @@ public sealed class PainSystem : EntitySystem
 {
     [Dependency] private ConsciousnessSystem _consciousnessSystem = default!;
 
+    //TODO: Make this a CVAR
+    private readonly FixedPoint2 _consciousnessPainEffectMax = 40;
+    private readonly FixedPoint2 _consciousnessPainFloor = 0.1;
+
     public override void Initialize()
     {
-        SubscribeLocalEvent<PainThresholdsComponent, ComponentGetState>(OnPainThresholdGetState);
-        SubscribeLocalEvent<PainThresholdsComponent, ComponentHandleState>(OnPainThresholdHandleState);
+        SubscribeLocalEvent<PainReceiverComponent, ComponentGetState>(OnPainThresholdGetState);
+        SubscribeLocalEvent<PainReceiverComponent, ComponentHandleState>(OnPainThresholdHandleState);
 
         SubscribeLocalEvent<PainInflicterComponent, ComponentGetState>(OnPainInflicterGetState);
         SubscribeLocalEvent<PainInflicterComponent, ComponentHandleState>(OnPainInflicterHandleState);
     }
 
-    private void OnPainInflicterHandleState(EntityUid uid, PainInflicterComponent component, ref ComponentHandleState args)
+    private void OnPainInflicterHandleState(EntityUid uid, PainInflicterComponent component,
+        ref ComponentHandleState args)
     {
         if (args.Current is not PainInflicterComponentState state)
             return;
@@ -33,27 +38,28 @@ public sealed class PainSystem : EntitySystem
         );
     }
 
-    private void OnPainThresholdHandleState(EntityUid uid, PainThresholdsComponent component, ref ComponentHandleState args)
+    private void OnPainThresholdHandleState(EntityUid uid, PainReceiverComponent component,
+        ref ComponentHandleState args)
     {
-        if (args.Current is not PainThresholdComponentState state)
+        if (args.Current is not PainReceiverComponentState state)
             return;
-        component.Thresholds = new SortedDictionary<FixedPoint2, FixedPoint2>(state.Thresholds);
+        component.MaxPain = state.MaxPain;
         component.PainModifier = state.PainModifier;
         component.RawPain = state.RawPain;
-        CheckThresholds(uid, component);
+        //ApplyPainEffects(uid, component);
     }
 
-    private void OnPainThresholdGetState(EntityUid uid, PainThresholdsComponent component, ref ComponentGetState args)
+    private void OnPainThresholdGetState(EntityUid uid, PainReceiverComponent component, ref ComponentGetState args)
     {
-        args.State = new PainThresholdComponentState(
+        args.State = new PainReceiverComponentState(
             component.PainModifier,
             component.RawPain,
-            new Dictionary<FixedPoint2, FixedPoint2>(component.Thresholds)
-        );
+            component.MaxPain,
+            component.ConsciousnessDamage);
     }
 
 
-    public FixedPoint2 GetPain(EntityUid target, PainThresholdsComponent? painThresholds = null)
+    public FixedPoint2 GetPain(EntityUid target, PainReceiverComponent? painThresholds = null)
     {
         if (!Resolve(target, ref painThresholds))
             return -1;
@@ -61,58 +67,36 @@ public sealed class PainSystem : EntitySystem
     }
 
     //Add or remove pain from a pain receiver
-    public bool ApplyPain(EntityUid target, FixedPoint2 pain, PainThresholdsComponent? painThresholds = null,
+    public bool ApplyPain(EntityUid target, FixedPoint2 pain, PainReceiverComponent? painReceiver = null,
         EntityUid? inflicterEntity = null)
     {
-        if (pain == 0 || !Resolve(target, ref painThresholds))
+        if (pain == 0 || !Resolve(target, ref painReceiver))
             return false;
 
-        var ev = new InflictPainEvent(painThresholds, pain, inflicterEntity);
+        var ev = new InflictPainEvent(painReceiver, pain, inflicterEntity);
         RaiseLocalEvent(target, ref ev, true);
         if (ev.Canceled)
             return false;
-        painThresholds.RawPain += pain;
         Dirty(target);
-        CheckThresholds(target, painThresholds);
+        ApplyPainEffects(target, painReceiver, pain);
         return true;
     }
 
-
-    private FixedPoint2 GetPreviousConsciousnessDamage(PainThresholdsComponent painThresholds)
+    private FixedPoint2 CalculateNewConsciousnessEffect(PainReceiverComponent painReceiver, FixedPoint2 pain)
     {
-        return painThresholds.CurrentThreshold == 0 ? 0 : painThresholds.Thresholds[painThresholds.CurrentThreshold];
+        //We do a lil' bit of mathin
+        // https://www.desmos.com/calculator/kxtd0njdhn
+        var painFloor = _consciousnessPainFloor * painReceiver.MaxPain;
+        var adjPainMod = painReceiver.PainModifier / (painReceiver.MaxPain - painFloor);
+        return FixedPoint2.Clamp(
+            FixedPoint2.Max(0, (pain - painFloor) * adjPainMod) *
+            _consciousnessPainEffectMax, 0, _consciousnessPainEffectMax);
     }
 
-    private FixedPoint2 GetConsciousnessDamageForPain(PainThresholdsComponent painThresholds, FixedPoint2 pain, out FixedPoint2 threshold)
+    private void ApplyPainEffects(EntityUid target, PainReceiverComponent? painReceiver, FixedPoint2 newPain)
     {
-        FixedPoint2 foundDamage = 0;
-        threshold = 0;
-        foreach (var (painThreshold, consciousnessDamage) in painThresholds.Thresholds)
-        {
-            if (pain < painThreshold)
-                break;
-            threshold = painThreshold;
-            foundDamage = consciousnessDamage;
-        }
-        return foundDamage;
-    }
-
-    private void CheckThresholds(EntityUid target, PainThresholdsComponent? painThresholds)
-    {
-        if (!Resolve(target,ref painThresholds))
+        if (!Resolve(target, ref painReceiver))
             return;
-        var pain = painThresholds.RawPain * painThresholds.PainModifier;
-        var delta = (GetPreviousConsciousnessDamage(painThresholds) - GetConsciousnessDamageForPain(painThresholds, pain, out var newThreshold));
-        if (newThreshold == painThresholds.CurrentThreshold)
-            return;
-        if (newThreshold < painThresholds.CurrentThreshold)
-        {
-            _consciousnessSystem.AddToDamage(target, -delta);
-        }
-        else
-        {
-            _consciousnessSystem.AddToDamage(target, delta);
-        }
-        painThresholds.CurrentThreshold = newThreshold;
+        painReceiver.RawPain += newPain;
     }
 }
