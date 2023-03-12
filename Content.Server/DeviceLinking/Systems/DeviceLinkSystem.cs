@@ -70,7 +70,7 @@ public sealed class DeviceLinkSystem : SharedDeviceLinkSystem
                 //Just skip using device networking if the source or the sink doesn't support it
                 if (!HasComp<DeviceNetworkComponent>(uid) || !TryComp<DeviceNetworkComponent?>(sinkUid, out var sinkNetworkComponent))
                 {
-                    RaiseLocalEvent(sinkUid, new SignalReceivedEvent(sink));
+                    RaiseLocalEvent(sinkUid, new SignalReceivedEvent(sink, uid));
                     continue;
                 }
 
@@ -103,7 +103,7 @@ public sealed class DeviceLinkSystem : SharedDeviceLinkSystem
         if (!args.Data.TryGetValue(InvokedPort, out string? port) || !(component.Ports?.Contains(port) ?? false))
             return;
 
-        RaiseLocalEvent(uid, new SignalReceivedEvent(port, args.Data));
+        RaiseLocalEvent(uid, new SignalReceivedEvent(port, args.Sender, args.Data));
     }
     #endregion
 

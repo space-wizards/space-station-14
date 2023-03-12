@@ -6,11 +6,14 @@ namespace Content.Server.DeviceLinking.Events
     {
         public readonly string Port;
         public readonly NetworkPayload? Data;
+        public readonly EntityUid? Trigger;
 
-        public SignalReceivedEvent(string port, NetworkPayload? data = null)
+        public SignalReceivedEvent(string port, EntityUid? trigger = null, NetworkPayload? data = null)
         {
             Port = port;
+            Trigger = trigger;
             Data = data;
         }
+
     }
 }
