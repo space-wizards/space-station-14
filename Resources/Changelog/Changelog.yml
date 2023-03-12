@@ -1,22 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Science passive research point generation is no longer capped at 30000,
-    type: Remove}
-  id: 2655
-  time: '2022-11-15T04:04:56.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed LOOC chat prefix not working. Now messages starting starting with
-      "(" just be interpreted as LOOC chat, type: Fix}
-  id: 2656
-  time: '2022-11-15T04:14:40.0000000+00:00'
-- author: moony
-  changes:
-  - {message: Origin station has been pulled temporarily due to needing re-review.,
-    type: Remove}
-  id: 2657
-  time: '2022-11-15T05:12:32.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Combat mode no longer disables alt-clicking., type: Tweak}
@@ -2921,3 +2903,18 @@ Entries:
     type: Fix}
   id: 3154
   time: '2023-03-11T03:27:11.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added a default landing sound for items., type: Add}
+  id: 3155
+  time: '2023-03-11T08:26:01.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: 'Changed space bears to glow, and resprited their hide.', type: Tweak}
+  id: 3156
+  time: '2023-03-11T14:35:53.0000000+00:00'
+- author: CaptainSqrBeard
+  changes:
+  - {message: Fixed slime hair was not translucent, type: Fix}
+  id: 3157
+  time: '2023-03-11T21:04:58.0000000+00:00'
