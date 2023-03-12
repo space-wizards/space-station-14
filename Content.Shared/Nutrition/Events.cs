@@ -25,8 +25,5 @@ public sealed class ConsumeDoAfterEvent : DoAfterEvent
         FlavorMessage = flavorMessage;
     }
 
-    public override DoAfterEvent Clone()
-    {
-        return this;
-    }
+    public override DoAfterEvent Clone() => this;
 }

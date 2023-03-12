@@ -222,7 +222,13 @@ public abstract partial class SharedToolSystem : EntitySystem
 
         public override DoAfterEvent Clone()
         {
-            return new ToolDoAfterEvent(Fuel, WrappedEvent.Clone(), OriginalTarget);
+            var evClone = WrappedEvent.Clone();
+
+            // Most DoAfter events are immutable
+            if (evClone == WrappedEvent)
+                return this;
+
+            return new ToolDoAfterEvent(Fuel, evClone, OriginalTarget);
         }
     }
 
@@ -241,10 +247,7 @@ public abstract partial class SharedToolSystem : EntitySystem
             Coordinates = coordinates;
         }
 
-        public override DoAfterEvent Clone()
-        {
-            return this;
-        }
+        public override DoAfterEvent Clone() => this;
     }
 
     [Serializable, NetSerializable]
@@ -262,10 +265,7 @@ public abstract partial class SharedToolSystem : EntitySystem
             Coordinates = coordinates;
         }
 
-        public override DoAfterEvent Clone()
-        {
-            return this;
-        }
+        public override DoAfterEvent Clone() => this;
     }
 }
 

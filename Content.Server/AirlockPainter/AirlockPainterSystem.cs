@@ -129,10 +129,7 @@ namespace Content.Server.AirlockPainter
                 Sprite = sprite;
             }
 
-            public override DoAfterEvent Clone()
-            {
-                return this;
-            }
+            public override DoAfterEvent Clone() => this;
         }
     }
 }

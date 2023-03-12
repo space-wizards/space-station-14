@@ -115,10 +115,7 @@ public sealed class ConstructionInteractDoAfterEvent : DoAfterEvent
         ClickLocation = ev.ClickLocation;
     }
 
-    public override DoAfterEvent Clone()
-    {
-        return this;
-    }
+    public override DoAfterEvent Clone() => this;
 }
 
 [Serializable, NetSerializable]

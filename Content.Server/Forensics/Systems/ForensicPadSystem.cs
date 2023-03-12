@@ -126,10 +126,7 @@ namespace Content.Server.Forensics
                 Sample = sample;
             }
 
-            public override DoAfterEvent Clone()
-            {
-                return this;
-            }
+            public override DoAfterEvent Clone() => this;
         }
     }
 }

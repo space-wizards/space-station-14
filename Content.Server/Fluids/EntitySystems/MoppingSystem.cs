@@ -313,9 +313,6 @@ public sealed class MoppingSystem : SharedMoppingSystem
             TransferAmount = transferAmount;
         }
 
-        public override DoAfterEvent Clone()
-        {
-            return new AbsorbantDoAfterEvent(TargetSolution, Message, Sound, TransferAmount);
-        }
+        public override DoAfterEvent Clone() => this;
     }
 }

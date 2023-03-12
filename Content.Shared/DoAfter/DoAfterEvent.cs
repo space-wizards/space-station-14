@@ -68,10 +68,7 @@ public abstract class SimpleDoAfterEvent : DoAfterEvent
     // E.g., then a SimpleDoAfter<TEvent> would just raise a TEvent event.
     // But afaik generic event types currently can't be serialized for networking or YAML.
 
-    public override DoAfterEvent Clone()
-    {
-        return this;
-    }
+    public override DoAfterEvent Clone() => this;
 }
 
 // Placeholder for obsolete async do afters

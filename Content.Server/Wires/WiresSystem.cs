@@ -722,10 +722,10 @@ public sealed class WiresSystem : EntitySystem
     public sealed class WireDoAfterEvent : DoAfterEvent
     {
         [DataField("action", required: true)]
-        public WiresAction Action;
+        public readonly WiresAction Action;
 
         [DataField("id", required: true)]
-        public int Id;
+        public readonly int Id;
 
         private WireDoAfterEvent()
         {
@@ -736,11 +736,8 @@ public sealed class WiresSystem : EntitySystem
             Action = action;
             Id = id;
         }
-
-        public override DoAfterEvent Clone()
-        {
-            return new WireDoAfterEvent(Action, Id);
-        }
+        
+        public override DoAfterEvent Clone() => this;
     }
 
     private void UpdateWires(EntityUid used, EntityUid user, EntityUid toolEntity, int id, WiresAction action, WiresComponent? wires = null, ToolComponent? tool = null)

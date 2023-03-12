@@ -670,11 +670,8 @@ namespace Content.Server.Storage.EntitySystems
                 ValidStorables = storables;
             }
 
-            public override DoAfterEvent Clone()
-            {
-                // Relying on people not somehow modifying the IReadOnlyList.
-                return this;
-            }
+            // Relying on people not somehow modifying the IReadOnlyList.
+            public override DoAfterEvent Clone() => this;
         }
     }
 }
