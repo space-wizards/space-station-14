@@ -61,7 +61,7 @@ namespace Content.Server.Tiles
             {
                 var ray = new CollisionRay(tilePos, dir.Normalized, (int) CollisionGroup.Impassable);
                 var results = _physics.IntersectRay(locationMap.MapId, ray, dir.Length, returnOnFirstHit: true);
-                canAccessCenter = results.Count() == 0;
+                canAccessCenter = !results.Any();
             }
 
             // if user can access tile center then they can place floor
