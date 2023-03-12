@@ -16,12 +16,13 @@ public sealed class TelecomSystem : EntitySystem
     {
         if (args.Channel.longRange)
             return;
-        if (HasComp<RadioMicrophoneComponent>(args.RadioSource) && HasComp<RadioSpeakerComponent>(args.RadioReceiver))
-            return;
         var mapSource = Transform(args.RadioSource).MapID;
         var mapReceiver = Transform(args.RadioReceiver).MapID;
         if (mapSource == mapReceiver)
         {
+            // if both source and receiver (for example) are handheld radios (but not headsets) then you don't server 
+            if (HasComp<RadioMicrophoneComponent>(args.RadioSource) && HasComp<RadioSpeakerComponent>(args.RadioReceiver))
+                return;
             var servers = EntityQuery<TelecomServerComponent, EncryptionKeyHolderComponent, ApcPowerReceiverComponent, TransformComponent>();
             foreach (var (_, keys, power, transform) in servers)
             {
