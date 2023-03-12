@@ -125,7 +125,7 @@ public sealed class FluidSpreaderSystem : EntitySystem
         var ray = new CollisionRay(dst, dir.Normalized, (int) CollisionGroup.TabletopMachineMask);
         var mapId = dstMap.MapId;
         var results = _physics.IntersectRay(mapId, ray, dir.Length, returnOnFirstHit: true);
-        if (results.Count() > 0)
+        if (results.Any())
         {
             newPuddleUid = null;
             newPuddleComp = null;
