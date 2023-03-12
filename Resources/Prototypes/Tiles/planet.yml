@@ -1,9 +1,7 @@
 - type: tile
   id: FloorPlanetDirt
   name: tiles-dirt-floor
-  sprite: /Textures/Tiles/dirt.png
-  variants: 4
-  placementVariants: [0, 1, 2, 3]
+  sprite: /Textures/Tiles/Planet/dirt.rsi/dirt.png
   isSubfloor: true
   canCrowbar: false
   footstepSounds:
