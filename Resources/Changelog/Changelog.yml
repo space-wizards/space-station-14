@@ -1,13 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: 'Added the Traversal Distorter, a machine capable of pushing Artifacts''
-      random node traversal in certain directions. Simply place an artifact on the
-      machine and you can choose how you want to encourage it.', type: Add}
-  id: 2674
-  time: '2022-11-18T04:43:18.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Item artifacts can now be scanned., type: Fix}
   id: 2675
   time: '2022-11-18T21:59:58.0000000+00:00'
@@ -2913,3 +2906,8 @@ Entries:
   - {message: Flashes can no longer affect blind players., type: Tweak}
   id: 3173
   time: '2023-03-13T04:03:51.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Changed security and HoS hardsuits lights from red to yellow., type: Tweak}
+  id: 3174
+  time: '2023-03-13T17:45:48.0000000+00:00'
