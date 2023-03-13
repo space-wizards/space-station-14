@@ -180,6 +180,8 @@ namespace Content.Server.GameTicking
 
             RoundLengthMetric.Set(0);
 
+            var startingEvent = new RoundStartingEvent(RoundId);
+            RaiseLocalEvent(startingEvent);
             var readyPlayers = new List<IPlayerSession>();
             var readyPlayerProfiles = new Dictionary<NetUserId, HumanoidCharacterProfile>();
 
@@ -422,7 +424,8 @@ namespace Content.Server.GameTicking
 #endif
                 // TODO: Maybe something less naive here?
                 // FIXME: Actually, definitely.
-                EntityManager.DeleteEntity(entity);
+                if (!Deleted(entity) && !Terminating(entity))
+                    EntityManager.DeleteEntity(entity);
 #if EXCEPTION_TOLERANCE
                 }
                 catch (Exception e)

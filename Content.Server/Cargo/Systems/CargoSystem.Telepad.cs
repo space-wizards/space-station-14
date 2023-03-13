@@ -58,34 +58,16 @@ public sealed partial class CargoSystem
                 continue;
             }
 
-            var orderIndices = new ValueList<int>();
-
-            foreach (var (oIndex, oOrder) in orderDatabase.Orders)
+            var xform = Transform(comp.Owner);
+            if(FulfillOrder(orderDatabase, xform.Coordinates,comp.PrinterOutput))
             {
-                if (!oOrder.Approved) continue;
-                orderIndices.Add(oIndex);
+                _audio.PlayPvs(_audio.GetSound(comp.TeleportSound), comp.Owner, AudioParams.Default.WithVolume(-8f));
+                UpdateOrders(orderDatabase);
+
+                comp.CurrentState = CargoTelepadState.Teleporting;
+                _appearance.SetData(comp.Owner, CargoTelepadVisuals.State, CargoTelepadState.Teleporting, appearance);
             }
 
-            if (orderIndices.Count == 0)
-            {
-                comp.Accumulator += comp.Delay;
-                continue;
-            }
-
-            orderIndices.Sort();
-            var index = orderIndices[0];
-            var order = orderDatabase.Orders[index];
-            order.Amount--;
-
-            if (order.Amount <= 0)
-                orderDatabase.Orders.Remove(index);
-
-            _audio.PlayPvs(_audio.GetSound(comp.TeleportSound), comp.Owner, AudioParams.Default.WithVolume(-8f));
-            SpawnProduct(comp, order);
-            UpdateOrders(orderDatabase);
-
-            comp.CurrentState = CargoTelepadState.Teleporting;
-            _appearance.SetData(comp.Owner, CargoTelepadVisuals.State, CargoTelepadState.Teleporting, appearance);
             comp.Accumulator += comp.Delay;
         }
     }
@@ -119,47 +101,5 @@ public sealed partial class CargoSystem
     private void OnTelepadAnchorChange(EntityUid uid, CargoTelepadComponent component, ref AnchorStateChangedEvent args)
     {
         SetEnabled(component);
-    }
-
-    /// <summary>
-    ///     Spawn the product and a piece of paper. Attempt to attach the paper to the product.
-    /// </summary>
-    private void SpawnProduct(CargoTelepadComponent component, CargoOrderData data)
-    {
-        // spawn the order
-        if (!_protoMan.TryIndex(data.ProductId, out CargoProductPrototype? prototype))
-            return;
-
-        var xform = Transform(component.Owner);
-
-        var product = EntityManager.SpawnEntity(prototype.Product, xform.Coordinates);
-
-        Transform(product).Anchored = false;
-
-        // spawn a piece of paper.
-        var printed = EntityManager.SpawnEntity(component.PrinterOutput, xform.Coordinates);
-
-        if (!TryComp<PaperComponent>(printed, out var paper))
-            return;
-
-        // fill in the order data
-        var val = Loc.GetString("cargo-console-paper-print-name", ("orderNumber", data.PrintableOrderNumber));
-
-        MetaData(printed).EntityName = val;
-
-        _paperSystem.SetContent(printed, Loc.GetString(
-            "cargo-console-paper-print-text",
-            ("orderNumber", data.PrintableOrderNumber),
-            ("itemName", prototype.Name),
-            ("requester", data.Requester),
-            ("reason", data.Reason),
-            ("approver", data.Approver ?? string.Empty)),
-            paper);
-
-        // attempt to attach the label
-        if (TryComp<PaperLabelComponent>(product, out var label))
-        {
-            _slots.TryInsert(product, label.LabelSlot, printed, null);
-        }
     }
 }
