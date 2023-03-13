@@ -197,7 +197,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/security.rsi
   - type: PointLight
-    color: "#ffadad"
+    color: "#ffeead"
   - type: PressureProtection
     highPressureMultiplier: 0.525
     lowPressureMultiplier: 10000
@@ -220,7 +220,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/security-red.rsi
   - type: PointLight
-    color: "#ffadad"
+    color: "#ffeead"
   - type: PressureProtection
     highPressureMultiplier: 0.45
     lowPressureMultiplier: 10000
