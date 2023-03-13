@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Added machine upgrades for the medical scanner. You can now decrease
-      the chance that cloning fails on a body., type: Add}
-  id: 2671
-  time: '2022-11-16T21:02:37.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Item artifacts. Artifact spawns may now spawn handheld artifacts, which
@@ -2914,3 +2908,8 @@ Entries:
   - {message: Strip menu won't open when trying to wake sleeping players., type: Fix}
   id: 3170
   time: '2023-03-13T03:29:26.0000000+00:00'
+- author: Nylux
+  changes:
+  - {message: Dionas can now get drunk., type: Fix}
+  id: 3171
+  time: '2023-03-13T03:48:32.0000000+00:00'
