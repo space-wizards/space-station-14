@@ -279,17 +279,6 @@
   categories:
     - UplinkUtility
 
-#TODO: Remove this from the uplink
-- type: listing
-  id: UplinkHeadset
-  name: uplink-headset-name
-  description: uplink-headset-desc
-  productEntity: ClothingHeadsetAltSyndicate
-  cost:
-    Telecrystal: 4
-  categories:
-  - UplinkUtility
-
 - type: listing
   id: UplinkHeadsetEncryptionKey
   name: uplink-encryption-key-name
@@ -299,6 +288,11 @@
     Telecrystal: 2
   categories:
   - UplinkUtility
+  conditions:
+    - !type:StoreWhitelistCondition
+      blacklist:
+        tags:
+          - NukeOpsUplink
 
 - type: listing
   id: UplinkHypopen
