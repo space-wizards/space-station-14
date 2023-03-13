@@ -54,10 +54,10 @@ public sealed class SolarFlare : StationEventSystem
                     _poweredLight.TryDestroyBulb(comp.Owner, comp);
             }
 
-            foreach (var comp in EntityQuery<DoorComponent>())
+            foreach (var (airlock, door) in EntityQuery<AirlockComponent, DoorComponent>())
             {
-                if (RobustRandom.Prob(_event.DoorToggleChancePerSecond))
-                    _door.TryToggleDoor(comp.Owner, comp);
+                if (airlock.AutoClose && RobustRandom.Prob(_event.DoorToggleChancePerSecond))
+                    _door.TryToggleDoor(door.Owner, door);
             }
         }
 
