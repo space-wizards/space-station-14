@@ -3,7 +3,7 @@ apc-menu-breaker-label = Главный рубильник
 apc-menu-breaker-button = Переключить
 apc-menu-power-label = Заряд батареи
 apc-menu-external-label = Внешнее питание
-apc-menu-charge-label = Заряд {$percent}
+apc-menu-charge-label = Заряд { $percent }
 
 # For the power state label
 
