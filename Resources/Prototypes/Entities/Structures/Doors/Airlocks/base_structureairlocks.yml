@@ -42,7 +42,7 @@
       layer:
       - AirlockLayer
   - type: LayerChangeOnWeld
-    unweldedLayer: AirlockLayer
+    unWeldedLayer: AirlockLayer
     weldedLayer: WallLayer
   - type: ContainerFill
     containers:

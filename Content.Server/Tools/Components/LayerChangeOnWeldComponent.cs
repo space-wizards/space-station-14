@@ -1,14 +1,17 @@
+using Content.Server.Tools.Systems;
 using Content.Shared.Physics;
 
-namespace Content.Server.Tools.Components
-{
-    [RegisterComponent]
-    public sealed class LayerChangeOnWeldComponent : Component
-    {
-        [DataField("unweldedLayer")]
-        public CollisionGroup UnweldedLayer = CollisionGroup.AirlockLayer;
+namespace Content.Server.Tools.Components;
 
-        [DataField("weldedLayer")]
-        public CollisionGroup WeldedLayer = CollisionGroup.WallLayer;
-    }
+[RegisterComponent]
+[Access(typeof(WeldableSystem))]
+public sealed class LayerChangeOnWeldComponent : Component
+{
+    [DataField("unWeldedLayer")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public CollisionGroup UnWeldedLayer = CollisionGroup.AirlockLayer;
+
+    [DataField("weldedLayer")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public CollisionGroup WeldedLayer = CollisionGroup.WallLayer;
 }
