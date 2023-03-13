@@ -1,0 +1,88 @@
+# Hook
+- type: dungeonRoomPack
+  id: LargeArea2
+  size: 17,17
+  rooms:
+    - 7,0,10,11
+    - 6,12,11,17
+    - 12,13,17,16
+
+# Wide corridor vertically up the middle and small corridors on left
+- type: dungeonRoomPack
+  id: LargeArea3
+  size: 17,17
+  rooms:
+    - 6,0,11,11
+    - 6,12,11,17
+    - 0,13,5,16
+    - 1,5,4,12
+    - 0,1,5,4
+
+# Long horizontal corridor with rooms above
+#- type: dungeonRoomPack
+#  id: LargeArea4
+#  size: 17,17
+#  rooms:
+#    - 0,7,17,10
+#    - 0,11,5,16
+#    - 6,11,11,16
+
+# Corridor from botleft to topright with 2 rooms in top left
+- type: dungeonRoomPack
+  id: LargeArea5
+  size: 17,17
+  rooms:
+    # Corridor (with fat bot-left)
+    - 0,1,11,4
+    - 12,0,17,5
+    - 13,6,16,17
+    # Rooms (5x7)
+    - 7,9,12,16
+    - 1,5,6,12
+
+# Medium
+# Whole area room
+#- type: dungeonRoomPack
+#  id: MediumArea1
+#  size: 5,17
+#  rooms:
+#    - 0,6,15,9
+#    - 11,12,16,17
+#    - 11,0,16,5
+#  roomConnections:
+#    - 13,5
+#    - 13,9
+
+# Three 5x5 rooms
+- type: dungeonRoomPack
+  id: MediumArea2
+  size: 5,17
+  rooms:
+    - 0,0,5,5
+    - 0,6,5,11
+    - 0,12,5,17
+
+# Two 5x5 and 3x5
+- type: dungeonRoomPack
+  id: MediumArea3
+  size: 5,17
+  rooms:
+    - 0,0,5,5
+    - 0,6,5,11
+    - 1,12,4,17
+
+# 3x5 -> 5x5 -> 3x5
+- type: dungeonRoomPack
+  id: MediumArea4
+  size: 5,17
+  rooms:
+    - 1,0,4,5
+    - 0,6,5,11
+    - 1,12,4,17
+
+# Small
+- type: dungeonRoomPack
+  id: SmallArea1
+  size: 5,5
+  rooms:
+    - 0,0,5,5
