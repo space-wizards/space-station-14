@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Item artifacts can now be scanned., type: Fix}
-  id: 2675
-  time: '2022-11-18T21:59:58.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: The 'toggle ghosts' button while a ghost is now an action., type: Tweak}
@@ -2911,3 +2906,9 @@ Entries:
   - {message: Changed security and HoS hardsuits lights from red to yellow., type: Tweak}
   id: 3174
   time: '2023-03-13T17:45:48.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: 'Added the warden''s hardsuit to the warden''s locker. Don''t abuse
+      it, wardens.', type: Add}
+  id: 3175
+  time: '2023-03-13T17:47:56.0000000+00:00'
