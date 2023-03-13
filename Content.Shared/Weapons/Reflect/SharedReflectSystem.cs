@@ -52,7 +52,7 @@ public abstract class SharedReflectSystem : EntitySystem
             args.Cancelled = true;
     }
     
-    public bool TryReflectProjectile(EntityUid user, EntityUid? reflector, EntityUid projectile)
+    private bool TryReflectProjectile(EntityUid user, EntityUid? reflector, EntityUid projectile)
     {
         if (TryComp<ReflectComponent>(reflector, out var reflect) &&
             reflect.Enabled && 
@@ -86,7 +86,7 @@ public abstract class SharedReflectSystem : EntitySystem
         }
     }
 
-    public bool TryReflectHitscan(EntityUid user, EntityUid? reflector, Vector2 direction, [NotNullWhen(true)] out Vector2? newDirection)
+    private bool TryReflectHitscan(EntityUid user, EntityUid? reflector, Vector2 direction, [NotNullWhen(true)] out Vector2? newDirection)
     {
         if (TryComp<ReflectComponent>(reflector, out var reflect) &&
             reflect.Enabled &&
