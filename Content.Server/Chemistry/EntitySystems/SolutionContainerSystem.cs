@@ -8,6 +8,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -491,6 +492,37 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         return false;
     }
 
+    /// <summary>
+    /// Gets the most common reagent across all solutions by volume.
+    /// </summary>
+    /// <param name="component"></param>
+    public ReagentPrototype? GetMaxReagent(SolutionContainerManagerComponent component)
+    {
+        if (component.Solutions.Count == 0)
+            return null;
+
+        var reagentCounts = new Dictionary<string, FixedPoint2>();
+
+        foreach (var solution in component.Solutions.Values)
+        {
+            foreach (var reagent in solution.Contents)
+            {
+                reagentCounts.TryGetValue(reagent.ReagentId, out var existing);
+                existing += reagent.Quantity;
+                reagentCounts[reagent.ReagentId] = existing;
+            }
+        }
+
+        var max = reagentCounts.Max();
+
+        return _prototypeManager.Index<ReagentPrototype>(max.Key);
+    }
+
+    public SoundSpecifier? GetSound(SolutionContainerManagerComponent component)
+    {
+        var max = GetMaxReagent(component);
+        return max?.FootstepSound;
+    }
 
     // Thermal energy and temperature management.
 
