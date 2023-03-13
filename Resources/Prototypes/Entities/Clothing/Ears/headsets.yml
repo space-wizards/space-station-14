@@ -239,3 +239,19 @@
   - type: Clothing
     sprite: Clothing/Ears/Headsets/service.rsi
 
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetLawyer
+  name: law & order headset
+  description: Includes the two communications channels most important to a lawyer - Security, for understanding and ridiculing the actions of the force, and Service, for understanding the needs and wants of the station's populus.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeySecurity
+      - EncryptionKeyService
+      - EncryptionKeyCommon
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/security.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/security.rsi

@@ -214,3 +214,196 @@
 
         Air Injectors:
         Injectors are similar to active vents, but they have no internal pump and do not require power. They cannot be configured, but they can continue to pump gasses up to much higher pressures.
+
+- type: entity
+  parent: BookBase
+  id: BookSpaceLaw
+  name: "Mr Spess' Space Law"
+  description: A copy of space law, the bible of the lawyer.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/books.rsi
+      layers:
+        - state: book_space_law
+    - type: Paper
+      content: |
+        All of the NT14 series of Nanotrasen space stations operate under space law. All crew, passengers and visitors aboard are expected to know and follow these laws.
+
+        SECTION 1: CRIMES
+
+        Crimes are divided into Low Crimes and High Crimes.
+        Low crimes can be charged, investigated, and punished directly by security. 
+        High Crimes should be heard and judged in a court of law.
+        Security personell can be tried in a Court-Martial for committing any High Crime, with the maximum listed punishment being applicable by the court martial.
+        Each crime has at least three sections: Minimum Punishment, Maximum Punishment, and Special Considerations
+          Any punishments below the maximum punishment can be applied and the minimum punishment must at least be applied.
+          If someone has committed a crime, use common sense when applying punishment.
+          Stealing someone's hat is very different from stealing the Nuclear Authentication Disk.
+          In the event of multiple crimes in the same vein, like an individual that has committed maiming and murder on the same victim, only the charge for the most severe crime should be applied.
+          When applying charges extenuating circumstances can apply, lifting the punishment for the crime entirely or applying a reduced sentence. 
+        In the situation where the commission of the crime is justified should be decided by the ranking memberof security or the Captain. This includes situations such as:
+          Justifiable homicide,
+          Emergency requiring tresspass,
+          Self defence, etc. 
+
+        SECTION 1.1: SENTENCING MODIFIERS
+
+        Solicitation, Accessory, Attempts and Conspiracy are to be treated and charged as if the perpetrator committed the associated crime. For example: an individual who is an accessory to murder will be punished as if they are charged with murder.
+          Solicitation: Encouraging, bribing, requesting, or instructing someone to commit a crime, with the intent that the person being solicited commits the crime.
+          Accessory: Assissting in the commission of a crime, without participating in the crime itself. knowing that a crime will be, has been, or is being committed.
+          Attempts: Attempting to commit a crime, with the intent to carry out that crime.
+          Conspiracy: Plannning to commit a crime, with the intent to eventually carry out that crime.
+
+        SECTION 1.2: PUNISHMENT
+
+        Execution
+        Termination of life. Anyone who has been given a sentence of death may choose how they wish to die. They should also be allowed to receive painkillers, anesthesia, and/or tranquilizers.
+
+         Normal Punishments
+         Extended Confinement: Confinement in the brig until the end of the shift. Commonly known as "perma", or "permabrigging".
+         Demotion: The restriction of an individual's access to certain areas aboard a vessel or facility. Aboard the station, this often means that an individual who has been demoted only has access in:
+           Public hallways
+           The mess hall
+           Arrivals
+           Maintenance
+           Dorms
+
+        SECTION 2: TREATMENT OF PRISONERS
+
+        Prisoners still have certain rights that must be upheld by law enforcement:
+          Prisoners must be granted adequate medical care. They should also be provided psychiatric and spiritual counselling if requested.
+          Prisoners must be allowed access to communications equipment (often headsets or handheld radios) so long as they are not abused.
+          Prisoners must be granted clothing, food, water, shelter and safety. If the brig is no longer safe, confinement must be established in another location.
+          Prisoners must be given access to legal counsel during an interrogation if requested and available.
+          Prisoners must be granted freedom of movement, and should not be restrained with handcuffs or other devices after incarceration unless there is an undue risk to life and limb. Similarly, any prisoners held for extended or permanent confinement should be held in the communal brig, and should not be confined to a solitary cell unless they pose a risk to life and limb.
+
+        SECTION 3.1: HIGH CRIMES
+
+        All maximum punishments marked with an asterisk are special circumstance only punishments (such as a Syndicate agent who has murdered several people).
+
+        Murder
+        To kill a sapient being with malicious intent and premeditation.
+        Minimum: Confinement for ten (10) minutes
+        Maximum: Execution*
+        Notes: Premeditated and malicious and the key words here.
+
+        Manslaughter
+        To kill a sapient being without intent, or in a manner less extreme than murder. Includes provoked manslaughter, manslaughter in self defense, negligent manslaughter, and impassioned killing.
+        Minimum: Confinement for five (5) minutes
+        Maximum: Extended confinement
+        Notes: Different from murder by virtue of lack of intent. If the actions of the perpetrator clearly did not intend to result in death, manslaughter is the appropriate charge.
+
+        Maiming
+        To inflict physical injury with the intent to disfigure, degrade appearance, or impair function.
+        Minimum: Confinement for seven minutes and thirty seconds (7:30)
+        Maximum: Extended confinement
+        Notes: This also includes mistreatment of bodies such as the taking of trophies, and security severely injuring prisoners to prevent escape.
+
+        Destruction of a Vessel or Habitat
+        To engage in maliciously destructive actions which threaten to destroy, or successfully destroy a vessel or habitat.
+        Minimum: Confinement for ten (10) minutes
+        Maximum: Execution*
+        Notes: This includes arson, bombing, tampering with Power, intentional decompression, sabotaging atmospherics, or tampering with the self-destruct.
+
+        Damage or Destruction of Property
+        To maliciously damage or deface public or private property or equipment, including legal evidence or recorded information.
+        Minimum: Demotion
+        Maximum: Extended confinement
+        Notes: This is a step down from destruction of a vessel or habitat, and a step up from vandalism. It applies more towards spacing a person’s PDA, maliciously breaking interior windows or furniture, or damaging machinery. Note that this requires malicious intent.
+
+        Kidnapping/Hostage Taking/Illegal Confinement
+        To unlawfully take away, transport, or confine a sapient being against that individual’s will.
+        Minimum: Containment for seven minutes and thirty seconds (7:30)
+        Maximum: Execution*
+        Notes: More severe punishment is appropriate depending on the motivation of the kidnapper. If an individual is held for ransom, the crime is considered Hostage Taking, and at a minimum should be given extended confinement. Notably, this includes the illegal confinement of an individual by security forces.
+
+        Sexual Assault/Harassment
+        To harass someone or attempt to force them into sexual situations.
+        Minimum: Extended confinement
+        Maximum: Exeuction
+        This law is mostly included to allow people to deal with it in the event it does occur. These people will often invoke the wrath of the Gods.
+
+        Rioting
+        To engage in a violent public disturbance which involves damage to people or property.
+        Minimum: Demotion
+        Maximum: Extended confinement
+        Notes: Separated from hooliganism by causing damage in a riot.
+
+        Espionage
+        The gathering or communication of confidential or secret information of the state to a foreign or unauthorized domestic recipient, or to intentionally misrepresent oneself as being an official of Nanotrasen.
+        Minimum: Demotion and fifteen (15) minutes of confinement
+        Maximum: Execution*
+        Notes: Note that execution only applies if they have committed other severe crimes such as multiple other high crimes.
+
+        Resisting Arrest/Breach of Arrest/Escape
+        To intentionally and violently resist Security Officers or other authorized personnel in the execution of an arrest; to violently flee arrest; to escape arrest, custody, or confinement.
+        Minimum: Additional five (5) minutes in the brig, on top of pre extisting sentence
+        Maximum: Extended confinement
+        Notes: Notably this only includes violently resisting arrest. Just because an accused person does not run to security with open arms does not mean they are resisting. Pushing or disarming does count. Execution can be sentenced by a Field Court Martial only if Extended Confinement isn't an option.
+
+        SECTION 3.2: LOW CRIMES
+
+        Assault
+        To threaten to use physical force against someone without the intent to kill or maim, while also having the capability and/or intent to carry out that threat.
+        Minimum: Confinement for three (3) minutes
+        Maximum: Demotion
+        Notes: Note that this doesn’t include “Irma kill u” over common radio, it requires intent and ability to carry out the threat of violence, like waving a knife at someone.
+
+        Battery
+        To use physical force against a person, including any unlawful and or unwanted touching of the person by an aggressor or by a substance utilized by them, either directly or indirectly.
+        Minimum: Confinement for five (5) minutes, up to seven minutes and thirty seconds (7:30) for any injury that results in a visit to Medical.
+        Maximum: Extended confinement
+        Notes: The degree of injury should come into play a lot here. If someone just punched someone else, things should probably be handled outside of the brig.
+
+        Theft
+        To take the property of another individual, organization, or common property, without consent, and with the intent to deprive the rightful owner.
+        Minimum: Confinement for two (2) minutes to seven minutes and thirty seconds (7:30) depending on severity of stolen item(s), confiscation and return of stolen item(s)
+        Maximum: Demotion
+        Notes: Even if an individual had access to items, removing them for unlawful personal use   or hiding them so others can’t use them   is still theft.
+
+        Endangerment
+        To recklessly put yourself or others in danger, either through direct action, or failure to act.
+        Minimum: Confinement for two (2) minutes
+        Maximum: Demotion
+        Notes: Covers industrial accidents, industrial negligence, or even medical malpractice. Punishment can vary widely based on severity. This also includes self experimentation with regards to the Science department.
+
+        Vandalism
+        To intentionally deface or superficially damage public or private property.
+        Minimum: Confinemnt for two (2) minutes, *or* five (5) minutes of community service
+        Maximum: Demotion
+
+        Tresspassing
+        To enter an area which an individual does not have access to, whether by simple action, force, or coercion.
+        Minimum: Removal from area and ticketing
+        Maximum: Demotion
+        Once again comes down to severity; breaking into the vault and refusing to leave should be punished more severely than following an engineer into the engineering lobby. Remember to make sure a trespasser was not invited in.
+
+        Animal Cruelty
+        To inflict unnecessary suffering or harm on a non sapient being with malicious intent.
+        Minimum: Confinement for five (5) minutes and psychiatric counseling
+        Maximum: Demotion
+        Notes: This doesn’t include legitimate and authorized experiments on monkeys, or killing chickens for meat; but stuffing a dog in disposals definitely counts. setting monkeys on fire for kicks is fine provided you are science. Unauthorized experiments on animals may also be included.
+
+        Controlled Substances/Equipment
+        To wrongfully use, possess, manufacture, or distribute any controlled substances or items.
+        Minimum: Ticketing
+        Maximum: Confiscation and interrogation
+        Notes: Yet again comes down to severity; possession of a fully automatic weapon with lethal ammunition should be punished more severely than a single syringe of space drugs. How the person in question is using the item should also be taken into account, If a salvage is using an energy sword from a traitor they killed in order to kill carp on wrecks then it's fine realistically, if they are using it to kill the clown, then its an issue.
+
+        Hooliganism
+        To intentionally engage in disruptive behavior such as indecent exposure, belligerent drunkenness, disorderly shouting, or aggressive assembly.
+        Minmum: Confinement until sobered up
+        Maximum: Demotion
+        Notes: This is kind of a catch all for malicious disruption. Note that only aggressive drunkenness counts, drowning your sorrows in the bar quietly is only punishable by your liver and your employer.
+
+        Cruelty and Maltreatment
+        To maltreat, be cruel to, or oppress an individual as that individual’s superior, or someone with authority over that individual.
+        Minimum: Confinement for five (5) minutes.
+        Maximum: Demotion
+        Notes: This largely applies to security and their treatment of people, either by using excessive force in detainment, improper punishment, or mistreating prisoners, but also applies to Officers using their position abusively, like demanding favors in exchange for promotion, or intimidating others to avoid punishment.
+
+        Evasion of Arrest/Failure to comply with a warrant
+        To non-violently resist, escape, or avoid arrest or the execution of a search warrant by a Security officer or otherwise authorized member of the Security team.
+        Minimum: Confinement for two (2) minutes, education of Standard Operating Procedures and Space Law
+        Maximum: Demotion
+        Notes: This includes hiding from security, refusing to report to the brig if properly presented with charges, or locking oneself in a workplace.
