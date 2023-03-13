@@ -1,10 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Fixes an issue where teleporting would happen if someone raised a riot
-      shield, type: Fix}
-  id: 2677
-  time: '2022-11-19T03:51:55.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: the RPED can now actually be printed at protolathes., type: Fix}
@@ -2913,3 +2907,8 @@ Entries:
       under them.', type: Tweak}
   id: 3176
   time: '2023-03-13T19:26:21.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Trees now have chopping and felling sounds., type: Add}
+  id: 3177
+  time: '2023-03-13T20:42:30.0000000+00:00'
