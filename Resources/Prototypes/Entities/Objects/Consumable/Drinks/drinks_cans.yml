@@ -342,3 +342,21 @@
           - 6pack4
           - 6pack5
           - 6pack6
+- type: entity
+  parent: DrinkCanBaseFull
+  id: DrinkShamblersJuiceCan
+  name: shamblers juice can
+  description: ~Shake me up some of that Shambler's Juice!~
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: ShamblersJuice
+          Quantity: 30
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/shamblersjuice.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/shamblersjuice.rsi

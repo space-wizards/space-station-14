@@ -39,3 +39,6 @@ reagent-desc-starkist = A sweet, orange flavored soft drink.
 
 reagent-name-fourteen-loko = Fourteen Loko
 reagent-desc-fourteen-loko = A highly processed liquid substance barely-passing intergalatic health standards for a soft drink.
+
+reagent-name-shamblers-juice = Shambler's Juice
+reagent-desc-shamblers-juice = ~Shake me up some of that Shambler's Juice!~
