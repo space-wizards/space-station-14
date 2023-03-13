@@ -8,10 +8,10 @@ namespace Content.Server.Tools.Components;
 public sealed class LayerChangeOnWeldComponent : Component
 {
     [DataField("unWeldedLayer")]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables]
     public CollisionGroup UnWeldedLayer = CollisionGroup.AirlockLayer;
 
     [DataField("weldedLayer")]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables]
     public CollisionGroup WeldedLayer = CollisionGroup.WallLayer;
 }
