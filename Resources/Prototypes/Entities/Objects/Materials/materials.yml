@@ -151,16 +151,28 @@
   name: bear hide
   components:
   - type: Sprite
+    netsync: false
     sprite: Objects/Materials/materials.rsi
-    state: bearpelt
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: bearpelt
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: bearpelt_glow
+      shader: unshaded
   - type: Item
     sprite: Clothing/Head/Misc/hides.rsi
     heldPrefix: bear
   - type: Clothing
+    netsync: false
     sprite: Clothing/Head/Misc/hides.rsi
     equippedPrefix: bear
     slots:
       - HEAD
+  - type: PointLight
+    radius: 1.2
+    energy: 1.5
+    color: "#4faffb"
+    slots:
 
 - type: entity
   parent: MaterialBase
