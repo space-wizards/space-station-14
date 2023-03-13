@@ -46,7 +46,12 @@ public sealed class PainSystem : EntitySystem
         component.MaxPain = state.MaxPain;
         component.PainModifier = state.PainModifier;
         component.RawPain = state.RawPain;
-        //ApplyPainEffects(uid, component);
+        var consciousnessDelta = state.ConsciousnessDamage - component.ConsciousnessDamage;
+        component.ConsciousnessDamage = state.ConsciousnessDamage;
+        if (consciousnessDelta != 0)
+        {
+            _consciousnessSystem.AddToDamage(uid, consciousnessDelta);
+        }
     }
 
     private void OnPainThresholdGetState(EntityUid uid, PainReceiverComponent component, ref ComponentGetState args)
@@ -84,6 +89,7 @@ public sealed class PainSystem : EntitySystem
 
     private FixedPoint2 CalculateNewConsciousnessEffect(PainReceiverComponent painReceiver, FixedPoint2 pain)
     {
+        //todo: may need to multiply pain by the painmod
         //We do a lil' bit of mathin
         // https://www.desmos.com/calculator/kxtd0njdhn
         var painFloor = _consciousnessPainFloor * painReceiver.MaxPain;
@@ -93,10 +99,17 @@ public sealed class PainSystem : EntitySystem
             _consciousnessPainEffectMax, 0, _consciousnessPainEffectMax);
     }
 
-    private void ApplyPainEffects(EntityUid target, PainReceiverComponent? painReceiver, FixedPoint2 newPain)
+    private void ApplyPainEffects(EntityUid target, PainReceiverComponent? painReceiver, FixedPoint2 addedPain)
     {
         if (!Resolve(target, ref painReceiver))
             return;
-        painReceiver.RawPain += newPain;
+        var previousConsciousnessEffect = painReceiver.ConsciousnessDamage;
+        painReceiver.RawPain += addedPain;
+        painReceiver.ConsciousnessDamage = CalculateNewConsciousnessEffect(painReceiver, painReceiver.Pain);
+        var consciousnessDelta = painReceiver.ConsciousnessDamage -
+                                 previousConsciousnessEffect;
+        if (consciousnessDelta == 0)
+            return;
+        _consciousnessSystem.AddToDamage(target, consciousnessDelta);
     }
 }
