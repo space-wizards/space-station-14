@@ -1,6 +1,7 @@
 using Content.Server.Wires;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
+using Content.Shared.Emag.Components;
 using Content.Shared.Wires;
 
 namespace Content.Server.Access;
@@ -30,8 +31,11 @@ public sealed class AccessWireAction : ComponentWireAction<AccessReaderComponent
 
     public override bool Mend(EntityUid user, Wire wire, AccessReaderComponent comp)
     {
-        comp.Enabled = true;
-        EntityManager.Dirty(comp);
+        if (!EntityManager.HasComponent<EmaggedComponent>(wire.Owner))
+        {
+            comp.Enabled = true;
+            EntityManager.Dirty(comp);
+        }
         return true;
     }
 
@@ -54,7 +58,7 @@ public sealed class AccessWireAction : ComponentWireAction<AccessReaderComponent
     {
         if (!wire.IsCut)
         {
-            if (EntityManager.TryGetComponent<AccessReaderComponent>(wire.Owner, out var access))
+            if (EntityManager.TryGetComponent<AccessReaderComponent>(wire.Owner, out var access) && !EntityManager.HasComponent<EmaggedComponent>(wire.Owner))
             {
                 access.Enabled = true;
                 EntityManager.Dirty(access);

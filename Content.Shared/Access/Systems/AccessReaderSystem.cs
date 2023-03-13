@@ -69,7 +69,7 @@ namespace Content.Shared.Access.Systems
         private void OnEmagged(EntityUid uid, AccessReaderComponent reader, ref GotEmaggedEvent args)
         {
             args.Handled = true;
-            reader.Enabled = true;
+            reader.Enabled = false;
             Dirty(reader);
         }
 
