@@ -51,7 +51,7 @@ public sealed class HandcuffComponent : Component
     ///     The path of the RSI file used for the player cuffed overlay.
     /// </summary>
     [DataField("cuffedRSI"), ViewVariables(VVAccess.ReadWrite)]
-    public SpriteSpecifier.Rsi? CuffedRSI = new(new ResourcePath("Objects/Misc/handcuffs.rsi"), string.Empty);
+    public string? CuffedRSI = "Objects/Misc/handcuffs.rsi";
 
     /// <summary>
     ///     The iconstate used with the RSI file for the player cuffed overlay.

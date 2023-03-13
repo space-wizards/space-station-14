@@ -493,7 +493,7 @@ namespace Content.Shared.Cuffs
             };
 
             handcuffComponent.Cuffing = true;
-            if (_timing.IsFirstTimePredicted)
+            if (_net.IsServer)
                 _doAfter.DoAfter(doAfterEventArgs);
         }
 
@@ -571,7 +571,7 @@ namespace Content.Shared.Cuffs
 
             cuffable.Uncuffing = true;
             Dirty(cuffable);
-            if (_timing.IsFirstTimePredicted)
+            if (_net.IsServer)
                 _doAfter.DoAfter(doAfterEventArgs);
         }
 

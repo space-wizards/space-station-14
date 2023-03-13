@@ -13,7 +13,7 @@ public sealed class CuffableComponent : Component
     /// The current RSI for the handcuff layer
     /// </summary>
     [DataField("currentRSI"), ViewVariables(VVAccess.ReadWrite)]
-    public SpriteSpecifier.Rsi? CurrentRSI;
+    public string? CurrentRSI;
 
     /// <summary>
     /// How many of this entity's hands are currently cuffed.
@@ -52,11 +52,11 @@ public sealed class CuffableComponentState : ComponentState
     public readonly bool CanStillInteract;
     public readonly bool Uncuffing;
     public readonly int NumHandsCuffed;
-    public readonly SpriteSpecifier.Rsi? RSI;
+    public readonly string? RSI;
     public readonly string? IconState;
     public readonly Color? Color;
 
-    public CuffableComponentState(int numHandsCuffed, bool canStillInteract,  bool uncuffing, SpriteSpecifier.Rsi? rsiPath, string? iconState, Color? color)
+    public CuffableComponentState(int numHandsCuffed, bool canStillInteract,  bool uncuffing, string? rsiPath, string? iconState, Color? color)
     {
         NumHandsCuffed = numHandsCuffed;
         CanStillInteract = canStillInteract;

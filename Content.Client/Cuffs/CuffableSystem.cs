@@ -68,7 +68,7 @@ public sealed class CuffableSystem : SharedCuffableSystem
         if (!Equals(component.CurrentRSI, cuffState.RSI) && cuffState.RSI != null) // we don't want to keep loading the same RSI
         {
             component.CurrentRSI = cuffState.RSI;
-            sprite.LayerSetState(HumanoidVisualLayers.Handcuffs, cuffState.IconState, component.CurrentRSI.RsiPath);
+            sprite.LayerSetState(HumanoidVisualLayers.Handcuffs, cuffState.IconState, component.CurrentRSI);
         }
         else
         {

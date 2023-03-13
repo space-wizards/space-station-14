@@ -7,9 +7,7 @@
   - type: Item
     size: 3
   - type: Handcuff
-    cuffedRSI:
-      sprite: Objects/Misc/handcuffs.rsi
-      state: 
+    cuffedRSI: Objects/Misc/handcuffs.rsi
     bodyIconState: body-overlay
   - type: Sprite
     sprite: Objects/Misc/handcuffs.rsi
@@ -34,9 +32,7 @@
     size: 5
   - type: Handcuff
     breakoutTime: 15
-    cuffedRSI: 
-      sprite: Objects/Misc/cablecuffs.rsi
-      state: 
+    cuffedRSI: Objects/Misc/cablecuffs.rsi
     bodyIconState: body-overlay
     color: red
     breakOnRemove: true
@@ -69,9 +65,7 @@
     size: 2
   - type: Handcuff
     breakoutTime: 20  # halfway between improvised cablecuffs and metal ones
-    cuffedRSI: 
-      sprite: Objects/Misc/cablecuffs.rsi  # cablecuffs will look fine
-      state: 
+    cuffedRSI: Objects/Misc/cablecuffs.rsi  # cablecuffs will look fine
     bodyIconState: body-overlay
     breakOnRemove: true
     brokenPrototype: ZiptiesBroken
