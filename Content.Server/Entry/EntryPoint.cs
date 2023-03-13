@@ -173,6 +173,7 @@ namespace Content.Server.Entry
         {
             _playTimeTracking?.Shutdown();
             _sysMan?.GetEntitySystemOrNull<StationSystem>()?.OnServerDispose();
+            IoCManager.Resolve<IServerDbManager>().Shutdown();
         }
 
         private static void LoadConfigPresets(IConfigurationManager cfg, IResourceManager res, ISawmill sawmill)

@@ -25,6 +25,8 @@ namespace Content.Server.Database
     {
         void Init();
 
+        void Shutdown();
+
         #region Preferences
         Task<PlayerPreferences> InitPrefsAsync(NetUserId userId, ICharacterProfile defaultProfile);
         Task SaveSelectedCharacterIndexAsync(NetUserId userId, int index);
@@ -244,6 +246,9 @@ namespace Content.Server.Database
         private ILoggerFactory _msLoggerFactory = default!;
 
         private bool _synchronous;
+        // When running in integration tests, we'll use a single in-memory SQLite database connection.
+        // This is that connection, close it when we shut down.
+        private SqliteConnection? _sqliteInMemoryConnection;
 
         public void Init()
         {
@@ -259,8 +264,8 @@ namespace Content.Server.Database
             switch (engine)
             {
                 case "sqlite":
-                    var sqliteOptions = CreateSqliteOptions();
-                    _db = new ServerDbSqlite(sqliteOptions);
+                    SetupSqlite(out var contextFunc, out var inMemory);
+                    _db = new ServerDbSqlite(contextFunc, inMemory);
                     break;
                 case "postgres":
                     var pgOptions = CreatePostgresOptions();
@@ -269,6 +274,11 @@ namespace Content.Server.Database
                 default:
                     throw new InvalidDataException($"Unknown database engine {engine}.");
             }
+        }
+
+        public void Shutdown()
+        {
+            _sqliteInMemoryConnection?.Dispose();
         }
 
         public Task<PlayerPreferences> InitPrefsAsync(NetUserId userId, ICharacterProfile defaultProfile)
@@ -681,35 +691,42 @@ namespace Content.Server.Database
             return builder.Options;
         }
 
-        private DbContextOptions<SqliteServerDbContext> CreateSqliteOptions()
+        private void SetupSqlite(out Func<DbContextOptions<SqliteServerDbContext>> contextFunc, out bool inMemory)
         {
-            var builder = new DbContextOptionsBuilder<SqliteServerDbContext>();
-
-            var configPreferencesDbPath = _cfg.GetCVar(CCVars.DatabaseSqliteDbPath);
-            var inMemory = _res.UserData.RootDir == null;
-
 #if USE_SYSTEM_SQLITE
             SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlite3());
 #endif
-            SqliteConnection connection;
+
+            // Can't re-use the SqliteConnection across multiple threads, so we have to make it every time.
+
+            Func<SqliteConnection> getConnection;
+
+            var configPreferencesDbPath = _cfg.GetCVar(CCVars.DatabaseSqliteDbPath);
+            inMemory = _res.UserData.RootDir == null;
+
             if (!inMemory)
             {
                 var finalPreferencesDbPath = Path.Combine(_res.UserData.RootDir!, configPreferencesDbPath);
                 Logger.DebugS("db.manager", $"Using SQLite DB \"{finalPreferencesDbPath}\"");
-                connection = new SqliteConnection($"Data Source={finalPreferencesDbPath}");
+                getConnection = () => new SqliteConnection($"Data Source={finalPreferencesDbPath}");
             }
             else
             {
-                Logger.DebugS("db.manager", $"Using in-memory SQLite DB");
-                connection = new SqliteConnection("Data Source=:memory:");
+                Logger.DebugS("db.manager", "Using in-memory SQLite DB");
+                _sqliteInMemoryConnection = new SqliteConnection("Data Source=:memory:");
                 // When using an in-memory DB we have to open it manually
-                // so EFCore doesn't open, close and wipe it.
-                connection.Open();
+                // so EFCore doesn't open, close and wipe it every operation.
+                _sqliteInMemoryConnection.Open();
+                getConnection = () => _sqliteInMemoryConnection;
             }
 
-            builder.UseSqlite(connection);
-            SetupLogging(builder);
-            return builder.Options;
+            contextFunc = () =>
+            {
+                var builder = new DbContextOptionsBuilder<SqliteServerDbContext>();
+                builder.UseSqlite(getConnection());
+                SetupLogging(builder);
+                return builder.Options;
+            };
         }
 
         private void SetupLogging(DbContextOptionsBuilder builder)

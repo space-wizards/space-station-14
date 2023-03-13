@@ -20,7 +20,7 @@ namespace Content.Server.Database
     /// </summary>
     public sealed class ServerDbSqlite : ServerDbBase
     {
-        private readonly DbContextOptions<SqliteServerDbContext> _options;
+        private readonly Func<DbContextOptions<SqliteServerDbContext>> _options;
 
         // This doesn't allow concurrent access so that's what the semaphore is for.
         // That said, this is bloody SQLite, I don't even think EFCore bothers to truly async it.
@@ -30,15 +30,16 @@ namespace Content.Server.Database
 
         private int _msDelay;
 
-        public ServerDbSqlite(DbContextOptions<SqliteServerDbContext> options)
+        public ServerDbSqlite(Func<DbContextOptions<SqliteServerDbContext>> options, bool inMemory)
         {
             _options = options;
 
-            var prefsCtx = new SqliteServerDbContext(options);
+            var prefsCtx = new SqliteServerDbContext(options());
 
             var cfg = IoCManager.Resolve<IConfigurationManager>();
 
-            var concurrency = cfg.GetCVar(CCVars.DatabaseSqliteConcurrency);
+            // When inMemory we re-use the same connection, so we can't have any concurrency.
+            var concurrency = inMemory ? 1 : cfg.GetCVar(CCVars.DatabaseSqliteConcurrency);
             _prefsSemaphore = new SemaphoreSlim(concurrency, concurrency);
 
             if (cfg.GetCVar(CCVars.DatabaseSynchronous))
@@ -523,7 +524,7 @@ namespace Content.Server.Database
 
             await _prefsSemaphore.WaitAsync();
 
-            var dbContext = new SqliteServerDbContext(_options);
+            var dbContext = new SqliteServerDbContext(_options());
 
             return new DbGuardImpl(this, dbContext);
         }
@@ -547,10 +548,10 @@ namespace Content.Server.Database
             public override ServerDbContext DbContext => _ctx;
             public SqliteServerDbContext SqliteDbContext => _ctx;
 
-            public override ValueTask DisposeAsync()
+            public override async ValueTask DisposeAsync()
             {
+                await _ctx.DisposeAsync();
                 _db._prefsSemaphore.Release();
-                return default;
             }
         }
     }
