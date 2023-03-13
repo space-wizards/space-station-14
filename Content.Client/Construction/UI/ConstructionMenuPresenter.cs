@@ -204,9 +204,8 @@ namespace Content.Client.Construction.UI
 
         private void PopulateInfo(ConstructionPrototype prototype)
         {
-            var spriteSys = _systemManager.GetEntitySystem<SpriteSystem>();
             _constructionView.ClearRecipeInfo();
-            _constructionView.SetRecipeInfo(prototype.Name, prototype.Description, spriteSys.Frame0(prototype.Icon), prototype.Type != ConstructionType.Item);
+            _constructionView.SetRecipeInfo(prototype);
 
             var stepList = _constructionView.RecipeStepList;
             GenerateStepList(prototype, stepList);
