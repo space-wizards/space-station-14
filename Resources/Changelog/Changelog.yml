@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Cat ears now cost 26tc, type: Tweak}
-  id: 2667
-  time: '2022-11-16T14:46:56.0000000+00:00'
 - author: Macoron
   changes:
   - {message: You can't turn chameleon hat into cat ears., type: Remove}
@@ -2919,3 +2914,9 @@ Entries:
       access all station radio channels.', type: Add}
   id: 3166
   time: '2023-03-13T00:48:34.0000000+00:00'
+- author: TaralGit
+  changes:
+  - {message: the handmade pistol is now a one shot firearm that uses shotgun shells
+      and has a more fitting sprite, type: Tweak}
+  id: 3167
+  time: '2023-03-13T00:52:57.0000000+00:00'
