@@ -94,7 +94,9 @@
   description: An adorable stuffed toy that resembles a lizardperson. Made by CentCom as a token initiative to combat speciesism in work environments. "Welcome your new colleagues as you do this plush, with open arms!"
   components:
   - type: Sprite
-    state: plushie_lizard
+    layers:
+      - state: plushie_lizard
+      - state: lizard-mark1
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/weh.ogg
@@ -107,6 +109,26 @@
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Items/Toys/weh.ogg
+  - type: RandomSprite
+    available:
+      - type: RandomSprite
+        available:
+          - 0:
+              plushie_lizard: ""
+            1:
+              lizard-mark1: Rainbow
+          - 0:
+              plushie_lizard: ""
+            1:
+              lizard-mark2: Rainbow
+          - 0:
+              plushie_lizard: ""
+            1:
+              lizard-mark3: Rainbow
+          - 0:
+              plushie_lizard: ""
+            1:
+              lizard-mark4: Rainbow
 
 - type: entity
   parent: BasePlushie
@@ -588,7 +610,7 @@
       revolver-ammo: !type:Container
 
 - type: entity
-  parent: RevolverCapGun 
+  parent: RevolverCapGun
   id: RevolverCapGunFake
   name: cap gun
   description: Looks almost like the real thing! Ages 8 and up.
