@@ -1,8 +1,0 @@
-- type: vendingMachineInventory
-  id: SustenanceInventory
-  startingInventory:
-    FoodTofuSlice: 12
-    FoodBreadMoldySlice: 6
-    DrinkWaterBottleFull: 4
-    FoodCorn: 4
-    SpoonPlastic: 4
