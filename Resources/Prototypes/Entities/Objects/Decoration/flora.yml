@@ -55,7 +55,6 @@
       density: 1000
       layer:
       - WallLayer
-
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Wood
@@ -63,7 +62,8 @@
     soundGroups:
       Brute:
         path: /Audio/Effects/chop.ogg
-        variation: 0.05
+        params:
+          variation: 0.05
   - type: Destructible
     thresholds:
     - trigger:
