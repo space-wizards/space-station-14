@@ -1,13 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'The base rules for all Wizards'' Den servers have been rewritten from
-      the ground up. A "long-form" version is available on the wiki, with even more
-      examples and clarifications. Not much concrete is changing--this is mostly just
-      better codifying stuff that we were already enforcing, but we recommend that
-      you reread them anyway, of course.', type: Add}
-  id: 2669
-  time: '2022-11-16T18:24:37.0000000+00:00'
 - author: Rane
   changes:
   - {message: Traitor objectives should no longer be overly steal-oriented., type: Tweak}
@@ -2920,3 +2911,8 @@ Entries:
   - {message: Slimeperson life support crate now can be ordered from cargo, type: Add}
   id: 3168
   time: '2023-03-13T01:04:27.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Engivend deny sprite no longer shakes., type: Fix}
+  id: 3169
+  time: '2023-03-13T02:22:52.0000000+00:00'
