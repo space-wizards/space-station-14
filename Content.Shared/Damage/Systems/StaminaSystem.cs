@@ -6,7 +6,6 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Events;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Rounding;
 using Content.Shared.Stunnable;
@@ -24,12 +23,12 @@ namespace Content.Shared.Damage.Systems;
 public sealed class StaminaSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     private const string CollideFixture = "projectile";
 
@@ -150,21 +149,24 @@ public sealed class StaminaSystem : EntitySystem
         var ev = new StaminaDamageOnHitAttemptEvent();
         RaiseLocalEvent(uid, ref ev);
 
-        if (ev.Cancelled) return;
+        if (ev.Cancelled)
+            return;
 
         args.HitSoundOverride = ev.HitSoundOverride;
         var stamQuery = GetEntityQuery<StaminaComponent>();
-        var toHit = new List<StaminaComponent>();
+        var toHit = new List<(EntityUid Entity, StaminaComponent Component)>();
 
         // Split stamina damage between all eligible targets.
         foreach (var ent in args.HitEntities)
         {
-            if (!stamQuery.TryGetComponent(ent, out var stam)) continue;
-            toHit.Add(stam);
+            if (!stamQuery.TryGetComponent(ent, out var stam))
+                continue;
+
+            toHit.Add((ent, stam));
         }
 
         var hitEvent = new StaminaMeleeHitEvent(toHit);
-        RaiseLocalEvent(uid, hitEvent, false);
+        RaiseLocalEvent(uid, hitEvent);
 
         if (hitEvent.Handled)
             return;
@@ -175,13 +177,13 @@ public sealed class StaminaSystem : EntitySystem
 
         damage += hitEvent.FlatModifier;
 
-        foreach (var comp in toHit)
+        foreach (var (ent, comp) in toHit)
         {
             var oldDamage = comp.StaminaDamage;
-            TakeStaminaDamage(comp.Owner, damage / toHit.Count, comp, source:args.User, with:component.Owner);
+            TakeStaminaDamage(ent, damage / toHit.Count, comp, source:args.User, with:ent);
             if (comp.StaminaDamage.Equals(oldDamage))
             {
-                _popup.PopupEntity(Loc.GetString("stamina-resist"), comp.Owner, args.User);
+                _popup.PopupEntity(Loc.GetString("stamina-resist"), ent, args.User);
             }
         }
     }
@@ -267,19 +269,20 @@ public sealed class StaminaSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        if (!_timing.IsFirstTimePredicted) return;
+        if (!_timing.IsFirstTimePredicted)
+            return;
 
-        var metaQuery = GetEntityQuery<MetaDataComponent>();
         var stamQuery = GetEntityQuery<StaminaComponent>();
+        var query = EntityQueryEnumerator<ActiveStaminaComponent>();
         var curTime = _timing.CurTime;
 
-        foreach (var active in EntityQuery<ActiveStaminaComponent>())
+        while (query.MoveNext(out var uid, out _))
         {
             // Just in case we have active but not stamina we'll check and account for it.
-            if (!stamQuery.TryGetComponent(active.Owner, out var comp) ||
+            if (!stamQuery.TryGetComponent(uid, out var comp) ||
                 comp.StaminaDamage <= 0f && !comp.Critical)
             {
-                RemComp<ActiveStaminaComponent>(active.Owner);
+                RemComp<ActiveStaminaComponent>(uid);
                 continue;
             }
 
@@ -292,12 +295,12 @@ public sealed class StaminaSystem : EntitySystem
             // We were in crit so come out of it and continue.
             if (comp.Critical)
             {
-                ExitStamCrit(active.Owner, comp);
+                ExitStamCrit(uid, comp);
                 continue;
             }
 
             comp.NextUpdate += TimeSpan.FromSeconds(1f);
-            TakeStaminaDamage(comp.Owner, -comp.Decay, comp);
+            TakeStaminaDamage(uid, -comp.Decay, comp);
             Dirty(comp);
         }
     }
@@ -305,7 +308,10 @@ public sealed class StaminaSystem : EntitySystem
     private void EnterStamCrit(EntityUid uid, StaminaComponent? component = null)
     {
         if (!Resolve(uid, ref component) ||
-            component.Critical) return;
+            component.Critical)
+        {
+            return;
+        }
 
         // To make the difference between a stun and a stamcrit clear
         // TODO: Mask?
@@ -326,7 +332,10 @@ public sealed class StaminaSystem : EntitySystem
     private void ExitStamCrit(EntityUid uid, StaminaComponent? component = null)
     {
         if (!Resolve(uid, ref component) ||
-            !component.Critical) return;
+            !component.Critical)
+        {
+            return;
+        }
 
         component.Critical = false;
         component.StaminaDamage = 0f;
