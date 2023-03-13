@@ -495,3 +495,10 @@
     maxSpawns: 1
     spawns:
     - id: Singularity
+
+- type: artifactEffect
+  id: EffectEmp
+  targetDepth: 3
+  effectHint: artifact-effect-hint-electrical-interference
+  components:
+  - type: EmpArtifact
