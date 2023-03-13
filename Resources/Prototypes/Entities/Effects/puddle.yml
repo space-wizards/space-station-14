@@ -81,6 +81,7 @@
       sprite: Fluids/weh.rsi
       state: splat0
       netsync: false
+      color: "#FFFFFF80"
     - type: IconSmooth
       key: puddles
       base: splat
