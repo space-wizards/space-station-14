@@ -265,6 +265,9 @@ public sealed partial class CargoSystem
 
     private void OnCargoOrderStartup(EntityUid uid, StationCargoOrderDatabaseComponent component, ComponentStartup args)
     {
+        if (!_enabled)
+            return;
+
         // Stations get created first but if any are added at runtime then do this.
         AddShuttle(component);
     }

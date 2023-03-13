@@ -153,7 +153,7 @@
             Quantity: 20
   - type: Tag
     tags: []
-    
+
 - type: entity
   name: stimulant injector
   parent: ChemicalMedipen
@@ -170,9 +170,14 @@
         reagents:
         - ReagentId: Stimulants
           Quantity: 60
+  - type: Hypospray
+    solutionName: pen
+    transferAmount: 60
+  - type: StaticPrice
+    price: 500
   - type: Tag
     tags: []
-    
+
 - type: entity
   name: stimulant microinjector
   parent: ChemicalMedipen
@@ -189,9 +194,11 @@
         reagents:
         - ReagentId: Stimulants
           Quantity: 15
+  - type: StaticPrice
+    price: 100
   - type: Tag
     tags: []
-    
+
 - type: entity
   name: experimental stimulant injector
   parent: ChemicalMedipen
@@ -208,6 +215,11 @@
         reagents:
         - ReagentId: ExperimentalStimulants
           Quantity: 60
+  - type: Hypospray
+    solutionName: pen
+    transferAmount: 60
+  - type: StaticPrice
+    price: 1000
   - type: Tag
     tags: []
 
