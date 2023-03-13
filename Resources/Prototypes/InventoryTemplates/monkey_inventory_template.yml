@@ -17,4 +17,5 @@
     whitelist:
       tags:
         - PetWearable
-        - Smokes
+      components:
+        - Smokable

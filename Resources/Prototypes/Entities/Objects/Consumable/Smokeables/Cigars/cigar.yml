@@ -15,7 +15,6 @@
     tags:
       - Cigar
       - Trash
-      - Smokes
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cigars/cigar.rsi
     slots: [ mask ]

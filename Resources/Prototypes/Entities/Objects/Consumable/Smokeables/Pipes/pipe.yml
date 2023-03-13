@@ -8,9 +8,6 @@
     sprite: Objects/Consumable/Smokeables/Pipes/pipe.rsi
     netsync: false
     state: unlit-icon
-  - type: Tag
-    tags:
-      - Smokes
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Pipes/pipe.rsi
     slots: [ mask ]
