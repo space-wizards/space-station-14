@@ -250,13 +250,13 @@ namespace Content.Shared.Access.Systems
         /// </summary>
         private bool FindAccessTagsItem(EntityUid uid, [NotNullWhen(true)] out HashSet<string>? tags)
         {
-            if (EntityManager.TryGetComponent(uid, out AccessComponent? access))
+            if (TryComp(uid, out AccessComponent? access))
             {
                 tags = access.Tags;
                 return true;
             }
 
-            if (EntityManager.TryGetComponent(uid, out PDAComponent? pda) &&
+            if (TryComp(uid, out PDAComponent? pda) &&
                 pda.ContainedID?.Owner is {Valid: true} id)
             {
                 tags = EntityManager.GetComponent<AccessComponent>(id).Tags;
@@ -273,7 +273,7 @@ namespace Content.Shared.Access.Systems
         /// </summary>
         private bool FindStationRecordKeyItem(EntityUid uid, [NotNullWhen(true)] out StationRecordKey? key)
         {
-            if (EntityManager.TryGetComponent(uid, out StationRecordKeyStorageComponent? storage) && storage.Key != null)
+            if (TryComp(uid, out StationRecordKeyStorageComponent? storage) && storage.Key != null)
             {
                 key = storage.Key;
                 return true;

@@ -403,6 +403,17 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitScientistFormal
+  name: scientist's formal jumpsuit
+  description: A uniform for sophisticated scientists, best worn with its matching tie.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/scientist_formal.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/scientist_formal.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitSec
   name: security jumpsuit
   description: A jumpsuit made of strong material, providing robust protection.
@@ -809,6 +820,17 @@
     sprite: Clothing/Uniforms/Jumpsuit/atmos.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/atmos.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitAtmosCasual
+  name: atmospheric technician's casual jumpsuit
+  description: Might as well relax with a job as easy as yours.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/atmos_casual.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/atmos_casual.rsi
 
 - type: entity
   parent: ClothingUniformBase
