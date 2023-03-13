@@ -1,9 +1,4 @@
 Entries:
-- author: nikthechampiongr
-  changes:
-  - {message: Fixes access permissions for maintenance door on saltern., type: Fix}
-  id: 2673
-  time: '2022-11-18T04:42:38.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'Added the Traversal Distorter, a machine capable of pushing Artifacts''
@@ -2913,3 +2908,8 @@ Entries:
     type: Add}
   id: 3172
   time: '2023-03-13T04:02:08.0000000+00:00'
+- author: furontier
+  changes:
+  - {message: Flashes can no longer affect blind players., type: Tweak}
+  id: 3173
+  time: '2023-03-13T04:03:51.0000000+00:00'
