@@ -19,6 +19,7 @@
   - type: Item
     size: 20
   - type: Clothing
+    quickEquip: false
     slots:
     - back
   - type: Construction
