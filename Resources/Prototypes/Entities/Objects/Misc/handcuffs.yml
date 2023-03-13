@@ -8,7 +8,7 @@
     size: 3
   - type: Handcuff
     cuffedRSI: Objects/Misc/handcuffs.rsi
-    iconState: body-overlay
+    bodyIconState: body-overlay
   - type: Sprite
     sprite: Objects/Misc/handcuffs.rsi
     state: handcuff
