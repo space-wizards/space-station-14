@@ -1,9 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: You can't turn chameleon hat into cat ears., type: Remove}
-  id: 2668
-  time: '2022-11-16T18:13:54.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'The base rules for all Wizards'' Den servers have been rewritten from
@@ -2920,3 +2915,8 @@ Entries:
       and has a more fitting sprite, type: Tweak}
   id: 3167
   time: '2023-03-13T00:52:57.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Slimeperson life support crate now can be ordered from cargo, type: Add}
+  id: 3168
+  time: '2023-03-13T01:04:27.0000000+00:00'
