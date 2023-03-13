@@ -30,13 +30,6 @@ public sealed partial class DungeonSystem
         }
 
         var mapId = new MapId(mapInt);
-        var mapUid = _mapManager.GetMapEntityId(mapId);
-
-        if (!TryComp<MapGridComponent>(mapUid, out var mapGrid))
-        {
-            shell.WriteError(Loc.GetString("cmd-dungen-mapgrid"));
-            return;
-        }
 
         if (!_prototype.TryIndex<DungeonConfigPrototype>(args[1], out var dungeon))
         {
@@ -51,6 +44,15 @@ public sealed partial class DungeonSystem
         }
 
         var position = new Vector2(posX, posY);
+        var dungeonUid = _mapManager.GetMapEntityId(mapId);
+
+        if (!TryComp<MapGridComponent>(dungeonUid, out var dungeonGrid))
+        {
+            dungeonUid = EntityManager.CreateEntityUninitialized(null, new EntityCoordinates(dungeonUid, position));
+            dungeonGrid = EntityManager.AddComponent<MapGridComponent>(dungeonUid);
+            EntityManager.InitializeAndStartEntity(dungeonUid, mapId);
+        }
+
         int seed;
 
         if (args.Length >= 5)
@@ -67,7 +69,7 @@ public sealed partial class DungeonSystem
         }
 
         shell.WriteLine(Loc.GetString("cmd-dungen-start", ("seed", seed)));
-        GenerateDungeon(dungeon, mapUid, mapGrid, position, seed);
+        GenerateDungeon(dungeon, dungeonUid, dungeonGrid, position, seed);
     }
 
     private CompletionResult CompletionCallback(IConsoleShell shell, string[] args)
