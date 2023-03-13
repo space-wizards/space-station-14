@@ -1,23 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Added machine upgrades for the medical scanner. You can now decrease
-      the chance that cloning fails on a body., type: Add}
-  id: 2671
-  time: '2022-11-16T21:02:37.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Item artifacts. Artifact spawns may now spawn handheld artifacts, which
-      have a suite of new triggers and very useful effects, with more coming.', type: Add}
-  id: 2672
-  time: '2022-11-17T17:40:05.0000000+00:00'
-- author: nikthechampiongr
-  changes:
-  - {message: Fixes access permissions for maintenance door on saltern., type: Fix}
-  id: 2673
-  time: '2022-11-18T04:42:38.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: 'Added the Traversal Distorter, a machine capable of pushing Artifacts''
       random node traversal in certain directions. Simply place an artifact on the
       machine and you can choose how you want to encourage it.', type: Add}
@@ -2914,3 +2897,19 @@ Entries:
   - {message: Strip menu won't open when trying to wake sleeping players., type: Fix}
   id: 3170
   time: '2023-03-13T03:29:26.0000000+00:00'
+- author: Nylux
+  changes:
+  - {message: Dionas can now get drunk., type: Fix}
+  id: 3171
+  time: '2023-03-13T03:48:32.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Science lockers now come with both a node scanner *and* an anomaly scanner,
+    type: Add}
+  id: 3172
+  time: '2023-03-13T04:02:08.0000000+00:00'
+- author: furontier
+  changes:
+  - {message: Flashes can no longer affect blind players., type: Tweak}
+  id: 3173
+  time: '2023-03-13T04:03:51.0000000+00:00'
