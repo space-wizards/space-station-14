@@ -1,12 +1,4 @@
 Entries:
-- author: BurninDreamear
-  changes:
-  - {message: 'All sorts of corporations now supply higher caliber bullets, revolver
-      only, for now...', type: Add}
-  - {message: Nanotrasen and Syndicate revolvers have been retrofitted to use .45
-      magnum rounds instead of .40. Happy shooting!, type: Tweak}
-  id: 2666
-  time: '2022-11-16T14:41:48.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Cat ears now cost 26tc, type: Tweak}
@@ -2920,3 +2912,10 @@ Entries:
       damage.', type: Tweak}
   id: 3165
   time: '2023-03-12T23:45:01.0000000+00:00'
+- author: GoodWheatley
+  changes:
+  - {message: 'A recently discovered security vulnerability in Nanotrasen radio frequencies
+      has been exploited by the Syndicate, allowing the Syndicate Encryption Key to
+      access all station radio channels.', type: Add}
+  id: 3166
+  time: '2023-03-13T00:48:34.0000000+00:00'
