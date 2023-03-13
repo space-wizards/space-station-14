@@ -111,24 +111,22 @@
       path: /Audio/Items/Toys/weh.ogg
   - type: RandomSprite
     available:
-      - type: RandomSprite
-        available:
-          - 0:
-              plushie_lizard: ""
-            1:
-              lizard-mark1: Rainbow
-          - 0:
-              plushie_lizard: ""
-            1:
-              lizard-mark2: Rainbow
-          - 0:
-              plushie_lizard: ""
-            1:
-              lizard-mark3: Rainbow
-          - 0:
-              plushie_lizard: ""
-            1:
-              lizard-mark4: Rainbow
+      - 0:
+          plushie_lizard: Sixteen
+        1:
+          lizard-mark1: Sixteen
+      - 0:
+          plushie_lizard: Sixteen
+        1:
+          lizard-mark2: Sixteen
+      - 0:
+          plushie_lizard: Sixteen
+        1:
+          lizard-mark3: Sixteen
+      - 0:
+          plushie_lizard: Sixteen
+        1:
+          lizard-mark4: Sixteen
 
 - type: entity
   parent: BasePlushie
