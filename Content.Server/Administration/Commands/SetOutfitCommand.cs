@@ -21,7 +21,7 @@ namespace Content.Server.Administration.Commands
     {
         [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly IPrototypeManager _prototypes = default!;
-        
+
         public string Command => "setoutfit";
 
         public string Description => Loc.GetString("set-outfit-command-description", ("requiredComponent", nameof(InventoryComponent)));
@@ -112,7 +112,7 @@ namespace Content.Server.Administration.Commands
                         pdaComponent.ContainedID.FullName = entityManager.GetComponent<MetaDataComponent>(target).EntityName;
                     }
 
-                    invSystem.TryEquip(target, equipmentEntity, slot.Name, true, inventory: inventoryComponent);
+                    invSystem.TryEquip(target, equipmentEntity, slot.Name, silent: true, force: true, inventory: inventoryComponent);
 
                     onEquipped?.Invoke(target, equipmentEntity);
                 }
