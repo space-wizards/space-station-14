@@ -28,6 +28,8 @@
     sprite: Objects/Materials/Shards/shard.rsi
   - type: CollisionWake
     enabled: false
+    useSound:
+      path: /Audio/Items/Culinary/chop.ogg
   - type: Fixtures
     fixtures:
     - shape:
