@@ -69,6 +69,13 @@ namespace Content.Shared.Construction.Prototypes
         [DataField("canRotate")]
         public bool CanRotate { get; } = true;
 
+        /// <summary>
+        ///     Wether we use the target node sprite or the icon to generate
+        ///     the sprite. By default we use the icon.
+        /// </summary>
+        [DataField("inferSprite")]
+        public bool InferSprite { get; } = false;
+
         public IReadOnlyList<IConstructionCondition> Conditions => _conditions;
     }
 

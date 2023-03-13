@@ -48,7 +48,10 @@ namespace Content.Client.Construction
         {
             var sprite = _constructionSystem.GetTargetNodeSprite(prototype);
             if (sprite == null)
+            {
+                Logger.Error("Failed to get the target node sprite of the construction prototype.");
                 return false;
+            }
 
             manager.PreparePlacementSprite(sprite);
             return true;
@@ -63,9 +66,9 @@ namespace Content.Client.Construction
             {
                 manager.CurrentTextures = null;
             }
-            else if (!SetManagerSprite(manager, _prototype))
+            else if (!_prototype.InferSprite
+                     || (_prototype.InferSprite && !SetManagerSprite(manager, _prototype)))
             {
-                // if we can't find any sprite, use the icon texture
                 var frame = _prototype.Icon.DirFrame0();
                 manager.CurrentTextures = new List<IDirectionalTextureProvider>{frame};
             }

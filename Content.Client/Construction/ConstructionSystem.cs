@@ -188,7 +188,9 @@ namespace Content.Client.Construction
         private bool SetSpriteFromTargetNode(ConstructionPrototype prototype, SpriteComponent sprite)
         {
             var spritePrototype = GetTargetNodeSprite(prototype);
-            if (spritePrototype == null) {
+            if (spritePrototype == null)
+            {
+                Logger.Error("Failed to get the target node sprite of the construction prototype.");
                 return false;
             }
 
@@ -200,10 +202,8 @@ namespace Content.Client.Construction
 
         private bool SetSprite(ConstructionPrototype prototype, SpriteComponent sprite)
         {
-            if (SetSpriteFromTargetNode(prototype, sprite))
-            {
+            if (prototype.InferSprite && SetSpriteFromTargetNode(prototype, sprite))
                 return true;
-            }
 
             SetSpriteFromIcon(prototype.Icon, sprite);
             return false;
