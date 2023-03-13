@@ -15,7 +15,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 10
+        Piercing: 12
     angle: 0
     animation: WeaponArcThrust
   - type: DamageOtherOnHit
@@ -48,7 +48,7 @@
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Piercing: 6
+        Piercing: 4
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
