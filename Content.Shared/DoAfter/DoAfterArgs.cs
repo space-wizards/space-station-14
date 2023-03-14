@@ -66,11 +66,17 @@ public sealed class DoAfterArgs
     #region Break/Cancellation Options
     // Break the chains
     /// <summary>
-    ///     Whether we need to keep our active hand as is (i.e. can't change hand or change item).
-    ///     This also covers requiring the hand to be free (if applicable).
+    ///     Whether or not this do after requires the user to have hands.
     /// </summary>
     [DataField("needHand")]
     public bool NeedHand;
+
+    /// <summary>
+    ///     Whether we need to keep our active hand as is (i.e. can't change hand or change item). This also covers
+    ///     requiring the hand to be free (if applicable). This does nothing if <see cref="NeedHand"/> is false.
+    /// </summary>
+    [DataField("breakOnHandChange")]
+    public bool BreakOnHandChange = true;
 
     /// <summary>
     ///     If do_after stops when the user moves
@@ -214,6 +220,7 @@ public sealed class DoAfterArgs
         EventTarget = other.EventTarget;
         Broadcast = other.Broadcast;
         NeedHand = other.NeedHand;
+        BreakOnHandChange = other.BreakOnHandChange;
         BreakOnUserMove = other.BreakOnUserMove;
         BreakOnTargetMove = other.BreakOnTargetMove;
         MovementThreshold = other.MovementThreshold;

@@ -211,6 +211,7 @@ namespace Content.Server.Cuffs.Components
             var uncuffTime = isOwner ? cuff.BreakoutTime : cuff.UncuffTime;
             var doAfterEventArgs = new DoAfterArgs(user, uncuffTime, new AwaitedDoAfterEvent(), null, target: Owner)
             {
+                RequireCanInteract = false, // leave it up to UncuffAttemptEvent
                 BreakOnUserMove = true,
                 BreakOnTargetMove = true,
                 BreakOnDamage = true,
@@ -220,7 +221,6 @@ namespace Content.Server.Cuffs.Components
             var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
 
             var result = await doAfterSystem.WaitDoAfter(doAfterEventArgs);
-
 
             if (result != DoAfterStatus.Cancelled)
             {

@@ -9,7 +9,6 @@ using Content.Server.Popups;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
@@ -28,7 +27,6 @@ using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Nutrition.EntitySystems
@@ -56,6 +54,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             base.Initialize();
 
+            // TODO add InteractNoHandEvent for entities like mice.
             SubscribeLocalEvent<DrinkComponent, SolutionChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<DrinkComponent, ComponentInit>(OnDrinkInit);
             SubscribeLocalEvent<DrinkComponent, LandEvent>(HandleLand);
@@ -279,7 +278,9 @@ namespace Content.Server.Nutrition.EntitySystems
                 BreakOnTargetMove = forceDrink,
                 MovementThreshold = 0.01f,
                 DistanceThreshold = 1.0f,
-                NeedHand = true,
+                // Mice and the like can eat without hands.
+                // TODO maybe set this based on some CanEatWithoutHands event or component?
+                NeedHand = forceDrink,
             };
 
             _doAfterSystem.TryStartDoAfter(doAfterEventArgs);

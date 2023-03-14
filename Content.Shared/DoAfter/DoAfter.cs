@@ -57,13 +57,13 @@ public sealed class DoAfter
     ///     If <see cref="DoAfterArgs.NeedHand"/> is true, this is the hand that was selected when the doafter started.
     /// </summary>
     [DataField("activeHand")]
-    public string? ActiveHand;
+    public string? InitialHand;
 
     /// <summary>
     ///     If <see cref="NeedHand"/> is true, this is the entity that was in the active hand when the doafter started.
     /// </summary>
     [DataField("activeItem")]
-    public EntityUid? ActiveItem;
+    public EntityUid? InitialItem;
 
     private DoAfter()
     {
@@ -92,8 +92,8 @@ public sealed class DoAfter
         Completed = other.Completed;
         UserPosition = other.UserPosition;
         TargetPosition = other.TargetPosition;
-        ActiveHand = other.ActiveHand;
-        ActiveItem = other.ActiveItem;
+        InitialHand = other.InitialHand;
+        InitialItem = other.InitialItem;
     }
 }
 

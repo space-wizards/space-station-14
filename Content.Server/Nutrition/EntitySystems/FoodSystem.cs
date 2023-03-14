@@ -51,6 +51,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             base.Initialize();
 
+            // TODO add InteractNoHandEvent for entities like mice.
             SubscribeLocalEvent<FoodComponent, UseInHandEvent>(OnUseFoodInHand);
             SubscribeLocalEvent<FoodComponent, AfterInteractEvent>(OnFeedFood);
             SubscribeLocalEvent<FoodComponent, GetVerbsEvent<AlternativeVerb>>(AddEatVerb);
@@ -143,7 +144,9 @@ namespace Content.Server.Nutrition.EntitySystems
                 BreakOnTargetMove = forceFeed,
                 MovementThreshold = 0.01f,
                 DistanceThreshold = 1.0f,
-                NeedHand = true,
+                // Mice and the like can eat without hands.
+                // TODO maybe set this based on some CanEatWithoutHands event or component?
+                NeedHand = forceFeed,
             };
 
             _doAfterSystem.TryStartDoAfter(doAfterEventArgs);

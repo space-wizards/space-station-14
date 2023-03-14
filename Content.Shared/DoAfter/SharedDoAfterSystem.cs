@@ -180,10 +180,13 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
         // For this we need to stay on the same hand slot and need the same item in that hand slot
         // (or if there is no item there we need to keep it free).
-        if (args.NeedHand && TryComp(args.User, out SharedHandsComponent? handsComponent))
+        if (args.NeedHand && args.BreakOnHandChange)
         {
-            doAfter.ActiveHand = handsComponent.ActiveHand?.Name;
-            doAfter.ActiveItem = handsComponent.ActiveHandEntity;
+            if (!TryComp(args.User, out SharedHandsComponent? handsComponent))
+                return false;
+
+            doAfter.InitialHand = handsComponent.ActiveHand?.Name;
+            doAfter.InitialItem = handsComponent.ActiveHandEntity;
         }
 
         // Inital checks

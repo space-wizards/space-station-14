@@ -152,10 +152,14 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
         if (args.NeedHand)
         {
-            if (!handsQuery.TryGetComponent(args.User, out var hands)
-                || hands.ActiveHand?.Name != doAfter.ActiveHand
-                || hands.ActiveHandEntity != doAfter.ActiveItem)
+            if (!handsQuery.TryGetComponent(args.User, out var hands) || hands.Count == 0)
                 return true;
+
+            if (args.BreakOnHandChange && ( hands.ActiveHand?.Name != doAfter.InitialHand
+                                            || hands.ActiveHandEntity != doAfter.InitialItem))
+            {
+                return true;
+            }
         }
 
         if (args.RequireCanInteract && !_actionBlocker.CanInteract(args.User, args.Target))
