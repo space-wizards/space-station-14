@@ -67,6 +67,10 @@ namespace Content.Client.Chemistry.UI
                 button.OnMouseEntered += args => OnDispenseReagentButtonMouseEntered?.Invoke(args, button);
                 button.OnMouseExited += args => OnDispenseReagentButtonMouseExited?.Invoke(args, button);
                 ChemicalList.AddChild(button);
+                if (p != null)
+                {
+                    button.SetColor(p.SubstanceColor);
+                }
             }
         }
 
@@ -187,6 +191,21 @@ namespace Content.Client.Chemistry.UI
         {
             ReagentId = reagentId;
             Text = text;
+        }
+
+        public void SetColor(Color color)
+        {
+            this.ModulateSelfOverride = Color.LightGray;
+            this.ModulateSelfOverride = color;
+            // if background (button) is light then make text dark and vice versa
+            if (Color.ToHsl(color).Z > 0.4)
+            {
+                Label.ModulateSelfOverride = Color.Black;
+            }
+            else
+            {
+                Label.ModulateSelfOverride = Color.White;
+            }
         }
     }
 }
