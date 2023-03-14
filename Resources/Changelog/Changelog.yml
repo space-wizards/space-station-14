@@ -1,9 +1,4 @@
 Entries:
-- author: ODJ
-  changes:
-  - {message: Lighthouse Station, type: Remove}
-  id: 2682
-  time: '2022-11-20T04:34:38.0000000+00:00'
 - author: keronshb
   changes:
   - {message: 'Subdermal Implants and Implanters have been added! Subdermal Implants
@@ -2911,3 +2906,8 @@ Entries:
   - {message: Fixed frezon canisters spawning with N2O in them., type: Fix}
   id: 3181
   time: '2023-03-14T03:42:07.0000000+00:00'
+- author: moony
+  changes:
+  - {message: The flashbang now darkens the screen instead of brightening it., type: Tweak}
+  id: 3182
+  time: '2023-03-14T05:37:22.0000000+00:00'
