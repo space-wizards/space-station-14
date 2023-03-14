@@ -16,3 +16,6 @@ ent-WeaponShotgunKammerer = Каммерер
 ent-WeaponShotgunSawn = обрез
     .desc = Против всякой шелупони. Использует патроны калибра .50 ружейный.
     .suffix = Дробовик
+ent-WeaponShotgunHandmade = handmade pistol
+    .desc = Looks unreliable. Uses .50 shotgun shells.
+    .suffix = { "" }
