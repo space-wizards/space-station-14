@@ -813,6 +813,12 @@
         Base: splat-0
   - type: Food
   - type: Hunger
+    thresholds: 
+    Overfed: 50
+    Okay: 25
+    Peckish: 12
+    Starving: 5
+    Dead: 0
     baseDecayRate: 0.25 # I'm very hungry! Give me. The cheese.
   - type: Extractable
     grindableSolutionName: food
