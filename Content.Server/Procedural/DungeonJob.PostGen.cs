@@ -501,6 +501,7 @@ public sealed partial class DungeonJob
                 if (!dungeon.RoomTiles.Contains(neighbor))
                     continue;
 
+                // Shrink by 0.01 to avoid polygon overlap from neighboring tiles.
                 foreach (var ent in _lookup.GetEntitiesIntersecting(_gridUid, new Box2(neighbor * grid.TileSize, (neighbor + 1) * grid.TileSize).Enlarged(-0.1f), flags))
                 {
                     if (!physicsQuery.TryGetComponent(ent, out var physics) ||
