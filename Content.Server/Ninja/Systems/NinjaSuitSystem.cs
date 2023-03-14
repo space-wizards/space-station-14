@@ -18,7 +18,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly EmpSystem _emp = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly NinjaSystem _ninja = default!;
+    [Dependency] private readonly new NinjaSystem _ninja = default!;
     [Dependency] private readonly PopupSystem _popups = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
