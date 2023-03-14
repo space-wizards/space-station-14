@@ -1,7 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CombatMode;
-using Content.Shared.Communications;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.Doors.Components;
@@ -31,7 +30,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
-    [Dependency] protected readonly SharedDoAfterSystem _doafter = default!;
+    [Dependency] protected readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedElectrocutionSystem _electrocution = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
@@ -50,20 +49,19 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         SubscribeLocalEvent<NinjaGlovesComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<NinjaGlovesComponent, ToggleActionEvent>(OnToggleAction);
         SubscribeLocalEvent<NinjaGlovesComponent, GotUnequippedEvent>(OnUnequipped);
-        SubscribeLocalEvent<NinjaGlovesComponent, DoAfterEvent>(EndedDoAfter);
 
         SubscribeLocalEvent<NinjaDoorjackComponent, InteractionAttemptEvent>(OnDoorjack);
 
         SubscribeLocalEvent<NinjaStunComponent, InteractionAttemptEvent>(OnStun);
 
         SubscribeLocalEvent<NinjaDrainComponent, InteractionAttemptEvent>(OnDrain);
-        SubscribeLocalEvent<NinjaDrainComponent, DoAfterEvent>(OnDrainDoAfter);
+        SubscribeLocalEvent<NinjaDrainComponent, DoAfterEvent<DrainData>>(OnDrainDoAfter);
 
         SubscribeLocalEvent<NinjaDownloadComponent, InteractionAttemptEvent>(OnDownload);
-        SubscribeLocalEvent<NinjaDownloadComponent, DoAfterEvent>(OnDownloadDoAfter);
+        SubscribeLocalEvent<NinjaDownloadComponent, DoAfterEvent<DownloadData>>(OnDownloadDoAfter);
 
         SubscribeLocalEvent<NinjaTerrorComponent, InteractionAttemptEvent>(OnTerror);
-        SubscribeLocalEvent<NinjaTerrorComponent, DoAfterEvent>(OnTerrorDoAfter);
+        SubscribeLocalEvent<NinjaTerrorComponent, DoAfterEvent<TerrorData>>(OnTerrorDoAfter);
     }
 
     /// <summary>
@@ -135,11 +133,6 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
             _ninja.AssignGloves(ninja, null);
     }
 
-    private void EndedDoAfter(EntityUid uid, NinjaGlovesComponent comp, DoAfterEvent args)
-    {
-        comp.Busy = false;
-    }
-
     /// <summary>
     /// Helper for glove ability handlers, checks gloves, range, combat mode and stuff.
     /// </summary>
@@ -163,6 +156,12 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         gloves = null;
         user = target = EntityUid.Invalid;
         return false;
+    }
+
+    private void EndBusy(EntityUid uid)
+    {
+        if (TryComp<NinjaGlovesComponent>(uid, out var gloves))
+            gloves.Busy = false;
     }
 
     private void OnDoorjack(EntityUid uid, NinjaDoorjackComponent comp, InteractionAttemptEvent args)
@@ -210,15 +209,13 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
     // can't predict PNBC existing so only done on server.
     protected virtual void OnDrain(EntityUid uid, NinjaDrainComponent comp, InteractionAttemptEvent args) { }
 
-    private void OnDrainDoAfter(EntityUid uid, NinjaDrainComponent comp, DoAfterEvent args)
+    private void OnDrainDoAfter(EntityUid uid, NinjaDrainComponent comp, DoAfterEvent<DrainData> args)
     {
+        EndBusy(uid);
         if (args.Cancelled || args.Handled || args.Args.Target == null)
             return;
 
-        var user = args.Args.User;
-        var target = args.Args.Target.Value;
-
-        _ninja.TryDrainPower(user, comp, target);
+        _ninja.TryDrainPower(args.Args.User, comp, args.Args.Target.Value);
     }
 
     private void OnDownload(EntityUid uid, NinjaDownloadComponent comp, InteractionAttemptEvent args)
@@ -226,7 +223,8 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         if (!GloveCheck(uid, args, out var gloves, out var user, out var target))
             return;
 
-        if (gloves.Busy || !TryComp<TechnologyDatabaseComponent>(target, out var database))
+        // can only hack the server, not a random console
+        if (gloves.Busy || !TryComp<TechnologyDatabaseComponent>(target, out var database) || HasComp<ResearchClientComponent>(target))
             return;
 
         // fail fast if theres no tech right now
@@ -238,18 +236,22 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
 
         var doafterArgs = new DoAfterEventArgs(user, comp.DownloadTime, target: target, used: uid)
         {
+            RaiseOnUser = false,
+            RaiseOnTarget = false,
             BreakOnDamage = true,
             BreakOnStun = true,
             BreakOnUserMove = true,
             MovementThreshold = 0.5f
         };
 
-        _doafter.DoAfter(doafterArgs);
+        _doAfter.DoAfter(doafterArgs, new DownloadData());
         gloves.Busy = true;
+        args.Cancel();
     }
 
-    private void OnDownloadDoAfter(EntityUid uid, NinjaDownloadComponent comp, DoAfterEvent args)
+    private void OnDownloadDoAfter(EntityUid uid, NinjaDownloadComponent comp, DoAfterEvent<DownloadData> args)
     {
+        EndBusy(uid);
         if (args.Cancelled || args.Handled)
             return;
 
@@ -286,13 +288,15 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
 
         var doafterArgs = new DoAfterEventArgs(user, comp.TerrorTime, target: target, used: uid)
         {
+            RaiseOnUser = false,
+            RaiseOnTarget = false,
             BreakOnDamage = true,
             BreakOnStun = true,
             BreakOnUserMove = true,
             MovementThreshold = 0.5f
         };
 
-        _doafter.DoAfter(doafterArgs);
+        _doAfter.DoAfter(doafterArgs, new TerrorData());
         gloves.Busy = true;
         // don't show the console popup
         args.Cancel();
@@ -304,8 +308,9 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         return false;
     }
 
-    private void OnTerrorDoAfter(EntityUid uid, NinjaTerrorComponent comp, DoAfterEvent args)
+    private void OnTerrorDoAfter(EntityUid uid, NinjaTerrorComponent comp, DoAfterEvent<TerrorData> args)
     {
+        EndBusy(uid);
         var target = args.Args.Target;
         if (args.Cancelled || args.Handled || target == null || !IsCommsConsole(target.Value))
             return;

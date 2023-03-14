@@ -29,7 +29,7 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
             MovementThreshold = 0.5f
         };
 
-        _doafter.DoAfter(doafterArgs);
+        _doAfter.DoAfter(doafterArgs, new DrainData());
         gloves.Busy = true;
     }
 

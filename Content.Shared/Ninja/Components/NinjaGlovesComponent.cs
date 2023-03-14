@@ -147,3 +147,9 @@ public sealed class NinjaTerrorComponent : Component
     [DataField("terrorTime")]
     public float TerrorTime = 20f;
 }
+
+public sealed record DrainData;
+
+public sealed record DownloadData;
+
+public sealed record TerrorData;
