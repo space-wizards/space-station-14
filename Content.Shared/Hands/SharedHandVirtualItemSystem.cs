@@ -1,17 +1,60 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
+using Robust.Shared.Network;
 
 namespace Content.Shared.Hands;
 
 public abstract class SharedHandVirtualItemSystem : EntitySystem
 {
+    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
+
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<HandVirtualItemComponent, BeingEquippedAttemptEvent>(OnBeingEquippedAttempt);
         SubscribeLocalEvent<HandVirtualItemComponent, BeforeRangedInteractEvent>(HandleBeforeInteract);
+    }
+
+    public bool TrySpawnVirtualItemInHand(EntityUid blockingEnt, EntityUid user)
+    {
+        return TrySpawnVirtualItemInHand(blockingEnt, user, out _);
+    }
+
+    public bool TrySpawnVirtualItemInHand(EntityUid blockingEnt, EntityUid user, [NotNullWhen(true)] out EntityUid? virtualItem)
+    {
+        if (!_hands.TryGetEmptyHand(user, out var hand))
+        {
+            virtualItem = null;
+            return false;
+        }
+
+        var pos = Transform(user).Coordinates;
+        virtualItem = Spawn("HandVirtualItem", pos);
+        var virtualItemComp = EntityManager.GetComponent<HandVirtualItemComponent>(virtualItem.Value);
+        virtualItemComp.BlockingEntity = blockingEnt;
+        _hands.DoPickup(user, hand, virtualItem.Value);
+        return true;
+    }
+
+
+    /// <summary>
+    ///     Deletes all virtual items in a user's hands with
+    ///     the specified blocked entity.
+    /// </summary>
+    public void DeleteInHandsMatching(EntityUid user, EntityUid matching)
+    {
+        foreach (var hand in _hands.EnumerateHands(user))
+        {
+            if (TryComp(hand.HeldEntity, out HandVirtualItemComponent? virt) && virt.BlockingEntity == matching)
+            {
+                Delete(virt, user);
+            }
+        }
     }
 
     private void OnBeingEquippedAttempt(EntityUid uid, HandVirtualItemComponent component, BeingEquippedAttemptEvent args)
@@ -34,10 +77,10 @@ public abstract class SharedHandVirtualItemSystem : EntitySystem
     public void Delete(HandVirtualItemComponent comp, EntityUid user)
     {
         var userEv = new VirtualItemDeletedEvent(comp.BlockingEntity, user);
-        RaiseLocalEvent(user, userEv, false);
+        RaiseLocalEvent(user, userEv);
         var targEv = new VirtualItemDeletedEvent(comp.BlockingEntity, user);
-        RaiseLocalEvent(comp.BlockingEntity, targEv, false);
+        RaiseLocalEvent(comp.BlockingEntity, targEv);
 
-        EntityManager.QueueDeleteEntity(comp.Owner);
+        QueueDel(comp.Owner);
     }
 }

@@ -102,25 +102,24 @@ namespace Content.Shared.Preferences
         ///     Defaults to <see cref="SharedHumanoidAppearanceSystem.DefaultSpecies"/> for the species.
         /// </summary>
         /// <returns></returns>
-        public static HumanoidCharacterProfile Default()
+        public HumanoidCharacterProfile() : this(
+            "John Doe",
+            "",
+            SharedHumanoidAppearanceSystem.DefaultSpecies,
+            18,
+            Sex.Male,
+            Gender.Male,
+            new HumanoidCharacterAppearance(),
+            ClothingPreference.Jumpsuit,
+            BackpackPreference.Backpack,
+            new Dictionary<string, JobPriority>
+            {
+                {SharedGameTicker.FallbackOverflowJob, JobPriority.High}
+            },
+            PreferenceUnavailableMode.SpawnAsOverflow,
+            new List<string>(),
+            new List<string>())
         {
-            return new(
-                "John Doe",
-                "",
-                SharedHumanoidAppearanceSystem.DefaultSpecies,
-                18,
-                Sex.Male,
-                Gender.Male,
-                HumanoidCharacterAppearance.Default(),
-                ClothingPreference.Jumpsuit,
-                BackpackPreference.Backpack,
-                new Dictionary<string, JobPriority>
-                {
-                    {SharedGameTicker.FallbackOverflowJob, JobPriority.High}
-                },
-                PreferenceUnavailableMode.SpawnAsOverflow,
-                new List<string>(),
-                new List<string>());
         }
 
         /// <summary>

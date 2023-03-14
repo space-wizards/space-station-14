@@ -1,134 +1,4 @@
 Entries:
-- author: Ygg01
-  changes:
-  - {message: Fluids no longer leak through micropores in concrete, type: Fix}
-  - {message: 'Fluids now spill slowly, rather than quantum tunneling to optimal size',
-    type: Fix}
-  id: 2661
-  time: '2022-11-15T11:31:00.0000000+00:00'
-- author: corentt
-  changes:
-  - {message: the price of food now depends on its nutritional capacity, type: Add}
-  id: 2662
-  time: '2022-11-15T11:51:31.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed a broken inhand for the fire extinguisher., type: Fix}
-  id: 2663
-  time: '2022-11-16T05:24:35.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Hydroponics trays and soil now properly rotate with the player perspective.,
-    type: Fix}
-  id: 2664
-  time: '2022-11-16T11:08:19.0000000+00:00'
-- author: GoodWheatley
-  changes:
-  - {message: Eswords can damage windows now., type: Tweak}
-  id: 2665
-  time: '2022-11-16T14:20:42.0000000+00:00'
-- author: BurninDreamear
-  changes:
-  - {message: 'All sorts of corporations now supply higher caliber bullets, revolver
-      only, for now...', type: Add}
-  - {message: Nanotrasen and Syndicate revolvers have been retrofitted to use .45
-      magnum rounds instead of .40. Happy shooting!, type: Tweak}
-  id: 2666
-  time: '2022-11-16T14:41:48.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Cat ears now cost 26tc, type: Tweak}
-  id: 2667
-  time: '2022-11-16T14:46:56.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: You can't turn chameleon hat into cat ears., type: Remove}
-  id: 2668
-  time: '2022-11-16T18:13:54.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'The base rules for all Wizards'' Den servers have been rewritten from
-      the ground up. A "long-form" version is available on the wiki, with even more
-      examples and clarifications. Not much concrete is changing--this is mostly just
-      better codifying stuff that we were already enforcing, but we recommend that
-      you reread them anyway, of course.', type: Add}
-  id: 2669
-  time: '2022-11-16T18:24:37.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Traitor objectives should no longer be overly steal-oriented., type: Tweak}
-  - {message: The fallback for the 'keep another traitor alive' condition now just
-      gives you stay alive rather than telling you to keep yourself alive., type: Fix}
-  id: 2670
-  time: '2022-11-16T20:58:48.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added machine upgrades for the medical scanner. You can now decrease
-      the chance that cloning fails on a body., type: Add}
-  id: 2671
-  time: '2022-11-16T21:02:37.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Item artifacts. Artifact spawns may now spawn handheld artifacts, which
-      have a suite of new triggers and very useful effects, with more coming.', type: Add}
-  id: 2672
-  time: '2022-11-17T17:40:05.0000000+00:00'
-- author: nikthechampiongr
-  changes:
-  - {message: Fixes access permissions for maintenance door on saltern., type: Fix}
-  id: 2673
-  time: '2022-11-18T04:42:38.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Added the Traversal Distorter, a machine capable of pushing Artifacts''
-      random node traversal in certain directions. Simply place an artifact on the
-      machine and you can choose how you want to encourage it.', type: Add}
-  id: 2674
-  time: '2022-11-18T04:43:18.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Item artifacts can now be scanned., type: Fix}
-  id: 2675
-  time: '2022-11-18T21:59:58.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: The 'toggle ghosts' button while a ghost is now an action., type: Tweak}
-  id: 2676
-  time: '2022-11-18T22:30:54.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: Fixes an issue where teleporting would happen if someone raised a riot
-      shield, type: Fix}
-  id: 2677
-  time: '2022-11-19T03:51:55.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: the RPED can now actually be printed at protolathes., type: Fix}
-  id: 2678
-  time: '2022-11-19T04:25:54.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Nukie planet has been fixed., type: Fix}
-  id: 2679
-  time: '2022-11-19T05:24:31.0000000+00:00'
-- author: Mervill
-  changes:
-  - {message: Paper and some misc other objects are now recyclable, type: Add}
-  - {message: Recycler counts the number of recycled items, type: Add}
-  - {message: Two way levels can be switched in a specific direction with the right-click
-      menu, type: Add}
-  id: 2680
-  time: '2022-11-19T16:05:44.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed weird zombie attack animations., type: Fix}
-  id: 2681
-  time: '2022-11-19T16:07:09.0000000+00:00'
-- author: ODJ
-  changes:
-  - {message: Lighthouse Station, type: Remove}
-  id: 2682
-  time: '2022-11-20T04:34:38.0000000+00:00'
 - author: keronshb
   changes:
   - {message: 'Subdermal Implants and Implanters have been added! Subdermal Implants
@@ -2920,3 +2790,124 @@ Entries:
       5 key slots., type: Fix}
   id: 3160
   time: '2023-03-12T13:51:28.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: grille can now be built on all tiles and in space, type: Tweak}
+  id: 3161
+  time: '2023-03-12T20:46:44.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Reduced cost of bottles in the medical techfab. 200 glass to 50 glass.,
+    type: Tweak}
+  id: 3162
+  time: '2023-03-12T23:37:00.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: ID card console sorts jobs now., type: Tweak}
+  id: 3163
+  time: '2023-03-12T23:40:17.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: The blood red hardsuit sprite is no longer identical to that of the
+      syndicate commander's hardsuit., type: Tweak}
+  id: 3164
+  time: '2023-03-12T23:42:42.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: 'Changed meat kudzu spread by half, but it deals additional piercing
+      damage.', type: Tweak}
+  id: 3165
+  time: '2023-03-12T23:45:01.0000000+00:00'
+- author: GoodWheatley
+  changes:
+  - {message: 'A recently discovered security vulnerability in Nanotrasen radio frequencies
+      has been exploited by the Syndicate, allowing the Syndicate Encryption Key to
+      access all station radio channels.', type: Add}
+  id: 3166
+  time: '2023-03-13T00:48:34.0000000+00:00'
+- author: TaralGit
+  changes:
+  - {message: the handmade pistol is now a one shot firearm that uses shotgun shells
+      and has a more fitting sprite, type: Tweak}
+  id: 3167
+  time: '2023-03-13T00:52:57.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Slimeperson life support crate now can be ordered from cargo, type: Add}
+  id: 3168
+  time: '2023-03-13T01:04:27.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Engivend deny sprite no longer shakes., type: Fix}
+  id: 3169
+  time: '2023-03-13T02:22:52.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: Strip menu won't open when trying to wake sleeping players., type: Fix}
+  id: 3170
+  time: '2023-03-13T03:29:26.0000000+00:00'
+- author: Nylux
+  changes:
+  - {message: Dionas can now get drunk., type: Fix}
+  id: 3171
+  time: '2023-03-13T03:48:32.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Science lockers now come with both a node scanner *and* an anomaly scanner,
+    type: Add}
+  id: 3172
+  time: '2023-03-13T04:02:08.0000000+00:00'
+- author: furontier
+  changes:
+  - {message: Flashes can no longer affect blind players., type: Tweak}
+  id: 3173
+  time: '2023-03-13T04:03:51.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Changed security and HoS hardsuits lights from red to yellow., type: Tweak}
+  id: 3174
+  time: '2023-03-13T17:45:48.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: 'Added the warden''s hardsuit to the warden''s locker. Don''t abuse
+      it, wardens.', type: Add}
+  id: 3175
+  time: '2023-03-13T17:47:56.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Welding doors will now stop mice, rat kings and other mobs from running
+      under them.', type: Tweak}
+  id: 3176
+  time: '2023-03-13T19:26:21.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Makeshift handcuffs are now the correct color, green.', type: Fix}
+  id: 3177
+  time: '2023-03-13T23:39:06.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Changed the held sprites of almost every uniform to be more accurate.,
+    type: Tweak}
+  id: 3178
+  time: '2023-03-14T00:12:58.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed being able to emag machines by snipping the access wire., type: Fix}
+  id: 3179
+  time: '2023-03-14T02:55:19.0000000+00:00'
+- author: ficcialfaint
+  changes:
+  - {message: Station Records Computer now shows fingerprints, type: Add}
+  id: 3180
+  time: '2023-03-14T02:55:56.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Changed the sprite of frezon canisters., type: Tweak}
+  - {message: Fixed frezon canisters spawning with N2O in them., type: Fix}
+  id: 3181
+  time: '2023-03-14T03:42:07.0000000+00:00'
+- author: moony
+  changes:
+  - {message: The flashbang now darkens the screen instead of brightening it., type: Tweak}
+  id: 3182
+  time: '2023-03-14T05:37:22.0000000+00:00'
