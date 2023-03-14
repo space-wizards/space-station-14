@@ -1,10 +1,13 @@
 using Content.Shared.Hands.Components;
+using Robust.Shared.IoC;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.DoAfter;
 
 public abstract partial class SharedDoAfterSystem : EntitySystem
 {
+    [Dependency] private readonly IDynamicTypeFactory _factory = default!;
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -80,18 +83,25 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (args.ExtraCheck?.Invoke() == false)
             return false;
 
-        if (args.AttemptEvent == null)
+        if (doAfter.AttemptEvent == null)
+        {
+            // I feel like this is somewhat cursed, but its the only way I can think of without having to just send
+            // redundant data over the network and increasing DoAfter boilerplate.
+            var evType = typeof(DoAfterAttemptEvent<>).MakeGenericType(args.Event.GetType());
+            doAfter.AttemptEvent = _factory.CreateInstance(evType, new object[] { doAfter, args.Event });
+        }
+
+        if (args.EventTarget != null)
+            RaiseLocalEvent(args.EventTarget.Value, doAfter.AttemptEvent, args.Broadcast);
+        else
+            RaiseLocalEvent(doAfter.AttemptEvent);
+
+        var ev = (CancellableEntityEventArgs) doAfter.AttemptEvent;
+        if (!ev.Cancelled)
             return true;
 
-        var ev = args.AttemptEvent;
         ev.Uncancel();
-        ev.DoAfter = doAfter;
-        if (args.EventTarget != null)
-            RaiseLocalEvent(args.EventTarget.Value, (object)ev, args.Broadcast);
-        else
-            RaiseLocalEvent((object)ev);
-
-        return !args.AttemptEvent.Cancelled;
+        return false;
     }
 
     private void TryComplete(DoAfter doAfter, DoAfterComponent component)
@@ -100,7 +110,8 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             return;
 
         // Perform final check (if required)
-        if (!doAfter.Args.AttemptEveryTick && !TryAttemptEvent(doAfter))
+        if (doAfter.Args.AttemptFrequency == AttemptFrequency.StartAndEnd
+            && !TryAttemptEvent(doAfter))
         {
             InternalCancel(doAfter, component);
             return;
@@ -120,7 +131,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (args.Used is { } used && !xformQuery.HasComponent(used))
             return true;
 
-        if (args.EventTarget is { Valid: true} eventTarget && !xformQuery.HasComponent(eventTarget))
+        if (args.EventTarget is {Valid: true} eventTarget && !xformQuery.HasComponent(eventTarget))
             return true;
 
         if (!xformQuery.TryGetComponent(args.User, out var userXform))
@@ -143,11 +154,12 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (args.BreakOnTargetMove)
         {
             DebugTools.Assert(targetXform != null, "Break on move is true, but no target specified?");
-            if (targetXform != null && !targetXform.Coordinates.InRange(EntityManager, _transform, doAfter.TargetPosition, args.MovementThreshold))
+            if (targetXform != null && !targetXform.Coordinates.InRange(EntityManager, _transform,
+                    doAfter.TargetPosition, args.MovementThreshold))
                 return true;
         }
 
-        if (args.AttemptEveryTick && !TryAttemptEvent(doAfter))
+        if (args.AttemptFrequency == AttemptFrequency.EveryTick && !TryAttemptEvent(doAfter))
             return true;
 
         if (args.NeedHand)
@@ -155,8 +167,8 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             if (!handsQuery.TryGetComponent(args.User, out var hands) || hands.Count == 0)
                 return true;
 
-            if (args.BreakOnHandChange && ( hands.ActiveHand?.Name != doAfter.InitialHand
-                                            || hands.ActiveHandEntity != doAfter.InitialItem))
+            if (args.BreakOnHandChange && (hands.ActiveHand?.Name != doAfter.InitialHand
+                                           || hands.ActiveHandEntity != doAfter.InitialItem))
             {
                 return true;
             }
@@ -169,13 +181,15 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         {
             if (targetXform != null
                 && !args.User.Equals(args.Target)
-                && !userXform.Coordinates.InRange(EntityManager, _transform, targetXform.Coordinates, args.DistanceThreshold.Value))
+                && !userXform.Coordinates.InRange(EntityManager, _transform, targetXform.Coordinates,
+                    args.DistanceThreshold.Value))
             {
                 return true;
             }
 
             if (usedXform != null
-                && !userXform.Coordinates.InRange(EntityManager, _transform, usedXform.Coordinates, args.DistanceThreshold.Value))
+                && !userXform.Coordinates.InRange(EntityManager, _transform, usedXform.Coordinates,
+                    args.DistanceThreshold.Value))
             {
                 return true;
             }

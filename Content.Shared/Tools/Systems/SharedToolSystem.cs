@@ -118,7 +118,7 @@ public abstract partial class SharedToolSystem : EntitySystem
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
             NeedHand = true,
-            AttemptEvent = fuel <= 0 ? null : new ToolFuelCheckEvent(fuel)
+            AttemptFrequency = fuel <= 0 ? AttemptFrequency.Never : AttemptFrequency.EveryTick
         };
 
         _doAfterSystem.TryStartDoAfter(doAfterArgs, out id);

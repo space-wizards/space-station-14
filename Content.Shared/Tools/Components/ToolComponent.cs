@@ -53,28 +53,4 @@ namespace Content.Shared.Tools.Components
             Target = target;
         }
     }
-
-    /// <summary>
-    ///     Event raised before the tool do after starts and just before it completes.
-    /// </summary>
-    [Serializable, NetSerializable]
-    public sealed class ToolFuelCheckEvent : DoAfterAttemptEvent
-    {
-        [DataField("fuel", required: true)]
-        public readonly float Fuel;
-
-        public ToolFuelCheckEvent()
-        {
-        }
-
-        public ToolFuelCheckEvent(float fuel)
-        {
-            Fuel = fuel;
-        }
-
-        public override ToolFuelCheckEvent Clone()
-        {
-            return new ToolFuelCheckEvent(Fuel);
-        }
-    }
 }

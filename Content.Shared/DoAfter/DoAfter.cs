@@ -65,6 +65,9 @@ public sealed class DoAfter
     [DataField("activeItem")]
     public EntityUid? InitialItem;
 
+    // cached attempt event for the sake of avoiding unnecessary reflection every time this needs to be raised.
+    [NonSerialized] public object? AttemptEvent;
+
     private DoAfter()
     {
     }

@@ -221,7 +221,7 @@ namespace Content.Server.Strip
             var doAfterArgs = new DoAfterArgs(user, ev.Time, new AwaitedDoAfterEvent(), null, target: target, used: held)
             {
                 ExtraCheck = Check,
-                AttemptEveryTick = true,
+                AttemptFrequency = AttemptFrequency.EveryTick,
                 BreakOnDamage = true,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -291,7 +291,7 @@ namespace Content.Server.Strip
             var doAfterArgs = new DoAfterArgs(user, ev.Time, new AwaitedDoAfterEvent(), null, target: target, used: held)
             {
                 ExtraCheck = Check,
-                AttemptEveryTick = true,
+                AttemptFrequency = AttemptFrequency.EveryTick,
                 BreakOnDamage = true,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -349,7 +349,7 @@ namespace Content.Server.Strip
             var doAfterArgs = new DoAfterArgs(user, ev.Time, new AwaitedDoAfterEvent(), null, target: target, used: item)
             {
                 ExtraCheck = Check,
-                AttemptEveryTick = true,
+                AttemptFrequency = AttemptFrequency.EveryTick,
                 BreakOnDamage = true,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -421,7 +421,7 @@ namespace Content.Server.Strip
             var doAfterArgs = new DoAfterArgs(user, ev.Time, new AwaitedDoAfterEvent(), null, target: target, used: item)
             {
                 ExtraCheck = Check,
-                AttemptEveryTick = true,
+                AttemptFrequency = AttemptFrequency.EveryTick,
                 BreakOnDamage = true,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,

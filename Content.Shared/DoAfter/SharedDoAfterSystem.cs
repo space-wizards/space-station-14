@@ -193,6 +193,9 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (ShouldCancel(doAfter, GetEntityQuery<TransformComponent>(), GetEntityQuery<SharedHandsComponent>()))
             return false;
 
+        if (args.AttemptFrequency == AttemptFrequency.StartAndEnd && !TryAttemptEvent(doAfter))
+            return false;
+
         if (args.Delay <= TimeSpan.Zero)
         {
             RaiseDoAfterEvents(doAfter, comp);

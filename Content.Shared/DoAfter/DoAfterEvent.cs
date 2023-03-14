@@ -1,5 +1,3 @@
-using Content.Shared.Tools;
-using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.DoAfter;
@@ -33,27 +31,6 @@ public abstract class DoAfterEvent : HandledEntityEventArgs
 }
 
 /// <summary>
-///     Base type for events that get raised every tick while a do-after is in progress to check whether the do-after should be canceled.
-/// </summary>
-[Serializable, NetSerializable]
-[ImplicitDataDefinitionForInheritors]
-public abstract class DoAfterAttemptEvent : CancellableEntityEventArgs
-{
-    /// <summary>
-    ///     The do after that triggered this event. This will be set by the do after system before the event is raised.
-    /// </summary>
-    [NonSerialized]
-    [Access(typeof(SharedDoAfterSystem), typeof(SharedToolSystem))]
-    public DoAfter DoAfter = default!;
-
-    /// <summary>
-    ///     Duplicate the current event. This is used by state handling, and should copy by value unless the reference
-    ///     types are immutable.
-    /// </summary>
-    public abstract DoAfterAttemptEvent Clone();
-}
-
-/// <summary>
 ///     Blank / empty event for simple do afters that carry no information.
 /// </summary>
 /// <remarks>
@@ -76,4 +53,29 @@ public abstract class SimpleDoAfterEvent : DoAfterEvent
 [Obsolete("Dont use async DoAfters")]
 public sealed class AwaitedDoAfterEvent : SimpleDoAfterEvent
 {
+}
+
+/// <summary>
+///     This event will optionally get raised every tick while a do-after is in progress to check whether the do-after
+///     should be canceled.
+/// </summary>
+public sealed class DoAfterAttemptEvent<TEvent> : CancellableEntityEventArgs where TEvent : DoAfterEvent
+{
+    /// <summary>
+    ///     The do after that triggered this event.
+    /// </summary>
+    public readonly DoAfter DoAfter;
+
+    /// <summary>
+    ///     The event that the DoAfter will raise after sucesfully finishing. Given that this event has the data
+    ///     required to perform the interaction, it should also contain the data required to validate/attempt the
+    ///     interaction.
+    /// </summary>
+    public readonly TEvent Event;
+
+    public DoAfterAttemptEvent(DoAfter doAfter, TEvent @event)
+    {
+        DoAfter = doAfter;
+        Event = @event;
+    }
 }

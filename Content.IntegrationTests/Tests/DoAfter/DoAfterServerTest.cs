@@ -67,13 +67,6 @@ namespace Content.IntegrationTests.Tests.DoAfter
                                     && type.HasCustomAttribute<SerializableAttribute>(),
                             $"{nameof(DoAfterEvent)} is not NetSerializable. Event: {type.Name}");
                     }
-
-                    foreach (var type in refMan.GetAllChildren<DoAfterAttemptEvent>(true))
-                    {
-                        Assert.That(type.HasCustomAttribute<NetSerializableAttribute>()
-                                    && type.HasCustomAttribute<SerializableAttribute>(),
-                            $"{nameof(DoAfterAttemptEvent)} is not NetSerializable. Event: {type.Name}");
-                    }
                 });
             });
 

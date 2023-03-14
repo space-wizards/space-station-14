@@ -39,16 +39,11 @@ public sealed class DoAfterArgs
     public readonly DoAfterEvent Event = default!;
 
     /// <summary>
-    ///     An optional event that will get raised every tick (unless <see cref="AttemptEveryTick"/> is false) to check whether the DoAfter should be canceled.
+    ///     This option determines how frequently the DoAfterAttempt event will get raised. Defaults to never raising the
+    ///     event.
     /// </summary>
-    [DataField("attemptEvent")]
-    public DoAfterAttemptEvent? AttemptEvent;
-
-    /// <summary>
-    ///     If true, the <see cref="AttemptEvent"/> will be raised every tick. Otherwise, it will only be raised at the beginning and end of the DoAfter.
-    /// </summary>
-    [DataField("attemptEveryTick")]
-    public bool AttemptEveryTick = true;
+    [DataField("attemptEventFrequency")]
+    public AttemptFrequency AttemptFrequency;
 
     /// <summary>
     ///     Entity which will receive the directed event. If null, no directed event will be raised.
@@ -228,18 +223,17 @@ public sealed class DoAfterArgs
         BreakOnDamage = other.BreakOnDamage;
         DamageThreshold = other.DamageThreshold;
         RequireCanInteract = other.RequireCanInteract;
-        AttemptEveryTick = other.AttemptEveryTick;
+        AttemptFrequency = other.AttemptFrequency;
         BlockDuplicate = other.BlockDuplicate;
         CancelDuplicate = other.CancelDuplicate;
         DuplicateCondition = other.DuplicateCondition;
 
         Event = other.Event.Clone();
-        AttemptEvent = other.AttemptEvent?.Clone();
     }
 }
 
 /// <summary>
-///     See <see cref="DoAfterArgs.DuplicateConditions"/>.
+///     See <see cref="DoAfterArgs.DuplicateCondition"/>.
 /// </summary>
 [Flags]
 public enum DuplicateConditions : byte
@@ -280,4 +274,22 @@ public enum DuplicateConditions : byte
     SameEvent = 1 << 3,
 
     All = SameTool | SameTarget | SameEvent,
+}
+
+public enum AttemptFrequency : byte
+{
+    /// <summary>
+    ///     Never raise the attempt event.
+    /// </summary>
+    Never = 0,
+
+    /// <summary>
+    ///     Raises the attempt event when the DoAfter is about to start or end.
+    /// </summary>
+    StartAndEnd = 1,
+
+    /// <summary>
+    ///     Raise the attempt event every tick while the DoAfter is running.
+    /// </summary>
+    EveryTick = 2
 }
