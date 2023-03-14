@@ -87,7 +87,6 @@
       state: base
     - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
       state: mouth
-      shader: unshaded
   - type: RandomSprite
     available:
     - enum.DamageStateVisualLayers.Base:

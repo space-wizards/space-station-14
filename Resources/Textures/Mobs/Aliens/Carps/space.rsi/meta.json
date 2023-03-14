@@ -5,7 +5,7 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/tgstation/tgstation/blob/master/icons/mob/animal.dmi, edited 'dead' to create 'crit' and 'dead' states",
+  "copyright": "Taken from https://github.com/tgstation/tgstation/blob/master/icons/mob/animal.dmi, remade by Alekshhh",
   "states": [
     {
       "name": "icon"
@@ -17,19 +17,23 @@
         [
           0.2,
           0.2,
-          0.2
-        ],
-        [
-          0.2,
           0.2,
           0.2
         ],
         [
           0.2,
           0.2,
+          0.2,
           0.2
         ],
         [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
           0.2,
           0.2,
           0.2
@@ -49,39 +53,26 @@
         [
           0.2,
           0.2,
-          0.2
-        ],
-        [
-          0.2,
           0.2,
           0.2
         ],
         [
           0.2,
           0.2,
+          0.2,
           0.2
         ],
         [
           0.2,
           0.2,
+          0.2,
           0.2
-        ]
-      ]
-    },
-    {
-      "name": "gib",
-      "delays": [
+        ],
         [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
+          0.2,
+          0.2,
+          0.2,
+          0.2
         ]
       ]
     }
