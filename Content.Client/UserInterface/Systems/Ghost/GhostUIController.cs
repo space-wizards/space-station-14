@@ -1,5 +1,6 @@
 ﻿using Content.Client.Gameplay;
 using Content.Client.Ghost;
+using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Client.UserInterface.Systems.Ghost.Widgets;
 using Content.Shared.Ghost;
 using Robust.Client.UserInterface;
@@ -15,6 +16,25 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
     [UISystemDependency] private readonly GhostSystem? _system = default;
 
     private GhostGui? Gui => UIManager.GetActiveUIWidgetOrNull<GhostGui>();
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        var gameplayStateLoad = UIManager.GetUIController<GameplayStateLoadController>();
+        gameplayStateLoad.OnScreenLoad += OnScreenLoad;
+        gameplayStateLoad.OnScreenUnload += OnScreenUnload;
+    }
+
+    private void OnScreenLoad()
+    {
+        LoadGui();
+    }
+
+    private void OnScreenUnload()
+    {
+        UnloadGui();
+    }
 
     public void OnSystemLoaded(GhostSystem system)
     {

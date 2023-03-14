@@ -39,6 +39,7 @@ flavor-base-fizzy = fizzy
 flavor-base-shocking = shocking
 flavor-base-cheap = cheap
 flavor-base-piquant = piquant
+flavor-base-sharp = sharp
 
 # lmao
 flavor-base-terrible = terrible
@@ -84,6 +85,7 @@ flavor-complex-pineapple = like pineapple
 flavor-complex-onion = like onion
 flavor-complex-eggplant = like eggplant
 flavor-complex-carrot = like carrots
+flavor-complex-cabbage = like cabbages
 flavor-complex-potatoes = like potatoes
 flavor-complex-mushroom = like mushrooms
 flavor-complex-tomato = like tomatoes
@@ -94,6 +96,7 @@ flavor-complex-bungo = like bungo
 flavor-complex-raisins = like dried grapes
 flavor-complex-orange = like oranges
 flavor-complex-watermelon = like watermelon
+flavor-complex-garlic = like garlic
 
 ## Complex foodstuffs (cooked foods, joke flavors, etc)
 
@@ -173,3 +176,4 @@ flavor-complex-medicine = like medicine
 flavor-complex-carpet = like a handful of fur
 flavor-complex-bee = unbeelievable
 flavor-complex-sax = like jazz
+flavor-complex-bottledlightning = like lightning in a bottle

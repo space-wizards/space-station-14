@@ -82,7 +82,7 @@ public sealed class ThrowingSystem : EntitySystem
 
         if (time < FlyTime)
         {
-            _thrownSystem.LandComponent(comp, physics);
+            _thrownSystem.LandComponent(uid, comp, physics);
         }
         else
         {
@@ -93,7 +93,7 @@ public sealed class ThrowingSystem : EntitySystem
                 if (physics.Deleted)
                     return;
 
-                _thrownSystem.LandComponent(comp, physics);
+                _thrownSystem.LandComponent(uid, comp, physics);
             });
         }
 
@@ -104,7 +104,7 @@ public sealed class ThrowingSystem : EntitySystem
             _gravity.IsWeightless(user.Value, userPhysics))
         {
             var msg = new ThrowPushbackAttemptEvent();
-            RaiseLocalEvent(physics.Owner, msg);
+            RaiseLocalEvent(uid, msg);
 
             if (!msg.Cancelled)
                 _physics.ApplyLinearImpulse(user.Value, -impulseVector * pushbackRatio, body: userPhysics);
