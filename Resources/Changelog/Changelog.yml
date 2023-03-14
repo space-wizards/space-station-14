@@ -1,17 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Nukie planet has been fixed., type: Fix}
-  id: 2679
-  time: '2022-11-19T05:24:31.0000000+00:00'
-- author: Mervill
-  changes:
-  - {message: Paper and some misc other objects are now recyclable, type: Add}
-  - {message: Recycler counts the number of recycled items, type: Add}
-  - {message: Two way levels can be switched in a specific direction with the right-click
-      menu, type: Add}
-  id: 2680
-  time: '2022-11-19T16:05:44.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fixed weird zombie attack animations., type: Fix}
@@ -2913,3 +2900,13 @@ Entries:
     type: Tweak}
   id: 3178
   time: '2023-03-14T00:12:58.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed being able to emag machines by snipping the access wire., type: Fix}
+  id: 3179
+  time: '2023-03-14T02:55:19.0000000+00:00'
+- author: ficcialfaint
+  changes:
+  - {message: Station Records Computer now shows fingerprints, type: Add}
+  id: 3180
+  time: '2023-03-14T02:55:56.0000000+00:00'
