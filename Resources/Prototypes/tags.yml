@@ -1,5 +1,3 @@
-# Alphabetical order is now apparently required.
-
 - type: Tag
   id: AirAlarm
 
@@ -8,6 +6,9 @@
 
 - type: Tag
   id: AirSensor
+
+- type: Tag
+  id: AppraisalTool
 
 - type: Tag
   id: ATVKeys
@@ -107,6 +108,10 @@
 
 - type: Tag
   id: CartridgeRocket
+
+# Allows you to walk over tile entities such as lava without steptrigger
+- type: Tag
+  id: Catwalk
 
 - type: Tag
   id: Cigarette
@@ -304,6 +309,9 @@
   id: IntercomElectronics
 
 - type: Tag
+  id: JanicartKeys
+
+- type: Tag
   id: JawsOfLife
 
 - type: Tag
@@ -317,6 +325,12 @@
 
 - type: Tag
   id: Machete
+
+- type: Tag
+  id: MacroBomb
+
+- type: Tag
+  id: MicroBomb
 
 # Magazines ordered by slot then caliber
 
@@ -414,12 +428,6 @@
   id: Payload # for grenade/bomb crafting
 
 - type: Tag
-  id: MacroBomb
-
-- type: Tag
-  id: MicroBomb
-
-- type: Tag
   id: PaintableAirlock
 
 - type: Tag
@@ -462,9 +470,6 @@
   id: ProximitySensor
 
 - type: Tag
-  id: JanicartKeys
-
-- type: Tag
   id: Radio
 
 - type: Tag
@@ -502,6 +507,9 @@
   id: RollingPaper
 
 - type: Tag
+  id: SalvageExperiment
+
+- type: Tag
   id: Screwdriver
 
 - type: Tag
@@ -511,13 +519,13 @@
   id: SecwayKeys
 
 - type: Tag
-  id: ShoesRequiredStepTriggerImmune
-
-- type: Tag
   id: Sheet
 
 - type: Tag
   id: ShellShotgun
+
+- type: Tag
+  id: ShoesRequiredStepTriggerImmune
 
 - type: Tag
   id: Shovel
@@ -559,6 +567,9 @@
   id: StringInstrument
 
 - type: Tag
+  id: SubdermalImplant
+
+- type: Tag
   id: SurveillanceCameraMonitorCircuitboard
 
 - type: Tag
@@ -583,10 +594,10 @@
   id: VehicleKey
 
 - type: Tag
-  id: WetFloorSign
+  id: Wall
 
 - type: Tag
-  id: Wall
+  id: WetFloorSign
 
 - type: Tag
   id: WallmountGeneratorAPUElectronics
@@ -623,6 +634,3 @@
 
 - type: Tag
   id: Write
-
-- type: Tag
-  id: SubdermalImplant
