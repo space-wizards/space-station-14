@@ -57,3 +57,18 @@ reagent-desc-pax = A psychiatric drug which prevents the patient from directly h
 
 reagent-name-honk = honk
 reagent-desc-honk = A toxin found in bananium. Causes severe honking and internal bleeding, may also cause the patient to mutate.
+
+reagent-name-human-muta-tox = human mutation toxin
+reagent-name-human-muta-tox = A drug capable of transforming any humanoid into a Human.
+
+reagent-name-slime-person-muta-tox = slime person mutation toxin
+reagent-desc-slime-person-muta-tox = A drug capable of transforming any humanoid into a slime person.
+
+reagent-name-skeleton-muta-tox = skin hurting juice
+reagent-desc-skeleton-muta-tox = A drug that hurts all over, followed by everything but the essentials falling off. Transforms any humanoid into a skeleton.
+
+reagent-name-reptilian-muta-tox = reptilian mutation toxin
+reagent-desc-reptilian-muta-tox = A drug capable of transforming any humanoid into a reptilian.
+
+reagent-name-monkey-muta-tox = monkey mutation toxin
+reagent-desc-monkey-muta-tox = A drug capable of transforming any humanoid into a monkey.
