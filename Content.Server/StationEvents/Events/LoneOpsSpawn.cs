@@ -17,6 +17,7 @@ public sealed class LoneOpsSpawn : StationEventSystem
 
     public override string Prototype => "LoneOps";
     public const string LoneOpsShuttlePath = "Maps/Shuttles/striker.yml";
+    public const string GameRuleProto = "Nukeops";
 
     public override void Started()
     {
@@ -30,12 +31,10 @@ public sealed class LoneOpsSpawn : StationEventSystem
 
         _map.TryLoad(shuttleMap, LoneOpsShuttlePath, out var grids, options);
 
-        _prototypeManager.TryIndex<GameRulePrototype>("Nukeops", out var ruleProto);
-
-        if (ruleProto == null)
+        if (!_prototypeManager.TryIndex<GameRulePrototype>(GameRuleProto, out var ruleProto))
             return;
 
-        _nukeopsRuleSystem.OnLoneOpsSpawn();
+        _nukeopsRuleSystem.LoadLoneOpsConfig();
         _gameTicker.StartGameRule(ruleProto);
     }
 }

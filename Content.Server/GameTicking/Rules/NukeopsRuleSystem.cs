@@ -233,7 +233,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
     }
 
-    public void OnLoneOpsSpawn()
+    public void LoadLoneOpsConfig()
     {
         _nukeopsRuleConfig.SpawnOutpost = false;
         _nukeopsRuleConfig.EndsRound = false;
@@ -613,7 +613,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         if (_nukiePlanet != null)
             return true; // Map is already loaded.
 
-        if (_nukeopsRuleConfig.SpawnOutpost == false)
+        if (!_nukeopsRuleConfig.SpawnOutpost)
             return true;
 
         var path = _nukeopsRuleConfig.NukieOutpostMap;
