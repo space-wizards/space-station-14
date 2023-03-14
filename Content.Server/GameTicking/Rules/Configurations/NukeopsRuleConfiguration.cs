@@ -26,6 +26,18 @@ public sealed class NukeopsRuleConfiguration : GameRuleConfiguration
     [DataField("maxOps")]
     public int MaxOperatives = 5;
 
+    /// <summary>
+    /// Whether or not all of the nuclear operatives dying will end the round. Used by LoneOpsSpawn event.
+    /// </summary>
+    [DataField("endsRound")]
+    public bool EndsRound = true;
+
+    /// <summary>
+    /// Whether or not to spawn the nuclear operative outpost. Used by LoneOpsSpawn event.
+    /// </summary>
+    [DataField("spawnOutpost")]
+    public bool SpawnOutpost = true;
+
     [DataField("randomHumanoidSettings", customTypeSerializer: typeof(PrototypeIdSerializer<RandomHumanoidSettingsPrototype>))]
     public string RandomHumanoidSettingsPrototype = "NukeOp";
 

@@ -70,4 +70,21 @@
       - sprite: Structures/Wallmounts/signs.rsi
         state: radiation
 
-
+- type: entity
+  noSpawn: true
+  id: SpawnPointLoneNukeOperative
+  name: ghost role spawn point
+  suffix: loneops
+  parent: MarkerBase
+  components:
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanLoneNuclearOperative
+    name: Lone Operative
+    description: You are a lone nuclear operative. Destroy the station!
+    rules: You are a syndicate operative tasked with the destruction of the station. As an antagonist, do whatever is required to complete this task.
+  - type: Sprite
+    sprite: markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: Structures/Wallmounts/signs.rsi
+        state: radiation

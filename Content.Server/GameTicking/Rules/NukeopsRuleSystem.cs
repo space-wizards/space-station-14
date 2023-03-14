@@ -233,6 +233,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
     }
 
+    public void OnLoneOpsSpawn()
+    {
+        _nukeopsRuleConfig.SpawnOutpost = false;
+        _nukeopsRuleConfig.EndsRound = false;
+    }
+
     private void OnRoundStart()
     {
         // TODO: This needs to try and target a Nanotrasen station. At the very least,
@@ -382,7 +388,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void CheckRoundShouldEnd()
     {
-        if (!RuleAdded || RuleWinType == WinType.CrewMajor || RuleWinType == WinType.OpsMajor)
+        if (!RuleAdded || !_nukeopsRuleConfig.EndsRound || RuleWinType == WinType.CrewMajor || RuleWinType == WinType.OpsMajor)
             return;
 
         // If there are any nuclear bombs that are active, immediately return. We're not over yet.
@@ -606,6 +612,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     {
         if (_nukiePlanet != null)
             return true; // Map is already loaded.
+
+        if (_nukeopsRuleConfig.SpawnOutpost == false)
+            return true;
 
         var path = _nukeopsRuleConfig.NukieOutpostMap;
         var shuttlePath = _nukeopsRuleConfig.NukieShuttleMap;
