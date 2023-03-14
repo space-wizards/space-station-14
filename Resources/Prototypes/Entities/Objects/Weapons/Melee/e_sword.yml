@@ -2,13 +2,14 @@
   name: energy sword
   parent: BaseItem
   id: EnergySword
-  description: A very dangerous energy sword. Can be stored in pockets when turned off. Makes a lot of noise when used or turned on.
+  description: Very loud and very dangerous. Can be stored in pockets when turned off.
   components:
   - type: EnergySword
     litDamageBonus:
         types:
-            Slash: 9.5
-            Heat: 9.5
+            Slash: 15
+            Heat: 15
+            Structural: 4
             Blunt: -4.5
     litDisarmMalus: 0.6
   - type: Sprite
@@ -21,9 +22,9 @@
         shader: unshaded
         map: [ "blade" ]
   - type: MeleeWeapon
-    attackRate: 1.5
+    attackRate: 1
     soundHit:
-      path: /Audio/Weapons/genhit1.ogg
+      path: /Audio/Weapons/eblade1.ogg
     damage:
       types:
         Blunt: 4.5
