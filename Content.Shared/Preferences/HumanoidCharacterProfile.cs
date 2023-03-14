@@ -106,26 +106,25 @@ namespace Content.Shared.Preferences
         ///     Defaults to <see cref="SharedHumanoidAppearanceSystem.DefaultSpecies"/> for the species.
         /// </summary>
         /// <returns></returns>
-        public static HumanoidCharacterProfile Default()
-        {
-            return new(
-                "John Doe",
-                "",
-                SharedHumanoidAppearanceSystem.DefaultSpecies,
-                SharedHumanoidAppearanceSystem.DefaultVoice, // Corvax-TTS
+        public HumanoidCharacterProfile() : this(
+            "John Doe",
+            "",
+            SharedHumanoidAppearanceSystem.DefaultSpecies,
+            SharedHumanoidAppearanceSystem.DefaultVoice, // Corvax-TTS
                 18,
                 Sex.Male,
                 Gender.Male,
-                HumanoidCharacterAppearance.Default(),
-                ClothingPreference.Jumpsuit,
-                BackpackPreference.Backpack,
-                new Dictionary<string, JobPriority>
-                {
-                    {SharedGameTicker.FallbackOverflowJob, JobPriority.High}
-                },
-                PreferenceUnavailableMode.SpawnAsOverflow,
-                new List<string>(),
-                new List<string>());
+               new HumanoidCharacterAppearance(),
+            ClothingPreference.Jumpsuit,
+            BackpackPreference.Backpack,
+            new Dictionary<string, JobPriority>
+            {
+                {SharedGameTicker.FallbackOverflowJob, JobPriority.High}
+            },
+            PreferenceUnavailableMode.SpawnAsOverflow,
+            new List<string>(),
+            new List<string>())
+        {
         }
 
         /// <summary>
