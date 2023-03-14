@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: the RPED can now actually be printed at protolathes., type: Fix}
-  id: 2678
-  time: '2022-11-19T04:25:54.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Nukie planet has been fixed., type: Fix}
@@ -2912,3 +2907,9 @@ Entries:
   - {message: 'Makeshift handcuffs are now the correct color, green.', type: Fix}
   id: 3177
   time: '2023-03-13T23:39:06.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Changed the held sprites of almost every uniform to be more accurate.,
+    type: Tweak}
+  id: 3178
+  time: '2023-03-14T00:12:58.0000000+00:00'
