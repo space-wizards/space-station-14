@@ -232,7 +232,7 @@
       - VoiceTrigger
       - PowerCellSmall
       - PowerCellMedium
-      - PowerCellHigh  
+      - PowerCellHigh
       - SynthesizerInstrument
       - RPED
       - NodeScanner
@@ -364,6 +364,7 @@
     - RipleyLLeg
     - RipleyRLeg
     - MechEquipmentGrabber
+    - MechEquipmentDrill
   - type: MaterialStorage
     whitelist:
       tags:

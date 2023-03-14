@@ -45,3 +45,11 @@
   materials:
     Steel: 500
     Plastic: 200
+
+- type: latheRecipe
+  id: MechEquipmentDrill
+  result: MechEquipmentDrill
+  completetime: 10
+  materials:
+    Steel: 500
+    Plastic: 200
