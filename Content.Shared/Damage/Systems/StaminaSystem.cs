@@ -7,6 +7,7 @@ using Content.Shared.Damage.Events;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
+using Content.Shared.Rejuvenate;
 using Content.Shared.Rounding;
 using Content.Shared.Stunnable;
 using Content.Shared.Weapons.Melee.Events;
@@ -45,6 +46,7 @@ public sealed class StaminaSystem : EntitySystem
         SubscribeLocalEvent<StaminaComponent, ComponentGetState>(OnStamGetState);
         SubscribeLocalEvent<StaminaComponent, ComponentHandleState>(OnStamHandleState);
         SubscribeLocalEvent<StaminaComponent, DisarmedEvent>(OnDisarmed);
+        SubscribeLocalEvent<StaminaComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<StaminaDamageOnCollideComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnHit);
     }
@@ -109,6 +111,18 @@ public sealed class StaminaSystem : EntitySystem
         var curTime = _timing.CurTime;
         var pauseTime = _metadata.GetPauseTime(uid);
         return MathF.Max(0f, component.StaminaDamage - MathF.Max(0f, (float) (curTime - (component.NextUpdate + pauseTime)).TotalSeconds * component.Decay));
+    }
+
+    private void OnRejuvenate(EntityUid uid, StaminaComponent component, RejuvenateEvent args)
+    {
+        if (component.StaminaDamage >= component.CritThreshold)
+        {
+            ExitStamCrit(uid, component);
+        }
+
+        component.StaminaDamage = 0;
+        RemComp<ActiveStaminaComponent>(uid);
+        Dirty(component);
     }
 
     private void OnDisarmed(EntityUid uid, StaminaComponent component, DisarmedEvent args)
@@ -209,7 +223,16 @@ public sealed class StaminaSystem : EntitySystem
 
     public void TakeStaminaDamage(EntityUid uid, float value, StaminaComponent? component = null, EntityUid? source = null, EntityUid? with = null)
     {
-        if (!Resolve(uid, ref component, false) || component.Critical)
+        if (!Resolve(uid, ref component, false))
+            return;
+
+        var ev = new BeforeStaminaDamageEvent(value);
+        RaiseLocalEvent(uid, ref ev);
+        if (ev.Cancelled)
+            return;
+
+        // Have we already reached the point of max stamina damage?
+        if (component.Critical)
             return;
 
         var oldDamage = component.StaminaDamage;
@@ -356,4 +379,11 @@ public sealed class StaminaSystem : EntitySystem
         public float CritThreshold;
         public TimeSpan LastUpdate;
     }
+
 }
+
+/// <summary>
+///     Raised before stamina damage is dealt to allow other systems to cancel it.
+/// </summary>
+[ByRefEvent]
+public record struct BeforeStaminaDamageEvent(float Value, bool Cancelled=false);
