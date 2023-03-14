@@ -192,8 +192,30 @@
 - type: entity
   parent: EncryptionKey
   id: EncryptionKeySyndie
-  name: blood-red encryption key
-  description: An encryption key used by... wait... Who is owner of this chip?
+  name: syndicate encryption key
+  description: An encryption key used by Syndicate agents to not only access the station's radio channels, but also securely contact other agents in the field.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Common
+    - Command
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+    - Syndicate
+    defaultChannel: Syndicate
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+    state: syn_cypherkey
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyNukie
+  name: nuclear operative encryption key
+  description: An encryption key used by nuclear operatives to securely contact each other during operations.
   components:
   - type: EncryptionKey
     channels:
