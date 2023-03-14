@@ -231,7 +231,6 @@
   - type: Slippery
     paralyzeTime: 4
     launchForwardsMultiplier: 5
-    enabled: false
   - type: StepTrigger
     intersectRatio: 0.2
   - type: RadiationSource

@@ -42,7 +42,7 @@
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          Bananium:
+          MaterialBananium:
             min: 0
             max: 1
       - !type:DoActsBehavior
