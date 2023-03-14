@@ -43,3 +43,9 @@
   - /Audio/Effects/Diseases/snore1.ogg
   - /Audio/Effects/Diseases/snore2.ogg
   - /Audio/Effects/Diseases/snore3.ogg
+
+- type: soundCollection
+  id: Honks
+  files:
+  - /Audio/Items/bikehorn.ogg
+

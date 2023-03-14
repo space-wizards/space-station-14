@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24 , bear pelt remade by Alekshhh",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24 , bear pelt remade by Alekshhh, bananium, bananium_1 and peel made by brainfood1183 (github) for ss14",
   "size": {
     "x": 32,
     "y": 32
@@ -14,7 +14,22 @@
       "name": "alienhide"
     },
     {
-      "name": "bananium"
+      "name": "bananium",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "bananium_1",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
     },
     {
       "name": "bearpelt"
@@ -106,6 +121,15 @@
     },
     {
       "name": "phoron_gem"
+    },
+    {
+      "name": "peel",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
     },
     {
       "name": "phoron_gem_spent"

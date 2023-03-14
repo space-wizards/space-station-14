@@ -217,6 +217,52 @@
   - type: SpaceGarbage
 
 - type: entity
+  name: bananium peel
+  parent: BaseItem
+  id: TrashBananiumPeel
+  description: Radioactive trash.
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/materials.rsi
+    state: peel
+  - type: Item
+    sprite: Objects/Materials/materials.rsi
+    heldPrefix: peel
+  - type: Slippery
+    paralyzeTime: 4
+    launchForwardsMultiplier: 5
+    enabled: false
+  - type: StepTrigger
+    intersectRatio: 0.2
+  - type: RadiationSource
+    intensity: 0.3
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.2,-0.2,0.2,0.2"
+      id: "slips"
+      hard: false
+      layer:
+      - SlipLayer
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.2,-0.2,0.2,0.2"
+      density: 30
+      mask:
+      - ItemMask
+  - type: Tag
+    tags:
+    - Recyclable
+    - Trash
+  - type: Recyclable
+  - type: SpaceGarbage
+
+- type: entity
   name: carrot
   parent: FoodProduceBase
   id: FoodCarrot

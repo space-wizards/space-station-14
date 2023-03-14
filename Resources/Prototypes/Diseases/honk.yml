@@ -1,0 +1,24 @@
+- type: disease
+  id: ActiveHonkVirus
+  name: disease-proto-honk
+  infectious: false
+  cureResist: 0.2
+  effects:
+    - !type:DiseaseAdjustReagent
+      probability: 0.07
+      reagent: Toxin
+      amount: 1
+    - !type:DiseaseHonk
+      probability: 0.05
+      honkMessage: disease-honk
+      honkSound:
+        collection: Honks
+    - !type:DiseaseAddComponent
+      comp: Cluwne
+      probability: 0.0005
+  cures:
+    - !type:DiseaseReagentCure
+      reagent: BananaHonk
+      min: 5
+    - !type:DiseaseJustWaitCure
+      maxLength: 400

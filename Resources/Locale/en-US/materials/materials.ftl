@@ -18,3 +18,4 @@ materials-plasma = plasma
 materials-plastic = plastic
 materials-wood = wood
 materials-uranium = uranium
+materials-bananium = bananium

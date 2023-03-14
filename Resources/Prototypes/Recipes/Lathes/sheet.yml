@@ -97,3 +97,10 @@
   completetime: 2
   materials:
     Plastic: 100
+
+- type: latheRecipe
+  id: MaterialBananium1
+  result: MaterialBananium1
+  completetime: 2
+  materials:
+    Bananium: 500

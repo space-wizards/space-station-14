@@ -116,6 +116,8 @@
     - id: ClothingHeadHatFancyCrown #how did that get there?
       amount: 1
   - type: DiseaseCarrier
+    naturalImmunities:
+    - ActiveHonkVirus
     carrierDiseases:
     - VentCough
     - AMIV
@@ -263,6 +265,8 @@
       Dead:
         Base: splat-3
   - type: DiseaseCarrier
+    naturalImmunities:
+      - ActiveHonkVirus
     carrierDiseases:
     - VentCough
     - AMIV

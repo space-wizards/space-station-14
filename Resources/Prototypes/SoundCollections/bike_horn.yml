@@ -8,3 +8,7 @@
   files:
   - /Audio/Items/brokenbikehorn.ogg
 
+- type: soundCollection
+  id: BananiumHorn
+  files:
+  - /Audio/Items/airhorn.ogg
