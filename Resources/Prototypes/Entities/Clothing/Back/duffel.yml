@@ -118,7 +118,7 @@
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelHydroponics
-  name: hydroponic's duffel bag
+  name: hydroponics duffel bag
   description: A large duffel bag for holding extra gardening tools.
   components:
     - type: Sprite
