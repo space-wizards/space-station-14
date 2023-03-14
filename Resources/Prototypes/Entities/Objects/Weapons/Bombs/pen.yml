@@ -14,5 +14,5 @@
     intensitySlope: 5
     maxIntensity: 30
     canCreateVacuum: false
-  - type: ActivateOnWrite
+  - type: ActivateOnPaperOpened
   - type: ExplodeOnTrigger

@@ -33,7 +33,7 @@ namespace Content.Server.Paper
             SubscribeLocalEvent<PaperComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<PaperComponent, PaperInputTextMessage>(OnInputTextMessage);
 
-            SubscribeLocalEvent<ActivateOnWriteComponent, PaperWriteEvent>(OnWrittenWith);
+            SubscribeLocalEvent<ActivateOnPaperOpenedComponent, PaperWriteEvent>(OnWrittenWith);
         }
 
         private void OnInit(EntityUid uid, PaperComponent paperComp, ComponentInit args)
@@ -129,7 +129,7 @@ namespace Content.Server.Paper
             UpdateUserInterface(uid, paperComp);
         }
 
-        private void OnWrittenWith(EntityUid uid, ActivateOnWriteComponent comp, ref PaperWriteEvent args)
+        private void OnWrittenWith(EntityUid uid, ActivateOnPaperOpenedComponent comp, ref PaperWriteEvent args)
         {
             RaiseLocalEvent(uid, new UseInHandEvent(args.User));
         }
