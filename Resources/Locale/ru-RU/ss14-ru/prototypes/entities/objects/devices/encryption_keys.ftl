@@ -40,3 +40,6 @@ ent-EncryptionKeyService = ключ шифрования сервисного о
 ent-EncryptionKeySyndie = кроваво-красный ключ шифрования
     .desc = Ключ шифрования, используемый... секундочку... Кто владелец этого чипа?
     .suffix = { "" }
+ent-EncryptionKeyNukie = nuclear operative encryption key
+    .desc = An encryption key used by nuclear operatives to securely contact each other during operations.
+    .suffix = { "" }

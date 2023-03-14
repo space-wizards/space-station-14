@@ -76,3 +76,6 @@ ent-ComputerSurveillanceCameraMonitor = camera monitor
 ent-ComputerSurveillanceWirelessCameraMonitor = wireless camera monitor
     .desc = A wireless surveillance camera monitor. You're watching them. Maybe.
     .suffix = { "" }
+ent-ComputerPalletConsole = cargo sale computer
+    .desc = Used to sell goods loaded onto cargo pallets
+    .suffix = { "" }
