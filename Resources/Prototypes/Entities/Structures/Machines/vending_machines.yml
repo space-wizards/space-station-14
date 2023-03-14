@@ -350,6 +350,177 @@
     color: "#3c5eb5"
 
 - type: entity
+  parent: VendingMachineCola
+  id: VendingMachineColaBlack
+  suffix: Black
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/cola-black.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#423438"
+
+- type: entity
+  parent: VendingMachineCola
+  id: VendingMachineColaRed
+  name: Space Cola Vendor
+  description: It vends cola, in space.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/cola-red.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#A50824"
+
+- type: entity
+  parent: VendingMachineCola
+  id: VendingMachineSpaceUp
+  name: Space-Up! Vendor
+  description: Indulge in an explosion of flavor.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/spaceup.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#44964A"
+
+- type: entity
+  parent: VendingMachineCola
+  id: VendingMachineSoda
+  suffix: Soda
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/soda.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#CBC6BE"
+
+- type: entity
+  parent: VendingMachineCola
+  id: VendingMachineStarkist
+  name: Star-kist Vendor
+  description: The taste of a star in liquid form.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/starkist.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#D3A44D"
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineShamblersJuice
+  name: Shambler's Juice Vendor
+  description: ~Shake me up some of that Shambler's Juice!~
+  components:
+  - type: VendingMachine
+    pack: ShamblersJuiceInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
+    ejectDelay: 1.9
+  - type: Advertise
+    pack: RobustSoftdrinksAds
+  - type: Speech
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/shamblersjuice.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#66538F"
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachinePwrGame
+  name: Pwr Game Vendor
+  description: You want it, we got it. Brought to you in partnership with Vlad's Salads.
+  components:
+  - type: VendingMachine
+    pack: PwrGameInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
+    ejectDelay: 1.9
+  - type: Advertise
+    pack: RobustSoftdrinksAds
+  - type: Speech
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/pwrgame.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#6927C5"
+
+- type: entity
   parent: VendingMachine
   id: VendingMachineDinnerware
   name: Plasteel Chef's Dinnerware Vendor
@@ -672,6 +843,82 @@
     radius: 1.5
     energy: 1.6
     color: "#c73434"
+
+- type: entity
+  parent: VendingMachineSnack
+  id: VendingMachineSnackBlue
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/snack-blue.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#3c5eb5"
+
+- type: entity
+  parent: VendingMachineSnack
+  id: VendingMachineSnackOrange
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/snack-orange.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#CE3401"
+
+- type: entity
+  parent: VendingMachineSnack
+  id: VendingMachineSnackGreen
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/snack-green.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#5F6A1C"
+
+- type: entity
+  parent: VendingMachineSnack
+  id: VendingMachineSnackTeal
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/snack-teal.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#207E79"
 
 - type: entity
   parent: VendingMachine
@@ -1479,72 +1726,4 @@
     layers:
     - state: dispenser
     - state: dispensereng
-
-- type: entity
-  parent: VendingMachine
-  id: VendingMachineShamblersJuice
-  name: Shambler's Juice Vendor
-  description: ~Shake me up some of that Shambler's Juice!~
-  components:
-  - type: VendingMachine
-    pack: ShamblersJuiceInventory
-    dispenseOnHitChance: 0.25
-    dispenseOnHitThreshold: 2
-    offState: off
-    brokenState: broken
-    normalState: normal-unshaded
-    ejectState: eject-unshaded
-    denyState: deny-unshaded
-    ejectDelay: 1.9
-  - type: Advertise
-    pack: RobustSoftdrinksAds
-  - type: Speech
-  - type: Sprite
-    sprite: Structures/Machines/VendingMachines/shamblersjuice.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Base"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: PointLight
-    radius: 1.5
-    energy: 1.6
-    color: "#66538F"
-
-- type: entity
-  parent: VendingMachine
-  id: VendingMachinePwrGame
-  name: Pwr Game Vendor
-  description: The only drink with the PWR that true gamers crave.
-  components:
-  - type: VendingMachine
-    pack: PwrGameInventory
-    dispenseOnHitChance: 0.25
-    dispenseOnHitThreshold: 2
-    offState: off
-    brokenState: broken
-    normalState: normal-unshaded
-    ejectState: eject-unshaded
-    denyState: deny-unshaded
-    ejectDelay: 1.9
-  - type: Advertise
-    pack: RobustSoftdrinksAds
-  - type: Speech
-  - type: Sprite
-    sprite: Structures/Machines/VendingMachines/pwrgame.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Base"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: PointLight
-    radius: 1.5
-    energy: 1.6
-    color: "#6927C5"
 
