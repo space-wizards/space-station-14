@@ -1,15 +1,18 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.Chat.Systems;
 using Content.Server.Fax;
 using Content.Server.Paper;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Nuke
 {
     public sealed class NukeCodePaperSystem : EntitySystem
     {
+        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly PaperSystem _paper = default!;
@@ -49,11 +52,10 @@ namespace Content.Server.Nuke
                 return false;
             }
 
-            var faxes = EntityManager.EntityQuery<FaxMachineComponent>();
+            var faxes = EntityQueryEnumerator<FaxMachineComponent>();
             var wasSent = false;
-            foreach (var fax in faxes)
+            while (faxes.MoveNext(out var faxEnt, out var fax))
             {
-                var faxEnt = fax.Owner;
                 if (!fax.ReceiveNukeCodes || !TryGetRelativeNukeCode(faxEnt, out var paperContent, station))
                 {
                     continue;
@@ -96,7 +98,9 @@ namespace Content.Server.Nuke
 
             var codesMessage = new FormattedMessage();
             // Find the first nuke that matches the passed location.
-            foreach (var nuke in EntityQuery<NukeComponent>())
+            var query = EntityQuery<NukeComponent>().ToList();
+            _random.Shuffle(query);
+            foreach (var nuke in query)
             {
                 if (!getAllCodes &&
                     (owningStation == null &&
@@ -108,6 +112,7 @@ namespace Content.Server.Nuke
 
                 codesMessage.PushNewline();
                 codesMessage.AddMarkup(Loc.GetString("nuke-codes-list", ("name", MetaData(nuke.Owner).EntityName), ("code", nuke.Code)));
+                break;
             }
 
             if (!codesMessage.IsEmpty)
