@@ -39,7 +39,7 @@ flavor-base-fizzy = шипуче
 flavor-base-shocking = шокирующе
 flavor-base-cheap = дёшево
 flavor-base-piquant = пикантно
-flavor-base-sharp = sharp
+flavor-base-sharp = резко
 # lmao
 flavor-base-terrible = ужасно
 
@@ -184,4 +184,4 @@ flavor-complex-medicine = как лекарство
 flavor-complex-carpet = как горсть шерсти
 flavor-complex-bee = беспчеловечно
 flavor-complex-sax = как джаз
-flavor-complex-bottledlightning = like lightning in a bottle
+flavor-complex-bottledlightning = как молния в бутылке
