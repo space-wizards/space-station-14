@@ -157,7 +157,7 @@ namespace Content.Server.Polymorph.Systems
                 _mobThreshold.GetScaledDamage(uid, child, out var damage) &&
                 damage != null)
             {
-                _damageable.SetDamage(damageParent, damage);
+                _damageable.SetDamage(child, damageParent, damage);
             }
 
             if (proto.Inventory == PolymorphInventoryChange.Transfer)
@@ -246,7 +246,7 @@ namespace Content.Server.Polymorph.Systems
                 _mobThreshold.GetScaledDamage(uid, parent, out var damage) &&
                 damage != null)
             {
-                _damageable.SetDamage(damageParent, damage);
+                _damageable.SetDamage(parent, damageParent, damage);
             }
 
             if (proto.Inventory == PolymorphInventoryChange.Transfer)
