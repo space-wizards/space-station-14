@@ -22,8 +22,8 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
     [Dependency] private readonly StationRecordsSystem _record = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
-    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-    [Dependency] private readonly AccessSystem _access = default!;
+    [Dependency] private readonly SharedAccessSystem _access = default!;
+    [Dependency] private readonly SharedAccessReaderSystem _accessReader = default!;
     [Dependency] private readonly IdCardSystem _idCard = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
@@ -61,7 +61,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
             var privilegedIdName = string.Empty;
             if (component.PrivilegedIdSlot.Item is { Valid: true } item)
             {
-                privilegedIdName = EntityManager.GetComponent<MetaDataComponent>(item).EntityName;
+                privilegedIdName = Comp<MetaDataComponent>(item).EntityName;
             }
 
             newState = new IdCardConsoleBoundUserInterfaceState(
@@ -77,15 +77,29 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         }
         else
         {
-            var targetIdComponent = EntityManager.GetComponent<IdCardComponent>(targetId);
-            var targetAccessComponent = EntityManager.GetComponent<AccessComponent>(targetId);
+            // door electronics have access but no id card, don't require it
+            var isId = TryComp<IdCardComponent>(targetId, out var targetIdComponent);
+            string[] tags;
+            if (isId)
+            {
+                // id card list of provided accesses
+                var access = Comp<AccessComponent>(targetId);
+                tags = access.Tags.ToArray();
+            }
+            else
+            {
+                // door electronics list of accepted accesses
+                var reader = Comp<AccessReaderComponent>(targetId);
+                tags = _accessReader.GetAccessList(reader).ToArray();
+            }
+
             var name = string.Empty;
             if (component.PrivilegedIdSlot.Item is { Valid: true } item)
-                name = EntityManager.GetComponent<MetaDataComponent>(item).EntityName;
+                name = MetaData(item).EntityName;
 
             var jobProto = string.Empty;
             if (_station.GetOwningStation(uid) is { } station
-                && EntityManager.TryGetComponent<StationRecordKeyStorageComponent>(targetId, out var keyStorage)
+                && TryComp<StationRecordKeyStorageComponent>(targetId, out var keyStorage)
                 && keyStorage.Key != null
                 && _record.TryGetRecord<GeneralStationRecord>(station, keyStorage.Key.Value, out var record))
             {
@@ -96,12 +110,12 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
                 component.PrivilegedIdSlot.HasItem,
                 PrivilegedIdIsAuthorized(uid, component),
                 true,
-                targetIdComponent.FullName,
-                targetIdComponent.JobTitle,
-                targetAccessComponent.Tags.ToArray(),
+                targetIdComponent?.FullName,
+                targetIdComponent?.JobTitle,
+                tags,
                 jobProto,
                 name,
-                EntityManager.GetComponent<MetaDataComponent>(targetId).EntityName);
+                MetaData(targetId).EntityName);
         }
 
         _userInterface.TrySetUiState(uid, IdCardConsoleUiKey.Key, newState);
@@ -134,6 +148,17 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
             return;
         }
 
+        if (TryComp<AccessReaderComponent>(targetId, out var reader))
+        {
+            // door electronics, set it to accept any of the listed accesses
+            // lets you e.g. set a door as both salvage and engineering so both departments can open, rather than require AA to open it.
+            _accessReader.UpdateAccess(reader, new HashSet<string>(newAccessList));
+            // TODO: still suffers the same log issues as below, not ideal.
+            _adminLogger.Add(LogType.Action, LogImpact.Medium,
+                $"{ToPrettyString(player):player} has modified {ToPrettyString(targetId):entity} with the following opening accesses: [{string.Join(", ", newAccessList)}]");
+            return;
+        }
+
         var oldTags = _access.TryGetTags(targetId) ?? new List<string>();
         oldTags = oldTags.ToList();
 
@@ -160,7 +185,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         if (!Resolve(uid, ref component))
             return true;
 
-        if (!EntityManager.TryGetComponent<AccessReaderComponent>(uid, out var reader))
+        if (!TryComp<AccessReaderComponent>(uid, out var reader))
             return true;
 
         var privilegedId = component.PrivilegedIdSlot.Item;
@@ -170,7 +195,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
     private void UpdateStationRecord(EntityUid uid, EntityUid targetId, string newFullName, string newJobTitle, string newJobProto)
     {
         if (_station.GetOwningStation(uid) is not { } station
-            || !EntityManager.TryGetComponent<StationRecordKeyStorageComponent>(targetId, out var keyStorage)
+            || !TryComp<StationRecordKeyStorageComponent>(targetId, out var keyStorage)
             || keyStorage.Key is not { } key
             || !_record.TryGetRecord<GeneralStationRecord>(station, key, out var record))
         {

@@ -26,7 +26,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
     [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
-    [Dependency] private readonly AccessReaderSystem _access = default!;
+    [Dependency] private readonly SharedAccessReaderSystem _access = default!;
 
     private const string KeySlot = "key_slot";
 

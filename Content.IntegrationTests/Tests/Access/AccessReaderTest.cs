@@ -20,7 +20,7 @@ namespace Content.IntegrationTests.Tests.Access
 
             await server.WaitAssertion(() =>
             {
-                var system = EntitySystem.Get<AccessReaderSystem>();
+                var system = EntitySystem.Get<SharedAccessReaderSystem>();
 
                 // test empty
                 var reader = new AccessReaderComponent();

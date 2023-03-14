@@ -29,7 +29,7 @@ public sealed partial class ShuttleSystem
 
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IdCardSystem _idSystem = default!;
-    [Dependency] private readonly AccessReaderSystem _reader = default!;
+    [Dependency] private readonly SharedAccessReaderSystem _reader = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
 

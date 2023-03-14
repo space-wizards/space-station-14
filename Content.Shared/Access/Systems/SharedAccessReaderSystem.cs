@@ -13,7 +13,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Access.Systems
 {
-    public sealed class AccessReaderSystem : EntitySystem
+    public abstract class SharedAccessReaderSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
@@ -291,6 +291,30 @@ namespace Content.Shared.Access.Systems
 
             key = null;
             return false;
+        }
+
+        /// <summary>
+        /// Replaces the access lists of this reader with a single list accepting any of the access tags.
+        /// </summary>
+        public void UpdateAccess(AccessReaderComponent comp, HashSet<string> accessTags)
+        {
+            comp.AccessLists.Clear();
+            comp.AccessLists.Add(accessTags);
+        }
+
+        /// <summary>
+        /// Returns all of this readers' accepted accesses, ignoring conditions
+        /// </summary>
+        public HashSet<string> GetAccessList(AccessReaderComponent comp)
+        {
+            var list = new HashSet<string>();
+
+            foreach (var accessList in comp.AccessLists)
+            {
+                list.UnionWith(accessList);
+            }
+
+            return list;
         }
     }
 }

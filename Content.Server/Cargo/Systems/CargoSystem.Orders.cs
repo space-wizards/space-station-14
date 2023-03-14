@@ -33,7 +33,7 @@ namespace Content.Server.Cargo.Systems
         private float _timer;
 
         [Dependency] private readonly IdCardSystem _idCardSystem = default!;
-        [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
+        [Dependency] private readonly SharedAccessReaderSystem _accessReader = default!;
         [Dependency] private readonly SignalLinkerSystem _linker = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly StationSystem _station = default!;
@@ -97,7 +97,7 @@ namespace Content.Server.Cargo.Systems
             if (args.Session.AttachedEntity is not {Valid: true} player)
                 return;
 
-            if (!_accessReaderSystem.IsAllowed(player, uid))
+            if (!_accessReader.IsAllowed(player, uid))
             {
                 ConsolePopup(args.Session, Loc.GetString("cargo-console-order-not-allowed"));
                 PlayDenySound(uid, component);

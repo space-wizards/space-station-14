@@ -25,7 +25,7 @@ namespace Content.Server.Doors.Systems;
 
 public sealed class DoorSystem : SharedDoorSystem
 {
-    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
+    [Dependency] private readonly SharedAccessReaderSystem _accessReader = default!;
     [Dependency] private readonly AirlockSystem _airlock = default!;
     [Dependency] private readonly AirtightSystem _airtightSystem = default!;
     [Dependency] private readonly ConstructionSystem _constructionSystem = default!;
@@ -239,9 +239,9 @@ public sealed class DoorSystem : SharedDoorSystem
         return AccessType switch
         {
             // Some game modes modify access rules.
-            AccessTypes.AllowAllIdExternal => !isExternal || _accessReaderSystem.IsAllowed(user.Value, access),
+            AccessTypes.AllowAllIdExternal => !isExternal || _accessReader.IsAllowed(user.Value, access),
             AccessTypes.AllowAllNoExternal => !isExternal,
-            _ => _accessReaderSystem.IsAllowed(user.Value, access)
+            _ => _accessReader.IsAllowed(user.Value, access)
         };
     }
 
