@@ -1,3 +1,4 @@
+using Content.Server.Fluids.EntitySystems;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Fluids.Components
@@ -10,10 +11,12 @@ namespace Content.Server.Fluids.Components
     /// When the drain is full, it can be unclogged using a plunger (i.e. an entity with a Plunger tag attached).
     /// Later this can be refactored into a proper Plunger component if needed.
     /// </summary>
-    [RegisterComponent]
+    [RegisterComponent, Access(typeof(DrainSystem))]
     public sealed class DrainComponent : Component
     {
         public const string SolutionName = "drainBuffer";
+        public const string PuddlePrototype = "PuddleSmear";
+        public const string PlungerTag = "Plunger";
 
         [DataField("accumulator")]
         public float Accumulator = 0f;
@@ -63,7 +66,7 @@ namespace Content.Server.Fluids.Components
         /// What's the probability of uncloging on each try
         /// </summary>
         [DataField("unclogProbability"), ViewVariables(VVAccess.ReadWrite)]
-        public float unclogProbability = 0.3f;
+        public float UnclogProbability = 0.3f;
 
         [DataField("manualDrainSound"), ViewVariables(VVAccess.ReadOnly)]
         public SoundSpecifier ManualDrainSound = new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg");

@@ -34,6 +34,7 @@
     node: toilet
   - type: Appearance
   - type: Drain
+    autoDrain: false
 
   - type: SolutionContainerVisuals
     maxFillLevels: 1

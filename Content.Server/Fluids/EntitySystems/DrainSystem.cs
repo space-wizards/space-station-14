@@ -18,6 +18,7 @@ using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Collections;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Fluids.EntitySystems
 {
@@ -26,7 +27,7 @@ namespace Content.Server.Fluids.EntitySystems
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
-        [Dependency] private readonly AudioSystem _audioSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SpillableSystem _spillableSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
@@ -53,12 +54,13 @@ namespace Content.Server.Fluids.EntitySystems
 
             Verb verb = new()
             {
-                Text = Loc.GetString("drain-component-empty-verb-inhand", ("object", "" + Name(args.Using.Value))),
+                Text = Loc.GetString("drain-component-empty-verb-inhand", ("object", Name(args.Using.Value))),
                 Act = () =>
                 {
                     Empty(args.Using.Value, spillable, args.Target, drain);
                 },
                 Impact = LogImpact.Low,
+                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/eject.svg.192dpi.png"))
 
             };
             args.Verbs.Add(verb);
@@ -102,7 +104,7 @@ namespace Content.Server.Fluids.EntitySystems
 
             if (drainSolution.MaxVolume == drainSolution.Volume)
             {
-                _spillableSystem.SpillAt(containerSolution, Transform(target).Coordinates, "PuddleSmear");
+                _spillableSystem.SpillAt(containerSolution, Transform(target).Coordinates, DrainComponent.PuddlePrototype);
                 _popupSystem.PopupEntity(
                     Loc.GetString("drain-component-empty-verb-target-is-full-message", ("object", target)),
                     container);
@@ -208,9 +210,9 @@ namespace Content.Server.Fluids.EntitySystems
 
         private void OnExamined(EntityUid uid, DrainComponent component, ExaminedEvent args)
         {
-            if (!args.IsInDetailsRange) { return; }
-            if (!TryComp(uid, out SolutionContainerManagerComponent? solutionComp)) { return; }
-            if (!_solutionSystem.TryGetSolution(uid, DrainComponent.SolutionName, out var drainSolution)) { return; }
+            if (!args.IsInDetailsRange ||
+                !TryComp(uid, out SolutionContainerManagerComponent? solutionComp) ||
+                !_solutionSystem.TryGetSolution(uid, DrainComponent.SolutionName, out var drainSolution)) { return; }
 
             var text = drainSolution.AvailableVolume != 0 ?
                 Loc.GetString("drain-component-examine-volume", ("volume", drainSolution.AvailableVolume)) :
@@ -220,11 +222,9 @@ namespace Content.Server.Fluids.EntitySystems
 
         private void OnInteract(EntityUid uid, DrainComponent component, InteractEvent args)
         {
-            if (!args.CanReach || args.Target == null) { return; }
-
-            if (!_tagSystem.HasTag(args.Used, "Plunger")) { return; }
-
-            if (!_solutionSystem.TryGetSolution(args.Target.Value, DrainComponent.SolutionName, out var drainSolution)) { return; }
+            if (!args.CanReach || args.Target == null ||
+                !_tagSystem.HasTag(args.Used, DrainComponent.PlungerTag) ||
+                !_solutionSystem.TryGetSolution(args.Target.Value, DrainComponent.SolutionName, out var drainSolution)) { return; }
 
             if (drainSolution.AvailableVolume > 0 && args.User.IsValid())
             {
@@ -250,7 +250,7 @@ namespace Content.Server.Fluids.EntitySystems
             if (args.Args.Target == null)
                 return;
 
-            if (!(_random.NextFloat() <= component.unclogProbability))
+            if (!(_random.Prob(component.UnclogProbability)))
             {
                 _popupSystem.PopupEntity(Loc.GetString("drain-component-unclog-fail", ("object", args.Args.Target.Value)), args.Args.Target.Value);
                 return;
