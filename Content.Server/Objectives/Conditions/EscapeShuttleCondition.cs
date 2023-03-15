@@ -1,7 +1,7 @@
-using Content.Server.Cuffs.Components;
 using Content.Server.Mind;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.Station.Components;
+using Content.Shared.Cuffs.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
