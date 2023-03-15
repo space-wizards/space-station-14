@@ -140,9 +140,8 @@
             groups:
               Airloss: -6
               Brute: -4
-              Burn: -4
+              Burn: -6
               Toxin: -4
-              Caustic: -4
 
 - type: reagent
   id: Dermaline
@@ -157,8 +156,10 @@
       effects:
       - !type:HealthChange
         damage:
-          groups:
-            Burn: -3
+          types:
+            Heat: -1
+            Shock: -1
+            Cold: -1
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
@@ -354,8 +355,10 @@
       effects:
       - !type:HealthChange
         damage:
-          groups:
-            Burn: -1
+          types:
+            Heat: -0.33
+            Shock: -0.33
+            Cold: -0.33
 
 - type: reagent
   id: Leporazine
@@ -494,7 +497,7 @@
       effects:
       - !type:HealthChange
         damage:
-          groups:
+          types:
             Caustic: -5
 
 - type: reagent
@@ -601,10 +604,12 @@
           max: 50
         damage:
           groups:
-            Burn: -1
             Brute: -1
           types:
             Poison: -0.5 ##Should be about what it was when it healed the toxin group
+            Heat: -0.33
+            Shock: -0.33
+            Cold: -0.33
 
 - type: reagent
   id: Lipozine
@@ -773,7 +778,7 @@
       - !type:HealthChange
         damage:
           types:
-            Acidic: -3
+            Caustic: -3
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold

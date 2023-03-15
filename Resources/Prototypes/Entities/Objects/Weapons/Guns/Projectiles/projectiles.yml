@@ -499,7 +499,7 @@
   components:
     - type: Projectile
       damage:
-        groups:
+        types:
           Caustic: 5
     - type: Sprite
       sprite: Objects/Weapons/Guns/Projectiles/xeno_toxic.rsi

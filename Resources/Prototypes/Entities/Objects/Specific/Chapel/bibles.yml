@@ -52,14 +52,14 @@
   components:
   - type: Bible
     damage:
-      groups:
+      types:
         Caustic: 20 ## ~15 dps
     damageOnFail:
       groups:
         Brute: 15
         Airloss: 25
     damageOnUntrainedUse:
-      groups:
+      types:
         Caustic: 50
     failChance: 0
     locPrefix: "necro"

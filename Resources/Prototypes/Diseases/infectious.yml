@@ -39,7 +39,7 @@
     - !type:DiseaseHealthChange
       probability: 0.015
       damage:
-        groups:
+        types:
           Caustic: 1
   cures:
     - !type:DiseaseBedrestCure
@@ -88,7 +88,7 @@
     - !type:DiseaseHealthChange
       probability: 0.05
       damage:
-        groups:
+        types:
           Caustic: 1
   cures:
     - !type:DiseaseBedrestCure

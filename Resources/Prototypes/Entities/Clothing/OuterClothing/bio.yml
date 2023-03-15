@@ -14,7 +14,7 @@
   - type: Armor
     modifiers:
       coefficients:
-        Acidic: 0.5
+        Caustic: 0.5
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -32,7 +32,7 @@
   - type: Armor
     modifiers:
       coefficients:
-        Acidic: 0.5
+        Caustic: 0.5
 
 - type: entity
   parent: ClothingOuterBioGeneral
@@ -48,7 +48,7 @@
   - type: Armor
     modifiers:
       coefficients:
-        Acidic: 0.5
+        Caustic: 0.5
 
 - type: entity
   parent: ClothingOuterBioGeneral
@@ -64,7 +64,7 @@
   - type: Armor
     modifiers:
       coefficients:
-        Acidic: 0.5
+        Caustic: 0.5
 
 - type: entity
   parent: ClothingOuterBioGeneral
@@ -80,7 +80,7 @@
   - type: Armor
     modifiers:
       coefficients:
-        Acidic: 0.5
+        Caustic: 0.5
 
 - type: entity
   parent: ClothingOuterBioCmo
@@ -96,4 +96,4 @@
   - type: Armor
     modifiers:
       coefficients:
-        Acidic: 0.5
+        Caustic: 0.5

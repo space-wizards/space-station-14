@@ -14,7 +14,7 @@
 
 - type: entity
   name: ointment
-  description: Used to treat those nasty burns.
+  description: Used to treat those nasty burns. Less effective on caustic burns.
   parent: BaseHealingItem
   id: Ointment
   components:
@@ -28,8 +28,11 @@
   - type: Healing
     damageContainer: Biological
     damage:
-      groups:
-        Burn: -15 # 5 for each type in the group
+      types:
+        Heat: -5
+        Cold: -5
+        Shock: -5
+        Caustic: -1.5
     healingBeginSound:
       path: "/Audio/Items/Medical/ointment_begin.ogg"
     healingEndSound:
