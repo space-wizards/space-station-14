@@ -10,7 +10,6 @@
   - type: InteractionOutline
   - type: Physics
   - type: Anchorable
-    bodyType: Dynamic
   - type: Fixtures
     fixtures:
     - shape:
@@ -64,7 +63,6 @@
   parent: SeatBase
   description: Apply butt.
   components:
-  - type: Anchorable
   - type: Sprite
     state: stool
   - type: Construction
