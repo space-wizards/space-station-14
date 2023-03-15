@@ -24,3 +24,21 @@
   - type: ContainerContainer
     containers:
       item-container: !type:Container
+
+- type: entity
+  id: MechEquipmentHorn
+  parent: BaseMechEquipment
+  name: mech horn
+  description: An enhanced bike horn that plays a hilarious array of sounds for the enjoyment of the crew. HONK!
+  components:
+  - type: Sprite
+    # TODO: use own sprite
+    state: mecha_honker
+  - type: MechSoundboard
+    sounds:
+    # TODO: all the meme shit + esword + bomb trolls
+    - collection: BikeHorn
+    - collection: CluwneHorn
+  - type: UIFragment
+    ui: !type:MechSoundboardUi
+  # TODO: tag as being for H.O.N.K. only!!!
