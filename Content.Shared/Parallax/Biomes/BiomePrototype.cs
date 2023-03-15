@@ -4,7 +4,6 @@ using Robust.Shared.Noise;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Parallax.Biomes;
 
@@ -12,6 +11,9 @@ namespace Content.Shared.Parallax.Biomes;
 public sealed class BiomePrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = default!;
+
+    [DataField("desc")]
+    public string Description = string.Empty;
 
     [DataField("layers")]
     public List<IBiomeLayer> Layers = new();
@@ -21,35 +23,23 @@ public sealed class BiomePrototype : IPrototype
 public interface IBiomeLayer
 {
     /// <summary>
+    /// Seed is used an offset from the relevant BiomeComponent's seed.
+    /// </summary>
+    FastNoiseLite Noise { get; }
+
+    /// <summary>
     /// Threshold for this layer to be present. If set to 0 forces it for every tile.
     /// </summary>
     float Threshold { get; }
-
-    /// <summary>
-    /// Offset the seed by the specified amount for this layer.
-    /// Useful if you have 2 similar layers but don't want them to match exactly.
-    /// </summary>
-    int SeedOffset { get; }
-
-    /// <summary>
-    /// Frequency for noise: lower values create larger blobs.
-    /// </summary>
-    float Frequency { get; }
 }
 
 public sealed class BiomeTileLayer : IBiomeLayer
 {
+    [DataField("noise")] public FastNoiseLite Noise { get; } = new(0);
+
     /// <inheritdoc/>
     [DataField("threshold")]
     public float Threshold { get; } = 0.5f;
-
-    /// <inheritdoc/>
-    [DataField("seedOffset")]
-    public int SeedOffset { get; } = 0;
-
-    /// <inheritdoc/>
-    [DataField("frequency")]
-    public float Frequency { get; } = 0.1f;
 
     /// <summary>
     /// Which tile variants to use for this layer. Uses all of the tile's variants if none specified
@@ -84,13 +74,8 @@ public sealed class BiomeDecalLayer : IBiomeWorldLayer
     [DataField("divisions")]
     public float Divisions = 1f;
 
-    /// <inheritdoc/>
-    [DataField("seedOffset")]
-    public int SeedOffset { get; } = 0;
-
-    /// <inheritdoc/>
-    [DataField("frequency")]
-    public float Frequency { get; } = 0.25f;
+    [DataField("noise")]
+    public FastNoiseLite Noise { get; } = new(0);
 
     /// <inheritdoc/>
     [DataField("threshold")]
@@ -106,17 +91,11 @@ public sealed class BiomeEntityLayer : IBiomeWorldLayer
     [DataField("allowedTiles", customTypeSerializer:typeof(PrototypeIdListSerializer<ContentTileDefinition>))]
     public List<string> AllowedTiles { get; } = new();
 
+    [DataField("noise")] public FastNoiseLite Noise { get; } = new(0);
+
     /// <inheritdoc/>
     [DataField("threshold")]
     public float Threshold { get; } = 0.5f;
-
-    /// <inheritdoc/>
-    [DataField("seedOffset")]
-    public int SeedOffset { get; } = 0;
-
-    /// <inheritdoc/>
-    [DataField("frequency")]
-    public float Frequency { get; } = 0.1f;
 
     [DataField("entities", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
     public List<string> Entities = new();
