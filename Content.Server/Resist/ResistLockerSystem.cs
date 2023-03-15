@@ -22,7 +22,7 @@ public sealed class ResistLockerSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<ResistLockerComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
-        SubscribeLocalEvent<ResistLockerComponent, DoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<ResistLockerComponent, DoAfterEvent<LockerDoAfterData>>(OnDoAfter);
         SubscribeLocalEvent<ResistLockerComponent, EntRemovedFromContainerMessage>(OnRemoved);
     }
 
@@ -58,7 +58,7 @@ public sealed class ResistLockerSystem : EntitySystem
 
         resistLockerComponent.IsResisting = true;
         _popupSystem.PopupEntity(Loc.GetString("resist-locker-component-start-resisting"), user, user, PopupType.Large);
-        _doAfterSystem.DoAfter(doAfterEventArgs);
+        _doAfterSystem.DoAfter(doAfterEventArgs, new LockerDoAfterData());
     }
 
     private void OnRemoved(EntityUid uid, ResistLockerComponent component, EntRemovedFromContainerMessage args)
@@ -67,7 +67,7 @@ public sealed class ResistLockerSystem : EntitySystem
         component.CancelToken = null;
     }
 
-    private void OnDoAfter(EntityUid uid, ResistLockerComponent component, DoAfterEvent args)
+    private void OnDoAfter(EntityUid uid, ResistLockerComponent component, DoAfterEvent<LockerDoAfterData> args)
     {
         if (args.Cancelled)
         {
@@ -95,5 +95,9 @@ public sealed class ResistLockerSystem : EntitySystem
 
         component.CancelToken = null;
         args.Handled = true;
+    }
+
+    private struct LockerDoAfterData
+    {
     }
 }

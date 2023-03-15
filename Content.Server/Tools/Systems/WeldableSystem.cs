@@ -69,7 +69,7 @@ public sealed class WeldableSystem : EntitySystem
         if (!CanWeld(uid, tool, user, component))
             return false;
 
-        var toolEvData = new ToolEventData(new WeldFinishedEvent(user, tool), targetEntity: uid);
+        var toolEvData = new ToolEventData(new WeldFinishedEvent(user, tool), cancelledEv: new WeldCancelledEvent(),targetEntity: uid);
         component.BeingWelded = _toolSystem.UseTool(tool, user, uid, component.WeldingTime.Seconds, new[] { component.WeldingQuality }, toolEvData, fuel: component.FuelConsumption);
 
         // Log attempt
