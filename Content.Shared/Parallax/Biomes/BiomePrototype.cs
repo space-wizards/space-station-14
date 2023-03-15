@@ -31,6 +31,11 @@ public interface IBiomeLayer
     /// Threshold for this layer to be present. If set to 0 forces it for every tile.
     /// </summary>
     float Threshold { get; }
+
+    /// <summary>
+    /// Is the thresold inverted so we need to be lower than it.
+    /// </summary>
+    public bool Invert { get; }
 }
 
 public sealed class BiomeTileLayer : IBiomeLayer
@@ -40,6 +45,9 @@ public sealed class BiomeTileLayer : IBiomeLayer
     /// <inheritdoc/>
     [DataField("threshold")]
     public float Threshold { get; } = 0.5f;
+
+    /// <inheritdoc/>
+    [DataField("invert")] public bool Invert { get; } = false;
 
     /// <summary>
     /// Which tile variants to use for this layer. Uses all of the tile's variants if none specified
@@ -81,6 +89,9 @@ public sealed class BiomeDecalLayer : IBiomeWorldLayer
     [DataField("threshold")]
     public float Threshold { get; } = 0.8f;
 
+    /// <inheritdoc/>
+    [DataField("invert")] public bool Invert { get; } = false;
+
     [DataField("decals", required: true, customTypeSerializer:typeof(PrototypeIdListSerializer<DecalPrototype>))]
     public List<string> Decals = new();
 }
@@ -96,6 +107,9 @@ public sealed class BiomeEntityLayer : IBiomeWorldLayer
     /// <inheritdoc/>
     [DataField("threshold")]
     public float Threshold { get; } = 0.5f;
+
+    /// <inheritdoc/>
+    [DataField("invert")] public bool Invert { get; } = false;
 
     [DataField("entities", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
     public List<string> Entities = new();
