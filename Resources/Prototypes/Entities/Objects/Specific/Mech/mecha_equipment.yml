@@ -41,4 +41,6 @@
     - collection: CluwneHorn
   - type: UIFragment
     ui: !type:MechSoundboardUi
+  - type: UseDelay
+    delay: 0.5
   # TODO: tag as being for H.O.N.K. only!!!

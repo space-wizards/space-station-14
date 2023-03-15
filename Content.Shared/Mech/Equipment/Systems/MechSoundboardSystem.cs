@@ -1,6 +1,7 @@
 using Content.Shared.Mech;
 using Content.Shared.Mech.Equipment.Components;
 using Content.Shared.Mech.Equipment.Systems;
+using Content.Shared.Timing;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace Content.Shared.Mech.Equipment.Systems;
 public sealed class SharedMechSoundboardSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
     public override void Initialize()
     {
@@ -60,9 +62,13 @@ public sealed class SharedMechSoundboardSystem : EntitySystem
         if (msg.Sound >= comp.Sounds.Count)
             return;
 
+        if (_useDelay.ActiveDelay(uid))
+            return;
+
         // TODO: add usedelay to honk
         // honk!!!!!
         var mech = equipment.EquipmentOwner.Value;
+        _useDelay.BeginDelay(uid);
         _audio.PlayPvs(comp.Sounds[msg.Sound], uid);
     }
 }
