@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Fixed mice and other small entities becoming unable to move sometimes
-      after they leave a container., type: Fix}
-  id: 2688
-  time: '2022-11-21T03:34:54.0000000+00:00'
 - author: checkraze
   changes:
   - {message: Added a renovated Moose Station, type: Add}
@@ -2898,3 +2892,9 @@ Entries:
   - {message: Fixed tile placement sometimes placing two tiles in one click., type: Fix}
   id: 3187
   time: '2023-03-15T02:05:53.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that caused several DoAfters (the delayed actions with the
+      progress bar) to stop working., type: Fix}
+  id: 3188
+  time: '2023-03-15T04:07:16.0000000+00:00'
