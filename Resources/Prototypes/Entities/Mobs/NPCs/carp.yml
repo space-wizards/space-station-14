@@ -5,8 +5,6 @@
   description: It's a space carp.
   abstract: true
   components:
-    - type: InputMover
-    - type: MobMover
     - type: HTN
       rootTask: SimpleHostileCompound
     - type: Faction
@@ -24,7 +22,6 @@
         enabled: false
         autoPopulate: false
         name: action-name-disarm
-    - type: Physics
     - type: Fixtures
       fixtures:
         - shape:
@@ -35,16 +32,9 @@
             - FlyingMobMask
           layer:
             - FlyingMobLayer
-    - type: MobState
-    - type: MobThresholds
-      thresholds:
-        0: Alive
-        50: Critical
-        100: Dead
     - type: Stamina
       excess: 100
     - type: MovementAlwaysTouching
-    - type: Appearance
     - type: DamageStateVisuals
       states:
         Alive:
@@ -73,7 +63,6 @@
     - type: Tag
       tags:
         - Carp
-        - DoorBumpOpener
     - type: ReplacementAccent
       accent: genericAggressive
 
