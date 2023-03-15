@@ -151,6 +151,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         if (!difference.IsSubsetOf(privilegedPerms))
         {
             _sawmill.Warning($"User {ToPrettyString(uid)} tried to modify permissions they could not give/take!");
+            return;
         }
 
         var addedTags = newAccessList.Except(oldTags).Select(tag => "+" + tag).ToList();
