@@ -314,9 +314,9 @@
   id: UplinkVoiceMask
   name: uplink-voice-mask-name
   description: uplink-voice-mask-desc
-  productEntity: ClothingMaskGasVoiceMasker
+  productEntity: ClothingMaskGasVoiceChameleon
   cost:
-    Telecrystal: 4
+    Telecrystal: 6
   categories:
   - UplinkUtility
 
