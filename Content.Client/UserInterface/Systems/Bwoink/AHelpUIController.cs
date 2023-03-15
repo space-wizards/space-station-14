@@ -253,6 +253,17 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
         Control?.OnBwoink(message.UserId);
     }
 
+    private void OpenWindow()
+    {
+        if (Window == null)
+            return;
+
+        if (EverOpened)
+            Window.Open();
+        else
+            Window.OpenCentered();
+    }
+
     public void Close()
     {
         Window?.Close();
@@ -282,18 +293,9 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
         EnsurePanel(_ownerId);
 
         if (IsOpen)
-        {
             Close();
-        }
         else
-        {
-            if (EverOpened)
-                Window!.Open();
-            else
-                Window!.OpenCentered();
-
-            EverOpened = true;
-        }
+            OpenWindow();
     }
 
     public event Action? OnClose;
@@ -303,7 +305,7 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
     public void Open(NetUserId channelId)
     {
         SelectChannel(channelId);
-        Window?.OpenCentered();
+        OpenWindow();
     }
 
     public void OnRequestClosed(WindowRequestClosedEventArgs args)

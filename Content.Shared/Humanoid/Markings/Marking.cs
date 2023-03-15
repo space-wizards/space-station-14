@@ -1,4 +1,6 @@
 using System.Linq;
+using Content.Shared.Humanoid.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Humanoid.Markings
@@ -10,7 +12,11 @@ namespace Content.Shared.Humanoid.Markings
         [DataField("markingColor")]
         private List<Color> _markingColors = new();
 
-        private Marking(string markingId,
+        private Marking()
+        {
+        }
+
+        public Marking(string markingId,
             List<Color> markingColors)
         {
             MarkingId = markingId;
@@ -43,7 +49,7 @@ namespace Content.Shared.Humanoid.Markings
         /// <summary>
         ///     ID of the marking prototype.
         /// </summary>
-        [DataField("markingId")]
+        [DataField("markingId", required: true)]
         public string MarkingId { get; } = default!;
 
         /// <summary>
@@ -66,6 +72,14 @@ namespace Content.Shared.Humanoid.Markings
 
         public void SetColor(int colorIndex, Color color) =>
             _markingColors[colorIndex] = color;
+
+        public void SetColor(Color color)
+        {
+            for (int i = 0; i < _markingColors.Count; i++)
+            {
+                _markingColors[i] = color;
+            }
+        }
 
         public int CompareTo(Marking? marking)
         {

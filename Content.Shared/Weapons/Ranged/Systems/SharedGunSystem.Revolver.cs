@@ -34,9 +34,10 @@ public partial class SharedGunSystem
 
     private void OnRevolverInteractUsing(EntityUid uid, RevolverAmmoProviderComponent component, InteractUsingEvent args)
     {
-        if (args.Handled) return;
+        if (args.Handled)
+            return;
 
-        if (TryRevolverInsert(component, args.Used, args.User))
+        if (TryRevolverInsert(uid, component, args.Used, args.User))
             args.Handled = true;
     }
 
@@ -52,7 +53,8 @@ public partial class SharedGunSystem
 
     private void OnRevolverHandleState(EntityUid uid, RevolverAmmoProviderComponent component, ref ComponentHandleState args)
     {
-        if (args.Current is not RevolverAmmoProviderComponentState state) return;
+        if (args.Current is not RevolverAmmoProviderComponentState state)
+            return;
 
         var oldIndex = component.CurrentIndex;
         component.CurrentIndex = state.CurrentIndex;
@@ -73,7 +75,7 @@ public partial class SharedGunSystem
         }
     }
 
-    public bool TryRevolverInsert(RevolverAmmoProviderComponent component, EntityUid uid, EntityUid? user)
+    public bool TryRevolverInsert(EntityUid revolverUid, RevolverAmmoProviderComponent component, EntityUid uid, EntityUid? user)
     {
         if (component.Whitelist?.IsValid(uid, EntityManager) == false)
             return false;
@@ -93,19 +95,19 @@ public partial class SharedGunSystem
 
             if (freeSlots == 0)
             {
-                Popup(Loc.GetString("gun-revolver-full"), component.Owner, user);
+                Popup(Loc.GetString("gun-revolver-full"), revolverUid, user);
                 return false;
             }
 
             var xformQuery = GetEntityQuery<TransformComponent>();
             var xform = xformQuery.GetComponent(uid);
-            var ammo = new List<IShootable>(freeSlots);
+            var ammo = new List<(EntityUid? Entity, IShootable Shootable)>(freeSlots);
             var ev = new TakeAmmoEvent(freeSlots, ammo, xform.Coordinates, user);
             RaiseLocalEvent(uid, ev);
 
             if (ev.Ammo.Count == 0)
             {
-                Popup(Loc.GetString("gun-speedloader-empty"), component.Owner, user);
+                Popup(Loc.GetString("gun-speedloader-empty"), revolverUid, user);
                 return false;
             }
 
@@ -119,29 +121,29 @@ public partial class SharedGunSystem
                     continue;
                 }
 
-                var ent = ev.Ammo.Last();
+                var ent = ev.Ammo.Last().Entity;
                 ev.Ammo.RemoveAt(ev.Ammo.Count - 1);
 
-                if (ent is not AmmoComponent ammoComp)
+                if (ent == null)
                 {
                     Sawmill.Error($"Tried to load hitscan into a revolver which is unsupported");
                     continue;
                 }
 
-                component.AmmoSlots[index] = ammoComp.Owner;
-                component.AmmoContainer.Insert(ammoComp.Owner, EntityManager);
+                component.AmmoSlots[index] = ent.Value;
+                component.AmmoContainer.Insert(ent.Value, EntityManager);
 
                 if (ev.Ammo.Count == 0)
                     break;
             }
 
             DebugTools.Assert(ammo.Count == 0);
-            UpdateRevolverAppearance(component);
+            UpdateRevolverAppearance(revolverUid, component);
             UpdateAmmoCount(uid);
             Dirty(component);
 
-            Audio.PlayPredicted(component.SoundInsert, component.Owner, user);
-            Popup(Loc.GetString("gun-revolver-insert"), component.Owner, user);
+            Audio.PlayPredicted(component.SoundInsert, revolverUid, user);
+            Popup(Loc.GetString("gun-revolver-insert"), revolverUid, user);
             return true;
         }
 
@@ -151,30 +153,35 @@ public partial class SharedGunSystem
             var index = (component.CurrentIndex + i) % component.Capacity;
 
             if (component.AmmoSlots[index] != null ||
-                component.Chambers[index] != null) continue;
+                component.Chambers[index] != null)
+            {
+                continue;
+            }
 
             component.AmmoSlots[index] = uid;
             component.AmmoContainer.Insert(uid);
-            Audio.PlayPredicted(component.SoundInsert, component.Owner, user);
-            Popup(Loc.GetString("gun-revolver-insert"), component.Owner, user);
-            UpdateRevolverAppearance(component);
+            Audio.PlayPredicted(component.SoundInsert, revolverUid, user);
+            Popup(Loc.GetString("gun-revolver-insert"), revolverUid, user);
+            UpdateRevolverAppearance(revolverUid, component);
             UpdateAmmoCount(uid);
             Dirty(component);
             return true;
         }
-        Popup(Loc.GetString("gun-revolver-full"), component.Owner, user);
+
+        Popup(Loc.GetString("gun-revolver-full"), revolverUid, user);
         return false;
     }
 
     private void OnRevolverVerbs(EntityUid uid, RevolverAmmoProviderComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || args.Hands == null) return;
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+            return;
 
         args.Verbs.Add(new AlternativeVerb()
         {
             Text = Loc.GetString("gun-revolver-empty"),
             Disabled = !AnyRevolverCartridges(component),
-            Act = () => EmptyRevolver(component, args.User),
+            Act = () => EmptyRevolver(uid, component, args.User),
             Priority = 1
         });
 
@@ -182,7 +189,7 @@ public partial class SharedGunSystem
         {
             Text = Loc.GetString("gun-revolver-spin"),
             // Category = VerbCategory.G,
-            Act = () => SpinRevolver(component, args.User)
+            Act = () => SpinRevolver(uid, component, args.User)
         });
     }
 
@@ -191,7 +198,10 @@ public partial class SharedGunSystem
         for (var i = 0; i < component.Capacity; i++)
         {
             if (component.Chambers[i] != null ||
-                component.AmmoSlots[i] != null) return true;
+                component.AmmoSlots[i] != null)
+            {
+                return true;
+            }
         }
 
         return false;
@@ -238,9 +248,9 @@ public partial class SharedGunSystem
         return count;
     }
 
-    public void EmptyRevolver(RevolverAmmoProviderComponent component, EntityUid? user = null)
+    public void EmptyRevolver(EntityUid revolverUid, RevolverAmmoProviderComponent component, EntityUid? user = null)
     {
-        var xform = Transform(component.Owner);
+        var xform = Transform(revolverUid);
         var mapCoordinates = xform.MapPosition;
         var anyEmpty = false;
 
@@ -259,7 +269,7 @@ public partial class SharedGunSystem
                     var uid = Spawn(component.FillPrototype, mapCoordinates);
 
                     if (TryComp<CartridgeAmmoComponent>(uid, out var cartridge))
-                        SetCartridgeSpent(cartridge, !(bool) chamber);
+                        SetCartridgeSpent(uid, cartridge, !(bool) chamber);
 
                     EjectCartridge(uid);
                 }
@@ -281,28 +291,28 @@ public partial class SharedGunSystem
 
         if (anyEmpty)
         {
-            Audio.PlayPredicted(component.SoundEject, component.Owner, user);
-            UpdateAmmoCount(component.Owner);
-            UpdateRevolverAppearance(component);
+            Audio.PlayPredicted(component.SoundEject, revolverUid, user);
+            UpdateAmmoCount(revolverUid);
+            UpdateRevolverAppearance(revolverUid, component);
             Dirty(component);
         }
     }
 
-    private void UpdateRevolverAppearance(RevolverAmmoProviderComponent component)
+    private void UpdateRevolverAppearance(EntityUid uid, RevolverAmmoProviderComponent component)
     {
-        if (!TryComp<AppearanceComponent>(component.Owner, out var appearance))
+        if (!TryComp<AppearanceComponent>(uid, out var appearance))
             return;
 
         var count = GetRevolverCount(component);
-        Appearance.SetData(component.Owner, AmmoVisuals.HasAmmo, count != 0, appearance);
-        Appearance.SetData(component.Owner, AmmoVisuals.AmmoCount, count, appearance);
-        Appearance.SetData(component.Owner, AmmoVisuals.AmmoMax, component.Capacity, appearance);
+        Appearance.SetData(uid, AmmoVisuals.HasAmmo, count != 0, appearance);
+        Appearance.SetData(uid, AmmoVisuals.AmmoCount, count, appearance);
+        Appearance.SetData(uid, AmmoVisuals.AmmoMax, component.Capacity, appearance);
     }
 
-    protected virtual void SpinRevolver(RevolverAmmoProviderComponent component, EntityUid? user = null)
+    protected virtual void SpinRevolver(EntityUid revolverUid, RevolverAmmoProviderComponent component, EntityUid? user = null)
     {
-        Audio.PlayPredicted(component.SoundSpin, component.Owner, user);
-        Popup(Loc.GetString("gun-revolver-spun"), component.Owner, user);
+        Audio.PlayPredicted(component.SoundSpin, revolverUid, user);
+        Popup(Loc.GetString("gun-revolver-spun"), revolverUid, user);
     }
 
     private void OnRevolverTakeAmmo(EntityUid uid, RevolverAmmoProviderComponent component, TakeAmmoEvent args)
@@ -327,14 +337,15 @@ public partial class SharedGunSystem
                     if (TryComp<CartridgeAmmoComponent>(ent, out var cartridge))
                     {
                         component.Chambers[index] = false;
-                        SetCartridgeSpent(cartridge, true);
-                        args.Ammo.Add(EnsureComp<AmmoComponent>(Spawn(cartridge.Prototype, args.Coordinates)));
+                        SetCartridgeSpent(ent, cartridge, true);
+                        var spawned = Spawn(cartridge.Prototype, args.Coordinates);
+                        args.Ammo.Add((spawned, EnsureComp<AmmoComponent>(spawned)));
                         Del(ent);
                         continue;
                     }
 
                     component.Chambers[i] = null;
-                    args.Ammo.Add(EnsureComp<AmmoComponent>(ent));
+                    args.Ammo.Add((ent, EnsureComp<AmmoComponent>(ent)));
                 }
             }
             else if (component.AmmoSlots[index] != null)
@@ -343,21 +354,23 @@ public partial class SharedGunSystem
 
                 if (TryComp<CartridgeAmmoComponent>(ent, out var cartridge))
                 {
-                    if (cartridge.Spent) continue;
+                    if (cartridge.Spent)
+                        continue;
 
-                    SetCartridgeSpent(cartridge, true);
-                    args.Ammo.Add(EnsureComp<AmmoComponent>(Spawn(cartridge.Prototype, args.Coordinates)));
+                    SetCartridgeSpent(ent.Value, cartridge, true);
+                    var spawned = Spawn(cartridge.Prototype, args.Coordinates);
+                    args.Ammo.Add((spawned, EnsureComp<AmmoComponent>(spawned)));
                     continue;
                 }
 
                 component.AmmoContainer.Remove(ent.Value);
                 component.AmmoSlots[index] = null;
-                args.Ammo.Add(EnsureComp<AmmoComponent>(ent.Value));
+                args.Ammo.Add((ent.Value, EnsureComp<AmmoComponent>(ent.Value)));
                 Transform(ent.Value).Coordinates = args.Coordinates;
             }
         }
 
-        UpdateRevolverAppearance(component);
+        UpdateRevolverAppearance(uid, component);
         Dirty(component);
     }
 

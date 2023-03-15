@@ -8,7 +8,6 @@
   footstepSounds:
     collection: FootstepPlating
   friction: 0.5
-  thermalConductivity: 0.04
   heatCapacity: 10000
 
 - type: tile
@@ -19,12 +18,12 @@
   - Space
   isSubfloor: true
   canWirecutter: true
+  weather: true
   footstepSounds:
     collection: FootstepPlating
   friction: 0.5
   isSpace: true
   itemDrop: PartRodMetal1
-  thermalConductivity: 0.04
   heatCapacity: 10000
 
 # The final step in underplating's deprecation before it gets completely wiped from the codebase.
