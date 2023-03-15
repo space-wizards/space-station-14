@@ -195,15 +195,16 @@ namespace Content.Client.Chemistry.UI
 
         public void SetColor(Color color)
         {
-            this.ModulateSelfOverride = color;
+            var background = Color.InterpolateBetween(color, Color.Black, 0.25f);
+            this.ModulateSelfOverride = background;
             // if background (button) is light then make text dark and vice versa
-            if (Color.ToHsl(color).Z > 0.4)
+            if (Color.ToHsl(background).Z > 0.5f)
             {
-                Label.ModulateSelfOverride = Color.Black;
+                Label.FontColorOverride = Color.Black;
             }
             else
             {
-                Label.ModulateSelfOverride = Color.White;
+                Label.FontColorOverride = Color.White;
             }
         }
     }
