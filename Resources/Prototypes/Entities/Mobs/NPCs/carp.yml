@@ -62,7 +62,8 @@
     - type: NoSlip
     - type: Tag
       tags:
-        - Carp
+      - Carp
+      - DoorBumpOpener
     - type: ReplacementAccent
       accent: genericAggressive
 
