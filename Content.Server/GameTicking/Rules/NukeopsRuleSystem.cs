@@ -53,7 +53,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
-    [Dependency] private readonly RandomHumanoidSystem _randomHumanoid = default!;
 
 
     private enum WinType
@@ -751,9 +750,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             if (sessions.TryGetValue(i, out var session))
             {
                 var profile = _prefs.GetPreferences(session.UserId).SelectedCharacter as HumanoidCharacterProfile;
-                var mob = EntityManager.SpawnEntity(
-            _prototypeManager.Index<SpeciesPrototype>(profile?.Species ?? HumanoidAppearanceSystem.DefaultSpecies).Prototype,
-            _random.Pick(spawns));
+                if (!_prototypeManager.TryIndex(profile?.Species ?? HumanoidAppearanceSystem.DefaultSpecies, out SpeciesPrototype? species))
+                {
+                    species = _prototypeManager.Index<SpeciesPrototype>(HumanoidAppearanceSystem.DefaultSpecies);
+                }
+
+                var mob = EntityManager.SpawnEntity(species.Prototype, _random.Pick(spawns));
                 SetupOperativeEntity(mob, spawnDetails.Name, spawnDetails.Gear, profile);
 
                 var newMind = new Mind.Mind(session.UserId)
