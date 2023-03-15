@@ -131,7 +131,7 @@ namespace Content.Shared.Cuffs
 
         private void OnRejuvenate(EntityUid uid, CuffableComponent component, RejuvenateEvent args)
         {
-            _container.EmptyContainer(component.Container, true, attachToGridOrMap: true);
+            _container.EmptyContainer(component.Container, true);
         }
 
         private void OnCuffsRemovedFromContainer(EntityUid uid, CuffableComponent component, EntRemovedFromContainerMessage args)
