@@ -1,9 +1,4 @@
 Entries:
-- author: illersaver
-  changes:
-  - {message: Added damage to gas tanks and utensils!, type: Add}
-  id: 2685
-  time: '2022-11-20T18:43:24.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed a bug causing gas/fire visuals to sometimes not update properly.,
@@ -2899,3 +2894,8 @@ Entries:
       channel., type: Remove}
   id: 3184
   time: '2023-03-15T00:38:00.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Added the Lava Brig dungeon theme., type: Add}
+  id: 3185
+  time: '2023-03-15T01:07:53.0000000+00:00'
