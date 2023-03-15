@@ -23,5 +23,5 @@ ent-ClothingHeadsetAltScience = research director's over-ear headset
     .desc = { ent-ClothingHeadsetAlt.desc }
     .suffix = { "" }
 ent-ClothingHeadsetAltSyndicate = blood-red over-ear headset
-    .desc = An updated, modular syndicate headset that accepts up to 5 encryption keys.
+    .desc = An updated, modular syndicate intercom that fits over the head and takes encryption keys (there are 5 key slots.).
     .suffix = { "" }
