@@ -22,6 +22,10 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepClown
+  # for H.O.N.K. construction
+  - type: Tag
+    tags:
+    - ClownShoes
 
 - type: entity
   parent: ClothingShoesBaseButcherable

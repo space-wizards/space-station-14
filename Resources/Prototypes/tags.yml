@@ -123,7 +123,13 @@
   id: CigPack
 
 - type: Tag
+  id: ClownMask
+
+- type: Tag
   id: ClownRubberStamp
+
+- type: Tag
+  id: ClownShoes
 
 - type: Tag
   id: Crayon
@@ -298,6 +304,27 @@
 
 - type: Tag
   id: HolosignProjector
+
+- type: Tag
+  id: HonkerCentralControlModule
+
+- type: Tag
+  id: HonkerPeripheralsControlModule
+
+- type: Tag
+  id: HonkerTargetingControlModule
+
+- type: Tag
+  id: HonkerLArm
+
+- type: Tag
+  id: HonkerLLeg
+
+- type: Tag
+  id: HonkerRLeg
+
+- type: Tag
+  id: HonkerRArm
 
 - type: Tag #Drop this innate tool instead of deleting it.
   id: InnateDontDelete
