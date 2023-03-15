@@ -31,7 +31,7 @@ namespace Content.Server.Tiles
 
         private void OnAfterInteract(EntityUid uid, FloorTileComponent component, AfterInteractEvent args)
         {
-            if (!args.CanReach)
+            if (!args.CanReach || args.Handled)
                 return;
 
             if (!TryComp<StackComponent>(uid, out var stack))
@@ -72,6 +72,8 @@ namespace Content.Server.Tiles
                             continue;
 
                         PlaceAt(mapGrid, location, currentTileDefinition.TileId, component.PlaceTileSound);
+                        args.Handled = true;
+                        return;
                     }
                 }
                 else if (HasBaseTurf(currentTileDefinition, ContentTileDefinition.SpaceID))
@@ -81,6 +83,8 @@ namespace Content.Server.Tiles
                     gridXform.WorldPosition = locationMap.Position;
                     location = new EntityCoordinates(mapGrid.Owner, Vector2.Zero);
                     PlaceAt(mapGrid, location, _tileDefinitionManager[component.OutputTiles[0]].TileId, component.PlaceTileSound, mapGrid.TileSize / 2f);
+                    args.Handled = true;
+                    return;
                 }
             }
         }
