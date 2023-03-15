@@ -27,12 +27,12 @@
   id: CMOGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitCMO
-    back: ClothingBackpackMedicalFilled
+    back: ClothingBackpackCMOFilled
     shoes: ClothingShoesColorBrown
     outerClothing: ClothingOuterCoatLabCmo
     id: CMOPDA
     ears: ClothingHeadsetAltMedical
     belt: ClothingBeltMedicalFilled
   innerclothingskirt: ClothingUniformJumpskirtCMO
-  satchel: ClothingBackpackSatchelMedicalFilled
-  duffelbag: ClothingBackpackDuffelMedicalFilled
+  satchel: ClothingBackpackSatchelCMOFilled
+  duffelbag: ClothingBackpackDuffelCMOFilled
