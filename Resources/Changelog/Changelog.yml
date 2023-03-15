@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: You can no longer use an RPED to increase a generator's power output
-      infinitely., type: Fix}
-  id: 2687
-  time: '2022-11-21T02:50:43.0000000+00:00'
 - author: Rane
   changes:
   - {message: Fixed mice and other small entities becoming unable to move sometimes
@@ -2898,3 +2892,9 @@ Entries:
   - {message: Puddles now use water footsteps., type: Tweak}
   id: 3186
   time: '2023-03-15T01:34:38.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed weldable entities becoming stuck in an un-weldable state., type: Fix}
+  - {message: Fixed tile placement sometimes placing two tiles in one click., type: Fix}
+  id: 3187
+  time: '2023-03-15T02:05:53.0000000+00:00'
