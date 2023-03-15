@@ -83,6 +83,7 @@ namespace Content.Shared.Access.Components
             public readonly string? TargetIdFullName;
             public readonly string? TargetIdJobTitle;
             public readonly string[]? TargetIdAccessList;
+            public readonly string[]? AllowedModifyAccessList;
             public readonly string TargetIdJobPrototype;
 
             public IdCardConsoleBoundUserInterfaceState(bool isPrivilegedIdPresent,
@@ -91,6 +92,7 @@ namespace Content.Shared.Access.Components
                 string? targetIdFullName,
                 string? targetIdJobTitle,
                 string[]? targetIdAccessList,
+                string[]? allowedModifyAccessList,
                 string targetIdJobPrototype,
                 string privilegedIdName,
                 string targetIdName)
@@ -101,6 +103,7 @@ namespace Content.Shared.Access.Components
                 TargetIdFullName = targetIdFullName;
                 TargetIdJobTitle = targetIdJobTitle;
                 TargetIdAccessList = targetIdAccessList;
+                AllowedModifyAccessList = allowedModifyAccessList;
                 TargetIdJobPrototype = targetIdJobPrototype;
                 PrivilegedIdName = privilegedIdName;
                 TargetIdName = targetIdName;

@@ -119,7 +119,7 @@ namespace Content.Client.Access.UI
             // this is a sussy way to do this
             foreach (var access in job.Access)
             {
-                if (_accessButtons.TryGetValue(access, out var button))
+                if (_accessButtons.TryGetValue(access, out var button) && !button.Disabled)
                 {
                     button.Pressed = true;
                 }
@@ -134,7 +134,7 @@ namespace Content.Client.Access.UI
 
                 foreach (var access in groupPrototype.Tags)
                 {
-                    if (_accessButtons.TryGetValue(access, out var button))
+                    if (_accessButtons.TryGetValue(access, out var button) && !button.Disabled)
                     {
                         button.Pressed = true;
                     }
@@ -190,6 +190,7 @@ namespace Content.Client.Access.UI
                 if (interfaceEnabled)
                 {
                     button.Pressed = state.TargetIdAccessList?.Contains(accessName) ?? false;
+                    button.Disabled = (!state.AllowedModifyAccessList?.Contains(accessName)) ?? true;
                 }
             }
 
