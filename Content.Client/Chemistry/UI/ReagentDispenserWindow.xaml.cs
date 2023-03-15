@@ -195,7 +195,6 @@ namespace Content.Client.Chemistry.UI
 
         public void SetColor(Color color)
         {
-            this.ModulateSelfOverride = Color.LightGray;
             this.ModulateSelfOverride = color;
             // if background (button) is light then make text dark and vice versa
             if (Color.ToHsl(color).Z > 0.4)
