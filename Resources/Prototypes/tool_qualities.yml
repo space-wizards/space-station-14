@@ -57,6 +57,6 @@
 - type: tool
   id: Honking
   name: tool-quality-honking-name
-  toolName: tool-quality-bike-horn-name
+  toolName: tool-quality-honking-tool-name
   spawn: BikeHorn
   icon: { sprite: Objects/Fun/bike_horn.rsi, state: icon }
