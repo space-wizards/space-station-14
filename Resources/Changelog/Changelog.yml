@@ -1,9 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed not showing ban ids in a player's ban list., type: Fix}
-  id: 2690
-  time: '2022-11-21T19:04:24.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix some mapgrids not being sent to clients., type: Fix}
@@ -2898,3 +2893,8 @@ Entries:
   - {message: all heads of staff now have flashes in their bag for self defence, type: Add}
   id: 3189
   time: '2023-03-15T04:37:50.0000000+00:00'
+- author: not-gavnaed
+  changes:
+  - {message: Added Station Records Computer on Aspid & Bagel, type: Add}
+  id: 3190
+  time: '2023-03-15T23:50:08.0000000+00:00'
