@@ -92,3 +92,11 @@
     Steel: 3000
     Glass: 1200
     Bananium: 500
+
+- type: latheRecipe
+  id: MechEquipmentHorn
+  result: MechEquipmentHorn
+  completetime: 10
+  materials:
+    Steel: 500
+    Bananium: 200
