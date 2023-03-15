@@ -1024,6 +1024,39 @@
 
 - type: entity
   parent: VendingMachine
+  id: VendingMachineRobotics
+  name: Robotech Deluxe
+  description: All the tools you need to create your own robot army.
+  components:
+  - type: VendingMachine
+    pack: RoboticsInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
+  - type: Advertise
+    pack: VendomatAds
+  - type: Speech
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/robotics.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: AccessReader
+    access: [["Research"]]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#B0ADA9"
+
+- type: entity
+  parent: VendingMachine
   id: VendingMachineYouTool
   name: YouTool
   description: "A vending machine containing standard tools. A label reads: Tools for tools."
@@ -1661,7 +1694,33 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Medical"]]
-
+   
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineCentDrobe
+  name: CentDrobe
+  description: A one-of-a-kind vending machine for all your centcom aesthetic needs!
+  components:
+  - type: VendingMachine
+    pack: CentDrobeInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/centdrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#48CF48"
+    
 - type: entity
   parent: VendingMachine
   id: VendingMachineHappyHonk

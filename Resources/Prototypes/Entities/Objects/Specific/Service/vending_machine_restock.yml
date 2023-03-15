@@ -75,12 +75,29 @@
 - type: entity
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockClothes
-  name: ClothesMate restock box
-  description: It's time to step up your fashion! Place inside the ClothesMate restock slot to begin.
+  name: Clothes restock box
+  description: It's time to step up your fashion! Place inside any clothes vendor restock slot to begin.
   components:
   - type: VendingMachineRestock
     canRestock:
     - ClothesMateInventory
+    - AtmosDrobeInventory
+    - BarDrobeInventory
+    - CargoDrobeInventory
+    - CentDrobeInventory
+    - ChefDrobeInventory
+    - ChemDrobeInventory
+    - DetDrobeInventory
+    - EngiDrobeInventory
+    - GeneDrobeInventory
+    - HyDrobeInventory
+    - JaniDrobeInventory
+    - LawDrobeInventory
+    - MediDrobeInventory
+    - RoboDrobeInventory
+    - SciDrobeInventory
+    - SecDrobeInventory
+    - ViroDrobeInventory
   - type: Sprite
     layers:
     - state: base
@@ -276,6 +293,8 @@
     canRestock:
     - RobustSoftdrinksInventory
     - BodaInventory
+    - PwrGameInventory
+    - ShamblersJuiceInventory
   - type: Sprite
     layers:
     - state: base
