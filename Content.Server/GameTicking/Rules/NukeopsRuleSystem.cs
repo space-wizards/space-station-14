@@ -5,7 +5,6 @@ using Content.Server.GameTicking.Rules.Components;
 using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
-using Content.Server.Humanoid.Systems;
 using Content.Server.Humanoid;
 using Content.Server.Mind.Components;
 using Content.Server.NPC.Systems;
