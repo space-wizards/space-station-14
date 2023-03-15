@@ -1,23 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: 'Subdermal Implants and Implanters have been added! Subdermal Implants
-      give the user a variety of functions and can either be a passive type (something
-      consistently happens), a reactive type (something happens on death), and/or
-      an activation type (something happens on button press). Implanters handle implants/removals.',
-    type: Add}
-  - {message: Macro Bomb implants have been added to the nuclear operative uplink.
-      They make a massive explosion upon death., type: Add}
-  - {message: Freedom and Storage implants have been added to the traitor uplink.
-      Freedom implants are limited use and allow you to break out of cuffs. Storage
-      implants allow you to store an item in hidden storage., type: Add}
-  - {message: 'Sad Trombone implant was added to clowns on spawn. If they die, a sad
-      tune planes.', type: Add}
-  - {message: Tracking implants have been added to cargo under armory. They'll track
-      whoever's been implanted via the suit sensor network, type: Add}
-  - {message: Implanters have been added to the medical lathe., type: Add}
-  id: 2683
-  time: '2022-11-20T06:49:37.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Magnet artifacts can now be activated with magboots., type: Add}
@@ -2911,3 +2892,9 @@ Entries:
   - {message: The flashbang now darkens the screen instead of brightening it., type: Tweak}
   id: 3182
   time: '2023-03-14T05:37:22.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a deconstruction bug that could cause entities to get "stuck"
+      to other entities., type: Fix}
+  id: 3183
+  time: '2023-03-15T00:14:19.0000000+00:00'
