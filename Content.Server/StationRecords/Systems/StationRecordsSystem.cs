@@ -3,9 +3,7 @@ using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Components;
-using Content.Server.Forensics;
 using Content.Shared.Inventory;
-using Content.Shared.Nuke;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
@@ -73,9 +71,7 @@ public sealed class StationRecordsSystem : EntitySystem
             return;
         }
 
-        TryComp<FingerprintComponent>(player, out var fingerprintComponent);
-
-        CreateGeneralRecord(station, idUid.Value, profile.Name, profile.Age, profile.Species, profile.Gender, jobId, fingerprintComponent?.Fingerprint, profile, records);
+        CreateGeneralRecord(station, idUid.Value, profile.Name, profile.Age, profile.Species, profile.Gender, jobId, profile, records);
     }
 
 
@@ -103,7 +99,7 @@ public sealed class StationRecordsSystem : EntitySystem
     ///     Optional - other systems should anticipate this.
     /// </param>
     /// <param name="records">Station records component.</param>
-    public void CreateGeneralRecord(EntityUid station, EntityUid? idUid, string name, int age, string species, Gender gender, string jobId, string? mobFingerprint, HumanoidCharacterProfile? profile = null,
+    public void CreateGeneralRecord(EntityUid station, EntityUid? idUid, string name, int age, string species, Gender gender, string jobId, HumanoidCharacterProfile? profile = null,
         StationRecordsComponent? records = null)
     {
         if (!Resolve(station, ref records))
@@ -125,8 +121,7 @@ public sealed class StationRecordsSystem : EntitySystem
             JobPrototype = jobId,
             Species = species,
             Gender = gender,
-            DisplayPriority = jobPrototype.Weight,
-            Fingerprint = mobFingerprint
+            DisplayPriority = jobPrototype.Weight
         };
 
         var key = AddRecord(station, records);
