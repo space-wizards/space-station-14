@@ -1,9 +1,4 @@
 Entries:
-- author: checkraze
-  changes:
-  - {message: Added a renovated Moose Station, type: Add}
-  id: 2689
-  time: '2022-11-21T09:20:08.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Fixed not showing ban ids in a player's ban list., type: Fix}
@@ -2898,3 +2893,8 @@ Entries:
       progress bar) to stop working., type: Fix}
   id: 3188
   time: '2023-03-15T04:07:16.0000000+00:00'
+- author: randy
+  changes:
+  - {message: all heads of staff now have flashes in their bag for self defence, type: Add}
+  id: 3189
+  time: '2023-03-15T04:37:50.0000000+00:00'
