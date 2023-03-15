@@ -3,6 +3,9 @@
   id: PuddleBase
   abstract: true
   components:
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepWater
   - type: Transform
     anchored: true
   - type: Sprite
