@@ -349,7 +349,7 @@ public sealed class StationSystem : EntitySystem
 
         // TODO SERIALIZATION The station data needs to be saveable somehow, but when a map gets saved, this entity
         // won't be included because its in null-space. Also, what happens to shuttles on other maps?
-        _transform.DetachParentToNull(Transform(station));
+        _transform.DetachParentToNull(station, Transform(station));
 
         var data = AddComp<StationDataComponent>(station);
         var metaData = MetaData(station);
@@ -398,11 +398,11 @@ public sealed class StationSystem : EntitySystem
 
         var stationMember = AddComp<StationMemberComponent>(mapGrid);
         stationMember.Station = station;
-        stationData.Grids.Add(((Component) gridComponent).Owner);
+        stationData.Grids.Add(gridComponent.Owner);
 
-        RaiseLocalEvent(station, new StationGridAddedEvent(((Component) gridComponent).Owner, false), true);
+        RaiseLocalEvent(station, new StationGridAddedEvent(gridComponent.Owner, false), true);
 
-        _sawmill.Info($"Adding grid {mapGrid}:{((Component) gridComponent).Owner} to station {Name(station)} ({station})");
+        _sawmill.Info($"Adding grid {mapGrid}:{gridComponent.Owner} to station {Name(station)} ({station})");
     }
 
     /// <summary>
@@ -421,10 +421,10 @@ public sealed class StationSystem : EntitySystem
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
         RemComp<StationMemberComponent>(mapGrid);
-        stationData.Grids.Remove(((Component) gridComponent).Owner);
+        stationData.Grids.Remove(gridComponent.Owner);
 
-        RaiseLocalEvent(station, new StationGridRemovedEvent(((Component) gridComponent).Owner), true);
-        _sawmill.Info($"Removing grid {mapGrid}:{((Component) gridComponent).Owner} from station {Name(station)} ({station})");
+        RaiseLocalEvent(station, new StationGridRemovedEvent(gridComponent.Owner), true);
+        _sawmill.Info($"Removing grid {mapGrid}:{gridComponent.Owner} from station {Name(station)} ({station})");
     }
 
     /// <summary>

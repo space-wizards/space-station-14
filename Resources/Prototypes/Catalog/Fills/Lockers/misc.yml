@@ -104,19 +104,19 @@
     - type: StorageFill
       contents:
         - id: lantern
-          prob: 0.66
+          prob: 0.50
         - id: Wirecutter
-          prob: 0.44
+          prob: 0.33
         - id: Screwdriver
-          prob: 0.44
+          prob: 0.33
         - id: Wrench
-          prob: 0.44
+          prob: 0.33
         - id: Crowbar
-          prob: 0.44
+          prob: 0.50
         - id: Welder
-          prob: 0.44
+          prob: 0.33
         - id: Multitool
-          prob: 0.44
+          prob: 0.10
         - id: Soap
           prob: 0.44
         - id: PlushieCarp
@@ -128,13 +128,13 @@
         - id: ClothingHandsGlovesColorYellow
           prob: 0.05
         - id: ClothingBeltUtility
-          prob: 0.33
+          prob: 0.10
         - id: ClothingHeadHatCone
           prob: 0.2
         - id: WeaponFlareGun
           prob: 0.1
         - id: ClothingHandsGlovesColorYellowBudget
-          prob: 0.33
+          prob: 0.25
 
 - type: entity
   id: ClosetWallMaintenanceFilledRandom

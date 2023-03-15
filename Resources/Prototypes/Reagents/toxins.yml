@@ -134,7 +134,8 @@
         damage:
           groups:
             Caustic: 0.5
-      - !type:Scream
+      - !type:Emote
+        emote: Scream
         probability: 0.3
   metabolisms:
     Poison:
@@ -169,7 +170,8 @@
         damage:
           groups:
             Caustic: 0.3
-      - !type:Scream
+      - !type:Emote
+        emote: Scream
         probability: 0.2
   metabolisms:
     Poison:
@@ -211,7 +213,8 @@
         damage:
           groups:
             Caustic: 0.1
-      - !type:Scream
+      - !type:Emote
+        emote: Scream
         probability: 0.1
   metabolisms:
     Poison:
@@ -342,6 +345,7 @@
   boilingPoint: 554 # I'm not a chemist, but it boils at 295, lower than melting point, idk how it works so I gave it higher value
   metabolisms:
     Poison:
+      metabolismRate: 0.05
       effects:
       - !type:HealthChange
         conditions:
@@ -351,9 +355,9 @@
           type: Animal # Applying damage to the mobs with lower metabolism capabilities
         damage:
           types:
-            Poison: 4
+            Poison: 0.4
       - !type:ChemVomit
-        probability: 0.04
+        probability: 0.04 #Scaled for time, not metabolismrate.
         conditions:
           - !type:ReagentThreshold
             min: 3
@@ -444,6 +448,7 @@
   color: "#F2E9D2"
   metabolisms:
     Poison:
+      metabolismRate: 0.05
       effects:
       - !type:HealthChange
         conditions:
@@ -453,7 +458,7 @@
           type: Animal
         damage:
           types:
-            Poison: 6
+            Poison: 0.06
 
 - type: reagent
   id: Pax
@@ -469,3 +474,90 @@
         component: Pacified
         refresh: false
         type: Add
+
+# Mutation toxins. Appeareance, flavour, and physical description have had very little thought put into them, and are in fact taken
+# from other reagents.
+- type: reagent
+  id: HumanMutaToxin
+  name: reagent-name-human-muta-tox
+  desc: reagent-desc-human-muta-tox
+  physicalDesc: reagent-physical-desc-ferrous
+  flavor: metallic
+  color: "#800000"
+  metabolisms:
+    Poison:
+      effects:
+        - !type:ChemCauseDisease
+          conditions:
+          - !type:ReagentThreshold
+            min: 20
+          causeChance: 1
+          disease: HumanMutation
+
+- type: reagent
+  id: SlimePersonMutaToxin
+  name: reagent-name-slime-person-muta-tox
+  desc: reagent-desc-slime-person-muta-tox
+  physicalDesc: reagent-physical-desc-viscous
+  flavor: slimy
+  color: "#2cf274"
+  metabolisms:
+    Poison:
+      effects:
+        - !type:ChemCauseDisease
+          conditions:
+          - !type:ReagentThreshold
+            min: 20
+          causeChance: 1
+          disease: SlimePersonMutation
+
+- type: reagent
+  id: SkeletonMutaToxin
+  name: reagent-name-skeleton-muta-tox
+  desc: reagent-desc-skeleton-muta-tox
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: milk
+  color: "#DFDFDF"
+  metabolisms:
+    Poison:
+      effects:
+        - !type:ChemCauseDisease
+          conditions:
+          - !type:ReagentThreshold
+            min: 20
+          causeChance: 1
+          disease: SkeletonMutation
+
+- type: reagent
+  id: ReptilianMutaToxin
+  name: reagent-name-reptilian-muta-tox
+  desc: reagent-desc-reptilian-muta-tox
+  physicalDesc: reagent-physical-desc-crystalline
+  flavor: metallic
+  color: "#364266"
+  metabolisms:
+    Poison:
+      effects:
+        - !type:ChemCauseDisease
+          conditions:
+          - !type:ReagentThreshold
+            min: 20
+          causeChance: 1
+          disease: ReptilianMutation
+
+- type: reagent
+  id: MonkeyMutaToxin
+  name: reagent-name-monkey-muta-tox
+  desc: reagent-desc-monkey-muta-tox
+  physicalDesc: reagent-physical-desc-fibrous
+  flavor: meaty
+  color: "#3B1E08"
+  metabolisms:
+    Poison:
+      effects:
+        - !type:ChemCauseDisease
+          conditions:
+          - !type:ReagentThreshold
+            min: 20
+          causeChance: 1
+          disease: MonkeyMutation

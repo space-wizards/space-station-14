@@ -311,9 +311,9 @@
   - type: CrewMonitoringConsole
   - type: DeviceNetwork
     deviceNetId: Wireless
-    receiveFrequencyId: SuitSensor
+    receiveFrequencyId: CrewMonitor
   - type: WirelessNetworkConnection
-    range: 500
+    range: 1200
 
 - type: entity
   parent: BaseComputer
@@ -395,6 +395,9 @@
     radius: 1.5
     energy: 1.6
     color: "#b53ca1"
+  - type: GuideHelp
+    guides:
+    - Xenoarchaeology
 
 - type: entity
   parent: BaseComputer
@@ -510,6 +513,9 @@
     radius: 1.5
     energy: 1.6
     color: "#3c5eb5"
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: StrongMetallic
 
 - type: entity
   parent: ComputerComms
@@ -710,6 +716,9 @@
         type: CloningConsoleBoundUserInterface
   - type: Speech
     speechSounds: Pai
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: StrongMetallic
 
 - type: entity
   parent: BaseComputer
@@ -782,3 +791,33 @@
     interfaces:
       - key: enum.SurveillanceCameraMonitorUiKey.Key
         type: SurveillanceCameraMonitorBoundUserInterface
+
+- type: entity
+  id: ComputerPalletConsole
+  parent: BaseComputer
+  name: cargo sale computer
+  description: Used to sell goods loaded onto cargo pallets
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: request
+    - map: ["computerLayerKeys"]
+      state: tech_key
+  - type: CargoPalletConsole
+  - type: ActivatableUI
+    key: enum.CargoPalletConsoleUiKey.Sale
+  - type: UserInterface
+    interfaces:
+    - key: enum.CargoPalletConsoleUiKey.Sale
+      type: CargoPalletConsoleBoundUserInterface
+  - type: Computer
+    board: CargoRequestComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89f25"

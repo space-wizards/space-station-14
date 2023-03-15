@@ -22,7 +22,7 @@ namespace Content.Shared.Radio
         [DataField("color")] public Color Color { get; private set; } = Color.Lime;
 
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
     }
 }

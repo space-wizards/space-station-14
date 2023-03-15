@@ -56,3 +56,7 @@
   copyright: "by brainfood for space-station-14, ."
   source: "https://github.com/space-wizards/space-station-14/pull/12193"
 
+- files: ["meat.png"]
+  license: "CC0-1.0"
+  copyright: "Created by EmoGarbage404 (github) for space-station-14."
+  source: "https://github.com/space-wizards/space-station-14/pull/13766"

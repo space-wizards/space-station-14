@@ -62,6 +62,33 @@
   color: red
 
 - type: reagent
+  id: Ketchunaise
+  name: reagent-name-ketchunaise
+  group: Foods
+  desc: reagent-desc-ketchunaise
+  physicalDesc: reagent-physical-desc-saucey
+  flavor: piquant
+  color: "#fba399"
+
+- type: reagent
+  id: Mayo
+  name: reagent-name-mayo
+  group: Foods
+  desc: reagent-desc-mayo
+  physicalDesc: reagent-physical-desc-thick
+  flavor: sour
+  color: "#f9f5e5"
+
+- type: reagent
+  id: Vinaigrette
+  name: reagent-name-vinaigrette
+  group: Foods
+  desc: reagent-desc-vinaigrette
+  physicalDesc: reagent-physical-desc-sour
+  flavor: sour
+  color: "#efdaae"
+
+- type: reagent
   id: Soysauce
   name: reagent-name-soysauce
   group: Foods

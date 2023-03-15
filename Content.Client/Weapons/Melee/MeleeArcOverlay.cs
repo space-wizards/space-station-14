@@ -42,9 +42,7 @@ public sealed class MeleeArcOverlay : Overlay
             return;
         }
 
-        var weapon = _melee.GetWeapon(player.Value);
-
-        if (weapon == null)
+        if (!_melee.TryGetWeapon(player.Value, out _, out var weapon))
             return;
 
         var mousePos = _inputManager.MouseScreenPosition;

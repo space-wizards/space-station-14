@@ -11,7 +11,7 @@ namespace Content.Server.Objectives
     public sealed class ObjectivePrototype : IPrototype
     {
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
         [DataField("issuer")] public string Issuer { get; private set; } = "Unknown";

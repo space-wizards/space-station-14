@@ -119,7 +119,7 @@ namespace Content.Server.Bed.Sleep
                 return;
             }
             if (TryComp<SpamEmitSoundComponent>(uid, out var spam))
-                spam.Enabled = (args.NewMobState == MobState.Alive) ? true : false;
+                spam.Enabled = args.NewMobState == MobState.Alive;
         }
 
         private void AddWakeVerb(EntityUid uid, SleepingComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -148,10 +148,11 @@ namespace Content.Server.Bed.Sleep
         /// </summary>
         private void OnInteractHand(EntityUid uid, SleepingComponent component, InteractHandEvent args)
         {
+            args.Handled = true;
+
             if (!TryWakeCooldown(uid))
                 return;
 
-            args.Handled = true;
             TryWaking(args.Target, user: args.User);
         }
 
@@ -213,7 +214,7 @@ namespace Content.Server.Bed.Sleep
         /// </summary>
         public bool TryWaking(EntityUid uid, SleepingComponent? component = null, bool force = false, EntityUid? user = null)
         {
-            if (!Resolve(uid, ref component))
+            if (!Resolve(uid, ref component, false))
                 return false;
 
             if (!force && HasComp<ForcedSleepingComponent>(uid))

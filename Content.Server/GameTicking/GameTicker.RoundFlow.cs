@@ -180,24 +180,8 @@ namespace Content.Server.GameTicking
 
             RoundLengthMetric.Set(0);
 
-            var playerIds = _playerGameStatuses.Keys.Select(player => player.UserId).ToArray();
-            var serverName = _configurationManager.GetCVar(CCVars.AdminLogsServerName);
-
-            // TODO FIXME AAAAAAAAAAAAAAAAAAAH THIS IS BROKEN
-            // Task.Run as a terrible dirty workaround to avoid synchronization context deadlock from .Result here.
-            // This whole setup logic should be made asynchronous so we can properly wait on the DB AAAAAAAAAAAAAH
-            var task = Task.Run(async () =>
-            {
-                var server = await _db.AddOrGetServer(serverName);
-                return await _db.AddNewRound(server, playerIds);
-            });
-
-            _taskManager.BlockWaitOnTask(task);
-            RoundId = task.GetAwaiter().GetResult();
-
             var startingEvent = new RoundStartingEvent(RoundId);
             RaiseLocalEvent(startingEvent);
-
             var readyPlayers = new List<IPlayerSession>();
             var readyPlayerProfiles = new Dictionary<NetUserId, HumanoidCharacterProfile>();
 
@@ -317,50 +301,50 @@ namespace Content.Server.GameTicking
             var allMinds = Get<MindTrackerSystem>().AllMinds;
             foreach (var mind in allMinds)
             {
-                if (mind != null)
+                if (mind == null)
+                    continue;
+
+                // Some basics assuming things fail
+                var userId = mind.OriginalOwnerUserId;
+                var playerOOCName = userId.ToString();
+                var connected = false;
+                var observer = mind.AllRoles.Any(role => role is ObserverRole);
+                // Continuing
+                if (_playerManager.TryGetSessionById(userId, out var ply))
                 {
-                    // Some basics assuming things fail
-                    var userId = mind.OriginalOwnerUserId;
-                    var playerOOCName = userId.ToString();
-                    var connected = false;
-                    var observer = mind.AllRoles.Any(role => role is ObserverRole);
-                    // Continuing
-                    if (_playerManager.TryGetSessionById(userId, out var ply))
-                    {
-                        connected = true;
-                    }
-                    PlayerData? contentPlayerData = null;
-                    if (_playerManager.TryGetPlayerData(userId, out var playerData))
-                    {
-                        contentPlayerData = playerData.ContentData();
-                    }
-                    // Finish
-                    var antag = mind.AllRoles.Any(role => role.Antagonist);
-
-                    var playerIcName = "Unknown";
-
-                    if (mind.CharacterName != null)
-                        playerIcName = mind.CharacterName;
-                    else if (mind.CurrentEntity != null && TryName(mind.CurrentEntity.Value, out var icName))
-                        playerIcName = icName;
-
-                    var playerEndRoundInfo = new RoundEndMessageEvent.RoundEndPlayerInfo()
-                    {
-                        // Note that contentPlayerData?.Name sticks around after the player is disconnected.
-                        // This is as opposed to ply?.Name which doesn't.
-                        PlayerOOCName = contentPlayerData?.Name ?? "(IMPOSSIBLE: REGISTERED MIND WITH NO OWNER)",
-                        // Character name takes precedence over current entity name
-                        PlayerICName = playerIcName,
-                        PlayerEntityUid = mind.OwnedEntity,
-                        Role = antag
-                            ? mind.AllRoles.First(role => role.Antagonist).Name
-                            : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("game-ticker-unknown-role"),
-                        Antag = antag,
-                        Observer = observer,
-                        Connected = connected
-                    };
-                    listOfPlayerInfo.Add(playerEndRoundInfo);
+                    connected = true;
                 }
+                PlayerData? contentPlayerData = null;
+                if (_playerManager.TryGetPlayerData(userId, out var playerData))
+                {
+                    contentPlayerData = playerData.ContentData();
+                }
+                // Finish
+                var antag = mind.AllRoles.Any(role => role.Antagonist);
+
+                var playerIcName = "Unknown";
+
+                if (mind.CharacterName != null)
+                    playerIcName = mind.CharacterName;
+                else if (mind.CurrentEntity != null && TryName(mind.CurrentEntity.Value, out var icName))
+                    playerIcName = icName;
+
+                var playerEndRoundInfo = new RoundEndMessageEvent.RoundEndPlayerInfo()
+                {
+                    // Note that contentPlayerData?.Name sticks around after the player is disconnected.
+                    // This is as opposed to ply?.Name which doesn't.
+                    PlayerOOCName = contentPlayerData?.Name ?? "(IMPOSSIBLE: REGISTERED MIND WITH NO OWNER)",
+                    // Character name takes precedence over current entity name
+                    PlayerICName = playerIcName,
+                    PlayerEntityUid = mind.OwnedEntity,
+                    Role = antag
+                        ? mind.AllRoles.First(role => role.Antagonist).Name
+                        : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("game-ticker-unknown-role"),
+                    Antag = antag,
+                    Observer = observer,
+                    Connected = connected
+                };
+                listOfPlayerInfo.Add(playerEndRoundInfo);
             }
             // This ordering mechanism isn't great (no ordering of minds) but functions
             var listOfPlayerInfoFinal = listOfPlayerInfo.OrderBy(pi => pi.PlayerOOCName).ToArray();
@@ -392,6 +376,7 @@ namespace Content.Server.GameTicking
             LobbySong = _robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString();
             RandomizeLobbyBackground();
             ResettingCleanup();
+            IncrementRoundNumber();
 
             if (!LobbyEnabled)
             {
@@ -405,6 +390,7 @@ namespace Content.Server.GameTicking
                     _roundStartTime = _gameTiming.CurTime + LobbyDuration;
 
                 SendStatusToAll();
+                UpdateInfoText();
 
                 ReqWindowAttentionAll();
             }
@@ -438,7 +424,8 @@ namespace Content.Server.GameTicking
 #endif
                 // TODO: Maybe something less naive here?
                 // FIXME: Actually, definitely.
-                EntityManager.DeleteEntity(entity);
+                if (!Deleted(entity) && !Terminating(entity))
+                    EntityManager.DeleteEntity(entity);
 #if EXCEPTION_TOLERANCE
                 }
                 catch (Exception e)

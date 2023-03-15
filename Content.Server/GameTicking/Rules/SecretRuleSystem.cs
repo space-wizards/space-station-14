@@ -23,9 +23,7 @@ public sealed class SecretRuleSystem : GameRuleSystem
 
     public override void Ended()
     {
-        // noop
         // Preset should already handle it.
-        return;
     }
 
     private void PickRule()

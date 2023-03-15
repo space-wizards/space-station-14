@@ -1,29 +1,34 @@
 - type: entity
+  parent: BaseStructure
   id: WeaponTurretSyndicateBroken
   name: ballistic turret (broken)
-  suffix: Syndicate
-  parent: BaseStructure
   description: A ballistic machine gun auto-turret.
   components:
     - type: Clickable
     - type: InteractionOutline
     - type: Sprite
       netsync: false
-      sprite: Objects/Weapons/Guns/turrets.rsi
+      sprite: Objects/Weapons/Guns/Turrets/turrets.rsi
       drawdepth: WallMountedItems
       layers:
         - state: syndie_broken
 
 - type: entity
-  id: WeaponTurretSyndicate
+  parent: BaseStructure
+  id: BaseWeaponTurret
   name: ballistic turret
-  parent: WeaponTurretSyndicateBroken
+  abstract: true
   components:
+    - type: Clickable
+    - type: InteractionOutline
     - type: Actions
     - type: ContainerContainer
       containers:
         ballistic-ammo: !type:Container
     - type: Sprite
+      netsync: false
+      sprite: Objects/Weapons/Guns/Turrets/turrets.rsi
+      drawdepth: WallMountedItems
       layers:
         - state: syndie_lethal
     - type: InteractionPopup
@@ -72,6 +77,84 @@
       blackboard:
         SoundTargetInLOS: !type:SoundPathSpecifier
           path: /Audio/Effects/double_beep.ogg
+
+- type: entity
+  parent: BaseWeaponTurret
+  id: WeaponTurretSyndicate
+  suffix: Syndicate
+  components:
     - type: Faction
       factions:
         - Syndicate
+
+- type: entity
+  parent: BaseWeaponTurret
+  id: WeaponTurretNanoTrasen
+  suffix: NanoTrasen
+  components:
+  - type: Faction
+    factions:
+    - NanoTrasen
+
+- type: entity
+  parent: BaseWeaponTurret
+  id: WeaponTurretHostile
+  suffix: Hostile
+  components:
+  - type: Faction
+    factions:
+    - SimpleHostile
+
+- type: entity
+  name: xeno turret
+  description: Shoots 9mm acid projectiles
+  parent: BaseWeaponTurret
+  id: WeaponTurretXeno
+  suffix: Xeno
+  components:
+    - type: Faction
+      factions:
+        - Xeno
+    - type: Sprite
+      netsync: false
+      sprite: Objects/Weapons/Guns/Turrets/xenoturret.rsi
+      noRot: true
+      layers:
+        - state: acid_turret
+    - type: BallisticAmmoProvider
+      proto: BulletAcid
+      capacity: 500
+    - type: Gun
+      fireRate: 1
+      selectedMode: FullAuto
+      soundGunshot: /Audio/Weapons/Xeno/alien_spitacid.ogg
+    - type: HTN
+      rootTask: TurretCompound
+      blackboard:
+        SoundTargetInLOS: !type:SoundPathSpecifier
+          path: /Audio/Animals/snake_hiss.ogg
+    - type: Damageable
+      damageContainer: Biological
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                path: /Audio/Effects/gib1.ogg
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                FoodMeatXeno:
+                  min: 3
+                  max: 5
+    - type: InteractionPopup
+      interactDelay: 1.0
+      successChance: 0.8
+      interactSuccessString: petting-success-generic
+      interactFailureString: petting-failure-generic
+      interactSuccessSound:
+        path: /Audio/Animals/snake_hiss.ogg

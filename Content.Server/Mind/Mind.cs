@@ -123,6 +123,13 @@ namespace Content.Server.Mind
         public bool PreventGhosting { get; set; }
 
         /// <summary>
+        ///     Prevents user from suiciding
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("preventSuicide")]
+        public bool PreventSuicide { get; set; }
+
+        /// <summary>
         ///     The session of the player owning this mind.
         ///     Can be null, in which case the player is currently not logged in.
         /// </summary>
@@ -329,7 +336,7 @@ namespace Content.Server.Mind
                 {
                     component = _entityManager.AddComponent<MindComponent>(entity.Value);
                 }
-                else if (component!.HasMind)
+                else if (component.HasMind)
                 {
                     _gameTickerSystem.OnGhostAttempt(component.Mind!, false);
                 }

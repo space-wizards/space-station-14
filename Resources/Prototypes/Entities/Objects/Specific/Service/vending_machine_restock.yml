@@ -363,3 +363,35 @@
     - state: green_bit
       shader: unshaded
     - state: refill_tanks
+
+- type: entity
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockVendomat
+  name: vendomat restock box
+  description: A box full of parts for various machinery. Load it into a Vendomat to begin.
+  components:
+  - type: VendingMachineRestock
+    canRestock:
+    - VendomatInventory
+  - type: Sprite
+    layers:
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_parts
+
+- type: entity
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockHappyHonk
+  name: happy honk restock box
+  description: place this box full of fun into the restock slot on the Happy Honk Dispenser to begin.
+  components:
+  - type: VendingMachineRestock
+    canRestock:
+    - HappyHonkDispenserInventory
+  - type: Sprite
+    layers:
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_honk
