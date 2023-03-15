@@ -45,3 +45,5 @@ The following sounds were used from youtube:
     goat_bah.ogg: audio is created by youtube user "Winry Marini" (https://youtu.be/QIhwzsk5bww) licensed under CC BY 3.0
 
     lizard_happy.ogg: audio created by youtube user "Nagaty Studio" (https://youtu.be/I7CX0AS8RNI) licensed under CC by 3.0.
+
+    bear.ogg: audio is recorded by "Nagaty Studio" (https://www.youtube.com/watch?v=pz6eZbESlU8) licensed under CC by 3.0. The original audio was reverbed.

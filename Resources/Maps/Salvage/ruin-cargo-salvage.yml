@@ -3878,7 +3878,7 @@ entities:
     parent: 16
     type: Transform
 - uid: 341
-  type: WeaponPistolHandmade
+  type: WeaponShotgunHandmade
   components:
   - pos: -1.4139366,-7.5071855
     parent: 16

@@ -66,5 +66,120 @@
     - !type:DiseasePopUp
       probability: 0.03
 
+# Mutation toxin diseases
+- type: disease
+  id: HumanMutation
+  name: disease-proto-muta-human
+  infectious: false
+  cureResist: 0.10
+  stages:
+    - 0
+    - 60
+  effects:
+    - !type:DiseasePolymorph
+      probability: 1
+      polymorphId: HumanMutationMorph
+      polymorphMessage: disease-polymorph
+      polymorphSound:
+        path: /Audio/Voice/Human/malescream_1.ogg
+      stages:
+        - 1
+  cures:
+    - !type:DiseaseJustWaitCure
+      maxLength: 61 # not sure how stages work, maybe this should be 60 or 60.1 or something
+    - !type:DiseaseReagentCure
+      reagent: Stellibinin
+
+- type: disease
+  id: SlimePersonMutation
+  name: disease-proto-muta-slime-person
+  infectious: false
+  cureResist: 0.10
+  stages:
+    - 0
+    - 60
+  effects:
+    - !type:DiseasePolymorph
+      probability: 1
+      polymorphId: SlimePersonMutationMorph
+      polymorphMessage: disease-polymorph
+      polymorphSound:
+        path: /Audio/Voice/Talk/slime_exclaim.ogg
+      stages:
+        - 1
+  cures:
+    - !type:DiseaseJustWaitCure
+      maxLength: 61 # not sure how stages work, maybe this should be 60 or 60.1 or something
+    - !type:DiseaseReagentCure
+      reagent: Stellibinin
+
+- type: disease
+  id: ReptilianMutation
+  name: disease-proto-muta-reptilian
+  infectious: false
+  cureResist: 0.10
+  stages:
+    - 0
+    - 60
+  effects:
+    - !type:DiseasePolymorph
+      probability: 1
+      polymorphId: ReptilianMutationMorph
+      polymorphMessage: disease-polymorph
+      polymorphSound:
+        path: /Audio/Voice/Reptilian/reptilian_scream.ogg
+      stages:
+        - 1
+  cures:
+    - !type:DiseaseJustWaitCure
+      maxLength: 61 # not sure how stages work, maybe this should be 60 or 60.1 or something
+    - !type:DiseaseReagentCure
+      reagent: Stellibinin
+
+- type: disease
+  id: SkeletonMutation
+  name: disease-proto-muta-skeleton
+  infectious: false
+  cureResist: 0.10
+  stages:
+    - 0
+    - 60
+  effects:
+    - !type:DiseasePolymorph
+      probability: 1
+      polymorphId: SkeletonMutationMorph
+      polymorphMessage: disease-polymorph
+      polymorphSound:
+        path: /Audio/Voice/Skeleton/skeleton_scream.ogg
+      stages:
+        - 1
+  cures:
+    - !type:DiseaseJustWaitCure
+      maxLength: 61 # not sure how stages work, maybe this should be 60 or 60.1 or something
+    - !type:DiseaseReagentCure
+      reagent: Stellibinin
+
+- type: disease
+  id: MonkeyMutation
+  name: disease-proto-muta-monkey
+  infectious: false
+  cureResist: 0.10
+  stages:
+    - 0
+    - 60
+  effects:
+    - !type:DiseasePolymorph
+      probability: 1
+      polymorphId: MonkeyMutationMorph
+      polymorphMessage: disease-polymorph
+      polymorphSound:
+        path: /Audio/Animals/monkey_scream.ogg
+      stages:
+        - 1
+  cures:
+    - !type:DiseaseJustWaitCure
+      maxLength: 61 # not sure how stages work, maybe this should be 60 or 60.1 or something
+    - !type:DiseaseReagentCure
+      reagent: Stellibinin
 
 ### Once radiation is refactored I want it to have a small chance of giving you regular cancer
