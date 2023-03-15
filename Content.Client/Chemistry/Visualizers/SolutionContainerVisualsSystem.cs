@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Rounding;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -41,7 +42,6 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
             Logger.Error("Attempted to set solution container visuals volume ratio on " + ToPrettyString(uid) + " to a value greater than 1. Volume should never be greater than max volume!");
             fraction = 1f;
         }
-        
         if (component.Metamorphic)
         {
             if (args.Sprite.LayerMapTryGet(component.BaseLayer, out var baseLayer))
@@ -79,19 +79,7 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
             }
         }
 
-        // Full and empty sprites are reserved for completely full or completely empty
-        // Remaining sprites fill the gap
-        // If there are only full and empty sprites, partially filled will show full.
-        int closestFillSprite;
-        if (fraction == 0f) {
-            closestFillSprite = 0;
-        } else if (fraction == 1f) {
-            closestFillSprite = component.MaxFillLevels;
-        } else if (component.MaxFillLevels < 3) {
-            closestFillSprite = 1;
-        } else {
-            closestFillSprite = (int) Math.Round(fraction * (component.MaxFillLevels - 2)) + 1;
-        }
+        int closestFillSprite = ContentHelpers.RoundToLevels(fraction, 1, component.MaxFillLevels + 1);
 
         if (closestFillSprite > 0)
         {
