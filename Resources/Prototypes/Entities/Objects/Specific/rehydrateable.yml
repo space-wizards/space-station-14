@@ -74,7 +74,7 @@
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
-    fixtures: # TODO: Make a second fixture.
+    fixtures:
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.3,-0.3,0.3,0.3"
