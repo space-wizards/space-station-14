@@ -369,7 +369,7 @@
   id: Caves
   layers:
     - !type:BiomeEntityLayer
-      threshold: 0.8
+      threshold: -0.5
       invert: true
       noise:
         seed: 0
