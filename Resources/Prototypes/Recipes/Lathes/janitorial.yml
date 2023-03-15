@@ -48,3 +48,11 @@
   materials:
     Steel: 100
     Glass: 1000
+
+- type: latheRecipe
+  id: Plunger
+  result: Plunger
+  completetime: 2
+  materials:
+    Plastic: 50
+    Wood: 200

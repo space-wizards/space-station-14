@@ -184,6 +184,10 @@
                 path: /Audio/Effects/metalbreak.ogg
     - type: ItemMapper
       mapLayers:
+        cart_plunger:
+          whitelist:
+            tags:
+              - Plunger
         cart_mop:
           whitelist:
             tags:
