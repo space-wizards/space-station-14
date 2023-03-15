@@ -67,7 +67,7 @@ namespace Content.Shared.Cuffs
             SubscribeLocalEvent<CuffableComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
             SubscribeLocalEvent<CuffableComponent, BeingPulledAttemptEvent>(OnBeingPulledAttempt);
             SubscribeLocalEvent<CuffableComponent, GetVerbsEvent<Verb>>(AddUncuffVerb);
-            SubscribeLocalEvent<CuffableComponent, DoAfterEvent>(OnCuffableDoAfter);
+            SubscribeLocalEvent<CuffableComponent, DoAfterEvent<UnCuffDoAfter>>(OnCuffableDoAfter);
             SubscribeLocalEvent<CuffableComponent, PullStartedMessage>(OnPull);
             SubscribeLocalEvent<CuffableComponent, PullStoppedMessage>(OnPull);
             SubscribeLocalEvent<CuffableComponent, DropAttemptEvent>(CheckAct);
@@ -78,7 +78,7 @@ namespace Content.Shared.Cuffs
 
             SubscribeLocalEvent<HandcuffComponent, AfterInteractEvent>(OnCuffAfterInteract);
             SubscribeLocalEvent<HandcuffComponent, MeleeHitEvent>(OnCuffMeleeHit);
-            SubscribeLocalEvent<HandcuffComponent, DoAfterEvent>(OnAddCuffDoAfter);
+            SubscribeLocalEvent<HandcuffComponent, DoAfterEvent<AddCuffDoAfter>>(OnAddCuffDoAfter);
 
         }
 
@@ -223,15 +223,16 @@ namespace Content.Shared.Cuffs
             args.Verbs.Add(verb);
         }
 
-        private void OnCuffableDoAfter(EntityUid uid, CuffableComponent component, DoAfterEvent args)
+        private void OnCuffableDoAfter(EntityUid uid, CuffableComponent component, DoAfterEvent<UnCuffDoAfter> args)
         {
+            component.Uncuffing = false;
+
             if (args.Args.Target is not { } target || args.Args.Used is not { } used)
                 return;
             if (args.Handled)
                 return;
             args.Handled = true;
 
-            component.Uncuffing = false;
             Dirty(component);
 
             var user = args.Args.User;
@@ -271,13 +272,14 @@ namespace Content.Shared.Cuffs
             args.Handled = true;
         }
 
-        private void OnAddCuffDoAfter(EntityUid uid, HandcuffComponent component, DoAfterEvent args)
+        private void OnAddCuffDoAfter(EntityUid uid, HandcuffComponent component, DoAfterEvent<AddCuffDoAfter> args)
         {
             var user = args.Args.User;
-            var target = args.Args.Target!.Value;
 
-            if (!TryComp<CuffableComponent>(target, out var cuffable))
+            if (!TryComp<CuffableComponent>(args.Args.Target, out var cuffable))
                 return;
+
+            var target = args.Args.Target.Value;
 
             if (args.Handled)
                 return;
@@ -494,7 +496,7 @@ namespace Content.Shared.Cuffs
 
             handcuffComponent.Cuffing = true;
             if (_net.IsServer)
-                _doAfter.DoAfter(doAfterEventArgs);
+                _doAfter.DoAfter(doAfterEventArgs, new AddCuffDoAfter());
         }
 
         /// <summary>
@@ -572,7 +574,7 @@ namespace Content.Shared.Cuffs
             cuffable.Uncuffing = true;
             Dirty(cuffable);
             if (_net.IsServer)
-                _doAfter.DoAfter(doAfterEventArgs);
+                _doAfter.DoAfter(doAfterEventArgs, new UnCuffDoAfter());
         }
 
         public void Uncuff(EntityUid target, EntityUid user, EntityUid cuffsToRemove, CuffableComponent? cuffable = null, HandcuffComponent? cuff = null)
@@ -663,6 +665,14 @@ namespace Content.Shared.Cuffs
         public IReadOnlyList<EntityUid> GetAllCuffs(CuffableComponent component)
         {
             return component.Container.ContainedEntities;
+        }
+
+        private struct UnCuffDoAfter
+        {
+        }
+
+        private struct AddCuffDoAfter
+        {
         }
     }
 }
