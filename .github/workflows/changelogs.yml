@@ -1,0 +1,24 @@
+name: Changelogs
+
+concurrency:
+  group: changelogs
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 10 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+
+    - name: Publish changelog
+      run: Tools/actions_changelogs_since_last_run.py
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DISCORD_WEBHOOK_URL: ${{ secrets.CHANGELOG_DISCORD_WEBHOOK }}
