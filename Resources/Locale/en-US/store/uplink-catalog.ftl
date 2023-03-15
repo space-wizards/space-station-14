@@ -82,7 +82,7 @@ uplink-headset-name = Syndicate Over-ear Headset
 uplink-headset-desc = A headset that allows you to communicate with other syndicate operatives. Has 4 slots for encryption keys.
 
 uplink-encryption-key-name = Syndicate Encryption Key
-uplink-encryption-key-desc = An encryption key that not only allows you to access all station-side radio channels, but also allows you to use a secure Syndicate channel to contact other agents.
+uplink-encryption-key-desc = An encryption key for access to the secret frequency of our special agents. No one will know about your special channel with friends... or rivals.
 
 uplink-hypopen-name = Hypopen
 uplink-hypopen-desc = A chemical hypospray disguised as a pen, capable of instantly injecting up to 15u of reagents. Starts empty.
@@ -208,7 +208,7 @@ uplink-syndicate-segway-crate-desc = Be an enemy of the corporation, in style!
 uplink-revolver-cap-gun-name = Cap Gun
 uplink-revolver-cap-gun-desc = Looks almost like the real thing! Ages 8 and up.
 
-uplink-syndicate-stamp-name = Syndicate Rubber Stamp # In loving memory, Btamp, ???-2/1/23
+uplink-syndicate-stamp-name = Syndicate Rubber Btamp
 uplink-syndicate-stamp-desc = A rubber stamp for stamping important documents.
 
 uplink-cat-ears-name = Cat Ears
