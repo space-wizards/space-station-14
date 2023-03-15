@@ -36,9 +36,12 @@
     state: mecha_honker
   - type: MechSoundboard
     sounds:
-    # TODO: all the meme shit + esword + bomb trolls
     - collection: BikeHorn
     - collection: CluwneHorn
+    - collection: TrollAnimals
+    - collection: TrollBeeping
+    - collection: TrollEsword
+    - collection: TrollMeeting
   - type: UIFragment
     ui: !type:MechSoundboardUi
   - type: UseDelay
