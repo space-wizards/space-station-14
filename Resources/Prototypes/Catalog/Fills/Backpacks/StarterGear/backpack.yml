@@ -222,9 +222,9 @@
         - id: BoxSurvival
 
 - type: entity
-  noSpawn: true
   parent: ClothingBackpackSatchelLeather
   id: ClothingBackpackPirateFilled
+  suffix: Filled Pirate
   components:
     - type: StorageFill
       contents:

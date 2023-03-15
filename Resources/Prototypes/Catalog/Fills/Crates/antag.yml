@@ -1,7 +1,7 @@
 - type: entity
   id: CratePirateChestCaptain
   name: captains pirate chest
-  suffix: antag
+  suffix: Filled
   parent: CratePirate
   components:
   - type: StorageFill
@@ -20,7 +20,7 @@
 - type: entity
   id: CratePirateChest
   name: crews pirate chest
-  suffix: antag
+  suffix: Filled
   parent: CratePirate
   components:
   - type: StorageFill

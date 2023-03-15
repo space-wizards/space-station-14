@@ -673,7 +673,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitPirateCap
   name: ancient armored hardsuit
-  suffix: pirate captain
+  suffix: Pirate
   description: An ancient armored hardsuit.
   components:
   - type: Sprite
@@ -703,7 +703,7 @@
   parent:  ClothingOuterHardsuitBase
   id:  ClothingOuterHardsuitPirateEVA
   name: deep space EVA suit
-  suffix: pirate
+  suffix: Pirate
   description: A heavy space suit that provides some basic protection from the cold harsh realities of deep space.
   components:
   - type: Sprite
