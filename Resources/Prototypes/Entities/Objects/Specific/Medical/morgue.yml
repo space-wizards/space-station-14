@@ -92,6 +92,18 @@
   components:
   - type: Foldable
     folded: true
+  - type: Sprite
+    layers:
+      - state: bag
+        map: [ "unfoldedLayer" ]
+        visible: false
+      - state: bag_folded
+        map: [ "foldedLayer" ]
+      - state: open_overlay
+        map: [ "enum.StorageVisualLayers.Door" ]
+      - state: label_overlay
+        map: [ "enum.BodyBagVisualLayers.Label" ]
+
 #  - type: BodyBagItem #TODO: we need some kind of generic placable, like thus:
 # - type: Placeable
 #   prototype: someId
