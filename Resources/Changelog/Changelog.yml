@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Magnet artifacts can now be activated with magboots., type: Add}
-  id: 2684
-  time: '2022-11-20T06:52:32.0000000+00:00'
 - author: illersaver
   changes:
   - {message: Added damage to gas tanks and utensils!, type: Add}
@@ -2898,3 +2893,9 @@ Entries:
       to other entities., type: Fix}
   id: 3183
   time: '2023-03-15T00:14:19.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: The syndicate encryption key no longer allows you to access every radio
+      channel., type: Remove}
+  id: 3184
+  time: '2023-03-15T00:38:00.0000000+00:00'
