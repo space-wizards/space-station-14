@@ -77,10 +77,10 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<SoundOnTriggerComponent,            TriggerEvent>(HandleSoundTrigger);
             SubscribeLocalEvent<PointLightEnableOnTriggerComponent, TriggerEvent>(HandlePointLightTrigger);
             SubscribeLocalEvent<GravityWellOnTriggerComponent,      TriggerEvent>(HandleGravityWellTrigger);
-            SubscribeLocalEvent<SingularityDistortionTweakOnTriggerComponent, TriggerEvent>(HandleDistortionTrigger);
+            SubscribeLocalEvent<SingularityDistortionOnTriggerComponent, TriggerEvent>(HandleDistortionTrigger);
         }
 
-        private void HandleDistortionTrigger(EntityUid uid, SingularityDistortionTweakOnTriggerComponent component, TriggerEvent args)
+        private void HandleDistortionTrigger(EntityUid uid, SingularityDistortionOnTriggerComponent component, TriggerEvent args)
         {
             var singulo = EnsureComp<SingularityDistortionComponent>(uid);
 
