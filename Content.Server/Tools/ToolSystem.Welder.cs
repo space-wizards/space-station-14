@@ -301,6 +301,7 @@ namespace Content.Server.Tools
 
             if (neededFuel > fuel)
             {
+                _popupSystem.PopupEntity(Loc.GetString("welder-component-cannot-weld-message"), uid, args.User);
                 args.Cancel();
             }
 
