@@ -90,9 +90,10 @@
       - LowImpassable
   # pet fish before rehydrating and he will be nice to you
   - type: Friends
-    pettable: true
-  - type: InteractionPopup
-    interactSuccessString: petting-success-dehydrated-carp
-    interactFailureString: petting-failure-generic
-    interactSuccessSound:
+  - type: PettableFriend
+    successString: petting-success-dehydrated-carp
+    failureString: petting-failure-generic
+  - type: EmitSoundOnUse
+    handle: false
+    sound:
       path: /Audio/Effects/bite.ogg
