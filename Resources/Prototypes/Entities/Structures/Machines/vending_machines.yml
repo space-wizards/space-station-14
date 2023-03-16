@@ -1150,7 +1150,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineSalvage
-  name: salvage vendor
+  name: Salvage Vendor
   description: A dwarves best friend!
   components:
   - type: VendingMachine
@@ -1762,7 +1762,7 @@
   parent: VendingMachine
   id: VendingMachineTankDispenserEVA
   suffix: EVA [O2, N2]
-  name: gas tank dispenser
+  name: Gas Tank Dispenser
   description: A vendor for dispensing gas tanks.
   components:
   - type: VendingMachine
@@ -1775,7 +1775,7 @@
   parent: VendingMachine
   id: VendingMachineTankDispenserEngineering
   suffix: ENG [O2, Plasma]
-  name: gas tank dispenser
+  name: Gas Tank Dispenser
   description: A vendor for dispensing gas tanks. This one has an engineering livery.
   components:
   - type: VendingMachine

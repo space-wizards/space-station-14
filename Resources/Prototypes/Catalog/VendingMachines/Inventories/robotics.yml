@@ -1,17 +1,14 @@
 - type: vendingMachineInventory
   id: RoboticsInventory
   startingInventory:
-    #TO DO: add bonesetter with surgery
-    ClothingOuterCoatLab: 4
-    #roboticist clothes
     CableApcStack: 4
-    Flash: 4
+    #Flash: 4 add when robotics
     ProximitySensor: 3
     RemoteSignaller: 3
     HandheldHealthAnalyzer: 3
     Scalpel: 2
     SawElectric: 2
-    #bonesetter
+    #Bonesetter: 2 add when robotics
     NitrousOxideTankFilled: 2
     ClothingMaskBreathMedical: 5
     Screwdriver: 2
