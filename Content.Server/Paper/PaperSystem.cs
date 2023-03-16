@@ -17,11 +17,12 @@ namespace Content.Server.Paper
 {
     public sealed class PaperSystem : EntitySystem
     {
-        [Dependency] private readonly TagSystem _tagSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
         public override void Initialize()
         {
@@ -32,8 +33,6 @@ namespace Content.Server.Paper
             SubscribeLocalEvent<PaperComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<PaperComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<PaperComponent, PaperInputTextMessage>(OnInputTextMessage);
-
-            SubscribeLocalEvent<ActivateOnPaperOpenedComponent, PaperWriteEvent>(OnWrittenWith);
         }
 
         private void OnInit(EntityUid uid, PaperComponent paperComp, ComponentInit args)
@@ -131,7 +130,7 @@ namespace Content.Server.Paper
 
         private void OnWrittenWith(EntityUid uid, ActivateOnPaperOpenedComponent comp, ref PaperWriteEvent args)
         {
-            RaiseLocalEvent(uid, new UseInHandEvent(args.User));
+            _interaction.UseInHandInteraction(args.User, uid);
         }
 
         /// <summary>
