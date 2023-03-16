@@ -1,11 +1,4 @@
 Entries:
-- author: Morty
-  changes:
-  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u043D\u043E\u0432\
-      \u0430\u044F \u043A\u0430\u0440\u0442\u0430 - ConstructionStation"
-    type: Add
-  id: 17
-  time: '2022-01-13T03:34:55.0000000+00:00'
 - author: 3RMc
   changes:
   - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u044B \u043F\u0435\u0440\
@@ -4281,3 +4274,10 @@ Entries:
     type: Fix
   id: 516
   time: '2023-03-16T21:40:13.0000000+00:00'
+- author: ficcialfaint
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u044B \u043F\u0435\u0440\
+      \u0435\u0432\u043E\u0434\u044B"
+    type: Add
+  id: 517
+  time: '2023-03-16T22:06:44.0000000+00:00'
