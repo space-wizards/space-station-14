@@ -7,6 +7,7 @@ using Content.Server.Spawners.EntitySystems;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
+using Content.Shared.Spawners.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
@@ -245,10 +246,12 @@ public sealed class ArrivalsSystem : EntitySystem
             var shuttleComp = Comp<ShuttleComponent>(component.Shuttle);
             var arrivalsComp = EnsureComp<ArrivalsShuttleComponent>(component.Shuttle);
             arrivalsComp.Station = uid;
-            _shuttles.TryFTLDock(shuttleComp, arrivals);
+            _shuttles.FTLTravel(shuttleComp, arrivals, hyperspaceTime: 10f, dock: true);
             arrivalsComp.NextTransfer = _timing.CurTime + TransferCooldown;
         }
 
-        _mapManager.DeleteMap(dummyMap);
+        // Don't start the arrivals shuttle immediately docked so power has a time to stabilise?
+        var timer = AddComp<TimedDespawnComponent>(_mapManager.GetMapEntityId(dummyMap));
+        timer.Lifetime = 15f;
     }
 }
