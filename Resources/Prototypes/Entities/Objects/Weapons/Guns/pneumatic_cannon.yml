@@ -30,6 +30,7 @@
       path: /Audio/Items/hiss.ogg
   - type: ContainerAmmoProvider
     container: storagebase
+    throwItems: true
   - type: PneumaticCannon
   - type: Storage
     capacity: 30
@@ -99,3 +100,34 @@
     containers:
       storagebase: !type:Container
         ents: []
+
+# shoots bullets instead of throwing them, no other changes
+- type: entity
+  parent: WeaponImprovisedPneumaticCannon
+  id: WeaponImprovisedPneumaticCannonGun
+  suffix: Gun
+  components:
+  - type: ContainerAmmoProvider
+    container: storagebase
+    throwItems: false
+
+# doesn't need gas, extra capacity
+- type: entity
+  parent: WeaponImprovisedPneumaticCannonGun
+  id: WeaponImprovisedPneumaticCannonAdmeme
+  suffix: Admeme
+  components:
+  - type: Storage
+    capacity: 1000
+  - type: PneumaticCannon
+    gasUsage: 0
+  - type: Gun
+    fireRate: 10
+    selectedMode: FullAuto
+    availableModes:
+    - SemiAuto
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Effects/thunk.ogg
+    soundEmpty:
+      path: /Audio/Items/hiss.ogg

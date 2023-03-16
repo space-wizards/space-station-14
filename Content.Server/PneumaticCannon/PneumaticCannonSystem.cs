@@ -63,7 +63,8 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
         if (!TryComp<GasTankComponent>(args.EntityUid, out var gas))
             return;
 
-        if (gas.Air.TotalMoles >= component.GasUsage)
+        // only accept tanks if it uses gas
+        if (gas.Air.TotalMoles >= component.GasUsage && component.GasUsage > 0f)
             return;
 
         args.Cancel();
@@ -71,7 +72,9 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
 
     private void OnShoot(EntityUid uid, PneumaticCannonComponent component, ref GunShotEvent args)
     {
-        if (GetGas(uid) is not { } gas)
+        // require a gas tank if it uses gas
+        var gas = GetGas(uid);
+        if (gas == null && component.GasUsage > 0f)
             return;
 
         if(TryComp<StatusEffectsComponent>(args.User, out var status)
@@ -81,6 +84,10 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
             Popup.PopupEntity(Loc.GetString("pneumatic-cannon-component-power-stun",
                 ("cannon", component.Owner)), uid, args.User);
         }
+
+        // ignore gas stuff if the cannon doesn't use any
+        if (gas == null)
+            return;
 
         // this should always be possible, as we'll eject the gas tank when it no longer is
         var environment = _atmos.GetContainingMixture(component.Owner, false, true);

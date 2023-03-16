@@ -32,7 +32,13 @@ public partial class SharedGunSystem
             if (_netMan.IsServer)
                 container.Remove(ent);
 
-            args.Ammo.Add((ent, EnsureComp<AmmoComponent>(ent)));
+            // if it's meant to throw items not shoot, ignore the ammo's cartridge component to prevent e.g. pneumatic cannon shooting bullets instead of throwing
+            if (!TryComp<AmmoComponent>(ent, out var ammo) || component.ThrowItems)
+            {
+                ammo = new AmmoComponent();
+            }
+
+            args.Ammo.Add((ent, ammo));
         }
     }
 
