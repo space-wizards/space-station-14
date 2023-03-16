@@ -5,13 +5,16 @@ using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
 using Content.Server.Flash.Components;
+using Content.Server.Singularity.Components;
 using Content.Shared.Database;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Payload.Components;
+using Content.Shared.Singularity.Components;
 using Content.Shared.StepTrigger.Systems;
 using Content.Shared.Trigger;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Events;
@@ -32,7 +35,8 @@ namespace Content.Server.Explosion.EntitySystems
         {
             Triggered = triggered;
             User = user;
-        }
+        }    [Dependency] private readonly SharedAudioSystem _audio = default!;
+
     }
 
     [UsedImplicitly]
@@ -45,6 +49,9 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly BodySystem _body = default!;
+        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly PointLightSystem _pointLightSystem = default!;
 
         public override void Initialize()
         {
@@ -57,15 +64,61 @@ namespace Content.Server.Explosion.EntitySystems
             InitializeVoice();
             InitializeMobstate();
 
-            SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(OnTriggerCollide);
-            SubscribeLocalEvent<TriggerOnActivateComponent, ActivateInWorldEvent>(OnActivate);
+            SubscribeLocalEvent<TriggerOnCollideComponent,     StartCollideEvent>(OnTriggerCollide);
+            SubscribeLocalEvent<TriggerOnActivateComponent,    ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<TriggerImplantActionComponent, ActivateImplantEvent>(OnImplantTrigger);
             SubscribeLocalEvent<TriggerOnStepTriggerComponent, StepTriggeredEvent>(OnStepTriggered);
 
-            SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
-            SubscribeLocalEvent<ExplodeOnTriggerComponent, TriggerEvent>(HandleExplodeTrigger);
-            SubscribeLocalEvent<FlashOnTriggerComponent, TriggerEvent>(HandleFlashTrigger);
-            SubscribeLocalEvent<GibOnTriggerComponent, TriggerEvent>(HandleGibTrigger);
+            SubscribeLocalEvent<DeleteOnTriggerComponent,           TriggerEvent>(HandleDeleteTrigger);
+            SubscribeLocalEvent<ExplodeOnTriggerComponent,          TriggerEvent>(HandleExplodeTrigger);
+            SubscribeLocalEvent<FlashOnTriggerComponent,            TriggerEvent>(HandleFlashTrigger);
+            SubscribeLocalEvent<GibOnTriggerComponent,              TriggerEvent>(HandleGibTrigger);
+            SubscribeLocalEvent<AnchorOnTriggerComponent,           TriggerEvent>(HandleAnchorTrigger);
+            SubscribeLocalEvent<SoundOnTriggerComponent,            TriggerEvent>(HandleSoundTrigger);
+            SubscribeLocalEvent<PointLightEnableOnTriggerComponent, TriggerEvent>(HandlePointLightTrigger);
+            SubscribeLocalEvent<GravityWellOnTriggerComponent,      TriggerEvent>(HandleGravityWellTrigger);
+            SubscribeLocalEvent<SingularityDistortionTweakOnTriggerComponent, TriggerEvent>(HandleDistortionTrigger);
+        }
+
+        private void HandleDistortionTrigger(EntityUid uid, SingularityDistortionTweakOnTriggerComponent component, TriggerEvent args)
+        {
+            var singulo = EnsureComp<SingularityDistortionComponent>(uid);
+
+            if (singulo != null)
+            {
+                singulo.Intensity = component.Intensity;
+            }
+        }
+
+        private void HandleGravityWellTrigger(EntityUid uid, GravityWellOnTriggerComponent component, TriggerEvent args)
+        {
+            var well = EnsureComp<GravityWellComponent>(uid);
+            if (well != null)
+            {
+                well.BaseRadialAcceleration     = component.RadialAcceleration;
+                well.BaseTangentialAcceleration = component.TangentialAcceleration;
+            }
+        }
+
+        private void HandlePointLightTrigger(EntityUid uid, PointLightEnableOnTriggerComponent component, TriggerEvent args)
+        {
+            if (HasComp<PointLightComponent>(uid))
+                _pointLightSystem.SetEnabled(uid, true);
+        }
+
+        private void HandleSoundTrigger(EntityUid uid, SoundOnTriggerComponent component, TriggerEvent args)
+        {
+            _audio.PlayPvs(component.Sound, uid);
+            if (component.RemoveOnTrigger)
+                RemCompDeferred<AnchorOnTriggerComponent>(uid);
+        }
+
+        private void HandleAnchorTrigger(EntityUid uid, AnchorOnTriggerComponent component, TriggerEvent args)
+        {
+            _container.TryRemoveFromContainer(uid, true);
+            _transformSystem.AnchorEntity(uid, Transform(uid));
+            if(component.RemoveOnTrigger)
+                RemCompDeferred<AnchorOnTriggerComponent>(uid);
         }
 
         private void HandleExplodeTrigger(EntityUid uid, ExplodeOnTriggerComponent component, TriggerEvent args)
@@ -74,14 +127,12 @@ namespace Content.Server.Explosion.EntitySystems
             args.Handled = true;
         }
 
-        #region Flash
         private void HandleFlashTrigger(EntityUid uid, FlashOnTriggerComponent component, TriggerEvent args)
         {
             // TODO Make flash durations sane ffs.
             _flashSystem.FlashArea(uid, args.User, component.Range, component.Duration * 1000f);
             args.Handled = true;
         }
-        #endregion
 
         private void HandleDeleteTrigger(EntityUid uid, DeleteOnTriggerComponent component, TriggerEvent args)
         {

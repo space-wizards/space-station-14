@@ -98,6 +98,13 @@
     sprite: Objects/Weapons/Grenades/supermattergrenade.rsi
   - type: OnUseTimerTrigger
     delay: 3
+  - type: PointLight
+    enabled: false
+    color: "#ffaa44"
+    energy: 8
+    radius: 6
+    softness: 1
+    offset: "0, 0"
   - type: Explosive
     explosionType: Default
     totalIntensity: 200
@@ -115,27 +122,49 @@
     maxRange: 8
     baseRadialAcceleration: 0
     gravPulsePeriod: 0.01
+  - type: SoundOnTrigger
+    removeOnTrigger: true
+    sound:
+      path: /Audio/Effects/Grenades/supermatter_start.ogg
+      volume: 5
   - type: AmbientSound
     enabled: False
     volume: -5
     range: 14
     sound:
-      path: /Audio/Effects/Grenades/Supermatter_Loop.ogg
-  - type: PointLight
-    enabled: false
-    color: "#ffaa44"
-    energy: 8
-    radius: 6
-    softness: 1
-    offset: "0, 0"
-  - type: SupermatterGrenade
+      path: /Audio/Effects/Grenades/supermatter_loop.ogg
+  - type: AnchorOnTrigger
+    removeOnTrigger: true
+  - type: SingularityDistortionTweakOnTrigger
+    removeOnTrigger: true
+    intensity: 100 
+  - type: GravityWellOnTrigger
+    removeOnTrigger: true
+    radialAcceleration: 145
+    tangentialAcceleration: 100
+  - type: PointLightEnableOnTrigger
+    removeOnTrigger: true
+  - type: TwoStagedGrenade
     explodeAfterGravityPull: True
-    timeTillExplosion: 8
-    distortionIntensity: 100
-    baseRadialAcceleration: 145
-    gravityPullStartSoundVolume: 10
-    gravityPullEndSoundVolume: 5
-    gravityPullLoopSoundOffset: 0.6
+    explossionDelay: 13.2
+    ambienceSoundOffset: 0.4
+    # componentsToAdd:
+    #   - ExplodeOnTriggerComponent
+    #   - AmbientSoundComponent
+    #     enabled: False
+    #     volume: -5
+    #     range: 14
+    #     sound:
+    #       path: /Audio/Effects/Grenades/supermatter_loop.ogg
+    #   - SoundOnTriggerComponent
+    #      sound:
+    #        path: /Audio/Effects/Grenades/supermatter_end.ogg
+    #        params:
+    #          volume: 5
+    endSound:
+      path: /Audio/Effects/Grenades/supermatter_end.ogg
+      params:
+        volume: 5
 
 - type: entity
   name: whitehole grenade
@@ -149,17 +178,25 @@
     maxRange: 10
   - type: AmbientSound
     sound:
-      path: /Audio/Effects/Grenades/Whitehole_Loop.ogg
+      path: /Audio/Effects/Grenades/whitehole_loop.ogg
   - type: PointLight
     color: "#ffffff"
-  - type: SupermatterGrenade
+  - type: SoundOnTrigger
+    removeOnTrigger: true
+    sound:
+      path: /Audio/Effects/Grenades/whitehole_start.ogg
+      volume: 5
+  - type: TwoStagedGrenade
     explodeAfterGravityPull: False
-    gravityPullStartSoundVolume: 5
-    gravityPullLoopSoundOffset: 0.8
-    gravityPullStartSound:
-      path: /Audio/Effects/Grenades/Whitehole_Start.ogg
-    distortionIntensity: -100
-    baseRadialAcceleration: -180
+    explossionDelay: 13.6
+    ambienceSoundOffset: 0.8
+  - type: SingularityDistortionTweakOnTrigger
+    removeOnTrigger: true
+    intensity: -100 
+  - type: GravityWellOnTrigger
+    removeOnTrigger: true
+    radialAcceleration: -180
+
 
 - type: entity
   name: the nuclear option
