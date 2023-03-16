@@ -5,7 +5,7 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/tgstation/tgstation/commit/53d1f1477d22a11a99c6c6924977cd431075761b Changed by Alekshhh",
+  "copyright": "Taken from https://github.com/tgstation/tgstation/blob/e9d1248bc9548ab18f3fcf967e0d9dfb303fe4ad/icons/mob/simple/animal.dmi",
   "states": [
     {
       "name": "dead"
