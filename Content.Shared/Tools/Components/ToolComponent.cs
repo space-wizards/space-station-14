@@ -65,6 +65,7 @@ namespace Content.Shared.Tools.Components
 
         public ToolUseFinishAttemptEvent(float fuel, EntityUid user)
         {
+            User = user;
             Fuel = fuel;
         }
     }
