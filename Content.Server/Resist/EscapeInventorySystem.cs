@@ -102,8 +102,4 @@ public sealed class EscapeInventorySystem : EntitySystem
         if (component.DoAfter != null)
             _doAfterSystem.Cancel(component.DoAfter);
     }
-
-    private sealed class EscapeInventoryEvent : SimpleDoAfterEvent
-    {
-    }
 }

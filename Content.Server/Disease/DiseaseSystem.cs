@@ -479,10 +479,6 @@ namespace Content.Server.Disease
             EntityManager.DeleteEntity(uid);
             args.Handled = true;
         }
-
-        private sealed class VaccineDoAfterEvent : SimpleDoAfterEvent
-        {
-        }
     }
 
     /// <summary>

@@ -428,9 +428,5 @@ namespace Content.Server.Light.EntitySystems
             args.Affected = true;
             TryDestroyBulb(uid, component);
         }
-
-        private sealed class PoweredLightDoAfterEvent : SimpleDoAfterEvent
-        {
-        }
     }
 }

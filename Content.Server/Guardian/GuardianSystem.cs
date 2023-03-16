@@ -333,9 +333,5 @@ namespace Content.Server.Guardian
             _popupSystem.PopupEntity(Loc.GetString("guardian-entity-recall"), host);
             guardianComponent.GuardianLoose = false;
         }
-
-        private sealed class GuardianCreatorDoAfterEvent : SimpleDoAfterEvent
-        {
-        }
     }
 }

@@ -588,8 +588,4 @@ namespace Content.Server.Nuke
     {
 
     }
-
-    public sealed class NukeDisarmDoAfterEvent : SimpleDoAfterEvent
-    {
-    }
 }

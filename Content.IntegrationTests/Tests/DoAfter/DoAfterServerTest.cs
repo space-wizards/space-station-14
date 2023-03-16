@@ -63,6 +63,9 @@ namespace Content.IntegrationTests.Tests.DoAfter
                 {
                     foreach (var type in refMan.GetAllChildren<DoAfterEvent>(true))
                     {
+                        if (type.IsAbstract || type == typeof(TestDoAfterEvent))
+                            continue;
+
                         Assert.That(type.HasCustomAttribute<NetSerializableAttribute>()
                                     && type.HasCustomAttribute<SerializableAttribute>(),
                             $"{nameof(DoAfterEvent)} is not NetSerializable. Event: {type.Name}");

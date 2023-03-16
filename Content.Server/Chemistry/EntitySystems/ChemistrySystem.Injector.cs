@@ -418,7 +418,4 @@ public sealed partial class ChemistrySystem
         AfterDraw(component, injector);
     }
 
-    private sealed class InjectorDoAfterEvent : SimpleDoAfterEvent
-    {
-    }
 }

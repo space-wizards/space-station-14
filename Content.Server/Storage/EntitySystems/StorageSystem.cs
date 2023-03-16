@@ -283,7 +283,7 @@ namespace Content.Server.Storage.EntitySystems
             var xformQuery = GetEntityQuery<TransformComponent>();
             xformQuery.TryGetComponent(uid, out var xform);
 
-            foreach (var entity in args.ValidStorables)
+            foreach (var entity in args.Entities)
             {
                 // Check again, situation may have changed for some entities, but we'll still pick up any that are valid
                 if (_containerSystem.IsEntityInContainer(entity)
@@ -654,24 +654,6 @@ namespace Content.Server.Storage.EntitySystems
                 return;
 
             _popupSystem.PopupEntity(Loc.GetString(message), player, player);
-        }
-
-        private sealed class AreaPickupDoAfterEvent : DoAfterEvent
-        {
-            [DataField("validStorables", required: true)]
-            public readonly IReadOnlyList<EntityUid> ValidStorables = default!;
-
-            private AreaPickupDoAfterEvent()
-            {
-            }
-
-            public AreaPickupDoAfterEvent(List<EntityUid> storables)
-            {
-                ValidStorables = storables;
-            }
-
-            // Relying on people not somehow modifying the IReadOnlyList.
-            public override DoAfterEvent Clone() => this;
         }
     }
 }

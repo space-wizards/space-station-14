@@ -141,14 +141,6 @@ public sealed class WeldableSystem : EntitySystem
             return;
         component.WeldingTime = time;
     }
-
-    /// <summary>
-    ///     Raised after welding do_after has finished. It doesn't guarantee success,
-    ///     use <see cref="WeldableChangedEvent"/> to get updated status.
-    /// </summary>
-    private sealed class WeldFinishedEvent : SimpleDoAfterEvent
-    {
-    }
 }
 
 /// <summary>

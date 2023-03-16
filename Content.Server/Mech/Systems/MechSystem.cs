@@ -439,27 +439,4 @@ public sealed class MechSystem : SharedMechSystem
         args.Handled = true;
     }
     #endregion
-
-    /// <summary>
-    ///     Event raised when the battery is successfully removed from the mech,
-    ///     on both success and failure
-    /// </summary>
-    private sealed class RemoveBatteryEvent : SimpleDoAfterEvent
-    {
-    }
-
-    /// <summary>
-    ///     Event raised when a person enters a mech, on both success and failure
-    /// </summary>
-    private sealed class MechEntryEvent : SimpleDoAfterEvent
-    {
-    }
-
-    /// <summary>
-    ///     Event raised when a person removes someone from a mech,
-    ///     on both success and failure
-    /// </summary>
-    private sealed class MechExitEvent : SimpleDoAfterEvent
-    {
-    }
 }

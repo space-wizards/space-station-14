@@ -233,9 +233,5 @@ namespace Content.Server.Forensics
 
             UpdateUserInterface(uid, component);
         }
-
-        private sealed class ForensicScannerDoAfterEvent : SimpleDoAfterEvent
-        {
-        }
     }
 }

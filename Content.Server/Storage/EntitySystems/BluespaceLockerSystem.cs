@@ -391,8 +391,4 @@ public sealed class BluespaceLockerSystem : EntitySystem
                 break;
         }
     }
-
-    private sealed class BluespaceLockerDoAfterEvent : SimpleDoAfterEvent
-    {
-    }
 }

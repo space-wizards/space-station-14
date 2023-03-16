@@ -88,10 +88,6 @@ public sealed class GatherableSystem : EntitySystem
         }
         args.Handled = true;
     }
-
-    private sealed class GatherableDoAfterEvent : SimpleDoAfterEvent
-    {
-    }
 }
 
 

@@ -84,8 +84,4 @@ public sealed class ResistLockerSystem : EntitySystem
 
         args.Handled = true;
     }
-
-    private sealed class ResistLockerDoAfterEvent : SimpleDoAfterEvent
-    {
-    }
 }

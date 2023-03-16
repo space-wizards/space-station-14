@@ -211,8 +211,4 @@ public sealed class StickySystem : EntitySystem
         component.StuckTo = null;
         RaiseLocalEvent(uid, new EntityUnstuckEvent(target, user), true);
     }
-
-    private sealed class StickyDoAfterEvent : SimpleDoAfterEvent
-    {
-    }
 }

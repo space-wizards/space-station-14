@@ -156,8 +156,4 @@ public sealed partial class AnomalySystem
         //The timer at the end here is actually added in the ui itself.
         return msg;
     }
-
-    private sealed class ScannerDoAfterEvent : SimpleDoAfterEvent
-    {
-    }
 }

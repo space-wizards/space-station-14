@@ -120,8 +120,4 @@ public sealed class HandTeleporterSystem : EntitySystem
             _audio.PlayPvs(component.ClearPortalsSound, uid);
         }
     }
-
-    private sealed class TeleporterDoAfterEvent : SimpleDoAfterEvent
-    {
-    }
 }

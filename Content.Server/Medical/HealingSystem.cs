@@ -66,9 +66,11 @@ public sealed class HealingSystem : EntitySystem
         _stacks.Use(args.Used.Value, 1);
 
         if (uid != args.User)
-            _adminLogger.Add(LogType.Healed, $"{EntityManager.ToPrettyString(args.User):user} healed {EntityManager.ToPrettyString(uid):target} for {total:damage} damage");
+            _adminLogger.Add(LogType.Healed,
+                $"{EntityManager.ToPrettyString(args.User):user} healed {EntityManager.ToPrettyString(uid):target} for {total:damage} damage");
         else
-            _adminLogger.Add(LogType.Healed, $"{EntityManager.ToPrettyString(args.User):user} healed themselves for {total:damage} damage");
+            _adminLogger.Add(LogType.Healed,
+                $"{EntityManager.ToPrettyString(args.User):user} healed themselves for {total:damage} damage");
 
         _audio.PlayPvs(healing.HealingEndSound, uid, AudioHelpers.WithVariation(0.125f, _random).WithVolume(-5f));
 
@@ -101,7 +103,8 @@ public sealed class HealingSystem : EntitySystem
         if (targetDamage.TotalDamage == 0)
             return false;
 
-        if (component.DamageContainerID is not null && !component.DamageContainerID.Equals(targetDamage.DamageContainerID))
+        if (component.DamageContainerID is not null &&
+            !component.DamageContainerID.Equals(targetDamage.DamageContainerID))
             return false;
 
         if (user != target && !_interactionSystem.InRangeUnobstructed(user, target, popup: true))
@@ -111,7 +114,8 @@ public sealed class HealingSystem : EntitySystem
             return false;
 
         if (component.HealingBeginSound != null)
-            _audio.PlayPvs(component.HealingBeginSound, uid, AudioHelpers.WithVariation(0.125f, _random).WithVolume(-5f));
+            _audio.PlayPvs(component.HealingBeginSound, uid,
+                AudioHelpers.WithVariation(0.125f, _random).WithVolume(-5f));
 
         var isNotSelf = user != target;
 
@@ -119,15 +123,16 @@ public sealed class HealingSystem : EntitySystem
             ? component.Delay
             : component.Delay * GetScaledHealingPenalty(user, component);
 
-        var doAfterEventArgs = new DoAfterArgs(user, delay, new HealingDoAfterEvent(), target, target: target, used: uid)
-        {
-            //Raise the event on the target if it's not self, otherwise raise it on self.
-            BreakOnUserMove = true,
-            BreakOnTargetMove = true,
-            // Didn't break on damage as they may be trying to prevent it and
-            // not being able to heal your own ticking damage would be frustrating.
-            NeedHand = true,
-        };
+        var doAfterEventArgs =
+            new DoAfterArgs(user, delay, new HealingDoAfterEvent(), target, target: target, used: uid)
+            {
+                //Raise the event on the target if it's not self, otherwise raise it on self.
+                BreakOnUserMove = true,
+                BreakOnTargetMove = true,
+                // Didn't break on damage as they may be trying to prevent it and
+                // not being able to heal your own ticking damage would be frustrating.
+                NeedHand = true,
+            };
 
         _doAfter.TryStartDoAfter(doAfterEventArgs);
         return true;
@@ -142,7 +147,8 @@ public sealed class HealingSystem : EntitySystem
     public float GetScaledHealingPenalty(EntityUid uid, HealingComponent component)
     {
         var output = component.Delay;
-        if (!TryComp<MobThresholdsComponent>(uid, out var mobThreshold) || !TryComp<DamageableComponent>(uid, out var damageable))
+        if (!TryComp<MobThresholdsComponent>(uid, out var mobThreshold) ||
+            !TryComp<DamageableComponent>(uid, out var damageable))
             return output;
         if (!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out var amount, mobThreshold))
             return 1;
@@ -151,9 +157,5 @@ public sealed class HealingSystem : EntitySystem
         //basically make it scale from 1 to the multiplier.
         var modifier = percentDamage * (component.SelfHealPenaltyMultiplier - 1) + 1;
         return Math.Max(modifier, 1);
-    }
-
-    private sealed class HealingDoAfterEvent : SimpleDoAfterEvent
-    {
     }
 }

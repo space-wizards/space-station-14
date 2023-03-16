@@ -114,22 +114,5 @@ namespace Content.Server.AirlockPainter
             _userInterfaceSystem.TrySetUiState(uid, AirlockPainterUiKey.Key,
                 new AirlockPainterBoundUserInterfaceState(component.Index));
         }
-
-        private sealed class AirlockPainterDoAfterEvent : DoAfterEvent
-        {
-            [DataField("sprite", required: true)]
-            public readonly string Sprite = default!;
-
-            private AirlockPainterDoAfterEvent()
-            {
-            }
-
-            public AirlockPainterDoAfterEvent(string sprite)
-            {
-                Sprite = sprite;
-            }
-
-            public override DoAfterEvent Clone() => this;
-        }
     }
 }

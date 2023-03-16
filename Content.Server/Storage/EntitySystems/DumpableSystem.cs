@@ -151,9 +151,5 @@ namespace Content.Server.Storage.EntitySystems
                 }
             }
         }
-
-        private sealed class DumpableDoAfterEvent : SimpleDoAfterEvent
-        {
-        }
     }
 }

@@ -232,10 +232,6 @@ namespace Content.Server.Wieldable
 
             args.BonusDamage += component.BonusDamage;
         }
-
-        private sealed class WieldableDoAfterEvent : SimpleDoAfterEvent
-        {
-        }
     }
 
     #region Events

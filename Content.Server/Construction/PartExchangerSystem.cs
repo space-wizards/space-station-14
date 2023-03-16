@@ -115,7 +115,4 @@ public sealed class PartExchangerSystem : EntitySystem
         });
     }
 
-    private sealed class ExchangerDoAfterEvent : SimpleDoAfterEvent
-    {
-    }
 }

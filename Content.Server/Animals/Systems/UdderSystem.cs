@@ -122,9 +122,5 @@ namespace Content.Server.Animals.Systems
             };
             args.Verbs.Add(verb);
         }
-
-        private sealed class MilkingDoAfterEvent : SimpleDoAfterEvent
-        {
-        }
     }
 }

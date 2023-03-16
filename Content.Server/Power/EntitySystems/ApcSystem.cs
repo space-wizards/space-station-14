@@ -247,10 +247,6 @@ namespace Content.Server.Power.EntitySystems
             _appearance.SetData(uid, ApcVisuals.PanelState, GetPanelState(apc), appearance);
         }
 
-        private sealed class ApcToolFinishedEvent : SimpleDoAfterEvent
-        {
-        }
-
         private void OnExamine(EntityUid uid, ApcComponent component, ExaminedEvent args)
         {
             args.PushMarkup(Loc.GetString(component.IsApcOpen

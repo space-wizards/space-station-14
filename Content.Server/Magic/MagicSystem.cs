@@ -122,10 +122,6 @@ public sealed class MagicSystem : EntitySystem
         _doAfter.TryStartDoAfter(doAfterEventArgs);
     }
 
-    private sealed class SpellbookDoAfterEvent : SimpleDoAfterEvent
-    {
-    }
-
     #region Spells
 
     /// <summary>

@@ -259,8 +259,4 @@ public sealed class SpillableSystem : EntitySystem
 
         args.Handled = true;
     }
-
-    private sealed class SpillDoAfterEvent : SimpleDoAfterEvent
-    {
-    }
 }

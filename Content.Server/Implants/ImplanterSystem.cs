@@ -134,12 +134,4 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
 
         args.Handled = true;
     }
-
-    private sealed class ImplantEvent : SimpleDoAfterEvent
-    {
-    }
-
-    private sealed class DrawEvent : SimpleDoAfterEvent
-    {
-    }
 }

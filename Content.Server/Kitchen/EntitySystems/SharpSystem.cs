@@ -161,8 +161,4 @@ public sealed class SharpSystem : EntitySystem
 
         args.Verbs.Add(verb);
     }
-
-    private sealed class SharpDoAfterEvent : SimpleDoAfterEvent
-    {
-    }
 }

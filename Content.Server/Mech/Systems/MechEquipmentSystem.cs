@@ -65,8 +65,4 @@ public sealed class MechEquipmentSystem : EntitySystem
 
         args.Handled = true;
     }
-
-    private sealed class InsertEquipmentEvent : SimpleDoAfterEvent
-    {
-    }
 }

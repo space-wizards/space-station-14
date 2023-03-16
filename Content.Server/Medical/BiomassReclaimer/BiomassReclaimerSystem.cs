@@ -253,9 +253,5 @@ namespace Content.Server.Medical.BiomassReclaimer
 
             return true;
         }
-
-        private sealed class ReclaimerDoAfterEvent : SimpleDoAfterEvent
-        {
-        }
     }
 }

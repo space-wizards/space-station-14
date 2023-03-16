@@ -178,8 +178,4 @@ public sealed class MechGrabberSystem : EntitySystem
 
         args.Handled = true;
     }
-
-    private sealed class GrabberDoAfterEvent : SimpleDoAfterEvent
-    {
-    }
 }

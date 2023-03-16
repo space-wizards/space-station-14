@@ -324,12 +324,4 @@ public sealed partial class RevenantSystem
             _emag.DoEmagEffect(ent, ent); //it emags itself. spooky.
         }
     }
-
-    private sealed class SoulEvent : SimpleDoAfterEvent
-    {
-    }
-
-    private sealed class HarvestEvent : SimpleDoAfterEvent
-    {
-    }
 }

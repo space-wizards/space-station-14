@@ -736,10 +736,6 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             UpdateVisualState(uid, component);
         }
-
-        private sealed class DisposalDoAfterEvent : SimpleDoAfterEvent
-        {
-        }
     }
 
     /// <summary>

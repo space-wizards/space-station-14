@@ -379,9 +379,5 @@ namespace Content.Server.Dragon
                 BreakOnUserMove = true,
             });
         }
-
-        private sealed class DragonDevourDoAfterEvent : SimpleDoAfterEvent
-        {
-        }
     }
 }

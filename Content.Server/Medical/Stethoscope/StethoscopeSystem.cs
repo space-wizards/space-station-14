@@ -155,10 +155,6 @@ namespace Content.Server.Medical
             };
             return msg;
         }
-
-        private sealed class StethoscopeDoAfterEvent : SimpleDoAfterEvent
-        {
-        }
     }
 
     public sealed class StethoscopeActionEvent : EntityTargetActionEvent {}

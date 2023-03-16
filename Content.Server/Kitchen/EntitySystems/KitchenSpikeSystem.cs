@@ -263,9 +263,5 @@ namespace Content.Server.Kitchen.EntitySystems
 
             return true;
         }
-
-        private sealed class SpikeDoAfterEvent : SimpleDoAfterEvent
-        {
-        }
     }
 }

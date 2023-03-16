@@ -105,9 +105,5 @@ namespace Content.Server.Medical
             OpenUserInterface(user, healthAnalyzer);
             _uiSystem.SendUiMessage(healthAnalyzer.UserInterface, new HealthAnalyzerScannedUserMessage(target));
         }
-
-        private sealed class HealthAnalyzerDoAfterEvent : SimpleDoAfterEvent
-        {
-        }
     }
 }

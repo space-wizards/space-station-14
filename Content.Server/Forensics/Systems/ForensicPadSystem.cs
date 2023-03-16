@@ -4,8 +4,8 @@ using Content.Shared.Inventory;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Shared.DoAfter;
+using Content.Shared.Forensics;
 using Content.Shared.IdentityManagement;
-using Robust.Shared.Serialization;
 
 namespace Content.Server.Forensics
 {
@@ -110,23 +110,6 @@ namespace Content.Server.Forensics
             padComponent.Used = true;
 
             args.Handled = true;
-        }
-
-        private sealed class ForensicPadDoAfterEvent : DoAfterEvent
-        {
-            [DataField("sample", required: true)]
-            public readonly string Sample = default!;
-
-            private ForensicPadDoAfterEvent()
-            {
-            }
-
-            public ForensicPadDoAfterEvent(string sample)
-            {
-                Sample = sample;
-            }
-
-            public override DoAfterEvent Clone() => this;
         }
     }
 }

@@ -261,8 +261,4 @@ public sealed class InternalsSystem : EntitySystem
 
         return null;
     }
-
-    private sealed class InternalsDoAfterEvent : SimpleDoAfterEvent
-    {
-    }
 }

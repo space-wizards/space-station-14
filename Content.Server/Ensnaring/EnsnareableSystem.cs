@@ -52,8 +52,4 @@ public sealed partial class EnsnareableSystem : SharedEnsnareableSystem
 
         args.Handled = true;
     }
-
-    private sealed class EnsnareableDoAfterEvent : SimpleDoAfterEvent
-    {
-    }
 }
