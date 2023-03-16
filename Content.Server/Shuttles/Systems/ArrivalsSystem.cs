@@ -37,6 +37,7 @@ public sealed class ArrivalsSystem : EntitySystem
     /// </summary>
     private bool _enabled;
 
+    // TODO: CVar
     /// <summary>
     /// Also need to factor in FTL time.
     /// </summary>
