@@ -1,7 +1,7 @@
-- type: vendingMachineInventory
-  id: ShamblersJuiceInventory
+﻿- type: vendingMachineInventory
+  id: StarkistInventory
   startingInventory:
-    DrinkShamblersJuiceCan: 10
+    DrinkStarkistCan: 8
     DrinkGrapeCan: 2
     DrinkRootBeerCan: 2
     DrinkIcedTeaCan: 2

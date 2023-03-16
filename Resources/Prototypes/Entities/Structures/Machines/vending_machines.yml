@@ -375,6 +375,8 @@
   name: Space Cola Vendor
   description: It vends cola, in space.
   components:
+  - type: VendingMachine
+    pack: SpaceColaInventory
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/cola-red.rsi
     layers:
@@ -396,6 +398,8 @@
   name: Space-Up! Vendor
   description: Indulge in an explosion of flavor.
   components:
+  - type: VendingMachine
+    pack: SpaceUpInventory
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/spaceup.rsi
     layers:
@@ -416,6 +420,8 @@
   id: VendingMachineSoda
   suffix: Soda
   components:
+  - type: VendingMachine
+    pack: SodaInventory
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/soda.rsi
     layers:
@@ -437,6 +443,8 @@
   name: Star-kist Vendor
   description: The taste of a star in liquid form.
   components:
+  - type: VendingMachine
+    pack: StarkistInventory
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/starkist.rsi
     layers:

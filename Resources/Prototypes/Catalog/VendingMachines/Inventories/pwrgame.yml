@@ -1,14 +1,10 @@
 - type: vendingMachineInventory
   id: PwrGameInventory
   startingInventory:
-    DrinkColaCan: 2
-    DrinkEnergyDrinkCan: 2
-    DrinkGrapeCan: 3
+    DrinkPwrGameCan: 5
+    DrinkEnergyDrinkCan: 5
+    DrinkGrapeCan: 2
     DrinkRootBeerCan: 2
     DrinkIcedTeaCan: 2
     DrinkLemonLimeCan: 2
-    DrinkSpaceMountainWindCan: 2
-    DrinkSpaceUpCan: 2
-    DrinkStarkistCan: 2
     DrinkFourteenLokoCan: 2
-    DrinkPwrGameCan: 2

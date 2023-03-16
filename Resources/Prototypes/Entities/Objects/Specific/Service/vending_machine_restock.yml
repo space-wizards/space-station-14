@@ -295,6 +295,10 @@
     - BodaInventory
     - PwrGameInventory
     - ShamblersJuiceInventory
+    - StarkistInventory
+    - SpaceUpInventory
+    - SpaceColaInventory
+    - SodaInventory
   - type: Sprite
     layers:
     - state: base
