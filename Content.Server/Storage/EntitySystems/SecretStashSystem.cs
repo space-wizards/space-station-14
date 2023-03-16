@@ -28,7 +28,7 @@ namespace Content.Server.Storage.EntitySystems
 
         private void OnDestroyed(EntityUid uid, SecretStashComponent component, DestructionEventArgs args)
         {
-            _containerSystem.EmptyContainer(component.ItemContainer, attachToGridOrMap: true);
+            _containerSystem.EmptyContainer(component.ItemContainer);
         }
 
         /// <summary>
