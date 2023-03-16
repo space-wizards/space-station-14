@@ -156,7 +156,7 @@
   name: nuclear authentication codes
   components:
   - type: NukeCodePaper
-    getAllCodes: true
+    allNukesAvailable: true
   - type: Paper
 
 - type: entity
@@ -165,7 +165,6 @@
   suffix: Station Only
   components:
   - type: NukeCodePaper
-    getAllCodes: false
 
 - type: entity
   name: pen

@@ -35,7 +35,7 @@ namespace Content.Server.Nuke
             if (!Resolve(uid, ref component))
                 return;
 
-            if (TryGetRelativeNukeCode(uid, out var paperContent, station, getAllCodes: component.GetAllCodes))
+            if (TryGetRelativeNukeCode(uid, out var paperContent, station, onlyCurrentStation: component.AllNukesAvailable))
             {
                 _paper.SetContent(uid, paperContent);
             }
@@ -86,7 +86,7 @@ namespace Content.Server.Nuke
             [NotNullWhen(true)] out string? nukeCode,
             EntityUid? station = null,
             TransformComponent? transform = null,
-            bool getAllCodes = false)
+            bool onlyCurrentStation = false)
         {
             nukeCode = null;
             if (!Resolve(uid, ref transform))
@@ -102,7 +102,7 @@ namespace Content.Server.Nuke
             _random.Shuffle(query);
             foreach (var nuke in query)
             {
-                if (!getAllCodes &&
+                if (!onlyCurrentStation &&
                     (owningStation == null &&
                     nuke.OriginMapGrid != (transform.MapID, transform.GridUid) ||
                     nuke.OriginStation != owningStation))

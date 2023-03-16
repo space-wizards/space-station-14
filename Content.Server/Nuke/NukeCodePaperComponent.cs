@@ -8,10 +8,11 @@ namespace Content.Server.Nuke
     public sealed class NukeCodePaperComponent : Component
     {
         /// <summary>
-        /// Whether or not the paper contains the codes for only
-        /// the local station nuke, or for all nukes that exist.
+        /// Whether or not paper will contain a code for a nuke on the same
+        /// station as the paper, or if it will get a random code from all
+        /// possible nukes.
         /// </summary>
-        [DataField("getAllCodes")]
-        public bool GetAllCodes;
+        [DataField("allNukesAvailable")]
+        public bool AllNukesAvailable;
     }
 }
