@@ -33,6 +33,8 @@ namespace Content.Server.Paper
             SubscribeLocalEvent<PaperComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<PaperComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<PaperComponent, PaperInputTextMessage>(OnInputTextMessage);
+
+            SubscribeLocalEvent<ActivateOnPaperOpenedComponent, PaperWriteEvent>(OnWrittenWith);
         }
 
         private void OnInit(EntityUid uid, PaperComponent paperComp, ComponentInit args)
