@@ -92,7 +92,7 @@
   - type: Friends
   - type: PettableFriend
     successString: petting-success-dehydrated-carp
-    failureString: petting-failure-generic
+    failureString: petting-failure-dehydrated-carp
   - type: EmitSoundOnUse
     handle: false
     sound:
