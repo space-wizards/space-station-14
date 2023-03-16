@@ -39,7 +39,7 @@ flavor-base-fizzy = шипуче
 flavor-base-shocking = шокирующе
 flavor-base-cheap = дёшево
 flavor-base-piquant = пикантно
-flavor-base-sharp = остро
+flavor-base-sharp = резко
 # lmao
 flavor-base-terrible = ужасно
 
