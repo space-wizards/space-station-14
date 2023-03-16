@@ -38,6 +38,13 @@
     stackType: Cardboard
   - type: Sprite
     state: cardboard_3
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - cardboard
+      - cardboard_2
+      - cardboard_3
 
 - type: entity
   parent: MaterialCardboard
