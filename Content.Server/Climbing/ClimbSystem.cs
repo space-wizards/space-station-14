@@ -1,3 +1,4 @@
+using System.Diagnostics.Tracing;
 using Content.Server.Body.Systems;
 using Content.Server.Climbing.Components;
 using Content.Server.DoAfter;
@@ -114,7 +115,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         if (_bonkSystem.TryBonk(entityToMove, climbable))
             return;
 
-        var args = new DoAfterArgs(user, component.ClimbDelay, new ClimbDoAfterEvent(), climbable, target: climbable, used: entityToMove)
+        var args = new DoAfterArgs(user, component.ClimbDelay, new ClimbDoAfterEvent(), entityToMove, target: climbable, used: entityToMove)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
@@ -431,9 +432,6 @@ public sealed class ClimbSystem : SharedClimbSystem
         _fixtureRemoveQueue.Clear();
     }
 
-    private sealed class ClimbDoAfterEvent : SimpleDoAfterEvent
-    {
-    }
 }
 
 /// <summary>
