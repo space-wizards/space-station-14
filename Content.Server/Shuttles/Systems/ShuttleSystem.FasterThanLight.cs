@@ -40,7 +40,6 @@ public sealed partial class ShuttleSystem
     private const float DefaultTravelTime = 30f;
     private const float DefaultArrivalTime = 5f;
     private const float FTLCooldown = 30f;
-
     private const float ShuttleFTLRange = 100f;
 
     /// <summary>

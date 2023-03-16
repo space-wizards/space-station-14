@@ -1056,6 +1056,12 @@ namespace Content.Shared.CCVar
             CVarDef.Create("shuttle.camera_rotation_locked", false, CVar.REPLICATED);
 
         /// <summary>
+        /// Whether the arrivals shuttle is enabled.
+        /// </summary>
+        public static readonly CVarDef<bool> ArrivalsShuttles =
+            CVarDef.Create("shuttle.arrivals", true, CVar.SERVERONLY);
+
+        /// <summary>
         /// Whether cargo shuttles are enabled.
         /// </summary>
         public static readonly CVarDef<bool> CargoShuttles =
