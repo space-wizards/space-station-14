@@ -117,8 +117,10 @@
   id: WeaponImprovisedPneumaticCannonAdmeme
   suffix: Admeme
   components:
+  - type: Item
+    size: 9999
   - type: Storage
-    capacity: 1000
+    capacity: 9999
   - type: PneumaticCannon
     gasUsage: 0
   - type: Gun
