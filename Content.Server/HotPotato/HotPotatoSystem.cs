@@ -13,15 +13,16 @@ public sealed class HotPotatoSystem : SharedHotPotatoSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<HotPotatoComponent, MeleeHitEvent>(TransferItem);
+        SubscribeLocalEvent<HotPotatoComponent, MeleeHitEvent>(OnMeleeHit);
         SubscribeLocalEvent<HotPotatoComponent, ActiveTimerTriggerEvent>(OnActiveTimer);
     }
 
-    private void TransferItem(EntityUid uid, HotPotatoComponent comp, MeleeHitEvent args)
+    private void OnMeleeHit(EntityUid uid, HotPotatoComponent comp, MeleeHitEvent args)
     {
         comp.CanTransfer = true;
         TryTransferItem(uid, args);
         comp.CanTransfer = !HasComp<ActiveHotPotatoComponent>(uid);
+        Dirty(comp);
     }
 
     private void TryTransferItem(EntityUid uid, MeleeHitEvent args)
