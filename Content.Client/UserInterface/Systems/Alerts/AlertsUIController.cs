@@ -20,10 +20,22 @@ public sealed class AlertsUIController : UIController, IOnStateEntered<GameplayS
 
         var gameplayStateLoad = UIManager.GetUIController<GameplayStateLoadController>();
         gameplayStateLoad.OnScreenLoad += OnScreenLoad;
+        gameplayStateLoad.OnScreenUnload += OnScreenUnload;
+    }
+
+    private void OnScreenUnload()
+    {
+        var widget = UI;
+        if (widget != null)
+            widget.AlertPressed -= OnAlertPressed;
     }
 
     private void OnScreenLoad()
     {
+        var widget = UI;
+        if (widget != null)
+            widget.AlertPressed += OnAlertPressed;
+
         SyncAlerts();
     }
 
@@ -43,14 +55,6 @@ public sealed class AlertsUIController : UIController, IOnStateEntered<GameplayS
         {
             UI?.SyncControls(system, system.AlertOrder, e);
         }
-
-        // The UI can change underneath us if the user switches between HUD layouts
-        // So ensure we're subscribed to the AlertPressed callback.
-        if (UI != null)
-        {
-            UI.AlertPressed -= OnAlertPressed; // Ensure we don't hook into the callback twice
-            UI.AlertPressed += OnAlertPressed;
-        }
     }
 
     public void OnSystemLoaded(ClientAlertsSystem system)
@@ -65,13 +69,9 @@ public sealed class AlertsUIController : UIController, IOnStateEntered<GameplayS
         system.ClearAlerts -= SystemOnClearAlerts;
     }
 
+
     public void OnStateEntered(GameplayState state)
     {
-        if (UI != null)
-        {
-            UI.AlertPressed += OnAlertPressed;
-        }
-
         // initially populate the frame if system is available
         SyncAlerts();
     }

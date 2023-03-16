@@ -31,8 +31,6 @@ public sealed class CuffableSystem : SharedCuffableSystem
         if (args.Current is not HandcuffComponentState state)
             return;
 
-        component.Cuffing = state.Cuffing;
-
         if (state.IconState == string.Empty)
             return;
 
@@ -48,7 +46,6 @@ public sealed class CuffableSystem : SharedCuffableSystem
             return;
 
         component.CanStillInteract = cuffState.CanStillInteract;
-        component.Uncuffing = cuffState.Uncuffing;
         _actionBlocker.UpdateCanMove(uid);
 
         var ev = new CuffedStateChangeEvent();

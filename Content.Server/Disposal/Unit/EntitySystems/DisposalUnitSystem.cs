@@ -494,10 +494,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 BreakOnDamage = true,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
-                NeedHand = false,
-                RaiseOnTarget = false,
-                RaiseOnUser = false,
-                RaiseOnUsed = true,
+                NeedHand = false
             };
 
             _doAfterSystem.TryStartDoAfter(doAfterArgs);
