@@ -35,9 +35,6 @@ public sealed class TwoStagedGrenadeSystem : EntitySystem
             else
                 EnsureComp<DeleteOnTriggerComponent>(uid);
         }
-        var sound = EnsureComp<SoundOnTriggerComponent>(uid);
-        if (component.EndSound != null)
-            sound.Sound = component.EndSound;
     }
 
     public override void Update(float frameTime)
@@ -58,6 +55,9 @@ public sealed class TwoStagedGrenadeSystem : EntitySystem
             if (!component.IsSecondStageEnded && component.TimeOfExplosion <= _timing.CurTime)
             {
                 component.IsSecondStageEnded = true;
+                var sound = EnsureComp<SoundOnTriggerComponent>(uid);
+                if (component.EndSound != null)
+                    sound.Sound = component.EndSound;
                 _triggerSystem.Trigger(uid);
             }
         }

@@ -141,7 +141,6 @@
   - type: GravityWellOnTrigger
     removeOnTrigger: true
     radialAcceleration: 145
-    tangentialAcceleration: 100
   - type: PointLightEnableOnTrigger
     removeOnTrigger: true
   - type: TwoStagedGrenade
@@ -190,7 +189,7 @@
     explodeAfterGravityPull: False
     explossionDelay: 13.6
     ambienceSoundOffset: 0.8
-  - type: SingularityDistortionTweakOnTrigger
+  - type: SingularityDistortionOnTrigger
     removeOnTrigger: true
     intensity: -100 
   - type: GravityWellOnTrigger
