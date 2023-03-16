@@ -13,6 +13,13 @@
   maxCount: 30
 
 - type: stack
+  id: Cardboard
+  name: cardboard
+  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: cardboard }
+  spawn: MaterialCardboard1
+  maxCount: 30
+
+- type: stack
   id: Cloth
   name: cloth
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: cloth }
