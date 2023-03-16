@@ -847,6 +847,7 @@
 - type: entity
   parent: VendingMachineSnack
   id: VendingMachineSnackBlue
+  suffix: Blue
   components:
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/snack-blue.rsi
@@ -866,6 +867,7 @@
 - type: entity
   parent: VendingMachineSnack
   id: VendingMachineSnackOrange
+  suffix: Orange
   components:
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/snack-orange.rsi
@@ -885,6 +887,7 @@
 - type: entity
   parent: VendingMachineSnack
   id: VendingMachineSnackGreen
+  suffix: Green
   components:
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/snack-green.rsi
@@ -904,6 +907,7 @@
 - type: entity
   parent: VendingMachineSnack
   id: VendingMachineSnackTeal
+  suffix: Teal
   components:
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/snack-teal.rsi
