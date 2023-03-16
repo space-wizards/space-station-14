@@ -6,6 +6,8 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Tools.Systems;
 
@@ -14,12 +16,14 @@ public sealed class WeldableSystem : EntitySystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<WeldableComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<WeldableComponent, WeldFinishedEvent>(OnWeldFinished);
+        SubscribeLocalEvent<LayerChangeOnWeldComponent, WeldableChangedEvent>(OnWeldChanged);
         SubscribeLocalEvent<WeldableComponent, ExaminedEvent>(OnExamine);
     }
 
@@ -87,6 +91,26 @@ public sealed class WeldableSystem : EntitySystem
 
         // Log success
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):user} {(!component.IsWelded ? "un" : "")}welded {ToPrettyString(uid):target}");
+    }
+
+    private void OnWeldChanged(EntityUid uid, LayerChangeOnWeldComponent component, WeldableChangedEvent args)
+    {
+        if (!TryComp<FixturesComponent>(uid, out var fixtures))
+            return;
+
+        foreach (var fixture in fixtures.Fixtures.Values)
+        {
+            switch (args.IsWelded)
+            {
+                case true when fixture.CollisionLayer == (int) component.UnWeldedLayer:
+                    _physics.SetCollisionLayer(uid, fixture, (int) component.WeldedLayer);
+                    break;
+
+                case false when fixture.CollisionLayer == (int) component.WeldedLayer:
+                    _physics.SetCollisionLayer(uid, fixture, (int) component.UnWeldedLayer);
+                    break;
+            }
+        }
     }
 
     private void UpdateAppearance(EntityUid uid, WeldableComponent? component = null)

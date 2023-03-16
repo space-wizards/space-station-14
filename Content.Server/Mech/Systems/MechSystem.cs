@@ -87,7 +87,7 @@ public sealed class MechSystem : SharedMechSystem
             var doAfterEventArgs = new DoAfterArgs(args.User, component.BatteryRemovalDelay, new RemoveBatteryEvent(), uid, target: uid, used: args.Target)
             {
                 BreakOnTargetMove = true,
-                BreakOnUserMove = true
+                BreakOnUserMove = true,
             };
 
             _doAfter.TryStartDoAfter(doAfterEventArgs);
