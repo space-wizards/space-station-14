@@ -14,13 +14,13 @@ public sealed class HotPotatoSystem : SharedHotPotatoSystem
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        foreach (var comp in EntityQuery<ActiveHotPotatoComponent>())
+        var query = AllEntityQuery<ActiveHotPotatoComponent>();
+        while (query.MoveNext(out var uid, out var comp))
         {
-            var curTime = _timing.CurTime;
-            if (curTime < comp.TargetTime)
+            if (_timing.CurTime < comp.TargetTime)
                 continue;
-            comp.TargetTime = curTime + TimeSpan.FromSeconds(comp.EffectCooldown);
-            var ent = Spawn("HotPotatoEffect", Transform(comp.Owner).MapPosition.Offset(_random.NextVector2(0.25f)));
+            comp.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(comp.EffectCooldown);
+            var ent = Spawn("HotPotatoEffect", Transform(uid).MapPosition.Offset(_random.NextVector2(0.25f)));
         }
     }
 }
