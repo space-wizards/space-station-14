@@ -135,7 +135,7 @@
       path: /Audio/Effects/Grenades/supermatter_loop.ogg
   - type: AnchorOnTrigger
     removeOnTrigger: true
-  - type: SingularityDistortionTweakOnTrigger
+  - type: SingularityDistortionOnTrigger
     removeOnTrigger: true
     intensity: 100 
   - type: GravityWellOnTrigger

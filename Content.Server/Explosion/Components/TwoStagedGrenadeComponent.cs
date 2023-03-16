@@ -11,40 +11,39 @@ namespace Content.Server.Explosion.Components;
 public sealed class TwoStagedGrenadeComponent : Component
 {
     /// <summary>
-    /// true => After grenade pull things in heap it will explode. Require ExplosiveComponent.
-    /// false => Grenade will just pull things in heap and delete it self.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("explodeAfterGravityPull")]
-    public bool ExplodeAfterGravityPull = false;
-
-    /// <summary>
-    /// Time after first trigger that will pass and grenade will be triggered again.
+    /// Time after first trigger (i.e. how long will second stage take) that will pass and grenade will be triggered again.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("explossionDelay")]
     public float ExplossionDelay = 0f;
 
-    [ViewVariables(VVAccess.ReadOnly)]
     public TimeSpan TimeOfExplosion = TimeSpan.Zero;
 
+    /// <summary>
+    /// Offset when AmbienceComponent will be enabled after first trigger.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("ambienceSoundOffset")]
     public float AmbienceSoundOffset = 0f;
 
-    [ViewVariables(VVAccess.ReadOnly)]
     public TimeSpan AmbienceStartTime = TimeSpan.Zero;
+
+    public bool IsSecondStageSoundBegan = false;
+
+    /// <summary>
+    /// true => After second stage grenade will explode. Require ExplosiveComponent.
+    /// false => Grenade will just pull things in heap and delete itself.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("explodeAfterGravityPull")]
+    public bool ExplodeAfterGravityPull = false;
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("endSound")]
     public SoundSpecifier? EndSound = new SoundPathSpecifier("/Audio/Effects/Grenades/supermatter_end.ogg");
 
-    [ViewVariables(VVAccess.ReadOnly)]
     public bool IsSecondStageBegan = false;
 
-    [ViewVariables(VVAccess.ReadOnly)]
-    public bool IsSecondStageSoundBegan = false;
-
-    [ViewVariables(VVAccess.ReadOnly)]
     public bool IsSecondStageEnded = false;
+
 }
