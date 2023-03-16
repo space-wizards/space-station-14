@@ -522,10 +522,10 @@
   - type: Explosive
     explosionType: DemolitionCharge
     maxIntensity: 9
-    intensitySlope: 7
-    totalIntensity: 120
+    intensitySlope: 6
+    totalIntensity: 60
     maxTileBreak: 0
   - type: PointLight
-    radius: 2
+    radius: 1
     color: orange
     energy: 0.5
