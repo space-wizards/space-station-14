@@ -153,7 +153,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             return;
         }
 
-        AttemptAttack(args.SenderSession.AttachedEntity!.Value, msg.Weapon, weapon, msg, args.SenderSession);
+        AttemptAttack(args.SenderSession.AttachedEntity!.Value, msg.Weapon, weapon, true, msg, args.SenderSession);
     }
 
     private void OnStopHeavyAttack(StopHeavyAttackEvent msg, EntitySessionEventArgs args)
@@ -191,7 +191,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             return;
         }
 
-        AttemptAttack(args.SenderSession.AttachedEntity.Value, msg.Weapon, weapon, msg, args.SenderSession);
+        AttemptAttack(args.SenderSession.AttachedEntity.Value, msg.Weapon, weapon, false, msg, args.SenderSession);
     }
 
     private void OnDisarmAttack(DisarmAttackEvent msg, EntitySessionEventArgs args)
@@ -206,7 +206,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             return;
         }
 
-        AttemptAttack(args.SenderSession.AttachedEntity.Value, weaponUid, weapon, msg, args.SenderSession);
+        AttemptAttack(args.SenderSession.AttachedEntity.Value, weaponUid, weapon, true, msg, args.SenderSession);
     }
 
     private void OnGetState(EntityUid uid, MeleeWeaponComponent component, ref ComponentGetState args)
@@ -282,7 +282,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
     public void AttemptLightAttackMiss(EntityUid user, EntityUid weaponUid, MeleeWeaponComponent weapon, EntityCoordinates coordinates)
     {
-        AttemptAttack(user, weaponUid, weapon, new LightAttackEvent(null, weaponUid, coordinates), null);
+        AttemptAttack(user, weaponUid, weapon, true, new LightAttackEvent(null, weaponUid, coordinates), null);
     }
 
     public void AttemptLightAttack(EntityUid user, EntityUid weaponUid, MeleeWeaponComponent weapon, EntityUid target)
@@ -290,7 +290,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (!TryComp<TransformComponent>(target, out var targetXform))
             return;
 
-        AttemptAttack(user, weaponUid, weapon, new LightAttackEvent(target, weaponUid, targetXform.Coordinates), null);
+        AttemptAttack(user, weaponUid, weapon, true, new LightAttackEvent(target, weaponUid, targetXform.Coordinates), null);
     }
 
     public void AttemptDisarmAttack(EntityUid user, EntityUid weaponUid, MeleeWeaponComponent weapon, EntityUid target)
@@ -298,17 +298,17 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (!TryComp<TransformComponent>(target, out var targetXform))
             return;
 
-        AttemptAttack(user, weaponUid, weapon, new DisarmAttackEvent(target, targetXform.Coordinates), null);
+        AttemptAttack(user, weaponUid, weapon, true, new DisarmAttackEvent(target, targetXform.Coordinates), null);
     }
 
     /// <summary>
     /// Called when a windup is finished and an attack is tried.
     /// </summary>
-    private void AttemptAttack(EntityUid user, EntityUid weaponUid, MeleeWeaponComponent weapon, AttackEvent attack, ICommonSession? session)
+    private void AttemptAttack(EntityUid user, EntityUid weaponUid, MeleeWeaponComponent weapon, bool isLight, AttackEvent attack, ICommonSession? session)
     {
         var curTime = Timing.CurTime;
 
-        if (weapon.NextAttack > curTime)
+        if (isLight && weapon.NextAttack > curTime)
             return;
 
         if (!CombatMode.IsInCombatMode(user))
