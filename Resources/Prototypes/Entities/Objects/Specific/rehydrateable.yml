@@ -88,3 +88,11 @@
       hard: false
       layer:
       - LowImpassable
+  # pet fish before rehydrating and he will be nice to you
+  - type: Friends
+    pettable: true
+  - type: InteractionPopup
+    interactSuccessString: petting-success-dehydrated-carp
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Effects/bite.ogg

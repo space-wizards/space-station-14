@@ -1,4 +1,4 @@
-### Interaction Popup component
+#### Interaction Popup component
 
 ## Petting animals
 
@@ -9,6 +9,7 @@ petting-success-bird = You pet {THE($target)} on {POSS-ADJ($target)} cute feathe
 petting-success-cat = You pet {THE($target)} on {POSS-ADJ($target)} fuzzy little head.
 petting-success-corrupted-corgi = In an act of hubris, you pet {THE($target)} on {POSS-ADJ($target)} cursed little head.
 petting-success-crab = You pet {THE($target)} on {POSS-ADJ($target)} smooth little head.
+petting-success-dehydrated-carp = You pet {THE($target)} on {POSS-ADJ($target)} dry little head. {CAPITALIZE(OBJECT($target))} seems to like you now!
 petting-success-dog = You pet {THE($target)} on {POSS-ADJ($target)} soft floofy head.
 petting-success-frog = You pet {THE($target)} on {POSS-ADJ($target)} slippery little head.
 petting-success-goat = You pet {THE($target)} on {POSS-ADJ($target)} horned floofy head.
