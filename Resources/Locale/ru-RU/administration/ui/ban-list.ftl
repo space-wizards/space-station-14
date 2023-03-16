@@ -1,5 +1,5 @@
 # UI
-ban-list-header-ids = Id
+ban-list-header-ids = ID
 ban-list-header-reason = Причина
 ban-list-header-time = Длительность бана
 ban-list-header-expires = Истекает
