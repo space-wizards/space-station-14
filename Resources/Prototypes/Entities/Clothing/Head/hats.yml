@@ -19,6 +19,17 @@
     sprite: Clothing/Head/Hats/beret.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret.rsi
+   
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretRND
+  name: purple beret
+  description: A beret for real scientists.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beret_rnd.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beret_rnd.rsi
 
 - type: entity
   parent: ClothingHeadBase
