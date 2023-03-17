@@ -808,6 +808,12 @@
   speaker: scout
 
 - type: ttsVoice
+  id: SniperTf
+  name: tts-voice-name-snipertf
+  sex: Male
+  speaker: sniper_tf
+
+- type: ttsVoice
   id: Soldier
   name: tts-voice-name-soldier
   sex: Male
@@ -938,6 +944,25 @@
   name: tts-voice-name-sidorovich
   sex: Male
   speaker: sidorovich
+
+- type: ttsVoice
+  id: P3
+  name: tts-voice-name-p3
+  sex: Male
+  speaker: p3
+
+- type: ttsVoice
+  id: Tereshkova
+  name: tts-voice-name-tereshkova
+  sex: Female
+  speaker: tereshkova
+  roundStart: false
+
+- type: ttsVoice
+  id: Babazina
+  name: tts-voice-name-babazina
+  sex: Female
+  speaker: babazina
 
 - type: ttsVoice
   id: Darius
@@ -1532,7 +1557,7 @@
 
 - type: ttsVoice
   id: FCommander
-  name: tts-voice-name-f_commander
+  name: tts-voice-name-fcommander
   sex: Female
   speaker: f_commander
 
