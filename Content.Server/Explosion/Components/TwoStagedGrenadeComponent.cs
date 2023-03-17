@@ -5,6 +5,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Explosion.Components;
 
 /// <summary>
+/// This component after trigger starts timer to trigger for second time to explode or delete self.
 /// This component is controlling process of exploding of supermatter grenade.
 /// </summary>
 [RegisterComponent]
