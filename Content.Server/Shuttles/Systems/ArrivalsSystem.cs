@@ -122,9 +122,13 @@ public sealed class ArrivalsSystem : EntitySystem
         var curTime = _timing.CurTime;
         TryGetArrivals(out var arrivals);
 
+        // TODO: FTL fucker, if on an edge tile every N seconds check for wall or w/e
+        // TODO: Docking should be per-grid rather than per dock and bump off when undocking.
+
         // TODO: Stop dispatch if emergency shuttle has arrived.
         // TODO: Need server join message specifying shuttle wait time or smth.
         // TODO: Need maps
+        // TODO: Need emergency suits on shuttle probs
         // TODO: Need some kind of comp to shunt people off if they try to get on?
         if (TryComp<TransformComponent>(arrivals, out var arrivalsXform))
         {
