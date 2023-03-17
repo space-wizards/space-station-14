@@ -78,9 +78,9 @@ namespace Content.Server.Forensics
                     scanner.Fibers = forensics.Fibers.ToList();
                 }
 
-                if (TryComp<DNAComponent>(args.Args.Target, out var dnaComponent))
+                if (TryComp<DNAComponent>(args.Args.Target, out var dna))
                 {
-                    scanner.DNA = dnaComponent.DNA;
+                    scanner.DNA = dna.DNA;
                 }
 
                     scanner.LastScannedName = MetaData(args.Args.Target.Value).EntityName;
