@@ -4,6 +4,7 @@ using Content.Server.Station.Components;
 using Content.Server.Cargo.Systems;
 using Content.Server.Station.Systems;
 using Content.Shared.Shipyard.Components;
+using Content.Shared.Shipyard;
 using Content.Shared.GameTicking;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
@@ -12,10 +13,11 @@ using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Coordinates;
+using Content.Shared.Shipyard.Events;
 
 namespace Content.Server.Shipyard.Systems;
 
-public sealed partial class ShipyardSystem : EntitySystem
+public sealed partial class ShipyardSystem : SharedShipyardSystem
 {
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
@@ -32,21 +34,26 @@ public sealed partial class ShipyardSystem : EntitySystem
 
     public override void Initialize()
     {
+        base.Initialize();
+        _enabled = _configManager.GetCVar(CCVars.Shipyard);
         _configManager.OnValueChanged(CCVars.Shipyard, SetShipyardEnabled, true);
         _sawmill = Logger.GetSawmill("shipyard");
-        InitializeConsole();
-        SubscribeLocalEvent<ShipyardConsoleComponent, ComponentInit>(OnShipyardStartup);
+
+        SubscribeLocalEvent<ShipyardConsoleComponent, ComponentStartup>(OnShipyardStartup);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+
+        SubscribeLocalEvent<ShipyardConsoleComponent, ShipyardConsolePurchaseMessage>(OnPurchaseMessage);
+        SubscribeLocalEvent<ShipyardConsoleComponent, BoundUIOpenedEvent>(OnConsoleUIOpened);
     }
     public override void Shutdown()
     {
         _configManager.UnsubValueChanged(CCVars.Shipyard, SetShipyardEnabled);
     }
-    private void OnShipyardStartup(EntityUid uid, ShipyardConsoleComponent component, ComponentInit args)
+    private void OnShipyardStartup(EntityUid uid, ShipyardConsoleComponent component, ComponentStartup args)
     {
         if (!_enabled)
             return;
-
+        InitializeConsole();
         SetupShipyard();
     }
 
