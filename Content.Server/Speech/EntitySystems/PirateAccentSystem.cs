@@ -8,8 +8,6 @@ public sealed class PirateAccentSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
 
-    public static readonly Dictionary<string, string> DirectReplacements = new();
-
     public override void Initialize()
     {
         base.Initialize();
@@ -25,11 +23,6 @@ public sealed class PirateAccentSystem : EntitySystem
         msg = Regex.Replace(msg, Loc.GetString($"{component.PirateWord}"), Loc.GetString($"{component.PirateResponse}"), RegexOptions.IgnoreCase);
         msg = Regex.Replace(msg, Loc.GetString($"{component.PirateWordOne}"), Loc.GetString($"{component.PirateResponseOne}"), RegexOptions.IgnoreCase);
         msg = Regex.Replace(msg, Loc.GetString($"{component.PirateWordTwo}"), Loc.GetString($"{component.PirateResponseTwo}"), RegexOptions.IgnoreCase);
-
-        foreach (var (first, replace) in DirectReplacements)
-        {
-            msg = Regex.Replace(msg, $@"(?<!\w){first}(?!\w)", replace, RegexOptions.IgnoreCase);
-        }
 
         // Suffix:
         if (_random.Prob(component.YarChance))
