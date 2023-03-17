@@ -79,7 +79,7 @@ public sealed class BloodstreamSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = new EntityQueryEnumerator<BloodstreamComponent>();
+        var query = EntityQueryEnumerator<BloodstreamComponent>();
         while (query.MoveNext(out var uid, out var bloodstream))
         {
             bloodstream.AccumulatedFrametime += frameTime;
