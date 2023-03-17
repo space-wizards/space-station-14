@@ -4,7 +4,7 @@ using Content.Server.Shuttles.Systems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 
-namespace Content.Server.Shuttles;
+namespace Content.Server.Shuttles.Commands;
 
 [AdminCommand(AdminFlags.Mapping)]
 public sealed class DockCommand : IConsoleCommand

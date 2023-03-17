@@ -19,7 +19,7 @@ namespace Content.Server.Alert.Click
             if (entManager.TryGetComponent(player, out PilotComponent? pilotComponent) &&
                 pilotComponent.Console != null)
             {
-                entManager.System<ShuttleConsoleSystem>().RemovePilot(pilotComponent);
+                entManager.System<ShuttleConsoleSystem>().RemovePilot(player, pilotComponent);
             }
         }
     }

@@ -1,12 +1,8 @@
 using System.Threading;
-using Content.Server.Access.Systems;
-using Content.Server.Popups;
-using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Components;
 using Content.Server.UserInterface;
-using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Popups;
@@ -16,22 +12,15 @@ using Content.Shared.Shuttles.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Shuttles.Systems;
 
-public sealed partial class ShuttleSystem
+public sealed partial class EmergencyShuttleSystem
 {
     /*
      * Handles the emergency shuttle's console and early launching.
      */
-
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IdCardSystem _idSystem = default!;
-    [Dependency] private readonly AccessReaderSystem _reader = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly RoundEndSystem _roundEnd = default!;
 
     /// <summary>
     /// Has the emergency shuttle arrived?
@@ -131,7 +120,7 @@ public sealed partial class ShuttleSystem
         }
 
         // Imminent departure
-        if (!_launchedShuttles && _consoleAccumulator <= DefaultStartupTime)
+        if (!_launchedShuttles && _consoleAccumulator <= ShuttleSystem.DefaultStartupTime)
         {
             _launchedShuttles = true;
 
@@ -139,19 +128,20 @@ public sealed partial class ShuttleSystem
             {
                 foreach (var comp in EntityQuery<StationDataComponent>(true))
                 {
-                    if (!TryComp<ShuttleComponent>(comp.EmergencyShuttle, out var shuttle)) continue;
+                    if (!TryComp<ShuttleComponent>(comp.EmergencyShuttle, out var shuttle))
+                        continue;
 
                     if (Deleted(CentCom))
                     {
                         // TODO: Need to get non-overlapping positions.
-                        FTLTravel(shuttle,
+                        _shuttle.FTLTravel(comp.EmergencyShuttle.Value, shuttle,
                             new EntityCoordinates(
                                 _mapManager.GetMapEntityId(CentComMap.Value),
                                 Vector2.One * 1000f), _consoleAccumulator, TransitTime);
                     }
                     else
                     {
-                        FTLTravel(shuttle,
+                        _shuttle.FTLTravel(comp.EmergencyShuttle.Value, shuttle,
                             CentCom.Value, _consoleAccumulator, TransitTime, dock: true);
                     }
                 }
@@ -169,7 +159,7 @@ public sealed partial class ShuttleSystem
 
             // Guarantees that emergency shuttle arrives first before anyone else can FTL.
             if (CentCom != null)
-                AddFTLDestination(CentCom.Value, true);
+                _shuttle.AddFTLDestination(CentCom.Value, true);
 
         }
     }
