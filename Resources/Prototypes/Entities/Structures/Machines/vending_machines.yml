@@ -375,8 +375,6 @@
   name: Space Cola Vendor
   description: It vends cola, in space.
   components:
-  - type: VendingMachine
-    pack: SpaceColaInventory
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/cola-red.rsi
     layers:

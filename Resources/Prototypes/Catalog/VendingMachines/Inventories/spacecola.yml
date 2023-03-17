@@ -1,9 +1,0 @@
-﻿- type: vendingMachineInventory
-  id: SpaceColaInventory
-  startingInventory:
-    DrinkColaCan: 10
-    DrinkGrapeCan: 3
-    DrinkRootBeerCan: 2
-    DrinkIcedTeaCan: 2
-    DrinkLemonLimeCan: 2
-    DrinkFourteenLokoCan: 2

@@ -1,7 +1,7 @@
 ﻿- type: vendingMachineInventory
   id: RobustSoftdrinksInventory
   startingInventory:
-    DrinkColaCan: 10
+    DrinkColaCan: 4
     DrinkGrapeCan: 2
     DrinkRootBeerCan: 2
     DrinkIcedTeaCan: 2

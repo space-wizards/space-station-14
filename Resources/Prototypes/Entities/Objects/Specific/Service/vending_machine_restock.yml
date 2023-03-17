@@ -297,7 +297,6 @@
     - ShamblersJuiceInventory
     - StarkistInventory
     - SpaceUpInventory
-    - SpaceColaInventory
     - SodaInventory
   - type: Sprite
     layers:
