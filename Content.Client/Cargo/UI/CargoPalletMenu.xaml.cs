@@ -22,12 +22,17 @@ public sealed partial class CargoPalletMenu : FancyWindow
 
     public void SetAppraisal(int amount)
     {
-        AppraisalLabel.Text = amount.ToString();
+        AppraisalLabel.Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", amount.ToString()));
     }
 
     public void SetCount(int count)
     {
         CountLabel.Text = count.ToString();
+    }
+    public void SetEnabled(bool enabled)
+    {
+        AppraiseButton.Disabled = !enabled;
+        SellButton.Disabled = !enabled;
     }
 
     private void OnSellPressed(BaseButton.ButtonEventArgs obj)
