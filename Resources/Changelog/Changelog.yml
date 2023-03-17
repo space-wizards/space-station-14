@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Fix some mapgrids not being sent to clients., type: Fix}
-  id: 2691
-  time: '2022-11-22T09:28:09.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Fix exception when shooting with your mouse outside of the window.,
     type: Fix}
   id: 2692
@@ -2898,3 +2893,11 @@ Entries:
   - {message: Added Station Records Computer on Aspid & Bagel, type: Add}
   id: 3190
   time: '2023-03-15T23:50:08.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Some forms of healing will no longer unexpectedly affect bleeding.,
+    type: Fix}
+  - {message: 'Bleeding and bloodloss damage is now more relevant, and you should
+      expect to encounter it in medical more often', type: Tweak}
+  id: 3191
+  time: '2023-03-16T22:27:28.0000000+00:00'
