@@ -163,7 +163,7 @@
     graph: ShotgunSawn
     node: shotgunsawn
     deconstructionTarget: null
-    
+
 - type: entity
   name: handmade pistol
   parent: BaseWeaponShotgun
