@@ -119,7 +119,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         foreach (var hand in handsComp.Hands.Values)
         {
             if (TryDrop(uid, hand, checkActionBlocker: checkActionBlocker, handsComp: handsComp) &&
-                TryPickup(uid, entity, hand.Name, checkActionBlocker, handsComp: handsComp))
+                TryPickup(uid, entity, hand, checkActionBlocker, handsComp: handsComp))
             {
                 return true;
             }
