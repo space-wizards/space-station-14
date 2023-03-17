@@ -113,7 +113,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (!Resolve(uid, ref handsComp, false))
             return false;
 
-        if (TryPickupAnyHand(uid, entity, checkActionBlocker, handsComp: handsComp))
+        if (TryPickupAnyHand(uid, entity, checkActionBlocker: checkActionBlocker, handsComp: handsComp))
             return true;
 
         foreach (var hand in handsComp.Hands.Values)
