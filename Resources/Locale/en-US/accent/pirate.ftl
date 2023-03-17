@@ -1,11 +1,11 @@
 accent-pirate-prefix-1 = Arrgh 
 accent-pirate-prefix-2 = Gar 
-accent-pirate-prefix-3 = Yarr
+accent-pirate-prefix-3 = Yarr 
 accent-pirate-word-1 = my
 accent-pirate-word-2 = me
 accent-pirate-word-3 = yes
-accent-pirate-word-4 = aye
-accent-pirate-word-5 = you
+accent-pirate-word-4 = hello
+accent-pirate-word-5 = ahoy
 accent-pirate-word-6 = ya
-accent-pirate-word-7 = hi
+accent-pirate-word-7 = hello
 accent-pirate-word-8 = ahoy

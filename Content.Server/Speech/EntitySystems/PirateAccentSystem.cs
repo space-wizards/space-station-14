@@ -1,6 +1,4 @@
 using Content.Server.Speech.Components;
-using Robust.Shared.Profiling;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Text.RegularExpressions;
 
@@ -9,6 +7,9 @@ namespace Content.Server.Speech.EntitySystems;
 public sealed class PirateAccentSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+
+    public static readonly Dictionary<string, string> DirectReplacements = new();
+
     public override void Initialize()
     {
         base.Initialize();
@@ -17,18 +18,13 @@ public sealed class PirateAccentSystem : EntitySystem
     }
 
     // converts left word when typed into the right word. For example typing you becomes ye.
-    private static readonly Dictionary<string, string> DirectReplacements = new()
-    {
-        { Loc.GetString($"accent-pirate-word-1"), Loc.GetString($"accent-pirate-word-2") },
-        { Loc.GetString($"accent-pirate-word-3"), Loc.GetString($"accent-pirate-word-4") },
-        { Loc.GetString($"accent-pirate-word-5"), Loc.GetString($"accent-pirate-word-6") },
-        { Loc.GetString($"accent-pirate-word-7"), Loc.GetString($"accent-pirate-word-8") },
-    };
-
     public string Accentuate(string message, PirateAccentComponent component)
     {
-
         var msg = message;
+
+        msg = Regex.Replace(msg, Loc.GetString($"{component.PirateWord}"), Loc.GetString($"{component.PirateResponse}"), RegexOptions.IgnoreCase);
+        msg = Regex.Replace(msg, Loc.GetString($"{component.PirateWordOne}"), Loc.GetString($"{component.PirateResponseOne}"), RegexOptions.IgnoreCase);
+        msg = Regex.Replace(msg, Loc.GetString($"{component.PirateWordTwo}"), Loc.GetString($"{component.PirateResponseTwo}"), RegexOptions.IgnoreCase);
 
         foreach (var (first, replace) in DirectReplacements)
         {
@@ -42,7 +38,7 @@ public sealed class PirateAccentSystem : EntitySystem
 
             // Reverse sanitize capital
             msg = msg[0].ToString().ToLower() + msg.Remove(0, 1);
-            msg = Loc.GetString($"accent-pirate-prefix-{pick}") + " " + msg;
+            msg = Loc.GetString($"{component.PiratePrefix}{pick}") + " " + msg;
         }
 
         return msg;
@@ -52,4 +48,3 @@ public sealed class PirateAccentSystem : EntitySystem
         args.Message = Accentuate(args.Message, component);
     }
 }
-
