@@ -45,7 +45,11 @@ public sealed class CargoPalletConsoleBoundUserInterface : BoundUserInterface
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         base.UpdateState(state);
-        if (state is not CargoPalletConsoleInterfaceState palletState) return;
+
+        if (state is not CargoPalletConsoleInterfaceState palletState)
+            return;
+
+        _menu?.SetEnabled(palletState.Enabled);
         _menu?.SetAppraisal(palletState.Appraisal);
         _menu?.SetCount(palletState.Count);
     }

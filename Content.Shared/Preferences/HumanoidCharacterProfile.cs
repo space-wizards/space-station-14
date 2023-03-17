@@ -105,9 +105,7 @@ namespace Content.Shared.Preferences
         ///     Defaults to <see cref="SharedHumanoidAppearanceSystem.DefaultSpecies"/> for the species.
         /// </summary>
         /// <returns></returns>
-        public static HumanoidCharacterProfile Default()
-        {
-            return new(
+        public HumanoidCharacterProfile() : this(
                 "John Doe",
                 "",
                 SharedHumanoidAppearanceSystem.DefaultSpecies,
@@ -365,7 +363,11 @@ namespace Content.Shared.Preferences
         {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
-            prototypeManager.TryIndex<SpeciesPrototype>(Species, out var speciesPrototype);
+            if (!prototypeManager.TryIndex<SpeciesPrototype>(Species, out var speciesPrototype))
+            {
+                Species = SharedHumanoidAppearanceSystem.DefaultSpecies;
+                speciesPrototype = prototypeManager.Index<SpeciesPrototype>(Species);
+            }
 
             var sex = Sex switch
             {

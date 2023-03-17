@@ -17,7 +17,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Shipyard.Systems;
 
-public sealed partial class ShipyardSystem
+public sealed partial class ShipyardSystem : SharedShipyardSystem
 {
     [Dependency] private readonly AccessReaderSystem _access = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
@@ -29,8 +29,7 @@ public sealed partial class ShipyardSystem
 
     public void InitializeConsole()
     {
-        SubscribeLocalEvent<ShipyardConsoleComponent, ShipyardConsolePurchaseMessage>(OnPurchaseMessage);
-        SubscribeLocalEvent<ShipyardConsoleComponent, BoundUIOpenedEvent>(OnConsoleUIOpened);
+
     }
 
     private void OnPurchaseMessage(EntityUid uid, ShipyardConsoleComponent component, ShipyardConsolePurchaseMessage args)

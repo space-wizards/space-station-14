@@ -91,24 +91,6 @@
       gun_chamber: !type:ContainerSlot
 
 - type: entity
-  name: handmade pistol
-  parent: BaseWeaponPistol
-  id: WeaponPistolHandmade
-  description: Looks unreliable. Uses .35 auto ammo.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/hm_pistol.rsi
-    layers:
-      - state: base
-        map: ["enum.GunVisualLayers.Base"]
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Pistols/hm_pistol.rsi
-  - type: Gun
-    selectedMode: SemiAuto
-    availableModes:
-      - SemiAuto
-
-- type: entity
   name: cobra
   parent: BaseWeaponPistol
   id: WeaponPistolCobra

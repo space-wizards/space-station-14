@@ -2,6 +2,8 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Shipyard;
 
+public abstract class SharedShipyardSystem : EntitySystem { }
+
 [NetSerializable, Serializable]
 public enum ShipyardConsoleUiKey : byte
 {

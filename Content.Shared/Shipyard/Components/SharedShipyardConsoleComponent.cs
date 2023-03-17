@@ -1,9 +1,10 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Audio;
+using Content.Shared.Shipyard;
 
 namespace Content.Shared.Shipyard.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedShipyardSystem))]
 public sealed class ShipyardConsoleComponent : Component
 {
     [DataField("soundError")]
