@@ -7,7 +7,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 24
+        Piercing: 33
 
 - type: entity
   id: BulletMinigun
