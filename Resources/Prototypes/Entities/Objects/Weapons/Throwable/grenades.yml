@@ -125,14 +125,14 @@
   - type: SoundOnTrigger
     removeOnTrigger: true
     sound:
-      path: /Audio/Effects/Grenades/supermatter_start.ogg
+      path: /Audio/Effects/Grenades/Supermatter/supermatter_start.ogg
       volume: 5
   - type: AmbientSound
     enabled: False
     volume: -5
     range: 14
     sound:
-      path: /Audio/Effects/Grenades/supermatter_loop.ogg
+      path: /Audio/Effects/Grenades/Supermatter/supermatter_loop.ogg
   - type: AnchorOnTrigger
     removeOnTrigger: true
   - type: SingularityDistortionOnTrigger
@@ -161,7 +161,7 @@
     #        params:
     #          volume: 5
     endSound:
-      path: /Audio/Effects/Grenades/supermatter_end.ogg
+      path: /Audio/Effects/Grenades/Supermatter/supermatter_end.ogg
       params:
         volume: 5
 
@@ -177,13 +177,13 @@
     maxRange: 10
   - type: AmbientSound
     sound:
-      path: /Audio/Effects/Grenades/whitehole_loop.ogg
+      path: /Audio/Effects/Grenades/Supermatter/whitehole_loop.ogg
   - type: PointLight
     color: "#ffffff"
   - type: SoundOnTrigger
     removeOnTrigger: true
     sound:
-      path: /Audio/Effects/Grenades/whitehole_start.ogg
+      path: /Audio/Effects/Grenades/Supermatter/whitehole_start.ogg
       volume: 5
   - type: TwoStagedGrenade
     explodeAfterGravityPull: False
