@@ -1,24 +1,6 @@
 Entries:
 - author: 3RMc
   changes:
-  - message: "\u043F\u0435\u0440\u0435\u0432\u043E\u0434\u044B \u043E\u0442 Lekar,\
-      \ ga, 3RMc, Morty"
-    type: Add
-  id: 23
-  time: '2022-01-14T21:31:17.0000000+00:00'
-- author: 3RMc
-  changes:
-  - message: "\u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u044B \u043F\u0435\u0440\
-      \u0435\u0432\u043E\u0434\u044B \u043E\u0442 Lekar, ga"
-    type: Add
-  - message: "\u0438\u0437\u043C\u0435\u043D\u0435\u043D \u043F\u0435\u0440\u0435\u0432\
-      \u043E\u0434 \u0441 \"\u041F\u0414\u0410\" \u043D\u0430 \"\u041A\u041F\u041A\
-      \""
-    type: Fix
-  id: 24
-  time: '2022-01-14T23:09:30.0000000+00:00'
-- author: 3RMc
-  changes:
   - message: "\u0410\u043A\u0442\u0443\u0430\u043B\u0438\u0437\u0438\u0440\u043E\u0432\
       \u0430\u043D\u044B \u043A\u043B\u044E\u0447\u0438 \u043F\u0435\u0440\u0435\u0432\
       \u043E\u0434\u043E\u0432"
@@ -4280,3 +4262,19 @@ Entries:
     type: Tweak
   id: 522
   time: '2023-03-17T09:19:49.0000000+00:00'
+- author: no_mad
+  changes:
+  - message: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D \u0448\u0430\u0442\u0442\u043B\
+      \ \u044D\u0432\u0430\u043A\u0443\u0430\u0446\u0438\u0438 \u043D\u0430 \u0434\
+      \u0435\u043B\u044C\u0442\u0435"
+    type: Tweak
+  id: 523
+  time: '2023-03-17T10:27:53.0000000+00:00'
+- author: no_mad
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0430 \u043A\u0430\u0440\
+      \u0442\u0430 \u0410\u0432\u0440\u0438\u0442 \u0432 \u043F\u0443\u043B\u043B\
+      \ \u043A\u0430\u0440\u0442!"
+    type: Add
+  id: 524
+  time: '2023-03-17T10:28:44.0000000+00:00'
