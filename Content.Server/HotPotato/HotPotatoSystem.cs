@@ -1,40 +1,14 @@
-using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Hands.Components;
 using Content.Server.Explosion.EntitySystems;
-using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.HotPotato;
 
 namespace Content.Server.HotPotato;
 
 public sealed class HotPotatoSystem : SharedHotPotatoSystem
 {
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<HotPotatoComponent, MeleeHitEvent>(OnMeleeHit);
         SubscribeLocalEvent<HotPotatoComponent, ActiveTimerTriggerEvent>(OnActiveTimer);
-    }
-
-    private void OnMeleeHit(EntityUid uid, HotPotatoComponent comp, MeleeHitEvent args)
-    {
-        comp.CanTransfer = true;
-        TryTransferItem(uid, args);
-        comp.CanTransfer = !HasComp<ActiveHotPotatoComponent>(uid);
-        Dirty(comp);
-    }
-
-    private void TryTransferItem(EntityUid uid, MeleeHitEvent args)
-    {
-        foreach (var hitEntity in args.HitEntities)
-        {
-            if (TryComp<SharedHandsComponent>(hitEntity, out var hands))
-            {
-                if (_hands.TryForcePickupAnyHand(hitEntity, uid, handsComp: hands))
-                    return;
-            }
-        }
     }
 
     private void OnActiveTimer(EntityUid uid, HotPotatoComponent comp, ref ActiveTimerTriggerEvent args)
