@@ -31,11 +31,8 @@ public sealed class HotPotatoSystem : SharedHotPotatoSystem
         {
             if (TryComp<SharedHandsComponent>(hitEntity, out var hands))
             {
-                if (_hands.TryPickupAnyHand(hitEntity, uid))
+                if (_hands.TryForcePickupAnyHand(hitEntity, uid, handsComp: hands))
                     return;
-                foreach (var hand in hands.Hands.Values)
-                    if (_hands.TryDrop(hitEntity, hand) && _hands.TryPickup(hitEntity, uid, hand.Name))
-                        return;
             }
         }
     }
