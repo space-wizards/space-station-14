@@ -22,7 +22,7 @@ public sealed class RadioSystem : EntitySystem
     [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly IReplayRecordingManager _replay = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
 
     // set used to prevent radio feedback loops.
     private readonly HashSet<string> _messages = new();
@@ -88,7 +88,7 @@ public sealed class RadioSystem : EntitySystem
             RaiseLocalEvent(receiver, ref ev);
         }
         if (!sentAtLeastOnce)
-            _popupSystem.PopupEntity(Loc.GetString("failed-to-send-message"), messageSource, messageSource, PopupType.MediumCaution);
+            _popup.PopupEntity(Loc.GetString("failed-to-send-message"), messageSource, messageSource, PopupType.MediumCaution);
 
         if (name != Name(messageSource))
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {ToPrettyString(messageSource):user} as {name} on {channel.LocalizedName}: {message}");
