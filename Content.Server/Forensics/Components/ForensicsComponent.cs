@@ -8,8 +8,5 @@ namespace Content.Server.Forensics
 
         [DataField("fibers")]
         public HashSet<string> Fibers = new();
-
-        [DataField("DNA")]
-        public string DNA = String.Empty;
     }
 }

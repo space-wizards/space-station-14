@@ -2,6 +2,7 @@ using Content.Server.Body.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Chemistry.ReactionEffects;
 using Content.Server.Fluids.EntitySystems;
+using Content.Server.Forensics;
 using Content.Server.HealthExaminable;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
@@ -291,7 +292,15 @@ public sealed class BloodstreamSystem : EntitySystem
             // Pass some of the chemstream into the spilled blood.
             var temp = component.ChemicalSolution.SplitSolution(component.BloodTemporarySolution.Volume / 10);
             component.BloodTemporarySolution.AddSolution(temp, _prototypeManager);
-            _spillableSystem.SpillAt(uid, component.BloodTemporarySolution, "PuddleBlood", false);
+            var puddle = EntityManager.EntitySysManager.GetEntitySystem<SpillableSystem>()
+                .SpillAt(uid, component.BloodTemporarySolution, "PuddleBlood", false);
+            if (puddle != null)
+            {
+                var puddleDna = EntityManager.EnsureComponent<DNAComponent>(puddle.Owner); //TODO: Get rid of .Owner
+                TryComp<DNAComponent>(uid, out var dnaComponent);
+                puddleDna.DNA = dnaComponent?.DNA;
+            }
+
             component.BloodTemporarySolution.RemoveAllSolution();
         }
 

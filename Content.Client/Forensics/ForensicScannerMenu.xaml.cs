@@ -52,6 +52,9 @@ namespace Content.Client.Forensics
             {
                 text.AppendLine(fiber);
             }
+            text.AppendLine();
+            text.AppendLine("DNA");
+            text.AppendLine(msg.DNA);
             Diagnostics.Text = text.ToString();
         }
     }

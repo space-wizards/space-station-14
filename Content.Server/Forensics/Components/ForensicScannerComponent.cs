@@ -21,6 +21,12 @@ namespace Content.Server.Forensics
         public List<string> Fibers = new();
 
         /// <summary>
+        /// A list of glove fibers that the forensic scanner found from the <see cref="ForensicsComponent"/> on an entity.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly)]
+        public string? DNA = string.Empty;
+
+        /// <summary>
         /// What is the name of the entity that was scanned last?
         /// </summary>
         /// <remarks>

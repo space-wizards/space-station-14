@@ -47,6 +47,7 @@ namespace Content.Server.Forensics
             var state = new ForensicScannerBoundUserInterfaceState(
                 component.Fingerprints,
                 component.Fibers,
+                component.DNA,
                 component.LastScannedName,
                 component.PrintCooldown,
                 component.PrintReadyAt);
@@ -77,7 +78,12 @@ namespace Content.Server.Forensics
                     scanner.Fibers = forensics.Fibers.ToList();
                 }
 
-                scanner.LastScannedName = MetaData(args.Args.Target.Value).EntityName;
+                if (TryComp<DNAComponent>(args.Args.Target, out var dnaComponent))
+                {
+                    scanner.DNA = dnaComponent.DNA;
+                }
+
+                    scanner.LastScannedName = MetaData(args.Args.Target.Value).EntityName;
             }
 
             OpenUserInterface(args.Args.User, scanner);
