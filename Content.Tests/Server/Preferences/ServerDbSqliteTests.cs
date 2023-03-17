@@ -47,6 +47,7 @@ namespace Content.Tests.Server.Preferences
                 21,
                 Sex.Male,
                 Gender.Epicene,
+                27000,
                 new HumanoidCharacterAppearance(
                     "Afro",
                     Color.Aqua,

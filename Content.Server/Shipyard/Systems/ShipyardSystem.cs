@@ -35,14 +35,14 @@ public sealed partial class ShipyardSystem : EntitySystem
         _configManager.OnValueChanged(CCVars.Shipyard, SetShipyardEnabled, true);
         _sawmill = Logger.GetSawmill("shipyard");
         InitializeConsole();
-        SubscribeLocalEvent<ShipyardConsoleComponent, ComponentInit>(OnShipyardStartup);
+        SubscribeLocalEvent<ShipyardConsoleComponent, ComponentStartup>(OnShipyardStartup);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
     }
     public override void Shutdown()
     {
         _configManager.UnsubValueChanged(CCVars.Shipyard, SetShipyardEnabled);
     }
-    private void OnShipyardStartup(EntityUid uid, ShipyardConsoleComponent component, ComponentInit args)
+    private void OnShipyardStartup(EntityUid uid, ShipyardConsoleComponent component, ComponentStartup args)
     {
         if (!_enabled)
             return;
