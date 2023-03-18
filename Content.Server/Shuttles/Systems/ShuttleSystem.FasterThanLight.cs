@@ -28,8 +28,8 @@ public sealed partial class ShuttleSystem
     private MapId? _hyperSpaceMap;
 
     public const float DefaultStartupTime = 5.5f;
-    private const float DefaultTravelTime = 30f;
-    private const float DefaultArrivalTime = 5f;
+    public const float DefaultTravelTime = 30f;
+    public const float DefaultArrivalTime = 5f;
     private const float FTLCooldown = 30f;
 
     private const float ShuttleFTLRange = 100f;
@@ -107,7 +107,8 @@ public sealed partial class ShuttleSystem
     /// </summary>
     public FTLDestinationComponent AddFTLDestination(EntityUid uid, bool enabled)
     {
-        if (TryComp<FTLDestinationComponent>(uid, out var destination) && destination.Enabled == enabled) return destination;
+        if (TryComp<FTLDestinationComponent>(uid, out var destination) && destination.Enabled == enabled)
+            return destination;
 
         destination = EnsureComp<FTLDestinationComponent>(uid);
 

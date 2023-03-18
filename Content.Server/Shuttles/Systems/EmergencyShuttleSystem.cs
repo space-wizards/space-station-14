@@ -19,6 +19,7 @@ using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Shuttles.Systems;
@@ -34,6 +35,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
    [Dependency] private readonly IConfigurationManager _configManager = default!;
    [Dependency] private readonly IGameTiming _timing = default!;
    [Dependency] private readonly IMapManager _mapManager = default!;
+   [Dependency] private readonly IRobustRandom _random = default!;
    [Dependency] private readonly AccessReaderSystem _reader = default!;
    [Dependency] private readonly ChatSystem _chatSystem = default!;
    [Dependency] private readonly CommunicationsConsoleSystem _commsConsole = default!;
@@ -43,7 +45,6 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
    [Dependency] private readonly PopupSystem _popup = default!;
    [Dependency] private readonly RoundEndSystem _roundEnd = default!;
    [Dependency] private readonly SharedAudioSystem _audio = default!;
-   [Dependency] private readonly SharedTransformSystem _transform = default!;
    [Dependency] private readonly ShuttleSystem _shuttle = default!;
    [Dependency] private readonly StationSystem _station = default!;
    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
@@ -64,6 +65,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
    public override void Initialize()
    {
+       _sawmill = Logger.GetSawmill("shuttle.emergency");
        _emergencyShuttleEnabled = _configManager.GetCVar(CCVars.EmergencyShuttleEnabled);
        // Don't immediately invoke as roundstart will just handle it.
        _configManager.OnValueChanged(CCVars.EmergencyShuttleEnabled, SetEmergencyShuttleEnabled);
@@ -192,6 +194,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
    private void OnRoundStart(RoundStartingEvent ev)
    {
+       CleanupEmergencyConsole();
        SetupEmergencyShuttle();
    }
 
@@ -299,5 +302,13 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
        }
 
        _mapManager.DeleteMap(CentComMap.Value);
+   }
+
+   private void OnEscapeUnpaused(EntityUid uid, EscapePodComponent component, ref EntityUnpausedEvent args)
+   {
+       if (component.LaunchTime == null)
+           return;
+
+       component.LaunchTime += args.PausedTime;
    }
 }
