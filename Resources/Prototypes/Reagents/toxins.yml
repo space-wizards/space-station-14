@@ -495,5 +495,5 @@
           types:
             Poison: 0.06
       - !type:ChemCauseDisease
-          causeChance: 0.5
+          causeChance: 1
           disease: ActiveHonkVirus ##makes target honk and potential chance to be cluwned.

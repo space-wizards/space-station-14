@@ -82,7 +82,6 @@
   - type: StaticPrice
     price: 1000
 
-
 - type: entity
   parent: BikeHorn
   id: BananiumHorn
