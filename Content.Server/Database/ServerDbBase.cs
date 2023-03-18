@@ -200,7 +200,7 @@ namespace Content.Server.Database
                 profile.Age,
                 sex,
                 gender,
-                profile.BankBalance,
+                balance,
                 new HumanoidCharacterAppearance
                 (
                     profile.HairName,

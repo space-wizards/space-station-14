@@ -113,7 +113,7 @@ namespace Content.Shared.Preferences
                 Sex.Male,
                 Gender.Male,
                 35000,
-                HumanoidCharacterAppearance.Default(),
+                new HumanoidCharacterAppearance(),
                 ClothingPreference.Jumpsuit,
                 BackpackPreference.Backpack,
                 new Dictionary<string, JobPriority>
@@ -122,7 +122,8 @@ namespace Content.Shared.Preferences
                 },
                 PreferenceUnavailableMode.SpawnAsOverflow,
                 new List<string>(),
-                new List<string>());
+                new List<string>())
+        {
         }
 
         /// <summary>
