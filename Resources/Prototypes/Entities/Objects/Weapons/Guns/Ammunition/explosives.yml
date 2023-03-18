@@ -128,7 +128,7 @@
 - type: entity
   id: CannonBall
   name: cannonball
-  suffix: pirate
+  suffix: Pirate
   parent: BaseGrenade
   components:
   - type: CartridgeAmmo

@@ -189,7 +189,7 @@
   name: blunderbuss
   parent: BaseWeaponShotgun
   id: WeaponShotgunBlunderbuss
-  suffix: pirate
+  suffix: Pirate
   description: Deadly at close range.
   components:
   - type: Sprite
