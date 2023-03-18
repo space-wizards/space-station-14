@@ -20,6 +20,7 @@
       - id: ClothingOuterWinterWarden
       - id: RubberStampWarden
       - id: DoorRemoteArmory
+      - id: ClothingOuterHardsuitWarden
 
 - type: entity
   id: LockerSecurityFilled

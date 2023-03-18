@@ -39,6 +39,9 @@ uplink-c4-desc = Use it to breach walls, airlocks or sabotage equipment. It can 
 uplink-c4-bundle-name = C-4 bundle
 uplink-c4-bundle-desc = Because sometimes quantity is quality. Contains 8 C-4 plastic explosives.
 
+uplink-emp-grenade-name = Emp Grenade
+uplink-emp-grenade-desc = Releases electromagnetic pulses that disrupt or damage many electronic devices or drain power cells.
+
 # Ammo
 uplink-pistol-magazine-name = Pistol Magazine (.35 auto)
 uplink-pistol-magazine-desc = Pistol magazine with 10 catridges. Compatible with Viper.
@@ -85,7 +88,7 @@ uplink-hypopen-name = Hypopen
 uplink-hypopen-desc = A chemical hypospray disguised as a pen, capable of instantly injecting up to 15u of reagents. Starts empty.
 
 uplink-voice-mask-name = Voice Mask
-uplink-voice-mask-desc = A gas mask that lets you adjust your voice to whoever you can think of.
+uplink-voice-mask-desc = A gas mask that lets you adjust your voice to whoever you can think of. Also utilizes cutting-edge chameleon technology.
 
 # Implants
 uplink-storage-implanter-name = Storage Implanter

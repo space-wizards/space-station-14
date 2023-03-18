@@ -304,12 +304,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxvol: 15
+        maxvol: 38
         reagents:
         - ReagentId: Nutriment
-          Quantity: 7
+          Quantity: 18
         - ReagentId: Vitamin
-          Quantity: 5
+          Quantity: 15
 # Tastes like sourness, leaves.
 
 - type: entity
