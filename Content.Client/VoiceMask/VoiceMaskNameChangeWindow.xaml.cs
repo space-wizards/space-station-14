@@ -34,6 +34,7 @@ public sealed partial class VoiceMaskNameChangeWindow : DefaultWindow
             .Resolve<IPrototypeManager>()
             .EnumeratePrototypes<TTSVoicePrototype>()
             .Where(o => o.RoundStart)
+            .OrderBy(o => Loc.GetString(o.Name))
             .ToList();
         for (var i = 0; i < _voices.Count; i++)
         {

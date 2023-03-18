@@ -24,7 +24,11 @@ public sealed partial class HumanoidProfileEditor
     {
         _ttsMgr = IoCManager.Resolve<TTSManager>();
         _ttsSys = _entMan.System<TTSSystem>();
-        _voiceList = _prototypeManager.EnumeratePrototypes<TTSVoicePrototype>().Where(o => o.RoundStart).ToList();
+        _voiceList = _prototypeManager
+            .EnumeratePrototypes<TTSVoicePrototype>()
+            .Where(o => o.RoundStart)
+            .OrderBy(o => Loc.GetString(o.Name))
+            .ToList();
 
         _voiceButton.OnItemSelected += args =>
         {
