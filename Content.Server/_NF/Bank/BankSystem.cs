@@ -1,6 +1,6 @@
 using System;
 using Content.Server.GameTicking;
-using Content.Shared.Bank;
+using Content.Shared.Bank.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Network;
 using Content.Shared.Database;
@@ -8,20 +8,21 @@ using Content.Server.Players;
 using Content.Shared.Preferences;
 using Content.Server.Database;
 using Content.Server.Preferences.Managers;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using Robust.Shared.Log;
 
-namespace Content.Server._NF.Bank;
+namespace Content.Server.Bank;
 
 public sealed class BankSystem : EntitySystem
 {
     [Dependency] private readonly IServerPreferencesManager _prefsManager = default!;
     [Dependency] private readonly IServerDbManager _dbManager = default!;
-    [Dependency] private readonly ISawmill _log = default!;
-    
+
+    private ISawmill _log = default!;
+
     public override void Initialize()
     {
         base.Initialize();
-
+        _log = Logger.GetSawmill("bank");
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawn);
         SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetach);
 
@@ -104,11 +105,7 @@ public sealed class BankSystem : EntitySystem
             _log.Info($"{mobUid} has no bank account");
             return false;
         }
-        if (bank.Balance < amount)
-        {
-            _log.Info($"{mobUid} has insufficient funds");
-            return false;
-        }
+
         bank.Balance += amount;
         _log.Info($"{mobUid} deposited {amount}");
         Dirty(bank);

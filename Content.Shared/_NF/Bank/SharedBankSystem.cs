@@ -1,13 +1,11 @@
-using Content.Shared.Bank;
 using Robust.Shared.GameStates;
+using Content.Shared.Bank.Components;
 
 
-namespace Content.Server._NF.Bank;
+namespace Content.Shared.Bank;
 
 public sealed class SharedBankSystem : EntitySystem
 {
-
-    [Dependency] private readonly ISawmill _log = default!;
     
     public override void Initialize()
     {
