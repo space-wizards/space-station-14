@@ -135,7 +135,7 @@
           steps:
             - material: Bananium
               amount: 2
-              doafter: 2
+              doAfter: 2
             - tool: Welding
               doAfter: 20
 
