@@ -115,3 +115,9 @@
   entity: ClothingShoesUSSPBlack
   sponsorOnly: true
   whitelistJobs: [HeadOfSecurity, IAA]
+
+# ondapapers
+- type: loadout
+  id: FancyCrownLoadout
+  entity: ClothingHeadHatFancyCrown
+  sponsorOnly: true
