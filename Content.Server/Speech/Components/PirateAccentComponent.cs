@@ -29,6 +29,18 @@ public sealed class PirateAccentComponent : Component
     [DataField("pirateResponseTwo", customTypeSerializer: typeof(PrototypeIdSerializer<ReplacementAccentPrototype>))]
     public string PirateResponseTwo = "accent-pirate-word-6";
 
+    [DataField("pirateWordThree", customTypeSerializer: typeof(PrototypeIdSerializer<ReplacementAccentPrototype>))]
+    public string PirateWordThree = "accent-pirate-word-7";
+
+    [DataField("pirateResponseThree", customTypeSerializer: typeof(PrototypeIdSerializer<ReplacementAccentPrototype>))]
+    public string PirateResponseThree = "accent-pirate-word-8";
+
+    [DataField("pirateWordFour", customTypeSerializer: typeof(PrototypeIdSerializer<ReplacementAccentPrototype>))]
+    public string PirateWordFour = "accent-pirate-word-9";
+
+    [DataField("pirateWordFive", customTypeSerializer: typeof(PrototypeIdSerializer<ReplacementAccentPrototype>))]
+    public string PirateWordFive = "accent-pirate-word-10";
+
     [DataField("piratePrefix", customTypeSerializer: typeof(PrototypeIdSerializer<ReplacementAccentPrototype>))]
     public string PiratePrefix = "accent-pirate-prefix-";
 }

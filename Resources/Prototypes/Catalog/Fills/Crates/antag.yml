@@ -26,13 +26,13 @@
   - type: StorageFill
     contents:
       - id: WeaponLauncherPirateCannon
-        amount: 1
+        amount: 2
       - id: ClothingOuterCoatGentle
         amount: 1
       - id: Cutlass
         amount: 2
       - id: CannonBall
-        amount: 4
+        amount: 2
       - id: ClothingHeadHatJesterAlt
         amount: 1
       - id: ClothingUniformJumpsuitJesterAlt

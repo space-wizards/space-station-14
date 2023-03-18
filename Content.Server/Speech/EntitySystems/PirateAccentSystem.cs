@@ -22,7 +22,10 @@ public sealed class PirateAccentSystem : EntitySystem
 
         msg = Regex.Replace(msg, Loc.GetString($"{component.PirateWord}"), Loc.GetString($"{component.PirateResponse}"), RegexOptions.IgnoreCase);
         msg = Regex.Replace(msg, Loc.GetString($"{component.PirateWordOne}"), Loc.GetString($"{component.PirateResponseOne}"), RegexOptions.IgnoreCase);
-        msg = Regex.Replace(msg, Loc.GetString($"{component.PirateWordTwo}"), Loc.GetString($"{component.PirateResponseTwo}"), RegexOptions.IgnoreCase);
+        msg = Regex.Replace(msg, ($@"(?<!\w){Loc.GetString($"{component.PirateWordTwo}")}(?!\w)"), Loc.GetString($"{component.PirateResponseTwo}"), RegexOptions.IgnoreCase);
+        msg = Regex.Replace(msg, ($@"(?<!\w){Loc.GetString($"{component.PirateWordThree}")}(?!\w)"), Loc.GetString($"{component.PirateResponseThree}"), RegexOptions.IgnoreCase);
+        msg = Regex.Replace(msg, ($@"(?<!\w){Loc.GetString($"{component.PirateWordFour}")}(?!\w)"), Loc.GetString($"{component.PirateResponseThree}"), RegexOptions.IgnoreCase);
+        msg = Regex.Replace(msg, ($@"(?<!\w){Loc.GetString($"{component.PirateWordFive}")}(?!\w)"), Loc.GetString($"{component.PirateResponseTwo}"), RegexOptions.IgnoreCase);
 
         // Suffix:
         if (_random.Prob(component.YarChance))
@@ -36,6 +39,7 @@ public sealed class PirateAccentSystem : EntitySystem
 
         return msg;
     }
+
     private void OnAccentGet(EntityUid uid, PirateAccentComponent component, AccentGetEvent args)
     {
         args.Message = Accentuate(args.Message, component);

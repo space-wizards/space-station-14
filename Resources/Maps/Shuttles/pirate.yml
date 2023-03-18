@@ -5233,4 +5233,10 @@ entities:
   - pos: 2.5,1.5
     parent: 0
     type: Transform
+- uid: 731
+  type: PaperBin5
+  components:
+  - pos: -0.5,10.5
+    parent: 0
+    type: Transform
 ...

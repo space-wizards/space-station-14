@@ -7,3 +7,7 @@ accent-pirate-word-3 = you
 accent-pirate-word-4 = ya
 accent-pirate-word-5 = hello
 accent-pirate-word-6 = ahoy
+accent-pirate-word-7 = yes
+accent-pirate-word-8 = aye
+accent-pirate-word-9 = yea
+accent-pirate-word-10 = hi
