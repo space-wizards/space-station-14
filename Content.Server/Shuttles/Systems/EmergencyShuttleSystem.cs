@@ -309,6 +309,6 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
        if (component.LaunchTime == null)
            return;
 
-       component.LaunchTime += args.PausedTime;
+       component.LaunchTime = component.LaunchTime.Value + args.PausedTime;
    }
 }
