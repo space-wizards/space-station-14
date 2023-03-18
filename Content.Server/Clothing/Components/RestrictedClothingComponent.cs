@@ -1,5 +1,5 @@
-﻿using Content.Server.Speech.Components;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+﻿using Content.Server.Clothing.Systems;
+using Content.Shared.Administration;
 
 namespace Content.Server.Clothing.Components;
 
@@ -7,13 +7,14 @@ namespace Content.Server.Clothing.Components;
 ///     Does bad things when someone tries to wear something they shouldn't
 /// </summary>
 [RegisterComponent]
+[Access(typeof(RestrictedClothingSystem))]
 public sealed class RestrictedClothingComponent : Component
 {
     /// <summary>
     ///     List of permissions required to be allowed to wear the item
     /// </summary>
     [DataField("permissions")] [ViewVariables(VVAccess.ReadWrite)]
-    public HashSet<string> Permissions = new();
+    public AdminFlags Permissions = AdminFlags.None;
 
     /// <summary>
     ///     Uid that won't be affected

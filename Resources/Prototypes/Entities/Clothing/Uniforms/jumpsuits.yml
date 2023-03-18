@@ -890,7 +890,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitAdmiral
-  suffix: DO NOT MAP
+  suffix: Admin
   name: admiral jumpsuit
   description: It's a jumpsuit with gold markings worn by CentCom High Command
   components:
@@ -914,7 +914,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitGrandAdmiral
-  suffix: DO NOT MAP
+  suffix: Admin
   name: grand admiral jumpsuit
   description: It's a jumpsuit with gold markings worn by CentCom's highest-ranking officer
   components:
@@ -963,7 +963,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/ert_janitor.rsi
   - type: DiseaseProtection
     protection: 0.1
-    
+
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitERTLeader

@@ -118,7 +118,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakGrandAdmiral
-  suffix: DO NOT MAP
+  suffix: Admin
   name: grand admiral's cloak
   description: A light grey cloak with a golden touch, given to those who proved themselves powerful enough.
   components:
@@ -134,7 +134,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakAdmiral
-  suffix: DO NOT MAP
+  suffix: Admin
   name: admiral's cloak
   description: A dark green cloak with a golden touch, given to those who proved themselves powerful enough.
   components:

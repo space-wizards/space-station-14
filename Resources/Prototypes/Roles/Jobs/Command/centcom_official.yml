@@ -23,10 +23,6 @@
   canBeAntag: false
   accessGroups:
     - AllAccess
-#  requirements:
-#    - !type:AdminPermissionRequirement
-#      permissions:
-#        - Admin
 
 - type: job
   id: CentralCommandGrandAdmiral
@@ -40,11 +36,6 @@
   canBeAntag: false
   accessGroups:
     - AllAccess
-#  requirements:
-#    - !type:AdminPermissionRequirement
-#      permissions:
-#        - Admin
-#        - Fun
 
 - type: startingGear
   id: CentcomGear
