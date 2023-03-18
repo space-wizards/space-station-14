@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.GameTicking.Rules.Configurations;
 
 /// <summary>
-/// Configuration for the Space Ninja antag.
+/// Configuration for the Cluwne Beast antag.
 /// </summary>
 public sealed class CluwneBeastRuleConfiguration : StationEventRuleConfiguration
 {
