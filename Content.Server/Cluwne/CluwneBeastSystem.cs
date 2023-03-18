@@ -40,7 +40,7 @@ public sealed class CluwneBeastSystem : EntitySystem
     }
 
     /// <summary>
-    /// On death removes active comps and gives genetic damage to prevent cloning, reduce this to allow cloning.
+    /// On death removes autoemote.
     /// </summary>
     private void OnMobState(EntityUid uid, CluwneBeastComponent component, MobStateChangedEvent args)
     {
@@ -60,7 +60,7 @@ public sealed class CluwneBeastSystem : EntitySystem
     }
 
     /// <summary>
-    /// OnStartup gives the cluwne outfit, ensures clumsy, gives name prefix and makes sure emote sounds are laugh.
+    /// OnStartup gives autoemote, makes cluwne beast clumsy and spawns a green portal.
     /// </summary>
     private void OnComponentStartup(EntityUid uid, CluwneBeastComponent component, ComponentStartup args)
     {
