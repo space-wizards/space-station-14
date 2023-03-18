@@ -318,7 +318,7 @@ public sealed partial class ShuttleSystem
                         comp.TravelStream = null;
                     }
 
-                    _audio.Play(_arrivalSound, Filter.Empty().AddInRange(Transform(uid).MapPosition, GetSoundRange(uid)), uid, true);
+                    _audio.PlayGlobal(_arrivalSound, Filter.Empty().AddInRange(Transform(uid).MapPosition, GetSoundRange(uid)), true);
 
                     if (TryComp<FTLDestinationComponent>(uid, out var dest))
                     {
