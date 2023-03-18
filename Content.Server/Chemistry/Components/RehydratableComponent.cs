@@ -20,10 +20,10 @@ public sealed class RehydratableComponent : Component
     public string CatalystPrototype = "Water";
 
     /// <summary>
-    /// The amount of catalyst that must be present to be hydrated.
+    /// The minimum amount of catalyst that must be present to be hydrated.
     /// </summary>
     [DataField("catalystAmount"), ViewVariables(VVAccess.ReadWrite)]
-    public FixedPoint2 CatalystAmount = FixedPoint2.Zero;
+    public FixedPoint2 CatalystMinimum = FixedPoint2.Zero;
 
     /// <summary>
     /// The entity to create when hydrated.

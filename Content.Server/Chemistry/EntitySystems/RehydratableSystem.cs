@@ -17,7 +17,7 @@ public sealed class RehydratableSystem : EntitySystem
 
     private void OnSolutionChange(EntityUid uid, RehydratableComponent comp, SolutionChangedEvent args)
     {
-        if (_solutions.GetReagentQuantity(uid, comp.CatalystPrototype) > comp.CatalystAmount)
+        if (_solutions.GetReagentQuantity(uid, comp.CatalystPrototype) > comp.CatalystMinimum)
         {
             Expand(uid, comp);
         }
