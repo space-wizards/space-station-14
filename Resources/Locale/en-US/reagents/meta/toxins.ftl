@@ -55,9 +55,6 @@ reagent-desc-allicin = An organosulfur compound found in alliums like garlic, on
 reagent-name-pax = pax
 reagent-desc-pax = A psychiatric drug which prevents the patient from directly harming anyone.
 
-reagent-name-honk = honk
-reagent-desc-honk = A toxin found in bananium. Causes severe honking and internal bleeding, may also cause the patient to mutate.
-
 reagent-name-human-muta-tox = human mutation toxin
 reagent-name-human-muta-tox = A drug capable of transforming any humanoid into a Human.
 
@@ -72,3 +69,6 @@ reagent-desc-reptilian-muta-tox = A drug capable of transforming any humanoid in
 
 reagent-name-monkey-muta-tox = monkey mutation toxin
 reagent-desc-monkey-muta-tox = A drug capable of transforming any humanoid into a monkey.
+
+reagent-name-honk = honk
+reagent-desc-honk = A toxin found in bananium. Causes severe honking and internal bleeding, may also cause the patient to mutate.
