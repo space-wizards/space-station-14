@@ -10,6 +10,7 @@
         prob: 0.3
       - id: ClothingHeadHatWarden
       - id: ClothingHeadHatBeretWarden
+      - id: ClothingHeadHatCapWardenAlt # Corvax-SecFashion
       - id: ClothingBeltSecurityFilled
       - id: Flash
       - id: ClothingEyesGlassesSecurity
@@ -18,6 +19,7 @@
       - id: ClothingShoesBootsJack
       - id: ClothingOuterCoatWarden
       - id: ClothingOuterWinterWarden
+      - id: ClothingOuterCoatWardenAlt # Corvax-SecFashion
       - id: RubberStampWarden
       - id: DoorRemoteArmory
       - id: ClothingOuterHardsuitWarden
@@ -42,6 +44,8 @@
       - id: ClothingHeadsetSecurity
       - id: ClothingHandsGlovesColorBlack
       - id: ClothingShoesBootsJack
+      - id: ClothingOuterCoatSecurityOvercoat # Corvax-SecFashion
+        prob: 0.2
 
 - type: entity
   id: LockerDetectiveFilled

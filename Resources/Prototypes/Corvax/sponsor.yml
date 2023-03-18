@@ -134,7 +134,7 @@
 
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadHatCapHoS
+  id: ClothingHeadHatCapLeatherHoS
   name: leather head of security's cap
   description: Pretty old stuff for these times, bringing back old memories...
   suffix: Sponsor

@@ -41,3 +41,25 @@
       sprite: Corvax/Clothing/Head/Hats/ERT_leader_beret.rsi
     - type: Clothing
       sprite: Corvax/Clothing/Head/Hats/ERT_leader_beret.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCapHoS
+  name: head of security cap
+  description: The robust standard-issue cap of the Head of Security. For showing the officers who's in charge.
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/Head/Hats/hoshat.rsi
+    - type: Clothing
+      sprite: Corvax/Clothing/Head/Hats/hoshat.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCapWardenAlt
+  name: warden's police hat
+  description: It's a special blue hat issued to the Warden of a security force.
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/Head/Hats/warden_alt.rsi
+    - type: Clothing
+      sprite: Corvax/Clothing/Head/Hats/warden_alt.rsi
