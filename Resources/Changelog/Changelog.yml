@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix exception when shooting with your mouse outside of the window.,
-    type: Fix}
-  id: 2692
-  time: '2022-11-23T06:35:06.0000000+00:00'
 - author: Mervill
   changes:
   - {message: Items dropped onto a moving Conveyor by the disposal network move immediately,
@@ -2901,3 +2895,9 @@ Entries:
       expect to encounter it in medical more often', type: Tweak}
   id: 3191
   time: '2023-03-16T22:27:28.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: 'Solar flare lost it''s ability to manipulate mechanical doors, curtains
+      and firelocks. Now it only affects autoclosing airlocks.', type: Fix}
+  id: 3192
+  time: '2023-03-18T10:57:38.0000000+00:00'
