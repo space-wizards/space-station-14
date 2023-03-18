@@ -6,6 +6,6 @@
 [RegisterComponent]
 public sealed class DNAComponent : Component
 {
-    [DataField("DNA")]
+    [DataField("dna")]
     public string? DNA = String.Empty;
 }

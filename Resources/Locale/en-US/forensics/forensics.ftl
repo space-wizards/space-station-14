@@ -1,6 +1,7 @@
 forensic-scanner-interface-title = Forensic scanner
 forensic-scanner-interface-fingerprints = Fingerprints
 forensic-scanner-interface-fibers = Fibers
+forensic-scanner-interface-dna = DNA
 forensic-scanner-interface-no-data = No scan data available
 forensic-scanner-interface-print = Print
 forensic-scanner-interface-clear = Clear

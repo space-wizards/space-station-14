@@ -292,11 +292,10 @@ public sealed class BloodstreamSystem : EntitySystem
             // Pass some of the chemstream into the spilled blood.
             var temp = component.ChemicalSolution.SplitSolution(component.BloodTemporarySolution.Volume / 10);
             component.BloodTemporarySolution.AddSolution(temp, _prototypeManager);
-            var puddle = EntityManager.EntitySysManager.GetEntitySystem<SpillableSystem>()
-                .SpillAt(uid, component.BloodTemporarySolution, "PuddleBlood", false);
+            var puddle = _spillableSystem.SpillAt(uid, component.BloodTemporarySolution, "PuddleBlood", false);
             if (puddle != null)
             {
-                var puddleDna = EntityManager.EnsureComponent<DNAComponent>(puddle.Owner); //TODO: Get rid of .Owner
+                var puddleDna = EnsureComp<DNAComponent>(puddle.Owner); //TODO: Get rid of .Owner
                 TryComp<DNAComponent>(uid, out var dnaComponent);
                 puddleDna.DNA = dnaComponent?.DNA;
             }

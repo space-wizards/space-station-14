@@ -217,6 +217,8 @@ namespace Content.Server.Forensics
             {
                 text.AppendLine(fiber);
             }
+            text.AppendLine();
+            text.AppendLine(Loc.GetString("forensic-scanner-interface-dna"));
 
             _paperSystem.SetContent(printed, text.ToString());
             _audioSystem.PlayPvs(component.SoundPrint, uid,
