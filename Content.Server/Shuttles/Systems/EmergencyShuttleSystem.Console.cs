@@ -33,7 +33,7 @@ public sealed partial class EmergencyShuttleSystem
     /// <summary>
     /// How much time remaining until the shuttle consoles for emergency shuttles are unlocked?
     /// </summary>
-    private float _consoleAccumulator;
+    private float _consoleAccumulator = float.MinValue;
 
     /// <summary>
     /// How long after the transit is over to end the round.
@@ -113,6 +113,15 @@ public sealed partial class EmergencyShuttleSystem
 
     private void UpdateEmergencyConsole(float frameTime)
     {
+        var minTime = -(TransitTime - (ShuttleSystem.DefaultStartupTime + ShuttleSystem.DefaultTravelTime +
+                                       ShuttleSystem.DefaultArrivalTime));
+
+        // TODO: I know this is shit but I already just cleaned up a billion things.
+        if (_consoleAccumulator < minTime)
+        {
+            return;
+        }
+
         _consoleAccumulator -= frameTime;
 
         // No early launch but we're under the timer.
@@ -156,7 +165,7 @@ public sealed partial class EmergencyShuttleSystem
                 while (podQuery.MoveNext(out _, out var pod))
                 {
                     pod.LaunchTime = _timing.CurTime + TimeSpan.FromSeconds(podLaunchOffset);
-                    podLaunchOffset += _random.NextFloat(0.5f, 1.5f);
+                    podLaunchOffset += _random.NextFloat(0.5f, 2.5f);
                 }
             }
         }
@@ -170,7 +179,7 @@ public sealed partial class EmergencyShuttleSystem
 
             // Don't dock them. If you do end up doing this then stagger launch.
             _shuttle.FTLTravel(uid, shuttle,
-                CentCom.Value, _consoleAccumulator, TransitTime);
+                CentCom.Value, hyperspaceTime: TransitTime);
 
             RemCompDeferred<EscapePodComponent>(uid);
         }
@@ -186,7 +195,7 @@ public sealed partial class EmergencyShuttleSystem
         }
 
         // All the others.
-        if (_consoleAccumulator < -(TransitTime - (ShuttleSystem.DefaultStartupTime + ShuttleSystem.DefaultTravelTime + ShuttleSystem.DefaultArrivalTime)))
+        if (_consoleAccumulator < minTime)
         {
             // Guarantees that emergency shuttle arrives first before anyone else can FTL.
             if (CentCom != null)
@@ -269,7 +278,7 @@ public sealed partial class EmergencyShuttleSystem
         _roundEndCancelToken = null;
         _leftShuttles = false;
         _launchedShuttles = false;
-        _consoleAccumulator = 0f;
+        _consoleAccumulator = float.MinValue;
         EarlyLaunchAuthorized = false;
         EmergencyShuttleArrived = false;
     }
@@ -316,7 +325,7 @@ public sealed partial class EmergencyShuttleSystem
         if (EarlyLaunchAuthorized || !EmergencyShuttleArrived || _consoleAccumulator <= _authorizeTime) return false;
 
         _logger.Add(LogType.EmergencyShuttle, LogImpact.Extreme, $"Emergency shuttle launch authorized");
-        _consoleAccumulator =_authorizeTime;
+        _consoleAccumulator = _authorizeTime;
         EarlyLaunchAuthorized = true;
         RaiseLocalEvent(new EmergencyShuttleAuthorizedEvent());
         AnnounceLaunch();
