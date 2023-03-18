@@ -1,7 +1,8 @@
-using System;
+using System.Threading;
 using Content.Server.GameTicking;
 using Content.Shared.Bank.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Content.Shared.Database;
 using Content.Server.Players;
@@ -9,6 +10,7 @@ using Content.Shared.Preferences;
 using Content.Server.Database;
 using Content.Server.Preferences.Managers;
 using Robust.Shared.Log;
+using Content.Shared.Audio;
 
 namespace Content.Server.Bank;
 
@@ -24,8 +26,8 @@ public sealed class BankSystem : EntitySystem
         base.Initialize();
         _log = Logger.GetSawmill("bank");
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawn);
-        SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetach);
-
+        SubscribeLocalEvent<BankAccountComponent, ComponentGetState>(OnBankAccountChanged);
+        SubscribeLocalEvent<PlayerJoinedLobbyEvent>(OnPlayerLobbyJoin);
     }
     // we may have to change this later depending on mind rework. then again, maybe the bank account should stay attached to the mob and not follow a mind around.
     private void OnPlayerSpawn (PlayerSpawnCompleteEvent args)
@@ -36,15 +38,20 @@ public sealed class BankSystem : EntitySystem
         Dirty(bank);
     }
 
-    private void OnPlayerDetach (PlayerDetachedEvent args)
+    private void OnBankAccountChanged(EntityUid mobUid, BankAccountComponent bank, ref ComponentGetState args)
     {
-        var mobUid = args.Entity;
-
-        if (!TryComp<BankAccountComponent>(mobUid, out var bank))
+        args.State = new BankAccountComponentState
+        {
+            Balance = bank.Balance,
+        };
+        var user = args.Player?.UserId;
+        if (user == null || args.Player?.AttachedEntity != mobUid)
+        {
+            _log.Warning($"Could not save bank account");
             return;
+        }
 
-        var user = args.Player.UserId;
-        var prefs = _prefsManager.GetPreferences(user);
+        var prefs = _prefsManager.GetPreferences((NetUserId) user);
         var character = prefs.SelectedCharacter;
         var index = prefs.IndexOfCharacter(character);
 
@@ -66,10 +73,15 @@ public sealed class BankSystem : EntitySystem
             profile.AntagPreferences,
             profile.TraitPreferences);
 
-        _dbManager.SaveCharacterSlotAsync(user, newProfile, index);
+        _dbManager.SaveCharacterSlotAsync((NetUserId) user, newProfile, index);
         _log.Info($"Character {profile.Name} saved");
     }
 
+    private void OnPlayerLobbyJoin (PlayerJoinedLobbyEvent args)
+    {
+        var cts = new CancellationToken();
+        _prefsManager.LoadData(args.PlayerSession, cts);
+    }
     public bool TryBankWithdraw(EntityUid mobUid, int amount)
     {
         if (amount <= 0)
