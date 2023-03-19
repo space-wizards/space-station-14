@@ -1,5 +1,5 @@
 - type: entity
-  name: Cluwne Beast
+  name: cluwnebeast
   id: MobCluwneBeast
   parent: SimpleMobBase
   description: A cluwne beast, nightmare fuel, time to run!
@@ -18,10 +18,10 @@
     - SimpleHostile
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Aliens/Xenos/cluwne_beast.rsi
+    sprite: Mobs/Aliens/cluwnebeast.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: beast
+      state: cluwnebeast
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -67,6 +67,7 @@
     baseSprintSpeed : 3.5
   - type: Inventory
     templateId: cluwnebeast
+    speciesId: cluwnebeast
   - type: Stripping
   - type: UserInterface
     interfaces:
