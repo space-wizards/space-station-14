@@ -2,3 +2,8 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "Taken from TG station."
   source: "https://github.com/tgstation/tgstation/commit/97945e7d08d1457ffc27e46526a48c0453cc95e4"
+
+- files: ["beast.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Partially taken from TG station and made by maximej (freesound.org) and then mixed together, converted to mono and shortened by brainfood1183 (github)."
+  source: "https://github.com/tgstation/tgstation/commit/3e34eb9e3fec7ff55c2db11ba2e7d3b4156443fa, https://freesound.org/people/maximej/sounds/596530/"

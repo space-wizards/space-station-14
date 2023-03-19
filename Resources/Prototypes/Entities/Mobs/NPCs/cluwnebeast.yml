@@ -35,6 +35,8 @@
       layer:
       - MobLayer
   - type: MobState
+  - type: Mind
+    showExamineInfo: true
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: CluwneBeast
