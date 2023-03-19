@@ -190,7 +190,7 @@ public sealed partial class WoundSystem
         }
     }
 
-    public IEnumerable<(EntityUid,WoundComponent)> GetAllWounds(EntityUid woundableId)
+    public IEnumerable<(EntityUid, WoundComponent)> GetAllWounds(EntityUid woundableId)
     {
         if (!TryGetAllWoundEntities(woundableId, out var wounds))
             yield break;
@@ -198,7 +198,7 @@ public sealed partial class WoundSystem
         foreach (var woundId in wounds)
         {
             if (TryComp<WoundComponent>(woundId, out var woundComp))
-                yield return (woundId,woundComp);
+                yield return (woundId, woundComp);
         }
     }
 

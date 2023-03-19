@@ -35,6 +35,7 @@ public partial class SharedBodySystem
             part.Symmetry
         );
     }
+
     private void OnPartHandleState(EntityUid uid, BodyPartComponent part, ref ComponentHandleState args)
     {
         if (args.Current is not BodyPartComponentState state)
@@ -124,7 +125,8 @@ public partial class SharedBodySystem
         return (parent = GetPartParent(id, part).GetValueOrDefault()) != default;
     }
 
-    public IEnumerable<(EntityUid Id, BodyPartComponent Component)> GetPartChildren(EntityUid? id, BodyPartComponent? part = null)
+    public IEnumerable<(EntityUid Id, BodyPartComponent Component)> GetPartChildren(EntityUid? id,
+        BodyPartComponent? part = null)
     {
         if (id == null || !Resolve(id.Value, ref part, false))
             yield break;
@@ -143,7 +145,8 @@ public partial class SharedBodySystem
         }
     }
 
-    public IEnumerable<(EntityUid Id, OrganComponent Component)> GetPartOrgans(EntityUid? partId, BodyPartComponent? part = null)
+    public IEnumerable<(EntityUid Id, OrganComponent Component)> GetPartOrgans(EntityUid? partId,
+        BodyPartComponent? part = null)
     {
         if (partId == null || !Resolve(partId.Value, ref part, false))
             yield break;
@@ -274,7 +277,7 @@ public partial class SharedBodySystem
             if (part.PartType == BodyPartType.Leg)
             {
                 UpdateMovementSpeed(oldBody);
-                if(!GetBodyChildrenOfType(oldBody, BodyPartType.Leg).Any())
+                if (!GetBodyChildrenOfType(oldBody, BodyPartType.Leg).Any())
                     Standing.Down(oldBody);
             }
 
@@ -300,7 +303,8 @@ public partial class SharedBodySystem
         return true;
     }
 
-    public void UpdateMovementSpeed(EntityUid body, BodyComponent? component = null, MovementSpeedModifierComponent? movement = null)
+    public void UpdateMovementSpeed(EntityUid body, BodyComponent? component = null,
+        MovementSpeedModifierComponent? movement = null)
     {
         if (!Resolve(body, ref component, ref movement, false))
             return;
@@ -315,7 +319,7 @@ public partial class SharedBodySystem
         var allLegs = new HashSet<EntityUid>();
         foreach (var slot in allSlots)
         {
-            if (slot.Type == BodyPartType.Leg && slot.Child is {  } child)
+            if (slot.Type == BodyPartType.Leg && slot.Child is { } child)
                 allLegs.Add(child);
         }
 
@@ -378,7 +382,8 @@ public partial class SharedBodySystem
         return true;
     }
 
-    public IEnumerable<(EntityUid Id, BodyPartComponent Component)> GetBodyChildrenOfType(EntityUid? bodyId, BodyPartType type, BodyComponent? body = null)
+    public IEnumerable<(EntityUid Id, BodyPartComponent Component)> GetBodyChildrenOfType(EntityUid? bodyId,
+        BodyPartType type, BodyComponent? body = null)
     {
         foreach (var part in GetBodyChildren(bodyId, body))
         {

@@ -21,6 +21,7 @@ public sealed partial class WoundSystem
                 FullyHealWound(target, woundEntity, woundable, wound);
             }
         }
+
         if (!Resolve(target, ref body))
             return;
         foreach (var (bodyPartEntity, bodyPart) in _body.GetBodyChildren(target, body))
@@ -32,6 +33,7 @@ public sealed partial class WoundSystem
                     FullyHealWound(bodyPartEntity, woundEntity, woundablePart, wound);
                 }
             }
+
             foreach (var (organEntity, organ) in _body.GetPartOrgans(bodyPartEntity, bodyPart))
             {
                 if (!TryComp(organEntity, out WoundableComponent? woundableOrgan))
@@ -103,7 +105,6 @@ public sealed partial class WoundSystem
         return SetWoundCauterize(woundableId, woundId, woundable, wound, false);
     }
 
-
     #endregion
 
     #region Private_Implementation
@@ -126,6 +127,7 @@ public sealed partial class WoundSystem
             HealWoundable(woundable);
         }
     }
+
     private bool SetWoundCauterize(EntityUid woundableId, EntityUid woundId, WoundableComponent woundable,
         WoundComponent wound, bool cauterized)
     {
