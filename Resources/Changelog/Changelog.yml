@@ -1,15 +1,4 @@
 Entries:
-- author: Mervill
-  changes:
-  - {message: Items dropped onto a moving Conveyor by the disposal network move immediately,
-    type: Fix}
-  id: 2693
-  time: '2022-11-23T07:38:39.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Chameleon masks and helmets can hide your identity., type: Tweak}
-  id: 2694
-  time: '2022-11-24T02:02:55.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Maybe fix grid clipping., type: Fix}
@@ -2901,3 +2890,15 @@ Entries:
       and firelocks. Now it only affects autoclosing airlocks.', type: Fix}
   id: 3192
   time: '2023-03-18T10:57:38.0000000+00:00'
+- author: 778b
+  changes:
+  - {message: Added IFF console boards!, type: Add}
+  id: 3193
+  time: '2023-03-19T00:55:54.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: All entity storage now has a roughly 2.5x higher air capacity., type: Tweak}
+  - {message: Livestock crates now have ~10x higher air capacity compared to previously.,
+    type: Tweak}
+  id: 3194
+  time: '2023-03-19T00:56:39.0000000+00:00'
