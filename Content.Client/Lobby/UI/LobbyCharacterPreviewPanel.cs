@@ -132,7 +132,8 @@ namespace Content.Client.Lobby.UI
                     _viewBox.AddChild(viewWest);
                     _viewBox.AddChild(viewEast);
                     _summaryLabel.Text = selectedCharacter.Summary;
-                    _bankAccountLabel.Text = selectedCharacter.BankBalance.ToString();
+                    var balance = selectedCharacter.BankBalance.ToString();
+                    _bankAccountLabel.Text = $"Account Balance: ${balance}";
                     EntitySystem.Get<HumanoidAppearanceSystem>().LoadProfile(_previewDummy.Value, selectedCharacter);
                     GiveDummyJobClothes(_previewDummy.Value, selectedCharacter);
                 }
