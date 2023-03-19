@@ -77,7 +77,7 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
 
         if (tile != null && _atmos.GetTileMixture(tile.Value.GridUid, null, tile.Value.GridIndices, true) is {} environment)
         {
-            _atmos.Merge(serverComp.Air, environment.RemoveVolume(SharedEntityStorageComponent.GasMixVolume));
+            _atmos.Merge(serverComp.Air, environment.RemoveVolume(serverComp.Air.Volume));
         }
     }
 
