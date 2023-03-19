@@ -24,5 +24,16 @@
             </BoxContainer>
         </ScrollContainer>
         <TextureButton VerticalExpand="True" />
+        <GridContainer Columns="3" HorizontalExpand="True">
+            <Button Name="TargetIdButton" Access="Public"/>
+            <Button Name="SellShipButton"
+                Text="Sell"
+                Disabled="True" />
+            <BoxContainer Orientation="Vertical">
+                <Label Text="{Loc 'shipyard-console-deed-label'}" />
+                <Label Name="DeedTitle"
+                    Text=""/>
+            </BoxContainer>
+        </GridContainer>
     </BoxContainer>
 </controls:FancyWindow>

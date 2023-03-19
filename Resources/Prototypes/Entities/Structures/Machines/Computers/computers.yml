@@ -799,9 +799,15 @@
   description: Used to purchase and sell shuttles
   components:
   - type: ShipyardConsole
-  - type: AccessReader
-    access:
-    - [ Captain ]
+    targetIdSlot:
+      name: id-card-console-target-id
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      ejectOnBreak: true
+      swap: false
+      whitelist:
+        components:
+        - IdCard
   - type: ActivatableUI
     key: enum.ShipyardConsoleUiKey.Shipyard
   - type: UserInterface
@@ -814,9 +820,6 @@
     radius: 1.5
     energy: 1.6
     color: "#b89f25"
-  - type: ContainerContainer
-    containers:
-      board: !type:Container
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -827,6 +830,11 @@
       state: request
     - map: ["computerLayerKeys"]
       state: tech_key
+  - type: ItemSlots  
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+      ShipyardConsole-targetId: !type:ContainerSlot {}
       
 - type: entity
   id: ComputerPalletConsole

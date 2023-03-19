@@ -14,6 +14,8 @@ using Robust.Shared.Configuration;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Coordinates;
 using Content.Shared.Shipyard.Events;
+using Content.Shared.Mobs.Components;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Shipyard.Systems;
 
@@ -21,6 +23,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
 {
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly CargoSystem _cargo = default!;
     [Dependency] private readonly PricingSystem _pricing = default!;
     [Dependency] private readonly ShuttleSystem _shuttle = default!;
     [Dependency] private readonly StationSystem _station = default!;
@@ -40,10 +43,12 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         _sawmill = Logger.GetSawmill("shipyard");
 
         SubscribeLocalEvent<ShipyardConsoleComponent, ComponentStartup>(OnShipyardStartup);
-        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
-
-        SubscribeLocalEvent<ShipyardConsoleComponent, ShipyardConsolePurchaseMessage>(OnPurchaseMessage);
         SubscribeLocalEvent<ShipyardConsoleComponent, BoundUIOpenedEvent>(OnConsoleUIOpened);
+        SubscribeLocalEvent<ShipyardConsoleComponent, ShipyardConsoleSellMessage>(OnSellMessage);
+        SubscribeLocalEvent<ShipyardConsoleComponent, ShipyardConsolePurchaseMessage>(OnPurchaseMessage);
+        SubscribeLocalEvent<ShipyardConsoleComponent, EntInsertedIntoContainerMessage>(OnItemSlotChanged);
+        SubscribeLocalEvent<ShipyardConsoleComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
     }
     public override void Shutdown()
     {
@@ -156,6 +161,64 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         };
 
         shuttleGrid = gridList[0];
+        return true;
+    }
+
+    /// <summary>
+    /// Checks a shuttle to make sure that it is docked to the given station, and that there are no lifeforms aboard. Then it appraises the grid, outputs to the server log, and deletes the grid
+    /// </summary>
+    /// <param name="stationUid">The ID of the station that the shuttle is docked to</param>
+    /// <param name="shuttleUid">The grid ID of the shuttle to be appraised and sold</param>
+    public bool TrySellShuttle(EntityUid stationUid, EntityUid shuttleUid, out int bill)
+    {
+        bill = 0;
+
+        if (!TryComp<StationDataComponent>(stationUid, out var stationGrid) || !HasComp<ShuttleComponent>(shuttleUid) || !TryComp<TransformComponent>(shuttleUid, out var xform) || ShipyardMap == null)
+            return false;
+
+        var targetGrid = _station.GetLargestGrid(stationGrid);
+
+        if (targetGrid == null)
+            return false;
+
+        var gridDocks = _shuttle.GetDocks((EntityUid) targetGrid);
+        var shuttleDocks = _shuttle.GetDocks(shuttleUid);
+        var isDocked = false;
+
+        foreach (var shuttleDock in shuttleDocks)
+        {
+            foreach (var gridDock in gridDocks)
+            {
+                if (shuttleDock.DockedWith == gridDock.Owner)
+                {
+                    isDocked = true;
+                    break;
+                };
+            };
+            if (isDocked)
+                break;
+        };
+
+        if (!isDocked)
+        {
+            _sawmill.Warning($"shuttle is not docked to that station");
+            return false;
+        };
+
+        var mobQuery = GetEntityQuery<MobStateComponent>();
+        var xformQuery = GetEntityQuery<TransformComponent>();
+
+        if (_cargo.FoundOrganics(shuttleUid, mobQuery, xformQuery))
+        {
+            _sawmill.Warning($"organics on board");
+            return false;
+        };
+
+        //just yeet and delete for now. Might want to split it into another function later to send back to the shipyard map first to pause for something
+        //also superman 3 moment
+        bill = (int) _pricing.AppraiseGrid(shuttleUid);
+        _mapManager.DeleteGrid(shuttleUid);
+        _sawmill.Info($"Sold shuttle {shuttleUid} for {bill}");
         return true;
     }
 
