@@ -1,4 +1,5 @@
-﻿using Content.Shared.Body.Part;
+﻿using Content.Shared.Body.Components;
+using Content.Shared.Body.Part;
 using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Wounds.Components;
 
@@ -11,15 +12,45 @@ public sealed partial class WoundSystem
 
     #region Public_API
 
-    public bool FullyHealWound(EntityUid woundableId, EntityUid woundId, WoundableComponent? woundable = null,
+    public void HealAllWounds(EntityUid target, BodyComponent? body = null, WoundableComponent? woundable = null)
+    {
+        if (Resolve(target, ref woundable))
+        {
+            foreach (var (woundEntity, wound) in GetAllWounds(target))
+            {
+                FullyHealWound(target, woundEntity, woundable, wound);
+            }
+        }
+        if (!Resolve(target, ref body))
+            return;
+        foreach (var (bodyPartEntity, bodyPart) in _body.GetBodyChildren(target, body))
+        {
+            if (TryComp(bodyPartEntity, out WoundableComponent? woundablePart))
+            {
+                foreach (var (woundEntity, wound) in GetAllWounds(bodyPartEntity))
+                {
+                    FullyHealWound(bodyPartEntity, woundEntity, woundablePart, wound);
+                }
+            }
+            foreach (var (organEntity, organ) in _body.GetPartOrgans(bodyPartEntity, bodyPart))
+            {
+                if (!TryComp(organEntity, out WoundableComponent? woundableOrgan))
+                    continue;
+                foreach (var (woundId, wound) in GetAllWounds(organEntity))
+                {
+                    FullyHealWound(bodyPartEntity, woundId, null, wound);
+                }
+            }
+        }
+    }
+
+    public void FullyHealWound(EntityUid woundableId, EntityUid woundId, WoundableComponent? woundable = null,
         WoundComponent? wound = null)
     {
-        if (!Resolve(woundableId, ref woundable, false))
-            return false;
-        if (!Resolve(woundId, ref wound, false))
-            return false;
+        if (!Resolve(woundableId, ref woundable, false) || !Resolve(woundId, ref wound, false))
+            return;
         Logger.Log(LogLevel.Info, "Wound " + woundId + " Fully Healed!");
-        return RemoveWound(woundableId, woundId, true, woundable, wound);
+        RemoveWound(woundableId, woundId, true, woundable, wound);
     }
 
     public bool AddHealingModifier(EntityUid woundId, FixedPoint2 additionalHealing, WoundComponent? wound = null)

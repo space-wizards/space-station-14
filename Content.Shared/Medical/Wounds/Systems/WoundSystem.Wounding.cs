@@ -190,6 +190,18 @@ public sealed partial class WoundSystem
         }
     }
 
+    public IEnumerable<(EntityUid,WoundComponent)> GetAllWounds(EntityUid woundableId)
+    {
+        if (!TryGetAllWoundEntities(woundableId, out var wounds))
+            yield break;
+
+        foreach (var woundId in wounds)
+        {
+            if (TryComp<WoundComponent>(woundId, out var woundComp))
+                yield return (woundId,woundComp);
+        }
+    }
+
     #endregion
 
     #region Private_Implementation

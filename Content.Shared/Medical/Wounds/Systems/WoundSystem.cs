@@ -5,6 +5,7 @@ using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Wounds.Components;
 using Content.Shared.Medical.Wounds.Prototypes;
+using Content.Shared.Rejuvenate;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
@@ -38,6 +39,13 @@ public sealed partial class WoundSystem : EntitySystem
         SubscribeLocalEvent<WoundComponent, ComponentHandleState>(OnWoundHandleState);
 
         SubscribeLocalEvent<BodyComponent, DamageChangedEvent>(OnBodyDamaged);
+        SubscribeLocalEvent<BodyComponent, RejuvenateEvent>(OnBodyRejuvenate);
+    }
+
+    private void OnBodyRejuvenate(EntityUid uid, BodyComponent component, RejuvenateEvent args)
+    {
+        HealAllWounds(uid, component);
+        //TODO: reset bodypart health/structure values
     }
 
     private void OnWoundableGetState(EntityUid uid, WoundableComponent component, ref ComponentGetState args)
