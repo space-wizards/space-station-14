@@ -1,12 +1,15 @@
 using Content.Server.Chemistry.Components;
 using Content.Server.Friends.Components;
+using Content.Server.NPC.Components;
+using Content.Server.NPC.Systems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 
 namespace Content.Server.Friends.Systems;
 
-public sealed class FriendsSystem : EntitySystem
+public sealed class PettableFriendSystem : EntitySystem
 {
+    [Dependency] private readonly FactionExceptionSystem _factionException = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
@@ -14,13 +17,13 @@ public sealed class FriendsSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<PettableFriendComponent, UseInHandEvent>(OnUseInHand);
-        SubscribeLocalEvent<FriendsComponent, GotRehydratedEvent>(OnRehydrated);
+        SubscribeLocalEvent<PettableFriendComponent, GotRehydratedEvent>(OnRehydrated);
     }
 
     private void OnUseInHand(EntityUid uid, PettableFriendComponent comp, UseInHandEvent args)
     {
         var user = args.User;
-        if (args.Handled || !TryComp<FriendsComponent>(uid, out var friends))
+        if (args.Handled || !TryComp<FactionExceptionComponent>(uid, out var factionException))
             return;
 
         if (IsFriends(friends, user))
@@ -31,21 +34,17 @@ public sealed class FriendsSystem : EntitySystem
 
         // you have made a new friend :)
         _popup.PopupEntity(Loc.GetString(comp.SuccessString, ("target", uid)), user, user);
-        friends.Friends.Add(user);
+        _factionException.IgnoreEntity(factionException, user);
         args.Handled = true;
     }
 
-    private void OnRehydrated(EntityUid uid, FriendsComponent comp, ref GotRehydratedEvent args)
+    private void OnRehydrated(EntityUid uid, PettableFriendComponent _, ref GotRehydratedEvent args)
     {
         // can only pet before hydrating, after that the fish cannot be negotiated with
-        AddComp<FriendsComponent>(args.Target).Friends = comp.Friends;
-    }
+        if (!TryComp<FactionExceptionComponent>(uid, out var comp))
+            return;
 
-    /// <summary>
-    /// Returns whether the entity is friends with the target or not.
-    /// </summary>
-    public bool IsFriends(FriendsComponent comp, EntityUid target)
-    {
-        return comp.Friends.Contains(target);
+        var targetComp = AddComp<FactionExceptionComponent>(args.Target);
+        _factionException.IgnoreEntities(targetComp, comp.Ignored);
     }
 }

@@ -4,11 +4,11 @@ namespace Content.Server.Friends.Components;
 
 /// <summary>
 /// Pet something to become friends with it (use in hand, press Z)
+/// Uses FactionExceptionComponent behind the scenes
 /// </summary>
-[RegisterComponent, Access(typeof(FriendsSystem))]
+[RegisterComponent, Access(typeof(PettableFriendSystem))]
 public sealed class PettableFriendComponent : Component
 {
-
     /// <summary>
     /// Localized popup sent when petting for the first time
     /// </summary>
