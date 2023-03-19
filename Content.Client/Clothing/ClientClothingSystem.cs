@@ -66,7 +66,6 @@ public sealed class ClientClothingSystem : ClothingSystem
         if (!TryComp(uid, out SpriteComponent? sprite) || !TryComp(uid, out HumanoidAppearanceComponent? humanoid))
             return;
 
-        #region Gendered masks
         int layer = (int) HumanoidVisualLayers.StencilMask;
 
         // Set layer to the correct gendered mask layer
@@ -83,20 +82,19 @@ public sealed class ClientClothingSystem : ClothingSystem
             }
             else
             {
-                // Defaults
-                var mask = clothing.Mask;
+                ClothingMask? mask = null;
                 var prefix = "";
 
-                // Override with gendered mask if it exists
-                if (humanoid.Sex == Sex.Female)
-                {
-                    mask = clothing.FemaleMask;
-                    prefix = "female_";
-                }
+                // Override with gendered mask
                 if (humanoid.Sex == Sex.Male)
                 {
                     mask = clothing.MaleMask;
                     prefix = "male_";
+                }
+                if (humanoid.Sex == Sex.Female)
+                {
+                    mask = clothing.FemaleMask;
+                    prefix = "female_";
                 }
                 if (humanoid.Sex == Sex.Unsexed)
                 {
@@ -104,9 +102,9 @@ public sealed class ClientClothingSystem : ClothingSystem
                     prefix = "unisex_";
                 }
 
-                if (mask != clothing.Mask)
+                // Use the mask override if it exists
+                if (mask != null)
                 {
-                    // Use the mask override if it exists
                     sprite.LayerSetState(layer, mask switch
                     {
                         ClothingMask.NoMask => $"{prefix}none",
@@ -118,9 +116,8 @@ public sealed class ClientClothingSystem : ClothingSystem
                 else sprite.LayerSetVisible(layer, false);
             }
         }
-        #endregion
 
-        #region General mask
+        // General Mask
         if (sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out layer))
         {
             if (!_inventorySystem.TryGetSlotEntity(uid, "jumpsuit", out var suit, component) ||
@@ -139,7 +136,6 @@ public sealed class ClientClothingSystem : ClothingSystem
                 sprite.LayerSetVisible(layer, true);
             }
         }
-        #endregion
     }
 
     private void OnGetVisuals(EntityUid uid, ClothingComponent item, GetEquipmentVisualsEvent args)
@@ -280,7 +276,6 @@ public sealed class ClientClothingSystem : ClothingSystem
             if (!TryComp(equipee, out HumanoidAppearanceComponent? humanoid))
                 return;
 
-            #region Gendered masks
             int layer = (int) HumanoidVisualLayers.StencilMask;
 
             // Set layer to the correct gendered mask layer
@@ -290,20 +285,19 @@ public sealed class ClientClothingSystem : ClothingSystem
 
             if (layer != (int) HumanoidVisualLayers.StencilMask)
             {
-                // Defaults
-                var mask = clothingComponent.Mask;
+                ClothingMask? mask = null;
                 var prefix = "";
 
                 // Override with gendered mask if it exists
-                if (humanoid.Sex == Sex.Female)
-                {
-                    mask = clothingComponent.FemaleMask;
-                    prefix = "female_";
-                }
                 if (humanoid.Sex == Sex.Male)
                 {
                     mask = clothingComponent.MaleMask;
                     prefix = "male_";
+                }
+                if (humanoid.Sex == Sex.Female)
+                {
+                    mask = clothingComponent.FemaleMask;
+                    prefix = "female_";
                 }
                 if (humanoid.Sex == Sex.Unsexed)
                 {
@@ -311,9 +305,9 @@ public sealed class ClientClothingSystem : ClothingSystem
                     prefix = "unisex_";
                 }
 
-                if (mask != clothingComponent.Mask)
+                // Use the mask override if it exists
+                if (mask != null)
                 {
-                    // Use the mask override if it exists
                     sprite.LayerSetState(layer, mask switch
                     {
                         ClothingMask.NoMask => $"{prefix}none",
@@ -324,9 +318,7 @@ public sealed class ClientClothingSystem : ClothingSystem
                 }
                 else sprite.LayerSetVisible(layer, false);
             }
-            #endregion
 
-            #region General mask
             // Get general mask layer
             if (sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out layer))
             {
@@ -339,7 +331,6 @@ public sealed class ClientClothingSystem : ClothingSystem
                 });
                 sprite.LayerSetVisible(layer, true);
             }
-            #endregion
         }
 
         if (!_inventorySystem.TryGetSlot(equipee, slot, out var slotDef, inventory))
