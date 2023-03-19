@@ -1,6 +1,7 @@
 using Robust.Shared.Audio;
 using Content.Shared.Chat.Prototypes;
 using Robust.Shared.GameStates;
+using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -55,4 +56,8 @@ public sealed class CluwneBeastComponent : Component
     public SoundSpecifier CluwneSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/Magic/staff_animation.ogg");
 
     public EmoteSoundsPrototype? EmoteSounds;
+
+    [DataField("cluwneRoleId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
+    public readonly string CluwneRoleId = "Cluwne Beast";
+
 }
