@@ -89,7 +89,10 @@ public sealed class MechSystem : SharedMechSystem
             var doAfterEventArgs = new DoAfterEventArgs(args.User, component.BatteryRemovalDelay, target: uid, used: args.Target)
             {
                 BreakOnTargetMove = true,
-                BreakOnUserMove = true
+                BreakOnUserMove = true,
+                RaiseOnTarget = true,
+                RaiseOnUsed = false,
+                RaiseOnUser = false,
             };
 
             _doAfter.DoAfter(doAfterEventArgs, removeBattery);
@@ -168,6 +171,9 @@ public sealed class MechSystem : SharedMechSystem
                     {
                         BreakOnUserMove = true,
                         BreakOnStun = true,
+                        RaiseOnTarget = true,
+                        RaiseOnUsed = false,
+                        RaiseOnUser = false,
                     };
 
                     _doAfter.DoAfter(doAfterEventArgs, mechEntryEvent);
@@ -200,7 +206,10 @@ public sealed class MechSystem : SharedMechSystem
                     {
                         BreakOnUserMove = true,
                         BreakOnTargetMove = true,
-                        BreakOnStun = true
+                        BreakOnStun = true,
+                        RaiseOnTarget = true,
+                        RaiseOnUsed = false,
+                        RaiseOnUser = false,
                     };
 
                     _doAfter.DoAfter(doAfterEventArgs, mechExitEvent);

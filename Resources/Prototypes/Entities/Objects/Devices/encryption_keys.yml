@@ -16,7 +16,7 @@
 - type: entity
   parent: EncryptionKey
   id: EncryptionKeyCommon
-  name: passenger encryption key
+  name: common encryption key
   description: An encryption key used by anyone.
   components:
   - type: EncryptionKey
