@@ -78,7 +78,12 @@ namespace Content.Server.Forensics
                     scanner.Fibers = forensics.Fibers.ToList();
                 }
 
-                if (TryComp<DNAComponent>(args.Args.Target, out var dna))
+                if (!TryComp<DNAComponent>(args.Args.Target, out var dna))
+                {
+                    scanner.DNA = string.Empty;
+                }
+
+                else
                 {
                     scanner.DNA = dna.DNA;
                 }
@@ -219,6 +224,7 @@ namespace Content.Server.Forensics
             }
             text.AppendLine();
             text.AppendLine(Loc.GetString("forensic-scanner-interface-dna"));
+            text.AppendLine(component.DNA);
 
             _paperSystem.SetContent(printed, text.ToString());
             _audioSystem.PlayPvs(component.SoundPrint, uid,
@@ -239,6 +245,7 @@ namespace Content.Server.Forensics
             component.Fingerprints = new();
             component.Fibers = new();
             component.LastScannedName = string.Empty;
+            component.DNA = String.Empty;
 
             UpdateUserInterface(uid, component);
         }
