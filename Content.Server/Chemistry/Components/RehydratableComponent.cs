@@ -22,7 +22,7 @@ public sealed class RehydratableComponent : Component
     /// <summary>
     /// The minimum amount of catalyst that must be present to be hydrated.
     /// </summary>
-    [DataField("catalystAmount"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("catalystMinimum"), ViewVariables(VVAccess.ReadWrite)]
     public FixedPoint2 CatalystMinimum = FixedPoint2.Zero;
 
     /// <summary>
