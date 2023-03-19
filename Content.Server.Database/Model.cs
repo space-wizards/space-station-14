@@ -125,8 +125,8 @@ namespace Content.Server.Database
                 .HasIndex(p => p.BanId)
                 .IsUnique();
 
-            modelBuilder.Entity<ServerBan>()
-                .HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR user_id IS NOT NULL OR hwid IS NOT NULL");
+            modelBuilder.Entity<ServerBan>().ToTable(t =>
+                t.HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR user_id IS NOT NULL OR hwid IS NOT NULL"));
 
             modelBuilder.Entity<ServerRoleBan>()
                 .HasIndex(p => p.UserId);
@@ -141,8 +141,8 @@ namespace Content.Server.Database
                 .HasIndex(p => p.BanId)
                 .IsUnique();
 
-            modelBuilder.Entity<ServerRoleBan>()
-                .HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR user_id IS NOT NULL OR hwid IS NOT NULL");
+            modelBuilder.Entity<ServerRoleBan>().ToTable(t =>
+                t.HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR user_id IS NOT NULL OR hwid IS NOT NULL"));
 
             modelBuilder.Entity<Player>()
                 .HasIndex(p => p.UserId)

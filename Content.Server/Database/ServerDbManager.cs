@@ -742,10 +742,10 @@ namespace Content.Server.Database
                 return true;
             }
 
-            public IDisposable BeginScope<TState>(TState state)
+            public IDisposable? BeginScope<TState>(TState state) where TState : notnull
             {
                 // TODO: this
-                return null!;
+                return null;
             }
         }
     }
