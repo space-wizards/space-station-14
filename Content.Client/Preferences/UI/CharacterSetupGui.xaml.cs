@@ -23,6 +23,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using TerraFX.Interop.Windows;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Preferences.UI
@@ -191,12 +192,12 @@ namespace Content.Client.Preferences.UI
                 };
 
                 var description = profile.Name;
-
+                var balance = humanoid?.BankBalance;
                 var highPriorityJob = humanoid?.JobPriorities.SingleOrDefault(p => p.Value == JobPriority.High).Key;
                 if (highPriorityJob != null)
                 {
                     var jobName = IoCManager.Resolve<IPrototypeManager>().Index<JobPrototype>(highPriorityJob).LocalizedName;
-                    description = $"{description}\n{jobName}";
+                    description = $"{description}\n{jobName}\n${balance}";
                 }
 
                 var descriptionLabel = new Label
