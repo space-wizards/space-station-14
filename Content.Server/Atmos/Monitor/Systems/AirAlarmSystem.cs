@@ -227,7 +227,7 @@ public sealed class AirAlarmSystem : EntitySystem
         if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target))
             return;
 
-        if (!(EntityManager.TryGetComponent(args.User, out ActorComponent? actor) && actor.PlayerSession != null))
+        if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
             return;
 
         if (EntityManager.TryGetComponent(uid, out WiresComponent? wire) && wire.IsPanelOpen)

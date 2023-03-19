@@ -103,7 +103,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
         private void OnFilterInteractHand(EntityUid uid, GasFilterComponent filter, InteractHandEvent args)
         {
-            if (!(EntityManager.TryGetComponent(args.User, out ActorComponent? actor) && actor.PlayerSession != null))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
             if (EntityManager.GetComponent<TransformComponent>(filter.Owner).Anchored)

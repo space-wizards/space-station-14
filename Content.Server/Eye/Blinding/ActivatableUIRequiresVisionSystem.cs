@@ -36,7 +36,7 @@ namespace Content.Server.Eye.Blinding
             if (!args.Blind)
                 return;
 
-            if (!(TryComp<ActorComponent>(uid, out var actor) && actor.PlayerSession != null))
+            if (!TryComp<ActorComponent>(uid, out var actor))
                 return;
 
             var uiList = _userInterfaceSystem.GetAllUIsForSession(actor.PlayerSession);

@@ -85,7 +85,7 @@ namespace Content.Server.Administration.Commands
 
             HumanoidCharacterProfile? profile = null;
             // Check if we are setting the outfit of a player to respect the preferences
-            if (entityManager.TryGetComponent<ActorComponent?>(target, out var actorComponent) && actorComponent.PlayerSession != null)
+            if (entityManager.TryGetComponent<ActorComponent?>(target, out var actorComponent))
             {
                 var userId = actorComponent.PlayerSession.UserId;
                 var preferencesManager = IoCManager.Resolve<IServerPreferencesManager>();

@@ -144,9 +144,8 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
     {
         if (!TryComp(ev.Target, out ActorComponent? actor))
             return;
-        // PSS - Fix for updates on mobs that have an Actor but no Session (Player hasn't logged in since save)
-        if (actor.PlayerSession != null)
-            _tracking.QueueRefreshTrackers(actor.PlayerSession);
+
+        _tracking.QueueRefreshTrackers(actor.PlayerSession);
     }
 
     private void OnPlayerJoinedLobby(PlayerJoinedLobbyEvent ev)

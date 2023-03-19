@@ -298,7 +298,7 @@ public sealed partial class GunSystem : SharedGunSystem
     {
         var filter = Filter.Pvs(uid, entityManager: EntityManager);
 
-        if (TryComp<ActorComponent>(user, out var actor) && actor.PlayerSession != null)
+        if (TryComp<ActorComponent>(user, out var actor))
             filter.RemovePlayer(actor.PlayerSession);
 
         RaiseNetworkEvent(message, filter);

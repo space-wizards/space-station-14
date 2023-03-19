@@ -1,4 +1,4 @@
-using Content.Server.Configurable;
+﻿using Content.Server.Configurable;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
@@ -151,7 +151,7 @@ public sealed class MailingUnitSystem : EntitySystem
 
     private void HandleActivate(EntityUid uid, MailingUnitComponent component, ActivateInWorldEvent args)
     {
-        if (!(EntityManager.TryGetComponent(args.User, out ActorComponent? actor) && actor.PlayerSession != null))
+        if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
         {
             return;
         }

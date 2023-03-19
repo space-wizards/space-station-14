@@ -193,7 +193,7 @@ public sealed class FaxSystem : EntitySystem
     private void OnInteractUsing(EntityUid uid, FaxMachineComponent component, InteractUsingEvent args)
     {
         if (args.Handled ||
-            !(TryComp<ActorComponent>(args.User, out var actor) && actor.PlayerSession != null) ||
+            !TryComp<ActorComponent>(args.User, out var actor) ||
             !_toolSystem.HasQuality(args.Used, "Screwing")) // Screwing because Pulsing already used by device linking
             return;
 

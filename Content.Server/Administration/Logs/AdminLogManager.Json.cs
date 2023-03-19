@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Content.Server.Administration.Logs.Converters;
@@ -71,7 +71,7 @@ public sealed partial class AdminLogManager
 
             entities.TryAdd((int) uid, entityName);
 
-            if (_entityManager.TryGetComponent(uid, out ActorComponent? actor) && actor.PlayerSession != null)
+            if (_entityManager.TryGetComponent(uid, out ActorComponent? actor))
             {
                 players.Add(actor.PlayerSession.UserId.UserId);
             }

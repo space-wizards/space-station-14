@@ -54,7 +54,7 @@ namespace Content.Server.UserInterface
             if (args.Handled || args.Key == null)
                 return;
 
-            if (!(TryComp(args.Performer, out ActorComponent? actor) && actor.PlayerSession != null))
+            if (!TryComp(args.Performer, out ActorComponent? actor))
                 return;
 
             args.Handled = _uiSystem.TryToggleUi(uid, args.Key, actor.PlayerSession);
@@ -114,7 +114,7 @@ namespace Content.Server.UserInterface
             if (aui.RequireHands && !HasComp<SharedHandsComponent>(user))
                 return false;
 
-            if (!(EntityManager.TryGetComponent(user, out ActorComponent? actor) && actor.PlayerSession != null)) return false;
+            if (!EntityManager.TryGetComponent(user, out ActorComponent? actor)) return false;
 
             if (aui.AdminOnly && !_adminManager.IsAdmin(actor.PlayerSession)) return false;
 

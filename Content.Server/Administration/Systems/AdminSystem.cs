@@ -85,7 +85,7 @@ namespace Content.Server.Administration.Systems
 
         private void OnIdentityChanged(IdentityChangedEvent ev)
         {
-            if (!(TryComp<ActorComponent>(ev.CharacterEntity, out var actor) && actor.PlayerSession != null))
+            if (!TryComp<ActorComponent>(ev.CharacterEntity, out var actor))
                 return;
 
             UpdatePlayerList(actor.PlayerSession);

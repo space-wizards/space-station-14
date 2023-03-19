@@ -1,4 +1,4 @@
-using Content.Server.Actions;
+﻿using Content.Server.Actions;
 using Content.Shared.Actions;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -33,7 +33,7 @@ public sealed class IntrinsicUISystem : EntitySystem
 
     public bool InteractUI(EntityUid uid, Enum? key, IntrinsicUIComponent? iui = null, ActorComponent? actor = null)
     {
-        if (!Resolve(uid, ref iui, ref actor) || !(actor.PlayerSession != null))
+        if (!Resolve(uid, ref iui, ref actor))
             return false;
 
         if (key is null)

@@ -1,4 +1,4 @@
-using Content.Server.Administration;
+﻿using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Bible.Components;
 using Content.Server.Chat.Managers;
@@ -35,7 +35,7 @@ public sealed class PrayerSystem : EntitySystem
     private void AddPrayVerb(EntityUid uid, PrayableComponent comp, GetVerbsEvent<ActivationVerb> args)
     {
         // if it doesn't have an actor and we can't reach it then don't add the verb
-        if (!(EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor) && actor.PlayerSession != null))
+        if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
             return;
 
         // this is to prevent ghosts from using it

@@ -53,7 +53,7 @@ public sealed partial class AdminVerbSystem
 
     private void AddTricksVerbs(GetVerbsEvent<Verb> args)
     {
-        if (!(EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor) && actor.PlayerSession != null))
+        if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
             return;
 
         var player = actor.PlayerSession;

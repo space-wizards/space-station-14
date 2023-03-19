@@ -52,7 +52,7 @@ namespace Content.Server.Interaction
             if (storage.Storage?.ID != container.ID)
                 return false;
 
-            if (!(TryComp(user, out ActorComponent? actor) && actor.PlayerSession != null))
+            if (!TryComp(user, out ActorComponent? actor))
                 return false;
 
             // we don't check if the user can access the storage entity itself. This should be handed by the UI system.

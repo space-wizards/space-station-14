@@ -15,7 +15,7 @@ public sealed partial class HumanoidAppearanceSystem
 
     private void OnVerbsRequest(EntityUid uid, HumanoidAppearanceComponent component, GetVerbsEvent<Verb> args)
     {
-        if (!(TryComp<ActorComponent>(args.User, out var actor) && actor.PlayerSession != null))
+        if (!TryComp<ActorComponent>(args.User, out var actor))
         {
             return;
         }

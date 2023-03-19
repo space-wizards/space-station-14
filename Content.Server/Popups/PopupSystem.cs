@@ -25,7 +25,7 @@ namespace Content.Server.Popups
 
         public override void PopupCursor(string message, EntityUid recipient, PopupType type = PopupType.Small)
         {
-            if (TryComp(recipient, out ActorComponent? actor) && actor.PlayerSession != null)
+            if (TryComp(recipient, out ActorComponent? actor))
                 RaiseNetworkEvent(new PopupCursorEvent(message, type), actor.PlayerSession);
         }
 
@@ -48,7 +48,7 @@ namespace Content.Server.Popups
 
         public override void PopupCoordinates(string message, EntityCoordinates coordinates, EntityUid recipient, PopupType type = PopupType.Small)
         {
-            if (TryComp(recipient, out ActorComponent? actor) && actor.PlayerSession != null)
+            if (TryComp(recipient, out ActorComponent? actor))
                 RaiseNetworkEvent(new PopupCoordinatesEvent(message, type, coordinates), actor.PlayerSession);
         }
 
@@ -60,7 +60,7 @@ namespace Content.Server.Popups
 
         public override void PopupEntity(string message, EntityUid uid, EntityUid recipient, PopupType type=PopupType.Small)
         {
-            if (TryComp(recipient, out ActorComponent? actor) && actor.PlayerSession != null)
+            if (TryComp(recipient, out ActorComponent? actor))
                 RaiseNetworkEvent(new PopupEntityEvent(message, type, uid), actor.PlayerSession);
         }
 

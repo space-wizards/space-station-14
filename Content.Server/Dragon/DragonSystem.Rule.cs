@@ -60,7 +60,7 @@ public sealed partial class DragonSystem
         {
             var met = RiftsMet(dragon);
 
-            if (TryComp<ActorComponent>(dragon.Owner, out var actor) && actor.PlayerSession != null)
+            if (TryComp<ActorComponent>(dragon.Owner, out var actor))
             {
                 args.AddLine(Loc.GetString("dragon-round-end-dragon-player", ("name", dragon.Owner), ("count", met), ("player", actor.PlayerSession)));
             }

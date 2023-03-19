@@ -75,8 +75,6 @@ namespace Content.Server.GameTicking
                         if (savedMindComponent?.Mind != null)
                         {
                             savedMindComponent.Mind.Persistence_ReattachPlayer(savedMindComponent, data.UserId);
-                            session.DetachFromEntity();
-                            RemComp<ActorComponent>(savedMindComponent.Owner);
                             Get<ActorSystem>().Attach(savedMindComponent.Owner, session);
                             data = session.ContentData();
                         }

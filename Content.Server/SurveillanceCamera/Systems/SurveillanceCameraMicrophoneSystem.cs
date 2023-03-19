@@ -43,7 +43,7 @@ public sealed class SurveillanceCameraMicrophoneSystem : EntitySystem
             {
                 // if the player has not already received the chat message, send it to them but don't log it to the chat
                 // window. This is simply so that it appears in camera.
-                if (TryComp(viewer, out ActorComponent? actor) && actor.PlayerSession != null)
+                if (TryComp(viewer, out ActorComponent? actor))
                     ev.Recipients.TryAdd(actor.PlayerSession, new ICChatRecipientData(range, false, true));
             }
         }

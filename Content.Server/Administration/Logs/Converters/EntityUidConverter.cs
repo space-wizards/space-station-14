@@ -26,7 +26,7 @@ public sealed class EntityUidConverter : AdminLogConverter<EntityUid>
             writer.WriteString("name", metaData.EntityName);
         }
 
-        if (entities.TryGetComponent(value, out ActorComponent? actor) && actor.PlayerSession != null)
+        if (entities.TryGetComponent(value, out ActorComponent? actor))
         {
             writer.WriteString("player", actor.PlayerSession.UserId.UserId);
         }

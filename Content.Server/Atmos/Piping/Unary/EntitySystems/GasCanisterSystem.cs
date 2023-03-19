@@ -223,7 +223,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnCanisterActivate(EntityUid uid, GasCanisterComponent component, ActivateInWorldEvent args)
         {
-            if (!(EntityManager.TryGetComponent(args.User, out ActorComponent? actor) && actor.PlayerSession != null))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
             if (TryComp<LockComponent>(uid, out var lockComponent) && lockComponent.Locked)
             {
@@ -240,7 +240,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnCanisterInteractHand(EntityUid uid, GasCanisterComponent component, InteractHandEvent args)
         {
-            if (!(EntityManager.TryGetComponent(args.User, out ActorComponent? actor) && actor.PlayerSession != null))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
             if (TryComp<LockComponent>(uid, out var lockComponent) && lockComponent.Locked)
                 return;

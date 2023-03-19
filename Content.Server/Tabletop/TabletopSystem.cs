@@ -54,7 +54,7 @@ namespace Content.Server.Tabletop
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (!(EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor) && actor.PlayerSession != null))
+            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
                 return;
 
             ActivationVerb verb = new();
@@ -67,7 +67,7 @@ namespace Content.Server.Tabletop
         private void OnTabletopActivate(EntityUid uid, TabletopGameComponent component, ActivateInWorldEvent args)
         {
             // Check that a player is attached to the entity.
-            if (!(EntityManager.TryGetComponent(args.User, out ActorComponent? actor) && actor.PlayerSession != null))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
             OpenSessionFor(actor.PlayerSession, uid);
@@ -91,7 +91,7 @@ namespace Content.Server.Tabletop
 
         private void OnGamerShutdown(EntityUid uid, TabletopGamerComponent component, ComponentShutdown args)
         {
-            if (!(EntityManager.TryGetComponent(uid, out ActorComponent? actor) && actor.PlayerSession != null))
+            if (!EntityManager.TryGetComponent(uid, out ActorComponent? actor))
                 return;
 
             if(component.Tabletop.IsValid())
@@ -107,7 +107,7 @@ namespace Content.Server.Tabletop
                 if (!EntityManager.EntityExists(gamer.Tabletop))
                     continue;
 
-                if (!(EntityManager.TryGetComponent(gamer.Owner, out ActorComponent? actor) && actor.PlayerSession != null))
+                if (!EntityManager.TryGetComponent(gamer.Owner, out ActorComponent? actor))
                 {
                     EntityManager.RemoveComponent<TabletopGamerComponent>(gamer.Owner);
                     return;

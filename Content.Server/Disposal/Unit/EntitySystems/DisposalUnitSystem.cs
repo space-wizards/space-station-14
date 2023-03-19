@@ -242,7 +242,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         #region Eventbus Handlers
         private void HandleActivate(EntityUid uid, DisposalUnitComponent component, ActivateInWorldEvent args)
         {
-            if (!(TryComp(args.User, out ActorComponent? actor) && actor.PlayerSession != null))
+            if (!TryComp(args.User, out ActorComponent? actor))
             {
                 return;
             }
@@ -733,7 +733,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             TryQueueEngage(uid, component);
 
-            if ((TryComp(inserted, out ActorComponent? actor) && actor.PlayerSession != null))
+            if (TryComp(inserted, out ActorComponent? actor))
             {
                 _ui.TryClose(uid, SharedDisposalUnitComponent.DisposalUnitUiKey.Key, actor.PlayerSession);
             }

@@ -117,7 +117,7 @@ namespace Content.Server.Strip
             if (TryComp<SharedCombatModeComponent>(user, out var mode) && mode.IsInCombatMode && !openInCombat)
                 return;
 
-            if (TryComp<ActorComponent>(user, out var actor) && actor.PlayerSession != null)
+            if (TryComp<ActorComponent>(user, out var actor))
             {
                 if (_userInterfaceSystem.SessionHasOpenUi(component.Owner, StrippingUiKey.Key, actor.PlayerSession))
                     return;

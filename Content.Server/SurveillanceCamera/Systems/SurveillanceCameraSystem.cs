@@ -199,9 +199,6 @@ public sealed class SurveillanceCameraSystem : EntitySystem
             return;
         }
 
-        if (!(actor.PlayerSession != null))
-            return;
-
         _userInterface.GetUiOrNull(uid, SurveillanceCameraSetupUiKey.Camera)!.Open(actor.PlayerSession);
         UpdateSetupInterface(uid, camera);
     }
@@ -293,9 +290,6 @@ public sealed class SurveillanceCameraSystem : EntitySystem
             return;
         }
 
-        if (!(actor.PlayerSession != null))
-            return;
-
         _viewSubscriberSystem.AddViewSubscriber(camera, actor.PlayerSession);
         component.ActiveViewers.Add(player);
 
@@ -351,9 +345,6 @@ public sealed class SurveillanceCameraSystem : EntitySystem
         {
             return;
         }
-
-        if (!(actor.PlayerSession != null))
-            return;
 
         _viewSubscriberSystem.RemoveViewSubscriber(camera, actor.PlayerSession);
         component.ActiveViewers.Remove(player);

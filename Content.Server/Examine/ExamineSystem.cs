@@ -35,7 +35,7 @@ namespace Content.Server.Examine
 
         public override void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs, bool centerAtCursor)
         {
-            if (!(TryComp<ActorComponent>(player, out var actor) && actor.PlayerSession != null))
+            if (!TryComp<ActorComponent>(player, out var actor))
                 return;
 
             var session = actor.PlayerSession;

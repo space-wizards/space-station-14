@@ -45,7 +45,7 @@ public sealed class RadioSystem : EntitySystem
 
     private void OnIntrinsicReceive(EntityUid uid, IntrinsicRadioReceiverComponent component, RadioReceiveEvent args)
     {
-        if (TryComp(uid, out ActorComponent? actor) && actor.PlayerSession != null)
+        if (TryComp(uid, out ActorComponent? actor))
             _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.ConnectedClient);
     }
 

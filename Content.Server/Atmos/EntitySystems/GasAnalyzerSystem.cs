@@ -111,7 +111,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!Resolve(uid, ref component))
                 return;
 
-            if (user != null && TryComp<ActorComponent>(user, out var actor) && actor.PlayerSession != null)
+            if (user != null && TryComp<ActorComponent>(user, out var actor))
                 _userInterface.TryClose(uid, GasAnalyzerUiKey.Key, actor.PlayerSession);
 
             component.Enabled = false;
@@ -132,7 +132,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OpenUserInterface(EntityUid user, GasAnalyzerComponent component)
         {
-            if (!(TryComp<ActorComponent>(user, out var actor) && actor.PlayerSession != null))
+            if (!TryComp<ActorComponent>(user, out var actor))
                 return;
 
             _userInterface.TryOpen(component.Owner, GasAnalyzerUiKey.Key, actor.PlayerSession);

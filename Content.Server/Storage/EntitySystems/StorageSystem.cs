@@ -111,7 +111,7 @@ namespace Content.Server.Storage.EntitySystems
             silent |= HasComp<GhostComponent>(args.User);
 
             // Get the session for the user
-            if (!(TryComp<ActorComponent>(args.User, out var actor) && actor.PlayerSession != null))
+            if (!TryComp<ActorComponent>(args.User, out var actor))
                 return;
 
             // Does this player currently have the storage UI open?
@@ -598,7 +598,7 @@ namespace Content.Server.Storage.EntitySystems
         /// <param name="entity">The entity to open the UI for</param>
         public void OpenStorageUI(EntityUid uid, EntityUid entity, ServerStorageComponent? storageComp = null, bool silent = false)
         {
-            if (!Resolve(uid, ref storageComp) || !TryComp(entity, out ActorComponent? player) || !(player.PlayerSession != null))
+            if (!Resolve(uid, ref storageComp) || !TryComp(entity, out ActorComponent? player))
                 return;
 
             if (!silent)

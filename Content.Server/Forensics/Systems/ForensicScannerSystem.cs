@@ -160,7 +160,7 @@ namespace Content.Server.Forensics
 
         private void OpenUserInterface(EntityUid user, ForensicScannerComponent component)
         {
-            if (!(TryComp<ActorComponent>(user, out var actor) && actor.PlayerSession != null))
+            if (!TryComp<ActorComponent>(user, out var actor))
                 return;
 
             UpdateUserInterface(component.Owner, component);
