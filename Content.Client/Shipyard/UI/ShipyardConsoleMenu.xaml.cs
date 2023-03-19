@@ -16,6 +16,7 @@ public sealed partial class ShipyardConsoleMenu : FancyWindow
 {
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
+    public event Action<ButtonEventArgs>? OnSellShip;
     public event Action<ButtonEventArgs>? OnOrderApproved;
     private readonly ShipyardConsoleBoundUserInterface _menu;
     private readonly List<string> _categoryStrings = new();
@@ -29,7 +30,9 @@ public sealed partial class ShipyardConsoleMenu : FancyWindow
         Title = Loc.GetString("shipyard-console-menu-title");
         SearchBar.OnTextChanged += OnSearchBarTextChanged;
         Categories.OnItemSelected += OnCategoryItemSelected;
+        SellShipButton.OnPressed += (args) => { OnSellShip?.Invoke(args); };
     }
+
 
     private void OnCategoryItemSelected(OptionButton.ItemSelectedEventArgs args)
     {
@@ -117,5 +120,17 @@ public sealed partial class ShipyardConsoleMenu : FancyWindow
     public void UpdateState(ShipyardConsoleInterfaceState state)
     {
         BankAccountLabel.Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", state.Balance.ToString()));
+        SellShipButton.Disabled = state.ShipDeedTitle == null;
+        TargetIdButton.Text = state.IsTargetIdPresent
+            ? Loc.GetString("id-card-console-window-eject-button")
+            : Loc.GetString("id-card-console-window-insert-button");
+        if (state.ShipDeedTitle != null)
+        {
+            DeedTitle.Text = state.ShipDeedTitle;
+        }
+        else
+        {
+            DeedTitle.Text = $"None";
+        }
     }
 }
