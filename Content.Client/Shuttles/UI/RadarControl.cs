@@ -182,7 +182,6 @@ public sealed class RadarControl : Control
             Matrix3.Multiply(in ourGridMatrix, in offsetMatrix, out var matrix);
 
             DrawGrid(handle, matrix, ourGrid, Color.MediumSpringGreen, true);
-
             DrawDocks(handle, ourGridId.Value, matrix);
         }
 
@@ -359,6 +358,8 @@ public sealed class RadarControl : Control
         var tileTris = new ValueList<Vector2>();
         Span<Vector2> tileVerts = new Vector2[4];
 
+        // Originally I used fixtures but this was a massive hassle
+        // Long-term it's probably better due to less data getting drawn but this is what it is for now.
         while (rator.MoveNext(out var tileRef))
         {
             var tileVec = (Vector2) tileRef.Value.GridIndices * grid.TileSize;
