@@ -128,6 +128,9 @@ public sealed partial class ShipyardConsoleMenu : FancyWindow
         {
             DeedTitle.Text = state.ShipDeedTitle;
         }
-
+        else
+        {
+            DeedTitle.Text = $"None";
+        }
     }
 }

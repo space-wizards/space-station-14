@@ -118,27 +118,21 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             return;
         }
 
-        string? deedName = null;
-
         if (TryComp<AccessComponent>(targetId, out var newCap))
         {
             //later we will make a custom pilot job, for now they get the captain treatment
             var newAccess = newCap.Tags.ToList();
             newAccess.Add($"Captain");
             _accessSystem.TrySetTags(targetId, newAccess, newCap);
-            if (TryComp<MetaDataComponent>(shuttle.Owner, out var mData))
-            {
-                deedName = mData.EntityName;
-            }
         }
         var newDeed = EnsureComp<ShuttleDeedComponent>(targetId);
         var channel = _prototypeManager.Index<RadioChannelPrototype>(component.ShipyardChannel);
         newDeed.ShuttleUid = shuttle.Owner;
-        newDeed.ShuttleName = deedName;
+        newDeed.ShuttleName = vessel.Name;
         _idSystem.TryChangeJobTitle(targetId, $"Captain", idCard, player);
         _radio.SendRadioMessage(uid, Loc.GetString("shipyard-console-docking", ("vessel", vessel.Name.ToString())), channel);
         PlayConfirmSound(uid, component);
-        RefreshState(uid, bank.Balance, true, deedName, true);
+        RefreshState(uid, bank.Balance, true, vessel.Name, true);
     }
 
     public void OnSellMessage(EntityUid uid, ShipyardConsoleComponent component, ShipyardConsoleSellMessage args)
