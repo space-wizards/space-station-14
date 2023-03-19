@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Maybe fix grid clipping., type: Fix}
-  id: 2695
-  time: '2022-11-24T05:54:21.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Omnitool can cut lattice and pry unpowered doors, type: Fix}
@@ -2902,3 +2897,8 @@ Entries:
     type: Tweak}
   id: 3194
   time: '2023-03-19T00:56:39.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Voice mask can no longer be used from your pockets., type: Fix}
+  id: 3195
+  time: '2023-03-19T23:41:25.0000000+00:00'
