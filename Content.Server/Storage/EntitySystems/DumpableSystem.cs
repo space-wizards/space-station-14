@@ -52,7 +52,7 @@ namespace Content.Server.Storage.EntitySystems
             {
                 Act = () =>
                 {
-                    StartDoAfter(uid, null, args.User, dumpable);//Had multiplier of 0.6f
+                    StartDoAfter(uid, args.Target, args.User, dumpable);//Had multiplier of 0.6f
                 },
                 Text = Loc.GetString("dump-verb-name"),
                 Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/drop.svg.192dpi.png")),

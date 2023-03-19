@@ -4,6 +4,7 @@ using Content.Server.Popups;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Swab;
 
 namespace Content.Server.Botany.Systems;
 

@@ -8,6 +8,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
+using Content.Shared.Udder;
 using Content.Shared.Verbs;
 
 namespace Content.Server.Animals.Systems

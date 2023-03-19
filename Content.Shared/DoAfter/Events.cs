@@ -6,91 +6,6 @@ namespace Content.Shared.DoAfter;
 // Really these should all go into their respective shared namespaces whenever those systems get properly predicted.
 
 [Serializable, NetSerializable]
-public sealed class MilkingDoAfterEvent : SimpleDoAfterEvent
-{
-}
-
-[Serializable, NetSerializable]
-public sealed class ScannerDoAfterEvent : SimpleDoAfterEvent
-{
-}
-
-[Serializable, NetSerializable]
-public sealed class InternalsDoAfterEvent : SimpleDoAfterEvent
-{
-}
-
-[Serializable, NetSerializable]
-public sealed class BotanySwabDoAfterEvent : SimpleDoAfterEvent
-{
-}
-
-[Serializable, NetSerializable]
-public sealed class InjectorDoAfterEvent : SimpleDoAfterEvent
-{
-}
-
-[Serializable, NetSerializable]
-public sealed class ExchangerDoAfterEvent : SimpleDoAfterEvent
-{
-}
-
-[Serializable, NetSerializable]
-public sealed class VaccineDoAfterEvent : SimpleDoAfterEvent
-{
-}
-
-[Serializable, NetSerializable]
-public sealed class DiseaseSwabDoAfterEvent : SimpleDoAfterEvent
-{
-}
-
-[Serializable, NetSerializable]
-public sealed class DisposalDoAfterEvent : SimpleDoAfterEvent
-{
-}
-
-[Serializable, NetSerializable]
-public sealed class DragonDevourDoAfterEvent : SimpleDoAfterEvent
-{
-}
-
-[Serializable, NetSerializable]
-public sealed class EnsnareableDoAfterEvent : SimpleDoAfterEvent
-{
-}
-
-[Serializable, NetSerializable]
-public sealed class SpillDoAfterEvent : SimpleDoAfterEvent
-{
-}
-
-[Serializable, NetSerializable]
-public sealed class ForensicScannerDoAfterEvent : SimpleDoAfterEvent
-{
-}
-
-[Serializable, NetSerializable]
-public sealed class GatherableDoAfterEvent : SimpleDoAfterEvent
-{
-}
-
-[Serializable, NetSerializable]
-public sealed class GuardianCreatorDoAfterEvent : SimpleDoAfterEvent
-{
-}
-
-[Serializable, NetSerializable]
-public sealed class ImplantEvent : SimpleDoAfterEvent
-{
-}
-
-[Serializable, NetSerializable]
-public sealed class DrawEvent : SimpleDoAfterEvent
-{
-}
-
-[Serializable, NetSerializable]
 public sealed class SpikeDoAfterEvent : SimpleDoAfterEvent
 {
 }
@@ -216,11 +131,6 @@ public sealed class WeldFinishedEvent : SimpleDoAfterEvent
 
 [Serializable, NetSerializable]
 public sealed class TeleporterDoAfterEvent : SimpleDoAfterEvent
-{
-}
-
-[Serializable, NetSerializable]
-public sealed class DumpableDoAfterEvent : SimpleDoAfterEvent
 {
 }
 

@@ -2,6 +2,7 @@ using System.Threading;
 using Content.Server.DoAfter;
 using Content.Shared.Alert;
 using Content.Shared.DoAfter;
+using Content.Shared.Ensnaring;
 using Content.Shared.Ensnaring.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.StepTrigger.Systems;

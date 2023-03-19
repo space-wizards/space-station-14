@@ -4,10 +4,14 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Forensics;
 
 [Serializable, NetSerializable]
+public sealed class ForensicScannerDoAfterEvent : SimpleDoAfterEvent
+{
+}
+
+[Serializable, NetSerializable]
 public sealed class ForensicPadDoAfterEvent : DoAfterEvent
 {
-    [DataField("sample", required: true)]
-    public readonly string Sample = default!;
+    [DataField("sample", required: true)] public readonly string Sample = default!;
 
     private ForensicPadDoAfterEvent()
     {

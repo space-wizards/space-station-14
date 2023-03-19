@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Body.Components;
 using Content.Shared.Disposal.Components;
+using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.Item;
 using Content.Shared.Mobs.Components;
@@ -8,10 +9,16 @@ using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Disposal
 {
+    [Serializable, NetSerializable]
+    public sealed class DisposalDoAfterEvent : SimpleDoAfterEvent
+    {
+    }
+
     [UsedImplicitly]
     public abstract class SharedDisposalUnitSystem : EntitySystem
     {
@@ -30,7 +37,8 @@ namespace Content.Shared.Disposal
             SubscribeLocalEvent<SharedDisposalUnitComponent, CanDropTargetEvent>(OnCanDragDropOn);
         }
 
-        private void OnPreventCollide(EntityUid uid, SharedDisposalUnitComponent component, ref PreventCollideEvent args)
+        private void OnPreventCollide(EntityUid uid, SharedDisposalUnitComponent component,
+            ref PreventCollideEvent args)
         {
             var otherBody = args.BodyB.Owner;
 

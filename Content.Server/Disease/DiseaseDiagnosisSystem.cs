@@ -18,6 +18,7 @@ using Content.Shared.Tools.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Swab;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Disease

@@ -11,6 +11,7 @@ using Content.Shared.Verbs;
 using Content.Server.Popups;
 using Content.Server.DoAfter;
 using Content.Shared.DoAfter;
+using Content.Shared.Internals;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems;

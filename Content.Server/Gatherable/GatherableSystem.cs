@@ -6,6 +6,7 @@ using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Destructible;
 using Content.Shared.EntityList;
+using Content.Shared.Gatherable;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
