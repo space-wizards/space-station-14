@@ -38,6 +38,7 @@ namespace Content.Shared.Preferences
             int age,
             Sex sex,
             Gender gender,
+            int bankBalance,
             HumanoidCharacterAppearance appearance,
             ClothingPreference clothing,
             BackpackPreference backpack,
@@ -52,6 +53,7 @@ namespace Content.Shared.Preferences
             Age = age;
             Sex = sex;
             Gender = gender;
+            BankBalance = bankBalance;
             Appearance = appearance;
             Clothing = clothing;
             Backpack = backpack;
@@ -67,7 +69,7 @@ namespace Content.Shared.Preferences
             Dictionary<string, JobPriority> jobPriorities,
             List<string> antagPreferences,
             List<string> traitPreferences)
-            : this(other.Name, other.FlavorText, other.Species, other.Age, other.Sex, other.Gender, other.Appearance, other.Clothing, other.Backpack,
+            : this(other.Name, other.FlavorText, other.Species, other.Age, other.Sex, other.Gender, other.BankBalance, other.Appearance, other.Clothing, other.Backpack,
                 jobPriorities, other.PreferenceUnavailable, antagPreferences, traitPreferences)
         {
         }
@@ -85,6 +87,7 @@ namespace Content.Shared.Preferences
             int age,
             Sex sex,
             Gender gender,
+            int bankBalance,
             HumanoidCharacterAppearance appearance,
             ClothingPreference clothing,
             BackpackPreference backpack,
@@ -92,7 +95,7 @@ namespace Content.Shared.Preferences
             PreferenceUnavailableMode preferenceUnavailable,
             IReadOnlyList<string> antagPreferences,
             IReadOnlyList<string> traitPreferences)
-            : this(name, flavortext, species, age, sex, gender, appearance, clothing, backpack, new Dictionary<string, JobPriority>(jobPriorities),
+            : this(name, flavortext, species, age, sex, gender, bankBalance, appearance, clothing, backpack, new Dictionary<string, JobPriority>(jobPriorities),
                 preferenceUnavailable, new List<string>(antagPreferences), new List<string>(traitPreferences))
         {
         }
@@ -103,22 +106,23 @@ namespace Content.Shared.Preferences
         /// </summary>
         /// <returns></returns>
         public HumanoidCharacterProfile() : this(
-            "John Doe",
-            "",
-            SharedHumanoidAppearanceSystem.DefaultSpecies,
-            18,
-            Sex.Male,
-            Gender.Male,
-            new HumanoidCharacterAppearance(),
-            ClothingPreference.Jumpsuit,
-            BackpackPreference.Backpack,
-            new Dictionary<string, JobPriority>
-            {
-                {SharedGameTicker.FallbackOverflowJob, JobPriority.High}
-            },
-            PreferenceUnavailableMode.SpawnAsOverflow,
-            new List<string>(),
-            new List<string>())
+                "John Doe",
+                "",
+                SharedHumanoidAppearanceSystem.DefaultSpecies,
+                18,
+                Sex.Male,
+                Gender.Male,
+                35000,
+                new HumanoidCharacterAppearance(),
+                ClothingPreference.Jumpsuit,
+                BackpackPreference.Backpack,
+                new Dictionary<string, JobPriority>
+                {
+                    {SharedGameTicker.FallbackOverflowJob, JobPriority.High}
+                },
+                PreferenceUnavailableMode.SpawnAsOverflow,
+                new List<string>(),
+                new List<string>())
         {
         }
 
@@ -136,6 +140,7 @@ namespace Content.Shared.Preferences
                 18,
                 Sex.Male,
                 Gender.Male,
+                35000,
                 HumanoidCharacterAppearance.DefaultWithSpecies(species),
                 ClothingPreference.Jumpsuit,
                 BackpackPreference.Backpack,
@@ -170,6 +175,7 @@ namespace Content.Shared.Preferences
 
             var sex = Sex.Unsexed;
             var age = 18;
+            var balance = 35000;
             if (prototypeManager.TryIndex<SpeciesPrototype>(species, out var speciesPrototype))
             {
                 sex = random.Pick(speciesPrototype.Sexes);
@@ -180,7 +186,7 @@ namespace Content.Shared.Preferences
 
             var name = GetName(species, gender);
 
-            return new HumanoidCharacterProfile(name, "", species, age, sex, gender, HumanoidCharacterAppearance.Random(species, sex), ClothingPreference.Jumpsuit, BackpackPreference.Backpack,
+            return new HumanoidCharacterProfile(name, "", species, age, sex, gender, balance, HumanoidCharacterAppearance.Random(species, sex), ClothingPreference.Jumpsuit, BackpackPreference.Backpack,
                 new Dictionary<string, JobPriority>
                 {
                     {SharedGameTicker.FallbackOverflowJob, JobPriority.High},
@@ -199,6 +205,9 @@ namespace Content.Shared.Preferences
 
         [DataField("gender")]
         public Gender Gender { get; private set; }
+
+        [DataField("bankBalance")]
+        public int BankBalance { get; private set; }
 
         public ICharacterAppearance CharacterAppearance => Appearance;
 
@@ -341,6 +350,7 @@ namespace Content.Shared.Preferences
             if (Age != other.Age) return false;
             if (Sex != other.Sex) return false;
             if (Gender != other.Gender) return false;
+            if (BankBalance != other.BankBalance) return false;
             if (PreferenceUnavailable != other.PreferenceUnavailable) return false;
             if (Clothing != other.Clothing) return false;
             if (Backpack != other.Backpack) return false;
@@ -433,6 +443,13 @@ namespace Content.Shared.Preferences
                 flavortext = FormattedMessage.RemoveMarkup(FlavorText);
             }
 
+            //make sure theres no funny bank stuff going on
+            var bankBalance = BankBalance;
+            if (BankBalance <= 0)
+            {
+                bankBalance = 0;
+            }
+
             var appearance = HumanoidCharacterAppearance.EnsureValid(Appearance, Species);
 
             var prefsUnavailableMode = PreferenceUnavailable switch
@@ -480,6 +497,7 @@ namespace Content.Shared.Preferences
             Age = age;
             Sex = sex;
             Gender = gender;
+            BankBalance = bankBalance;
             Appearance = appearance;
             Clothing = clothing;
             Backpack = backpack;
@@ -526,6 +544,7 @@ namespace Content.Shared.Preferences
                     Clothing,
                     Backpack
                 ),
+                BankBalance,
                 PreferenceUnavailable,
                 _jobPriorities,
                 _antagPreferences,
