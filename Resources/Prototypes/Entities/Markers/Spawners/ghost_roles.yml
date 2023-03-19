@@ -85,5 +85,5 @@
     sprite: Markers/jobs.rsi
     layers:
       - state: green
-      - sprite: Mobs/Aliens/Xenos/cluwne_beast.rsi
+      - sprite: Mobs/Aliens/cluwnebeast.rsi
         state: icon

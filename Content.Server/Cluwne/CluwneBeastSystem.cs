@@ -7,6 +7,7 @@ using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Configurations;
 using Robust.Shared.Prototypes;
 using Content.Server.Emoting.Systems;
+using Content.Server.Abilities.Mime;
 using Content.Server.Speech.EntitySystems;
 using Content.Shared.Cluwne;
 using Content.Shared.Weapons.Melee.Events;
@@ -19,6 +20,7 @@ using Content.Server.Chat.Managers;
 using Content.Server.IdentityManagement;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
+using Content.Server.Administration.Commands;
 
 namespace Content.Server.Cluwne;
 
@@ -81,6 +83,7 @@ public sealed class CluwneBeastSystem : EntitySystem
         _autoEmote.AddEmote(uid, "CluwneBeastGiggle");
         EnsureComp<ClumsyComponent>(uid);
         Spawn(component.BlueSpaceId, Transform(uid).Coordinates);
+        SetOutfitCommand.SetOutfit(uid, "CluwneBeastGear", EntityManager);
     }
 
     public CluwneBeastRuleConfiguration RuleConfig()
@@ -132,7 +135,9 @@ public sealed class CluwneBeastSystem : EntitySystem
         {
             if (HasComp<HumanoidAppearanceComponent>(entity)
                 && !_mobStateSystem.IsDead(entity)
-                && _robustRandom.Prob(component.Cluwinification))
+                && _robustRandom.Prob(component.Cluwinification)
+                && !HasComp<ClumsyComponent>(entity)
+                && !HasComp<MimePowersComponent>(entity))
             {
                 _audio.PlayPvs(component.CluwneSound, uid);
                 EnsureComp<CluwneComponent>(entity);
