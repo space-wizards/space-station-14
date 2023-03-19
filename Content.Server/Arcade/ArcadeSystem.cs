@@ -5,6 +5,7 @@ using Content.Shared.Arcade;
 using Robust.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Content.Server.Nuke;
 
 namespace Content.Server.Arcade
 {
@@ -27,7 +28,7 @@ namespace Content.Server.Arcade
         private void OnAfterUIOpen(EntityUid uid, BlockGameArcadeComponent component, AfterActivatableUIOpenEvent args)
         {
             var actor = Comp<ActorComponent>(args.User);
-            if (component.UserInterface?.SessionHasOpen(actor.PlayerSession) == true)
+            if (actor.PlayerSession != null && component.UserInterface?.SessionHasOpen(actor.PlayerSession) == true)
             {
                  component.RegisterPlayerSession(actor.PlayerSession);
             }

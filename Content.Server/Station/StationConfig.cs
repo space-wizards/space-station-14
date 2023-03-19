@@ -1,4 +1,4 @@
-﻿using Content.Server.Maps.NameGenerators;
+using Content.Server.Maps.NameGenerators;
 using JetBrains.Annotations;
 
 namespace Content.Server.Station;
@@ -14,6 +14,14 @@ namespace Content.Server.Station;
 [DataDefinition, PublicAPI]
 public sealed partial class StationConfig
 {
+    public StationConfig() { }
+    public StationConfig(string stationNameTemplate, Dictionary<string, List<int?>> availableJobs, List<string> overflowJobs)
+    {
+        StationNameTemplate = stationNameTemplate;
+        _availableJobs = availableJobs;
+        _overflowJobs = overflowJobs;
+    }
+
     /// <summary>
     /// The name template to use for the station.
     /// If there's a name generator this should follow it's required format.

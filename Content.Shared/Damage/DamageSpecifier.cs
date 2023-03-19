@@ -38,6 +38,16 @@ namespace Content.Shared.Damage
         public Dictionary<string, FixedPoint2> DamageDict { get; set; } = new();
 
         /// <summary>
+        /// PSS - Proxy access to DamageDict.
+        /// </summary>
+        [JsonIgnore]
+        [DataField("pssDamageDict")]
+        private Dictionary<string, FixedPoint2> PSS_DamageDict
+        {
+            get => DamageDict; set => DamageDict = value;
+        }
+
+        /// <summary>
         ///     Sum of the damage values.
         /// </summary>
         /// <remarks>

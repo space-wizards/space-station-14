@@ -1,5 +1,4 @@
 - type: entity
-  save: false
   name: Urisst' Mzhand
   parent: BaseMobOrganic
   id: BaseMobReptilian
@@ -54,7 +53,6 @@
   - type: Perishable
 
 - type: entity
-  save: false
   name: Urist McHands
   parent: MobHumanDummy
   id: MobReptilianDummy

@@ -57,7 +57,7 @@ namespace Content.Server.Recycling
             if (args.Handled) return;
             args.SetHandled(SuicideKind.Bloodloss);
             var victim = args.Victim;
-            if (TryComp(victim, out ActorComponent? actor) &&
+            if (TryComp(victim, out ActorComponent? actor) && actor.PlayerSession != null &&
                 actor.PlayerSession.ContentData()?.Mind is { } mind)
             {
                 _ticker.OnGhostAttempt(mind, false);

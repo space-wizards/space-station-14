@@ -211,7 +211,7 @@ public sealed partial class CargoSystem
 
         _uiSystem.GetUiOrNull(component.Owner, CargoConsoleUiKey.Shuttle)?.SetState(
             new CargoShuttleConsoleBoundUserInterfaceState(
-                station != null ? MetaData(station.Value).EntityName : Loc.GetString("cargo-shuttle-console-station-unknown"),
+                (station != null && station.Value != EntityUid.Invalid) ? MetaData(station.Value).EntityName : Loc.GetString("cargo-shuttle-console-station-unknown"),
                 string.IsNullOrEmpty(shuttleName) ? Loc.GetString("cargo-shuttle-console-shuttle-not-found") : shuttleName,
                 _shuttle.CanFTL(shuttle?.Owner, out _),
                 shuttle?.NextCall,

@@ -109,7 +109,6 @@
   id: Exclamation
   name: exclamation
   noSpawn: true
-  save: false
   components:
     - type: Transform
       noRot: true

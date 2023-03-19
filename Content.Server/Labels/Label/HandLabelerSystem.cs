@@ -90,7 +90,7 @@ namespace Content.Server.Labels
 
         private void OnActivate(EntityUid uid, HandLabelerComponent handLabeler, ActivateInWorldEvent args)
         {
-            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
+            if (!(EntityManager.TryGetComponent(args.User, out ActorComponent? actor) && actor.PlayerSession != null))
                 return;
 
             handLabeler.Owner.GetUIOrNull(HandLabelerUiKey.Key)?.Open(actor.PlayerSession);

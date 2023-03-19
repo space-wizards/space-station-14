@@ -67,14 +67,14 @@ namespace Content.Server.Administration.Systems
 
         private void AddAdminVerbs(GetVerbsEvent<Verb> args)
         {
-            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
+            if (!(EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor) && actor.PlayerSession != null))
                 return;
 
             var player = actor.PlayerSession;
 
             if (_adminManager.IsAdmin(player))
             {
-                if (TryComp(args.Target, out ActorComponent? targetActor))
+                if (TryComp(args.Target, out ActorComponent? targetActor) && targetActor.PlayerSession != null)
                 {
                     // AdminHelp
                     Verb verb = new();
@@ -170,7 +170,7 @@ namespace Content.Server.Administration.Systems
                         Category = VerbCategory.Admin,
                         Act = () =>
                         {
-                            if (!TryComp<ActorComponent>(args.Target, out var actor)) return;
+                            if (!(TryComp<ActorComponent>(args.Target, out var actor) && actor.PlayerSession != null)) return;
 
                             _console.ExecuteCommand(player, $"respawn {actor.PlayerSession.Name}");
                         },
@@ -183,7 +183,7 @@ namespace Content.Server.Administration.Systems
 
         private void AddDebugVerbs(GetVerbsEvent<Verb> args)
         {
-            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
+            if (!(EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor) && actor.PlayerSession != null))
                 return;
 
             var player = actor.PlayerSession;

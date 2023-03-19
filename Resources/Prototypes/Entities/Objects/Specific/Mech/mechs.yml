@@ -1,6 +1,5 @@
 - type: entity
   id: BaseMech
-  save: false
   abstract: true
   components:
   - type: Sprite

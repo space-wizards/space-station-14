@@ -11,6 +11,7 @@ public abstract class SharedHandsComponent : Component
     ///     The currently active hand.
     /// </summary>
     [ViewVariables]
+    [DataField("pssActiveHand")]
     public Hand? ActiveHand;
 
     /// <summary>
@@ -20,6 +21,7 @@ public abstract class SharedHandsComponent : Component
     public EntityUid? ActiveHandEntity => ActiveHand?.HeldEntity;
 
     [ViewVariables]
+    [DataField("pssHands")]
     public Dictionary<string, Hand> Hands = new();
 
     public int Count => Hands.Count;
@@ -44,13 +46,16 @@ public abstract class SharedHandsComponent : Component
     public float ThrowRange { get; set; } = 8f;
 }
 
+[DataDefinition]
 [Serializable, NetSerializable]
 public sealed class Hand //TODO: This should definitely be a struct - Jezi
 {
     [ViewVariables]
-    public string Name { get; }
+    [DataField("pssName")]
+    public string Name { get; private set; }
 
     [ViewVariables]
+    [DataField("pssLocation")]
     public HandLocation Location { get; }
 
     /// <summary>
@@ -58,12 +63,18 @@ public sealed class Hand //TODO: This should definitely be a struct - Jezi
     ///     which may not be synced with the server when the client hands are created.
     /// </summary>
     [ViewVariables, NonSerialized]
+    [DataField("pssContainer")]
     public ContainerSlot? Container;
 
     [ViewVariables]
     public EntityUid? HeldEntity => Container?.ContainedEntity;
 
     public bool IsEmpty => HeldEntity == null;
+
+    public Hand()
+    {
+        Name = string.Empty;
+    }
 
     public Hand(string name, HandLocation location, ContainerSlot? container = null)
     {

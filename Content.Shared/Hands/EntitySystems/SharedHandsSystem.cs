@@ -21,8 +21,26 @@ public abstract partial class SharedHandsSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<SharedHandsComponent, ComponentInit>(OnComponentInit);
 
         InitializeInteractions();
+    }
+
+    private void OnComponentInit(EntityUid uid, SharedHandsComponent component, ComponentInit args)
+    {
+        // PSS - Persistence fixes/tweaks - this is so damn hard - but less time consuming with the serialization stuff for this PoC.
+        // Basically hands containers great their own instances instead of referencing original ones in main mob's container manager.
+        if (component.ActiveHand != null && !component.Hands.ContainsValue(component.ActiveHand))
+        {
+            component.ActiveHand = component.Hands.GetValueOrDefault(component.ActiveHand.Name);
+        }
+        if (TryComp<ContainerManagerComponent>(uid, out var containerManager))
+        {
+            foreach (var (name, hand) in component.Hands)
+            {
+                hand.Container = containerManager.Containers.GetValueOrDefault(name) as ContainerSlot;
+            }
+        }
     }
 
     public override void Shutdown()

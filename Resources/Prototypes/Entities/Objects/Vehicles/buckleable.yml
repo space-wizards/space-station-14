@@ -1,6 +1,5 @@
 - type: entity
   id: BaseVehicle
-  save: false
   abstract: true
   name: Vehicle
   components:

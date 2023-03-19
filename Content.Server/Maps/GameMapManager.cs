@@ -4,8 +4,10 @@ using System.Linq;
 using Content.Shared.CCVar;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
+using Robust.Shared.ContentPack;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Maps;
 
@@ -15,6 +17,7 @@ public sealed class GameMapManager : IGameMapManager
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IResourceManager _resourceManager = default!;
     
     [ViewVariables(VVAccess.ReadOnly)]
     private readonly Queue<string> _previousMaps = new();
@@ -43,6 +46,25 @@ public sealed class GameMapManager : IGameMapManager
                 }
                 else
                 {
+                    var usePersistence = _configurationManager.GetCVar<bool>(CCVars.UsePersistence);
+                    if (usePersistence)
+                    {
+                        var resource = new ResourcePath(value);
+                        if (!_resourceManager.UserData.Exists(resource))
+                        {
+                            var defaultPersistenceMap = new ResourcePath("/Maps/Test/empty.yml");
+                            using (var r = _resourceManager.ContentFileReadText(defaultPersistenceMap))
+                            {
+                                using (var w = _resourceManager.UserData.OpenWriteText(resource))
+                                {
+                                    r.BaseStream.CopyTo(w.BaseStream);
+                                }
+
+                            }
+                        }
+                        _configSelectedMap = GameMapPrototype.Persistence(resource);
+                        Logger.Info($"Using persistence.");
+                    }
                     Logger.ErrorS("mapsel", $"Unknown map prototype {value} was selected!");
                 }
             }

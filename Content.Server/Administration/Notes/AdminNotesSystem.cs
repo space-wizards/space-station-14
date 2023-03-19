@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration.Commands;
+using Content.Server.Administration.Commands;
 using Content.Shared.Database;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -25,7 +25,7 @@ public sealed class AdminNotesSystem : EntitySystem
             return;
         }
 
-        if (!_notes.CanView(user))
+        if (user == null || target == null || !_notes.CanView(user))
         {
             return;
         }

@@ -351,7 +351,7 @@ public sealed class StationSystem : EntitySystem
         // won't be included because its in null-space. Also, what happens to shuttles on other maps?
         _transform.DetachParentToNull(station, Transform(station));
 
-        var data = AddComp<StationDataComponent>(station);
+        var data = EnsureComp<StationDataComponent>(station);
         var metaData = MetaData(station);
         data.StationConfig = stationConfig;
 
@@ -396,7 +396,7 @@ public sealed class StationSystem : EntitySystem
         if (!string.IsNullOrEmpty(name))
             MetaData(mapGrid).EntityName = name;
 
-        var stationMember = AddComp<StationMemberComponent>(mapGrid);
+        var stationMember = EnsureComp<StationMemberComponent>(mapGrid);
         stationMember.Station = station;
         stationData.Grids.Add(gridComponent.Owner);
 

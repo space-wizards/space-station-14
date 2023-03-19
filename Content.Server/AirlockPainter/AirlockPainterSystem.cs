@@ -58,7 +58,7 @@ namespace Content.Server.AirlockPainter
 
         private void OnActivate(EntityUid uid, AirlockPainterComponent component, ActivateInWorldEvent args)
         {
-            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
+            if (!(EntityManager.TryGetComponent(args.User, out ActorComponent? actor) && actor.PlayerSession != null))
                 return;
             DirtyUI(uid, component);
             component.Owner.GetUIOrNull(AirlockPainterUiKey.Key)?.Open(actor.PlayerSession);

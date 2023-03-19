@@ -145,7 +145,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
         private void OnMixerInteractHand(EntityUid uid, GasMixerComponent mixer, InteractHandEvent args)
         {
-            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
+            if (!(EntityManager.TryGetComponent(args.User, out ActorComponent? actor) && actor.PlayerSession != null))
                 return;
 
             if (EntityManager.GetComponent<TransformComponent>(mixer.Owner).Anchored)

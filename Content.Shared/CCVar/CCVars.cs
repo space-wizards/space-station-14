@@ -191,6 +191,12 @@ namespace Content.Shared.CCVar
             GameMap = CVarDef.Create("game.map", string.Empty, CVar.SERVERONLY);
 
         /// <summary>
+        ///     Controls whether to use world persistence or not.
+        /// </summary>
+        public static readonly CVarDef<bool>
+            UsePersistence = CVarDef.Create("game.usepersistence", false, CVar.ARCHIVE);
+
+        /// <summary>
         ///     Prototype to use for map pool.
         /// </summary>
         public static readonly CVarDef<string>

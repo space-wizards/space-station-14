@@ -39,7 +39,7 @@ public sealed class BloodstreamSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BloodstreamComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<BloodstreamComponent, ComponentStartup>(OnComponentInit);
         SubscribeLocalEvent<BloodstreamComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<BloodstreamComponent, HealthBeingExaminedEvent>(OnHealthBeingExamined);
         SubscribeLocalEvent<BloodstreamComponent, BeingGibbedEvent>(OnBeingGibbed);
@@ -126,7 +126,7 @@ public sealed class BloodstreamSystem : EntitySystem
         }
     }
 
-    private void OnComponentInit(EntityUid uid, BloodstreamComponent component, ComponentInit args)
+    private void OnComponentInit(EntityUid uid, BloodstreamComponent component, ComponentStartup args)
     {
         component.ChemicalSolution = _solutionContainerSystem.EnsureSolution(uid, BloodstreamComponent.DefaultChemicalsSolutionName);
         component.BloodSolution = _solutionContainerSystem.EnsureSolution(uid, BloodstreamComponent.DefaultBloodSolutionName);

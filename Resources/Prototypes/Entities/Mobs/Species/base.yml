@@ -1,6 +1,5 @@
 # Anything human specific (e.g. UI, input) goes under MobHuman
 - type: entity
-  save: false
   name: Urist McHands
   id: BaseMobOrganic
   noSpawn: true
@@ -302,7 +301,6 @@
     deathPenalty: 0.01 # However they really ought to be living and intact, otherwise they're worth 100x less.
 
 - type: entity
-  save: false
   name: Urist McHands
   id: BaseMobOrganicDummy
   abstract: true

@@ -43,7 +43,7 @@ namespace Content.Shared.Damage
         /// <remarks>
         ///     If this data-field is specified, this allows damageable components to be initialized with non-zero damage.
         /// </remarks>
-        [DataField("damage", readOnly: true)] //todo remove this readonly when implementing writing to damagespecifier
+        [DataField("damage")] //todo remove this readonly when implementing writing to damagespecifier - ingles98: leaving this todo since i removed it for pss
         public DamageSpecifier Damage = new();
 
         /// <summary>
@@ -59,6 +59,7 @@ namespace Content.Shared.Damage
         ///     The sum of all damages in the DamageableComponent.
         /// </summary>
         [ViewVariables]
+        [DataField("pssTotalDamage")]
         public FixedPoint2 TotalDamage;
 
         [DataField("radiationDamageTypes", customTypeSerializer: typeof(PrototypeIdListSerializer<DamageTypePrototype>))]

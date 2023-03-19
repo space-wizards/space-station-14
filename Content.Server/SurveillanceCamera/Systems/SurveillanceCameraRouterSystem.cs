@@ -143,6 +143,9 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
             return;
         }
 
+        if (!(actor.PlayerSession != null))
+            return;
+
         _userInterface.GetUiOrNull(uid, SurveillanceCameraSetupUiKey.Router)!.Open(actor.PlayerSession);
         UpdateSetupInterface(uid, camera);
     }

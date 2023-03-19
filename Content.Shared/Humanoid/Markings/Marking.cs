@@ -12,7 +12,7 @@ namespace Content.Shared.Humanoid.Markings
         [DataField("markingColor")]
         private List<Color> _markingColors = new();
 
-        private Marking()
+        public Marking()
         {
         }
 

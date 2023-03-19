@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Mech.Components;
@@ -262,7 +262,7 @@ public sealed class MechSystem : SharedMechSystem
         if (user == null)
             return;
 
-        if (!TryComp<ActorComponent>(user, out var actor))
+        if (!(TryComp<ActorComponent>(user, out var actor) && actor.PlayerSession != null))
             return;
 
         _ui.TryToggleUi(uid, MechUiKey.Key, actor.PlayerSession);

@@ -86,7 +86,7 @@ namespace Content.Server.Medical
 
         private void OpenUserInterface(EntityUid user, HealthAnalyzerComponent healthAnalyzer)
         {
-            if (!TryComp<ActorComponent>(user, out var actor) || healthAnalyzer.UserInterface == null)
+            if (!(TryComp<ActorComponent>(user, out var actor) && actor.PlayerSession != null) || healthAnalyzer.UserInterface == null)
                 return;
 
             _uiSystem.OpenUi(healthAnalyzer.UserInterface ,actor.PlayerSession);

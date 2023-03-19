@@ -1,5 +1,4 @@
 - type: entity
-  save: false
   name: Urist McPlants
   parent: BaseMobOrganic
   id: BaseMobDiona
@@ -59,7 +58,6 @@
     soundsId: DionaBodyEmotes
 
 - type: entity
-  save: false
   name: Urist McHands
   parent: MobHumanDummy
   id: MobDionaDummy

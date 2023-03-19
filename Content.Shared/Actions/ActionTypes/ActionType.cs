@@ -86,6 +86,7 @@ public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneab
     ///     The entity that enables / provides this action. If the action is innate, this may be the user themselves. If
     ///     this action has no provider (e.g., mapping tools), the this will result in broadcast events.
     /// </summary>
+    [DataField("pssProvider")]
     public EntityUid? Provider;
 
     /// <summary>

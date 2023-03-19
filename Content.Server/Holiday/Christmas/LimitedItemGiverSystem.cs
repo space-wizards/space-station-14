@@ -1,4 +1,4 @@
-﻿using Content.Server.Hands.Systems;
+using Content.Server.Hands.Systems;
 using Content.Server.Mind.Components;
 using Content.Server.Popups;
 using Content.Shared.Interaction;
@@ -23,7 +23,7 @@ public sealed class LimitedItemGiverSystem : EntitySystem
 
     private void OnInteractHand(EntityUid uid, LimitedItemGiverComponent component, InteractHandEvent args)
     {
-        if (!TryComp<ActorComponent>(args.User, out var actor))
+        if (!(TryComp<ActorComponent>(args.User, out var actor) && actor.PlayerSession != null))
             return;
 
         if (component.GrantedPlayers.Contains(actor.PlayerSession.UserId) || (component.RequiredHoliday is not null && !_holiday.IsCurrentlyHoliday(component.RequiredHoliday)))

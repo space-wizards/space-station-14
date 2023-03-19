@@ -1,13 +1,16 @@
 using Content.Server.Database;
+using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
 using Content.Shared.Preferences;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Server.GameTicking
 {
@@ -64,6 +67,20 @@ namespace Content.Server.GameTicking
                     var data = session.ContentData();
 
                     DebugTools.AssertNotNull(data);
+
+                    // Persistence hook
+                    if (data!.Mind == null)
+                    {
+                        var savedMindComponent = EntityManager.EntityQuery<MindComponent>(true).Where(c => c.Mind?.UserId == data.UserId).FirstOrDefault();
+                        if (savedMindComponent?.Mind != null)
+                        {
+                            savedMindComponent.Mind.Persistence_ReattachPlayer(savedMindComponent, data.UserId);
+                            session.DetachFromEntity();
+                            RemComp<ActorComponent>(savedMindComponent.Owner);
+                            Get<ActorSystem>().Attach(savedMindComponent.Owner, session);
+                            data = session.ContentData();
+                        }
+                    }
 
                     if (data!.Mind == null)
                     {

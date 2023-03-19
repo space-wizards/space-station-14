@@ -216,7 +216,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
     /// </summary>
     private void OpenDeviceListUi(EntityUid? targetUid, EntityUid userUid, NetworkConfiguratorComponent configurator)
     {
-        if (!targetUid.HasValue || !TryComp(userUid, out ActorComponent? actor) || !AccessCheck(targetUid.Value, userUid, configurator))
+        if (!targetUid.HasValue || !(TryComp(userUid, out ActorComponent? actor) && actor.PlayerSession != null) || !AccessCheck(targetUid.Value, userUid, configurator))
             return;
 
         configurator.ActiveDeviceList = targetUid;

@@ -1,4 +1,4 @@
-﻿using Content.Server.Explosion.EntitySystems;
+using Content.Server.Explosion.EntitySystems;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.GhostKick;
@@ -14,7 +14,7 @@ public sealed class GhostKickUserOnTriggerSystem : EntitySystem
 
     private void HandleMineTriggered(EntityUid uid, GhostKickUserOnTriggerComponent userOnTriggerComponent, TriggerEvent args)
     {
-        if (!TryComp(args.User, out ActorComponent? actor))
+        if (!(TryComp(args.User, out ActorComponent? actor) && actor.PlayerSession != null))
             return;
 
         _ghostKickManager.DoDisconnect(

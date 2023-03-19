@@ -81,7 +81,7 @@ namespace Content.Server.Paper
         {
             if (_tagSystem.HasTag(args.Used, "Write"))
             {
-                if (!TryComp<ActorComponent>(args.User, out var actor))
+                if (!(TryComp<ActorComponent>(args.User, out var actor) && actor.PlayerSession != null))
                     return;
 
                 paperComp.Mode = PaperAction.Write;

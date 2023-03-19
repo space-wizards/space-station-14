@@ -94,8 +94,7 @@ namespace Content.Server.Salvage
         public int PreviousCharge = 5;
 
     }
-
-    [CopyByRef, DataRecord]
+    [CopyByRef, DataRecord, Serializable, DataDefinition] // TODO PSS: Check if this is actually being properly saved/loaded.
     public record struct MagnetState(MagnetStateType StateType, TimeSpan Until)
     {
         public static readonly MagnetState Inactive = new (MagnetStateType.Inactive, TimeSpan.Zero);

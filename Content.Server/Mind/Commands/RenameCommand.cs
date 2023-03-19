@@ -92,7 +92,7 @@ public sealed class RenameCommand : IConsoleCommand
 
         // Admin Overlay
         if (entSysMan.TryGetEntitySystem<AdminSystem>(out var adminSystem)
-            && entMan.TryGetComponent<ActorComponent>(entityUid, out var actorComp))
+            && entMan.TryGetComponent<ActorComponent>(entityUid, out var actorComp) && actorComp.PlayerSession != null)
         {
             adminSystem.UpdatePlayerList(actorComp.PlayerSession);
         }

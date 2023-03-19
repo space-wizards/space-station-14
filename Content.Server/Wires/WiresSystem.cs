@@ -459,7 +459,7 @@ public sealed class WiresSystem : EntitySystem
             (_toolSystem.HasQuality(args.Used, "Cutting", tool) ||
             _toolSystem.HasQuality(args.Used, "Pulsing", tool)))
         {
-            if (EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
+            if (EntityManager.TryGetComponent(args.User, out ActorComponent? actor) && actor.PlayerSession != null)
             {
                 _uiSystem.GetUiOrNull(uid, WiresUiKey.Key)?.Open(actor.PlayerSession);
                 args.Handled = true;

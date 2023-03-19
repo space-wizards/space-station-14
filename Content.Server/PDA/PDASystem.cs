@@ -171,7 +171,7 @@ namespace Content.Server.PDA
         private void UpdateStationName(PDAComponent pda)
         {
             var station = _stationSystem.GetOwningStation(pda.Owner);
-            pda.StationName = station is null ? null : Name(station.Value);
+            pda.StationName = (station is null || station == EntityUid.Invalid) ? null : Name(station.Value);
         }
 
         private void AfterUIOpen(EntityUid uid, PDAComponent pda, AfterActivatableUIOpenEvent args)

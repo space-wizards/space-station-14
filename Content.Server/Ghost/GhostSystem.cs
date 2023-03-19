@@ -193,7 +193,7 @@ namespace Content.Server.Ghost
             if (args.SenderSession.AttachedEntity is not {Valid: true} attached ||
                 !EntityManager.TryGetComponent(attached, out GhostComponent? ghost) ||
                 !ghost.CanReturnToBody ||
-                !EntityManager.TryGetComponent(attached, out ActorComponent? actor))
+                !(EntityManager.TryGetComponent(attached, out ActorComponent? actor) && actor.PlayerSession != null))
             {
                 Logger.Warning($"User {args.SenderSession.Name} sent an invalid {nameof(GhostReturnToBodyRequest)}");
                 return;

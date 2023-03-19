@@ -70,7 +70,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
 
     private void OpenUI(EntityUid player, ActorComponent? actor = null)
     {
-        if (!Resolve(player, ref actor))
+        if (!Resolve(player, ref actor) || !(actor.PlayerSession != null))
         {
             return;
         }

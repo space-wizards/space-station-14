@@ -257,7 +257,8 @@ namespace Content.Server.MachineLinking.System
 
         private bool TryGetOrOpenUI(ActorComponent actor, SignalLinkerComponent linker, [NotNullWhen(true)] out BoundUserInterface? bui)
         {
-            if (_userInterfaceSystem.TryGetUi(linker.Owner, SignalLinkerUiKey.Key, out bui))
+            bui = null;
+            if (actor.PlayerSession != null && _userInterfaceSystem.TryGetUi(linker.Owner, SignalLinkerUiKey.Key, out bui))
             {
                 bui.Open(actor.PlayerSession);
                 return true;

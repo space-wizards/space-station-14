@@ -1,5 +1,4 @@
 - type: entity
-  save: false
   name: Pathfinding Dummy
   parent: BaseMobHuman
   id: MobHumanPathDummy

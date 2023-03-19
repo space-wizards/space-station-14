@@ -44,6 +44,7 @@ public sealed class VocalComponent : Component
     ///     Null if no valid prototype for entity sex was found.
     /// </summary>
     [ViewVariables]
+    [DataField("pssEmoteSounds")]
     public EmoteSoundsPrototype? EmoteSounds = null;
 }
 

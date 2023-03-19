@@ -249,7 +249,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         var filter = Filter.Empty();
         foreach (var nukie in EntityQuery<NukeOperativeComponent>())
         {
-            if (!TryComp<ActorComponent>(nukie.Owner, out var actor))
+            if (!(TryComp<ActorComponent>(nukie.Owner, out var actor) && actor.PlayerSession != null))
             {
                 continue;
             }
@@ -562,7 +562,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             return;
 
         HumanoidCharacterProfile? profile = null;
-        if (TryComp(args.Spawned, out ActorComponent? actor))
+        if (TryComp(args.Spawned, out ActorComponent? actor) && actor.PlayerSession != null)
             profile = _prefs.GetPreferences(actor.PlayerSession.UserId).SelectedCharacter as HumanoidCharacterProfile;
 
         SetupOperativeEntity(uid, nukeOpSpawner.OperativeName, nukeOpSpawner.OperativeStartingGear, profile);

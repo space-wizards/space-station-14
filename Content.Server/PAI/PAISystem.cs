@@ -108,7 +108,7 @@ namespace Content.Server.PAI
 
             //  Close the instrument interface if it was open
             //  before closing
-            if (HasComp<ActiveInstrumentComponent>(uid) && TryComp<ActorComponent>(uid, out var actor))
+            if (HasComp<ActiveInstrumentComponent>(uid) && TryComp<ActorComponent>(uid, out var actor) && actor.PlayerSession != null)
             {
                 _instrumentSystem.ToggleInstrumentUi(uid, actor.PlayerSession);
             }

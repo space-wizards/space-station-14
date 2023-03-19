@@ -1,5 +1,4 @@
 - type: entity
-  save: false
   name: Urist McSkelly
   parent: BaseMobOrganic
   id: BaseMobSkeletonPerson
@@ -68,7 +67,6 @@
           - MobLayer
 
 - type: entity
-  save: false
   name: Urist McSkelly
   parent: BaseMobOrganicDummy
   id: MobSkeletonPersonDummy

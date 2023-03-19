@@ -40,7 +40,7 @@ public sealed partial class StoreSystem
         if (!Resolve(storeEnt, ref component))
             return;
 
-        if (!TryComp<ActorComponent>(user, out var actor))
+        if (!(TryComp<ActorComponent>(user, out var actor) && actor.PlayerSession != null))
             return;
 
         if (!_ui.TryToggleUi(storeEnt, StoreUiKey.Key, actor.PlayerSession))

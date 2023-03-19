@@ -114,7 +114,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnPumpInteractHand(EntityUid uid, GasVolumePumpComponent pump, InteractHandEvent args)
         {
-            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
+            if (!(EntityManager.TryGetComponent(args.User, out ActorComponent? actor) && actor.PlayerSession != null))
                 return;
 
             if (EntityManager.GetComponent<TransformComponent>(pump.Owner).Anchored)

@@ -1,4 +1,4 @@
-﻿using Content.Server.IdentityManagement;
+using Content.Server.IdentityManagement;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.IdentityManagement.Components;
@@ -62,7 +62,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     {
         if (!Resolve(uid, ref component))
             return;
-        if (!TryComp(user, out ActorComponent? actor))
+        if (!(TryComp(user, out ActorComponent? actor) && actor.PlayerSession != null))
             return;
         _uiSystem.TryToggleUi(uid, ChameleonUiKey.Key, actor.PlayerSession);
     }

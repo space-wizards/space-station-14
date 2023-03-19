@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Humanoid.Markings;
@@ -42,7 +43,7 @@ public sealed class MarkingSet
     ///     feature of markings, which is the limit of markings you can put on a
     ///     humanoid.
     /// </remarks>
-    [DataField("markings")]
+    [DataField("markings", customTypeSerializer: typeof(DictionarySerializer<MarkingCategories, List<Marking>>))]
     public Dictionary<MarkingCategories, List<Marking>> Markings = new();
 
     /// <summary>

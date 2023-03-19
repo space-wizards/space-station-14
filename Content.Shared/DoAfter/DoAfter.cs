@@ -18,11 +18,13 @@ public sealed class DoAfter
     public TaskCompletionSource<DoAfterStatus> Tcs;
 
     //TODO: Should be merged into here
+    [DataField("pssEventArgs")]
     public readonly DoAfterEventArgs EventArgs;
 
     //ID so the client DoAfterSystem can track
     public byte ID;
 
+    [DataField("pssCanceled")]
     public bool Cancelled = false;
 
     //Cache the delay so the timer properly shows
@@ -53,8 +55,17 @@ public sealed class DoAfter
 #pragma warning restore RA0004
 
     // NeedHand
+    [DataField("pssActiveHand")]
     public readonly string? ActiveHand;
+    [DataField("pssActiveItem")]
     public readonly EntityUid? ActiveItem;
+
+    public DoAfter()
+    {
+        EventArgs = new DoAfterEventArgs(EntityUid.Invalid,0);
+        Tcs = new TaskCompletionSource<DoAfterStatus>();
+        AsTask = Tcs.Task;
+    }
 
     public DoAfter(DoAfterEventArgs eventArgs, IEntityManager entityManager)
     {

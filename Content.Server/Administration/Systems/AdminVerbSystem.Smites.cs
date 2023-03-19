@@ -86,7 +86,7 @@ public sealed partial class AdminVerbSystem
     // All smite verbs have names so invokeverb works.
     private void AddSmiteVerbs(GetVerbsEvent<Verb> args)
     {
-        if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
+        if (!(EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor) && actor.PlayerSession != null))
             return;
 
         var player = actor.PlayerSession;
@@ -512,7 +512,7 @@ public sealed partial class AdminVerbSystem
         };
         args.Verbs.Add(mouse);
 
-        if (TryComp<ActorComponent>(args.Target, out var actorComponent))
+        if (TryComp<ActorComponent>(args.Target, out var actorComponent) && actorComponent.PlayerSession != null)
         {
             Verb ghostKick = new()
             {

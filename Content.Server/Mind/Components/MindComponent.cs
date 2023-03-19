@@ -11,6 +11,7 @@ namespace Content.Server.Mind.Components
         /// </summary>
         [ViewVariables]
         [Access(typeof(MindSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
+        [DataField("pssMind")]
         public Mind? Mind { get; set; }
 
         /// <summary>

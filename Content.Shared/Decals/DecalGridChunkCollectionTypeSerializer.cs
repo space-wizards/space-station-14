@@ -34,7 +34,15 @@ namespace Content.Shared.Decals
             // TODO: Dump this when we don't need support anymore.
             if (version > 1)
             {
-                var nodes = (SequenceDataNode) node["nodes"];
+                SequenceDataNode nodes;
+                try // May not have the "nodes" key. Since we cannot acces the Key.Value property, this is the way to go for now, and it is ugly.
+                {
+                    nodes = (SequenceDataNode) node["nodes"];
+                }
+                catch
+                {
+                    nodes = new SequenceDataNode();
+                }
                 dictionary = new Dictionary<Vector2i, DecalChunk>();
 
                 foreach (var dNode in nodes)

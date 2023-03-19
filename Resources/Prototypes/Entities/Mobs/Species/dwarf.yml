@@ -1,5 +1,4 @@
 - type: entity
-  save: false
   name: Urist McHands The Dwarf
   parent: BaseMobOrganic
   id: BaseMobDwarf
@@ -27,7 +26,6 @@
     requiredLegs: 2
 
 - type: entity
-  save: false
   name: Urist McHands
   parent: MobHumanDummy
   id: MobDwarfDummy

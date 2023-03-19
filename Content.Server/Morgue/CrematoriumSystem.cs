@@ -141,7 +141,7 @@ public sealed class CrematoriumSystem : EntitySystem
         args.SetHandled(SuicideKind.Heat);
 
         var victim = args.Victim;
-        if (TryComp(victim, out ActorComponent? actor) && actor.PlayerSession.ContentData()?.Mind is { } mind)
+        if ((TryComp(victim, out ActorComponent? actor) && actor.PlayerSession != null) && actor.PlayerSession.ContentData()?.Mind is { } mind)
         {
             _ticker.OnGhostAttempt(mind, false);
 

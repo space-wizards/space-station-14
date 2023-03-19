@@ -29,7 +29,7 @@ public sealed class ConfigurationSystem : EntitySystem
         if (!TryComp(args.Used, out ToolComponent? tool) || !tool.Qualities.Contains(component.QualityNeeded))
             return;
 
-        if (!TryComp(args.User, out ActorComponent? actor))
+        if (!(TryComp(args.User, out ActorComponent? actor) && actor.PlayerSession != null))
             return;
 
         args.Handled = _uiSystem.TryOpen(uid, ConfigurationUiKey.Key, actor.PlayerSession);

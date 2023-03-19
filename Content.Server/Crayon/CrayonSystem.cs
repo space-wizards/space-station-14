@@ -88,7 +88,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
         if (args.Handled)
             return;
 
-        if (!TryComp<ActorComponent>(args.User, out var actor) ||
+        if (!(TryComp<ActorComponent>(args.User, out var actor) && actor.PlayerSession != null) ||
             component.UserInterface == null)
         {
             return;
@@ -139,7 +139,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
 
     private void OnCrayonDropped(EntityUid uid, CrayonComponent component, DroppedEvent args)
     {
-        if (TryComp<ActorComponent>(args.User, out var actor))
+        if (TryComp<ActorComponent>(args.User, out var actor) && actor.PlayerSession != null)
             _uiSystem.TryClose(uid, SharedCrayonComponent.CrayonUiKey.Key, actor.PlayerSession);
     }
 

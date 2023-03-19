@@ -13,6 +13,7 @@ using Content.Shared.Mobs.Systems;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Network;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Mind
@@ -27,20 +28,53 @@ namespace Content.Server.Mind
     ///     Things such as respawning do not follow, because you're a new character.
     ///     Getting borged, cloned, turned into a catbeast, etc... will keep it following you.
     /// </remarks>
-    public sealed class Mind
+    [DataDefinition]
+    [Serializable]
+    public sealed partial class Mind
     {
         private readonly MobStateSystem _mobStateSystem = default!;
         private readonly GameTicker _gameTickerSystem = default!;
         private readonly MindSystem _mindSystem = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+
+        // I am trully sorry for this.
+        [Dependency] private IPlayerManager __playerManager = default!;
+        private IPlayerManager _playerManager
+        {
+            get
+            {
+                if (__playerManager != null) return __playerManager;
+                __playerManager = IoCManager.Resolve<IPlayerManager>();
+                return __playerManager;
+            }
+        }
+        [Dependency] private IEntityManager __entityManager = default!;
+        private IEntityManager _entityManager
+        {
+            get
+            {
+                if (__entityManager != null) return __entityManager;
+                __entityManager = IoCManager.Resolve<IEntityManager>();
+                return __entityManager;
+            }
+        }
+        [Dependency] private IAdminLogManager __adminLogger = default!;
+        private IAdminLogManager _adminLogger
+        {
+            get
+            {
+                if (__adminLogger != null) return __adminLogger;
+                __adminLogger = IoCManager.Resolve<IAdminLogManager>();
+                return __adminLogger;
+            }
+        }
 
         private readonly ISet<Role> _roles = new HashSet<Role>();
 
         private readonly List<Objective> _objectives = new();
 
         public string Briefing = String.Empty;
+
+        public Mind() { }
 
         /// <summary>
         ///     Creates the new mind.
@@ -62,6 +96,7 @@ namespace Content.Server.Mind
         ///     The session ID of the player owning this mind.
         /// </summary>
         [ViewVariables]
+        [DataField("pssUserId")]
         public NetUserId? UserId { get; private set; }
 
         /// <summary>
@@ -69,17 +104,20 @@ namespace Content.Server.Mind
         ///     May end up used for round-end information (as the owner may have abandoned Mind since)
         /// </summary>
         [ViewVariables]
-        public NetUserId OriginalOwnerUserId { get; }
+        [DataField("pssOriginalOwnerUserId")]
+        public NetUserId OriginalOwnerUserId { get; private set; }
 
         [ViewVariables]
         public bool IsVisitingEntity => VisitingEntity != null;
 
         [ViewVariables]
+        [DataField("pssVisitingEntity")]
         public EntityUid? VisitingEntity { get; private set; }
 
         [ViewVariables] public EntityUid? CurrentEntity => VisitingEntity ?? OwnedEntity;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("pssCharacterName")]
         public string? CharacterName { get; set; }
 
         /// <summary>
@@ -87,6 +125,7 @@ namespace Content.Server.Mind
         ///     Can be null - will be null if the Mind is not considered "dead".
         /// </summary>
         [ViewVariables]
+        [DataField("pssTimeOfDeath")]
         public TimeSpan? TimeOfDeath { get; set; } = null;
 
         /// <summary>

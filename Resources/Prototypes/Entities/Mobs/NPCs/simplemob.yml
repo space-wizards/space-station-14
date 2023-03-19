@@ -1,5 +1,4 @@
 - type: entity
-  save: false
   abstract: true
   id: SimpleSpaceMobBase # Mob without barotrauma, freezing and asphyxiation (for space carps!?)
   suffix: AI
@@ -154,7 +153,6 @@
   - type: Perishable
 
 - type: entity
-  save: false
   abstract: true
   id: SimpleMobBase # for air breathers
   parent: SimpleSpaceMobBase

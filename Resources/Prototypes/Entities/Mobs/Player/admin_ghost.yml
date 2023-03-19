@@ -1,6 +1,5 @@
 - type: entity
   parent: MobObserver
-  save: false
   id: AdminObserver
   name: admin observer
   noSpawn: true

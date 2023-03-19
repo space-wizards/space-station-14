@@ -85,7 +85,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             _popup.PopupEntity(Loc.GetString("cream-pied-component-on-hit-by-message",("thrower", args.Thrown)), uid, args.Target);
             var otherPlayers = Filter.Empty().AddPlayersByPvs(uid);
-            if (TryComp<ActorComponent>(args.Target, out var actor)) 
+            if ((TryComp<ActorComponent>(args.Target, out var actor) && actor.PlayerSession != null)) 
             {
                 otherPlayers.RemovePlayer(actor.PlayerSession);
             }

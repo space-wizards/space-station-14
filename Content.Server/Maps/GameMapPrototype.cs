@@ -17,6 +17,31 @@ namespace Content.Server.Maps;
 [DebuggerDisplay("GameMapPrototype [{ID} - {MapName}]")]
 public sealed partial class GameMapPrototype : IPrototype
 {
+    public GameMapPrototype() { }
+    public GameMapPrototype(string mapName, ResourcePath mapPath, Dictionary<string, StationConfig> stations)
+    {
+        MapPath = mapPath;
+        _stations = stations;
+        ID = mapName;
+        MapName = mapName;
+    }
+
+    public static GameMapPrototype Persistence(ResourcePath mapPath, string mapName = "Empty", string defaultJob = "Passenger")
+    {
+        var stations = new Dictionary<string, StationConfig>();
+        var defaultAvailableJobs = new Dictionary<string, List<int?>>()
+        {
+            { defaultJob, new List<int?>() { { -1 }, { -1 } } }
+        };
+        var defaultOverflowJobs = new List<string>()
+        {
+            { defaultJob },
+        };
+        var defaultStation = new StationConfig(mapName, defaultAvailableJobs, defaultOverflowJobs);
+        stations.Add(mapName, defaultStation);
+        return new GameMapPrototype(mapName, mapPath, stations);
+    }
+
     /// <inheritdoc/>
     [IdDataField]
     public string ID { get; } = default!;
