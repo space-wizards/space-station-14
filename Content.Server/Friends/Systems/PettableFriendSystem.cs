@@ -26,7 +26,7 @@ public sealed class PettableFriendSystem : EntitySystem
         if (args.Handled || !TryComp<FactionExceptionComponent>(uid, out var factionException))
             return;
 
-        if (IsFriends(friends, user))
+        if (_factionException.IsIgnored(factionException, user))
         {
             _popup.PopupEntity(Loc.GetString(comp.FailureString, ("target", uid)), user, user);
             return;
