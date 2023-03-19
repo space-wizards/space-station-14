@@ -7,7 +7,7 @@ namespace Content.Server.Friends.Systems;
 
 public sealed class FriendsSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPopupSystem _popups = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -25,17 +25,17 @@ public sealed class FriendsSystem : EntitySystem
 
         if (IsFriends(friends, user))
         {
-            _popups.PopupEntity(Loc.GetString(comp.FailureString, ("target", uid)), user, user);
+            _popup.PopupEntity(Loc.GetString(comp.FailureString, ("target", uid)), user, user);
             return;
         }
 
         // you have made a new friend :)
-        _popups.PopupEntity(Loc.GetString(comp.SuccessString, ("target", uid)), user, user);
+        _popup.PopupEntity(Loc.GetString(comp.SuccessString, ("target", uid)), user, user);
         friends.Friends.Add(user);
         args.Handled = true;
     }
 
-    protected void OnRehydrated(EntityUid uid, FriendsComponent comp, ref GotRehydratedEvent args)
+    private void OnRehydrated(EntityUid uid, FriendsComponent comp, ref GotRehydratedEvent args)
     {
         // can only pet before hydrating, after that the fish cannot be negotiated with
         AddComp<FriendsComponent>(args.Target).Friends = comp.Friends;
