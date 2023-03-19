@@ -175,14 +175,13 @@ public sealed class RadarControl : Control
 
         // Draw our grid in detail
         var ourGridId = _coordinates.Value.GetGridUid(_entManager);
-        if (_entManager.TryGetComponent<MapGridComponent>(ourGridId, out var ourGrid) &&
-            _entManager.TryGetComponent<FixturesComponent>(ourGridId, out var ourFixtures))
+        if (_entManager.TryGetComponent<MapGridComponent>(ourGridId, out var ourGrid))
         {
             var ourGridMatrix = xformQuery.GetComponent(ourGridId.Value).WorldMatrix;
 
             Matrix3.Multiply(in ourGridMatrix, in offsetMatrix, out var matrix);
 
-            DrawGrid(handle, matrix, ourGrid, ourFixtures, Color.MediumSpringGreen, true);
+            DrawGrid(handle, matrix, ourGrid, Color.MediumSpringGreen, true);
 
             DrawDocks(handle, ourGridId.Value, matrix);
         }
@@ -200,7 +199,7 @@ public sealed class RadarControl : Control
         foreach (var grid in _mapManager.FindGridsIntersecting(mapPosition.MapId,
                      new Box2(mapPosition.Position - MaxRadarRange, mapPosition.Position + MaxRadarRange)))
         {
-            if (grid.Owner == ourGridId || !fixturesQuery.TryGetComponent(grid.Owner, out var fixtures))
+            if (grid.Owner == ourGridId)
                 continue;
 
             var gridBody = bodyQuery.GetComponent(grid.Owner);
@@ -282,7 +281,7 @@ public sealed class RadarControl : Control
             }
 
             // Detailed view
-            DrawGrid(handle, matty, grid, fixtures, color, true);
+            DrawGrid(handle, matty, grid, color, true);
 
             DrawDocks(handle, grid.Owner, matty);
         }
@@ -353,7 +352,7 @@ public sealed class RadarControl : Control
         }
     }
 
-    private void DrawGrid(DrawingHandleScreen handle, Matrix3 matrix, MapGridComponent grid, FixturesComponent fixturesComp, Color color, bool drawInterior)
+    private void DrawGrid(DrawingHandleScreen handle, Matrix3 matrix, MapGridComponent grid, Color color, bool drawInterior)
     {
         var rator = grid.GetAllTilesEnumerator();
         var edges = new ValueList<Vector2>();
