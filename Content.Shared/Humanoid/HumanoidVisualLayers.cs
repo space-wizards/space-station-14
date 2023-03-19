@@ -24,6 +24,9 @@ namespace Content.Shared.Humanoid
         LFoot,
         Handcuffs,
         StencilMask,
+        MaleStencilMask,
+        FemaleStencilMask,
+        UnisexStencilMask,
         Ensnare,
         Fire,
     }

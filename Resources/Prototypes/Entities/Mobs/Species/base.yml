@@ -110,16 +110,31 @@
         # sprite refactor when
         state: l_leg
       - shader: StencilMask
-        map: [ "enum.HumanoidVisualLayers.StencilMask" ]
+        map: ["enum.HumanoidVisualLayers.StencilMask"]
+        sprite: Mobs/Customization/masking_helpers.rsi
+        state: full
+        visible: false
+      - shader: StencilMask
+        map: ["enum.HumanoidVisualLayers.MaleStencilMask"]
+        sprite: Mobs/Customization/masking_helpers.rsi
+        state: male_full
+        visible: false
+      - shader: StencilMask
+        map: ["enum.HumanoidVisualLayers.FemaleStencilMask"]
         sprite: Mobs/Customization/masking_helpers.rsi
         state: female_full
         visible: false
-      - map: [ "jumpsuit" ]
-      - map: [ "enum.HumanoidVisualLayers.LHand" ]
-      - map: [ "enum.HumanoidVisualLayers.RHand" ]
-      - map: [ "enum.HumanoidVisualLayers.LFoot" ]
-      - map: [ "enum.HumanoidVisualLayers.RFoot" ]
-      - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      - shader: StencilMask
+        map: ["enum.HumanoidVisualLayers.UnisexStencilMask"]
+        sprite: Mobs/Customization/masking_helpers.rsi
+        state: unisex_full
+        visible: false
+      - map: ["jumpsuit"]
+      - map: ["enum.HumanoidVisualLayers.LFoot"]
+      - map: ["enum.HumanoidVisualLayers.RFoot"]
+      - map: ["enum.HumanoidVisualLayers.LHand"]
+      - map: ["enum.HumanoidVisualLayers.RHand"]
+      - map: ["enum.HumanoidVisualLayers.Handcuffs"]
         color: "#ffffff"
         sprite: Objects/Misc/handcuffs.rsi
         state: body-overlay-2
@@ -332,16 +347,31 @@
           sprite: Mobs/Species/Human/parts.rsi
           state: l_leg
         - shader: StencilMask
-          map: [ "enum.HumanoidVisualLayers.StencilMask" ]
+          map: ["enum.HumanoidVisualLayers.StencilMask"]
+          sprite: Mobs/Customization/masking_helpers.rsi
+          state: full
+          visible: false
+        - shader: StencilMask
+          map: ["enum.HumanoidVisualLayers.MaleStencilMask"]
+          sprite: Mobs/Customization/masking_helpers.rsi
+          state: male_full
+          visible: false
+        - shader: StencilMask
+          map: ["enum.HumanoidVisualLayers.FemaleStencilMask"]
           sprite: Mobs/Customization/masking_helpers.rsi
           state: female_full
           visible: false
-        - map: [ "jumpsuit" ]
-        - map: [ "enum.HumanoidVisualLayers.LHand" ]
-        - map: [ "enum.HumanoidVisualLayers.RHand" ]
-        - map: [ "enum.HumanoidVisualLayers.LFoot" ]
-        - map: [ "enum.HumanoidVisualLayers.RFoot" ]
-        - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+        - shader: StencilMask
+          map: ["enum.HumanoidVisualLayers.UnisexStencilMask"]
+          sprite: Mobs/Customization/masking_helpers.rsi
+          state: unisex_full
+          visible: false
+        - map: ["jumpsuit"]
+        - map: ["enum.HumanoidVisualLayers.LFoot"]
+        - map: ["enum.HumanoidVisualLayers.RFoot"]
+        - map: ["enum.HumanoidVisualLayers.LHand"]
+        - map: ["enum.HumanoidVisualLayers.RHand"]
+        - map: ["enum.HumanoidVisualLayers.Handcuffs"]
           color: "#ffffff"
           sprite: Objects/Misc/handcuffs.rsi
           state: body-overlay-2
