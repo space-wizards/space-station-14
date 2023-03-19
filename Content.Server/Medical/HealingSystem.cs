@@ -2,6 +2,7 @@ using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Systems;
 using Content.Server.DoAfter;
+using Content.Server.Medical.Bloodstream.Systems;
 using Content.Server.Medical.Components;
 using Content.Server.Stack;
 using Content.Shared.Audio;

@@ -15,6 +15,8 @@ using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using System.Linq;
+using Content.Server.Medical.Bloodstream.Components;
+using Content.Server.Medical.Bloodstream.Systems;
 
 namespace Content.Server.Nutrition.EntitySystems
 {

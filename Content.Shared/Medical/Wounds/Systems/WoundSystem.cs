@@ -84,7 +84,8 @@ public sealed partial class WoundSystem : EntitySystem
             wound.Severity,
             wound.BaseHealingRate,
             wound.HealingModifier,
-            wound.HealingMultiplier
+            wound.HealingMultiplier,
+            wound.Cauterized
         );
     }
 
@@ -100,6 +101,7 @@ public sealed partial class WoundSystem : EntitySystem
         wound.BaseHealingRate = state.BaseHealingRate;
         wound.HealingModifier = state.HealingModifier;
         wound.HealingMultiplier = state.HealingMultiplier;
+        wound.Cauterized = state.Cauterized;
     }
 
     private void CacheWoundData()

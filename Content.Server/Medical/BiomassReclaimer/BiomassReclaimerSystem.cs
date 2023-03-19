@@ -16,6 +16,7 @@ using Content.Server.Climbing;
 using Content.Server.Construction;
 using Content.Server.DoAfter;
 using Content.Server.Materials;
+using Content.Server.Medical.Bloodstream.Components;
 using Content.Server.Mind.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;

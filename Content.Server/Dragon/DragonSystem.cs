@@ -9,6 +9,7 @@ using System.Threading;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
+using Content.Server.Medical.Bloodstream.Systems;
 using Content.Server.NPC;
 using Content.Shared.Damage;
 using Content.Shared.Dragon;

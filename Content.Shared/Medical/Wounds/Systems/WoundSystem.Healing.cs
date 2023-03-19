@@ -1,4 +1,5 @@
-﻿using Content.Shared.FixedPoint;
+﻿using Content.Shared.Body.Part;
+using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Wounds.Components;
 
 namespace Content.Shared.Medical.Wounds.Systems;
@@ -53,6 +54,25 @@ public sealed partial class WoundSystem
         return true;
     }
 
+    public bool CauterizeWound(EntityUid woundableId, EntityUid woundId,
+        WoundableComponent? woundable = null,
+        WoundComponent? wound = null)
+    {
+        if (!Resolve(woundableId, ref woundable) || !Resolve(woundId, ref wound))
+            return false;
+        return SetWoundCauterize(woundableId, woundId, woundable, wound, true);
+    }
+
+    public bool RepenWound(EntityUid woundableId, EntityUid woundId,
+        WoundableComponent? woundable = null,
+        WoundComponent? wound = null)
+    {
+        if (!Resolve(woundableId, ref woundable) || !Resolve(woundId, ref wound))
+            return false;
+        return SetWoundCauterize(woundableId, woundId, woundable, wound, false);
+    }
+
+
     #endregion
 
     #region Private_Implementation
@@ -74,6 +94,23 @@ public sealed partial class WoundSystem
 
             HealWoundable(woundable);
         }
+    }
+    private bool SetWoundCauterize(EntityUid woundableId, EntityUid woundId, WoundableComponent woundable,
+        WoundComponent wound, bool cauterized)
+    {
+        if (wound.Cauterized == cauterized)
+            return false;
+        var oldState = wound.Cauterized;
+        wound.Cauterized = cauterized;
+        var ev = new WoundCauterizedEvent(woundableId, woundId, woundable, wound, oldState);
+        RaiseLocalEvent(woundableId, ref ev, true);
+        var bodyId = CompOrNull<BodyPartComponent>(woundableId)?.Body;
+        if (!bodyId.HasValue)
+            return true;
+        //propagate this event to bodyEntity if we are a bodyPart
+        var ev2 = new WoundCauterizedEvent(woundableId, woundId, woundable, wound, oldState);
+        RaiseLocalEvent(bodyId.Value, ref ev2, true);
+        return true;
     }
 
     private void HealWoundable(WoundableComponent woundable)

@@ -4,6 +4,7 @@ using Content.Shared.Medical.Wounds.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map.Events;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
@@ -31,4 +32,34 @@ public sealed class WoundComponent : Component
 
     //How much to multiply the Healing modifier
     [DataField("healingMultiplier")] public FixedPoint2 HealingMultiplier;
+
+    //Is this wound cauterized?
+    [DataField("cauterized")] public bool Cauterized;
+}
+
+[Serializable, NetSerializable]
+public sealed class WoundComponentState : ComponentState
+{
+    public string? ScarWound;
+    public FixedPoint2 HealthCapDamage;
+    public FixedPoint2 IntegrityDamage;
+    public FixedPoint2 Severity;
+    public FixedPoint2 BaseHealingRate;
+    public FixedPoint2 HealingModifier;
+    public FixedPoint2 HealingMultiplier;
+    public bool Cauterized;
+
+    public WoundComponentState(string? scarWound, FixedPoint2 healthCapDamage,
+        FixedPoint2 integrityDamage, FixedPoint2 severity, FixedPoint2 baseHealingRate, FixedPoint2 healingModifier,
+        FixedPoint2 healingMultiplier, bool cauterized)
+    {
+        ScarWound = scarWound;
+        HealthCapDamage = healthCapDamage;
+        IntegrityDamage = integrityDamage;
+        Severity = severity;
+        BaseHealingRate = baseHealingRate;
+        HealingModifier = healingModifier;
+        HealingMultiplier = healingMultiplier;
+        Cauterized = cauterized;
+    }
 }

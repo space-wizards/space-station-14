@@ -12,7 +12,6 @@ namespace Content.Shared.Medical.Wounds.Systems;
 
 public sealed partial class WoundSystem
 {
-
     #region Public_API
 
     public bool AddWound(EntityUid woundableId, string woundPrototypeId, WoundableComponent? woundable = null)
@@ -27,13 +26,13 @@ public sealed partial class WoundSystem
         if (!wounds.Insert(woundId))
             return false;
         woundable.HealthCapDamage += wound.Severity * wound.HealthCapDamage;
-        var ev = new WoundAddedEvent(woundableId, woundable, woundId, wound);
+        var ev = new WoundAddedEvent(woundableId, woundId, woundable, wound);
         RaiseLocalEvent(woundableId, ref ev, true);
 
         //propagate this event to bodyEntity if we are a bodyPart
         if (TryComp<BodyPartComponent>(woundableId, out var bodyPart) && bodyPart.Body.HasValue)
         {
-            var ev2 = new WoundAddedEvent(woundableId, woundable, woundId, wound);
+            var ev2 = new WoundAddedEvent(woundableId, woundId, woundable, wound);
             RaiseLocalEvent(bodyPart.Body.Value, ref ev2, true);
         }
 
@@ -58,13 +57,13 @@ public sealed partial class WoundSystem
         if (makeScar && wound.ScarWound != null)
             AddWound(woundableId, wound.ScarWound, woundable);
 
-        var ev = new WoundRemovedEvent(woundableId, woundable, woundId, wound);
+        var ev = new WoundRemovedEvent(woundableId, woundId, woundable, wound);
         RaiseLocalEvent(woundableId, ref ev, true);
 
         //propagate this event to bodyEntity if we are a bodyPart
         if (bodyId.HasValue)
         {
-            var ev2 = new WoundRemovedEvent(woundableId, woundable, woundId, wound);
+            var ev2 = new WoundRemovedEvent(woundableId, woundId, woundable, wound);
             RaiseLocalEvent(bodyId.Value, ref ev2, true);
         }
 
@@ -218,13 +217,14 @@ public sealed partial class WoundSystem
             return;
         var healthCapDamageDelta = severityDelta * wound.HealthCapDamage;
         woundable.HealthCapDamage += healthCapDamageDelta;
+        var oldSeverity = wound.Severity;
         wound.Severity = newSeverity;
-        var ev = new WoundSeverityChangedEvent(woundableId, woundId, wound);
+        var ev = new WoundSeverityChangedEvent(woundableId, woundId, wound, oldSeverity);
         RaiseLocalEvent(woundableId, ref ev, true);
         if (!bodyId.HasValue)
             return;
         //propagate this event to bodyEntity if we are a bodyPart
-        var ev2 = new WoundSeverityChangedEvent(woundableId, woundId, wound);
+        var ev2 = new WoundSeverityChangedEvent(woundableId, woundId, wound, oldSeverity);
         RaiseLocalEvent(bodyId.Value, ref ev2, true);
     }
 

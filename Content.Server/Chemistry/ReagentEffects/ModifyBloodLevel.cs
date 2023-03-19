@@ -1,5 +1,7 @@
 ﻿using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
+using Content.Server.Medical.Bloodstream.Components;
+using Content.Server.Medical.Bloodstream.Systems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 

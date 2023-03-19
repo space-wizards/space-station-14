@@ -13,6 +13,8 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.GhostKick;
 using Content.Server.Interaction.Components;
 using Content.Server.Medical;
+using Content.Server.Medical.Bloodstream.Components;
+using Content.Server.Medical.Bloodstream.Systems;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Pointing.Components;
 using Content.Server.Polymorph.Systems;
