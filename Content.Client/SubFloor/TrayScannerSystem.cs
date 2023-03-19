@@ -79,7 +79,7 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
             else
             {
                 var newAlpha = MathF.Max(0f, revealed.Alpha - alphaChangeRate);
-                
+
                 // Irrelevant
                 if (revealed.Alpha.Equals(newAlpha))
                 {
