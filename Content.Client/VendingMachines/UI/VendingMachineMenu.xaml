@@ -1,21 +1,24 @@
 ﻿<controls:FancyWindow xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:style="clr-namespace:Content.Client.Stylesheets"
-    MinSize="750 500">
+    MinSize="550 500">
+    <!-- ^ TODO: Automatic resizing, but good -->
     <BoxContainer Orientation="Horizontal" Margin="8">
         <!-- List of vendable items -->
-        <ScrollContainer MinWidth="225" MinHeight="175" SizeFlagsStretchRatio="9" HorizontalExpand="True" VerticalExpand="True">
+        <!-- TODO: Make some sort of background for this -->
+        <ScrollContainer MinWidth="250" MinHeight="175" SizeFlagsStretchRatio="9" HorizontalExpand="True" VerticalExpand="True">
             <BoxContainer Name="VendingContents" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" />
         </ScrollContainer>
 
         <Control MinSize="8 8" />
 
         <!-- Item Information -->
-        <BoxContainer Orientation="Vertical" MinWidth="175" SizeFlagsStretchRatio="1" HorizontalExpand="True" VerticalExpand="True">
+        <BoxContainer Orientation="Vertical" MinWidth="250" MaxWidth="250" SizeFlagsStretchRatio="1" HorizontalExpand="True" VerticalExpand="True">
+            <!-- TODO: Replace this button with not a button -->
             <Button Disabled="True">
                 <BoxContainer Orientation="Vertical">
                     <!-- This gets filled with information about the currently selected item -->
-                    <BoxContainer Name="VendingInfo" Orientation="Vertical" HorizontalExpand="False" VerticalExpand="True" Margin="8" />
+                    <BoxContainer Name="VendingInfo" Orientation="Vertical" VerticalExpand="True" Margin="8" />
 
                     <Control VerticalExpand="True" VerticalAlignment="Stretch" />
 

@@ -66,8 +66,8 @@ namespace Content.Client.VendingMachines.UI
 
 
         /// <summary>
-        /// Populates the list of available items on the vending machine interface
-        /// and sets icons based on their prototypes
+        ///     Populates the list of available items on the vending machine interface
+        ///     and sets icons based on their prototypes
         /// </summary>
         public void Populate(List<VendingMachineInventoryEntry> inventory)
         {
@@ -97,7 +97,7 @@ namespace Content.Client.VendingMachines.UI
                 if (itemName == null)
                     continue;
 
-                var entity = _entityManager.SpawnEntity(itemName ?? "VendingMachineCola", MapCoordinates.Nullspace);
+                var entity = _entityManager.SpawnEntity(itemName ?? "ClothingUniformJumpsuitAncient", MapCoordinates.Nullspace);
                 ents.Add(entity);
 
                 var metaData = _entityManager.GetComponent<MetaDataComponent>(entity);
@@ -142,7 +142,6 @@ namespace Content.Client.VendingMachines.UI
 
                 var itemButton = new Button()
                 {
-
                     ToggleMode = true,
                     Group = group,
                     HorizontalExpand = true,
@@ -163,7 +162,7 @@ namespace Content.Client.VendingMachines.UI
 
         // private void SetSizeAfterUpdate(int longestEntryLength)
         // {
-        //     SetSize = (Math.Clamp((longestEntryLength + 2) * 16, 750, 900), 500f);
+        //     SetSize = (Math.Clamp((longestEntryLength + 32) * 16, MinSize.X, 900), SetSize.Y);
         // }
 
         private void SetSelectedItem(int index, string? name)
@@ -172,7 +171,7 @@ namespace Content.Client.VendingMachines.UI
 
             VendingInfo.Children.Clear();
 
-            var ent = _entityManager.SpawnEntity(name ?? "VendingMachineCola", MapCoordinates.Nullspace);
+            var ent = _entityManager.SpawnEntity(name ?? "ClothingUniformJumpsuitAncient", MapCoordinates.Nullspace);
 
             var metaData = _entityManager.GetComponent<MetaDataComponent>(ent);
             _entityManager.TryGetComponent<SpriteComponent>(ent, out var sprite);
