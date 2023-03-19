@@ -47,7 +47,7 @@ namespace Content.Server.Forensics
             var state = new ForensicScannerBoundUserInterfaceState(
                 component.Fingerprints,
                 component.Fibers,
-                component.DNA,
+                component.DNAs,
                 component.LastScannedName,
                 component.PrintCooldown,
                 component.PrintReadyAt);
@@ -70,25 +70,17 @@ namespace Content.Server.Forensics
                 {
                     scanner.Fingerprints = new();
                     scanner.Fibers = new();
+                    scanner.DNAs = new();
                 }
 
                 else
                 {
                     scanner.Fingerprints = forensics.Fingerprints.ToList();
                     scanner.Fibers = forensics.Fibers.ToList();
+                    scanner.DNAs = forensics.DNAs.ToList();
                 }
 
-                if (!TryComp<DNAComponent>(args.Args.Target, out var dna))
-                {
-                    scanner.DNA = string.Empty;
-                }
-
-                else
-                {
-                    scanner.DNA = dna.DNA;
-                }
-
-                    scanner.LastScannedName = MetaData(args.Args.Target.Value).EntityName;
+                scanner.LastScannedName = MetaData(args.Args.Target.Value).EntityName;
             }
 
             OpenUserInterface(args.Args.User, scanner);
@@ -223,8 +215,11 @@ namespace Content.Server.Forensics
                 text.AppendLine(fiber);
             }
             text.AppendLine();
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-dna"));
-            text.AppendLine(component.DNA);
+            text.AppendLine(Loc.GetString("forensic-scanner-interface-dnas"));
+            foreach (var dna in component.DNAs)
+            {
+                text.AppendLine(dna);
+            }
 
             _paperSystem.SetContent(printed, text.ToString());
             _audioSystem.PlayPvs(component.SoundPrint, uid,
@@ -244,8 +239,8 @@ namespace Content.Server.Forensics
 
             component.Fingerprints = new();
             component.Fibers = new();
+            component.DNAs = new();
             component.LastScannedName = string.Empty;
-            component.DNA = String.Empty;
 
             UpdateUserInterface(uid, component);
         }

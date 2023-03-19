@@ -4,7 +4,7 @@
 /// This component is for mobs that have DNA.
 /// </summary>
 [RegisterComponent]
-public sealed class DNAComponent : Component
+public sealed class DnaComponent : Component
 {
     [DataField("dna")]
     public string? DNA = String.Empty;

@@ -53,8 +53,11 @@ namespace Content.Client.Forensics
                 text.AppendLine(fiber);
             }
             text.AppendLine();
-            text.AppendLine("DNA");
-            text.AppendLine(msg.DNA);
+            text.AppendLine(Loc.GetString("forensic-scanner-interface-dnas"));
+            foreach (var dna in msg.DNAs)
+            {
+                text.AppendLine(dna);
+            }
             Diagnostics.Text = text.ToString();
         }
     }

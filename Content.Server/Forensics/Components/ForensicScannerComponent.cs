@@ -24,7 +24,7 @@ namespace Content.Server.Forensics
         /// DNA that the forensic scanner found from the <see cref="DNAComponent"/> on an entity.
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
-        public string? DNA = string.Empty;
+        public List<string> DNAs = new();
 
         /// <summary>
         /// What is the name of the entity that was scanned last?

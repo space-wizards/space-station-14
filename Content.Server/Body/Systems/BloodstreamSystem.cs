@@ -295,9 +295,9 @@ public sealed class BloodstreamSystem : EntitySystem
             var puddle = _spillableSystem.SpillAt(uid, component.BloodTemporarySolution, "PuddleBlood", false);
             if (puddle != null)
             {
-                var puddleDna = EnsureComp<DNAComponent>(puddle.Owner); //TODO: Get rid of .Owner
-                TryComp<DNAComponent>(uid, out var dnaComponent);
-                puddleDna.DNA = dnaComponent?.DNA;
+                var comp = EnsureComp<ForensicsComponent>(puddle.Owner); //TODO: Get rid of .Owner
+                TryComp<DnaComponent>(uid, out var dnaComponent);
+                comp.DNAs.Add(dnaComponent?.DNA ?? "");
             }
 
             component.BloodTemporarySolution.RemoveAllSolution();

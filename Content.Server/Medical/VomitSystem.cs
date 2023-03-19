@@ -50,10 +50,9 @@ namespace Content.Server.Medical
 
             var puddle = EntityManager.SpawnEntity("PuddleVomit", Transform(uid).Coordinates);
 
-            var dna = EnsureComp<DNAComponent>(puddle);
-            TryComp<DNAComponent>(uid, out var dnaComponent);
-            dna.DNA = dnaComponent?.DNA;
-
+            var forensics = EnsureComp<ForensicsComponent>(puddle);
+            TryComp<DnaComponent>(uid, out var dnaComponent);
+            forensics.DNAs.Add(dnaComponent?.DNA ?? "");
 
             var puddleComp = Comp<PuddleComponent>(puddle);
 

@@ -12,7 +12,7 @@ namespace Content.Server.Forensics
         {
             SubscribeLocalEvent<FingerprintComponent, ContactInteractionEvent>(OnInteract);
             SubscribeLocalEvent<FingerprintComponent, ComponentInit>(OnFingeprintInit);
-            SubscribeLocalEvent<DNAComponent, ComponentInit>(OnDNAInit);
+            SubscribeLocalEvent<DnaComponent, ComponentInit>(OnDNAInit);
         }
 
         private void OnInteract(EntityUid uid, FingerprintComponent component, ContactInteractionEvent args)
@@ -25,7 +25,7 @@ namespace Content.Server.Forensics
             component.Fingerprint = GenerateFingerprint();
         }
 
-        private void OnDNAInit(EntityUid uid, DNAComponent component, ComponentInit args)
+        private void OnDNAInit(EntityUid uid, DnaComponent component, ComponentInit args)
         {
             component.DNA = GenerateDNA();
         }

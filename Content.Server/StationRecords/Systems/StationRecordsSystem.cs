@@ -74,7 +74,7 @@ public sealed class StationRecordsSystem : EntitySystem
         }
 
         TryComp<FingerprintComponent>(player, out var fingerprintComponent);
-        TryComp<DNAComponent>(player, out var dnaComponent);
+        TryComp<DnaComponent>(player, out var dnaComponent);
 
         CreateGeneralRecord(station, idUid.Value, profile.Name, profile.Age, profile.Species, profile.Gender, jobId, fingerprintComponent?.Fingerprint, dnaComponent?.DNA, profile, records);
     }
