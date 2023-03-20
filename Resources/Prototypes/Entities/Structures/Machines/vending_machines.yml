@@ -73,6 +73,8 @@
     price: 200
   - type: Appearance
   - type: WiresVisuals
+  - type: MarketModifier
+    mod: 10
 
 - type: entity
   parent: VendingMachine

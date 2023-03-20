@@ -1,3 +1,4 @@
+using Content.Server.Bank;
 using Content.Server.Cargo.Systems;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
@@ -8,6 +9,7 @@ using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Bank.Components;
 using Content.Shared.Damage;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
@@ -31,6 +33,7 @@ namespace Content.Server.VendingMachines
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
         [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
         [Dependency] private readonly AudioSystem _audioSystem = default!;
+        [Dependency] private readonly BankSystem _bankSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedActionsSystem _action = default!;
         [Dependency] private readonly PricingSystem _pricing = default!;
@@ -237,37 +240,37 @@ namespace Content.Server.VendingMachines
         /// <param name="type">The type of inventory the item is from</param>
         /// <param name="itemId">The prototype ID of the item</param>
         /// <param name="throwItem">Whether the item should be thrown in a random direction after ejection</param>
-        public void TryEjectVendorItem(EntityUid uid, InventoryType type, string itemId, bool throwItem, VendingMachineComponent? vendComponent = null)
+        public bool TryEjectVendorItem(EntityUid uid, InventoryType type, string itemId, bool throwItem, VendingMachineComponent? vendComponent = null)
         {
             if (!Resolve(uid, ref vendComponent))
-                return;
+                return false;
 
             if (vendComponent.Ejecting || vendComponent.Broken || !this.IsPowered(uid, EntityManager))
             {
-                return;
+                return false;
             }
 
             var entry = GetEntry(itemId, type, vendComponent);
-
+            
             if (entry == null)
             {
                 _popupSystem.PopupEntity(Loc.GetString("vending-machine-component-try-eject-invalid-item"), uid);
                 Deny(uid, vendComponent);
-                return;
+                return false;
             }
 
             if (entry.Amount <= 0)
             {
                 _popupSystem.PopupEntity(Loc.GetString("vending-machine-component-try-eject-out-of-stock"), uid);
                 Deny(uid, vendComponent);
-                return;
+                return false;
             }
 
             if (string.IsNullOrEmpty(entry.ID))
-                return;
+                return false;
 
             if (!TryComp<TransformComponent>(vendComponent.Owner, out var transformComp))
-                return;
+                return false;
 
             // Start Ejecting, and prevent users from ordering while anim playing
             vendComponent.Ejecting = true;
@@ -277,6 +280,7 @@ namespace Content.Server.VendingMachines
             UpdateVendingMachineInterfaceState(vendComponent);
             TryUpdateVisualState(uid, vendComponent);
             _audioSystem.PlayPvs(vendComponent.SoundVend, vendComponent.Owner, AudioParams.Default.WithVolume(-2f));
+            return true;
         }
 
         /// <summary>
@@ -287,9 +291,37 @@ namespace Content.Server.VendingMachines
         /// <param name="itemId">The prototype ID of the item</param>
         public void AuthorizedVend(EntityUid uid, EntityUid sender, InventoryType type, string itemId, VendingMachineComponent component)
         {
+            if (!TryComp<BankAccountComponent>(sender, out var bank))
+            {
+                return;
+            }
+
+            if (!_prototypeManager.TryIndex<EntityPrototype>(itemId, out var proto))
+            {
+                return;
+            }
+
+            var price = _pricing.GetEstimatedPrice(proto);
+
+            if (TryComp<MarketModifierComponent>(component.Owner, out var modifier))
+            {
+                price *= modifier.Mod;
+            }
+
+            var totalPrice = ((int) price);
+
+            if (price > bank.Balance)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("bank-insufficient-funds"), uid);
+                Deny(uid, component);
+            }
+
             if (IsAuthorized(uid, sender, component))
             {
-                TryEjectVendorItem(uid, type, itemId, component.CanShoot, component);
+                if (TryEjectVendorItem(uid, type, itemId, component.CanShoot, component))
+                {
+                    _bankSystem.TryBankWithdraw(sender, totalPrice);
+                }
             }
         }
 
