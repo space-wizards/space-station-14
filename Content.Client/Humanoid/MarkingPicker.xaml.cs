@@ -431,7 +431,7 @@ public sealed partial class MarkingPicker : Control
             markingSet.AddBack(MarkingCategories.FacialHair, FacialHairMarking);
         }
 
-        if (!_markingManager.MustMatchSkin(_currentSpecies, marking.BodyPart, _prototypeManager))
+        if (!_markingManager.MustMatchSkin(_currentSpecies, marking.BodyPart, out var _, _prototypeManager))
         {
             // Do default coloring
             var colors = MarkingColoring.GetMarkingLayerColors(

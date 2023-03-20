@@ -91,3 +91,5 @@
       - id: Medicine
       - id: Poison
       - id: Narcotic
+      - id: Alcohol
+        rateModifier: 0.1

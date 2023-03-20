@@ -54,6 +54,19 @@
         amount: 3
 
 - type: entity
+  id: CrateSlimepersonLifeSupport
+  parent: CrateInternals
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingMaskGas
+        amount: 2
+      - id: ClothingMaskBreath
+        amount: 2
+      - id: NitrogenTankFilled
+        amount: 4
+
+- type: entity
   id: CrateEmergencyRadiation
   parent: CrateRadiation
   components:

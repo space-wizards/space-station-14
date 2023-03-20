@@ -95,6 +95,7 @@ public sealed class WeatherOverlay : Overlay
         {
             var bodyQuery = _entManager.GetEntityQuery<PhysicsComponent>();
             var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
+            var weatherIgnoreQuery = _entManager.GetEntityQuery<IgnoreWeatherComponent>();
 
             foreach (var grid in _mapManager.FindGridsIntersecting(mapId, worldAABB))
             {
@@ -105,7 +106,7 @@ public sealed class WeatherOverlay : Overlay
                 foreach (var tile in grid.GetTilesIntersecting(worldAABB))
                 {
                     // Ignored tiles for stencil
-                    if (_weather.CanWeatherAffect(grid, tile, bodyQuery))
+                    if (_weather.CanWeatherAffect(grid, tile, weatherIgnoreQuery, bodyQuery))
                     {
                         continue;
                     }
