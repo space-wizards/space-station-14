@@ -1,12 +1,11 @@
 using System.Linq;
 using Content.Server.Administration.Commands;
-using Content.Server.CharacterAppearance.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
-using Content.Server.Humanoid.Systems;
+using Content.Server.Humanoid;
 using Content.Server.Mind.Components;
 using Content.Server.NPC.Systems;
 using Content.Server.Nuke;
@@ -32,6 +31,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Content.Shared.Humanoid.Prototypes;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -44,6 +44,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _playerSystem = default!;
     [Dependency] private readonly FactionSystem _faction = default!;
+    [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly ShuttleSystem _shuttleSystem = default!;
@@ -51,7 +52,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
-    [Dependency] private readonly RandomHumanoidSystem _randomHumanoid = default!;
 
 
     private enum WinType
@@ -699,10 +699,14 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     private void SetupOperativeEntity(EntityUid mob, string name, string gear, HumanoidCharacterProfile? profile)
     {
         MetaData(mob).EntityName = name;
-        EntityManager.EnsureComponent<RandomHumanoidAppearanceComponent>(mob);
         EntityManager.EnsureComponent<NukeOperativeComponent>(mob);
 
-        if(_startingGearPrototypes.TryGetValue(gear, out var gearPrototype))
+        if (profile != null)
+        {
+            _humanoidSystem.LoadProfile(mob, profile);
+        }
+
+        if (_startingGearPrototypes.TryGetValue(gear, out var gearPrototype))
             _stationSpawningSystem.EquipStartingGear(mob, gearPrototype, profile);
 
         _faction.RemoveFaction(mob, "NanoTrasen", false);
@@ -744,8 +748,13 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
             if (sessions.TryGetValue(i, out var session))
             {
-                var mob = _randomHumanoid.SpawnRandomHumanoid(_nukeopsRuleConfig.RandomHumanoidSettingsPrototype, _random.Pick(spawns), string.Empty);
                 var profile = _prefs.GetPreferences(session.UserId).SelectedCharacter as HumanoidCharacterProfile;
+                if (!_prototypeManager.TryIndex(profile?.Species ?? HumanoidAppearanceSystem.DefaultSpecies, out SpeciesPrototype? species))
+                {
+                    species = _prototypeManager.Index<SpeciesPrototype>(HumanoidAppearanceSystem.DefaultSpecies);
+                }
+
+                var mob = EntityManager.SpawnEntity(species.Prototype, _random.Pick(spawns));
                 SetupOperativeEntity(mob, spawnDetails.Name, spawnDetails.Gear, profile);
 
                 var newMind = new Mind.Mind(session.UserId)
