@@ -11,6 +11,7 @@ using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Content.Shared.ActionBlocker;
 
 namespace Content.Shared.Medical.Cryogenics;
 
@@ -18,6 +19,7 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly StandingStateSystem _standingStateSystem = default!;
+    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
@@ -28,16 +30,15 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
 
         InitializeInsideCryoPod();
     }
-
     protected void OnCryoPodCanDropOn(EntityUid uid, SharedCryoPodComponent component, ref CanDropTargetEvent args)
     {
-        args.CanDrop = args.CanDrop && HasComp<BodyComponent>(args.Dragged);
+        args.CanDrop = args.CanDrop && CanCryoPodInsert(uid, args.Dragged, component);
         args.Handled = true;
     }
-
     protected void OnComponentInit(EntityUid uid, SharedCryoPodComponent cryoPodComponent, ComponentInit args)
     {
-        cryoPodComponent.BodyContainer = _containerSystem.EnsureContainer<ContainerSlot>(uid, "scanner-body");
+        base.Initialize();
+        cryoPodComponent.BodyContainer = _containerSystem.EnsureContainer<ContainerSlot>(uid, $"scanner-body");
     }
 
     protected void UpdateAppearance(EntityUid uid, SharedCryoPodComponent? cryoPod = null, AppearanceComponent? appearance = null)
@@ -120,18 +121,49 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
             return;
 
         // Eject verb
-        if (cryoPodComponent.BodyContainer.ContainedEntity != null)
+        if (IsOccupied(cryoPodComponent))
         {
-            args.Verbs.Add(new AlternativeVerb
-            {
-                Text = Loc.GetString("cryo-pod-verb-noun-occupant"),
-                Category = VerbCategory.Eject,
-                Priority = 1, // Promote to top to make ejecting the ALT-click action
-                Act = () => TryEjectBody(uid, args.User, cryoPodComponent)
-            });
+            AlternativeVerb verb = new();
+            verb.Act = () => EjectBody(uid, cryoPodComponent);
+            verb.Category = VerbCategory.Eject;
+            verb.Text = Loc.GetString("cryo-pod-verb-noun-occupant");
+            verb.Priority = 1; // Promote to top to make ejecting the ALT-click action
+            args.Verbs.Add(verb);
+        }
+
+        // Self-insert verb
+        if (!IsOccupied(cryoPodComponent) &&
+            CanCryoPodInsert(uid, args.User, cryoPodComponent) &&
+            _blocker.CanMove(args.User))
+        {
+            AlternativeVerb verb = new();
+            verb.Act = () => InsertBody(uid, args.User, cryoPodComponent);
+            verb.Text = Loc.GetString("cryo-pod-verb-noun-occupant");
+            args.Verbs.Add(verb);
         }
     }
 
+    protected void AddInsertOtherVerb(EntityUid uid, SharedCryoPodComponent cryoPodComponent, GetVerbsEvent<InteractionVerb> args)
+    {
+        if (args.Using == null ||
+                !args.CanAccess ||
+                !args.CanInteract ||
+                IsOccupied(cryoPodComponent) ||
+                !CanCryoPodInsert(uid, args.Using.Value, cryoPodComponent))
+            return;
+
+        string name = "Unknown";
+        if (TryComp<MetaDataComponent>(args.Using.Value, out var metadata))
+            name = metadata.EntityName;
+
+        InteractionVerb verb = new()
+        {
+            Act = () => InsertBody(uid, args.Using.Value, cryoPodComponent),
+            Category = VerbCategory.Insert,
+            Text = name
+        };
+        args.Verbs.Add(verb);
+    }
     protected void OnEmagged(EntityUid uid, SharedCryoPodComponent? cryoPodComponent, ref GotEmaggedEvent args)
     {
         if (!Resolve(uid, ref cryoPodComponent))
@@ -154,7 +186,17 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
     {
         cryoPodComponent.IsPrying = false;
     }
+    public bool IsOccupied(SharedCryoPodComponent scannerComponent)
+    {
+        return scannerComponent.BodyContainer.ContainedEntity != null;
+    }
+    public bool CanCryoPodInsert(EntityUid uid, EntityUid target, SharedCryoPodComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return false;
 
+        return HasComp<BodyComponent>(target);
+    }
     #region Event records
 
     protected record CryoPodPryFinished;
