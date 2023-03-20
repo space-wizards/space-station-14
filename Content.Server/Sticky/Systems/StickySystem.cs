@@ -5,6 +5,7 @@ using Content.Server.Sticky.Events;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Sticky;
 using Content.Shared.Sticky.Components;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;

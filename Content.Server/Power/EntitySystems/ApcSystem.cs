@@ -10,6 +10,7 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Power;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using JetBrains.Annotations;

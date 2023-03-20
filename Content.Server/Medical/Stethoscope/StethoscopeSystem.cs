@@ -11,6 +11,7 @@ using Content.Shared.Verbs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.DoAfter;
+using Content.Shared.Medical;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Medical

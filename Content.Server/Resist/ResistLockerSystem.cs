@@ -7,6 +7,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Lock;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
+using Content.Shared.Resist;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Resist;

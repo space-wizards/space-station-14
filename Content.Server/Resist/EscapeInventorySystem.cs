@@ -10,6 +10,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.DoAfter;
 using Content.Shared.Movement.Events;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Resist;
 
 namespace Content.Server.Resist;
 

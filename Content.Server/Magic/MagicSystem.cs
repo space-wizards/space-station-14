@@ -13,6 +13,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Magic;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Spawners.Components;

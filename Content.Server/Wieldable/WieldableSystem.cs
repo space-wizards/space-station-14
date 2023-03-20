@@ -13,6 +13,7 @@ using Robust.Shared.Player;
 using Content.Server.Actions.Events;
 using Content.Shared.DoAfter;
 using Content.Shared.Weapons.Melee.Events;
+using Content.Shared.Wieldable;
 
 
 namespace Content.Server.Wieldable

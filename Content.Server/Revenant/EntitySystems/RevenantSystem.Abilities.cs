@@ -26,6 +26,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Revenant.Components;
+using Content.Shared.Revenant.EntitySystems;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Utility;
 

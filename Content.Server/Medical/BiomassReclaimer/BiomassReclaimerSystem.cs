@@ -28,6 +28,7 @@ using Robust.Shared.Configuration;
 using Robust.Server.Player;
 using Robust.Shared.Physics.Components;
 using Content.Shared.Humanoid;
+using Content.Shared.Medical;
 
 namespace Content.Server.Medical.BiomassReclaimer
 {
