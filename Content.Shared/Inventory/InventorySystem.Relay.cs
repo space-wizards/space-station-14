@@ -7,6 +7,8 @@ using Content.Shared.Radio;
 using Content.Shared.Slippery;
 using Content.Shared.Strip.Components;
 using Content.Shared.Temperature;
+using Content.Shared.Verbs;
+using Robust.Shared.Containers;
 
 namespace Content.Shared.Inventory;
 
@@ -23,6 +25,8 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, SeeIdentityAttemptEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, ModifyChangedTemperatureEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, GetDefaultRadioChannelEvent>(RelayInventoryEvent);
+
+        SubscribeLocalEvent<InventoryComponent, GetVerbsEvent<EquipmentVerb>>(OnGetStrippingVerbs);
     }
 
     protected void RelayInventoryEvent<T>(EntityUid uid, InventoryComponent component, T args) where T : EntityEventArgs, IInventoryRelayEvent
@@ -38,6 +42,33 @@ public partial class InventorySystem
             RaiseLocalEvent(container.ContainedEntity.Value, ev, false);
         }
     }
+
+    private void OnGetStrippingVerbs(EntityUid uid, InventoryComponent component, GetVerbsEvent<EquipmentVerb> args)
+    {
+        // Automatically relay stripping related verbs to all equipped clothing.
+
+        if (!_prototypeManager.TryIndex(component.TemplateId, out InventoryTemplatePrototype? proto))
+            return;
+
+        if (!TryComp(uid, out ContainerManagerComponent? containers))
+            return;
+
+        var ev = new InventoryRelayedEvent<GetVerbsEvent<EquipmentVerb>>(args);
+        foreach (var slotDef in proto.Slots)
+        {
+            if (slotDef.StripHidden && args.User != uid)
+                continue;
+
+            if (!containers.TryGetContainer(slotDef.Name, out var container))
+                continue;
+
+            if (container is not ContainerSlot slot || slot.ContainedEntity is not { } ent)
+                continue;
+
+            RaiseLocalEvent(ent, ev);
+        }
+    }
+
 }
 
 /// <summary>
@@ -49,7 +80,7 @@ public partial class InventorySystem
 ///      happens to be a dead mouse. Clothing that wishes to modify movement speed must subscribe to
 ///      InventoryRelayedEvent&lt;RefreshMovementSpeedModifiersEvent&gt;
 /// </remarks>
-public sealed class InventoryRelayedEvent<TEvent> : EntityEventArgs where TEvent : EntityEventArgs, IInventoryRelayEvent
+public sealed class InventoryRelayedEvent<TEvent> : EntityEventArgs where TEvent : EntityEventArgs
 {
     public readonly TEvent Args;
 

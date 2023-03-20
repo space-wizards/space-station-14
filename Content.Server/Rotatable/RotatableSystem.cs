@@ -30,9 +30,11 @@ namespace Content.Server.Rotatable
             {
                 Act = () => TryFlip(uid, component, args.User),
                 Text = Loc.GetString("flippable-verb-get-data-text"),
+                Category = VerbCategory.Rotate,
+                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/flip.svg.192dpi.png")),
+                Priority = -3, // show flip last
                 DoContactInteraction = true
             };
-            // TODO VERB ICONS Add Uno reverse card style icon?
             args.Verbs.Add(verb);
         }
 

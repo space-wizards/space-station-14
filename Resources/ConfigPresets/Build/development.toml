@@ -6,8 +6,11 @@ lobbyenabled = false
 # Makes mapping annoying
 grid_splitting = false
 
+[procgen]
+preload = false
+
 [shuttle]
 # Wastes startup time
+auto_call_time = 0
 cargo = false
 emergency_enabled = false
-

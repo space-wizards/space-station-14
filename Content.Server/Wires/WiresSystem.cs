@@ -467,7 +467,7 @@ public sealed class WiresSystem : EntitySystem
         }
         else if (!component.IsScrewing && _toolSystem.HasQuality(args.Used, "Screwing", tool))
         {
-            var toolEvData = new ToolEventData(new WireToolFinishedEvent(uid, args.User));
+            var toolEvData = new ToolEventData(new WireToolFinishedEvent(uid, args.User), cancelledEv: new WireToolCanceledEvent(uid));
 
             component.IsScrewing = _toolSystem.UseTool(args.Used, args.User, uid, ScrewTime, new[] { "Screwing" }, toolEvData, toolComponent: tool);
             args.Handled = component.IsScrewing;

@@ -35,6 +35,7 @@ public sealed class MoppingSystem : SharedMoppingSystem
         base.Initialize();
         SubscribeLocalEvent<AbsorbentComponent, ComponentInit>(OnAbsorbentInit);
         SubscribeLocalEvent<AbsorbentComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<AbsorbentComponent, SolutionChangedEvent>(OnAbsorbentSolutionChange);
         SubscribeLocalEvent<AbsorbentComponent, DoAfterEvent<AbsorbantData>>(OnDoAfter);
     }
 
@@ -270,7 +271,17 @@ public sealed class MoppingSystem : SharedMoppingSystem
 
     private void OnDoAfter(EntityUid uid, AbsorbentComponent component, DoAfterEvent<AbsorbantData> args)
     {
-        if (args.Handled || args.Cancelled || args.Args.Target == null)
+        if (args.Args.Target == null)
+            return;
+
+        if (args.Cancelled)
+        {
+            //Remove the interacting entities or else it breaks the mop
+            component.InteractingEntities.Remove(args.Args.Target.Value);
+            return;
+        }
+
+        if (args.Handled)
             return;
 
         _audio.PlayPvs(args.AdditionalData.Sound, uid);

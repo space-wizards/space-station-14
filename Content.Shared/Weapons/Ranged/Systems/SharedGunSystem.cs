@@ -1,6 +1,6 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Audio;
 using Content.Shared.CombatMode;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
@@ -22,7 +22,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -53,6 +52,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private   readonly SharedGravitySystem _gravity = default!;
     [Dependency] protected readonly SharedProjectileSystem Projectiles = default!;
+    [Dependency] protected readonly SharedTransformSystem Transform = default!;
 
     protected ISawmill Sawmill = default!;
 
@@ -107,27 +107,31 @@ public abstract partial class SharedGunSystem : EntitySystem
     {
         var user = args.SenderSession.AttachedEntity;
 
-        if (user == null) return;
+        if (user == null ||
+            !TryGetGun(user.Value, out var ent, out var gun))
+            return;
 
-        var gun = GetGun(user.Value);
-
-        if (gun?.Owner != msg.Gun) return;
+        if (ent != msg.Gun)
+            return;
 
         gun.ShootCoordinates = msg.Coordinates;
         Sawmill.Debug($"Set shoot coordinates to {gun.ShootCoordinates}");
-        AttemptShoot(user.Value, gun);
+        AttemptShoot(user.Value, ent, gun);
     }
 
     private void OnStopShootRequest(RequestStopShootEvent ev, EntitySessionEventArgs args)
     {
         if (args.SenderSession.AttachedEntity == null ||
-            !TryComp<GunComponent>(ev.Gun, out var gun)) return;
+            !TryComp<GunComponent>(ev.Gun, out var gun) ||
+            !TryGetGun(args.SenderSession.AttachedEntity.Value, out _, out var userGun))
+        {
+            return;
+        }
 
-        var userGun = GetGun(args.SenderSession.AttachedEntity.Value);
+        if (userGun != gun)
+            return;
 
-        if (userGun != gun) return;
-
-        StopShooting(gun);
+        StopShooting(ev.Gun, gun);
     }
 
     private void OnGetState(EntityUid uid, GunComponent component, ref ComponentGetState args)
@@ -147,7 +151,8 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     private void OnHandleState(EntityUid uid, GunComponent component, ref ComponentHandleState args)
     {
-        if (args.Current is not GunComponentState state) return;
+        if (args.Current is not GunComponentState state)
+            return;
 
         Sawmill.Debug($"Handle state: setting shot count from {component.ShotCounter} to {state.ShotCounter}");
         component.FireRate = state.FireRate;
@@ -168,27 +173,40 @@ public abstract partial class SharedGunSystem : EntitySystem
         return true;
     }
 
-    public GunComponent? GetGun(EntityUid entity)
+    public bool TryGetGun(EntityUid entity, out EntityUid gunEntity, [NotNullWhen(true)] out GunComponent? gunComp)
     {
+        gunEntity = default;
+        gunComp = null;
+
         if (!_combatMode.IsInCombatMode(entity))
-            return null;
+            return false;
 
         if (EntityManager.TryGetComponent(entity, out SharedHandsComponent? hands) &&
             hands.ActiveHandEntity is { } held &&
             TryComp(held, out GunComponent? gun))
         {
-            return gun;
+            gunEntity = held;
+            gunComp = gun;
+            return true;
         }
 
         // Last resort is check if the entity itself is a gun.
-        return !TryComp(entity, out gun) ? null : gun;
+        if (TryComp(entity, out gun))
+        {
+            gunEntity = entity;
+            gunComp = gun;
+            return true;
+        }
+
+        return false;
     }
 
-    private void StopShooting(GunComponent gun)
+    private void StopShooting(EntityUid uid, GunComponent gun)
     {
-        if (gun.ShotCounter == 0) return;
+        if (gun.ShotCounter == 0)
+            return;
 
-        Sawmill.Debug($"Stopped shooting {ToPrettyString(gun.Owner)}");
+        Sawmill.Debug($"Stopped shooting {ToPrettyString(uid)}");
         gun.ShotCounter = 0;
         gun.ShootCoordinates = null;
         Dirty(gun);
@@ -197,14 +215,14 @@ public abstract partial class SharedGunSystem : EntitySystem
     /// <summary>
     /// Attempts to shoot at the target coordinates. Resets the shot counter after every shot.
     /// </summary>
-    public void AttemptShoot(EntityUid user, GunComponent gun, EntityCoordinates toCoordinates)
+    public void AttemptShoot(EntityUid user, EntityUid gunUid, GunComponent gun, EntityCoordinates toCoordinates)
     {
         gun.ShootCoordinates = toCoordinates;
-        AttemptShoot(user, gun);
+        AttemptShoot(user, gunUid, gun);
         gun.ShotCounter = 0;
     }
 
-    private void AttemptShoot(EntityUid user, GunComponent gun)
+    private void AttemptShoot(EntityUid user, EntityUid gunUid, GunComponent gun)
     {
         if (gun.FireRate <= 0f)
             return;
@@ -260,22 +278,22 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         var fromCoordinates = Transform(user).Coordinates;
         // Remove ammo
-        var ev = new TakeAmmoEvent(shots, new List<IShootable>(), fromCoordinates, user);
+        var ev = new TakeAmmoEvent(shots, new List<(EntityUid? Entity, IShootable Shootable)>(), fromCoordinates, user);
 
         // Listen it just makes the other code around it easier if shots == 0 to do this.
         if (shots > 0)
-            RaiseLocalEvent(gun.Owner, ev, false);
+            RaiseLocalEvent(gunUid, ev);
 
         DebugTools.Assert(ev.Ammo.Count <= shots);
         DebugTools.Assert(shots >= 0);
-        UpdateAmmoCount(gun.Owner);
+        UpdateAmmoCount(gunUid);
 
         // Even if we don't actually shoot update the ShotCounter. This is to avoid spamming empty sounds
         // where the gun may be SemiAuto or Burst.
         gun.ShotCounter += shots;
 
         var attemptEv = new AttemptShootEvent(user);
-        RaiseLocalEvent(gun.Owner, ref attemptEv);
+        RaiseLocalEvent(gunUid, ref attemptEv);
 
         if (ev.Ammo.Count <= 0 || attemptEv.Cancelled)
         {
@@ -286,7 +304,7 @@ public abstract partial class SharedGunSystem : EntitySystem
                 // Don't spam safety sounds at gun fire rate, play it at a reduced rate.
                 // May cause prediction issues? Needs more tweaking
                 gun.NextFire = TimeSpan.FromSeconds(Math.Max(lastFire.TotalSeconds + SafetyNextFire, gun.NextFire.TotalSeconds));
-                Audio.PlayPredicted(gun.SoundEmpty, gun.Owner, user);
+                Audio.PlayPredicted(gun.SoundEmpty, gunUid, user);
                 Dirty(gun);
                 return;
             }
@@ -295,19 +313,20 @@ public abstract partial class SharedGunSystem : EntitySystem
         }
 
         // Shoot confirmed - sounds also played here in case it's invalid (e.g. cartridge already spent).
-        Shoot(gun, ev.Ammo, fromCoordinates, toCoordinates.Value, user);
+        Shoot(gunUid, gun, ev.Ammo, fromCoordinates, toCoordinates.Value, user);
         var shotEv = new GunShotEvent(user);
-        RaiseLocalEvent(gun.Owner, ref shotEv);
+        RaiseLocalEvent(gunUid, ref shotEv);
         // Projectiles cause impulses especially important in non gravity environments
         if (TryComp<PhysicsComponent>(user, out var userPhysics))
         {
             if (_gravity.IsWeightless(user, userPhysics))
-                CauseImpulse(fromCoordinates, toCoordinates.Value, userPhysics);
+                CauseImpulse(fromCoordinates, toCoordinates.Value, user, userPhysics);
         }
         Dirty(gun);
     }
 
     public void Shoot(
+        EntityUid gunUid,
         GunComponent gun,
         EntityUid ammo,
         EntityCoordinates fromCoordinates,
@@ -315,25 +334,16 @@ public abstract partial class SharedGunSystem : EntitySystem
         EntityUid? user = null)
     {
         var shootable = EnsureComp<AmmoComponent>(ammo);
-        Shoot(gun, new List<IShootable>(1) { shootable }, fromCoordinates, toCoordinates, user);
+        Shoot(gunUid, gun, new List<(EntityUid? Entity, IShootable Shootable)>(1) { (ammo, shootable) }, fromCoordinates, toCoordinates, user);
     }
 
     public abstract void Shoot(
+        EntityUid gunUid,
         GunComponent gun,
-        List<IShootable> ammo,
+        List<(EntityUid? Entity, IShootable Shootable)> ammo,
         EntityCoordinates fromCoordinates,
         EntityCoordinates toCoordinates,
         EntityUid? user = null);
-
-    public void Shoot(
-        GunComponent gun,
-        IShootable ammo,
-        EntityCoordinates fromCoordinates,
-        EntityCoordinates toCoordinates,
-        EntityUid? user = null)
-    {
-        Shoot(gun, new List<IShootable>(1) { ammo }, fromCoordinates, toCoordinates, user);
-    }
 
     protected abstract void Popup(string message, EntityUid? uid, EntityUid? user);
 
@@ -342,13 +352,13 @@ public abstract partial class SharedGunSystem : EntitySystem
     /// </summary>
     protected virtual void UpdateAmmoCount(EntityUid uid) {}
 
-    protected void SetCartridgeSpent(CartridgeAmmoComponent cartridge, bool spent)
+    protected void SetCartridgeSpent(EntityUid uid, CartridgeAmmoComponent cartridge, bool spent)
     {
         if (cartridge.Spent != spent)
             Dirty(cartridge);
 
         cartridge.Spent = spent;
-        Appearance.SetData(cartridge.Owner, AmmoVisuals.Spent, spent);
+        Appearance.SetData(uid, AmmoVisuals.Spent, spent);
     }
 
     /// <summary>
@@ -385,15 +395,15 @@ public abstract partial class SharedGunSystem : EntitySystem
         CreateEffect(gun, ev, user);
     }
 
-    public void CauseImpulse(EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, PhysicsComponent userPhysics)
+    public void CauseImpulse(EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid user, PhysicsComponent userPhysics)
     {
-        var fromMap = fromCoordinates.ToMapPos(EntityManager);
-        var toMap = toCoordinates.ToMapPos(EntityManager);
+        var fromMap = fromCoordinates.ToMapPos(EntityManager, Transform);
+        var toMap = toCoordinates.ToMapPos(EntityManager, Transform);
         var shotDirection = (toMap - fromMap).Normalized;
 
         const float impulseStrength = 5.0f;
         var impulseVector =  shotDirection * impulseStrength;
-        Physics.ApplyLinearImpulse(userPhysics.Owner, -impulseVector, body: userPhysics);
+        Physics.ApplyLinearImpulse(user, -impulseVector, body: userPhysics);
     }
     protected abstract void CreateEffect(EntityUid uid, MuzzleFlashEvent message, EntityUid? user = null);
 

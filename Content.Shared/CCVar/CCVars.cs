@@ -1032,6 +1032,16 @@ namespace Content.Shared.CCVar
             CVarDef.Create("ban.hardware_ids", true, CVar.SERVERONLY);
 
         /*
+         * Procgen
+         */
+
+        /// <summary>
+        /// Should we pre-load all of the procgen atlasses.
+        /// </summary>
+        public static readonly CVarDef<bool> ProcgenPreload =
+            CVarDef.Create("procgen.preload", true, CVar.SERVERONLY);
+
+        /*
          * Shuttles
          */
 
@@ -1199,6 +1209,11 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> UILayout =
             CVarDef.Create("ui.layout", "Default", CVar.CLIENTONLY | CVar.ARCHIVE);
 
+        public static readonly CVarDef<string> DefaultScreenChatSize =
+            CVarDef.Create("ui.default_chat_size", "", CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        public static readonly CVarDef<string> SeparatedScreenChatSize =
+            CVarDef.Create("ui.separated_chat_size", "0.6,0", CVar.CLIENTONLY | CVar.ARCHIVE);
 
 
         /*
@@ -1459,6 +1474,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<string> InfoLinksBugReport =
             CVarDef.Create("infolinks.bug_report", "", CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// Link to site handling ban appeals. Shown in ban disconnect messages.
+        /// </summary>
+        public static readonly CVarDef<string> InfoLinksAppeal =
+            CVarDef.Create("infolinks.appeal", "", CVar.SERVER | CVar.REPLICATED);
 
         /*
          * CONFIG

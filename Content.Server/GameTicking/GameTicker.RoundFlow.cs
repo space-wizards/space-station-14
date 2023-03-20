@@ -424,7 +424,8 @@ namespace Content.Server.GameTicking
 #endif
                 // TODO: Maybe something less naive here?
                 // FIXME: Actually, definitely.
-                EntityManager.DeleteEntity(entity);
+                if (!Deleted(entity) && !Terminating(entity))
+                    EntityManager.DeleteEntity(entity);
 #if EXCEPTION_TOLERANCE
                 }
                 catch (Exception e)

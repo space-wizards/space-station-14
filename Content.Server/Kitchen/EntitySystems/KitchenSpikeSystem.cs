@@ -77,12 +77,19 @@ namespace Content.Server.Kitchen.EntitySystems
             if (TryComp<ButcherableComponent>(args.Args.Target.Value, out var butcherable))
                 butcherable.BeingButchered = false;
 
-            if (args.Handled || args.Cancelled)
+            if (args.Cancelled)
+            {
+                component.InUse = false;
+                return;
+            }
+
+            if (args.Handled)
                 return;
 
             if (Spikeable(uid, args.Args.User, args.Args.Target.Value, component, butcherable))
                 Spike(uid, args.Args.User, args.Args.Target.Value, component);
 
+            component.InUse = false;
             args.Handled = true;
         }
 
