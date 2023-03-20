@@ -410,6 +410,9 @@
   id: MonkeyCube
 
 - type: Tag
+  id: Multitool
+
+- type: Tag
   id: Mop
 
 - type: Tag

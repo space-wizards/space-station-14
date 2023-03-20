@@ -448,13 +448,13 @@
   - type: Storage
     capacity: 60
     whitelist:
+      tags:
+      - Multitool
       components:
-        - Gun
-        - Tool
-        - RCD
-        - MeleeWeapon
-        - BallisticAmmoProvider
-        - CartridgeAmmo
+      - Gun
+      - MeleeWeapon
+      - BallisticAmmoProvider
+      - CartridgeAmmo
 
 - type: entity
   parent: ClothingBeltStorageBase

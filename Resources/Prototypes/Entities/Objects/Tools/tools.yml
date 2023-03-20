@@ -200,6 +200,7 @@
   - type: Tag
     tags:
       - DroneUsable
+      - Multitool
   - type: StaticPrice
     price: 60
 
