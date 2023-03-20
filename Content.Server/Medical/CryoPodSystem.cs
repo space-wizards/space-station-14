@@ -56,11 +56,11 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
         SubscribeLocalEvent<CryoPodComponent, CanDropTargetEvent>(OnCryoPodCanDropOn);
         SubscribeLocalEvent<CryoPodComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<CryoPodComponent, GetVerbsEvent<AlternativeVerb>>(AddAlternativeVerbs);
+        SubscribeLocalEvent<CryoPodComponent, GetVerbsEvent<InteractionVerb>>(AddInsertOtherVerb);
         SubscribeLocalEvent<CryoPodComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<CryoPodComponent, DoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<CryoPodComponent, CryoPodPryFinished>(OnCryoPodPryFinished);
         SubscribeLocalEvent<CryoPodComponent, CryoPodPryInterrupted>(OnCryoPodPryInterrupted);
-
         SubscribeLocalEvent<CryoPodComponent, AtmosDeviceUpdateEvent>(OnCryoPodUpdateAtmosphere);
         SubscribeLocalEvent<CryoPodComponent, DragDropTargetEvent>(HandleDragDropOn);
         SubscribeLocalEvent<CryoPodComponent, InteractUsingEvent>(OnInteractUsing);
@@ -125,13 +125,12 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
     }
 
     #region Interaction
-
     private void HandleDragDropOn(EntityUid uid, CryoPodComponent cryoPodComponent, ref DragDropTargetEvent args)
     {
         if (cryoPodComponent.BodyContainer.ContainedEntity != null)
             return;
 
-        var doAfterArgs = new DoAfterEventArgs(args.User, cryoPodComponent.EntryDelay, target:args.Dragged, used:uid)
+        var doAfterArgs = new DoAfterEventArgs(args.User, cryoPodComponent.EntryDelay, target: args.Dragged, used: uid)
         {
             BreakOnDamage = true,
             BreakOnStun = true,
@@ -143,12 +142,12 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
         args.Handled = true;
     }
 
-    private void OnDoAfter(EntityUid uid, CryoPodComponent component, DoAfterEvent args)
+    private void OnDoAfter(EntityUid uid, CryoPodComponent cryoPodComponent, DoAfterEvent args)
     {
         if (args.Cancelled || args.Handled || args.Args.Target == null)
             return;
 
-        InsertBody(uid, args.Args.Target.Value, component);
+        InsertBody(uid, args.Args.Target.Value, cryoPodComponent);
 
         args.Handled = true;
     }
