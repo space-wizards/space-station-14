@@ -380,8 +380,8 @@ namespace Content.Server.Nutrition.EntitySystems
             args.Handled = true;
 
             var comp = EnsureComp<ForensicsComponent>(uid);
-            TryComp<DnaComponent>(args.Args.Target, out var dnaComponent);
-            comp.DNAs.Add(dnaComponent?.DNA ?? "");
+            if (TryComp<DnaComponent>(args.Args.Target, out var dna))
+                comp.DNAs.Add(dna.DNA);
         }
 
         private void AddDrinkVerb(EntityUid uid, DrinkComponent component, GetVerbsEvent<AlternativeVerb> ev)

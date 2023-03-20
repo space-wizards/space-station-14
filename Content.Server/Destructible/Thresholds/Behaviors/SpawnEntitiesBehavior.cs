@@ -42,6 +42,16 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 {
                     var spawned = system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
                     system.StackSystem.SetCount(spawned, count);
+
+                    if (!TransferForensics || !system.EntityManager.TryGetComponent<ForensicsComponent>(owner, out var forensicsComponent))
+                        continue;
+                    var comp = system.EntityManager.EnsureComponent<ForensicsComponent>(spawned);
+                    comp.DNAs = forensicsComponent.DNAs;
+
+                    if (!system.Random.Prob(0.4f))
+                        continue;
+                    comp.Fingerprints = forensicsComponent.Fingerprints;
+                    comp.Fibers = forensicsComponent.Fibers;
                 }
                 else
                 {

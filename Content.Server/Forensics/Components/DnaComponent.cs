@@ -6,6 +6,6 @@
 [RegisterComponent]
 public sealed class DnaComponent : Component
 {
-    [DataField("dna")]
-    public string? DNA = String.Empty;
+    [ViewVariables(VVAccess.ReadWrite)]
+    public string DNA = String.Empty;
 }
