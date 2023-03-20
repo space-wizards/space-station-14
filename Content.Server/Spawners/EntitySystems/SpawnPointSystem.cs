@@ -51,6 +51,22 @@ public sealed class SpawnPointSystem : EntitySystem
             }
         }
 
+        // First, let's try to spawn the player at the late join points..
+        foreach (var spawnPoint in points)
+        {
+            var xform = Transform(spawnPoint.Owner);
+            if (spawnPoint.SpawnType == SpawnPointType.LateJoin)
+            {
+                args.SpawnResult = _stationSpawning.SpawnPlayerMob(
+                    xform.Coordinates,
+                    args.Job,
+                    args.HumanoidCharacterProfile,
+                    args.Station);
+
+                return;
+            }
+        }
+
         // Ok we've still not returned, but we need to put them /somewhere/.
         // TODO: Refactor gameticker spawning code so we don't have to do this!
         foreach (var spawnPoint in points)
