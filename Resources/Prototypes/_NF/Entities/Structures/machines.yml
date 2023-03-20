@@ -1,0 +1,87 @@
+- type: entity
+  id: ComputerShipyard
+  parent: BaseComputer
+  name: shipyard console
+  description: Used to purchase and sell shuttles
+  components:
+  - type: ShipyardConsole
+    targetIdSlot:
+      name: id-card-console-target-id
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      ejectOnBreak: true
+      swap: false
+      whitelist:
+        components:
+        - IdCard
+  - type: ActivatableUI
+    key: enum.ShipyardConsoleUiKey.Shipyard
+  - type: UserInterface
+    interfaces:
+    - key: enum.ShipyardConsoleUiKey.Shipyard
+      type: ShipyardConsoleBoundUserInterface
+  - type: Computer
+    board: ShipyardComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89f25"
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: request
+    - map: ["computerLayerKeys"]
+      state: tech_key
+  - type: ItemSlots  
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+      ShipyardConsole-targetId: !type:ContainerSlot {}
+
+- type: entity
+  id: ComputerBankATM
+  parent: BaseComputer
+  name: bank atm
+  description: Used to deposit and withdraw funds from a personal bank account
+  components:
+  - type: BankATM
+    bank-ATM-cashSlot:
+      name: bank-ATM-cashSlot
+      insertSound: /Audio/Machines/scanning.ogg
+      ejectSound: /Audio/Machines/tray_eject.ogg
+      ejectOnBreak: true
+      swap: false
+      whitelist:
+        components:
+        - Currency
+  - type: ActivatableUI
+    key: enum.BankATMMenuUiKey.ATM
+  - type: UserInterface
+    interfaces:
+    - key: enum.BankATMMenuUiKey.ATM
+      type: BankATMMenuBoundUserInterface
+  - type: Computer
+    board: ShipyardComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89f25"
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: request
+    - map: ["computerLayerKeys"]
+      state: tech_key
+  - type: ItemSlots  
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+      bank-ATM-cashSlot: !type:ContainerSlot {}

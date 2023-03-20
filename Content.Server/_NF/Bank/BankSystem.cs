@@ -1,15 +1,16 @@
 using System.Threading;
+using Content.Shared.Bank;
 using Content.Server.GameTicking;
-using Content.Shared.Bank.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Content.Shared.Preferences;
 using Content.Server.Database;
 using Content.Server.Preferences.Managers;
+using Content.Shared.Bank.Components;
 
 namespace Content.Server.Bank;
 
-public sealed class BankSystem : EntitySystem
+public sealed partial class BankSystem : EntitySystem
 {
     [Dependency] private readonly IServerPreferencesManager _prefsManager = default!;
     [Dependency] private readonly IServerDbManager _dbManager = default!;
@@ -23,6 +24,7 @@ public sealed class BankSystem : EntitySystem
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawn);
         SubscribeLocalEvent<BankAccountComponent, ComponentGetState>(OnBankAccountChanged);
         SubscribeLocalEvent<PlayerJoinedLobbyEvent>(OnPlayerLobbyJoin);
+        InitializeATM();
     }
 
     // we may have to change this later depending on mind rework.
