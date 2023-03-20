@@ -1,26 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Omnitool can cut lattice and pry unpowered doors, type: Fix}
-  id: 2696
-  time: '2022-11-24T06:00:34.0000000+00:00'
-- author: JustinTrotter
-  changes:
-  - {message: Welder tanks explode when shot with projectile guns. (Also don't poke
-      them with a spear), type: Add}
-  id: 2697
-  time: '2022-11-24T06:01:51.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Map ambient lighting can now be controlled by admins via RGBLightController.,
-    type: Add}
-  id: 2698
-  time: '2022-11-24T07:31:17.0000000+00:00'
-- author: Vordenburg
-  changes:
-  - {message: Individual stations can now have specific emergency shuttles., type: Tweak}
-  id: 2699
-  time: '2022-11-24T18:28:04.0000000+00:00'
 - author: Checkraze
   changes:
   - {message: Added the Courser class evacuation shuttle., type: Add}
@@ -2902,3 +2880,25 @@ Entries:
   - {message: Voice mask can no longer be used from your pockets., type: Fix}
   id: 3195
   time: '2023-03-19T23:41:25.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'Added waist bags, get them from your nearest clothesmate vendor today!',
+    type: Add}
+  id: 3196
+  time: '2023-03-20T00:45:38.0000000+00:00'
+- author: robertGN
+  changes:
+  - {message: Foldable objects spawned folded now use the correct sprites, type: Fix}
+  id: 3197
+  time: '2023-03-20T00:46:38.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Cognizine works on animals that are already being controlled., type: Fix}
+  id: 3198
+  time: '2023-03-20T00:47:07.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: Nukeops now uses your selected character's appearance and species. Nukeop
+      names are still randomized., type: Tweak}
+  id: 3199
+  time: '2023-03-20T00:48:06.0000000+00:00'
