@@ -5,7 +5,6 @@ using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Paper;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
@@ -34,7 +33,7 @@ namespace Content.Server.Paper
             SubscribeLocalEvent<PaperComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<PaperComponent, PaperInputTextMessage>(OnInputTextMessage);
 
-            SubscribeLocalEvent<ActivateOnPaperOpenedComponent, PaperWriteEvent>(OnWrittenWith);
+            SubscribeLocalEvent<ActivateOnPaperOpenedComponent, PaperWriteEvent>(OnPaperWrite);
         }
 
         private void OnInit(EntityUid uid, PaperComponent paperComp, ComponentInit args)
@@ -130,7 +129,7 @@ namespace Content.Server.Paper
             UpdateUserInterface(uid, paperComp);
         }
 
-        private void OnWrittenWith(EntityUid uid, ActivateOnPaperOpenedComponent comp, ref PaperWriteEvent args)
+        private void OnPaperWrite(EntityUid uid, ActivateOnPaperOpenedComponent comp, ref PaperWriteEvent args)
         {
             _interaction.UseInHandInteraction(args.User, uid);
         }
