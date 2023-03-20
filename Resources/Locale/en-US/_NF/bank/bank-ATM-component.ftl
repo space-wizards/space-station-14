@@ -6,3 +6,7 @@ bank-atm-menu-withdraw-button = Withdraw
 bank-atm-menu-deposit-label = Deposit Amount:{" "}
 bank-atm-menu-no-deposit = Empty
 bank-atm-menu-deposit-button = Deposit
+bank-insufficient-funds = Insufficient Funds
+bank-atm-menu-transaction-denied = Transaction Denied
+bank-atm-menu-deposit-successful = Deposit Accepted
+bank-atm-menu-withdraw-successful = Transfer Approved

@@ -1,9 +1,9 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
             xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-            SetSize="300 170"
-            MinSize="300 170">
-    <BoxContainer Orientation="Vertical">
+            SetSize="300 180"
+            MinSize="300 180">
+    <BoxContainer Margin="10 2 10 2" Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc 'bank-atm-menu-balance-label'}"
                    StyleClasses="LabelKeyText" />
