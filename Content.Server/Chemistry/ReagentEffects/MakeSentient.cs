@@ -22,8 +22,14 @@ public sealed class MakeSentient : ReagentEffect
         // This piece of code makes things able to speak "normally". One thing of note is that monkeys have a unique accent and won't be affected by this.
         entityManager.RemoveComponent<ReplacementAccentComponent>(uid);
 
-        // Monke talk
+        // Monke talk. This makes cognizine a cure to AMIV's long term damage funnily enough, do with this information what you will.
         entityManager.RemoveComponent<MonkeyAccentComponent>(uid);
+
+        // This makes it so it doesn't add a ghost role to things that are already sentient
+        if (entityManager.HasComponent<MindComponent>(uid))
+        {
+            return;
+        }
 
         // No idea what anything past this point does
         if (entityManager.TryGetComponent(uid, out GhostTakeoverAvailableComponent? takeOver))
