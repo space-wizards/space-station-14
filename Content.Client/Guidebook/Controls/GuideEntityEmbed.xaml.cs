@@ -164,6 +164,11 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
         if (args.TryGetValue("Interactive", out var interactive))
             Interactive = bool.Parse(interactive);
 
+        if (args.TryGetValue("Rotation", out var rotation))
+        {
+            Sprite.Rotation = Angle.FromDegrees(double.Parse(rotation));
+        }
+
         Margin = new Thickness(4, 8);
 
         control = this;
