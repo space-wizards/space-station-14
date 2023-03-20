@@ -711,6 +711,11 @@
         conditions:
         - !type:ReagentThreshold
           min: 5
+      - !type:RemoveReplacementAccent
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
+        removesMonkeyAccent: true
 
 - type: reagent
   id: Ethyloxyephedrine
