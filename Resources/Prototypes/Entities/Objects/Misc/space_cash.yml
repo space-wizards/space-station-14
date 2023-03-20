@@ -4,6 +4,9 @@
   name: spacebucks
   description: You gotta have money.
   components:
+  - type: Currency
+    price:
+      Speso: 1 
   - type: Material
     materials:
       Credit: 1
