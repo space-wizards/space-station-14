@@ -66,14 +66,14 @@ public sealed class ClientClothingSystem : ClothingSystem
         if (!TryComp(uid, out SpriteComponent? sprite) || !TryComp(uid, out HumanoidAppearanceComponent? humanoid))
             return;
 
-        int layer = (int) HumanoidVisualLayers.StencilMask;
+        int layer = -1;
 
         // Set layer to the correct gendered mask layer
         if (humanoid.Sex == Sex.Male) sprite.LayerMapTryGet(HumanoidVisualLayers.MaleStencilMask, out layer);
         if (humanoid.Sex == Sex.Female) sprite.LayerMapTryGet(HumanoidVisualLayers.FemaleStencilMask, out layer);
         if (humanoid.Sex == Sex.Unsexed) sprite.LayerMapTryGet(HumanoidVisualLayers.UnisexStencilMask, out layer);
 
-        if (layer != (int) HumanoidVisualLayers.StencilMask)
+        if (layer != -1)
         {
             if (!_inventorySystem.TryGetSlotEntity(uid, "jumpsuit", out var suit, component) ||
                 !TryComp(suit, out ClothingComponent? clothing))
@@ -256,14 +256,14 @@ public sealed class ClientClothingSystem : ClothingSystem
             if (!TryComp(equipee, out HumanoidAppearanceComponent? humanoid))
                 return;
 
-            int layer = (int) HumanoidVisualLayers.StencilMask;
+            int layer = -1;
 
             // Set layer to the correct gendered mask layer
             if (humanoid.Sex == Sex.Male) sprite.LayerMapTryGet(HumanoidVisualLayers.MaleStencilMask, out layer);
             if (humanoid.Sex == Sex.Female) sprite.LayerMapTryGet(HumanoidVisualLayers.FemaleStencilMask, out layer);
             if (humanoid.Sex == Sex.Unsexed) sprite.LayerMapTryGet(HumanoidVisualLayers.UnisexStencilMask, out layer);
 
-            if (layer != (int) HumanoidVisualLayers.StencilMask)
+            if (layer != -1)
             {
                 ClothingMask? mask = null;
                 var prefix = "";
