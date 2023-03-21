@@ -5,7 +5,6 @@ using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.HotPotato;
 
@@ -43,12 +42,17 @@ public abstract class SharedHotPotatoSystem : EntitySystem
 
             if (_hands.TryForcePickupAnyHand(hitEntity, uid, handsComp: hands) && _net.IsServer)
             {
-                _popup.PopupEntity(Loc.GetString("hot-potato-passed", ("from", args.User), ("to", hitEntity)), uid);
+                _popup.PopupEntity(Loc.GetString("hot-potato-passed",
+                    ("from", args.User), ("to", hitEntity)), uid, PopupType.Medium);
                 break;
             }
 
             if (_net.IsServer)
-                _popup.PopupEntity(Loc.GetString("hot-potato-failed", ("to", hitEntity)), uid);
+            {
+                _popup.PopupEntity(Loc.GetString("hot-potato-failed",
+                    ("to", hitEntity)), uid, PopupType.Medium);
+            }
+
             break;
         }
         comp.CanTransfer = false;

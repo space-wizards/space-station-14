@@ -8,6 +8,7 @@ namespace Content.Shared.HotPotato;
 /// except entities with this component can be removed in specific case: <see cref="CanTransfer"/>
 /// </summary>
 [RegisterComponent, NetworkedComponent]
+[Access(typeof(SharedHotPotatoSystem))]
 public sealed class HotPotatoComponent : Component
 {
     /// <summary>
