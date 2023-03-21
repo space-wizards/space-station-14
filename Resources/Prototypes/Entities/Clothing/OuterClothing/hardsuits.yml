@@ -345,6 +345,32 @@
 
 - type: entity
   parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitWarden
+  name: warden's hardsuit
+  description: A specialized riot suit geared to combat low pressure environments while maintaining agility.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/security-warden.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/security-warden.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 10000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.6
+        Piercing: 0.6
+        Heat: 0.8
+        Radiation: 0.25
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitWarden
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitSyndie
   name: blood red hardsuit
   description: A heavily armored and agile advanced hardsuit designed for work in special operations.
@@ -591,7 +617,7 @@
     walkModifier: 1.0
     sprintModifier: 1.0
   - type: TemperatureProtection
-    coefficient: 0.001    
+    coefficient: 0.001
   - type: Armor
     modifiers:
       coefficients:
@@ -632,7 +658,7 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertengineer.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTEngineer
-    
+
 - type: entity
   parent: ClothingOuterHardsuitERTLeader
   id: ClothingOuterHardsuitERTMedical
@@ -656,7 +682,7 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertsecurity.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTSecurity
-    
+
 - type: entity
   parent: ClothingOuterHardsuitERTLeader
   id: ClothingOuterHardsuitERTJanitor

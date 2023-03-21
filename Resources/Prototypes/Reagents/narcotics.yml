@@ -149,7 +149,7 @@
   group: Narcotics
   desc: reagent-desc-experimental-stimulants
   physicalDesc: reagent-physical-desc-exhilarating
-  flavor: bottled lightning
+  flavor: bottledlightning
   color: "#AE0101"
   boilingPoint: 212.0
   meltingPoint: 170.0
@@ -158,13 +158,22 @@
       metabolismRate: 0.25 # lasts for 4 minutes instead of 5
       effects:
       - !type:MovespeedModifier # nyoom
+        conditions:
+        - !type:ReagentThreshold
+          min: 10
         walkSpeedModifier: 1.8
         sprintSpeedModifier: 1.8
+      - !type:MovespeedModifier # antinyoom
+        conditions:
+        - !type:ReagentThreshold
+          max: 10 # ghetto withdrawal
+        walkSpeedModifier: 0.7
+        sprintSpeedModifier: 0.7
       - !type:Electrocute
         conditions:
           - !type:ReagentThreshold
             max: 10 # ghetto withdrawal effect
-        probability: 0.3 # get stunlocked nerd
+        probability: 0.1 # get stunlocked nerd
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
@@ -177,32 +186,40 @@
         component: StutteringAccent
       - !type:HealthChange
         conditions:
-          - !type:ReagentThreshold
-            min: 10
+        - !type:ReagentThreshold
+          min: 10
         damage:
           types:
             Poison: 1 # You will be laying on the floor in crit in 100 seconds if you don't have antitoxin meds (Ideally this should deal twice as much damage but since nukies don't have access to stellbinin it would kill them)
       - !type:HealthChange
         conditions:
-          - !type:ReagentThreshold
-            min: 60.1 #so nukies don't take a tick of 8 poison damage when it first gets injected
+        - !type:ReagentThreshold
+          min: 60
         damage:
           types:
             Poison: 8 # TODO this should ideally kill your liver instead
       # effectively negates stamcrits
       - !type:GenericStatusEffect
         conditions:
-          - !type:ReagentThreshold
-            min: 10
+        - !type:ReagentThreshold
+          min: 10
         key: Stun
         time: 6
         type: Remove
       - !type:GenericStatusEffect
         conditions:
-          - !type:ReagentThreshold
-            min: 10
+        - !type:ReagentThreshold
+          min: 10
         key: KnockedDown
         time: 6
+        type: Remove
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          min: 10
+        key: ForcedSleep
+        component: ForcedSleeping
+        refresh: false
         type: Remove
     Medicine:
       metabolismRate: 0.25
@@ -217,7 +234,7 @@
           - !type:ReagentThreshold
             min: 10
           damage:
-            types:
+            groups:
               Brute: -4
               Burn: -4
         # stops CMOs from hypoing you with lexorin and sec from filling you with tranq shells
