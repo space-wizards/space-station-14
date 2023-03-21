@@ -15,6 +15,6 @@ public sealed class HotPotatoSystem : SharedHotPotatoSystem
     {
         EnsureComp<ActiveHotPotatoComponent>(uid);
         comp.CanTransfer = false;
-        Dirty(uid);
+        Dirty(comp);
     }
 }
