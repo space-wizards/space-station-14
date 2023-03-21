@@ -1,3 +1,3 @@
-ent-PenExploding = pen
-    .desc = A dark ink pen.
-    .suffix = Exploding
+ent-PenExploding = { ent-Pen }
+    .desc = { ent-Pen.desc }
+    .suffix = Взрывчатка

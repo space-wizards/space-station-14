@@ -28,8 +28,8 @@ uplink-c4-bundle-name = набор C-4
 uplink-c4-bundle-desc = Иногда количество - это качество. Содержит 8 штук взрывчатки C-4.
 uplink-emp-grenade-name = { ent-EmpGrenade }
 uplink-emp-grenade-desc = { ent-EmpGrenade.desc }
-uplink-exploding-pen-name = Exploding pen
-uplink-exploding-pen-desc = A class IV explosive device contained within a standard pen. Comes with a 4 second fuse.
+uplink-exploding-pen-name = Взрывающаяся ручка
+uplink-exploding-pen-desc = Взрывное устройство класса IV, помещённое в стандартную ручку. Снабжено 4-секундным таймером.
 # Ammo
 uplink-pistol-magazine-name = пистолетный магазин (.35 авто)
 uplink-pistol-magazine-desc = Пистолетный магазин на 10 патронов. Совместим с "Гадюкой".
