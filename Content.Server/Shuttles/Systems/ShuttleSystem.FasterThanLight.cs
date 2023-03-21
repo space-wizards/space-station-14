@@ -241,16 +241,16 @@ public sealed partial class ShuttleSystem
                         _physics.SetAngularDamping(body, 0f);
                     }
 
+                    SetDockBolts(uid, true);
+                    _console.RefreshShuttleConsoles(uid);
+                    var ev = new FTLStartedEvent(fromMapUid, fromMatrix, fromRotation);
+                    RaiseLocalEvent(uid, ref ev);
+
                     if (comp.TravelSound != null)
                     {
                         comp.TravelStream = SoundSystem.Play(comp.TravelSound.GetSound(),
                             Filter.Pvs(uid, 4f, entityManager: EntityManager), comp.TravelSound.Params);
                     }
-
-                    SetDockBolts(uid, true);
-                    _console.RefreshShuttleConsoles(uid);
-                    var ev = new FTLStartedEvent(fromMapUid, fromMatrix, fromRotation);
-                    RaiseLocalEvent(uid, ref ev);
                     break;
                 // Arriving, play effects
                 case FTLState.Travelling:

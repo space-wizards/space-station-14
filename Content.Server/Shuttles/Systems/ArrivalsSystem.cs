@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
 using Content.Server.Shuttles.Components;
@@ -8,6 +9,7 @@ using Content.Server.Spawners.EntitySystems;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
+using Content.Shared.Shuttles.Components;
 using Content.Shared.Spawners.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
@@ -23,6 +25,7 @@ namespace Content.Server.Shuttles.Systems;
 /// </summary>
 public sealed class ArrivalsSystem : EntitySystem
 {
+    [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
@@ -37,13 +40,13 @@ public sealed class ArrivalsSystem : EntitySystem
     /// <summary>
     /// If enabled then spawns players on an alternate map so they can take a shuttle to the station.
     /// </summary>
-    private bool _enabled;
+    public bool Enabled { get; private set; }
 
     // TODO: CVar
     /// <summary>
     /// Also need to factor in FTL time. If it's lower than it just double-cycles the cooldown
     /// </summary>
-    private TimeSpan TransferCooldown = TimeSpan.FromSeconds(90);
+    private TimeSpan TransferCooldown = TimeSpan.FromSeconds(60);
 
     // TODO: CVar
     private ResourcePath _arrivalsStation = new("/Maps/Misc/terminal.yml");
@@ -54,13 +57,14 @@ public sealed class ArrivalsSystem : EntitySystem
 
         SubscribeLocalEvent<PlayerSpawningEvent>(OnPlayerSpawn, before: new []{typeof(SpawnPointSystem)});
         SubscribeLocalEvent<StationArrivalsComponent, ComponentStartup>(OnArrivalsStartup);
+        SubscribeLocalEvent<ArrivalsShuttleComponent, ComponentStartup>(OnShuttleStartup);
         SubscribeLocalEvent<ArrivalsShuttleComponent, EntityUnpausedEvent>(OnShuttleUnpaused);
         SubscribeLocalEvent<StationInitializedEvent>(OnStationInit);
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStarting);
         SubscribeLocalEvent<ArrivalsShuttleComponent, FTLStartedEvent>(OnArrivalsFTL);
 
         // Don't invoke immediately as it will get set in the natural course of things.
-        _enabled = _cfgManager.GetCVar(CCVars.ArrivalsShuttles);
+        Enabled = _cfgManager.GetCVar(CCVars.ArrivalsShuttles);
         _cfgManager.OnValueChanged(CCVars.ArrivalsShuttles, SetArrivals);
     }
 
@@ -103,7 +107,7 @@ public sealed class ArrivalsSystem : EntitySystem
     private void OnPlayerSpawn(PlayerSpawningEvent ev)
     {
         // Only works on latejoin even if enabled.
-        if (!_enabled || _ticker.RunLevel != GameRunLevel.InRound)
+        if (!Enabled || _ticker.RunLevel != GameRunLevel.InRound)
             return;
 
         var points = EntityQuery<SpawnPointComponent, TransformComponent>().ToList();
@@ -129,6 +133,11 @@ public sealed class ArrivalsSystem : EntitySystem
                 return;
             }
         }
+    }
+
+    private void OnShuttleStartup(EntityUid uid, ArrivalsShuttleComponent component, ComponentStartup args)
+    {
+        EnsureComp<PreventPilotComponent>(uid);
     }
 
     private void OnShuttleUnpaused(EntityUid uid, ArrivalsShuttleComponent component, ref EntityUnpausedEvent args)
@@ -194,7 +203,7 @@ public sealed class ArrivalsSystem : EntitySystem
     private void OnRoundStarting(RoundStartingEvent ev)
     {
         // Setup arrivals station
-        if (!_enabled)
+        if (!Enabled)
             return;
 
         SetupArrivalsStation();
@@ -225,9 +234,9 @@ public sealed class ArrivalsSystem : EntitySystem
 
     private void SetArrivals(bool obj)
     {
-        _enabled = obj;
+        Enabled = obj;
 
-        if (_enabled)
+        if (Enabled)
         {
             SetupArrivalsStation();
             var query = AllEntityQuery<StationArrivalsComponent>();
@@ -263,7 +272,7 @@ public sealed class ArrivalsSystem : EntitySystem
 
     private void OnArrivalsStartup(EntityUid uid, StationArrivalsComponent component, ComponentStartup args)
     {
-        if (!_enabled)
+        if (!Enabled)
             return;
 
         // If it's a latespawn station then this will fail but that's okey
