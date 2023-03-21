@@ -48,7 +48,7 @@ public sealed partial class BankATMMenu : FancyWindow
 
     private void OnAmountChanged(LineEdit.LineEditEventArgs args)
     {
-        if (Int32.TryParse(args.Text, out var amount))
+        if (int.TryParse(args.Text, out var amount))
         {
             Amount = amount;
         }    

@@ -1,5 +1,6 @@
 using Content.Client.VendingMachines.UI;
 using Content.Shared.VendingMachines;
+using Content.Shared.Bank.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using System.Linq;
@@ -23,6 +24,12 @@ namespace Content.Client.VendingMachines
 
             var entMan = IoCManager.Resolve<IEntityManager>();
             var vendingMachineSys = entMan.System<VendingMachineSystem>();
+            var priceMod = 1f;
+
+            if (entMan.TryGetComponent<MarketModifierComponent>(Owner.Owner, out var market))
+            {
+                priceMod = market.Mod;
+            }
 
             _cachedInventory = vendingMachineSys.GetAllInventory(Owner.Owner);
 
@@ -31,7 +38,7 @@ namespace Content.Client.VendingMachines
             _menu.OnClose += Close;
             _menu.OnItemSelected += OnItemSelected;
 
-            _menu.Populate(_cachedInventory);
+            _menu.Populate(_cachedInventory, priceMod);
 
             _menu.OpenCentered();
         }
@@ -43,9 +50,16 @@ namespace Content.Client.VendingMachines
             if (state is not VendingMachineInterfaceState newState)
                 return;
 
-            _cachedInventory = newState.Inventory;
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            var priceMod = 1f;
 
-            _menu?.Populate(_cachedInventory);
+            if (entMan.TryGetComponent<MarketModifierComponent>(Owner.Owner, out var market))
+            {
+                priceMod = market.Mod;
+            }
+            _cachedInventory = newState.Inventory;
+            _menu?.UpdateBalance(newState.Balance);
+            _menu?.Populate(_cachedInventory, priceMod);
         }
 
         private void OnItemSelected(ItemList.ItemListSelectedEventArgs args)
