@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.HotPotato;
 
@@ -14,4 +15,15 @@ public sealed class HotPotatoComponent : Component
     /// </summary>
     [DataField("canTransfer"), ViewVariables(VVAccess.ReadWrite)]
     public bool CanTransfer = true;
+}
+
+[Serializable, NetSerializable]
+public sealed class HotPotatoComponentState : ComponentState
+{
+    public bool CanTransfer;
+
+    public HotPotatoComponentState(bool canTransfer)
+    {
+        CanTransfer = canTransfer;
+    }
 }

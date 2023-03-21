@@ -13,7 +13,7 @@ public sealed class ActiveHotPotatoComponent : Component
     /// </summary>
     [DataField("effectCooldown"), ViewVariables(VVAccess.ReadWrite)]
     public float EffectCooldown = 0.3f;
-    
+
     /// <summary>
     /// Moment in time next effect will be spawned
     /// </summary>
