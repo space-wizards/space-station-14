@@ -23,7 +23,6 @@ namespace Content.Shared.Humanoid
         RFoot,
         LFoot,
         Handcuffs,
-        StencilMask,
         MaleStencilMask,
         FemaleStencilMask,
         UnisexStencilMask,

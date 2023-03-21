@@ -116,26 +116,6 @@ public sealed class ClientClothingSystem : ClothingSystem
                 else sprite.LayerSetVisible(layer, false);
             }
         }
-
-        // General Mask
-        if (sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out layer))
-        {
-            if (!_inventorySystem.TryGetSlotEntity(uid, "jumpsuit", out var suit, component) ||
-                !TryComp(suit, out ClothingComponent? clothing))
-            {
-                sprite.LayerSetVisible(layer, false);
-            }
-            else
-            {
-                sprite.LayerSetState(layer, clothing.Mask switch
-                {
-                    ClothingMask.NoMask => "none",
-                    ClothingMask.UniformTop => "top",
-                    _ => "full",
-                });
-                sprite.LayerSetVisible(layer, true);
-            }
-        }
     }
 
     private void OnGetVisuals(EntityUid uid, ClothingComponent item, GetEquipmentVisualsEvent args)
@@ -317,19 +297,6 @@ public sealed class ClientClothingSystem : ClothingSystem
                     sprite.LayerSetVisible(layer, true);
                 }
                 else sprite.LayerSetVisible(layer, false);
-            }
-
-            // Get general mask layer
-            if (sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out layer))
-            {
-                // Set layer to the mask
-                sprite.LayerSetState(layer, clothingComponent.Mask switch
-                {
-                    ClothingMask.NoMask => "none",
-                    ClothingMask.UniformTop => "top",
-                    _ => "full",
-                });
-                sprite.LayerSetVisible(layer, true);
             }
         }
 

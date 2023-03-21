@@ -110,11 +110,6 @@
         # sprite refactor when
         state: l_leg
       - shader: StencilMask
-        map: ["enum.HumanoidVisualLayers.StencilMask"]
-        sprite: Mobs/Customization/masking_helpers.rsi
-        state: full
-        visible: false
-      - shader: StencilMask
         map: ["enum.HumanoidVisualLayers.MaleStencilMask"]
         sprite: Mobs/Customization/masking_helpers.rsi
         state: male_full
@@ -346,11 +341,6 @@
         - shader: StencilClear
           sprite: Mobs/Species/Human/parts.rsi
           state: l_leg
-        - shader: StencilMask
-          map: ["enum.HumanoidVisualLayers.StencilMask"]
-          sprite: Mobs/Customization/masking_helpers.rsi
-          state: full
-          visible: false
         - shader: StencilMask
           map: ["enum.HumanoidVisualLayers.MaleStencilMask"]
           sprite: Mobs/Customization/masking_helpers.rsi
