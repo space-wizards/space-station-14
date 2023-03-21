@@ -97,6 +97,8 @@
     layers:
       - state: plushie_lizard
       - state: lizard-mark1
+      - state: lizard-frills1
+      - state: lizard-horns1
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/weh.ogg
@@ -109,7 +111,7 @@
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Items/Toys/weh.ogg
-  - type: RandomSprite
+  - type: RandomSprite #TODO: Make it ENUMS (EWW)
     available:
       - 0:
           plushie_lizard: Sixteen
@@ -127,6 +129,26 @@
           plushie_lizard: Sixteen
         1:
           lizard-mark4: Sixteen
+      - 0:
+          plushie_lizard: Sixteen
+        2:
+          lizard-frills1: Sixteen
+      - 0:
+          plushie_lizard: Sixteen
+        2:
+          lizard-frills2: Sixteen
+      - 0:
+          plushie_lizard: Sixteen
+        2:
+          lizard-frills3: Sixteen
+      - 0:
+          plushie_lizard: Sixteen
+        3:
+          lizard-horns1: ""
+      - 0:
+          plushie_lizard: Sixteen
+        3:
+          lizard-horns2: ""
 
 - type: entity
   parent: BasePlushie
