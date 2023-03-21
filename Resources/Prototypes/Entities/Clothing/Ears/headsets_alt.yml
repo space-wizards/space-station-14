@@ -70,7 +70,7 @@
     sprite: Clothing/Ears/Headsets/engineering.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/engineering.rsi
-
+ 
 - type: entity
   parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltMedical
@@ -123,7 +123,7 @@
   parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltSyndicate
   name: blood-red over-ear headset
-  description: An updated, modular syndicate headset that accepts up to 5 encryption keys.
+  description: An updated, modular syndicate intercom that fits over the head and takes encryption keys (there are 5 key slots.).
   components:
   - type: Headset
   - type: EncryptionKeyHolder
@@ -131,7 +131,7 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyNukie
+      - EncryptionKeySyndie
   - type: Sprite
     sprite: Clothing/Ears/Headsets/syndicate.rsi
   - type: Clothing

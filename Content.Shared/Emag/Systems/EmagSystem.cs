@@ -164,7 +164,7 @@ namespace Content.Shared.Emag.Systems
             var emaggedEvent = new GotEmaggedEvent(user);
             RaiseLocalEvent(target, ref emaggedEvent);
 
-            if (!emaggedEvent.Repeatable)
+            if (emaggedEvent.Handled && !emaggedEvent.Repeatable)
                 EnsureComp<EmaggedComponent>(target);
             return emaggedEvent.Handled;
         }

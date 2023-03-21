@@ -56,4 +56,10 @@ public sealed class GeneralStationRecord
     /// </summary>
     [ViewVariables]
     public int DisplayPriority;
+
+    /// <summary>
+    ///     Fingerprint of the person.
+    /// </summary>
+    [ViewVariables]
+    public string? Fingerprint;
 }

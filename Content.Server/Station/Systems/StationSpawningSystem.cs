@@ -1,4 +1,4 @@
-﻿using Content.Server.Access.Systems;
+using Content.Server.Access.Systems;
 using Content.Server.DetailExaminable;
 using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
@@ -105,9 +105,12 @@ public sealed class StationSpawningSystem : EntitySystem
             return jobEntity;
         }
 
-        var entity = EntityManager.SpawnEntity(
-            _prototypeManager.Index<SpeciesPrototype>(profile?.Species ?? HumanoidAppearanceSystem.DefaultSpecies).Prototype,
-            coordinates);
+        if (!_prototypeManager.TryIndex(profile?.Species ?? HumanoidAppearanceSystem.DefaultSpecies, out SpeciesPrototype? species))
+        {
+            species = _prototypeManager.Index<SpeciesPrototype>(HumanoidAppearanceSystem.DefaultSpecies);
+        }
+
+        var entity = EntityManager.SpawnEntity(species.Prototype, coordinates);
 
         if (job?.StartingGear != null)
         {
