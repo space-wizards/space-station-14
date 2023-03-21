@@ -76,57 +76,6 @@
   inventory: Transfer
 
 - type: polymorph
-  id: HumanMutationMorph
-  entity: MobHuman
-  forced: true
-  transferName: true
-  # I would like to use transferHumanoidAppearance, but it doesn't work the way you'd expect yet
-  # transferHumanoidAppearance: true
-  revertOnCrit: false
-  revertOnDeath: false
-  inventory: Transfer
-
-- type: polymorph
-  id: SlimePersonMutationMorph
-  entity: MobSlimePerson
-  forced: true
-  transferName: true
-  # transferHumanoidAppearance: true
-  revertOnCrit: false
-  revertOnDeath: false
-  inventory: Transfer
-
-- type: polymorph
-  id: ReptilianMutationMorph
-  entity: MobReptilian
-  forced: true
-  transferName: true
-  # transferHumanoidAppearance: true
-  revertOnCrit: false
-  revertOnDeath: false
-  inventory: Transfer
-
-- type: polymorph
-  id: SkeletonMutationMorph
-  entity: MobSkeletonPerson
-  forced: true
-  transferName: true
-  # transferHumanoidAppearance: true
-  revertOnCrit: false
-  revertOnDeath: false
-  inventory: Transfer
-
-- type: polymorph
-  id: MonkeyMutationMorph
-  entity: MobMonkey
-  forced: true
-  transferName: true
-  # transferHumanoidAppearance: true
-  revertOnCrit: false
-  revertOnDeath: false
-  inventory: Transfer
-
-- type: polymorph
   id: AMIVMorph
   entity: MobMonkey
   forced: true

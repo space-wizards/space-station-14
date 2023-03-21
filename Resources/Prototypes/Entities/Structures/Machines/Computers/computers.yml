@@ -159,6 +159,8 @@
     interfaces:
       - key: enum.IFFConsoleUiKey.Key
         type: IFFConsoleBoundUserInterface
+  - type: Computer
+    board: ComputerIFFCircuitboard
 
 - type: entity
   parent: ComputerIFF
@@ -177,6 +179,8 @@
     interfaces:
       - key: enum.IFFConsoleUiKey.Key
         type: IFFConsoleBoundUserInterface
+  - type: Computer
+    board: ComputerIFFSyndicateCircuitboard
 
 - type: entity
   parent: BaseComputer

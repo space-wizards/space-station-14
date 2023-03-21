@@ -1,63 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed not showing ban ids in a player's ban list., type: Fix}
-  id: 2690
-  time: '2022-11-21T19:04:24.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix some mapgrids not being sent to clients., type: Fix}
-  id: 2691
-  time: '2022-11-22T09:28:09.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix exception when shooting with your mouse outside of the window.,
-    type: Fix}
-  id: 2692
-  time: '2022-11-23T06:35:06.0000000+00:00'
-- author: Mervill
-  changes:
-  - {message: Items dropped onto a moving Conveyor by the disposal network move immediately,
-    type: Fix}
-  id: 2693
-  time: '2022-11-23T07:38:39.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Chameleon masks and helmets can hide your identity., type: Tweak}
-  id: 2694
-  time: '2022-11-24T02:02:55.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Maybe fix grid clipping., type: Fix}
-  id: 2695
-  time: '2022-11-24T05:54:21.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Omnitool can cut lattice and pry unpowered doors, type: Fix}
-  id: 2696
-  time: '2022-11-24T06:00:34.0000000+00:00'
-- author: JustinTrotter
-  changes:
-  - {message: Welder tanks explode when shot with projectile guns. (Also don't poke
-      them with a spear), type: Add}
-  id: 2697
-  time: '2022-11-24T06:01:51.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Map ambient lighting can now be controlled by admins via RGBLightController.,
-    type: Add}
-  id: 2698
-  time: '2022-11-24T07:31:17.0000000+00:00'
-- author: Vordenburg
-  changes:
-  - {message: Individual stations can now have specific emergency shuttles., type: Tweak}
-  id: 2699
-  time: '2022-11-24T18:28:04.0000000+00:00'
-- author: Checkraze
-  changes:
-  - {message: Added the Courser class evacuation shuttle., type: Add}
-  id: 2700
-  time: '2022-11-25T08:18:17.0000000+00:00'
 - author: Mervill
   changes:
   - {message: Recycler can no longer recycle things if it's unpowered., type: Fix}
@@ -2898,3 +2839,67 @@ Entries:
   - {message: all heads of staff now have flashes in their bag for self defence, type: Add}
   id: 3189
   time: '2023-03-15T04:37:50.0000000+00:00'
+- author: not-gavnaed
+  changes:
+  - {message: Added Station Records Computer on Aspid & Bagel, type: Add}
+  id: 3190
+  time: '2023-03-15T23:50:08.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Some forms of healing will no longer unexpectedly affect bleeding.,
+    type: Fix}
+  - {message: 'Bleeding and bloodloss damage is now more relevant, and you should
+      expect to encounter it in medical more often', type: Tweak}
+  id: 3191
+  time: '2023-03-16T22:27:28.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: 'Solar flare lost it''s ability to manipulate mechanical doors, curtains
+      and firelocks. Now it only affects autoclosing airlocks.', type: Fix}
+  id: 3192
+  time: '2023-03-18T10:57:38.0000000+00:00'
+- author: 778b
+  changes:
+  - {message: Added IFF console boards!, type: Add}
+  id: 3193
+  time: '2023-03-19T00:55:54.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: All entity storage now has a roughly 2.5x higher air capacity., type: Tweak}
+  - {message: Livestock crates now have ~10x higher air capacity compared to previously.,
+    type: Tweak}
+  id: 3194
+  time: '2023-03-19T00:56:39.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Voice mask can no longer be used from your pockets., type: Fix}
+  id: 3195
+  time: '2023-03-19T23:41:25.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'Added waist bags, get them from your nearest clothesmate vendor today!',
+    type: Add}
+  id: 3196
+  time: '2023-03-20T00:45:38.0000000+00:00'
+- author: robertGN
+  changes:
+  - {message: Foldable objects spawned folded now use the correct sprites, type: Fix}
+  id: 3197
+  time: '2023-03-20T00:46:38.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Cognizine works on animals that are already being controlled., type: Fix}
+  id: 3198
+  time: '2023-03-20T00:47:07.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: Nukeops now uses your selected character's appearance and species. Nukeop
+      names are still randomized., type: Tweak}
+  id: 3199
+  time: '2023-03-20T00:48:06.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Bames Jond from the Syndicate has added his exploding pen to the uplink.,
+    type: Add}
+  id: 3200
+  time: '2023-03-20T19:32:29.0000000+00:00'
