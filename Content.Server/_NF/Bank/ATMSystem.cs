@@ -32,25 +32,6 @@ public sealed partial class BankSystem
         SubscribeLocalEvent<BankATMComponent, EntRemovedFromContainerMessage>(OnCashSlotChanged);
     }
 
-    private void GetInsertedCashAmount(BankATMComponent component, out int amount)
-    {
-        amount = 0;
-        var cashEntity = component.CashSlot.ContainerSlot?.ContainedEntity;
-
-        if (!TryComp<StackComponent>(cashEntity, out var cashStack))
-        {
-            return;
-        }
-
-        if (cashStack.StackTypeId != component.CashType)
-        {
-            return;
-        }
-
-        amount = cashStack.Count;
-        return;
-    }
-
     private void OnWithdraw(EntityUid uid, BankATMComponent component, BankWithdrawMessage args)
     {
 
@@ -136,7 +117,8 @@ public sealed partial class BankSystem
         }
 
         // validate stack prototypes
-        if (!TryComp<StackComponent>(component.CashSlot.ContainerSlot.ContainedEntity, out var stackComponent) || stackComponent.StackTypeId == null)
+        if (!TryComp<StackComponent>(component.CashSlot.ContainerSlot.ContainedEntity, out var stackComponent) ||
+            stackComponent.StackTypeId == null)
         {
             _log.Info($"ATM cash slot contains bad stack prototype");
             ConsolePopup(args.Session, Loc.GetString("bank-atm-menu-wrong-cash"));
@@ -224,6 +206,21 @@ public sealed partial class BankSystem
 
         _uiSystem.SetUiState(bui,
             new BankATMMenuInterfaceState(bank.Balance, true, deposit));
+    }
+
+    private void GetInsertedCashAmount(BankATMComponent component, out int amount)
+    {
+        amount = 0;
+        var cashEntity = component.CashSlot.ContainerSlot?.ContainedEntity;
+
+        if (!TryComp<StackComponent>(cashEntity, out var cashStack) ||
+            cashStack.StackTypeId != component.CashType)
+        {
+            return;
+        }
+
+        amount = cashStack.Count;
+        return;
     }
 
     private void PlayDenySound(EntityUid uid, BankATMComponent component)

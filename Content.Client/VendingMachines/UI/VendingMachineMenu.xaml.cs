@@ -119,7 +119,7 @@ namespace Content.Client.VendingMachines.UI
         }
         public void UpdateBalance(int balance)
         {
-            BalanceLabel.Text = balance.ToString();
+            BalanceLabel.Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", balance.ToString()));
         }
 
         private void SetSizeAfterUpdate(int longestEntryLength)
