@@ -1,0 +1,6 @@
+- type: soundCollection
+  id: FootstepBoots
+  files:
+  - /Audio/Corvax/Effects/Footsteps/boots1.ogg
+  - /Audio/Corvax/Effects/Footsteps/boots2.ogg
+  - /Audio/Corvax/Effects/Footsteps/boots3.ogg
