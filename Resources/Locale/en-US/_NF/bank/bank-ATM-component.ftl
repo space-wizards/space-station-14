@@ -10,3 +10,4 @@ bank-insufficient-funds = Insufficient Funds
 bank-atm-menu-transaction-denied = Transaction Denied
 bank-atm-menu-deposit-successful = Deposit Accepted
 bank-atm-menu-withdraw-successful = Transfer Approved
+bank-atm-menu-wrong-cash = Wrong Currency Type

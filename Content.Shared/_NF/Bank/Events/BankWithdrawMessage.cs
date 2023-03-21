@@ -9,7 +9,8 @@ namespace Content.Shared.Bank.Events;
 
 public sealed class BankWithdrawMessage : BoundUserInterfaceMessage
 {
-    public int Amount; //amount to withdraw
+    //amount to withdraw. validation is happening server side but we still need client input from a text field.
+    public int Amount;
 
     public BankWithdrawMessage(int amount)
     {

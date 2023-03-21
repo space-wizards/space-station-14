@@ -1,7 +1,7 @@
-using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 using Content.Shared.Bank.Components;
 using Content.Shared.Containers.ItemSlots;
+using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Bank;
 
@@ -22,10 +22,12 @@ public sealed partial class SharedBankSystem : EntitySystem
         SubscribeLocalEvent<BankATMComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<BankATMComponent, ComponentRemove>(OnComponentRemove);
     }
+
     private void OnComponentInit(EntityUid uid, BankATMComponent component, ComponentInit args)
     {
         _itemSlotsSystem.AddItemSlot(uid, BankATMComponent.CashSlotSlotId, component.CashSlot);
     }
+
     private void OnComponentRemove(EntityUid uid, BankATMComponent component, ComponentRemove args)
     {
         _itemSlotsSystem.RemoveItemSlot(uid, component.CashSlot);
