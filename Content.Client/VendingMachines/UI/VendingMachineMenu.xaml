@@ -1,6 +1,18 @@
-﻿<DefaultWindow xmlns="https://spacestation14.io">
-    <ItemList Name="VendingContents"
-              SizeFlagsStretchRatio="8"
-              VerticalExpand="True">
-    </ItemList>
-</DefaultWindow>
+<controls:FancyWindow xmlns="https://spacestation14.io"
+            xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+            xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+            SetSize="360 380"
+            MinSize="300 300">
+    <BoxContainer Margin="6 2 6 12" Orientation="Vertical">
+        <BoxContainer Margin ="0 2 0 4" Orientation="Horizontal">
+            <Label Text="{Loc 'bank-atm-menu-balance-label'}"
+                StyleClasses="LabelKeyText" />
+            <Label Name="BalanceLabel"
+                Text="{Loc 'bank-atm-menu-no-bank'}" />
+        </BoxContainer>
+        <ItemList Name="VendingContents"
+            SizeFlagsStretchRatio="8"
+            VerticalExpand="True">
+        </ItemList>
+    </BoxContainer>
+</controls:FancyWindow>

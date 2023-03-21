@@ -104,12 +104,22 @@ namespace Content.Server.VendingMachines
 
         private void OnBoundUIOpened(EntityUid uid, VendingMachineComponent component, BoundUIOpenedEvent args)
         {
-            UpdateVendingMachineInterfaceState(component);
+            if (args.Session.AttachedEntity is not { Valid: true } player)
+                return;
+
+            var balance = 0;
+
+            if (TryComp<BankAccountComponent>(player, out var bank))
+            {
+                balance = bank.Balance;
+            }
+
+            UpdateVendingMachineInterfaceState(component, balance);
         }
 
-        private void UpdateVendingMachineInterfaceState(VendingMachineComponent component)
+        private void UpdateVendingMachineInterfaceState(VendingMachineComponent component, int balance)
         {
-            var state = new VendingMachineInterfaceState(GetAllInventory(component.Owner, component));
+            var state = new VendingMachineInterfaceState(GetAllInventory(component.Owner, component), balance);
 
             _userInterfaceSystem.TrySetUiState(component.Owner, VendingMachineUiKey.Key, state);
         }
@@ -240,7 +250,7 @@ namespace Content.Server.VendingMachines
         /// <param name="type">The type of inventory the item is from</param>
         /// <param name="itemId">The prototype ID of the item</param>
         /// <param name="throwItem">Whether the item should be thrown in a random direction after ejection</param>
-        public bool TryEjectVendorItem(EntityUid uid, InventoryType type, string itemId, bool throwItem, VendingMachineComponent? vendComponent = null)
+        public bool TryEjectVendorItem(EntityUid uid, InventoryType type, string itemId, bool throwItem, int balance, VendingMachineComponent? vendComponent = null)
         {
             if (!Resolve(uid, ref vendComponent))
                 return false;
@@ -277,7 +287,7 @@ namespace Content.Server.VendingMachines
             vendComponent.NextItemToEject = entry.ID;
             vendComponent.ThrowNextItem = throwItem;
             entry.Amount--;
-            UpdateVendingMachineInterfaceState(vendComponent);
+            UpdateVendingMachineInterfaceState(vendComponent, balance);
             TryUpdateVisualState(uid, vendComponent);
             _audioSystem.PlayPvs(vendComponent.SoundVend, vendComponent.Owner, AudioParams.Default.WithVolume(-2f));
             return true;
@@ -302,6 +312,15 @@ namespace Content.Server.VendingMachines
             }
 
             var price = _pricing.GetEstimatedPrice(proto);
+            // Somewhere deep in the shitcode of pricing, a hardcoded 20 dollar value exists for anything without
+            // a staticprice component for some god forsaken reason, and I cant find it or think of another way to
+            // get an accurate price from a prototype with no staticprice comp.
+            // this will undoubtably lead to vending machine exploits if I cant find wtf pricing system is doing.
+            // also stacks arent handled properly either f
+            if (price == 0)
+            {
+                price = 20;
+            }
 
             if (TryComp<MarketModifierComponent>(component.Owner, out var modifier))
             {
@@ -310,7 +329,7 @@ namespace Content.Server.VendingMachines
 
             var totalPrice = ((int) price);
 
-            if (price > bank.Balance)
+            if (totalPrice > bank.Balance)
             {
                 _popupSystem.PopupEntity(Loc.GetString("bank-insufficient-funds"), uid);
                 Deny(uid, component);
@@ -318,9 +337,10 @@ namespace Content.Server.VendingMachines
 
             if (IsAuthorized(uid, sender, component))
             {
-                if (TryEjectVendorItem(uid, type, itemId, component.CanShoot, component))
+                if (TryEjectVendorItem(uid, type, itemId, component.CanShoot, bank.Balance, component))
                 {
                     _bankSystem.TryBankWithdraw(sender, totalPrice);
+                    UpdateVendingMachineInterfaceState(component, bank.Balance);
                 }
             }
         }
@@ -385,7 +405,7 @@ namespace Content.Server.VendingMachines
                 EjectItem(vendComponent, forceEject);
             }
             else
-                TryEjectVendorItem(uid, item.Type, item.ID, throwItem, vendComponent);
+                TryEjectVendorItem(uid, item.Type, item.ID, throwItem, 0, vendComponent);
         }
 
         private void EjectItem(VendingMachineComponent vendComponent, bool forceEject = false)
@@ -477,7 +497,7 @@ namespace Content.Server.VendingMachines
 
             RestockInventoryFromPrototype(uid, vendComponent);
 
-            UpdateVendingMachineInterfaceState(vendComponent);
+            UpdateVendingMachineInterfaceState(vendComponent, 0);
             TryUpdateVisualState(uid, vendComponent);
         }
     }

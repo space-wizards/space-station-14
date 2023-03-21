@@ -58,7 +58,7 @@ namespace Content.Client.VendingMachines
                 priceMod = market.Mod;
             }
             _cachedInventory = newState.Inventory;
-
+            _menu?.UpdateBalance(newState.Balance);
             _menu?.Populate(_cachedInventory, priceMod);
         }
 
