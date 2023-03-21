@@ -1,8 +1,6 @@
-using System.Threading;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Coordinates.Helpers;
-using Content.Server.DoAfter;
 using Content.Server.Doors.Systems;
 using Content.Server.Magic.Events;
 using Content.Server.Weapons.Ranged.Systems;
@@ -43,7 +41,7 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly GunSystem _gunSystem = default!;
     [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;

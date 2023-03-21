@@ -1,7 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.DoAfter;
 using Content.Server.Ghost;
 using Content.Server.Light.Components;
 using Content.Server.MachineLinking.Events;
@@ -40,7 +39,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 

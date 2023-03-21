@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Server.Cargo.Systems;
-using Content.Server.DoAfter;
 using Content.Server.Wires;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
@@ -9,7 +8,6 @@ using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 
 namespace Content.Server.VendingMachines.Restock
 {
@@ -17,7 +15,7 @@ namespace Content.Server.VendingMachines.Restock
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly AudioSystem _audioSystem = default!;
         [Dependency] private readonly PricingSystem _pricingSystem = default!;

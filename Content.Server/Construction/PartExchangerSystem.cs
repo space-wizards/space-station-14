@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Server.Construction.Components;
-using Content.Server.DoAfter;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Wires;
@@ -17,7 +16,7 @@ namespace Content.Server.Construction;
 public sealed class PartExchangerSystem : EntitySystem
 {
     [Dependency] private readonly ConstructionSystem _construction = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;

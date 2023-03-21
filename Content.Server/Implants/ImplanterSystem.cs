@@ -1,9 +1,6 @@
-using System.Threading;
-using Content.Server.DoAfter;
 using Content.Server.Guardian;
 using Content.Server.Popups;
 using Content.Shared.DoAfter;
-using Content.Shared.Hands;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
@@ -18,7 +15,7 @@ namespace Content.Server.Implants;
 public sealed partial class ImplanterSystem : SharedImplanterSystem
 {
     [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
 
     public override void Initialize()

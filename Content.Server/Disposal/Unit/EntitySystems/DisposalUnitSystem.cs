@@ -4,7 +4,6 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Unit.Components;
-using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
@@ -42,7 +41,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly AppearanceSystem _appearance = default!;
         [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;

@@ -9,7 +9,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Content.Shared.Verbs;
 using Content.Server.Popups;
-using Content.Server.DoAfter;
 using Content.Shared.DoAfter;
 using Content.Shared.Internals;
 using Robust.Shared.Utility;
@@ -21,7 +20,7 @@ public sealed class InternalsSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly GasTankSystem _gasTank = default!;
     [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;

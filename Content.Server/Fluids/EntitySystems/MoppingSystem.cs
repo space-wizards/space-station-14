@@ -1,7 +1,5 @@
-using System.Linq;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.DoAfter;
 using Content.Server.Fluids.Components;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
@@ -20,7 +18,7 @@ namespace Content.Server.Fluids.EntitySystems;
 [UsedImplicitly]
 public sealed class MoppingSystem : SharedMoppingSystem
 {
-    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SpillableSystem _spillableSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;

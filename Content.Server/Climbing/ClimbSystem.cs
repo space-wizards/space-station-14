@@ -1,7 +1,5 @@
-using System.Diagnostics.Tracing;
 using Content.Server.Body.Systems;
 using Content.Server.Climbing.Components;
-using Content.Server.DoAfter;
 using Content.Server.Interaction;
 using Content.Server.Popups;
 using Content.Server.Stunnable;
@@ -37,7 +35,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly InteractionSystem _interactionSystem = default!;

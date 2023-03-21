@@ -1,7 +1,6 @@
 using Content.Server.Animals.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.DoAfter;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.DoAfter;
@@ -19,7 +18,7 @@ namespace Content.Server.Animals.Systems
     internal sealed class UdderSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public override void Initialize()

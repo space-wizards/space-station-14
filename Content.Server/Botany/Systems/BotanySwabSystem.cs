@@ -1,5 +1,4 @@
 using Content.Server.Botany.Components;
-using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
@@ -10,7 +9,7 @@ namespace Content.Server.Botany.Systems;
 
 public sealed class BotanySwabSystem : EntitySystem
 {
-    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly MutationSystem _mutationSystem = default!;
 

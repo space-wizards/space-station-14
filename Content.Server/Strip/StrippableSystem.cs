@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Server.DoAfter;
 using Content.Server.Ensnaring;
 using Content.Server.Hands.Components;
 using Content.Shared.CombatMode;
@@ -12,7 +11,6 @@ using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
-using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
@@ -30,7 +28,7 @@ namespace Content.Server.Strip
         [Dependency] private readonly SharedCuffableSystem _cuffable = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
-        [Dependency] private readonly DoAfterSystem _doAfter = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly EnsnareableSystem _ensnaring = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;

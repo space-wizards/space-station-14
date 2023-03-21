@@ -1,10 +1,6 @@
-using System.Threading;
 using Content.Server.Destructible;
-using Content.Server.DoAfter;
 using Content.Server.Gatherable.Components;
-using Content.Shared.Damage;
 using Content.Shared.DoAfter;
-using Content.Shared.Destructible;
 using Content.Shared.EntityList;
 using Content.Shared.Gatherable;
 using Content.Shared.Interaction;
@@ -18,9 +14,8 @@ public sealed class GatherableSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly DestructibleSystem _destructible = default!;
-    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
 

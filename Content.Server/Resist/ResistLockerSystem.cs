@@ -1,5 +1,3 @@
-using System.Threading;
-using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
@@ -8,13 +6,12 @@ using Content.Shared.Lock;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Content.Shared.Resist;
-using Robust.Shared.Containers;
 
 namespace Content.Server.Resist;
 
 public sealed class ResistLockerSystem : EntitySystem
 {
-    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly LockSystem _lockSystem = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;

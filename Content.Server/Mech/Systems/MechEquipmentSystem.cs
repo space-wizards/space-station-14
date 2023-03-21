@@ -1,9 +1,7 @@
-﻿using Content.Server.DoAfter;
-using Content.Server.Mech.Components;
+﻿using Content.Server.Mech.Components;
 using Content.Server.Popups;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
-using Content.Shared.Mech.Equipment;
 using Content.Shared.Mech.Equipment.Components;
 
 namespace Content.Server.Mech.Systems;
@@ -14,7 +12,7 @@ namespace Content.Server.Mech.Systems;
 public sealed class MechEquipmentSystem : EntitySystem
 {
     [Dependency] private readonly MechSystem _mech = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
 
     /// <inheritdoc/>

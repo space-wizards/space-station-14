@@ -1,4 +1,3 @@
-using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Audio;
@@ -23,7 +22,7 @@ namespace Content.Server.Guardian
     /// </summary>
     public sealed class GuardianSystem : EntitySystem
     {
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly DamageableSystem _damageSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actionSystem = default!;

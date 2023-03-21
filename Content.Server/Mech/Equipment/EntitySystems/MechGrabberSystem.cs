@@ -1,11 +1,9 @@
 ﻿using System.Linq;
-using Content.Server.DoAfter;
 using Content.Server.Interaction;
 using Content.Server.Mech.Components;
 using Content.Server.Mech.Equipment.Components;
 using Content.Server.Mech.Systems;
 using Content.Shared.DoAfter;
-using Content.Shared.Construction.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Mech;
 using Content.Shared.Mech.Equipment.Components;
@@ -26,7 +24,7 @@ public sealed class MechGrabberSystem : EntitySystem
 {
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly MechSystem _mech = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly InteractionSystem _interaction = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly TransformSystem _transform = default!;

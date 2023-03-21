@@ -1,7 +1,5 @@
-using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Systems;
-using Content.Server.DoAfter;
 using Content.Server.Medical.Components;
 using Content.Server.Stack;
 using Content.Shared.Audio;
@@ -26,7 +24,7 @@ public sealed class HealingSystem : EntitySystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly StackSystem _stacks = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;

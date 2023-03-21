@@ -1,7 +1,6 @@
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
-using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Shared.DoAfter;
 using Content.Shared.Forensics;
@@ -14,7 +13,7 @@ namespace Content.Server.Forensics
     /// </summary>
     public sealed class ForensicPadSystem : EntitySystem
     {
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 

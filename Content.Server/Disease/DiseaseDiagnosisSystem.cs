@@ -3,7 +3,6 @@ using Content.Shared.Disease;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Examine;
-using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Server.Hands.Components;
 using Content.Server.Nutrition.EntitySystems;
@@ -19,7 +18,6 @@ using Content.Server.Station.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Swab;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Disease
 {
@@ -28,7 +26,7 @@ namespace Content.Server.Disease
     /// </summary>
     public sealed class DiseaseDiagnosisSystem : EntitySystem
     {
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;

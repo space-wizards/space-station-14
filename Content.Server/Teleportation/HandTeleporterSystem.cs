@@ -1,9 +1,7 @@
 using Content.Server.Administration.Logs;
-using Content.Server.DoAfter;
 using Content.Shared.DoAfter;
 using Content.Shared.Database;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Teleportation;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Teleportation.Systems;
 using Robust.Server.GameObjects;
@@ -18,7 +16,7 @@ public sealed class HandTeleporterSystem : EntitySystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly LinkedEntitySystem _link = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly DoAfterSystem _doafter = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doafter = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

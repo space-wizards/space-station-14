@@ -11,7 +11,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Server.DoAfter;
 using Content.Server.Interaction;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Item;
@@ -44,7 +43,7 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IAdminManager _admin = default!;
         [Dependency] private readonly ContainerSystem _containerSystem = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
         [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
         [Dependency] private readonly InteractionSystem _interactionSystem = default!;

@@ -2,7 +2,6 @@ using Content.Server.AlertLevel;
 using Content.Server.Audio;
 using Content.Server.Chat.Systems;
 using Content.Server.Coordinates.Helpers;
-using Content.Server.DoAfter;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
@@ -28,7 +27,7 @@ namespace Content.Server.Nuke
         [Dependency] private readonly StationSystem _stationSystem = default!;
         [Dependency] private readonly ServerGlobalSoundSystem _soundSystem = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;

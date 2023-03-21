@@ -1,6 +1,5 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.DoAfter;
 using Content.Server.Fluids.Components;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.Components;
@@ -30,7 +29,7 @@ public sealed class SpillableSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger= default!;
-    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
 
     public override void Initialize()
     {

@@ -1,4 +1,3 @@
-using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Server.Sticky.Components;
 using Content.Server.Sticky.Events;
@@ -8,16 +7,14 @@ using Content.Shared.Interaction;
 using Content.Shared.Sticky;
 using Content.Shared.Sticky.Components;
 using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Sticky.Systems;
 
 public sealed class StickySystem : EntitySystem
 {
-    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;

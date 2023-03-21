@@ -1,5 +1,4 @@
 ﻿using Content.Server.Body.Systems;
-using Content.Server.DoAfter;
 using Content.Server.Kitchen.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Interaction;
@@ -22,7 +21,7 @@ public sealed class SharpSystem : EntitySystem
 {
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly SharedDestructibleSystem _destructibleSystem = default!;
-    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly ContainerSystem _containerSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;

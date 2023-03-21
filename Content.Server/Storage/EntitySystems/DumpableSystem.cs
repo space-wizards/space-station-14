@@ -1,11 +1,9 @@
-using System.Threading;
 using Content.Shared.Interaction;
 using Content.Server.Storage.Components;
 using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.Disposal.Unit.EntitySystems;
-using Content.Server.DoAfter;
 using Content.Shared.DoAfter;
 using Content.Shared.Placeable;
 using Content.Shared.Storage;
@@ -17,7 +15,7 @@ namespace Content.Server.Storage.EntitySystems
 {
     public sealed class DumpableSystem : EntitySystem
     {
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly DisposalUnitSystem _disposalUnitSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;

@@ -1,7 +1,6 @@
 using Content.Server.Body.Systems;
 using Content.Server.Chat.Systems;
 using Content.Server.Disease.Components;
-using Content.Server.DoAfter;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Clothing.Components;
@@ -37,7 +36,7 @@ namespace Content.Server.Disease
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ISerializationManager _serializationManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;

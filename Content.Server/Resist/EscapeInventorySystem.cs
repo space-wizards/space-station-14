@@ -1,5 +1,3 @@
-using System.Threading;
-using Content.Server.DoAfter;
 using Content.Server.Contests;
 using Robust.Shared.Containers;
 using Content.Server.Popups;
@@ -16,7 +14,7 @@ namespace Content.Server.Resist;
 
 public sealed class EscapeInventorySystem : EntitySystem
 {
-    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;

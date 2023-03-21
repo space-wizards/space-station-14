@@ -1,5 +1,4 @@
 using Content.Server.Administration.Logs;
-using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Server.UserInterface;
 using Content.Shared.AirlockPainter;
@@ -10,7 +9,6 @@ using Content.Shared.Doors.Components;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 
 namespace Content.Server.AirlockPainter
 {
@@ -22,7 +20,7 @@ namespace Content.Server.AirlockPainter
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;

@@ -1,11 +1,9 @@
 using Content.Server.Body.Systems;
-using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Chemistry.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
-using System.Threading;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
@@ -33,7 +31,7 @@ namespace Content.Server.Dragon
         [Dependency] private readonly ITileDefinitionManager _tileDef = default!;
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;

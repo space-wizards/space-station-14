@@ -1,5 +1,4 @@
 using Content.Server.Administration.Logs;
-using Content.Server.DoAfter;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
 using Content.Shared.Database;
@@ -25,7 +24,7 @@ namespace Content.Server.Kitchen.EntitySystems
     public sealed class KitchenSpikeSystem : SharedKitchenSpikeSystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly DoAfterSystem _doAfter = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
         [Dependency] private readonly IAdminLogManager _logger = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;

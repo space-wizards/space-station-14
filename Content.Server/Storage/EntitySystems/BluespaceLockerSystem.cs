@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Server.DoAfter;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Mind.Components;
 using Content.Server.Resist;
@@ -24,7 +23,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly WeldableSystem _weldableSystem = default!;
     [Dependency] private readonly LockSystem _lockSystem = default!;
-    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
 
     public override void Initialize()

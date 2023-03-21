@@ -3,7 +3,6 @@ using System.Text; // todo: remove this stinky LINQy
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Timing;
-using Content.Server.DoAfter;
 using Content.Server.Paper;
 using Content.Server.Popups;
 using Content.Server.UserInterface;
@@ -18,7 +17,7 @@ namespace Content.Server.Forensics
     public sealed class ForensicScannerSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly PaperSystem _paperSystem = default!;

@@ -1,5 +1,3 @@
-using System.Threading;
-using Content.Server.DoAfter;
 using Content.Shared.Alert;
 using Content.Shared.DoAfter;
 using Content.Shared.Ensnaring;
@@ -12,7 +10,7 @@ namespace Content.Server.Ensnaring;
 
 public sealed partial class EnsnareableSystem
 {
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
 
     public void InitializeEnsnaring()

@@ -1,5 +1,4 @@
 using Content.Shared.Hands.Components;
-using Robust.Shared.IoC;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.DoAfter;

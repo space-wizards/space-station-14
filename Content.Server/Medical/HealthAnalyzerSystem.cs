@@ -1,4 +1,3 @@
-using Content.Server.DoAfter;
 using Content.Server.Medical.Components;
 using Content.Server.Disease;
 using Content.Server.Popups;
@@ -17,7 +16,7 @@ namespace Content.Server.Medical
     {
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly DiseaseSystem _disease = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 

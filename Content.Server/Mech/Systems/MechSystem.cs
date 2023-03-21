@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.DoAfter;
 using Content.Server.Mech.Components;
 using Content.Server.Power.Components;
 using Content.Server.Wires;
@@ -27,7 +26,7 @@ public sealed class MechSystem : SharedMechSystem
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;

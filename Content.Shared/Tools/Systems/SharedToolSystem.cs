@@ -26,8 +26,8 @@ public abstract partial class SharedToolSystem : EntitySystem
         var ev = args.WrappedEvent;
         ev.DoAfter = args.DoAfter;
 
-        if (args.OriginalTarget != null)
-            RaiseLocalEvent(args.OriginalTarget.Value, ev);
+        if (args.Used != null)
+            RaiseLocalEvent(args.Used.Value, ev);
         else
             RaiseLocalEvent(ev);
     }

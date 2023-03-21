@@ -1,4 +1,3 @@
-using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
 using Content.Server.Wieldable.Components;
@@ -20,7 +19,7 @@ namespace Content.Server.Wieldable
 {
     public sealed class WieldableSystem : EntitySystem
     {
-        [Dependency] private readonly DoAfterSystem _doAfter = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
         [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedItemSystem _itemSystem = default!;

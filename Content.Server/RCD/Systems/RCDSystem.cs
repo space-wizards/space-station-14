@@ -1,6 +1,4 @@
-using System.Threading;
 using Content.Server.Administration.Logs;
-using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Server.RCD.Components;
 using Content.Shared.Database;
@@ -23,7 +21,7 @@ namespace Content.Server.RCD.Systems
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;

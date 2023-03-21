@@ -1,5 +1,4 @@
 using Content.Server.Body.Components;
-using Content.Server.DoAfter;
 using Content.Server.Medical.Components;
 using Content.Server.Popups;
 using Content.Shared.Actions;
@@ -19,7 +18,7 @@ namespace Content.Server.Medical
     public sealed class StethoscopeSystem : EntitySystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
         public override void Initialize()

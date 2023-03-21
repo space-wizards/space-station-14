@@ -1,9 +1,6 @@
 using System;
-using System.Reflection;
 using System.Threading.Tasks;
-using Content.Server.DoAfter;
 using Content.Shared.DoAfter;
-using Content.Shared.IoC;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -84,7 +81,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
             await server.WaitIdleAsync();
 
             var entityManager = server.ResolveDependency<IEntityManager>();
-            var doAfterSystem = entityManager.EntitySysManager.GetEntitySystem<DoAfterSystem>();
+            var doAfterSystem = entityManager.EntitySysManager.GetEntitySystem<SharedDoAfterSystem>();
             var data = new TestDoAfterEvent();
 
             // That it finishes successfully
@@ -109,7 +106,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
             var entityManager = server.ResolveDependency<IEntityManager>();
-            var doAfterSystem = entityManager.EntitySysManager.GetEntitySystem<DoAfterSystem>();
+            var doAfterSystem = entityManager.EntitySysManager.GetEntitySystem<SharedDoAfterSystem>();
             DoAfterId? id = default;
             var ev = new TestDoAfterEvent();
 
