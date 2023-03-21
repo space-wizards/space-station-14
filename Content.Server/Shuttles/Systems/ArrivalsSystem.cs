@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
 using Content.Server.Shuttles.Components;
+using Content.Server.Shuttles.Events;
 using Content.Server.Spawners.Components;
 using Content.Server.Spawners.EntitySystems;
 using Content.Server.Station.Components;
@@ -28,6 +29,7 @@ public sealed class ArrivalsSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly MapLoaderSystem _loader = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ShuttleSystem _shuttles = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
     [Dependency] private readonly StationSystem _station = default!;
@@ -39,12 +41,12 @@ public sealed class ArrivalsSystem : EntitySystem
 
     // TODO: CVar
     /// <summary>
-    /// Also need to factor in FTL time.
+    /// Also need to factor in FTL time. If it's lower than it just double-cycles the cooldown
     /// </summary>
     private TimeSpan TransferCooldown = TimeSpan.FromSeconds(90);
 
     // TODO: CVar
-    private ResourcePath _arrivalsStation = new("/Maps/centcomm.yml");
+    private ResourcePath _arrivalsStation = new("/Maps/Misc/terminal.yml");
 
     public override void Initialize()
     {
@@ -55,10 +57,42 @@ public sealed class ArrivalsSystem : EntitySystem
         SubscribeLocalEvent<ArrivalsShuttleComponent, EntityUnpausedEvent>(OnShuttleUnpaused);
         SubscribeLocalEvent<StationInitializedEvent>(OnStationInit);
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStarting);
+        SubscribeLocalEvent<ArrivalsShuttleComponent, FTLStartedEvent>(OnArrivalsFTL);
 
         // Don't invoke immediately as it will get set in the natural course of things.
         _enabled = _cfgManager.GetCVar(CCVars.ArrivalsShuttles);
         _cfgManager.OnValueChanged(CCVars.ArrivalsShuttles, SetArrivals);
+    }
+
+    private void OnArrivalsFTL(EntityUid uid, ArrivalsShuttleComponent component, ref FTLStartedEvent args)
+    {
+        // Anyone already clocked in yeet them off the shuttle.
+        if (args.FromMapUid != null)
+        {
+            var clockedQuery = AllEntityQuery<ClockedInComponent, TransformComponent>();
+
+            // Clock them in when they FTL
+            while (clockedQuery.MoveNext(out var cUid, out _, out var xform))
+            {
+                if (xform.GridUid != uid)
+                    continue;
+
+                var rotation = xform.LocalRotation;
+                _transform.SetCoordinates(cUid, new EntityCoordinates(args.FromMapUid.Value, args.FTLFrom.Transform(xform.LocalPosition)));
+                _transform.SetWorldRotation(cUid, args.FromRotation + rotation);
+            }
+        }
+
+        var pendingQuery = AllEntityQuery<PendingClockInComponent, TransformComponent>();
+
+        // Clock them in when they FTL
+        while (pendingQuery.MoveNext(out var pUid, out _, out var xform))
+        {
+            if (xform.GridUid != uid)
+                continue;
+
+            EnsureComp<ClockedInComponent>(pUid);
+        }
     }
 
     private void OnStationInit(StationInitializedEvent ev)
@@ -91,8 +125,8 @@ public sealed class ArrivalsSystem : EntitySystem
                     ev.HumanoidCharacterProfile,
                     ev.Station);
 
+                EnsureComp<PendingClockInComponent>(ev.SpawnResult.Value);
                 return;
-
             }
         }
     }

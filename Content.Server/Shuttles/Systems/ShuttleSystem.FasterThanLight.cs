@@ -222,6 +222,9 @@ public sealed partial class ShuttleSystem
                     DoTheDinosaur(xform);
 
                     comp.State = FTLState.Travelling;
+                    var fromMapUid = xform.MapUid;
+                    var fromMatrix = _transform.GetWorldMatrix(xform);
+                    var fromRotation = _transform.GetWorldRotation(xform);
 
                     var width = Comp<MapGridComponent>(uid).LocalAABB.Width;
                     xform.Coordinates = new EntityCoordinates(_mapManager.GetMapEntityId(_hyperSpaceMap!.Value), new Vector2(_index + width / 2f, 0f));
@@ -246,6 +249,8 @@ public sealed partial class ShuttleSystem
 
                     SetDockBolts(uid, true);
                     _console.RefreshShuttleConsoles(uid);
+                    var ev = new FTLStartedEvent(fromMapUid, fromMatrix, fromRotation);
+                    RaiseLocalEvent(uid, ref ev);
                     break;
                 // Arriving, play effects
                 case FTLState.Travelling:

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Server.GameTicking;
+using Content.Server.Shuttles.Components;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Systems;
 using Robust.Shared.Random;
@@ -40,6 +41,7 @@ public sealed class SpawnPointSystem : EntitySystem
                     args.HumanoidCharacterProfile,
                     args.Station);
 
+                EnsureComp<ClockedInComponent>(args.SpawnResult.Value);
                 return;
             }
 
@@ -51,6 +53,7 @@ public sealed class SpawnPointSystem : EntitySystem
                     args.HumanoidCharacterProfile,
                     args.Station);
 
+                EnsureComp<ClockedInComponent>(args.SpawnResult.Value);
                 return;
             }
         }
@@ -66,6 +69,7 @@ public sealed class SpawnPointSystem : EntitySystem
                 args.HumanoidCharacterProfile,
                 args.Station);
 
+            EnsureComp<ClockedInComponent>(args.SpawnResult.Value);
             return;
         }
 
