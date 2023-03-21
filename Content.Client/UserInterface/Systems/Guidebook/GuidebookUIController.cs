@@ -118,8 +118,7 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
     /// <summary>
     ///     Opens the guidebook.
     /// </summary>
-    /// <param name="guides">What guides should be shown. If not specified, this will instead raise a <see
-    /// cref="GetGuidesEvent"/> and automatically include all guide prototypes.</param>
+    /// <param name="guides">What guides should be shown. If not specified, this will instead list all the entries</param>
     /// <param name="rootEntries">A list of guides that should form the base of the table of contents. If not specified,
     /// this will automatically simply be a list of all guides that have no parent.</param>
     /// <param name="forceRoot">This forces a singular guide to contain all other guides. This guide will
@@ -149,13 +148,8 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
 
         if (guides == null)
         {
-            var ev = new GetGuidesEvent()
-            {
-                Guides = _prototypeManager.EnumeratePrototypes<GuideEntryPrototype>().ToDictionary(x => x.ID, x => (GuideEntry) x)
-            };
-
-            EntityManager.EventBus.RaiseEvent(EventSource.Local, ev);
-            guides = ev.Guides;
+            guides = _prototypeManager.EnumeratePrototypes<GuideEntryPrototype>()
+                .ToDictionary(x => x.ID, x => (GuideEntry) x);
         }
         else if (includeChildren)
         {

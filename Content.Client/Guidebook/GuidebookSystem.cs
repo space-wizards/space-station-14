@@ -145,8 +145,3 @@ public sealed class GuidebookSystem : EntitySystem
         RaiseLocalEvent(activated, activateMsg, true);
     }
 }
-
-public sealed class GetGuidesEvent : EntityEventArgs
-{
-    public Dictionary<string, GuideEntry> Guides { get; init; } = new();
-}
