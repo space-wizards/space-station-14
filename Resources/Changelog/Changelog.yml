@@ -1,11 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Fixed missing text regarding voice triggers., type: Fix}
-  id: 2704
-  time: '2022-11-27T08:01:17.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: 'Microwave and radiation triggers have been combined, to reduce confusion.',
     type: Fix}
   - {message: Item artifacts can now be sprayed properly., type: Fix}
@@ -2901,3 +2896,8 @@ Entries:
   - {message: The looping sound from the torch has been removed., type: Remove}
   id: 3203
   time: '2023-03-22T04:20:21.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix NPC faction cache not refreshing correctly., type: Fix}
+  id: 3204
+  time: '2023-03-22T04:58:23.0000000+00:00'
