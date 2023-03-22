@@ -167,8 +167,10 @@ public sealed class BloodstreamSystem : EntitySystem
         var totalFloat = total.Float();
         TryModifyBleedAmount(uid, totalFloat, component);
 
-        // Critical hit. Causes target to lose blood, using the bleed rate modifier of the weapon, currently divided by 5
-        // The crit chance is currently the bleed rate modifier divided by 50.
+        /// <summary>
+        ///     Critical hit. Causes target to lose blood, using the bleed rate modifier of the weapon, currently divided by 5
+        ///     The crit chance is currently the bleed rate modifier divided by 50.
+        /// </summary>
         var prob = Math.Clamp(totalFloat / 50, 0, 1);
         var healPopupProb = Math.Clamp(Math.Abs(totalFloat) / 25, 0, 1);
         if (totalFloat > 0 && _robustRandom.Prob(prob))
@@ -189,8 +191,9 @@ public sealed class BloodstreamSystem : EntitySystem
                 uid, PopupType.Medium);
         }
     }
-
-    // Shows text on health examine, based on bleed rate and blood level.
+    /// <summary>
+    ///     Shows text on health examine, based on bleed rate and blood level.
+    /// </summary>
     private void OnHealthBeingExamined(EntityUid uid, BloodstreamComponent component, HealthBeingExaminedEvent args)
     {
         // Shows profusely bleeding at half the max bleed rate.
