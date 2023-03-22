@@ -69,6 +69,8 @@ namespace Content.Server.Physics.Controllers
             foreach (var mover in EntityQuery<InputMoverComponent>(true))
             {
                 var uid = mover.Owner;
+                EntityUid physicsUid = uid;
+
                 if (relayQuery.HasComponent(uid))
                     continue;
 
@@ -87,13 +89,15 @@ namespace Content.Server.Physics.Controllers
                     {
                         continue;
                     }
+
+                    physicsUid = xform.ParentUid;
                 }
                 else if (!bodyQuery.TryGetComponent(uid, out body))
                 {
                     continue;
                 }
 
-                HandleMobMovement(uid, mover, body, xformMover, frameTime, xformQuery, moverQuery, relayTargetQuery);
+                HandleMobMovement(uid, mover, physicsUid, body, xformMover, frameTime, xformQuery, moverQuery, relayTargetQuery);
             }
 
             HandleShuttleMovement(frameTime);
