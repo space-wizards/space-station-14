@@ -1,15 +1,4 @@
 Entries:
-- author: Checkraze
-  changes:
-  - {message: Added the Courser class evacuation shuttle., type: Add}
-  id: 2700
-  time: '2022-11-25T08:18:17.0000000+00:00'
-- author: Mervill
-  changes:
-  - {message: Recycler can no longer recycle things if it's unpowered., type: Fix}
-  - {message: Fix conveyor assemblies being un-interactable after deconstruct, type: Fix}
-  id: 2701
-  time: '2022-11-25T09:00:41.0000000+00:00'
 - author: Gaxeer
   changes:
   - {message: add missing flame to cowelder, type: Fix}
@@ -2902,3 +2891,14 @@ Entries:
       names are still randomized., type: Tweak}
   id: 3199
   time: '2023-03-20T00:48:06.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Bames Jond from the Syndicate has added his exploding pen to the uplink.,
+    type: Add}
+  id: 3200
+  time: '2023-03-20T19:32:29.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix melee arcs showing up in the context menu., type: Fix}
+  id: 3201
+  time: '2023-03-22T02:34:23.0000000+00:00'
