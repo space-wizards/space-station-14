@@ -161,11 +161,14 @@ public sealed class BloodstreamSystem : EntitySystem
         if (bloodloss.Empty)
             return;
 
+        // Does the calculation of how much bleed rate should be added/removed, then applies it
         var oldBleedAmount = component.BleedAmount;
         var total = bloodloss.Total;
         var totalFloat = total.Float();
         TryModifyBleedAmount(uid, totalFloat, component);
 
+        // Critical hit. Causes target to lose blood, using the bleed rate modifier of the weapon, currently divided by 5
+        // The crit chance is currently the bleed rate modifier divided by 50.
         var prob = Math.Clamp(totalFloat / 50, 0, 1);
         var healPopupProb = Math.Clamp(Math.Abs(totalFloat) / 25, 0, 1);
         if (totalFloat > 0 && _robustRandom.Prob(prob))
@@ -173,6 +176,8 @@ public sealed class BloodstreamSystem : EntitySystem
             TryModifyBloodLevel(uid, (-total) / 5, component);
             _audio.PlayPvs(component.InstantBloodSound, uid);
         }
+
+        // Heat damage will always cauterize, this message simply has a chance of showing up as feedback to avoid spam.
         else if (totalFloat < 0 && oldBleedAmount > 0 && _robustRandom.Prob(healPopupProb))
         {
             // Magically, this damage has healed some bleeding, likely
