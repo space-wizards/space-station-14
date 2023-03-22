@@ -78,3 +78,45 @@
     quickEquip: false
     slots:
     - back
+
+- type: entity
+  name: honk hammer
+  parent: BaseItem
+  id: HonkHammer
+  description: A hammer used to stun non believers.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/honk_hammer.rsi
+    netsync: false
+    layers:
+    - state: hammer_off
+      map: [ "enum.ToggleVisuals.Layer" ]
+  - type: Stunbaton
+    energyPerUse: 100
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 5
+    bluntStaminaDamageFactor: 2.0
+    angle: 60
+    animation: WeaponArcSlash
+  - type: StaminaDamageOnHit
+    damage: 55
+  - type: Battery
+    maxCharge: 1500
+    startingCharge: 1500
+  - type: ItemCooldown
+  - type: Item
+    heldPrefix: off
+    size: 20
+  - type: DisarmMalus
+    malus: 0.225
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+     enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: {state: hammer_on}
+          False: {state: hammer_off}
+  - type: StaticPrice
+    price: 150

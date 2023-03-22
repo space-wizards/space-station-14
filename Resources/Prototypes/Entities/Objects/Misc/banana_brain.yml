@@ -1,0 +1,27 @@
+- type: entity
+  parent: BaseItem
+  id: BananaBrain
+  name: banana brain
+  description: The warped brain of a cluwne beast.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - banana
+  - type: Food
+  - type: Item
+    size: 5
+  - type: CluwneBrain
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: JuiceBanana
+          Quantity: 2
+  - type: Sprite
+    sprite: Objects/Misc/bananabrain.rsi
+    state: brain
