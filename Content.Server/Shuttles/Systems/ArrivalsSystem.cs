@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Administration;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
@@ -8,12 +9,14 @@ using Content.Server.Spawners.Components;
 using Content.Server.Spawners.EntitySystems;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Spawners.Components;
 using Content.Shared.Tiles;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
+using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -27,6 +30,7 @@ namespace Content.Server.Shuttles.Systems;
 public sealed class ArrivalsSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _cfgManager = default!;
+    [Dependency] private readonly IConsoleHost _console = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -41,15 +45,6 @@ public sealed class ArrivalsSystem : EntitySystem
     /// If enabled then spawns players on an alternate map so they can take a shuttle to the station.
     /// </summary>
     public bool Enabled { get; private set; }
-
-    // TODO: CVar
-    /// <summary>
-    /// Also need to factor in FTL time. If it's lower than it just double-cycles the cooldown
-    /// </summary>
-    private TimeSpan TransferCooldown = TimeSpan.FromSeconds(60);
-
-    // TODO: CVar
-    private ResourcePath _arrivalsStation = new("/Maps/Misc/terminal.yml");
 
     public override void Initialize()
     {
@@ -66,12 +61,88 @@ public sealed class ArrivalsSystem : EntitySystem
         // Don't invoke immediately as it will get set in the natural course of things.
         Enabled = _cfgManager.GetCVar(CCVars.ArrivalsShuttles);
         _cfgManager.OnValueChanged(CCVars.ArrivalsShuttles, SetArrivals);
+
+        // Command so admins can set these for funsies
+        _console.RegisterCommand("arrivals", ArrivalsCommand, ArrivalsCompletion);
+    }
+
+    private CompletionResult ArrivalsCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length != 1)
+            return CompletionResult.Empty;
+
+        return new CompletionResult(new CompletionOption[]
+        {
+            // Enables and disable are separate comms in case you don't want to accidentally toggle it, compared to
+            // returns which doesn't have an immediate effect
+            new("enable", Loc.GetString("cmd-arrivals-enable-hint")),
+            new("disable", Loc.GetString("cmd-arrivals-disable-hint")),
+            new("returns", Loc.GetString("cmd-arrivals-returns-hint")),
+            new ("force", Loc.GetString("cmd-arrivals-force-hint"))
+        }, "Option");
+    }
+
+    [AdminCommand(AdminFlags.Fun)]
+    private void ArrivalsCommand(IConsoleShell shell, string argstr, string[] args)
+    {
+        if (args.Length != 1)
+        {
+            shell.WriteError(Loc.GetString("cmd-arrivals-invalid"));
+            return;
+        }
+
+        switch (args[0])
+        {
+            case "enable":
+                _cfgManager.SetCVar(CCVars.ArrivalsShuttles, true);
+                break;
+            case "disable":
+                _cfgManager.SetCVar(CCVars.ArrivalsShuttles, false);
+                break;
+            case "returns":
+                var existing = _cfgManager.GetCVar(CCVars.ArrivalsReturns);
+                _cfgManager.SetCVar(CCVars.ArrivalsReturns, !existing);
+                shell.WriteLine(Loc.GetString("cmd-arrivals-returns", ("value", !existing)));
+                break;
+            case "force":
+                var query = AllEntityQuery<PendingClockInComponent, TransformComponent>();
+                var spawnPoints = EntityQuery<SpawnPointComponent, TransformComponent>().ToList();
+
+                TryGetArrivals(out var arrivalsUid);
+
+                while (query.MoveNext(out var uid, out _, out var pendingXform))
+                {
+                    _random.Shuffle(spawnPoints);
+
+                    foreach (var (point, xform) in spawnPoints)
+                    {
+                        if (point.SpawnType != SpawnPointType.LateJoin || xform.GridUid == arrivalsUid)
+                            continue;
+
+                        _transform.SetCoordinates(uid, pendingXform, xform.Coordinates);
+                        break;
+                    }
+
+                    RemCompDeferred<PendingClockInComponent>(uid);
+                    shell.WriteLine(Loc.GetString("cmd-arrivals-forced", ("uid", ToPrettyString(uid))));
+                }
+                break;
+            default:
+                shell.WriteError(Loc.GetString($"cmd-arrivals-invalid"));
+                break;
+        }
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _cfgManager.UnsubValueChanged(CCVars.ArrivalsShuttles, SetArrivals);
     }
 
     private void OnArrivalsFTL(EntityUid uid, ArrivalsShuttleComponent component, ref FTLStartedEvent args)
     {
         // Anyone already clocked in yeet them off the shuttle.
-        if (args.FromMapUid != null)
+        if (!_cfgManager.GetCVar(CCVars.ArrivalsReturns) && args.FromMapUid != null)
         {
             var clockedQuery = AllEntityQuery<ClockedInComponent, TransformComponent>();
 
@@ -195,7 +266,7 @@ public sealed class ArrivalsSystem : EntitySystem
                         _shuttles.FTLTravel(shuttle, targetGrid.Value, dock: true);
                 }
 
-                comp.NextTransfer += TransferCooldown;
+                comp.NextTransfer += TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.ArrivalsCooldown));
             }
         }
     }
@@ -213,7 +284,7 @@ public sealed class ArrivalsSystem : EntitySystem
     {
         var mapId = _mapManager.CreateMap();
 
-        if (!_loader.TryLoad(mapId, _arrivalsStation.ToString(), out var uids))
+        if (!_loader.TryLoad(mapId, _cfgManager.GetCVar(CCVars.ArrivalsMap).ToString(), out var uids))
         {
             return;
         }
@@ -265,12 +336,6 @@ public sealed class ArrivalsSystem : EntitySystem
         }
     }
 
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        _cfgManager.UnsubValueChanged(CCVars.ArrivalsShuttles, SetArrivals);
-    }
-
     private void OnArrivalsStartup(EntityUid uid, StationArrivalsComponent component, ComponentStartup args)
     {
         if (!Enabled)
@@ -297,7 +362,7 @@ public sealed class ArrivalsSystem : EntitySystem
             arrivalsComp.Station = uid;
             EnsureComp<ProtectedGridComponent>(uid);
             _shuttles.FTLTravel(shuttleComp, arrivals, hyperspaceTime: 10f, dock: true);
-            arrivalsComp.NextTransfer = _timing.CurTime + TransferCooldown;
+            arrivalsComp.NextTransfer = _timing.CurTime + TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.ArrivalsCooldown));
         }
 
         // Don't start the arrivals shuttle immediately docked so power has a time to stabilise?
