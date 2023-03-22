@@ -190,6 +190,7 @@ public sealed class BloodstreamSystem : EntitySystem
         }
     }
 
+    // Shows text on health examine, based on bleed rate and blood level
     private void OnHealthBeingExamined(EntityUid uid, BloodstreamComponent component, HealthBeingExaminedEvent args)
     {
         if (component.BleedAmount > 10)
