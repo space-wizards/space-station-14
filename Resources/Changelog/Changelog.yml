@@ -1,9 +1,4 @@
 Entries:
-- author: Gaxeer
-  changes:
-  - {message: add missing flame to cowelder, type: Fix}
-  id: 2702
-  time: '2022-11-25T11:27:45.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'Added the Exosuit Fabricator, the center of all (future) robotics and
@@ -2902,3 +2897,8 @@ Entries:
   - {message: Fix melee arcs showing up in the context menu., type: Fix}
   id: 3201
   time: '2023-03-22T02:34:23.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Re-sprited the riot suit to match the style., type: Tweak}
+  id: 3202
+  time: '2023-03-22T04:18:35.0000000+00:00'
