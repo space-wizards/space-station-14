@@ -11,6 +11,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Shuttles.Events;
+using Content.Shared.Tiles;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Server.Player;
@@ -448,6 +449,7 @@ public sealed partial class ShuttleSystem
 
        _shuttleIndex += _mapManager.GetGrid(shuttle.Value).LocalAABB.Width + ShuttleSpawnBuffer;
        component.EmergencyShuttle = shuttle;
+       EnsureComp<ProtectedGridComponent>(shuttle.Value);
    }
 
    private void CleanupEmergencyShuttle()

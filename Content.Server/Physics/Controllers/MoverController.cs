@@ -264,7 +264,7 @@ namespace Content.Server.Physics.Controllers
             // Reset inputs for non-piloted shuttles.
             foreach (var (shuttle, _) in _shuttlePilots)
             {
-                if (newPilots.ContainsKey(shuttle) || FTLLocked(shuttle)) continue;
+                if (newPilots.ContainsKey(shuttle) || CanPilot(shuttle)) continue;
 
                 _thruster.DisableLinearThrusters(shuttle);
             }
@@ -275,7 +275,7 @@ namespace Content.Server.Physics.Controllers
             // then do the movement input once for it.
             foreach (var (shuttle, pilots) in _shuttlePilots)
             {
-                if (Paused(shuttle.Owner) || FTLLocked(shuttle) || !TryComp(shuttle.Owner, out PhysicsComponent? body)) continue;
+                if (Paused(shuttle.Owner) || CanPilot(shuttle) || !TryComp(shuttle.Owner, out PhysicsComponent? body)) continue;
 
                 var shuttleNorthAngle = Transform(body.Owner).WorldRotation;
 
@@ -559,10 +559,11 @@ namespace Content.Server.Physics.Controllers
             }
         }
 
-        private bool FTLLocked(ShuttleComponent shuttle)
+        private bool CanPilot(ShuttleComponent shuttle)
         {
-            return (TryComp<FTLComponent>(shuttle.Owner, out var ftl) &&
-                    (ftl.State & (FTLState.Starting | FTLState.Travelling | FTLState.Arriving)) != 0x0);
+            return TryComp<FTLComponent>(shuttle.Owner, out var ftl) &&
+                   (ftl.State & (FTLState.Starting | FTLState.Travelling | FTLState.Arriving)) != 0x0 ||
+                   HasComp<PreventPilotComponent>(shuttle.Owner);
         }
 
     }
