@@ -75,7 +75,7 @@
   components:
   - type: Tag
     tags:
-    - Brutepack
+    - Bloodpack
   - type: Sprite
     state: brutepack
   - type: Healing
