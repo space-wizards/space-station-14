@@ -11,6 +11,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Spawners.Components;
+using Content.Shared.Tiles;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
@@ -25,7 +26,6 @@ namespace Content.Server.Shuttles.Systems;
 /// </summary>
 public sealed class ArrivalsSystem : EntitySystem
 {
-    [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
@@ -221,6 +221,7 @@ public sealed class ArrivalsSystem : EntitySystem
         foreach (var id in uids)
         {
             EnsureComp<ArrivalsSourceComponent>(id);
+            EnsureComp<ProtectedGridComponent>(id);
         }
 
         // Handle roundstart stations.
@@ -294,6 +295,7 @@ public sealed class ArrivalsSystem : EntitySystem
             var shuttleComp = Comp<ShuttleComponent>(component.Shuttle);
             var arrivalsComp = EnsureComp<ArrivalsShuttleComponent>(component.Shuttle);
             arrivalsComp.Station = uid;
+            EnsureComp<ProtectedGridComponent>(uid);
             _shuttles.FTLTravel(shuttleComp, arrivals, hyperspaceTime: 10f, dock: true);
             arrivalsComp.NextTransfer = _timing.CurTime + TransferCooldown;
         }
