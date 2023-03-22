@@ -68,7 +68,8 @@
     - type: Armor
       modifiers:
         coefficients:
-          Blunt: 0.3
-          Slash: 0.3
-          Piercing: 0.2
-          Heat: 0.3
+          Blunt: 0.8
+          Slash: 0.8
+          Piercing: 0.6
+          Heat: 0.9
+
