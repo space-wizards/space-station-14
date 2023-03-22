@@ -190,20 +190,23 @@ public sealed class BloodstreamSystem : EntitySystem
         }
     }
 
-    // Shows text on health examine, based on bleed rate and blood level
+    // Shows text on health examine, based on bleed rate and blood level.
     private void OnHealthBeingExamined(EntityUid uid, BloodstreamComponent component, HealthBeingExaminedEvent args)
     {
-        if (component.BleedAmount > component.MaxBleedAmount * 0.5)
+        // Shows profusely bleeding at half the max bleed rate.
+        if (component.BleedAmount > component.MaxBleedAmount / 2)
         {
             args.Message.PushNewline();
             args.Message.AddMarkup(Loc.GetString("bloodstream-component-profusely-bleeding", ("target", Identity.Entity(uid, EntityManager))));
         }
+        // Shows bleeding message when bleeding, but less than profusely.
         else if (component.BleedAmount > 0)
         {
             args.Message.PushNewline();
             args.Message.AddMarkup(Loc.GetString("bloodstream-component-bleeding", ("target", Identity.Entity(uid, EntityManager))));
         }
 
+        // If the mob's blood level is below the damage threshhold, the pale message is added.
         if (GetBloodLevelPercentage(uid, component) < component.BloodlossThreshold)
         {
             args.Message.PushNewline();
