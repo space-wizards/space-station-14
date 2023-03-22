@@ -477,6 +477,19 @@
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/bananahonkglass.rsi
     state: icon
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -8
+            Blunt: -8
+            Slash: -8
+            Piercing: -8
+        conditions:
+        - !type:OrganType
+          type: Cluwne
 
 - type: reagent
   id: Barefoot

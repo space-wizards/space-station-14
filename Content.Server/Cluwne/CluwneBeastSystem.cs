@@ -21,6 +21,7 @@ using Content.Server.IdentityManagement;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Content.Server.Administration.Commands;
+using Content.Shared.Zombies;
 
 namespace Content.Server.Cluwne;
 
@@ -137,6 +138,7 @@ public sealed class CluwneBeastSystem : EntitySystem
                 && !_mobStateSystem.IsDead(entity)
                 && _robustRandom.Prob(component.Cluwinification)
                 && !HasComp<ClumsyComponent>(entity)
+                && !HasComp<ZombieComponent>(entity)
                 && !HasComp<MimePowersComponent>(entity))
             {
                 _audio.PlayPvs(component.CluwneSound, uid);

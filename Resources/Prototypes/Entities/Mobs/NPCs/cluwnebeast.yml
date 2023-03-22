@@ -58,8 +58,7 @@
         Piercing: 4
         Structural: 10
   - type: Body
-    prototype: Human
-    requiredLegs: 2
+    prototype: Cluwne
   - type: Appearance
   - type: Strippable
   - type: MovementSpeedModifier
@@ -110,3 +109,7 @@
   - type: RandomMetadata
     nameSegments:
     - names_clown
+  - type: Butcherable
+    spawned:
+    - id: BananaBrain #another cluwne could become the beast!
+      amount: 1

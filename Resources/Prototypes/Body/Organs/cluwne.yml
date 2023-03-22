@@ -1,0 +1,21 @@
+- type: entity
+  id: OrganCluwneStomach
+  parent: OrganAnimalStomach
+  suffix: "cluwne"
+  components:
+  - type: Stomach
+    maxVolume: 50 # they're hungry
+  - type: Sprite
+    state: stomach
+  - type: Metabolizer
+    maxReagents: 6
+    metabolizerTypes: [ Cluwne ]
+    removeEmpty: true
+    groups:
+      - id: Food
+      - id: Drink
+      - id: Medicine
+      - id: Poison
+      - id: Narcotic
+      - id: Alcohol
+        rateModifier: 0.1
