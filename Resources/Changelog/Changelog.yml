@@ -1,12 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: 'Added the Exosuit Fabricator, the center of all (future) robotics and
-      exosuit production!', type: Add}
-  id: 2703
-  time: '2022-11-27T03:36:27.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Fixed missing text regarding voice triggers., type: Fix}
   id: 2704
   time: '2022-11-27T08:01:17.0000000+00:00'
@@ -2902,3 +2896,8 @@ Entries:
   - {message: Re-sprited the riot suit to match the style., type: Tweak}
   id: 3202
   time: '2023-03-22T04:18:35.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: The looping sound from the torch has been removed., type: Remove}
+  id: 3203
+  time: '2023-03-22T04:20:21.0000000+00:00'
