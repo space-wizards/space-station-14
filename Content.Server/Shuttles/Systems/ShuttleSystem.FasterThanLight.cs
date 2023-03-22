@@ -15,6 +15,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.Shuttles.Events;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Doors.Components;
+using Content.Shared.Shuttles.Components;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -83,6 +84,12 @@ public sealed partial class ShuttleSystem
 
     public bool CanFTL(EntityUid? uid, [NotNullWhen(false)] out string? reason, TransformComponent? xform = null)
     {
+        if (HasComp<PreventPilotComponent>(uid))
+        {
+            reason = Loc.GetString("shuttle-console-prevent");
+            return false;
+        }
+
         reason = null;
 
         if (!TryComp<MapGridComponent>(uid, out var grid) ||

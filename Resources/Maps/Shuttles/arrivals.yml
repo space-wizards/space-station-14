@@ -204,34 +204,53 @@ entities:
     data:
       tiles:
         -1,-1:
-          0: 65535
+          0: 3
+          1: 65532
         -1,0:
-          0: 65535
+          1: 65535
         -2,-2:
-          0: 34816
+          1: 34816
         -2,-1:
-          0: 34952
+          1: 34952
         -1,-2:
-          0: 65520
+          1: 65520
         0,0:
-          0: 65535
+          1: 65535
         0,1:
-          0: 32767
+          1: 32687
+          0: 80
         0,2:
-          0: 307
+          1: 307
         -2,0:
-          0: 34952
+          1: 34952
         -2,1:
-          0: 2184
+          1: 2184
         -1,1:
-          0: 65535
+          1: 65455
+          0: 80
         -1,2:
-          0: 3310
+          1: 3310
         0,-2:
-          0: 65392
+          1: 65392
         0,-1:
-          0: 65535
+          1: 65531
+          0: 4
       uniqueMixes:
+      - volume: 2500
+        temperature: 293.15
+        moles:
+        - 20.078888
+        - 75.53487
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
       - volume: 2500
         temperature: 293.15
         moles:
@@ -731,12 +750,16 @@ entities:
   - pos: 1.5,7.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 81
   type: CableHV
   components:
   - pos: 1.5,6.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 82
   type: CableHV
   components:
@@ -906,24 +929,32 @@ entities:
   - pos: -1.5,-4.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 110
   type: CableHV
   components:
   - pos: -1.5,-5.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 111
   type: CableHV
   components:
   - pos: 0.5,-5.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 112
   type: CableHV
   components:
   - pos: 0.5,-4.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 113
   type: CableHV
   components:
@@ -955,6 +986,8 @@ entities:
   - pos: 1.5,6.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 118
   type: CableMV
   components:
@@ -985,12 +1018,16 @@ entities:
   - pos: -0.5,3.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 123
   type: CableApcExtension
   components:
   - pos: -0.5,3.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 124
   type: CableApcExtension
   components:
@@ -1165,36 +1202,48 @@ entities:
   - pos: 0.5,-4.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 153
   type: CableApcExtension
   components:
   - pos: 1.5,-4.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 154
   type: CableApcExtension
   components:
   - pos: -1.5,-4.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 155
   type: CableApcExtension
   components:
   - pos: -2.5,-4.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 156
   type: CableApcExtension
   components:
   - pos: -2.5,-5.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 157
   type: CableApcExtension
   components:
   - pos: 1.5,-5.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 158
   type: CableApcExtension
   components:
@@ -1261,18 +1310,24 @@ entities:
   - pos: 1.5,-5.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 169
   type: Thruster
   components:
   - pos: 2.5,7.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 170
   type: Thruster
   components:
   - pos: -3.5,7.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 171
   type: Thruster
   components:
@@ -1280,6 +1335,8 @@ entities:
     pos: -1.5,-6.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 172
   type: Thruster
   components:
@@ -1287,6 +1344,8 @@ entities:
     pos: -2.5,-6.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 173
   type: Thruster
   components:
@@ -1294,6 +1353,8 @@ entities:
     pos: 1.5,-6.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 174
   type: Thruster
   components:
@@ -1301,6 +1362,8 @@ entities:
     pos: 0.5,-6.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 175
   type: Thruster
   components:
@@ -1308,6 +1371,8 @@ entities:
     pos: 2.5,-6.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 176
   type: Thruster
   components:
@@ -1315,6 +1380,8 @@ entities:
     pos: -3.5,-6.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 177
   type: AirlockGlassShuttle
   components:
@@ -1324,6 +1391,7 @@ entities:
     type: Transform
   - fixtures:
     - shape: !type:PolygonShape
+        radius: 0.01
         vertices:
         - 0.49,-0.49
         - 0.49,0.49
@@ -1342,10 +1410,19 @@ entities:
       - InteractImpassable
       - Opaque
       density: 100
+      hard: True
+      restitution: 0
+      friction: 0.4
+      id: null
     - shape: !type:PhysShapeCircle
         radius: 0.2
         position: 0,-0.5
+      mask: []
+      layer: []
+      density: 1
       hard: False
+      restitution: 0
+      friction: 0.4
       id: docking
     type: Fixtures
 - uid: 178
@@ -1357,6 +1434,7 @@ entities:
     type: Transform
   - fixtures:
     - shape: !type:PolygonShape
+        radius: 0.01
         vertices:
         - 0.49,-0.49
         - 0.49,0.49
@@ -1375,10 +1453,19 @@ entities:
       - InteractImpassable
       - Opaque
       density: 100
+      hard: True
+      restitution: 0
+      friction: 0.4
+      id: null
     - shape: !type:PhysShapeCircle
         radius: 0.2
         position: 0,-0.5
+      mask: []
+      layer: []
+      density: 1
       hard: False
+      restitution: 0
+      friction: 0.4
       id: docking
     type: Fixtures
 - uid: 179
@@ -1390,6 +1477,7 @@ entities:
     type: Transform
   - fixtures:
     - shape: !type:PolygonShape
+        radius: 0.01
         vertices:
         - 0.49,-0.49
         - 0.49,0.49
@@ -1408,10 +1496,19 @@ entities:
       - InteractImpassable
       - Opaque
       density: 100
+      hard: True
+      restitution: 0
+      friction: 0.4
+      id: null
     - shape: !type:PhysShapeCircle
         radius: 0.2
         position: 0,-0.5
+      mask: []
+      layer: []
+      density: 1
       hard: False
+      restitution: 0
+      friction: 0.4
       id: docking
     type: Fixtures
 - uid: 180
@@ -1423,6 +1520,7 @@ entities:
     type: Transform
   - fixtures:
     - shape: !type:PolygonShape
+        radius: 0.01
         vertices:
         - 0.49,-0.49
         - 0.49,0.49
@@ -1441,10 +1539,19 @@ entities:
       - InteractImpassable
       - Opaque
       density: 100
+      hard: True
+      restitution: 0
+      friction: 0.4
+      id: null
     - shape: !type:PhysShapeCircle
         radius: 0.2
         position: 0,-0.5
+      mask: []
+      layer: []
+      density: 1
       hard: False
+      restitution: 0
+      friction: 0.4
       id: docking
     type: Fixtures
 - uid: 181
@@ -1454,6 +1561,8 @@ entities:
     pos: -1.5,7.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 182
   type: GasPipeBend
   components:
@@ -1461,30 +1570,40 @@ entities:
     pos: -1.5,8.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 183
   type: GasPipeBend
   components:
   - pos: -0.5,8.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 184
   type: GasPassiveGate
   components:
   - pos: -0.5,7.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 185
   type: GasPipeStraight
   components:
   - pos: -0.5,6.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 186
   type: GasPipeFourway
   components:
   - pos: -0.5,5.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 187
   type: GasPipeBend
   components:
@@ -1492,12 +1611,16 @@ entities:
     pos: -2.5,5.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 188
   type: GasPipeBend
   components:
   - pos: 1.5,5.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 189
   type: GasPipeBend
   components:
@@ -1505,6 +1628,8 @@ entities:
     pos: 1.5,-3.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 190
   type: GasPipeBend
   components:
@@ -1512,6 +1637,8 @@ entities:
     pos: -2.5,-3.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 191
   type: GasPipeTJunction
   components:
@@ -1519,6 +1646,8 @@ entities:
     pos: -0.5,-3.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 192
   type: GasPipeStraight
   components:
@@ -1526,6 +1655,8 @@ entities:
     pos: 0.5,5.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 193
   type: GasPipeStraight
   components:
@@ -1533,6 +1664,8 @@ entities:
     pos: -1.5,5.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 194
   type: GasPipeStraight
   components:
@@ -1540,6 +1673,8 @@ entities:
     pos: -1.5,-3.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 195
   type: GasPipeStraight
   components:
@@ -1547,108 +1682,144 @@ entities:
     pos: 0.5,-3.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 196
   type: GasPipeStraight
   components:
   - pos: 1.5,-2.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 197
   type: GasPipeStraight
   components:
   - pos: 1.5,-1.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 198
   type: GasPipeStraight
   components:
   - pos: 1.5,-0.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 199
   type: GasPipeStraight
   components:
   - pos: 1.5,0.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 200
   type: GasPipeStraight
   components:
   - pos: 1.5,1.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 201
   type: GasPipeStraight
   components:
   - pos: 1.5,2.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 202
   type: GasPipeStraight
   components:
   - pos: 1.5,3.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 203
   type: GasPipeStraight
   components:
   - pos: 1.5,4.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 204
   type: GasPipeStraight
   components:
   - pos: -2.5,-2.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 205
   type: GasPipeStraight
   components:
   - pos: -2.5,-1.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 206
   type: GasPipeStraight
   components:
   - pos: -2.5,-0.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 207
   type: GasPipeStraight
   components:
   - pos: -2.5,0.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 208
   type: GasPipeStraight
   components:
   - pos: -2.5,1.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 209
   type: GasPipeStraight
   components:
   - pos: -2.5,2.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 210
   type: GasPipeStraight
   components:
   - pos: -2.5,3.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 211
   type: GasPipeStraight
   components:
   - pos: -2.5,4.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 212
   type: GasVentPump
   components:
   - pos: -0.5,-2.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 213
   type: GasVentPump
   components:
@@ -1656,6 +1827,8 @@ entities:
     pos: -0.5,4.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 214
   type: AirCanister
   components:
@@ -1725,6 +1898,8 @@ entities:
     pos: 2.5,-0.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 224
   type: ChairPilotSeat
   components:
@@ -1732,6 +1907,8 @@ entities:
     pos: 2.5,0.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 225
   type: ChairPilotSeat
   components:
@@ -1739,6 +1916,8 @@ entities:
     pos: 2.5,1.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 226
   type: ChairPilotSeat
   components:
@@ -1746,6 +1925,8 @@ entities:
     pos: 2.5,2.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 227
   type: ChairPilotSeat
   components:
@@ -1753,6 +1934,8 @@ entities:
     pos: -1.5,-0.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 228
   type: ChairPilotSeat
   components:
@@ -1760,6 +1943,8 @@ entities:
     pos: -1.5,0.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 229
   type: ChairPilotSeat
   components:
@@ -1767,6 +1952,8 @@ entities:
     pos: -1.5,1.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 230
   type: ChairPilotSeat
   components:
@@ -1774,6 +1961,8 @@ entities:
     pos: -1.5,2.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 231
   type: ChairPilotSeat
   components:
@@ -1781,6 +1970,8 @@ entities:
     pos: 0.5,-0.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 232
   type: ChairPilotSeat
   components:
@@ -1788,6 +1979,8 @@ entities:
     pos: 0.5,0.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 233
   type: ChairPilotSeat
   components:
@@ -1795,6 +1988,8 @@ entities:
     pos: 0.5,1.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 234
   type: ChairPilotSeat
   components:
@@ -1802,6 +1997,8 @@ entities:
     pos: 0.5,2.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 235
   type: ChairPilotSeat
   components:
@@ -1809,6 +2006,8 @@ entities:
     pos: -3.5,-0.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 236
   type: ChairPilotSeat
   components:
@@ -1816,6 +2015,8 @@ entities:
     pos: -3.5,0.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 237
   type: ChairPilotSeat
   components:
@@ -1823,6 +2024,8 @@ entities:
     pos: -3.5,1.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 238
   type: ChairPilotSeat
   components:
@@ -1830,18 +2033,24 @@ entities:
     pos: -3.5,2.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 239
   type: ChairPilotSeat
   components:
   - pos: 1.5,5.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 240
   type: ChairPilotSeat
   components:
   - pos: -2.5,5.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 241
   type: ChairPilotSeat
   components:
@@ -1849,6 +2058,8 @@ entities:
     pos: -0.5,8.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 242
   type: ComputerShuttle
   components:
@@ -1915,12 +2126,48 @@ entities:
   - pos: 0.5,5.5
     parent: 0
     type: Transform
+  - air:
+      volume: 200
+      immutable: False
+      temperature: 293.14963
+      moles:
+      - 1.7459903
+      - 6.568249
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    type: EntityStorage
 - uid: 253
   type: ClosetFireFilled
   components:
   - pos: -1.5,5.5
     parent: 0
     type: Transform
+  - air:
+      volume: 200
+      immutable: False
+      temperature: 293.14963
+      moles:
+      - 1.7459903
+      - 6.568249
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    type: EntityStorage
 - uid: 254
   type: PottedPlantRandom
   components:
@@ -1965,6 +2212,24 @@ entities:
   - pos: -2.5,-3.5
     parent: 0
     type: Transform
+  - air:
+      volume: 200
+      immutable: False
+      temperature: 293.14963
+      moles:
+      - 1.7459903
+      - 6.568249
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    type: EntityStorage
 - uid: 261
   type: VendingMachineClothing
   components:
@@ -2140,6 +2405,24 @@ entities:
   - pos: 2.5,6.5
     parent: 0
     type: Transform
+  - air:
+      volume: 200
+      immutable: False
+      temperature: 293.14963
+      moles:
+      - 1.7459903
+      - 6.568249
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    type: EntityStorage
 - uid: 287
   type: ClosetWallFireFilledRandom
   components:
@@ -2147,6 +2430,24 @@ entities:
     pos: -3.5,-4.5
     parent: 0
     type: Transform
+  - air:
+      volume: 200
+      immutable: False
+      temperature: 293.14963
+      moles:
+      - 1.7459903
+      - 6.568249
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    type: EntityStorage
 - uid: 288
   type: ClosetWallEmergencyFilledRandom
   components:
@@ -2154,16 +2455,58 @@ entities:
     pos: 2.5,-4.5
     parent: 0
     type: Transform
+  - air:
+      volume: 200
+      immutable: False
+      temperature: 293.14963
+      moles:
+      - 1.7459903
+      - 6.568249
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    type: EntityStorage
 - uid: 289
   type: ClosetWallEmergencyFilledRandom
   components:
   - pos: -3.5,6.5
     parent: 0
     type: Transform
+  - air:
+      volume: 200
+      immutable: False
+      temperature: 293.14963
+      moles:
+      - 1.7459903
+      - 6.568249
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    type: EntityStorage
 - uid: 290
   type: PosterLegitNanotrasenLogo
   components:
   - pos: -2.5,6.5
+    parent: 0
+    type: Transform
+- uid: 291
+  type: GravityGeneratorMini
+  components:
+  - pos: -2.5,-5.5
     parent: 0
     type: Transform
 ...
