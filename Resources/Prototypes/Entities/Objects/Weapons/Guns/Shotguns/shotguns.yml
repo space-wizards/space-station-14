@@ -163,3 +163,24 @@
     graph: ShotgunSawn
     node: shotgunsawn
     deconstructionTarget: null
+
+- type: entity
+  name: handmade pistol
+  parent: BaseWeaponShotgun
+  id: WeaponShotgunHandmade
+  description: Looks unreliable. Uses .50 shotgun shells.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Shotguns/hm_pistol.rsi
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Shotguns/hm_pistol.rsi
+  - type: Item
+    size: 10
+  - type: Gun
+    fireRate: 4
+  - type: BallisticAmmoProvider
+    capacity: 1
+  - type: Construction
+    graph: ShotgunSawn
+    node: shotgunsawn
+    deconstructionTarget: null

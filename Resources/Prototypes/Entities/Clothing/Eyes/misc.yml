@@ -25,3 +25,4 @@
   - type: Construction
     graph: Blindfold
     node: blindfold
+  - type: FlashImmunity

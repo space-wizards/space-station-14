@@ -10,6 +10,11 @@
   - type: Clickable
   - type: InteractionOutline
   - type: MovedByPressure
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Effects/drop.ogg
+      params:
+        volume: 2
   - type: DamageOnHighSpeedImpact
     damage:
       types:

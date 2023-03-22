@@ -124,7 +124,7 @@ public sealed partial class NPCSteeringSystem
                 // Breaking behaviours and the likes.
                 lock (_obstacles)
                 {
-                    status = TryHandleFlags(steering, node, bodyQuery);
+                    status = TryHandleFlags(uid, steering, node, bodyQuery);
                 }
 
                 // TODO: Need to handle re-pathing in case the target moves around.
