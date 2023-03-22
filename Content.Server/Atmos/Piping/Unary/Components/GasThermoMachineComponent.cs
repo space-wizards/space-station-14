@@ -13,7 +13,20 @@ namespace Content.Server.Atmos.Piping.Unary.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("enabled")]
-        public bool Enabled = true;
+        public bool Enabled = false;
+
+        /// <summary>
+        ///      Whether the power switch is on AND the machine has enough power
+        /// </summary>
+        [ViewVariables]
+        public bool IsRunning = false;
+
+        [ViewVariables]
+        [DataField("idlePower")]
+        public float IdlePower = 0;
+
+        [ViewVariables]
+        public float ActivePower = 1000; //inherit from ApcPowerReciever powerLoad
 
         /// <summary>
         ///     Current maximum temperature, calculated from <see cref="BaseHeatCapacity"/> and the quality of matter
@@ -92,5 +105,6 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         /// </summary>
         [DataField("machinePartTemperature", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
         public string MachinePartTemperature = "Laser";
+
     }
 }
