@@ -147,7 +147,7 @@
     Blunt: 5
 
 # Represents which damage types should be modified
-# in relation to how they cause bloodloss damage.
+# in relation to how they cause bleed rate.
 - type: damageModifierSet
   id: BloodlossHuman
   coefficients:
