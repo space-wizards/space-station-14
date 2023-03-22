@@ -81,7 +81,7 @@
   - type: Healing
     damageContainer: Biological
     damage:
-    bloodlossModifier: 20
+    ModifyBloodLevel: 10
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
     healingEndSound:
