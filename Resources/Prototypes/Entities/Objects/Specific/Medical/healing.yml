@@ -67,30 +67,30 @@
   - type: StackPrice
     price: 10
 
-#- type: entity
-#  name: blood pack
-#  description: Contains a groundbreaking universal blood replacement created by Nanotrasen's advanced medical science.
-#  parent: BaseHealingItem
-#  id: Bloodpack
-#  components:
-#  - type: Tag
-#    tags:
-#    - Bloodpack
-#  - type: Sprite
-#    state: brutepack
-#  - type: Healing
-#    damageContainer: Biological
-#    damage:
-#    bloodlossModifier: -3 # a little bit of bloodloss healing.
-#    healingBeginSound:
-#      path: "/Audio/Items/Medical/brutepack_begin.ogg"
-#    healingEndSound:
-#      path: "/Audio/Items/Medical/brutepack_end.ogg"
-#  - type: Stack
-#    stackType: Brutepack
-#    count: 10
-#  - type: StackPrice
-#    price: 10
+- type: entity
+  name: blood pack
+  description: Contains a groundbreaking universal blood replacement created by Nanotrasen's advanced medical science.
+  parent: BaseHealingItem
+  id: Bloodpack
+  components:
+  - type: Tag
+    tags:
+    - Bloodpack
+  - type: Sprite
+    state: brutepack
+  - type: Healing
+    damageContainer: Biological
+    damage:
+    ModifyBloodLevel: 20
+    healingBeginSound:
+      path: "/Audio/Items/Medical/brutepack_begin.ogg"
+    healingEndSound:
+      path: "/Audio/Items/Medical/brutepack_end.ogg"
+  - type: Stack
+    stackType: Brutepack
+    count: 10
+  - type: StackPrice
+    price: 10
 
 - type: entity
   name: roll of gauze
