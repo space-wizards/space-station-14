@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
@@ -10,7 +11,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Player;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -28,6 +29,7 @@ public sealed class FloorTileSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStackSystem _stackSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     public override void Initialize()
     {
@@ -48,19 +50,39 @@ public sealed class FloorTileSystem : EntitySystem
 
         // this looks a bit sussy but it might be because it needs to be able to place off of grids and expand them
         var location = args.ClickLocation.AlignWithClosestGridTile();
-        var physics = GetEntityQuery<PhysicsComponent>();
-        foreach (var ent in location.GetEntitiesInTile(lookupSystem: _lookup))
-        {
-            // check that we the tile we're trying to access isn't blocked by a wall or something
-            if (physics.TryGetComponent(ent, out var phys) &&
-                phys.BodyType == BodyType.Static &&
-                phys.Hard &&
-                (phys.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
-                return;
-        }
         var locationMap = location.ToMap(EntityManager, _transform);
         if (locationMap.MapId == MapId.Nullspace)
             return;
+
+        var physicQuery = GetEntityQuery<PhysicsComponent>();
+        var transformQuery = GetEntityQuery<TransformComponent>();
+
+        var tilePos = location.ToMapPos(EntityManager, _transform);
+        var userPos = Transform(args.User).Coordinates.ToMapPos(EntityManager, _transform);
+        var dir = userPos - tilePos;
+        var canAccessCenter = false;
+        if (dir.LengthSquared > 0.01)
+        {
+            var ray = new CollisionRay(tilePos, dir.Normalized, (int) CollisionGroup.Impassable);
+            var results = _physics.IntersectRay(locationMap.MapId, ray, dir.Length, returnOnFirstHit: true);
+            canAccessCenter = !results.Any();
+        }
+        
+        // if user can access tile center then they can place floor
+        // otherwise check it isn't blocked by a wall
+        if (!canAccessCenter)
+        {
+            foreach (var ent in location.GetEntitiesInTile(lookupSystem: _lookup))
+            {
+                if (physicQuery.TryGetComponent(ent, out var phys) &&
+                    phys.BodyType == BodyType.Static &&
+                    phys.Hard &&
+                    (phys.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
+                {
+                    return;
+                }
+            }
+        }
         _mapManager.TryGetGrid(location.EntityId, out var mapGrid);
 
         foreach (var currentTile in component.OutputTiles)
