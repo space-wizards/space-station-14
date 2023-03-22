@@ -81,6 +81,8 @@
   - type: Healing
     damageContainer: Biological
     damage:
+      types:
+        bloodloss: -3 #for whatever godforsaken reason I cannot touch blood level without healing one of these, so fuck it, bloodloss healing
     ModifyBloodLevel: 10
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
