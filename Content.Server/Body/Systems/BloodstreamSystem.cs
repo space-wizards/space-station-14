@@ -100,7 +100,9 @@ public sealed class BloodstreamSystem : EntitySystem
             // as well as stop their bleeding to a certain extent.
             if (bloodstream.BleedAmount > 0)
             {
+                // Blood is removed from the bloodstream at a 1-1 rate with the bleed amount
                 TryModifyBloodLevel(uid, (-bloodstream.BleedAmount), bloodstream);
+                // Bleed rate is reduced by the bleed reduction amount in the bloodstream component.
                 TryModifyBleedAmount(uid, -bloodstream.BleedReductionAmount, bloodstream);
             }
 
