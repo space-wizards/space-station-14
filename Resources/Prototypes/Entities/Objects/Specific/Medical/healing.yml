@@ -75,12 +75,12 @@
   components:
   - type: Tag
     tags:
-    - Bloodpack
+    - Brutepack
   - type: Sprite
     state: brutepack
   - type: Healing
     damageContainer: Biological
-    damage:
+    #damage:
     bloodlossModifier: 20
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
