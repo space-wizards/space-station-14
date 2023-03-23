@@ -218,7 +218,7 @@
 
 - type: entity
   name: bananium peel
-  parent: BaseItem
+  parent: TrashBananaPeel
   id: TrashBananiumPeel
   description: Radioactive trash.
   components:
@@ -231,35 +231,27 @@
   - type: Slippery
     paralyzeTime: 4
     launchForwardsMultiplier: 5
-  - type: StepTrigger
-    intersectRatio: 0.2
   - type: RadiationSource
     intensity: 0.3
-  - type: CollisionWake
-    enabled: false
-  - type: Physics
-    bodyType: Dynamic
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.2,-0.2,0.2,0.2"
-      id: "slips"
-      hard: false
-      layer:
-      - SlipLayer
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.2,-0.2,0.2,0.2"
-      density: 30
-      mask:
-      - ItemMask
-  - type: Tag
-    tags:
-    - Recyclable
-    - Trash
-  - type: Recyclable
-  - type: SpaceGarbage
+
+- type: entity
+  name: banana peel
+  suffix: Explosive
+  parent: TrashBananaPeel
+  id: TrashBananaPeelExplosive
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/banana.rsi
+      state: primed
+    - type: TriggerOnSlip
+    - type: ExplodeOnTrigger
+    - type: Explosive
+      explosionType: Default
+      maxIntensity: 2
+      totalIntensity: 10
+      canCreateVacuum: false
+    - type: DeleteOnTrigger
+    - type: AnimationPlayer
 
 - type: entity
   name: carrot
