@@ -103,6 +103,8 @@
         amount: 1
       - id: Ointment
         amount: 1
+      - id: Bloodpack
+        amount: 1
 
 - type: entity
   id: MedkitCombatFilled
