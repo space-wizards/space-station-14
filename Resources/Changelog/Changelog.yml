@@ -1,9 +1,4 @@
 Entries:
-- author: PJB3005
-  changes:
-  - {message: Links to the wiki/discord/etc show up again in the lobby., type: Fix}
-  id: 2717
-  time: '2022-12-04T12:47:26.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Vehicles now inherit access from the rider instead of having access
@@ -2913,3 +2908,8 @@ Entries:
   - {message: Fix arrivals stranding you at terminal., type: Fix}
   id: 3216
   time: '2023-03-23T06:41:42.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix docking, type: Fix}
+  id: 3217
+  time: '2023-03-23T06:50:52.0000000+00:00'
