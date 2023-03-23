@@ -152,7 +152,7 @@ public sealed partial class ShuttleSystem
                     else
                     {
                         FTLTravel(shuttle,
-                            CentCom.Value, _consoleAccumulator, TransitTime, dock: true);
+                            CentCom.Value, _consoleAccumulator, TransitTime, true);
                     }
                 }
             }
