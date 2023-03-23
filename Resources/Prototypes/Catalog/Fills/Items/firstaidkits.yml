@@ -12,6 +12,8 @@
         amount: 2
       - id: Ointment
         amount: 2
+      - id: PillTricordrazine
+        amount: 3
       # see https://github.com/tgstation/blob/master/code/game/objects/items/storage/firstaid.dm for example contents
 
 - type: entity
@@ -96,8 +98,6 @@
       - id: Brutepack
         amount: 3 # TO DO: Advanced fills
       - id: SyringeTranexamicAcid
-        amount: 1
-      - id: PillTricordrazine
         amount: 1
       - id: AntiPoisonMedipen
         amount: 1
