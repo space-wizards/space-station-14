@@ -71,9 +71,11 @@
   id: ForcedCluwneBeast
   entity: MobCluwneBeast
   forced: true
+  transferHumanoidAppearance: false
   transferName: false
   inventory: None
   revertOnDeath: false
+  revertOnCrit: false
   transferDamage: false
 
 # this is a test for transferring some visual appearance stuff
