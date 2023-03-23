@@ -23,6 +23,7 @@ public sealed class RadioSystem : EntitySystem
     [Dependency] private readonly IReplayRecordingManager _replay = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly TelecomSystem _telecom = default!;
 
     // set used to prevent radio feedback loops.
     private readonly HashSet<string> _messages = new();
@@ -68,21 +69,28 @@ public sealed class RadioSystem : EntitySystem
             Loc.GetString("chat-radio-message-wrap", ("color", channel.Color), ("channel", $"\\[{channel.LocalizedName}\\]"), ("name", name), ("message", FormattedMessage.EscapeText(message))),
             EntityUid.Invalid);
         var chatMsg = new MsgChatMessage { Message = chat };
-
         var ev = new RadioReceiveEvent(message, messageSource, channel, chatMsg);
-        var sentAtLeastOnce = false;
 
         var sourceMapId = Transform(radioSource).MapID;
-        var query = AllEntityQuery<ActiveRadioComponent, TransformComponent>();
-        while (query.MoveNext(out var receiver, out var radio, out var transform))
+        var hasActiveServer = _telecom.HasActiveServer(sourceMapId, channel.ID);
+        var hasMicro = HasComp<RadioMicrophoneComponent>(radioSource);
+
+        var speakerQuery = GetEntityQuery<RadioSpeakerComponent>();
+        var radioQuery = AllEntityQuery<ActiveRadioComponent, TransformComponent>();
+        var sentAtLeastOnce = false;
+        while (radioQuery.MoveNext(out var receiver, out var radio, out var transform))
         {
             if (!radio.Channels.Contains(channel.ID))
                 continue;
 
             if (!channel.LongRange && transform.MapID != sourceMapId)
                 continue;
+            
+            var needServer = !channel.LongRange && (!hasMicro || !speakerQuery.HasComponent(receiver));
+            if (needServer && !hasActiveServer)
+                continue;
 
-            var attemptEv = new RadioReceiveAttemptEvent(channel, radioSource, receiver, sourceMapId);
+            var attemptEv = new RadioReceiveAttemptEvent(channel, radioSource, receiver);
             RaiseLocalEvent(ref attemptEv);
             if (attemptEv.Cancelled)
                 continue;

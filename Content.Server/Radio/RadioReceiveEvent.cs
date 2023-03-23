@@ -1,6 +1,5 @@
 using Content.Shared.Chat;
 using Content.Shared.Radio;
-using Robust.Shared.Map;
 
 namespace Content.Server.Radio;
 
@@ -30,15 +29,13 @@ public struct RadioReceiveAttemptEvent
     public readonly RadioChannelPrototype Channel;
     public readonly EntityUid RadioSource;
     public readonly EntityUid RadioReceiver;
-    public readonly MapId MapId;
 
     public bool Cancelled = false;
 
-    public RadioReceiveAttemptEvent(RadioChannelPrototype channel, EntityUid radioSource, EntityUid radioReceiver, MapId mapId)
+    public RadioReceiveAttemptEvent(RadioChannelPrototype channel, EntityUid radioSource, EntityUid radioReceiver)
     {
         Channel = channel;
         RadioSource = radioSource;
         RadioReceiver = radioReceiver;
-        MapId = mapId;
     }
 }
