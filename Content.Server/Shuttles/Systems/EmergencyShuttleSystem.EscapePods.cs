@@ -30,7 +30,7 @@ public sealed partial class EmergencyShuttleSystem
 
             if (escape != null)
             {
-                var config = _dock.GetDockingConfig(ent[0], xform.GridUid.Value, uid, dock, escape.Value.Entity, escape.Value.Component);
+                var config = _dock.GetDockingConfig(ent[0], xform.GridUid.Value, escape.Value.Entity, escape.Value.Component, uid, dock);
 
                 if (config != null)
                 {
