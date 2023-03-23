@@ -1,13 +1,12 @@
 using Robust.Shared.Audio;
-using Content.Shared.Chat.Prototypes;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Content.Shared.Damage.Prototypes;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Cluwne;
 
 [RegisterComponent, NetworkedComponent]
+[Access(typeof(SharedCluwneBrainSystem))]
 public sealed class CluwneBrainComponent : Component
 {
+    [DataField("honkSound")]
+    public SoundSpecifier HonkSound = new SoundPathSpecifier("/Audio/Items/bikehorn.ogg");
 }
