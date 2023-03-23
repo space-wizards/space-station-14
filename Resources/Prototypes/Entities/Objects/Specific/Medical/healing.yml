@@ -56,7 +56,7 @@
     damage:
       groups:
         Brute: -15 # 5 for each type in the group
-    bloodlossModifier: -3 # a little bit of bloodloss healing.
+    bloodlossModifier: -3 # a little bit of bleed rate healing.
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
     healingEndSound:
