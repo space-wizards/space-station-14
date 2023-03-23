@@ -18,7 +18,6 @@ using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
-using Content.Shared.Emag.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
@@ -550,7 +549,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             component.AutomaticEngageToken?.Cancel();
             component.AutomaticEngageToken = null;
 
-            if (!HasComp<EmaggedComponent>(uid))
+            if (!component.AutoFlush)
             {
                 component.Pressure = 0;
                 component.State = SharedDisposalUnitComponent.PressureState.Pressurizing;
@@ -713,8 +712,8 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return;
             }
 
-            // if emagged, ignore the timer and instantly flush
-            if (HasComp<EmaggedComponent>(uid))
+            // if autoflushing, ignore the timer and instantly flush
+            if (component.AutoFlush)
             {
                 if (!TryFlush(uid, component))
                     TryQueueEngage(uid, component);

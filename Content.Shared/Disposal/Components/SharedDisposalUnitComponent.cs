@@ -21,6 +21,12 @@ namespace Content.Shared.Disposal.Components
         [DataField("mobsCanEnter")]
         public bool MobsCanEnter = true;
 
+        /// <summary>
+        /// Automatically flushes items and has no pressure requirement
+        /// </summary>
+        [DataField("autoFlush"), ViewVariables(VVAccess.ReadWrite)]
+        public bool AutoFlush = false;
+
         [Serializable, NetSerializable]
         public enum Visuals : byte
         {
