@@ -9,5 +9,5 @@ namespace Content.Server.Shuttles.Components;
 [RegisterComponent, Access(typeof(EmergencyShuttleSystem))]
 public sealed class EscapePodFillComponent : Component
 {
-    [DataField("path")] public ResourcePath Path = new("/Maps/Shuttles/escape_pod.yml");
+    [DataField("path")] public ResourcePath Path = new("/Maps/Shuttles/escape_pod_small.yml");
 }
