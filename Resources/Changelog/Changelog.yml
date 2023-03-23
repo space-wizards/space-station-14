@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix tile friction on planetmaps., type: Fix}
-  id: 2720
-  time: '2022-12-05T03:47:08.0000000+00:00'
 - author: Prentor
   changes:
   - {message: Animals have to eat less but more frequently, type: Tweak}
@@ -2912,3 +2907,9 @@ Entries:
   - {message: Fix some instances of NPCs getting stuck., type: Fix}
   id: 3219
   time: '2023-03-23T12:53:17.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: The Emag has received an update for disabling safety overrides on disposal
+      units., type: Tweak}
+  id: 3220
+  time: '2023-03-23T14:55:50.0000000+00:00'
