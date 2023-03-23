@@ -52,6 +52,11 @@ public sealed class RadioSystem : EntitySystem
             _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.ConnectedClient);
     }
 
+    /// <summary>
+    /// Send radio message to all active radio listeners
+    /// </summary>
+    /// <param name="messageSource">Entity that spoke the message</param>
+    /// <param name="radioSource">Entity that picked up the message and will send it, e.g. headset</param>
     public void SendRadioMessage(EntityUid messageSource, string message, RadioChannelPrototype channel, EntityUid radioSource)
     {
         // TODO if radios ever garble / modify messages, feedback-prevention needs to be handled better than this.
@@ -87,18 +92,19 @@ public sealed class RadioSystem : EntitySystem
 
             if (!channel.LongRange && transform.MapID != sourceMapId)
                 continue;
-            
+            // don't need telecom server for long range channels or handheld radios and intercoms
             var needServer = !channel.LongRange && (!hasMicro || !speakerQuery.HasComponent(receiver));
             if (needServer && !hasActiveServer)
                 continue;
-
+            // check if message can be sent to specific receiver
             var attemptEv = new RadioReceiveAttemptEvent(channel, radioSource, receiver);
             RaiseLocalEvent(ref attemptEv);
             if (attemptEv.Cancelled)
                 continue;
 
-            sentAtLeastOnce = true;
+            // send the message
             RaiseLocalEvent(receiver, ref ev);
+            sentAtLeastOnce = true;
         }
         if (!sentAtLeastOnce)
             _popup.PopupEntity(Loc.GetString("failed-to-send-message"), messageSource, messageSource, PopupType.MediumCaution);
@@ -112,6 +118,7 @@ public sealed class RadioSystem : EntitySystem
         _messages.Remove(message);
     }
 
+    /// <inheritdoc cref="TelecomServerComponent"/>
     private bool HasActiveServer(MapId mapId, string channelId)
     {
         var servers = EntityQuery<TelecomServerComponent, EncryptionKeyHolderComponent, ApcPowerReceiverComponent, TransformComponent>();
