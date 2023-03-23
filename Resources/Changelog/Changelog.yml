@@ -1,21 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'Microwave and radiation triggers have been combined, to reduce confusion.',
-    type: Fix}
-  - {message: Item artifacts can now be sprayed properly., type: Fix}
-  id: 2705
-  time: '2022-11-27T08:01:41.0000000+00:00'
-- author: Pangogie
-  changes:
-  - {message: Chemists have stopped pouring dangerous chemicals into the vents., type: Tweak}
-  id: 2706
-  time: '2022-11-27T10:27:02.0000000+00:00'
-- author: Vordenburg
-  changes:
-  - {message: The RPG-7 can be loaded again with its proper ammo., type: Fix}
-  id: 2707
-  time: '2022-11-28T02:47:28.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: It's now possible to reset camera rotation before the lerp starts after
@@ -2901,3 +2884,20 @@ Entries:
   - {message: Fix NPC faction cache not refreshing correctly., type: Fix}
   id: 3204
   time: '2023-03-22T04:58:23.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Adjusted ships on radar so they look much nicer., type: Tweak}
+  id: 3205
+  time: '2023-03-22T20:52:39.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Add additional rules around arrivals., type: Add}
+  - {message: Fix some instances of being able to return to the arrivals station.,
+    type: Fix}
+  id: 3206
+  time: '2023-03-23T01:37:43.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Monkeys spawned by artifacts no longer suffocate., type: Fix}
+  id: 3207
+  time: '2023-03-23T01:44:37.0000000+00:00'
