@@ -103,6 +103,7 @@ entities:
 - uid: 0
   components:
   - type: MetaData
+  - type: EscapePod
   - parent: invalid
     type: Transform
   - chunks:
