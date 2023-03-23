@@ -94,6 +94,6 @@
     sprite: Structures/Storage/Crates/piratechest.rsi
     state: crate_icon
   product: CrateFunPirate
-  cost: 1500
+  cost: 400
   category: Fun
   group: market

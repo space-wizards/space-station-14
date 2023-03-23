@@ -14,8 +14,6 @@
         amount: 1
       - id: MicroBombImplanter
         amount: 1
-      - id: SadTromboneImplanter
-        amount: 1
 
 - type: entity
   id: CratePirateChest
@@ -33,13 +31,7 @@
         amount: 2
       - id: CannonBall
         amount: 2
-      - id: ClothingHeadHatJesterAlt
-        amount: 1
-      - id: ClothingUniformJumpsuitJesterAlt
-        amount: 1
       - id: WeaponPistolFlintlock
         amount: 4
-      - id: ClothingShoesJester
-        amount: 1
       - id: WeaponShotgunBlunderbuss
         amount: 2

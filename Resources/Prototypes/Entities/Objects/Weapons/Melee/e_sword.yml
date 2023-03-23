@@ -120,7 +120,6 @@
   name: energy cutlass
   parent: EnergySword
   id: EnergyCutlass
-  suffix: E-Cutlass
   description: An exotic energy weapon.
   components:
   - type: EnergySword

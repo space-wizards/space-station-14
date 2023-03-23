@@ -1,46 +1,29 @@
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using System.Text.RegularExpressions;
-using Content.Server.Speech.Components;
 using Content.Server.Speech.EntitySystems;
 
 namespace Content.Server.Speech.Components;
 
 [RegisterComponent]
+[Access(typeof(PirateAccentSystem))]
 public sealed class PirateAccentComponent : Component
 {
-    [DataField("yarChance")]
-    public float YarChance = 1f;
+    [ViewVariables(VVAccess.ReadWrite)]
+    public readonly float YarrChance = 0.5f;
 
-    [DataField("pirateWord", customTypeSerializer: typeof(PrototypeIdSerializer<ReplacementAccentPrototype>))]
-    public string PirateWord = "accent-pirate-word-1";
+    [ViewVariables]
+    public readonly List<string> PirateWords = new()
+    {
+        { "accent-pirate-prefix-1" },
+        { "accent-pirate-prefix-2" },
+        { "accent-pirate-prefix-3" }
+    };
 
-    [DataField("pirateResponse", customTypeSerializer: typeof(PrototypeIdSerializer<ReplacementAccentPrototype>))]
-    public string PirateResponse = "accent-pirate-word-2";
-
-    [DataField("pirateWordOne", customTypeSerializer: typeof(PrototypeIdSerializer<ReplacementAccentPrototype>))]
-    public string PirateWordOne = "accent-pirate-word-3";
-
-    [DataField("pirateResponseOne", customTypeSerializer: typeof(PrototypeIdSerializer<ReplacementAccentPrototype>))]
-    public string PirateResponseOne = "accent-pirate-word-4";
-
-    [DataField("pirateWordTwo", customTypeSerializer: typeof(PrototypeIdSerializer<ReplacementAccentPrototype>))]
-    public string PirateWordTwo = "accent-pirate-word-5";
-
-    [DataField("pirateResponseTwo", customTypeSerializer: typeof(PrototypeIdSerializer<ReplacementAccentPrototype>))]
-    public string PirateResponseTwo = "accent-pirate-word-6";
-
-    [DataField("pirateWordThree", customTypeSerializer: typeof(PrototypeIdSerializer<ReplacementAccentPrototype>))]
-    public string PirateWordThree = "accent-pirate-word-7";
-
-    [DataField("pirateResponseThree", customTypeSerializer: typeof(PrototypeIdSerializer<ReplacementAccentPrototype>))]
-    public string PirateResponseThree = "accent-pirate-word-8";
-
-    [DataField("pirateWordFour", customTypeSerializer: typeof(PrototypeIdSerializer<ReplacementAccentPrototype>))]
-    public string PirateWordFour = "accent-pirate-word-9";
-
-    [DataField("pirateWordFive", customTypeSerializer: typeof(PrototypeIdSerializer<ReplacementAccentPrototype>))]
-    public string PirateWordFive = "accent-pirate-word-10";
-
-    [DataField("piratePrefix", customTypeSerializer: typeof(PrototypeIdSerializer<ReplacementAccentPrototype>))]
-    public string PiratePrefix = "accent-pirate-prefix-";
+    [ViewVariables]
+    public readonly Dictionary<string, string> DirectReplacements = new()
+    {
+        { "accent-pirate-replaced-1", "accent-pirate-replacement-1" },
+        { "accent-pirate-replaced-2", "accent-pirate-replacement-2" },
+        { "accent-pirate-replaced-3", "accent-pirate-replacement-3" },
+        { "accent-pirate-replaced-4", "accent-pirate-replacement-4" },
+        { "accent-pirate-replaced-5", "accent-pirate-replacement-5" },
+    };
 }

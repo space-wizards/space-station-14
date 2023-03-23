@@ -175,7 +175,6 @@
 
 - type: entity
   id: CrateFunPirate
-  suffix: fun
   parent: CratePirate
   components:
   - type: StorageFill

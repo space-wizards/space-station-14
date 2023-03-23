@@ -289,7 +289,7 @@
 - type: entity
   parent: ClothingBackpackSatchelLeather
   id: ClothingBackpackPirateFilled
-  suffix: Filled Pirate
+  suffix: Filled, Pirate
   components:
     - type: StorageFill
       contents:

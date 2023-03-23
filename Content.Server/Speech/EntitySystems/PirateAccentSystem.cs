@@ -20,22 +20,19 @@ public sealed class PirateAccentSystem : EntitySystem
     {
         var msg = message;
 
-        msg = Regex.Replace(msg, Loc.GetString($"{component.PirateWord}"), Loc.GetString($"{component.PirateResponse}"), RegexOptions.IgnoreCase);
-        msg = Regex.Replace(msg, Loc.GetString($"{component.PirateWordOne}"), Loc.GetString($"{component.PirateResponseOne}"), RegexOptions.IgnoreCase);
-        msg = Regex.Replace(msg, ($@"(?<!\w){Loc.GetString($"{component.PirateWordTwo}")}(?!\w)"), Loc.GetString($"{component.PirateResponseTwo}"), RegexOptions.IgnoreCase);
-        msg = Regex.Replace(msg, ($@"(?<!\w){Loc.GetString($"{component.PirateWordThree}")}(?!\w)"), Loc.GetString($"{component.PirateResponseThree}"), RegexOptions.IgnoreCase);
-        msg = Regex.Replace(msg, ($@"(?<!\w){Loc.GetString($"{component.PirateWordFour}")}(?!\w)"), Loc.GetString($"{component.PirateResponseThree}"), RegexOptions.IgnoreCase);
-        msg = Regex.Replace(msg, ($@"(?<!\w){Loc.GetString($"{component.PirateWordFive}")}(?!\w)"), Loc.GetString($"{component.PirateResponseTwo}"), RegexOptions.IgnoreCase);
-
-        // Suffix:
-        if (_random.Prob(component.YarChance))
+        foreach (var (first, replace) in component.DirectReplacements)
         {
-            var pick = _random.Next(1, 4);
-
-            // Reverse sanitize capital
-            msg = msg[0].ToString().ToLower() + msg.Remove(0, 1);
-            msg = Loc.GetString($"{component.PiratePrefix}{pick}") + " " + msg;
+            msg = Regex.Replace(msg, $@"(?<!\w){Loc.GetString(first)}(?!\w)",
+                Loc.GetString(replace), RegexOptions.IgnoreCase);
         }
+
+        if (!_random.Prob(component.YarrChance))
+            return msg;
+
+        var pick = _random.Pick(component.PirateWords);
+        // Reverse sanitize capital
+        msg = msg[0].ToString().ToLower() + msg.Remove(0, 1);
+        msg = Loc.GetString(pick) + " " + msg;
 
         return msg;
     }
