@@ -735,7 +735,7 @@
 - type: entity
   parent: AirlockGlassShuttle
   id: AirlockExternalGlassShuttleArrivals
-  suffix: External, Glass, Docking
+  suffix: External, Arrivals, Glass, Docking
   components:
     - type: PriorityDock
       tag: DockArrivals
