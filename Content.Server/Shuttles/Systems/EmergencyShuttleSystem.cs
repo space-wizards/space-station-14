@@ -73,6 +73,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
        SubscribeLocalEvent<StationDataComponent, ComponentStartup>(OnStationStartup);
        SubscribeNetworkEvent<EmergencyShuttleRequestPositionMessage>(OnShuttleRequestPosition);
        InitializeEmergencyConsole();
+       InitializeEscapePods();
    }
 
    private void SetEmergencyShuttleEnabled(bool value)
