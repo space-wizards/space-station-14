@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Turrets will now shoot space targets., type: Fix}
-  id: 2711
-  time: '2022-12-01T15:02:02.0000000+00:00'
 - author: Morb0
   changes:
   - {message: Kick AFK players, type: Add}
@@ -2913,3 +2908,10 @@ Entries:
       the ingame topbar buttons., type: Tweak}
   id: 3210
   time: '2023-03-23T03:41:43.0000000+00:00'
+- author: adamsogm
+  changes:
+  - {message: Changed how full solution containers appear based on their actual fill
+      level., type: Tweak}
+  - {message: Fixed water cup being perpetually empty., type: Fix}
+  id: 3211
+  time: '2023-03-23T03:49:42.0000000+00:00'
