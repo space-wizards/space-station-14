@@ -5,6 +5,8 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Tools.Systems;
 
@@ -13,6 +15,7 @@ public sealed class WeldableSystem : EntitySystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     public override void Initialize()
     {
@@ -20,6 +23,7 @@ public sealed class WeldableSystem : EntitySystem
         SubscribeLocalEvent<WeldableComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<WeldableComponent, WeldFinishedEvent>(OnWeldFinished);
         SubscribeLocalEvent<WeldableComponent, WeldCancelledEvent>(OnWeldCanceled);
+        SubscribeLocalEvent<LayerChangeOnWeldComponent, WeldableChangedEvent>(OnWeldChanged);
         SubscribeLocalEvent<WeldableComponent, ExaminedEvent>(OnExamine);
     }
 
@@ -65,7 +69,7 @@ public sealed class WeldableSystem : EntitySystem
         if (!CanWeld(uid, tool, user, component))
             return false;
 
-        var toolEvData = new ToolEventData(new WeldFinishedEvent(user, tool), targetEntity: uid);
+        var toolEvData = new ToolEventData(new WeldFinishedEvent(user, tool), cancelledEv: new WeldCancelledEvent(),targetEntity: uid);
         component.BeingWelded = _toolSystem.UseTool(tool, user, uid, component.WeldingTime.Seconds, new[] { component.WeldingQuality }, toolEvData, fuel: component.FuelConsumption);
 
         // Log attempt
@@ -94,6 +98,26 @@ public sealed class WeldableSystem : EntitySystem
     private void OnWeldCanceled(EntityUid uid, WeldableComponent component, WeldCancelledEvent args)
     {
         component.BeingWelded = false;
+    }
+
+    private void OnWeldChanged(EntityUid uid, LayerChangeOnWeldComponent component, WeldableChangedEvent args)
+    {
+        if (!TryComp<FixturesComponent>(uid, out var fixtures))
+            return;
+
+        foreach (var fixture in fixtures.Fixtures.Values)
+        {
+            switch (args.IsWelded)
+            {
+                case true when fixture.CollisionLayer == (int) component.UnWeldedLayer:
+                    _physics.SetCollisionLayer(uid, fixture, (int) component.WeldedLayer);
+                    break;
+
+                case false when fixture.CollisionLayer == (int) component.WeldedLayer:
+                    _physics.SetCollisionLayer(uid, fixture, (int) component.UnWeldedLayer);
+                    break;
+            }
+        }
     }
 
     private void UpdateAppearance(EntityUid uid, WeldableComponent? component = null)

@@ -5,19 +5,20 @@ using System.Text;
 using Content.Server.Database;
 using Content.Shared.Administration;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 
 
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Ban)]
-    public sealed class BanCommand : IConsoleCommand
+    public sealed class BanCommand : LocalizedCommands
     {
-        public string Command => "ban";
-        public string Description => Loc.GetString("cmd-ban-desc");
-        public string Help => Loc.GetString("cmd-ban-help", ("Command", Command));
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
-        public async void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override string Command => "ban";
+
+        public override async void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
             var plyMgr = IoCManager.Resolve<IPlayerManager>();
@@ -54,7 +55,7 @@ namespace Content.Server.Administration.Commands
             var located = await locator.LookupIdByNameOrIdAsync(target);
             if (located == null)
             {
-                shell.WriteError(Loc.GetString("cmd-ban-player"));
+                shell.WriteError(LocalizationManager.GetString("cmd-ban-player"));
                 return;
             }
 
@@ -64,7 +65,7 @@ namespace Content.Server.Administration.Commands
 
             if (player != null && player.UserId == targetUid)
             {
-                shell.WriteLine(Loc.GetString("cmd-ban-self"));
+                shell.WriteLine(LocalizationManager.GetString("cmd-ban-self"));
                 return;
             }
 
@@ -100,43 +101,42 @@ namespace Content.Server.Administration.Commands
 
             var response = new StringBuilder($"Banned {target} with reason \"{reason}\"");
 
-            response.Append(expires == null ?
-                " permanently."
-                : $" until {expires}");
+            response.Append(expires == null ? " permanently." : $" until {expires}");
 
             shell.WriteLine(response.ToString());
 
             if (plyMgr.TryGetSessionById(targetUid, out var targetPlayer))
             {
-                targetPlayer.ConnectedClient.Disconnect(banDef.DisconnectMessage);
+                var message = banDef.FormatBanMessage(_cfg, LocalizationManager);
+                targetPlayer.ConnectedClient.Disconnect(message);
             }
         }
 
-        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
             if (args.Length == 1)
             {
                 var playerMgr = IoCManager.Resolve<IPlayerManager>();
                 var options = playerMgr.ServerSessions.Select(c => c.Name).OrderBy(c => c).ToArray();
-                return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-ban-hint"));
+                return CompletionResult.FromHintOptions(options, LocalizationManager.GetString("cmd-ban-hint"));
             }
 
             if (args.Length == 2)
-                return CompletionResult.FromHint(Loc.GetString("cmd-ban-hint-reason"));
+                return CompletionResult.FromHint(LocalizationManager.GetString("cmd-ban-hint-reason"));
 
             if (args.Length == 3)
             {
                 var durations = new CompletionOption[]
                 {
-                    new("0", Loc.GetString("cmd-ban-hint-duration-1")),
-                    new("1440", Loc.GetString("cmd-ban-hint-duration-2")),
-                    new("4320", Loc.GetString("cmd-ban-hint-duration-3")),
-                    new("10080", Loc.GetString("cmd-ban-hint-duration-4")),
-                    new("20160", Loc.GetString("cmd-ban-hint-duration-5")),
-                    new("43800", Loc.GetString("cmd-ban-hint-duration-6")),
+                    new("0", LocalizationManager.GetString("cmd-ban-hint-duration-1")),
+                    new("1440", LocalizationManager.GetString("cmd-ban-hint-duration-2")),
+                    new("4320", LocalizationManager.GetString("cmd-ban-hint-duration-3")),
+                    new("10080", LocalizationManager.GetString("cmd-ban-hint-duration-4")),
+                    new("20160", LocalizationManager.GetString("cmd-ban-hint-duration-5")),
+                    new("43800", LocalizationManager.GetString("cmd-ban-hint-duration-6")),
                 };
 
-                return CompletionResult.FromHintOptions(durations, Loc.GetString("cmd-ban-hint-duration"));
+                return CompletionResult.FromHintOptions(durations, LocalizationManager.GetString("cmd-ban-hint-duration"));
             }
 
             return CompletionResult.Empty;

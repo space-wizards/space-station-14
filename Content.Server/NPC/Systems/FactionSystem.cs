@@ -36,6 +36,9 @@ namespace Content.Server.NPC.Systems
 
         private void OnProtoReload(PrototypesReloadedEventArgs obj)
         {
+            if (!obj.ByType.ContainsKey(typeof(FactionPrototype)))
+                return;
+
             RefreshFactions();
         }
 
@@ -49,6 +52,9 @@ namespace Content.Server.NPC.Systems
         /// </summary>
         private void RefreshFactions(FactionComponent component)
         {
+            component.FriendlyFactions.Clear();
+            component.HostileFactions.Clear();
+
             foreach (var faction in component.Factions)
             {
                 // YAML Linter already yells about this

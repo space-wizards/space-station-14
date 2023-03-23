@@ -42,6 +42,9 @@ uplink-c4-bundle-desc = Because sometimes quantity is quality. Contains 8 C-4 pl
 uplink-emp-grenade-name = Emp Grenade
 uplink-emp-grenade-desc = Releases electromagnetic pulses that disrupt or damage many electronic devices or drain power cells.
 
+uplink-exploding-pen-name = Exploding pen
+uplink-exploding-pen-desc = A class IV explosive device contained within a standard pen. Comes with a 4 second fuse.
+
 # Ammo
 uplink-pistol-magazine-name = Pistol Magazine (.35 auto)
 uplink-pistol-magazine-desc = Pistol magazine with 10 catridges. Compatible with Viper.
@@ -82,7 +85,7 @@ uplink-headset-name = Syndicate Over-ear Headset
 uplink-headset-desc = A headset that allows you to communicate with other syndicate operatives. Has 4 slots for encryption keys.
 
 uplink-encryption-key-name = Syndicate Encryption Key
-uplink-encryption-key-desc = An encryption key that not only allows you to access all station-side radio channels, but also allows you to use a secure Syndicate channel to contact other agents.
+uplink-encryption-key-desc = An encryption key for access to the secret frequency of our special agents. No one will know about your special channel with friends... or rivals.
 
 uplink-hypopen-name = Hypopen
 uplink-hypopen-desc = A chemical hypospray disguised as a pen, capable of instantly injecting up to 15u of reagents. Starts empty.
@@ -148,6 +151,9 @@ uplink-necronomicon-desc = An unholy book capable of summoning a demonic familia
 uplink-revolver-cap-gun-fake-name = Fake Cap Gun
 uplink-revolver-cap-gun-fake-desc = Fool your enemy! It can use both cap and magnum bullets. Comes loaded with magnum bullets.
 
+uplink-banana-peel-explosive-name = Explosive Banana Peel
+uplink-banana-peel-explosive-desc = They will burst into laughter when they slip on it!
+
 # Armor
 uplink-chameleon-name = Chameleon Kit
 uplink-chameleon-desc = A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!
@@ -208,7 +214,7 @@ uplink-syndicate-segway-crate-desc = Be an enemy of the corporation, in style!
 uplink-revolver-cap-gun-name = Cap Gun
 uplink-revolver-cap-gun-desc = Looks almost like the real thing! Ages 8 and up.
 
-uplink-syndicate-stamp-name = Syndicate Rubber Stamp # In loving memory, Btamp, ???-2/1/23
+uplink-syndicate-stamp-name = Syndicate Rubber Btamp
 uplink-syndicate-stamp-desc = A rubber stamp for stamping important documents.
 
 uplink-cat-ears-name = Cat Ears
