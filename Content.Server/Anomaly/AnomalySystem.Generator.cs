@@ -162,10 +162,9 @@ public sealed partial class AnomalySystem
 
     private void UpdateGenerator()
     {
-        foreach (var (active, gen) in EntityQuery<GeneratingAnomalyGeneratorComponent, AnomalyGeneratorComponent>())
+        var query = EntityQueryEnumerator<GeneratingAnomalyGeneratorComponent, AnomalyGeneratorComponent>();
+        while (query.MoveNext(out var ent, out var active, out var gen))
         {
-            var ent = active.Owner;
-
             if (Timing.CurTime < active.EndTime)
                 continue;
             active.AudioStream?.Stop();

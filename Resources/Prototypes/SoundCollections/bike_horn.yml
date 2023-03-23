@@ -2,3 +2,9 @@
   id: BikeHorn
   files:
   - /Audio/Items/bikehorn.ogg
+
+- type: soundCollection
+  id: CluwneHorn
+  files:
+  - /Audio/Items/brokenbikehorn.ogg
+

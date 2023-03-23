@@ -321,7 +321,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     _atmosphereSystem.HotspotExpose(transform.GridUid.Value,
                         _transformSystem.GetGridOrMapTilePosition(uid, transform),
-                        700f, 50f, true);
+                        700f, 50f, uid, true);
 
                 }
 

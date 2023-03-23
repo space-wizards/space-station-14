@@ -5,7 +5,6 @@ using Content.Shared.CrewManifest;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
 using static Content.Shared.Access.Components.SharedIdCardConsoleComponent;
-
 namespace Content.Client.Access.UI
 {
     public sealed class IdCardConsoleBoundUserInterface : BoundUserInterface
@@ -16,7 +15,6 @@ namespace Content.Client.Access.UI
         public IdCardConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
-
         private IdCardConsoleWindow? _window;
 
         protected override void Open()

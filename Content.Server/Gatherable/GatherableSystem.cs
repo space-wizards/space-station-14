@@ -3,6 +3,7 @@ using Content.Server.Destructible;
 using Content.Server.DoAfter;
 using Content.Server.Gatherable.Components;
 using Content.Shared.Damage;
+using Content.Shared.DoAfter;
 using Content.Shared.Destructible;
 using Content.Shared.EntityList;
 using Content.Shared.Interaction;
@@ -27,15 +28,12 @@ public sealed class GatherableSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<GatherableComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<GatheringDoafterCancel>(OnDoafterCancel);
-        SubscribeLocalEvent<GatherableComponent, GatheringDoafterSuccess>(OnDoafterSuccess);
+        SubscribeLocalEvent<GatherableComponent, DoAfterEvent>(OnDoAfter);
     }
 
     private void OnInteractUsing(EntityUid uid, GatherableComponent component, InteractUsingEvent args)
     {
-        if (!TryComp<GatheringToolComponent>(args.Used, out var tool) ||
-            component.ToolWhitelist?.IsValid(args.Used) == false ||
-            tool.GatheringEntities.TryGetValue(uid, out var cancelToken))
+        if (!TryComp<GatheringToolComponent>(args.Used, out var tool) || component.ToolWhitelist?.IsValid(args.Used) == false)
             return;
 
         // Can't gather too many entities at once.
@@ -46,38 +44,39 @@ public sealed class GatherableSystem : EntitySystem
         var damageTime = (damageRequired / tool.Damage.Total).Float();
         damageTime = Math.Max(1f, damageTime);
 
-        cancelToken = new CancellationTokenSource();
-        tool.GatheringEntities[uid] = cancelToken;
-
-        var doAfter = new DoAfterEventArgs(args.User, damageTime, cancelToken.Token, uid)
+        var doAfter = new DoAfterEventArgs(args.User, damageTime, target: uid, used: args.Used)
         {
             BreakOnDamage = true,
             BreakOnStun = true,
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
             MovementThreshold = 0.25f,
-            BroadcastCancelledEvent = new GatheringDoafterCancel { Tool = args.Used, Resource = uid },
-            TargetFinishedEvent = new GatheringDoafterSuccess { Tool = args.Used, Resource = uid, Player = args.User }
         };
 
         _doAfterSystem.DoAfter(doAfter);
     }
 
-    private void OnDoafterSuccess(EntityUid uid, GatherableComponent component, GatheringDoafterSuccess ev)
+    private void OnDoAfter(EntityUid uid, GatherableComponent component, DoAfterEvent args)
     {
-        if (!TryComp(ev.Tool, out GatheringToolComponent? tool))
+        if(!TryComp<GatheringToolComponent>(args.Args.Used, out var tool) || args.Args.Target == null)
             return;
 
+        if (args.Handled || args.Cancelled)
+        {
+            tool.GatheringEntities.Remove(args.Args.Target.Value);
+            return;
+        }
+
         // Complete the gathering process
-        _destructible.DestroyEntity(uid);
-        _audio.PlayPvs(tool.GatheringSound, ev.Resource);
-        tool.GatheringEntities.Remove(ev.Resource);
+        _destructible.DestroyEntity(args.Args.Target.Value);
+        _audio.PlayPvs(tool.GatheringSound, args.Args.Target.Value);
+        tool.GatheringEntities.Remove(args.Args.Target.Value);
 
         // Spawn the loot!
         if (component.MappedLoot == null)
             return;
 
-        var playerPos = Transform(ev.Player).MapPosition;
+        var playerPos = Transform(args.Args.User).MapPosition;
 
         foreach (var (tag, table) in component.MappedLoot)
         {
@@ -91,27 +90,7 @@ public sealed class GatherableSystem : EntitySystem
             var spawnPos = playerPos.Offset(_random.NextVector2(0.3f));
             Spawn(spawnLoot[0], spawnPos);
         }
-    }
-
-    private void OnDoafterCancel(GatheringDoafterCancel ev)
-    {
-        if (!TryComp<GatheringToolComponent>(ev.Tool, out var tool))
-            return;
-
-        tool.GatheringEntities.Remove(ev.Resource);
-    }
-
-    private sealed class GatheringDoafterCancel : EntityEventArgs
-    {
-        public EntityUid Tool;
-        public EntityUid Resource;
-    }
-
-    private sealed class GatheringDoafterSuccess : EntityEventArgs
-    {
-        public EntityUid Tool;
-        public EntityUid Resource;
-        public EntityUid Player;
+        args.Handled = true;
     }
 }
 

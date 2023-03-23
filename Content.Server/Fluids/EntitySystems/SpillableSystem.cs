@@ -16,7 +16,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Threading;
+using Content.Shared.DoAfter;
 
 namespace Content.Server.Fluids.EntitySystems;
 
@@ -38,8 +38,7 @@ public sealed class SpillableSystem : EntitySystem
         SubscribeLocalEvent<SpillableComponent, GetVerbsEvent<Verb>>(AddSpillVerb);
         SubscribeLocalEvent<SpillableComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<SpillableComponent, SolutionSpikeOverflowEvent>(OnSpikeOverflow);
-        SubscribeLocalEvent<SpillableComponent, SpillFinishedEvent>(OnSpillFinished);
-        SubscribeLocalEvent<SpillableComponent, SpillCancelledEvent>(OnSpillCancelled);
+        SubscribeLocalEvent<SpillableComponent, DoAfterEvent>(OnDoAfter);
     }
 
     private void OnSpikeOverflow(EntityUid uid, SpillableComponent component, SolutionSpikeOverflowEvent args)
@@ -142,20 +141,14 @@ public sealed class SpillableSystem : EntitySystem
         {
             verb.Act = () =>
             {
-                if (component.CancelToken == null)
+                _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, component.SpillDelay.Value, target:uid)
                 {
-                    component.CancelToken = new CancellationTokenSource();
-                    _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, component.SpillDelay.Value, component.CancelToken.Token, component.Owner)
-                    {
-                        BreakOnTargetMove = true,
-                        BreakOnUserMove = true,
-                        BreakOnDamage = true,
-                        BreakOnStun = true,
-                        NeedHand = true,
-                        TargetFinishedEvent = new SpillFinishedEvent(args.User, component.Owner, solution),
-                        TargetCancelledEvent = new SpillCancelledEvent(component.Owner)
-                    });
-                }
+                    BreakOnTargetMove = true,
+                    BreakOnUserMove = true,
+                    BreakOnDamage = true,
+                    BreakOnStun = true,
+                    NeedHand = true
+                });
             };
         }
         verb.Impact = LogImpact.Medium; // dangerous reagent reaction are logged separately.
@@ -263,46 +256,19 @@ public sealed class SpillableSystem : EntitySystem
         return puddleComponent;
     }
 
-    private void OnSpillFinished(EntityUid uid, SpillableComponent component, SpillFinishedEvent ev)
+    private void OnDoAfter(EntityUid uid, SpillableComponent component, DoAfterEvent args)
     {
-        component.CancelToken = null;
-
-        //solution gone by other means before doafter completes
-        if (ev.Solution == null || ev.Solution.Volume == 0)
+        if (args.Handled || args.Cancelled || args.Args.Target == null)
             return;
 
-        var puddleSolution = _solutionContainerSystem.SplitSolution(uid,
-            ev.Solution, ev.Solution.Volume);
+        //solution gone by other means before doafter completes
+        if (!_solutionContainerSystem.TryGetDrainableSolution(uid, out var solution) || solution.Volume == 0)
+            return;
 
-        SpillAt(puddleSolution, Transform(component.Owner).Coordinates, "PuddleSmear");
-    }
+        var puddleSolution = _solutionContainerSystem.SplitSolution(uid, solution, solution.Volume);
 
-    private void OnSpillCancelled(EntityUid uid, SpillableComponent component, SpillCancelledEvent ev)
-    {
-        component.CancelToken = null;
-    }
+        SpillAt(puddleSolution, Transform(uid).Coordinates, "PuddleSmear");
 
-    internal sealed class SpillFinishedEvent : EntityEventArgs
-    {
-        public SpillFinishedEvent(EntityUid user, EntityUid spillable, Solution solution)
-        {
-            User = user;
-            Spillable = spillable;
-            Solution = solution;
-        }
-
-        public EntityUid User { get; }
-        public EntityUid Spillable { get; }
-        public Solution Solution { get; }
-    }
-
-    private sealed class SpillCancelledEvent : EntityEventArgs
-    {
-        public EntityUid Spillable;
-
-        public SpillCancelledEvent(EntityUid spillable)
-        {
-            Spillable = spillable;
-        }
+        args.Handled = true;
     }
 }

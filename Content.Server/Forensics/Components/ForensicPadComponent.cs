@@ -1,5 +1,3 @@
-using System.Threading;
-
 namespace Content.Server.Forensics
 {
     /// <summary>
@@ -8,8 +6,6 @@ namespace Content.Server.Forensics
     [RegisterComponent]
     public sealed class ForensicPadComponent : Component
     {
-        public CancellationTokenSource? CancelToken;
-
         [DataField("scanDelay")]
         public float ScanDelay = 3.0f;
 

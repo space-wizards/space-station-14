@@ -15,7 +15,6 @@ using Content.Shared.Weapons.Melee.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Player;
 
 namespace Content.Server.Tools
 {
@@ -132,7 +131,7 @@ namespace Content.Server.Tools
             if (transform.GridUid is {} gridUid)
             {
                 var position = _transformSystem.GetGridOrMapTilePosition(uid, transform);
-                _atmosphereSystem.HotspotExpose(gridUid, position, 700, 50, true);
+                _atmosphereSystem.HotspotExpose(gridUid, position, 700, 50, uid, true);
             }
 
             _entityManager.Dirty(welder);
@@ -302,6 +301,7 @@ namespace Content.Server.Tools
 
             if (neededFuel > fuel)
             {
+                _popupSystem.PopupEntity(Loc.GetString("welder-component-cannot-weld-message"), uid, args.User);
                 args.Cancel();
             }
 

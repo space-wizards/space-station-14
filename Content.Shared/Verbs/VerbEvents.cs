@@ -22,7 +22,7 @@ namespace Content.Shared.Verbs
 
         public readonly bool AdminRequest;
 
-        public RequestServerVerbsEvent(EntityUid entityUid, List<Type> verbTypes, EntityUid? slotOwner = null, bool adminRequest = false)
+        public RequestServerVerbsEvent(EntityUid entityUid, IEnumerable<Type> verbTypes, EntityUid? slotOwner = null, bool adminRequest = false)
         {
             EntityUid = entityUid;
             SlotOwner = slotOwner;

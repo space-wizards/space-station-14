@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Server.GameTicking;
+using Content.Server.Shuttles.Components;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Systems;
 using Robust.Shared.Random;
@@ -20,6 +21,9 @@ public sealed class SpawnPointSystem : EntitySystem
 
     private void OnSpawnPlayer(PlayerSpawningEvent args)
     {
+        if (args.SpawnResult != null)
+            return;
+
         // TODO: Cache all this if it ends up important.
         var points = EntityQuery<SpawnPointComponent>().ToList();
         _random.Shuffle(points);
@@ -39,7 +43,8 @@ public sealed class SpawnPointSystem : EntitySystem
 
                 return;
             }
-            else if (_gameTicker.RunLevel != GameRunLevel.InRound && spawnPoint.SpawnType == SpawnPointType.Job && (args.Job == null || spawnPoint.Job?.ID == args.Job.Prototype.ID))
+
+            if (_gameTicker.RunLevel != GameRunLevel.InRound && spawnPoint.SpawnType == SpawnPointType.Job && (args.Job == null || spawnPoint.Job?.ID == args.Job.Prototype.ID))
             {
                 args.SpawnResult = _stationSpawning.SpawnPlayerMob(
                     xform.Coordinates,

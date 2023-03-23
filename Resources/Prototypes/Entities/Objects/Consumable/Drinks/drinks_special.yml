@@ -34,29 +34,30 @@
   parent: DrinkGlassBase
   id: DrinkShotGlass
   name: shot glass
-  description: Perfect for slamming down onto the table angrily. 
+  description: Perfect for slamming down onto the table angrily.
   components:
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 10
+        maxVol: 7
   - type: SolutionTransfer
     transferAmount: 10
     minTransferAmount: 10
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shotglass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkCarafe
-  name: pitcher
-  description: A handled glass pitcher.
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/carafe.rsi
-    state: icon-10
+    layers:
+      - state: icon
+        map: [ "enum.SolutionContainerLayers.Base" ]
+      - state: fill1
+        map: [ "enum.SolutionContainerLayers.Fill" ]
+        visible: false
+      - state: icon-front
+        map: [ "enum.SolutionContainerLayers.Overlay" ]
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: fill
 
 - type: entity
   parent: DrinkGlassBase

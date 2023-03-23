@@ -1,4 +1,3 @@
-using System.Threading;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
@@ -14,18 +13,19 @@ using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
-using Content.Server.Tools;
 using Content.Server.UserInterface;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Medical.Cryogenics;
 using Content.Shared.MedicalScanner;
+using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -44,7 +44,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly ToolSystem _toolSystem = default!;
+    [Dependency] private readonly SharedToolSystem _toolSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
     [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
@@ -57,8 +57,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
         SubscribeLocalEvent<CryoPodComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<CryoPodComponent, GetVerbsEvent<AlternativeVerb>>(AddAlternativeVerbs);
         SubscribeLocalEvent<CryoPodComponent, GotEmaggedEvent>(OnEmagged);
-        SubscribeLocalEvent<CryoPodComponent, DoInsertCryoPodEvent>(DoInsertCryoPod);
-        SubscribeLocalEvent<CryoPodComponent, DoInsertCancelledCryoPodEvent>(DoInsertCancelCryoPod);
+        SubscribeLocalEvent<CryoPodComponent, DoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<CryoPodComponent, CryoPodPryFinished>(OnCryoPodPryFinished);
         SubscribeLocalEvent<CryoPodComponent, CryoPodPryInterrupted>(OnCryoPodPryInterrupted);
 
@@ -130,29 +129,27 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
     private void HandleDragDropOn(EntityUid uid, CryoPodComponent cryoPodComponent, ref DragDropTargetEvent args)
     {
         if (cryoPodComponent.BodyContainer.ContainedEntity != null)
-        {
             return;
-        }
 
-        if (cryoPodComponent.DragDropCancelToken != null)
-        {
-            cryoPodComponent.DragDropCancelToken.Cancel();
-            cryoPodComponent.DragDropCancelToken = null;
-            return;
-        }
-
-        cryoPodComponent.DragDropCancelToken = new CancellationTokenSource();
-        var doAfterArgs = new DoAfterEventArgs(args.User, cryoPodComponent.EntryDelay, cryoPodComponent.DragDropCancelToken.Token, uid, args.Dragged)
+        var doAfterArgs = new DoAfterEventArgs(args.User, cryoPodComponent.EntryDelay, target:args.Dragged, used:uid)
         {
             BreakOnDamage = true,
             BreakOnStun = true,
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
             NeedHand = false,
-            TargetFinishedEvent = new DoInsertCryoPodEvent(args.Dragged),
-            TargetCancelledEvent = new DoInsertCancelledCryoPodEvent()
         };
         _doAfterSystem.DoAfter(doAfterArgs);
+        args.Handled = true;
+    }
+
+    private void OnDoAfter(EntityUid uid, CryoPodComponent component, DoAfterEvent args)
+    {
+        if (args.Cancelled || args.Handled || args.Args.Target == null)
+            return;
+
+        InsertBody(uid, args.Args.Target.Value, component);
+
         args.Handled = true;
     }
 
@@ -190,9 +187,8 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
                 return;
             cryoPodComponent.IsPrying = true;
 
-            _toolSystem.UseTool(args.Used, args.User, uid, 0f,
-                cryoPodComponent.PryDelay, "Prying",
-                new CryoPodPryFinished(), new CryoPodPryInterrupted(), uid);
+            var toolEvData = new ToolEventData(new CryoPodPryFinished(), targetEntity:uid);
+            _toolSystem.UseTool(args.Used, args.User, uid, cryoPodComponent.PryDelay, new [] {"Prying"}, toolEvData);
 
             args.Handled = true;
         }
@@ -200,7 +196,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
 
     private void OnExamined(EntityUid uid, CryoPodComponent component, ExaminedEvent args)
     {
-        var container = _itemSlotsSystem.GetItemOrNull(component.Owner, component.SolutionContainerName);
+        var container = _itemSlotsSystem.GetItemOrNull(uid, component.SolutionContainerName);
         if (args.IsInDetailsRange && container != null && _solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSolution))
         {
             args.PushMarkup(Loc.GetString("cryo-pod-examine", ("beaker", Name(container.Value))));

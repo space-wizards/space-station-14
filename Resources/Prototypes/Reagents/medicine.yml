@@ -140,7 +140,7 @@
             groups:
               Airloss: -6
               Brute: -4
-              Burn: -4
+              Burn: -6
               Toxin: -4
 
 - type: reagent
@@ -156,8 +156,10 @@
       effects:
       - !type:HealthChange
         damage:
-          groups:
-            Burn: -3
+          types:
+            Heat: -1
+            Shock: -1
+            Cold: -1
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
@@ -353,8 +355,10 @@
       effects:
       - !type:HealthChange
         damage:
-          groups:
-            Burn: -1
+          types:
+            Heat: -0.33
+            Shock: -0.33
+            Cold: -0.33
 
 - type: reagent
   id: Leporazine
@@ -493,7 +497,7 @@
       effects:
       - !type:HealthChange
         damage:
-          groups:
+          types:
             Caustic: -5
 
 - type: reagent
@@ -600,10 +604,12 @@
           max: 50
         damage:
           groups:
-            Burn: -1
             Brute: -1
           types:
             Poison: -0.5 ##Should be about what it was when it healed the toxin group
+            Heat: -0.33
+            Shock: -0.33
+            Cold: -0.33
 
 - type: reagent
   id: Lipozine
@@ -757,3 +763,43 @@
         messages: ["ethyloxyephedrine-effect-feeling-awake", "ethyloxyephedrine-effect-clear-mind"]
         type: Local
         probability: 0.1
+        
+- type: reagent
+  id: Sigynate
+  name: reagent-name-sigynate
+  group: Medicine
+  desc: reagent-desc-sigynate
+  physicalDesc: reagent-physical-desc-thick
+  flavor: sweet
+  color: "#e0a5b9"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Caustic: -3
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 16
+        damage:
+          types:
+            Heat: 2
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+        type: Local
+        visualType: Medium
+        messages: [ "generic-reagent-effect-nauseous" ]
+        probability: 0.2
+      - !type:ChemVomit
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        probability: 0.02
