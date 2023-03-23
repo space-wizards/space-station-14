@@ -64,7 +64,6 @@ public sealed partial class CargoSystem
 
         SubscribeLocalEvent<CargoShuttleComponent, FTLStartedEvent>(OnCargoFTLStarted);
         SubscribeLocalEvent<CargoShuttleComponent, FTLCompletedEvent>(OnCargoFTLCompleted);
-        SubscribeLocalEvent<CargoShuttleComponent, FTLTagEvent>(OnCargoFTLTag);
 
         SubscribeLocalEvent<CargoShuttleConsoleComponent, ComponentStartup>(OnCargoShuttleConsoleStartup);
 
@@ -79,12 +78,6 @@ public sealed partial class CargoSystem
         SubscribeLocalEvent<StationCargoOrderDatabaseComponent, ComponentStartup>(OnCargoOrderStartup);
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
-    }
-
-    private void OnCargoFTLTag(EntityUid uid, CargoShuttleComponent component, ref FTLTagEvent args)
-    {
-        if (args.Handled)
-            return;
     }
 
     private void ShutdownShuttle()
@@ -159,7 +152,7 @@ public sealed partial class CargoSystem
             if (stationUid != component.Station)
                 continue;
 
-            console.Entity = component.Owner;
+            console.Entity = GetShuttleConsole(component.Owner);
         }
 
         // Update order consoles.
