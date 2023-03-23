@@ -10,15 +10,16 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 14
+        Blunt: 10
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Blunt: 5
+        Blunt: 8
   - type: Item
-    size: 15
+    size: 20
   - type: Clothing
+    quickEquip: false
     slots:
     - back
   - type: Construction

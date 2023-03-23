@@ -13,20 +13,28 @@
     - SimpleHostile
   - type: Sprite
     drawdepth: Mobs
+    netsync: false
+    sprite: Mobs/Animals/bear.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: bear
-      sprite: Mobs/Animals/bear.rsi
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: glow
+      shader: unshaded
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
-        radius: 0.48
-      density: 400
+        radius: 0.40
+      density: 100
       mask:
       - MobMask
       layer:
       - MobLayer
+  - type: PointLight
+    radius: 1.2
+    energy: 2
+    color: "#4faffb"
   - type: MovementAlwaysTouching
   - type: MobState
     allowedStates:
@@ -43,6 +51,7 @@
     states:
       Alive:
         Base: bear
+        BaseUnshaded: glow
       Critical:
         Base: bear_dead
       Dead:
@@ -56,6 +65,12 @@
       prob: 0.3
   - type: Bloodstream
     bloodMaxVolume: 500
+    bloodReagent: Cryoxadone
+  - type: Vocal
+    sounds:
+      Male: Bear
+      Female: Bear
+      Unsexed: Bear
   - type: CombatMode
     disarmAction:
       enabled: false

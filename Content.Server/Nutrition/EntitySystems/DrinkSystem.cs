@@ -267,8 +267,8 @@ namespace Content.Server.Nutrition.EntitySystems
             var doAfterEventArgs = new DoAfterEventArgs(user, drink.ForceDrink ? drink.ForceFeedDelay : drink.Delay,
                 target: target, used: item)
             {
-                RaiseOnTarget = drink.ForceDrink,
-                RaiseOnUser = !drink.ForceDrink,
+                RaiseOnTarget = user != target,
+                RaiseOnUser = false,
                 BreakOnUserMove = drink.ForceDrink,
                 BreakOnDamage = true,
                 BreakOnStun = true,
@@ -295,16 +295,16 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
             }
 
-            if (args.Handled || args.Cancelled || component.Deleted)
+            if (args.Handled || component.Deleted)
                 return;
 
             if (!TryComp<BodyComponent>(args.Args.Target, out var body))
                 return;
 
+            component.Drinking = false;
+
             var transferAmount = FixedPoint2.Min(component.TransferAmount, args.AdditionalData.DrinkSolution.Volume);
             var drained = _solutionContainerSystem.Drain(uid, args.AdditionalData.DrinkSolution, transferAmount);
-
-            //var forceDrink = args.Args.Target.Value != args.Args.User;
 
             if (!_bodySystem.TryGetBodyOrganComponents<StomachComponent>(args.Args.Target.Value, out var stomachs, body))
             {
@@ -375,7 +375,6 @@ namespace Content.Server.Nutrition.EntitySystems
             //TODO: Grab the stomach UIDs somehow without using Owner
             _stomachSystem.TryTransferSolution(firstStomach.Value.Comp.Owner, drained, firstStomach.Value.Comp);
 
-            component.Drinking = false;
             component.ForceDrink = false;
             args.Handled = true;
         }

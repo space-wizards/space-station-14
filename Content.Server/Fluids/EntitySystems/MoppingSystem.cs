@@ -35,6 +35,7 @@ public sealed class MoppingSystem : SharedMoppingSystem
         base.Initialize();
         SubscribeLocalEvent<AbsorbentComponent, ComponentInit>(OnAbsorbentInit);
         SubscribeLocalEvent<AbsorbentComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<AbsorbentComponent, SolutionChangedEvent>(OnAbsorbentSolutionChange);
         SubscribeLocalEvent<AbsorbentComponent, DoAfterEvent<AbsorbantData>>(OnDoAfter);
     }
 

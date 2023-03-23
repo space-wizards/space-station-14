@@ -12,7 +12,6 @@
       I rigged the area where our stuff's at to be a toasty thousand K.
       You know how to drain it when we need it out.
        - J.
-
 # ---- GAMING ----
 
 - type: entity
@@ -46,7 +45,6 @@
       Leaving this so you know what's up.
       Sorry.
        - Alexander
-
 - type: entity
   id: PaperWrittenSalvageLoreGaming2
   noSpawn: true # keep this from spamming spawn sheet
@@ -64,11 +62,9 @@
       Int: 528,491
       Wis: 1
       Cha: 1
-
       Where's the age?
       Why are those ability scores so ridiculous?
       What even are you trying to do here, Leah? - Your Friendly DM
-
 - type: entity
   id: PaperWrittenSalvageLoreGaming3
   noSpawn: true # keep this from spamming spawn sheet
@@ -83,7 +79,6 @@
       Session 3: On their way to underground lair.
       Session 4: Just ran into the Architect Of Flies.
       Oh dear goodness they just started randomly killing everybody
-
 - type: entity
   id: PaperWrittenSalvageLoreGaming4
   noSpawn: true # keep this from spamming spawn sheet
@@ -97,6 +92,4 @@
       It's amazing.
       But not in a good way.
       Cheers, - Arielle
-
 # ----
-

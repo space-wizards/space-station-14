@@ -1034,7 +1034,7 @@ namespace Content.Client.Preferences.UI
             {
                 if (_markingManager.CanBeApplied(Profile.Species, hairProto, _prototypeManager))
                 {
-                    if (_markingManager.MustMatchSkin(Profile.Species, HumanoidVisualLayers.Hair, _prototypeManager))
+                    if (_markingManager.MustMatchSkin(Profile.Species, HumanoidVisualLayers.Hair, out var _, _prototypeManager))
                     {
                         hairColor = Profile.Appearance.SkinColor;
                     }
@@ -1069,7 +1069,7 @@ namespace Content.Client.Preferences.UI
             {
                 if (_markingManager.CanBeApplied(Profile.Species, facialHairProto, _prototypeManager))
                 {
-                    if (_markingManager.MustMatchSkin(Profile.Species, HumanoidVisualLayers.Hair, _prototypeManager))
+                    if (_markingManager.MustMatchSkin(Profile.Species, HumanoidVisualLayers.Hair, out var _, _prototypeManager))
                     {
                         facialHairColor = Profile.Appearance.SkinColor;
                     }
