@@ -52,18 +52,12 @@ namespace Content.Server.Body.Components
         /// <summary>
         ///     The base bloodloss damage to be incurred if below <see cref="BloodlossThreshold"/>
         /// </summary>
-        /// <remarks>
-        ///  It would be great if this had a default, I couldn't figure out how to do it.
-        /// </remarks>
         [DataField("bloodlossDamage", required: true)]
         public DamageSpecifier BloodlossDamage = new();
 
         /// <summary>
         ///     The base bloodloss damage to be healed if above <see cref="BloodlossThreshold"/>
         /// </summary>
-        /// <remarks>
-        ///  It would be great if this had a default, I couldn't figure out how to do it.
-        /// </remarks>
         [DataField("bloodlossHealDamage", required: true)]
         public DamageSpecifier BloodlossHealDamage = new();
 
