@@ -1,10 +1,11 @@
-using Content.Client.Stylesheets;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Collections;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
@@ -174,16 +175,13 @@ public sealed class RadarControl : Control
 
         // Draw our grid in detail
         var ourGridId = _coordinates.Value.GetGridUid(_entManager);
-        if (ourGridId != null)
+        if (_entManager.TryGetComponent<MapGridComponent>(ourGridId, out var ourGrid))
         {
             var ourGridMatrix = xformQuery.GetComponent(ourGridId.Value).WorldMatrix;
-            var ourGridFixtures = fixturesQuery.GetComponent(ourGridId.Value);
 
             Matrix3.Multiply(in ourGridMatrix, in offsetMatrix, out var matrix);
 
-            // Draw our grid; use non-filled boxes so it doesn't look awful.
-            DrawGrid(handle, matrix, ourGridFixtures, Color.Yellow);
-
+            DrawGrid(handle, matrix, ourGrid, Color.MediumSpringGreen, true);
             DrawDocks(handle, ourGridId.Value, matrix);
         }
 
@@ -200,7 +198,7 @@ public sealed class RadarControl : Control
         foreach (var grid in _mapManager.FindGridsIntersecting(mapPosition.MapId,
                      new Box2(mapPosition.Position - MaxRadarRange, mapPosition.Position + MaxRadarRange)))
         {
-            if (grid.Owner == ourGridId || !fixturesQuery.TryGetComponent(grid.Owner, out var gridFixtures))
+            if (grid.Owner == ourGridId)
                 continue;
 
             var gridBody = bodyQuery.GetComponent(grid.Owner);
@@ -228,7 +226,11 @@ public sealed class RadarControl : Control
             var gridXform = xformQuery.GetComponent(grid.Owner);
             var gridMatrix = gridXform.WorldMatrix;
             Matrix3.Multiply(in gridMatrix, in offsetMatrix, out var matty);
-            var color = iff?.Color ?? IFFComponent.IFFColor;
+            var color = iff?.Color ?? Color.Gold;
+
+            // Others default:
+            // Color.FromHex("#FFC000FF")
+            // Hostile default: Color.Firebrick
 
             if (ShowIFF &&
                 (iff == null && IFFComponent.ShowIFFDefault ||
@@ -278,7 +280,7 @@ public sealed class RadarControl : Control
             }
 
             // Detailed view
-            DrawGrid(handle, matty, gridFixtures, color);
+            DrawGrid(handle, matty, grid, color, true);
 
             DrawDocks(handle, grid.Owner, matty);
         }
@@ -309,9 +311,10 @@ public sealed class RadarControl : Control
 
     private void DrawDocks(DrawingHandleScreen handle, EntityUid uid, Matrix3 matrix)
     {
-        if (!ShowDocks) return;
+        if (!ShowDocks)
+            return;
 
-        const float DockScale = 1.2f;
+        const float DockScale = 1f;
 
         if (_docks.TryGetValue(uid, out var docks))
         {
@@ -342,40 +345,113 @@ public sealed class RadarControl : Control
                     verts[i] = ScalePosition(vert);
                 }
 
-                handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts, color);
+                handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts, color.WithAlpha(0.8f));
+                handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, verts, color);
             }
         }
     }
 
-    private void DrawGrid(DrawingHandleScreen handle, Matrix3 matrix, FixturesComponent component, Color color)
+    private void DrawGrid(DrawingHandleScreen handle, Matrix3 matrix, MapGridComponent grid, Color color, bool drawInterior)
     {
-        foreach (var fixture in component.Fixtures.Values)
+        var rator = grid.GetAllTilesEnumerator();
+        var edges = new ValueList<Vector2>();
+        var tileTris = new ValueList<Vector2>();
+        Span<Vector2> tileVerts = new Vector2[4];
+
+        // Originally I used fixtures but this was a massive hassle
+        // Long-term it's probably better due to less data getting drawn but this is what it is for now.
+        while (rator.MoveNext(out var tileRef))
         {
-            // If the fixture has any points out of range we won't draw any of it.
-            var invalid = false;
-            var poly = (PolygonShape) fixture.Shape;
-            var verts = new Vector2[poly.VertexCount + 1];
+            var tileVec = (Vector2) tileRef.Value.GridIndices * grid.TileSize;
 
-            for (var i = 0; i < poly.VertexCount; i++)
+            if (drawInterior)
             {
-                var vert = matrix.Transform(poly.Vertices[i]);
+                tileVerts[0] = tileVec;
+                tileVerts[1] = tileVec + new Vector2(grid.TileSize, 0f);
+                tileVerts[2] = tileVec + new Vector2(grid.TileSize, grid.TileSize);
+                tileVerts[3] = tileVec + new Vector2(0f, grid.TileSize);
 
-                if (vert.Length > RadarRange)
+                // If the fixture has any points out of range we won't draw any of it.
+                var invalid = false;
+
+                for (var i = 0; i < 4; i++)
                 {
-                    invalid = true;
-                    break;
+                    var vert = matrix.Transform(tileVerts[i]);
+
+                    if (vert.Length > RadarRange)
+                    {
+                        invalid = true;
+                        break;
+                    }
+
+                    vert.Y = -vert.Y;
+                    tileVerts[i] = ScalePosition(vert);
                 }
 
-                vert.Y = -vert.Y;
-                verts[i] = ScalePosition(vert);
+                if (invalid)
+                    continue;
+
+                tileTris.Add(tileVerts[0]);
+                tileTris.Add(tileVerts[1]);
+                tileTris.Add(tileVerts[3]);
+
+                tileTris.Add(tileVerts[1]);
+                tileTris.Add(tileVerts[3]);
+                tileTris.Add(tileVerts[2]);
             }
 
-            if (invalid) continue;
+            // Iterate edges and see which we can draw
+            for (var i = 0; i < 4; i++)
+            {
+                var dir = (DirectionFlag) Math.Pow(2, i);
+                var dirVec = dir.AsDir().ToIntVec();
 
-            // Closed list
-            verts[poly.VertexCount] = verts[0];
-            handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, verts, color);
+                if (!grid.GetTileRef(tileRef.Value.GridIndices + dirVec).Tile.IsEmpty)
+                    continue;
+
+                Vector2 start;
+                Vector2 end;
+
+                // Draw line
+                // Could probably rotate this but this might be faster?
+                switch (dir)
+                {
+                    case DirectionFlag.South:
+                        start = tileVec;
+                        end = tileVec + new Vector2(grid.TileSize, 0f);
+                        break;
+                    case DirectionFlag.East:
+                        start = tileVec + new Vector2(grid.TileSize, 0f);
+                        end = tileVec + new Vector2(grid.TileSize, grid.TileSize);
+                        break;
+                    case DirectionFlag.North:
+                        start = tileVec + new Vector2(grid.TileSize, grid.TileSize);
+                        end = tileVec + new Vector2(0f, grid.TileSize);
+                        break;
+                    case DirectionFlag.West:
+                        start = tileVec + new Vector2(0f, grid.TileSize);
+                        end = tileVec;
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+
+                var adjustedStart = matrix.Transform(start);
+                var adjustedEnd = matrix.Transform(end);
+
+                if (adjustedStart.Length > RadarRange || adjustedEnd.Length > RadarRange)
+                    continue;
+
+                start = ScalePosition(new Vector2(adjustedStart.X, -adjustedStart.Y));
+                end = ScalePosition(new Vector2(adjustedEnd.X, -adjustedEnd.Y));
+
+                edges.Add(start);
+                edges.Add(end);
+            }
         }
+
+        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, tileTris.Span, color.WithAlpha(0.05f));
+        handle.DrawPrimitives(DrawPrimitiveTopology.LineList, edges.Span, color);
     }
 
     private Vector2 ScalePosition(Vector2 value)
