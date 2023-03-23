@@ -1,4 +1,6 @@
 namespace Content.Shared.Cluwne;
 
-public abstract class SharedCluwneBrainSystem
-{ }
+public abstract class SharedCluwneBrainSystem : EntitySystem
+{
+
+}
