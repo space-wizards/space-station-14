@@ -1,9 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Weld modular mines and grenades to salvage them, type: Tweak}
-  id: 2714
-  time: '2022-12-03T01:20:38.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: Updated all Engineering jumpsuit sprites, type: Tweak}
@@ -2916,3 +2911,9 @@ Entries:
       character creator menu.', type: Tweak}
   id: 3213
   time: '2023-03-23T05:03:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Cargo shuttles now use FTL and not their own system. They have to FTL
+      back and forth to sell / purchase goods., type: Tweak}
+  id: 3214
+  time: '2023-03-23T05:10:49.0000000+00:00'
