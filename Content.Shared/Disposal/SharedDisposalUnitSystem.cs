@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Body.Components;
 using Content.Shared.Disposal.Components;
 using Content.Shared.DragDrop;
+using Content.Shared.Emag.Systems;
 using Content.Shared.Item;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -28,6 +29,7 @@ namespace Content.Shared.Disposal
             base.Initialize();
             SubscribeLocalEvent<SharedDisposalUnitComponent, PreventCollideEvent>(OnPreventCollide);
             SubscribeLocalEvent<SharedDisposalUnitComponent, CanDropTargetEvent>(OnCanDragDropOn);
+            SubscribeLocalEvent<SharedDisposalUnitComponent, GotEmaggedEvent>(OnEmagged);
         }
 
         private void OnPreventCollide(EntityUid uid, SharedDisposalUnitComponent component, ref PreventCollideEvent args)
@@ -54,6 +56,12 @@ namespace Content.Shared.Disposal
                 return;
 
             args.CanDrop = CanInsert(component, args.Dragged);
+            args.Handled = true;
+        }
+
+        private void OnEmagged(EntityUid uid, SharedDisposalUnitComponent component, ref GotEmaggedEvent args)
+        {
+            component.DisablePressure = true;
             args.Handled = true;
         }
 
