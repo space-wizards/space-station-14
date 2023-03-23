@@ -41,7 +41,6 @@ public sealed class SpawnPointSystem : EntitySystem
                     args.HumanoidCharacterProfile,
                     args.Station);
 
-                EnsureComp<ClockedInComponent>(args.SpawnResult.Value);
                 return;
             }
 
@@ -53,7 +52,6 @@ public sealed class SpawnPointSystem : EntitySystem
                     args.HumanoidCharacterProfile,
                     args.Station);
 
-                EnsureComp<ClockedInComponent>(args.SpawnResult.Value);
                 return;
             }
         }
@@ -69,7 +67,6 @@ public sealed class SpawnPointSystem : EntitySystem
                 args.HumanoidCharacterProfile,
                 args.Station);
 
-            EnsureComp<ClockedInComponent>(args.SpawnResult.Value);
             return;
         }
 
