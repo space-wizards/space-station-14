@@ -92,10 +92,12 @@ public sealed class RadioSystem : EntitySystem
 
             if (!channel.LongRange && transform.MapID != sourceMapId)
                 continue;
+
             // don't need telecom server for long range channels or handheld radios and intercoms
             var needServer = !channel.LongRange && (!hasMicro || !speakerQuery.HasComponent(receiver));
             if (needServer && !hasActiveServer)
                 continue;
+                
             // check if message can be sent to specific receiver
             var attemptEv = new RadioReceiveAttemptEvent(channel, radioSource, receiver);
             RaiseLocalEvent(ref attemptEv);
