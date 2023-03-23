@@ -1,6 +1,8 @@
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
+using JetBrains.Annotations;
 using Robust.Client.Graphics;
+using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Collections;
@@ -126,6 +128,26 @@ public sealed class RadarControl : Control
         relativeWorldPos = _rotation.Value.RotateVec(relativeWorldPos);
         var coords = _coordinates.Value.Offset(relativeWorldPos);
         OnRadarClick?.Invoke(coords);
+    }
+
+    /// <summary>
+    /// Gets the entitycoordinates of where the mouseposition is, relative to the control.
+    /// </summary>
+    [PublicAPI]
+    public EntityCoordinates GetMouseCoordinates(ScreenCoordinates screen)
+    {
+        if (_coordinates == null || _rotation == null)
+        {
+            return EntityCoordinates.Invalid;
+        }
+
+        var pos = screen.Position / UIScale - GlobalPosition;
+
+        var a = InverseScalePosition(pos);
+        var relativeWorldPos = new Vector2(a.X, -a.Y);
+        relativeWorldPos = _rotation.Value.RotateVec(relativeWorldPos);
+        var coords = _coordinates.Value.Offset(relativeWorldPos);
+        return coords;
     }
 
     protected override void MouseWheel(GUIMouseWheelEventArgs args)
