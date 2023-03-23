@@ -10,8 +10,6 @@
         amount: 1
       - id: Brutepack
         amount: 2
-      - id: Gauze
-        amount: 1
       - id: Ointment
         amount: 2
       # see https://github.com/tgstation/blob/master/code/game/objects/items/storage/firstaid.dm for example contents
@@ -102,6 +100,8 @@
       - id: PillTricordrazine
         amount: 1
       - id: AntiPoisonMedipen
+        amount: 1
+      - id: Gauze
         amount: 1
 
 - type: entity
