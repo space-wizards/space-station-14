@@ -153,8 +153,8 @@ public sealed partial class EmergencyShuttleSystem
                     }
                     else
                     {
-                        _shuttle.FTLTravel(comp.EmergencyShuttle.Value, shuttle,
-                            CentCom.Value, _consoleAccumulator, TransitTime, dock: true);
+                        FTLTravel(shuttle,
+                            CentCom.Value, _consoleAccumulator, TransitTime, true);
                     }
                 }
 
