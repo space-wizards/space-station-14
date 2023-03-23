@@ -170,6 +170,8 @@ namespace Content.Server.Zombies
 
             //This is specifically here to combat insuls, because frying zombies on grilles is funny as shit.
             _serverInventory.TryUnequip(target, "gloves", true, true);
+            //Should prevent instances of zombies using comms for information they shouldnt be able to have.
+            _serverInventory.TryUnequip(target, "ears", true, true);
 
             //popup
             _popupSystem.PopupEntity(Loc.GetString("zombie-transform", ("target", target)), target, PopupType.LargeCaution);
