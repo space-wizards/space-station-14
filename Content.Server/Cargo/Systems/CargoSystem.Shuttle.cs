@@ -64,6 +64,7 @@ public sealed partial class CargoSystem
 
         SubscribeLocalEvent<CargoShuttleComponent, FTLStartedEvent>(OnCargoFTLStarted);
         SubscribeLocalEvent<CargoShuttleComponent, FTLCompletedEvent>(OnCargoFTLCompleted);
+        SubscribeLocalEvent<CargoShuttleComponent, FTLTagEvent>(OnCargoFTLTag);
 
         SubscribeLocalEvent<CargoShuttleConsoleComponent, ComponentStartup>(OnCargoShuttleConsoleStartup);
 
@@ -78,6 +79,16 @@ public sealed partial class CargoSystem
         SubscribeLocalEvent<StationCargoOrderDatabaseComponent, ComponentStartup>(OnCargoOrderStartup);
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+    }
+
+    private void OnCargoFTLTag(EntityUid uid, CargoShuttleComponent component, ref FTLTagEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        // Just saves mappers forgetting.
+        args.Handled = true;
+        args.Tag = "DockCargo";
     }
 
     private void ShutdownShuttle()
