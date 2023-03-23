@@ -1,10 +1,4 @@
 Entries:
-- author: JustinTrotter
-  changes:
-  - {message: Toggle internals icon correctly toggles gas tanks equipped on your back,
-    type: Fix}
-  id: 2724
-  time: '2022-12-06T23:14:09.0000000+00:00'
 - author: Veritius
   changes:
   - {message: Tranquiliser shells' capacity has been reduced., type: Tweak}
@@ -2916,3 +2910,9 @@ Entries:
   - {message: Tweaked baseball bats and spears damage and weight values., type: Tweak}
   id: 3223
   time: '2023-03-23T16:06:09.0000000+00:00'
+- author: Nekomancer
+  changes:
+  - {message: Added small light post state sprites, type: Add}
+  - {message: Tweaked small light post empty sprite, type: Tweak}
+  id: 3224
+  time: '2023-03-23T16:12:33.0000000+00:00'
