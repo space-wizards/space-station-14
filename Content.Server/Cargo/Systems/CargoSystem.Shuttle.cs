@@ -452,11 +452,11 @@ public sealed partial class CargoSystem
 
     private void OnCargoFTLStarted(EntityUid uid, CargoShuttleComponent component, ref FTLStartedEvent args)
     {
-        var xform = Transform(uid);
         var stationUid = component.Station;
 
         // Called
-        if (xform.MapID != CargoMap ||
+        if (CargoMap == null ||
+            args.FromMapUid != _mapManager.GetMapEntityId(CargoMap.Value) ||
             !TryComp<StationCargoOrderDatabaseComponent>(stationUid, out var orderDatabase))
         {
             return;
