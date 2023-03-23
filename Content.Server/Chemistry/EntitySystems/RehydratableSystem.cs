@@ -1,4 +1,5 @@
 using Content.Server.Chemistry.Components;
+using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
 
 namespace Content.Server.Chemistry.EntitySystems;
@@ -18,7 +19,7 @@ public sealed class RehydratableSystem : EntitySystem
     private void OnSolutionChange(EntityUid uid, RehydratableComponent comp, SolutionChangedEvent args)
     {
         var quantity = _solutions.GetReagentQuantity(uid, comp.CatalystPrototype);
-        if (quantity != FixedPoint.Zero && quantity >= comp.CatalystMinimum)
+        if (quantity != FixedPoint2.Zero && quantity >= comp.CatalystMinimum)
         {
             Expand(uid, comp);
         }
