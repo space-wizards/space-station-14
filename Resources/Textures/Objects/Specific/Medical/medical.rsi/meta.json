@@ -37,6 +37,9 @@
 		{
 			"name": "ointment-inhand-right",
 			"directions": 4
+		},
+		{
+			"name": "bloodpack"
 		}
 	]
 }
