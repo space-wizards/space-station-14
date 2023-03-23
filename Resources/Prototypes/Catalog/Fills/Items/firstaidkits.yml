@@ -98,7 +98,7 @@
   - type: StorageFill
     contents:
       - id: Brutepack
-        amount: 3 # TO DO: Advanced fills
+        amount: 2 # TO DO: Advanced fills
       - id: Gauze
         amount: 1
 
