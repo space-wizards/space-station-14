@@ -220,9 +220,6 @@ public sealed partial class ShuttleSystem
         SoundSystem.Play(_startupSound.GetSound(), Filter.Empty().AddInRange(Transform(uid).MapPosition, GetSoundRange(component.Owner)), _startupSound.Params);
         // Make sure the map is setup before we leave to avoid pop-in (e.g. parallax).
         SetupHyperspace();
-
-        var ev = new FTLStartedEvent();
-        RaiseLocalEvent(uid, ref ev);
         return true;
     }
 
