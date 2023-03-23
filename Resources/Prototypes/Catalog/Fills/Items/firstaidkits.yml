@@ -59,6 +59,8 @@
         amount: 1
       - id: PillDylovene
         amount: 3
+      - id: AntiPoisonMedipen
+        amount: 1
 
 - type: entity
   id: MedkitOxygenFilled
@@ -99,8 +101,6 @@
         amount: 1
       - id: Brutepack
         amount: 3 # TO DO: Advanced fills
-      - id: AntiPoisonMedipen
-        amount: 1
       - id: Gauze
         amount: 1
 
