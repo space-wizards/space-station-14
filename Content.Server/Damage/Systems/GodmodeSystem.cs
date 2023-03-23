@@ -39,7 +39,7 @@ namespace Content.Server.Damage.Systems
 
             if (EntityManager.TryGetComponent(entity, out DamageableComponent? damageable))
             {
-                _damageableSystem.SetDamage(damageable, new DamageSpecifier());
+                _damageableSystem.SetDamage(entity, damageable, new DamageSpecifier());
             }
 
             return true;
@@ -66,7 +66,7 @@ namespace Content.Server.Damage.Systems
             {
                 if (old.Damage != null)
                 {
-                    _damageableSystem.SetDamage(damageable, old.Damage);
+                    _damageableSystem.SetDamage(entity, damageable, old.Damage);
                 }
             }
 

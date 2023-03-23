@@ -148,10 +148,11 @@ namespace Content.Server.Bed.Sleep
         /// </summary>
         private void OnInteractHand(EntityUid uid, SleepingComponent component, InteractHandEvent args)
         {
+            args.Handled = true;
+
             if (!TryWakeCooldown(uid))
                 return;
 
-            args.Handled = true;
             TryWaking(args.Target, user: args.User);
         }
 

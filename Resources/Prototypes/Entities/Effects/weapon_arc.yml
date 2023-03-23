@@ -10,6 +10,9 @@
       drawdepth: Effects
     - type: EffectVisuals
     - type: WeaponArcVisuals
+    - type: Tag
+      tags:
+        - HideContextMenu
 
 - type: entity
   # Plays the state animation then disappears with no fade or swing

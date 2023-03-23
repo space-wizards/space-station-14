@@ -12,5 +12,6 @@ public sealed class EntityStorageComponent : SharedEntityStorageComponent, IGasM
     ///     None while open. Grabs gas from the atmosphere when closed, and exposes any entities inside to it.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public GasMixture Air { get; set; } = new (GasMixVolume);
+    [DataField("air")]
+    public GasMixture Air { get; set; } = new (200);
 }
