@@ -11,6 +11,9 @@ using Robust.Shared.Network;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
 using Content.Shared.Popups;
+using Robust.Shared.Map;
+using Content.Shared.Radio.Components;
+using Content.Server.Power.Components;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -23,7 +26,6 @@ public sealed class RadioSystem : EntitySystem
     [Dependency] private readonly IReplayRecordingManager _replay = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly TelecomSystem _telecom = default!;
 
     // set used to prevent radio feedback loops.
     private readonly HashSet<string> _messages = new();
@@ -72,7 +74,7 @@ public sealed class RadioSystem : EntitySystem
         var ev = new RadioReceiveEvent(message, messageSource, channel, chatMsg);
 
         var sourceMapId = Transform(radioSource).MapID;
-        var hasActiveServer = _telecom.HasActiveServer(sourceMapId, channel.ID);
+        var hasActiveServer = HasActiveServer(sourceMapId, channel.ID);
         var hasMicro = HasComp<RadioMicrophoneComponent>(radioSource);
 
         var speakerQuery = GetEntityQuery<RadioSpeakerComponent>();
@@ -108,5 +110,20 @@ public sealed class RadioSystem : EntitySystem
 
         _replay.QueueReplayMessage(chat);
         _messages.Remove(message);
+    }
+
+    private bool HasActiveServer(MapId mapId, string channelId)
+    {
+        var servers = EntityQuery<TelecomServerComponent, EncryptionKeyHolderComponent, ApcPowerReceiverComponent, TransformComponent>();
+        foreach (var (_, keys, power, transform) in servers)
+        {
+            if (transform.MapID == mapId &&
+                power.Powered &&
+                keys.Channels.Contains(channelId))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
