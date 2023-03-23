@@ -11,6 +11,7 @@ using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Spawners.Components;
 using Content.Shared.Tiles;
@@ -141,21 +142,13 @@ public sealed class ArrivalsSystem : EntitySystem
 
     private void OnArrivalsFTL(EntityUid uid, ArrivalsShuttleComponent component, ref FTLStartedEvent args)
     {
-        // Anyone already clocked in yeet them off the shuttle.
+        // Any mob then yeet them off the shuttle.
         if (!_cfgManager.GetCVar(CCVars.ArrivalsReturns) && args.FromMapUid != null)
         {
-            var clockedQuery = AllEntityQuery<ClockedInComponent, TransformComponent>();
-
-            // Clock them in when they FTL
-            while (clockedQuery.MoveNext(out var cUid, out _, out var xform))
-            {
-                if (xform.GridUid != uid)
-                    continue;
-
-                var rotation = xform.LocalRotation;
-                _transform.SetCoordinates(cUid, new EntityCoordinates(args.FromMapUid.Value, args.FTLFrom.Transform(xform.LocalPosition)));
-                _transform.SetWorldRotation(cUid, args.FromRotation + rotation);
-            }
+            var pendingEntQuery = GetEntityQuery<PendingClockInComponent>();
+            var mobQuery = GetEntityQuery<MobStateComponent>();
+            var xformQuery = GetEntityQuery<TransformComponent>();
+            DumpChildren(uid, ref args, pendingEntQuery, mobQuery, xformQuery);
         }
 
         var pendingQuery = AllEntityQuery<PendingClockInComponent, TransformComponent>();
@@ -163,10 +156,38 @@ public sealed class ArrivalsSystem : EntitySystem
         // Clock them in when they FTL
         while (pendingQuery.MoveNext(out var pUid, out _, out var xform))
         {
+            // Cheaper to iterate pending arrivals than all children
             if (xform.GridUid != uid)
                 continue;
 
-            EnsureComp<ClockedInComponent>(pUid);
+            RemCompDeferred<PendingClockInComponent>(pUid);
+        }
+    }
+
+    private void DumpChildren(EntityUid uid,
+        ref FTLStartedEvent args,
+        EntityQuery<PendingClockInComponent> pendingEntQuery,
+        EntityQuery<MobStateComponent> mobQuery,
+        EntityQuery<TransformComponent> xformQuery)
+    {
+        if (pendingEntQuery.HasComponent(uid))
+            return;
+
+        var xform = xformQuery.GetComponent(uid);
+
+        if (mobQuery.HasComponent(uid))
+        {
+            var rotation = xform.LocalRotation;
+            _transform.SetCoordinates(uid, new EntityCoordinates(args.FromMapUid!.Value, args.FTLFrom.Transform(xform.LocalPosition)));
+            _transform.SetWorldRotation(uid, args.FromRotation + rotation);
+            return;
+        }
+
+        var children = xform.ChildEnumerator;
+
+        while (children.MoveNext(out var child))
+        {
+            DumpChildren(child.Value, ref args, pendingEntQuery, mobQuery, xformQuery);
         }
     }
 
