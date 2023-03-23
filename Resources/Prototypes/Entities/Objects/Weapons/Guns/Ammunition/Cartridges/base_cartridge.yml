@@ -4,6 +4,7 @@
   abstract: true
   components:
   - type: Sprite
+    drawdepth: Items
     netsync: false
   - type: Tag
     tags:
