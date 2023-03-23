@@ -3,6 +3,7 @@ using Content.Server.Hands.Components;
 using Content.Server.Storage.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Storage;
+using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -59,6 +60,7 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
         /// <inheritdoc />
         public override void Initialize()
@@ -601,8 +603,13 @@ namespace Content.Server.Storage.EntitySystems
             if (!Resolve(uid, ref storageComp) || !TryComp(entity, out ActorComponent? player))
                 return;
 
+            // prevent spamming bag open / honkerton honk sound
+            silent |= _useDelay.ActiveDelay(uid);
             if (!silent)
+            {
                 _audio.PlayPvs(storageComp.StorageOpenSound, uid);
+                _useDelay.BeginDelay(uid);
+            }
 
             Logger.DebugS(storageComp.LoggerName, $"Storage (UID {uid}) \"used\" by player session (UID {player.PlayerSession.AttachedEntity}).");
 
