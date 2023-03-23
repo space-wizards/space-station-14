@@ -1,10 +1,4 @@
 Entries:
-- author: Cripes
-  changes:
-  - {message: Fix bug where air alarm would show incorrect filters for a scrubber,
-    type: Fix}
-  id: 2728
-  time: '2022-12-06T23:33:21.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: NPCs will be more persistent in chases., type: Tweak}
@@ -2916,3 +2910,8 @@ Entries:
     type: Tweak}
   id: 3227
   time: '2023-03-23T16:51:50.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Paperwork now looks the same as he did before, type: Tweak}
+  id: 3228
+  time: '2023-03-23T16:53:27.0000000+00:00'
