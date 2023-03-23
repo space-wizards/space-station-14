@@ -22,7 +22,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         public float Offset { get; set; } = 0.5f;
 
         [DataField("transferForensics")]
-        public bool TransferForensics = false;
+        public bool DoTransferForensics = false;
 
         public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
         {
@@ -43,15 +43,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                     var spawned = system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
                     system.StackSystem.SetCount(spawned, count);
 
-                    if (!TransferForensics || !system.EntityManager.TryGetComponent<ForensicsComponent>(owner, out var forensicsComponent))
-                        continue;
-                    var comp = system.EntityManager.EnsureComponent<ForensicsComponent>(spawned);
-                    comp.DNAs = forensicsComponent.DNAs;
-
-                    if (!system.Random.Prob(0.4f))
-                        continue;
-                    comp.Fingerprints = forensicsComponent.Fingerprints;
-                    comp.Fibers = forensicsComponent.Fibers;
+                    TransferForensics(spawned, system, owner);
                 }
                 else
                 {
@@ -59,18 +51,25 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                     {
                         var spawned = system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
 
-                        if (!TransferForensics || !system.EntityManager.TryGetComponent<ForensicsComponent>(owner, out var forensicsComponent))
-                            continue;
-                        var comp = system.EntityManager.EnsureComponent<ForensicsComponent>(spawned);
-                        comp.DNAs = forensicsComponent.DNAs;
-
-                        if (!system.Random.Prob(0.4f))
-                            continue;
-                        comp.Fingerprints = forensicsComponent.Fingerprints;
-                        comp.Fibers = forensicsComponent.Fibers;
+                        TransferForensics(spawned, system, owner);
                     }
                 }
             }
+        }
+
+        public void TransferForensics(EntityUid spawned, DestructibleSystem system, EntityUid owner)
+        {
+            if (!DoTransferForensics ||
+                !system.EntityManager.TryGetComponent<ForensicsComponent>(owner, out var forensicsComponent))
+                return;
+
+            var comp = system.EntityManager.EnsureComponent<ForensicsComponent>(spawned);
+            comp.DNAs = forensicsComponent.DNAs;
+
+            if (!system.Random.Prob(0.4f))
+                return;
+            comp.Fingerprints = forensicsComponent.Fingerprints;
+            comp.Fibers = forensicsComponent.Fibers;
         }
     }
 }
