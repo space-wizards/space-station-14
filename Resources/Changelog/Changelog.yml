@@ -1,9 +1,4 @@
 Entries:
-- author: Veritius
-  changes:
-  - {message: Tranquiliser shells' capacity has been reduced., type: Tweak}
-  id: 2725
-  time: '2022-12-06T23:14:24.0000000+00:00'
 - author: nikthechampiongr
   changes:
   - {message: Added confirmation button for character deletion., type: Add}
@@ -2916,3 +2911,9 @@ Entries:
   - {message: Tweaked small light post empty sprite, type: Tweak}
   id: 3224
   time: '2023-03-23T16:12:33.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: 'Zombies drop their headsets, preventing them from hearing comms.',
+    type: Tweak}
+  id: 3225
+  time: '2023-03-23T16:17:33.0000000+00:00'
