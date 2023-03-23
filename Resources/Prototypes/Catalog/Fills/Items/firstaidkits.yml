@@ -119,7 +119,7 @@
         amount: 1 # TO DO: More combat meds
       - id: SyringeTranexamicAcid
         amount: 1
-      - id: PillTricordrazine
+      - id: EmergencyMedipen
         amount: 1
       - id: AntiPoisonMedipen
         amount: 1
