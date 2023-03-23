@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: NPCs will no longer stall on 1 bad path., type: Fix}
-  id: 2723
-  time: '2022-12-06T23:11:05.0000000+00:00'
 - author: JustinTrotter
   changes:
   - {message: Toggle internals icon correctly toggles gas tanks equipped on your back,
@@ -2916,3 +2911,8 @@ Entries:
     type: Add}
   id: 3222
   time: '2023-03-23T15:54:15.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Tweaked baseball bats and spears damage and weight values., type: Tweak}
+  id: 3223
+  time: '2023-03-23T16:06:09.0000000+00:00'
