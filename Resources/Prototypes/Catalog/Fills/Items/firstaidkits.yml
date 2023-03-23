@@ -101,6 +101,8 @@
         amount: 2 # TO DO: Advanced fills
       - id: Gauze
         amount: 1
+      - id: Ointment
+        amount: 1
 
 - type: entity
   id: MedkitCombatFilled
