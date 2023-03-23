@@ -52,6 +52,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
+    [Dependency] private readonly ShuttleSystem _shuttle = default!;
 
 
     private enum WinType

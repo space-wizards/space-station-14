@@ -112,7 +112,7 @@ namespace Content.Server.Shuttles.Systems
             var tagEv = new FTLTagEvent();
             RaiseLocalEvent(xform.GridUid.Value, ref tagEv);
 
-            _shuttle.FTLTravel(shuttle, args.Destination, dock: dock, priorityTag: tagEv.Tag);
+            _shuttle.FTLTravel(xform.GridUid.Value, shuttle, args.Destination, dock: dock, priorityTag: tagEv.Tag);
         }
 
         private void OnDock(DockEvent ev)
@@ -141,7 +141,7 @@ namespace Content.Server.Shuttles.Systems
 
             while (query.MoveNext(out var uid, out var comp))
             {
-                UpdateState(uid, comp, docks);
+                UpdateState(uid, docks);
             }
         }
 
@@ -173,12 +173,12 @@ namespace Content.Server.Shuttles.Systems
 
         private void OnConsoleAnchorChange(EntityUid uid, ShuttleConsoleComponent component, ref AnchorStateChangedEvent args)
         {
-            UpdateState(uid, component);
+            UpdateState(uid);
         }
 
         private void OnConsolePowerChange(EntityUid uid, ShuttleConsoleComponent component, ref PowerChangedEvent args)
         {
-            UpdateState(uid, component);
+            UpdateState(uid);
         }
 
         private bool TryPilot(EntityUid user, EntityUid uid)
@@ -243,7 +243,7 @@ namespace Content.Server.Shuttles.Systems
             return result;
         }
 
-        private void UpdateState(EntityUid consoleUid, ShuttleConsoleComponent component, List<DockingInterfaceState>? docks = null)
+        private void UpdateState(EntityUid consoleUid, List<DockingInterfaceState>? docks = null)
         {
             EntityUid? entity = consoleUid;
 
@@ -302,7 +302,7 @@ namespace Content.Server.Shuttles.Systems
 
                     var canTravel = !locked &&
                                     comp.Enabled &&
-                                    (!TryComp<FTLComponent>(ftlUid, out var ftl) || ftl.State == FTLState.Cooldown);
+                                    (!TryComp<FTLComponent>(destUid, out var ftl) || ftl.State == FTLState.Cooldown);
 
                     // Can't travel to same map (yet)
                     if (canTravel && consoleXform?.MapUid == Transform(destUid).MapUid)
@@ -331,7 +331,7 @@ namespace Content.Server.Shuttles.Systems
         {
             base.Update(frameTime);
 
-            var toRemove = new RemQueue<PilotComponent>();
+            var toRemove = new ValueList<(EntityUid, PilotComponent)>();
             var query = EntityQueryEnumerator<PilotComponent>();
 
             while (query.MoveNext(out var uid, out var comp))
@@ -347,7 +347,7 @@ namespace Content.Server.Shuttles.Systems
 
             foreach (var (uid, comp) in toRemove)
             {
-                RemovePilot(comp.Owner, comp);
+                RemovePilot(uid, comp);
             }
         }
 

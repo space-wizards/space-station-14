@@ -138,7 +138,9 @@ public sealed partial class EmergencyShuttleSystem
 
             if (CentComMap != null)
             {
-                foreach (var comp in EntityQuery<StationDataComponent>(true))
+                var dataQuery = AllEntityQuery<StationDataComponent>();
+
+                while (dataQuery.MoveNext(out var comp))
                 {
                     if (!TryComp<ShuttleComponent>(comp.EmergencyShuttle, out var shuttle))
                         continue;
@@ -153,7 +155,7 @@ public sealed partial class EmergencyShuttleSystem
                     }
                     else
                     {
-                        FTLTravel(shuttle,
+                        _shuttle.FTLTravel(comp.EmergencyShuttle.Value, shuttle,
                             CentCom.Value, _consoleAccumulator, TransitTime, true);
                     }
                 }

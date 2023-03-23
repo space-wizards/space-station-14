@@ -33,7 +33,7 @@ public sealed partial class DockingSystem
    /// <summary>
    /// Checks if 2 docks can be connected by moving the shuttle directly onto docks.
    /// </summary>
-   private bool CanDock(
+   public bool CanDock(
        DockingComponent shuttleDock,
        TransformComponent shuttleDockXform,
        DockingComponent gridDock,
@@ -79,25 +79,63 @@ public sealed partial class DockingSystem
        return true;
    }
 
-   public DockingConfig? GetDockingConfig(EntityUid shuttleUid, EntityUid targetGrid)
-    {
-       var gridDocks = GetDocks(targetGrid);
-
-       if (gridDocks.Count <= 0)
-           return null;
-
-       var xformQuery = GetEntityQuery<TransformComponent>();
-       var targetGridGrid = Comp<MapGridComponent>(targetGrid);
-       var targetGridXform = xformQuery.GetComponent(targetGrid);
-       var targetGridAngle = _transform.GetWorldRotation(targetGridXform).Reduced();
-
-       var shuttleDocks = GetDocks(shuttleUid);
-       var shuttleAABB = Comp<MapGridComponent>(shuttleUid).LocalAABB;
-
-       var validDockConfigs = new List<DockingConfig>();
-
-       if (shuttleDocks.Count > 0)
+   /// <summary>
+   /// Gets docking config between 2 specific docks.
+   /// </summary>
+   public DockingConfig? GetDockingConfig(
+       EntityUid shuttleUid,
+       EntityUid targetGrid,
+       EntityUid shuttleDockUid,
+       DockingComponent shuttleDock,
+       EntityUid gridDockUid,
+       DockingComponent gridDock)
+   {
+       var shuttleDocks = new List<(EntityUid, DockingComponent)>(1)
        {
+           (shuttleDockUid, shuttleDock)
+       };
+
+       var gridDocks = new List<(EntityUid, DockingComponent)>(1)
+       {
+           (gridDockUid, gridDock)
+       };
+
+       return GetDockingConfigPrivate(shuttleUid, targetGrid, shuttleDocks, gridDocks);
+   }
+
+   /// <summary>
+   /// Tries to get a valid docking configuration for the shuttle to the target grid.
+   /// </summary>
+   /// <param name="priorityTag">Priority docking tag to prefer, e.g. for emergency shuttle</param>
+   public DockingConfig? GetDockingConfig(EntityUid shuttleUid, EntityUid targetGrid, string? priorityTag = null)
+   {
+       var gridDocks = GetDocks(targetGrid);
+       var shuttleDocks = GetDocks(shuttleUid);
+
+       return GetDockingConfigPrivate(shuttleUid, targetGrid, shuttleDocks, gridDocks, priorityTag);
+   }
+
+   private DockingConfig? GetDockingConfigPrivate(
+       EntityUid shuttleUid,
+       EntityUid targetGrid,
+       List<(EntityUid, DockingComponent)> shuttleDocks,
+       List<(EntityUid, DockingComponent)> gridDocks,
+       string? priorityTag = null)
+    {
+        if (gridDocks.Count <= 0)
+            return null;
+
+        var xformQuery = GetEntityQuery<TransformComponent>();
+        var targetGridGrid = Comp<MapGridComponent>(targetGrid);
+        var targetGridXform = xformQuery.GetComponent(targetGrid);
+        var targetGridAngle = _transform.GetWorldRotation(targetGridXform).Reduced();
+
+        var shuttleAABB = Comp<MapGridComponent>(shuttleUid).LocalAABB;
+
+        var validDockConfigs = new List<DockingConfig>();
+
+        if (shuttleDocks.Count > 0)
+        {
            // We'll try all combinations of shuttle docks and see which one is most suitable
            foreach (var (dockUid, shuttleDock) in shuttleDocks)
            {
@@ -183,22 +221,24 @@ public sealed partial class DockingSystem
                    });
                }
            }
-       }
+        }
 
-       if (validDockConfigs.Count <= 0)
+        if (validDockConfigs.Count <= 0)
            return null;
 
-       // Prioritise by priority docks, then by maximum connected ports, then by most similar angle.
-       validDockConfigs = validDockConfigs
-           .OrderByDescending(x => x.Docks.Any(docks => HasComp<EmergencyDockComponent>(docks.DockB.Owner)))
+        // Prioritise by priority docks, then by maximum connected ports, then by most similar angle.
+        validDockConfigs = validDockConfigs
+           .OrderByDescending(x => x.Docks.Any(docks =>
+               TryComp<PriorityDockComponent>(docks.DockB.Owner, out var priority) &&
+               priority.Tag?.Equals(priorityTag) == true))
            .ThenByDescending(x => x.Docks.Count)
            .ThenBy(x => Math.Abs(Angle.ShortestDistance(x.Angle.Reduced(), targetGridAngle).Theta)).ToList();
 
-       var location = validDockConfigs.First();
-       location.TargetGrid = targetGrid;
-       // TODO: Ideally do a hyperspace warpin, just have it run on like a 10 second timer.
+        var location = validDockConfigs.First();
+        location.TargetGrid = targetGrid;
+        // TODO: Ideally do a hyperspace warpin, just have it run on like a 10 second timer.
 
-       return location;
+        return location;
     }
 
    /// <summary>
