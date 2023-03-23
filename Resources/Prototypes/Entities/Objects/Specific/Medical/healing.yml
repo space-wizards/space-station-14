@@ -56,7 +56,6 @@
     damage:
       groups:
         Brute: -15 # 5 for each type in the group
-    bloodlossModifier: -3 # a little bit of bleed rate healing.
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
     healingEndSound:
@@ -82,7 +81,7 @@
     damageContainer: Biological
     damage:
       types:
-        bloodloss: -3 #for whatever godforsaken reason I cannot touch blood level without healing one of these, so fuck it, bloodloss healing
+        bloodloss: -3 #for whatever godforsaken reason I cannot touch blood level without healing one of these, so fuck it, bleed rate healing
     ModifyBloodLevel: 10
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
