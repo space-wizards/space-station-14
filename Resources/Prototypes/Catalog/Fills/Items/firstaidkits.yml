@@ -24,7 +24,7 @@
   - type: StorageFill
     contents:
       - id: Ointment
-        amount: 2
+        amount: 4
       - id: PillKelotane
         amount: 3
       - id: SyringeInaprovaline
