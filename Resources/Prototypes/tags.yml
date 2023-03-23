@@ -183,6 +183,12 @@
   id: DiscreteHealthAnalyzer #So construction recipes don't eat medical PDAs
 
 - type: Tag
+  id: DockCargo
+
+- type: Tag
+  id: DockEmergency
+
+- type: Tag
   id: Document
 
 - type: Tag

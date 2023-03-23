@@ -1,24 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Turrets will now shoot space targets., type: Fix}
-  id: 2711
-  time: '2022-12-01T15:02:02.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: Kick AFK players, type: Add}
-  id: 2712
-  time: '2022-12-01T16:38:20.0000000+00:00'
-- author: jick
-  changes:
-  - {message: Escape key clears chat input, type: Tweak}
-  id: 2713
-  time: '2022-12-03T01:15:59.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Weld modular mines and grenades to salvage them, type: Tweak}
-  id: 2714
-  time: '2022-12-03T01:20:38.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: Updated all Engineering jumpsuit sprites, type: Tweak}
@@ -2913,3 +2893,27 @@ Entries:
       the ingame topbar buttons., type: Tweak}
   id: 3210
   time: '2023-03-23T03:41:43.0000000+00:00'
+- author: adamsogm
+  changes:
+  - {message: Changed how full solution containers appear based on their actual fill
+      level., type: Tweak}
+  - {message: Fixed water cup being perpetually empty., type: Fix}
+  id: 3211
+  time: '2023-03-23T03:49:42.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Changed PKA to have a consistent firerate of 1.5 seconds, type: Tweak}
+  id: 3212
+  time: '2023-03-23T04:22:01.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Hair, facial hair, markings, etc are now sorted alphabetically in the
+      character creator menu.', type: Tweak}
+  id: 3213
+  time: '2023-03-23T05:03:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Cargo shuttles now use FTL and not their own system. They have to FTL
+      back and forth to sell / purchase goods., type: Tweak}
+  id: 3214
+  time: '2023-03-23T05:10:49.0000000+00:00'
