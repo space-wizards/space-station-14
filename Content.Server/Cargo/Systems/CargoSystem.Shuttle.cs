@@ -149,10 +149,10 @@ public sealed partial class CargoSystem
         while (pilotConsoleQuery.MoveNext(out var uid, out var console))
         {
             var stationUid = _station.GetOwningStation(uid);
-            if (stationUid != component.Station)
+            if (stationUid == null || stationUid != component.Station)
                 continue;
 
-            console.Entity = GetShuttleConsole(component.Owner);
+            console.Entity = GetShuttleConsole(stationUid.Value);
         }
 
         // Update order consoles.
