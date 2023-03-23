@@ -76,7 +76,7 @@
     tags:
     - Bloodpack
   - type: Sprite
-    state: brutepack
+    state: Bloodpack
   - type: Healing
     damageContainer: Biological
     damage:
