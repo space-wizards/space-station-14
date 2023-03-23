@@ -182,9 +182,6 @@ entities:
       -1,-4:
         ind: -1,-4
         tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABdAAAAXQAAAF4AAABeAAAAXgAAAF4AAABdAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF0AAABeAAAAXgAAAF4AAABeAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABdAAAAXgAAAF4AAABeAAAAXgAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXQAAAF4AAABeAAAAXgAAAF4AAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF0AAABeAAAARAAAAEQAAABeAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABdAAAAXgAAAEQAAAJEAAACXgAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXQAAAF4AAABEAAACRAAAA14AAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF0AAABeAAAARAAAAkQAAABeAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF4AAABeAAAAXgAAAEQAAANEAAACXgAAAF4AAABeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeAAAAXgAAAF4AAABEAAAARAAAAF4AAABeAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAAF4AAABeAAAARAAAAEQAAABeAAAAXgAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF0AAAAoAAAARAAAAEQAAANEAAACRAAAAygAAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
-      0,-4:
-        ind: 0,-4
-        tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
       1,-2:
         ind: 1,-2
         tiles: XgAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAAF4AAABeAAAATgAAAF4AAABeAAAAXgAAAF4AAABdAAAAXgAAADoAAAA6AAAAOgAAADoAAAA6AAAARAAAA0QAAAFEAAADXgAAAE4AAABeAAAAXgAAAF4AAABeAAAAXQAAAF4AAAA6AAAAOgAAADoAAAA6AAAAOgAAAEQAAANEAAACRAAAA14AAABeAAAAFgAAAF4AAABeAAAAXgAAAF0AAABeAAAAOgAAADoAAAA6AAAAOgAAADoAAABEAAABRAAAAEQAAANeAAAAFgAAABYAAAFeAAAAXgAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAAF4AAABeAAAARAAAAkQAAAFEAAABXgAAAEQAAAAWAAABXgAAAEQAAAJEAAABXgAAAEQAAAJRAAAAUQAAAFEAAABEAAAARAAAAEQAAAJEAAAARAAAA14AAABEAAAAFgAAAl4AAABEAAABRAAAAl4AAABEAAAAUQAAAFEAAABRAAAARAAAAEQAAABEAAABRAAAAkQAAABEAAAARAAAABYAAAMWAAAARAAAAEQAAANEAAAARAAAAUQAAAJEAAABRAAAAkQAAANEAAACRAAAAUQAAAJEAAACXgAAABYAAAAWAAADXgAAAEQAAABEAAADXgAAAEQAAAJEAAABRAAAAEQAAABEAAABRAAAAUQAAAJEAAADRAAAAl4AAAAWAAAAXgAAAF4AAABeAAAAXgAAAF4AAABEAAABRAAAAhYAAAAWAAABFgAAABYAAAMWAAADFgAAAhYAAAJeAAAAXgAAABYAAAIWAAADFgAAABYAAAFEAAACRAAAA0QAAABeAAAAXgAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAAAQAAAEWAAAAFgAAABYAAAAWAAADRAAAAEQAAAFEAAADWwAAAVsAAAFbAAADWwAAAFsAAABbAAADXgAAAAQAAAEEAAABXgAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAAF4AAABbAAAAWwAAA1sAAAJbAAABWwAAA14AAAAEAAACBAAAAV4AAABeAAAAWwAAAFsAAANbAAABXgAAAAQAAAFeAAAAWwAAAlsAAABbAAABWwAAA1sAAAFeAAAABAAAAgQAAABeAAAAWwAAAlsAAABbAAABWwAAAV4AAAAEAAACXgAAAF4AAABbAAADWwAAAFsAAAJeAAAAXgAAAAQAAAAAAAAAXgAAAF4AAABbAAACWwAAAFsAAAFeAAAABAAAAAQAAAFeAAAAXgAAAF4AAABeAAAAXgAAAAUAAAAEAAAAAAAAAA==
@@ -2494,7 +2491,8 @@ entities:
           1: 1024
         -5,-4:
           0: 63486
-          1: 2049
+          1: 2048
+          6: 1
         -5,-3:
           0: 65535
         -5,-2:
@@ -2958,7 +2956,7 @@ entities:
           0: 61166
         -4,-15:
           0: 51342
-          6: 1088
+          7: 1088
         -4,-14:
           0: 52428
         -3,-14:
@@ -2968,12 +2966,12 @@ entities:
           0: 65535
         -3,-15:
           0: 50252
-          6: 15283
+          7: 15283
         -2,-13:
           0: 65535
         -2,-14:
           0: 59528
-          6: 1536
+          7: 1536
         -1,-15:
           0: 28672
         -1,-14:
@@ -2982,7 +2980,7 @@ entities:
           0: 65535
         0,-14:
           0: 12288
-          6: 768
+          7: 768
         0,-13:
           0: 13107
         4,-8:
@@ -2995,7 +2993,7 @@ entities:
           0: 65535
         5,-8:
           0: 13119
-          6: 52416
+          7: 52416
         5,-7:
           0: 65503
           1: 32
@@ -3005,7 +3003,7 @@ entities:
           0: 65535
         6,-8:
           0: 56543
-          6: 8992
+          7: 8992
         6,-7:
           0: 65535
         6,-6:
@@ -3025,7 +3023,7 @@ entities:
           1: 16
         8,-8:
           0: 16383
-          7: 49152
+          8: 49152
         8,-7:
           0: 65535
         8,-6:
@@ -3099,7 +3097,8 @@ entities:
         -6,-6:
           0: 65535
         -6,-5:
-          0: 65535
+          0: 30583
+          9: 34952
         -5,-8:
           0: 65535
         -5,-7:
@@ -3109,7 +3108,8 @@ entities:
           1: 32
         -5,-5:
           0: 61167
-          1: 4368
+          10: 16
+          6: 4352
         -8,-10:
           0: 65535
         -8,-9:
@@ -3127,7 +3127,7 @@ entities:
           0: 65535
         -6,-9:
           0: 65023
-          1: 512
+          6: 512
         -5,-11:
           0: 12288
         -5,-10:
@@ -3305,9 +3305,9 @@ entities:
           0: 65535
         -12,4:
           0: 3618
-          6: 204
+          7: 204
         -11,4:
-          6: 17
+          7: 17
           0: 35754
         -11,5:
           0: 52424
@@ -3355,29 +3355,29 @@ entities:
           0: 32768
         -14,0:
           0: 16191
-          8: 192
-          9: 49152
+          11: 192
+          12: 49152
         -14,1:
           1: 1
           0: 16190
-          6: 49344
+          7: 49344
         -14,2:
           0: 16191
-          10: 192
-          6: 49152
+          13: 192
+          7: 49152
         -14,3:
           0: 49407
         -13,0:
           0: 61423
-          8: 16
-          9: 4096
+          11: 16
+          12: 4096
         -13,1:
           0: 61423
-          6: 4112
+          7: 4112
         -13,2:
           0: 61423
-          10: 16
-          6: 4096
+          13: 16
+          7: 4096
         -13,3:
           0: 31999
         -15,-4:
@@ -3579,6 +3579,21 @@ entities:
       - volume: 2500
         temperature: 293.15
         moles:
+        - 20.04244
+        - 75.39776
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+      - volume: 2500
+        temperature: 293.15
+        moles:
         - 0
         - 0
         - 0
@@ -3596,6 +3611,36 @@ entities:
         moles:
         - 21.213781
         - 79.80423
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+      - volume: 2500
+        temperature: 293.15
+        moles:
+        - 20.078888
+        - 75.53487
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+      - volume: 2500
+        temperature: 293.15
+        moles:
+        - 20.045357
+        - 75.40873
         - 0
         - 0
         - 0
@@ -7061,7 +7106,7 @@ entities:
   components:
   - type: MetaData
   - type: Transform
-  - index: 5
+  - index: 24
     type: Map
   - type: PhysicsMap
   - type: Broadphase
@@ -32137,6 +32182,13 @@ entities:
       id: docking
     type: Fixtures
 - uid: 3761
+  type: AirlockExternalGlass
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -9.5,-43.5
+    parent: 0
+    type: Transform
+- uid: 3762
   type: AirlockExternalGlassShuttleArrivals
   components:
   - rot: 1.5707963267948966 rad
@@ -32179,235 +32231,51 @@ entities:
       friction: 0.4
       id: docking
     type: Fixtures
-- uid: 3762
-  type: AirlockExternalGlassShuttleLocked
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: -14.5,-43.5
-    parent: 0
-    type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        radius: 0.01
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-      density: 100
-      hard: True
-      restitution: 0
-      friction: 0.4
-      id: null
-    - shape: !type:PhysShapeCircle
-        radius: 0.2
-        position: 0,-0.5
-      mask: []
-      layer: []
-      density: 1
-      hard: False
-      restitution: 0
-      friction: 0.4
-      id: docking
-    type: Fixtures
 - uid: 3763
-  type: AirlockExternalGlassShuttleLocked
+  type: AirlockExternalGlass
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -14.5,-50.5
+  - rot: 1.5707963267948966 rad
+    pos: -12.5,-43.5
     parent: 0
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        radius: 0.01
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-      density: 100
-      hard: True
-      restitution: 0
-      friction: 0.4
-      id: null
-    - shape: !type:PhysShapeCircle
-        radius: 0.2
-        position: 0,-0.5
-      mask: []
-      layer: []
-      density: 1
-      hard: False
-      restitution: 0
-      friction: 0.4
-      id: docking
-    type: Fixtures
 - uid: 3764
-  type: AtmosDeviceFanTiny
+  type: AirlockExternalGlass
   components:
-  - pos: -13.5,-50.5
+  - rot: 1.5707963267948966 rad
+    pos: -12.5,-50.5
     parent: 0
     type: Transform
 - uid: 3765
-  type: AtmosDeviceFanTiny
+  type: AirlockExternalGlass
   components:
-  - pos: -8.5,-50.5
+  - rot: 1.5707963267948966 rad
+    pos: -9.5,-50.5
     parent: 0
     type: Transform
 - uid: 3766
   type: AtmosDeviceFanTiny
   components:
-  - pos: -8.5,-43.5
+  - pos: -13.5,-50.5
     parent: 0
     type: Transform
 - uid: 3767
   type: AtmosDeviceFanTiny
   components:
-  - pos: -13.5,-43.5
+  - pos: -8.5,-50.5
     parent: 0
     type: Transform
 - uid: 3768
+  type: AtmosDeviceFanTiny
   components:
-  - type: MetaData
-  - pos: 2.2710133,-2.4148211
-    parent: 473
+  - pos: -8.5,-43.5
+    parent: 0
     type: Transform
-  - chunks:
-      -1,-3:
-        ind: -1,-3
-        tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
-    type: MapGrid
-  - type: Broadphase
-  - angularDamping: 0.05
-    linearDamping: 0.05
-    fixedRotation: False
-    canCollide: False
-    bodyType: Dynamic
-    type: Physics
-  - fixtures: []
-    type: Fixtures
-  - type: OccluderTree
-  - type: Shuttle
-  - nextUpdate: 38.2504725
-    type: GridPathfinding
-  - gravityShakeSound: !type:SoundPathSpecifier
-      path: /Audio/Effects/alert.ogg
-    type: Gravity
-  - chunkCollection:
-      version: 2
-      nodes: []
-    type: DecalGrid
-  - version: 2
-    data:
-      tiles:
-        -2,-12:
-          0: 52428
-        -2,-11:
-          0: 52300
-          1: 128
-        -2,-10:
-          0: 12
-        -1,-12:
-          0: 65535
-        -1,-11:
-          0: 65407
-          1: 128
-        -1,-10:
-          0: 15
-        -2,-14:
-          2: 1536
-          0: 59528
-        -2,-13:
-          0: 52428
-        -1,-15:
-          0: 28672
-        -1,-14:
-          0: 65535
-        -1,-13:
-          0: 65535
-        0,-12:
-          0: 13107
-        0,-11:
-          0: 13107
-        0,-10:
-          0: 1
-        0,-14:
-          2: 768
-          0: 12288
-        0,-13:
-          0: 13107
-      uniqueMixes:
-      - volume: 2500
-        temperature: 293.15
-        moles:
-        - 21.824879
-        - 82.10312
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-      - volume: 2500
-        temperature: 293.15
-        moles:
-        - 18.439045
-        - 69.36594
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-      - volume: 2500
-        temperature: 293.15
-        moles:
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-      chunkSize: 4
-    type: GridAtmosphere
-  - type: GasTileOverlay
+- uid: 3769
+  type: AtmosDeviceFanTiny
+  components:
+  - pos: -13.5,-43.5
+    parent: 0
+    type: Transform
 - uid: 3770
   type: PoweredSmallLight
   components:
@@ -39546,6 +39414,18 @@ entities:
     pos: -8.5,-48.5
     parent: 0
     type: Transform
+- uid: 4707
+  type: SpawnPointLatejoin
+  components:
+  - pos: -11.5,-48.5
+    parent: 0
+    type: Transform
+- uid: 4708
+  type: SpawnPointLatejoin
+  components:
+  - pos: -11.5,-47.5
+    parent: 0
+    type: Transform
 - uid: 4709
   type: ReinforcedWindow
   components:
@@ -39570,6 +39450,12 @@ entities:
   - pos: -14.5,-42.5
     parent: 0
     type: Transform
+- uid: 4713
+  type: SpawnPointLatejoin
+  components:
+  - pos: -11.5,-46.5
+    parent: 0
+    type: Transform
 - uid: 4714
   type: AirlockGlass
   components:
@@ -39577,9 +39463,15 @@ entities:
     parent: 0
     type: Transform
 - uid: 4715
-  type: AirlockExternalGlassLocked
+  type: SpawnPointLatejoin
   components:
-  - pos: -12.5,-50.5
+  - pos: -11.5,-45.5
+    parent: 0
+    type: Transform
+- uid: 4716
+  type: SpawnPointLatejoin
+  components:
+  - pos: -10.5,-48.5
     parent: 0
     type: Transform
 - uid: 4717
@@ -39589,9 +39481,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 4718
-  type: AirlockExternalGlassLocked
+  type: SpawnPointLatejoin
   components:
-  - pos: -12.5,-43.5
+  - pos: -10.5,-47.5
     parent: 0
     type: Transform
 - uid: 4719
@@ -39602,15 +39494,15 @@ entities:
     parent: 0
     type: Transform
 - uid: 4720
-  type: AirlockExternalGlass
+  type: SpawnPointLatejoin
   components:
-  - pos: -9.5,-43.5
+  - pos: -10.5,-46.5
     parent: 0
     type: Transform
 - uid: 4721
-  type: AirlockExternalGlass
+  type: SpawnPointLatejoin
   components:
-  - pos: -9.5,-50.5
+  - pos: -10.5,-45.5
     parent: 0
     type: Transform
 - uid: 4722
@@ -39715,6 +39607,92 @@ entities:
   - pos: -7.5,-49.5
     parent: 0
     type: Transform
+- uid: 4736
+  type: AirlockExternalGlassShuttleLocked
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -14.5,-43.5
+    parent: 0
+    type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        radius: 0.01
+        vertices:
+        - 0.49,-0.49
+        - 0.49,0.49
+        - -0.49,0.49
+        - -0.49,-0.49
+      mask:
+      - Impassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
+      - InteractImpassable
+      layer:
+      - MidImpassable
+      - HighImpassable
+      - BulletImpassable
+      - InteractImpassable
+      - Opaque
+      density: 100
+      hard: True
+      restitution: 0
+      friction: 0.4
+      id: null
+    - shape: !type:PhysShapeCircle
+        radius: 0.2
+        position: 0,-0.5
+      mask: []
+      layer: []
+      density: 1
+      hard: False
+      restitution: 0
+      friction: 0.4
+      id: docking
+    type: Fixtures
+- uid: 4737
+  type: AirlockExternalGlassShuttleLocked
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -14.5,-50.5
+    parent: 0
+    type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        radius: 0.01
+        vertices:
+        - 0.49,-0.49
+        - 0.49,0.49
+        - -0.49,0.49
+        - -0.49,-0.49
+      mask:
+      - Impassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
+      - InteractImpassable
+      layer:
+      - MidImpassable
+      - HighImpassable
+      - BulletImpassable
+      - InteractImpassable
+      - Opaque
+      density: 100
+      hard: True
+      restitution: 0
+      friction: 0.4
+      id: null
+    - shape: !type:PhysShapeCircle
+        radius: 0.2
+        position: 0,-0.5
+      mask: []
+      layer: []
+      density: 1
+      hard: False
+      restitution: 0
+      friction: 0.4
+      id: docking
+    type: Fixtures
 - uid: 4738
   type: WindowReinforcedDirectional
   components:
@@ -39827,6 +39805,56 @@ entities:
     pos: -13.5,-45.5
     parent: 0
     type: Transform
+- uid: 4756
+  type: Morgue
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -20.5,-18.5
+    parent: 0
+    type: Transform
+  - air:
+      volume: 200
+      immutable: False
+      temperature: 293.14963
+      moles:
+      - 1.7430744
+      - 6.5572805
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    type: EntityStorage
+- uid: 4757
+  type: Morgue
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -20.5,-17.5
+    parent: 0
+    type: Transform
+  - air:
+      volume: 200
+      immutable: False
+      temperature: 293.14963
+      moles:
+      - 1.7459903
+      - 6.568249
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    type: EntityStorage
 - uid: 4758
   type: Grille
   components:
@@ -40061,6 +40089,56 @@ entities:
   - pos: -4.5,-28.5
     parent: 0
     type: Transform
+- uid: 4797
+  type: Morgue
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -20.5,-16.5
+    parent: 0
+    type: Transform
+  - air:
+      volume: 200
+      immutable: False
+      temperature: 293.14963
+      moles:
+      - 1.7459903
+      - 6.568249
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    type: EntityStorage
+- uid: 4798
+  type: Morgue
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -20.5,-15.5
+    parent: 0
+    type: Transform
+  - air:
+      volume: 200
+      immutable: False
+      temperature: 293.14963
+      moles:
+      - 1.7459903
+      - 6.568249
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    type: EntityStorage
 - uid: 4826
   type: GasOutletInjector
   components:
@@ -52454,162 +52532,6 @@ entities:
   - pos: -18.5,-20.5
     parent: 0
     type: Transform
-- uid: 6659
-  type: Morgue
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -20.5,-18.5
-    parent: 0
-    type: Transform
-  - air:
-      volume: 200
-      immutable: False
-      temperature: 293.14957
-      moles:
-      - 1.6033952
-      - 6.031821
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    type: EntityStorage
-  - containers:
-      EntityStorageComponent: !type:Container
-        showEnts: False
-        occludes: True
-        ents: []
-      morgue_tray: !type:ContainerSlot
-        showEnts: False
-        occludes: True
-        ent: null
-      entity_storage: !type:Container
-        showEnts: False
-        occludes: True
-        ents: []
-    type: ContainerContainer
-- uid: 6660
-  type: Morgue
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -20.5,-17.5
-    parent: 0
-    type: Transform
-  - air:
-      volume: 200
-      immutable: False
-      temperature: 293.14957
-      moles:
-      - 1.6033952
-      - 6.031821
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    type: EntityStorage
-  - containers:
-      EntityStorageComponent: !type:Container
-        showEnts: False
-        occludes: True
-        ents: []
-      morgue_tray: !type:ContainerSlot
-        showEnts: False
-        occludes: True
-        ent: null
-      entity_storage: !type:Container
-        showEnts: False
-        occludes: True
-        ents: []
-    type: ContainerContainer
-- uid: 6661
-  type: Morgue
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -20.5,-16.5
-    parent: 0
-    type: Transform
-  - air:
-      volume: 200
-      immutable: False
-      temperature: 293.14957
-      moles:
-      - 1.6033952
-      - 6.031821
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    type: EntityStorage
-  - containers:
-      EntityStorageComponent: !type:Container
-        showEnts: False
-        occludes: True
-        ents: []
-      morgue_tray: !type:ContainerSlot
-        showEnts: False
-        occludes: True
-        ent: null
-      entity_storage: !type:Container
-        showEnts: False
-        occludes: True
-        ents: []
-    type: ContainerContainer
-- uid: 6662
-  type: Morgue
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -20.5,-15.5
-    parent: 0
-    type: Transform
-  - air:
-      volume: 200
-      immutable: False
-      temperature: 293.14957
-      moles:
-      - 1.6033952
-      - 6.031821
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    type: EntityStorage
-  - containers:
-      EntityStorageComponent: !type:Container
-        showEnts: False
-        occludes: True
-        ents: []
-      morgue_tray: !type:ContainerSlot
-        showEnts: False
-        occludes: True
-        ent: null
-      entity_storage: !type:Container
-        showEnts: False
-        occludes: True
-        ents: []
-    type: ContainerContainer
 - uid: 6663
   type: BoxBodyBag
   components:
@@ -53891,44 +53813,6 @@ entities:
     type: AtmosPipeColor
   - bodyType: Static
     type: Physics
-- uid: 6843
-  type: Crematorium
-  components:
-  - pos: -22.5,-32.5
-    parent: 0
-    type: Transform
-  - air:
-      volume: 200
-      immutable: False
-      temperature: 293.14957
-      moles:
-      - 1.6033952
-      - 6.031821
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    type: EntityStorage
-  - containers:
-      EntityStorageComponent: !type:Container
-        showEnts: False
-        occludes: True
-        ents: []
-      morgue_tray: !type:ContainerSlot
-        showEnts: False
-        occludes: True
-        ent: null
-      entity_storage: !type:Container
-        showEnts: False
-        occludes: True
-        ents: []
-    type: ContainerContainer
 - uid: 6844
   type: APCBasic
   components:
