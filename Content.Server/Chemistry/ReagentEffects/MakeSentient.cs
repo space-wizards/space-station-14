@@ -26,7 +26,7 @@ public sealed class MakeSentient : ReagentEffect
         entityManager.RemoveComponent<MonkeyAccentComponent>(uid);
 
         // This makes it so it doesn't add a ghost role to things that are already sentient
-        if (entityManager.HasComponent<MindComponent>(uid))
+        if (entityManager.HasComponent<MindContainerComponent>(uid))
         {
             return;
         }
