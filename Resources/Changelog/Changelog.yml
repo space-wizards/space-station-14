@@ -1,9 +1,4 @@
 Entries:
-- author: jick
-  changes:
-  - {message: Escape key clears chat input, type: Tweak}
-  id: 2713
-  time: '2022-12-03T01:15:59.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Weld modular mines and grenades to salvage them, type: Tweak}
@@ -2915,3 +2910,9 @@ Entries:
   - {message: Changed PKA to have a consistent firerate of 1.5 seconds, type: Tweak}
   id: 3212
   time: '2023-03-23T04:22:01.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Hair, facial hair, markings, etc are now sorted alphabetically in the
+      character creator menu.', type: Tweak}
+  id: 3213
+  time: '2023-03-23T05:03:20.0000000+00:00'
