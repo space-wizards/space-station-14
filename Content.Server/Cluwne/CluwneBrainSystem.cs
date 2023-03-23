@@ -7,11 +7,6 @@ using Content.Shared.Damage;
 using Robust.Shared.Prototypes;
 using Content.Shared.Interaction.Components;
 using Content.Server.Disease;
-using Robust.Shared;
-using Robust.Shared.Configuration;
-using Robust.Shared.Network;
-using Robust.Shared.Utility;
-using Robust.Shared.GameStates;
 
 namespace Content.Server.Cluwne;
 
@@ -33,13 +28,12 @@ public sealed class CluwneBrainSystem : EntitySystem
     private void AfterEat(EntityUid uid, CluwneBrainComponent component, ComponentStartup args)
     {
         if (HasComp<HumanoidAppearanceComponent>(uid)
-                && HasComp<CluwneComponent>(uid)
-                && !HasComp<ZombieComponent>(uid))
+           && HasComp<CluwneComponent>(uid)
+           && !HasComp<ZombieComponent>(uid))
         {
             _audio.PlayPvs(component.HonkSound, uid);
             _polymorph.PolymorphEntity(uid, "ForcedCluwneBeast");
             _disease.CureAllDiseases(uid);
-            RemComp<CluwneBrainComponent>(uid);
         }
 
         else if (HasComp<HumanoidAppearanceComponent>(uid)
@@ -49,14 +43,12 @@ public sealed class CluwneBrainSystem : EntitySystem
         {
             EnsureComp<CluwneComponent>(uid);
             _disease.CureAllDiseases(uid);
-            RemComp<CluwneBrainComponent>(uid);
         }
 
         else
         {
             var damageSpec = new DamageSpecifier(_proto.Index<DamageGroupPrototype>("Genetic"), 50);
             _damageable.TryChangeDamage(uid, damageSpec);
-            RemComp<CluwneBrainComponent>(uid);
         }
     }
 }
