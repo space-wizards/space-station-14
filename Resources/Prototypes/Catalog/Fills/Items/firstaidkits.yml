@@ -43,6 +43,8 @@
         amount: 1
       - id: Bloodpack
         amount: 1
+      - id: SyringeTranexamicAcid
+        amount: 1
 
 - type: entity
   id: MedkitToxinFilled
@@ -97,8 +99,6 @@
         amount: 1
       - id: Brutepack
         amount: 3 # TO DO: Advanced fills
-      - id: SyringeTranexamicAcid
-        amount: 1
       - id: AntiPoisonMedipen
         amount: 1
       - id: Gauze
