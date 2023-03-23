@@ -85,10 +85,6 @@ public sealed partial class CargoSystem
     {
         if (args.Handled)
             return;
-
-        // Just saves mappers forgetting.
-        args.Handled = true;
-        args.Tag = "DockCargo";
     }
 
     private void ShutdownShuttle()

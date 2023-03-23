@@ -504,7 +504,6 @@ public sealed partial class ShuttleSystem
     public bool TryFTLProximity(ShuttleComponent component, EntityUid targetUid, TransformComponent? xform = null, TransformComponent? targetXform = null)
     {
         if (!Resolve(targetUid, ref targetXform) ||
-            targetXform.GridUid == null ||
             targetXform.MapUid == null ||
             !targetXform.MapUid.Value.IsValid() ||
             !Resolve(component.Owner, ref xform))
@@ -530,9 +529,9 @@ public sealed partial class ShuttleSystem
 
         var targetAABB = _transform.GetWorldMatrix(targetXform, xformQuery)
             .TransformBox(targetLocalAABB).Enlarged(shuttleAABB.Size.Length);
-        var nearbyGrids = new HashSet<EntityUid>(1) { targetXform.GridUid.Value };
+        var nearbyGrids = new HashSet<EntityUid>();
         var iteration = 0;
-        var lastCount = 1;
+        var lastCount = nearbyGrids.Count;
         var mapId = targetXform.MapID;
 
         while (iteration < FTLProximityIterations)
@@ -580,7 +579,7 @@ public sealed partial class ShuttleSystem
         }
 
         // TODO: This is pretty crude for multiple landings.
-        if (nearbyGrids.Count > 1 || !HasComp<MapComponent>(targetXform.GridUid.Value))
+        if (nearbyGrids.Count > 1 || !HasComp<MapComponent>(targetXform.GridUid))
         {
             var minRadius = (MathF.Max(targetAABB.Width, targetAABB.Height) + MathF.Max(shuttleAABB.Width, shuttleAABB.Height)) / 2f;
             spawnPos = targetAABB.Center + _random.NextVector2(minRadius, minRadius + 64f);
@@ -598,7 +597,7 @@ public sealed partial class ShuttleSystem
 
         xform.Coordinates = new EntityCoordinates(targetXform.MapUid.Value, spawnPos);
 
-        if (!HasComp<MapComponent>(targetXform.GridUid.Value))
+        if (!HasComp<MapComponent>(targetXform.GridUid))
         {
             _transform.SetLocalRotation(xform, _random.NextAngle());
         }
