@@ -4,6 +4,7 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Collections;
+using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -70,6 +71,11 @@ public sealed class RadarControl : Control
 
     public Action<float>? OnRadarRangeChanged;
 
+    /// <summary>
+    /// Raised if the user left-clicks on the radar control with the relevant entitycoordinates.
+    /// </summary>
+    public Action<EntityCoordinates>? OnRadarClick;
+
     public RadarControl()
     {
         IoCManager.InjectDependencies(this);
@@ -103,6 +109,23 @@ public sealed class RadarControl : Control
             var grid = _docks.GetOrNew(coordinates.EntityId);
             grid.Add(state);
         }
+    }
+
+    protected override void KeyBindUp(GUIBoundKeyEventArgs args)
+    {
+        base.KeyBindUp(args);
+
+        if (_coordinates == null || _rotation == null || args.Function != EngineKeyFunctions.UIClick ||
+            OnRadarClick == null)
+        {
+            return;
+        }
+
+        var a = InverseScalePosition(args.RelativePosition);
+        var relativeWorldPos = new Vector2(a.X, -a.Y);
+        relativeWorldPos = _rotation.Value.RotateVec(relativeWorldPos);
+        var coords = _coordinates.Value.Offset(relativeWorldPos);
+        OnRadarClick?.Invoke(coords);
     }
 
     protected override void MouseWheel(GUIMouseWheelEventArgs args)
@@ -171,7 +194,7 @@ public sealed class RadarControl : Control
         var offset = _coordinates.Value.Position;
         var offsetMatrix = Matrix3.CreateInverseTransform(
             mapPosition.Position,
-            xform.WorldRotation - _rotation.Value);
+            xform.WorldRotation + _rotation.Value);
 
         // Draw our grid in detail
         var ourGridId = _coordinates.Value.GetGridUid(_entManager);
@@ -475,5 +498,10 @@ public sealed class RadarControl : Control
     private Vector2 ScalePosition(Vector2 value)
     {
         return value * MinimapScale + MidPoint;
+    }
+
+    private Vector2 InverseScalePosition(Vector2 value)
+    {
+        return (value - MidPoint) / MinimapScale;
     }
 }
