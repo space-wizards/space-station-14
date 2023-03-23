@@ -58,7 +58,7 @@ public sealed class FloorTileSystem : EntitySystem
         var transformQuery = GetEntityQuery<TransformComponent>();
 
         var tilePos = location.ToMapPos(EntityManager, _transform);
-        var userPos = Transform(args.User).Coordinates.ToMapPos(EntityManager, _transform);
+        var userPos = transformQuery.GetComponent(args.User).Coordinates.ToMapPos(EntityManager, _transform);
         var dir = userPos - tilePos;
         var canAccessCenter = false;
         if (dir.LengthSquared > 0.01)
