@@ -90,7 +90,7 @@ public sealed partial class ShuttleSystem
         }
     }
 
-    public bool CanFTL(EntityUid? uid, [NotNullWhen(false)] out string? reason, TransformComponent? xform = null)
+    public bool CanFTL(EntityUid? uid, [NotNullWhen(false)] out string? reason)
     {
         if (HasComp<PreventPilotComponent>(uid))
         {
@@ -99,26 +99,6 @@ public sealed partial class ShuttleSystem
         }
 
         reason = null;
-
-        if (!TryComp<MapGridComponent>(uid, out var grid) ||
-            !Resolve(uid.Value, ref xform))
-        {
-            return true;
-        }
-
-        var bounds = xform.WorldMatrix.TransformBox(grid.LocalAABB).Enlarged(ShuttleFTLRange);
-        var bodyQuery = GetEntityQuery<PhysicsComponent>();
-
-        foreach (var other in _mapManager.FindGridsIntersecting(xform.MapID, bounds))
-        {
-            if (grid.Owner == other.Owner ||
-                !bodyQuery.TryGetComponent(other.Owner, out var body) ||
-                body.Mass < ShuttleFTLMassThreshold) continue;
-
-            reason = Loc.GetString("shuttle-console-proximity");
-            return false;
-        }
-
         return true;
     }
 
