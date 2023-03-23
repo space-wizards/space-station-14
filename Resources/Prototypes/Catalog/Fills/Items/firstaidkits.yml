@@ -123,6 +123,8 @@
         amount: 1
       - id: AntiPoisonMedipen
         amount: 1
+      - id: Bloodpack
+        amount: 2
 
 - type: entity
   id: StimkitFilled
