@@ -12,6 +12,7 @@ using Content.Shared.Stacks;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
+using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
@@ -24,6 +25,8 @@ using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Robust.Shared.Prototypes;
 using Content.Shared.Coordinates;
+using Content.Shared.Mobs.Components;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Cargo.Systems;
 
@@ -411,80 +414,6 @@ public sealed partial class CargoSystem
         }
     }
 
-    private void SendToCargoMap(EntityUid uid, CargoShuttleComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return;
-
-        component.NextCall = _timing.CurTime + TimeSpan.FromSeconds(component.Cooldown);
-        Transform(uid).Coordinates = component.Coordinates;
-        DebugTools.Assert(MetaData(uid).EntityPaused);
-
-        UpdateShuttleCargoConsoles(component);
-        _sawmill.Info($"Stashed cargo shuttle {ToPrettyString(uid)}");
-    }
-
-    /// <summary>
-    /// Retrieves a shuttle for delivery.
-    /// </summary>
-    public void CallShuttle(StationCargoOrderDatabaseComponent orderDatabase)
-    {
-        if (!TryComp<CargoShuttleComponent>(orderDatabase.Shuttle, out var shuttle))
-            return;
-
-        // Already called / not available
-        if (shuttle.NextCall == null || _timing.CurTime < shuttle.NextCall)
-            return;
-
-        if (!TryComp<StationDataComponent>(orderDatabase.Owner, out var stationData))
-            return;
-
-        var targetGrid = _station.GetLargestGrid(stationData);
-
-        // Nowhere to warp in to.
-        if (!TryComp<TransformComponent>(targetGrid, out var xform))
-            return;
-
-        shuttle.NextCall = null;
-
-        // Find a valid free area nearby to spawn in on
-        // TODO: Make this use hyperspace now.
-        var center = new Vector2();
-        var minRadius = 0f;
-        Box2? aabb = null;
-        var xformQuery = GetEntityQuery<TransformComponent>();
-
-        foreach (var grid in _mapManager.GetAllMapGrids(xform.MapID))
-        {
-            var worldAABB = xformQuery.GetComponent(grid.Owner).WorldMatrix.TransformBox(grid.LocalAABB);
-            aabb = aabb?.Union(worldAABB) ?? worldAABB;
-        }
-
-        if (aabb != null)
-        {
-            center = aabb.Value.Center;
-            minRadius = MathF.Max(aabb.Value.Width, aabb.Value.Height);
-        }
-
-        var offset = 0f;
-        if (TryComp<MapGridComponent>(orderDatabase.Shuttle, out var shuttleGrid))
-        {
-            var bounds = shuttleGrid.LocalAABB;
-            offset = MathF.Max(bounds.Width, bounds.Height) / 2f;
-        }
-
-        Transform(shuttle.Owner).Coordinates = new EntityCoordinates(xform.ParentUid,
-            center + _random.NextVector2(minRadius + offset, minRadius + CallOffset + offset));
-        DebugTools.Assert(!MetaData(shuttle.Owner).EntityPaused);
-
-        AddCargoContents(shuttle, orderDatabase);
-        UpdateOrders(orderDatabase);
-        UpdateShuttleCargoConsoles(shuttle);
-        _console.RefreshShuttleConsoles();
-
-        _sawmill.Info($"Retrieved cargo shuttle {ToPrettyString(shuttle.Owner)} from {ToPrettyString(orderDatabase.Owner)}");
-    }
-
     private void AddCargoContents(CargoShuttleComponent shuttle, StationCargoOrderDatabaseComponent orderDatabase)
     {
         var xformQuery = GetEntityQuery<TransformComponent>();
@@ -526,14 +455,9 @@ public sealed partial class CargoSystem
         var xform = Transform(uid);
         var stationUid = component.Station;
 
-        if (player == null) return;
-
-        var stationUid = _station.GetOwningStation(uid);
-
-        if (!TryComp<StationCargoOrderDatabaseComponent>(stationUid, out var orderDatabase) ||
-            !TryComp<StationBankAccountComponent>(stationUid, out var bank)) return;
-
-        if (!TryComp<CargoShuttleComponent>(orderDatabase.Shuttle, out var shuttle))
+        // Called
+        if (xform.MapID != CargoMap ||
+            !TryComp<StationCargoOrderDatabaseComponent>(stationUid, out var orderDatabase))
         {
             return;
         }
@@ -554,47 +478,10 @@ public sealed partial class CargoSystem
 
         if (TryComp<StationBankAccountComponent>(stationUid, out var bank))
         {
-            SellPallets(component, bank);
+            SellPallets(uid, out var amount);
+            bank.Balance += (int) amount;
+            _console.RefreshShuttleConsoles();
         }
-
-        SellPallets((EntityUid) orderDatabase.Shuttle, out double price);
-        bank.Balance += (int) price;
-        _console.RefreshShuttleConsoles();
-        SendToCargoMap(orderDatabase.Shuttle.Value);
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="component"></param>
-    private bool IsBlocked(CargoShuttleComponent component)
-    {
-        // TODO: Would be good to rate-limit this on the console.
-        var mobQuery = GetEntityQuery<MobStateComponent>();
-        var xformQuery = GetEntityQuery<TransformComponent>();
-
-        return FoundOrganics(component.Owner, mobQuery, xformQuery);
-    }
-
-    public bool FoundOrganics(EntityUid uid, EntityQuery<MobStateComponent> mobQuery, EntityQuery<TransformComponent> xformQuery)
-    {
-        var xform = xformQuery.GetComponent(uid);
-        var childEnumerator = xform.ChildEnumerator;
-
-        while (childEnumerator.MoveNext(out var child))
-        {
-            if ((mobQuery.TryGetComponent(child.Value, out var mobState) && !_mobState.IsDead(child.Value, mobState))
-                || FoundOrganics(child.Value, mobQuery, xformQuery)) return true;
-        }
-
-        return false;
-    }
-
-    private void OnCargoShuttleCall(EntityUid uid, CargoShuttleConsoleComponent component, CargoCallShuttleMessage args)
-    {
-        var stationUid = _station.GetOwningStation(args.Entity);
-        if (!TryComp<StationCargoOrderDatabaseComponent>(stationUid, out var orderDatabase)) return;
-        CallShuttle(orderDatabase);
     }
 
     #endregion
