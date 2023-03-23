@@ -549,7 +549,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             component.AutomaticEngageToken?.Cancel();
             component.AutomaticEngageToken = null;
 
-            if (!component.AutoFlush)
+            if (!component.DisablePressure)
             {
                 component.Pressure = 0;
                 component.State = SharedDisposalUnitComponent.PressureState.Pressurizing;
@@ -709,14 +709,6 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         {
             if (component.Deleted || !component.AutomaticEngage || !component.Powered && component.Container.ContainedEntities.Count == 0)
             {
-                return;
-            }
-
-            // if autoflushing, ignore the timer and instantly flush
-            if (component.AutoFlush)
-            {
-                if (!TryFlush(uid, component))
-                    TryQueueEngage(uid, component);
                 return;
             }
 

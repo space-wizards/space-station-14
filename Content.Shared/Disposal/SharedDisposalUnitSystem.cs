@@ -61,7 +61,7 @@ namespace Content.Shared.Disposal
 
         private void OnEmagged(EntityUid uid, SharedDisposalUnitComponent component, ref GotEmaggedEvent args)
         {
-            component.AutoFlush = true;
+            component.DisablePressure = true;
             args.Handled = true;
         }
 
