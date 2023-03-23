@@ -81,6 +81,8 @@
         amount: 1
       - id: CabbageSeeds
         amount: 1
+      - id: GarlicSeeds
+        amount: 1
       - id: ChanterelleSeeds
         amount: 1
       - id: PotatoSeeds
@@ -89,9 +91,17 @@
         amount: 1
       - id: LemonSeeds
         amount: 1
+      - id: LimeSeeds
+        amount: 1
+      - id: OrangeSeeds
+        amount: 1
       - id: OatSeeds
         amount: 1
       - id: OnionSeeds
         amount: 1
       - id: OnionRedSeeds
+        amount: 1
+      - id: RiceSeeds
+        amount: 1
+      - id: SoybeanSeeds
         amount: 1

@@ -257,3 +257,12 @@
       fiberMaterial: fibers-synthetic
       fiberColor: fibers-black
     - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsGlovesColorWhite
+  id: ClothingHandsGlovesCluwne
+  name: cluwne hands
+  suffix: Unremoveable
+  description:  A cursed pair of cluwne hands.
+  components:
+  - type: Unremoveable

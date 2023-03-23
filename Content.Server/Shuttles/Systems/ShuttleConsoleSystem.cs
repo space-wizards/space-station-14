@@ -46,12 +46,27 @@ namespace Content.Server.Shuttles.Systems
 
             SubscribeLocalEvent<PilotComponent, MoveEvent>(HandlePilotMove);
             SubscribeLocalEvent<PilotComponent, ComponentGetState>(OnGetState);
+
+            SubscribeLocalEvent<FTLDestinationComponent, ComponentStartup>(OnFtlDestStartup);
+            SubscribeLocalEvent<FTLDestinationComponent, ComponentShutdown>(OnFtlDestShutdown);
+        }
+
+        private void OnFtlDestStartup(EntityUid uid, FTLDestinationComponent component, ComponentStartup args)
+        {
+            RefreshShuttleConsoles();
+        }
+
+        private void OnFtlDestShutdown(EntityUid uid, FTLDestinationComponent component, ComponentShutdown args)
+        {
+            RefreshShuttleConsoles();
         }
 
         private void OnDestinationMessage(EntityUid uid, ShuttleConsoleComponent component, ShuttleConsoleDestinationMessage args)
         {
             if (!TryComp<FTLDestinationComponent>(args.Destination, out var dest))
+            {
                 return;
+            }
 
             if (!dest.Enabled)
                 return;
@@ -65,6 +80,11 @@ namespace Content.Server.Shuttles.Systems
 
             RaiseLocalEvent(entity.Value, ref getShuttleEv);
             entity = getShuttleEv.Console;
+
+            if (entity == null || dest.Whitelist?.IsValid(entity.Value, EntityManager) == false)
+            {
+                return;
+            }
 
             if (!TryComp<TransformComponent>(entity, out var xform) ||
                 !TryComp<ShuttleComponent>(xform.GridUid, out var shuttle))
@@ -284,8 +304,7 @@ namespace Content.Server.Shuttles.Systems
 
                     var canTravel = !locked &&
                                     comp.Enabled &&
-                                    !Paused(destUid, meta) &&
-                                    (!TryComp<FTLComponent>(destUid, out var ftl) || ftl.State == FTLState.Cooldown);
+                                    (!TryComp<FTLComponent>(comp.Owner, out var ftl) || ftl.State == FTLState.Cooldown);
 
                     // Can't travel to same map (yet)
                     if (canTravel && consoleXform?.MapUid == Transform(destUid).MapUid)

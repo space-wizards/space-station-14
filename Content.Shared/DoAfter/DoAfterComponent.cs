@@ -38,12 +38,14 @@ public sealed class DoAfterComponentState : ComponentState
 public sealed class DoAfterEvent : HandledEntityEventArgs
 {
     public bool Cancelled;
+    public byte Id;
     public readonly DoAfterEventArgs Args;
 
-    public DoAfterEvent(bool cancelled, DoAfterEventArgs args)
+    public DoAfterEvent(bool cancelled, DoAfterEventArgs args, byte id)
     {
         Cancelled = cancelled;
         Args = args;
+        Id = id;
     }
 }
 
@@ -57,13 +59,15 @@ public sealed class DoAfterEvent<T> : HandledEntityEventArgs
 {
     public T AdditionalData;
     public bool Cancelled;
+    public byte Id;
     public readonly DoAfterEventArgs Args;
 
-    public DoAfterEvent(T additionalData, bool cancelled, DoAfterEventArgs args)
+    public DoAfterEvent(T additionalData, bool cancelled, DoAfterEventArgs args, byte id)
     {
         AdditionalData = additionalData;
         Cancelled = cancelled;
         Args = args;
+        Id = id;
     }
 }
 

@@ -14,7 +14,9 @@ public abstract partial class SharedGunSystem
 
     private void OnCartridgeHandleState(EntityUid uid, CartridgeAmmoComponent component, ref ComponentHandleState args)
     {
-        if (args.Current is not CartridgeAmmoComponentState state) return;
+        if (args.Current is not CartridgeAmmoComponentState state)
+            return;
+
         component.Spent = state.Spent;
     }
 

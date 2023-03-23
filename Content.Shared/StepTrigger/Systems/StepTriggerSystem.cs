@@ -1,6 +1,8 @@
 using Content.Shared.StepTrigger.Components;
+using Content.Shared.Tag;
 using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -37,20 +39,38 @@ public sealed class StepTriggerSystem : EntitySystem
         var query = GetEntityQuery<PhysicsComponent>();
         var enumerator = EntityQueryEnumerator<StepTriggerActiveComponent, StepTriggerComponent, TransformComponent>();
 
-        while (enumerator.MoveNext(out var active, out var trigger, out var transform))
+        while (enumerator.MoveNext(out var uid, out var active, out var trigger, out var transform))
         {
-            if (!Update(trigger, transform, query))
+            if (!Update(uid, trigger, transform, query))
                 continue;
 
-            RemCompDeferred(trigger.Owner, active);
+            RemCompDeferred(uid, active);
         }
     }
 
-    private bool Update(StepTriggerComponent component, TransformComponent transform, EntityQuery<PhysicsComponent> query)
+    private bool Update(EntityUid uid, StepTriggerComponent component, TransformComponent transform, EntityQuery<PhysicsComponent> query)
     {
         if (!component.Active ||
             component.Colliding.Count == 0)
+        {
             return true;
+        }
+
+        if (component.Blacklist != null && TryComp<MapGridComponent>(transform.GridUid, out var grid))
+        {
+            var anch = grid.GetAnchoredEntitiesEnumerator(grid.LocalToTile(transform.Coordinates));
+
+            while (anch.MoveNext(out var ent))
+            {
+                if (ent == uid)
+                    continue;
+
+                if (component.Blacklist.IsValid(ent.Value, EntityManager) == true)
+                {
+                    return false;
+                }
+            }
+        }
 
         foreach (var otherUid in component.Colliding)
         {

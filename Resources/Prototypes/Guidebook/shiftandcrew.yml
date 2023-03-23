@@ -3,6 +3,7 @@
   name: guide-entry-jobs
   text: "/Server Info/Guidebook/Jobs.xml"
   children:
+  - Botany
   - Engineering
   - Science
 

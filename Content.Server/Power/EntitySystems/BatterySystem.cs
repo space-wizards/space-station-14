@@ -1,4 +1,5 @@
 using Content.Server.Cargo.Systems;
+using Content.Server.Emp;
 using Content.Server.Power.Components;
 using Content.Shared.Examine;
 using Content.Shared.Rejuvenate;
@@ -17,6 +18,7 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<PowerNetworkBatteryComponent, RejuvenateEvent>(OnNetBatteryRejuvenate);
             SubscribeLocalEvent<BatteryComponent, RejuvenateEvent>(OnBatteryRejuvenate);
             SubscribeLocalEvent<BatteryComponent, PriceCalculationEvent>(CalculateBatteryPrice);
+            SubscribeLocalEvent<BatteryComponent, EmpPulseEvent>(OnEmpPulse);
 
             SubscribeLocalEvent<NetworkBatteryPreSync>(PreSync);
             SubscribeLocalEvent<NetworkBatteryPostSync>(PostSync);
@@ -86,6 +88,12 @@ namespace Content.Server.Power.EntitySystems
         private void CalculateBatteryPrice(EntityUid uid, BatteryComponent component, ref PriceCalculationEvent args)
         {
             args.Price += component.CurrentCharge * component.PricePerJoule;
+        }
+
+        private void OnEmpPulse(EntityUid uid, BatteryComponent component, ref EmpPulseEvent args)
+        {
+            args.Affected = true;
+            component.UseCharge(args.EnergyConsumption);   
         }
     }
 }

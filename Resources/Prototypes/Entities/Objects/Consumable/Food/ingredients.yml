@@ -249,10 +249,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 50
         reagents:
         - ReagentId: MilkOat
-          Quantity: 20
+          Quantity: 50
 
 # Misc
 
@@ -462,6 +462,51 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
+
+- type: entity
+  name: tofu
+  parent: FoodBakingBase
+  id: FoodTofu
+  description: Solid white block with a subtle flavor.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - tofu
+  - type: Sprite
+    state: tofu
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Protein
+          Quantity: 9
+        - ReagentId: Nutriment
+          Quantity: 6
+  - type: SliceableFood
+    count: 3
+    slice: FoodTofuSlice
+
+- type: entity
+  name: tofu slice
+  parent: FoodBakingBase
+  id: FoodTofuSlice
+  description: A slice of tofu. Ingredient of various vegetarian dishes.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - tofu
+  - type: Sprite
+    state: tofu-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Protein
+          Quantity: 3
+        - ReagentId: Nutriment
+          Quantity: 2
 
 - type: entity
   name: burned mess

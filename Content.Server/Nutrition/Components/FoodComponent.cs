@@ -42,10 +42,15 @@ namespace Content.Server.Nutrition.Components
 
         /// <summary>
         /// Is this entity being forcefed?
-        /// Prevents the entity from being forced to eat multiple times if not self
         /// </summary>
         [DataField("forceFeed")]
         public bool ForceFeed;
+
+        /// <summary>
+        /// Is this entity eating or being fed?
+        /// </summary>
+        [DataField(("eating"))]
+        public bool Eating;
 
         /// <summary>
         /// How long it takes to eat the food personally.

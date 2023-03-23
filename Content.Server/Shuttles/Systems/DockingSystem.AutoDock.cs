@@ -73,7 +73,11 @@ public sealed partial class DockingSystem
 
         // TODO: Validation
         if (!TryComp<DockingComponent>(args.DockEntity, out var dock) ||
-            !dock.Docked) return;
+            !dock.Docked ||
+            HasComp<PreventPilotComponent>(Transform(uid).GridUid))
+        {
+            return;
+        }
 
         Undock(dock);
     }
@@ -83,7 +87,12 @@ public sealed partial class DockingSystem
         _sawmill.Debug($"Received autodock request for {ToPrettyString(args.DockEntity)}");
         var player = args.Session.AttachedEntity;
 
-        if (player == null || !HasComp<DockingComponent>(args.DockEntity)) return;
+        if (player == null ||
+            !HasComp<DockingComponent>(args.DockEntity) ||
+            HasComp<PreventPilotComponent>(Transform(uid).GridUid))
+        {
+            return;
+        }
 
         // TODO: Validation
         var comp = EnsureComp<AutoDockComponent>(args.DockEntity);

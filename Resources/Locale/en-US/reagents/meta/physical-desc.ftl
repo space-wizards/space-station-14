@@ -85,3 +85,5 @@ reagent-physical-desc-volatile = volatile
 reagent-physical-desc-inky = inky
 reagent-physical-desc-enigmatic = enigmatic
 reagent-physical-desc-exotic-smelling = exotic smelling
+reagent-physical-desc-energizing = energizing
+reagent-physical-desc-exhilarating = exhilarating
