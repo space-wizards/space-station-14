@@ -53,8 +53,11 @@ public sealed class ArrivalsSystem : EntitySystem
 
         SubscribeLocalEvent<PlayerSpawningEvent>(OnPlayerSpawn, before: new []{typeof(SpawnPointSystem)});
         SubscribeLocalEvent<StationArrivalsComponent, ComponentStartup>(OnArrivalsStartup);
+
         SubscribeLocalEvent<ArrivalsShuttleComponent, ComponentStartup>(OnShuttleStartup);
         SubscribeLocalEvent<ArrivalsShuttleComponent, EntityUnpausedEvent>(OnShuttleUnpaused);
+        SubscribeLocalEvent<ArrivalsShuttleComponent, FTLTagEvent>(OnShuttleTag);
+
         SubscribeLocalEvent<StationInitializedEvent>(OnStationInit);
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStarting);
         SubscribeLocalEvent<ArrivalsShuttleComponent, FTLStartedEvent>(OnArrivalsFTL);
@@ -65,6 +68,16 @@ public sealed class ArrivalsSystem : EntitySystem
 
         // Command so admins can set these for funsies
         _console.RegisterCommand("arrivals", ArrivalsCommand, ArrivalsCompletion);
+    }
+
+    private void OnShuttleTag(EntityUid uid, ArrivalsShuttleComponent component, ref FTLTagEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        // Just saves mappers forgetting. (v2 boogaloo)
+        args.Handled = true;
+        args.Tag = "DockArrivals";
     }
 
     private CompletionResult ArrivalsCompletion(IConsoleShell shell, string[] args)
