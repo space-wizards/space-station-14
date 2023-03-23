@@ -97,8 +97,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: HandheldHealthAnalyzer
-        amount: 1
       - id: Brutepack
         amount: 3 # TO DO: Advanced fills
       - id: Gauze
