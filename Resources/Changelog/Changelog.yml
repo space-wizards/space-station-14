@@ -1,12 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: Updated all Engineering jumpsuit sprites, type: Tweak}
-  - {message: Updated the Emergency Firesuit's sprite, type: Tweak}
-  - {message: Partially resprited most hardhats, type: Tweak}
-  - {message: Added the orange hardhat to the engidrobe vendor, type: Tweak}
-  id: 2715
-  time: '2022-12-03T01:41:06.0000000+00:00'
 - author: GoodWheatley
   changes:
   - {message: The Syndicate has adjusted the price of several uplink items to encourage
@@ -2917,3 +2909,8 @@ Entries:
       back and forth to sell / purchase goods., type: Tweak}
   id: 3214
   time: '2023-03-23T05:10:49.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix some shuttle console rotations flipping the viewport., type: Fix}
+  id: 3215
+  time: '2023-03-23T05:52:21.0000000+00:00'
