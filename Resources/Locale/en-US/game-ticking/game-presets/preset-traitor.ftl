@@ -9,7 +9,7 @@ traitor-round-end-result = {$traitorCount ->
 
 traitor-round-end-codewords =
     The codewords were:
-    {$codewords}.
+    [color=White]{$codewords}[/color].
 
 # Shown at the end of a round of Traitor
 traitor-user-was-a-traitor = [color=gray]{$user}[/color] was a traitor.
