@@ -360,10 +360,9 @@ public sealed partial class ShuttleSystem
                     comp.State = FTLState.Cooldown;
                     comp.Accumulator += FTLCooldown;
                     _console.RefreshShuttleConsoles(uid);
-                    var mapUid = _mapManager.GetMapEntityId(mapId);
                     _mapManager.SetMapPaused(mapId, false);
                     var ftlEvent = new FTLCompletedEvent();
-                    RaiseLocalEvent(mapUid, ref ftlEvent, true);
+                    RaiseLocalEvent(uid, ref ftlEvent, true);
                     break;
                 case FTLState.Cooldown:
                     RemComp<FTLComponent>(uid);
