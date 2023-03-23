@@ -81,11 +81,6 @@ namespace Content.Server.Shuttles.Systems
             RaiseLocalEvent(entity.Value, ref getShuttleEv);
             entity = getShuttleEv.Console;
 
-            if (entity == null || dest.Whitelist?.IsValid(entity.Value, EntityManager) == false)
-            {
-                return;
-            }
-
             if (!TryComp<TransformComponent>(entity, out var xform) ||
                 !TryComp<ShuttleComponent>(xform.GridUid, out var shuttle))
             {
@@ -110,7 +105,7 @@ namespace Content.Server.Shuttles.Systems
                 return;
             }
 
-            var dock = HasComp<MapComponent>(args.Destination);
+            var dock = HasComp<MapComponent>(args.Destination) && HasComp<MapGridComponent>(args.Destination);
             var tagEv = new FTLTagEvent();
             RaiseLocalEvent(xform.GridUid.Value, ref tagEv);
 
