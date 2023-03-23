@@ -1,12 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Vehicles now inherit access from the rider instead of having access
-      defined on the vehicle itself., type: Tweak}
-  id: 2718
-  time: '2022-12-05T00:23:59.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Artifact analyzers linked to consoles roundstart should now work properly.,
     type: Fix}
   id: 2719
@@ -2913,3 +2907,9 @@ Entries:
   - {message: Fix docking, type: Fix}
   id: 3217
   time: '2023-03-23T06:50:52.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: you can now place floor tiles under directional windows (or any other
+      non-full wall)., type: Fix}
+  id: 3218
+  time: '2023-03-23T06:55:51.0000000+00:00'
