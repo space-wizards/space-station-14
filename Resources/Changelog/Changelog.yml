@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: NPCs will be more persistent in chases., type: Tweak}
-  id: 2729
-  time: '2022-12-06T23:34:23.0000000+00:00'
 - author: Errant
   changes:
   - {message: Wall mounted generators and substations actually mounted on a wall can
@@ -2915,3 +2910,8 @@ Entries:
   - {message: Paperwork now looks the same as he did before, type: Tweak}
   id: 3228
   time: '2023-03-23T16:53:27.0000000+00:00'
+- author: 08A
+  changes:
+  - {message: Fixed welder interaction when it has a fuel shortage problem, type: Fix}
+  id: 3229
+  time: '2023-03-23T17:08:46.0000000+00:00'
