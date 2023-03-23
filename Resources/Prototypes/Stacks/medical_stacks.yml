@@ -29,6 +29,6 @@
 - type: stack
   id: Bloodpack
   name: bloodpack
-  icon: { sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: Bloodpack }
+  icon: { sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: gauze }
   spawn: Bloodpack
   maxCount: 10
