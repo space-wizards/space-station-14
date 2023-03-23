@@ -138,6 +138,10 @@ namespace Content.Client.Lobby
             {
                 text = Loc.GetString("lobby-state-paused");
             }
+            else if ((_gameTicker.StartTime - _gameTicker.PreloadTime) < _gameTiming.CurTime)
+            {
+                text = Loc.GetString("lobby-state-preloading");
+            }
             else
             {
                 var difference = _gameTicker.StartTime - _gameTiming.CurTime;
