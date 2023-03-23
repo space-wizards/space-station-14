@@ -1,9 +1,4 @@
 Entries:
-- author: Cripes
-  changes:
-  - {message: Air Alarm UI is now easier to understand, type: Tweak}
-  id: 2732
-  time: '2022-12-06T23:46:08.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Added geiger counter. It can be found in radiation suit closets., type: Add}
@@ -2917,3 +2912,10 @@ Entries:
   - {message: Dehydrated carp will fit in lockers now., type: Fix}
   id: 3231
   time: '2023-03-23T17:44:36.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Syndicate shoulder holsters can no longer hold melee weapons., type: Tweak}
+  - {message: Suspicious toolbox now comes with a utility belt in place of a holster.,
+    type: Tweak}
+  id: 3232
+  time: '2023-03-23T18:14:55.0000000+00:00'
