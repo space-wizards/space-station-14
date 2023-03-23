@@ -382,19 +382,30 @@ public sealed class RadarControl : Control
                         break;
                     }
 
-                    vert.Y = -vert.Y;
-                    verts[i] = ScalePosition(vert);
+                    verts[i] = vert;
                 }
 
                 if (invalid)
                     continue;
 
-                interiorTris.Add(verts[0]);
-                interiorTris.Add(verts[1]);
-                interiorTris.Add(verts[3]);
-                interiorTris.Add(verts[1]);
-                interiorTris.Add(verts[2]);
-                interiorTris.Add(verts[3]);
+                Vector2 AdjustedVert(Vector2 vert)
+                {
+                    if (vert.Length > RadarRange)
+                    {
+                        vert = vert.Normalized * RadarRange;
+                    }
+
+                    vert.Y = -vert.Y;
+                    return ScalePosition(vert);
+                }
+
+                interiorTris.Add(AdjustedVert(verts[0]));
+                interiorTris.Add(AdjustedVert(verts[1]));
+                interiorTris.Add(AdjustedVert(verts[3]));
+
+                interiorTris.Add(AdjustedVert(verts[1]));
+                interiorTris.Add(AdjustedVert(verts[2]));
+                interiorTris.Add(AdjustedVert(verts[3]));
             }
 
             handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, interiorTris.Span, color.WithAlpha(0.05f));
