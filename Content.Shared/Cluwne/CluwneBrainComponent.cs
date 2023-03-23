@@ -5,6 +5,7 @@ namespace Content.Shared.Cluwne;
 
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedCluwneBrainSystem))]
+
 public sealed class CluwneBrainComponent : Component
 {
     [DataField("honkSound")]
