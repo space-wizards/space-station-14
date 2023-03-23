@@ -25,5 +25,6 @@ public sealed class TelecomSystem : EntitySystem
             if (transform.MapID == args.MapId && power.Powered && keys.Channels.Contains(args.Channel.ID))
                 return;
         }
+        args.Cancelled = true;
     }
 }
