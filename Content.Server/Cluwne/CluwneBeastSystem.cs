@@ -147,4 +147,3 @@ public sealed class CluwneBeastSystem : EntitySystem
         }
     }
 }
-
