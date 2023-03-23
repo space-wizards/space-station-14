@@ -1,9 +1,4 @@
 Entries:
-- author: Prentor
-  changes:
-  - {message: Animals have to eat less but more frequently, type: Tweak}
-  id: 2721
-  time: '2022-12-06T22:56:14.0000000+00:00'
 - author: Bright0
   changes:
   - {message: item cabinets no longer can be (un)locked while open, type: Fix}
@@ -2913,3 +2908,10 @@ Entries:
       units., type: Tweak}
   id: 3220
   time: '2023-03-23T14:55:50.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: 'Changed sprites of the seed extractor, hydroponics bags and hydroponics
+      leather gloves.', type: Tweak}
+  - {message: Fixed inconsistent hydroponics bag naming., type: Fix}
+  id: 3221
+  time: '2023-03-23T15:10:18.0000000+00:00'
