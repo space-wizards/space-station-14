@@ -11,4 +11,4 @@ accent-pirate-replacement-3 = ahoy
 accent-pirate-replaced-4 = yes
 accent-pirate-replacement-4 = aye
 accent-pirate-replaced-5 = yea
-accent-pirate-replacement-5 = hi
+accent-pirate-replaced-6 = hi

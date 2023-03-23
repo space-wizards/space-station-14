@@ -25,6 +25,7 @@ public sealed class PirateAccentComponent : Component
         { "accent-pirate-replaced-2", "accent-pirate-replacement-2" },
         { "accent-pirate-replaced-3", "accent-pirate-replacement-3" },
         { "accent-pirate-replaced-4", "accent-pirate-replacement-4" },
-        { "accent-pirate-replaced-5", "accent-pirate-replacement-5" },
+        { "accent-pirate-replaced-5", "accent-pirate-replacement-4" },
+        { "accent-pirate-replaced-6", "accent-pirate-replacement-3" },
     };
 }
