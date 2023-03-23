@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Ghosts can now toggle seeing FoV, type: Add}
-  id: 2710
-  time: '2022-12-01T05:46:04.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Turrets will now shoot space targets., type: Fix}
@@ -2912,3 +2907,9 @@ Entries:
   - {message: added janitoral maid uniform with miniskirt, type: Add}
   id: 3209
   time: '2023-03-23T03:39:12.0000000+00:00'
+- author: AJCM-git
+  changes:
+  - {message: The guidebook can now be accessed from new buttons in the lobby and
+      the ingame topbar buttons., type: Tweak}
+  id: 3210
+  time: '2023-03-23T03:41:43.0000000+00:00'
