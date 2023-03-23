@@ -1,10 +1,4 @@
 Entries:
-- author: GoodWheatley
-  changes:
-  - {message: The Syndicate has adjusted the price of several uplink items to encourage
-      traitors to use more diverse strategies., type: Add}
-  id: 2716
-  time: '2022-12-03T01:48:25.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: Links to the wiki/discord/etc show up again in the lobby., type: Fix}
@@ -2914,3 +2908,8 @@ Entries:
   - {message: Fix some shuttle console rotations flipping the viewport., type: Fix}
   id: 3215
   time: '2023-03-23T05:52:21.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix arrivals stranding you at terminal., type: Fix}
+  id: 3216
+  time: '2023-03-23T06:41:42.0000000+00:00'
