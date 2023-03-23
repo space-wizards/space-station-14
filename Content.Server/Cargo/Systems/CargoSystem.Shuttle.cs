@@ -480,7 +480,6 @@ public sealed partial class CargoSystem
         {
             SellPallets(uid, out var amount);
             bank.Balance += (int) amount;
-            _console.RefreshShuttleConsoles();
         }
     }
 
