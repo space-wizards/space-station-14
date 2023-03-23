@@ -14,7 +14,7 @@ public sealed class TelecomSystem : EntitySystem
 
     private void OnRadioReceiveAttempt(ref RadioReceiveAttemptEvent args)
     {
-        if (args.Channel.longRange)
+        if (args.Channel.LongRange)
             return;
         var mapSource = Transform(args.RadioSource).MapID;
         var mapReceiver = Transform(args.RadioReceiver).MapID;
