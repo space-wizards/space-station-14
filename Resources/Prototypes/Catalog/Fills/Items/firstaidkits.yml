@@ -41,6 +41,8 @@
         amount: 2
       - id: Gauze
         amount: 1
+      - id: Bloodpack
+        amount: 1
 
 - type: entity
   id: MedkitToxinFilled
