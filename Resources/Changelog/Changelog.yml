@@ -1,152 +1,4 @@
 Entries:
-- author: Checkraze
-  changes:
-  - {message: Added the Courser class evacuation shuttle., type: Add}
-  id: 2700
-  time: '2022-11-25T08:18:17.0000000+00:00'
-- author: Mervill
-  changes:
-  - {message: Recycler can no longer recycle things if it's unpowered., type: Fix}
-  - {message: Fix conveyor assemblies being un-interactable after deconstruct, type: Fix}
-  id: 2701
-  time: '2022-11-25T09:00:41.0000000+00:00'
-- author: Gaxeer
-  changes:
-  - {message: add missing flame to cowelder, type: Fix}
-  id: 2702
-  time: '2022-11-25T11:27:45.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Added the Exosuit Fabricator, the center of all (future) robotics and
-      exosuit production!', type: Add}
-  id: 2703
-  time: '2022-11-27T03:36:27.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed missing text regarding voice triggers., type: Fix}
-  id: 2704
-  time: '2022-11-27T08:01:17.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Microwave and radiation triggers have been combined, to reduce confusion.',
-    type: Fix}
-  - {message: Item artifacts can now be sprayed properly., type: Fix}
-  id: 2705
-  time: '2022-11-27T08:01:41.0000000+00:00'
-- author: Pangogie
-  changes:
-  - {message: Chemists have stopped pouring dangerous chemicals into the vents., type: Tweak}
-  id: 2706
-  time: '2022-11-27T10:27:02.0000000+00:00'
-- author: Vordenburg
-  changes:
-  - {message: The RPG-7 can be loaded again with its proper ammo., type: Fix}
-  id: 2707
-  time: '2022-11-28T02:47:28.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: It's now possible to reset camera rotation before the lerp starts after
-      traversing a grid., type: Tweak}
-  id: 2708
-  time: '2022-11-29T22:41:27.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: All station events are no longer capped at a certain number of occurrences.,
-    type: Tweak}
-  id: 2709
-  time: '2022-12-01T05:45:43.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Ghosts can now toggle seeing FoV, type: Add}
-  id: 2710
-  time: '2022-12-01T05:46:04.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Turrets will now shoot space targets., type: Fix}
-  id: 2711
-  time: '2022-12-01T15:02:02.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: Kick AFK players, type: Add}
-  id: 2712
-  time: '2022-12-01T16:38:20.0000000+00:00'
-- author: jick
-  changes:
-  - {message: Escape key clears chat input, type: Tweak}
-  id: 2713
-  time: '2022-12-03T01:15:59.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Weld modular mines and grenades to salvage them, type: Tweak}
-  id: 2714
-  time: '2022-12-03T01:20:38.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: Updated all Engineering jumpsuit sprites, type: Tweak}
-  - {message: Updated the Emergency Firesuit's sprite, type: Tweak}
-  - {message: Partially resprited most hardhats, type: Tweak}
-  - {message: Added the orange hardhat to the engidrobe vendor, type: Tweak}
-  id: 2715
-  time: '2022-12-03T01:41:06.0000000+00:00'
-- author: GoodWheatley
-  changes:
-  - {message: The Syndicate has adjusted the price of several uplink items to encourage
-      traitors to use more diverse strategies., type: Add}
-  id: 2716
-  time: '2022-12-03T01:48:25.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: Links to the wiki/discord/etc show up again in the lobby., type: Fix}
-  id: 2717
-  time: '2022-12-04T12:47:26.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Vehicles now inherit access from the rider instead of having access
-      defined on the vehicle itself., type: Tweak}
-  id: 2718
-  time: '2022-12-05T00:23:59.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Artifact analyzers linked to consoles roundstart should now work properly.,
-    type: Fix}
-  id: 2719
-  time: '2022-12-05T02:35:07.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix tile friction on planetmaps., type: Fix}
-  id: 2720
-  time: '2022-12-05T03:47:08.0000000+00:00'
-- author: Prentor
-  changes:
-  - {message: Animals have to eat less but more frequently, type: Tweak}
-  id: 2721
-  time: '2022-12-06T22:56:14.0000000+00:00'
-- author: Bright0
-  changes:
-  - {message: item cabinets no longer can be (un)locked while open, type: Fix}
-  id: 2722
-  time: '2022-12-06T22:59:59.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: NPCs will no longer stall on 1 bad path., type: Fix}
-  id: 2723
-  time: '2022-12-06T23:11:05.0000000+00:00'
-- author: JustinTrotter
-  changes:
-  - {message: Toggle internals icon correctly toggles gas tanks equipped on your back,
-    type: Fix}
-  id: 2724
-  time: '2022-12-06T23:14:09.0000000+00:00'
-- author: Veritius
-  changes:
-  - {message: Tranquiliser shells' capacity has been reduced., type: Tweak}
-  id: 2725
-  time: '2022-12-06T23:14:24.0000000+00:00'
-- author: nikthechampiongr
-  changes:
-  - {message: Added confirmation button for character deletion., type: Add}
-  id: 2726
-  time: '2022-12-06T23:14:48.0000000+00:00'
 - author: Interrobang01
   changes:
   - {message: You can now put holofan projectors into the utility belt., type: Tweak}
@@ -2902,3 +2754,166 @@ Entries:
       names are still randomized., type: Tweak}
   id: 3199
   time: '2023-03-20T00:48:06.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Bames Jond from the Syndicate has added his exploding pen to the uplink.,
+    type: Add}
+  id: 3200
+  time: '2023-03-20T19:32:29.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix melee arcs showing up in the context menu., type: Fix}
+  id: 3201
+  time: '2023-03-22T02:34:23.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Re-sprited the riot suit to match the style., type: Tweak}
+  id: 3202
+  time: '2023-03-22T04:18:35.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: The looping sound from the torch has been removed., type: Remove}
+  id: 3203
+  time: '2023-03-22T04:20:21.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix NPC faction cache not refreshing correctly., type: Fix}
+  id: 3204
+  time: '2023-03-22T04:58:23.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Adjusted ships on radar so they look much nicer., type: Tweak}
+  id: 3205
+  time: '2023-03-22T20:52:39.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Add additional rules around arrivals., type: Add}
+  - {message: Fix some instances of being able to return to the arrivals station.,
+    type: Fix}
+  id: 3206
+  time: '2023-03-23T01:37:43.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Monkeys spawned by artifacts no longer suffocate., type: Fix}
+  id: 3207
+  time: '2023-03-23T01:44:37.0000000+00:00'
+- author: MagnusCrowe
+  changes:
+  - {message: 'Fixed the caustic damage issue where caustic damage was actually heat
+      and poison damage and could be cured by things like dermaline and dylovene,
+      where also siderlac could cure heat and poison damage', type: Fix}
+  - {message: 'Fixed health analyzer counting heat and poison damage as caustic damage,
+      causing the damage group totals to not add up correctly to total damage', type: Fix}
+  - {message: Changed Caustic from a damage group to a damage type under the Burn
+      group, type: Tweak}
+  - {message: 'Added Sodium Carbonate, a neutral precursor chemical', type: Add}
+  - {message: 'Added Sigynate, a new synthetic caustic damage medicine that heals
+      6 caustic damage per unit', type: Add}
+  - {message: Changed Cryoxadone to cure +2 Burn per unit to account for the new damage
+      type in the Burn group, type: Tweak}
+  - {message: Changed harmful acid's damage types to caustic if they used to cause
+      poison, type: Tweak}
+  id: 3208
+  time: '2023-03-23T03:38:36.0000000+00:00'
+- author: Van
+  changes:
+  - {message: added janitoral maid uniform with miniskirt, type: Add}
+  id: 3209
+  time: '2023-03-23T03:39:12.0000000+00:00'
+- author: AJCM-git
+  changes:
+  - {message: The guidebook can now be accessed from new buttons in the lobby and
+      the ingame topbar buttons., type: Tweak}
+  id: 3210
+  time: '2023-03-23T03:41:43.0000000+00:00'
+- author: adamsogm
+  changes:
+  - {message: Changed how full solution containers appear based on their actual fill
+      level., type: Tweak}
+  - {message: Fixed water cup being perpetually empty., type: Fix}
+  id: 3211
+  time: '2023-03-23T03:49:42.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Changed PKA to have a consistent firerate of 1.5 seconds, type: Tweak}
+  id: 3212
+  time: '2023-03-23T04:22:01.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Hair, facial hair, markings, etc are now sorted alphabetically in the
+      character creator menu.', type: Tweak}
+  id: 3213
+  time: '2023-03-23T05:03:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Cargo shuttles now use FTL and not their own system. They have to FTL
+      back and forth to sell / purchase goods., type: Tweak}
+  id: 3214
+  time: '2023-03-23T05:10:49.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix some shuttle console rotations flipping the viewport., type: Fix}
+  id: 3215
+  time: '2023-03-23T05:52:21.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix arrivals stranding you at terminal., type: Fix}
+  id: 3216
+  time: '2023-03-23T06:41:42.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix docking, type: Fix}
+  id: 3217
+  time: '2023-03-23T06:50:52.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: you can now place floor tiles under directional windows (or any other
+      non-full wall)., type: Fix}
+  id: 3218
+  time: '2023-03-23T06:55:51.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix some instances of NPCs getting stuck., type: Fix}
+  id: 3219
+  time: '2023-03-23T12:53:17.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: The Emag has received an update for disabling safety overrides on disposal
+      units., type: Tweak}
+  id: 3220
+  time: '2023-03-23T14:55:50.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: 'Changed sprites of the seed extractor, hydroponics bags and hydroponics
+      leather gloves.', type: Tweak}
+  - {message: Fixed inconsistent hydroponics bag naming., type: Fix}
+  id: 3221
+  time: '2023-03-23T15:10:18.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: 'added explosive banana peel to clown uplink (2 TC, 30 total damage)',
+    type: Add}
+  id: 3222
+  time: '2023-03-23T15:54:15.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Tweaked baseball bats and spears damage and weight values., type: Tweak}
+  id: 3223
+  time: '2023-03-23T16:06:09.0000000+00:00'
+- author: Nekomancer
+  changes:
+  - {message: Added small light post state sprites, type: Add}
+  - {message: Tweaked small light post empty sprite, type: Tweak}
+  id: 3224
+  time: '2023-03-23T16:12:33.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: 'Zombies drop their headsets, preventing them from hearing comms.',
+    type: Tweak}
+  id: 3225
+  time: '2023-03-23T16:17:33.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Round end screen now lists traitor codewords., type: Tweak}
+  id: 3226
+  time: '2023-03-23T16:29:40.0000000+00:00'

@@ -12,6 +12,7 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.NPC;
 using Content.Shared.NPC.Events;
+using Content.Shared.Physics;
 using Content.Shared.Weapons.Melee;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -54,6 +55,11 @@ namespace Content.Server.NPC.Systems
         [Dependency] private readonly SharedMoverController _mover = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
+
+        /// <summary>
+        /// Enabled antistuck detection so if an NPC is in the same spot for a while it will re-path.
+        /// </summary>
+        public bool AntiStuck = true;
 
         private bool _enabled;
 
@@ -402,11 +408,21 @@ namespace Content.Server.NPC.Systems
             var targetPoly = _pathfindingSystem.GetPoly(steering.Coordinates);
 
             // If this still causes issues future sloth adjust the collision mask.
+            // Thanks past sloth I already realised.
             if (targetPoly != null &&
                 steering.Coordinates.Position.Equals(Vector2.Zero) &&
-                _interaction.InRangeUnobstructed(uid, steering.Coordinates.EntityId, range: 30f))
+                TryComp<PhysicsComponent>(uid, out var physics) &&
+                _interaction.InRangeUnobstructed(uid, steering.Coordinates.EntityId, range: 30f, (CollisionGroup) physics.CollisionMask))
             {
                 steering.CurrentPath.Clear();
+                // Enqueue our poly as it will be pruned later.
+                var ourPoly = _pathfindingSystem.GetPoly(xform.Coordinates);
+
+                if (ourPoly != null)
+                {
+                    steering.CurrentPath.Enqueue(ourPoly);
+                }
+
                 steering.CurrentPath.Enqueue(targetPoly);
                 return;
             }
@@ -441,7 +457,7 @@ namespace Content.Server.NPC.Systems
             var targetPos = steering.Coordinates.ToMap(EntityManager, _transform);
             var ourPos = xform.MapPosition;
 
-            PrunePath(ourPos, targetPos.Position - ourPos.Position, result.Path);
+            PrunePath(uid, ourPos, targetPos.Position - ourPos.Position, result.Path);
             steering.CurrentPath = result.Path;
         }
 

@@ -42,6 +42,9 @@ uplink-c4-bundle-desc = Because sometimes quantity is quality. Contains 8 C-4 pl
 uplink-emp-grenade-name = Emp Grenade
 uplink-emp-grenade-desc = Releases electromagnetic pulses that disrupt or damage many electronic devices or drain power cells.
 
+uplink-exploding-pen-name = Exploding pen
+uplink-exploding-pen-desc = A class IV explosive device contained within a standard pen. Comes with a 4 second fuse.
+
 # Ammo
 uplink-pistol-magazine-name = Pistol Magazine (.35 auto)
 uplink-pistol-magazine-desc = Pistol magazine with 10 catridges. Compatible with Viper.
@@ -147,6 +150,9 @@ uplink-necronomicon-desc = An unholy book capable of summoning a demonic familia
 
 uplink-revolver-cap-gun-fake-name = Fake Cap Gun
 uplink-revolver-cap-gun-fake-desc = Fool your enemy! It can use both cap and magnum bullets. Comes loaded with magnum bullets.
+
+uplink-banana-peel-explosive-name = Explosive Banana Peel
+uplink-banana-peel-explosive-desc = They will burst into laughter when they slip on it!
 
 uplink-hot-potato-name = Hot Potato
 uplink-hot-potato-desc = Once activated, this time bomb can't be dropped - only passed to someone else!
