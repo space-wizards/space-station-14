@@ -27,8 +27,6 @@
         amount: 4
       - id: PillKelotane
         amount: 3
-      - id: SyringeInaprovaline
-        amount: 1
 
 - type: entity
   id: MedkitBruteFilled
@@ -70,7 +68,7 @@
       - id: PillDexalin
         amount: 3
       - id: SyringeInaprovaline
-        amount: 1
+        amount: 2
 
 - type: entity
   id: MedkitRadiationFilled
