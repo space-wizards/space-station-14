@@ -8,7 +8,7 @@
   },
   "states": [
     {
-      "name": "brain_on",
+      "name": "ano01_on",
       "delays": [
         [
           0.2,
@@ -21,7 +21,7 @@
       ]
     },
     {
-      "name": "brain"
+      "name": "ano01"
     }
   ]
 }

@@ -474,3 +474,17 @@
         component: Pacified
         refresh: false
         type: Add
+
+- type: reagent
+  id: BananaBrain
+  name: reagent-name-bananabrain
+  desc: reagent-desc-bananabrain
+  physicalDesc: reagent-physical-desc-pungent
+  flavor: acidic
+  color: "#AAAAAA"
+  metabolisms:
+    Poison:
+      effects:
+        - !type:ChemCauseDisease
+          causeChance: 1
+          disease: ActiveCluwneVirus

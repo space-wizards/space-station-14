@@ -19,3 +19,7 @@ disease-proto-tongue-twister = Tongue Twister
 # Zombie
 disease-proto-zombie = Zombie Virus
 disease-proto-zombie-passive = Zombie Virus
+
+# Beast
+disease-proto-beast = Mydoom Virus
+

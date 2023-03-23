@@ -2,57 +2,54 @@ using Content.Shared.Cluwne;
 using Content.Shared.Humanoid;
 using Content.Server.Polymorph.Systems;
 using Content.Shared.Zombies;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage;
-using Content.Server.Nutrition.EntitySystems;
 using Robust.Shared.Prototypes;
 using Content.Shared.Interaction.Components;
-using Content.Server.Abilities.Mime;
-using Content.Shared.Actions.ActionTypes;
-using Content.Shared.Actions;
-using Content.Shared.Interaction;
-using Content.Server.Nutrition;
-using Prometheus.DotNetRuntime;
+using Content.Server.Disease;
 
 namespace Content.Server.Cluwne;
 
 public sealed class CluwneBrainSystem : EntitySystem
 {
-    [Dependency] private readonly PolymorphSystem _polymorphSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly PolymorphSystem _polymorph = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly DiseaseSystem _disease = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<CluwneBrainComponent, UseInHandEvent>(AfterEat);
+        SubscribeLocalEvent<CluwneBrainComponent, ComponentStartup>(AfterEat);
     }
 
-    private void AfterEat(EntityUid uid, CluwneBrainComponent component, UseInHandEvent args)
+    private void AfterEat(EntityUid uid, CluwneBrainComponent component, ComponentStartup args)
     {
-
-        if (HasComp<HumanoidAppearanceComponent>(args.User)
-                && HasComp<CluwneComponent>(args.User)
-                && !HasComp<ZombieComponent>(args.User))
+        if (HasComp<HumanoidAppearanceComponent>(uid)
+                && HasComp<CluwneComponent>(uid)
+                && !HasComp<ZombieComponent>(uid))
         {
-            _polymorphSystem.PolymorphEntity(args.User, "ForcedCluwneBeast");
+            _polymorph.PolymorphEntity(uid, "ForcedCluwneBeast");
+            RemComp<CluwneBrainComponent>(uid);
+            _disease.CureAllDiseases(uid);
         }
 
-        else if (HasComp<HumanoidAppearanceComponent>(args.User)
-                && !HasComp<CluwneComponent>(args.User)
-                && !HasComp<ClumsyComponent>(args.User)
-                && !HasComp<MimePowersComponent>(args.User)
-                && !HasComp<ZombieComponent>(args.User))
+        else if (HasComp<HumanoidAppearanceComponent>(uid)
+                && !HasComp<CluwneComponent>(uid)
+                && !HasComp<ClumsyComponent>(uid)
+                && !HasComp<ZombieComponent>(uid))
         {
-            EnsureComp<CluwneComponent>(args.User);
+            EnsureComp<CluwneComponent>(uid);
+            RemComp<CluwneBrainComponent>(uid);
+            _disease.CureAllDiseases(uid);
         }
 
         else
         {
-            var damageSpec = new DamageSpecifier(_prototypeManager.Index<DamageGroupPrototype>("Genetic"), 50);
-            _damageableSystem.TryChangeDamage(args.User, damageSpec);
+            var damageSpec = new DamageSpecifier(_proto.Index<DamageGroupPrototype>("Genetic"), 50);
+            _damageable.TryChangeDamage(uid, damageSpec);
+            RemComp<CluwneBrainComponent>(uid);
         }
     }
 }

@@ -1,0 +1,16 @@
+- type: disease
+  id: ActiveCluwneVirus
+  name: disease-proto-zombie
+  infectious: false
+  cureResist: 0.2
+  effects:
+    - !type:DiseaseHealthChange
+      probability: 0.01
+      damage:
+        types:
+          Blunt: 1
+    - !type:DiseaseAddComponent
+      comp: CluwneBrain
+  cures:
+    - !type:DiseaseJustWaitCure
+      maxLength: 900

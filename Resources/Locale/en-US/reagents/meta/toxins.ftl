@@ -54,3 +54,6 @@ reagent-desc-allicin = An organosulfur compound found in alliums like garlic, on
 
 reagent-name-pax = pax
 reagent-desc-pax = A psychiatric drug which prevents the patient from directly harming anyone.
+
+reagent-name-unstable-bananabrain = glanofen
+reagent-desc-unstable-bananabrain = A radioactive mutagen that often causes severe cell decay and horrific mutations.
