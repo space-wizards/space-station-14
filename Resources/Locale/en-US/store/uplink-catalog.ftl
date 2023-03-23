@@ -151,6 +151,9 @@ uplink-necronomicon-desc = An unholy book capable of summoning a demonic familia
 uplink-revolver-cap-gun-fake-name = Fake Cap Gun
 uplink-revolver-cap-gun-fake-desc = Fool your enemy! It can use both cap and magnum bullets. Comes loaded with magnum bullets.
 
+uplink-banana-peel-explosive-name = Explosive Banana Peel
+uplink-banana-peel-explosive-desc = They will burst into laughter when they slip on it!
+
 # Armor
 uplink-chameleon-name = Chameleon Kit
 uplink-chameleon-desc = A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!
