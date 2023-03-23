@@ -23,7 +23,7 @@
       types:
         Piercing: 15
   - type: Item
-    size: 20
+    size: 25
   - type: Clothing
     quickEquip: false
     slots:
