@@ -123,7 +123,7 @@
         - !type:ReagentThreshold
           min: 5
         damage:
-          groups:
+          types:
             Caustic: 1
       - !type:ChemVomit
         probability: 0.04
