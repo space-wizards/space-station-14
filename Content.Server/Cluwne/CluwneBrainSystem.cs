@@ -31,7 +31,6 @@ public sealed class CluwneBrainSystem : EntitySystem
         && HasComp<CluwneComponent>(uid)
         && !HasComp<ZombieComponent>(uid))
         {
-            _audio.PlayPvs(component.HonkSound, uid);
             _polymorph.PolymorphEntity(uid, "ForcedCluwneBeast");
             _disease.CureAllDiseases(uid);
             RemComp<CluwneBrainComponent>(uid);

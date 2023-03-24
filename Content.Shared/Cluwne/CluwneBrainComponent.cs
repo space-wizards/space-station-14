@@ -6,6 +6,4 @@ namespace Content.Shared.Cluwne;
 [RegisterComponent, NetworkedComponent]
 public sealed class CluwneBrainComponent : Component
 {
-    [DataField("honkSound")]
-    public SoundSpecifier HonkSound = new SoundPathSpecifier("/Audio/Items/bikehorn.ogg");
 }
