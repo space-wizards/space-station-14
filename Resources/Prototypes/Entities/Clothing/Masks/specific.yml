@@ -15,8 +15,17 @@
     - type: ChameleonClothing
       slot: [mask]
       default: ClothingMaskGas
+    - type: BreathMask
     - type: IdentityBlocker # need that for default ClothingMaskGas
     - type: UserInterface
       interfaces:
         - key: enum.ChameleonUiKey.Key
           type: ChameleonBoundUserInterface
+
+- type: entity
+  parent: ClothingMaskGasChameleon
+  id: ClothingMaskGasVoiceChameleon
+  suffix: Voice Mask, Chameleon
+  components:
+    - type: VoiceMasker
+      default: ClothingMaskGas

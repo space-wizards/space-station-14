@@ -16,7 +16,7 @@
   id: ProtolatheMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: protolathe machine board
-  description: A machine printed circuit board for a protolathe
+  description: A machine printed circuit board for a protolathe.
   components:
     - type: MachineBoard
       prototype: Protolathe
@@ -33,7 +33,7 @@
   id: SecurityTechFabCircuitboard
   parent: BaseMachineCircuitboard
   name: security techfab machine board
-  description: A machine printed circuit board for a security techfab
+  description: A machine printed circuit board for a security techfab.
   components:
     - type: Sprite
       state: security
@@ -52,7 +52,7 @@
   id: MedicalTechFabCircuitboard
   parent: BaseMachineCircuitboard
   name: medical techfab machine board
-  description: A machine printed circuit board for a medical techfab
+  description: A machine printed circuit board for a medical techfab.
   components:
     - type: Sprite
       state: medical
@@ -150,7 +150,7 @@
   id: ArtifactAnalyzerMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: artifact analyzer machine board
-  description: A machine printed circuit board for an artifact analyzer
+  description: A machine printed circuit board for an artifact analyzer.
   components:
     - type: Sprite
       state: science
@@ -166,7 +166,7 @@
   id: TraversalDistorterMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: traversal distorter machine board
-  description: A machine printed circuit board for a traversal distorter
+  description: A machine printed circuit board for a traversal distorter.
   components:
     - type: Sprite
       state: science
@@ -183,7 +183,7 @@
   parent: BaseMachineCircuitboard
   id: AnomalyVesselCircuitboard
   name: anomaly vessel machine board
-  description: A machine printed circuit board for an anomaly vessel
+  description: A machine printed circuit board for an anomaly vessel.
   components:
     - type: Sprite
       state: science
@@ -272,7 +272,7 @@
   id: CloningPodMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: cloning pod machine board
-  description: A machine printed circuit board for a cloning pod
+  description: A machine printed circuit board for a cloning pod.
   components:
     - type: Sprite
       state: medical
@@ -289,7 +289,7 @@
   id: MedicalScannerMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: medical scanner machine board
-  description: A machine printed circuit board for a medical scanner
+  description: A machine printed circuit board for a medical scanner.
   components:
     - type: Sprite
       state: medical
@@ -306,7 +306,7 @@
   id: CrewMonitoringServerMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: crew monitoring server machine board
-  description: A machine printed circuit board for a crew monitoring server
+  description: A machine printed circuit board for a crew monitoring server.
   components:
     - type: MachineBoard
       prototype: CrewMonitoringServer
@@ -321,7 +321,7 @@
   id: CryoPodMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: cryo pod machine board
-  description: A machine printed circuit board for a cryo pod
+  description: A machine printed circuit board for a cryo pod.
   components:
     - type: Sprite
       state: medical
@@ -339,7 +339,7 @@
   id: ChemMasterMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: ChemMaster 4000 machine board
-  description: A machine printed circuit board for a ChemMaster 4000
+  description: A machine printed circuit board for a ChemMaster 4000.
   components:
     - type: Sprite
       state: medical
@@ -359,7 +359,7 @@
   id: ChemDispenserMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: chem dispenser machine board
-  description: A machine printed circuit board for a chem dispenser
+  description: A machine printed circuit board for a chem dispenser.
   components:
     - type: Sprite
       state: medical
@@ -376,7 +376,7 @@
   id: BiomassReclaimerMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: biomass reclaimer machine board
-  description: A machine printed circuit board for a biomass reclaimer
+  description: A machine printed circuit board for a biomass reclaimer.
   components:
     - type: MachineBoard
       prototype: BiomassReclaimer
@@ -401,7 +401,7 @@
   id: HydroponicsTrayMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: hydroponics tray machine board
-  description: A machine printed circuit board for a hydroponics tray
+  description: A machine printed circuit board for a hydroponics tray.
   components:
     - type: Sprite
       state: service
@@ -425,7 +425,7 @@
   id: SeedExtractorMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: seed extractor machine board
-  description: A machine printed circuit board for a seed extractor
+  description: A machine printed circuit board for a seed extractor.
   components:
     - type: Sprite
       state: service
@@ -443,7 +443,7 @@
   id: SMESMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: SMES machine board
-  description: A machine printed circuit board for a SMES
+  description: A machine printed circuit board for a SMES.
   components:
     - type: Sprite
       sprite: Objects/Misc/module.rsi
@@ -457,7 +457,7 @@
   id: SubstationMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: substation machine board
-  description: A machine printed circuit board for a substation
+  description: A machine printed circuit board for a substation.
   components:
     - type: MachineBoard
       prototype: SubstationBasicEmpty
@@ -560,7 +560,7 @@
   id: ReagentGrinderMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: reagent grinder machine board
-  description: A machine printed circuit board for a reagent grinder
+  description: A machine printed circuit board for a reagent grinder.
   components:
     - type: MachineBoard
       prototype: KitchenReagentGrinder
@@ -578,7 +578,7 @@
   id: HotplateMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: hotplate machine board
-  description: A machine printed circuit board for a hotplate
+  description: A machine printed circuit board for a hotplate.
   components:
     - type: MachineBoard
       prototype: ChemistryHotplate
@@ -663,7 +663,7 @@
   id: SurveillanceCameraRouterCircuitboard
   parent: BaseMachineCircuitboard
   name: surveillance camera router board
-  description: A machine printed circuit board for a surveillance camera router
+  description: A machine printed circuit board for a surveillance camera router.
   components:
     - type: MachineBoard
       prototype: SurveillanceCameraRouterConstructed
@@ -674,7 +674,7 @@
   id: SurveillanceCameraWirelessRouterCircuitboard
   parent: BaseMachineCircuitboard
   name: surveillance camera wireless router board
-  description: A machine printed circuit board for a surveillance camera wireless router
+  description: A machine printed circuit board for a surveillance camera wireless router.
   components:
     - type: MachineBoard
       prototype: SurveillanceCameraWirelessRouterConstructed
@@ -686,7 +686,7 @@
   id: SurveillanceWirelessCameraMovableCircuitboard
   parent: BaseMachineCircuitboard
   name: movable wireless camera board
-  description: A machine printed circuit board for a movable wireless camera
+  description: A machine printed circuit board for a movable wireless camera.
   components:
     - type: MachineBoard
       prototype: SurveillanceWirelessCameraMovableConstructed
@@ -701,7 +701,7 @@
   id: SurveillanceWirelessCameraAnchoredCircuitboard
   parent: BaseMachineCircuitboard
   name: wireless camera board
-  description: A machine printed circuit board for a wireless camera
+  description: A machine printed circuit board for a wireless camera.
   components:
     - type: MachineBoard
       prototype: SurveillanceWirelessCameraAnchoredConstructed
@@ -716,7 +716,7 @@
   id: GasRecyclerMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: gas recycler board
-  description: A printed circuit board for a gas recycler
+  description: A printed circuit board for a gas recycler.
   components:
   - type: MachineBoard
     prototype: GasRecycler
@@ -731,7 +731,7 @@
   id: BoozeDispenserMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: booze dispenser machine board
-  description: A machine printed circuit board for a booze dispenser
+  description: A machine printed circuit board for a booze dispenser.
   components:
     - type: Sprite
       state: service
@@ -749,7 +749,7 @@
   id: SodaDispenserMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: soda dispenser machine board
-  description: A machine printed circuit board for a soda dispenser
+  description: A machine printed circuit board for a soda dispenser.
   components:
     - type: Sprite
       state: service
@@ -767,7 +767,7 @@
   id: TelecomServerCircuitboard
   parent: BaseMachineCircuitboard
   name: telecommunication server machine board 
-  description: A machine printed circuit board for an telecommunication server
+  description: A machine printed circuit board for an telecommunication server.
   components:
     - type: MachineBoard
       prototype: TelecomServer

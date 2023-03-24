@@ -102,6 +102,7 @@ namespace Content.Shared.Movement.Systems
         protected void HandleMobMovement(
             EntityUid uid,
             InputMoverComponent mover,
+            EntityUid physicsUid,
             PhysicsComponent physicsComponent,
             TransformComponent xform,
             float frameTime,
@@ -230,7 +231,7 @@ namespace Content.Shared.Movement.Systems
 
             UsedMobMovement[uid] = true;
             // Specifically don't use mover.Owner because that may be different to the actual physics body being moved.
-            var weightless = _gravity.IsWeightless(uid, physicsComponent, xform);
+            var weightless = _gravity.IsWeightless(physicsUid, physicsComponent, xform);
             var (walkDir, sprintDir) = GetVelocityInput(mover);
             var touching = false;
 
@@ -336,10 +337,10 @@ namespace Content.Shared.Movement.Systems
             if (!weightless || touching)
                 Accelerate(ref velocity, in worldTotal, accel, frameTime);
 
-            PhysicsSystem.SetLinearVelocity(uid, velocity, body: physicsComponent);
+            PhysicsSystem.SetLinearVelocity(physicsUid, velocity, body: physicsComponent);
 
             // Ensures that players do not spiiiiiiin
-            PhysicsSystem.SetAngularVelocity(uid, 0, body: physicsComponent);
+            PhysicsSystem.SetAngularVelocity(physicsUid, 0, body: physicsComponent);
         }
 
         private void Friction(float minimumFrictionSpeed, float frameTime, float friction, ref Vector2 velocity)
