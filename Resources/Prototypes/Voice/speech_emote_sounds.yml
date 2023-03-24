@@ -107,7 +107,7 @@
   id: CluwneBeast
   sound:
     collection: CluwneBeastScreams
-        params:
+    params:
       variation: 0.125
 
 - type: emoteSounds
