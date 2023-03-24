@@ -6,6 +6,7 @@ using Content.Shared.Hands.Components;
 using Robust.Shared.GameStates;
 using Content.Shared.Weapons.Ranged.Events;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Projectiles;
 
 namespace Content.Shared.Weapons.Reflect;
 
@@ -34,29 +35,30 @@ public abstract class SharedReflectSystem : EntitySystem
     {
         if (args.Current is not ReflectComponentState state) return;
         component.Enabled = state.Enabled;
-        component.HitscanChance = state.HitscanChance;
-        component.ProjectileChance = state.ProjectileChance;
+        component.EnergeticChance = state.EnergeticChance;
+        component.KineticChance = state.KineticChance;
         component.Spread = state.Spread;
     }
 
     private static void OnGetState(EntityUid uid, ReflectComponent component, ref ComponentGetState args)
     {
-        args.State = new ReflectComponentState(component.Enabled, component.HitscanChance, component.ProjectileChance, component.Spread);
+        args.State = new ReflectComponentState(component.Enabled, component.EnergeticChance, component.KineticChance, component.Spread);
     }
 
     private void OnHandReflectProjectile(EntityUid uid, SharedHandsComponent hands, ref ProjectileReflectAttemptEvent args)
     {
         if (args.Cancelled)
             return;
-        if (TryReflectProjectile(uid, hands.ActiveHandEntity, args.ProjUid))
+        if (TryReflectProjectile(uid, hands.ActiveHandEntity, args.ProjUid, args.Component))
             args.Cancelled = true;
     }
     
-    private bool TryReflectProjectile(EntityUid user, EntityUid? reflector, EntityUid projectile)
+    private bool TryReflectProjectile(EntityUid user, EntityUid? reflector, EntityUid projectile, ProjectileComponent component)
     {
+        var isEnergyProjectile = component.Damage.DamageDict.ContainsKey("Heat");
         if (TryComp<ReflectComponent>(reflector, out var reflect) &&
             reflect.Enabled && 
-            _random.Prob(reflect.ProjectileChance))
+            (isEnergyProjectile && _random.Prob(reflect.EnergeticChance) || _random.Prob(reflect.KineticChance)))
         {
             var rotation = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2).Opposite();
 
@@ -90,7 +92,7 @@ public abstract class SharedReflectSystem : EntitySystem
     {
         if (TryComp<ReflectComponent>(reflector, out var reflect) &&
             reflect.Enabled &&
-            _random.Prob(reflect.HitscanChance))
+            _random.Prob(reflect.EnergeticChance))
         {
             _popup.PopupEntity(Loc.GetString("reflect-shot"), user, PopupType.Small);
             _audio.PlayPvs(reflect.OnReflect, user, AudioHelpers.WithVariation(0.05f, _random));

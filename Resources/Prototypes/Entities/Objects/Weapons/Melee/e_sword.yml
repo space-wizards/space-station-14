@@ -53,8 +53,8 @@
     malus: 0
   - type: Reflect
     enabled: false
-    hitscanChance: 0.5
-    projectileChance: 0.25
+    energeticChance: 0.5
+    kineticChance: 0.25
     spread: 45
 
 - type: entity

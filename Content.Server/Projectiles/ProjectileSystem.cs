@@ -42,7 +42,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
 
         var otherEntity = args.OtherFixture.Body.Owner;
         // it's here so this check is only done once before possible hit
-        var attemptEv = new ProjectileReflectAttemptEvent(uid, false);
+        var attemptEv = new ProjectileReflectAttemptEvent(uid, component, false);
         RaiseLocalEvent(otherEntity, ref attemptEv);
         if (attemptEv.Cancelled)
         {

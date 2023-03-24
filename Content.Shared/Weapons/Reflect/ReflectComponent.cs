@@ -16,11 +16,14 @@ public sealed class ReflectComponent : Component
     [DataField("enabled"), ViewVariables(VVAccess.ReadWrite)]
     public bool Enabled = true;
 
-    [DataField("hitscanChance"), ViewVariables(VVAccess.ReadWrite)]
-    public float HitscanChance;
+    /// <summary>
+    /// Reflect chance for hitscan weapons (lasers) and projectiles with heat damage (disabler)
+    /// </summary>
+    [DataField("energeticChance"), ViewVariables(VVAccess.ReadWrite)]
+    public float EnergeticChance;
 
-    [DataField("projectileChance"), ViewVariables(VVAccess.ReadWrite)]
-    public float ProjectileChance;
+    [DataField("kineticChance"), ViewVariables(VVAccess.ReadWrite)]
+    public float KineticChance;
 
     [DataField("spread"), ViewVariables(VVAccess.ReadWrite)]
     public Angle Spread = Angle.FromDegrees(5);
@@ -33,14 +36,14 @@ public sealed class ReflectComponent : Component
 public sealed class ReflectComponentState : ComponentState
 {
     public bool Enabled;
-    public float HitscanChance;
-    public float ProjectileChance;
+    public float EnergeticChance;
+    public float KineticChance;
     public Angle Spread;
-    public ReflectComponentState(bool enabled, float hitscanChance, float projectileChance, Angle spread)
+    public ReflectComponentState(bool enabled, float energeticChance, float kineticChance, Angle spread)
     {
         Enabled = enabled;
-        HitscanChance = hitscanChance;
-        ProjectileChance = projectileChance;
+        EnergeticChance = energeticChance;
+        KineticChance = kineticChance;
         Spread = spread;
     }
 }
