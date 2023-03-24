@@ -39,4 +39,4 @@ latejoin-arrival-announcement =
        *[neuter] прибыл
     } на станцию!
 latejoin-arrival-sender = Станции
-latejoin-arrivals-direction = A shuttle transferring you to your station will arrive shortly.
+latejoin-arrivals-direction = Вскоре прибудет шаттл, который доставит вас на станцию.

@@ -20,5 +20,5 @@ ent-CrateEmergencyAdvancedKit = продвинутый аварийный наб
     .desc = Ящик, содержащий 4 продвинутые аптечки первой помощи.
 ent-CrateEmergencyRadiationKit = аварийный набор выведения радиации
     .desc = Ящик, содержащий 4 набора для выведения радиации.
-ent-CrateVirologyBiosuit = Virology bio suit crate
-    .desc = Contains 2 biohazard suits to ensure that no disease will distract you from treating the crew. Requires Medical access to open.
+ent-CrateVirologyBiosuit = ящик вирусологических биозащитных костюмов
+    .desc = Содержит 2 костюма биологической защиты, чтобы никакая зараза не отвлекала вас от лечения экипажа. Чтобы открыть необходим уровень доступа Медицинский.

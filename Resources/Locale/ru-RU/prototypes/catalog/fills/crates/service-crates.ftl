@@ -14,5 +14,5 @@ ent-CrateServicePersonnel = ящик для найма персонала
     .desc = Содержит коробку с КПК и чистыми ID картами.
 ent-CrateServiceBooks = ящик книг
     .desc = Содержит 10 пустых книг случайного вида.
-ent-CrateJanitorBiosuit = Janitor bio suit crate
-    .desc = Contains 2 biohazard suits to ensure that no disease will distract you from cleaning.
+ent-CrateJanitorBiosuit = ящик биозащитных костюмов уборщика
+    .desc = Содержит 2 костюма биологической защиты, чтобы никакая зараза не отвлекала вас от уборки станции.

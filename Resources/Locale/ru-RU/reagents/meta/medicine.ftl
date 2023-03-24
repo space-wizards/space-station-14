@@ -64,5 +64,5 @@ reagent-name-ethyloxyephedrine = этилоксиэфедрин
 reagent-desc-ethyloxyephedrine = Нестабильное лекарственное средство, получаемое из дезоксиэфедрина. Поскольку основные эффекты дезоксиэфедрина нейтрализованы, он может пригодиться для чего-то ещё.
 reagent-name-diphenylmethylamine = дифенилметиламин
 reagent-desc-diphenylmethylamine = Более стабильное лекарственное средство, чем этилоксиэфедрин. Полезен для поддержания бодрости.
-reagent-name-sigynate = sigynate
-reagent-desc-sigynate = A thick pink syrup useful for neutralizing acids and soothing trauma caused by acids.  Tastes sweet!
+reagent-name-sigynate = сигинат
+reagent-desc-sigynate = Густой розовый сироп, полезный для нейтрализации кислот и смягчения повреждений, вызванных кислотами. Сладкий на вкус!

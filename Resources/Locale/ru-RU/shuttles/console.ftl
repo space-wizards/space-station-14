@@ -2,7 +2,7 @@ shuttle-pilot-start = Пилотирование начато
 shuttle-pilot-end = Пилотирование прекращено
 shuttle-console-in-ftl = Невозможно войти в БСС когда уже в БСС!
 shuttle-console-proximity = Слишком близко к соседним объектам
-shuttle-console-prevent = You are unable to pilot this ship.
+shuttle-console-prevent = Вы не можете управлять этим кораблем.
 # Display
 shuttle-console-display-label = Дисплей
 shuttle-console-ftl-state = Состояние БСС

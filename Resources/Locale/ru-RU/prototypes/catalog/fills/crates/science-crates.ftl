@@ -1,2 +1,2 @@
-ent-CrateScienceBiosuit = scientist bio suit crate
-    .desc = Contains 2 biohazard suits to ensure that no disease will distract you from doing science. Requires Science access to open.
+ent-CrateScienceBiosuit = ящик научных биозащитных костюмов
+    .desc = Содержит 2 костюма биологической защиты, чтобы никакая зараза не отвлекала вас от занятия исследованиями. Чтобы открыть необходим уровень доступа Научный.
