@@ -355,6 +355,7 @@ namespace Content.Server.Strip
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 NeedHand = true,
+                BreakOnHandChange = false, // allow simultaneously removing multiple items.
                 DuplicateCondition = DuplicateConditions.SameTool
             };
 
@@ -427,6 +428,7 @@ namespace Content.Server.Strip
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 NeedHand = true,
+                BreakOnHandChange = false, // allow simultaneously removing multiple items.
                 DuplicateCondition = DuplicateConditions.SameTool
             };
 
