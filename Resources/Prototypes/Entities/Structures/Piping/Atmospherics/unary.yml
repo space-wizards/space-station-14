@@ -281,8 +281,9 @@
       panelClose: freezerPanelClose
       panelOn : freezerPanelOn
     - type: GasThermoMachine
-      enabled: false
       mode: Freezer
+    - type: ApcPowerReceiver
+      powerDisabled: true #starts off
     - type: Machine
       board: ThermomachineFreezerMachineCircuitBoard
 
@@ -309,7 +310,8 @@
       panelClose: heaterPanelClose
       panelOn : heaterPanelOn
     - type: GasThermoMachine
-      enabled : false
       mode: Heater
+    - type: ApcPowerReceiver
+      powerDisabled: true #starts off
     - type: Machine
       board: ThermomachineHeaterMachineCircuitBoard

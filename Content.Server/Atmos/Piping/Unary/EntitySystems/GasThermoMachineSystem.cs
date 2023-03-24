@@ -42,11 +42,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnInit(EntityUid uid, GasThermoMachineComponent thermoMachine, ComponentInit args)
         {
-            if (TryComp<ApcPowerReceiverComponent>(uid, out var apcPowerReceiver))
-            {
-                thermoMachine.ActivePower = apcPowerReceiver.Load; //inherit powerLoad prototype variable from ApcPowerReceiverComponent
-            }
-
             UpdateState(uid, thermoMachine);
         }
 
@@ -57,6 +52,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnThermoMachineUpdated(EntityUid uid, GasThermoMachineComponent thermoMachine, AtmosDeviceUpdateEvent args)
         {
+
             if (!thermoMachine.IsRunning
                 || !TryComp(uid, out NodeContainerComponent? nodeContainer)
                 || !nodeContainer.TryGetNode(thermoMachine.InletName, out PipeNode? inlet))
@@ -78,7 +74,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         {
             UpdateState(uid, thermoMachine);
         }
-
 
         private void OnGasThermoRefreshParts(EntityUid uid, GasThermoMachineComponent thermoMachine, RefreshPartsEvent args)
         {
@@ -121,7 +116,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnToggleMessage(EntityUid uid, GasThermoMachineComponent thermoMachine, GasThermomachineToggleMessage args)
         {
-            SetEnabled(uid, thermoMachine, !thermoMachine.Enabled);
+            SetEnabled(uid, thermoMachine, _power.TogglePower(uid));
             UpdateState(uid, thermoMachine);
             DirtyUI(uid, thermoMachine);
         }
@@ -152,10 +147,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
 
             thermoMachine.IsRunning = thermoMachine.Enabled && _power.IsPowered(uid);
-            if (TryComp<ApcPowerReceiverComponent>(uid, out var apcPowerReceiver))
-            {
-                apcPowerReceiver.Load = thermoMachine.Enabled ? thermoMachine.ActivePower : thermoMachine.IdlePower;
-            }
 
             _appearance.SetData(uid, ThermoMachineVisuals.Running, thermoMachine.IsRunning, appearance);
         }

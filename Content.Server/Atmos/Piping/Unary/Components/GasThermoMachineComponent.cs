@@ -21,13 +21,6 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [ViewVariables]
         public bool IsRunning = false;
 
-        [ViewVariables]
-        [DataField("idlePower")]
-        public float IdlePower = 0;
-
-        [ViewVariables]
-        public float ActivePower = 1000; //inherit from ApcPowerReciever powerLoad
-
         /// <summary>
         ///     Current maximum temperature, calculated from <see cref="BaseHeatCapacity"/> and the quality of matter
         ///     bins. The heat capacity effectively determines the rate at which the thermo machine can add or remove
