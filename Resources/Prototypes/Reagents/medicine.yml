@@ -21,7 +21,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: -2
+            Poison: -1
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
