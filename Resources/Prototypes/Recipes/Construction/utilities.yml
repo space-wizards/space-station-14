@@ -566,7 +566,7 @@
   - sprite: Structures/Piping/Atmospherics/pump.rsi
     state: pumpSignalValve
   conditions:
-  - !type: TileNotBlocked {}
+  - !type:TileNotBlocked {}
 
 - type: construction
   id: GasPort
