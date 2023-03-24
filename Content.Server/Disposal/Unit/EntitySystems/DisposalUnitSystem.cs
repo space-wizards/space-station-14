@@ -552,8 +552,11 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             component.AutomaticEngageToken?.Cancel();
             component.AutomaticEngageToken = null;
 
-            component.Pressure = 0;
-            component.State = SharedDisposalUnitComponent.PressureState.Pressurizing;
+            if (!component.DisablePressure)
+            {
+                component.Pressure = 0;
+                component.State = SharedDisposalUnitComponent.PressureState.Pressurizing;
+            }
 
             component.Engaged = false;
 
