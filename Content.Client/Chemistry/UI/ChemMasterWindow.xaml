@@ -5,7 +5,7 @@
                 MinSize="620 670"
                 Title="{Loc 'chem-master-bound-user-interface-title'}">
     <TabContainer Name="Tabs" Margin="5 5 7 5">
-        <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="5 5 5 5" SeparationOverride="10">
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="5" SeparationOverride="10">
             <!-- Input container info -->
             <BoxContainer Orientation="Horizontal">
                 <Label Text="{Loc 'chem-master-window-container-label'}" />
@@ -20,7 +20,7 @@
 
                 <ScrollContainer HorizontalExpand="True" MinSize="0 200">
                     <!-- Initially empty, when server sends state data this will have container contents and fill volume.-->
-                    <BoxContainer Name="InputContainerInfo" Orientation="Vertical" Margin="4 4 4 4" HorizontalExpand="True">
+                    <BoxContainer Name="InputContainerInfo" Orientation="Vertical" Margin="4" HorizontalExpand="True">
                         <Label Text="{Loc 'chem-master-window-no-container-loaded-text'}" />
                     </BoxContainer>
                 </ScrollContainer>
@@ -45,14 +45,14 @@
 
                 <ScrollContainer HorizontalExpand="True" MinSize="0 200">
                     <!-- Buffer reagent list -->
-                    <BoxContainer Name="BufferInfo" Orientation="Vertical" Margin="4 4 4 4" HorizontalExpand="True">
+                    <BoxContainer Name="BufferInfo" Orientation="Vertical" Margin="4" HorizontalExpand="True">
                         <Label Text="{Loc 'chem-master-window-buffer-empty-text'}" />
                     </BoxContainer>
                 </ScrollContainer>
             </PanelContainer>
         </BoxContainer>
 
-        <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="5 5 5 5" SeparationOverride="10">
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="5" SeparationOverride="10">
             <!-- Output container info -->
             <BoxContainer Orientation="Horizontal">
                 <Label Text="{Loc 'chem-master-window-container-label'}" />
@@ -67,7 +67,7 @@
 
                 <ScrollContainer HorizontalExpand="True" MinSize="0 200">
                     <!-- Initially empty, when server sends state data this will have container contents and fill volume.-->
-                    <BoxContainer Name="OutputContainerInfo" Orientation="Vertical" Margin="4 4 4 4" HorizontalExpand="True">
+                    <BoxContainer Name="OutputContainerInfo" Orientation="Vertical" Margin="4" HorizontalExpand="True">
                         <Label Text="{Loc 'chem-master-window-no-container-loaded-text'}" />
                     </BoxContainer>
                 </ScrollContainer>
@@ -91,7 +91,7 @@
                 </PanelContainer.PanelOverride>
 
                 <!-- Packaging Info -->
-                <BoxContainer Orientation="Vertical" Margin="4 4 4 4" HorizontalExpand="True" VerticalExpand="True" SeparationOverride="5">
+                <BoxContainer Orientation="Vertical" Margin="4" HorizontalExpand="True" VerticalExpand="True" SeparationOverride="5">
                     <!-- Label for output -->
                     <BoxContainer Orientation="Horizontal">
                         <Label Text="{Loc 'chem-master-current-text-label'}" />
