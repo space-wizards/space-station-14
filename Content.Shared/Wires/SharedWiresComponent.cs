@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Wires
 {
     [Serializable, NetSerializable]
-    public sealed class WireOpenDoAfterEvent : SimpleDoAfterEvent
+    public sealed class WirePanelDoAfterEvent : SimpleDoAfterEvent
     {
     }
 
