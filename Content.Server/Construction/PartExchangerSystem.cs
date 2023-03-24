@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Construction.Components;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
-using Content.Server.Wires;
 using Content.Shared.DoAfter;
 using Content.Shared.Construction.Components;
 using Content.Shared.Exchanger;
@@ -10,6 +9,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
+using Content.Shared.Wires;
 
 namespace Content.Server.Construction;
 
@@ -99,7 +99,7 @@ public sealed class PartExchangerSystem : EntitySystem
         if (!HasComp<MachineComponent>(args.Target))
             return;
 
-        if (TryComp<WiresComponent>(args.Target, out var wires) && !wires.IsPanelOpen)
+        if (TryComp<WiresPanelComponent>(args.Target, out var panel) && !panel.Open)
         {
             _popup.PopupEntity(Loc.GetString("construction-step-condition-wire-panel-open"),
                 args.Target.Value);

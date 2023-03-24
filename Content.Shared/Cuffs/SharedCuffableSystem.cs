@@ -266,7 +266,7 @@ namespace Content.Shared.Cuffs
             if (!args.HitEntities.Any())
                 return;
 
-            TryCuffing(uid, args.User, args.HitEntities.First(), component);
+            TryCuffing(args.User, args.HitEntities.First(), uid, component);
             args.Handled = true;
         }
 

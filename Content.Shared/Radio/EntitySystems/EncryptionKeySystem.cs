@@ -8,7 +8,9 @@ using Content.Shared.Popups;
 using Content.Shared.Radio.Components;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
+using Content.Shared.Wires;
 using Robust.Shared.Containers;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
@@ -22,8 +24,9 @@ public sealed class EncryptionKeySystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedToolSystem _toolSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly SharedToolSystem _tool = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
@@ -54,7 +57,7 @@ public sealed class EncryptionKeySystem : EntitySystem
         }
 
         // if tool use ever gets predicted this needs changing.
-        _popupSystem.PopupEntity(Loc.GetString("encryption-keys-all-extracted"), uid, args.User);
+        _popup.PopupEntity(Loc.GetString("encryption-keys-all-extracted"), uid, args.User);
         _audio.PlayPvs(component.KeyExtractionSound, uid);
     }
 
@@ -93,8 +96,8 @@ public sealed class EncryptionKeySystem : EntitySystem
 
         if (!component.KeysUnlocked)
         {
-            if (_timing.IsFirstTimePredicted)
-                _popupSystem.PopupEntity(Loc.GetString("encryption-keys-are-locked"), uid, args.User);
+            if (_net.IsClient && _timing.IsFirstTimePredicted)
+                _popup.PopupEntity(Loc.GetString("encryption-keys-are-locked"), uid, args.User);
             return;
         }
 
@@ -110,20 +113,26 @@ public sealed class EncryptionKeySystem : EntitySystem
 
     private void TryInsertKey(EntityUid uid, EncryptionKeyHolderComponent component, InteractUsingEvent args)
     {
-        args.Handled = true;
+        if (TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
+        {
+            if (_net.IsClient && _timing.IsFirstTimePredicted)
+                _popup.PopupEntity(Loc.GetString("encryption-keys-panel-locked"), uid, args.User);
+            return;
+        }
 
         if (component.KeySlots <= component.KeyContainer.ContainedEntities.Count)
         {
-            if (_timing.IsFirstTimePredicted)
-                _popupSystem.PopupEntity(Loc.GetString("encryption-key-slots-already-full"), uid, args.User);
+            if (_net.IsClient && _timing.IsFirstTimePredicted)
+                _popup.PopupEntity(Loc.GetString("encryption-key-slots-already-full"), uid, args.User);
             return;
         }
 
         if (component.KeyContainer.Insert(args.Used))
         {
-            if (_timing.IsFirstTimePredicted)
-                _popupSystem.PopupEntity(Loc.GetString("encryption-key-successfully-installed"), uid, args.User);
+            if (_net.IsClient&& _timing.IsFirstTimePredicted)
+                _popup.PopupEntity(Loc.GetString("encryption-key-successfully-installed"), uid, args.User);
             _audio.PlayPredicted(component.KeyInsertionSound, args.Target, args.User);
+            args.Handled = true;
             return;
         }
     }
@@ -133,16 +142,21 @@ public sealed class EncryptionKeySystem : EntitySystem
         if (!TryComp<ToolComponent>(args.Used, out var tool) || !tool.Qualities.Contains(component.KeysExtractionMethod))
             return;
 
-        args.Handled = true;
-
-        if (component.KeyContainer.ContainedEntities.Count == 0)
+        if (TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
         {
-            if (_timing.IsFirstTimePredicted)
-                _popupSystem.PopupEntity(Loc.GetString("encryption-keys-no-keys"), uid, args.User);
+            if (_net.IsClient && _timing.IsFirstTimePredicted)
+                _popup.PopupEntity(Loc.GetString("encryption-keys-panel-locked"), uid, args.User);
             return;
         }
 
-        _toolSystem.UseTool(args.Used, args.User, uid, 1f, component.KeysExtractionMethod, new EncryptionRemovalFinishedEvent(), toolComponent: tool);
+        if (component.KeyContainer.ContainedEntities.Count == 0)
+        {
+            if (_net.IsClient && _timing.IsFirstTimePredicted)
+                _popup.PopupEntity(Loc.GetString("encryption-keys-no-keys"), uid, args.User);
+            return;
+        }
+
+        _tool.UseTool(args.Used, args.User, uid, 1f, component.KeysExtractionMethod, new EncryptionRemovalFinishedEvent(), toolComponent: tool);
     }
 
     private void OnStartup(EntityUid uid, EncryptionKeyHolderComponent component, ComponentStartup args)

@@ -6,18 +6,6 @@ namespace Content.Server.Wires;
 public sealed class WiresComponent : Component
 {
     /// <summary>
-    ///     Is the panel open for this entity's wires?
-    /// </summary>
-    [ViewVariables]
-    public bool IsPanelOpen { get; set; }
-
-    /// <summary>
-    ///     Should this entity's wires panel be visible at all?
-    /// </summary>
-    [ViewVariables]
-    public bool IsPanelVisible { get; set; } = true;
-
-    /// <summary>
     ///     The name of this entity's internal board.
     /// </summary>
     [DataField("BoardName")]
@@ -78,10 +66,4 @@ public sealed class WiresComponent : Component
 
     [DataField("pulseSound")]
     public SoundSpecifier PulseSound = new SoundPathSpecifier("/Audio/Effects/multitool_pulse.ogg");
-
-    [DataField("screwdriverOpenSound")]
-    public SoundSpecifier ScrewdriverOpenSound = new SoundPathSpecifier("/Audio/Machines/screwdriveropen.ogg");
-
-    [DataField("screwdriverCloseSound")]
-    public SoundSpecifier ScrewdriverCloseSound = new SoundPathSpecifier("/Audio/Machines/screwdriverclose.ogg");
 }

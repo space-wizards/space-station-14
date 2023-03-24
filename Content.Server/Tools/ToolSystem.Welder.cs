@@ -16,7 +16,6 @@ using Content.Shared.Weapons.Melee.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Tools
