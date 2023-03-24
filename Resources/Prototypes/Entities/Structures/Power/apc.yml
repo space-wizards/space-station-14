@@ -91,6 +91,14 @@
     BoardName: "APC"
     LayoutId: APC
   - type: WiresVisuals
+  - type: GenericVisualizer
+    visuals:
+      enum.ApcVisuals.ChargeState:
+        enum.ApcVisualLayers.ChargeState:
+          Lack: { state: powered-1 }
+          Charging: { state: powered-2 }
+          Full: { state: powered-3 }
+          Emag: { state: emag-unlit }
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: StrongMetallic

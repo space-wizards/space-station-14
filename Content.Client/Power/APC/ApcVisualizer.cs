@@ -19,22 +19,6 @@ namespace Content.Client.Power.APC
             var sprite = ent.GetComponent<SpriteComponent>(component.Owner);
             if (component.TryGetData<ApcChargeState>(ApcVisuals.ChargeState, out var chargeState))
             {
-                switch (chargeState)
-                {
-                    case ApcChargeState.Lack:
-                        sprite.LayerSetState(ApcVisualLayers.ChargeState, "powered-1");
-                        break;
-                    case ApcChargeState.Charging:
-                        sprite.LayerSetState(ApcVisualLayers.ChargeState, "powered-2");
-                        break;
-                    case ApcChargeState.Full:
-                        sprite.LayerSetState(ApcVisualLayers.ChargeState, "powered-3");
-                        break;
-                    case ApcChargeState.Emag:
-                        sprite.LayerSetState(ApcVisualLayers.ChargeState, "emag-unlit");
-                        break;
-                }
-
                 if (ent.TryGetComponent(component.Owner, out SharedPointLightComponent? light))
                 {
                     light.Color = chargeState switch
@@ -46,10 +30,6 @@ namespace Content.Client.Power.APC
                         _ => LackColor
                     };
                 }
-            }
-            else
-            {
-                sprite.LayerSetState(ApcVisualLayers.ChargeState, "powered-1");
             }
         }
 
