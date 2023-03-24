@@ -139,6 +139,9 @@
       - id: MedkitRadiationFilled
         amount: 4
 
+
+
+
 - type: entity
   id: CrateVirologyBiosuit
   parent: CrateMedicalSecure
