@@ -79,7 +79,7 @@ public sealed class BloodstreamSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = new EntityQueryEnumerator<BloodstreamComponent>();
+        var query = EntityQueryEnumerator<BloodstreamComponent>();
         while (query.MoveNext(out var uid, out var bloodstream))
         {
             bloodstream.AccumulatedFrametime += frameTime;
@@ -100,7 +100,7 @@ public sealed class BloodstreamSystem : EntitySystem
             // as well as stop their bleeding to a certain extent.
             if (bloodstream.BleedAmount > 0)
             {
-                TryModifyBloodLevel(uid, (-bloodstream.BleedAmount) / 10, bloodstream);
+                TryModifyBloodLevel(uid, (-bloodstream.BleedAmount) / 20, bloodstream);
                 TryModifyBleedAmount(uid, -bloodstream.BleedReductionAmount, bloodstream);
             }
 
