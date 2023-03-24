@@ -30,7 +30,6 @@
       path: /Audio/Items/hiss.ogg
   - type: ContainerAmmoProvider
     container: storagebase
-    throwItems: true
   - type: PneumaticCannon
   - type: Storage
     capacity: 30
@@ -107,8 +106,7 @@
   id: WeaponImprovisedPneumaticCannonGun
   suffix: Gun
   components:
-  - type: ContainerAmmoProvider
-    container: storagebase
+  - type: PneumaticCannon
     throwItems: false
 
 # doesn't need gas, extra capacity
@@ -123,6 +121,7 @@
     capacity: 9999
   - type: PneumaticCannon
     gasUsage: 0
+    throwItems: false
   - type: Gun
     fireRate: 10
     selectedMode: FullAuto
