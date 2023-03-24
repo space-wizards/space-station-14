@@ -988,6 +988,8 @@ entities:
   - pos: -8.5,7.5
     parent: 179
     type: Transform
+  missingComponents:
+  - TimedDespawn
 - uid: 143
   type: Table
   components:
