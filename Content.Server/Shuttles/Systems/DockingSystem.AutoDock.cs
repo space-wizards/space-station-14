@@ -56,8 +56,8 @@ public sealed partial class DockingSystem
                 continue;
             }
 
-            var worldPos = _transformSystem.GetWorldPosition(xform, xformQuery);
-            var otherWorldPos = _transformSystem.GetWorldPosition(otherXform, xformQuery);
+            var worldPos = _transform.GetWorldPosition(xform, xformQuery);
+            var otherWorldPos = _transform.GetWorldPosition(otherXform, xformQuery);
 
             if ((worldPos - otherWorldPos).Length < comp.Radius) continue;
 

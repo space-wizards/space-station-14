@@ -35,7 +35,7 @@ public abstract class SharedToolSystem : EntitySystem
         if (args.Handled || args.AdditionalData.Ev == null)
             return;
 
-        if (args.Cancelled)
+        if (args.Cancelled || !ToolFinishUse(uid, args.Args.User, args.AdditionalData.Fuel))
         {
             if (args.AdditionalData.CancelledEv != null)
             {
@@ -50,15 +50,12 @@ public abstract class SharedToolSystem : EntitySystem
             return;
         }
 
-        if (ToolFinishUse(uid, args.Args.User, args.AdditionalData.Fuel))
-        {
-            if (args.AdditionalData.TargetEntity != null)
-                RaiseLocalEvent(args.AdditionalData.TargetEntity.Value, args.AdditionalData.Ev);
-            else
-                RaiseLocalEvent(args.AdditionalData.Ev);
+        if (args.AdditionalData.TargetEntity != null)
+            RaiseLocalEvent(args.AdditionalData.TargetEntity.Value, args.AdditionalData.Ev);
+        else
+            RaiseLocalEvent(args.AdditionalData.Ev);
 
-            args.Handled = true;
-        }
+        args.Handled = true;
     }
 
     public bool UseTool(EntityUid tool, EntityUid user, EntityUid? target, float doAfterDelay, IEnumerable<string> toolQualitiesNeeded, ToolEventData toolEventData, float fuel = 0f, ToolComponent? toolComponent = null, Func<bool>? doAfterCheck = null, CancellationTokenSource? cancelToken = null)

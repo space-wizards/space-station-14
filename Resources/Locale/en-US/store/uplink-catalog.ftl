@@ -127,7 +127,7 @@ uplink-super-surplus-bundle-desc = Contains 125 telecrystals worth of completely
 
 # Tools
 uplink-toolbox-name = Toolbox
-uplink-toolbox-desc = A full compliment of tools for the mechanically inclined traitor. Includes a pair of insulated combat gloves, syndicate gas mask and a shoulder holster.
+uplink-toolbox-desc = A full compliment of tools for the mechanically inclined traitor. Includes a pair of insulated combat gloves, syndicate gas mask and a utility belt.
 
 uplink-syndicate-jaws-of-life-name = Jaws Of Life
 uplink-syndicate-jaws-of-life-desc = A combined prying and cutting tool. Useful for entering the station or its departments.
@@ -150,6 +150,9 @@ uplink-necronomicon-desc = An unholy book capable of summoning a demonic familia
 
 uplink-revolver-cap-gun-fake-name = Fake Cap Gun
 uplink-revolver-cap-gun-fake-desc = Fool your enemy! It can use both cap and magnum bullets. Comes loaded with magnum bullets.
+
+uplink-banana-peel-explosive-name = Explosive Banana Peel
+uplink-banana-peel-explosive-desc = They will burst into laughter when they slip on it!
 
 # Armor
 uplink-chameleon-name = Chameleon Kit
