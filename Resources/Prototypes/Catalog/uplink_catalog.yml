@@ -128,7 +128,7 @@
   description: uplink-c4-desc
   productEntity: C4
   cost:
-    Telecrystal: 2
+    Telecrystal: 4
   categories:
   - UplinkExplosives
 
@@ -138,7 +138,7 @@
   description: uplink-c4-bundle-desc
   productEntity: ClothingBackpackDuffelSyndicateC4tBundle
   cost:
-    Telecrystal: 12
+    Telecrystal: 20
   categories:
   - UplinkExplosives
 
@@ -496,7 +496,7 @@
   description: uplink-toolbox-desc
   productEntity: ToolboxSyndicateFilled
   cost:
-    Telecrystal: 2
+    Telecrystal: 4
   categories:
   - UplinkTools
 
@@ -592,6 +592,20 @@
   - !type:BuyerJobCondition
     whitelist:
     - Mime
+    - Clown
+
+- type: listing
+  id: uplinkBananaPeelExplosive
+  name: uplink-banana-peel-explosive-name
+  description: uplink-banana-peel-explosive-desc
+  productEntity: TrashBananaPeelExplosive
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
     - Clown
 
 # Armor

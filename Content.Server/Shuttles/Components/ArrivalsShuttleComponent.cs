@@ -1,8 +1,9 @@
+using Content.Server.Shuttles.Systems;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Shuttles.Components;
 
-[RegisterComponent]
+[RegisterComponent, Access(typeof(ArrivalsSystem))]
 public sealed class ArrivalsShuttleComponent : Component
 {
     [DataField("station")]

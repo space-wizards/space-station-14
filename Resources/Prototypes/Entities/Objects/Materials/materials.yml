@@ -108,6 +108,13 @@
     stackType: WoodPlank
   - type: Sprite
     state: wood
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - wood
+      - wood_2
+      - wood_3
   - type: Item
     heldPrefix: wood
 

@@ -1,3 +1,4 @@
+using Content.Server.Shuttles.Systems;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Components;
@@ -5,7 +6,7 @@ namespace Content.Server.Shuttles.Components;
 /// <summary>
 /// Added to a station that is available for arrivals shuttles.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(ArrivalsSystem))]
 public sealed class StationArrivalsComponent : Component
 {
     [DataField("shuttle")]
