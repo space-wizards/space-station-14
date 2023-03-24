@@ -11,7 +11,6 @@ using Content.Shared.Tools;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Power.EntitySystems
@@ -25,8 +24,7 @@ namespace Content.Server.Power.EntitySystems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly SharedToolSystem _toolSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-
-        private const float ScrewTime = 2f;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         public override void Initialize()
         {
@@ -95,7 +93,7 @@ namespace Content.Server.Power.EntitySystems
             battery.CanDischarge = apc.MainBreakerEnabled;
 
             UpdateUIState(uid, apc);
-            SoundSystem.Play(apc.OnReceiveMessageSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-2f));
+            _audio.PlayPvs(apc.OnReceiveMessageSound, uid, AudioParams.Default.WithVolume(-2f));
         }
 
         private void OnEmagged(EntityUid uid, ApcComponent comp, ref GotEmaggedEvent args)
@@ -143,10 +141,16 @@ namespace Content.Server.Power.EntitySystems
 
             var netBattery = Comp<PowerNetworkBatteryComponent>(uid);
             float power = netBattery is not null ? netBattery.CurrentSupply : 0f;
-
-            if (_userInterfaceSystem.GetUiOrNull(uid, ApcUiKey.Key, ui) is { } bui)
+            var bui = _userInterfaceSystem.GetUiOrNull(uid, ApcUiKey.Key, ui);
+            if (bui != null)
             {
-                bui.SetState(new ApcBoundInterfaceState(apc.MainBreakerEnabled, apc.HasAccess, (int)MathF.Ceiling(power), apc.LastExternalState, battery.CurrentCharge / battery.MaxCharge));
+                var state = new ApcBoundInterfaceState(
+                    apc.MainBreakerEnabled,
+                    apc.HasAccess, (int) MathF.Ceiling(power),
+                    apc.LastExternalState,
+                    battery.CurrentCharge / battery.MaxCharge
+                );
+                _userInterfaceSystem.SetUiState(bui, state);
             }
         }
 
