@@ -13,6 +13,7 @@ public sealed class DoAfterOverlay : Overlay
     private readonly IEntityManager _entManager;
     private readonly IGameTiming _timing;
     private readonly SharedTransformSystem _transform;
+    private readonly MetaDataSystem _meta;
 
     private readonly Texture _barTexture;
     private readonly ShaderInstance _shader;
@@ -33,6 +34,7 @@ public sealed class DoAfterOverlay : Overlay
         _entManager = entManager;
         _timing = timing;
         _transform = _entManager.EntitySysManager.GetEntitySystem<SharedTransformSystem>();
+        _meta = _entManager.EntitySysManager.GetEntitySystem<MetaDataSystem>();
         var sprite = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/progress_bar.rsi"), "icon");
         _barTexture = _entManager.EntitySysManager.GetEntitySystem<SpriteSystem>().Frame0(sprite);
 
@@ -43,7 +45,6 @@ public sealed class DoAfterOverlay : Overlay
     {
         var handle = args.WorldHandle;
         var rotation = args.Viewport.Eye?.Rotation ?? Angle.Zero;
-        var spriteQuery = _entManager.GetEntityQuery<SpriteComponent>();
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
         // If you use the display UI scale then need to set max(1f, displayscale) because 0 is valid.
@@ -52,19 +53,29 @@ public sealed class DoAfterOverlay : Overlay
         var rotationMatrix = Matrix3.CreateRotation(-rotation);
         handle.UseShader(_shader);
 
-        var time = _timing.CurTime;
+        var curTime = _timing.CurTime;
 
         var bounds = args.WorldAABB.Enlarged(5f);
 
-        var enumerator = _entManager.EntityQueryEnumerator<ActiveDoAfterComponent, DoAfterComponent, SpriteComponent, TransformComponent>();
+        var metaQuery = _entManager.GetEntityQuery<MetaDataComponent>();
+        var enumerator = _entManager.AllEntityQueryEnumerator<ActiveDoAfterComponent, DoAfterComponent, SpriteComponent, TransformComponent>();
         while (enumerator.MoveNext(out var uid, out _, out var comp, out var sprite, out var xform))
         {
             if (xform.MapID != args.MapId)
                 continue;
 
-            var worldPosition = _transform.GetWorldPosition(xform);
+            if (comp.DoAfters.Count == 0)
+                continue;
+
+            var worldPosition = _transform.GetWorldPosition(xform, xformQuery);
             if (!bounds.Contains(worldPosition))
                 continue;
+
+            // If the entity is paused, we will draw the do-after as it was when the entity got paused.
+            var meta = metaQuery.GetComponent(uid);
+            var time = meta.EntityPaused
+                ? _meta.GetPauseTime(uid, meta)
+                : curTime;
 
             var worldMatrix = Matrix3.CreateTranslation(worldPosition);
             Matrix3.Multiply(scaleMatrix, worldMatrix, out var scaledWorld);
