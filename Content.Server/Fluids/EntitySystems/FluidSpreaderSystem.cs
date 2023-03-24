@@ -122,7 +122,7 @@ public sealed class FluidSpreaderSystem : EntitySystem
         var dst = dstMap.Position;
         var src = Transform(srcUid).MapPosition.Position;
         var dir = src - dst;
-        var ray = new CollisionRay(dst, dir.Normalized, (int) CollisionGroup.TabletopMachineMask);
+        var ray = new CollisionRay(dst, dir.Normalized, (int) CollisionGroup.ItemMask);
         var mapId = dstMap.MapId;
         var results = _physics.IntersectRay(mapId, ray, dir.Length, returnOnFirstHit: true);
         if (results.Any())
