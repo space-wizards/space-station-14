@@ -8,5 +8,7 @@ ent-CrateEmergencyRadiation = ящик противорадиационного 
     .desc = Переживите ядерный апокалипсис и двигатель суперматерии благодаря двум комплектам противорадиационных костюмов. Каждый комплект включает в себя шлем, костюм и счетчик Гейгера. Мы даже подарим бутылку водки и несколько стаканов, учитывая продолжительность жизни тех, кто это заказывает.
 ent-CrateEmergencyInflatablewall = ящик надувных стен
     .desc = Три стопки надувных стен для случаев, когда металлические стены станции больше не удерживают атмосферу.
+ent-CrateGenericBiosuit = Emergency bio suit crate
+    .desc = Contains 2 biohazard suits to ensure that no disease will distract you from what you're doing there.
 ent-CrateSlimepersonLifeSupport = ящик жизнеобеспечения слаймолюдов
     .desc = Содержит четыре дыхательные маски и четыре больших баллона азота.

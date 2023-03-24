@@ -31,3 +31,6 @@ ent-CrateEmergencyAdvancedKit = { ent-CrateMedical }
 ent-CrateEmergencyRadiationKit = { ent-CrateMedical }
     .desc = { ent-CrateMedical.desc }
     .suffix = { "" }
+ent-CrateVirologyBiosuit = { ent-CrateMedicalSecure }
+    .desc = { ent-CrateMedicalSecure.desc }
+    .suffix = { "" }

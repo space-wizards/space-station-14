@@ -22,3 +22,6 @@ ent-CrateServicePersonnel = ящик для найма персонала
 ent-CrateServiceBooks = ящик книг
     .desc = Содержит 10 пустых книг случайного вида.
     .suffix = { "" }
+ent-CrateJanitorBiosuit = { ent-CratePlastic }
+    .desc = { ent-CratePlastic.desc }
+    .suffix = { "" }
