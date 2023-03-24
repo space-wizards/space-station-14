@@ -14,7 +14,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.Medical.CrewMonitoring
 {
     [GenerateTypedNameReferences]
-    public sealed partial class CrewMonitoringWindow : DefaultWindow
+    public sealed partial class CrewMonitoringWindow : FancyWindow
     {
         private List<Control> _rowsContent = new();
         private List<(DirectionIcon Icon, Vector2 Position)> _directionIcons = new();
