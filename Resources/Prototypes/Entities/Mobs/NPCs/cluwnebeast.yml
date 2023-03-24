@@ -59,6 +59,7 @@
         Structural: 10
   - type: Body
     prototype: Cluwne
+    requiredLegs: 2
   - type: Appearance
   - type: Strippable
   - type: MovementSpeedModifier
