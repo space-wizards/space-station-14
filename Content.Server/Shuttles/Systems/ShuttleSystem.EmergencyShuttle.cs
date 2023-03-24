@@ -11,6 +11,8 @@ using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Shuttles.Events;
+using Content.Shared.Tiles;
+using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Server.Player;
@@ -109,126 +111,6 @@ public sealed partial class ShuttleSystem
    }
 
    /// <summary>
-   /// Checks whether the emergency shuttle can warp to the specified position.
-   /// </summary>
-   private bool ValidSpawn(MapGridComponent grid, Box2 area)
-   {
-       return !grid.GetLocalTilesIntersecting(area).Any();
-   }
-
-   private DockingConfig? GetDockingConfig(ShuttleComponent component, EntityUid targetGrid)
-   {
-       var gridDocks = GetDocks(targetGrid);
-
-       if (gridDocks.Count <= 0) return null;
-
-       var xformQuery = GetEntityQuery<TransformComponent>();
-       var targetGridGrid = Comp<MapGridComponent>(targetGrid);
-       var targetGridXform = xformQuery.GetComponent(targetGrid);
-       var targetGridAngle = targetGridXform.WorldRotation.Reduced();
-
-       var shuttleDocks = GetDocks(component.Owner);
-       var shuttleAABB = Comp<MapGridComponent>(component.Owner).LocalAABB;
-
-       var validDockConfigs = new List<DockingConfig>();
-
-       if (shuttleDocks.Count > 0)
-       {
-           // We'll try all combinations of shuttle docks and see which one is most suitable
-           foreach (var shuttleDock in shuttleDocks)
-           {
-               var shuttleDockXform = xformQuery.GetComponent(shuttleDock.Owner);
-
-               foreach (var gridDock in gridDocks)
-               {
-                   var gridXform = xformQuery.GetComponent(gridDock.Owner);
-
-                   if (!CanDock(
-                           shuttleDock, shuttleDockXform,
-                           gridDock, gridXform,
-                           targetGridAngle,
-                           shuttleAABB,
-                           targetGridGrid,
-                           out var dockedAABB,
-                           out var matty,
-                           out var targetAngle)) continue;
-
-                   // Can't just use the AABB as we want to get bounds as tight as possible.
-                   var spawnPosition = new EntityCoordinates(targetGrid, matty.Transform(Vector2.Zero));
-                   spawnPosition = new EntityCoordinates(targetGridXform.MapUid!.Value, spawnPosition.ToMapPos(EntityManager));
-
-                   var dockedBounds = new Box2Rotated(shuttleAABB.Translated(spawnPosition.Position), targetGridAngle, spawnPosition.Position);
-
-                   // Check if there's no intersecting grids (AKA oh god it's docking at cargo).
-                   if (_mapManager.FindGridsIntersecting(targetGridXform.MapID,
-                           dockedBounds).Any(o => o.Owner != targetGrid))
-                   {
-                       continue;
-                   }
-
-                   // Alright well the spawn is valid now to check how many we can connect
-                   // Get the matrix for each shuttle dock and test it against the grid docks to see
-                   // if the connected position / direction matches.
-
-                   var dockedPorts = new List<(DockingComponent DockA, DockingComponent DockB)>()
-                   {
-                       (shuttleDock, gridDock),
-                   };
-
-                   // TODO: Check shuttle orientation as the tiebreaker.
-
-                   foreach (var other in shuttleDocks)
-                   {
-                       if (other == shuttleDock) continue;
-
-                       foreach (var otherGrid in gridDocks)
-                       {
-                           if (otherGrid == gridDock) continue;
-
-                           if (!CanDock(
-                                   other,
-                                   xformQuery.GetComponent(other.Owner),
-                                   otherGrid,
-                                   xformQuery.GetComponent(otherGrid.Owner),
-                                   targetGridAngle,
-                                   shuttleAABB, targetGridGrid,
-                                   out var otherDockedAABB,
-                                   out _,
-                                   out var otherTargetAngle) ||
-                               !otherDockedAABB.Equals(dockedAABB) ||
-                               !targetAngle.Equals(otherTargetAngle)) continue;
-
-                           dockedPorts.Add((other, otherGrid));
-                       }
-                   }
-
-                   validDockConfigs.Add(new DockingConfig()
-                   {
-                       Docks = dockedPorts,
-                       Area = dockedAABB.Value,
-                       Coordinates = spawnPosition,
-                       Angle = targetAngle,
-                   });
-               }
-           }
-       }
-
-       if (validDockConfigs.Count <= 0) return null;
-
-       // Prioritise by priority docks, then by maximum connected ports, then by most similar angle.
-       validDockConfigs = validDockConfigs
-           .OrderByDescending(x => x.Docks.Any(docks => HasComp<EmergencyDockComponent>(docks.DockB.Owner)))
-           .ThenByDescending(x => x.Docks.Count)
-           .ThenBy(x => Math.Abs(Angle.ShortestDistance(x.Angle.Reduced(), targetGridAngle).Theta)).ToList();
-
-       var location = validDockConfigs.First();
-       location.TargetGrid = targetGrid;
-       // TODO: Ideally do a hyperspace warpin, just have it run on like a 10 second timer.
-
-       return location;
-   }
-
-   /// <summary>
    /// Calls the emergency shuttle for the station.
    /// </summary>
    public void CallEmergencyShuttle(EntityUid? stationUid)
@@ -304,6 +186,7 @@ public sealed partial class ShuttleSystem
        TransformComponent gridDockXform,
        Angle targetGridRotation,
        Box2 shuttleAABB,
+       EntityUid gridUid,
        MapGridComponent grid,
        [NotNullWhen(true)] out Box2? shuttleDockedAABB,
        out Matrix3 matty,
@@ -336,7 +219,8 @@ public sealed partial class ShuttleSystem
        // Rounding moment
        shuttleDockedAABB = shuttleDockedAABB.Value.Enlarged(-0.01f);
 
-       if (!ValidSpawn(grid, shuttleDockedAABB.Value)) return false;
+       if (!ValidSpawn(gridUid, grid, shuttleDockedAABB.Value))
+           return false;
 
        gridRotation = targetGridRotation + gridDockAngle - shuttleDockAngle;
        return true;
@@ -448,6 +332,7 @@ public sealed partial class ShuttleSystem
 
        _shuttleIndex += _mapManager.GetGrid(shuttle.Value).LocalAABB.Width + ShuttleSpawnBuffer;
        component.EmergencyShuttle = shuttle;
+       EnsureComp<ProtectedGridComponent>(shuttle.Value);
    }
 
    private void CleanupEmergencyShuttle()
