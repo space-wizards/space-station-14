@@ -16,3 +16,6 @@ ent-CrateSecuritySupplies = ящик припасов СБ
 ent-CrateRestraints = ящик наручников
     .desc = Содержит по две коробки наручников и стяжек. Чтобы открыть необходим уровень доступа Служба безопасности.
     .suffix = { "" }
+ent-CrateSecurityBiosuit = { ent-CrateSecgear }
+    .desc = { ent-CrateSecgear.desc }
+    .suffix = { "" }

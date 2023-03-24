@@ -10,3 +10,5 @@ ent-CrateSecuritySupplies = ящик припасов СБ
     .desc = Содержит различные припасы для службы безопасности станции. Чтобы открыть необходим уровень доступа Служба безопасности.
 ent-CrateRestraints = ящик наручников
     .desc = Содержит по две коробки наручников и стяжек. Чтобы открыть необходим уровень доступа Служба безопасности.
+ent-CrateSecurityBiosuit = security bio suit crate
+    .desc = Contains 2 biohazard suits to ensure that no disease will distract you from your duties. Requires Security access to open.

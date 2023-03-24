@@ -1,5 +1,5 @@
 ent-EnergySword = energy sword
-    .desc = A very dangerous energy sword. Can be stored in pockets when turned off. Makes a lot of noise when used or turned on.
+    .desc = Very loud and very dangerous. Can be stored in pockets when turned off.
     .suffix = { "" }
 ent-EnergyDagger = pen
     .desc = A dark ink pen.

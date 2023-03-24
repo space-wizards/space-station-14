@@ -31,3 +31,6 @@ ent-CrateEmergencyAdvancedKit = Продвинутый аварийный наб
 ent-CrateEmergencyRadiationKit = Аварийный набор выведения радиации
     .desc = Ящик, содержащий 4 набора для выведения радиации.
     .suffix = { "" }
+ent-CrateVirologyBiosuit = { ent-CrateMedicalSecure }
+    .desc = { ent-CrateMedicalSecure.desc }
+    .suffix = { "" }

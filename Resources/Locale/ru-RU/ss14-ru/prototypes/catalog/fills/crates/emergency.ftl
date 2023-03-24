@@ -16,3 +16,6 @@ ent-CrateEmergencyRadiation = ящик противорадиационного 
 ent-CrateEmergencyInflatablewall = ящик надувных стен
     .desc = Три стопки надувных стен для случаев, когда металлические стены станции больше не удерживают атмосферу.
     .suffix = { "" }
+ent-CrateGenericBiosuit = { ent-CratePlastic }
+    .desc = { ent-CratePlastic.desc }
+    .suffix = { "" }
