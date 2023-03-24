@@ -47,6 +47,18 @@
     - type: WeaponArcVisuals
       animation: Slash
 
+- type: entity
+  id: WeaponArcSlashHf
+  parent: WeaponArcStatic
+  noSpawn: true
+  components:
+    - type: WeaponArcVisuals
+      fadeOut: false
+    - type: Sprite
+      state: hf_slash
+    - type: TimedDespawn
+      lifetime: 0.2
+
 
 - type: entity
   id: WeaponArcBite

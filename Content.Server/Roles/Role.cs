@@ -1,4 +1,4 @@
-﻿// Hey look,
+// Hey look,
 // Antag Datums.
 
 namespace Content.Server.Roles

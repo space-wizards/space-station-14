@@ -1,4 +1,13 @@
 - type: instantAction
+  id: Fart
+  useDelay: 10
+  icon: Interface/Actions/butt.png
+  name: action-name-fart
+  description: action-description-fart
+  serverEvent: !type:FartActionEvent
+  checkCanInteract: false
+
+- type: instantAction
   id: Scream
   useDelay: 10
   icon: Interface/Actions/scream.png

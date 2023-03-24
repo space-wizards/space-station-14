@@ -46,7 +46,8 @@ namespace Content.Server.Weapons.Melee.EnergySword.Components
             Color.DodgerBlue,
             Color.Aqua,
             Color.MediumSpringGreen,
-            Color.MediumOrchid
+            Color.MediumOrchid,
+            Color.White
         };
 
         [DataField("litDamageBonus")]

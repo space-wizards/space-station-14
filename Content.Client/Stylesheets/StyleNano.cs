@@ -85,6 +85,7 @@ namespace Content.Client.Stylesheets
         public static readonly Color GoodGreenFore = Color.FromHex("#31843E");
         public static readonly Color ConcerningOrangeFore = Color.FromHex("#A5762F");
         public static readonly Color DangerousRedFore = Color.FromHex("#BB3232");
+        public static readonly Color HippieBlue = Color.FromHex("#214478");
         public static readonly Color DisabledFore = Color.FromHex("#5A5A5A");
 
         public static readonly Color ButtonColorDefault = Color.FromHex("#464966");
@@ -478,6 +479,7 @@ namespace Content.Client.Stylesheets
             var sliderFillWhite = new StyleBoxTexture(sliderFillBox) { Modulate = Color.White };
 
             var boxFont13 = resCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
+            var comicFont20 = resCache.GetFont("/Fonts/qd-better-comic-sans-font/Qdbettercomicsansboldalternates.ttf", 20);
 
             var insetBack = new StyleBoxTexture
             {
@@ -1012,8 +1014,8 @@ namespace Content.Client.Stylesheets
                 new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassLabelHeadingBigger}, null, null),
                     new[]
                     {
-                        new StyleProperty(Label.StylePropertyFont, notoSansBold20),
-                        new StyleProperty(Label.StylePropertyFontColor, NanoGold),
+                        new StyleProperty(Label.StylePropertyFont, comicFont20),
+                        new StyleProperty(Label.StylePropertyFontColor, HippieBlue),
                     }),
 
                 // Small Label

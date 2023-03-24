@@ -1,19 +1,43 @@
 ﻿- type: lobbyBackground
-  id: Robotics
-  background: /Textures/LobbyScreens/robotics.png
+  id: Entertainment
+  background: /Textures/LobbyScreens/entertainment.png
 
 - type: lobbyBackground
-  id: Supermatter
-  background: /Textures/LobbyScreens/supermatter.png
+  id: Arrest
+  background: /Textures/LobbyScreens/arrest.png
 
 - type: lobbyBackground
-  id: Warden
-  background: /Textures/LobbyScreens/warden.png
+  id: Mime
+  background: /Textures/LobbyScreens/mime.png
 
 - type: lobbyBackground
-  id: Pharmacy
-  background: /Textures/LobbyScreens/pharmacy.png
+  id: Security
+  background: /Textures/LobbyScreens/security.png
 
 - type: lobbyBackground
-  id: SSXIV
-  background: /Textures/LobbyScreens/ssxiv.png
+  id: Captain
+  background: /Textures/LobbyScreens/captain.png
+
+- type: lobbyBackground
+  id: Galactic
+  background: /Textures/LobbyScreens/galactic.png
+
+- type: lobbyBackground
+  id: Memes
+  background: /Textures/LobbyScreens/rare+memes.png
+
+- type: lobbyBackground
+  id: Shitsec
+  background: /Textures/LobbyScreens/shitsec.png
+
+- type: lobbyBackground
+  id: Syndicate
+  background: /Textures/LobbyScreens/syndicate.png
+
+- type: lobbyBackground
+  id: Honkday
+  background: /Textures/LobbyScreens/honkday.png
+
+- type: lobbyBackground
+  id: Law
+  background: /Textures/LobbyScreens/law.png

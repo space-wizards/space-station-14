@@ -6,9 +6,9 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Science
-      time: 18000
+      time: 0
     - !type:OverallPlaytimeRequirement
-      time: 108000
+      time: 0
   weight: 10
   startingGear: ResearchDirectorGear
   icon: "ResearchDirector"

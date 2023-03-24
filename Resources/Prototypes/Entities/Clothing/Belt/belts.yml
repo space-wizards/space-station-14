@@ -377,6 +377,8 @@
     sprite: Clothing/Belt/sheath.rsi
   - type: Storage
     capacity: 15
+    storageInsertSound: /Audio/Items/sheath.ogg
+    storageRemoveSound: /Audio/Items/unsheath.ogg
     whitelist:
       tags:
         - CaptainSabre
@@ -388,6 +390,31 @@
           - CaptainSabre
   - type: Appearance
 
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltSheathHf
+  name: edgelord's sheath
+  description: A strange sheath designed to hold an electric blade of some sort. One could only imagine how edgy this guy's musical preference is.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/hf_sheath.rsi
+    state: sheath
+  - type: Clothing
+    sprite: Clothing/Belt/hf_sheath.rsi
+  - type: Storage
+    capacity: 15
+    storageInsertSound: /Audio/Items/sheath.ogg
+    storageRemoveSound: /Audio/Items/unsheath.ogg
+    whitelist:
+      tags:
+        - HfBlade
+  - type: ItemMapper
+    mapLayers:
+      sheath-sabre:
+        whitelist:
+          tags:
+          - HfBlade
+  - type: Appearance
 # Belts without visualizers
 
 - type: entity

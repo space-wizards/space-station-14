@@ -78,6 +78,9 @@
             "name": "slash"
         },
         {
+            "name": "hf_slash"
+        },
+        {
             "name": "fist"
         }
     ]

@@ -159,6 +159,23 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatCatEarsCursed
+  name: cat ears
+  description: "NYAH!"
+  components:
+  - type: Tag
+    tags: # ignore "WhitelistChameleon" tag
+      - DroneUsable
+  - type: Sprite
+    sprite: Clothing/Head/Hats/catears.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/catears.rsi
+  - type: AddAccentClothing
+    accent: OwOAccent
+  - type: StickyClothing
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatSquid
   name: squiddy
   description: "Scare your friends with this eldritch mask."

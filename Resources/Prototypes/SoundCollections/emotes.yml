@@ -30,3 +30,8 @@
     - /Audio/Voice/Diona/diona_rustle1.ogg
     - /Audio/Voice/Diona/diona_rustle2.ogg
     - /Audio/Voice/Diona/diona_rustle3.ogg
+
+- type: soundCollection
+  id: Farts
+  files:
+    - /Audio/Effects/Emotes/fart.ogg

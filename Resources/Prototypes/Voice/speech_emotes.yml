@@ -53,6 +53,14 @@
     - giggling
     - giggled
 
+- type: emote
+  id: Fart
+  category: Vocal
+  chatMessages: [farts, lets out a massive fart]
+  chatTriggers:
+    - farts
+    - fart
+
 # hand emotes
 - type: emote
   id: Clap

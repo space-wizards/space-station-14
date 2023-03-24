@@ -27,11 +27,17 @@ public sealed class VocalSystem : EntitySystem
         SubscribeLocalEvent<VocalComponent, SexChangedEvent>(OnSexChanged);
         SubscribeLocalEvent<VocalComponent, EmoteEvent>(OnEmote);
         SubscribeLocalEvent<VocalComponent, ScreamActionEvent>(OnScreamAction);
+        SubscribeLocalEvent<VocalComponent, FartActionEvent>(OnFartAction);
     }
 
     private void OnMapInit(EntityUid uid, VocalComponent component, MapInitEvent args)
     {
         // try to add scream action when vocal comp added
+        if (_proto.TryIndex(component.FartActionId, out InstantActionPrototype? protofart))
+        {
+            component.FartAction = new InstantAction(protofart);
+            _actions.AddAction(uid, component.FartAction, null);
+        }
         if (_proto.TryIndex(component.ScreamActionId, out InstantActionPrototype? proto))
         {
             component.ScreamAction = new InstantAction(proto);
@@ -71,6 +77,15 @@ public sealed class VocalSystem : EntitySystem
         args.Handled = _chat.TryPlayEmoteSound(uid, component.EmoteSounds, args.Emote);
     }
 
+    private void OnFartAction(EntityUid uid, VocalComponent component, FartActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        _chat.TryEmoteWithChat(uid, component.FartActionId);
+        args.Handled = true;
+    }
+    
     private void OnScreamAction(EntityUid uid, VocalComponent component, ScreamActionEvent args)
     {
         if (args.Handled)

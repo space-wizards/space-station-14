@@ -64,6 +64,8 @@
         Blunt: 10
         Slash: 20
         Structural: 3
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:

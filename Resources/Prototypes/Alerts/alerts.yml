@@ -41,6 +41,12 @@
   description: alerts-high-toxin-desc
 
 - type: alert
+  id: Courage
+  icons: [/Textures/Interface/Alerts/Courage/revolution_emblem.png]
+  name: "[color=green]Courage[/color]"
+  description: "Seeing the [color=green]flag[/color] that bears the emblem of the revolution gives you [color=green]strength[/color]"
+
+- type: alert
   id: LowPressure
   category: Pressure
   icons:

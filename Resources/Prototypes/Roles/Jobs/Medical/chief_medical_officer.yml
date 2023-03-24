@@ -8,9 +8,9 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 18000
+      time: 0
     - !type:OverallPlaytimeRequirement
-      time: 108000
+      time: 0
   weight: 10
   startingGear: CMOGear
   icon: "ChiefMedicalOfficer"

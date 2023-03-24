@@ -160,7 +160,9 @@ public sealed class MeleeWeaponComponentState : ComponentState
     public string WideAnimation;
     public float Range;
 
-    public MeleeWeaponComponentState(float attackRate, bool attacking, TimeSpan nextAttack, TimeSpan? windupStart, string clickAnimation, string wideAnimation, float range)
+    public SoundSpecifier? HitSound;
+
+    public MeleeWeaponComponentState(float attackRate, bool attacking, TimeSpan nextAttack, TimeSpan? windupStart, string clickAnimation, string wideAnimation, float range,SoundSpecifier? hitSound)
     {
         AttackRate = attackRate;
         Attacking = attacking;
@@ -169,5 +171,6 @@ public sealed class MeleeWeaponComponentState : ComponentState
         ClickAnimation = clickAnimation;
         WideAnimation = wideAnimation;
         Range = range;
+        HitSound = hitSound;
     }
 }

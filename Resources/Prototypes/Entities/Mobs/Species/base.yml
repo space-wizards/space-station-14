@@ -82,6 +82,7 @@
       - ForcedSleep
       - TemporaryBlindness
       - Pacified
+      - Courage
   - type: DiseaseCarrier
   - type: Blindable
   # Other

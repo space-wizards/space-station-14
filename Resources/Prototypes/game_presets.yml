@@ -119,3 +119,16 @@
   rules:
     - Pirates
     - BasicStationEventScheduler
+
+- type: gamePreset
+  id: Revolution
+  alias:
+    - Revo
+    - Revolutionary
+    - Revolutionaries
+  name: revolution-title
+  description: revolution-description
+  showInVote: true
+  rules:
+    - Revolution
+    - BasicStationEventScheduler

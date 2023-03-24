@@ -17,6 +17,9 @@
   id: Baguette
 
 - type: Tag
+  id: Bedsheet
+
+- type: Tag
   id: Bee
 
 - type: Tag
@@ -292,6 +295,9 @@
 
 - type: Tag
   id: Head
+
+- type: Tag
+  id: HfBlade
 
 - type: Tag
   id: HideContextMenu

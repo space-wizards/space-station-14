@@ -1,0 +1,62 @@
+- type: entity
+  name: high frequency blade
+  parent: BaseItem
+  id: HfBlade
+  description: RULES OF NATURE
+  components:
+  - type: EnergySword
+    litDamageBonus:
+        types:
+            Slash: 19
+            Heat: 19
+            Blunt: -4.5
+    litDisarmMalus: 0.6
+    onHitOn: !type:SoundPathSpecifier
+      path: /Audio/Weapons/rapierhit.ogg
+    activateSound: !type:SoundPathSpecifier
+      path: /Audio/Weapons/hfblade-music1.ogg
+    colorOptions:
+      - White
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/hf_blade.rsi
+    layers:
+      - state: hf_blade
+      - state: hf_blade_on
+        color: "#FFFFFF"
+        visible: false
+        shader: unshaded
+        map: [ "blade" ]
+  - type: MeleeWeapon
+    attackRate: 1.5
+    soundHit:
+      path: /Audio/Weapons/genhit1.ogg
+    damage:
+      types:
+        Blunt: 4.5
+    animation: WeaponArcSlashHf
+  - type: Item
+    size: 15
+    sprite: Objects/Weapons/Melee/hf_blade.rsi
+  - type: Tag
+    tags:
+    - HfBlade
+  - type: UseDelay
+    delay: 1.0
+  - type: PointLight
+    netsync: false
+    enabled: false
+    radius: 2
+    energy: 2
+    color: red
+  - type: Appearance
+  - type: ToggleableLightVisuals
+    spriteLayer: blade
+    inhandVisuals:
+      left:
+      - state: inhand-left-blade
+        shader: unshaded
+      right:
+      - state: inhand-right-blade
+        shader: unshaded
+  - type: DisarmMalus
+    malus: 0

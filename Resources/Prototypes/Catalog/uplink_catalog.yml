@@ -55,6 +55,17 @@
   - UplinkWeapons
 
 - type: listing
+  id: UplinkHFblade
+  name: uplink-hfblade-name
+  description: uplink-hfblade-desc
+  icon: { sprite: /Textures/Objects/Weapons/Melee/hf_blade.rsi, state: icon }
+  productEntity: ClothingBeltSheathHfFilled
+  cost:
+    Telecrystal: 20
+  categories:
+  - UplinkWeapons
+
+- type: listing
   id: UplinkEnergyDagger
   name: uplink-edagger-name
   description: uplink-edagger-desc
@@ -842,7 +853,7 @@
   id: UplinkCatEars
   name: uplink-cat-ears-name
   description: uplink-cat-ears-desc
-  productEntity: ClothingHeadHatCatEars
+  productEntity: ClothingHeadHatCatEarsCursed
   cost:
     Telecrystal: 26
   categories:
@@ -883,16 +894,6 @@
   name: uplink-operative-suit-name
   description: uplink-operative-suit-desc
   productEntity: ClothingUniformJumpsuitOperative
-  cost:
-    Telecrystal: 1
-  categories:
-  - UplinkPointless
-
-- type: listing
-  id: UplinkOperativeSkirt
-  name: uplink-operative-skirt-name
-  description: uplink-operative-skirt-desc
-  productEntity: ClothingUniformJumpskirtOperative
   cost:
     Telecrystal: 1
   categories:

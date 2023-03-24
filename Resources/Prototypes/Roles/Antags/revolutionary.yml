@@ -1,0 +1,13 @@
+- type: antag
+  id: Revolutionary
+  name: "Revolutionary"
+  antagonist: true
+  setPreference: false
+  objective: "Take down the heads of staff.. Vive la révolution!"
+
+- type: antag
+  id: RevolutionaryHead
+  name: "Revolutionary Head"
+  antagonist: true
+  setPreference: true
+  objective: "Convert as many crew to the revolution and take down the head of staff"

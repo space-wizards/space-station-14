@@ -85,6 +85,15 @@
       - id: CaptainSabre
 
 - type: entity
+  id: ClothingBeltSheathHfFilled
+  parent: ClothingBeltSheathHf
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: HfBlade
+
+- type: entity
   id: ClothingBeltMilitaryWebbingMedFilled
   parent: ClothingBeltMilitaryWebbingMed
   suffix: Filled

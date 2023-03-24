@@ -53,3 +53,7 @@
 
 - type: statusEffect
   id: Pacified #cannot attack
+
+- type: statusEffect
+  id: Courage
+  alert: Courage

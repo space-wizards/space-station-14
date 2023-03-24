@@ -51,7 +51,7 @@
                 <BoxContainer Orientation="Vertical"  HorizontalExpand="True">
                 <!-- Top row -->
                 <BoxContainer Orientation="Horizontal" MinSize="0 40" Name="HeaderContainer" Access="Public"  SeparationOverride="4">
-                    <Label Margin="8 0 0 0" StyleClasses="LabelHeadingBigger" VAlign="Center" Text="{Loc 'ui-lobby-title'}" />
+                    <Label Margin="8 0 0 0" StyleClasses="LabelHeadingBigger" VAlign="Center" Text="{Loc ''}" />
                     <Label Name="ServerName" Access="Public" StyleClasses="LabelHeadingBigger" VAlign="Center" HorizontalExpand="True" HorizontalAlignment="Center" />
                 </BoxContainer>
                 <!-- Gold line -->

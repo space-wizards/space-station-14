@@ -6,7 +6,7 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 1800
+      time: 0
   startingGear: ChemistGear
   icon: "Chemist"
   supervisors: job-supervisors-cmo

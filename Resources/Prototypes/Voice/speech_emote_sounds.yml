@@ -8,6 +8,8 @@
       collection: MaleScreams
     Laugh:
       collection: MaleLaugh
+    Fart:
+      collection: Farts
 
 - type: emoteSounds
   id: FemaleHuman
@@ -18,6 +20,8 @@
       collection: FemaleScreams
     Laugh:
       collection: FemaleLaugh
+    Fart:
+      collection: Farts
 
 - type: emoteSounds
   id: UnisexReptilian
@@ -28,6 +32,8 @@
       path: /Audio/Voice/Reptilian/reptilian_scream.ogg
     Laugh:
       path: /Audio/Animals/lizard_happy.ogg
+    Fart:
+      collection: Farts
 
 - type: emoteSounds
   id: UnisexVox
@@ -43,6 +49,8 @@
       path: /Audio/Voice/Diona/diona_scream.ogg
     Laugh:
       collection: DionaLaugh
+    Fart:
+      collection: Farts
   params:
     variation: 0.125
 

@@ -1,0 +1,42 @@
+- type: entity
+  name: Hypnotic flash
+  parent: Flash
+  id: RevolutionaryFlash
+  description: Acts like a standard flash, having more uses at the cost of having a weaker stun. If used on a person not wearing eye protection and not apart of command or security it will convert them over to the revolution
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/revoflash.rsi
+      state: flash
+    - type: Flash
+      duration: 1000
+      range: 1
+      aoeFlashDuration: 500
+      uses: 10
+    - type: Item
+      size: 5
+      sprite: Objects/Weapons/Melee/revoflash.rsi
+
+- type: entity
+  name: Revolution flag
+  parent: BaseItem
+  id: RevolutionFlag
+  description: A flag that bears the emblem of the revolution, it may not be much but it may bring courage to those that fight for freedom
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/revolutionflag.rsi
+      state: icon
+    - type: TwoHanded
+    - type: Flag
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 2
+      range: 1
+      angle: 60
+    - type: Item
+      size: 200
+      sprite: Objects/Weapons/Melee/revolutionflag.rsi
+    - type: ItemCooldown
+    - type: Construction
+      graph: revolutionflag
+      node: flag

@@ -27,6 +27,9 @@ public sealed class VocalComponent : Component
     [DataField("screamId", customTypeSerializer: typeof(PrototypeIdSerializer<EmotePrototype>))]
     public string ScreamId = "Scream";
 
+    [DataField("fartId", customTypeSerializer: typeof(PrototypeIdSerializer<EmotePrototype>))]
+    public string FartId = "Fart";
+
     [DataField("wilhelm")]
     public SoundSpecifier Wilhelm = new SoundPathSpecifier("/Audio/Voice/Human/wilhelm_scream.ogg");
 
@@ -39,6 +42,12 @@ public sealed class VocalComponent : Component
     [DataField("screamAction")]
     public InstantAction? ScreamAction;
 
+    [DataField("fartActionId", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
+    public string FartActionId = "Fart";
+
+    [DataField("fartAction")]
+    public InstantAction? FartAction;
+
     /// <summary>
     ///     Currently loaded emote sounds prototype, based on entity sex.
     ///     Null if no valid prototype for entity sex was found.
@@ -48,6 +57,10 @@ public sealed class VocalComponent : Component
 }
 
 public sealed class ScreamActionEvent : InstantActionEvent
+{
+
+}
+public sealed class FartActionEvent : InstantActionEvent
 {
 
 }
