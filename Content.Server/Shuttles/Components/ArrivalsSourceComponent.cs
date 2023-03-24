@@ -1,9 +1,11 @@
+using Content.Server.Shuttles.Systems;
+
 namespace Content.Server.Shuttles.Components;
 
 /// <summary>
 /// Added to a designated arrivals station for players to spawn at, if enabled.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(ArrivalsSystem))]
 public sealed class ArrivalsSourceComponent : Component
 {
 

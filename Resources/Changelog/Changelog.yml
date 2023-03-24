@@ -1,73 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: NPCs will be more persistent in chases., type: Tweak}
-  id: 2729
-  time: '2022-12-06T23:34:23.0000000+00:00'
-- author: Errant
-  changes:
-  - {message: Wall mounted generators and substations actually mounted on a wall can
-      now be ~punched~ reached, type: Fix}
-  id: 2730
-  time: '2022-12-06T23:34:56.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Renamed .40 magnum to .45 and remove .45., type: Tweak}
-  id: 2731
-  time: '2022-12-06T23:38:10.0000000+00:00'
-- author: Cripes
-  changes:
-  - {message: Air Alarm UI is now easier to understand, type: Tweak}
-  id: 2732
-  time: '2022-12-06T23:46:08.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Added geiger counter. It can be found in radiation suit closets., type: Add}
-  - {message: Radiation suit and hardsuits have built-in geiger counter., type: Add}
-  id: 2733
-  time: '2022-12-07T01:56:52.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed a small issue with the analysis console that would cause extra
-      text to display., type: Fix}
-  id: 2734
-  time: '2022-12-08T01:28:51.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix the landing sound for thrown items on planet maps., type: Fix}
-  id: 2735
-  time: '2022-12-08T01:47:31.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix planet footstep sound modifiers., type: Fix}
-  id: 2736
-  time: '2022-12-08T01:56:12.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Ban reason text no longer clips off screen., type: Fix}
-  id: 2737
-  time: '2022-12-08T02:05:18.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Restructured and rebalanced the entire Science tech tree., type: Tweak}
-  - {message: Synthesizers are now properly printable in protolathes., type: Fix}
-  id: 2738
-  time: '2022-12-09T03:06:42.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Revamped the Nuke Ops round end screen., type: Tweak}
-  id: 2739
-  time: '2022-12-10T02:08:40.0000000+00:00'
-- author: Vordenburg
-  changes:
-  - {message: Toy ammunition boxes can be re-filled again., type: Fix}
-  id: 2740
-  time: '2022-12-10T03:43:19.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Rat servants will pathfind under doors again., type: Fix}
-  id: 2741
-  time: '2022-12-10T09:31:03.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'Added Ripley, Cargo''s favorite mechanized machine of destruc-- I mean,
@@ -2915,3 +2846,80 @@ Entries:
   - {message: Paperwork now looks the same as he did before, type: Tweak}
   id: 3228
   time: '2023-03-23T16:53:27.0000000+00:00'
+- author: 08A
+  changes:
+  - {message: Fixed welder interaction when it has a fuel shortage problem, type: Fix}
+  id: 3229
+  time: '2023-03-23T17:08:46.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: The energy sword now does 30 damage per hit and swings slower., type: Tweak}
+  - {message: The energy sword can now break structures., type: Tweak}
+  - {message: 'The energy sword has received its iconic hitsound back, making it much
+      more obvious and threatening.', type: Tweak}
+  id: 3230
+  time: '2023-03-23T17:17:07.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Dehydrated carp will fit in lockers now., type: Fix}
+  id: 3231
+  time: '2023-03-23T17:44:36.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Syndicate shoulder holsters can no longer hold melee weapons., type: Tweak}
+  - {message: Suspicious toolbox now comes with a utility belt in place of a holster.,
+    type: Tweak}
+  id: 3232
+  time: '2023-03-23T18:14:55.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: 'added Telecom System. Sending messages through headsets (but handheld
+      radios / intercoms and etc.) now requires powered telecom server with channel
+      encryption key inserted. Source, receiver and server should be on the same map.
+      Centcom and syndicate channels are available without server and their messages
+      not limited to map.', type: Add}
+  id: 3233
+  time: '2023-03-24T00:02:41.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: maintenance panel needs to be opened to insert/remove keys in telecom
+      server, type: Tweak}
+  - {message: telecom server now can be deconstructed with crowbar, type: Fix}
+  id: 3234
+  time: '2023-03-24T00:09:46.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Shells and cartridges now appear over tables, type: Fix}
+  id: 3235
+  time: '2023-03-24T01:05:55.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Biosuit crates now can be ordered from cargo, type: Add}
+  id: 3236
+  time: '2023-03-24T01:40:27.0000000+00:00'
+- author: TimmyTwoHands
+  changes:
+  - {message: Removed combat bonuses from Boxers., type: Tweak}
+  id: 3237
+  time: '2023-03-24T01:50:29.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix static melee offsets not showing the correct position., type: Fix}
+  id: 3238
+  time: '2023-03-24T02:13:16.0000000+00:00'
+- author: MisterMecky
+  changes:
+  - {message: modified and added stack sprites for wood, type: Tweak}
+  id: 3239
+  time: '2023-03-24T02:26:20.0000000+00:00'
+- author: Mr0maks
+  changes:
+  - {message: Fix freedom implant charges not being used., type: Fix}
+  id: 3240
+  time: '2023-03-24T03:07:21.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Fixed exploits that would let you continue controlling a cardboard box
+      after exiting it., type: Fix}
+  id: 3241
+  time: '2023-03-24T05:09:58.0000000+00:00'
