@@ -20,7 +20,7 @@ public sealed class JammerSystem : EntitySystem
         SubscribeLocalEvent<RadioJammerComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<RadioJammerComponent, PowerCellChangedEvent>(OnPowerCellChanged);
         SubscribeLocalEvent<RadioJammerComponent, ExaminedEvent>(OnExamine);
-        SubscribeLocalEvent<RadioReceiveAttemptEvent>(OnRadioSendAttempt);
+        SubscribeLocalEvent<RadioSendAttemptEvent>(OnRadioSendAttempt);
     }
 
     public override void Update(float frameTime)
@@ -65,7 +65,7 @@ public sealed class JammerSystem : EntitySystem
         }
     }
 
-    private void OnRadioSendAttempt(ref RadioReceiveAttemptEvent args)
+    private void OnRadioSendAttempt(ref RadioSendAttemptEvent args)
     {
         var source = Transform(args.RadioSource).Coordinates;
         var query = AllEntityQuery<RadioJammerComponent, TransformComponent>();
