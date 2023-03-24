@@ -195,7 +195,7 @@ public sealed class MechSystem : SharedMechSystem
                 Priority = 1, // Promote to top to make ejecting the ALT-click action
                 Act = () =>
                 {
-                    if (args.User == component.PilotSlot.ContainedEntity)
+                    if (args.User == uid || args.User == component.PilotSlot.ContainedEntity)
                     {
                         TryEject(uid, component);
                         return;
