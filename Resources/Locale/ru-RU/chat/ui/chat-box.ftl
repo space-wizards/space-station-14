@@ -12,6 +12,7 @@ hud-chatbox-select-channel-Radio = Рация
 hud-chatbox-channel-Admin = Админ
 hud-chatbox-channel-Dead = Мертвые
 hud-chatbox-channel-Emotes = Эмоции
+hud-chatbox-channel-AdminAlert = Оповещение администраторов
 hud-chatbox-channel-AdminChat = Админ
 hud-chatbox-channel-Local = Рядом
 hud-chatbox-channel-Whisper = Шёпот
