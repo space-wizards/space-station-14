@@ -1,7 +1,7 @@
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 
-namespace Content.Server.Containers;
+namespace Content.Shared.Containers;
 
 public sealed class ContainerFillSystem : EntitySystem
 {
