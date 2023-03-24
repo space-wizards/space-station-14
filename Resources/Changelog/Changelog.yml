@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Ban reason text no longer clips off screen., type: Fix}
-  id: 2737
-  time: '2022-12-08T02:05:18.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Restructured and rebalanced the entire Science tech tree., type: Tweak}
@@ -2923,3 +2918,8 @@ Entries:
   - {message: Biosuit crates now can be ordered from cargo, type: Add}
   id: 3236
   time: '2023-03-24T01:40:27.0000000+00:00'
+- author: TimmyTwoHands
+  changes:
+  - {message: Removed combat bonuses from Boxers., type: Tweak}
+  id: 3237
+  time: '2023-03-24T01:50:29.0000000+00:00'
