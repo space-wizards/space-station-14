@@ -128,7 +128,7 @@
   description: uplink-c4-desc
   productEntity: C4
   cost:
-    Telecrystal: 2
+    Telecrystal: 4
   categories:
   - UplinkExplosives
 
@@ -138,7 +138,7 @@
   description: uplink-c4-bundle-desc
   productEntity: ClothingBackpackDuffelSyndicateC4tBundle
   cost:
-    Telecrystal: 12
+    Telecrystal: 20
   categories:
   - UplinkExplosives
 
@@ -149,6 +149,16 @@
   productEntity: EmpGrenade
   cost:
     Telecrystal: 4
+  categories:
+  - UplinkExplosives
+
+- type: listing
+  id: UplinkExplodingPen
+  name: uplink-exploding-pen-name
+  description: uplink-exploding-pen-desc
+  productEntity: PenExploding
+  cost:
+    Telecrystal: 5
   categories:
   - UplinkExplosives
 
@@ -279,6 +289,17 @@
   categories:
     - UplinkUtility
 
+#TODO: Remove this from the uplink
+- type: listing
+  id: UplinkHeadset
+  name: uplink-headset-name
+  description: uplink-headset-desc
+  productEntity: ClothingHeadsetAltSyndicate
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkUtility
+
 - type: listing
   id: UplinkHeadsetEncryptionKey
   name: uplink-encryption-key-name
@@ -288,11 +309,6 @@
     Telecrystal: 2
   categories:
   - UplinkUtility
-  conditions:
-    - !type:StoreWhitelistCondition
-      blacklist:
-        tags:
-          - NukeOpsUplink
 
 - type: listing
   id: UplinkHypopen
@@ -480,7 +496,7 @@
   description: uplink-toolbox-desc
   productEntity: ToolboxSyndicateFilled
   cost:
-    Telecrystal: 2
+    Telecrystal: 4
   categories:
   - UplinkTools
 
@@ -562,7 +578,7 @@
     blacklist:
       components:
       - SurplusBundle
-  
+
 - type: listing
   id: uplinkRevolverCapGunFake
   name: uplink-revolver-cap-gun-fake-name
@@ -576,6 +592,20 @@
   - !type:BuyerJobCondition
     whitelist:
     - Mime
+    - Clown
+
+- type: listing
+  id: uplinkBananaPeelExplosive
+  name: uplink-banana-peel-explosive-name
+  description: uplink-banana-peel-explosive-desc
+  productEntity: TrashBananaPeelExplosive
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
     - Clown
 
 # Armor
@@ -744,7 +774,7 @@
     Telecrystal: 8
   categories:
   - UplinkMisc
-  
+
 - type: listing
   id: UplinkStimkit
   name: uplink-stimkit-name
@@ -754,7 +784,7 @@
     Telecrystal: 12
   categories:
   - UplinkMisc
-  
+
 - type: listing
   id: UplinkStimpackExperimental
   name: uplink-experimental-stimpack-name

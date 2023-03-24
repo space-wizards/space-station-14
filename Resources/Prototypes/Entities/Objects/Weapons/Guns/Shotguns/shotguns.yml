@@ -115,7 +115,7 @@
     capacity: 2
   - type: Construction
     graph: ShotgunSawn
-    node: shotgundoublebarreled
+    node: start
     deconstructionTarget: null
 
 - type: entity
