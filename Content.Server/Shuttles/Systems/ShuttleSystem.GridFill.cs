@@ -2,14 +2,14 @@ using Content.Server.Shuttles.Components;
 
 namespace Content.Server.Shuttles.Systems;
 
-public sealed partial class EmergencyShuttleSystem
+public sealed partial class ShuttleSystem
 {
-    private void InitializeEscapePods()
+    private void InitializeGridFills()
     {
-        SubscribeLocalEvent<EscapePodFillComponent, MapInitEvent>(OnEscapePodFillMapInit);
+        SubscribeLocalEvent<GridFillComponent, MapInitEvent>(OnGridFillMapInit);
     }
 
-    private void OnEscapePodFillMapInit(EntityUid uid, EscapePodFillComponent component, MapInitEvent args)
+    private void OnGridFillMapInit(EntityUid uid, GridFillComponent component, MapInitEvent args)
     {
         if (!TryComp<DockingComponent>(uid, out var dock) ||
             !TryComp<TransformComponent>(uid, out var xform) ||
@@ -22,19 +22,19 @@ public sealed partial class EmergencyShuttleSystem
         var mapId = _mapManager.CreateMap();
         var valid = false;
 
-        if (_map.TryLoad(mapId, component.Path.ToString(), out var ent) &&
+        if (_loader.TryLoad(mapId, component.Path.ToString(), out var ent) &&
             ent.Count == 1 &&
             TryComp<TransformComponent>(ent[0], out var shuttleXform))
         {
-            var escape = GetEscapePodDock(ent[0]);
+            var escape = GetSingleDock(ent[0]);
 
             if (escape != null)
             {
-                var config = _dock.GetDockingConfig(ent[0], xform.GridUid.Value, escape.Value.Entity, escape.Value.Component, uid, dock);
+                var config = _dockSystem.GetDockingConfig(ent[0], xform.GridUid.Value, escape.Value.Entity, escape.Value.Component, uid, dock);
 
                 if (config != null)
                 {
-                    _shuttle.FTLDock(config, shuttleXform);
+                    FTLDock(config, shuttleXform);
                     valid = true;
                 }
             }
@@ -42,13 +42,13 @@ public sealed partial class EmergencyShuttleSystem
 
         if (!valid)
         {
-            _sawmill.Error($"Error loading escape dock for {ToPrettyString(uid)} / {component.Path}");
+            _sawmill.Error($"Error loading gridfill dock for {ToPrettyString(uid)} / {component.Path}");
         }
 
         _mapManager.DeleteMap(mapId);
     }
 
-    private (EntityUid Entity, DockingComponent Component)? GetEscapePodDock(EntityUid uid)
+    private (EntityUid Entity, DockingComponent Component)? GetSingleDock(EntityUid uid)
     {
         var dockQuery = GetEntityQuery<DockingComponent>();
         var xformQuery = GetEntityQuery<TransformComponent>();

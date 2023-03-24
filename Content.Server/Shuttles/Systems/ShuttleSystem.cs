@@ -23,6 +23,7 @@ namespace Content.Server.Shuttles.Systems
         [Dependency] private readonly DockingSystem _dockSystem = default!;
         [Dependency] private readonly DoorSystem _doors = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
+        [Dependency] private readonly MapLoaderSystem _loader = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -44,6 +45,7 @@ namespace Content.Server.Shuttles.Systems
             _sawmill = Logger.GetSawmill("shuttles");
 
             InitializeFTL();
+            InitializeGridFills();
             InitializeIFF();
             InitializeImpact();
 

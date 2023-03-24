@@ -745,7 +745,7 @@
   id: AirlockExternalGlassShuttleEscape
   suffix: External, Escape 3x4, Glass, Docking
   components:
-    - type: EscapePodFill
+    - type: GridFill
 
 #HighSecDoors
 - type: entity
