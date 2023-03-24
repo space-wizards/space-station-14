@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Fix the landing sound for thrown items on planet maps., type: Fix}
-  id: 2735
-  time: '2022-12-08T01:47:31.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Fix planet footstep sound modifiers., type: Fix}
   id: 2736
   time: '2022-12-08T01:56:12.0000000+00:00'
@@ -2923,3 +2918,8 @@ Entries:
   - {message: telecom server now can be deconstructed with crowbar, type: Fix}
   id: 3234
   time: '2023-03-24T00:09:46.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Shells and cartridges now appear over tables, type: Fix}
+  id: 3235
+  time: '2023-03-24T01:05:55.0000000+00:00'
