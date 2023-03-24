@@ -40,9 +40,9 @@ namespace Content.Server.Paper
 
         private void OnMapInit(EntityUid uid, PaperComponent paperComp, MapInitEvent args)
         {
-            if (paperComp.Content != "" && Loc.TryGetString(paperComp.Content, out var locText))
+            if (!string.IsNullOrEmpty(paperComp.Content))
             {
-                paperComp.Content = locText;
+                paperComp.Content = Loc.GetString(paperComp.Content);
             }
         }
 
