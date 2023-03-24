@@ -25,7 +25,7 @@
       mask:
       - MachineMask 
       layer:
-      - [MidImpassable, LowImpassable, BulletImpassable]
+      - MidImpassable, LowImpassable, BulletImpassable
   - type: Sprite
     sprite: Structures/Power/Generation/solar_panel.rsi
     state: normal
