@@ -46,11 +46,5 @@ public sealed class CluwneBrainSystem : EntitySystem
             _disease.CureAllDiseases(uid);
             RemComp<CluwneBrainComponent>(uid);
         }
-
-        else
-        {
-            var damageSpec = new DamageSpecifier(_proto.Index<DamageGroupPrototype>("Genetic"), 50);
-            _damageable.TryChangeDamage(uid, damageSpec);
-        }
     }
 }
