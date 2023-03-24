@@ -255,10 +255,9 @@ namespace Content.Server.Hands.Systems
                 !TryComp(slotEntity, out ServerStorageComponent? storageComponent))
             {
                 if (_inventorySystem.TryGetSlot(plyEnt, equipmentSlot, out var slotDefinition) &&
-                    TryComp(plyEnt, out InventoryComponent? inv) &&
-                    (hands.ActiveHand.HeldEntity != null || slotEntity != null))
+                    TryComp(plyEnt, out InventoryComponent? inv))
                 {
-                    if (hands.ActiveHand.HeldEntity == null)
+                    if (hands.ActiveHand.HeldEntity == null && slotEntity != null)
                     {
                         _inventorySystem.TryUnequip(plyEnt, equipmentSlot);
                         PickupOrDrop(plyEnt, slotEntity.Value);
