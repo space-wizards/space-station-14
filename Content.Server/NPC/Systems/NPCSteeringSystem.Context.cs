@@ -1,9 +1,11 @@
 using System.Linq;
+using Content.Server.Examine;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
 using Content.Shared.NPC;
+using Content.Shared.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 
@@ -124,7 +126,7 @@ public sealed partial class NPCSteeringSystem
                 // Breaking behaviours and the likes.
                 lock (_obstacles)
                 {
-                    status = TryHandleFlags(steering, node, bodyQuery);
+                    status = TryHandleFlags(uid, steering, node, bodyQuery);
                 }
 
                 // TODO: Need to handle re-pathing in case the target moves around.
@@ -177,7 +179,8 @@ public sealed partial class NPCSteeringSystem
         }
         // Stuck detection
         // Check if we have moved further than the movespeed * stuck time.
-        else if (ourCoordinates.TryDistance(EntityManager, steering.LastStuckCoordinates, out var stuckDistance) &&
+        else if (AntiStuck &&
+                 ourCoordinates.TryDistance(EntityManager, steering.LastStuckCoordinates, out var stuckDistance) &&
                  stuckDistance < NPCSteeringComponent.StuckDistance)
         {
             var stuckTime = _timing.CurTime - steering.LastStuckTime;
@@ -281,13 +284,26 @@ public sealed partial class NPCSteeringSystem
     /// <summary>
     /// We may be pathfinding and moving at the same time in which case early nodes may be out of date.
     /// </summary>
-    public void PrunePath(MapCoordinates mapCoordinates, Vector2 direction, Queue<PathPoly> nodes)
+    public void PrunePath(EntityUid uid, MapCoordinates mapCoordinates, Vector2 direction, Queue<PathPoly> nodes)
     {
-        if (nodes.Count == 0)
+        if (nodes.Count <= 1)
             return;
 
-        // Prune the first node as it's irrelevant.
+        // Prune the first node as it's irrelevant (normally it is our node so we don't want to backtrack).
         nodes.Dequeue();
+        // TODO: Really need layer support
+        CollisionGroup mask = 0;
+
+        if (TryComp<PhysicsComponent>(uid, out var physics))
+        {
+            mask = (CollisionGroup) physics.CollisionMask;
+        }
+
+        // If we have to backtrack (for example, we're behind a table and the target is on the other side)
+        // Then don't consider pruning.
+        var goal = nodes.Last().Coordinates.ToMap(EntityManager, _transform);
+        var canPrune =
+            _interaction.InRangeUnobstructed(mapCoordinates, goal, (goal.Position - mapCoordinates.Position).Length + 0.1f, mask);
 
         while (nodes.TryPeek(out var node))
         {
@@ -298,7 +314,8 @@ public sealed partial class NPCSteeringSystem
 
             // If any nodes are 'behind us' relative to the target we'll prune them.
             // This isn't perfect but should fix most cases of stutter stepping.
-            if (nodeMap.MapId == mapCoordinates.MapId &&
+            if (canPrune &&
+                nodeMap.MapId == mapCoordinates.MapId &&
                 Vector2.Dot(direction, nodeMap.Position - mapCoordinates.Position) < 0f)
             {
                 nodes.Dequeue();

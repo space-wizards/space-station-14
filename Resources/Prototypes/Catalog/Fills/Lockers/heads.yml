@@ -71,7 +71,6 @@
       - id: ClothingNeckCloakHop
       - id: ClothingHeadHatHopcap
       - id: HoPIDCard
-        prob: 0.9
       - id: ClothingHeadsetCommand
       - id: BoxPDA
       - id: BoxID

@@ -32,7 +32,7 @@ public partial class SharedGunSystem
             if (_netMan.IsServer)
                 container.Remove(ent);
 
-            args.Ammo.Add(EnsureComp<AmmoComponent>(ent));
+            args.Ammo.Add((ent, EnsureComp<AmmoComponent>(ent)));
         }
     }
 

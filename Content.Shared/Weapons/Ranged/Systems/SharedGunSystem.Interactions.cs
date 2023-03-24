@@ -33,7 +33,7 @@ public abstract partial class SharedGunSystem
 
         AlternativeVerb verb = new()
         {
-            Act = () => SelectFire(component, nextMode, args.User),
+            Act = () => SelectFire(uid, component, nextMode, args.User),
             Text = Loc.GetString("gun-selector-verb", ("mode", GetLocSelector(nextMode))),
             Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/fold.svg.192dpi.png")),
         };
@@ -47,7 +47,9 @@ public abstract partial class SharedGunSystem
 
         foreach (var mode in Enum.GetValues<SelectiveFire>())
         {
-            if ((mode & component.AvailableModes) == 0x0) continue;
+            if ((mode & component.AvailableModes) == 0x0)
+                continue;
+
             modes.Add(mode);
         }
 
@@ -55,9 +57,10 @@ public abstract partial class SharedGunSystem
         return modes[(index + 1) % modes.Count];
     }
 
-    private void SelectFire(GunComponent component, SelectiveFire fire, EntityUid? user = null)
+    private void SelectFire(EntityUid uid, GunComponent component, SelectiveFire fire, EntityUid? user = null)
     {
-        if (component.SelectedMode == fire) return;
+        if (component.SelectedMode == fire)
+            return;
 
         DebugTools.Assert((component.AvailableModes  & fire) != 0x0);
         component.SelectedMode = fire;
@@ -69,22 +72,23 @@ public abstract partial class SharedGunSystem
         else
             component.NextFire += cooldown;
 
-        Audio.PlayPredicted(component.SoundModeToggle, component.Owner, user);
-        Popup(Loc.GetString("gun-selected-mode", ("mode", GetLocSelector(fire))), component.Owner, user);
+        Audio.PlayPredicted(component.SoundModeToggle, uid, user);
+        Popup(Loc.GetString("gun-selected-mode", ("mode", GetLocSelector(fire))), uid, user);
         Dirty(component);
     }
 
     /// <summary>
     /// Cycles the gun's <see cref="SelectiveFire"/> to the next available one.
     /// </summary>
-    public void CycleFire(GunComponent component, EntityUid? user = null)
+    public void CycleFire(EntityUid uid, GunComponent component, EntityUid? user = null)
     {
         // Noop
-        if (component.SelectedMode == component.AvailableModes) return;
+        if (component.SelectedMode == component.AvailableModes)
+            return;
 
         DebugTools.Assert((component.AvailableModes & component.SelectedMode) == component.SelectedMode);
         var nextMode = GetNextMode(component);
-        SelectFire(component, nextMode, user);
+        SelectFire(uid, component, nextMode, user);
     }
 
     // TODO: Actions need doing for guns anyway.
@@ -95,6 +99,6 @@ public abstract partial class SharedGunSystem
 
     private void OnCycleMode(EntityUid uid, GunComponent component, CycleModeEvent args)
     {
-        SelectFire(component, args.Mode, args.Performer);
+        SelectFire(uid, component, args.Mode, args.Performer);
     }
 }
