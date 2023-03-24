@@ -263,6 +263,8 @@ namespace Content.Server.Hands.Systems
                         PickupOrDrop(plyEnt, slotEntity.Value);
                         return;
                     }
+                    if (hands.ActiveHand.HeldEntity == null)
+                        return;
                     if (!_inventorySystem.CanEquip(plyEnt, hands.ActiveHand.HeldEntity.Value, equipmentSlot, out var reason))
                     {
                         _popupSystem.PopupEntity(Loc.GetString(reason), plyEnt, session);
