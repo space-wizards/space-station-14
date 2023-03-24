@@ -28,7 +28,25 @@
     drawdepth: WallMountedItems
     netsync: false
     sprite: Structures/Power/apc.rsi
-    state: apc0
+    layers:
+    - state: apc0
+    - state: apco3-0
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.ChargeState"]
+    - state: apcox-0
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.Lock"]
+    - state: apco0-3
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.Equipment"]
+    - state: apco1-3
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.Lighting"]
+    - state: apco2-3
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.Environment"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
     visuals:
     - type: ApcVisualizer
@@ -69,6 +87,10 @@
     supplyRampTolerance: 1000
     supplyRampRate: 500
   - type: WallMount
+  - type: Wires
+    BoardName: "APC"
+    LayoutId: APC
+  - type: WiresVisuals
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: StrongMetallic

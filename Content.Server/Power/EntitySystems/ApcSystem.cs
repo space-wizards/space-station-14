@@ -6,11 +6,8 @@ using Content.Shared.Access.Systems;
 using Content.Shared.APC;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
-using Content.Shared.Examine;
-using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tools;
-using Content.Shared.Tools.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -42,10 +39,6 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<ApcComponent, ChargeChangedEvent>(OnBatteryChargeChanged);
             SubscribeLocalEvent<ApcComponent, ApcToggleMainBreakerMessage>(OnToggleMainBreaker);
             SubscribeLocalEvent<ApcComponent, GotEmaggedEvent>(OnEmagged);
-
-            SubscribeLocalEvent<ApcToolFinishedEvent>(OnToolFinished);
-            SubscribeLocalEvent<ApcComponent, InteractUsingEvent>(OnInteractUsing);
-            SubscribeLocalEvent<ApcComponent, ExaminedEvent>(OnExamine);
 
             SubscribeLocalEvent<ApcComponent, EmpPulseEvent>(OnEmpPulse);
         }
@@ -118,18 +111,13 @@ namespace Content.Server.Power.EntitySystems
             if (!Resolve(uid, ref apc, ref battery))
                 return;
 
-            if (TryComp(uid, out AppearanceComponent? appearance))
-            {
-                UpdatePanelAppearance(uid, appearance, apc);
-            }
-
             var newState = CalcChargeState(uid, apc, battery);
             if (newState != apc.LastChargeState && apc.LastChargeStateTime + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime)
             {
                 apc.LastChargeState = newState;
                 apc.LastChargeStateTime = _gameTiming.CurTime;
 
-                if (appearance != null)
+                if (TryComp(uid, out AppearanceComponent? appearance))
                 {
                     _appearance.SetData(uid, ApcVisuals.ChargeState, newState, appearance);
                 }
@@ -205,67 +193,6 @@ namespace Content.Server.Power.EntitySystems
             }
 
             return ApcExternalPowerState.Good;
-        }
-
-        public static ApcPanelState GetPanelState(ApcComponent apc)
-        {
-            if (apc.IsApcOpen)
-                return ApcPanelState.Open;
-            else
-                return ApcPanelState.Closed;
-        }
-
-        private void OnInteractUsing(EntityUid uid, ApcComponent component, InteractUsingEvent args)
-        {
-            if (!EntityManager.TryGetComponent(args.Used, out ToolComponent? tool))
-                return;
-
-            var toolEvData = new ToolEventData(new ApcToolFinishedEvent(uid), fuel: 0f);
-
-            if (_toolSystem.UseTool(args.Used, args.User, uid, ScrewTime, new [] { "Screwing" }, toolEvData, toolComponent:tool))
-                args.Handled = true;
-        }
-
-        private void OnToolFinished(ApcToolFinishedEvent args)
-        {
-            if (!EntityManager.TryGetComponent(args.Target, out ApcComponent? component))
-                return;
-            component.IsApcOpen = !component.IsApcOpen;
-
-            if (TryComp(args.Target, out AppearanceComponent? appearance))
-            {
-                UpdatePanelAppearance(args.Target, appearance);
-            }
-
-            if (component.IsApcOpen)
-                SoundSystem.Play(component.ScrewdriverOpenSound.GetSound(), Filter.Pvs(args.Target), args.Target);
-            else
-                SoundSystem.Play(component.ScrewdriverCloseSound.GetSound(), Filter.Pvs(args.Target), args.Target);
-        }
-
-        private void UpdatePanelAppearance(EntityUid uid, AppearanceComponent? appearance = null, ApcComponent? apc = null)
-        {
-            if (!Resolve(uid, ref appearance, ref apc, false))
-                return;
-
-            _appearance.SetData(uid, ApcVisuals.PanelState, GetPanelState(apc), appearance);
-        }
-
-        private sealed class ApcToolFinishedEvent : EntityEventArgs
-        {
-            public EntityUid Target { get; }
-
-            public ApcToolFinishedEvent(EntityUid target)
-            {
-                Target = target;
-            }
-        }
-
-        private void OnExamine(EntityUid uid, ApcComponent component, ExaminedEvent args)
-        {
-            args.PushMarkup(Loc.GetString(component.IsApcOpen
-                ? "apc-component-on-examine-panel-open"
-                : "apc-component-on-examine-panel-closed"));
         }
 
         private void OnEmpPulse(EntityUid uid, ApcComponent component, ref EmpPulseEvent args)
