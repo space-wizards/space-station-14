@@ -32,6 +32,8 @@ The following sounds were used from freesound:
 
     pig_oink.ogg:  modified from "Pig Oink.wav" by freesound user "qubodup" (https://freesound.org/people/qubodup/sounds/442906/) licensed under CC0 1.0 (public domain). The original audio was converted from WAV to OGG format.
 
+    cerberus.ogg: modified from "DogBARKING.wav" by freesound user "ahill86" (https://freesound.org/people/ahill86/sounds/207124/) licensed under CCO 1.0 (Public domain dedication). The original audio was converted from WAV to OGG format, echoed, amplified and pitched down.
+
 The following sounds are taken from TGstation github (licensed under CC by 3.0):
 
     space_dragon_roar.ogg: taken at https://github.com/tgstation/tgstation/commit/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0
@@ -47,9 +49,3 @@ The following sounds were used from youtube:
     lizard_happy.ogg: audio created by youtube user "Nagaty Studio" (https://youtu.be/I7CX0AS8RNI) licensed under CC by 3.0.
 
     bear.ogg: audio is recorded by "Nagaty Studio" (https://www.youtube.com/watch?v=pz6eZbESlU8) licensed under CC by 3.0. The original audio was reverbed.
-
-The following sounds were used from pixabay:
-
-    cerberus.ogg: audio is created by pixabay deleted user 3424813 (https://pixabay.com/sound-effects/dog-snarl-self-made-105738/) licensed under CC0.
-
-    bite_demon.ogg: audio is created by pixabay user nick121087 (https://pixabay.com/sound-effects/demonic-woman-scream-6333/) licensed under CC0. A sample was taken and it has been mixed with bite.ogg

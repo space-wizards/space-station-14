@@ -1624,7 +1624,7 @@
   - type: MeleeWeapon
     hidden: true
     soundHit:
-        path: /Audio/Animals/bite_demon.ogg
+        path: /Audio/Effects/bite.ogg
     angle: 0
     animation: WeaponArcBite
     damage:
