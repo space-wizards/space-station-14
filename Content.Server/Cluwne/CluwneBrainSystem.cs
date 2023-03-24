@@ -28,18 +28,19 @@ public sealed class CluwneBrainSystem : EntitySystem
     private void AfterEat(EntityUid uid, CluwneBrainComponent component, ComponentStartup args)
     {
         if (HasComp<HumanoidAppearanceComponent>(uid)
-        && HasComp<CluwneComponent>(uid)
-        && !HasComp<ZombieComponent>(uid))
+            && HasComp<CluwneComponent>(uid)
+            && !HasComp<ZombieComponent>(uid))
         {
+            _audio.PlayPvs(component.HonkSound, uid);
             _polymorph.PolymorphEntity(uid, "ForcedCluwneBeast");
             _disease.CureAllDiseases(uid);
             RemComp<CluwneBrainComponent>(uid);
         }
 
         else if (HasComp<HumanoidAppearanceComponent>(uid)
-        && !HasComp<CluwneComponent>(uid)
-        && !HasComp<ClumsyComponent>(uid)
-        && !HasComp<ZombieComponent>(uid))
+            && !HasComp<CluwneComponent>(uid)
+            && !HasComp<ClumsyComponent>(uid)
+            && !HasComp<ZombieComponent>(uid))
         {
             EnsureComp<CluwneComponent>(uid);
             _disease.CureAllDiseases(uid);
@@ -48,8 +49,8 @@ public sealed class CluwneBrainSystem : EntitySystem
 
         else
         {
-            var damageSpec = new DamageSpecifier(_prototypeManager.Index<DamageGroupPrototype>("Genetic"), 50);
-            _damageableSystem.TryChangeDamage(uid, damageSpec);
+            var damageSpec = new DamageSpecifier(_proto.Index<DamageGroupPrototype>("Genetic"), 50);
+            _damageable.TryChangeDamage(uid, damageSpec);
         }
     }
 }
