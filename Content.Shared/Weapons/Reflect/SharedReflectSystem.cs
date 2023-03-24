@@ -56,9 +56,10 @@ public abstract class SharedReflectSystem : EntitySystem
     private bool TryReflectProjectile(EntityUid user, EntityUid? reflector, EntityUid projectile, ProjectileComponent component)
     {
         var isEnergyProjectile = component.Damage.DamageDict.ContainsKey("Heat");
+        var isKineticProjectile = !isEnergyProjectile;
         if (TryComp<ReflectComponent>(reflector, out var reflect) &&
             reflect.Enabled && 
-            (isEnergyProjectile && _random.Prob(reflect.EnergeticChance) || _random.Prob(reflect.KineticChance)))
+            (isEnergyProjectile && _random.Prob(reflect.EnergeticChance) || isKineticProjectile && _random.Prob(reflect.KineticChance)))
         {
             var rotation = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2).Opposite();
 
