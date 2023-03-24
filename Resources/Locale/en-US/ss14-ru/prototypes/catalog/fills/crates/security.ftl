@@ -16,3 +16,6 @@ ent-CrateSecuritySupplies = { ent-CrateSecgear }
 ent-CrateRestraints = { ent-CrateSecgear }
     .desc = { ent-CrateSecgear.desc }
     .suffix = { "" }
+ent-CrateSecurityBiosuit = { ent-CrateSecgear }
+    .desc = { ent-CrateSecgear.desc }
+    .suffix = { "" }

@@ -16,3 +16,6 @@ ent-CrateEmergencyRadiation = { ent-CrateRadiation }
 ent-CrateEmergencyInflatablewall = { ent-CratePlastic }
     .desc = { ent-CratePlastic.desc }
     .suffix = { "" }
+ent-CrateGenericBiosuit = { ent-CratePlastic }
+    .desc = { ent-CratePlastic.desc }
+    .suffix = { "" }
