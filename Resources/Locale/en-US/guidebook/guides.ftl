@@ -22,5 +22,5 @@ guide-entry-artifact-reports = Artifact Reports
 guide-entry-traversal-distorter = Traversal Distorter
 guide-entry-machine-upgrading = Machine Upgrading
 
-guide-entry-security = Seucrity
+guide-entry-security = Security
 guide-entry-dna = DNA
