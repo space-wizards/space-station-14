@@ -22,11 +22,6 @@ namespace Content.Client.Fluids
 
         private void OnComponentInit(EntityUid uid, PuddleVisualizerComponent puddleVisuals, ComponentInit args)
         {
-            if (!TryComp(uid, out AppearanceComponent? appearance))
-            {
-                return;
-            }
-
             if (!TryComp(uid, out SpriteComponent? sprite))
             {
                 return;
@@ -45,10 +40,10 @@ namespace Content.Client.Fluids
                 return;
             }
 
-            if (!args.Component.TryGetData(PuddleVisuals.VolumeScale, out float volumeScale)
-                || !args.Component.TryGetData(PuddleVisuals.CurrentVolume, out FixedPoint2 currentVolume)
-                || !args.Component.TryGetData(PuddleVisuals.SolutionColor, out Color solutionColor)
-                || !args.Component.TryGetData(PuddleVisuals.IsEvaporatingVisual, out bool isEvaporating))
+            if (!AppearanceSystem.TryGetData<float>(uid, PuddleVisuals.VolumeScale, out var volumeScale)
+                || !AppearanceSystem.TryGetData<FixedPoint2>(uid, PuddleVisuals.CurrentVolume, out var currentVolume)
+                || !AppearanceSystem.TryGetData<Color>(uid, PuddleVisuals.SolutionColor, out var solutionColor)
+                || !AppearanceSystem.TryGetData<bool>(uid, PuddleVisuals.IsEvaporatingVisual, out var isEvaporating))
             {
                 return;
             }

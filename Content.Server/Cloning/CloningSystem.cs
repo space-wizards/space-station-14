@@ -31,6 +31,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
+using Content.Shared.Humanoid;
 
 namespace Content.Server.Cloning
 {
@@ -41,7 +42,7 @@ namespace Content.Server.Cloning
         [Dependency] private readonly IPrototypeManager _prototype = default!;
         [Dependency] private readonly EuiManager _euiManager = null!;
         [Dependency] private readonly CloningConsoleSystem _cloningConsoleSystem = default!;
-        [Dependency] private readonly HumanoidSystem _humanoidSystem = default!;
+        [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
         [Dependency] private readonly ContainerSystem _containerSystem = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly PowerReceiverSystem _powerReceiverSystem = default!;
@@ -170,7 +171,7 @@ namespace Content.Server.Cloning
             if (mind.UserId == null || !_playerManager.TryGetSessionById(mind.UserId.Value, out var client))
                 return false; // If we can't track down the client, we can't offer transfer. That'd be quite bad.
 
-            if (!TryComp<HumanoidComponent>(bodyToClone, out var humanoid))
+            if (!TryComp<HumanoidAppearanceComponent>(bodyToClone, out var humanoid))
                 return false; // whatever body was to be cloned, was not a humanoid
 
             if (!_prototype.TryIndex<SpeciesPrototype>(humanoid.Species, out var speciesPrototype))

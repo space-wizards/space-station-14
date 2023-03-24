@@ -35,7 +35,7 @@ public sealed class BarSignSystem : VisualizerSystem<BarSignComponent>
         if (!Resolve(sign.Owner, ref appearance, ref sprite))
             return;
 
-        appearance.TryGetData(PowerDeviceVisuals.Powered, out bool powered);
+        AppearanceSystem.TryGetData<bool>(sign.Owner, PowerDeviceVisuals.Powered, out var powered, appearance);
 
         if (powered
             && sign.CurrentSign != null

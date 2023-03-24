@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
 using Content.Server.Players;
+using Content.Server.Shuttles.Systems;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Station.Components;
@@ -227,6 +228,13 @@ namespace Content.Server.GameTicking
                     Loc.GetString("job-greet-station-name", ("stationName", metaData.EntityName)));
             }
 
+            // Arrivals is unable to do this during spawning as no actor is attached yet.
+            // We also want this message last.
+            if (lateJoin && _arrivals.Enabled)
+            {
+                _chatManager.DispatchServerMessage(player, Loc.GetString("latejoin-arrivals-direction"));
+            }
+
             // We raise this event directed to the mob, but also broadcast it so game rules can do something now.
             PlayersJoinedRoundNormally++;
             var aev = new PlayerSpawnCompleteEvent(mob, player, jobId, lateJoin, PlayersJoinedRoundNormally, station, character);
@@ -361,7 +369,8 @@ namespace Content.Server.GameTicking
             }
 
             // AAAAAAAAAAAAA
-            _sawmill.Error("Found no observer spawn points!");
+            // This should be an error, if it didn't cause tests to start erroring when they delete a player.
+            _sawmill.Warning("Found no observer spawn points!");
             return EntityCoordinates.Invalid;
         }
         #endregion

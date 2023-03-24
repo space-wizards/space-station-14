@@ -1,8 +1,5 @@
 - type: latheRecipe
   id: RipleyHarness
-  icon:
-     sprite: Objects/Specific/Mech/ripley_construction.rsi
-     state: ripley_harness
   result: RipleyHarness
   completetime: 10
   materials:
@@ -11,9 +8,6 @@
 
 - type: latheRecipe
   id: RipleyLArm
-  icon:
-     sprite: Objects/Specific/Mech/ripley_construction.rsi
-     state: ripley_l_arm
   result: RipleyLArm
   completetime: 10
   materials:
@@ -22,9 +16,6 @@
 
 - type: latheRecipe
   id: RipleyLLeg
-  icon:
-     sprite: Objects/Specific/Mech/ripley_construction.rsi
-     state: ripley_l_leg
   result: RipleyLLeg
   completetime: 10
   materials:
@@ -33,9 +24,6 @@
 
 - type: latheRecipe
   id: RipleyRLeg
-  icon:
-     sprite: Objects/Specific/Mech/ripley_construction.rsi
-     state: ripley_r_leg
   result: RipleyRLeg
   completetime: 10
   materials:
@@ -44,9 +32,6 @@
 
 - type: latheRecipe
   id: RipleyRArm
-  icon:
-     sprite: Objects/Specific/Mech/ripley_construction.rsi
-     state: ripley_r_arm
   result: RipleyRArm
   completetime: 10
   materials:
@@ -55,9 +40,6 @@
 
 - type: latheRecipe
   id: MechEquipmentGrabber
-  icon:
-     sprite: Objects/Specific/Mech/mecha_equipment.rsi
-     state: mecha_clamp
   result: MechEquipmentGrabber
   completetime: 10
   materials:

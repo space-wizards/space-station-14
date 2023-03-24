@@ -1,8 +1,8 @@
-using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Audio;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Extinguisher;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
@@ -17,6 +17,7 @@ public sealed class FireExtinguisherSystem : EntitySystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -123,7 +124,7 @@ public sealed class FireExtinguisherSystem : EntitySystem
 
         if (comp.HasSafety)
         {
-            appearance.SetData(FireExtinguisherVisuals.Safety, comp.Safety);
+            _appearance.SetData(uid, FireExtinguisherVisuals.Safety, comp.Safety, appearance);
         }
     }
 

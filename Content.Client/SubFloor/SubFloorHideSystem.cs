@@ -5,7 +5,7 @@ namespace Content.Client.SubFloor;
 
 public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
 {
-    [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     private bool _showAll;
 
@@ -34,8 +34,8 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
         if (args.Sprite == null)
             return;
 
-        args.Component.TryGetData(SubFloorVisuals.Covered, out bool covered);
-        args.Component.TryGetData(SubFloorVisuals.ScannerRevealed, out bool scannerRevealed);
+        _appearance.TryGetData<bool>(uid, SubFloorVisuals.Covered, out var covered, args.Component);
+        _appearance.TryGetData<bool>(uid, SubFloorVisuals.ScannerRevealed, out var scannerRevealed, args.Component);
 
         scannerRevealed &= !ShowAll; // no transparency for show-subfloor mode.
 
@@ -46,7 +46,7 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
         foreach (var layer in args.Sprite.AllLayers)
         {
             // pipe connection visuals are updated AFTER this, and may re-hide some layers
-            layer.Visible = revealed; 
+            layer.Visible = revealed;
 
             if (layer.Visible)
                 layer.Color = layer.Color.WithAlpha(transparency);
@@ -72,7 +72,7 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
     {
         foreach (var (_, appearance) in EntityManager.EntityQuery<SubFloorHideComponent, AppearanceComponent>(true))
         {
-            _appearanceSystem.MarkDirty(appearance, true);
+            _appearance.MarkDirty(appearance, true);
         }
     }
 }

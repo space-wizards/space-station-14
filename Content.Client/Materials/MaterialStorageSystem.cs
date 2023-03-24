@@ -23,7 +23,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         if (!args.Sprite.LayerMapTryGet(MaterialStorageVisualLayers.Inserting, out var layer))
             return;
 
-        if (!_appearance.TryGetData(uid, MaterialStorageVisuals.Inserting, out bool inserting, args.Component))
+        if (!_appearance.TryGetData<bool>(uid, MaterialStorageVisuals.Inserting, out var inserting, args.Component))
             return;
 
         if (inserting && TryComp<InsertingMaterialStorageComponent>(uid, out var insertingComp))
@@ -44,7 +44,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
     {
         if (!base.TryInsertMaterialEntity(user, toInsert, receiver, component))
             return false;
-        _transform.DetachParentToNull(Transform(toInsert));
+        _transform.DetachParentToNull(toInsert, Transform(toInsert));
         return true;
     }
 }

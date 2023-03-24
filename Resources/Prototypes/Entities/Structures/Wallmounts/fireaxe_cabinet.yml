@@ -3,43 +3,42 @@
   name: fire axe cabinet
   description: There is a small label that reads "For Emergency use only" along with details for safe use of the axe. As if.
   components:
-    - type: MeleeSound
-      soundGroups:
-        Brute:
-          path:
-            "/Audio/Effects/glass_hit.ogg"
-    - type: WallMount
-    - type: Clickable
-    - type: InteractionOutline
-    - type: Sprite
-      sprite: Structures/Wallmounts/fireaxe_cabinet.rsi
-      netsync: false
-      layers:
-      - state: cabinet
-      - state: fireaxe
-        map: ["enum.ItemCabinetVisualLayers.ContainsItem"]
-        visible: true
-      - state: glass
-        map: ["enum.ItemCabinetVisualLayers.Door"]
-    - type: ItemCabinet
-      cabinetSlot:
-        ejectOnInteract: true
-        whitelist:
-          tags:
-          - FireAxe
-      doorSound:
-        path: /Audio/Machines/machine_switch.ogg
-    - type: Appearance
-    - type: ItemCabinetVisuals
-      openState: glass-up
-      closedState: glass
-    - type: Lock      
-    - type: AccessReader
-      access: [["Atmospherics"]]
-    - type: ItemSlots
-    - type: ContainerContainer
-      containers:
-        ItemCabinet: !type:ContainerSlot
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Effects/glass_hit.ogg"
+  - type: WallMount
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Structures/Wallmounts/fireaxe_cabinet.rsi
+    netsync: false
+    layers:
+    - state: cabinet
+    - state: fireaxe
+      map: ["enum.ItemCabinetVisualLayers.ContainsItem"]
+      visible: true
+    - state: glass
+      map: ["enum.ItemCabinetVisualLayers.Door"]
+  - type: ItemCabinet
+    cabinetSlot:
+      ejectOnInteract: true
+      whitelist:
+        tags:
+        - FireAxe
+    doorSound:
+      path: /Audio/Machines/machine_switch.ogg
+    openState: glass-up
+    closedState: glass
+  - type: Appearance
+  - type: Lock
+  - type: AccessReader
+    access: [["Atmospherics"]]
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      ItemCabinet: !type:ContainerSlot
   placement:
     mode: SnapgridCenter
 
@@ -50,6 +49,10 @@
   components:
   - type: ItemCabinet
     opened: true
+    doorSound:
+      path: /Audio/Machines/machine_switch.ogg
+    openState: glass-up
+    closedState: glass
 
 - type: entity
   id: FireAxeCabinetFilled
@@ -63,6 +66,10 @@
       whitelist:
         tags:
         - FireAxe
+    doorSound:
+      path: /Audio/Machines/machine_switch.ogg
+    openState: glass-up
+    closedState: glass
 
 - type: entity
   id: FireAxeCabinetFilledOpen
@@ -71,3 +78,7 @@
   components:
   - type: ItemCabinet
     opened: true
+    doorSound:
+      path: /Audio/Machines/machine_switch.ogg
+    openState: glass-up
+    closedState: glass

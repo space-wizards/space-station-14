@@ -94,6 +94,9 @@
       node: grilleBroken
       deconstructionTarget: start
     - type: Fixtures # overwrite BaseStructure parent.
+    - type: Physics
+      bodyType: Static
+      canCollide: false
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: FlimsyMetallic

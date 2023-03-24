@@ -33,6 +33,7 @@ job-description-passenger = Enjoy your stay aboard the station with no obligatio
 job-description-psychologist = Provide emotional support to traumatized crew. Not available on all maps!
 job-description-qm = Manage the supplies of the station & the cargo department, keep the salvage specialists working, make sure all orders are fulfilled, and keep the money flowing.
 job-description-rd = Manage the science department, unlocking technologies, acquiring & researching artifacts, and performing experiments.
+job-description-research-assistant = Learn the basics of how to research various artifacts and anomalies.
 job-description-reporter = Entertain & inform the crew with your vibrant journalism through wireless cameras and the radio. Not available on all maps!
 job-description-salvagespec = Use the salvage magnet to draw in derelicts & asteroids to loot and enrich the station, and fight off any space fauna along the way.
 job-description-scientist = Research alien artifacts, unlock new technologies, upgrade machines around the station, and make everything run more efficiently.

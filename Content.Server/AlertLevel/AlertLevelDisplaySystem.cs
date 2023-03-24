@@ -1,11 +1,13 @@
 using Content.Server.Station.Systems;
 using Content.Shared.AlertLevel;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.AlertLevel;
 
 public sealed class AlertLevelDisplaySystem : EntitySystem
 {
     [Dependency] private readonly StationSystem _stationSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -17,7 +19,7 @@ public sealed class AlertLevelDisplaySystem : EntitySystem
     {
         foreach (var (_, appearance) in EntityManager.EntityQuery<AlertLevelDisplayComponent, AppearanceComponent>())
         {
-            appearance.SetData(AlertLevelDisplay.CurrentLevel, args.AlertLevel);
+            _appearance.SetData(appearance.Owner, AlertLevelDisplay.CurrentLevel, args.AlertLevel, appearance);
         }
     }
 
@@ -28,7 +30,7 @@ public sealed class AlertLevelDisplaySystem : EntitySystem
             var stationUid = _stationSystem.GetOwningStation(uid);
             if (stationUid != null && TryComp(stationUid, out AlertLevelComponent? alert))
             {
-                appearance.SetData(AlertLevelDisplay.CurrentLevel, alert.CurrentLevel);
+                _appearance.SetData(uid, AlertLevelDisplay.CurrentLevel, alert.CurrentLevel, appearance);
             }
         }
     }

@@ -46,6 +46,9 @@
     maxChargeRate: 5000
     supplyRampTolerance: 5000
     supplyRampRate: 1000
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: StrongMetallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -102,6 +105,7 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+    canCollide: false
   - type: Fixtures
   - type: Transform
     anchored: true
@@ -166,7 +170,7 @@
 - type: entity
   parent: BaseSubstation
   id: SubstationBasic
-  suffix: Basic, 2.5MW
+  suffix: Basic, 2.5MJ
   components:
   - type: Battery
     maxCharge: 2500000
@@ -183,7 +187,7 @@
 - type: entity
   parent: BaseSubstationWall
   id: SubstationWallBasic
-  suffix: Basic, 2MW
+  suffix: Basic, 2MJ
   components:
   - type: Battery
     maxCharge: 2000000
@@ -202,6 +206,7 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+    canCollide: false
   - type: Fixtures
   - type: Transform
     anchored: true

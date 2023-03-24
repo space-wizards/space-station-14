@@ -17,7 +17,7 @@ public sealed class DiceSystem : SharedDiceSystem
         if (!Resolve(uid, ref die))
             return;
 
-        var roll = _random.Next(1, die.Sides);
+        var roll = _random.Next(1, die.Sides + 1);
         SetCurrentSide(uid, roll, die);
 
         _popup.PopupEntity(Loc.GetString("dice-component-on-roll-land", ("die", uid), ("currentSide", die.CurrentValue)), uid);

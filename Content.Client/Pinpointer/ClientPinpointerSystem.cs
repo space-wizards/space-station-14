@@ -8,7 +8,7 @@ namespace Content.Client.Pinpointer
     public sealed class ClientPinpointerSystem : SharedPinpointerSystem
     {
         [Dependency] private readonly IEyeManager _eyeManager = default!;
-        [Dependency] private readonly AppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {

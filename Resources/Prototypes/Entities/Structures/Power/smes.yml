@@ -60,6 +60,9 @@
     - type: Machine
       board: SMESMachineCircuitboard
     - type: StationInfiniteBatteryTarget
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: StrongMetallic
 
 # SMES' in use
 

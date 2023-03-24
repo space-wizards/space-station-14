@@ -35,9 +35,12 @@ public sealed class DecalPainter
 
         decals.Sort(Comparer<DecalData>.Create((x, y) => x.Decal.ZIndex.CompareTo(y.Decal.ZIndex)));
 
-        foreach (var proto in _sPrototypeManager.EnumeratePrototypes<DecalPrototype>())
+        if (_decalTextures.Count == 0)
         {
-            _decalTextures.Add(proto.ID, proto.Sprite);
+            foreach (var proto in _sPrototypeManager.EnumeratePrototypes<DecalPrototype>())
+            {
+                _decalTextures.Add(proto.ID, proto.Sprite);
+            }
         }
 
         foreach (var decal in decals)

@@ -43,6 +43,9 @@
   - type: SignalReceiver
     inputs:
       MedicalScannerReceiver: []
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: StrongMetallic
   - type: Destructible
     thresholds:
     - trigger:

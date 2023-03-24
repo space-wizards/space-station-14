@@ -25,7 +25,7 @@ public sealed class BodySystem : SharedBodySystem
 {
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly HumanoidSystem _humanoidSystem = default!;
+    [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
@@ -83,7 +83,7 @@ public sealed class BodySystem : SharedBodySystem
             return false;
 
         if (part.Body is { } body &&
-            TryComp<HumanoidComponent>(body, out var humanoid))
+            TryComp<HumanoidAppearanceComponent>(body, out var humanoid))
         {
             var layer = part.ToHumanoidLayers();
             if (layer != null)
@@ -103,7 +103,7 @@ public sealed class BodySystem : SharedBodySystem
         if (!base.DropPart(partId, part))
             return false;
 
-        if (oldBody == null || !TryComp<HumanoidComponent>(oldBody, out var humanoid))
+        if (oldBody == null || !TryComp<HumanoidAppearanceComponent>(oldBody, out var humanoid))
             return true;
 
         var layer = part.ToHumanoidLayers();

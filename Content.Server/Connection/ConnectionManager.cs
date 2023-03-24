@@ -28,6 +28,7 @@ namespace Content.Server.Connection
         [Dependency] private readonly IServerNetManager _netMgr = default!;
         [Dependency] private readonly IServerDbManager _db = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly ILocalizationManager _loc = default!;
 
         public void Initialize()
         {
@@ -121,7 +122,7 @@ namespace Content.Server.Connection
                 var minOverallHours = _cfg.GetCVar(CCVars.PanicBunkerMinOverallHours);
                 var overallTime = ( await _db.GetPlayTimes(e.UserId)).Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall);
                 var haveMinOverallTime = overallTime != null && overallTime.TimeSpent.TotalHours > minOverallHours;
-                
+
                 if (showReason && !haveMinOverallTime)
                 {
                     return (ConnectionDenyReason.Panic,
@@ -147,14 +148,25 @@ namespace Content.Server.Connection
             if (bans.Count > 0)
             {
                 var firstBan = bans[0];
-                return (ConnectionDenyReason.Ban, firstBan.DisconnectMessage, bans);
+                var message = firstBan.FormatBanMessage(_cfg, _loc);
+                return (ConnectionDenyReason.Ban, message, bans);
             }
 
-            if (_cfg.GetCVar(CCVars.WhitelistEnabled)
-                && await _db.GetWhitelistStatusAsync(userId) == false
-                && adminData is null)
+            if (_cfg.GetCVar(CCVars.WhitelistEnabled))
             {
-                return (ConnectionDenyReason.Whitelist, Loc.GetString(_cfg.GetCVar(CCVars.WhitelistReason)), null);
+                var min = _cfg.GetCVar(CCVars.WhitelistMinPlayers);
+                var max = _cfg.GetCVar(CCVars.WhitelistMaxPlayers);
+                var playerCountValid = _plyMgr.PlayerCount >= min && _plyMgr.PlayerCount < max;
+
+                if (playerCountValid && await _db.GetWhitelistStatusAsync(userId) == false
+                                     && adminData is null)
+                {
+                    var msg = Loc.GetString(_cfg.GetCVar(CCVars.WhitelistReason));
+                    // was the whitelist playercount changed?
+                    if (min > 0 || max < int.MaxValue)
+                        msg += "\n" + Loc.GetString("whitelist-playercount-invalid", ("min", min), ("max", max));
+                    return (ConnectionDenyReason.Whitelist, msg, null);
+                }
             }
 
             return null;

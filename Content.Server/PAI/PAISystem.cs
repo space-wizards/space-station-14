@@ -16,6 +16,7 @@ namespace Content.Server.PAI
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly InstrumentSystem _instrumentSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {
@@ -75,7 +76,7 @@ namespace Content.Server.PAI
             // But having the pda's name permanently be "old lady's PAI" is weird.
             // Changing the PAI's identity in a way that ties it to the owner's identity also seems weird.
             // Cause then you could remotely figure out information about the owner's equipped items.
-            
+
             EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityName = val;
 
             var ghostFinder = EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(uid);
@@ -126,7 +127,7 @@ namespace Content.Server.PAI
         {
             if (EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearance))
             {
-                appearance.SetData(PAIVisuals.Status, status);
+                _appearance.SetData(uid, PAIVisuals.Status, status, appearance);
             }
         }
 

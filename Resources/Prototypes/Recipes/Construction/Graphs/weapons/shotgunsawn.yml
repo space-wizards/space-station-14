@@ -1,8 +1,8 @@
 - type: constructionGraph
   id: ShotgunSawn
-  start: shotgundoublebarreled
+  start: start
   graph:
-    - node: shotgundoublebarreled
+    - node: start
       edges:
         - to: shotgunsawn
           steps:

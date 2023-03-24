@@ -165,9 +165,6 @@
 
 - type: latheRecipe
   id: MiningDrill
-  icon:
-    sprite: Objects/Tools/handdrill.rsi
-    state: handdrill
   result: MiningDrill
   completetime: 3
   materials:

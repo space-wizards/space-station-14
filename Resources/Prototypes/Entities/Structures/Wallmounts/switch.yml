@@ -12,6 +12,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
+    canCollide: false
   - type: Sprite
     sprite: Structures/Wallmounts/switch.rsi
     state: on
@@ -42,6 +43,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
+    canCollide: false
   - type: Sprite
     sprite: Structures/Wallmounts/switch.rsi
     state: dead
@@ -87,6 +89,7 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Physics
+      canCollide: false
     - type: Transform
       anchored: true
     - type: Sprite

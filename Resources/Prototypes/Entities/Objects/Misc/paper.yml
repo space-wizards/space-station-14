@@ -28,6 +28,7 @@
   - type: Tag
     tags:
     - Document
+    - Trash
   - type: Appearance
   - type: PaperVisuals
   - type: Recyclable

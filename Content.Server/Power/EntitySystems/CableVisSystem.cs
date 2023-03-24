@@ -4,6 +4,7 @@ using Content.Server.Power.Components;
 using Content.Server.Power.Nodes;
 using Content.Shared.Wires;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.Server.Power.EntitySystems
@@ -12,6 +13,7 @@ namespace Content.Server.Power.EntitySystems
     public sealed class CableVisSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {
@@ -55,7 +57,7 @@ namespace Content.Server.Power.EntitySystems
                 };
             }
 
-            appearance.SetData(WireVisVisuals.ConnectedMask, mask);
+            _appearance.SetData(uid, WireVisVisuals.ConnectedMask, mask, appearance);
         }
     }
 }

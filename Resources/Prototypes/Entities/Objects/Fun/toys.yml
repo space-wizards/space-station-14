@@ -282,6 +282,16 @@
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Voice/Vox/shriek1.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieAtmosian
+  name: atmosian plushie
+  description: An adorable stuffed toy that resembles a brave atmosian. Unfortunately, he won't fix those depressurizations for you.
+  components:
+  - type: Sprite
+    state: plushie_atmosian
+
 ## Figurines
 
 - type: entity
@@ -578,6 +588,21 @@
       revolver-ammo: !type:Container
 
 - type: entity
+  parent: RevolverCapGun 
+  id: RevolverCapGunFake
+  name: cap gun
+  description: Looks almost like the real thing! Ages 8 and up.
+  components:
+    - type: RevolverAmmoProvider
+      whitelist:
+        tags:
+          - CartridgeCap
+          - SpeedLoaderCap
+          - CartridgeMagnum
+          - SpeedLoaderMagnum
+      proto: CartridgeMagnum
+
+- type: entity
   parent: BaseItem
   id: FoamBlade
   name: foamblade
@@ -594,7 +619,7 @@
       types:
         Blunt: 0
   - type: Item
-    size: 24
+    size: 20
     sprite: Objects/Fun/toys.rsi
     heldPrefix: foamblade
   - type: ItemCooldown

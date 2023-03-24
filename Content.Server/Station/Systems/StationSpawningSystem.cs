@@ -1,4 +1,4 @@
-﻿using Content.Server.Access.Systems;
+using Content.Server.Access.Systems;
 using Content.Server.DetailExaminable;
 using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
@@ -8,6 +8,7 @@ using Content.Server.PDA;
 using Content.Server.Roles;
 using Content.Server.Station.Components;
 using Content.Server.Mind.Commands;
+using Content.Server.Shuttles.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Humanoid.Prototypes;
@@ -34,7 +35,7 @@ public sealed class StationSpawningSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly HandsSystem _handsSystem = default!;
-    [Dependency] private readonly HumanoidSystem _humanoidSystem = default!;
+    [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly IdCardSystem _cardSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly PDASystem _pdaSystem = default!;
@@ -105,9 +106,12 @@ public sealed class StationSpawningSystem : EntitySystem
             return jobEntity;
         }
 
-        var entity = EntityManager.SpawnEntity(
-            _prototypeManager.Index<SpeciesPrototype>(profile?.Species ?? HumanoidSystem.DefaultSpecies).Prototype,
-            coordinates);
+        if (!_prototypeManager.TryIndex(profile?.Species ?? HumanoidAppearanceSystem.DefaultSpecies, out SpeciesPrototype? species))
+        {
+            species = _prototypeManager.Index<SpeciesPrototype>(HumanoidAppearanceSystem.DefaultSpecies);
+        }
+
+        var entity = EntityManager.SpawnEntity(species.Prototype, coordinates);
 
         if (job?.StartingGear != null)
         {
