@@ -11,6 +11,7 @@ public sealed class JammerSystem : EntitySystem
 {
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -24,9 +25,9 @@ public sealed class JammerSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
-        foreach (var jam in EntityQuery<RadioJammerComponent>())
+        var query = AllEntityQuery<RadioJammerComponent>();
+        while (query.MoveNext(out var uid, out var jam))
         {
-            var uid = jam.Owner;
             if (jam.Activated && _powerCell.TryGetBatteryFromSlot(uid, out var battery))
                 jam.Activated = battery.TryUseCharge(jam.Wattage * frameTime);
         }
@@ -34,7 +35,7 @@ public sealed class JammerSystem : EntitySystem
 
     private void OnActivate(EntityUid uid, RadioJammerComponent comp, ActivateInWorldEvent args)
     {
-        comp.Activated = 
+        comp.Activated =
             !comp.Activated &&
             _powerCell.TryGetBatteryFromSlot(uid, out var battery) &&
             battery.CurrentCharge > comp.Wattage;
@@ -66,12 +67,11 @@ public sealed class JammerSystem : EntitySystem
 
     private void OnRadioSendAttempt(ref RadioReceiveAttemptEvent args)
     {
-        if (args.RadioSource == null)
-            return;
-        var source = Transform(args.RadioSource.Value).Coordinates;
-        foreach (var jam in EntityQuery<RadioJammerComponent>())
+        var source = Transform(args.RadioSource).Coordinates;
+        var query = AllEntityQuery<RadioJammerComponent, TransformComponent>();
+        while (query.MoveNext(out _, out var jam, out var transform))
         {
-            if (jam.Activated && source.InRange(EntityManager, Transform(jam.Owner).Coordinates, jam.Range))
+            if (jam.Activated && source.InRange(EntityManager, _transform, transform.Coordinates, jam.Range))
             {
                 args.Cancelled = true;
                 return;
