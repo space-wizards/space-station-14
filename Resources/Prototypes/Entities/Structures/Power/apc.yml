@@ -29,8 +29,8 @@
     netsync: false
     sprite: Structures/Power/apc.rsi
     layers:
-    - state: apc0
-    - state: apco3-0
+    - state: base
+    - state: powered-1
       shader: unshaded
       map: ["enum.ApcVisualLayers.ChargeState"]
     - state: apcox-0
@@ -168,9 +168,8 @@
   id: APCConstructed
   suffix: Open
   components:
-  - type: Apc
-    voltage: Apc
-    open: true
+  - type: WiresPanel
+    open: True
 
 # APCs in use
 - type: entity

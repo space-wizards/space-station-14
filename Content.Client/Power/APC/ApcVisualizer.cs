@@ -22,13 +22,13 @@ namespace Content.Client.Power.APC
                 switch (chargeState)
                 {
                     case ApcChargeState.Lack:
-                        sprite.LayerSetState(ApcVisualLayers.ChargeState, "apco3-0");
+                        sprite.LayerSetState(ApcVisualLayers.ChargeState, "powered-1");
                         break;
                     case ApcChargeState.Charging:
-                        sprite.LayerSetState(ApcVisualLayers.ChargeState, "apco3-1");
+                        sprite.LayerSetState(ApcVisualLayers.ChargeState, "powered-2");
                         break;
                     case ApcChargeState.Full:
-                        sprite.LayerSetState(ApcVisualLayers.ChargeState, "apco3-2");
+                        sprite.LayerSetState(ApcVisualLayers.ChargeState, "powered-3");
                         break;
                     case ApcChargeState.Emag:
                         sprite.LayerSetState(ApcVisualLayers.ChargeState, "emag-unlit");
@@ -49,7 +49,7 @@ namespace Content.Client.Power.APC
             }
             else
             {
-                sprite.LayerSetState(ApcVisualLayers.ChargeState, "apco3-0");
+                sprite.LayerSetState(ApcVisualLayers.ChargeState, "powered-1");
             }
         }
 
