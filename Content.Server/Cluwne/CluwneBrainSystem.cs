@@ -48,8 +48,8 @@ public sealed class CluwneBrainSystem : EntitySystem
 
         else
         {
-            var damageSpec = new DamageSpecifier(_proto.Index<DamageGroupPrototype>("Genetic"), 50);
-            _damageable.TryChangeDamage(uid, damageSpec);
+            var damageSpec = new DamageSpecifier(_prototypeManager.Index<DamageGroupPrototype>("Genetic"), 50);
+            _damageableSystem.TryChangeDamage(uid, damageSpec);
         }
     }
 }
