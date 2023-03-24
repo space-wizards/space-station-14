@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Fix planet footstep sound modifiers., type: Fix}
-  id: 2736
-  time: '2022-12-08T01:56:12.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Ban reason text no longer clips off screen., type: Fix}
   id: 2737
   time: '2022-12-08T02:05:18.0000000+00:00'
@@ -2923,3 +2918,8 @@ Entries:
   - {message: Shells and cartridges now appear over tables, type: Fix}
   id: 3235
   time: '2023-03-24T01:05:55.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Biosuit crates now can be ordered from cargo, type: Add}
+  id: 3236
+  time: '2023-03-24T01:40:27.0000000+00:00'
