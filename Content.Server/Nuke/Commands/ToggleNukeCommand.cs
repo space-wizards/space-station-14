@@ -63,12 +63,12 @@ public sealed class ToggleNukeCommand : LocalizedCommands
     {
         if (args.Length == 1)
         {
-            return CompletionResult.FromHint(Loc.GetString("Time (in seconds)"));
+            return CompletionResult.FromHint(Loc.GetString(Loc.GetString("cmd-nukearm-1-help")));
         }
 
         if (args.Length == 2)
         {
-            return CompletionResult.FromHintOptions(CompletionHelper.Components<NukeComponent>(args[1]), "Nuke");
+            return CompletionResult.FromHintOptions(CompletionHelper.Components<NukeComponent>(args[1]), Loc.GetString("cmd-nukearm-2-help"));
         }
 
         return CompletionResult.Empty;
