@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed a small issue with the analysis console that would cause extra
-      text to display., type: Fix}
-  id: 2734
-  time: '2022-12-08T01:28:51.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix the landing sound for thrown items on planet maps., type: Fix}
@@ -2922,3 +2916,10 @@ Entries:
       not limited to map.', type: Add}
   id: 3233
   time: '2023-03-24T00:02:41.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: maintenance panel needs to be opened to insert/remove keys in telecom
+      server, type: Tweak}
+  - {message: telecom server now can be deconstructed with crowbar, type: Fix}
+  id: 3234
+  time: '2023-03-24T00:09:46.0000000+00:00'
