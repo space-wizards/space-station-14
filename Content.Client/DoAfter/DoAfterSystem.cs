@@ -15,6 +15,7 @@ public sealed class DoAfterSystem : SharedDoAfterSystem
     [Dependency] private readonly IOverlayManager _overlay = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly MetaDataSystem _metadata = default!;
 
     public override void Initialize()
     {
@@ -39,6 +40,9 @@ public sealed class DoAfterSystem : SharedDoAfterSystem
         var playerEntity = _player.LocalPlayer?.ControlledEntity;
 
         if (!TryComp(playerEntity, out ActiveDoAfterComponent? active))
+            return;
+
+        if (_metadata.EntityPaused(playerEntity.Value))
             return;
 
         var time = GameTiming.CurTime;

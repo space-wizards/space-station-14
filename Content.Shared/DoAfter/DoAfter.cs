@@ -22,7 +22,7 @@ public sealed class DoAfter
     ///     Time at which this do after was started.
     /// </summary>
     [DataField("startTime", customTypeSerializer: typeof(TimeOffsetSerializer), required:true)]
-    public readonly TimeSpan StartTime;
+    public TimeSpan StartTime;
 
     /// <summary>
     ///     The time at which this do after was canceled

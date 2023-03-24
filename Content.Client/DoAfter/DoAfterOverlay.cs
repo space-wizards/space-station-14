@@ -74,7 +74,7 @@ public sealed class DoAfterOverlay : Overlay
             // If the entity is paused, we will draw the do-after as it was when the entity got paused.
             var meta = metaQuery.GetComponent(uid);
             var time = meta.EntityPaused
-                ? _meta.GetPauseTime(uid, meta)
+                ? curTime - _meta.GetPauseTime(uid, meta)
                 : curTime;
 
             var worldMatrix = Matrix3.CreateTranslation(worldPosition);
