@@ -1,9 +1,4 @@
 Entries:
-- author: Vordenburg
-  changes:
-  - {message: Toy ammunition boxes can be re-filled again., type: Fix}
-  id: 2740
-  time: '2022-12-10T03:43:19.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Rat servants will pathfind under doors again., type: Fix}
@@ -2922,3 +2917,8 @@ Entries:
   - {message: modified and added stack sprites for wood, type: Tweak}
   id: 3239
   time: '2023-03-24T02:26:20.0000000+00:00'
+- author: Mr0maks
+  changes:
+  - {message: Fix freedom implant charges not being used., type: Fix}
+  id: 3240
+  time: '2023-03-24T03:07:21.0000000+00:00'
