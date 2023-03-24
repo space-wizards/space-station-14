@@ -1,12 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Restructured and rebalanced the entire Science tech tree., type: Tweak}
-  - {message: Synthesizers are now properly printable in protolathes., type: Fix}
-  id: 2738
-  time: '2022-12-09T03:06:42.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Revamped the Nuke Ops round end screen., type: Tweak}
   id: 2739
   time: '2022-12-10T02:08:40.0000000+00:00'
@@ -2923,3 +2917,8 @@ Entries:
   - {message: Removed combat bonuses from Boxers., type: Tweak}
   id: 3237
   time: '2023-03-24T01:50:29.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix static melee offsets not showing the correct position., type: Fix}
+  id: 3238
+  time: '2023-03-24T02:13:16.0000000+00:00'
