@@ -1,10 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Added geiger counter. It can be found in radiation suit closets., type: Add}
-  - {message: Radiation suit and hardsuits have built-in geiger counter., type: Add}
-  id: 2733
-  time: '2022-12-07T01:56:52.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fixed a small issue with the analysis console that would cause extra
@@ -2919,3 +2913,12 @@ Entries:
     type: Tweak}
   id: 3232
   time: '2023-03-23T18:14:55.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: 'added Telecom System. Sending messages through headsets (but handheld
+      radios / intercoms and etc.) now requires powered telecom server with channel
+      encryption key inserted. Source, receiver and server should be on the same map.
+      Centcom and syndicate channels are available without server and their messages
+      not limited to map.', type: Add}
+  id: 3233
+  time: '2023-03-24T00:02:41.0000000+00:00'
