@@ -7,6 +7,7 @@ using Content.Server.Storage.EntitySystems;
 using Content.Server.Stunnable;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Part;
+using Content.Shared.Clothing.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
@@ -18,6 +19,7 @@ using Content.Shared.Pulling.Components;
 using Content.Shared.Stacks;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
+using Prometheus.DotNetRuntime.EventListening;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
@@ -254,6 +256,31 @@ namespace Content.Server.Hands.Systems
             if (!_inventorySystem.TryGetSlotEntity(plyEnt, equipmentSlot, out var slotEntity) ||
                 !TryComp(slotEntity, out ServerStorageComponent? storageComponent))
             {
+                if (_inventorySystem.TryGetSlot(plyEnt, equipmentSlot, out var slotDefinition) &&
+                    TryComp(plyEnt, out InventoryComponent? inv) &&
+                    (hands.ActiveHand.HeldEntity != null || slotEntity != null))
+                {
+                    if (hands.ActiveHand.HeldEntity == null)
+                    {
+                        _inventorySystem.TryUnequip(plyEnt, equipmentSlot);
+                        PickupOrDrop(plyEnt, slotEntity.Value);
+                        return;
+                    }
+                    if (!_inventorySystem.CanEquip(plyEnt, hands.ActiveHand.HeldEntity.Value, equipmentSlot, out var reason))
+                    {
+                        _popupSystem.PopupEntity(Loc.GetString(reason), plyEnt, session);
+                        return;
+                    }
+                    if (slotEntity == null)
+                    {
+                        _inventorySystem.TryEquip(plyEnt, hands.ActiveHand.HeldEntity.Value, equipmentSlot);
+                        return;
+                    }
+                    _inventorySystem.TryUnequip(plyEnt, equipmentSlot);
+                    _inventorySystem.TryEquip(plyEnt, hands.ActiveHand.HeldEntity.Value, equipmentSlot);
+                    PickupOrDrop(plyEnt, slotEntity.Value);
+                    return;
+                }
                 _popupSystem.PopupEntity(Loc.GetString("hands-system-missing-equipment-slot", ("slotName", equipmentSlot)), plyEnt, session);
                 return;
             }
