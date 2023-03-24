@@ -32,6 +32,7 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         SubscribeLocalEvent<CardboardBoxComponent, StorageAfterCloseEvent>(AfterStorageClosed);
         SubscribeLocalEvent<CardboardBoxComponent, InteractedNoHandEvent>(OnNoHandInteracted);
         SubscribeLocalEvent<CardboardBoxComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
+        SubscribeLocalEvent<CardboardBoxComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
 
         SubscribeLocalEvent<CardboardBoxComponent, DamageChangedEvent>(OnDamage);
     }
@@ -50,7 +51,6 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         //Remove the mover after the box is opened and play the effect if it hasn't been played yet.
         if (component.Mover != null)
         {
-            RemComp<RelayInputMoverComponent>(component.Mover.Value);
             if (_timing.CurTime > component.EffectCooldown)
             {
                 RaiseNetworkEvent(new PlayBoxEffectMessage(component.Owner, component.Mover.Value), Filter.PvsExcept(component.Owner));
@@ -58,8 +58,6 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
                 component.EffectCooldown = _timing.CurTime + CardboardBoxComponent.MaxEffectCooldown;
             }
         }
-
-        component.Mover = null;
 
         // If this box has a stealth/chameleon effect, disable the stealth effect while the box is open.
         _stealth.SetEnabled(uid, false);
@@ -101,5 +99,18 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         var relay = EnsureComp<RelayInputMoverComponent>(args.Entity);
         _mover.SetRelay(args.Entity, uid, relay);
         component.Mover = args.Entity;
+    }
+
+    /// <summary>
+    /// Through e.g. teleporting, it's possible for the mover to exit the box without opening it.
+    /// Handle those situations but don't play the sound.
+    /// </summary>
+    private void OnEntRemoved(EntityUid uid, CardboardBoxComponent component, EntRemovedFromContainerMessage args)
+    {
+        if (args.Entity != component.Mover)
+            return;
+
+        RemComp<RelayInputMoverComponent>(component.Mover.Value);
+        component.Mover = null;
     }
 }
