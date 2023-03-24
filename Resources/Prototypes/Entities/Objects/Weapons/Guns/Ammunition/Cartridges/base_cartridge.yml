@@ -4,7 +4,7 @@
   abstract: true
   components:
   - type: Sprite
-    drawdepth: FloorObjects
+    drawdepth: Items
     netsync: false
   - type: Tag
     tags:
