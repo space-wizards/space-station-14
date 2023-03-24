@@ -177,7 +177,7 @@
   suffix: Open
   components:
   - type: WiresPanel
-    open: True
+    open: true
 
 # APCs in use
 - type: entity
