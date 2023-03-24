@@ -28,8 +28,11 @@ using Content.Server.Traits.Assorted;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Weapons.Melee;
+using Content.Server.Chat;
+using Content.Server.Chat.Systems;
 
 namespace Content.Server.Zombies
 {
@@ -49,6 +52,8 @@ namespace Content.Server.Zombies
         [Dependency] private readonly HumanoidAppearanceSystem _sharedHuApp = default!;
         [Dependency] private readonly IdentitySystem _identity = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
+        [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
+        [Dependency] private readonly EmoteOnDamageSystem _emoteOnDamage = default!;
         [Dependency] private readonly IChatManager _chatMan = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
 
@@ -67,7 +72,7 @@ namespace Content.Server.Zombies
             if (args.NewMobState == MobState.Dead ||
                 args.NewMobState == MobState.Critical)
             {
-                ZombifyEntity(uid);
+                ZombifyEntity(uid, args.Component);
             }
         }
 
@@ -83,10 +88,13 @@ namespace Content.Server.Zombies
         ///     rewrite this, but this is how it shall lie eternal. Turn back now.
         ///     -emo
         /// </remarks>
-        public void ZombifyEntity(EntityUid target)
+        public void ZombifyEntity(EntityUid target, MobStateComponent? mobState = null)
         {
             //Don't zombfiy zombies
             if (HasComp<ZombieComponent>(target))
+                return;
+
+            if (!Resolve(target, ref mobState, logMissing: false))
                 return;
 
             //you're a real zombie now, son.
@@ -124,6 +132,17 @@ namespace Content.Server.Zombies
             melee.Range = 1.5f;
             Dirty(melee);
 
+            if (mobState.CurrentState == MobState.Alive)
+            {
+                // Groaning when damaged
+                EnsureComp<EmoteOnDamageComponent>(target);
+                _emoteOnDamage.AddEmote(target, "Scream");
+
+                // Random groaning
+                EnsureComp<AutoEmoteComponent>(target);
+                _autoEmote.AddEmote(target, "ZombieGroan");
+            }
+
             //We have specific stuff for humanoid zombies because they matter more
             if (TryComp<HumanoidAppearanceComponent>(target, out var huApComp)) //huapcomp
             {
@@ -158,6 +177,8 @@ namespace Content.Server.Zombies
 
             //This is specifically here to combat insuls, because frying zombies on grilles is funny as shit.
             _serverInventory.TryUnequip(target, "gloves", true, true);
+            //Should prevent instances of zombies using comms for information they shouldnt be able to have.
+            _serverInventory.TryUnequip(target, "ears", true, true);
 
             //popup
             _popupSystem.PopupEntity(Loc.GetString("zombie-transform", ("target", target)), target, PopupType.LargeCaution);

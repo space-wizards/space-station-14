@@ -1,14 +1,11 @@
 using System.Threading;
-using Content.Server.Access.Systems;
-using Content.Server.Popups;
-using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Components;
 using Content.Server.UserInterface;
-using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
+using Content.Shared.GameTicking;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Shuttles.BUIStates;
@@ -17,22 +14,15 @@ using Content.Shared.Shuttles.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Shuttles.Systems;
 
-public sealed partial class ShuttleSystem
+public sealed partial class EmergencyShuttleSystem
 {
     /*
      * Handles the emergency shuttle's console and early launching.
      */
-
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IdCardSystem _idSystem = default!;
-    [Dependency] private readonly AccessReaderSystem _reader = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly RoundEndSystem _roundEnd = default!;
 
     /// <summary>
     /// Has the emergency shuttle arrived?
@@ -44,7 +34,7 @@ public sealed partial class ShuttleSystem
     /// <summary>
     /// How much time remaining until the shuttle consoles for emergency shuttles are unlocked?
     /// </summary>
-    private float _consoleAccumulator;
+    private float _consoleAccumulator = float.MinValue;
 
     /// <summary>
     /// How long after the transit is over to end the round.
@@ -71,6 +61,8 @@ public sealed partial class ShuttleSystem
     /// </summary>
     private bool _launchedShuttles;
 
+    private bool _leftShuttles;
+
     /// <summary>
     /// Have we announced the launch?
     /// </summary>
@@ -86,6 +78,8 @@ public sealed partial class ShuttleSystem
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleRepealAllMessage>(OnEmergencyRepealAll);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, ActivatableUIOpenAttemptEvent>(OnEmergencyOpenAttempt);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, GotEmaggedEvent>(OnEmagged); // Corvax-Hijack
+
+        SubscribeLocalEvent<EscapePodComponent, EntityUnpausedEvent>(OnEscapeUnpaused);
     }
     
     // Corvax-Hijack-Start
@@ -129,7 +123,14 @@ public sealed partial class ShuttleSystem
 
     private void UpdateEmergencyConsole(float frameTime)
     {
-        if (_consoleAccumulator <= 0f) return;
+        // Add some buffer time so eshuttle always first.
+        var minTime = -(TransitTime - (ShuttleSystem.DefaultStartupTime + ShuttleSystem.DefaultTravelTime + 1f));
+
+        // TODO: I know this is shit but I already just cleaned up a billion things.
+        if (_consoleAccumulator < minTime)
+        {
+            return;
+        }
 
         _consoleAccumulator -= frameTime;
 
@@ -141,46 +142,76 @@ public sealed partial class ShuttleSystem
         }
 
         // Imminent departure
-        if (!_launchedShuttles && _consoleAccumulator <= DefaultStartupTime)
+        if (!_launchedShuttles && _consoleAccumulator <= ShuttleSystem.DefaultStartupTime)
         {
             _launchedShuttles = true;
 
             if (CentComMap != null)
             {
-                foreach (var comp in EntityQuery<StationDataComponent>(true))
+                var dataQuery = AllEntityQuery<StationDataComponent>();
+
+                while (dataQuery.MoveNext(out var comp))
                 {
-                    if (!TryComp<ShuttleComponent>(comp.EmergencyShuttle, out var shuttle)) continue;
+                    if (!TryComp<ShuttleComponent>(comp.EmergencyShuttle, out var shuttle))
+                        continue;
 
                     if (Deleted(CentCom))
                     {
                         // TODO: Need to get non-overlapping positions.
-                        FTLTravel(shuttle,
+                        _shuttle.FTLTravel(comp.EmergencyShuttle.Value, shuttle,
                             new EntityCoordinates(
                                 _mapManager.GetMapEntityId(CentComMap.Value),
-                                Vector2.One * 1000f), _consoleAccumulator, TransitTime);
+                                _random.NextVector2(1000f)), _consoleAccumulator, TransitTime);
                     }
                     else
                     {
-                        FTLTravel(shuttle,
-                            CentCom.Value, _consoleAccumulator, TransitTime, dock: true);
+                        _shuttle.FTLTravel(comp.EmergencyShuttle.Value, shuttle,
+                            CentCom.Value, _consoleAccumulator, TransitTime, true);
                     }
+                }
+
+                var podQuery = AllEntityQuery<EscapePodComponent>();
+                var podLaunchOffset = 0.5f;
+
+                // Stagger launches coz funny
+                while (podQuery.MoveNext(out _, out var pod))
+                {
+                    pod.LaunchTime = _timing.CurTime + TimeSpan.FromSeconds(podLaunchOffset);
+                    podLaunchOffset += _random.NextFloat(0.5f, 2.5f);
                 }
             }
         }
 
-        // Departed
-        if (_consoleAccumulator <= 0f)
+        var podLaunchQuery = EntityQueryEnumerator<EscapePodComponent, ShuttleComponent>();
+
+        while (podLaunchQuery.MoveNext(out var uid, out var pod, out var shuttle))
         {
-            _launchedShuttles = true;
+            if (CentCom == null || pod.LaunchTime == null || pod.LaunchTime < _timing.CurTime)
+                continue;
+
+            // Don't dock them. If you do end up doing this then stagger launch.
+            _shuttle.FTLTravel(uid, shuttle,
+                CentCom.Value, hyperspaceTime: TransitTime);
+
+            RemCompDeferred<EscapePodComponent>(uid);
+        }
+
+        // Departed
+        if (!_leftShuttles && _consoleAccumulator <= 0f)
+        {
+            _leftShuttles = true;
             _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("emergency-shuttle-left", ("transitTime", $"{TransitTime:0}")));
 
             _roundEndCancelToken = new CancellationTokenSource();
             Timer.Spawn((int) (TransitTime * 1000) + _bufferTime.Milliseconds, () => _roundEnd.EndRound(), _roundEndCancelToken.Token);
+        }
 
+        // All the others.
+        if (_consoleAccumulator < minTime)
+        {
             // Guarantees that emergency shuttle arrives first before anyone else can FTL.
             if (CentCom != null)
-                AddFTLDestination(CentCom.Value, true);
-
+                _shuttle.AddFTLDestination(CentCom.Value, true);
         }
     }
 
@@ -195,7 +226,8 @@ public sealed partial class ShuttleSystem
             return;
         }
 
-        if (component.AuthorizedEntities.Count == 0) return;
+        if (component.AuthorizedEntities.Count == 0)
+            return;
 
         _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle early launch REPEAL ALL by {args.Session:user}");
         _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("emergency-shuttle-console-auth-revoked", ("remaining", component.AuthorizationsRequired)));
@@ -256,8 +288,9 @@ public sealed partial class ShuttleSystem
     {
         _announced = false;
         _roundEndCancelToken = null;
+        _leftShuttles = false;
         _launchedShuttles = false;
-        _consoleAccumulator = 0f;
+        _consoleAccumulator = float.MinValue;
         EarlyLaunchAuthorized = false;
         EmergencyShuttleArrived = false;
     }
@@ -304,7 +337,7 @@ public sealed partial class ShuttleSystem
         if (EarlyLaunchAuthorized || !EmergencyShuttleArrived || _consoleAccumulator <= _authorizeTime) return false;
 
         _logger.Add(LogType.EmergencyShuttle, LogImpact.Extreme, $"Emergency shuttle launch authorized");
-        _consoleAccumulator =_authorizeTime;
+        _consoleAccumulator = _authorizeTime;
         EarlyLaunchAuthorized = true;
         RaiseLocalEvent(new EmergencyShuttleAuthorizedEvent());
         AnnounceLaunch();
