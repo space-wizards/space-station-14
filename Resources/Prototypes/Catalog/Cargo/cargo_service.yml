@@ -84,6 +84,6 @@
     sprite: Clothing/Head/Hoods/Bio/janitor.rsi
     state: icon
   product: CrateJanitorBiosuit
-  cost: 500
+  cost: 800
   category: Service
   group: market
