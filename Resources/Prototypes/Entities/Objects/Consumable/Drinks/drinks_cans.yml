@@ -342,3 +342,41 @@
           - 6pack4
           - 6pack5
           - 6pack6
+
+- type: entity
+  parent: DrinkCanBaseFull
+  id: DrinkShamblersJuiceCan
+  name: shamblers juice can
+  description: ~Shake me up some of that Shambler's Juice!~
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: ShamblersJuice
+          Quantity: 30
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/shamblersjuice.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/shamblersjuice.rsi
+    
+- type: entity
+  parent: DrinkCanBaseFull
+  id: DrinkPwrGameCan
+  name: pwr game can
+  description: The only drink with the PWR that true gamers crave. When a gamer talks about gamerfuel, this is what they're literally referring to.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: PwrGame
+          Quantity: 30
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/pwrgame.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/pwrgame.rsi

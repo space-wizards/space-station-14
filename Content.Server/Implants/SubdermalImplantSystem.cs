@@ -29,6 +29,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
             return;
 
         _cuffable.Uncuff(component.ImplantedEntity.Value, cuffs.LastAddedCuffs, cuffs.LastAddedCuffs);
+        args.Handled = true;
     }
 
     #region Relays
