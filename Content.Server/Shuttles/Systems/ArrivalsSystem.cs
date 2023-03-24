@@ -280,7 +280,7 @@ public sealed class ArrivalsSystem : EntitySystem
         // TODO: Need some kind of comp to shunt people off if they try to get on?
         if (TryComp<TransformComponent>(arrivals, out var arrivalsXform))
         {
-            while (query.MoveNext(out var comp, out var shuttle, out var xform))
+            while (query.MoveNext(out var uid, out var comp, out var shuttle, out var xform))
             {
                 if (comp.NextTransfer > curTime || !TryComp<StationDataComponent>(comp.Station, out var data))
                     continue;
@@ -289,7 +289,7 @@ public sealed class ArrivalsSystem : EntitySystem
                 if (xform.MapUid != arrivalsXform.MapUid)
                 {
                     if (arrivals.IsValid())
-                        _shuttles.FTLTravel(shuttle, arrivals, dock: true);
+                        _shuttles.FTLTravel(uid, shuttle, arrivals, dock: true);
                 }
                 // Go to station
                 else
@@ -297,7 +297,7 @@ public sealed class ArrivalsSystem : EntitySystem
                     var targetGrid = _station.GetLargestGrid(data);
 
                     if (targetGrid != null)
-                        _shuttles.FTLTravel(shuttle, targetGrid.Value, dock: true);
+                        _shuttles.FTLTravel(uid, shuttle, targetGrid.Value, dock: true);
                 }
 
                 comp.NextTransfer += TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.ArrivalsCooldown));
@@ -395,7 +395,7 @@ public sealed class ArrivalsSystem : EntitySystem
             var arrivalsComp = EnsureComp<ArrivalsShuttleComponent>(component.Shuttle);
             arrivalsComp.Station = uid;
             EnsureComp<ProtectedGridComponent>(uid);
-            _shuttles.FTLTravel(shuttleComp, arrivals, hyperspaceTime: 10f, dock: true);
+            _shuttles.FTLTravel(component.Shuttle, shuttleComp, arrivals, hyperspaceTime: 10f, dock: true);
             arrivalsComp.NextTransfer = _timing.CurTime + TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.ArrivalsCooldown));
         }
 
