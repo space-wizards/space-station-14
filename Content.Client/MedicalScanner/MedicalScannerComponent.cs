@@ -1,15 +1,10 @@
-﻿using Content.Shared.DragDrop;
-using Content.Shared.MedicalScanner;
-using Robust.Shared.GameObjects;
+﻿using Content.Shared.MedicalScanner;
 
 namespace Content.Client.MedicalScanner;
 
 [RegisterComponent]
-[ComponentReference(typeof(SharedMedicalScannerComponent))]
 public sealed class MedicalScannerComponent : SharedMedicalScannerComponent
 {
-    #region Appearance
-
     /// <summary>
     /// A map of the base machine sprite states indexed by which machine states they correspond to.
     /// </summary>
@@ -35,11 +30,4 @@ public sealed class MedicalScannerComponent : SharedMedicalScannerComponent
         [MedicalScannerStatus.Green] = "idle_unlit",
         [MedicalScannerStatus.Yellow] = "maint_unlit",
     };
-    #endregion Appearance
-
-    // TODO: ECS DragDrop
-    public override bool DragDropOn(DragDropEvent eventArgs)
-    {
-        return false;
-    }
 }

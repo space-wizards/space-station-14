@@ -62,7 +62,7 @@
       map: ["enum.GunVisualLayers.Mag"]
   - type: MagazineVisuals
     magState: mag
-    steps: 7
+    steps: 6
     zeroVisible: false
   - type: Appearance
 
@@ -131,27 +131,6 @@
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
-
-- type: entity
-  id: MagazinePistolCalicoTopMounted
-  name: Calico magazine (.35 auto top-mounted)
-  parent: BaseMagazinePistolSubMachineGun
-  components:
-  - type: Tag
-    tags:
-      - MagazineCalico
-  - type: BallisticAmmoProvider
-    capacity: 100
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/calico_mag.rsi
-    layers:
-    - state: icon
-      map: ["enum.GunVisualLayers.Base"]
-  - type: MagazineVisuals
-    magState: mag
-    steps: 1
-    zeroVisible: false
-  - type: Appearance
 
 - type: entity
   id: MagazinePistol

@@ -140,7 +140,7 @@ public sealed partial class ResearchSystem
         if (!CanRun(uid))
             return points;
 
-        var ev = new ResearchServerGetPointsPerSecondEvent(component.Owner, points);
+        var ev = new ResearchServerGetPointsPerSecondEvent(uid, points);
         foreach (var client in component.Clients)
         {
             RaiseLocalEvent(client, ref ev);
