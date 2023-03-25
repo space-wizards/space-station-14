@@ -288,6 +288,16 @@
       board: ThermomachineFreezerMachineCircuitBoard
 
 - type: entity
+  parent: GasThermoMachineFreezer
+  id: GasThermoMachineFreezerEnabled
+  suffix: Enabled
+  components:
+  - type: GasThermoMachine
+    enabled: true
+  - type: ApcPowerReceiver
+    powerDisabled: false
+
+- type: entity
   parent: BaseGasThermoMachine
   id: GasThermoMachineHeater
   name: heater
@@ -315,3 +325,13 @@
       powerDisabled: true #starts off
     - type: Machine
       board: ThermomachineHeaterMachineCircuitBoard
+
+- type: entity
+  parent: GasThermoMachineHeater
+  id: GasThermoMachineHeaterEnabled
+  suffix: Enabled
+  components:
+  - type: GasThermoMachine
+    enabled: true
+  - type: ApcPowerReceiver
+    powerDisabled: false
