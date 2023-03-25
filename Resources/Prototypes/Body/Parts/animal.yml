@@ -1,4 +1,4 @@
-﻿# Just copypasta of some human basic body parts for interaction,
+# Just copypasta of some human basic body parts for interaction,
 # only differences for now is that limbs work in pairs,
 # they are unextractable and can't be spawned (no surgery on Animals!?).
 
@@ -17,6 +17,9 @@
         ents: []
   - type: StaticPrice
     price: 50
+  - type: Tag
+    tags:
+      - Trash
 
 # For primates mainly
 - type: entity

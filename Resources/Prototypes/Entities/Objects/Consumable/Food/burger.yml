@@ -100,6 +100,15 @@
       - tofu
   - type: Sprite
     state: tofu
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Protein
+          Quantity: 3
 # Tastes like bun, tofu.
 
 - type: entity

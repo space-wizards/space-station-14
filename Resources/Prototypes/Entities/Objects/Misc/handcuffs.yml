@@ -8,7 +8,7 @@
     size: 3
   - type: Handcuff
     cuffedRSI: Objects/Misc/handcuffs.rsi
-    iconState: body-overlay
+    bodyIconState: body-overlay
   - type: Sprite
     sprite: Objects/Misc/handcuffs.rsi
     state: handcuff
@@ -34,7 +34,7 @@
     breakoutTime: 15
     cuffedRSI: Objects/Misc/cablecuffs.rsi
     bodyIconState: body-overlay
-    color: red
+    color: forestgreen
     breakOnRemove: true
     brokenPrototype: CablecuffsBroken
     startCuffSound:
@@ -53,7 +53,7 @@
   - type: Sprite
     sprite: Objects/Misc/cablecuffs.rsi
     state: cuff
-    color: red
+    color: forestgreen
 
 - type: entity
   name: zipties

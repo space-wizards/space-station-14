@@ -11,7 +11,9 @@
   - type: Sprite
     netsync: false
     sprite: Objects/Power/light_bulb.rsi
-    state: normal
+    layers:
+      - map: [ enum.LightBulbVisualLayers.Base ]
+        state: normal
   - type: LightBulb
   - type: Damageable
     damageContainer: Inorganic
@@ -55,13 +57,21 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Appearance
-    visuals:
-    - type: LightBulbVisualizer
   - type: Tag
     tags:
     - Trash
   - type: Recyclable
   - type: SpaceGarbage
+
+- type: entity
+  parent: BaseLightbulb
+  id: BaseLightTube
+  abstract: true
+  components:
+  - type: Sprite
+    sprite:  Objects/Power/light_tube.rsi
+  - type: LightBulb
+    bulb: Tube
 
 # Lighting color values gathered from
 # https://andi-siess.de/rgb-to-color-temperature/
@@ -78,77 +88,58 @@
     lightEnergy: 1.0
     lightRadius: 6
     lightSoftness: 1.1
-  - type: Sprite
-    sprite: Objects/Power/light_bulb.rsi
-    state: normal
 
 - type: entity
-  parent: BaseLightbulb
+  parent: BaseLightTube
   name: fluorescent light tube
   id: LightTube
   description: A light fixture.
   components:
   - type: LightBulb
-    bulb: Tube
     color: "#FFE4CE" # 5000K color temp
     lightEnergy: 0.8
     lightRadius: 10
     lightSoftness: 1
     PowerUse: 25
-  - type: Sprite
-    sprite:  Objects/Power/light_tube.rsi
-    state: normal
 
 - type: entity
-  parent: BaseLightbulb
+  parent: BaseLightTube
   name: led light tube
   description: A high power high energy bulb.
   id: LedLightTube
   components:
   - type: LightBulb
-    bulb: Tube
     color: "#EEEEFF"
     lightEnergy: 1
     lightRadius: 15
     lightSoftness: 0.9
     BurningTemperature: 350
     PowerUse: 12
-  - type: Sprite
-    sprite:  Objects/Power/light_tube.rsi
-    state: normal
 
 - type: entity
-  parent: BaseLightbulb
+  parent: BaseLightTube
   name: exterior light tube
   description: A high power high energy bulb for the depths of space. May contain mercury.
   id: ExteriorLightTube
   components:
   - type: LightBulb
-    bulb: Tube
     color: "#B4FCF0"
     lightEnergy: 4.5
     lightRadius: 12
     lightSoftness: 0.5
     BurningTemperature: 350
     PowerUse: 100
-  - type: Sprite
-    sprite:  Objects/Power/light_tube.rsi
-    state: normal
 
 - type: entity
-  parent: BaseLightbulb
+  parent: BaseLightTube
   name: sodium light tube
   description: A high power high energy bulb for the depths of space. Salty.
   id: SodiumLightTube
   components:
   - type: LightBulb
-    bulb: Tube
     color: "#FFAF38"
     lightEnergy: 4
     lightRadius: 10
     lightSoftness: 0.5
     BurningTemperature: 350
     PowerUse: 100
-  - type: Sprite
-    sprite:  Objects/Power/light_tube.rsi
-    state: normal

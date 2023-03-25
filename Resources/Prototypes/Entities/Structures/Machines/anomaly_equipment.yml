@@ -121,7 +121,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      density: 25
+      density: 50
       mask:
       - MachineMask
       layer:

@@ -19,7 +19,7 @@ public sealed class FleshAnomalyComponent : Component
     /// scales with severity.
     /// </summary>
     [DataField("maxSpawnAmount"), ViewVariables(VVAccess.ReadWrite)]
-    public int MaxSpawnAmount = 8;
+    public int MaxSpawnAmount = 7;
 
     /// <summary>
     /// The maximum radius the entities will spawn in.
@@ -27,7 +27,7 @@ public sealed class FleshAnomalyComponent : Component
     /// scales with stability
     /// </summary>
     [DataField("spawnRange"), ViewVariables(VVAccess.ReadWrite)]
-    public float SpawnRange = 4f;
+    public float SpawnRange = 5f;
 
     /// <summary>
     /// The tile that is spawned by the anomaly's effect

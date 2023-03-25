@@ -125,6 +125,7 @@ public abstract class SharedMechSystem : EntitySystem
         if (pilot == null)
             return;
 
+        // TODO why is this being blocked?
         if (!_timing.IsFirstTimePredicted)
             return;
 
@@ -155,7 +156,7 @@ public abstract class SharedMechSystem : EntitySystem
 
         args.Entities.Add(pilot.Value);
         _access.FindAccessItemsInventory(pilot.Value, out var items);
-        args.Entities = args.Entities.Union(items).ToHashSet();
+        args.Entities.UnionWith(items);
     }
 
     private void SetupUser(EntityUid mech, EntityUid pilot, SharedMechComponent? component = null)
@@ -165,6 +166,8 @@ public abstract class SharedMechSystem : EntitySystem
 
         var rider = EnsureComp<MechPilotComponent>(pilot);
         var relay = EnsureComp<RelayInputMoverComponent>(pilot);
+
+        // Warning: this bypasses most normal interaction blocking components on the user, like drone laws and the like.
         var irelay = EnsureComp<InteractionRelayComponent>(pilot);
 
         _mover.SetRelay(pilot, mech, relay);
