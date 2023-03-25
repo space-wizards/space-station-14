@@ -254,8 +254,7 @@ namespace Content.Server.Hands.Systems
             if (!_inventorySystem.TryGetSlotEntity(plyEnt, equipmentSlot, out var slotEntity) ||
                 !TryComp(slotEntity, out ServerStorageComponent? storageComponent))
             {
-                if (_inventorySystem.TryGetSlot(plyEnt, equipmentSlot, out var slotDefinition) &&
-                    TryComp(plyEnt, out InventoryComponent? inv))
+                if (_inventorySystem.HasSlot(plyEnt, equipmentSlot))
                 {
                     if (hands.ActiveHand.HeldEntity == null && slotEntity != null)
                     {
