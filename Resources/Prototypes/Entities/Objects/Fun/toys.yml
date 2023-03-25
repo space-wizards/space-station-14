@@ -292,6 +292,27 @@
   - type: Sprite
     state: plushie_atmosian
 
+- type: entity
+  parent: BasePlushie
+  id: PlushieFloyd
+  name: George Floyd Plushie
+  description: I can't Sneed.
+  components:
+  - type: Sprite
+    state: plushie_floyd
+  - type: EmitSoundOnUse
+    sound:
+      collection: FloydPlush
+  - type: EmitSoundOnLand
+    sound:
+      collection: FloydPlush
+  - type: EmitSoundOnActivate
+    sound:
+      collection: FloydPlush
+  - type: MeleeWeapon
+    soundHit:
+      collection: FloydPlush
+
 ## Figurines
 
 - type: entity
