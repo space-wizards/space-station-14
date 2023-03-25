@@ -45,15 +45,16 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _playerSystem = default!;
+    [Dependency] private readonly EmergencyShuttleSystem _emergency = default!;
     [Dependency] private readonly FactionSystem _faction = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
-    [Dependency] private readonly ShuttleSystem _shuttleSystem = default!;
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
+    [Dependency] private readonly ShuttleSystem _shuttle = default!;
     [Dependency] private readonly RandomHumanoidSystem _randomHumanoid = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
 
@@ -280,7 +281,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             }
 
             // UH OH
-            if (nukeTransform.MapID == _shuttleSystem.CentComMap)
+            if (nukeTransform.MapID == _emergency.CentComMap)
             {
                 _winConditions.Add(WinCondition.NukeActiveAtCentCom);
                 RuleWinType = WinType.OpsMajor;
@@ -337,7 +338,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         foreach (var (_, transform) in EntityManager.EntityQuery<NukeDiskComponent, TransformComponent>())
         {
             var diskMapId = transform.MapID;
-            diskAtCentCom = _shuttleSystem.CentComMap == diskMapId;
+            diskAtCentCom = _emergency.CentComMap == diskMapId;
 
             // TODO: The target station should be stored, and the nuke disk should store its original station.
             // This is fine for now, because we can assume a single station in base SS14.
@@ -658,7 +659,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         if (TryComp<ShuttleComponent>(shuttleId, out var shuttle))
         {
-            _shuttleSystem.TryFTLDock(shuttle, _nukieOutpost.Value);
+            _shuttle.TryFTLDock(shuttleId, shuttle, _nukieOutpost.Value);
         }
 
         _nukiePlanet = mapId;

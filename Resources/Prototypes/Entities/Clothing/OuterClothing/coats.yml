@@ -91,6 +91,10 @@
     sprite: Clothing/OuterClothing/Coats/labcoat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/labcoat.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.9
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -102,6 +106,10 @@
     sprite: Clothing/OuterClothing/Coats/labcoat_chem.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/labcoat_chem.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.75
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -113,6 +121,11 @@
     sprite: Clothing/OuterClothing/Coats/labcoat_viro.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/labcoat_viro.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.9
+
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -124,6 +137,10 @@
     sprite: Clothing/OuterClothing/Coats/labcoat_cmo.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/labcoat_cmo.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.75
 
 - type: entity
   parent: ClothingOuterStorageBase

@@ -14,11 +14,13 @@ using Content.Shared.MachineLinking.Events;
 using Content.Shared.Popups;
 using Content.Shared.Research.Components;
 using Content.Shared.Xenoarchaeology.Equipment;
+using Content.Shared.Xenoarchaeology.XenoArtifacts;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -31,6 +33,7 @@ namespace Content.Server.Xenoarchaeology.Equipment.Systems;
 public sealed class ArtifactAnalyzerSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedAmbientSoundSystem _ambienntSound = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -74,7 +77,8 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var (active, scan) in EntityQuery<ActiveArtifactAnalyzerComponent, ArtifactAnalyzerComponent>())
+        var query = EntityQueryEnumerator<ActiveArtifactAnalyzerComponent, ArtifactAnalyzerComponent>();
+        while (query.MoveNext(out var uid, out var active, out var scan))
         {
             if (scan.Console != null)
                 UpdateUserInterface(scan.Console.Value);
@@ -82,7 +86,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
             if (_timing.CurTime - active.StartTime < (scan.AnalysisDuration * scan.AnalysisDurationMulitplier))
                 continue;
 
-            FinishScan(scan.Owner, scan, active);
+            FinishScan(uid, scan, active);
         }
     }
 
@@ -139,7 +143,9 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         }
         else if (TryComp<ArtifactComponent>(component.LastAnalyzedArtifact, out var artifact))
         {
-            var lastNode = (ArtifactNode?) artifact.CurrentNode?.Clone();
+            var lastNode = artifact.CurrentNodeId == null
+                ? null
+                : (ArtifactNode?) _artifact.GetNodeFromId(artifact.CurrentNodeId.Value, artifact).Clone();
             component.LastAnalyzedNode = lastNode;
             component.LastAnalyzerPointValue = _artifact.GetResearchPointValue(component.LastAnalyzedArtifact.Value, artifact);
         }
@@ -298,17 +304,20 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
 
         msg.PushNewline();
         var needSecondNewline = false;
-        if (n.Trigger.TriggerHint != null)
+
+        var triggerProto = _prototype.Index<ArtifactTriggerPrototype>(n.Trigger);
+        if (triggerProto.TriggerHint != null)
         {
             msg.AddMarkup(Loc.GetString("analysis-console-info-trigger",
-                ("trigger", Loc.GetString(n.Trigger.TriggerHint))) + "\n");
+                ("trigger", Loc.GetString(triggerProto.TriggerHint))) + "\n");
             needSecondNewline = true;
         }
 
-        if (n.Effect.EffectHint != null)
+        var effectproto = _prototype.Index<ArtifactEffectPrototype>(n.Effect);
+        if (effectproto.EffectHint != null)
         {
             msg.AddMarkup(Loc.GetString("analysis-console-info-effect",
-                ("effect", Loc.GetString(n.Effect.EffectHint))) + "\n");
+                ("effect", Loc.GetString(effectproto.EffectHint))) + "\n");
             needSecondNewline = true;
         }
 

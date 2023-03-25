@@ -554,6 +554,17 @@
     sprite: Clothing/Uniforms/Jumpskirt/janimaid.rsi
 
 - type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtJanimaidmini
+  name: janitorial maid uniform with miniskirt
+  description: Elite service, not some candy wrappers.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/janimaidmini.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/janimaidmini.rsi
+
+- type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpskirtLawyerRed
   name: red lawyer suitskirt

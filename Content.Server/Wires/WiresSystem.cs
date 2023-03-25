@@ -7,7 +7,6 @@ using Content.Server.Hands.Components;
 using Content.Server.Power.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Database;
-using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -21,17 +20,17 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Wires;
 
-public sealed class WiresSystem : EntitySystem
+public sealed class WiresSystem : SharedWiresSystem
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     private IRobustRandom _random = new RobustRandom();
 
@@ -44,6 +43,8 @@ public sealed class WiresSystem : EntitySystem
     #region Initialization
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
 
         // this is a broadcast event
@@ -52,7 +53,6 @@ public sealed class WiresSystem : EntitySystem
         SubscribeLocalEvent<WiresComponent, ComponentStartup>(OnWiresStartup);
         SubscribeLocalEvent<WiresComponent, WiresActionMessage>(OnWiresActionMessage);
         SubscribeLocalEvent<WiresComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<WiresComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<WiresComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<WiresComponent, TimedWireEvent>(OnTimedWire);
         SubscribeLocalEvent<WiresComponent, PowerChangedEvent>(OnWiresPowered);
@@ -244,7 +244,6 @@ public sealed class WiresSystem : EntitySystem
             SetOrCreateWireLayout(uid, component);
 
         UpdateUserInterface(uid);
-        UpdateAppearance(uid);
     }
     #endregion
 
@@ -340,10 +339,14 @@ public sealed class WiresSystem : EntitySystem
         {
             foreach (var (owner, wireAction) in _finishedWires)
             {
-                // sure
-                _activeWires[owner].RemoveAll(action => action.CancelToken == wireAction.CancelToken);
+                if (!_activeWires.TryGetValue(owner, out var activeWire))
+                {
+                    continue;
+                }
 
-                if (_activeWires[owner].Count == 0)
+                activeWire.RemoveAll(action => action.CancelToken == wireAction.CancelToken);
+
+                if (activeWire.Count == 0)
                 {
                     _activeWires.Remove(owner);
                 }
@@ -452,75 +455,71 @@ public sealed class WiresSystem : EntitySystem
 
     private void OnInteractUsing(EntityUid uid, WiresComponent component, InteractUsingEvent args)
     {
-        if (!EntityManager.TryGetComponent(args.Used, out ToolComponent? tool))
+        if (!TryComp<ToolComponent>(args.Used, out var tool) || !TryComp<WiresPanelComponent>(uid, out var panel))
             return;
-
-        if (component.IsPanelOpen &&
+        if (panel.Open &&
             (_toolSystem.HasQuality(args.Used, "Cutting", tool) ||
             _toolSystem.HasQuality(args.Used, "Pulsing", tool)))
         {
             if (EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
             {
-                _uiSystem.GetUiOrNull(uid, WiresUiKey.Key)?.Open(actor.PlayerSession);
+                var ui = _uiSystem.GetUiOrNull(uid, WiresUiKey.Key);
+                if (ui != null)
+                    _uiSystem.OpenUi(ui, actor.PlayerSession);
                 args.Handled = true;
             }
         }
-        else if (!component.IsScrewing && _toolSystem.HasQuality(args.Used, "Screwing", tool))
+        else if (!panel.IsScrewing && _toolSystem.HasQuality(args.Used, "Screwing", tool))
         {
             var toolEvData = new ToolEventData(new WireToolFinishedEvent(uid, args.User), cancelledEv: new WireToolCanceledEvent(uid));
 
-            component.IsScrewing = _toolSystem.UseTool(args.Used, args.User, uid, ScrewTime, new[] { "Screwing" }, toolEvData, toolComponent: tool);
-            args.Handled = component.IsScrewing;
+            panel.IsScrewing = _toolSystem.UseTool(args.Used, args.User, uid, ScrewTime, new[] { "Screwing" }, toolEvData, toolComponent: tool);
+            args.Handled = panel.IsScrewing;
 
             // Log attempt
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):user} is screwing {ToPrettyString(uid):target}'s {(component.IsPanelOpen ? "open" : "closed")} maintenance panel at {Transform(uid).Coordinates:targetlocation}");
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):user} is screwing {ToPrettyString(uid):target}'s {(panel.Open ? "open" : "closed")} maintenance panel at {Transform(uid).Coordinates:targetlocation}");
         }
     }
 
     private void OnToolFinished(WireToolFinishedEvent args)
     {
-        if (!EntityManager.TryGetComponent(args.Target, out WiresComponent? component))
+        if (!TryComp<WiresPanelComponent>((args.Target), out var panel))
             return;
 
-        component.IsScrewing = false;
-        component.IsPanelOpen = !component.IsPanelOpen;
-        UpdateAppearance(args.Target);
+        panel.IsScrewing = false;
+        TogglePanel(args.Target, panel, !panel.Open);
 
         // Log success
-        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):user} screwed {ToPrettyString(args.Target):target}'s maintenance panel {(component.IsPanelOpen ? "open" : "closed")}");
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):user} screwed {ToPrettyString(args.Target):target}'s maintenance panel {(panel.Open ? "open" : "closed")}");
 
-        if (component.IsPanelOpen)
+        if (panel.Open)
         {
-            _audio.PlayPvs(component.ScrewdriverOpenSound, args.Target);
+            _audio.PlayPvs(panel.ScrewdriverOpenSound, args.Target);
         }
         else
         {
-            _audio.PlayPvs(component.ScrewdriverCloseSound, args.Target);
+            _audio.PlayPvs(panel.ScrewdriverCloseSound, args.Target);
             var ui = _uiSystem.GetUiOrNull(args.Target, WiresUiKey.Key);
             if (ui != null)
             {
                 _uiSystem.CloseAll(ui);
             }
         }
+
+        Dirty(panel);
     }
 
     private void OnToolCanceled(WireToolCanceledEvent ev)
     {
-        if (!TryComp(ev.Target, out WiresComponent? component))
+        if (!TryComp<WiresPanelComponent>(ev.Target, out var component))
             return;
 
         component.IsScrewing = false;
     }
 
-    private void OnExamine(EntityUid uid, WiresComponent component, ExaminedEvent args)
-    {
-        args.PushMarkup(Loc.GetString(component.IsPanelOpen
-            ? "wires-component-on-examine-panel-open"
-            : "wires-component-on-examine-panel-closed"));
-    }
-
     private void OnMapInit(EntityUid uid, WiresComponent component, MapInitEvent args)
     {
+        EnsureComp<WiresPanelComponent>(uid);
         if (component.SerialNumber == null)
         {
             GenerateSerialNumber(uid, component);
@@ -568,14 +567,6 @@ public sealed class WiresSystem : EntitySystem
 
         wires.SerialNumber = new string(data);
         UpdateUserInterface(uid);
-    }
-
-    private void UpdateAppearance(EntityUid uid, AppearanceComponent? appearance = null, WiresComponent? wires = null)
-    {
-        if (!Resolve(uid, ref appearance, ref wires, false))
-            return;
-
-        _appearance.SetData(uid, WiresVisuals.MaintenancePanelState, wires.IsPanelOpen && wires.IsPanelVisible, appearance);
     }
 
     private void UpdateUserInterface(EntityUid uid, WiresComponent? wires = null, ServerUserInterfaceComponent? ui = null)
@@ -651,6 +642,26 @@ public sealed class WiresSystem : EntitySystem
         }
     }
 
+    public void ChangePanelVisibility(EntityUid uid, WiresPanelComponent component, bool visible)
+    {
+        component.Visible = visible;
+        UpdateAppearance(uid, component);
+        Dirty(component);
+    }
+
+    public void TogglePanel(EntityUid uid, WiresPanelComponent component, bool open)
+    {
+        component.Open = open;
+        UpdateAppearance(uid, component);
+        Dirty(component);
+    }
+
+    private void UpdateAppearance(EntityUid uid, WiresPanelComponent panel)
+    {
+        if (TryComp<AppearanceComponent>(uid, out var appearance))
+            _appearance.SetData(uid, WiresVisuals.MaintenancePanelState, panel.Open && panel.Visible, appearance);
+    }
+
     private void TryDoWireAction(EntityUid used, EntityUid user, EntityUid toolEntity, int id, WiresAction action, WiresComponent? wires = null, ToolComponent? tool = null)
     {
         if (!Resolve(used, ref wires)
@@ -716,7 +727,7 @@ public sealed class WiresSystem : EntitySystem
         if (_toolTime > 0f)
         {
             var data = new WireExtraData(action, id);
-            var args = new DoAfterEventArgs(user, _toolTime, target:used, used:toolEntity)
+            var args = new DoAfterEventArgs(user, _toolTime, target: used, used: toolEntity)
             {
                 NeedHand = true,
                 BreakOnStun = true,
