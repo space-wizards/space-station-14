@@ -14,8 +14,8 @@
           shader: unshaded
           visible: false
     - type: Appearance
-    - type: ParticleAcceleratorPartVisualizer
-      baseState: unlit
+    - type: ParticleAcceleratorPartVisuals
+      stateBase: unlit
     - type: ParticleAcceleratorFuelChamber
     - type: Construction
       graph: ParticleAcceleratorFuelChamber

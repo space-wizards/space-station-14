@@ -14,8 +14,8 @@
           shader: unshaded
           visible: false
     - type: Appearance
-    - type: ParticleAcceleratorPartVisualizer
-      baseState: unlit
+    - type: ParticleAcceleratorPartVisuals
+      stateBase: unlit
     - type: ParticleAcceleratorEmitter
       emitterType: Left
     - type: Construction
@@ -41,8 +41,8 @@
           shader: unshaded
           visible: false
     - type: Appearance
-    - type: ParticleAcceleratorPartVisualizer
-      baseState: unlit
+    - type: ParticleAcceleratorPartVisuals
+      stateBase: unlit
     - type: ParticleAcceleratorEmitter
       emitterType: Center
     - type: Construction
@@ -67,8 +67,8 @@
           shader: unshaded
           visible: false
     - type: Appearance
-    - type: ParticleAcceleratorPartVisualizer
-      baseState: unlit
+    - type: ParticleAcceleratorPartVisuals
+      stateBase: unlit
     - type: ParticleAcceleratorEmitter
       emitterType: Right
     - type: Construction

@@ -4,11 +4,14 @@ namespace Content.Client.ParticleAccelerator;
 
 [RegisterComponent]
 [Access(typeof(ParticleAcceleratorPartVisualizerSystem))]
-public sealed class ParticleAcceleratorPartVisualizerComponent : Component
+public sealed class ParticleAcceleratorPartVisualsComponent : Component
 {
-    [DataField("baseState", required: true)]
-    public string BaseState = default!;
+    [DataField("stateBase", required: true)]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public string StateBase = default!;
 
+    [DataField("stateSuffixes")]
+    [ViewVariables(VVAccess.ReadWrite)]
     public static readonly Dictionary<ParticleAcceleratorVisualState, string> StatesSuffixes = new()
     {
         {ParticleAcceleratorVisualState.Powered, "p"},
