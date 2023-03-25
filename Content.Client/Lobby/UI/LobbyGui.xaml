@@ -17,7 +17,7 @@
                 <Control Name="DefaultState" VerticalExpand="True">
                     <!-- Left Top Panel -->
                     <PanelContainer StyleClasses="AngleRect" HorizontalAlignment="Left" Name = "LeftSideTop" VerticalAlignment="Top" >
-                        <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" MaxWidth="620">
+                        <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" MaxWidth="800">
                             <info:LinkBanner Name="LinkBanner" VerticalExpand="false" HorizontalAlignment="Center" Margin="3 3 3 3"/>
                             <controls:StripeBack>
                                 <BoxContainer Orientation="Horizontal" SeparationOverride="6" Margin="3 3 3 3">
