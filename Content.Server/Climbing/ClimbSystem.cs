@@ -124,7 +124,6 @@ public sealed class ClimbSystem : SharedClimbSystem
             BreakOnStun = true,
             RaiseOnUser = false,
             RaiseOnTarget = false,
-            RaiseOnUsed = true
         };
 
         _doAfterSystem.DoAfter(args, ev);
