@@ -238,7 +238,6 @@ public abstract partial class SharedGunSystem : EntitySystem
             return;
         }
 
-
         var curTime = Timing.CurTime;
 
         // Need to do this to play the clicking sound for empty automatic weapons
@@ -313,7 +312,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         }
 
         // Shoot confirmed - sounds also played here in case it's invalid (e.g. cartridge already spent).
-        Shoot(gunUid, gun, ev.Ammo, fromCoordinates, toCoordinates.Value, user);
+        Shoot(gunUid, gun, ev.Ammo, fromCoordinates, toCoordinates.Value, user, throwItems: attemptEv.ThrowItems);
         var shotEv = new GunShotEvent(user);
         RaiseLocalEvent(gunUid, ref shotEv);
         // Projectiles cause impulses especially important in non gravity environments
@@ -331,10 +330,11 @@ public abstract partial class SharedGunSystem : EntitySystem
         EntityUid ammo,
         EntityCoordinates fromCoordinates,
         EntityCoordinates toCoordinates,
-        EntityUid? user = null)
+        EntityUid? user = null,
+        bool throwItems = false)
     {
         var shootable = EnsureComp<AmmoComponent>(ammo);
-        Shoot(gunUid, gun, new List<(EntityUid? Entity, IShootable Shootable)>(1) { (ammo, shootable) }, fromCoordinates, toCoordinates, user);
+        Shoot(gunUid, gun, new List<(EntityUid? Entity, IShootable Shootable)>(1) { (ammo, shootable) }, fromCoordinates, toCoordinates, user, throwItems);
     }
 
     public abstract void Shoot(
@@ -343,7 +343,8 @@ public abstract partial class SharedGunSystem : EntitySystem
         List<(EntityUid? Entity, IShootable Shootable)> ammo,
         EntityCoordinates fromCoordinates,
         EntityCoordinates toCoordinates,
-        EntityUid? user = null);
+        EntityUid? user = null,
+        bool throwItems = false);
 
     protected abstract void Popup(string message, EntityUid? uid, EntityUid? user);
 
@@ -438,8 +439,9 @@ public abstract partial class SharedGunSystem : EntitySystem
 /// </remarks>
 /// <param name="User">The user that attempted to fire this gun.</param>
 /// <param name="Cancelled">Set this to true if the shot should be cancelled.</param>
+/// <param name="ThrowItems">Set this to true if the ammo shouldn't actually be fired, just thrown.</param>
 [ByRefEvent]
-public record struct AttemptShootEvent(EntityUid User, bool Cancelled=false);
+public record struct AttemptShootEvent(EntityUid User, bool Cancelled = false, bool ThrowItems = false);
 
 /// <summary>
 ///     Raised directed on the gun after firing.
