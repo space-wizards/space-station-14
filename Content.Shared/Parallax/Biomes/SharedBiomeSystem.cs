@@ -20,18 +20,12 @@ public abstract class SharedBiomeSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<BiomeComponent, ComponentGetState>(OnBiomeGetState);
         SubscribeLocalEvent<BiomeComponent, AfterAutoHandleStateEvent>(OnBiomeAfterHandleState);
     }
 
     private void OnBiomeAfterHandleState(EntityUid uid, BiomeComponent component, ref AfterAutoHandleStateEvent args)
     {
         component.Noise.SetSeed(component.Seed);
-    }
-
-    private void OnBiomeGetState(EntityUid uid, BiomeComponent component, ref ComponentGetState args)
-    {
-        args.State = new BiomeComponentState(component.Seed, component.BiomePrototype);
     }
 
     protected T Pick<T>(List<T> collection, float value)
