@@ -1,4 +1,4 @@
-# MindComponent localization
+# MindContainerComponent localization
 
 comp-mind-ghosting-prevented = You are not able to ghost right now.
 

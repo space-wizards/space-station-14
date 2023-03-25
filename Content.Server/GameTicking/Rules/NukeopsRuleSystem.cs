@@ -171,10 +171,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     private void OnComponentInit(EntityUid uid, NukeOperativeComponent component, ComponentInit args)
     {
         // If entity has a prior mind attached, add them to the players list.
-        if (!TryComp<MindContainerComponent>(uid, out var mindComponent) || !RuleAdded)
+        if (!TryComp<MindContainerComponent>(uid, out var mindContainerComponent) || !RuleAdded)
             return;
 
-        var session = mindComponent.Mind?.Session;
+        var session = mindContainerComponent.Mind?.Session;
         var name = MetaData(uid).EntityName;
         if (session != null)
             _operativePlayers.Add(name, session);
@@ -576,10 +576,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void OnMindAdded(EntityUid uid, NukeOperativeComponent component, MindAddedMessage args)
     {
-        if (!TryComp<MindContainerComponent>(uid, out var mindComponent) || mindComponent.Mind == null)
+        if (!TryComp<MindContainerComponent>(uid, out var mindContainerComponent) || mindContainerComponent.Mind == null)
             return;
 
-        var mind = mindComponent.Mind;
+        var mind = mindContainerComponent.Mind;
 
         if (_operativeMindPendingData.TryGetValue(uid, out var role))
         {

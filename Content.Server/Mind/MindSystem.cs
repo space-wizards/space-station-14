@@ -509,22 +509,22 @@ public sealed class MindSystem : EntitySystem
     }
 
     /// <summary>
-    /// Gets a mind from uid and/or MindComponent. Used for null checks.
+    /// Gets a mind from uid and/or MindContainerComponent. Used for null checks.
     /// </summary>
     /// <param name="uid">Entity UID that owns the mind.</param>
     /// <param name="mind">The returned mind.</param>
-    /// <param name="mindComponent">Mind component on <paramref name="uid"/> to get the mind from.</param>
+    /// <param name="mindContainerComponent">Mind component on <paramref name="uid"/> to get the mind from.</param>
     /// <returns>True if mind found. False if not.</returns>
-    public bool TryGetMind(EntityUid uid, [NotNullWhen(true)] out Mind? mind, MindContainerComponent? mindComponent = null)
+    public bool TryGetMind(EntityUid uid, [NotNullWhen(true)] out Mind? mind, MindContainerComponent? mindContainerComponent = null)
     {
         mind = null;
-        if (!Resolve(uid, ref mindComponent))
+        if (!Resolve(uid, ref mindContainerComponent))
             return false;
 
-        if (!mindComponent.HasMind)
+        if (!mindContainerComponent.HasMind)
             return false;
 
-        mind = mindComponent.Mind;
+        mind = mindContainerComponent.Mind;
         return true;
     }
 
@@ -533,14 +533,14 @@ public sealed class MindSystem : EntitySystem
     /// </summary>
     /// <param name="mind">Mind to set OwnedComponent and OwnedEntity on</param>
     /// <param name="uid">Entity owned by <paramref name="mind"/></param>
-    /// <param name="mindComponent">MindComponent owned by <paramref name="mind"/></param>
-    private void SetOwnedEntity(Mind mind, EntityUid? uid, MindContainerComponent? mindComponent)
+    /// <param name="mindContainerComponent">MindContainerComponent owned by <paramref name="mind"/></param>
+    private void SetOwnedEntity(Mind mind, EntityUid? uid, MindContainerComponent? mindContainerComponent)
     {
         if (uid != null)
-            Resolve(uid.Value, ref mindComponent);
+            Resolve(uid.Value, ref mindContainerComponent);
 
         mind.OwnedEntity = uid;
-        mind.OwnedComponent = mindComponent;
+        mind.OwnedComponent = mindContainerComponent;
     }
 
     /// <summary>

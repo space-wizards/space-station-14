@@ -456,9 +456,9 @@ namespace Content.Server.ParticleAccelerator.Components
             }
 
             // Logging
-            _entMan.TryGetComponent(playerSession?.AttachedEntity, out MindContainerComponent? mindComponent);
-            if(mindComponent != null)
-                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{_entMan.ToPrettyString(mindComponent.Owner):player} has set {_entMan.ToPrettyString(Owner)} to on");
+            _entMan.TryGetComponent(playerSession?.AttachedEntity, out MindContainerComponent? mindContainerComponent);
+            if(mindContainerComponent != null)
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{_entMan.ToPrettyString(mindContainerComponent.Owner):player} has set {_entMan.ToPrettyString(Owner)} to on");
 
             _isEnabled = true;
             UpdatePowerDraw();
@@ -480,9 +480,9 @@ namespace Content.Server.ParticleAccelerator.Components
         public void SwitchOff(IPlayerSession? playerSession = null, bool rescan = false)
         {
             // Logging
-            _entMan.TryGetComponent(playerSession?.AttachedEntity, out MindContainerComponent? mindComponent);
-            if(mindComponent != null)
-                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{_entMan.ToPrettyString(mindComponent.Owner):player} has set {_entMan.ToPrettyString(Owner)} to off{(rescan ? " via rescan" : "")}");
+            _entMan.TryGetComponent(playerSession?.AttachedEntity, out MindContainerComponent? mindContainerComponent);
+            if(mindContainerComponent != null)
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{_entMan.ToPrettyString(mindContainerComponent.Owner):player} has set {_entMan.ToPrettyString(Owner)} to off{(rescan ? " via rescan" : "")}");
 
             _isEnabled = false;
             PowerOff();
@@ -535,7 +535,7 @@ namespace Content.Server.ParticleAccelerator.Components
             UpdatePartVisualStates();
 
             // Logging
-            _entMan.TryGetComponent(playerSession?.AttachedEntity, out MindContainerComponent? mindComponent);
+            _entMan.TryGetComponent(playerSession?.AttachedEntity, out MindContainerComponent? mindContainerComponent);
             LogImpact impact;
             switch (state)
             {
@@ -552,8 +552,8 @@ namespace Content.Server.ParticleAccelerator.Components
                     impact = LogImpact.Extreme;
                     break;
             }
-            if(mindComponent != null)
-                _adminLogger.Add(LogType.Action, impact, $"{_entMan.ToPrettyString(mindComponent.Owner):player} has set the strength of {_entMan.ToPrettyString(Owner)} to {state}");
+            if(mindContainerComponent != null)
+                _adminLogger.Add(LogType.Action, impact, $"{_entMan.ToPrettyString(mindContainerComponent.Owner):player} has set the strength of {_entMan.ToPrettyString(Owner)} to {state}");
 
             if (_isEnabled)
             {
