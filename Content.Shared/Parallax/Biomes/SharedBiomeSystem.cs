@@ -306,17 +306,4 @@ public abstract class SharedBiomeSystem : EntitySystem
 
         // Domain warps require separate noise
     }
-
-    [Serializable, NetSerializable]
-    private sealed class BiomeComponentState : ComponentState
-    {
-        public int Seed;
-        public string Prototype;
-
-        public BiomeComponentState(int seed, string prototype)
-        {
-            Seed = seed;
-            Prototype = prototype;
-        }
-    }
 }
