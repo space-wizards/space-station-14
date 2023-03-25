@@ -78,6 +78,8 @@ namespace Content.IntegrationTests.Tests
             await pairTracker.CleanReturnAsync();
         }
 
+        const string TestMap = "Maps/bagel.yml";
+
         /// <summary>
         ///     Loads the default map, runs it for 5 ticks, then assert that it did not change.
         /// </summary>
@@ -91,13 +93,13 @@ namespace Content.IntegrationTests.Tests
 
             MapId mapId = default;
 
-            // Load saltern.yml as uninitialized map, and save it to ensure it's up to date.
+            // Load bagel.yml as uninitialized map, and save it to ensure it's up to date.
             server.Post(() =>
             {
                 mapId = mapManager.CreateMap();
                 mapManager.AddUninitializedMap(mapId);
                 mapManager.SetMapPaused(mapId, true);
-                mapLoader.LoadMap(mapId, "Maps/bagel.yml");
+                mapLoader.LoadMap(mapId, TestMap);
                 mapLoader.SaveMap(mapId, "load save ticks save 1.yml");
             });
 
@@ -145,6 +147,89 @@ namespace Content.IntegrationTests.Tests
                     TestContext.Error.WriteLine(twoTmp);
                 }
             });
+
+            await server.WaitPost(() => mapManager.DeleteMap(mapId));
+            await pairTracker.CleanReturnAsync();
+        }
+
+        /// <summary>
+        ///     Loads the same uninitialized map at slightly different times, and then checks that they are the same
+        ///     when getting saved.
+        /// </summary>
+        /// <remarks>
+        ///     Should ensure that entities do not perform randomization prior to initialization and should prevents
+        ///     bugs like the one discussed in github.com/space-wizards/RobustToolbox/issues/3870. This test is somewhat
+        ///     similar to <see cref="LoadSaveTicksSaveBagel"/> and <see cref="SaveLoadSave"/>, but neither of these
+        ///     caught the mentioned bug.
+        /// </remarks>
+        [Test]
+        public async Task LoadTickLoadBagel()
+        {
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            var server = pairTracker.Pair.Server;
+
+            var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
+            var mapManager = server.ResolveDependency<IMapManager>();
+
+            MapId mapAId = default;
+            MapId mapBId = default;
+
+            // Load the first map
+            server.Post(() =>
+            {
+                mapAId = mapManager.CreateMap();
+                mapManager.AddUninitializedMap(mapAId);
+                mapManager.SetMapPaused(mapAId, true);
+                mapLoader.LoadMap(mapAId, TestMap);
+            });
+
+            server.RunTicks(5);
+
+            // Load the second map
+            server.Post(() =>
+            {
+                mapBId = mapManager.CreateMap();
+                mapManager.AddUninitializedMap(mapBId);
+                mapManager.SetMapPaused(mapBId, true);
+                mapLoader.LoadMap(mapBId, TestMap);
+            });
+
+            const string fileA = "/load tick load a.yml";
+            const string fileB = "/load tick load b.yml";
+
+            // Save both maps
+            await server.WaitPost(() =>
+            {
+                mapLoader.SaveMap(mapAId, fileA);
+                mapLoader.SaveMap(mapBId, fileB);
+            });
+
+            await server.WaitIdleAsync();
+            var userData = server.ResolveDependency<IResourceManager>().UserData;
+
+            string yamlA;
+            string yamlB;
+
+            await using (var stream = userData.Open(new ResourcePath(fileA), FileMode.Open))
+            using (var reader = new StreamReader(stream))
+            {
+                yamlA = await reader.ReadToEndAsync();
+            }
+
+            await using (var stream = userData.Open(new ResourcePath(fileB), FileMode.Open))
+            using (var reader = new StreamReader(stream))
+            {
+                yamlB = await reader.ReadToEndAsync();
+            }
+
+            Assert.That(yamlA, Is.EqualTo(yamlB));
+
+            await server.WaitPost(() =>
+            {
+                mapManager.DeleteMap(mapAId);
+                mapManager.DeleteMap(mapBId);
+            });
+
             await pairTracker.CleanReturnAsync();
         }
     }
