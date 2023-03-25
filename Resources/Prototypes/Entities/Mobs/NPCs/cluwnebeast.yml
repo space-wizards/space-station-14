@@ -55,16 +55,12 @@
     damage:
       types:
         Slash: 10
-        Piercing: 4
-        Structural: 10
+        Piercing: 2
+        Structural: 8
   - type: Body
     prototype: Cluwne
     requiredLegs: 2
-  - type: Appearance
   - type: Strippable
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 1.5
-    baseSprintSpeed : 3.5
   - type: Inventory
     templateId: cluwnebeast
     speciesId: cluwnebeast
@@ -91,9 +87,10 @@
       - CannotSuicide
       - DoorBumpOpener
       - FootstepSound
+      - ShoesRequiredStepTriggerImmune
   - type: Stealth
   - type: StealthOnMove
-    passiveVisibilityRate: -0.1
+    passiveVisibilityRate: -0.2
     movementVisibilityRate: 0.6
   - type: Vocal
     sounds:

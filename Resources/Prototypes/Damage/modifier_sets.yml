@@ -147,16 +147,18 @@
     Blunt: 5
 
 - type: damageModifierSet
-  id: CluwneBeast # More resistant to blunt, poison and shock and less to slashing and cold, immune to radiation. 
+  id: CluwneBeast # Needssome resistances so it doesn't die instantly. 
   coefficients:
     Blunt: 0.8
     Slash: 0.9
     Cold: 0.8
-    Heat: 1
+    Piercing: 0.7
+    Heat: 0.8
     Poison: 0.8
     Radiation: 0.2
     Shock: 0.8
     Cellular: 0.2
+    Bloodloss: 0.4
 
 # Represents which damage types should be modified
 # in relation to how they cause bloodloss damage.

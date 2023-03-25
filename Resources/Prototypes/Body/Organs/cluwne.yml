@@ -4,11 +4,11 @@
   suffix: "cluwne"
   components:
   - type: Stomach
-    maxVolume: 50 # they're hungry
+    maxVolume: 50
   - type: Sprite
     state: stomach
   - type: Metabolizer
-    maxReagents: 6
+    maxReagents: 3
     metabolizerTypes: [ Cluwne ]
     removeEmpty: true
     groups:
@@ -18,4 +18,4 @@
       - id: Poison
       - id: Narcotic
       - id: Alcohol
-        rateModifier: 0.1
+        rateModifier: 0.2
