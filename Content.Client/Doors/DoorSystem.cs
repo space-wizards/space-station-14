@@ -6,12 +6,14 @@ using Robust.Client.ResourceManagement;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Doors;
 
 public sealed class DoorSystem : SharedDoorSystem
 {
     [Dependency] private readonly AnimationPlayerSystem _animationSystem = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IResourceCache _resourceCache = default!;
 
     public override void Initialize()
@@ -67,15 +69,11 @@ public sealed class DoorSystem : SharedDoorSystem
 
     private void OnAppearanceChange(EntityUid uid, DoorComponent comp, ref AppearanceChangeEvent args)
     {
-        if (args.Sprite == null)
+        if (args.Sprite == null || !_gameTiming.IsFirstTimePredicted)
             return;
 
         if(!AppearanceSystem.TryGetData<DoorState>(uid, DoorVisuals.State, out var state, args.Component))
             state = DoorState.Closed;
-        
-        TryComp<AnimationPlayerComponent>(uid, out var animPlayer);
-        if (_animationSystem.HasRunningAnimation(uid, animPlayer, DoorComponent.AnimationKey))
-            _animationSystem.Stop(uid, animPlayer, DoorComponent.AnimationKey); // Halt all running anomations.
 
         if (AppearanceSystem.TryGetData<string>(uid, DoorVisuals.BaseRSI, out var baseRsi, args.Component))
         {
@@ -88,6 +86,10 @@ public sealed class DoorSystem : SharedDoorSystem
                 layer.Rsi = res?.RSI;
             }
         }
+        
+        TryComp<AnimationPlayerComponent>(uid, out var animPlayer);
+        if (_animationSystem.HasRunningAnimation(uid, animPlayer, DoorComponent.AnimationKey))
+            _animationSystem.Stop(uid, animPlayer, DoorComponent.AnimationKey); // Halt all running anomations.
 
         args.Sprite.DrawDepth = comp.ClosedDrawDepth;
         switch(state)
@@ -108,14 +110,10 @@ public sealed class DoorSystem : SharedDoorSystem
             case DoorState.Opening:
                 if (animPlayer != null && comp.OpeningAnimation != default)
                     _animationSystem.Play(uid, animPlayer, (Animation)comp.OpeningAnimation, DoorComponent.AnimationKey);
-                else
-                    goto case DoorState.Open;
                 break;
             case DoorState.Closing:
                 if (animPlayer != null && comp.ClosingAnimation != default && comp.CurrentlyCrushing.Count == 0)
                     _animationSystem.Play(uid, animPlayer, (Animation)comp.ClosingAnimation, DoorComponent.AnimationKey);
-                else
-                    goto case DoorState.Closed;
                 break;
             case DoorState.Denying:
                 if (animPlayer != null && comp.DenyingAnimation != default)
@@ -128,7 +126,7 @@ public sealed class DoorSystem : SharedDoorSystem
                     _animationSystem.Play(uid, animPlayer, (Animation)comp.EmaggingAnimation, DoorComponent.AnimationKey);
                 break;
             default:
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException($"Invalid door visual state {state}");
         }
     }
 
