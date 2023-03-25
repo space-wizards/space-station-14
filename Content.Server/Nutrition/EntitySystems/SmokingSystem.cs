@@ -112,7 +112,7 @@ namespace Content.Server.Nutrition.EntitySystems
                     if (transform.GridUid is {} gridUid)
                     {
                         var position = _transformSystem.GetGridOrMapTilePosition(uid, transform);
-                        _atmos.HotspotExpose(gridUid, position, smokable.ExposeTemperature, smokable.ExposeVolume, true);
+                        _atmos.HotspotExpose(gridUid, position, smokable.ExposeTemperature, smokable.ExposeVolume, uid, true);
                     }
                 }
 

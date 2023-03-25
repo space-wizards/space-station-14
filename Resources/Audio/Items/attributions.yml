@@ -17,3 +17,13 @@
   license: "CC-BY-SA-3.0"
   copyright: "Time immemorial"
   source: "https://github.com/tgstation/tgstation/blob/172b533d0257fcc1f8a05406f1c9fad514c14d88/sound/items/rped.ogg"
+
+- files: ["scary_horn.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by theOperand (github) for tgstation, modified by brainfood1183 (github) for ss14"
+  source: "https://github.com/tgstation/tgstation/blob/9a378933d2cfcb2c6692f5c60fbce979ac4e47c5/sound/spookoween/scary_horn.ogg"
+
+- files: ["airhorn.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation, modified by brainfood1183 (github) for ss14"
+  source: "https://github.com/tgstation/tgstation/blob/529d97cb1c105bcd548e95a9c9070bbf5253dd81/sound/items/AirHorn.ogg"

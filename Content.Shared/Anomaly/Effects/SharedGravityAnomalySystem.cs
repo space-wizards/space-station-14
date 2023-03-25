@@ -26,12 +26,13 @@ public abstract class SharedGravityAnomalySystem : EntitySystem
         var range = component.MaxThrowRange * args.Severity;
         var strength = component.MaxThrowStrength * args.Severity;
         var lookup = _lookup.GetEntitiesInRange(uid, range, LookupFlags.Dynamic | LookupFlags.Sundries);
+        var xformQuery = GetEntityQuery<TransformComponent>();
+        var worldPos = _xform.GetWorldPosition(xform, xformQuery);
+
         foreach (var ent in lookup)
         {
-            var tempXform = Transform(ent);
-
-            var foo = tempXform.MapPosition.Position - xform.MapPosition.Position;
-            _throwing.TryThrow(ent, foo.Normalized * 10, strength, uid, 0);
+            var foo = _xform.GetWorldPosition(ent, xformQuery) - worldPos;
+            _throwing.TryThrow(ent, foo * 10, strength, uid, 0);
         }
     }
 
@@ -49,12 +50,11 @@ public abstract class SharedGravityAnomalySystem : EntitySystem
         var range = component.MaxThrowRange * 2;
         var strength = component.MaxThrowStrength * 2;
         var lookup = _lookup.GetEntitiesInRange(uid, range, LookupFlags.Dynamic | LookupFlags.Sundries);
+        var xformQuery = GetEntityQuery<TransformComponent>();
+
         foreach (var ent in lookup)
         {
-            var tempXform = Transform(ent);
-
-            var foo = tempXform.MapPosition.Position - xform.MapPosition.Position;
-            Logger.Debug($"{ToPrettyString(ent)}: {foo}: {foo.Normalized}: {foo.Normalized * 10}");
+            var foo = _xform.GetWorldPosition(ent, xformQuery) - worldPos;
             _throwing.TryThrow(ent, foo * 5, strength, uid, 0);
         }
     }

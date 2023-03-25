@@ -322,6 +322,8 @@ public sealed class TraitorRuleSystem : GameRuleSystem
 
         var result = Loc.GetString("traitor-round-end-result", ("traitorCount", Traitors.Count));
 
+        result += "\n" + Loc.GetString("traitor-round-end-codewords", ("codewords", string.Join(", ", Codewords))) + "\n";
+
         foreach (var traitor in Traitors)
         {
             var name = traitor.Mind.CharacterName;
