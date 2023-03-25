@@ -9,21 +9,8 @@ public sealed partial class GravitySystem : SharedGravitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SharedGravityGeneratorComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<SharedGravityGeneratorComponent, AppearanceChangeEvent>(OnAppearanceChange);
         InitializeShake();
-    }
-
-    /// <summary>
-    /// Ensures that gravity generators have the sprite layers necessary to be rendered correctly.
-    /// </summary>
-    private void OnComponentStartup(EntityUid uid, SharedGravityGeneratorComponent comp, ComponentStartup args)
-    {
-        if(!TryComp<SpriteComponent>(uid, out var sprite))
-            return;
-
-        sprite.LayerMapReserveBlank(GravityGeneratorVisualLayers.Base);
-        sprite.LayerMapReserveBlank(GravityGeneratorVisualLayers.Core);
     }
 
     /// <summary>
