@@ -18,6 +18,7 @@ namespace Content.Shared.Access.Components
 
         [DataField("jobTitle")]
         [AutoNetworkedField]
+        [Access(Other = AccessPermissions.ReadWrite)]
         public string? JobTitle;
     }
 }
