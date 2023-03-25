@@ -174,7 +174,7 @@
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterDameDane
-  name: dame dane coat
+  name: yakuza coat
   description: Friday...
   components:
   - type: Sprite
