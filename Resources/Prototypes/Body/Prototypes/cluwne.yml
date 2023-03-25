@@ -21,8 +21,6 @@
         heart: OrganHumanHeart
         lungs: OrganHumanLungs
         stomach: OrganCluwneStomach
-        liver: OrganHumanLiver
-        kidneys: OrganHumanKidneys
     right arm:
       part: RightArmHuman
       connections:
@@ -37,13 +35,6 @@
       part: LeftHandHuman
     right leg:
       part: RightLegHuman
-      connections:
-      - right foot
     left leg:
       part: LeftLegHuman
-      connections:
-      - left foot
-    right foot:
-      part: RightFootHuman
-    left foot:
-      part: LeftFootHuman
+

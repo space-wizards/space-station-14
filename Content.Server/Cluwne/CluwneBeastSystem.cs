@@ -22,6 +22,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Content.Server.Administration.Commands;
 using Content.Shared.Zombies;
+using Content.Shared.Movement.Systems;
 
 namespace Content.Server.Cluwne;
 
@@ -36,6 +37,7 @@ public sealed class CluwneBeastSystem : EntitySystem
     [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
     [Dependency] private readonly IChatManager _chatMan = default!;
     [Dependency] private readonly IdentitySystem _identity = default!;
+    [Dependency] private readonly MovementSpeedModifierSystem _speedmod = default!;
 
 
 
@@ -85,6 +87,7 @@ public sealed class CluwneBeastSystem : EntitySystem
         EnsureComp<ClumsyComponent>(uid);
         Spawn(component.BlueSpaceId, Transform(uid).Coordinates);
         SetOutfitCommand.SetOutfit(uid, "CluwneBeastGear", EntityManager);
+        _speedmod.RefreshMovementSpeedModifiers(uid);
     }
 
     public CluwneBeastRuleConfiguration RuleConfig()
