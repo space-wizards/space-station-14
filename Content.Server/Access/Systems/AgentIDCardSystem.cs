@@ -1,10 +1,9 @@
-using Content.Shared.Access.Components;
 using Content.Server.Access.Components;
-using Content.Shared.Access.Systems;
-using Content.Shared.Interaction;
 using Content.Server.Popups;
 using Content.Server.UserInterface;
-using Robust.Shared.Player;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
+using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Access.Systems
@@ -42,11 +41,15 @@ namespace Content.Server.Access.Systems
                 _popupSystem.PopupEntity(Loc.GetString("agent-id-no-new", ("card", args.Target)), args.Target.Value, args.User);
                 return;
             }
-            else if (addedLength == 1)
+
+            Dirty(access);
+
+            if (addedLength == 1)
             {
                 _popupSystem.PopupEntity(Loc.GetString("agent-id-new-1", ("card", args.Target)), args.Target.Value, args.User);
                 return;
             }
+
             _popupSystem.PopupEntity(Loc.GetString("agent-id-new", ("number", addedLength), ("card", args.Target)), args.Target.Value, args.User);
         }
 

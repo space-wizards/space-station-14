@@ -10,6 +10,9 @@ strippable-component-alert-owner = {$user} is removing your {$item}!
 strippable-component-alert-owner-hidden = You feel someone fumbling in your {$slot}!
 strippable-component-alert-owner-insert = {$user} is putting {$item} on you!
 
+# generic warning for when a user interacts with your equipped items.
+strippable-component-alert-owner-interact = {$user} is fumbling around with your {$item}!
+
 # StripVerb
 strip-verb-get-data-text = Strip
 

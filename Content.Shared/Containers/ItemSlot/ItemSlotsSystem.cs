@@ -111,7 +111,7 @@ namespace Content.Shared.Containers.ItemSlots
         /// </summary>
         public void RemoveItemSlot(EntityUid uid, ItemSlot slot, ItemSlotsComponent? itemSlots = null)
         {
-            if (slot.ContainerSlot == null)
+            if (Terminating(uid) || slot.ContainerSlot == null)
                 return;
 
             slot.ContainerSlot.Shutdown();
@@ -499,14 +499,18 @@ namespace Content.Shared.Containers.ItemSlots
                 if (slot.InsertVerbText != null)
                 {
                     insertVerb.Text = Loc.GetString(slot.InsertVerbText);
-                    insertVerb.IconTexture = "/Textures/Interface/VerbIcons/insert.svg.192dpi.png";
+                    insertVerb.Icon =
+                        new SpriteSpecifier.Texture(
+                            new ResourcePath("/Textures/Interface/VerbIcons/insert.svg.192dpi.png"));
                 }
                 else if(slot.EjectOnInteract)
                 {
                     // Inserting/ejecting is a primary interaction for this entity. Instead of using the insert
                     // category, we will use a single "Place <item>" verb.
                     insertVerb.Text = Loc.GetString("place-item-verb-text", ("subject", verbSubject));
-                    insertVerb.IconTexture = "/Textures/Interface/VerbIcons/drop.svg.192dpi.png";
+                    insertVerb.Icon =
+                        new SpriteSpecifier.Texture(
+                            new ResourcePath("/Textures/Interface/VerbIcons/drop.svg.192dpi.png"));
                 }
                 else
                 {

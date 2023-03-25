@@ -5,6 +5,7 @@ using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Coordinates;
+using Content.Shared.DragDrop;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 
@@ -18,6 +19,12 @@ public partial class SharedBodySystem
 
         SubscribeLocalEvent<BodyComponent, ComponentGetState>(OnBodyGetState);
         SubscribeLocalEvent<BodyComponent, ComponentHandleState>(OnBodyHandleState);
+        SubscribeLocalEvent<BodyComponent, CanDragEvent>(OnBodyCanDrag);
+    }
+
+    private void OnBodyCanDrag(EntityUid uid, BodyComponent component, ref CanDragEvent args)
+    {
+        args.Handled = true;
     }
 
     private void OnBodyInit(EntityUid bodyId, BodyComponent body, ComponentInit args)

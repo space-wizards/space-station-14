@@ -6,7 +6,7 @@
   components:
   - type: Rotatable
   - type: Sprite
-    sprite: Structures/dispensers.rsi
+    sprite: Structures/smalldispensers.rsi
     drawdepth: SmallObjects
     state: soda
     netsync: false
@@ -14,7 +14,7 @@
     pack: SodaDispenserInventory
     emagPack: SodaDispenserEmagInventory
   - type: Transform
-    noRot: false  
+    noRot: false
   - type: Machine
     board: SodaDispenserMachineCircuitboard
   - type: Wires

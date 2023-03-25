@@ -18,6 +18,7 @@ namespace Content.Client.NPC
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IResourceCache _cache = default!;
+        [Dependency] private readonly NPCSteeringSystem _steering = default!;
 
         public PathfindingDebugMode Modes
         {
@@ -35,6 +36,15 @@ namespace Content.Client.NPC
                 else if (!overlayManager.HasOverlay<PathfindingOverlay>())
                 {
                     overlayManager.AddOverlay(new PathfindingOverlay(EntityManager, _eyeManager, _inputManager, _mapManager, _cache, this));
+                }
+
+                if ((value & PathfindingDebugMode.Steering) != 0x0)
+                {
+                    _steering.DebugEnabled = true;
+                }
+                else
+                {
+                    _steering.DebugEnabled = false;
                 }
 
                 _modes = value;

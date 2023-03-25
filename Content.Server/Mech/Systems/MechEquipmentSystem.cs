@@ -1,9 +1,9 @@
 ﻿using Content.Server.DoAfter;
 using Content.Server.Mech.Components;
 using Content.Server.Popups;
+using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Mech.Equipment.Components;
-using Robust.Shared.Player;
 
 namespace Content.Server.Mech.Systems;
 
@@ -20,15 +20,11 @@ public sealed class MechEquipmentSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<MechEquipmentComponent, AfterInteractEvent>(OnUsed);
-        SubscribeLocalEvent<MechEquipmentComponent, MechEquipmentInstallFinished>(OnFinished);
-        SubscribeLocalEvent<MechEquipmentComponent, MechEquipmentInstallCancelled>(OnCancelled);
+        SubscribeLocalEvent<MechEquipmentComponent, DoAfterEvent<InsertEquipmentEvent>>(OnInsertEquipment);
     }
 
     private void OnUsed(EntityUid uid, MechEquipmentComponent component, AfterInteractEvent args)
     {
-        if (component.TokenSource != null)
-            return;
-
         if (args.Handled || !args.CanReach || args.Target == null)
             return;
 
@@ -50,26 +46,30 @@ public sealed class MechEquipmentSystem : EntitySystem
 
         _popup.PopupEntity(Loc.GetString("mech-equipment-begin-install", ("item", uid)), mech);
 
-        component.TokenSource = new();
-        _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.InstallDuration, component.TokenSource.Token, mech, uid)
+        var insertEquipment = new InsertEquipmentEvent();
+        var doAfterEventArgs = new DoAfterEventArgs(args.User, component.InstallDuration, target: mech, used: uid)
         {
             BreakOnStun = true,
             BreakOnTargetMove = true,
-            BreakOnUserMove = true,
-            UsedFinishedEvent = new MechEquipmentInstallFinished(mech),
-            UsedCancelledEvent = new MechEquipmentInstallCancelled()
-        });
+            BreakOnUserMove = true
+        };
+
+        _doAfter.DoAfter(doAfterEventArgs, insertEquipment);
     }
 
-    private void OnFinished(EntityUid uid, MechEquipmentComponent component, MechEquipmentInstallFinished args)
+    private void OnInsertEquipment(EntityUid uid, MechEquipmentComponent component, DoAfterEvent<InsertEquipmentEvent> args)
     {
-        component.TokenSource = null;
-        _popup.PopupEntity(Loc.GetString("mech-equipment-finish-install", ("item", uid)), args.Mech);
-        _mech.InsertEquipment(args.Mech, uid);
+        if (args.Handled || args.Cancelled || args.Args.Target == null)
+            return;
+
+        _popup.PopupEntity(Loc.GetString("mech-equipment-finish-install", ("item", uid)), args.Args.Target.Value);
+        _mech.InsertEquipment(args.Args.Target.Value, uid);
+
+        args.Handled = true;
     }
 
-    private void OnCancelled(EntityUid uid, MechEquipmentComponent component, MechEquipmentInstallCancelled args)
+    private sealed class InsertEquipmentEvent : EntityEventArgs
     {
-        component.TokenSource = null;
+
     }
 }

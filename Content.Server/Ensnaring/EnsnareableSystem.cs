@@ -1,4 +1,5 @@
 using Content.Server.Popups;
+using Content.Shared.DoAfter;
 using Content.Shared.Ensnaring;
 using Content.Shared.Ensnaring.Components;
 using Content.Shared.Popups;
@@ -19,43 +20,36 @@ public sealed partial class EnsnareableSystem : SharedEnsnareableSystem
         InitializeEnsnaring();
 
         SubscribeLocalEvent<EnsnareableComponent, ComponentInit>(OnEnsnareableInit);
-        SubscribeLocalEvent<EnsnareableComponent, FreeEnsnareDoAfterComplete>(OnFreeComplete);
-        SubscribeLocalEvent<EnsnareableComponent, FreeEnsnareDoAfterCancel>(OnFreeFail);
+        SubscribeLocalEvent<EnsnareableComponent, DoAfterEvent>(OnDoAfter);
     }
 
     private void OnEnsnareableInit(EntityUid uid, EnsnareableComponent component, ComponentInit args)
     {
-        component.Container = _container.EnsureContainer<Container>(component.Owner, "ensnare");
+        component.Container = _container.EnsureContainer<Container>(uid, "ensnare");
     }
 
-    private void OnFreeComplete(EntityUid uid, EnsnareableComponent component, FreeEnsnareDoAfterComplete args)
+    private void OnDoAfter(EntityUid uid, EnsnareableComponent component, DoAfterEvent args)
     {
-        if (!TryComp<EnsnaringComponent>(args.EnsnaringEntity, out var ensnaring))
+        if (args.Handled || !TryComp<EnsnaringComponent>(args.Args.Used, out var ensnaring))
             return;
 
-        component.Container.Remove(args.EnsnaringEntity);
+        if (args.Cancelled)
+        {
+            _popup.PopupEntity(Loc.GetString("ensnare-component-try-free-fail", ("ensnare", args.Args.Used)), uid, uid, PopupType.Large);
+            return;
+        }
+
+        component.Container.Remove(args.Args.Used.Value);
         component.IsEnsnared = false;
         Dirty(component);
         ensnaring.Ensnared = null;
 
-        _popup.PopupEntity(Loc.GetString("ensnare-component-try-free-complete", ("ensnare", args.EnsnaringEntity)),
-            uid, uid, PopupType.Large);
+        _popup.PopupEntity(Loc.GetString("ensnare-component-try-free-complete", ("ensnare", args.Args.Used)), uid, uid, PopupType.Large);
 
-        UpdateAlert(component);
+        UpdateAlert(args.Args.Used.Value, component);
         var ev = new EnsnareRemoveEvent();
         RaiseLocalEvent(uid, ev);
 
-        ensnaring.CancelToken = null;
-    }
-
-    private void OnFreeFail(EntityUid uid, EnsnareableComponent component, FreeEnsnareDoAfterCancel args)
-    {
-        if (!TryComp<EnsnaringComponent>(args.EnsnaringEntity, out var ensnaring))
-            return;
-
-        ensnaring.CancelToken = null;
-
-        _popup.PopupEntity(Loc.GetString("ensnare-component-try-free-fail", ("ensnare", args.EnsnaringEntity)),
-            uid, uid, PopupType.Large);
+        args.Handled = true;
     }
 }

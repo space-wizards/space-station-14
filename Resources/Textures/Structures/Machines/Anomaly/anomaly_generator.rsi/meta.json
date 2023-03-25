@@ -8,6 +8,21 @@
   "copyright":"Created by EmoGarbage",
   "states":[
     {
+      "name": "generating",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
       "name":"base"
     },
     {

@@ -155,6 +155,11 @@
   description: flavor-base-terrible
 
 - type: flavor
+  id: sharp
+  flavorType: Base
+  description: flavor-base-sharp
+
+- type: flavor
   id: nothing
   flavorType: Complex
   description: flavor-complex-nothing
@@ -293,6 +298,11 @@
   id: carrot
   flavorType: Complex
   description: flavor-complex-carrot
+
+- type: flavor
+  id: cabbage
+  flavorType: Complex
+  description: flavor-complex-cabbage
 
 - type: flavor
   id: potatoes
@@ -648,3 +658,13 @@
   id: watermelon
   flavorType: Complex
   description: flavor-complex-watermelon
+
+- type: flavor
+  id: garlic
+  flavorType: Complex
+  description: flavor-complex-garlic
+
+- type: flavor
+  id: bottledlightning
+  flavorType: Complex
+  description: flavor-complex-bottledlightning
