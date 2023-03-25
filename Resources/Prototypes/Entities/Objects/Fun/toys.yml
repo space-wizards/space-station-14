@@ -133,7 +133,7 @@
   parent: BasePlushie
   id: PlushieSharkBlue
   name: blue shark soft toy
-  description: Big and safe to have by your side if you want to discover the world below the surface of the ocean.
+  description: Seeing this fills you with a sudden sense of loathing.
   components:
   - type: Sprite
     sprite: Objects/Fun/sharkplush.rsi
@@ -145,7 +145,7 @@
   parent: PlushieSharkBlue
   id: PlushieSharkPink
   name: pink shark soft toy
-  description: Hehe shonk :)
+  description: Laser Shark
   components:
   - type: Sprite
     sprite: Objects/Fun/sharkplush.rsi
@@ -157,7 +157,7 @@
   parent: PlushieSharkBlue
   id: PlushieSharkGrey
   name: grey shark soft toy
-  description: A quiet, reserved kind of shonk. Loves to ride the grey tide.
+  description: Loves to ride the grey tide.
   components:
   - type: Sprite
     sprite: Objects/Fun/sharkplush.rsi
