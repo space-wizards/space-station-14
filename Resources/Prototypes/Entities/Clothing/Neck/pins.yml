@@ -3,7 +3,7 @@
   id: ClothingNeckPinBase
   abstract: true
   name: pin
-  description: be nothing do crime
+  description: A blank pin
   components:
   - type: Item
     size: 1
@@ -12,7 +12,7 @@
   parent: ClothingNeckPinBase
   id: ClothingNeckLGBTPin
   name: LGBT pin
-  description: be gay do crime
+  description: Perfect for showing the world that you are an attention seeking groomer! Hows your relationship with your father?
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
@@ -28,7 +28,7 @@
   parent: ClothingNeckPinBase
   id: ClothingNeckAromanticPin
   name: aromantic pin
-  description: be aro do crime
+  description: Perfect for showing the world that you are an attention seeking groomer! Hows your relationship with your father?
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
@@ -44,7 +44,7 @@
   parent: ClothingNeckPinBase
   id: ClothingNeckAsexualPin
   name: asexual pin
-  description: be ace do crime
+  description: Perfect for showing the world that you are an attention seeking groomer! Hows your relationship with your father?
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
@@ -60,7 +60,7 @@
   parent: ClothingNeckPinBase
   id: ClothingNeckBisexualPin
   name: bisexual pin
-  description: be bi do crime
+  description: Perfect for showing the world that you are an attention seeking groomer! Hows your relationship with your father?
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
@@ -76,7 +76,7 @@
   parent: ClothingNeckPinBase
   id: ClothingNeckIntersexPin
   name: intersex pin
-  description: be intersex do crime
+  description: Perfect for showing the world that you are an attention seeking groomer! Hows your relationship with your father?
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
@@ -92,7 +92,7 @@
   parent: ClothingNeckPinBase
   id: ClothingNeckLesbianPin
   name: lesbian pin
-  description: be lesbian do crime
+  description: Perfect for showing the world that you are an attention seeking groomer! Hows your relationship with your father?
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
@@ -108,7 +108,7 @@
   parent: ClothingNeckPinBase
   id: ClothingNeckNonBinaryPin
   name: non-binary pin
-  description: "01100010 01100101 00100000 01100101 01101110 01100010 01111001 00100000 01100100 01101111 00100000 01100011 01110010 01101001 01101101 01100101"
+  description: "01100110 01100001 01100111 01100111 01101111 01110100"
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
@@ -124,7 +124,7 @@
   parent: ClothingNeckPinBase
   id: ClothingNeckPansexualPin
   name: pansexual pin
-  description: be pan do crime
+  description: Perfect for showing the world that you are an attention seeking groomer! Hows your relationship with your father?
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
@@ -140,7 +140,7 @@
   parent: ClothingNeckPinBase
   id: ClothingNeckTransPin
   name: transgender pin
-  description: be trans do crime
+  description: Perfect for showing the world that you are an attention seeking groomer! Hows your relationship with your father?
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
