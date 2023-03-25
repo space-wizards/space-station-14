@@ -136,13 +136,12 @@ namespace Content.IntegrationTests.Tests.Minds
         [Test]
         public async Task TestGhostOnDeleteMap()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
             var server = pairTracker.Pair.Server;
             var testMap = await PoolManager.CreateTestMap(pairTracker);
             var coordinates = testMap.GridCoords;
 
             var entMan = server.ResolveDependency<IServerEntityManager>();
-            var playerMan = server.ResolveDependency<IPlayerManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
 
             var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
@@ -153,11 +152,9 @@ namespace Content.IntegrationTests.Tests.Minds
             Mind mind = null;
             await server.WaitAssertion(() =>
             {
-                var player = playerMan.ServerSessions.Single();
-
                 playerEnt = entMan.SpawnEntity(null, coordinates);
 
-                mind = mindSystem.CreateMind(player.UserId);
+                mind = mindSystem.CreateMind(null);
                 mindSystem.TransferTo(mind, playerEnt);
 
                 Assert.That(mind.CurrentEntity, Is.EqualTo(playerEnt));
