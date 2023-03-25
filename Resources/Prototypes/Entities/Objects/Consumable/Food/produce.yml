@@ -217,6 +217,25 @@
   - type: SpaceGarbage
 
 - type: entity
+  name: banana peel
+  suffix: Explosive
+  parent: TrashBananaPeel
+  id: TrashBananaPeelExplosive
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/banana.rsi
+      state: primed
+    - type: TriggerOnSlip
+    - type: ExplodeOnTrigger
+    - type: Explosive
+      explosionType: Default
+      maxIntensity: 2
+      totalIntensity: 10
+      canCreateVacuum: false
+    - type: DeleteOnTrigger
+    - type: AnimationPlayer
+
+- type: entity
   name: carrot
   parent: FoodProduceBase
   id: FoodCarrot
