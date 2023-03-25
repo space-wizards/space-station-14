@@ -87,3 +87,13 @@
   cost: 700
   category: Medical
   group: market
+
+- type: cargoProduct
+  id: MedicalBiosuit
+  icon:
+    sprite: Clothing/Head/Hoods/Bio/bio.rsi
+    state: icon
+  product: CrateVirologyBiosuit
+  cost: 800
+  category: Medical
+  group: market

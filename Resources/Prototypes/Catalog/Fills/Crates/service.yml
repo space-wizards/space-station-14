@@ -121,3 +121,14 @@
         - id: BoxCardboard
           amount: 6
 
+  id: CrateJanitorBiosuit
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterBioJanitor
+        amount: 2
+      - id: ClothingHeadHatHoodBioJanitor
+        amount: 2
+      - id: ClothingMaskSterile
+        amount: 2

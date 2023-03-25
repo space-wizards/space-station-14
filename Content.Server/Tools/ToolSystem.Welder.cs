@@ -15,7 +15,6 @@ using Content.Shared.Weapons.Melee.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Player;
 
 namespace Content.Server.Tools
 {
@@ -302,6 +301,7 @@ namespace Content.Server.Tools
 
             if (neededFuel > fuel)
             {
+                _popupSystem.PopupEntity(Loc.GetString("welder-component-cannot-weld-message"), uid, args.User);
                 args.Cancel();
             }
 

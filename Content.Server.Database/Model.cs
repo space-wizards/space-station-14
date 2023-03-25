@@ -417,8 +417,31 @@ namespace Content.Server.Database
         public string? Name { get; set; } = default!;
     }
 
+    // Used by SS14.Admin
+    public interface IBanCommon<TUnban> where TUnban : IUnbanCommon
+    {
+        int Id { get; set; }
+        Guid? UserId { get; set; }
+        (IPAddress, int)? Address { get; set; }
+        byte[]? HWId { get; set; }
+        DateTime BanTime { get; set; }
+        DateTime? ExpirationTime { get; set; }
+        string Reason { get; set; }
+        Guid? BanningAdmin { get; set; }
+        TUnban? Unban { get; set; }
+    }
+
+    // Used by SS14.Admin
+    public interface IUnbanCommon
+    {
+        int Id { get; set; }
+        int BanId { get; set; }
+        Guid? UnbanningAdmin { get; set; }
+        DateTime UnbanTime { get; set; }
+    }
+
     [Table("server_ban")]
-    public class ServerBan
+    public class ServerBan : IBanCommon<ServerUnban>
     {
         public int Id { get; set; }
         public Guid? UserId { get; set; }
@@ -438,7 +461,7 @@ namespace Content.Server.Database
     }
 
     [Table("server_unban")]
-    public class ServerUnban
+    public class ServerUnban : IUnbanCommon
     {
         [Column("unban_id")] public int Id { get; set; }
 
@@ -488,7 +511,7 @@ namespace Content.Server.Database
     }
 
     [Table("server_role_ban")]
-    public sealed class ServerRoleBan
+    public sealed class ServerRoleBan : IBanCommon<ServerRoleUnban>
     {
         public int Id { get; set; }
         public Guid? UserId { get; set; }
@@ -508,7 +531,7 @@ namespace Content.Server.Database
     }
 
     [Table("server_role_unban")]
-    public sealed class ServerRoleUnban
+    public sealed class ServerRoleUnban : IUnbanCommon
     {
         [Column("role_unban_id")] public int Id { get; set; }
 
