@@ -1,7 +1,7 @@
 {
 	"version":1,
 	"size":{"x":32,"y":32},
-	"copyright":"Taken from tgstation",
+	"copyright":"Base sprites taken from tgstation, splitted to display on two layers (machinebody/panel) by Menshin, for SS14",
 	"license":"CC-BY-SA-3.0",
 	"states":[
 		{
