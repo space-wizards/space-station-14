@@ -1,15 +1,15 @@
 using Content.Server.Construction.Components;
-using Content.Server.Tools;
 using Content.Server.Stack;
 using Content.Shared.Interaction;
 using Content.Shared.Stacks;
+using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 
 namespace Content.Server.Construction
 {
     public sealed class RefiningSystem : EntitySystem
     {
-        [Dependency] private readonly ToolSystem _toolSystem = default!;
+        [Dependency] private readonly SharedToolSystem _toolSystem = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
         public override void Initialize()
         {
@@ -29,7 +29,9 @@ namespace Content.Server.Construction
 
             component.BeingWelded = true;
 
-            if (!await _toolSystem.UseTool(args.Used, args.User, uid, component.RefineFuel, component.RefineTime, component.QualityNeeded))
+            var toolEvData = new ToolEventData(null);
+
+            if (!_toolSystem.UseTool(args.Used, args.User, uid, component.RefineTime, component.QualityNeeded, toolEvData, component.RefineFuel))
             {
                 // failed to veld - abort refine
                 component.BeingWelded = false;

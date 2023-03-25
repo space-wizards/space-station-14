@@ -1,6 +1,4 @@
-﻿using System.Threading;
-using Content.Shared.Audio;
-using Robust.Shared.Audio;
+﻿using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -41,15 +39,4 @@ public sealed class HandTeleporterComponent : Component
     [DataField("portalCreationDelay")]
     public float PortalCreationDelay = 2.5f;
 
-    public CancellationTokenSource? CancelToken = null;
 }
-
-/// <summary>
-///     Raised on doafter success for creating a portal.
-/// </summary>
-public record HandTeleporterSuccessEvent(EntityUid User);
-
-/// <summary>
-///     Raised on doafter cancel for creating a portal.
-/// </summary>
-public record HandTeleporterCancelledEvent;

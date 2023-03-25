@@ -8,7 +8,7 @@
     - type: InteractionOutline
     - type: Sprite
       netsync: false
-      sprite: Objects/Weapons/Guns/turrets.rsi
+      sprite: Objects/Weapons/Guns/Turrets/turrets.rsi
       drawdepth: WallMountedItems
       layers:
         - state: syndie_broken
@@ -27,7 +27,7 @@
         ballistic-ammo: !type:Container
     - type: Sprite
       netsync: false
-      sprite: Objects/Weapons/Guns/turrets.rsi
+      sprite: Objects/Weapons/Guns/Turrets/turrets.rsi
       drawdepth: WallMountedItems
       layers:
         - state: syndie_lethal
@@ -104,3 +104,57 @@
   - type: Faction
     factions:
     - SimpleHostile
+
+- type: entity
+  name: xeno turret
+  description: Shoots 9mm acid projectiles
+  parent: BaseWeaponTurret
+  id: WeaponTurretXeno
+  suffix: Xeno
+  components:
+    - type: Faction
+      factions:
+        - Xeno
+    - type: Sprite
+      netsync: false
+      sprite: Objects/Weapons/Guns/Turrets/xenoturret.rsi
+      noRot: true
+      layers:
+        - state: acid_turret
+    - type: BallisticAmmoProvider
+      proto: BulletAcid
+      capacity: 500
+    - type: Gun
+      fireRate: 1
+      selectedMode: FullAuto
+      soundGunshot: /Audio/Weapons/Xeno/alien_spitacid.ogg
+    - type: HTN
+      rootTask: TurretCompound
+      blackboard:
+        SoundTargetInLOS: !type:SoundPathSpecifier
+          path: /Audio/Animals/snake_hiss.ogg
+    - type: Damageable
+      damageContainer: Biological
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                path: /Audio/Effects/gib1.ogg
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                FoodMeatXeno:
+                  min: 3
+                  max: 5
+    - type: InteractionPopup
+      interactDelay: 1.0
+      successChance: 0.8
+      interactSuccessString: petting-success-generic
+      interactFailureString: petting-failure-generic
+      interactSuccessSound:
+        path: /Audio/Animals/snake_hiss.ogg

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Robust.Client.Graphics;
@@ -49,16 +50,7 @@ namespace Content.Client.Construction
         public override void StartHijack(PlacementManager manager)
         {
             base.StartHijack(manager);
-
-            var frame = _prototype?.Icon.DirFrame0();
-            if (frame == null)
-            {
-                manager.CurrentTextures = null;
-            }
-            else
-            {
-                manager.CurrentTextures = new List<IDirectionalTextureProvider> {frame};
-            }
+            manager.CurrentTextures = _prototype?.Layers.Select(sprite => sprite.DirFrame0()).ToList();
         }
     }
 }

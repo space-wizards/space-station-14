@@ -38,6 +38,10 @@ namespace Content.Shared.Decals
                     component.DecalIndex[decalUid] = indices;
                 }
             }
+
+            // This **shouldn't** be required, but just in case we ever get entity prototypes that have decal grids, we
+            // need to ensure that we send an initial full state to players.
+            Dirty(component);
         }
 
         protected Dictionary<Vector2i, DecalChunk>? ChunkCollection(EntityUid gridEuid, DecalGridComponent? comp = null)

@@ -15,7 +15,6 @@
       # Sounds legit nuff
       litSound:
         path: /Audio/Items/Flare/flare_on.ogg
-      loopedSound: /Audio/Items/Flare/flare_burn.ogg
     - type: Sprite
       sprite: Objects/Misc/torch.rsi
       layers:
