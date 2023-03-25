@@ -31,7 +31,7 @@ public sealed class ExpendableLightSystem : VisualizerSystem<ExpendableLightComp
         {
             lightBehaviour.StopLightBehaviour();
 
-            if (lightBehaviourID != string.Empty)
+            if (!string.IsNullOrEmpty(lightBehaviourID))
             {
                 lightBehaviour.StartLightBehaviour(lightBehaviourID);
             }
@@ -55,18 +55,20 @@ public sealed class ExpendableLightSystem : VisualizerSystem<ExpendableLightComp
                 );
                 if (!string.IsNullOrWhiteSpace(comp.IconStateLit))
                     args.Sprite.LayerSetState(ExpendableLightVisualLayers.Overlay, comp.IconStateLit);
-                if (!string.IsNullOrWhiteSpace(comp.SpriteShaderLit))
-                    args.Sprite.LayerSetShader(ExpendableLightVisualLayers.Overlay, comp.SpriteShaderLit);
-
+                args.Sprite.LayerSetShader(ExpendableLightVisualLayers.Overlay, comp.SpriteShaderLit ?? "invalidshaderstatebecausethisprocdoesnotacceptnullvaluesandthisistheonlywaytoresetitbacktothedefaultshaderstate");
                 args.Sprite.LayerSetVisible(ExpendableLightVisualLayers.Glow, true);
+                if (comp.GlowColorLit.HasValue)
+                {
+                    args.Sprite.LayerSetColor(ExpendableLightVisualLayers.Overlay, comp.GlowColorLit.Value);
+                    args.Sprite.LayerSetColor(ExpendableLightVisualLayers.Glow, comp.GlowColorLit.Value);
+                }
 
                 break;
             case ExpendableLightState.Dead:
                 comp.PlayingStream?.Stop();
                 if (!string.IsNullOrWhiteSpace(comp.IconStateSpent))
                     args.Sprite.LayerSetState(ExpendableLightVisualLayers.Overlay, comp.IconStateSpent);
-                if (!string.IsNullOrWhiteSpace(comp.SpriteShaderSpent))
-                    args.Sprite.LayerSetShader(ExpendableLightVisualLayers.Overlay, comp.SpriteShaderSpent);
+                args.Sprite.LayerSetShader(ExpendableLightVisualLayers.Overlay, comp.SpriteShaderSpent ?? "ireallywishthatIdidn'thavetodothisbutI'mnotannoyedenoughtothinkaboutmakinganengineprjusttofixthis");
 
                 args.Sprite.LayerSetVisible(ExpendableLightVisualLayers.Glow, false);
                 break;

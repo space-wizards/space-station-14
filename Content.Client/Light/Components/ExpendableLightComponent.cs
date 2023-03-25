@@ -26,13 +26,19 @@ public sealed class ExpendableLightComponent : SharedExpendableLightComponent
     /// The sprite layer shader used while the expendable light is lit.
     /// </summary>
     [DataField("spriteShaderLit")]
-    public string? SpriteShaderLit = "shaded";
+    public string? SpriteShaderLit = null;
 
     /// <summary>
     /// The sprite layer shader used after the expendable light has burnt out.
     /// </summary>
     [DataField("spriteShaderSpent")]
-    public string SpriteShaderSpent = "shaded";
+    public string? SpriteShaderSpent = null;
+
+    /// <summary>
+    /// The sprite layer shader used after the expendable light has burnt out.
+    /// </summary>
+    [DataField("glowColorLit")]
+    public Color? GlowColorLit = null;
 
     /// <summary>
     /// The sound that plays when the expendable light is lit.
