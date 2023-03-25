@@ -1,3 +1,4 @@
+using Content.Client.UserInterface.Controls;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Kitchen;
@@ -11,7 +12,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Kitchen.UI
 {
     [GenerateTypedNameReferences]
-    public sealed partial class GrinderMenu : DefaultWindow
+    public sealed partial class GrinderMenu : FancyWindow
     {
         private readonly IEntityManager _entityManager;
         private readonly IPrototypeManager _prototypeManager ;
