@@ -314,6 +314,16 @@
   physicalDesc: reagent-physical-desc-acrid
   flavor: bitter
   color: "#215263"
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:MovespeedModifier
+        walkSpeedModifier: 0.65
+        sprintSpeedModifier: 0.65
+      - !type:HealthChange
+        damage:
+          types:
+            Cellular: 4 # TODO: Make this deal brain damage instead of genetic damage once brain damage is added
 
 - type: reagent
   id: SpaceDrugs
