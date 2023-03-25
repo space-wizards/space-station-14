@@ -109,8 +109,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakTrans
-  name: vampire cloak
-  description: Worn by high ranking vampires of the transylvanian society of vampires.
+  name: Space American Cloak
+  description: A regal American cloak with golden tassel. Are you a real American?
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/trans.rsi
