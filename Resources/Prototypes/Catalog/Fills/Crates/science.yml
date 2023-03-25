@@ -1,1 +1,12 @@
-# Bro what do I PUT here
+- type: entity
+  id: CrateScienceBiosuit
+  parent: CrateScienceSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterBioScientist
+        amount: 2
+      - id: ClothingHeadHatHoodBioScientist
+        amount: 2
+      - id: ClothingMaskSterile
+        amount: 2

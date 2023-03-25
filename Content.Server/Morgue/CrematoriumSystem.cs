@@ -14,6 +14,7 @@ using Content.Shared.Examine;
 using Content.Shared.Standing;
 using Content.Shared.Storage;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Storage.Components;
 
 namespace Content.Server.Morgue;
 
@@ -42,8 +43,9 @@ public sealed class CrematoriumSystem : EntitySystem
             return;
 
         if (_appearance.TryGetData<bool>(uid, CrematoriumVisuals.Burning, out var isBurning, appearance) && isBurning)
+        {
             args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-is-burning", ("owner", uid)));
-
+        }
         if (_appearance.TryGetData<bool>(uid, StorageVisuals.HasContents, out var hasContents, appearance) && hasContents)
         {
             args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-has-contents"));
@@ -54,9 +56,9 @@ public sealed class CrematoriumSystem : EntitySystem
         }
     }
 
-    private void OnAttemptOpen(EntityUid uid, ActiveCrematoriumComponent component, StorageOpenAttemptEvent args)
+    private void OnAttemptOpen(EntityUid uid, ActiveCrematoriumComponent component, ref StorageOpenAttemptEvent args)
     {
-        args.Cancel();
+        args.Cancelled = true;
     }
 
     private void AddCremateVerb(EntityUid uid, CrematoriumComponent component, GetVerbsEvent<AlternativeVerb> args)

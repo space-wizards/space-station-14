@@ -31,12 +31,12 @@
   equipment:
     head: ClothingHeadHatHardhatWhite
     jumpsuit: ClothingUniformJumpsuitChiefEngineer
-    back: ClothingBackpackEngineeringFilled
+    back: ClothingBackpackChiefEngineerFilled
     shoes: ClothingShoesColorBrown
     id: CEPDA
     eyes: ClothingEyesGlassesMeson
     ears: ClothingHeadsetCE
     belt: ClothingBeltChiefEngineerFilled
   innerclothingskirt: ClothingUniformJumpskirtChiefEngineer
-  satchel: ClothingBackpackSatchelEngineeringFilled
-  duffelbag: ClothingBackpackDuffelEngineeringFilled
+  satchel: ClothingBackpackSatchelChiefEngineerFilled
+  duffelbag: ClothingBackpackDuffelChiefEngineerFilled

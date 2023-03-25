@@ -14,11 +14,21 @@
     snapCardinals: true
     layers:
     - state: condisposal
-      map: ["enum.DisposalUnitVisualLayers.Base"]
-    - state: dispover-handle
-      map: ["enum.DisposalUnitVisualLayers.Handle"]
+      map: [ "enum.DisposalUnitVisualLayers.Unanchored" ]
+    - state: disposal
+      map: [ "enum.DisposalUnitVisualLayers.Base" ]
+    - state: disposal-charging
+      map: [ "enum.DisposalUnitVisualLayers.BaseCharging" ]
+    - state: disposal-flush
+      map: [ "enum.DisposalUnitVisualLayers.BaseFlush" ]
+    - state: dispover-charge
+      map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
     - state: dispover-ready
-      map: ["enum.DisposalUnitVisualLayers.Light"]
+      map: [ "enum.DisposalUnitVisualLayers.OverlayReady" ]
+    - state: dispover-full
+      map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
+    - state: dispover-handle
+      map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -54,19 +64,6 @@
             min: 1
             max: 1
   - type: Appearance
-    visuals:
-    - type: DisposalUnitVisualizer
-      state_unanchored: condisposal
-      state_anchored: disposal
-      state_charging: disposal-charging
-      overlay_charging: dispover-charge
-      overlay_ready: dispover-ready
-      overlay_full: dispover-full
-      overlay_engaged: dispover-handle
-      state_flush: disposal-flush
-      flush_sound:
-        path: /Audio/Machines/disposalflush.ogg
-      flush_time: 2
   - type: UserInterface
     interfaces:
     - key: enum.DisposalUnitUiKey.Key
@@ -87,6 +84,8 @@
     graph: DisposalMachine
     node: disposal_unit
   - type: DisposalUnit
+    flushSound:
+      path: /Audio/Machines/disposalflush.ogg
     flushTime: 2
   - type: UserInterface
     interfaces:
@@ -104,18 +103,30 @@
     sprite: Structures/Piping/disposal.rsi
     layers:
       - state: conmailing
+        map: [ "enum.DisposalUnitVisualLayers.Unanchored" ]
+      - state: mailing
         map: [ "enum.DisposalUnitVisualLayers.Base" ]
-      - state: mailover-handle
-        map: [ "enum.DisposalUnitVisualLayers.Handle" ]
+      - state: mailing-charging
+        map: [ "enum.DisposalUnitVisualLayers.BaseCharging" ]
+      - state: mailing-flush
+        map: [ "enum.DisposalUnitVisualLayers.BaseFlush" ]
+      - state: dispover-charge
+        map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
       - state: dispover-ready
-        map: [ "enum.DisposalUnitVisualLayers.Light" ]
+        map: [ "enum.DisposalUnitVisualLayers.OverlayReady" ]
+      - state: dispover-full
+        map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
+      - state: mailover-handle
+        map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]
   - type: Construction
     graph: DisposalMachine
     node: mailing_unit
   - type: DisposalUnit
-    flushTime: 2
     autoEngageEnabled: false
     mobsCanEnter: false
+    flushSound:
+      path: /Audio/Machines/disposalflush.ogg
+    flushTime: 2
   - type: MailingUnit
   - type: DeviceNetwork
     deviceNetId: Wired
@@ -124,19 +135,6 @@
   - type: WiredNetworkConnection
   - type: Configuration
   - type: Appearance
-    visuals:
-      - type: DisposalUnitVisualizer
-        state_unanchored: conmailing
-        state_anchored: mailing
-        state_charging: mailing-charging
-        overlay_charging: dispover-charge
-        overlay_ready: dispover-ready
-        overlay_full: dispover-full
-        overlay_engaged: mailover-handle
-        state_flush: mailing-flush
-        flush_sound:
-          path: /Audio/Machines/disposalflush.ogg
-        flush_time: 2
   - type: UserInterface
     interfaces:
     - key: enum.MailingUnitUiKey.Key

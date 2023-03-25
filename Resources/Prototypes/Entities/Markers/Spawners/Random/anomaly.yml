@@ -13,4 +13,6 @@
     - AnomalyPyroclastic
     - AnomalyGravity
     - AnomalyElectricity
+    - AnomalyFlesh
+    - AnomalyBluespace
     chance: 1

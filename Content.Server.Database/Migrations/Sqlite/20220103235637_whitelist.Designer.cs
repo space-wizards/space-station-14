@@ -12,7 +12,7 @@ namespace Content.Server.Database.Migrations.Sqlite
 {
     [DbContext(typeof(SqliteServerDbContext))]
     [Migration("20220103235637_whitelist")]
-    partial class whitelist
+    partial class Whitelist
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

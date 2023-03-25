@@ -1,6 +1,6 @@
-﻿using Content.Shared.Disposal.Components;
-using Content.Shared.DragDrop;
-using Robust.Shared.GameObjects;
+using Content.Shared.Disposal.Components;
+using Robust.Client.Animations;
+using Robust.Shared.Audio;
 
 namespace Content.Client.Disposal.Components
 {
@@ -8,6 +8,11 @@ namespace Content.Client.Disposal.Components
     [ComponentReference(typeof(SharedDisposalUnitComponent))]
     public sealed class DisposalUnitComponent : SharedDisposalUnitComponent
     {
+        [DataField("flushSound")]
+        public readonly SoundSpecifier? FlushSound;
+
+        public Animation FlushAnimation = default!;
+
         public DisposalUnitBoundUserInterfaceState? UiState;
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)

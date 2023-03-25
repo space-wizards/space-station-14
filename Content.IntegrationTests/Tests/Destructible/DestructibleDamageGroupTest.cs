@@ -39,7 +39,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 var coordinates = testMap.GridCoords;
 
                 sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleDamageGroupEntityId, coordinates);
-                sDamageableComponent = IoCManager.Resolve<IEntityManager>().GetComponent<DamageableComponent>(sDestructibleEntity);
+                sDamageableComponent = sEntityManager.GetComponent<DamageableComponent>(sDestructibleEntity);
 
                 sTestThresholdListenerSystem = sEntitySystemManager.GetEntitySystem<TestDestructibleListenerSystem>();
                 sTestThresholdListenerSystem.ThresholdsReached.Clear();
@@ -125,7 +125,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sTestThresholdListenerSystem.ThresholdsReached.Clear();
 
                 // Heal both classes of damage to 0
-                sDamageableSystem.SetAllDamage(sDamageableComponent, 0);
+                sDamageableSystem.SetAllDamage(sDestructibleEntity, sDamageableComponent, 0);
 
                 // No new thresholds reached, healing should not trigger it
                 Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
@@ -163,7 +163,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 threshold.TriggersOnce = true;
 
                 // Heal brute and burn back to 0
-                sDamageableSystem.SetAllDamage(sDamageableComponent, 0);
+                sDamageableSystem.SetAllDamage(sDestructibleEntity, sDamageableComponent, 0);
 
                 // No new thresholds reached from healing
                 Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);

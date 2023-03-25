@@ -16,9 +16,7 @@ namespace Content.Server.Tools.Components
         [DataField("delay")]
         public float Delay = 1f;
 
-        /// <summary>
-        /// Used for do_afters.
-        /// </summary>
-        public CancellationTokenSource? CancelToken = null;
+        [DataField("cancelToken")]
+        public CancellationTokenSource? CancelToken;
     }
 }

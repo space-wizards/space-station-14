@@ -11,6 +11,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Chemistry.Reagent
 {
@@ -69,8 +70,8 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("meltingPoint")]
         public float? MeltingPoint { get; }
 
-        [DataField("spritePath")]
-        public string SpriteReplacementPath { get; } = string.Empty;
+        [DataField("metamorphicSprite")]
+        public SpriteSpecifier? MetamorphicSprite { get; } = null;
 
         [DataField("metabolisms", serverOnly: true, customTypeSerializer: typeof(PrototypeIdDictionarySerializer<ReagentEffectsEntry, MetabolismGroupPrototype>))]
         public Dictionary<string, ReagentEffectsEntry>? Metabolisms = null;

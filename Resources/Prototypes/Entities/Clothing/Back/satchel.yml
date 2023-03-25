@@ -59,6 +59,15 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/chemistry.rsi
+    
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelVirology
+  name: virology satchel
+  description: A satchel made of hypo-allergenic fibers. It's designed to help prevent the spread of disease. Smells like monkey.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/virology.rsi
 
 - type: entity
   parent: ClothingBackpackSatchel

@@ -28,6 +28,8 @@
     - type: Construction
       graph: ParticleAcceleratorPowerBox
       node: completed
+    - type: GuideHelp
+      guides: [ Singularity, Power ]
 
 - type: entity
   parent: ParticleAcceleratorBase
@@ -45,3 +47,5 @@
       graph: ParticleAcceleratorPowerBox
       node: start
       defaultTarget: completed
+    - type: GuideHelp
+      guides: [ Singularity, Power ]

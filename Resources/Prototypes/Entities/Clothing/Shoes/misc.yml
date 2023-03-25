@@ -58,3 +58,14 @@
     sprite: Clothing/Shoes/Misc/tourist.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Misc/tourist.rsi
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesDameDane
+  name: dame dane shoes
+  description: At last...
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Misc/damedaneshoes.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Misc/damedaneshoes.rsi

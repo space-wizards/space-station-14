@@ -18,8 +18,5 @@ public sealed class ResistLockerComponent : Component
     [ViewVariables]
     public bool IsResisting = false;
 
-    /// <summary>
-    /// Cancellation token used to cancel the DoAfter if the container is opened before it's complete
-    /// </summary>
     public CancellationTokenSource? CancelToken;
 }
