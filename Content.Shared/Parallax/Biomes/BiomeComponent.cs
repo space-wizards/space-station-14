@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Parallax.Biomes;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
-public sealed class BiomeComponent : Component
+public sealed partial class BiomeComponent : Component
 {
     public FastNoiseLite Noise = new();
 
