@@ -128,7 +128,7 @@
   description: uplink-c4-desc
   productEntity: C4
   cost:
-    Telecrystal: 4
+    Telecrystal: 2 # Corvax-Revert
   categories:
   - UplinkExplosives
 
@@ -138,7 +138,7 @@
   description: uplink-c4-bundle-desc
   productEntity: ClothingBackpackDuffelSyndicateC4tBundle
   cost:
-    Telecrystal: 20
+    Telecrystal: 12 # Corvax-Revert
   categories:
   - UplinkExplosives
 
