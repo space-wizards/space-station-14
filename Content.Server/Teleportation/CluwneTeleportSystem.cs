@@ -19,7 +19,7 @@ using Robust.Shared.Configuration;
 using Content.Server.StationEvents.Components;
 
 using System.Linq;
-
+using Content.Shared.Destructible;
 
 namespace Content.Server.Teleportation;
 
@@ -95,17 +95,22 @@ public sealed class CluwneTeleportSystem : EntitySystem
     private void HandlePortalUpdate(EntityUid uid, CluwneTeleporterComponent component, EntityUid user)
     {
         var spawnLocations = EntityManager.EntityQuery<VentCritterSpawnLocationComponent>().ToList();
-        _robustRandom.Shuffle(spawnLocations);
+        var spawnAmount = (component.SpawnAmount);
+        _robustRandom.Shuffle(spawnLocations);;
 
-        foreach (var location in spawnLocations)
+        if (Deleted(user))
+        return;
+
+        // Create the first portal.
+        if (component.FirstPortal == null && component.SecondPortal == null)
         {
 
-            if (Deleted(user))
-                return;
-
-            // Create the first portal.
-            if (component.FirstPortal == null && component.SecondPortal == null)
+            foreach (var location in spawnLocations)
             {
+
+                if (spawnAmount-- == 0)
+                    break;
+
                 var xform = Transform(user);
                 if (xform.ParentUid != xform.GridUid)
                     return;
@@ -117,34 +122,38 @@ public sealed class CluwneTeleportSystem : EntitySystem
                 }
 
             }
-            else if (component.SecondPortal == null)
-            {
-                var timeout = EnsureComp<PortalTimeoutComponent>(user);
-                timeout.EnteredPortal = null;
-                component.SecondPortal = Spawn(component.SecondPortalPrototype, Transform(user).Coordinates);
-                _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(user):player} opened {ToPrettyString(component.SecondPortal.Value)} at {Transform(component.SecondPortal.Value).Coordinates} linked to {ToPrettyString(component.FirstPortal!.Value)} using {ToPrettyString(uid)}");
-                _link.TryLink(component.FirstPortal!.Value, component.SecondPortal.Value, true);
-                _audio.PlayPvs(component.NewPortalSound, uid);
-            }
-            else
-            {
-                // Logging
-                var portalStrings = "";
-                portalStrings += ToPrettyString(component.FirstPortal!.Value);
-                if (portalStrings != "")
-                    portalStrings += " and ";
+
+        }
+
+        else if (component.SecondPortal == null)
+        {
+            var timeout = EnsureComp<PortalTimeoutComponent>(user);
+            timeout.EnteredPortal = null;
+            component.SecondPortal = Spawn(component.SecondPortalPrototype, Transform(user).Coordinates);
+            _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(user):player} opened {ToPrettyString(component.SecondPortal.Value)} at {Transform(component.SecondPortal.Value).Coordinates} linked to {ToPrettyString(component.FirstPortal!.Value)} using {ToPrettyString(uid)}");
+            _link.TryLink(component.FirstPortal!.Value, component.SecondPortal.Value, true);
+            _audio.PlayPvs(component.NewPortalSound, uid);
+        }
+
+        else
+        {
+            // Logging
+            var portalStrings = "";
+            portalStrings += ToPrettyString(component.FirstPortal!.Value);
+            if (portalStrings != "")
+                portalStrings += " and ";
                 portalStrings += ToPrettyString(component.SecondPortal!.Value);
-                if (portalStrings != "")
-                   _adminLogger.Add(LogType.EntityDelete, LogImpact.Low, $"{ToPrettyString(user):player} closed {portalStrings} with {ToPrettyString(uid)}");
+            if (portalStrings != "")
+                _adminLogger.Add(LogType.EntityDelete, LogImpact.Low, $"{ToPrettyString(user):player} closed {portalStrings} with {ToPrettyString(uid)}");
 
                 // Clear both portals
-                QueueDel(component.FirstPortal!.Value);
-                QueueDel(component.SecondPortal!.Value);
+            QueueDel(component.FirstPortal!.Value);
+            QueueDel(component.SecondPortal!.Value);
 
-                component.FirstPortal = null;
-                component.SecondPortal = null;
-                _audio.PlayPvs(component.ClearPortalsSound, uid);
-            }
-        } 
+            component.FirstPortal = null;
+            component.SecondPortal = null;
+            _audio.PlayPvs(component.ClearPortalsSound, uid);
+        }
+
     }
 }
