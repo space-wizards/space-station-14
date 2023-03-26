@@ -156,6 +156,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         SubscribeLocalEvent<RulePlayerSpawningEvent>(OnPlayersSpawning);
         SubscribeLocalEvent<NukeOperativeComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
+        SubscribeLocalEvent<RoundEndSystemChangedEvent>(OnRoundEndEvent);
         SubscribeLocalEvent<NukeExplodedEvent>(OnNukeExploded);
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
         SubscribeLocalEvent<NukeDisarmSuccessEvent>(OnNukeDisarm);
@@ -240,6 +241,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         _nukeopsRuleConfig.EndsRound = false;
     }
 
+    public bool CheckLoneOpsSpawn()
+    {
+        return _nukeopsRuleConfig.CanLoneOpsSpawn;
+    }
+
     private void OnRoundStart()
     {
         // TODO: This needs to try and target a Nanotrasen station. At the very least,
@@ -266,6 +272,19 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
 
         _audioSystem.PlayGlobal(_nukeopsRuleConfig.GreetSound, filter, recordReplay: false);
+    }
+
+    /// <summary>
+    /// Resets any variables that can/have been changed.
+    /// </summary>
+    private void OnRoundEndEvent(RoundEndSystemChangedEvent ev)
+    {
+        if (!RuleAdded)
+            return;
+
+        _nukeopsRuleConfig.EndsRound = true;
+        _nukeopsRuleConfig.SpawnOutpost = true;
+        _nukeopsRuleConfig.CanLoneOpsSpawn = true;
     }
 
     private void OnRoundEnd()
@@ -616,6 +635,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         if (!_nukeopsRuleConfig.SpawnOutpost)
             return true;
+
+        _nukeopsRuleConfig.CanLoneOpsSpawn = false;
 
         var path = _nukeopsRuleConfig.NukieOutpostMap;
         var shuttlePath = _nukeopsRuleConfig.NukieShuttleMap;

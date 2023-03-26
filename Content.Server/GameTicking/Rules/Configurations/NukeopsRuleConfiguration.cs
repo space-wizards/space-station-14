@@ -38,6 +38,12 @@ public sealed class NukeopsRuleConfiguration : GameRuleConfiguration
     [DataField("spawnOutpost")]
     public bool SpawnOutpost = true;
 
+    /// <summary>
+    /// Whether or not loneops can spawn. Set to false if a normal nukeops round is occurring.
+    /// </summary>
+    [DataField("canLoneOpsSpawn")]
+    public bool CanLoneOpsSpawn = true;
+
     [DataField("randomHumanoidSettings", customTypeSerializer: typeof(PrototypeIdSerializer<RandomHumanoidSettingsPrototype>))]
     public string RandomHumanoidSettingsPrototype = "NukeOp";
 

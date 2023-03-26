@@ -23,6 +23,9 @@ public sealed class LoneOpsSpawn : StationEventSystem
     {
         base.Started();
 
+        if (!_nukeopsRuleSystem.CheckLoneOpsSpawn())
+            return;
+
         var shuttleMap = _mapManager.CreateMap();
         var options = new MapLoadOptions()
         {
