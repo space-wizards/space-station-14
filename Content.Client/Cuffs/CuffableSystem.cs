@@ -15,15 +15,9 @@ public sealed class CuffableSystem : SharedCuffableSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<CuffableComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<CuffableComponent, ComponentShutdown>(OnCuffableShutdown);
         SubscribeLocalEvent<CuffableComponent, ComponentHandleState>(OnCuffableHandleState);
         SubscribeLocalEvent<HandcuffComponent, ComponentHandleState>(OnHandcuffHandleState);
-    }
-
-    private void OnShutdown(EntityUid uid, CuffableComponent component, ComponentShutdown args)
-    {
-        if (TryComp<SpriteComponent>(uid, out var sprite))
-            sprite.LayerSetVisible(HumanoidVisualLayers.Handcuffs, false);
     }
 
     private void OnHandcuffHandleState(EntityUid uid, HandcuffComponent component, ref ComponentHandleState args)
@@ -38,8 +32,15 @@ public sealed class CuffableSystem : SharedCuffableSystem
 
         if (TryComp<SpriteComponent>(uid, out var sprite))
         {
-            sprite.LayerSetState(HumanoidVisualLayers.Handcuffs, state.IconState);
+            // If you think this should be an explicit layer look at the YML and see https://github.com/space-wizards/space-station-14/issues/14771
+            sprite.LayerSetState(0, state.IconState);
         }
+    }
+
+    private void OnCuffableShutdown(EntityUid uid, CuffableComponent component, ComponentShutdown args)
+    {
+        if (TryComp<SpriteComponent>(uid, out var sprite))
+            sprite.LayerSetVisible(HumanoidVisualLayers.Handcuffs, false);
     }
 
     private void OnCuffableHandleState(EntityUid uid, CuffableComponent component, ref ComponentHandleState args)
