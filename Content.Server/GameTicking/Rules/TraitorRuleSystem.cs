@@ -1,11 +1,13 @@
 using System.Linq;
 using Content.Server.Chat.Managers;
+using Content.Server.Mind;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Server.Traitor;
 using Content.Server.Traitor.Uplink;
 using Content.Server.NPC.Systems;
+using Content.Server.Shuttles.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.Preferences;
@@ -35,6 +37,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly MindSystem _mindSystem = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -171,9 +174,23 @@ public sealed class TraitorRuleSystem : GameRuleSystem
 
     public List<IPlayerSession> FindPotentialTraitors(in Dictionary<IPlayerSession, HumanoidCharacterProfile> candidates)
     {
-        var list = new List<IPlayerSession>(candidates.Keys).Where(x =>
-            x.Data.ContentData()?.Mind?.AllRoles.All(role => role is not Job { CanBeAntag: false }) ?? false
-        ).ToList();
+        var list = new List<IPlayerSession>();
+        var pendingQuery = GetEntityQuery<PendingClockInComponent>();
+
+        foreach (var player in candidates.Keys)
+        {
+            // Role prevents antag.
+            if (!(player.Data.ContentData()?.Mind?.AllRoles.All(role => role is not Job { CanBeAntag: false }) ?? false))
+            {
+                continue;
+            }
+
+            // Latejoin
+            if (player.AttachedEntity != null && pendingQuery.HasComponent(player.AttachedEntity.Value))
+                continue;
+
+            list.Add(player);
+        }
 
         var prefList = new List<IPlayerSession>();
 
@@ -239,7 +256,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
 
         var antagPrototype = _prototypeManager.Index<AntagPrototype>(TraitorPrototypeID);
         var traitorRole = new TraitorRole(mind, antagPrototype);
-        mind.AddRole(traitorRole);
+        _mindSystem.AddRole(mind, traitorRole);
         Traitors.Add(traitorRole);
         traitorRole.GreetTraitor(Codewords);
 
@@ -255,7 +272,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         {
             var objective = _objectivesManager.GetRandomObjective(traitorRole.Mind, "TraitorObjectiveGroups");
             if (objective == null) continue;
-            if (traitorRole.Mind.TryAddObjective(objective))
+            if (_mindSystem.TryAddObjective(traitorRole.Mind, objective))
                 difficulty += objective.Difficulty;
         }
 
@@ -322,10 +339,12 @@ public sealed class TraitorRuleSystem : GameRuleSystem
 
         var result = Loc.GetString("traitor-round-end-result", ("traitorCount", Traitors.Count));
 
+        result += "\n" + Loc.GetString("traitor-round-end-codewords", ("codewords", string.Join(", ", Codewords))) + "\n";
+
         foreach (var traitor in Traitors)
         {
             var name = traitor.Mind.CharacterName;
-            traitor.Mind.TryGetSession(out var session);
+            _mindSystem.TryGetSession(traitor.Mind, out var session);
             var username = session?.Name;
 
             var objectives = traitor.Mind.AllObjectives.ToArray();

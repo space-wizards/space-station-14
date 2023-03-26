@@ -26,7 +26,7 @@ public sealed class TraitorDeathMatchRedemptionSystem : EntitySystem
 
     private void OnInteractUsing(EntityUid uid, TraitorDeathMatchRedemptionComponent component, InteractUsingEvent args)
     {
-        if (!EntityManager.TryGetComponent<MindComponent>(args.User, out var userMindComponent))
+        if (!EntityManager.TryGetComponent<MindContainerComponent>(args.User, out var userMindComponent))
         {
             _popup.PopupEntity(Loc.GetString(
                 "traitor-death-match-redemption-component-interact-using-main-message",

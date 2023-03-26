@@ -1,9 +1,13 @@
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
+using JetBrains.Annotations;
+using Content.Shared.Shuttles.Systems;
 using Robust.Client.Graphics;
+using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Collections;
+using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -33,14 +37,14 @@ public sealed class RadarControl : Control
 
     private Angle? _rotation;
 
-    private float _radarMinRange = 64f;
-    private float _radarMaxRange = 256f;
-    public float RadarRange { get; private set; } = 256f;
+    private float _radarMinRange = SharedRadarConsoleSystem.DefaultMinRange;
+    private float _radarMaxRange = SharedRadarConsoleSystem.DefaultMaxRange;
+    public float RadarRange { get; private set; } = SharedRadarConsoleSystem.DefaultMinRange;
 
     /// <summary>
     /// We'll lerp between the radarrange and actual range
     /// </summary>
-    private float _actualRadarRange = 256f;
+    private float _actualRadarRange = SharedRadarConsoleSystem.DefaultMinRange;
 
     /// <summary>
     /// Controls the maximum distance that IFF labels will display.
@@ -70,6 +74,11 @@ public sealed class RadarControl : Control
 
     public Action<float>? OnRadarRangeChanged;
 
+    /// <summary>
+    /// Raised if the user left-clicks on the radar control with the relevant entitycoordinates.
+    /// </summary>
+    public Action<EntityCoordinates>? OnRadarClick;
+
     public RadarControl()
     {
         IoCManager.InjectDependencies(this);
@@ -87,13 +96,10 @@ public sealed class RadarControl : Control
     {
         _radarMaxRange = ls.MaxRange;
 
-        if (_radarMaxRange < RadarRange)
-        {
-            _actualRadarRange = _radarMaxRange;
-        }
-
         if (_radarMaxRange < _radarMinRange)
             _radarMinRange = _radarMaxRange;
+
+        _actualRadarRange = Math.Clamp(_actualRadarRange, _radarMinRange, _radarMaxRange);
 
         _docks.Clear();
 
@@ -103,6 +109,43 @@ public sealed class RadarControl : Control
             var grid = _docks.GetOrNew(coordinates.EntityId);
             grid.Add(state);
         }
+    }
+
+    protected override void KeyBindUp(GUIBoundKeyEventArgs args)
+    {
+        base.KeyBindUp(args);
+
+        if (_coordinates == null || _rotation == null || args.Function != EngineKeyFunctions.UIClick ||
+            OnRadarClick == null)
+        {
+            return;
+        }
+
+        var a = InverseScalePosition(args.RelativePosition);
+        var relativeWorldPos = new Vector2(a.X, -a.Y);
+        relativeWorldPos = _rotation.Value.RotateVec(relativeWorldPos);
+        var coords = _coordinates.Value.Offset(relativeWorldPos);
+        OnRadarClick?.Invoke(coords);
+    }
+
+    /// <summary>
+    /// Gets the entitycoordinates of where the mouseposition is, relative to the control.
+    /// </summary>
+    [PublicAPI]
+    public EntityCoordinates GetMouseCoordinates(ScreenCoordinates screen)
+    {
+        if (_coordinates == null || _rotation == null)
+        {
+            return EntityCoordinates.Invalid;
+        }
+
+        var pos = screen.Position / UIScale - GlobalPosition;
+
+        var a = InverseScalePosition(pos);
+        var relativeWorldPos = new Vector2(a.X, -a.Y);
+        relativeWorldPos = _rotation.Value.RotateVec(relativeWorldPos);
+        var coords = _coordinates.Value.Offset(relativeWorldPos);
+        return coords;
     }
 
     protected override void MouseWheel(GUIMouseWheelEventArgs args)
@@ -171,17 +214,18 @@ public sealed class RadarControl : Control
         var offset = _coordinates.Value.Position;
         var offsetMatrix = Matrix3.CreateInverseTransform(
             mapPosition.Position,
-            xform.WorldRotation - _rotation.Value);
+            xform.WorldRotation + _rotation.Value);
 
         // Draw our grid in detail
         var ourGridId = _coordinates.Value.GetGridUid(_entManager);
-        if (_entManager.TryGetComponent<MapGridComponent>(ourGridId, out var ourGrid))
+        if (_entManager.TryGetComponent<MapGridComponent>(ourGridId, out var ourGrid) &&
+            fixturesQuery.TryGetComponent(ourGridId, out var ourFixturesComp))
         {
             var ourGridMatrix = xformQuery.GetComponent(ourGridId.Value).WorldMatrix;
 
             Matrix3.Multiply(in ourGridMatrix, in offsetMatrix, out var matrix);
 
-            DrawGrid(handle, matrix, ourGrid, Color.MediumSpringGreen, true);
+            DrawGrid(handle, matrix, ourFixturesComp, ourGrid, Color.MediumSpringGreen, true);
             DrawDocks(handle, ourGridId.Value, matrix);
         }
 
@@ -198,7 +242,7 @@ public sealed class RadarControl : Control
         foreach (var grid in _mapManager.FindGridsIntersecting(mapPosition.MapId,
                      new Box2(mapPosition.Position - MaxRadarRange, mapPosition.Position + MaxRadarRange)))
         {
-            if (grid.Owner == ourGridId)
+            if (grid.Owner == ourGridId || !fixturesQuery.TryGetComponent(grid.Owner, out var fixturesComp))
                 continue;
 
             var gridBody = bodyQuery.GetComponent(grid.Owner);
@@ -280,7 +324,7 @@ public sealed class RadarControl : Control
             }
 
             // Detailed view
-            DrawGrid(handle, matty, grid, color, true);
+            DrawGrid(handle, matty, fixturesComp, grid, color, true);
 
             DrawDocks(handle, grid.Owner, matty);
         }
@@ -351,32 +395,29 @@ public sealed class RadarControl : Control
         }
     }
 
-    private void DrawGrid(DrawingHandleScreen handle, Matrix3 matrix, MapGridComponent grid, Color color, bool drawInterior)
+    private void DrawGrid(DrawingHandleScreen handle, Matrix3 matrix, FixturesComponent fixturesComp, MapGridComponent grid, Color color, bool drawInterior)
     {
         var rator = grid.GetAllTilesEnumerator();
         var edges = new ValueList<Vector2>();
         var tileTris = new ValueList<Vector2>();
-        Span<Vector2> tileVerts = new Vector2[4];
 
-        // Originally I used fixtures but this was a massive hassle
-        // Long-term it's probably better due to less data getting drawn but this is what it is for now.
-        while (rator.MoveNext(out var tileRef))
+        if (drawInterior)
         {
-            var tileVec = (Vector2) tileRef.Value.GridIndices * grid.TileSize;
+            var interiorTris = new ValueList<Vector2>();
+            // TODO: Engine pr
+            Span<Vector2> verts = new Vector2[8];
 
-            if (drawInterior)
+            foreach (var fixture in fixturesComp.Fixtures.Values)
             {
-                tileVerts[0] = tileVec;
-                tileVerts[1] = tileVec + new Vector2(grid.TileSize, 0f);
-                tileVerts[2] = tileVec + new Vector2(grid.TileSize, grid.TileSize);
-                tileVerts[3] = tileVec + new Vector2(0f, grid.TileSize);
-
-                // If the fixture has any points out of range we won't draw any of it.
                 var invalid = false;
+                var poly = (PolygonShape) fixture.Shape;
 
-                for (var i = 0; i < 4; i++)
+                for (var i = 0; i < poly.VertexCount; i++)
                 {
-                    var vert = matrix.Transform(tileVerts[i]);
+                    var vert = poly.Vertices[i];
+                    vert = new Vector2(MathF.Round(vert.X), MathF.Round(vert.Y));
+
+                    vert = matrix.Transform(vert);
 
                     if (vert.Length > RadarRange)
                     {
@@ -384,21 +425,40 @@ public sealed class RadarControl : Control
                         break;
                     }
 
-                    vert.Y = -vert.Y;
-                    tileVerts[i] = ScalePosition(vert);
+                    verts[i] = vert;
                 }
 
                 if (invalid)
                     continue;
 
-                tileTris.Add(tileVerts[0]);
-                tileTris.Add(tileVerts[1]);
-                tileTris.Add(tileVerts[3]);
+                Vector2 AdjustedVert(Vector2 vert)
+                {
+                    if (vert.Length > RadarRange)
+                    {
+                        vert = vert.Normalized * RadarRange;
+                    }
 
-                tileTris.Add(tileVerts[1]);
-                tileTris.Add(tileVerts[3]);
-                tileTris.Add(tileVerts[2]);
+                    vert.Y = -vert.Y;
+                    return ScalePosition(vert);
+                }
+
+                interiorTris.Add(AdjustedVert(verts[0]));
+                interiorTris.Add(AdjustedVert(verts[1]));
+                interiorTris.Add(AdjustedVert(verts[3]));
+
+                interiorTris.Add(AdjustedVert(verts[1]));
+                interiorTris.Add(AdjustedVert(verts[2]));
+                interiorTris.Add(AdjustedVert(verts[3]));
             }
+
+            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, interiorTris.Span, color.WithAlpha(0.05f));
+        }
+
+        while (rator.MoveNext(out var tileRef))
+        {
+            // TODO: Short-circuit interior chunk nodes
+            // This can be optimised a lot more if required.
+            Vector2? tileVec = null;
 
             // Iterate edges and see which we can draw
             for (var i = 0; i < 4; i++)
@@ -411,26 +471,27 @@ public sealed class RadarControl : Control
 
                 Vector2 start;
                 Vector2 end;
+                tileVec ??= (Vector2) tileRef.Value.GridIndices * grid.TileSize;
 
                 // Draw line
                 // Could probably rotate this but this might be faster?
                 switch (dir)
                 {
                     case DirectionFlag.South:
-                        start = tileVec;
-                        end = tileVec + new Vector2(grid.TileSize, 0f);
+                        start = tileVec.Value;
+                        end = tileVec.Value + new Vector2(grid.TileSize, 0f);
                         break;
                     case DirectionFlag.East:
-                        start = tileVec + new Vector2(grid.TileSize, 0f);
-                        end = tileVec + new Vector2(grid.TileSize, grid.TileSize);
+                        start = tileVec.Value + new Vector2(grid.TileSize, 0f);
+                        end = tileVec.Value + new Vector2(grid.TileSize, grid.TileSize);
                         break;
                     case DirectionFlag.North:
-                        start = tileVec + new Vector2(grid.TileSize, grid.TileSize);
-                        end = tileVec + new Vector2(0f, grid.TileSize);
+                        start = tileVec.Value + new Vector2(grid.TileSize, grid.TileSize);
+                        end = tileVec.Value + new Vector2(0f, grid.TileSize);
                         break;
                     case DirectionFlag.West:
-                        start = tileVec + new Vector2(0f, grid.TileSize);
-                        end = tileVec;
+                        start = tileVec.Value + new Vector2(0f, grid.TileSize);
+                        end = tileVec.Value;
                         break;
                     default:
                         throw new NotImplementedException();
@@ -457,5 +518,10 @@ public sealed class RadarControl : Control
     private Vector2 ScalePosition(Vector2 value)
     {
         return value * MinimapScale + MidPoint;
+    }
+
+    private Vector2 InverseScalePosition(Vector2 value)
+    {
+        return (value - MidPoint) / MinimapScale;
     }
 }

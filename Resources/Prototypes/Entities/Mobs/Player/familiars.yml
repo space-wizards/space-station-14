@@ -21,7 +21,7 @@
   - type: Access
     tags:
     - Chapel
-  - type: Mind
+  - type: MindContainer
     showExamineInfo: true
   - type: Alerts
   - type: Familiar
@@ -72,6 +72,11 @@
   - type: Access
     tags:
     - Chapel
-  - type: Mind
+  - type: MindContainer
     showExamineInfo: true
   - type: Familiar
+  - type: Vocal
+    sounds:
+      Male: Cerberus
+      Female: Cerberus
+      Unsexed: Cerberus

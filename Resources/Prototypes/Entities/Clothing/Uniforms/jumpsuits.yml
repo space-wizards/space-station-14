@@ -1000,7 +1000,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitDameDane
-  name: dame dane outfit
+  name: yakuza outfit
   description: Baka mitai...
   components:
   - type: Sprite
