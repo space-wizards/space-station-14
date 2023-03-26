@@ -29223,11 +29223,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 2736
-  type: VendingMachineCola
+  type: RandomVendingSnacks
   components:
-  - flags: SessionSpecific
-    type: MetaData
-  - pos: 28.5,0.5
+  - pos: 27.5,0.5
     parent: 0
     type: Transform
 - uid: 2737
@@ -29240,15 +29238,11 @@ entities:
     parent: 0
     type: Transform
 - uid: 2738
-  type: VendingMachineChang
+  type: RandomVendingDrinks
   components:
-  - flags: SessionSpecific
-    type: MetaData
-  - pos: 27.5,0.5
+  - pos: 28.5,0.5
     parent: 0
     type: Transform
-  - sprite: Structures/Machines/VendingMachines/cigs.rsi
-    type: Sprite
 - uid: 2739
   type: WindowReinforcedDirectional
   components:
@@ -32965,19 +32959,15 @@ entities:
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 3271
-  type: VendingMachineDiscount
+  type: RandomVendingDrinks
   components:
-  - flags: SessionSpecific
-    type: MetaData
-  - pos: 14.5,-12.5
+  - pos: 14.5,-13.5
     parent: 0
     type: Transform
 - uid: 3272
-  type: VendingMachineCola
+  type: RandomVendingSnacks
   components:
-  - flags: SessionSpecific
-    type: MetaData
-  - pos: 14.5,-13.5
+  - pos: 14.5,-12.5
     parent: 0
     type: Transform
 - uid: 3273
@@ -46830,28 +46820,21 @@ entities:
     parent: 0
     type: Transform
 - uid: 5008
-  type: VendingMachineSnack
+  type: RandomVendingDrinks
   components:
-  - flags: SessionSpecific
-    type: MetaData
   - pos: -46.5,-1.5
     parent: 0
     type: Transform
 - uid: 5009
-  type: VendingMachineCola
+  type: RandomVendingSnacks
   components:
-  - flags: SessionSpecific
-    type: MetaData
-  - pos: -46.5,-0.5
+  - pos: -46.5,0.5
     parent: 0
     type: Transform
 - uid: 5010
-  type: VendingMachineCoffee
+  type: RandomVending
   components:
-  - flags: SessionSpecific
-    name: Hot drinks machine
-    type: MetaData
-  - pos: -46.5,0.5
+  - pos: -46.5,-0.5
     parent: 0
     type: Transform
 - uid: 5011
@@ -47414,66 +47397,108 @@ entities:
       id: docking
     type: Fixtures
 - uid: 5081
+  type: RandomVendingDrinks
+  components:
+  - pos: 15.5,11.5
+    parent: 0
+    type: Transform
+- uid: 5082
+  type: RandomVendingSnacks
+  components:
+  - pos: 22.5,19.5
+    parent: 0
+    type: Transform
+- uid: 5083
+  type: RandomVendingDrinks
+  components:
+  - pos: 25.5,19.5
+    parent: 0
+    type: Transform
+- uid: 5084
+  type: RandomVending
+  components:
+  - pos: 26.5,39.5
+    parent: 0
+    type: Transform
+- uid: 5085
+  type: RandomVending
+  components:
+  - pos: 26.5,40.5
+    parent: 0
+    type: Transform
+- uid: 5086
   type: AtmosDeviceFanTiny
   components:
   - pos: -61.5,-24.5
     parent: 0
     type: Transform
-- uid: 5082
+- uid: 5087
   type: AirlockExternalGlass
   components:
   - pos: -61.5,-22.5
     parent: 0
     type: Transform
-- uid: 5083
-  type: CableHV
-  components:
-  - pos: 94.5,1.5
-    parent: 0
-    type: Transform
-- uid: 5084
-  type: CableHV
-  components:
-  - pos: 59.5,3.5
-    parent: 0
-    type: Transform
-- uid: 5085
-  type: CableHV
-  components:
-  - pos: 59.5,2.5
-    parent: 0
-    type: Transform
-- uid: 5086
-  type: CableHV
-  components:
-  - pos: 59.5,1.5
-    parent: 0
-    type: Transform
-- uid: 5087
-  type: CableHV
-  components:
-  - pos: 59.5,0.5
-    parent: 0
-    type: Transform
 - uid: 5088
-  type: CableHV
+  type: RandomVendingSnacks
   components:
-  - pos: 60.5,0.5
+  - pos: -5.5,-60.5
     parent: 0
     type: Transform
 - uid: 5089
-  type: CableHV
+  type: RandomVendingDrinks
   components:
-  - pos: 61.5,0.5
+  - pos: -6.5,-60.5
     parent: 0
     type: Transform
 - uid: 5090
   type: CableHV
   components:
-  - pos: 62.5,0.5
+  - pos: 94.5,1.5
     parent: 0
     type: Transform
 - uid: 5091
+  type: CableHV
+  components:
+  - pos: 59.5,3.5
+    parent: 0
+    type: Transform
+- uid: 5092
+  type: CableHV
+  components:
+  - pos: 59.5,2.5
+    parent: 0
+    type: Transform
+- uid: 5093
+  type: CableHV
+  components:
+  - pos: 59.5,1.5
+    parent: 0
+    type: Transform
+- uid: 5094
+  type: CableHV
+  components:
+  - pos: 59.5,0.5
+    parent: 0
+    type: Transform
+- uid: 5095
+  type: CableHV
+  components:
+  - pos: 60.5,0.5
+    parent: 0
+    type: Transform
+- uid: 5096
+  type: CableHV
+  components:
+  - pos: 61.5,0.5
+    parent: 0
+    type: Transform
+- uid: 5097
+  type: CableHV
+  components:
+  - pos: 62.5,0.5
+    parent: 0
+    type: Transform
+- uid: 5098
   type: CableHV
   components:
   - pos: 63.5,0.5
@@ -47481,66 +47506,10 @@ entities:
     type: Transform
   - enabled: True
     type: AmbientSound
-- uid: 5092
-  type: CableHV
-  components:
-  - pos: 64.5,0.5
-    parent: 0
-    type: Transform
-  - enabled: True
-    type: AmbientSound
-- uid: 5093
-  type: CableHV
-  components:
-  - pos: 65.5,0.5
-    parent: 0
-    type: Transform
-  - enabled: True
-    type: AmbientSound
-- uid: 5094
-  type: CableHV
-  components:
-  - pos: 66.5,0.5
-    parent: 0
-    type: Transform
-  - enabled: True
-    type: AmbientSound
-- uid: 5095
-  type: CableHV
-  components:
-  - pos: 67.5,0.5
-    parent: 0
-    type: Transform
-  - enabled: True
-    type: AmbientSound
-- uid: 5096
-  type: CableHV
-  components:
-  - pos: 68.5,0.5
-    parent: 0
-    type: Transform
-  - enabled: True
-    type: AmbientSound
-- uid: 5097
-  type: CableHV
-  components:
-  - pos: 69.5,0.5
-    parent: 0
-    type: Transform
-  - enabled: True
-    type: AmbientSound
-- uid: 5098
-  type: CableHV
-  components:
-  - pos: 70.5,0.5
-    parent: 0
-    type: Transform
-  - enabled: True
-    type: AmbientSound
 - uid: 5099
   type: CableHV
   components:
-  - pos: 71.5,0.5
+  - pos: 64.5,0.5
     parent: 0
     type: Transform
   - enabled: True
@@ -47554,7 +47523,7 @@ entities:
 - uid: 5101
   type: CableHV
   components:
-  - pos: 72.5,0.5
+  - pos: 65.5,0.5
     parent: 0
     type: Transform
   - enabled: True
@@ -47562,7 +47531,7 @@ entities:
 - uid: 5102
   type: CableHV
   components:
-  - pos: 73.5,0.5
+  - pos: 66.5,0.5
     parent: 0
     type: Transform
   - enabled: True
@@ -47570,7 +47539,7 @@ entities:
 - uid: 5103
   type: CableHV
   components:
-  - pos: 74.5,0.5
+  - pos: 67.5,0.5
     parent: 0
     type: Transform
   - enabled: True
@@ -47578,7 +47547,7 @@ entities:
 - uid: 5104
   type: CableHV
   components:
-  - pos: 75.5,0.5
+  - pos: 68.5,0.5
     parent: 0
     type: Transform
   - enabled: True
@@ -47586,7 +47555,7 @@ entities:
 - uid: 5105
   type: CableHV
   components:
-  - pos: 76.5,0.5
+  - pos: 69.5,0.5
     parent: 0
     type: Transform
   - enabled: True
@@ -47594,7 +47563,7 @@ entities:
 - uid: 5106
   type: CableHV
   components:
-  - pos: 77.5,0.5
+  - pos: 70.5,0.5
     parent: 0
     type: Transform
   - enabled: True
@@ -47602,7 +47571,7 @@ entities:
 - uid: 5107
   type: CableHV
   components:
-  - pos: 78.5,0.5
+  - pos: 71.5,0.5
     parent: 0
     type: Transform
   - enabled: True
@@ -47610,7 +47579,7 @@ entities:
 - uid: 5108
   type: CableHV
   components:
-  - pos: 79.5,0.5
+  - pos: 72.5,0.5
     parent: 0
     type: Transform
   - enabled: True
@@ -47618,7 +47587,7 @@ entities:
 - uid: 5109
   type: CableHV
   components:
-  - pos: 80.5,0.5
+  - pos: 73.5,0.5
     parent: 0
     type: Transform
   - enabled: True
@@ -47626,7 +47595,7 @@ entities:
 - uid: 5110
   type: CableHV
   components:
-  - pos: 81.5,0.5
+  - pos: 74.5,0.5
     parent: 0
     type: Transform
   - enabled: True
@@ -47634,7 +47603,7 @@ entities:
 - uid: 5111
   type: CableHV
   components:
-  - pos: 82.5,0.5
+  - pos: 75.5,0.5
     parent: 0
     type: Transform
   - enabled: True
@@ -47642,7 +47611,7 @@ entities:
 - uid: 5112
   type: CableHV
   components:
-  - pos: 83.5,0.5
+  - pos: 76.5,0.5
     parent: 0
     type: Transform
   - enabled: True
@@ -47702,7 +47671,7 @@ entities:
 - uid: 5121
   type: CableHV
   components:
-  - pos: 84.5,0.5
+  - pos: 77.5,0.5
     parent: 0
     type: Transform
   - enabled: True
@@ -47710,7 +47679,7 @@ entities:
 - uid: 5122
   type: CableHV
   components:
-  - pos: 85.5,0.5
+  - pos: 78.5,0.5
     parent: 0
     type: Transform
   - enabled: True
@@ -47718,7 +47687,7 @@ entities:
 - uid: 5123
   type: CableHV
   components:
-  - pos: 86.5,0.5
+  - pos: 79.5,0.5
     parent: 0
     type: Transform
   - enabled: True
@@ -47726,7 +47695,7 @@ entities:
 - uid: 5124
   type: CableHV
   components:
-  - pos: 87.5,0.5
+  - pos: 80.5,0.5
     parent: 0
     type: Transform
   - enabled: True
@@ -47734,7 +47703,7 @@ entities:
 - uid: 5125
   type: CableHV
   components:
-  - pos: 88.5,0.5
+  - pos: 81.5,0.5
     parent: 0
     type: Transform
   - enabled: True
@@ -47766,7 +47735,7 @@ entities:
 - uid: 5130
   type: CableHV
   components:
-  - pos: 89.5,0.5
+  - pos: 82.5,0.5
     parent: 0
     type: Transform
   - enabled: True
@@ -47774,7 +47743,7 @@ entities:
 - uid: 5131
   type: CableHV
   components:
-  - pos: 90.5,0.5
+  - pos: 83.5,0.5
     parent: 0
     type: Transform
   - enabled: True
@@ -47782,55 +47751,69 @@ entities:
 - uid: 5132
   type: CableHV
   components:
-  - pos: 91.5,0.5
+  - pos: 84.5,0.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 5133
   type: CableHV
   components:
-  - pos: 92.5,0.5
+  - pos: 85.5,0.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 5134
   type: CableHV
   components:
-  - pos: 93.5,0.5
+  - pos: 86.5,0.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 5135
   type: CableHV
   components:
-  - pos: 94.5,0.5
+  - pos: 87.5,0.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 5136
   type: CableHV
   components:
-  - pos: 94.5,2.5
+  - pos: 88.5,0.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 5137
   type: CableHV
   components:
-  - pos: 94.5,3.5
+  - pos: 89.5,0.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 5138
   type: CableHV
   components:
-  - pos: 94.5,4.5
+  - pos: 90.5,0.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 5139
   type: CableHV
   components:
-  - pos: 94.5,5.5
+  - pos: 91.5,0.5
     parent: 0
     type: Transform
 - uid: 5140
   type: CableHV
   components:
-  - pos: 94.5,6.5
+  - pos: 92.5,0.5
     parent: 0
     type: Transform
 - uid: 5141
@@ -47849,109 +47832,109 @@ entities:
 - uid: 5143
   type: CableHV
   components:
-  - pos: 95.5,6.5
+  - pos: 93.5,0.5
     parent: 0
     type: Transform
 - uid: 5144
   type: CableHV
   components:
-  - pos: 95.5,7.5
+  - pos: 94.5,0.5
     parent: 0
     type: Transform
 - uid: 5145
   type: CableHV
   components:
-  - pos: 95.5,8.5
+  - pos: 94.5,2.5
     parent: 0
     type: Transform
 - uid: 5146
   type: CableHV
   components:
-  - pos: 95.5,9.5
+  - pos: 94.5,3.5
     parent: 0
     type: Transform
 - uid: 5147
   type: CableHV
   components:
-  - pos: 95.5,10.5
+  - pos: 94.5,4.5
     parent: 0
     type: Transform
 - uid: 5148
   type: CableHV
   components:
-  - pos: 95.5,11.5
+  - pos: 94.5,5.5
     parent: 0
     type: Transform
 - uid: 5149
   type: CableHV
   components:
-  - pos: 95.5,12.5
+  - pos: 94.5,6.5
     parent: 0
     type: Transform
 - uid: 5150
   type: CableHV
   components:
-  - pos: 95.5,13.5
+  - pos: 95.5,6.5
     parent: 0
     type: Transform
 - uid: 5151
   type: CableHV
   components:
-  - pos: 96.5,13.5
+  - pos: 95.5,7.5
     parent: 0
     type: Transform
 - uid: 5152
   type: CableHV
   components:
-  - pos: 96.5,14.5
+  - pos: 95.5,8.5
     parent: 0
     type: Transform
 - uid: 5153
   type: CableHV
   components:
-  - pos: 96.5,15.5
+  - pos: 95.5,9.5
     parent: 0
     type: Transform
 - uid: 5154
   type: CableHV
   components:
-  - pos: 96.5,16.5
+  - pos: 95.5,10.5
     parent: 0
     type: Transform
 - uid: 5155
   type: CableHV
   components:
-  - pos: 96.5,17.5
+  - pos: 95.5,11.5
     parent: 0
     type: Transform
 - uid: 5156
   type: CableHV
   components:
-  - pos: 96.5,18.5
+  - pos: 95.5,12.5
     parent: 0
     type: Transform
 - uid: 5157
   type: CableHV
   components:
-  - pos: 97.5,18.5
+  - pos: 95.5,13.5
     parent: 0
     type: Transform
 - uid: 5158
   type: CableHV
   components:
-  - pos: 98.5,18.5
+  - pos: 96.5,13.5
     parent: 0
     type: Transform
 - uid: 5159
   type: CableHV
   components:
-  - pos: 99.5,18.5
+  - pos: 96.5,14.5
     parent: 0
     type: Transform
 - uid: 5160
   type: CableHV
   components:
-  - pos: 100.5,18.5
+  - pos: 96.5,15.5
     parent: 0
     type: Transform
 - uid: 5161
@@ -48239,67 +48222,67 @@ entities:
 - uid: 5208
   type: CableHV
   components:
-  - pos: 101.5,18.5
+  - pos: 96.5,16.5
     parent: 0
     type: Transform
 - uid: 5209
   type: CableHV
   components:
-  - pos: 102.5,18.5
+  - pos: 96.5,17.5
     parent: 0
     type: Transform
 - uid: 5210
   type: CableHV
   components:
-  - pos: 103.5,18.5
+  - pos: 96.5,18.5
     parent: 0
     type: Transform
 - uid: 5211
   type: CableHV
   components:
-  - pos: 104.5,18.5
+  - pos: 97.5,18.5
     parent: 0
     type: Transform
 - uid: 5212
   type: CableHV
   components:
-  - pos: 105.5,18.5
+  - pos: 98.5,18.5
     parent: 0
     type: Transform
 - uid: 5213
   type: CableHV
   components:
-  - pos: 106.5,18.5
+  - pos: 99.5,18.5
     parent: 0
     type: Transform
 - uid: 5214
   type: CableHV
   components:
-  - pos: 107.5,18.5
+  - pos: 100.5,18.5
     parent: 0
     type: Transform
 - uid: 5215
   type: CableHV
   components:
-  - pos: 108.5,18.5
+  - pos: 101.5,18.5
     parent: 0
     type: Transform
 - uid: 5216
   type: CableHV
   components:
-  - pos: 109.5,18.5
+  - pos: 102.5,18.5
     parent: 0
     type: Transform
 - uid: 5217
   type: CableHV
   components:
-  - pos: 110.5,18.5
+  - pos: 103.5,18.5
     parent: 0
     type: Transform
 - uid: 5218
   type: CableHV
   components:
-  - pos: 111.5,18.5
+  - pos: 104.5,18.5
     parent: 0
     type: Transform
 - uid: 5219
@@ -48321,91 +48304,91 @@ entities:
 - uid: 5221
   type: CableHV
   components:
-  - pos: 112.5,18.5
+  - pos: 105.5,18.5
     parent: 0
     type: Transform
 - uid: 5222
   type: CableHV
   components:
-  - pos: 112.5,17.5
+  - pos: 106.5,18.5
     parent: 0
     type: Transform
 - uid: 5223
   type: CableHV
   components:
-  - pos: 112.5,16.5
+  - pos: 107.5,18.5
     parent: 0
     type: Transform
 - uid: 5224
   type: CableHV
   components:
-  - pos: 112.5,15.5
+  - pos: 108.5,18.5
     parent: 0
     type: Transform
 - uid: 5225
   type: CableHV
   components:
-  - pos: 112.5,14.5
+  - pos: 109.5,18.5
     parent: 0
     type: Transform
 - uid: 5226
   type: CableHV
   components:
-  - pos: 112.5,13.5
+  - pos: 110.5,18.5
     parent: 0
     type: Transform
 - uid: 5227
   type: CableHV
   components:
-  - pos: 112.5,-5.5
+  - pos: 111.5,18.5
     parent: 0
     type: Transform
 - uid: 5228
   type: CableHV
   components:
-  - pos: 113.5,13.5
+  - pos: 112.5,18.5
     parent: 0
     type: Transform
 - uid: 5229
   type: CableHV
   components:
-  - pos: 113.5,12.5
+  - pos: 112.5,17.5
     parent: 0
     type: Transform
 - uid: 5230
   type: CableHV
   components:
-  - pos: 113.5,11.5
+  - pos: 112.5,16.5
     parent: 0
     type: Transform
 - uid: 5231
   type: CableHV
   components:
-  - pos: 113.5,10.5
+  - pos: 112.5,15.5
     parent: 0
     type: Transform
 - uid: 5232
   type: CableHV
   components:
-  - pos: 113.5,9.5
+  - pos: 112.5,14.5
     parent: 0
     type: Transform
 - uid: 5233
   type: CableHV
   components:
-  - pos: 113.5,8.5
+  - pos: 112.5,13.5
     parent: 0
     type: Transform
 - uid: 5234
   type: CableHV
   components:
-  - pos: 113.5,7.5
+  - pos: 112.5,-5.5
     parent: 0
     type: Transform
 - uid: 5235
   type: CableHV
   components:
-  - pos: 113.5,6.5
+  - pos: 113.5,13.5
     parent: 0
     type: Transform
 - uid: 5236
@@ -48435,37 +48418,37 @@ entities:
 - uid: 5240
   type: CableHV
   components:
-  - pos: 114.5,6.5
+  - pos: 113.5,12.5
     parent: 0
     type: Transform
 - uid: 5241
   type: CableHV
   components:
-  - pos: 115.5,6.5
+  - pos: 113.5,11.5
     parent: 0
     type: Transform
 - uid: 5242
   type: CableHV
   components:
-  - pos: 115.5,5.5
+  - pos: 113.5,10.5
     parent: 0
     type: Transform
 - uid: 5243
   type: CableHV
   components:
-  - pos: 115.5,4.5
+  - pos: 113.5,9.5
     parent: 0
     type: Transform
 - uid: 5244
   type: CableHV
   components:
-  - pos: 115.5,3.5
+  - pos: 113.5,8.5
     parent: 0
     type: Transform
 - uid: 5245
   type: CableHV
   components:
-  - pos: 115.5,2.5
+  - pos: 113.5,7.5
     parent: 0
     type: Transform
 - uid: 5246
@@ -48508,145 +48491,145 @@ entities:
 - uid: 5250
   type: CableHV
   components:
-  - pos: 115.5,1.5
+  - pos: 113.5,6.5
     parent: 0
     type: Transform
 - uid: 5251
   type: CableHV
   components:
-  - pos: 115.5,0.5
+  - pos: 114.5,6.5
     parent: 0
     type: Transform
 - uid: 5252
   type: CableHV
   components:
-  - pos: 114.5,0.5
+  - pos: 115.5,6.5
     parent: 0
     type: Transform
 - uid: 5253
   type: CableHV
   components:
-  - pos: 113.5,0.5
+  - pos: 115.5,5.5
     parent: 0
     type: Transform
 - uid: 5254
   type: CableHV
   components:
-  - pos: 112.5,0.5
+  - pos: 115.5,4.5
     parent: 0
     type: Transform
 - uid: 5255
   type: CableHV
   components:
-  - pos: 111.5,0.5
+  - pos: 115.5,3.5
     parent: 0
     type: Transform
 - uid: 5256
   type: CableHV
   components:
-  - pos: 111.5,1.5
+  - pos: 115.5,2.5
     parent: 0
     type: Transform
 - uid: 5257
   type: CableHV
   components:
-  - pos: 115.5,-0.5
+  - pos: 115.5,1.5
     parent: 0
     type: Transform
 - uid: 5258
   type: CableHV
   components:
-  - pos: 115.5,-1.5
+  - pos: 115.5,0.5
     parent: 0
     type: Transform
 - uid: 5259
   type: CableHV
   components:
-  - pos: 115.5,-2.5
+  - pos: 114.5,0.5
     parent: 0
     type: Transform
 - uid: 5260
   type: CableHV
   components:
-  - pos: 115.5,-3.5
+  - pos: 113.5,0.5
     parent: 0
     type: Transform
 - uid: 5261
   type: CableHV
   components:
-  - pos: 115.5,-4.5
+  - pos: 112.5,0.5
     parent: 0
     type: Transform
 - uid: 5262
   type: CableHV
   components:
-  - pos: 114.5,-4.5
+  - pos: 111.5,0.5
     parent: 0
     type: Transform
 - uid: 5263
   type: CableHV
   components:
-  - pos: 113.5,-4.5
+  - pos: 111.5,1.5
     parent: 0
     type: Transform
 - uid: 5264
   type: CableHV
   components:
-  - pos: 112.5,-4.5
+  - pos: 115.5,-0.5
     parent: 0
     type: Transform
 - uid: 5265
   type: CableHV
   components:
-  - pos: 112.5,-6.5
+  - pos: 115.5,-1.5
     parent: 0
     type: Transform
 - uid: 5266
   type: CableHV
   components:
-  - pos: 112.5,-7.5
+  - pos: 115.5,-2.5
     parent: 0
     type: Transform
 - uid: 5267
   type: CableHV
   components:
-  - pos: 112.5,-8.5
+  - pos: 115.5,-3.5
     parent: 0
     type: Transform
 - uid: 5268
   type: CableHV
   components:
-  - pos: 112.5,-9.5
+  - pos: 115.5,-4.5
     parent: 0
     type: Transform
 - uid: 5269
   type: CableHV
   components:
-  - pos: 112.5,-10.5
+  - pos: 114.5,-4.5
     parent: 0
     type: Transform
 - uid: 5270
   type: CableHV
   components:
-  - pos: 112.5,-11.5
+  - pos: 113.5,-4.5
     parent: 0
     type: Transform
 - uid: 5271
   type: CableHV
   components:
-  - pos: 112.5,-12.5
+  - pos: 112.5,-4.5
     parent: 0
     type: Transform
 - uid: 5272
   type: CableHV
   components:
-  - pos: 112.5,-13.5
+  - pos: 112.5,-6.5
     parent: 0
     type: Transform
 - uid: 5273
   type: CableHV
   components:
-  - pos: 112.5,-14.5
+  - pos: 112.5,-7.5
     parent: 0
     type: Transform
 - uid: 5274
@@ -48658,229 +48641,229 @@ entities:
 - uid: 5275
   type: CableHV
   components:
-  - pos: 112.5,-15.5
+  - pos: 112.5,-8.5
     parent: 0
     type: Transform
 - uid: 5276
   type: CableHV
   components:
-  - pos: 112.5,-16.5
+  - pos: 112.5,-9.5
     parent: 0
     type: Transform
 - uid: 5277
   type: CableHV
   components:
-  - pos: 112.5,-17.5
+  - pos: 112.5,-10.5
     parent: 0
     type: Transform
 - uid: 5278
   type: CableHV
   components:
-  - pos: 112.5,-18.5
+  - pos: 112.5,-11.5
     parent: 0
     type: Transform
 - uid: 5279
   type: CableHV
   components:
-  - pos: 111.5,-18.5
+  - pos: 112.5,-12.5
     parent: 0
     type: Transform
 - uid: 5280
   type: CableHV
   components:
-  - pos: 110.5,-18.5
+  - pos: 112.5,-13.5
     parent: 0
     type: Transform
 - uid: 5281
   type: CableHV
   components:
-  - pos: 109.5,-18.5
+  - pos: 112.5,-14.5
     parent: 0
     type: Transform
 - uid: 5282
   type: CableHV
   components:
-  - pos: 108.5,-18.5
+  - pos: 112.5,-15.5
     parent: 0
     type: Transform
 - uid: 5283
   type: CableHV
   components:
-  - pos: 107.5,-18.5
+  - pos: 112.5,-16.5
     parent: 0
     type: Transform
 - uid: 5284
   type: CableHV
   components:
-  - pos: 106.5,-18.5
+  - pos: 112.5,-17.5
     parent: 0
     type: Transform
 - uid: 5285
   type: CableHV
   components:
-  - pos: 105.5,-18.5
+  - pos: 112.5,-18.5
     parent: 0
     type: Transform
 - uid: 5286
   type: CableHV
   components:
-  - pos: 104.5,-18.5
+  - pos: 111.5,-18.5
     parent: 0
     type: Transform
 - uid: 5287
   type: CableHV
   components:
-  - pos: 103.5,-18.5
+  - pos: 110.5,-18.5
     parent: 0
     type: Transform
 - uid: 5288
   type: CableHV
   components:
-  - pos: 102.5,-18.5
+  - pos: 109.5,-18.5
     parent: 0
     type: Transform
 - uid: 5289
   type: CableHV
   components:
-  - pos: 101.5,-18.5
+  - pos: 108.5,-18.5
     parent: 0
     type: Transform
 - uid: 5290
   type: CableHV
   components:
-  - pos: 100.5,-18.5
+  - pos: 107.5,-18.5
     parent: 0
     type: Transform
 - uid: 5291
   type: CableHV
   components:
-  - pos: 99.5,-18.5
+  - pos: 106.5,-18.5
     parent: 0
     type: Transform
 - uid: 5292
   type: CableHV
   components:
-  - pos: 98.5,-18.5
+  - pos: 105.5,-18.5
     parent: 0
     type: Transform
 - uid: 5293
   type: CableHV
   components:
-  - pos: 97.5,-18.5
+  - pos: 104.5,-18.5
     parent: 0
     type: Transform
 - uid: 5294
   type: CableHV
   components:
-  - pos: 96.5,-18.5
+  - pos: 103.5,-18.5
     parent: 0
     type: Transform
 - uid: 5295
   type: CableHV
   components:
-  - pos: 96.5,-17.5
+  - pos: 102.5,-18.5
     parent: 0
     type: Transform
 - uid: 5296
   type: CableHV
   components:
-  - pos: 96.5,-16.5
+  - pos: 101.5,-18.5
     parent: 0
     type: Transform
 - uid: 5297
   type: CableHV
   components:
-  - pos: 96.5,-15.5
+  - pos: 100.5,-18.5
     parent: 0
     type: Transform
 - uid: 5298
   type: CableHV
   components:
-  - pos: 96.5,-14.5
+  - pos: 99.5,-18.5
     parent: 0
     type: Transform
 - uid: 5299
   type: CableHV
   components:
-  - pos: 96.5,-13.5
+  - pos: 98.5,-18.5
     parent: 0
     type: Transform
 - uid: 5300
   type: CableHV
   components:
-  - pos: 96.5,-12.5
+  - pos: 97.5,-18.5
     parent: 0
     type: Transform
 - uid: 5301
   type: CableHV
   components:
-  - pos: 96.5,-11.5
+  - pos: 96.5,-18.5
     parent: 0
     type: Transform
 - uid: 5302
   type: CableHV
   components:
-  - pos: 96.5,-10.5
+  - pos: 96.5,-17.5
     parent: 0
     type: Transform
 - uid: 5303
   type: CableHV
   components:
-  - pos: 96.5,-9.5
+  - pos: 96.5,-16.5
     parent: 0
     type: Transform
 - uid: 5304
   type: CableHV
   components:
-  - pos: 96.5,-8.5
+  - pos: 96.5,-15.5
     parent: 0
     type: Transform
 - uid: 5305
   type: CableHV
   components:
-  - pos: 96.5,-7.5
+  - pos: 96.5,-14.5
     parent: 0
     type: Transform
 - uid: 5306
   type: CableHV
   components:
-  - pos: 96.5,-6.5
+  - pos: 96.5,-13.5
     parent: 0
     type: Transform
 - uid: 5307
   type: CableHV
   components:
-  - pos: 96.5,-5.5
+  - pos: 96.5,-12.5
     parent: 0
     type: Transform
 - uid: 5308
   type: CableHV
   components:
-  - pos: 96.5,-4.5
+  - pos: 96.5,-11.5
     parent: 0
     type: Transform
 - uid: 5309
   type: CableHV
   components:
-  - pos: 95.5,-4.5
+  - pos: 96.5,-10.5
     parent: 0
     type: Transform
 - uid: 5310
   type: CableHV
   components:
-  - pos: 94.5,-4.5
+  - pos: 96.5,-9.5
     parent: 0
     type: Transform
 - uid: 5311
   type: CableHV
   components:
-  - pos: 94.5,-3.5
+  - pos: 96.5,-8.5
     parent: 0
     type: Transform
 - uid: 5312
   type: CableHV
   components:
-  - pos: 94.5,-2.5
+  - pos: 96.5,-7.5
     parent: 0
     type: Transform
 - uid: 5313
@@ -48910,22 +48893,64 @@ entities:
 - uid: 5317
   type: CableHV
   components:
-  - pos: 94.5,-1.5
+  - pos: 96.5,-6.5
     parent: 0
     type: Transform
 - uid: 5318
   type: CableHV
   components:
-  - pos: 94.5,-0.5
+  - pos: 96.5,-5.5
     parent: 0
     type: Transform
 - uid: 5319
+  type: CableHV
+  components:
+  - pos: 96.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 5320
+  type: CableHV
+  components:
+  - pos: 95.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 5321
+  type: CableHV
+  components:
+  - pos: 94.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 5322
+  type: CableHV
+  components:
+  - pos: 94.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 5323
+  type: CableHV
+  components:
+  - pos: 94.5,-2.5
+    parent: 0
+    type: Transform
+- uid: 5324
+  type: CableHV
+  components:
+  - pos: 94.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 5325
+  type: CableHV
+  components:
+  - pos: 94.5,-0.5
+    parent: 0
+    type: Transform
+- uid: 5326
   type: AtmosDeviceFanTiny
   components:
   - pos: 41.5,47.5
     parent: 0
     type: Transform
-- uid: 5320
+- uid: 5327
   type: AirlockExternalGlassShuttleEscape
   components:
   - rot: -1.5707963267948966 rad
@@ -48968,22 +48993,22 @@ entities:
       friction: 0.4
       id: docking
     type: Fixtures
-- uid: 5321
+- uid: 5328
+  type: WallReinforced
+  components:
+  - pos: -52.5,-39.5
+    parent: 0
+    type: Transform
+- uid: 5329
   type: SignEscapePods
   components:
   - pos: 38.5,45.5
     parent: 0
     type: Transform
-- uid: 5322
+- uid: 5330
   type: AtmosDeviceFanTiny
   components:
   - pos: -63.5,-13.5
-    parent: 0
-    type: Transform
-- uid: 5328
-  type: WallReinforced
-  components:
-  - pos: -52.5,-39.5
     parent: 0
     type: Transform
 - uid: 5333
@@ -107484,15 +107509,6 @@ entities:
   - pos: 16.5,11.5
     parent: 0
     type: Transform
-- uid: 12986
-  type: VendingMachineCoffee
-  components:
-  - flags: SessionSpecific
-    name: Hot drinks machine
-    type: MetaData
-  - pos: 15.5,11.5
-    parent: 0
-    type: Transform
 - uid: 12987
   type: DisposalTrunk
   components:
@@ -111083,23 +111099,6 @@ entities:
   - pos: 24.5,19.5
     parent: 0
     type: Transform
-- uid: 13489
-  type: VendingMachineCoffee
-  components:
-  - flags: SessionSpecific
-    name: Hot drinks machine
-    type: MetaData
-  - pos: 22.5,19.5
-    parent: 0
-    type: Transform
-- uid: 13490
-  type: VendingMachineChang
-  components:
-  - flags: SessionSpecific
-    type: MetaData
-  - pos: 25.5,19.5
-    parent: 0
-    type: Transform
 - uid: 13491
   type: Rack
   components:
@@ -111871,15 +111870,6 @@ entities:
   type: WallSolid
   components:
   - pos: 25.5,40.5
-    parent: 0
-    type: Transform
-- uid: 13592
-  type: VendingMachineCoffee
-  components:
-  - flags: SessionSpecific
-    name: Hot drinks machine
-    type: MetaData
-  - pos: 26.5,40.5
     parent: 0
     type: Transform
 - uid: 13593
@@ -154905,7 +154895,7 @@ entities:
   - pos: 9.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -14870.382
+  - SecondsUntilStateChange: -16027.151
     state: Closing
     type: Door
   - inputs:
@@ -154921,7 +154911,7 @@ entities:
   - pos: 10.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -14870.382
+  - SecondsUntilStateChange: -16027.151
     state: Closing
     type: Door
   - inputs:
@@ -154937,7 +154927,7 @@ entities:
   - pos: 11.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -14870.382
+  - SecondsUntilStateChange: -16027.151
     state: Closing
     type: Door
   - inputs:
@@ -154953,7 +154943,7 @@ entities:
   - pos: 13.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -14870.382
+  - SecondsUntilStateChange: -16027.151
     state: Closing
     type: Door
   - inputs:
@@ -154969,7 +154959,7 @@ entities:
   - pos: 14.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -14870.382
+  - SecondsUntilStateChange: -16027.151
     state: Closing
     type: Door
   - inputs:
@@ -154985,7 +154975,7 @@ entities:
   - pos: 15.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -14870.382
+  - SecondsUntilStateChange: -16027.151
     state: Closing
     type: Door
   - inputs:
@@ -175474,22 +175464,6 @@ entities:
   type: ReinforcedWindow
   components:
   - pos: -6.5,-65.5
-    parent: 0
-    type: Transform
-- uid: 22044
-  type: VendingMachineChang
-  components:
-  - flags: SessionSpecific
-    type: MetaData
-  - pos: -6.5,-60.5
-    parent: 0
-    type: Transform
-- uid: 22045
-  type: VendingMachineCola
-  components:
-  - flags: SessionSpecific
-    type: MetaData
-  - pos: -5.5,-60.5
     parent: 0
     type: Transform
 - uid: 22046
