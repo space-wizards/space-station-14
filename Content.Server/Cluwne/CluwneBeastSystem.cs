@@ -85,7 +85,6 @@ public sealed class CluwneBeastSystem : EntitySystem
         EnsureComp<AutoEmoteComponent>(uid);
         _autoEmote.AddEmote(uid, "CluwneBeastGiggle");
         EnsureComp<ClumsyComponent>(uid);
-        Spawn(component.BlueSpaceId, Transform(uid).Coordinates);
         SetOutfitCommand.SetOutfit(uid, "CluwneBeastGear", EntityManager);
         _speedmod.RefreshMovementSpeedModifiers(uid);
     }

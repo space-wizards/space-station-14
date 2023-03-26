@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: BasePortal
   abstract: true
   name: bluespace portal
@@ -51,28 +51,33 @@
     energy: 3
 
 - type: entity
-  id: PortalGreen
-  name: bluespace portal
+  id: PortalGreeny
+  parent: BasePortal
   description: A mysterious green portal!
   components:
-  - type: InteractionOutline
-  - type: Clickable
-  - type: TimedDespawn
-    lifetime: 5
-  - type: Physics
-    bodyType: Static
   - type: Sprite
-    sprite: /Textures/Effects/portal.rsi
     layers:
     - state: portal-green
-  - type: Fixtures
-    fixtures:
-    - id: portalFixture
-      shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.48,0.25,0.48"
-      mask:
-      - FullTileMask
-      layer:
-      - WallLayer
-      hard: false
+  - type: TimedDespawn
+    lifetime: 20
+  - type: PointLight
+    netsync: false
+    color: Green
+    radius: 3
+    energy: 3
+
+- type: entity
+  id: PortalYellow
+  parent: BasePortal
+  description: A mysterious yellow portal!
+  components:
+  - type: TimedDespawn
+    lifetime: 20
+  - type: Sprite
+    layers:
+    - state: portal-yellow
+  - type: PointLight
+    netsync: false
+    color: Yellow
+    radius: 3
+    energy: 3
