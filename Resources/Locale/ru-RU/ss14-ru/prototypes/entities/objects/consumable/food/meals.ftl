@@ -73,3 +73,6 @@ ent-FoodMealSashimi = сашими
 ent-FoodMealEnchiladas = энчилада
     .desc = Вива Ля Мексика!
     .suffix = { "" }
+ent-FoodSaladWatermelonFruitBowl = чаша для фруктов из дыни
+    .desc = Единственный салат, в котором можно съесть миску.
+    .suffix = { "" }

@@ -70,3 +70,7 @@ seeds-rice-name = рис
 seeds-rice-display-name = стебля риса
 seeds-soybeans-name = соевые бобы
 seeds-soybeans-display-name = растения соевых бобов
+seeds-watermelon-name = арбуз
+seeds-watermelon-display-name = арбузного растения
+seeds-grape-name = виноград
+seeds-grape-display-name = виноградного растения

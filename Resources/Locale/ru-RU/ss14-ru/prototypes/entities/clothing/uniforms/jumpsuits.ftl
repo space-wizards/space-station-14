@@ -259,6 +259,6 @@ ent-ClothingUniformJumpsuitERTSecurity = униформа службы безо�
 ent-ClothingUniformJumpsuitCluwne = костюм клувна
     .desc = Проклятый костюм клувна.
     .suffix = Неснимаемый
-ent-ClothingUniformJumpsuitDameDane = дамэ да нэ костюм
+ent-ClothingUniformJumpsuitDameDane = якудза костюм
     .desc = Бака митаи...
     .suffix = { "" }
