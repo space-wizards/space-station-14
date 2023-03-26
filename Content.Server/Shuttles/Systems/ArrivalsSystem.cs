@@ -14,6 +14,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Spawners.Components;
+using Content.Shared.Tag;
 using Content.Shared.Tiles;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
@@ -41,6 +42,7 @@ public sealed class ArrivalsSystem : EntitySystem
     [Dependency] private readonly ShuttleSystem _shuttles = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
     [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
     /// <summary>
     /// If enabled then spawns players on an alternate map so they can take a shuttle to the station.
@@ -159,9 +161,10 @@ public sealed class ArrivalsSystem : EntitySystem
         if (!_cfgManager.GetCVar(CCVars.ArrivalsReturns) && args.FromMapUid != null)
         {
             var pendingEntQuery = GetEntityQuery<PendingClockInComponent>();
+            var arrivalsBlacklistQuery = GetEntityQuery<ArrivalsBlacklistComponent>();
             var mobQuery = GetEntityQuery<MobStateComponent>();
             var xformQuery = GetEntityQuery<TransformComponent>();
-            DumpChildren(uid, ref args, pendingEntQuery, mobQuery, xformQuery);
+            DumpChildren(uid, ref args, pendingEntQuery, arrivalsBlacklistQuery, mobQuery, xformQuery);
         }
 
         var pendingQuery = AllEntityQuery<PendingClockInComponent, TransformComponent>();
@@ -180,6 +183,7 @@ public sealed class ArrivalsSystem : EntitySystem
     private void DumpChildren(EntityUid uid,
         ref FTLStartedEvent args,
         EntityQuery<PendingClockInComponent> pendingEntQuery,
+        EntityQuery<ArrivalsBlacklistComponent> arrivalsBlacklistQuery,
         EntityQuery<MobStateComponent> mobQuery,
         EntityQuery<TransformComponent> xformQuery)
     {
@@ -188,7 +192,7 @@ public sealed class ArrivalsSystem : EntitySystem
 
         var xform = xformQuery.GetComponent(uid);
 
-        if (mobQuery.HasComponent(uid))
+        if (mobQuery.HasComponent(uid) || arrivalsBlacklistQuery.HasComponent(uid))
         {
             var rotation = xform.LocalRotation;
             _transform.SetCoordinates(uid, new EntityCoordinates(args.FromMapUid!.Value, args.FTLFrom.Transform(xform.LocalPosition)));
@@ -200,7 +204,7 @@ public sealed class ArrivalsSystem : EntitySystem
 
         while (children.MoveNext(out var child))
         {
-            DumpChildren(child.Value, ref args, pendingEntQuery, mobQuery, xformQuery);
+            DumpChildren(child.Value, ref args, pendingEntQuery, arrivalsBlacklistQuery, mobQuery, xformQuery);
         }
     }
 
