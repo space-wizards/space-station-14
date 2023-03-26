@@ -1,4 +1,3 @@
-using Content.Server.Mind;
 using Robust.Server.Player;
 using Robust.Shared.Network;
 
@@ -38,15 +37,9 @@ namespace Content.Server.Players
 
         public void WipeMind()
         {
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var mindSystem = entityManager.System<MindSystem>();
-            
+            Mind?.TransferTo(null);
             // This will ensure Mind == null
-            if (Mind == null)
-                return;
-
-            mindSystem.TransferTo(Mind, null);
-            mindSystem.ChangeOwningPlayer(Mind, null);
+            Mind?.ChangeOwningPlayer(null);
         }
 
         /// <summary>

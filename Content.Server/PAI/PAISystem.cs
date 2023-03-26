@@ -33,7 +33,7 @@ namespace Content.Server.PAI
         {
             if (args.IsInDetailsRange)
             {
-                if (EntityManager.TryGetComponent<MindContainerComponent>(uid, out var mind) && mind.HasMind)
+                if (EntityManager.TryGetComponent<MindComponent>(uid, out var mind) && mind.HasMind)
                 {
                     args.PushMarkup(Loc.GetString("pai-system-pai-installed"));
                 }
@@ -58,7 +58,7 @@ namespace Content.Server.PAI
             args.Handled = true;
 
             // Check for pAI activation
-            if (EntityManager.TryGetComponent<MindContainerComponent>(uid, out var mind) && mind.HasMind)
+            if (EntityManager.TryGetComponent<MindComponent>(uid, out var mind) && mind.HasMind)
             {
                 _popupSystem.PopupEntity(Loc.GetString("pai-system-pai-installed"), uid, args.User, PopupType.Large);
                 return;
@@ -136,7 +136,7 @@ namespace Content.Server.PAI
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (EntityManager.TryGetComponent<MindContainerComponent>(uid, out var mind) && mind.HasMind)
+            if (EntityManager.TryGetComponent<MindComponent>(uid, out var mind) && mind.HasMind)
             {
                 ActivationVerb verb = new();
                 verb.Text = Loc.GetString("pai-system-wipe-device-verb-text");
@@ -146,9 +146,9 @@ namespace Content.Server.PAI
                     // Wiping device :(
                     // The shutdown of the Mind should cause automatic reset of the pAI during OnMindRemoved
                     // EDIT: But it doesn't!!!! Wtf? Do stuff manually
-                    if (EntityManager.HasComponent<MindContainerComponent>(uid))
+                    if (EntityManager.HasComponent<MindComponent>(uid))
                     {
-                        EntityManager.RemoveComponent<MindContainerComponent>(uid);
+                        EntityManager.RemoveComponent<MindComponent>(uid);
                         _popupSystem.PopupEntity(Loc.GetString("pai-system-wiped-device"), uid, args.User, PopupType.Large);
                         PAITurningOff(uid);
                     }

@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Mind;
+using Content.Shared.Coordinates;
 using NUnit.Framework;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -9,7 +10,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
-namespace Content.IntegrationTests.Tests.Minds
+namespace Content.IntegrationTests.Tests
 {
     // Tests various scenarios of deleting the entity that a player's mind is connected to.
     [TestFixture]
@@ -25,8 +26,6 @@ namespace Content.IntegrationTests.Tests.Minds
             var playerMan = server.ResolveDependency<IPlayerManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
 
-            var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
-
             EntityUid playerEnt = default;
             EntityUid visitEnt = default;
             Mind mind = null;
@@ -40,9 +39,11 @@ namespace Content.IntegrationTests.Tests.Minds
                 playerEnt = entMan.SpawnEntity(null, pos);
                 visitEnt = entMan.SpawnEntity(null, pos);
 
-                mind = mindSystem.CreateMind(player.UserId);
-                mindSystem.TransferTo(mind, playerEnt);
-                mindSystem.Visit(mind, visitEnt);
+                mind = new Mind(player.UserId);
+                mind.ChangeOwningPlayer(player.UserId);
+
+                mind.TransferTo(playerEnt);
+                mind.Visit(visitEnt);
 
                 Assert.That(player.AttachedEntity, Is.EqualTo(visitEnt));
                 Assert.That(mind.VisitingEntity, Is.EqualTo(visitEnt));
@@ -90,9 +91,6 @@ namespace Content.IntegrationTests.Tests.Minds
             var entMan = server.ResolveDependency<IServerEntityManager>();
             var playerMan = server.ResolveDependency<IPlayerManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
-
-            var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
-
             var map = await PoolManager.CreateTestMap(pairTracker);
 
             EntityUid playerEnt = default;
@@ -105,8 +103,10 @@ namespace Content.IntegrationTests.Tests.Minds
 
                 playerEnt = entMan.SpawnEntity(null, pos);
 
-                mind = mindSystem.CreateMind(player.UserId);
-                mindSystem.TransferTo(mind, playerEnt);
+                mind = new Mind(player.UserId);
+                mind.ChangeOwningPlayer(player.UserId);
+
+                mind.TransferTo(playerEnt);
 
                 Assert.That(mind.CurrentEntity, Is.EqualTo(playerEnt));
             });
@@ -136,26 +136,27 @@ namespace Content.IntegrationTests.Tests.Minds
         [Test]
         public async Task TestGhostOnDeleteMap()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
             var testMap = await PoolManager.CreateTestMap(pairTracker);
             var coordinates = testMap.GridCoords;
 
             var entMan = server.ResolveDependency<IServerEntityManager>();
+            var playerMan = server.ResolveDependency<IPlayerManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
-
-            var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
-
             var map = await PoolManager.CreateTestMap(pairTracker);
 
             EntityUid playerEnt = default;
             Mind mind = null;
             await server.WaitAssertion(() =>
             {
-                playerEnt = entMan.SpawnEntity(null, coordinates);
+                var player = playerMan.ServerSessions.Single();
 
-                mind = mindSystem.CreateMind(null);
-                mindSystem.TransferTo(mind, playerEnt);
+                playerEnt = entMan.SpawnEntity(null, coordinates);
+                mind = new Mind(player.UserId);
+                mind.ChangeOwningPlayer(player.UserId);
+
+                mind.TransferTo(playerEnt);
 
                 Assert.That(mind.CurrentEntity, Is.EqualTo(playerEnt));
             });

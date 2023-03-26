@@ -1,4 +1,3 @@
-using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Shared.Administration;
@@ -10,10 +9,9 @@ namespace Content.Server.Administration.Commands
     [AdminCommand(AdminFlags.Admin)]
     sealed class SetMindCommand : IConsoleCommand
     {
-        
         public string Command => "setmind";
 
-        public string Description => Loc.GetString("set-mind-command-description", ("requiredComponent", nameof(MindContainerComponent)));
+        public string Description => Loc.GetString("set-mind-command-description", ("requiredComponent", nameof(MindComponent)));
 
         public string Help => Loc.GetString("set-mind-command-help-text", ("command", Command));
 
@@ -41,7 +39,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (!entityManager.HasComponent<MindContainerComponent>(eUid))
+            if (!entityManager.HasComponent<MindComponent>(eUid))
             {
                 shell.WriteLine(Loc.GetString("set-mind-command-target-has-no-mind-message"));
                 return;
@@ -61,16 +59,16 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var mindSystem = entityManager.System<MindSystem>();
-            
             var mind = playerCData.Mind;
             if (mind == null)
             {
-                mind = mindSystem.CreateMind(session.UserId);
-                mind.CharacterName = entityManager.GetComponent<MetaDataComponent>(eUid).EntityName;
+                mind = new Mind.Mind(session.UserId)
+                {
+                    CharacterName = entityManager.GetComponent<MetaDataComponent>(eUid).EntityName
+                };
+                mind.ChangeOwningPlayer(session.UserId);
             }
-
-            mindSystem.TransferTo(mind, eUid);
+            mind.TransferTo(eUid);
         }
     }
 }
