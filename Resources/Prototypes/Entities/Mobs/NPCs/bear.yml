@@ -76,7 +76,6 @@
   - type: Tag
     tags:
     - DoorBumpOpener
-    - CannotSuicide
     - FootstepSound
   - type: Puller
     needsHands: false
