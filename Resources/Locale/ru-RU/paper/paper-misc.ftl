@@ -1,29 +1,29 @@
 book-text-plasma-trap =
-    Heheheheh, no way in hell they're going to get at our stash NOW, is there?
-    I rigged the area where our stuff's at to be a toasty thousand K.
-    You know how to drain it when we need it out.
+    Хе-хе-хе, ни за что на свете они не доберутся до нашего тайника ТЕПЕРЬ, не так ли?
+    Я оборудовал место, где лежат наши вещи, на тысячу К.
+    Ты знаешь, как откачать это, когда она нам понадобится.
      - J.
 book-text-holoparasite-info =
-    Thanks for choosing our holoparasite package!
-    At cybersun, we pride ourselves on cutting-edge military and industrial technology, and greatly appreciate your contribution to our establishment!
-    Guardians are helpful and intelligent beings which nest within your body, completely immune to common hazards such as pressure, temperature and even bullets!
-    You have purchased the holoparasite package, which contains a holoparasite activator, an instruction booklet, and our softcap merchandise.
-    Instructions for use:
-    1. Activate the holoparasite injector (preferably in a secluded area).
-    2. Wait for the tingling and/or painful metaphysical sensation.
-    3. Check your holoparasite for the ability to communicate and cooperate, and capacity to understand your orders.
-    4. Use your recall-manifest ability to summon or recall the holoparasite back into your body.
-    5. Keep the holoparasite within a short distance from yourself, otherwise it will be recalled by force!
-    WARNING: Guardians are metaphysical beings, but draw from your HEALTH in order to exist. Direct damage done to guardians will be partially transferred to you!
-    Cybersun inc. is not responsible for complete annihilation following the misuse of Holoparasite technology.
+    Спасибо за выбор нашего набора голопаразита!
+   В компании Cybersun мы гордимся передовыми военными и промышленными технологиями и очень ценим ваш вклад в наше дело!
+   Голопаразиты - это полезные и разумные существа, которые гнездятся в вашем теле, абсолютно невосприимчивые к таким обычным опасностям, как давление, температура и даже пули!
+   Вы приобрели пакет голопаразита, который содержит активатор голопаразита, буклет с инструкциями и наш товар в упаковке с пластиковой крышкой.
+    Инструкции по применению:
+    1. Активируйте инжектор голопаразита (желательно в укромном месте).
+    2. Дождитесь покалывания и/или болезненных метафизических ощущений.
+    3. Проверьте своего голопаразита на способность к общению и сотрудничеству, а также на способность понимать ваши приказы.
+    4. Используйте свою способность отзыва-призыва, чтобы призвать или вызвать голопаразита обратно в свое тело.
+    5. Держите голопаразита на близком расстоянии от себя, иначе он будет отозван насильно!
+    WARNING: Голопаразиты - метафизические существа, но для своего существования они черпают энергию из вашего ЗДОРОВЬЯ. Прямой ущерб, нанесенный Хранителям, будет частично передан вам!
+    Cybersun inc. не несет ответственности за полное уничтожение после неправильного использования технологии голопаразитов.
 book-text-ame-scribbles =
-    I don't know if you're trained already, so I hope this'll help.
-    AME controller needs LV power and an HV wire to output to. Check the area with a crowbar if you aren't sure.
-    There should be an empty room next to where you found this, that room's wired for the AME.
-    You can put an AME anywhere if you can get the wires to it, though.
-    3x3 grid of AME parts, multitool them to unpack. Be careful not to 'trap' anything.
-    AME controller adjacent horizontally or vertically (not diagonally) to any point.
-    With only 1 core (what a 3x3 grid will get you), don't turn it up above 2.
-    The golden rule is 2 injection for every 1 core. You can go lower to save fuel.
-    Higher will burn the engine out and eventually make it explode. Don't.
-    Don't forget to refuel it, it tends to stop at the worst possible time.
+    Я не знаю, прошли ли вы уже обучение, поэтому надеюсь, что это поможет.
+    Контроллеру ДАМ требуется НВ питание и ВВ провод для вывода на него. Проверьте это место с помощью лома, если вы не уверены.
+    Рядом с тем местом, где вы нашли это, должна быть пустая комната, эта комната оборудована для ДАМ.
+    Вы можете установить ДАМ в любом месте, если сможете подвести к нему провода.
+    3x3 сетка из частей ДАМ, распакуйте их мультитулом. Будьте осторожны, чтобы ничего не "зацепить".
+    Контроллер ДАМ примыкает по горизонтали или вертикали (не по диагонали) к любой точке.
+    Имея только 1 ядро (то, что даст вам сетка 3x3), не поднимайте впрыск выше 2.
+    Золотое правило - 2 впрыска на каждое 1 ядро. Вы можете опустить его ниже, чтобы сэкономить топливо.
+    Больше - сожжет двигатель и в конечном итоге приведет к взрыву. Не делайте этого.
+    Не забывайте заправлять его, он имеет свойство прекращать работу в самое неподходящее время.

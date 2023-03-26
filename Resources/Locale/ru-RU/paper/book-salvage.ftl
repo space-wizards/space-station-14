@@ -1,17 +1,17 @@
 book-text-demonomicon1 =
-    How To Summon a Demon
-    - by J.G. Wizgerald
+   Как призвать демона
+    - написано J.G. Wizgerald
     
-    1. todo finish writing demon summoning guide
+    1. todo: дописать гайд по призыву демона
 book-text-demonomicon2 =
-    How To Summon a Lemon
-    - by J.G. Wizgerald
+    Как призвать лемона
+    - написано J.G. Wizgerald
     
-    1. todo finish writing lemon summoning guide
-    2. WAit. Typo. Oh shit. Sorry guys
+    1. todo: дописать гайд по призыву лемона
+    2. Погодите. Опечатка. О чёрт, извините ребята
 book-text-demonomicon3 =
-    Cool Demon Names I Found
-    - by Ms. Mossrock
+    Хорошие имена демонов которые я нашёл
+    - написано Ms. Mossrock
     
     Abraxas
     Nephilim
@@ -22,70 +22,69 @@ book-text-demonomicon3 =
     Scylla
     Phenex
 book-text-chemistry-insane =
-    IGOR CHEMISTRY GUIDE TO CHEMISTRY
+    ИГОРЬ ХИМИЯ РУКОВОДСТВО ПО ХИМИИ
     
-    TITLE: GUIDE TO CHEMISTRY
+    ЗАГОЛОВОК: ГАЙД ПО ХИМИИ
     
-    ABSTRACT: GUIDE TO CHEMISTRY
+    КОНСПЕКТ: ГАЙД ПО ХИМИИ
     
-    SECTION: WISE WORDS OF IGOR CHEMISTRY
+    СЕКЦИЯ: МУДРЫЕ СЛОВА ИГОРЯ ХИМИИ
     
-    MY NUMBER ONE TIP. IS TO ALWAYS HAVE FUN. YOU NEVER KNOW WHEN IT'LL ALL END.
-    SO JUST KEEP AT IT!!
+    МОЙ СОВЕТ НОМЕР ОДИН. ЭТО ВСЕГДА ПОЛУЧАТЬ УДОВОЛЬСТВИЕ. ТЫ НИКОГДА НЕ ЗНАЕШЬ КОГДА ВСЁ ЗАКОНЧИТСЯ.
+    ТАК ЧТО ПРОСТО ПРОДОЛЖАЙ В ТОМ ЖЕ ДУХЕ!!!
     
-    MY NUMBER TWO TIP. I JUST CAN'T STOP FUCKING GRINDING UP JUMPSUITS. MY "COLLEAGUES" (agents) KEEP YELLING AT ME
-    TO STOP AND THAT 'itll come out of our paychecks' BUT THE STUFF IS SO GOOD. I'M LIKE AN INTERIOR DECORATION GENIUS.
-    SAXOPHONES AND BATTERIES TAKE MY MIND OFF OF IT BUT I'M ALWAYS BACK TO THE JUMPSUITS. HOO WEE.
+    МОЙ СОВЕТ НОМЕР ДВА. Я НЕ МОГУ ЧЕРТ ВОЗЬМИ ПЕРЕСТАТЬ ИЗМЕЛЬЧАТЬ КОМБИНЕЗОНЫ. МОИ "коллеги" (агенты) ПОСТОЯННО КРИЧАТ МНЕ.
+    ПРЕКРАТИ И ЧТО "это будет вычитаться из наших зарплат", НО СТАФФ ТАКОЙ ХОРОШИЙ. Я КАК ГЕНИЙ В ОБЛАСТИ ДЕКОРАЦИИ ИНТЕРЬЕРА.
+    САКСОФОНЫ И БАТАРЕИ ОТВЛЕКАЮТ МЕНЯ ОТ ЭТОГО, НО Я ВСЕГДА ВОЗВРАЩАЮСЬ К КОМБИНЕЗОНАМ. ХОУ УИ.
     
-    MY NUMBER THREE TIP. THANK YOU FOR READING!! IGOR CHEMISTRY
+    МОЙ СОВЕТ НОМЕР ТРИ. СПАСИБО ЗА ЧТЕНИЕ!! ИГОРЬ ХИМИЯ
     
-    CONCLUSION: IGOR CHEMISTRY
+    ЗАКЛЮЧЕНИЕ: ИГОРЬ ХИМИЯ
 book-text-botanics =
-    ** Applications of Botanical Specimens Found In Nanotrasen Territories **
+    ** Применение ботанических образцов, найденных на территориях Нанотрейзен **
     
-    Many plants, when ground, yield useful chemicals. S. (spessmens) papaver and S. aloe vera
-    are known for their basic healing properties.
+    Многие растения при измельчении дают полезные химические вещества. (Виды) мак и алое вера
+    известны своими основными лечебными свойствами.
     
-    S. lucidum, or lingzhi, is known for its potent ability to save those near death from toxins. Eating too much
-    is known to cause adverse effects.
+    Lucidum, или линчжи, известен своей мощной способностью спасать людей, близких к смерти, от токсинов. Употребление слишком большого количества
+    как известно, может привести к неблагоприятным последствиям.
     
-    S. amanita, a powerfully poisonous specimen (Rest In Peace Sir Alacaster), and S. galactica, a
-    seemingly ordinary antitoxin, appear to have some sort of relation to eachother.
+    Аманита, очень ядовитый образец (Земля пухом, сэр Алакастер), и галочертополох, сильный антитоксин, кажется, что они имеют какое-то отношение друг к другу.
     
-    Some research is being done on combinations of the medicinal plants discussed, and they may prove fruitful.
+    Исследования комбинаций обсуждаемых лекарственных растений уже ведутся, и они могут оказаться плодотворными.
     
     ----
     
-    - penned by James Alacaster and Golzuk Amaranth
+    - написанная Джеймсом Алакастером и Голзуком Амарантом
 book-text-gnome =
-    All Hail Our Gnome King
+    Да здраствует наш король гномов!
     
-    He who is the grand cartographer who placed our kind into the world of the Island!
+    Тот, кто является великим картографом, поместившим наш род на Остров!
     
-    He who loves those with the largest of Hats!
+    Тот, кто любит тех, у кого большия шляпы!
     
-    Struck down by the evildoers who cannot appreciate our kind!
+    Поражен злодеями, что не могут оценить наш род!
     
-    Our revenge will be dealt in full! He will Rise once more! hee Hoo!
+    Наша месть будет свершена сполна! Он восстанет вновь! Хи-хи-хи!
 book-text-fishing =
-    When I grow up, I want to be one of the harvesters of the space sea!
+    Когда я вырасту, я хочу стать одним из добытчиков космического моря!
     
-    I think before my days are done I want to catch the fabled space fish!
+    Думаю, до конца своих дней я хочу ловить сказочную космическую рыбу!
     
-    I'm like a little rat sailing the seas of cheese! The bastards come to end me but I am as sly as a cat and as lucky as they come!
+    Я как маленькая крыса, плывущая по сырному морю! Ублюдки приходят, чтобы покончить со мной, но я хитер, как кот, и удачлив, как они!
     
-    Press the <L BUMPER> and <R TRIGGER> to activate the fishing minigame.
+    Нажмите <L BUMPER> и <R TRIGGER>, чтобы активировать мини-игру "Рыбалка".
     
-    - Sgt. John Baker Aclopoly
+    - Сержант Джон Бейкер Аклополия
 book-text-detective =
-    CHAPTER 1: SMALL ADVENTURES IN A BIG STATION
+    ГЛАВА 1: МАЛЕНЬКИЕ ПРИКЛЮЧЕНИЯ НА БОЛЬШОЙ СТАНЦИИ
     
-    This station is filled with crime and grime...
+    Эта станция кишит преступностью и грязью...
     
-    I was shooting hoops down on Bagel when I heard a cry and a laser shot. I walked under the table nearby to hide, but there wasn't a second shot.
+    Я играл в обруч на Бублике, когда услышал крик и лазерный выстрел. Я залез под стол неподалеку, чтобы спрятаться, но второго выстрела не последовало.
     
-    Outside, the engineerin chief got blasted by two Syndies hooked up with some fierce contraband. There wasn't enough of him for an open casket funeral.
+    Снаружи старший инженер был взорван двумя Синди, прихватившими какую-то жуткую контрабанду. Его тела не хватило на похороны в открытом гробу.
     
-    Things always go wild here.. I'll never look at clowns the same.
+    Здесь всегда все идет наперекосяк... Я никогда не буду смотреть на клоунов так же.
     
-    The question is.. Who did it?
+    Но вопрос... Кто сделал это?
