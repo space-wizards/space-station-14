@@ -49,10 +49,11 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
         var enumerator = _stationRecordsSystem.GetRecordsOfType<GeneralStationRecord>(owningStation.Value, stationRecordsComponent);
 
-        var listing = new Dictionary<StationRecordKey, string>();
+        var listing = new Dictionary<StationRecordKey, RecordListingValue>();
         foreach (var pair in enumerator)
         {
-            listing.Add(pair.Item1, pair.Item2.Name);
+            RecordListingValue listingValue = new RecordListingValue(pair.Item2.Name, pair.Item2.Fingerprint);
+            listing.Add(pair.Item1, listingValue);
         }
 
         if (listing.Count == 0)
