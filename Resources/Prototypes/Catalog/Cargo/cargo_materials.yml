@@ -59,7 +59,7 @@
   group: market
 
 - type: cargoProduct
-  id: MaterialCardboard
+  id: CardboardMaterial
   icon:
     sprite: Objects/Materials/materials.rsi
     state: cardboard_3
