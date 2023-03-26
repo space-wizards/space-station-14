@@ -21,7 +21,7 @@
   - type: Access
     tags:
     - Chapel
-  - type: Mind
+  - type: MindContainer
     showExamineInfo: true
   - type: Alerts
   - type: Familiar
@@ -72,7 +72,7 @@
   - type: Access
     tags:
     - Chapel
-  - type: Mind
+  - type: MindContainer
     showExamineInfo: true
   - type: Familiar
   - type: Vocal

@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Tag;
@@ -21,7 +22,7 @@ namespace Content.Server.Bql
             {
                 return input.Where(e =>
                 {
-                    if (entityManager.TryGetComponent<MindComponent>(e, out var mind))
+                    if (entityManager.TryGetComponent<MindContainerComponent>(e, out var mind))
                         return (mind.Mind?.VisitingEntity == e) ^ isInverted;
 
                     return isInverted;
@@ -32,7 +33,7 @@ namespace Content.Server.Bql
             {
 
                 return DoSelection(
-                    entityManager.EntityQuery<MindComponent>().Select(x => x.Owner),
+                    entityManager.EntityQuery<MindContainerComponent>().Select(x => x.Owner),
                     arguments, isInverted, entityManager);
             }
         }
@@ -68,14 +69,16 @@ namespace Content.Server.Bql
 
             public override IEnumerable<EntityUid> DoSelection(IEnumerable<EntityUid> input, IReadOnlyList<object> arguments, bool isInverted, IEntityManager entityManager)
             {
+                var mindSystem = entityManager.System<MindSystem>();
                 return input.Where(e =>
-                    (entityManager.TryGetComponent<MindComponent>(e, out var mind) &&
-                    !(mind.Mind?.CharacterDeadPhysically ?? false)) ^ isInverted);
+                    entityManager.TryGetComponent<MindContainerComponent>(e, out var mind)
+                    && mind.Mind != null
+                    && !mindSystem.IsCharacterDeadPhysically(mind.Mind));
             }
 
             public override IEnumerable<EntityUid> DoInitialSelection(IReadOnlyList<object> arguments, bool isInverted, IEntityManager entityManager)
             {
-                return DoSelection(entityManager.EntityQuery<MindComponent>().Select(x => x.Owner), arguments,
+                return DoSelection(entityManager.EntityQuery<MindContainerComponent>().Select(x => x.Owner), arguments,
                     isInverted, entityManager);
             }
         }

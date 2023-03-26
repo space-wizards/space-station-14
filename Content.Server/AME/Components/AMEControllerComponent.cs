@@ -176,20 +176,20 @@ namespace Content.Server.AME.Components
             }
 
             // Logging
-            _entities.TryGetComponent(player, out MindComponent? mindComponent);
-            if (mindComponent != null)
+            _entities.TryGetComponent(player, out MindContainerComponent? mindContainerComponent);
+            if (mindContainerComponent != null)
             {
                 var humanReadableState = _injecting ? "Inject" : "Not inject";
 
                 if (msg.Button == UiButton.IncreaseFuel || msg.Button == UiButton.DecreaseFuel)
-                    _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{_entities.ToPrettyString(mindComponent.Owner):player} has set the AME to inject {InjectionAmount} while set to {humanReadableState}");
+                    _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{_entities.ToPrettyString(mindContainerComponent.Owner):player} has set the AME to inject {InjectionAmount} while set to {humanReadableState}");
 
                 if (msg.Button == UiButton.ToggleInjection)
-                    _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{_entities.ToPrettyString(mindComponent.Owner):player} has set the AME to {humanReadableState}");
+                    _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{_entities.ToPrettyString(mindContainerComponent.Owner):player} has set the AME to {humanReadableState}");
 
                 // Admin alert
                 if (GetCoreCount() * 2 == InjectionAmount - 2 && msg.Button == UiButton.IncreaseFuel)
-                    _chat.SendAdminAlert(player, $"increased AME over safe limit to {InjectionAmount}", mindComponent);
+                    _chat.SendAdminAlert(player, $"increased AME over safe limit to {InjectionAmount}", mindContainerComponent);
             }
 
             GetAMENodeGroup()?.UpdateCoreVisuals();

@@ -2,6 +2,7 @@ using Content.Server.Actions;
 using Content.Server.Buckle.Systems;
 using Content.Server.Humanoid;
 using Content.Server.Inventory;
+using Content.Server.Mind;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Polymorph.Components;
@@ -40,6 +41,7 @@ namespace Content.Server.Polymorph.Systems
         [Dependency] private readonly SharedHandsSystem _hands = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
+        [Dependency] private readonly MindSystem _mindSystem = default!;
 
         private readonly ISawmill _saw = default!;
 
@@ -195,8 +197,8 @@ namespace Content.Server.Polymorph.Systems
                 _humanoid.CloneAppearance(uid, child);
             }
 
-            if (TryComp<MindComponent>(uid, out var mind) && mind.Mind != null)
-                    mind.Mind.TransferTo(child);
+            if (_mindSystem.TryGetMind(uid, out var mind))
+                _mindSystem.TransferTo(mind, child);
 
             //Ensures a map to banish the entity to
             EnsurePausesdMap();
@@ -272,10 +274,8 @@ namespace Content.Server.Polymorph.Systems
                 }
             }
 
-            if (TryComp<MindComponent>(uid, out var mind) && mind.Mind != null)
-            {
-                mind.Mind.TransferTo(parent);
-            }
+            if (_mindSystem.TryGetMind(uid, out var mind))
+                _mindSystem.TransferTo(mind, parent);
 
             _popup.PopupEntity(Loc.GetString("polymorph-revert-popup-generic",
                 ("parent", Identity.Entity(uid, EntityManager)),

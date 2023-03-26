@@ -48,6 +48,6 @@ public sealed partial class DefaultGameScreen : InGameScreen
     {
         SetMarginBottom(Chat, size.X);
         SetMarginLeft(Chat, size.Y);
-        SetMarginTop(Alerts, Size.X);
+        SetMarginTop(Alerts, size.X);
     }
 }
