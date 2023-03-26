@@ -199,7 +199,7 @@ uplink-nocturine-chemistry-bottle-name = Nocturine Bottle
 uplink-nocturine-chemistry-bottle-desc = A chemical that makes it very hard for your target to stand up.
 
 uplink-poison-pill-name = Poison Pill
-uplink-poison-pill-desc = An lethal, unlabeled pill containing lexorin and nocturine which lulls victims into a sleep while the lexorin works away. The victim has around 4 seconds to react before death.
+uplink-poison-pill-desc = A lethal, unlabeled pill containing lexorin and nocturine which lulls victims into a sleep while the lexorin works away. The victim has around 4 seconds to react before death.
 
 uplink-stimpack-name = Stimpack
 uplink-stimpack-desc = The legendary chemical produced by Donk Co. for the Syndicate. Injecting yourself with this will increase your run speed and let you recover from stuns faster for 5 minutes.
