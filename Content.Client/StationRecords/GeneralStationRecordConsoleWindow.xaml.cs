@@ -103,15 +103,14 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 
         foreach ((StationRecordKey key, RecordListingValue value) in listing)
         {
-            string name = value.name;
-            string fingerPrint = value.fingerPrint;
-            // Logger.Debug("+++++++++++++++++++++++++++++++++++++++++++++++++++++");
-            // Logger.Debug($"list passangers in record listining {name}, {fingerPrint}");
-            // Logger.Debug($"filter for fingerPrints {_fingerPrintsFilter}");
+            if (_fingerPrintsFilter.Length > 0 && !CheckFingerPrint(value.fingerPrint)) {
+                continue;
+            }
 
-            var item = RecordListing.AddItem(name);
+            string personalName = value.name;
+
+            var item = RecordListing.AddItem(personalName);
             item.Metadata = key;
-
             if (selected != null && key.ID == selected.Value.ID)
             {
                 item.Selected = true;
@@ -166,8 +165,13 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
     {
         if (_state != null)
         {
-            _fingerPrintsFilter = fingerPrints;
+            _fingerPrintsFilter = fingerPrints.ToLower();
             UpdateState(_state, false);
         }
+    }
+    private bool CheckFingerPrint(string print = "") {
+        string lowerCasePrints = print.ToLower();
+        Logger.Debug($"print {lowerCasePrints}, savePrint {_fingerPrintsFilter}");
+        return lowerCasePrints.StartsWith(_fingerPrintsFilter);
     }
 }
