@@ -54,7 +54,7 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         {
             if (_timing.CurTime > component.EffectCooldown)
             {
-                RaiseNetworkEvent(new PlayBoxEffectMessage(uid, component.Mover.Value), Filter.PvsExcept(uid));
+                RaiseNetworkEvent(new PlayBoxEffectMessage(uid, component.Mover.Value));
                 _audio.PlayPvs(component.EffectSound, uid);
                 component.EffectCooldown = _timing.CurTime + CardboardBoxComponent.MaxEffectCooldown;
             }
