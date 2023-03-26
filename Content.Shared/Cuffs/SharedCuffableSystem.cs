@@ -28,18 +28,16 @@ using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Cuffs
 {
     public abstract class SharedCuffableSystem : EntitySystem
     {
-        [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-        [Dependency] private readonly AlertsSystem _alerts = default!;
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
-        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly INetManager _net = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
+        [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+        [Dependency] private readonly AlertsSystem _alerts = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
@@ -268,7 +266,7 @@ namespace Content.Shared.Cuffs
             if (!args.HitEntities.Any())
                 return;
 
-            TryCuffing(uid, args.User, args.HitEntities.First(), component);
+            TryCuffing(args.User, args.HitEntities.First(), uid, component);
             args.Handled = true;
         }
 
