@@ -227,6 +227,22 @@
         - ReagentId: Romerol
           Quantity: 10
 
+- type: entity
+  name: pill
+  parent: Pill
+  id: PillPoison
+  suffix: Poison
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Lexorin
+          Quantity: 10
+        - ReagentId: Nocturine
+          Quantity: 10
+
 # Syringes
 - type: entity
   name: ephedrine syringe
