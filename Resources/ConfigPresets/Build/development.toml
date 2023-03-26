@@ -1,6 +1,8 @@
 ﻿[game]
 # Straight in-game baby
 lobbyenabled = false
+# Dev map for faster loading & convenience
+map = "Dev"
 
 [physics]
 # Makes mapping annoying
@@ -14,3 +16,4 @@ preload = false
 auto_call_time = 0
 cargo = false
 emergency_enabled = false
+arrivals = false

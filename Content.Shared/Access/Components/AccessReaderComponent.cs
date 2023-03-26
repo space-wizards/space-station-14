@@ -14,6 +14,13 @@ namespace Content.Shared.Access.Components;
 public sealed class AccessReaderComponent : Component
 {
     /// <summary>
+    /// Whether or not the accessreader is enabled.
+    /// If not, it will always let people through.
+    /// </summary>
+    [DataField("enabled")]
+    public bool Enabled = true;
+
+    /// <summary>
     ///     The set of tags that will automatically deny an allowed check, if any of them are present.
     /// </summary>
     [DataField("denyTags", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AccessLevelPrototype>))]
@@ -36,14 +43,17 @@ public sealed class AccessReaderComponent : Component
 [Serializable, NetSerializable]
 public sealed class AccessReaderComponentState : ComponentState
 {
+    public bool Enabled;
+
     public HashSet<string> DenyTags;
 
     public List<HashSet<string>> AccessLists;
 
     public HashSet<StationRecordKey> AccessKeys;
 
-    public AccessReaderComponentState(HashSet<string> denyTags, List<HashSet<string>> accessLists, HashSet<StationRecordKey> accessKeys)
+    public AccessReaderComponentState(bool enabled, HashSet<string> denyTags, List<HashSet<string>> accessLists, HashSet<StationRecordKey> accessKeys)
     {
+        Enabled = enabled;
         DenyTags = denyTags;
         AccessLists = accessLists;
         AccessKeys = accessKeys;

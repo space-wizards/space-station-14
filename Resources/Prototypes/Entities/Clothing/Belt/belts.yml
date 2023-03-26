@@ -450,7 +450,6 @@
     whitelist:
       components:
         - Gun
-        - MeleeWeapon
         - BallisticAmmoProvider
         - CartridgeAmmo
 

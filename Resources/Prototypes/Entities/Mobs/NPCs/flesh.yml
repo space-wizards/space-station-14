@@ -37,7 +37,7 @@
     - id: FoodMeat
       amount: 1
   - type: Bloodstream
-    bloodMaxVolume: 500
+    bloodMaxVolume: 100
   - type: CombatMode
     disarmAction:
       enabled: false

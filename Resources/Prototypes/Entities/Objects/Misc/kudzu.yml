@@ -130,11 +130,12 @@
           acts: [ "Destruction" ]
     - type: Spreader
       growthResult: FleshKudzu
-      chance: 0.5
+      chance: 0.2
     - type: DamageContacts
       damage:
         types:
           Slash: 1.5
+          Piercing: 1.5
       ignoreWhitelist:
         tags:
         - Flesh
