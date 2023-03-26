@@ -766,6 +766,16 @@
   - UplinkMisc
 
 - type: listing
+  id: UplinkPoisonPill
+  name: uplink-poison-pill-name
+  description: uplink-poison-pill-desc
+  productEntity: PillPoison
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkMisc
+
+- type: listing
   id: UplinkStimpack
   name: uplink-stimpack-name
   description: uplink-stimpack-desc
