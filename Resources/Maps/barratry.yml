@@ -56763,7 +56763,7 @@ entities:
     description: Alas poor Yorick...
     name: captain's skull
     type: GhostTakeoverAvailable
-  - type: Mind
+  - type: MindContainer
   - type: InputMover
   - type: MobMover
   - type: MovementAlwaysTouching

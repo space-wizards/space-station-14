@@ -1,4 +1,5 @@
 ﻿using Content.Server.Administration;
+using Content.Server.Mind;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.Roles;
@@ -12,6 +13,7 @@ namespace Content.Server.Roles
     public sealed class RemoveRoleCommand : IConsoleCommand
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public string Command => "rmrole";
 
@@ -43,7 +45,8 @@ namespace Content.Server.Roles
             }
 
             var role = new Job(mind, _prototypeManager.Index<JobPrototype>(args[1]));
-            mind.RemoveRole(role);
+            var mindSystem = _entityManager.System<MindSystem>();
+            mindSystem.RemoveRole(mind, role);
         }
     }
 }

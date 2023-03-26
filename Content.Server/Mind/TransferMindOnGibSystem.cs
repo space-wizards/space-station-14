@@ -15,6 +15,7 @@ public sealed class TransferMindOnGibSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly MindSystem _mindSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -24,7 +25,7 @@ public sealed class TransferMindOnGibSystem : EntitySystem
 
     private void OnGib(EntityUid uid, TransferMindOnGibComponent component, BeingGibbedEvent args)
     {
-        if (!TryComp<MindComponent>(uid, out var mindcomp) || mindcomp.Mind == null)
+        if (!TryComp<MindContainerComponent>(uid, out var mindcomp) || mindcomp.Mind == null)
             return;
 
         var validParts = args.GibbedParts.Where(p => _tag.HasTag(p, component.TargetTag)).ToHashSet();
@@ -32,6 +33,6 @@ public sealed class TransferMindOnGibSystem : EntitySystem
             return;
 
         var ent = _random.Pick(validParts);
-        mindcomp.Mind.TransferTo(ent);
+        _mindSystem.TransferTo(mindcomp.Mind, ent);
     }
 }

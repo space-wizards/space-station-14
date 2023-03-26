@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Administration.Commands;
 using Content.Server.Cargo.Systems;
 using Content.Server.Chat.Managers;
+using Content.Server.Mind;
 using Content.Server.Preferences.Managers;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
@@ -38,6 +39,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem
     [Dependency] private readonly PricingSystem _pricingSystem = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly NamingSystem _namingSystem = default!;
+    [Dependency] private readonly MindSystem _mindSystem = default!;
 
     [ViewVariables]
     private List<Mind.Mind> _pirates = new();
@@ -206,16 +208,13 @@ public sealed class PiratesRuleSystem : GameRuleSystem
             var name = _namingSystem.GetName("Human", gender);
 
             var session = ops[i];
-            var newMind = new Mind.Mind(session.UserId)
-            {
-                CharacterName = name
-            };
-            newMind.ChangeOwningPlayer(session.UserId);
+            var newMind = _mindSystem.CreateMind(session.UserId, name);
+            _mindSystem.ChangeOwningPlayer(newMind, session.UserId);
 
             var mob = Spawn("MobHuman", _random.Pick(spawns));
             MetaData(mob).EntityName = name;
 
-            newMind.TransferTo(mob);
+            _mindSystem.TransferTo(newMind, mob);
             var profile = _prefs.GetPreferences(session.UserId).SelectedCharacter as HumanoidCharacterProfile;
             _stationSpawningSystem.EquipStartingGear(mob, pirateGear, profile);
 
