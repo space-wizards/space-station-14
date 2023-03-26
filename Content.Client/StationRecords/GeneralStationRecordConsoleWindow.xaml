@@ -3,10 +3,10 @@
                MinSize="750 500">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Margin="5" HorizontalExpand="true" VerticalAlignment="Center">
-            <LineEdit Name="RecordListinFingerInput"
+            <LineEdit Name="RecordListinFingerPrintsLine"
                 PlaceHolder="{Loc 'set-fingerprint-code'}" HorizontalExpand="True"/>
-            <Button Name="RecordListingFilter" Text="{Loc Filter}"/>
-            <Button Name="RecordListingFilterReset" Text="{Loc Reset}"/>
+            <Button Name="RecordListingFingerPrintsFilter" Text="{Loc Filter}"/>
+            <Button Name="RecordListingFingerPrintsReset" Text="{Loc Reset}"/>
         </BoxContainer>
         <BoxContainer VerticalExpand="True">
             <!-- Record listing -->

@@ -33,6 +33,7 @@ public struct RecordListingValue
         name = personName;
     }
 }
+[Serializable, NetSerializable]
 public sealed class GeneralStationRecordConsoleState : BoundUserInterfaceState
 {
     /// <summary>

@@ -12,7 +12,12 @@ namespace Content.Client.StationRecords;
 public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 {
     public Action<StationRecordKey?>? OnKeySelected;
+
     private bool _isPopulating;
+
+    private string _fingerPrintsFilter = "";
+
+    private GeneralStationRecordConsoleState? _state;
 
     public GeneralStationRecordConsoleWindow()
     {
@@ -33,9 +38,24 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
             if (!_isPopulating)
                 OnKeySelected?.Invoke(null);
         };
+
+        RecordListingFingerPrintsFilter.OnPressed += _ =>
+        {
+            string fingerPrints = RecordListinFingerPrintsLine.Text;
+            if (fingerPrints.Length > 0 && fingerPrints != _fingerPrintsFilter)
+            {
+                FilterRecordListingForFingerPrints(fingerPrints);
+            }
+        };
+
+        RecordListingFingerPrintsReset.OnPressed += _ =>
+        {
+            RecordListinFingerPrintsLine.Text = "";
+            FilterRecordListingForFingerPrints("");
+        };
     }
 
-    public void UpdateState(GeneralStationRecordConsoleState state)
+    public void UpdateState(GeneralStationRecordConsoleState state, bool setState = true)
     {
         if (state.RecordListing == null)
         {
@@ -45,8 +65,14 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
             return;
         }
 
+        if (setState)
+        {
+            _state = state;
+        }
+
         RecordListingStatus.Visible = false;
         RecordListing.Visible = true;
+
         PopulateRecordListing(state.RecordListing!, state.SelectedKey);
 
         RecordContainerStatus.Visible = state.Record == null;
@@ -66,14 +92,23 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
         }
     }
 
-    private void PopulateRecordListing(Dictionary<StationRecordKey, string> listing, StationRecordKey? selected)
+    private void PopulateRecordListing(Dictionary<StationRecordKey, RecordListingValue> listing, StationRecordKey? selected)
     {
         RecordListing.Clear();
         RecordListing.ClearSelected();
 
         _isPopulating = true;
-        foreach (var (key, name) in listing)
+
+        Logger.Debug($"filter for fingerPrints ++++++ {_fingerPrintsFilter}");
+
+        foreach ((StationRecordKey key, RecordListingValue value) in listing)
         {
+            string name = value.name;
+            string fingerPrint = value.fingerPrint;
+            // Logger.Debug("+++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            // Logger.Debug($"list passangers in record listining {name}, {fingerPrint}");
+            // Logger.Debug($"filter for fingerPrints {_fingerPrintsFilter}");
+
             var item = RecordListing.AddItem(name);
             item.Metadata = key;
 
@@ -125,6 +160,14 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
         foreach (var control in recordControls)
         {
             RecordContainer.AddChild(control);
+        }
+    }
+    private void FilterRecordListingForFingerPrints(string fingerPrints)
+    {
+        if (_state != null)
+        {
+            _fingerPrintsFilter = fingerPrints;
+            UpdateState(_state, false);
         }
     }
 }

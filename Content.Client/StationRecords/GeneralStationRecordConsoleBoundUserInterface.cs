@@ -34,7 +34,6 @@ public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInt
         {
             return;
         }
-
         _window?.UpdateState(cast);
     }
 
