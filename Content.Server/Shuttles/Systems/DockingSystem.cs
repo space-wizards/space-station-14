@@ -25,7 +25,7 @@ namespace Content.Server.Shuttles.Systems
         [Dependency] private readonly ShuttleConsoleSystem _console = default!;
         [Dependency] private readonly SharedJointSystem _jointSystem = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         private ISawmill _sawmill = default!;
         private const string DockingFixture = "docking";

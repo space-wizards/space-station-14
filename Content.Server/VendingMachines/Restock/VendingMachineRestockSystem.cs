@@ -1,11 +1,11 @@
 using System.Linq;
 using Content.Server.Cargo.Systems;
 using Content.Server.DoAfter;
-using Content.Server.Wires;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.VendingMachines;
+using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -35,7 +35,7 @@ namespace Content.Server.VendingMachines.Restock
             EntityUid user,
             EntityUid target)
         {
-            if (!TryComp<WiresComponent>(target, out var wires) || !wires.IsPanelOpen)
+            if (!TryComp<WiresPanelComponent>(target, out var panel) || !panel.Open)
             {
                 _popupSystem.PopupCursor(Loc.GetString("vending-machine-restock-needs-panel-open",
                         ("this", uid),

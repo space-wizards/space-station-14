@@ -153,10 +153,13 @@ public sealed partial class MeleeWeaponSystem
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0.05f, 0.15f), FadeAnimationKey);
                 break;
             case WeaponArcAnimation.None:
-                var (mapPos, mapRot) = _transform.GetWorldPositionRotation(userXform, GetEntityQuery<TransformComponent>());
-                var xform = Transform(animationUid);
+                var xformQuery = GetEntityQuery<TransformComponent>();
+                var (mapPos, mapRot) = _transform.GetWorldPositionRotation(userXform, xformQuery);
+                var xform = xformQuery.GetComponent(animationUid);
                 xform.AttachToGridOrMap();
-                _transform.SetWorldPosition(xform, mapPos + (mapRot - userXform.LocalRotation).RotateVec(localPos));
+                var worldPos = mapPos + (mapRot - userXform.LocalRotation).RotateVec(localPos);
+                var newLocalPos = _transform.GetInvWorldMatrix(xform.ParentUid, xformQuery).Transform(worldPos);
+                _transform.SetLocalPositionNoLerp(xform, newLocalPos);
                 if (arcComponent.Fadeout)
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0f, 0.15f), FadeAnimationKey);
                 break;
