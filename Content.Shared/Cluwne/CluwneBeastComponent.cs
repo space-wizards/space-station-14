@@ -38,12 +38,6 @@ public sealed class CluwneBeastComponent : Component
     public float ParalyzeTime = 2f;
 
     /// <summary>
-    /// Spawner for mysterious portal.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("blueSpaceId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string BlueSpaceId = "PortalGreen";
-
-    /// <summary>
     /// Sound specifiers for honk and knock.
     /// </summary>
     [DataField("spawnsound")]
@@ -59,5 +53,4 @@ public sealed class CluwneBeastComponent : Component
 
     [DataField("cluwneRoleId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
     public readonly string CluwneRoleId = "Cluwne Beast";
-
 }
