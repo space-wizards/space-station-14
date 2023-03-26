@@ -538,7 +538,7 @@
     - map: ["computerLayerKeys"]
       state: syndie_key
   - type: AccessReader
-    access: [[ "NuclearOperative" ]]
+    access: [[ "NuclearOperativeComander" ]]
   - type: CommunicationsConsole
     title: comms-console-announcement-title-nukie
     color: "#ff0000"

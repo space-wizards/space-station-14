@@ -491,6 +491,19 @@
 
 - type: entity
   parent: IDCardStandard
+  id: SyndicateComanderIDCard
+  name: Syndicate comander ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: syndie
+  - type: Access
+    tags:
+    - NuclearOperativeComander
+    - NuclearOperative
+
+- type: entity
+  parent: IDCardStandard
   id: SyndicateIDCard
   name: Syndicate ID card
   components:

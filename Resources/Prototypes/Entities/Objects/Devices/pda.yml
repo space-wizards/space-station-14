@@ -603,6 +603,18 @@
 
 - type: entity
   parent: BasePDA
+  id: SyndiComPDA
+  name: comander syndicate PDA
+  description: Ok, time to be a productive member of- oh cool I'm a bad guy time to kill people!
+  components:
+  - type: PDA
+    id: SyndicateComanderIDCard
+    state: pda-syndi
+  - type: Icon
+    state: pda-syndi
+
+- type: entity
+  parent: BasePDA
   id: SyndiPDA
   name: syndicate PDA
   description: Ok, time to be a productive member of- oh cool I'm a bad guy time to kill people!

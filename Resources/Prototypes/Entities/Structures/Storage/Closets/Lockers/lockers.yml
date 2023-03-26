@@ -291,6 +291,21 @@
   - type: AccessReader
     access: [["HeadOfSecurity"]]
 
+# Armory
+- type: entity
+  id: LockerArmory
+  parent: LockerBaseSecure
+  name: armory locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: armory
+      state_open: armory_open
+      state_closed: armory_door
+  - type: AccessReader
+    access: [["Armory"]]
+
 # Warden
 - type: entity
   id: LockerWarden
@@ -343,7 +358,7 @@
 # Syndicate
 - type: entity
   id: LockerSyndicatePersonal
-  name: armory closet
+  name: operative closet
   parent: LockerBaseSecure
   description: It's a personal storage unit for operative gear.
   components:
@@ -353,6 +368,8 @@
       state: syndicate
       state_open: syndicate_open
       state_closed: syndicate_door
+  - type: AccessReader
+    access: [["NuclearOperative"]]
 
 # Bluespace
 - type: entity

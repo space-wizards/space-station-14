@@ -771,3 +771,20 @@
   components:
   - type: AccessReader
     access: [["Armory"]]
+
+# Syndicate
+- type: entity
+  parent: AirlockSyndicate
+  id: AirlockSyndicateLocked
+  suffix: Syndicate, Locked
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
+
+- type: entity
+  parent: AirlockSyndicate
+  id: AirlockSyndicateExternal
+  suffix: Syndicate
+  components:
+  - type: AccessReader
+    access: [["External"]]
