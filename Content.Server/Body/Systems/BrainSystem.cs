@@ -1,6 +1,5 @@
 using Content.Server.Body.Components;
 using Content.Server.Ghost.Components;
-using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
@@ -11,8 +10,6 @@ namespace Content.Server.Body.Systems
 {
     public sealed class BrainSystem : EntitySystem
     {
-        [Dependency] private readonly MindSystem _mindSystem = default!;
-        
         public override void Initialize()
         {
             base.Initialize();
@@ -37,8 +34,8 @@ namespace Content.Server.Body.Systems
 
         private void HandleMind(EntityUid newEntity, EntityUid oldEntity)
         {
-            EntityManager.EnsureComponent<MindContainerComponent>(newEntity);
-            var oldMind = EntityManager.EnsureComponent<MindContainerComponent>(oldEntity);
+            EntityManager.EnsureComponent<MindComponent>(newEntity);
+            var oldMind = EntityManager.EnsureComponent<MindComponent>(oldEntity);
 
             EnsureComp<GhostOnMoveComponent>(newEntity);
             if (HasComp<BodyComponent>(newEntity))
@@ -47,10 +44,7 @@ namespace Content.Server.Body.Systems
             // TODO: This is an awful solution.
             EnsureComp<InputMoverComponent>(newEntity);
 
-            if (!_mindSystem.TryGetMind(oldEntity, out var mind, oldMind))
-                return;
-            
-            _mindSystem.TransferTo(mind, newEntity);
+            oldMind.Mind?.TransferTo(newEntity);
         }
     }
 }
