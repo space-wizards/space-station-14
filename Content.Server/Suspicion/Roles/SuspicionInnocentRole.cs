@@ -1,5 +1,4 @@
 using Content.Server.Chat.Managers;
-using Content.Server.Mind;
 using Content.Shared.Roles;
 
 namespace Content.Server.Suspicion.Roles
@@ -24,10 +23,8 @@ namespace Content.Server.Suspicion.Roles
             base.Greet();
 
             var chat = IoCManager.Resolve<IChatManager>();
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var mindSystem = entityManager.System<MindSystem>();
 
-            if (mindSystem.TryGetSession(Mind, out var session))
+            if (Mind.TryGetSession(out var session))
             {
                 chat.DispatchServerMessage(session, $"You're an {Name}!");
                 chat.DispatchServerMessage(session, $"Objective: {Objective}");

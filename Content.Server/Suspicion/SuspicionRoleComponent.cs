@@ -67,13 +67,13 @@ namespace Content.Server.Suspicion
 
         public void SyncRoles()
         {
-            if (!_entMan.TryGetComponent(Owner, out MindContainerComponent? mind) ||
+            if (!_entMan.TryGetComponent(Owner, out MindComponent? mind) ||
                 !mind.HasMind)
             {
                 return;
             }
 
-            Role = mind.Mind.AllRoles.First(role => role is SuspicionRole);
+            Role = mind.Mind!.AllRoles.First(role => role is SuspicionRole);
         }
 
         public void AddAlly(SuspicionRoleComponent ally)

@@ -28,7 +28,7 @@ public sealed partial class AdminVerbSystem
         if (!_adminManager.HasAdminFlag(player, AdminFlags.Fun))
             return;
 
-        var targetHasMind = TryComp(args.Target, out MindContainerComponent? targetMindComp);
+        var targetHasMind = TryComp(args.Target, out MindComponent? targetMindComp);
         if (!targetHasMind || targetMindComp == null)
             return;
 
@@ -56,7 +56,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Structures/Wallmounts/signs.rsi"), "bio"),
             Act = () =>
             {
-                TryComp(args.Target, out MindContainerComponent? mindComp);
+                TryComp(args.Target, out MindComponent? mindComp);
                 if (mindComp == null || mindComp.Mind == null)
                     return;
 

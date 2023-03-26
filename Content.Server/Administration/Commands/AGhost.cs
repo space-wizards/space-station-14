@@ -1,6 +1,5 @@
 ﻿using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
-using Content.Server.Mind;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.Ghost;
@@ -34,12 +33,10 @@ namespace Content.Server.Administration.Commands
                 shell.WriteLine("You can't ghost here!");
                 return;
             }
-            
-            var mindSystem = _entities.System<MindSystem>();
 
             if (mind.VisitingEntity != default && _entities.HasComponent<GhostComponent>(mind.VisitingEntity))
             {
-                mindSystem.UnVisit(mind);
+                player.ContentData()!.Mind?.UnVisit();
                 return;
             }
 
@@ -59,12 +56,12 @@ namespace Content.Server.Administration.Commands
                 else if (!string.IsNullOrWhiteSpace(mind.Session?.Name))
                     _entities.GetComponent<MetaDataComponent>(ghost).EntityName = mind.Session.Name;
 
-                mindSystem.Visit(mind, ghost);
+                mind.Visit(ghost);
             }
             else
             {
                 _entities.GetComponent<MetaDataComponent>(ghost).EntityName = player.Name;
-                mindSystem.TransferTo(mind, ghost);
+                mind.TransferTo(ghost);
             }
 
             var comp = _entities.GetComponent<GhostComponent>(ghost);

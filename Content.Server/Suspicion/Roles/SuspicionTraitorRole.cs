@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Server.Chat.Managers;
-using Content.Server.Mind;
 using Content.Shared.Roles;
 
 namespace Content.Server.Suspicion.Roles
@@ -22,10 +21,7 @@ namespace Content.Server.Suspicion.Roles
 
         public void GreetSuspicion(List<SuspicionTraitorRole> traitors, IChatManager chatMgr)
         {
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var mindSystem = entityManager.System<MindSystem>();
-            
-            if (mindSystem.TryGetSession(Mind, out var session))
+            if (Mind.TryGetSession(out var session))
             {
                 chatMgr.DispatchServerMessage(session, Loc.GetString("suspicion-role-greeting", ("roleName", Name)));
                 chatMgr.DispatchServerMessage(session, Loc.GetString("suspicion-objective", ("objectiveText", Objective)));

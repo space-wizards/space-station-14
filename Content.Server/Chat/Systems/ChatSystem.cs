@@ -497,9 +497,9 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (player == null)
             return true;
 
-        var mindContainerComponent = player.ContentData()?.Mind;
+        var mindComponent = player.ContentData()?.Mind;
 
-        if (mindContainerComponent == null)
+        if (mindComponent == null)
         {
             shell?.WriteError("You don't have a mind!");
             return false;

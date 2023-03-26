@@ -4,7 +4,6 @@ using Content.Server.Body.Components;
 using Content.Server.GameTicking;
 using Content.Server.Humanoid;
 using Content.Server.Kitchen.Components;
-using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
@@ -29,7 +28,6 @@ public sealed class BodySystem : SharedBodySystem
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly MindSystem _mindSystem = default!;
 
     public override void Initialize()
     {
@@ -42,14 +40,16 @@ public sealed class BodySystem : SharedBodySystem
 
     private void OnRelayMoveInput(EntityUid uid, BodyComponent component, ref MoveInputEvent args)
     {
-        if (_mobState.IsDead(uid) && _mindSystem.TryGetMind(uid, out var mind))
+        if (_mobState.IsDead(uid) &&
+            EntityManager.TryGetComponent<MindComponent>(uid, out var mind) &&
+            mind.HasMind)
         {
-            if (!mind.TimeOfDeath.HasValue)
+            if (!mind.Mind!.TimeOfDeath.HasValue)
             {
-                mind.TimeOfDeath = _gameTiming.RealTime;
+                mind.Mind.TimeOfDeath = _gameTiming.RealTime;
             }
 
-            _ticker.OnGhostAttempt(mind, true);
+            _ticker.OnGhostAttempt(mind.Mind!, true);
         }
     }
 

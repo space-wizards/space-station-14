@@ -19,7 +19,6 @@ using Content.Server.Construction;
 using Content.Server.Materials;
 using Content.Server.Stack;
 using Content.Server.Jobs;
-using Content.Server.Mind;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Zombies;
@@ -55,7 +54,6 @@ namespace Content.Server.Cloning
         [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly MaterialStorageSystem _material = default!;
-        [Dependency] private readonly MindSystem _mindSystem = default!;
 
         public readonly Dictionary<Mind.Mind, EntityUid> ClonesWaitingForMind = new();
         public const float EasyModeCloningCost = 0.7f;
@@ -99,12 +97,12 @@ namespace Content.Server.Cloning
         {
             if (!ClonesWaitingForMind.TryGetValue(mind, out var entity) ||
                 !EntityManager.EntityExists(entity) ||
-                !TryComp<MindContainerComponent>(entity, out var mindComp) ||
+                !TryComp<MindComponent>(entity, out var mindComp) ||
                 mindComp.Mind != null)
                 return;
 
-            _mindSystem.TransferTo(mind, entity, ghostCheckOverride: true);
-            _mindSystem.UnVisit(mind);
+            mind.TransferTo(entity, ghostCheckOverride: true);
+            mind.UnVisit();
             ClonesWaitingForMind.Remove(mind);
         }
 
@@ -159,7 +157,7 @@ namespace Content.Server.Cloning
             {
                 if (EntityManager.EntityExists(clone) &&
                     !_mobStateSystem.IsDead(clone) &&
-                    TryComp<MindContainerComponent>(clone, out var cloneMindComp) &&
+                    TryComp<MindComponent>(clone, out var cloneMindComp) &&
                     (cloneMindComp.Mind == null || cloneMindComp.Mind == mind))
                     return false; // Mind already has clone
 
