@@ -170,51 +170,45 @@ namespace Content.IntegrationTests.Tests
 
             var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
             var mapManager = server.ResolveDependency<IMapManager>();
-
-            MapId mapAId = default;
-            MapId mapBId = default;
-
-            // Load the first map
-            server.Post(() =>
-            {
-                mapAId = mapManager.CreateMap();
-                mapManager.AddUninitializedMap(mapAId);
-                mapManager.SetMapPaused(mapAId, true);
-                mapLoader.LoadMap(mapAId, TestMap);
-            });
-
-            server.RunTicks(5);
-
-            // Load the second map
-            server.Post(() =>
-            {
-                mapBId = mapManager.CreateMap();
-                mapManager.AddUninitializedMap(mapBId);
-                mapManager.SetMapPaused(mapBId, true);
-                mapLoader.LoadMap(mapBId, TestMap);
-            });
-
-            const string fileA = "/load tick load a.yml";
-            const string fileB = "/load tick load b.yml";
-
-            // Save both maps
-            await server.WaitPost(() =>
-            {
-                mapLoader.SaveMap(mapAId, fileA);
-                mapLoader.SaveMap(mapBId, fileB);
-            });
-
-            await server.WaitIdleAsync();
             var userData = server.ResolveDependency<IResourceManager>().UserData;
 
+            MapId mapId = default;
+            const string fileA = "/load tick load a.yml";
+            const string fileB = "/load tick load b.yml";
             string yamlA;
             string yamlB;
 
+            // Load & save the first map
+            server.Post(() =>
+            {
+                mapId = mapManager.CreateMap();
+                mapManager.AddUninitializedMap(mapId);
+                mapManager.SetMapPaused(mapId, true);
+                mapLoader.LoadMap(mapId, TestMap);
+                mapLoader.SaveMap(mapId, fileA);
+            });
+
+            await server.WaitIdleAsync();
             await using (var stream = userData.Open(new ResourcePath(fileA), FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
                 yamlA = await reader.ReadToEndAsync();
             }
+
+            server.RunTicks(5);
+
+            // Load & save the second map
+            server.Post(() =>
+            {
+                mapManager.DeleteMap(mapId);
+                mapManager.CreateMap(mapId);
+                mapManager.AddUninitializedMap(mapId);
+                mapManager.SetMapPaused(mapId, true);
+                mapLoader.LoadMap(mapId, TestMap);
+                mapLoader.SaveMap(mapId, fileB);
+            });
+
+            await server.WaitIdleAsync();
 
             await using (var stream = userData.Open(new ResourcePath(fileB), FileMode.Open))
             using (var reader = new StreamReader(stream))
@@ -224,12 +218,7 @@ namespace Content.IntegrationTests.Tests
 
             Assert.That(yamlA, Is.EqualTo(yamlB));
 
-            await server.WaitPost(() =>
-            {
-                mapManager.DeleteMap(mapAId);
-                mapManager.DeleteMap(mapBId);
-            });
-
+            await server.WaitPost(() => mapManager.DeleteMap(mapId));
             await pairTracker.CleanReturnAsync();
         }
     }

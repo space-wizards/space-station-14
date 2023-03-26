@@ -9373,9 +9373,6 @@ entities:
   - nextUpdate: 8187.135845
     type: GridPathfinding
   - type: RadiationGridResistance
-  - nextShake: 0
-    shakeTimes: 10
-    type: GravityShake
   - type: GasTileOverlay
 - uid: 61
   type: GasVentScrubber
