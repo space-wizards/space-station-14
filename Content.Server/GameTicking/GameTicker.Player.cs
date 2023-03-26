@@ -8,6 +8,7 @@ using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using PlayerData = Content.Server.Players.PlayerData;
 
 namespace Content.Server.GameTicking
 {

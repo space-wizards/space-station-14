@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Mind;
-using Content.Shared.Coordinates;
 using NUnit.Framework;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -10,7 +9,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
-namespace Content.IntegrationTests.Tests
+namespace Content.IntegrationTests.Tests.Minds
 {
     // Tests various scenarios of deleting the entity that a player's mind is connected to.
     [TestFixture]
@@ -26,6 +25,8 @@ namespace Content.IntegrationTests.Tests
             var playerMan = server.ResolveDependency<IPlayerManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
 
+            var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
+
             EntityUid playerEnt = default;
             EntityUid visitEnt = default;
             Mind mind = null;
@@ -39,11 +40,9 @@ namespace Content.IntegrationTests.Tests
                 playerEnt = entMan.SpawnEntity(null, pos);
                 visitEnt = entMan.SpawnEntity(null, pos);
 
-                mind = new Mind(player.UserId);
-                mind.ChangeOwningPlayer(player.UserId);
-
-                mind.TransferTo(playerEnt);
-                mind.Visit(visitEnt);
+                mind = mindSystem.CreateMind(player.UserId);
+                mindSystem.TransferTo(mind, playerEnt);
+                mindSystem.Visit(mind, visitEnt);
 
                 Assert.That(player.AttachedEntity, Is.EqualTo(visitEnt));
                 Assert.That(mind.VisitingEntity, Is.EqualTo(visitEnt));
@@ -91,6 +90,9 @@ namespace Content.IntegrationTests.Tests
             var entMan = server.ResolveDependency<IServerEntityManager>();
             var playerMan = server.ResolveDependency<IPlayerManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
+
+            var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
+
             var map = await PoolManager.CreateTestMap(pairTracker);
 
             EntityUid playerEnt = default;
@@ -103,10 +105,8 @@ namespace Content.IntegrationTests.Tests
 
                 playerEnt = entMan.SpawnEntity(null, pos);
 
-                mind = new Mind(player.UserId);
-                mind.ChangeOwningPlayer(player.UserId);
-
-                mind.TransferTo(playerEnt);
+                mind = mindSystem.CreateMind(player.UserId);
+                mindSystem.TransferTo(mind, playerEnt);
 
                 Assert.That(mind.CurrentEntity, Is.EqualTo(playerEnt));
             });
@@ -136,27 +136,26 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestGhostOnDeleteMap()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
             var server = pairTracker.Pair.Server;
             var testMap = await PoolManager.CreateTestMap(pairTracker);
             var coordinates = testMap.GridCoords;
 
             var entMan = server.ResolveDependency<IServerEntityManager>();
-            var playerMan = server.ResolveDependency<IPlayerManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
+
+            var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
+
             var map = await PoolManager.CreateTestMap(pairTracker);
 
             EntityUid playerEnt = default;
             Mind mind = null;
             await server.WaitAssertion(() =>
             {
-                var player = playerMan.ServerSessions.Single();
-
                 playerEnt = entMan.SpawnEntity(null, coordinates);
-                mind = new Mind(player.UserId);
-                mind.ChangeOwningPlayer(player.UserId);
 
-                mind.TransferTo(playerEnt);
+                mind = mindSystem.CreateMind(null);
+                mindSystem.TransferTo(mind, playerEnt);
 
                 Assert.That(mind.CurrentEntity, Is.EqualTo(playerEnt));
             });

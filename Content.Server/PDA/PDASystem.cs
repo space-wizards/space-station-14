@@ -4,6 +4,7 @@ using Content.Server.Instruments;
 using Content.Server.Light.Components;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Light.Events;
+using Content.Server.Mind;
 using Content.Server.PDA.Ringer;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
@@ -27,6 +28,7 @@ namespace Content.Server.PDA
         [Dependency] private readonly StationSystem _stationSystem = default!;
         [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
         [Dependency] private readonly StoreSystem _storeSystem = default!;
+        [Dependency] private readonly MindSystem _mindSystem = default!;
 
         public override void Initialize()
         {
@@ -124,8 +126,10 @@ namespace Content.Server.PDA
                 if (session.AttachedEntity is not { Valid: true } user)
                     continue;
 
-                if (storeComponent.AccountOwner == user || (TryComp<MindComponent>(session.AttachedEntity, out var mindcomp) && mindcomp.Mind != null &&
-                    mindcomp.Mind.HasRole<TraitorRole>()))
+                if (storeComponent.AccountOwner == user
+                    || (TryComp<MindContainerComponent>(session.AttachedEntity, out var mindComp)
+                        && mindComp.Mind != null
+                        && _mindSystem.HasRole<TraitorRole>(mindComp.Mind)))
                     _cartridgeLoaderSystem?.UpdateUiState(pda.Owner, uplinkState, session);
             }
         }
@@ -181,9 +185,10 @@ namespace Content.Server.PDA
             if (!TryComp<StoreComponent>(pda.Owner, out var storeComp))
                 return;
 
-            if (storeComp.AccountOwner != args.User &&
-                !(TryComp<MindComponent>(args.User, out var mindcomp) && mindcomp.Mind != null && mindcomp.Mind.HasRole<TraitorRole>()))
-                return;
+            if (storeComp.AccountOwner != args.User
+                && !(TryComp<MindContainerComponent>(args.User, out var mindComp)
+                     && mindComp.Mind != null
+                     && _mindSystem.HasRole<TraitorRole>(mindComp.Mind))) return;
 
             if (!_uiSystem.TryGetUi(pda.Owner, PDAUiKey.Key, out var ui))
                 return;
