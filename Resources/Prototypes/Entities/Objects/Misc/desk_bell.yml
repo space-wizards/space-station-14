@@ -34,7 +34,7 @@
     delay: 0.5
   - type: MeleeWeapon
     soundHit:
-      path: /Audio/Items/Toys/desk_bell_ring.ogg
+      path: /Audio/Items/desk_bell_ring.ogg
     damage:
       types:
         Blunt: 0.1
