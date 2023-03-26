@@ -1,0 +1,6 @@
+- type: soundCollection
+  id: FloydPlush
+  files:
+  - /Audio/Items/Toys/floyd1.ogg
+  - /Audio/Items/Toys/floyd2.ogg
+  - /Audio/Items/Toys/floyd3.ogg
