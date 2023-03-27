@@ -1,14 +1,14 @@
+using Content.Server.Radio.EntitySystems;
+
 namespace Content.Server.Radio.Components;
 
 /// <summary>
-/// When activated prevents from sending messages in range
+/// When activated (<see cref="ActiveRadioJammerComponent"/>) prevents from sending messages in range
 /// </summary>
 [RegisterComponent]
+[Access(typeof(JammerSystem))]
 public sealed class RadioJammerComponent : Component
 {
-    [DataField("activated"), ViewVariables(VVAccess.ReadWrite)]
-    public bool Activated = false;
-
     [DataField("range"), ViewVariables(VVAccess.ReadWrite)]
     public float Range = 8f;
 

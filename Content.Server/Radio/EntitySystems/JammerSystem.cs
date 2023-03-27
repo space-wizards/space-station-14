@@ -18,44 +18,54 @@ public sealed class JammerSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<RadioJammerComponent, ActivateInWorldEvent>(OnActivate);
-        SubscribeLocalEvent<RadioJammerComponent, PowerCellChangedEvent>(OnPowerCellChanged);
+        SubscribeLocalEvent<ActiveRadioJammerComponent, PowerCellChangedEvent>(OnPowerCellChanged);
         SubscribeLocalEvent<RadioJammerComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RadioSendAttemptEvent>(OnRadioSendAttempt);
     }
 
     public override void Update(float frameTime)
     {
-        var query = AllEntityQuery<RadioJammerComponent>();
-        while (query.MoveNext(out var uid, out var jam))
+        var query = AllEntityQuery<ActiveRadioJammerComponent, RadioJammerComponent>();
+        while (query.MoveNext(out var uid, out var _, out var jam))
         {
-            if (jam.Activated && _powerCell.TryGetBatteryFromSlot(uid, out var battery))
-                jam.Activated = battery.TryUseCharge(jam.Wattage * frameTime);
+            if (_powerCell.TryGetBatteryFromSlot(uid, out var battery) &&
+                !battery.TryUseCharge(jam.Wattage * frameTime))
+            {
+                RemComp<ActiveRadioJammerComponent>(uid);
+            }
         }
     }
 
     private void OnActivate(EntityUid uid, RadioJammerComponent comp, ActivateInWorldEvent args)
     {
-        comp.Activated =
-            !comp.Activated &&
+        var activated = !HasComp<ActiveRadioJammerComponent>(uid) && 
             _powerCell.TryGetBatteryFromSlot(uid, out var battery) &&
             battery.CurrentCharge > comp.Wattage;
-        var state = Loc.GetString(comp.Activated ? "radio-jammer-component-on-state" : "radio-jammer-component-off-state");
+        if (activated)
+        {
+            EnsureComp<ActiveRadioJammerComponent>(uid);
+        }
+        else
+        {
+            RemComp<ActiveRadioJammerComponent>(uid);
+        }
+        var state = Loc.GetString(activated ? "radio-jammer-component-on-state" : "radio-jammer-component-off-state");
         var message = Loc.GetString("radio-jammer-component-on-use", ("state", state));
         _popup.PopupEntity(message, args.User, args.User);
         args.Handled = true;
     }
 
-    private void OnPowerCellChanged(EntityUid uid, RadioJammerComponent comp, PowerCellChangedEvent args)
+    private void OnPowerCellChanged(EntityUid uid, ActiveRadioJammerComponent comp, PowerCellChangedEvent args)
     {
         if (args.Ejected)
-            comp.Activated = false;
+            RemComp<ActiveRadioJammerComponent>(uid);
     }
 
     private void OnExamine(EntityUid uid, RadioJammerComponent comp, ExaminedEvent args)
     {
         if (args.IsInDetailsRange)
         {
-            var msg = comp.Activated
+            var msg = HasComp<ActiveRadioJammerComponent>(uid)
                 ? Loc.GetString("radio-jammer-component-examine-on-state")
                 : Loc.GetString("radio-jammer-component-examine-off-state");
             args.PushMarkup(msg);
@@ -68,10 +78,10 @@ public sealed class JammerSystem : EntitySystem
     private void OnRadioSendAttempt(ref RadioSendAttemptEvent args)
     {
         var source = Transform(args.RadioSource).Coordinates;
-        var query = AllEntityQuery<RadioJammerComponent, TransformComponent>();
-        while (query.MoveNext(out _, out var jam, out var transform))
+        var query = AllEntityQuery<ActiveRadioJammerComponent, RadioJammerComponent, TransformComponent>();
+        while (query.MoveNext(out _, out _, out var jam, out var transform))
         {
-            if (jam.Activated && source.InRange(EntityManager, _transform, transform.Coordinates, jam.Range))
+            if (source.InRange(EntityManager, _transform, transform.Coordinates, jam.Range))
             {
                 args.Cancelled = true;
                 return;
