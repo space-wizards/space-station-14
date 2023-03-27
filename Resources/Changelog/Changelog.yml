@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fix tile decals not loading properly., type: Fix}
-  id: 2771
-  time: '2022-12-19T02:18:58.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: 'Popups will now show in additional viewports (e.g. cameras, tabletop).',
@@ -2932,3 +2927,10 @@ Entries:
   - {message: rat servants can now be butchered for 1 rat meat., type: Tweak}
   id: 3270
   time: '2023-03-27T05:27:10.0000000+00:00'
+- author: MisterMecky
+  changes:
+  - {message: 'Added cardboard material, which can be used to craft big and small
+      boxes', type: Add}
+  - {message: Cardboard crates can now be ordered from cargo, type: Add}
+  id: 3271
+  time: '2023-03-27T23:04:25.0000000+00:00'
