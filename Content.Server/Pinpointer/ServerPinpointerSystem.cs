@@ -21,7 +21,7 @@ namespace Content.Server.Pinpointer
         private void OnActivate(EntityUid uid, PinpointerComponent component, ActivateInWorldEvent args)
         {
             TogglePinpointer(uid, component);
-            if (!HasComp<EmaggedComponent>(uid))
+            if (!component.CanRetarget)
                 LocateTarget(uid, component);
         }
 
@@ -33,7 +33,7 @@ namespace Content.Server.Pinpointer
             // this code update ALL pinpointers in game
             foreach (var pinpointer in EntityQuery<PinpointerComponent>())
             {
-                if (HasComp<EmaggedComponent>(pinpointer.Owner))
+                if (pinpointer.CanRetarget)
                     continue;
 
                 LocateTarget(pinpointer.Owner, pinpointer);
