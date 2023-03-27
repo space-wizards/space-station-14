@@ -27,6 +27,37 @@
 
 - type: entity
   parent: MaterialBase
+  id: MaterialCardboard
+  name: cardboard
+  suffix: Full
+  components:
+  - type: Material
+    materials:
+      Cardboard: 100
+  - type: Stack
+    stackType: Cardboard
+  - type: Sprite
+    state: cardboard_3
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - cardboard
+      - cardboard_2
+      - cardboard_3
+
+- type: entity
+  parent: MaterialCardboard
+  id: MaterialCardboard1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: cardboard
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: MaterialBase
   id: MaterialCloth
   name: cloth
   suffix: Full
