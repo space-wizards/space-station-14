@@ -13,6 +13,6 @@ ent-ClothingShoeSlippersDuck = тапки-уточки
 ent-ClothingShoesTourist = туристическая обувь
     .desc = Эти дешевые сандалии не выглядят очень удобными.
     .suffix = { "" }
-ent-ClothingShoesDameDane = туфли dame dane
+ent-ClothingShoesDameDane = туфли якудзы
     .desc = В конце концов...
     .suffix = { "" }

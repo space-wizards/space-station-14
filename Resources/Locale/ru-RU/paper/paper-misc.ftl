@@ -1,29 +1,26 @@
-book-text-plasma-trap =
-    Heheheheh, no way in hell they're going to get at our stash NOW, is there?
-    I rigged the area where our stuff's at to be a toasty thousand K.
-    You know how to drain it when we need it out.
-     - J.
-book-text-holoparasite-info =
-    Thanks for choosing our holoparasite package!
-    At cybersun, we pride ourselves on cutting-edge military and industrial technology, and greatly appreciate your contribution to our establishment!
-    Guardians are helpful and intelligent beings which nest within your body, completely immune to common hazards such as pressure, temperature and even bullets!
-    You have purchased the holoparasite package, which contains a holoparasite activator, an instruction booklet, and our softcap merchandise.
-    Instructions for use:
-    1. Activate the holoparasite injector (preferably in a secluded area).
-    2. Wait for the tingling and/or painful metaphysical sensation.
-    3. Check your holoparasite for the ability to communicate and cooperate, and capacity to understand your orders.
-    4. Use your recall-manifest ability to summon or recall the holoparasite back into your body.
-    5. Keep the holoparasite within a short distance from yourself, otherwise it will be recalled by force!
-    WARNING: Guardians are metaphysical beings, but draw from your HEALTH in order to exist. Direct damage done to guardians will be partially transferred to you!
-    Cybersun inc. is not responsible for complete annihilation following the misuse of Holoparasite technology.
-book-text-ame-scribbles =
-    I don't know if you're trained already, so I hope this'll help.
-    AME controller needs LV power and an HV wire to output to. Check the area with a crowbar if you aren't sure.
-    There should be an empty room next to where you found this, that room's wired for the AME.
-    You can put an AME anywhere if you can get the wires to it, though.
-    3x3 grid of AME parts, multitool them to unpack. Be careful not to 'trap' anything.
-    AME controller adjacent horizontally or vertically (not diagonally) to any point.
-    With only 1 core (what a 3x3 grid will get you), don't turn it up above 2.
-    The golden rule is 2 injection for every 1 core. You can go lower to save fuel.
-    Higher will burn the engine out and eventually make it explode. Don't.
-    Don't forget to refuel it, it tends to stop at the worst possible time.
+book-text-plasma-trap = Ихихихихи, ТЕПЕРЬ они ни за что на свете не доберутся до нашего тайника, ясно?
+      В комнате, где лежат наши вещи, я установил температуру в тысячу К.
+      Вы знаете что делать, когда вещи нам понадобятся.
+       - Джей.
+book-text-holoparasite-info = Спасибо, что выбрали наш набор голопаразита!
+      Мы в компании Cybersun гордимся нашими передовыми военными и промышленными технологиями и очень ценим ваш вклад в наше развитие!
+      Стражи - это разумные и услужливые существа, которые вселяются в ваше тело, и абсолютно невосприимчивы к таким распространенным опасностям, как давление, температура и даже пули!
+      Вы приобрели набор голопаразита, который содержит активатор голопаразита в виде инъектора, брошюру с инструкцией, и нашу фирменную бейсболку!
+      Инструкция по применению:
+      1. Активируйте инъектор голопаразита (желательно в укромном месте).
+      2. Дождитесь покалывания и/или болезненных метафизических ощущений.
+      3. Проверьте своего голопаразита на способность к общению и сотрудничеству, а также на способность понимать ваши приказы.
+      4. Используйте свою способность призыва/отзыва, чтобы призвать или отозвать голопаразита обратно в ваше тело.
+      5. Не позволяйте голопаразиту удаляться от вас на большое расстояние, иначе он будет принудительно отозван!
+      ВНИМАНИЕ: Стражи - существа метафизические, но для своего существования они черпают вашу ЖИЗНЕННУЮ ЭНЕРГИЮ. Прямой урон, наносимый хранителям, будет частично переноситься на вас!
+      Cybersun Inc. не несет ответственности за тотальную аннигиляцию вызванную неправильным использованием технологии Голопаразита.
+book-text-ame-scribbles = Я не знаю, прошли ли вы уже обучение, поэтому надеюсь, что это поможет.
+      Контроллеру ДАМ требуется высоковольтный кабель для передачи сгенерированной энергии. Если вы не уверены в наличии кабеля - сковырните пол ломом.
+      Рядом с местом, где вы нашли мою записку, должна быть пустая комната. Эта комната предназначена для ДАМ. ДАМ, а не дам.
+      Но вообще ДАМ можно разместить где угодно, были бы кабеля.
+      Расположите детали ДАМ сеткой 3x3, распакуйте их с применением мультитула. И постарайтесь не "запереть" никого внутри.
+      Контроллер должен соприкасаться ДАМ по горизонтали или вертикали (но не по диагонали).
+      Имея 1 ядро (которое и формируется вышеупомянутой сеткой 3x3), не устанавливайте впрыск выше 2.
+      Золотое правило - 2 впрыска на 1 ядро. В целях экономии топлива можно поставить меньше.
+      Поставите больше - и это привёдет к перегреву ДАМ, что в конечном итоге вызовет взрыв. Давайте без этого.
+      Не забывайте заправлять ДАМ, так как топливо имеет тенденцию заканчиваться в самый неподходящий момент.

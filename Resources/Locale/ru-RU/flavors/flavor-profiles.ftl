@@ -99,7 +99,7 @@ flavor-complex-raisins = как сушеный виноград
 flavor-complex-orange = как апельсины
 flavor-complex-watermelon = как арбуз
 flavor-complex-garlic = как чеснок
-flavor-complex-grape = like grapes
+flavor-complex-grape = как виноград
 
 ## Complex foodstuffs (cooked foods, joke flavors, etc)
 
