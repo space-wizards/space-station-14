@@ -1,10 +1,10 @@
-using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Smoking;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Nutrition.Components
+namespace Content.Shared.Nutrition.Components
 {
-    [RegisterComponent, Access(typeof(SmokingSystem))]
+    [RegisterComponent, NetworkedComponent]
     public sealed class SmokableComponent : Component
     {
         [DataField("solution")]

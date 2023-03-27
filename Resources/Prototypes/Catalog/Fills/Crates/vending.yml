@@ -134,6 +134,14 @@
     - id: VendingMachineRestockVendomat
 
 - type: entity
+  id: CrateVendingMachineRestockRoboticsFilled
+  parent: CrateScienceSecure
+  components:
+  - type: StorageFill
+    contents:
+    - id: VendingMachineRestockRobotics
+
+- type: entity
   id: CrateVendingMachineRestockTankDispenserFilled
   parent: CratePlastic
   components:
