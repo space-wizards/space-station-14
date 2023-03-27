@@ -259,6 +259,6 @@ ent-ClothingUniformJumpsuitERTSecurity = ERT security uniform
 ent-ClothingUniformJumpsuitCluwne = cluwne suit
     .desc = Cursed cluwne suit.
     .suffix = Unremoveable
-ent-ClothingUniformJumpsuitDameDane = dame dane outfit
+ent-ClothingUniformJumpsuitDameDane = yakuza outfit
     .desc = Baka mitai...
     .suffix = { "" }
