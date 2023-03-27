@@ -1,6 +1,0 @@
-author: AJCM-git
-time: 2023-03-24T21:08:50.0000000+00:00
-changes:
-- type: Fix
-  message: The changelog no longer gets squished in the lobby at 75% UI scale
-...

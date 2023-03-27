@@ -1,6 +1,0 @@
-author: mirrorcult
-time: 2023-03-26T01:55:24.0000000+00:00
-changes:
-- type: Tweak
-  message: Bullet impulses in space increased from 5 -> 25
-...

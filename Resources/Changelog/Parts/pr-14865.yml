@@ -1,8 +1,0 @@
-author: metalgearsloth
-time: 2023-03-26T17:01:43.0000000+00:00
-changes:
-- &1635990453 type: Fix
-  &1098037592 message: Fixed static pricing being used on some stackable entities.
-- type: Tweak
-  message: Removed the base $20 price for items.
-...

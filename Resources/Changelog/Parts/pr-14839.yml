@@ -1,6 +1,0 @@
-author: Menshin
-time: 2023-03-25T03:10:49.0000000+00:00
-changes:
-- type: Fix
-  message: Alert display lights on fire alarms properly reacts to power changes.
-...

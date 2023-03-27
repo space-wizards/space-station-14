@@ -1,8 +1,0 @@
-author: deltanedas
-time: 2023-03-25T23:15:46.0000000+00:00
-changes:
-- &402322737 type: Fix
-  &796209500 message: Pneumatic cannon can no longer shoot bullets.
-- type: Add
-  message: New admeme pneumatic cannon variants that can still shoot bullets.
-...
