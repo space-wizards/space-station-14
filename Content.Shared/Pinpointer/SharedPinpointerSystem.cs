@@ -32,14 +32,14 @@ namespace Content.Shared.Pinpointer
         }
 
         /// <summary>
-        ///     Set the target if emagged and off
+        ///     Set the target if capable
         /// </summary>
         private void OnAfterInteract(EntityUid uid, PinpointerComponent component, AfterInteractEvent args)
         {
             if (!args.CanReach || args.Target is not { } target)
                 return;
 
-            if (!HasComp<EmaggedComponent>(uid) || component.IsActive)
+            if (!component.CanRetarget || component.IsActive)
                 return;
 
             // TODO add doafter once the freeze is lifted
@@ -124,6 +124,7 @@ namespace Content.Shared.Pinpointer
         private void OnEmagged(EntityUid uid, PinpointerComponent component, ref GotEmaggedEvent args)
         {
             args.Handled = true;
+            component.CanRetarget = true;
         }
     }
 }

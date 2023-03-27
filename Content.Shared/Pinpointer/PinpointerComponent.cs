@@ -42,6 +42,12 @@ namespace Content.Shared.Pinpointer
         [DataField("updateTargetName"), ViewVariables(VVAccess.ReadWrite)]
         public bool UpdateTargetName;
 
+        /// <summary>
+        ///     Whether or not the target can be reassigned.
+        /// </summary>
+        [DataField("canRetarget"), ViewVariables(VVAccess.ReadWrite)]
+        public bool CanRetarget;
+
         [ViewVariables(VVAccess.ReadOnly)]
         public EntityUid? Target = null;
 
