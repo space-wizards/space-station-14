@@ -248,7 +248,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 continue;
 
             // prevent deathnettles injecting through hardsuits
-            if (!comp.PierceArmor && _tag.HasTag(entity, "HardsuitOn"))
+            if (!comp.PierceArmor && _inventory.TryGetSlotEntity(entity, "outerClothing", out var suit) && _tag.HasTag(suit, "Hardsuit"))
                 continue;
 
             if (bloodQuery.TryGetComponent(entity, out var bloodstream))

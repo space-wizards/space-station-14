@@ -291,6 +291,9 @@
   id: Handcuffs
 
 - type: Tag
+  id: Hardsuit
+
+- type: Tag
   id: Head
 
 - type: Tag
