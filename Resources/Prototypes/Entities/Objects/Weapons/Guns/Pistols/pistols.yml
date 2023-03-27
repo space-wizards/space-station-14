@@ -110,7 +110,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
       params:
-        volume: -16
+        volume: -14
   - type: ItemSlots
     slots:
       gun_magazine:
