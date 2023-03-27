@@ -33,4 +33,5 @@ nuke-label-syndicate = SYN-{ $serial }
 # Codes
 
 nuke-codes-message = [color=red]СОВЕРШЕННО СЕКРЕТНО![/color] Код активации ядерной боеголовки: { $name } - { $code }
+nuke-codes-list = { $name } code: { $code }
 nuke-codes-fax-paper-name = коды ядерной аутентификации

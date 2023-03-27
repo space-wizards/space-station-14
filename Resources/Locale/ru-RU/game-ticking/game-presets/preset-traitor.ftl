@@ -6,9 +6,7 @@ traitor-round-end-result =
         [one] Был один предатель.
        *[other] Было { $traitorCount } предателей.
     }
-traitor-round-end-codewords = Кодовыми словами были:
-    [color=White]{ $codewords }[/color].
-
+traitor-round-end-codewords = Кодовыми словами были: [color=White]{ $codewords }[/color].
 # Shown at the end of a round of Traitor
 traitor-user-was-a-traitor = [color=gray]{ $user }[/color] был(а) предателем.
 traitor-user-was-a-traitor-named = [color=White]{ $name }[/color] ([color=gray]{ $user }[/color]) был(а) предателем.

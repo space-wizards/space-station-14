@@ -26,3 +26,5 @@ reagent-name-starkist = старкист
 reagent-desc-starkist = Сладкий безалкогольный напиток со вкусом апельсина.
 reagent-name-fourteen-loko = фоуртин локо
 reagent-desc-fourteen-loko = Сильно переработанная жидкая субстанция, едва ли соответствующая межгалактическим стандартам безопасности для безалкогольного напитка.
+reagent-name-shamblers-juice = Shambler's Juice
+reagent-desc-shamblers-juice = ~Shake me up some of that Shambler's Juice!~

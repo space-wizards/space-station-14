@@ -2,6 +2,7 @@
 
 crew-monitoring-user-interface-title = Мониторинг экипажа
 crew-monitoring-user-interface-name = Имя
+crew-monitoring-user-interface-job = Job
 crew-monitoring-user-interface-status = Статус
 crew-monitoring-user-interface-location = Местоположение
 crew-monitoring-user-interface-alive = Жив

@@ -70,3 +70,7 @@ seeds-rice-name = риса
 seeds-rice-display-name = стеблей риса
 seeds-soybeans-name = сои
 seeds-soybeans-display-name = сои
+seeds-watermelon-name = watermelon
+seeds-watermelon-display-name = watermelon plant
+seeds-grape-name = grape
+seeds-grape-display-name = grape plant

@@ -31,3 +31,6 @@ ent-ClothingHeadHatHoodRad = капюшон радиозащитного кос�
 ent-ClothingHeadHatHoodGoliathCloak = капюшон плаща голиафа
     .desc = Капюшон плаща голиафа, сделанный из шкуры выносливой фауны с далекой планеты.
     .suffix = { "" }
+ent-ClothingHeadHatHoodMoth = moth mask
+    .desc = A mask in the form of a moths head is usually made of lightweight materials. It mimics the shape of a moths head with large eyes and long antennae. Such masks are often used in cosplay, or when shooting movies and videos.
+    .suffix = { "" }
