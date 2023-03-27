@@ -1,0 +1,6 @@
+author: keronshb
+time: 2023-03-26T02:26:39.0000000+00:00
+changes:
+- type: Fix
+  message: Cardboard Boxes will now play their effect again
+...

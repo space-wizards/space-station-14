@@ -1,0 +1,6 @@
+author: 778b
+time: 2023-03-25T04:32:46.0000000+00:00
+changes:
+- type: Fix
+  message: Solar panels no longer block light from getting to other solar panels.
+...

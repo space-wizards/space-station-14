@@ -1,0 +1,6 @@
+author: Slava0135
+time: 2023-03-24T14:09:52.0000000+00:00
+changes:
+- type: Fix
+  message: fluid can now spread through directional windows (through not occupied sides).
+...

@@ -1,0 +1,6 @@
+author: AJCM-git
+time: 2023-03-24T19:54:44.0000000+00:00
+changes:
+- type: Fix
+  message: Traitor codewords now get properly displayed in the round end summary
+...

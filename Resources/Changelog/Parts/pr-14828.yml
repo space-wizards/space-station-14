@@ -1,0 +1,6 @@
+author: Tyzemol
+time: 2023-03-26T23:01:09.0000000+00:00
+changes:
+- type: Tweak
+  message: Smart equip to backpack/belt hotkeys can now be used to quickly take or insert an item into corresponding slots (such as some tools and weapons)
+...
