@@ -11,5 +11,6 @@
       - Security
       defaultChannel: Command
     - type: Sprite
-      sprite: Objects/Devices/encryption_keys.rsi
-      state: nt_cypherkey
+      layers:
+      - state: crypt_silver
+      - state: nano_label
