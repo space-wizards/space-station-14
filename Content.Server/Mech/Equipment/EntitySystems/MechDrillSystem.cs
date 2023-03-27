@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Server.DoAfter;
+using Content.Server.Gatherable;
 using Content.Server.Gatherable.Components;
 using Content.Server.Interaction;
 using Content.Server.Mech.Components;
@@ -30,12 +31,13 @@ public sealed class MechDrillSystem : EntitySystem
     [Dependency] private readonly InteractionSystem _interaction = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly GatherableSystem _gatherableSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         SubscribeLocalEvent<MechDrillComponent, InteractNoHandEvent>(OnInteract);
-        SubscribeLocalEvent<MechDrillComponent, DoAfterEvent>(OnMechdrill);
+        SubscribeLocalEvent<MechDrillComponent, DoAfterEvent>(OnMechDrill);
     }
 
     private void OnInteract(EntityUid uid, MechDrillComponent component, InteractNoHandEvent args)
@@ -51,22 +53,23 @@ public sealed class MechDrillSystem : EntitySystem
         if (!TryComp<MechComponent>(args.User, out var mech) || mech.PilotSlot.ContainedEntity == target)
             return;
 
-        if (mech.Energy + component.drillEnergyDelta < 0)
+        if (mech.Energy + component.DrillEnergyDelta < 0)
             return;
 
         if (!_interaction.InRangeUnobstructed(args.User, target))
             return;
 
         args.Handled = true;
-        component.AudioStream = _audio.PlayPvs(component.drillSound, uid);
-        _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.drillDelay, target:target, used:uid)
+        component.AudioStream = _audio.PlayPvs(component.DrillSound, uid);
+        _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.DrillDelay, target:target, used:uid)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true
         });
+
     }
 
-    private void OnMechdrill(EntityUid uid, MechDrillComponent component, DoAfterEvent args)
+    private void OnMechDrill(EntityUid uid, MechDrillComponent component, DoAfterEvent args)
     {
         if (args.Cancelled)
         {
@@ -79,7 +82,7 @@ public sealed class MechDrillSystem : EntitySystem
 
         if (!TryComp<MechEquipmentComponent>(uid, out var equipmentComponent) || equipmentComponent.EquipmentOwner == null)
             return;
-        if (!_mech.TryChangeEnergy(equipmentComponent.EquipmentOwner.Value, component.drillEnergyDelta))
+        if (!_mech.TryChangeEnergy(equipmentComponent.EquipmentOwner.Value, component.DrillEnergyDelta))
             return;
 
         _mech.UpdateUserInterface(equipmentComponent.EquipmentOwner.Value);

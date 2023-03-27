@@ -14,21 +14,16 @@ public sealed class MechDrillComponent : Component
     /// The change in energy after each drill.
     /// </summary>
     [DataField("drillEnergyDelta")]
-    public float drillEnergyDelta = -30;
-
+    public float DrillEnergyDelta = -30;
     /// <summary>
     /// How long does it take to drill something?
     /// </summary>
     [DataField("drillDelay")]
-    public float drillDelay = 0.25f;
-
-
+    public float DrillDelay = 0.25f;
     /// <summary>
-    /// The sound played when a mech is drillbing something
+    /// The sound played when a mech is drilling something
     /// </summary>
     [DataField("drillSound")]
-    public SoundSpecifier drillSound = new SoundPathSpecifier("/Audio/Mecha/sound_mecha_hydraulic.ogg");
-
+    public SoundSpecifier DrillSound = new SoundPathSpecifier("/Audio/Mecha/sound_mecha_hydraulic.ogg");
     public IPlayingAudioStream? AudioStream;
-
 }

@@ -28,7 +28,7 @@
 - type: entity
   id: MechEquipmentDrill
   parent: BaseMechEquipment
-  name: Mecha drill
+  name: mecha drill
   description: Gives the mech the ability to drill things.
   components:
     - type: Sprite
