@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Rat servants will pathfind under doors again., type: Fix}
-  id: 2741
-  time: '2022-12-10T09:31:03.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'Added Ripley, Cargo''s favorite mechanized machine of destruc-- I mean,
@@ -2922,3 +2917,9 @@ Entries:
   - {message: Fix freedom implant charges not being used., type: Fix}
   id: 3240
   time: '2023-03-24T03:07:21.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Fixed exploits that would let you continue controlling a cardboard box
+      after exiting it., type: Fix}
+  id: 3241
+  time: '2023-03-24T05:09:58.0000000+00:00'

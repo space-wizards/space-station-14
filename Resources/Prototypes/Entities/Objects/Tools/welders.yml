@@ -134,6 +134,7 @@
   - type: Sprite
     sprite: Objects/Tools/welder_mini.rsi
   - type: Item
+    size: 5
     sprite: Objects/Tools/welder_mini.rsi
   - type: RefillableSolution
     solution: Welder

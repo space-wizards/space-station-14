@@ -1,7 +1,5 @@
-using Content.Server.Storage.Components;
 using Content.Shared.Storage;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Sequence;
@@ -9,7 +7,7 @@ using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Serialization.TypeSerializers.Interfaces;
 
-namespace Content.Server.Containers;
+namespace Content.Shared.Containers;
 
 /// <summary>
 ///     Component for spawning entity prototypes into containers on map init.

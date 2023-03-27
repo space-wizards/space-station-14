@@ -350,6 +350,183 @@
     color: "#3c5eb5"
 
 - type: entity
+  parent: VendingMachineCola
+  id: VendingMachineColaBlack
+  suffix: Black
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/cola-black.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#423438"
+
+- type: entity
+  parent: VendingMachineCola
+  id: VendingMachineColaRed
+  name: Space Cola Vendor
+  description: It vends cola, in space.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/cola-red.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#A50824"
+
+- type: entity
+  parent: VendingMachineCola
+  id: VendingMachineSpaceUp
+  name: Space-Up! Vendor
+  description: Indulge in an explosion of flavor.
+  components:
+  - type: VendingMachine
+    pack: SpaceUpInventory
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/spaceup.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#44964A"
+
+- type: entity
+  parent: VendingMachineCola
+  id: VendingMachineSoda
+  suffix: Soda
+  components:
+  - type: VendingMachine
+    pack: SodaInventory
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/soda.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#CBC6BE"
+
+- type: entity
+  parent: VendingMachineCola
+  id: VendingMachineStarkist
+  name: Star-kist Vendor
+  description: The taste of a star in liquid form.
+  components:
+  - type: VendingMachine
+    pack: StarkistInventory
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/starkist.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#D3A44D"
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineShamblersJuice
+  name: Shambler's Juice Vendor
+  description: ~Shake me up some of that Shambler's Juice!~
+  components:
+  - type: VendingMachine
+    pack: ShamblersJuiceInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
+    ejectDelay: 1.9
+  - type: Advertise
+    pack: RobustSoftdrinksAds
+  - type: Speech
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/shamblersjuice.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#66538F"
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachinePwrGame
+  name: Pwr Game Vendor
+  description: You want it, we got it. Brought to you in partnership with Vlad's Salads.
+  components:
+  - type: VendingMachine
+    pack: PwrGameInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
+    ejectDelay: 1.9
+  - type: Advertise
+    pack: RobustSoftdrinksAds
+  - type: Speech
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/pwrgame.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#6927C5"
+
+- type: entity
   parent: VendingMachine
   id: VendingMachineDinnerware
   name: Plasteel Chef's Dinnerware Vendor
@@ -674,6 +851,86 @@
     color: "#c73434"
 
 - type: entity
+  parent: VendingMachineSnack
+  id: VendingMachineSnackBlue
+  suffix: Blue
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/snack-blue.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#3c5eb5"
+
+- type: entity
+  parent: VendingMachineSnack
+  id: VendingMachineSnackOrange
+  suffix: Orange
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/snack-orange.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#CE3401"
+
+- type: entity
+  parent: VendingMachineSnack
+  id: VendingMachineSnackGreen
+  suffix: Green
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/snack-green.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#5F6A1C"
+
+- type: entity
+  parent: VendingMachineSnack
+  id: VendingMachineSnackTeal
+  suffix: Teal
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/snack-teal.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#207E79"
+
+- type: entity
   parent: VendingMachine
   id: VendingMachineSovietSoda
   name: BODA
@@ -777,6 +1034,39 @@
 
 - type: entity
   parent: VendingMachine
+  id: VendingMachineRobotics
+  name: Robotech Deluxe
+  description: All the tools you need to create your own robot army.
+  components:
+  - type: VendingMachine
+    pack: RoboticsInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
+  - type: Advertise
+    pack: VendomatAds
+  - type: Speech
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/robotics.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: AccessReader
+    access: [["Research"]]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#B0ADA9"
+
+- type: entity
+  parent: VendingMachine
   id: VendingMachineYouTool
   name: YouTool
   description: "A vending machine containing standard tools. A label reads: Tools for tools."
@@ -870,7 +1160,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineSalvage
-  name: salvage vendor
+  name: Salvage Vendor
   description: A dwarves best friend!
   components:
   - type: VendingMachine
@@ -1414,7 +1704,33 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Medical"]]
-
+   
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineCentDrobe
+  name: CentDrobe
+  description: A one-of-a-kind vending machine for all your centcom aesthetic needs!
+  components:
+  - type: VendingMachine
+    pack: CentDrobeInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/centdrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#48CF48"
+    
 - type: entity
   parent: VendingMachine
   id: VendingMachineHappyHonk
@@ -1456,7 +1772,7 @@
   parent: VendingMachine
   id: VendingMachineTankDispenserEVA
   suffix: EVA [O2, N2]
-  name: gas tank dispenser
+  name: Gas Tank Dispenser
   description: A vendor for dispensing gas tanks.
   components:
   - type: VendingMachine
@@ -1469,7 +1785,7 @@
   parent: VendingMachine
   id: VendingMachineTankDispenserEngineering
   suffix: ENG [O2, Plasma]
-  name: gas tank dispenser
+  name: Gas Tank Dispenser
   description: A vendor for dispensing gas tanks. This one has an engineering livery.
   components:
   - type: VendingMachine
@@ -1479,3 +1795,4 @@
     layers:
     - state: dispenser
     - state: dispensereng
+
