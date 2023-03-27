@@ -15,7 +15,6 @@ public sealed partial class MeleeWeaponSystem
     /// </summary>
     private const float DamageAnimationLength = 0.30f;
 
-    private const string AnimationKey = "melee-animation";
     private const string DamageAnimationKey = "damage-effect";
     private const string FadeAnimationKey = "melee-fade";
     private const string SlashAnimationKey = "melee-slash";
@@ -154,10 +153,10 @@ public sealed partial class MeleeWeaponSystem
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0.05f, 0.15f), FadeAnimationKey);
                 break;
             case WeaponArcAnimation.None:
-                var mapPos = userXform.WorldPosition;
+                var (mapPos, mapRot) = _transform.GetWorldPositionRotation(userXform, GetEntityQuery<TransformComponent>());
                 var xform = Transform(animationUid);
                 xform.AttachToGridOrMap();
-                xform.WorldPosition = mapPos + (userXform.WorldRotation - userXform.LocalRotation).RotateVec(localPos);
+                _transform.SetWorldPosition(xform, mapPos + (mapRot - userXform.LocalRotation).RotateVec(localPos));
                 if (arcComponent.Fadeout)
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0f, 0.15f), FadeAnimationKey);
                 break;

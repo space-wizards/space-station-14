@@ -39,3 +39,10 @@
       types:
         Blunt: 200
 
+- type: entity
+  parent: MobHuman
+  id: MobCluwne
+  name: person
+  description: A polymorphed unfortunate.
+  components:
+  - type: Cluwne

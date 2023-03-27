@@ -18,6 +18,7 @@
   - Space
   isSubfloor: true
   canWirecutter: true
+  weather: true
   footstepSounds:
     collection: FootstepPlating
   friction: 0.5

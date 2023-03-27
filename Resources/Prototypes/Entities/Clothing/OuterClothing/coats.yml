@@ -175,4 +175,15 @@
     sprite: Clothing/OuterClothing/Coats/clownpriest.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/clownpriest.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatParamedicWB
+  name: paramedic windbreaker
+  description: A paramedic's trusty windbreaker, for all the space wind.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/windbreaker_paramedic.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/windbreaker_paramedic.rsi
     

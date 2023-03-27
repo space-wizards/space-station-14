@@ -10,13 +10,12 @@
     sprite: Objects/Devices/encryption_keys.rsi
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
-    state: cypherkey
     netsync: false
 
 - type: entity
   parent: EncryptionKey
   id: EncryptionKeyCommon
-  name: passenger encryption key
+  name: common encryption key
   description: An encryption key used by anyone.
   components:
   - type: EncryptionKey
@@ -24,8 +23,9 @@
     - Common
     defaultChannel: Common
   - type: Sprite
-    sprite: Objects/Devices/encryption_keys.rsi
-    state: cypherkey
+    layers:
+    - state: crypt_gray
+    - state: common_label
 
 - type: entity
   parent: EncryptionKey
@@ -35,28 +35,12 @@
   components:
   - type: EncryptionKey
     channels:
-    - Common
     - Supply
     defaultChannel: Supply
   - type: Sprite
-    sprite: Objects/Devices/encryption_keys.rsi
-    state: cargo_cypherkey
-
-- type: entity
-  parent: EncryptionKey
-  id: EncryptionKeyQM
-  name: quartermaster's encryption key
-  description: An encryption key used by the boss of cargo.
-  components:
-  - type: EncryptionKey
-    channels:
-    - Common
-    - Command
-    - Supply
-    defaultChannel: Supply
-  - type: Sprite
-    sprite: Objects/Devices/encryption_keys.rsi
-    state: qm_cypherkey
+    layers:
+    - state: crypt_gray
+    - state: cargo_label
 
 - type: entity
   parent: EncryptionKey
@@ -66,25 +50,18 @@
   components:
   - type: EncryptionKey
     channels:
-    - Common
-    - Command
     - CentCom
-    - Engineering
-    - Medical
-    - Science
-    - Security
-    - Service
-    - Supply
     defaultChannel: CentCom
   - type: Sprite
-    sprite: Objects/Devices/encryption_keys.rsi
-    state: bin_cypherkey
+    layers:
+    - state: crypt_blue
+    - state: nano_label
 
 - type: entity
   parent: EncryptionKey
-  id: EncryptionKeyCommand
-  name: command encryption key
-  description: An encryption key used by crew's bosses.
+  id: EncryptionKeyStationMaster
+  name: station master encryption key
+  description: An encryption key used by station's bosses.
   components:
   - type: EncryptionKey
     channels:
@@ -98,8 +75,24 @@
     - Supply
     defaultChannel: Command
   - type: Sprite
-    sprite: Objects/Devices/encryption_keys.rsi
-    state: com_cypherkey
+    layers:
+    - state: crypt_gold
+    - state: cap_label
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyCommand
+  name: command encryption key
+  description: An encryption key used by crew's bosses.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Command
+    defaultChannel: Command
+  - type: Sprite
+    layers:
+    - state: crypt_silver
+    - state: com_label
 
 - type: entity
   parent: EncryptionKey
@@ -109,28 +102,12 @@
   components:
   - type: EncryptionKey
     channels:
-    - Common
     - Engineering
     defaultChannel: Engineering
   - type: Sprite
-    sprite: Objects/Devices/encryption_keys.rsi
-    state: eng_cypherkey
-
-- type: entity
-  parent: EncryptionKey
-  id: EncryptionKeyCE
-  name: chief engineer's encryption key
-  description: An encryption key used by the boss of the real men.
-  components:
-  - type: EncryptionKey
-    channels:
-    - Common
-    - Command
-    - Engineering
-    defaultChannel: Engineering
-  - type: Sprite
-    sprite: Objects/Devices/encryption_keys.rsi
-    state: ce_cypherkey
+    layers:
+    - state: crypt_gray
+    - state: eng_label
 
 - type: entity
   parent: EncryptionKey
@@ -140,28 +117,12 @@
   components:
   - type: EncryptionKey
     channels:
-    - Common
     - Medical
     defaultChannel: Medical
   - type: Sprite
-    sprite: Objects/Devices/encryption_keys.rsi
-    state: med_cypherkey
-
-- type: entity
-  parent: EncryptionKey
-  id: EncryptionKeyCMO
-  name: chief medical officer encryption key
-  description: An encryption key used by the head of the medical department.
-  components:
-  - type: EncryptionKey
-    channels:
-    - Common
-    - Command
-    - Medical
-    defaultChannel: Medical
-  - type: Sprite
-    sprite: Objects/Devices/encryption_keys.rsi
-    state: cmo_cypherkey
+    layers:
+    - state: crypt_gray
+    - state: med_label
 
 - type: entity
   parent: EncryptionKey
@@ -171,13 +132,13 @@
   components:
   - type: EncryptionKey
     channels:
-    - Common
     - Medical
     - Science
     defaultChannel: Science
   - type: Sprite
-    sprite: Objects/Devices/encryption_keys.rsi
-    state: medsci_cypherkey
+    layers:
+    - state: crypt_gray
+    - state: medsci_label
 
 - type: entity
   parent: EncryptionKey
@@ -187,12 +148,12 @@
   components:
   - type: EncryptionKey
     channels:
-    - Common
     - Science
     defaultChannel: Science
   - type: Sprite
-    sprite: Objects/Devices/encryption_keys.rsi
-    state: sci_cypherkey
+    layers:
+    - state: crypt_gray
+    - state: sci_label
 
 - type: entity
   parent: EncryptionKey
@@ -202,28 +163,12 @@
   components:
   - type: EncryptionKey
     channels:
-    - Common
     - Science
     defaultChannel: Science
   - type: Sprite
-    sprite: Objects/Devices/encryption_keys.rsi
-    state: rob_cypherkey
-
-- type: entity
-  parent: EncryptionKey
-  id: EncryptionKeyRD
-  name: research director's encryption key
-  description: An encryption key used by the head of the science department. Looks like it's been chewed on.
-  components:
-  - type: EncryptionKey
-    channels:
-    - Common
-    - Command
-    - Science
-    defaultChannel: Science
-  - type: Sprite
-    sprite: Objects/Devices/encryption_keys.rsi
-    state: rd_cypherkey
+    layers:
+    - state: crypt_gray
+    - state: robotics_label
 
 - type: entity
   parent: EncryptionKey
@@ -233,28 +178,12 @@
   components:
   - type: EncryptionKey
     channels:
-    - Common
     - Security
     defaultChannel: Security
   - type: Sprite
-    sprite: Objects/Devices/encryption_keys.rsi
-    state: sec_cypherkey
-
-- type: entity
-  parent: EncryptionKey
-  id: EncryptionKeyHOS
-  name: head of security encryption key
-  description: An encryption key used by the boss of security.
-  components:
-  - type: EncryptionKey
-    channels:
-    - Common
-    - Command
-    - Security
-    defaultChannel: Security
-  - type: Sprite
-    sprite: Objects/Devices/encryption_keys.rsi
-    state: hos_cypherkey
+    layers:
+    - state: crypt_gray
+    - state: sec_label
 
 - type: entity
   parent: EncryptionKey
@@ -264,12 +193,12 @@
   components:
   - type: EncryptionKey
     channels:
-    - Common
     - Service
     defaultChannel: Service
   - type: Sprite
-    sprite: Objects/Devices/encryption_keys.rsi
-    state: srv_cypherkey
+    layers:
+    - state: crypt_gray
+    - state: service_label
 
 - type: entity
   parent: EncryptionKey
@@ -282,5 +211,6 @@
     - Syndicate
     defaultChannel: Syndicate
   - type: Sprite
-    sprite: Objects/Devices/encryption_keys.rsi
-    state: syn_cypherkey
+    layers:
+    - state: crypt_red
+    - state: synd_label

@@ -1,4 +1,5 @@
 using Content.Shared.StepTrigger.Systems;
+using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -39,6 +40,12 @@ public sealed class StepTriggerComponent : Component
     /// </summary>
     [DataField("requiredTriggeredSpeed")]
     public float RequiredTriggerSpeed = 3.5f;
+
+    /// <summary>
+    /// If any entities occupy the blacklist on the same tile then steptrigger won't work.
+    /// </summary>
+    [DataField("blacklist")]
+    public EntityWhitelist? Blacklist;
 }
 
 [RegisterComponent]

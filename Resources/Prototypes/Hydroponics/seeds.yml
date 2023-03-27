@@ -125,6 +125,56 @@
       PotencyDivisor: 25
 
 - type: seed
+  id: lime
+  name: seeds-lime-name
+  noun: seeds-noun-seeds
+  displayName: seeds-lime-display-name
+  plantRsi: Objects/Specific/Hydroponics/lime.rsi
+  productPrototypes:
+    - FoodLime
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 6
+  production: 6
+  yield: 4
+  potency: 10
+  idealLight: 8
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: orange
+  name: seeds-orange-name
+  noun: seeds-noun-seeds
+  displayName: seeds-orange-display-name
+  plantRsi: Objects/Specific/Hydroponics/orange.rsi
+  productPrototypes:
+    - FoodOrange
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 6
+  production: 6
+  yield: 4
+  potency: 10
+  idealLight: 8
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
   id: pineapple
   name: seeds-pineapple-name
   noun: seeds-noun-seeds

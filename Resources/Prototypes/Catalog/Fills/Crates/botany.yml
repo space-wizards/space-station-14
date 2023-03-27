@@ -91,6 +91,10 @@
         amount: 1
       - id: LemonSeeds
         amount: 1
+      - id: LimeSeeds
+        amount: 1
+      - id: OrangeSeeds
+        amount: 1
       - id: OatSeeds
         amount: 1
       - id: OnionSeeds

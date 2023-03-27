@@ -85,6 +85,26 @@
 
 - type: entity
   parent: SeedBase
+  name: packet of lime seeds
+  id: LimeSeeds
+  components:
+    - type: Seed
+      seedId: lime
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/lime.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of orange seeds
+  id: OrangeSeeds
+  components:
+    - type: Seed
+      seedId: orange
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/orange.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of pineapple seeds
   id: PineappleSeeds
   components:

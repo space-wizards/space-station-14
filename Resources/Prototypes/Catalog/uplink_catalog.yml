@@ -142,6 +142,26 @@
   categories:
   - UplinkExplosives
 
+- type: listing
+  id: UplinkEmpGrenade
+  name: uplink-emp-grenade-name
+  description: uplink-emp-grenade-desc
+  productEntity: EmpGrenade
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkExplosives
+
+- type: listing
+  id: UplinkExplodingPen
+  name: uplink-exploding-pen-name
+  description: uplink-exploding-pen-desc
+  productEntity: PenExploding
+  cost:
+    Telecrystal: 5
+  categories:
+  - UplinkExplosives
+
 # Ammo
 
 - type: listing
@@ -304,9 +324,9 @@
   id: UplinkVoiceMask
   name: uplink-voice-mask-name
   description: uplink-voice-mask-desc
-  productEntity: ClothingMaskGasVoiceMasker
+  productEntity: ClothingMaskGasVoiceChameleon
   cost:
-    Telecrystal: 4
+    Telecrystal: 6
   categories:
   - UplinkUtility
 
@@ -558,7 +578,7 @@
     blacklist:
       components:
       - SurplusBundle
-  
+
 - type: listing
   id: uplinkRevolverCapGunFake
   name: uplink-revolver-cap-gun-fake-name
@@ -740,7 +760,7 @@
     Telecrystal: 8
   categories:
   - UplinkMisc
-  
+
 - type: listing
   id: UplinkStimkit
   name: uplink-stimkit-name
@@ -750,7 +770,7 @@
     Telecrystal: 12
   categories:
   - UplinkMisc
-  
+
 - type: listing
   id: UplinkStimpackExperimental
   name: uplink-experimental-stimpack-name

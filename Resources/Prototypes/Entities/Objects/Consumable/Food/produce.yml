@@ -324,6 +324,44 @@
         Quantity: 10
 
 - type: entity
+  name: lime
+  parent: FoodLemon
+  id: FoodLime
+  description: Cures Space Scurvy, allows you to act like a Space Pirate.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - sour
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/lime.rsi
+  - type: Produce
+    seedId: lime
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceLime
+        Quantity: 10
+
+- type: entity
+  name: orange
+  parent: FoodLemon
+  id: FoodOrange
+  description: Healthy, very orange.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - orange
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/orange.rsi
+  - type: Produce
+    seedId: orange
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceOrange
+        Quantity: 10
+
+- type: entity
   name: pineapple
   parent: FoodProduceBase
   id: FoodPineapple

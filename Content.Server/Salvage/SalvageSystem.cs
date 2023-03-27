@@ -16,29 +16,45 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Server.Cargo.Systems;
+using Content.Server.NPC.Pathfinding;
+using Content.Server.Parallax;
+using Content.Server.Procedural;
+using Content.Server.Station.Systems;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Salvage
 {
-    public sealed class SalvageSystem : EntitySystem
+    public sealed partial class SalvageSystem : SharedSalvageSystem
     {
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly BiomeSystem _biome = default!;
+        [Dependency] private readonly CargoSystem _cargo = default!;
+        [Dependency] private readonly DungeonSystem _dungeon = default!;
         [Dependency] private readonly MapLoaderSystem _map = default!;
+        [Dependency] private readonly PathfindingSystem _pathfinding = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly RadioSystem _radioSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+        [Dependency] private readonly StationSystem _station = default!;
+        [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
         private static readonly int SalvageLocationPlaceAttempts = 16;
 
         // TODO: This is probably not compatible with multi-station
         private readonly Dictionary<EntityUid, SalvageGridState> _salvageGridStates = new();
 
+        private ISawmill _sawmill = default!;
+
         public override void Initialize()
         {
             base.Initialize();
 
+            _sawmill = Logger.GetSawmill("salvage");
             SubscribeLocalEvent<SalvageMagnetComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<SalvageMagnetComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<SalvageMagnetComponent, ComponentShutdown>(OnMagnetRemoval);

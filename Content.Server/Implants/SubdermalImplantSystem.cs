@@ -1,4 +1,5 @@
-﻿using Content.Server.Cuffs.Components;
+﻿using Content.Server.Cuffs;
+using Content.Shared.Cuffs.Components;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction.Events;
@@ -9,6 +10,7 @@ namespace Content.Server.Implants;
 
 public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 {
+    [Dependency] private readonly CuffableSystem _cuffable = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
 
     public override void Initialize()
@@ -26,10 +28,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         if (!TryComp<CuffableComponent>(component.ImplantedEntity, out var cuffs) || cuffs.Container.ContainedEntities.Count < 1)
             return;
 
-        if (TryComp<HandcuffComponent>(cuffs.LastAddedCuffs, out var cuff))
-        {
-            cuffs.Uncuff(component.ImplantedEntity.Value, cuffs.LastAddedCuffs, cuff, true);
-        }
+        _cuffable.Uncuff(component.ImplantedEntity.Value, cuffs.LastAddedCuffs, cuffs.LastAddedCuffs);
     }
 
     #region Relays
