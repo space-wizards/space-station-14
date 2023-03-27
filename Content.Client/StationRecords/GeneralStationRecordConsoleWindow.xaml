@@ -5,9 +5,9 @@
         <!-- filter for finger prints -->
         <BoxContainer Margin="5" HorizontalExpand="true" VerticalAlignment="Center">
             <LineEdit Name="RecordListinFingerPrintsLine" StyleClasses="actionSearchBox"
-                PlaceHolder="{Loc 'set-fingerprint-code'}" HorizontalExpand="True"/>
-            <Button Name="RecordListingFingerPrintsFilter" Text="{Loc Filter}"/>
-            <Button Name="RecordListingFingerPrintsReset" Text="{Loc Reset}"/>
+                PlaceHolder="{Loc 'general-station-record-console-set-fingerprint-code'}" HorizontalExpand="True"/>
+            <Button Name="RecordListingFingerPrintsFilter" Text="{Loc 'general-station-record-console-search-records'}"/>
+            <Button Name="RecordListingFingerPrintsReset" Text="{Loc 'general-station-record-console-reset-filters'}"/>
         </BoxContainer>
         <BoxContainer VerticalExpand="True">
             <!-- Record listing -->
