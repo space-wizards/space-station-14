@@ -2,8 +2,9 @@
                Title="{Loc 'general-station-record-console-window-title'}"
                MinSize="750 500">
     <BoxContainer Orientation="Vertical">
+        <!-- filter for finger prints -->
         <BoxContainer Margin="5" HorizontalExpand="true" VerticalAlignment="Center">
-            <LineEdit Name="RecordListinFingerPrintsLine"
+            <LineEdit Name="RecordListinFingerPrintsLine" StyleClasses="actionSearchBox"
                 PlaceHolder="{Loc 'set-fingerprint-code'}" HorizontalExpand="True"/>
             <Button Name="RecordListingFingerPrintsFilter" Text="{Loc Filter}"/>
             <Button Name="RecordListingFingerPrintsReset" Text="{Loc Reset}"/>
