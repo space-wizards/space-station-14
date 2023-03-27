@@ -52,3 +52,8 @@ public sealed class SelectGeneralStationRecord : BoundUserInterfaceMessage
         SelectedKey = selectedKey;
     }
 }
+
+[Serializable, NetSerializable]
+public sealed class StationRecordArrestButtonPressed : BoundUserInterfaceMessage
+{
+}

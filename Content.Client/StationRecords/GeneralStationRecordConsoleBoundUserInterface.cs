@@ -19,6 +19,8 @@ public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInt
         _window.OnClose += Close;
 
         _window.OpenCentered();
+
+        _window.OnArrestButtonPressed += _ => SendMessage(new StationRecordArrestButtonPressed());
     }
 
     private void OnKeySelected(StationRecordKey? key)
