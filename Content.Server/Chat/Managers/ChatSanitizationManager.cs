@@ -1,5 +1,9 @@
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 
@@ -60,6 +64,8 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         { ":\\", "chatsan-uncertain" },
         { "lmao", "chatsan-laughs" },
         { "lmao.", "chatsan-laughs" },
+        { "lmfao", "chatsan-laughs" },
+        { "lmfao.", "chatsan-laughs" },
         { "lol", "chatsan-laughs" },
         { "lol.", "chatsan-laughs" },
         { "lel", "chatsan-laughs" },
@@ -80,6 +86,7 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
 
     public bool TrySanitizeOutSmilies(string input, EntityUid speaker, out string sanitized, [NotNullWhen(true)] out string? emote)
     {
+        //Don't do anything if sanitization is disabled
         if (!_doSanitize)
         {
             sanitized = input;
@@ -88,17 +95,35 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         }
 
         input = input.TrimEnd();
+        string removedWord = "";
+        sanitized = input;
 
-        foreach (var (smiley, replacement) in SmileyToEmote)
+        //Go through the dictionary, remove matches and store the last replaced word's replacement
+        foreach (KeyValuePair<string, string> entry in SmileyToEmote)
         {
-            if (input.EndsWith(smiley, true, CultureInfo.InvariantCulture))
+            string pattern = Regex.Escape(entry.Key);
+            string replacement = "";
+            if (Regex.IsMatch(sanitized, pattern, RegexOptions.IgnoreCase))
             {
-                sanitized = input.Remove(input.Length - smiley.Length).TrimEnd();
-                emote = Loc.GetString(replacement, ("ent", speaker));
-                return true;
+                removedWord = entry.Value;
+                sanitized = Regex.Replace(sanitized, pattern, replacement, RegexOptions.IgnoreCase);
             }
         }
 
+        //If words were replaced play the emote for the smiley that was deleted and clean up the message
+        emote = removedWord;
+        if (emote != "")
+        {
+            sanitized = Regex.Replace(sanitized, @"\s+", " ");
+            sanitized = sanitized.Trim();
+            if (sanitized != "")
+            {
+                sanitized = Char.ToUpper(sanitized[0]).ToString() + sanitized.Substring(1);
+            }
+            emote = Loc.GetString(emote, ("ent", speaker));
+            return true;
+        }
+        //If no words were replaced return the original message
         sanitized = input;
         emote = null;
         return false;
