@@ -17,10 +17,11 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
+using Content.Shared.StatusEffect;
+using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
-using Content.Shared.StatusEffect;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -39,6 +40,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
     [Dependency] private readonly ExamineSystem _examine = default!;
     [Dependency] private readonly LagCompensationSystem _lag = default!;
     [Dependency] private readonly SolutionContainerSystem _solutions = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
     public override void Initialize()
     {
@@ -243,6 +245,10 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         foreach (var entity in args.HitEntities)
         {
             if (Deleted(entity))
+                continue;
+
+            // prevent deathnettles injecting through hardsuits
+            if (!comp.PierceArmor && _tag.HasTag(entity, "HardusitOn"))
                 continue;
 
             if (bloodQuery.TryGetComponent(entity, out var bloodstream))
