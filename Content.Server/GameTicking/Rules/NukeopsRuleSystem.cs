@@ -32,6 +32,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.GameTicking;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -156,7 +157,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         SubscribeLocalEvent<RulePlayerSpawningEvent>(OnPlayersSpawning);
         SubscribeLocalEvent<NukeOperativeComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
-        SubscribeLocalEvent<RoundEndSystemChangedEvent>(OnRoundEndEvent);
         SubscribeLocalEvent<NukeExplodedEvent>(OnNukeExploded);
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
         SubscribeLocalEvent<NukeDisarmSuccessEvent>(OnNukeDisarm);
@@ -272,19 +272,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
 
         _audioSystem.PlayGlobal(_nukeopsRuleConfig.GreetSound, filter, recordReplay: false);
-    }
-
-    /// <summary>
-    /// Resets any variables that can/have been changed.
-    /// </summary>
-    private void OnRoundEndEvent(RoundEndSystemChangedEvent ev)
-    {
-        if (!RuleAdded)
-            return;
-
-        _nukeopsRuleConfig.EndsRound = true;
-        _nukeopsRuleConfig.SpawnOutpost = true;
-        _nukeopsRuleConfig.CanLoneOpsSpawn = true;
     }
 
     private void OnRoundEnd()
@@ -905,5 +892,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             SpawnOperativesForGhostRoles();
     }
 
-    public override void Ended() { }
+    public override void Ended()
+    {
+        _nukeopsRuleConfig.EndsRound = true;
+        _nukeopsRuleConfig.SpawnOutpost = true;
+        _nukeopsRuleConfig.CanLoneOpsSpawn = true;
+    }
 }
