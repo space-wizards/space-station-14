@@ -93,6 +93,10 @@
   - type: Sprite
     state: advanced
   - type: Item
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 12
     heldPrefix: advanced
 
 - type: entity
@@ -218,7 +222,7 @@
     attackRate: 1.5
     damage:
       groups:
-        Brute: 10
+        Brute: 15
     soundHit:
       path: /Audio/Items/drill_hit.ogg
   - type: Tool
