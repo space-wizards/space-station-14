@@ -171,7 +171,6 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
     private bool CheckFingerPrint(string print = "")
     {
         string lowerCasePrints = print.ToLower();
-        Logger.Debug($"print {lowerCasePrints}, savePrint {_fingerPrintsFilter}");
         return lowerCasePrints.StartsWith(_fingerPrintsFilter);
     }
 }
