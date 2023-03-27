@@ -1,6 +1,6 @@
 - type: entity
   name: pinpointer
-  description: A handheld tracking device that locks onto certain signals.
+  description: A handheld tracking device. While typically far more capable, this one has been configured to lock onto certain signals.
   parent: BaseItem
   id: PinpointerBase
   abstract: true
