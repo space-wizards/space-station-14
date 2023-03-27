@@ -74,6 +74,8 @@
     containers:
       toggleable-clothing: !type:ContainerSlot {}
   - type: GroupExamine
+  - type: ClothingGrantTag
+    tag: HardsuitOn
 
 - type: entity
   abstract: true
