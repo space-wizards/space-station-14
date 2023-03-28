@@ -6,17 +6,13 @@ namespace Content.Server.Shuttles.Events;
 /// Raised when shuttle console tries to FTL to other map. Can be cancelled.
 /// </summary>
 [ByRefEvent]
-public struct ShuttleConsoleFTLTravelAttemptEvent
+public record struct ShuttleConsoleFTLTravelAttemptEvent
 {
     public bool Cancelled = false;
     public EntityUid Uid;
-    public ShuttleConsoleComponent Component;
-    public EntityUid Destination;
     public string? Reason;
-    public ShuttleConsoleFTLTravelAttemptEvent(EntityUid uid, ShuttleConsoleComponent component, EntityUid dest)
+    public ShuttleConsoleFTLTravelAttemptEvent(EntityUid uid)
     {
         Uid = uid;
-        Component = component;
-        Destination = dest;
     }
 }

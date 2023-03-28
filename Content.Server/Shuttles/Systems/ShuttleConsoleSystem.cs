@@ -108,13 +108,14 @@ public sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
             return;
         }
 
-        var ev = new ShuttleConsoleFTLTravelAttemptEvent(uid, component, args.Destination);
-            RaiseLocalEvent(ref ev);
-            if (ev.Cancelled)
-            {
-                _popup.PopupCursor(ev.Reason ?? Loc.GetString("shuttle-console-unavailable"), args.Session);
-                return;
-            }
+        var ev = new ShuttleConsoleFTLTravelAttemptEvent(uid);
+        RaiseLocalEvent(ref ev);
+
+        if (ev.Cancelled)
+        {
+            _popup.PopupCursor(ev.Reason ?? Loc.GetString("shuttle-console-unavailable"), args.Session);
+            return;
+        }
 
         var dock = HasComp<MapComponent>(args.Destination) && HasComp<MapGridComponent>(args.Destination);
         var tagEv = new FTLTagEvent();

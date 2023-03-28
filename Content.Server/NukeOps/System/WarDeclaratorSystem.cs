@@ -33,7 +33,7 @@ namespace Content.Server.NukeOps
 
         private void OnComponentInit(EntityUid uid, WarDeclaratorComponent comp, ComponentInit args)
         {
-            comp.Message = Loc.GetString(comp.DefaultMessage);
+            comp.Message = Loc.GetString(comp.Message);
             DirtyUI(uid, comp);
         }
 

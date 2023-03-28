@@ -307,6 +307,9 @@ namespace Content.Server.Communications
         }
     }
 
+    /// <summary>
+    /// Raised on announcement
+    /// </summary>
     [ByRefEvent]
     public record struct CommunicationConsoleAnnouncementEvent
     {
@@ -324,6 +327,9 @@ namespace Content.Server.Communications
         }
     }
 
+    /// <summary>
+    /// Raised on shuttle call attempt. Can be cancelled
+    /// </summary>
     [ByRefEvent]
     public record struct CommunicationConsoleCallShuttleAttemptEvent
     {

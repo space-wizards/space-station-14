@@ -42,6 +42,7 @@ using Robust.Shared.Utility;
 using Content.Server.NukeOps;
 using Content.Shared.NukeOps;
 using Content.Shared.Humanoid.Prototypes;
+using Content.Server.Shuttles.Events;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -200,9 +201,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     /// </summary>
     public WarConditionStatus GetWarCondition()
     {
-        if (!RuleAdded) return WarConditionStatus.NO_WAR_UNKNOWN;
-        
-        if (_nukeopsRuleConfig.EnableWarOps == false)
+        if (!RuleAdded || _nukeopsRuleConfig.EnableWarOps == false)
         {
             return WarConditionStatus.NO_WAR_UNKNOWN;
         }

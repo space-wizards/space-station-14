@@ -7,7 +7,7 @@ namespace Content.Shared.NukeOps
     /// Useful when there are multiple UI for an object. Here it's future-proofing only.
     /// </summary>
     [Serializable, NetSerializable]
-    public enum WarDeclaratorUiKey
+    public enum WarDeclaratorUiKey : byte
     {
         Key,
     }
