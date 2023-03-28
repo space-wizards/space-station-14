@@ -1,9 +1,4 @@
 Entries:
-- author: Stealthbomber16
-  changes:
-  - {message: Added wares to the Nutrimax and Kitchenware machines., type: Add}
-  id: 2776
-  time: '2022-12-20T02:48:13.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed a bug allowing players to control a moving cardboard box without
@@ -2928,3 +2923,8 @@ Entries:
       remote., type: Fix}
   id: 3275
   time: '2023-03-28T05:05:58.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Body bags no longer mispredict when folded while full., type: Fix}
+  id: 3276
+  time: '2023-03-28T05:43:36.0000000+00:00'
