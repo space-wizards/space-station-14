@@ -23,6 +23,8 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
 
         var doafterArgs = new DoAfterEventArgs(user, comp.DrainTime, target: target, used: uid)
         {
+            RaiseOnUser = false,
+            RaiseOnTarget = false,
             BreakOnDamage = true,
             BreakOnStun = true,
             BreakOnUserMove = true,
