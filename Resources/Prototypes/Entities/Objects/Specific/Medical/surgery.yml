@@ -93,11 +93,11 @@
   - type: Sprite
     state: advanced
   - type: Item
+    heldPrefix: advanced
   - type: MeleeWeapon
     damage:
       types:
         Slash: 12
-    heldPrefix: advanced
 
 - type: entity
   name: laser scalpel
