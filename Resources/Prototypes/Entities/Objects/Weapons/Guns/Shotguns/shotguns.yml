@@ -131,6 +131,14 @@
   - type: BallisticAmmoProvider
 
 - type: entity
+  parent: WeaponShotgunEnforcer
+  id: WeaponShotgunEnforcerBeanbag
+  suffix: Non-Lethal
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunBeanbag
+
+- type: entity
   name: Kammerer
   parent: BaseWeaponShotgun
   id: WeaponShotgunKammerer
