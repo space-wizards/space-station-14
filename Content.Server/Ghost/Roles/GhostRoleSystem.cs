@@ -202,9 +202,7 @@ namespace Content.Server.Ghost.Roles
         {
             if (!Resolve(roleUid, ref role)) return;
 
-            var contentData = player.ContentData();
-
-            DebugTools.AssertNotNull(contentData);
+            DebugTools.AssertNotNull(player.ContentData());
 
             var newMind = _mindSystem.CreateMind(player.UserId,
                 EntityManager.GetComponent<MetaDataComponent>(mob).EntityName);
