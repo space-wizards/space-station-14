@@ -8,9 +8,9 @@
   - id: Extraction
   - id: Incision
     behavior: !type:OrganSelection
+  - id: Cauterization
   effect:
     !type:OrganExtractionEffect
   parts:
   - Torso
   - Head
-  hidden: true # TODO SURGERY
