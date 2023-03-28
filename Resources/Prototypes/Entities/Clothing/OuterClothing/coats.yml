@@ -203,4 +203,20 @@
     sprite: Clothing/OuterClothing/Coats/windbreaker_paramedic.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/windbreaker_paramedic.rsi
-    
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterHakama
+  name: samurai hakama
+  description: Hakama is a type of traditional Japanese clothing that is often associated with samurai. These are wide trousers that are tied at the waist with a long wide belt called an obi. The hakama is made of heavy, durable fabric, it is practical and stylish. It is decorated with intricate patterns and embroidery on the back.
+  components:
+  - type: Sprite
+    sprite: Clothing\OuterClothing\Coats\hakama.rsi
+  - type: Clothing
+    sprite: Clothing\OuterClothing\Coats\hakama.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.9
