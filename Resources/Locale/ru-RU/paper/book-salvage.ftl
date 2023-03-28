@@ -1,8 +1,8 @@
 book-text-demonomicon1 =
-   Как призвать демона
-    - написано J.G. Wizgerald
+    Как призвать демона
+     - написано J.G. Wizgerald
     
-    1. todo: дописать гайд по призыву демона
+     1. todo: дописать гайд по призыву демона
 book-text-demonomicon2 =
     Как призвать лемона
     - написано J.G. Wizgerald

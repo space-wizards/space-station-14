@@ -22,6 +22,7 @@ petting-success-tarantula = Вы гладите { $target } по его мале
 petting-success-holo = Вы гладите { $target } по его металлической шипастой голове.
 petting-success-dragon = Уворачиваясь от клыков, когтей, и пламени, вы гладите { $target } по его огромной чешуйчатой голове.
 petting-success-hamster = Вы гладите { $target } по его пушистой маленькой головке.
+petting-success-bear = Вы неохотно гладите { $target } по его мистической голове.
 petting-failure-generic = Вы тянетесь погладить { $target }, но { $target } настороженно уклоняется от вас.
 petting-failure-bat = Вы тянетесь погладить { $target }, но { $target } очень трудно поймать!
 petting-failure-corrupted-corgi = Вы тянетесь погладить { $target }, но решаете, что лучше не надо.
@@ -33,6 +34,7 @@ petting-failure-sloth = Вы тянетесь погладить { $target }, н
 petting-failure-holo = Вы тянетесь погладить { $target }, но { $target } едва не пронзает шипами вашу руку!
 petting-failure-dragon = Вы поднимаете руку, но { $target } издаёт рёв, и вы решаете, что не хотите стать кормом для карпов.
 petting-failure-hamster = Вы тянетесь погладить { $target }, но { $target } пытается укусить ваш палец и только ваши быстрые рефлексы спасают от этой почти смертельной травмы.
+petting-failure-bear = Вы протягиваете руку, чтобы погладить { $target }, но { $target } рычит, заставляя вас дважды подумать.
 
 ## Knocking on windows
 

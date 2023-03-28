@@ -19,3 +19,6 @@ ent-CrateMaterialPlasteel = ящик листов пластали
 ent-CrateMaterialPlasma = ящик твёрдой плазмы
     .desc = 90 листов плазмы.
     .suffix = { "" }
+ent-CrateMaterialCardboard = ящик картона
+    .desc = 60 листов картона.
+    .suffix = { "" }
