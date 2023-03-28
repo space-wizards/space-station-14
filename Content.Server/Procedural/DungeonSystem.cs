@@ -40,6 +40,8 @@ public sealed partial class DungeonSystem : EntitySystem
         base.Initialize();
         _sawmill = Logger.GetSawmill("dungen");
         _console.RegisterCommand("dungen", Loc.GetString("cmd-dungen-desc"), Loc.GetString("cmd-dungen-help"), GenerateDungeon, CompletionCallback);
+        _console.RegisterCommand("dungen_preset_vis", Loc.GetString("cmd-dungenvis-desc"), Loc.GetString("cmd-dungenvis-help"), DungeonPresetVis, PresetCallback);
+        _console.RegisterCommand("dungen_pack_vis", Loc.GetString("cmd-dungenvis-desc"), Loc.GetString("cmd-dungenvis-help"), DungeonPackVis, PackCallback);
         _prototype.PrototypesReloaded += PrototypeReload;
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
     }
