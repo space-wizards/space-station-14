@@ -50,7 +50,7 @@ namespace Content.Server.Damage.Systems
 
             if (TryComp<DamageableComponent>(uid, out var damageable))
             {
-                godmode.OldDamage = damageable.Damage;
+                godmode.OldDamage = new(damageable.Damage);
             }
 
             // Rejuv to cover other stuff
