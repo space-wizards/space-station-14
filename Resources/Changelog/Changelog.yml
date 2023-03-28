@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: RCD is once again printable at protolathes. Unlock it in the Rapid Upgrades
-      tech., type: Add}
-  - {message: Freshly-printed RCDs now start with 0 charges., type: Tweak}
-  id: 2778
-  time: '2022-12-20T03:37:40.0000000+00:00'
 - author: checkraze
   changes:
   - {message: Added new parallax and intercoms to Kettle, type: Add}
@@ -2928,3 +2921,9 @@ Entries:
     type: Fix}
   id: 3277
   time: '2023-03-28T11:58:14.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Changed the ahelp relay message to always be displayed at the bottom
+      of the window when the relay is enabled., type: Tweak}
+  id: 3278
+  time: '2023-03-28T21:27:22.0000000+00:00'
