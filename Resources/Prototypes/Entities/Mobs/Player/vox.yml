@@ -11,7 +11,7 @@
       interactSuccessString: hugging-success-generic
       interactSuccessSound: /Audio/Effects/thudswoosh.ogg
       messagePerceivedByOthers: hugging-success-generic-others
-    - type: MindContainer
+    - type: Mind
       showExamineInfo: true
     - type: Input
       context: "human"
@@ -32,3 +32,4 @@
       damageRecovery:
         types:
           Asphyxiation: -1.0
+

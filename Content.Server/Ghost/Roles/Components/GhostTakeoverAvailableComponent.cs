@@ -17,7 +17,7 @@ namespace Content.Server.Ghost.Roles.Components
 
             Taken = true;
 
-            var mind = Owner.EnsureComponent<MindContainerComponent>();
+            var mind = Owner.EnsureComponent<MindComponent>();
 
             if (mind.HasMind)
                 return false;

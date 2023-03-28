@@ -6,6 +6,17 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: medicine
   color: "#081a80"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:GenericStatusEffect
+        key: Stutter
+        component: ScrambledAccent
+    Alcohol:
+      effects:
+      - !type:Drunk
+        slurSpeech: false
+        boozePower: 20
 
 - type: reagent
   id: Dylovene

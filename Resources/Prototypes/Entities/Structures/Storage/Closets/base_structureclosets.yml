@@ -86,6 +86,8 @@
   - type: Weldable
   - type: WallMount
     arc: 180
+  - type: StaticPrice
+    price: 50
   - type: Transform
     noRot: false
   - type: Sprite
