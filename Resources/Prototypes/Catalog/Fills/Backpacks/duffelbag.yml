@@ -12,6 +12,7 @@
       - id: Cautery
       - id: Retractor
       - id: Scalpel
+      - id: Drapes
 
 - type: entity
   id: ClothingBackpackDuffelCBURN
@@ -43,6 +44,7 @@
       - id: Cautery
       - id: Retractor
       - id: ScalpelAdvanced
+      - id: Drapes
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmoBundle
@@ -274,6 +276,7 @@
       - id: Cautery
       - id: Retractor
       - id: ScalpelAdvanced
+      - id: Drapes
       - id: BoxSurvivalSyndicate
       - id: CombatKnife
       - id: WeaponPistolViper

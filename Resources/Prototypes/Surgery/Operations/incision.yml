@@ -1,0 +1,33 @@
+- type: surgeryOperation
+  id: OpenIncision
+  name: Making an Incision
+  description: The first step of most surgeries.
+  steps:
+  - id: Incision
+  - id: VesselCompression
+  - id: Retraction
+  parts:
+  - Torso
+  - Head
+  - Arm
+  - Hand
+  - Leg
+  - Foot
+  - Tail
+  hidden: true
+
+- type: surgeryOperation
+  id: CloseIncision
+  name: Closing an Incision
+  description: The last step of most surgeries.
+  steps:
+  - id: Cauterization
+  parts:
+  - Torso
+  - Head
+  - Arm
+  - Hand
+  - Leg
+  - Foot
+  - Tail
+  hidden: true

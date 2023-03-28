@@ -1,0 +1,19 @@
+- type: surgeryOperation
+  id: Amputation
+  name: Amputation
+  description: Removing a limb or a limb stump.
+  steps:
+  - id: Incision
+  - id: VesselCompression
+  - id: Retraction
+  - id: Amputation
+  - id: Cauterization
+  effect:
+    !type:AmputationEffect
+  parts:
+  - Head
+  - Arm
+  - Hand
+  - Leg
+  - Foot
+  - Tail

@@ -1,0 +1,9 @@
+
+<Control xmlns="https://spacestation14.io"
+         xmlns:cc="clr-namespace:Content.Client.UserInterface.Controls">
+    <BoxContainer Orientation="Vertical">
+        <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
+            <ItemList Name="TargetsList"/>
+        </ScrollContainer>
+    </BoxContainer>
+</Control>

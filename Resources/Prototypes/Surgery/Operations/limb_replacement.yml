@@ -1,0 +1,18 @@
+- type: surgeryOperation
+  id: LimbReplacement
+  name: Limb Replacement
+  description: Replacing missing limbs or severed heads.
+  steps:
+  - id: Amputation
+    conditional: !type:StumpConditional
+  - id: LimbAttachment
+  - id: VesselCompression
+  effect:
+    !type:LimbReplacementEffect
+  parts:
+  - Head
+  - Arm
+  - Hand
+  - Leg
+  - Foot
+  - Tail

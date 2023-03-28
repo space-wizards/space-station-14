@@ -1,0 +1,18 @@
+- type: surgeryOperation
+  id: OrganRepair
+  name: Organ Repair
+  description: Mending damaged eyes, collapsed lungs, or other organ damage.
+  steps:
+  - id: Incision
+  - id: Bonesaw
+  - id: OrganMending
+  - id: BoneGel
+  - id: BoneSetter
+  - id: BoneGel
+  - id: Cauterization
+  effect:
+    !type:OrganRepairEffect
+  parts:
+  - Torso
+  - Head
+  hidden: true # TODO SURGERY

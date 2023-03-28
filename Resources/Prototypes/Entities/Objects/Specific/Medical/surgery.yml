@@ -10,6 +10,25 @@
   - type: StaticPrice
     price: 60
 
+# Drapes
+
+- type: entity
+  name: drapes
+  id: Drapes
+  parent: BaseToolSurgery
+  description: Blue sterile sheets used to prepare patients for surgery.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/drapes.rsi
+    state: drapes
+  - type: Item
+    sprite: Objects/Specific/Medical/Surgery/drapes.rsi
+  - type: SurgeryDrapes
+  - type: UserInterface
+    interfaces:
+    - key: enum.SurgeryUiKey.Key
+      type: SurgeryBoundUserInterface
+
 # Cautery
 
 - type: entity
@@ -24,6 +43,11 @@
   - type: Item
     sprite: Objects/Specific/Medical/Surgery/cautery.rsi
   - type: ItemCooldown
+  - type: SurgeryTool
+    steps:
+    - Cauterization
+    delay: 3
+  - type: Cautery
 
 # Drill
 
@@ -45,6 +69,10 @@
         Piercing: 10
     soundHit:
       path: /Audio/Items/drill_hit.ogg
+  - type: SurgeryTool
+    steps:
+    - Drilling
+    delay: 3
 
 # Scalpel
 
@@ -58,7 +86,7 @@
     butcherDelayModifier: 1.5 # Butchering with a scalpel, regardless of the type, will take 50% longer
   - type: Utensil
     types:
-      - Knife
+    - Knife
   - type: Sprite
     sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
     state: scalpel
@@ -72,6 +100,10 @@
         Slash: 8
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
+  - type: SurgeryTool
+    steps:
+    - Incision
+    delay: 5
 
 - type: entity
   name: shiv
@@ -83,6 +115,10 @@
     state: shiv
   - type: Item
     heldPrefix: shiv
+  - type: SurgeryTool
+    steps:
+    - Incision
+    delay: 8
 
 - type: entity
   name: advanced scalpel
@@ -94,10 +130,17 @@
     state: advanced
   - type: Item
     heldPrefix: advanced
+<<<<<<< Updated upstream
   - type: MeleeWeapon
     damage:
       types:
         Slash: 12
+=======
+  - type: SurgeryTool
+    steps:
+    - Incision
+    delay: 4
+>>>>>>> Stashed changes
 
 - type: entity
   name: laser scalpel
@@ -109,6 +152,10 @@
     state: laser
   - type: Item
     heldPrefix: laser
+  - type: SurgeryTool
+    steps:
+    - Incision
+    delay: 2
 
 # Scissors
 
@@ -124,6 +171,10 @@
   - type: Item
     sprite: Objects/Specific/Medical/Surgery/scissors.rsi
   - type: ItemCooldown
+  - type: SurgeryTool
+    steps:
+    - Retraction
+    delay: 3
 
 - type: entity
   name: hemostat
@@ -135,13 +186,26 @@
     state: hemostat
   - type: Item
     heldPrefix: hemostat
+  - type: SurgeryTool
+    steps:
+    - VesselCompression
+    delay: 3
 
-  # - type: entity
-  #   name: bone setter
-  #   id: BoneSetter
-  #   parent: Retractor
-  #   description: A surgical tool used for setting bones.
-  #   components:
+- type: entity
+  name: bone setter
+  id: BoneSetter
+  parent: Retractor
+  description: A surgical tool used for setting bones.
+  components:
+  - type: Sprite
+    state: setter
+  - type: Item
+    heldPrefix: setter
+  - type: SurgeryTool
+    steps:
+    - Setting
+    # TODO: get actual number not pulled out of thin air
+    delay: 6
 # Saws
 
 - type: entity
@@ -153,7 +217,7 @@
   - type: Sharp
   - type: Utensil
     types:
-      - Knife
+    - Knife
   - type: Sprite
     sprite: Objects/Specific/Medical/Surgery/saw.rsi
     state: saw
@@ -162,8 +226,12 @@
   - type: ItemCooldown
   - type: Tool
     qualities:
-      - Sawing
+    - Sawing
     speed: 1.0
+  - type: SurgeryTool
+    steps:
+    - Amputation
+    delay: 6
 # No melee for regular saw because have you ever seen someone use a band saw as a weapon? It's dumb.
 
 - type: entity
@@ -186,6 +254,10 @@
     qualities:
       - Sawing
     speed: 0.5
+  - type: SurgeryTool
+    steps:
+    - Amputation
+    delay: 8
 
 - type: entity
   name: circular saw
@@ -207,6 +279,10 @@
     qualities:
       - Sawing
     speed: 1.5
+  - type: SurgeryTool
+    steps:
+    - Amputation
+    delay: 4
 
 - type: entity
   name: advanced circular saw
@@ -229,3 +305,7 @@
     qualities:
       - Sawing
     speed: 2.0
+  - type: SurgeryTool
+    steps:
+    - Amputation
+    delay: 2

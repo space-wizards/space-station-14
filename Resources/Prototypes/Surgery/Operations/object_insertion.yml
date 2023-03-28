@@ -1,0 +1,25 @@
+- type: surgeryOperation
+  id: ObjectInsertion
+  name: Cavity Surgery
+  description: Putting things inside peoples' body cavities.
+  steps:
+  - id: Incision
+  - id: Bonesaw
+  - id: Drilling
+  - id: Insertion
+  - id: FixOVein
+  - id: BoneGel
+  - id: BoneSetter
+  - id: BoneGel
+  - id: Cauterization
+  effect:
+    !type:ObjectInsertionEffect
+  parts:
+  - Torso
+  - Head
+  - Arm
+  - Hand
+  - Leg
+  - Foot
+  - Tail
+  hidden: true # TODO SURGERY

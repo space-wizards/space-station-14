@@ -1,0 +1,18 @@
+- type: surgeryOperation
+  id: Autopsy
+  name: Autopsy
+  description: Examination of cadavers to find cause of death.
+  steps:
+  - id: Incision
+  - id: Autopsy
+  effect:
+    !type:AutopsyEffect
+  parts:
+  - Torso
+  - Head
+  - Arm
+  - Hand
+  - Leg
+  - Foot
+  - Tail
+  hidden: true # TODO SURGERY: autopsy scanner item and system

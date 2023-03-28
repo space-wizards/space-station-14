@@ -61,6 +61,8 @@
         amount: 1
       - id: ClothingMaskSterile
         amount: 1
+      - id: Drapes
+        amount: 1
 
 - type: entity
   id: CrateMedicalScrubs
@@ -136,6 +138,7 @@
     contents:
       - id: MedkitRadiationFilled
         amount: 4
+<<<<<<< Updated upstream
 - type: entity
   id: CrateVirologyBiosuit
   parent: CrateMedicalSecure
@@ -148,3 +151,5 @@
         amount: 2
       - id: ClothingMaskSterile
         amount: 2
+=======
+>>>>>>> Stashed changes

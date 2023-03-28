@@ -1,0 +1,16 @@
+- type: surgeryOperation
+  id: OrganExtraction
+  name: Organ Extraction
+  description: Extracts an organ from a detached bodypart, such as a severed head.
+  steps:
+  - id: Incision
+  - id: Retraction
+  - id: Extraction
+  - id: Incision
+    behavior: !type:OrganSelection
+  effect:
+    !type:OrganExtractionEffect
+  parts:
+  - Torso
+  - Head
+  hidden: true # TODO SURGERY

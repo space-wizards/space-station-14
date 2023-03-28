@@ -1,0 +1,18 @@
+- type: surgeryOperation
+  id: ArteryRepair
+  name: Arterial Bleeding Repair
+  description: Repairs damaged arteries to fix internal bleeding.
+  steps:
+  - id: Incision
+  - id: FixOVein
+  - id: Cauterization
+  effect:
+    !type:ArteryRepairEffect
+  parts:
+  - Torso
+  - Head
+  - Arm
+  - Hand
+  - Leg
+  - Foot
+  - Tail
