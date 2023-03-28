@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Mining drills and power drills can now be printed at the protolathe.,
-    type: Add}
-  - {message: Thrusters and Gyroscopes can be built and upgraded., type: Add}
-  id: 2773
-  time: '2022-12-19T04:38:30.0000000+00:00'
 - author: Willhelm53
   changes:
   - {message: Fixed tomato and vomit splats losing their color/sprite., type: Fix}
@@ -2933,3 +2926,8 @@ Entries:
   - {message: Power Drills can now fit in utility belts, type: Tweak}
   id: 3272
   time: '2023-03-27T23:35:00.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: The top menu in separated hud will now stretch with chat size., type: Tweak}
+  id: 3273
+  time: '2023-03-28T02:51:40.0000000+00:00'
