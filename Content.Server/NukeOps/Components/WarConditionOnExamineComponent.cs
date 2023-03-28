@@ -1,4 +1,4 @@
-namespace Content.Server.NukeOps
+namespace Content.Server.NukeOps.Components
 {
     /// <summary>
     /// Shows information about war conditions on examine

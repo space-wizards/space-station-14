@@ -39,7 +39,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Server.NukeOps;
+using Content.Server.NukeOps.System;
 using Content.Shared.NukeOps;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Server.Shuttles.Events;
@@ -218,12 +218,21 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
         else
         {
-            if (_operativePlayers.Count < _nukeopsRuleConfig.WarDeclarationMinOpsSize) return WarConditionStatus.NO_WAR_SMALL_CREW;
-            if (_leftOutpost) return WarConditionStatus.NO_WAR_SHUTTLE_DEPARTED;
-    
+            if (_operativePlayers.Count < _nukeopsRuleConfig.WarDeclarationMinOpsSize)
+            {
+                return WarConditionStatus.NO_WAR_SMALL_CREW;
+            }
+            if (_leftOutpost)
+            {
+                return WarConditionStatus.NO_WAR_SHUTTLE_DEPARTED;
+            }
+
             var gameruleTime = _gameTiming.CurTime.Subtract(_gameruleStartTime);
-            if (gameruleTime > _nukeopsRuleConfig.WarDeclarationTimeWindow) return WarConditionStatus.NO_WAR_TIMEOUT;
-    
+            if (gameruleTime > _nukeopsRuleConfig.WarDeclarationTimeWindow)
+            {
+                return WarConditionStatus.NO_WAR_TIMEOUT;
+            }
+
             return WarConditionStatus.YES_WAR;
         }  
     }
@@ -234,11 +243,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             return;
         
         if (!_declarationMade || _nukieOutpost == null)
-        {
             return;
-        }
-        var mapOutpost = EntityManager.GetComponent<TransformComponent>(_nukieOutpost.Value).MapID;
-        var mapShuttle = EntityManager.GetComponent<TransformComponent>(ev.Uid).MapID;
+
+        var mapOutpost = Transform(_nukieOutpost.Value).MapID;
+        var mapShuttle = Transform(ev.Uid).MapID;
 
         if (mapOutpost == mapShuttle)
         {

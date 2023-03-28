@@ -7,8 +7,9 @@ using Robust.Server.GameObjects;
 using Content.Server.GameTicking.Rules;
 using Content.Shared.Database;
 using Content.Server.Administration.Logs;
+using Content.Server.NukeOps.Components;
 
-namespace Content.Server.NukeOps
+namespace Content.Server.NukeOps.System
 {
     /// <summary>
     /// War declarator that used in NukeOps game rule for declaring war
@@ -34,7 +35,6 @@ namespace Content.Server.NukeOps
         private void OnComponentInit(EntityUid uid, WarDeclaratorComponent comp, ComponentInit args)
         {
             comp.Message = Loc.GetString(comp.Message);
-            DirtyUI(uid, comp);
         }
 
         private void OnActivate(EntityUid uid, WarDeclaratorComponent comp, ActivateInWorldEvent args)
@@ -79,11 +79,13 @@ namespace Content.Server.NukeOps
 
         public void RefreshAllDeclaratorsUI()
         {
-            foreach (var comp in EntityQuery<WarDeclaratorComponent>())
+            var enumerator = EntityQueryEnumerator<WarDeclaratorComponent>();
+            while (enumerator.MoveNext(out var uid, out var component))
             {
-                DirtyUI(comp.Owner, comp);
+                DirtyUI(uid, component);
             }
         }
+
 
         private void DirtyUI(EntityUid uid,
             WarDeclaratorComponent? warDeclarator = null)

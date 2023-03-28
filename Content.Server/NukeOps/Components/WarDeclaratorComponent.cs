@@ -1,6 +1,6 @@
 using Robust.Shared.Audio;
 
-namespace Content.Server.NukeOps
+namespace Content.Server.NukeOps.Components
 {
     /// <summary>
     /// War declarator that used in NukeOps game rule for declaring war

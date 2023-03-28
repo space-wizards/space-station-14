@@ -4,8 +4,9 @@ using Content.Server.GameTicking.Rules;
 using Content.Shared.Examine;
 using Content.Server.Power.EntitySystems;
 using Robust.Shared.Timing;
+using Content.Server.NukeOps.Components;
 
-namespace Content.Server.NukeOps
+namespace Content.Server.NukeOps.System
 {
     /// <summary>
     /// Shows information about war conditions on examine
