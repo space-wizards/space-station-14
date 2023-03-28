@@ -31,3 +31,6 @@ ent-ClothingHeadHatHoodRad = radiation hood
 ent-ClothingHeadHatHoodGoliathCloak = goliath cloak hood
     .desc = A hood of a goliath cloak, it is made from the hide of resilient fauna from a distant planet.
     .suffix = { "" }
+ent-ClothingHeadHatHoodMoth = moth mask
+    .desc = A mask in the form of a moths head is usually made of lightweight materials. It mimics the shape of a moths head with large eyes and long antennae. Such masks are often used in cosplay, or when shooting movies and videos.
+    .suffix = { "" }
