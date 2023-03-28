@@ -34,7 +34,7 @@
   parent: BaseItem
   name: advanced mop
   id: AdvMopItem
-  description: A mop that can't be stopped, viscera cleanup detail awaits.
+  description: Motorized mop that have a bigger reservoir and can mop multiple puddles at once. Automatic Clown Countermeasure no included.
   components:
     - type: Sprite
       sprite: Objects/Specific/Janitorial/advmop.rsi
@@ -47,13 +47,13 @@
       size: 15
       sprite: Objects/Specific/Janitorial/advmop.rsi
     - type: Absorbent
-      MaxInteractingEntities: 3
-      PickupAmount: 30
+      maxEntities: 3
+      PickupAmount: 25
       speed: 15
     - type: SolutionContainerManager
       solutions:
         absorbed:
-          maxVol: 120
+          maxVol: 100
     - type: Tag
       tags:
         - DroneUsable #No bucket because it holds chems, they can drag the cart or use a drain
