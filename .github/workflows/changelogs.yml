@@ -27,8 +27,8 @@ jobs:
         cd RobustToolbox
         git fetch --depth=1
 
-    - name: Publish changelog
-      run: Tools/actions_changelogs_since_last_run.py
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        DISCORD_WEBHOOK_URL: ${{ secrets.CHANGELOG_DISCORD_WEBHOOK }}
+    # - name: Publish changelog
+      # run: Tools/actions_changelogs_since_last_run.py
+      # env:
+        # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # DISCORD_WEBHOOK_URL: ${{ secrets.CHANGELOG_DISCORD_WEBHOOK }}
