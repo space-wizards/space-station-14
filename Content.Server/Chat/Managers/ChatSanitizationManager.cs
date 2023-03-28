@@ -1,12 +1,8 @@
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Xml.Linq;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
-using static System.Net.Mime.MediaTypeNames;
+using System.Text.RegularExpressions;
 
 namespace Content.Server.Chat.Managers;
 
