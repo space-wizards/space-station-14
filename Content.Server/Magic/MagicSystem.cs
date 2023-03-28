@@ -1,4 +1,3 @@
-using System.Threading;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Coordinates.Helpers;
@@ -13,6 +12,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Magic;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Spawners.Components;
@@ -20,20 +20,17 @@ using Content.Shared.Storage;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Magic;
 
 /// <summary>
 /// Handles learning and using spells (actions)
+/// Spells that can be predicted should instead go in <see cref="SharedMagicSystem"/>
 /// </summary>
-public sealed class MagicSystem : EntitySystem
+public sealed class MagicSystem : SharedMagicSystem
 {
-    [Dependency] private readonly ISerializationManager _seriMan = default!;
-    [Dependency] private readonly IComponentFactory _compFact = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -57,12 +54,10 @@ public sealed class MagicSystem : EntitySystem
         SubscribeLocalEvent<SpellbookComponent, DoAfterEvent>(OnDoAfter);
 
         SubscribeLocalEvent<InstantSpawnSpellEvent>(OnInstantSpawn);
-        SubscribeLocalEvent<TeleportSpellEvent>(OnTeleportSpell);
         SubscribeLocalEvent<KnockSpellEvent>(OnKnockSpell);
         SubscribeLocalEvent<SmiteSpellEvent>(OnSmiteSpell);
         SubscribeLocalEvent<WorldSpawnSpellEvent>(OnWorldSpawn);
         SubscribeLocalEvent<ProjectileSpellEvent>(OnProjectileSpell);
-        SubscribeLocalEvent<ChangeComponentsSpellEvent>(OnChangeComponentsSpell);
     }
 
     private void OnDoAfter(EntityUid uid, SpellbookComponent component, DoAfterEvent args)
@@ -160,34 +155,13 @@ public sealed class MagicSystem : EntitySystem
         foreach (var pos in GetSpawnPositions(xform, ev.Pos))
         {
             // If applicable, this ensures the projectile is parented to grid on spawn, instead of the map.
-            var mapPos = pos.ToMap(EntityManager);
+            var mapPos = pos.ToMap(EntityManager, _transformSystem);
             EntityCoordinates spawnCoords = _mapManager.TryFindGridAt(mapPos, out var grid)
                 ? pos.WithEntityId(grid.Owner, EntityManager)
                 : new(_mapManager.GetMapEntityId(mapPos.MapId), mapPos.Position);
 
             var ent = Spawn(ev.Prototype, spawnCoords);
             _gunSystem.ShootProjectile(ent, ev.Target.Position - mapPos.Position, userVelocity, ev.Performer);
-        }
-    }
-
-    private void OnChangeComponentsSpell(ChangeComponentsSpellEvent ev)
-    {
-        foreach (var toRemove in ev.ToRemove)
-        {
-            if (_compFact.TryGetRegistration(toRemove, out var registration))
-                RemComp(ev.Target, registration.Type);
-        }
-
-        foreach (var (name, data) in ev.ToAdd)
-        {
-            if (HasComp(ev.Target, data.Component.GetType()))
-                continue;
-
-            var component = (Component) _compFact.GetComponent(name);
-            component.Owner = ev.Target;
-            var temp = (object) component;
-            _seriMan.CopyTo(data.Component, ref temp);
-            EntityManager.AddComponent(ev.Target, (Component) temp!);
         }
     }
 
@@ -250,25 +224,6 @@ public sealed class MagicSystem : EntitySystem
     }
 
     /// <summary>
-    /// Teleports the user to the clicked location
-    /// </summary>
-    /// <param name="args"></param>
-    private void OnTeleportSpell(TeleportSpellEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        var transform = Transform(args.Performer);
-
-        if (transform.MapID != args.Target.GetMapId(EntityManager)) return;
-
-        _transformSystem.SetCoordinates(args.Performer, args.Target);
-        transform.AttachToGridOrMap();
-        _audio.PlayPvs(args.BlinkSound, args.Performer, AudioParams.Default.WithVolume(args.BlinkVolume));
-        args.Handled = true;
-    }
-
-    /// <summary>
     /// Opens all doors within range
     /// </summary>
     /// <param name="args"></param>
@@ -290,7 +245,7 @@ public sealed class MagicSystem : EntitySystem
                 _airlock.SetBoltsDown(entity, airlock, false);
 
             if (TryComp<DoorComponent>(entity, out var doorComp) && doorComp.State is not DoorState.Open)
-                _doorSystem.StartOpening(doorComp.Owner);
+                _doorSystem.StartOpening(entity);
         }
 
         args.Handled = true;
