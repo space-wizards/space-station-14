@@ -48,7 +48,7 @@
       sprite: Objects/Specific/Janitorial/advmop.rsi
     - type: Absorbent
       maxEntities: 3
-      PickupAmount: 25
+      pickupAmount: 25
       speed: 12.5
     - type: SolutionContainerManager
       solutions:
