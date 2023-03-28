@@ -1,14 +1,4 @@
 Entries:
-- author: TemporalOroboros
-  changes:
-  - {message: Singularities now explicitly consume things in containers they consume
-      instead of it being implied. If they can't consume something inside of a container
-      they're consuming it will be dropped to the ground., type: Add}
-  - {message: Admins can now pick up singularities (if they bother to VV them into
-      being items) and wander around without drilling a chasm through the station.,
-    type: Add}
-  id: 2775
-  time: '2022-12-20T02:47:15.0000000+00:00'
 - author: Stealthbomber16
   changes:
   - {message: Added wares to the Nutrimax and Kitchenware machines., type: Add}
@@ -2932,3 +2922,9 @@ Entries:
       Cobra pistol, making it much quieter.', type: Tweak}
   id: 3274
   time: '2023-03-28T03:46:07.0000000+00:00'
+- author: 25203
+  changes:
+  - {message: Fixed a bug where airlock lights would not update when using a door
+      remote., type: Fix}
+  id: 3275
+  time: '2023-03-28T05:05:58.0000000+00:00'
