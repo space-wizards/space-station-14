@@ -20,7 +20,6 @@ namespace Content.Client.Administration.UI.Bwoink
 
             var msg = new FormattedMessage();
             msg.PushColor(Color.LightGray);
-            msg.
             msg.AddText(Loc.GetString("bwoink-system-messages-being-relayed-to-discord"));
             msg.Pop();
             RelayedToDiscordLabel.SetMessage(msg);

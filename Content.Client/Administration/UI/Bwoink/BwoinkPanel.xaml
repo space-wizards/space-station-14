@@ -4,6 +4,6 @@
     Orientation="Vertical"
     HorizontalExpand="True">
     <OutputPanel Name="TextOutput" VerticalExpand="true" />
-    <RichTextLabel Name="RelayedToDiscordLabel" Access="Public" Visible="False" />
     <HistoryLineEdit Name="SenderLineEdit" />
+    <RichTextLabel Name="RelayedToDiscordLabel" Access="Public" Visible="False" />
 </BoxContainer>
