@@ -9,5 +9,5 @@ public sealed class NinjaStationGridComponent : Component
     /// <summary>
     /// The grid uid being targeted.
     /// </summary>
-    public EntityUid? Grid;
+    public EntityUid Grid;
 }

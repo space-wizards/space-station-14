@@ -255,6 +255,7 @@ namespace Content.Server.Electrocution
             }
         }
 
+        /// <inheritdoc/>
         public override bool TryDoElectrocution(
             EntityUid uid, EntityUid? sourceUid, int shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f,
             StatusEffectsComponent? statusEffects = null, bool ignoreInsulation = false)
