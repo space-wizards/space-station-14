@@ -31,6 +31,33 @@
       - Mop
 
 - type: entity
+  parent: BaseItem
+  name: advanced mop
+  id: AdvMopItem
+  description: A mop that can't be stopped, viscera cleanup detail awaits.
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Janitorial/mop.rsi
+      state: mop
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 10
+    - type: Item
+      size: 15
+      sprite: Objects/Specific/Janitorial/mop.rsi
+    - type: Absorbent
+      speed: 50
+    - type: SolutionContainerManager
+      solutions:
+        absorbed:
+          maxVol: 100
+    - type: Tag
+      tags:
+        - DroneUsable #No bucket because it holds chems, they can drag the cart or use a drain
+        - Mop
+
+- type: entity
   name: mop bucket
   id: MopBucket
   description: Holds water and the tears of the janitor.
