@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace Content.Server.Body.Surgery.Systems;
 
-// TODO: move 90% of this shit into shared
+// TODO SURGERY: move 90% of this shit into shared
 public sealed class SurgerySystem : SharedSurgerySystem
 {
     [Dependency] private readonly SharedBodySystem _body = default!;
@@ -87,7 +87,7 @@ public sealed class SurgerySystem : SharedSurgerySystem
         }
 
         // starting a new operation
-        // TODO SURGERY: support operating on individual surgery targets
+        // TODO SURGERY: support operating on individual bodyparts
         if (!TryComp<ActorComponent>(user, out var actor) || !TryComp<BodyComponent>(target, out var body))
             return;
 
@@ -199,7 +199,7 @@ public sealed class SurgerySystem : SharedSurgerySystem
         if (!TryComp<ActorComponent>(surgeon, out var actor) || !TryComp<BodyComponent>(target, out var body))
             return false;
 
-        // TODO: make server body component, or add our own one
+        // TODO SURGERY: bui on bodypart with organ selection ui key
 //        body.OrganSelectionUI?.Open(actor.PlayerSession);
         return true;
     }

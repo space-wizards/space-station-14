@@ -16,7 +16,7 @@ public sealed class OperationSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public IEnumerable<SurgeryOperationPrototype> AllSurgeries =>
-        _proto.EnumeratePrototypes<SurgeryOperationPrototype>();
+        _proto.EnumeratePrototypes<SurgeryOperationPrototype>().Where(op => !op.Hidden);
 
     public IEnumerable<SurgeryOperationPrototype> PossibleSurgeries(BodyPartType partType)
     {
