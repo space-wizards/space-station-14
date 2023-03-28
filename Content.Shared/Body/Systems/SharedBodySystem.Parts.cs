@@ -358,14 +358,16 @@ public partial class SharedBodySystem
         if (partId == null || !Resolve(partId.Value, ref part, false))
             return false;
 
-        DropPart(partId, part);
+        if (!DropPart(partId, part))
+            return false;
 
         foreach (var slot in part.Children.Values)
         {
-            DropPart(slot.Child);
+            if (!DropPart(slot.Child))
+                return false;
         }
 
-        return false;
+        return true;
     }
 
     public bool DeletePart(EntityUid? id, BodyPartComponent? part = null)
