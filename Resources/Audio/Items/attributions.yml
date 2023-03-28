@@ -27,3 +27,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from tgstation, modified by brainfood1183 (github) for ss14"
   source: "https://github.com/tgstation/tgstation/blob/529d97cb1c105bcd548e95a9c9070bbf5253dd81/sound/items/AirHorn.ogg"
+
+- files: ["desk_bell_ring.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by NicholasJudy567, converted to OGG and mono"
+  source: "https://freesound.org/people/NicholasJudy567/sounds/672185/"
