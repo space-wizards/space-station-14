@@ -37,7 +37,7 @@
   description: A mop that can't be stopped, viscera cleanup detail awaits.
   components:
     - type: Sprite
-      sprite: Objects/Specific/Janitorial/mop.rsi
+      sprite: Objects/Specific/Janitorial/advmop.rsi
       state: mop
     - type: MeleeWeapon
       damage:
@@ -47,11 +47,13 @@
       size: 15
       sprite: Objects/Specific/Janitorial/mop.rsi
     - type: Absorbent
-      speed: 50
+      MaxInteractingEntities: 3
+      PickupAmount: 30
+      speed: 15
     - type: SolutionContainerManager
       solutions:
         absorbed:
-          maxVol: 100
+          maxVol: 120
     - type: Tag
       tags:
         - DroneUsable #No bucket because it holds chems, they can drag the cart or use a drain
