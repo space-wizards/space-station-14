@@ -63,7 +63,7 @@ public sealed partial class HumanoidProfileEditor
                 IoCManager.Resolve<SponsorsManager>().TryGetInfo(out var sponsor) &&
                 !sponsor.AllowedMarkings.Contains(voice.ID))
             {
-                _voiceButton.SetItemDisabled(i, true);
+                _voiceButton.SetItemDisabled(_voiceButton.GetIdx(i), true);
             }
         }
 
