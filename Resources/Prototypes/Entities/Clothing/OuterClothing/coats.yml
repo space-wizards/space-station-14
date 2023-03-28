@@ -208,7 +208,7 @@
   parent: ClothingOuterStorageBase
   id: ClothingOuterHakama
   name: samurai hakama
-  description: Hakama is a type of traditional Japanese clothing that is often associated with samurai. These are wide trousers that are tied at the waist with a long wide belt called an obi. The hakama is made of heavy, durable fabric, it is practical and stylish. It is decorated with intricate patterns and embroidery on the back.
+  description: Hakama is a type of traditional Japanese clothing that is often associated with samurai. The hakama is made of heavy, durable fabric, it is practical in combat and stylish in appearance. It is decorated with intricate patterns and embroidery on the back.
   components:
   - type: Sprite
     sprite: Clothing\OuterClothing\Coats\hakama.rsi
