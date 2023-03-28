@@ -1,6 +1,8 @@
+using Content.Shared.Materials;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Teleportation.Components;
@@ -21,6 +23,12 @@ public sealed class CluwneTeleporterComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public float SpawnAmount = 1;
 
+    [DataField("requiredMaterial", customTypeSerializer: typeof(PrototypeIdSerializer<MaterialPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+    public string RequiredMaterial = "Plasma";
+
+    [DataField("materialPerAnomaly"), ViewVariables(VVAccess.ReadWrite)]
+    public int MaterialPerAnomaly = 1500; // a bit less than a stack of plasma
+
     [DataField("firstPortalPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string FirstPortalPrototype = "PortalGreeny";
 
@@ -28,18 +36,27 @@ public sealed class CluwneTeleporterComponent : Component
     public string SecondPortalPrototype = "PortalYellow";
 
     [DataField("newPortalSound")]
-    public SoundSpecifier NewPortalSound = new SoundPathSpecifier("/Audio/Machines/high_tech_confirm.ogg")
+    public SoundSpecifier NewPortalSound = new SoundPathSpecifier("/Audio/Magic/wand_teleport.ogg")
     {
         Params = AudioParams.Default.WithVolume(-2f)
     };
 
+    [DataField("cooldownEndTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan CooldownEndTime = TimeSpan.Zero;
+
+    /// <summary>
+    /// The cooldown between generating anomalies.
+    /// </summary>
+    [DataField("cooldownLength"), ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan CooldownLength = TimeSpan.FromMinutes(1);
+
     [DataField("clearPortalsSound")]
-    public SoundSpecifier ClearPortalsSound = new SoundPathSpecifier("/Audio/Machines/button.ogg");
+    public SoundSpecifier ClearPortalsSound = new SoundPathSpecifier("/Audio/Magic/wand_teleport.ogg");
 
     /// <summary>
     ///     Delay for creating the portals in seconds.
     /// </summary>
     [DataField("portalCreationDelay")]
-    public float PortalCreationDelay = 2.5f;
+    public float PortalCreationDelay = 4.5f;
 
 }
