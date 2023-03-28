@@ -17,7 +17,7 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Interaction;
+using Content.Shared.Inventory;
 using Content.Shared.StatusEffect;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
@@ -39,7 +39,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
     [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
     [Dependency] private readonly ContestsSystem _contests = default!;
     [Dependency] private readonly ExamineSystem _examine = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly LagCompensationSystem _lag = default!;
     [Dependency] private readonly SolutionContainerSystem _solutions = default!;
     [Dependency] private readonly TagSystem _tag = default!;
@@ -250,7 +250,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 continue;
 
             // prevent deathnettles injecting through hardsuits
-            if (!comp.PierceArmor && _inventory.TryGetSlotEntity(entity, "outerClothing", out var suit) && _tag.HasTag(suit, "Hardsuit"))
+            if (!comp.PierceArmor && _inventory.TryGetSlotEntity(entity, "outerClothing", out var suit) && _tag.HasTag(suit.Value, "Hardsuit"))
                 continue;
 
             if (bloodQuery.TryGetComponent(entity, out var bloodstream))
