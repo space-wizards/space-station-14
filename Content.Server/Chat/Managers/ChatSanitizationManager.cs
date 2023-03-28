@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Content.Server.Chat.Managers;
 
@@ -57,21 +58,18 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         { "o.o", "chatsan-wide-eyed" },
         { "._.", "chatsan-surprised" },
         { ".-.", "chatsan-confused" },
+        { "wtf", "chatsan-confused" },
         { "-_-", "chatsan-unimpressed" },
         { "o/", "chatsan-waves" },
         { "^^/", "chatsan-waves" },
         { ":/", "chatsan-uncertain" },
         { ":\\", "chatsan-uncertain" },
         { "lmao", "chatsan-laughs" },
-        { "lmao.", "chatsan-laughs" },
+        { "haha", "chatsan-laughs" },
         { "lmfao", "chatsan-laughs" },
-        { "lmfao.", "chatsan-laughs" },
         { "lol", "chatsan-laughs" },
-        { "lol.", "chatsan-laughs" },
         { "lel", "chatsan-laughs" },
-        { "lel.", "chatsan-laughs" },
         { "kek", "chatsan-laughs" },
-        { "kek.", "chatsan-laughs" },
         { "o7", "chatsan-salutes" },
         { ";_;7", "chatsan-tearfully-salutes"},
         { "idk", "chatsan-shrugs" }
@@ -101,12 +99,11 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         //Go through the dictionary, remove matches and store the last replaced word's replacement
         foreach (KeyValuePair<string, string> entry in SmileyToEmote)
         {
-            string pattern = Regex.Escape(entry.Key);
-            string replacement = "";
+            string pattern = $@"(?<!\w){Regex.Escape(entry.Key)}(?!\w)";
             if (Regex.IsMatch(sanitized, pattern, RegexOptions.IgnoreCase))
             {
                 removedWord = entry.Value;
-                sanitized = Regex.Replace(sanitized, pattern, replacement, RegexOptions.IgnoreCase);
+                sanitized = Regex.Replace(sanitized, pattern, "", RegexOptions.IgnoreCase);
             }
         }
 
@@ -116,9 +113,11 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         {
             sanitized = Regex.Replace(sanitized, @"\s+", " ");
             sanitized = sanitized.Trim();
+            //if there is anything left after removing the smiley capitalize the first letter and get rid of spaces in front of punctuation marks
             if (sanitized != "")
             {
                 sanitized = Char.ToUpper(sanitized[0]).ToString() + sanitized.Substring(1);
+                sanitized = Regex.Replace(sanitized, @"(\s*)(\p{P})", "$2");
             }
             emote = Loc.GetString(emote, ("ent", speaker));
             return true;
