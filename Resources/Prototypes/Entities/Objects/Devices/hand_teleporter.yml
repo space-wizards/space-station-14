@@ -11,13 +11,16 @@
   - type: HandTeleporter
 
 - type: entity
-  id: CluwneTeleporter
+  id: TeleportSpellBook
   parent: BaseItem
-  name: cluwne teleporter
-  description: "A Nanotrasen signature item--only the finest bluespace tech. Instructions: Use once to create a portal which teleports at random. Use again to link it to a portal at your current location. Use again to clear all portals."
+  name: summon gate
+  description: "A dusty tome with the title Pel Ror, loosly translated as summon gateway."
   components:
   - type: Sprite
-    sprite: /Textures/Objects/Devices/hand_teleporter.rsi
-    layers:
-    - state: icon
+    netsync: false
+    sprite: Objects/Magic/teleportation.rsi
+    state: icon
+  - type: Item
+    size: 15
+    sprite: Objects/Magic/teleportation.rsi
   - type: CluwneTeleporter

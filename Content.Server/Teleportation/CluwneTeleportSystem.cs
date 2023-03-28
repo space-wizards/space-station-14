@@ -1,6 +1,7 @@
 using Content.Server.Administration.Logs;
 using Content.Server.DoAfter;
 using Content.Shared.Cluwne;
+using Content.Server.Popups;
 using Content.Shared.DoAfter;
 using Content.Shared.Database;
 using Content.Server.Anomaly;
@@ -17,9 +18,18 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Configuration;
 using Content.Server.StationEvents.Components;
-
+using Content.Shared.Materials;
 using System.Linq;
 using Content.Shared.Destructible;
+using Content.Server.Construction.Completions;
+using Content.Server.Anomaly.Components;
+using Content.Server.Materials;
+using Robust.Shared.Timing;
+using Content.Server.Chat.Managers;
+using Content.Server.Database;
+using Robust.Server.Player;
+using Content.Server.Chat.Systems;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Content.Server.Teleportation;
 
@@ -33,12 +43,15 @@ public sealed class CluwneTeleportSystem : EntitySystem
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly DoAfterSystem _doafter = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
+
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         SubscribeLocalEvent<CluwneTeleporterComponent, UseInHandEvent>(OnUseHand);
-
         SubscribeLocalEvent<CluwneTeleporterComponent, DoAfterEvent>(DoAfter);
     }
 
@@ -54,6 +67,12 @@ public sealed class CluwneTeleportSystem : EntitySystem
 
     private void OnUseHand(EntityUid uid, CluwneTeleporterComponent component, UseInHandEvent args)
     {
+        if (_timing.CurTime < component.CooldownEndTime)
+        {
+            _popupSystem.PopupEntity(Loc.GetString("spell-gate-wait"), args.User);
+            return;
+        }
+
         if (Deleted(component.FirstPortal))
             component.FirstPortal = null;
 
@@ -99,7 +118,7 @@ public sealed class CluwneTeleportSystem : EntitySystem
         _robustRandom.Shuffle(spawnLocations);;
 
         if (Deleted(user))
-        return;
+            return;
 
         // Create the first portal.
         if (component.FirstPortal == null && component.SecondPortal == null)
@@ -119,20 +138,16 @@ public sealed class CluwneTeleportSystem : EntitySystem
                     timeout.EnteredPortal = null;
                     var coords = Transform(location.Owner);
                     component.FirstPortal = Spawn(component.FirstPortalPrototype, coords.Coordinates);
+                    component.SecondPortal = Spawn(component.SecondPortalPrototype, Transform(user).Coordinates);
+                    _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(user):player} opened {ToPrettyString(component.SecondPortal.Value)} at {Transform(component.SecondPortal.Value).Coordinates} linked to {ToPrettyString(component.FirstPortal!.Value)} using {ToPrettyString(uid)}");
+                    _link.TryLink(component.FirstPortal!.Value, component.SecondPortal.Value, true);
+                    _audio.PlayPvs(component.NewPortalSound, uid);
+                    _chat.TrySendInGameICMessage(user, Loc.GetString("spell-gate-speech"), InGameICChatType.Speak, false);
+                    component.CooldownEndTime = _timing.CurTime + component.CooldownLength;
                 }
 
             }
 
-        }
-
-        else if (component.SecondPortal == null)
-        {
-            var timeout = EnsureComp<PortalTimeoutComponent>(user);
-            timeout.EnteredPortal = null;
-            component.SecondPortal = Spawn(component.SecondPortalPrototype, Transform(user).Coordinates);
-            _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(user):player} opened {ToPrettyString(component.SecondPortal.Value)} at {Transform(component.SecondPortal.Value).Coordinates} linked to {ToPrettyString(component.FirstPortal!.Value)} using {ToPrettyString(uid)}");
-            _link.TryLink(component.FirstPortal!.Value, component.SecondPortal.Value, true);
-            _audio.PlayPvs(component.NewPortalSound, uid);
         }
 
         else

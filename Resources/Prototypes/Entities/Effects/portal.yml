@@ -59,7 +59,7 @@
     layers:
     - state: portal-green
   - type: TimedDespawn
-    lifetime: 20
+    lifetime: 60
   - type: PointLight
     netsync: false
     color: Green
@@ -72,7 +72,7 @@
   description: A mysterious yellow portal!
   components:
   - type: TimedDespawn
-    lifetime: 20
+    lifetime: 60
   - type: Sprite
     layers:
     - state: portal-yellow
