@@ -123,12 +123,12 @@ public sealed class OperationSystem : EntitySystem
         return (step?.Necessary(comp) ?? false) && step.ID == tag.ID;
     }
 
-    public void AddSurgeryTag(EntityUid user, OperationComponent comp, SurgeryTag tag)
+    public void AddSurgeryTag(EntityUid user, EntityUid uid, OperationComponent comp, SurgeryTag tag)
     {
         comp.Tags.Add(tag);
         Dirty(comp);
 
-        CheckCompletion(user, comp);
+        CheckCompletion(user, uid, comp);
     }
 
     public bool TryRemoveSurgeryTag(OperationComponent comp, SurgeryTag tag)
@@ -145,7 +145,7 @@ public sealed class OperationSystem : EntitySystem
         return true;
     }
 
-    private void CheckCompletion(EntityUid user, OperationComponent comp)
+    private void CheckCompletion(EntityUid user, EntityUid uid, OperationComponent comp)
     {
         if (comp.Prototype!.Steps.Count > comp.Tags.Count)
             return;
@@ -168,6 +168,7 @@ public sealed class OperationSystem : EntitySystem
 
         Logger.InfoS("surgery", $"User {user} completed operation {comp.Prototype!.Name} on part {comp.Part}");
         comp.Prototype.Effect?.Execute(user, comp);
+        RemComp<OperationComponent>(uid);
     }
 
     /// <summary>

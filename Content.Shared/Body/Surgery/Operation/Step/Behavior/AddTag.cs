@@ -9,7 +9,7 @@ public sealed class AddTag : IStepBehavior
 
     public bool Perform(SurgeryStepContext context)
     {
-        context.OperationSystem.AddSurgeryTag(context.Surgeon, context.Operation, context.Step.ID);
+        context.OperationSystem.AddSurgeryTag(context.Surgeon, context.Target, context.Operation, context.Step.ID);
         return true;
     }
 

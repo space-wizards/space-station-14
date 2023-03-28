@@ -7,6 +7,7 @@
     conditional: !type:StumpConditional
   - id: LimbAttachment
   - id: VesselCompression
+  - id: Cauterization
   effect:
     !type:LimbReplacementEffect
   parts:
