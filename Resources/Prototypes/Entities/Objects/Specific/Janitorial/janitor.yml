@@ -38,14 +38,14 @@
   components:
     - type: Sprite
       sprite: Objects/Specific/Janitorial/advmop.rsi
-      state: mop
+      state: advmop
     - type: MeleeWeapon
       damage:
         types:
           Blunt: 10
     - type: Item
       size: 15
-      sprite: Objects/Specific/Janitorial/mop.rsi
+      sprite: Objects/Specific/Janitorial/advmop.rsi
     - type: Absorbent
       MaxInteractingEntities: 3
       PickupAmount: 30

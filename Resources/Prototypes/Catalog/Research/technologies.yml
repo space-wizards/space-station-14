@@ -34,8 +34,8 @@
   id: AdvancedCleaningTechnology
   description: technologies-advanced-cleaning-technology-description
   icon:
-    sprite: Objects/Specific/Janitorial/mop.rsi
-    state: mop
+    sprite: Objects/Specific/Janitorial/advvmop.rsi
+    state: advmop
   requiredPoints: 5000
   requiredTechnologies:
     - BasicResearch
