@@ -55,7 +55,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         _actions.AddAction(user, comp.EmpAction, uid, actions);
     }
 
-    // TODO: put in shared so client properly predicts insertion, but it uses powercell so how???
+    // TODO: if/when battery is in shared, put this there too
     private void OnSuitInsertAttempt(EntityUid uid, NinjaSuitComponent comp, ContainerIsInsertingAttemptEvent args)
     {
         // no power cell for some reason??? allow it

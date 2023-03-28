@@ -104,7 +104,7 @@ public abstract class SharedNinjaSystem : EntitySystem
             return;
 
         comp.DoorsJacked = state.DoorsJacked;
-        comp.DownloadedNodes = state.DownloadedNodes;
+        comp.DownloadedNodes = new (state.DownloadedNodes);
         comp.SpiderChargeTarget = state.SpiderChargeTarget;
         comp.SpiderChargeDetonated = state.SpiderChargeDetonated;
         comp.CalledInThreat = state.CalledInThreat;

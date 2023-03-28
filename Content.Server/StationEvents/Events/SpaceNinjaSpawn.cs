@@ -67,7 +67,7 @@ public sealed class SpaceNinjaSpawn : StationEventSystem
         var spawner = Spawn("SpawnPointGhostSpaceNinja", coords);
 
         // tell the player where the station is when they pick the role
-        _ninja.SetTargetGrid(spawner, gridUid.Value);
+        _ninja.SetNinjaStationGrid(spawner, gridUid.Value);
 
         // start traitor rule incase it isn't, for the sweet greentext
         var rule = _proto.Index<GameRulePrototype>("Traitor");

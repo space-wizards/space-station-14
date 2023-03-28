@@ -148,8 +148,17 @@ public sealed class NinjaTerrorComponent : Component
     public float TerrorTime = 20f;
 }
 
+/// <summary>
+/// DoAfter event data for drain ability.
+/// </summary>
 public sealed record DrainData;
 
+/// <summary>
+/// DoAfter event data for research download ability.
+/// </summary>
 public sealed record DownloadData;
 
+/// <summary>
+/// DoAfter event data for comms console terror ability.
+/// </summary>
 public sealed record TerrorData;

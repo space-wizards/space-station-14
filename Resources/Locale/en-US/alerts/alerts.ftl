@@ -85,4 +85,4 @@ alerts-pulling-name = Pulling
 alerts-pulling-desc = You're pulling something. Click the alert to stop.
 
 alerts-suit-power-name = Suit Power
-alerts-suit-power-desc = Your space ninja suit requires power to function, this lets you know how much there is.
+alerts-suit-power-desc = How much power your space ninja suit has.

@@ -4,10 +4,10 @@ namespace Content.Server.Ninja.Components;
 /// Used by space ninja to indicate what station grid to head towards.
 /// </summary>
 [RegisterComponent]
-public sealed class TargetGridComponent : Component
+public sealed class NinjaStationGridComponent : Component
 {
     /// <summary>
     /// The grid uid being targeted.
     /// </summary>
-    public EntityUid Grid = EntityUid.Invalid;
+    public EntityUid? Grid;
 }

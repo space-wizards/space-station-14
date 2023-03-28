@@ -7,5 +7,3 @@ redalert.ogg was taken from: https://github.com/Skyrat-SS13/Skyrat13/commit/2d4f
 bluealert.ogg was taken from: https://github.com/Skyrat-SS13/Skyrat13/commit/2d4f2d1b489590b559e4073f41b126cef56f4c50
 
 nukeops.ogg was taken from: https://github.com/tgstation/tgstation/commit/827967c9650c23af64280ad1491405fed8f644c5
-
-ninja_greeting.ogg was taken from: https://github.com/tgstation/tgstation/commit/b02b93ce2ab891164511a973493cdf951b4120f7

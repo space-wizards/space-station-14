@@ -119,13 +119,13 @@ public sealed class NinjaSystem : SharedNinjaSystem
     }
 
     /// <summary>
-    /// Set the target grid on an entity.
+    /// Set the station grid on an entity, either ninja spawner or the ninja itself.
     /// Used to tell a ghost that takes ninja role where the station is.
     /// </summary>
-    public void SetTargetGrid(EntityUid uid, EntityUid grid)
+    public void SetNinjaStationGrid(EntityUid uid, EntityUid grid)
     {
-        var target = EnsureComp<TargetGridComponent>(uid);
-        target.Grid = grid;
+        var station = EnsureComp<NinjaStationGridComponent>(uid);
+        station.Grid = grid;
     }
 
     /// <summary>
@@ -239,9 +239,9 @@ public sealed class NinjaSystem : SharedNinjaSystem
 
     private void OnNinjaSpawned(EntityUid uid, NinjaComponent comp, GhostRoleSpawnerUsedEvent args)
     {
-        // inherit spawner's target grid
-        if (TryComp<TargetGridComponent>(args.Spawner, out var target))
-            SetTargetGrid(uid, target.Grid);
+        // inherit spawner's station grid
+        if (TryComp<NinjaStationGridComponent>(args.Spawner, out var station))
+            SetNinjaStationGrid(uid, station.Grid);
     }
 
     private void OnNinjaMindAdded(EntityUid uid, NinjaComponent comp, MindAddedMessage args)
@@ -267,9 +267,9 @@ public sealed class NinjaSystem : SharedNinjaSystem
         _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);
         _chatMan.DispatchServerMessage(session, Loc.GetString("ninja-role-greeting"));
 
-        if (TryComp<TargetGridComponent>(mind.OwnedEntity, out var target))
+        if (TryComp<NinjaStationGridComponent>(mind.OwnedEntity, out var station))
         {
-            var gridPos = _transform.GetWorldPosition(target.Grid);
+            var gridPos = _transform.GetWorldPosition(station.Grid);
             var ninjaPos = _transform.GetWorldPosition(mind.OwnedEntity.Value);
             var vector = gridPos - ninjaPos;
             var direction = vector.GetDir();
