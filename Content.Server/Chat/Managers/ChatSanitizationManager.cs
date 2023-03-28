@@ -17,6 +17,7 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
     private static readonly Dictionary<string, string> SmileyToEmote = new()
     {
         // I could've done this with regex, but felt it wasn't the right idea.
+        // Added wtf, haha and kek, removed :v, :u, :s as these are conflicting with the radio channels and do more harm than good
         { ":)", "chatsan-smiles" },
         { ":]", "chatsan-smiles" },
         { "=)", "chatsan-smiles" },
@@ -38,16 +39,13 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         { ":D", "chatsan-smiles-widely" },
         { "D:", "chatsan-frowns-deeply" },
         { ":O", "chatsan-surprised" },
-        { ":3", "chatsan-smiles" }, //nope
-        { ":S", "chatsan-uncertain" },
+        { ":3", "chatsan-smiles-smugly" }, //nope
         { ":>", "chatsan-grins" },
         { ":<", "chatsan-pouts" },
         { "xD", "chatsan-laughs" },
         { ";-;", "chatsan-cries" },
         { ";_;", "chatsan-cries" },
         { "qwq", "chatsan-cries" },
-        { ":u", "chatsan-smiles-smugly" },
-        { ":v", "chatsan-smiles-smugly" },
         { ">:i", "chatsan-annoyed" },
         { ":i", "chatsan-sighs" },
         { ":|", "chatsan-sighs" },
