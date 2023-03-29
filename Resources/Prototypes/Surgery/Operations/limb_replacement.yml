@@ -6,10 +6,9 @@
   - id: Amputation
     conditional: !type:StumpConditional
   - id: LimbAttachment
+    insertionHandler: !type:InsertOrgan
   - id: VesselCompression
   - id: Cauterization
-  effect:
-    !type:LimbReplacementEffect
   parts:
   - Head
   - Arm

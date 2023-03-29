@@ -14,9 +14,11 @@ public sealed class OperationSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedSurgerySystem _surgery = default!;
 
     public IEnumerable<SurgeryOperationPrototype> AllSurgeries =>
         _proto.EnumeratePrototypes<SurgeryOperationPrototype>().Where(op => !op.Hidden);
+        // TODO: prerequisites like having ribcage/skull opened or for adding limbs, missing a limb
 
     public IEnumerable<SurgeryOperationPrototype> PossibleSurgeries(BodyPartType partType)
     {
@@ -67,6 +69,10 @@ public sealed class OperationSystem : EntitySystem
     }
 
     /// <summary>
+    /// Try to insert an item for a step
+    /// </summary>
+
+    /// <summary>
     /// Returns the next step for this operation.
     /// </summary>
     private OperationStep? GetNextStep(OperationComponent comp)
@@ -89,7 +95,7 @@ public sealed class OperationSystem : EntitySystem
         if (step == null)
             return false;
 
-        var context = new SurgeryStepContext(target, surgeon, comp, tool, step, this);
+        var context = new SurgeryStepContext(target, surgeon, comp, tool, step, this, _surgery);
         return step.CanPerform(context);
     }
 
@@ -103,7 +109,7 @@ public sealed class OperationSystem : EntitySystem
         if (step == null)
             return false;
 
-        var context = new SurgeryStepContext(target, surgeon, comp, tool, step, this);
+        var context = new SurgeryStepContext(target, surgeon, comp, tool, step, this, _surgery);
         if (step.CanPerform(context) && step.Perform(context))
         {
             Logger.InfoS("surgery", $"{surgeon} completed step {step.ID} on {target}'s {comp.Prototype!.Name} operation");

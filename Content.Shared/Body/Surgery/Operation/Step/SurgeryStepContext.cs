@@ -35,13 +35,19 @@ public sealed class SurgeryStepContext
     /// </summary>
     public readonly OperationSystem OperationSystem;
 
+    /// <summary>
+    /// Reference to the surgery system
+    /// </summary>
+    public readonly SharedSurgerySystem SurgerySystem;
+
     public SurgeryStepContext(
         EntityUid target,
         EntityUid surgeon,
         OperationComponent operation,
         SurgeryToolComponent tool,
         OperationStep step,
-        OperationSystem operationSystem)
+        OperationSystem operationSystem,
+        SharedSurgerySystem surgerySystem)
     {
         Target = target;
         Surgeon = surgeon;
@@ -49,5 +55,6 @@ public sealed class SurgeryStepContext
         Tool = tool;
         Step = step;
         OperationSystem = operationSystem;
+        SurgerySystem = surgerySystem;
     }
 }

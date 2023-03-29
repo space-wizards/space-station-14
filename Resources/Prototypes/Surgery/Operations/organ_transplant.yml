@@ -1,0 +1,18 @@
+- type: surgeryOperation
+  id: OrganTransplant
+  name: Organ Transplant
+  description: Inserts an organ into a bodypart. The organ must not already be present.
+  # TODO: prerequisite ribcage/skull opening
+  steps:
+  - id: Incision
+  - id: Retraction
+  - id: VesselCompression
+  - id: Insertion
+    insertionHandler: !type:OrganSelection
+  - id: Cauterization
+  - id: Cauterization
+  effect:
+    !type:OrganExtractionEffect
+  parts:
+  - Torso
+  - Head

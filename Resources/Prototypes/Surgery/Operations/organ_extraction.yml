@@ -1,7 +1,7 @@
 - type: surgeryOperation
   id: OrganExtraction
   name: Organ Extraction
-  description: Extracts an organ from a detached bodypart, such as a severed head.
+  description: Extracts an organ from a bodypart.
   steps:
   - id: Incision
   - id: Retraction

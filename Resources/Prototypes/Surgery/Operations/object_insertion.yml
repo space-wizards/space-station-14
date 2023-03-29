@@ -1,25 +1,37 @@
+# TODO: require opening ribcage
 - type: surgeryOperation
-  id: ObjectInsertion
-  name: Cavity Surgery
-  description: Putting things inside peoples' body cavities.
+  id: ChestInsertion
+  name: Cavity Insertion
+  description: Putting things inside peoples' chest cavities.
   steps:
   - id: Incision
-  - id: Bonesaw
-  - id: Drilling
+  - id: Retraction
+  - id: VesselCompression
+  - id: Incision
   - id: Insertion
-  - id: FixOVein
-  - id: BoneGel
-  - id: BoneSetter
-  - id: BoneGel
+    insertionHandler: !type:InsertItem
+      maxSize: 10
   - id: Cauterization
-  effect:
-    !type:ObjectInsertionEffect
   parts:
   - Torso
+
+- type: surgeryOperation
+  id: LimbInsertion
+  name: Cavity Insertion
+  description: Putting things under peoples' skin.
+  steps:
+  - id: Incision
+  - id: Retraction
+  - id: VesselCompression
+  - id: Incision
+  - id: Insertion
+    insertionHandler: !type:InsertItem
+      maxSize: 5
+  - id: Cauterization
+  parts:
   - Head
   - Arm
   - Hand
   - Leg
   - Foot
   - Tail
-  hidden: true # TODO SURGERY

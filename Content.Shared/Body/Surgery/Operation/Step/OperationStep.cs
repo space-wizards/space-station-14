@@ -1,5 +1,6 @@
 using Content.Shared.Body.Surgery.Operation.Step.Behavior;
 using Content.Shared.Body.Surgery.Operation.Step.Conditional;
+using Content.Shared.Body.Surgery.Operation.Step.Insertion;
 using Content.Shared.Body.Surgery.Components;
 using Robust.Shared.Prototypes;
 //using Robust.Shared.Serialization.Manager.Attributes;
@@ -15,8 +16,14 @@ public sealed class OperationStep
     [DataField("conditional")]
     public readonly IOperationStepConditional? Conditional;
 
-    [DataField("behavior", serverOnly: true)]
+    [DataField("behavior")]
     public readonly IStepBehavior? Behavior = new AddTag();
+
+    /// <summary>
+    /// Defines what handles inserting items into the patient on this step
+    /// </summary>
+    [DataField("insertionHandler")]
+    public readonly IInsertionHandler? InsertionHandler;
 
     public bool Necessary(OperationComponent operation)
     {

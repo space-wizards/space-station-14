@@ -62,7 +62,7 @@ public sealed class SelectOrganUiState : BoundUserInterfaceState
     public readonly EntityUid Target;
     public readonly EntityUid[] Organs;
 
-    public SelectOperationUiState(EntityUid target, EntityUid[] organs)
+    public SelectOrganUiState(EntityUid target, EntityUid[] organs)
     {
         Target = target;
         Organs = organs;

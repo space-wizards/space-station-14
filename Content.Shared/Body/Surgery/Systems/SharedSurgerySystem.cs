@@ -1,9 +1,12 @@
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Surgery;
+using Content.Shared.Body.Surgery.Components;
 using Content.Shared.Body.Surgery.Operation;
 using Content.Shared.Body.Surgery.Operation.Step;
+using Content.Shared.Body.Systems;
 using Content.Shared.DoAfter;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Shared.GameObjects;
@@ -16,6 +19,7 @@ public abstract class SharedSurgerySystem : EntitySystem
 {
     [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly OperationSystem _operation = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
@@ -231,6 +235,19 @@ public abstract class SharedSurgerySystem : EntitySystem
     protected virtual bool OpenSelectUi(EntityUid uid, EntityUid surgeon, EntityUid target, Enum key, BoundUserInterfaceState state)
     {
         // client always predicts that opening the ui works
+        return true;
+    }
+
+    /// <summary>
+    /// Removes an organ then puts it in the surgeons hands if possible.
+    /// </summary>
+    /// <returns>true if the organ was removed successfully</returns>
+    public bool RemoveOrgan(EntityUid surgeon, EntityUid organ)
+    {
+        if (!_body.DropOrgan(organ))
+            return false;
+
+        _hands.TryPickupAnyHand(surgeon, organ);
         return true;
     }
 }
