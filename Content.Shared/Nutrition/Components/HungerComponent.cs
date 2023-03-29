@@ -24,7 +24,7 @@ public sealed class HungerComponent : Component
 
     /// <summary>
     /// The actual amount at which <see cref="CurrentHunger"/> decays.
-    /// Affected by <seealso cref="CurrentHungerThreshold"/>
+    /// Affected by <seealso cref="CurrentThreshold"/>
     /// </summary>
     [DataField("actualDecayRate"), ViewVariables(VVAccess.ReadWrite)]
     public float ActualDecayRate;
@@ -33,14 +33,14 @@ public sealed class HungerComponent : Component
     /// The last threshold this entity was at.
     /// Stored in order to prevent recalculating
     /// </summary>
-    [DataField("lastHungerThreshold"), ViewVariables(VVAccess.ReadWrite)]
-    public HungerThreshold LastHungerThreshold;
+    [DataField("lastThreshold"), ViewVariables(VVAccess.ReadWrite)]
+    public HungerThreshold LastThreshold;
 
     /// <summary>
     /// The current hunger threshold the entity is at
     /// </summary>
-    [DataField("currentHungerThreshold"), ViewVariables(VVAccess.ReadWrite)]
-    public HungerThreshold CurrentHungerThreshold;
+    [DataField("currentThreshold"), ViewVariables(VVAccess.ReadWrite)]
+    public HungerThreshold CurrentThreshold;
 
     /// <summary>
     /// A dictionary relating HungerThreshold to the amount of <see cref="CurrentHunger"/> needed for each one

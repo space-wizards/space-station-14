@@ -37,8 +37,8 @@ public sealed class HungerSystem : EntitySystem
         args.State = new HungerComponentState(component.CurrentHunger,
             component.BaseDecayRate,
             component.ActualDecayRate,
-            component.LastHungerThreshold,
-            component.CurrentHungerThreshold,
+            component.LastThreshold,
+            component.CurrentThreshold,
             component.Thresholds,
             component.HungerThresholdAlerts,
             component.StarvingSlowdownModifier,
@@ -53,8 +53,8 @@ public sealed class HungerSystem : EntitySystem
         component.CurrentHunger = state.CurrentHunger;
         component.BaseDecayRate = state.BaseDecayRate;
         component.ActualDecayRate = state.ActualDecayRate;
-        component.LastHungerThreshold = state.LastHungerThreshold;
-        component.CurrentHungerThreshold = state.CurrentThreshold;
+        component.LastThreshold = state.LastHungerThreshold;
+        component.CurrentThreshold = state.CurrentThreshold;
         component.Thresholds = new(state.HungerThresholds);
         component.HungerThresholdAlerts = new(state.HungerAlertThresholds);
         component.StarvingSlowdownModifier = state.StarvingSlowdownModifier;
@@ -77,7 +77,7 @@ public sealed class HungerSystem : EntitySystem
 
     private void OnRefreshMovespeed(EntityUid uid, HungerComponent component, RefreshMovementSpeedModifiersEvent args)
     {
-        if (component.CurrentHungerThreshold > HungerThreshold.Starving)
+        if (component.CurrentThreshold > HungerThreshold.Starving)
             return;
 
         if (_jetpack.IsUserFlying(uid))
@@ -127,9 +127,9 @@ public sealed class HungerSystem : EntitySystem
             return;
 
         var calculatedHungerThreshold = GetHungerThreshold(component);
-        if (calculatedHungerThreshold == component.CurrentHungerThreshold)
+        if (calculatedHungerThreshold == component.CurrentThreshold)
             return;
-        component.CurrentHungerThreshold = calculatedHungerThreshold;
+        component.CurrentThreshold = calculatedHungerThreshold;
         DoHungerThresholdEffects(uid, component);
         Dirty(component);
     }
@@ -139,12 +139,15 @@ public sealed class HungerSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (component.CurrentHungerThreshold == component.LastHungerThreshold && !force)
+        if (component.CurrentThreshold == component.LastThreshold && !force)
             return;
 
-        _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
+        if (GetMovementThreshold(component.CurrentThreshold) != GetMovementThreshold(component.LastThreshold))
+        {
+            _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
+        }
 
-        if (component.HungerThresholdAlerts.TryGetValue(component.CurrentHungerThreshold, out var alertId))
+        if (component.HungerThresholdAlerts.TryGetValue(component.CurrentThreshold, out var alertId))
         {
             _alerts.ShowAlert(uid, alertId);
         }
@@ -158,9 +161,12 @@ public sealed class HungerSystem : EntitySystem
             _damageable.TryChangeDamage(uid, damage, true, false);
         }
 
-        component.LastHungerThreshold = component.CurrentHungerThreshold;
-        if (component.HungerThresholdDecayModifiers.TryGetValue(component.CurrentHungerThreshold, out var modifier))
+        if (component.HungerThresholdDecayModifiers.TryGetValue(component.CurrentThreshold, out var modifier))
+        {
             component.ActualDecayRate = component.BaseDecayRate * modifier;
+        }
+
+        component.LastThreshold = component.CurrentThreshold;
     }
 
     /// <summary>
@@ -184,6 +190,22 @@ public sealed class HungerSystem : EntitySystem
             }
         }
         return result;
+    }
+
+    private bool GetMovementThreshold(HungerThreshold threshold)
+    {
+        switch (threshold)
+        {
+            case HungerThreshold.Overfed:
+            case HungerThreshold.Okay:
+                return true;
+            case HungerThreshold.Peckish:
+            case HungerThreshold.Starving:
+            case HungerThreshold.Dead:
+                return false;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(threshold), threshold, null);
+        }
     }
 
     public override void Update(float frameTime)
