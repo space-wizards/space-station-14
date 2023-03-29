@@ -1,4 +1,5 @@
 using Content.Shared.Alert;
+using Content.Shared.Damage;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -83,6 +84,12 @@ public sealed class HungerComponent : Component
     /// </summary>
     [DataField("starvingSlowdownModifier"), ViewVariables(VVAccess.ReadWrite)]
     public float StarvingSlowdownModifier = 0.75f;
+
+    /// <summary>
+    /// Damage dealt when your current threshold is at HungerThreshold.Dead
+    /// </summary>
+    [DataField("starvationDamage")]
+    public DamageSpecifier? StarvationDamage;
 
     /// <summary>
     /// The time when the hunger will update next.

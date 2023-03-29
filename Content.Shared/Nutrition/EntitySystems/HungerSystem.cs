@@ -1,4 +1,6 @@
 ﻿using Content.Shared.Alert;
+using Content.Shared.Damage;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Rejuvenate;
@@ -13,6 +15,8 @@ public sealed class HungerSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly SharedJetpackSystem _jetpack = default!;
 
@@ -149,6 +153,11 @@ public sealed class HungerSystem : EntitySystem
             _alerts.ClearAlertCategory(uid, AlertCategory.Hunger);
         }
 
+        if (component.StarvationDamage is { } damage && !_mobState.IsDead(uid))
+        {
+            _damageable.TryChangeDamage(uid, damage, true, false);
+        }
+
         component.LastHungerThreshold = component.CurrentHungerThreshold;
         if (component.HungerThresholdDecayModifiers.TryGetValue(component.CurrentHungerThreshold, out var modifier))
             component.ActualDecayRate = component.BaseDecayRate * modifier;
@@ -188,7 +197,7 @@ public sealed class HungerSystem : EntitySystem
                 continue;
             hunger.NextUpdateTime = _timing.CurTime + hunger.UpdateRate;
 
-            ModifyHunger(uid, -(float) hunger.UpdateRate.TotalSeconds * hunger.ActualDecayRate, hunger);
+            ModifyHunger(uid, -hunger.ActualDecayRate, hunger);
         }
     }
 }
