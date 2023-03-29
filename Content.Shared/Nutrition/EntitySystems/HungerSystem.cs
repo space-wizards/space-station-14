@@ -26,6 +26,7 @@ public sealed class HungerSystem : EntitySystem
 
         SubscribeLocalEvent<HungerComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<HungerComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<HungerComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<HungerComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<HungerComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<HungerComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
@@ -39,11 +40,8 @@ public sealed class HungerSystem : EntitySystem
             component.ActualDecayRate,
             component.LastThreshold,
             component.CurrentThreshold,
-            component.Thresholds,
-            component.HungerThresholdAlerts,
             component.StarvingSlowdownModifier,
-            component.NextUpdateTime,
-            component.UpdateRate);
+            component.NextUpdateTime);
     }
 
     private void OnHandleState(EntityUid uid, HungerComponent component, ref ComponentHandleState args)
@@ -55,11 +53,13 @@ public sealed class HungerSystem : EntitySystem
         component.ActualDecayRate = state.ActualDecayRate;
         component.LastThreshold = state.LastHungerThreshold;
         component.CurrentThreshold = state.CurrentThreshold;
-        component.Thresholds = new(state.HungerThresholds);
-        component.HungerThresholdAlerts = new(state.HungerAlertThresholds);
         component.StarvingSlowdownModifier = state.StarvingSlowdownModifier;
         component.NextUpdateTime = state.NextUpdateTime;
-        component.UpdateRate = state.UpdateRate;
+    }
+
+    private void OnUnpaused(EntityUid uid, HungerComponent component, ref EntityUnpausedEvent args)
+    {
+        component.NextUpdateTime += args.PausedTime;
     }
 
     private void OnMapInit(EntityUid uid, HungerComponent component, MapInitEvent args)

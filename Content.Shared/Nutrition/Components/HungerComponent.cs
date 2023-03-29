@@ -3,6 +3,7 @@ using Content.Shared.Damage;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 
 namespace Content.Shared.Nutrition.Components;
@@ -94,13 +95,13 @@ public sealed class HungerComponent : Component
     /// <summary>
     /// The time when the hunger will update next.
     /// </summary>
-    [DataField("nextUpdateTime"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("nextUpdateTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan NextUpdateTime;
 
     /// <summary>
     /// The time between each update.
     /// </summary>
-    [DataField("updateRate"), ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan UpdateRate = TimeSpan.FromSeconds(1);
 }
 
@@ -117,37 +118,25 @@ public sealed class HungerComponentState : ComponentState
 
     public HungerThreshold CurrentThreshold;
 
-    public Dictionary<HungerThreshold, float> HungerThresholds;
-
-    public Dictionary<HungerThreshold, AlertType> HungerAlertThresholds;
-
     public float StarvingSlowdownModifier;
 
     public TimeSpan NextUpdateTime;
-
-    public TimeSpan UpdateRate;
 
     public HungerComponentState(float currentHunger,
         float baseDecayRate,
         float actualDecayRate,
         HungerThreshold lastHungerThreshold,
         HungerThreshold currentThreshold,
-        Dictionary<HungerThreshold, float> hungerThresholds,
-        Dictionary<HungerThreshold, AlertType> hungerAlertThresholds,
         float starvingSlowdownModifier,
-        TimeSpan nextUpdateTime,
-        TimeSpan updateRate)
+        TimeSpan nextUpdateTime)
     {
         CurrentHunger = currentHunger;
         BaseDecayRate = baseDecayRate;
         ActualDecayRate = actualDecayRate;
         LastHungerThreshold = lastHungerThreshold;
         CurrentThreshold = currentThreshold;
-        HungerThresholds = hungerThresholds;
-        HungerAlertThresholds = hungerAlertThresholds;
         StarvingSlowdownModifier = starvingSlowdownModifier;
         NextUpdateTime = nextUpdateTime;
-        UpdateRate = updateRate;
     }
 }
 

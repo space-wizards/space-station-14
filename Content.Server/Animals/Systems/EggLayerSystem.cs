@@ -38,7 +38,7 @@ public sealed class EggLayerSystem : EntitySystem
         {
             // Players should be using the action.
             if (HasComp<ActorComponent>(uid))
-                return;
+                continue;
 
             eggLayer.AccumulatedFrametime += frameTime;
 
@@ -80,7 +80,7 @@ public sealed class EggLayerSystem : EntitySystem
                 return false;
             }
 
-            _hunger.ModifyHunger(uid, hunger.CurrentHunger - component.HungerUsage, hunger);
+            _hunger.ModifyHunger(uid, -component.HungerUsage, hunger);
         }
 
         foreach (var ent in EntitySpawnCollection.GetSpawns(component.EggSpawn, _random))
