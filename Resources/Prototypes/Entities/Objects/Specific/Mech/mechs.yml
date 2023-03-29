@@ -75,8 +75,8 @@
 - type: entity
   id: MechRipley
   parent: BaseMech
-  name: ripley
-  description: Cargo's favorite robotic box hauling friend.
+  name: Ripley APLU
+  description: Cargo's favorite robotic box hauling friend also A versatile, lightly armored mech.
   components:
   - type: FootstepModifier
     footstepSoundCollection:
@@ -98,3 +98,42 @@
     brokenState: ripley-broken
     startingBattery: PowerCellHigh
     mechToPilotDamageMultiplier: 0.5
+
+
+- type: entity
+  id: MechHauler
+  parent: MechRipley
+  name: Hauler APLU
+  description: A cheaper, more lightweight version of the RIPLEY mech. Designed for use in cargo transfer.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/mecha.rsi
+    layers:
+    - map: [ "enum.MechVisualLayers.Base" ]
+      state: hauler
+  - type: Mech
+    baseState: hauler
+    openState: hauler-open
+    brokenState: hauler-broken
+    mechToPilotDamageMultiplier: 0.85
+  - type: MeleeWeapon
+    hidden: true
+    attackRate: 0.80
+    damage:
+      types:
+        Blunt: 13
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1.5
+    baseSprintSpeed: 3
+
+- type: entity
+  id: MechHaulerBattery
+  parent: MechHauler
+  suffix: Battery
+  components:
+  - type: Mech
+    baseState: hauler
+    openState: hauler-open
+    brokenState: hauler-broken
+    startingBattery: PowerCellHigh
+    mechToPilotDamageMultiplier: 0.75

@@ -39,3 +39,26 @@
   - type: ConditionalSpawner
     prototypes:
       - VehicleATV
+
+- type: entity
+  name: Hauler APLU Spawner
+  id: SpawnMechHauler
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Specific/Mech/mecha_equipment.rsi
+        state: mecha_clamp
+  - type: ConditionalSpawner
+    prototypes:
+      - MechHauler
+
+- type: entity
+  id: SpawnMechHaulerBattery
+  parent: SpawnMechHauler
+  suffix: Battery
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+      - MechHaulerBattery
