@@ -1,0 +1,39 @@
+- type: entity
+  id: FloorWaterEntity
+  name: water
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: StepTrigger
+    requiredTriggeredSpeed: 0
+    intersectRatio: 0.1
+  - type: Transform
+    anchored: true
+  - type: SyncSprite
+  - type: Sprite
+    sprite: Tiles/Planet/water.rsi
+    netsync: false
+    drawdepth: BelowFloor
+    layers:
+      - state: shoreline_water
+  - type: SlowContacts
+    walkSpeedModifier: 0.5
+    sprintSpeedModifier: 0.5
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.5,-0.5,0.5,0.5"
+      layer:
+        - SlipLayer
+      mask:
+        - ItemMask
+      density: 1000
+      hard: false
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepWater

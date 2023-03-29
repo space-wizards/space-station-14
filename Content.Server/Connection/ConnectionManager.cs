@@ -154,7 +154,7 @@ namespace Content.Server.Connection
             {
                 var min = _cfg.GetCVar(CCVars.WhitelistMinPlayers);
                 var max = _cfg.GetCVar(CCVars.WhitelistMaxPlayers);
-                var playerCountValid = _plyMgr.PlayerCount > min && _plyMgr.PlayerCount < max;
+                var playerCountValid = _plyMgr.PlayerCount >= min && _plyMgr.PlayerCount < max;
 
                 if (playerCountValid && await _db.GetWhitelistStatusAsync(userId) == false
                                      && adminData is null)

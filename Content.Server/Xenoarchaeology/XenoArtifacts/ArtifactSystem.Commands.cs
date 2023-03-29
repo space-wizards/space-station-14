@@ -1,9 +1,7 @@
 ﻿using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
-using Content.Shared.Xenoarchaeology.XenoArtifacts;
 using Robust.Shared.Console;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts;
 
@@ -16,6 +14,9 @@ public partial class ArtifactSystem
         _conHost.RegisterCommand("forceartifactnode", "Forces an artifact to traverse to a given node", "forceartifacteffect <uid> <node ID>",
             ForceArtifactNode,
             ForceArtifactNodeCompletions);
+
+        _conHost.RegisterCommand("getartifactmaxvalue", "Reports the maximum research point value for a given artifact", "forceartifacteffect <uid>",
+            GetArtifactMaxValue);
     }
 
     [AdminCommand(AdminFlags.Fun)]
@@ -47,5 +48,21 @@ public partial class ArtifactSystem
         }
 
         return CompletionResult.Empty;
+    }
+
+    [AdminCommand(AdminFlags.Debug)]
+    private void GetArtifactMaxValue(IConsoleShell shell, string argstr, string[] args)
+    {
+        if (args.Length != 1)
+            shell.WriteError("Argument length must be 1");
+
+        if (!EntityUid.TryParse(args[0], out var uid))
+            return;
+
+        if (!TryComp<ArtifactComponent>(uid, out var artifact) || artifact.NodeTree == null)
+            return;
+
+        var pointSum = GetResearchPointValue(uid, artifact, true);
+        shell.WriteLine($"Max point value for {ToPrettyString(uid)} with {artifact.NodeTree.AllNodes.Count} nodes: {pointSum}");
     }
 }

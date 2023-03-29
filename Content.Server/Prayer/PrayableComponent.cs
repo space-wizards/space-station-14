@@ -1,4 +1,6 @@
-﻿namespace Content.Server.Prayer
+﻿using Robust.Shared.Utility;
+
+namespace Content.Server.Prayer
 {
     /// <summary>
     /// Allows an entity to be prayed on in the context menu
@@ -39,7 +41,7 @@
         /// </summary>
         [DataField("verbImage")]
         [ViewVariables(VVAccess.ReadOnly)]
-        public string VerbImage = "/Textures/Interface/pray.svg.png";
+        public SpriteSpecifier? VerbImage = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/pray.svg.png"));
     }
 }
 

@@ -9,7 +9,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#33EE00"
-  spritePath: absintheglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/absintheglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -27,7 +29,9 @@
   physicalDesc: reagent-physical-desc-bubbly
   flavor: ale
   color: "#663100"
-  spritePath: aleglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/aleglass.rsi
+    state: icon
 
 - type: reagent
   id: Beer
@@ -37,7 +41,9 @@
   physicalDesc: reagent-physical-desc-bubbly
   flavor: beer
   color: "#cfa85f"
-  spritePath: beerglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/beerglass.rsi
+    state: icon
 
 - type: reagent
   id: BlueCuracao
@@ -47,7 +53,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#0000CD"
-  spritePath: curacaoglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/curacaoglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -65,7 +73,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#AB3C05"
-  spritePath: cognacglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/cognacglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -83,7 +93,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: rum
   color: "#664300"
-  spritePath: rumglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/rumglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -132,7 +144,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#664300"
-  spritePath: ginvodkaglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -150,7 +164,9 @@
   physicalDesc: reagent-physical-desc-cloudy
   flavor: coffeeliquor
   color: "#664300"
-  spritePath: coffeeliqueurglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/coffeeliqueurglass.rsi
+    state: icon
 
 - type: reagent
   id: MelonLiquor
@@ -160,7 +176,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: watermelon
   color: "#138808"
-  spritePath: emeraldglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/emeraldglass.rsi
+    state: icon
 
 - type: reagent
   id: NTCahors
@@ -170,7 +188,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: bitter
   color: "#7E4043"
-  spritePath: wineglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/wineglass.rsi
+    state: icon
 
 - type: reagent
   id: PoisonWine
@@ -180,7 +200,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: bitter
   color: "#000000"
-  spritePath: pwineglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/pwineglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -204,7 +226,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: rum
   color: "#664300"
-  spritePath: rumglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/rumglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -248,7 +272,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#91FF91"
-  spritePath: vermouthglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/vermouthglass.rsi
+    state: icon
 
 - type: reagent
   id: Vodka
@@ -258,7 +284,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: vodka
   color: "#d1d1d155"
-  spritePath: ginvodkaglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -276,7 +304,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: whiskey
   color: "#664300"
-  spritePath: whiskeyglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/whiskeyglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -294,7 +324,9 @@
   physicalDesc: reagent-physical-desc-translucent
   flavor: shittywine
   color: "#7E4043"
-  spritePath: wineglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/wineglass.rsi
+    state: icon
 
 # Mixed Alcohol
 
@@ -306,17 +338,21 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#365000"
-  spritePath: acidspitglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/acidspitglass.rsi
+    state: icon
 
 - type: reagent
-  id: AlliesCocktail #haha, cock. that's hot
-  name: reagent-name-allies-cocktail #haha, cock. that's hot
+  id: AlliesCocktail
+  name: reagent-name-allies-cocktail
   parent: BaseAlcohol
-  desc: reagent-desc-allies-cocktail #haha, cock. that's hot
+  desc: reagent-desc-allies-cocktail
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#00664d"
-  spritePath: alliescocktail.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/alliescocktail.rsi
+    state: icon
 
 - type: reagent
   id: Aloe
@@ -326,7 +362,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#192c00"
-  spritePath: aloe.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/aloe.rsi
+    state: icon
 
 - type: reagent
   id: Amasec
@@ -336,7 +374,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#124da7"
-  spritePath: amasecglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/amasecglass.rsi
+    state: icon
 
 - type: reagent
   id: Andalusia
@@ -346,7 +386,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#665700"
-  spritePath: andalusia.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/andalusia.rsi
+    state: icon
 
 - type: reagent
   id: Antifreeze
@@ -356,7 +398,10 @@
   physicalDesc: reagent-physical-desc-translucent
   flavor: alcohol
   color: "#ff7d63"
-  spritePath: antifreeze.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/antifreeze.rsi
+    state: icon
+
   metabolisms:
     Drink:
       effects:
@@ -374,7 +419,9 @@
   physicalDesc: reagent-physical-desc-cloudy
   flavor: atomicbomb
   color: "#666300"
-  spritePath: atomicbombglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/atomicbombglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -395,7 +442,9 @@
   physicalDesc: reagent-physical-desc-bubbly
   flavor: alcohol
   color: "#664300"
-  spritePath: b52glass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/b52glass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -413,7 +462,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#FF7F3B"
-  spritePath: bahama_mama.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/bahama_mama.rsi
+    state: icon
 
 - type: reagent
   id: BananaHonk
@@ -423,7 +474,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: bananahonk
   color: "#ffff91"
-  spritePath: bananahonkglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/bananahonkglass.rsi
+    state: icon
 
 - type: reagent
   id: Barefoot
@@ -433,7 +486,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#664300"
-  spritePath: b&p.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/b&p.rsi
+    state: icon
 
 - type: reagent
   id: BeepskySmash
@@ -443,7 +498,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: beepsky
   color: "#664300"
-  spritePath: beepskysmashglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/beepskysmashglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -461,7 +518,9 @@
   physicalDesc: reagent-physical-desc-bilky
   flavor: alcohol
   color: "#895C4C"
-  spritePath: glass_brown.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/glass_brown.rsi
+    state: icon
 
 - type: reagent
   id: BlackRussian
@@ -471,7 +530,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#360000"
-  spritePath: blackrussianglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/blackrussianglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -489,7 +550,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: bloodymary
   color: "#660000"
-  spritePath: bloodymaryglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/bloodymaryglass.rsi
+    state: icon
 
 - type: reagent
   id:  Booger
@@ -499,7 +562,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#8CFF8C"
-  spritePath: booger.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/booger.rsi
+    state: icon
 
 - type: reagent
   id: BraveBull
@@ -509,7 +574,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#664300"
-  spritePath: bravebullglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/bravebullglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -527,7 +594,9 @@
   physicalDesc: reagent-physical-desc-bubbly
   flavor: cubalibre
   color: "#3E1B00"
-  spritePath: cubalibreglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/cubalibreglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -545,7 +614,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#a70000"
-  spritePath: demonsblood.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/demonsblood.rsi
+    state: icon
 
 - type: reagent
   id: DevilsKiss
@@ -555,7 +626,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#A68310"
-  spritePath: devilskiss.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/devilskiss.rsi
+    state: icon
 
 - type: reagent
   id: DoctorsDelight
@@ -565,7 +638,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: medicine
   color: "#FF8CFF"
-  spritePath: doctorsdelightglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/doctorsdelightglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -594,7 +669,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#2E6671"
-  spritePath: driestmartiniglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/driestmartiniglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -612,7 +689,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#2E6671"
-  spritePath: erikasurprise.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/erikasurprise.rsi
+    state: icon
 
 - type: reagent
   id: GargleBlaster
@@ -622,7 +701,9 @@
   physicalDesc: reagent-physical-desc-volatile
   flavor: gargleblaster
   color: "#9cc8b4"
-  spritePath: gargleblasterglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/gargleblasterglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -640,7 +721,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#664300"
-  spritePath: ginfizzglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/ginfizzglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -658,7 +741,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: gintonic
   color: "#004166"
-  spritePath: gintonicglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/gintonicglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -676,7 +761,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#FFFF91"
-  spritePath: goldschlagerglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/goldschlagerglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -694,7 +781,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#664300"
-  spritePath: grogglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/grogglass.rsi
+    state: icon
 
 - type: reagent
   id: HippiesDelight
@@ -704,7 +793,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#6eaa0c"
-  spritePath: hippiesdelightglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/hippiesdelightglass.rsi
+    state: icon
 
 - type: reagent
   id: Hooch
@@ -714,7 +805,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#664e00"
-  spritePath: glass_brown2.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/glass_brown2.rsi
+    state: icon
 
 - type: reagent
   id: IcedBeer
@@ -724,7 +817,9 @@
   physicalDesc: reagent-physical-desc-bubbly
   flavor: icedbeer
   color: "#664300"
-  spritePath: iced_beerglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/iced_beerglass.rsi
+    state: icon
 
 - type: reagent
   id: IrishCarBomb
@@ -734,7 +829,9 @@
   physicalDesc: reagent-physical-desc-bubbly
   flavor: alcohol
   color: "#2E6671"
-  spritePath: irishcarbomb.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/irishcarbomb.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -752,7 +849,9 @@
   physicalDesc: reagent-physical-desc-creamy
   flavor: creamy
   color: "#664300"
-  spritePath: irishcreamglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/irishcreamglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -770,7 +869,9 @@
   physicalDesc: reagent-physical-desc-cloudy
   flavor: irishcoffee
   color: "#664300"
-  spritePath: irishcoffeeglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/irishcoffeeglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -788,7 +889,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: longisland
   color: "#664300"
-  spritePath: longislandicedteaglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/longislandicedteaglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -806,7 +909,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#664300"
-  spritePath: manhattanglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/manhattanglass.rsi
+    state: icon
 
 - type: reagent
   id: ManhattanProject
@@ -816,7 +921,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#664300"
-  spritePath: proj_manhattanglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/proj_manhattanglass.rsi
+    state: icon
 
 - type: reagent
   id: ManlyDorf
@@ -826,7 +933,9 @@
   physicalDesc: reagent-physical-desc-bubbly
   flavor: alcohol
   color: "#664300"
-  spritePath: manlydorfglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/manlydorfglass.rsi
+    state: icon
 
 - type: reagent
   id: Margarita
@@ -836,7 +945,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#8CFF8C"
-  spritePath: margaritaglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/margaritaglass.rsi
+    state: icon
 
 - type: reagent
   id: Martini
@@ -846,7 +957,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#664300"
-  spritePath: martiniglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/martiniglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -864,7 +977,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#664300"
-  spritePath: meadglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/meadglass.rsi
+    state: icon
 
 - type: reagent
   id: Mojito
@@ -874,7 +989,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#664300"
-  spritePath: mojito.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/mojito.rsi
+    state: icon
 
 - type: reagent
   id: Moonshine
@@ -901,7 +1018,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#2E2E61"
-  spritePath: neurotoxinglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/neurotoxinglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -925,7 +1044,9 @@
   physicalDesc: reagent-physical-desc-metallic
   flavor: alcohol
   color: "#585840"
-  spritePath: patronglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/patronglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -943,7 +1064,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#C73C00"
-  spritePath: red_meadglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/red_meadglass.rsi
+    state: icon
 
 - type: reagent
   id: Sbiten
@@ -953,7 +1076,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#004166"
-  spritePath: sbitenglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/sbitenglass.rsi
+    state: icon
 
 - type: reagent
   id: ScrewdriverCocktail
@@ -963,7 +1088,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: screwdriver
   color: "#A68310"
-  spritePath: screwdriverglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/screwdriverglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -981,7 +1108,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: nothing
   color: "#004666"
-  spritePath: silencerglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/silencerglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -999,7 +1128,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: singulo
   color: "#3b0c0c"
-  spritePath: singulo.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/singulo.rsi
+    state: icon
 
 - type: reagent
   id: SnowWhite
@@ -1009,7 +1140,9 @@
   physicalDesc: reagent-physical-desc-bubbly
   flavor: alcohol
   color: "#FFFFFF"
-  spritePath: snowwhite.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/snowwhite.rsi
+    state: icon
 
 - type: reagent
   id: SuiDream
@@ -1019,7 +1152,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#00A86B"
-  spritePath: sdreamglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/sdreamglass.rsi
+    state: icon
 
 - type: reagent
   id: SyndicateBomb
@@ -1029,7 +1164,9 @@
   physicalDesc: reagent-physical-desc-opaque
   flavor: syndiebomb
   color: "#2E6660"
-  spritePath: syndicatebomb.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/syndicatebomb.rsi
+    state: icon
 
 - type: reagent
   id: TequilaSunrise
@@ -1039,7 +1176,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: tequilasunrise
   color: "#FFE48C"
-  spritePath: tequillasunriseglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/tequillasunriseglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -1057,7 +1196,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: threemileisland
   color: "#666340"
-  spritePath: threemileislandglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/threemileislandglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -1078,7 +1219,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#665c00"
-  spritePath: toxinsspecialglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/toxinsspecialglass.rsi
+    state: icon
 
 - type: reagent
   id: VodkaMartini
@@ -1088,7 +1231,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#004666"
-  spritePath: martiniglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/martiniglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -1106,7 +1251,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#0064C8"
-  spritePath: vodkatonicglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/vodkatonicglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -1124,7 +1271,9 @@
   physicalDesc: reagent-physical-desc-bubbly
   flavor: whiskeycola
   color: "#3E1B00"
-  spritePath: whiskeycolaglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/whiskeycolaglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -1142,7 +1291,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: whiskeycola
   color: "#533600"
-  spritePath: whiskeysodaglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/whiskeysodaglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -1160,7 +1311,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#A68340"
-  spritePath: whiterussianglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/whiterussianglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:

@@ -139,7 +139,7 @@ namespace Content.Server.MachineLinking.System
 
             foreach (var receiver in receivers)
             {
-                var eventArgs = new SignalReceivedEvent(receiver.Port);
+                var eventArgs = new SignalReceivedEvent(receiver.Port, uid);
                 RaiseLocalEvent(receiver.Uid, eventArgs);
             }
         }

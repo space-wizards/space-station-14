@@ -7,7 +7,6 @@ namespace Content.Server.Explosion.EntitySystems
     public sealed partial class TriggerSystem
     {
         [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
-
         private void InitializeSignal()
         {
             SubscribeLocalEvent<TriggerOnSignalComponent,SignalReceivedEvent>(OnSignalReceived);
@@ -19,7 +18,7 @@ namespace Content.Server.Explosion.EntitySystems
             if (args.Port != component.Port)
                 return;
 
-            Trigger(uid);
+            Trigger(uid, args.Trigger);
         }
         private void OnInit(EntityUid uid, TriggerOnSignalComponent component, ComponentInit args)
         {

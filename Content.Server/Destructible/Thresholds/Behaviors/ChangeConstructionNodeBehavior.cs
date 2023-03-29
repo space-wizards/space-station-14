@@ -9,7 +9,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         [DataField("node")]
         public string Node { get; private set; } = string.Empty;
 
-        public void Execute(EntityUid owner, DestructibleSystem system)
+        public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
         {
             if (string.IsNullOrEmpty(Node) || !system.EntityManager.TryGetComponent(owner, out ConstructionComponent? construction))
                 return;

@@ -1,0 +1,40 @@
+- type: entity
+  id: FleshBlocker
+  parent: BaseStructure
+  name: flesh clump
+  description: An annoying clump of flesh.
+  components:
+  - type: InteractionOutline
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Decoration/flesh_decoration.rsi
+    layers:
+    - state: closed
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.3
+      density: 190
+      mask:
+      - MachineMask
+      layer:
+      - Impassable
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          closed: ""
+      - enum.DamageStateVisualLayers.Base:
+          ajar: ""
+      - enum.DamageStateVisualLayers.Base:
+          open: ""
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]

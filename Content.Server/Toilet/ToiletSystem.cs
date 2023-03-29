@@ -3,7 +3,6 @@ using Content.Server.Buckle.Systems;
 using Content.Server.Popups;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
-using Content.Server.Tools;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Buckle.Components;
@@ -13,6 +12,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Toilet;
+using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -28,7 +28,7 @@ namespace Content.Server.Toilet
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SecretStashSystem _secretStash = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly ToolSystem _toolSystem = default!;
+        [Dependency] private readonly SharedToolSystem _toolSystem = default!;
 
         public override void Initialize()
         {
@@ -102,10 +102,10 @@ namespace Content.Server.Toilet
                     return;
                 component.IsPrying = true;
 
+                var toolEvData = new ToolEventData(new ToiletPryFinished(uid));
+
                 // try to pry toilet cistern
-                if (!_toolSystem.UseTool(args.Used, args.User, uid, 0f,
-                    component.PryLidTime, component.PryingQuality,
-                    new ToiletPryFinished(uid), new ToiletPryInterrupted(uid)))
+                if (!_toolSystem.UseTool(args.Used, args.User, uid, component.PryLidTime, new [] {component.PryingQuality}, toolEvData))
                 {
                     component.IsPrying = false;
                     return;

@@ -217,7 +217,6 @@ namespace Content.Shared.Humanoid
             {
                 markingSet = new MarkingSet(appearance.Markings, speciesProto.MarkingPoints, markingManager, proto);
                 markingSet.EnsureValid(markingManager);
-                markingSet.FilterSpecies(species, markingManager);
 
                 switch (speciesProto.SkinColoration)
                 {
@@ -236,6 +235,7 @@ namespace Content.Shared.Humanoid
 
                         break;
                 }
+                markingSet.EnsureSpecies(species, skinColor, markingManager);
             }
 
             return new HumanoidCharacterAppearance(

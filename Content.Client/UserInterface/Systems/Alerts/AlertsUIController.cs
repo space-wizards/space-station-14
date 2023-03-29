@@ -1,6 +1,7 @@
 using Content.Client.Alerts;
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Systems.Alerts.Widgets;
+using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Shared.Alert;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
@@ -12,6 +13,19 @@ public sealed class AlertsUIController : UIController, IOnStateEntered<GameplayS
     [UISystemDependency] private readonly ClientAlertsSystem? _alertsSystem = default;
 
     private AlertsUI? UI => UIManager.GetActiveUIWidgetOrNull<AlertsUI>();
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        var gameplayStateLoad = UIManager.GetUIController<GameplayStateLoadController>();
+        gameplayStateLoad.OnScreenLoad += OnScreenLoad;
+    }
+
+    private void OnScreenLoad()
+    {
+        SyncAlerts();
+    }
 
     private void OnAlertPressed(object? sender, AlertType e)
     {

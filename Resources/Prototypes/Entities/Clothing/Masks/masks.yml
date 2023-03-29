@@ -107,7 +107,6 @@
   id: ClothingMaskGasVoiceMasker
   name: gas mask
   suffix: Voice Mask
-  description: A face-covering mask that can be connected to an air supply. There are switches and knobs underneath the mask.
   components:
     - type: VoiceMasker
 
@@ -233,3 +232,18 @@
   - type: DiseaseProtection
     protection: 0.1
   - type: IdentityBlocker
+
+- type: entity
+  parent: ClothingMaskClown
+  id: ClothingMaskCluwne
+  name: cluwne face and hair
+  suffix: Unremoveable
+  description: Cursed cluwne face and hair.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/cluwne.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/cluwne.rsi
+  - type: Unremoveable 
+  - type: AddAccentClothing
+    accent: StutteringAccent

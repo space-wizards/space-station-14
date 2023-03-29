@@ -23,6 +23,11 @@ namespace Content.Shared.Entry
             SharedContentIoC.Register();
         }
 
+        public override void Shutdown()
+        {
+            _prototypeManager.PrototypesReloaded -= PrototypeReload;
+        }
+
         public override void Init()
         {
         }
@@ -48,6 +53,8 @@ namespace Content.Shared.Entry
 
         private void InitTileDefinitions()
         {
+            _prototypeManager.PrototypesReloaded += PrototypeReload;
+
             // Register space first because I'm a hard coding hack.
             var spaceDef = _prototypeManager.Index<ContentTileDefinition>(ContentTileDefinition.SpaceID);
 
@@ -74,6 +81,15 @@ namespace Content.Shared.Entry
             }
 
             _tileDefinitionManager.Initialize();
+        }
+
+        private void PrototypeReload(PrototypesReloadedEventArgs obj)
+        {
+            // Need to re-allocate tiledefs due to how prototype reloads work
+            foreach (var def in _prototypeManager.EnumeratePrototypes<ContentTileDefinition>())
+            {
+                def.AssignTileId(_tileDefinitionManager[def.ID].TileId);
+            }
         }
     }
 }

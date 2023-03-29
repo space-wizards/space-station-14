@@ -2,6 +2,7 @@ using Content.Server.DeviceLinking.Components;
 using Content.Shared.DeviceLinking;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
+using Robust.Shared.Utility;
 
 namespace Content.Server.DeviceLinking.Systems
 {
@@ -64,7 +65,7 @@ namespace Content.Server.DeviceLinking.Systems
                 Category = VerbCategory.Lever,
                 Message = Loc.GetString("two-way-lever-cant"),
                 Disabled = component.State == TwoWayLeverState.Left,
-                IconTexture = $"/Textures/Interface/VerbIcons/{_leftToggleImage}",
+                Icon = new SpriteSpecifier.Texture(new ResourcePath($"/Textures/Interface/VerbIcons/{_leftToggleImage}")),
                 Text = Loc.GetString("two-way-lever-left"),
             };
 
@@ -85,7 +86,7 @@ namespace Content.Server.DeviceLinking.Systems
                 Category = VerbCategory.Lever,
                 Message = Loc.GetString("two-way-lever-cant"),
                 Disabled = component.State == TwoWayLeverState.Right,
-                IconTexture = $"/Textures/Interface/VerbIcons/{_rightToggleImage}",
+                Icon = new SpriteSpecifier.Texture(new ResourcePath($"/Textures/Interface/VerbIcons/{_rightToggleImage}")),
                 Text = Loc.GetString("two-way-lever-right"),
             };
 

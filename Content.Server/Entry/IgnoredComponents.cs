@@ -20,7 +20,6 @@ namespace Content.Server.Entry
             "PuddleVisualizer",
             "UIFragment",
             "PDABorderColor",
-            "TabletopItemVisualizer",
         };
     }
 }

@@ -3,6 +3,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.DoAfter;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
 using Robust.Shared.Audio;

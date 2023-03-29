@@ -11,6 +11,8 @@
     - type: Construction
       graph: ParticleAcceleratorEndCap
       node: completed
+    - type: GuideHelp
+      guides: [ Singularity, Power ]
 
 # Unfinished
 
@@ -30,3 +32,5 @@
       graph: ParticleAcceleratorEndCap
       node: start
       defaultTarget: completed
+    - type: GuideHelp
+      guides: [ Singularity, Power ]

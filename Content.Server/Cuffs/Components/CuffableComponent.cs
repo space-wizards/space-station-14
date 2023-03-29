@@ -18,6 +18,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Content.Server.Recycling.Components;
+using Content.Shared.DoAfter;
 using Robust.Shared.Map;
 
 namespace Content.Server.Cuffs.Components

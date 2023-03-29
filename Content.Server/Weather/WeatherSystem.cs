@@ -26,19 +26,15 @@ public sealed class WeatherSystem : SharedWeatherSystem
 
     private void OnWeatherGetState(EntityUid uid, WeatherComponent component, ref ComponentGetState args)
     {
-        args.State = new WeatherComponentState()
-        {
-            Weather = component.Weather,
-            EndTime = component.EndTime,
-            StartTime = component.StartTime,
-        };
+        args.State = new WeatherComponentState(component.Weather);
     }
 
     [AdminCommand(AdminFlags.Fun)]
     private void WeatherTwo(IConsoleShell shell, string argstr, string[] args)
     {
-        if (args.Length != 2)
+        if (args.Length < 2)
         {
+            shell.WriteError($"A");
             return;
         }
 
@@ -54,13 +50,36 @@ public sealed class WeatherSystem : SharedWeatherSystem
             return;
         }
 
+        TimeSpan? endTime = null;
+
+        if (args.Length == 3)
+        {
+            if (int.TryParse(args[2], out var durationInt))
+            {
+                var curTime = Timing.CurTime;
+                var maxTime = TimeSpan.MaxValue;
+
+                // If it's already running then just fade out with how much time we're into the weather.
+                if (TryComp<WeatherComponent>(MapManager.GetMapEntityId(mapId), out var weatherComp) &&
+                    weatherComp.Weather.TryGetValue(args[1], out var existing))
+                {
+                    maxTime = curTime - existing.StartTime;
+                }
+
+                endTime = curTime + TimeSpan.FromSeconds(durationInt);
+
+                if (endTime > maxTime)
+                    endTime = maxTime;
+            }
+        }
+
         if (args[1].Equals("null"))
         {
-            SetWeather(mapId, null);
+            SetWeather(mapId, null, endTime);
         }
         else if (ProtoMan.TryIndex<WeatherPrototype>(args[1], out var weatherProto))
         {
-            SetWeather(mapId, weatherProto);
+            SetWeather(mapId, weatherProto, endTime);
         }
         else
         {

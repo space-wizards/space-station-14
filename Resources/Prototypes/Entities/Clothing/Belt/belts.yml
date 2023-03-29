@@ -27,6 +27,7 @@
         - Radio
         - HolofanProjector
         - Multitool
+        - AppraisalTool
       components:
         - AirlockPainter
         - NetworkConfigurator
@@ -93,6 +94,7 @@
         - Radio
         - HolofanProjector
         - Multitool
+        - AppraisalTool
       components:
         - AirlockPainter
         - NetworkConfigurator
