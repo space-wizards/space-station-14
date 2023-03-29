@@ -1,9 +1,4 @@
 Entries:
-- author: checkraze
-  changes:
-  - {message: Added new parallax and intercoms to Kettle, type: Add}
-  id: 2779
-  time: '2022-12-20T03:40:34.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'Cloning consoles, scanners, and cloning pods are now properly linked
@@ -2927,3 +2922,8 @@ Entries:
       of the window when the relay is enabled., type: Tweak}
   id: 3278
   time: '2023-03-28T21:27:22.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: 'It is and always has been "Gorlex". (What is "Gorlax"?)', type: Fix}
+  id: 3279
+  time: '2023-03-29T00:46:27.0000000+00:00'
