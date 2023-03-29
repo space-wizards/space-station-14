@@ -11,6 +11,12 @@ public sealed class ContentEyeComponent : Component
     /// <summary>
     /// Zoom we're lerping to.
     /// </summary>
-    [ViewVariables, DataField("targetZoom")]
+    [DataField("targetZoom")]
     public Vector2 TargetZoom = Vector2.One;
+
+    /// <summary>
+    /// How far we're allowed to zoom out.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("maxZoom")]
+    public Vector2 MaxZoom = Vector2.One;
 }

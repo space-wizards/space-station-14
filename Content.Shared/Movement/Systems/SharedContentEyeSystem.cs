@@ -18,7 +18,6 @@ public abstract class SharedContentEyeSystem : EntitySystem
     private const byte ZoomMultiple = 10;
 
     protected static readonly Vector2 MinZoom = new(MathF.Pow(ZoomMod, -ZoomMultiple), MathF.Pow(ZoomMod, -ZoomMultiple));
-    protected static readonly Vector2 MaxZoom = new(MathF.Pow(ZoomMod, ZoomMultiple), MathF.Pow(ZoomMod, ZoomMultiple));
 
     protected ISawmill Sawmill = Logger.GetSawmill("ceye");
 
@@ -56,6 +55,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
         args.State = new ContentEyeComponentState()
         {
             TargetZoom = component.TargetZoom,
+            MaxZoom = component.MaxZoom,
         };
     }
 
@@ -65,6 +65,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
             return;
 
         component.TargetZoom = state.TargetZoom;
+        component.MaxZoom = state.MaxZoom;
     }
 
     protected void UpdateEye(EntityUid uid, ContentEyeComponent content, SharedEyeComponent eye, float frameTime)
@@ -119,7 +120,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
         }
 
         actual = Vector2.ComponentMax(MinZoom, actual);
-        actual = Vector2.ComponentMin(MaxZoom, actual);
+        actual = Vector2.ComponentMin(component.MaxZoom, actual);
 
         if (actual.Equals(component.TargetZoom))
             return;
@@ -134,6 +135,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
     private sealed class ContentEyeComponentState : ComponentState
     {
         public Vector2 TargetZoom;
+        public Vector2 MaxZoom;
     }
 
     private sealed class ResetZoomInputCmdHandler : InputCmdHandler

@@ -6,6 +6,7 @@
   noSpawn: true
   components:
   - type: ContentEye
+    maxZoom: 8.916104, 8.916104
   - type: Tag
     tags:
     - CanPilot
