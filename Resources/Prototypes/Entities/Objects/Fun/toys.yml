@@ -131,6 +131,66 @@
 
 - type: entity
   parent: BasePlushie
+  id: PlushieDiona
+  name: diona plushie
+  description: An adorable stuffed toy that resembles a diona. Love water and cuddles. Do not wet!
+  components:
+    - type: Sprite
+      layers:
+        - state: plushie_diona
+        - state: plushie_diona1
+          map: [ "enum.SolutionContainerLayers.Fill" ]
+          visible: false
+    - type: EmitSoundOnUse
+      sound:
+        path: /Audio/Items/Toys/toy_rustle.ogg
+    - type: EmitSoundOnLand
+      sound:
+        path: /Audio/Items/Toys/toy_rustle.ogg
+    - type: EmitSoundOnActivate
+      sound:
+        path: /Audio/Items/Toys/toy_rustle.ogg
+    - type: MeleeWeapon
+      soundHit:
+        path: /Audio/Items/Toys/toy_rustle.ogg
+    - type: SolutionContainerManager
+      solutions:
+        plushie:
+          maxVol: 1
+    - type: RefillableSolution
+      solution: plushie
+    - type: SolutionContainerVisuals
+      maxFillLevels: 1
+      fillBaseName: plushie_diona
+      changeColor: false
+    - type: Appearance
+    - type: Reactive
+      reactions:
+        - reagents: [ Water ]
+          methods: [ Touch ]
+          effects:
+            - !type:AddToSolutionReaction
+              solution: plushie
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.3,-0.3,0.3,0.3"
+          density: 15
+          mask:
+            - ItemMask
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.3,-0.3,0.3,0.3"
+          id: "rehydrate"
+          hard: false
+          layer:
+            - LowImpassable
+    - type: CollisionWake
+      enabled: false
+
+- type: entity
+  parent: BasePlushie
   id: PlushieSharkBlue
   name: blue shark soft toy
   description: Big and safe to have by your side if you want to discover the world below the surface of the ocean.
@@ -588,7 +648,7 @@
       revolver-ammo: !type:Container
 
 - type: entity
-  parent: RevolverCapGun 
+  parent: RevolverCapGun
   id: RevolverCapGunFake
   name: cap gun
   description: Looks almost like the real thing! Ages 8 and up.
