@@ -1,6 +1,6 @@
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Body.Surgery.Operation.Insertion;
+namespace Content.Shared.Body.Surgery.Operation.Step.Insertion;
 
 public sealed class InsertItem : IInsertionHandler
 {
@@ -13,7 +13,7 @@ public sealed class InsertItem : IInsertionHandler
     public bool TryInsert(EntityUid part, EntityUid item)
     {
         var systemMan = IoCManager.Resolve<IEntitySystemManager>();
-        var containerMan = systemMan.GetEntitySystem<ContainerManagerSystem>();
+//        var containerMan = systemMan.GetEntitySystem<ContainerManagerSystem>();
         // TODO: add to bodypart container "bodypart", checking total size somehow
         return true;
     }

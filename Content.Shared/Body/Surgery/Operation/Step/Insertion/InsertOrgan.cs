@@ -1,7 +1,7 @@
 using Content.Shared.Body.Systems;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Body.Surgery.Operation.Insertion;
+namespace Content.Shared.Body.Surgery.Operation.Step.Insertion;
 
 public sealed class InsertOrgan : IInsertionHandler
 {

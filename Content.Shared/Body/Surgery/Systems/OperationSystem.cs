@@ -71,6 +71,11 @@ public sealed class OperationSystem : EntitySystem
     /// <summary>
     /// Try to insert an item for a step
     /// </summary>
+    public bool TryInsertItem(OperationComponent comp, EntityUid item)
+    {
+        var step = GetNextStep(comp);
+        return step?.InsertionHandler?.TryInsert(comp.Part, item) ?? false;
+    }
 
     /// <summary>
     /// Returns the next step for this operation.

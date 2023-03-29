@@ -11,7 +11,7 @@ public sealed class OrganSelection : IStepBehavior
 
     public bool Perform(SurgeryStepContext context)
     {
-        context.SurgerySystem.SelectOrgan(context.Surgeon, context.Target);
+        context.SurgerySystem.SelectOrgan(context.Operation.Part, context.Surgeon, context.Target);
         return true;
     }
 }

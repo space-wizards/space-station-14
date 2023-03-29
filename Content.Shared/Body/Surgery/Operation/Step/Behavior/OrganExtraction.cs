@@ -11,7 +11,7 @@ public sealed class OrganExtraction : IStepBehavior
 
     public bool Perform(SurgeryStepContext context)
     {
-        var organ = context.Operation.SelectedOrgan.Value;
-        return SurgerySystem.RemoveOrgan(context.Surgeon, organ);
+        var organ = context.Operation.SelectedOrgan!.Value;
+        return context.SurgerySystem.RemoveOrgan(context.Surgeon, organ);
     }
 }

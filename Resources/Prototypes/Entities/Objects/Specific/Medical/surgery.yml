@@ -130,17 +130,14 @@
     state: advanced
   - type: Item
     heldPrefix: advanced
-<<<<<<< Updated upstream
   - type: MeleeWeapon
     damage:
       types:
         Slash: 12
-=======
   - type: SurgeryTool
     steps:
     - Incision
     delay: 4
->>>>>>> Stashed changes
 
 - type: entity
   name: laser scalpel

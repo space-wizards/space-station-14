@@ -11,6 +11,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using System.Linq;
 
 namespace Content.Shared.Body.Surgery.Systems;
@@ -23,6 +24,7 @@ public abstract class SharedSurgerySystem : EntitySystem
     [Dependency] private readonly OperationSystem _operation = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -36,7 +38,7 @@ public abstract class SharedSurgerySystem : EntitySystem
         SubscribeLocalEvent<OperationComponent, AfterInteractUsingEvent>(OnOperationAfterInteractUsing);
 
         SubscribeLocalEvent<SurgeryDrapesComponent, OperationSelectedMessage>(OnOperationSelected);
-        SubscribeLocalEvent<BodyPartComponent, OrganSelectedMessage>(OnOrganSelected);
+        SubscribeLocalEvent<OperationComponent, OrganSelectedMessage>(OnOrganSelected);
 
         foreach (var operation in _proto.EnumeratePrototypes<SurgeryOperationPrototype>())
         {
@@ -163,12 +165,16 @@ public abstract class SharedSurgerySystem : EntitySystem
         }
     }
 
-    private void OnAfterInteractUsing(EntityUid uid, OperationComponent comp, AfterInteractUsingEvent args)
+    private void OnOperationAfterInteractUsing(EntityUid uid, OperationComponent comp, AfterInteractUsingEvent args)
     {
         if (args.Handled || !args.CanReach || !_timing.IsFirstTimePredicted)
+            return;
 
         // insert organs into part, part onto body, implants into cavity
-        args.Handled = _operation.TryInsertItem(uid, args.User, comp, args.Used);
+        var user = args.User;
+        args.Handled = _operation.TryInsertItem(comp, args.Used);
+        if (args.Handled)
+            _popup.PopupEntity(Loc.GetString("surgery-insert-success", ("user", user), ("part", comp.Part), ("item", args.Used)), user, user);
     }
 
     private void OnOperationSelected(EntityUid uid, SurgeryDrapesComponent comp, OperationSelectedMessage msg)
@@ -228,7 +234,7 @@ public abstract class SharedSurgerySystem : EntitySystem
 
         var organs = _body.GetPartOrgans(part, bodyPart)
             .Select((child, _) => child.Item1);
-        var state = new SelectOrganUiState(target, surgeon, organs.ToArray());
+        var state = new SelectOrganUiState(target, organs.ToArray());
         return OpenSelectUi(part, surgeon, target, SelectOrganUiKey.Key, state);
     }
 
