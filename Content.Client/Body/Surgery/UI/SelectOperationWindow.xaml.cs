@@ -13,11 +13,11 @@ using System.Collections.Generic;
 namespace Content.Client.Body.Surgery.UI;
 
 [GenerateTypedNameReferences]
-public sealed partial class SurgeryWindow : DefaultWindow
+public sealed partial class SelectOperationWindow : DefaultWindow
 {
     private readonly IEntityManager _entMan;
 
-    public SurgeryWindow(IEntityManager entMan)
+    public SelectOperationWindow(IEntityManager entMan)
     {
         _entMan = entMan;
 
@@ -33,9 +33,8 @@ public sealed partial class SurgeryWindow : DefaultWindow
 
         foreach (var (uid, operations) in targets)
         {
-            // TODO SURGERY: skip if there are no non-hidden operations
-            //if (operation.Hidden)
-            //    continue;
+            if (operations.Count == 0)
+                continue;
 
             var tab = new OperationTab
             {

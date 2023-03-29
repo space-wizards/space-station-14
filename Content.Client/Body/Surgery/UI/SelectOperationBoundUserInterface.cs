@@ -1,8 +1,8 @@
 using Content.Shared.Body.Part;
+using Content.Shared.Body.Surgery;
 using Content.Shared.Body.Surgery.Components;
 using Content.Shared.Body.Surgery.Operation;
 using Content.Shared.Body.Surgery.Systems;
-using Content.Shared.Body.Surgery.UI;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Shared.GameObjects;
@@ -15,23 +15,23 @@ using System.Linq;
 
 namespace Content.Client.Body.Surgery.UI;
 
-public sealed class SurgeryBoundUserInterface : BoundUserInterface
+public sealed class SelectOperationBoundUserInterface : BoundUserInterface
 {
     [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly IEntitySystemManager _systemMan = default!;
     private OperationSystem _operation = default!;
 
-    private SurgeryWindow? _window;
+    private SelectOperationWindow? _window;
     private EntityUid _target = EntityUid.Invalid;
     private EntityUid _user = EntityUid.Invalid;
 
-    public SurgeryBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey) { }
+    public SelectOperationBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey) { }
 
     protected override void Open()
     {
         base.Open();
 
-        _window = new SurgeryWindow(_entMan);
+        _window = new SelectOperationWindow(_entMan);
         _window.OnClose += Close;
         _window.OpenCentered();
         _window.OperationSelected += OnOperationSelected;
@@ -43,7 +43,7 @@ public sealed class SurgeryBoundUserInterface : BoundUserInterface
     {
         base.UpdateState(state);
 
-        if (_window == null || state is not SurgeryUIState uiState)
+        if (_window == null || state is not SelectOperationUiState uiState)
         {
             return;
         }
@@ -53,17 +53,16 @@ public sealed class SurgeryBoundUserInterface : BoundUserInterface
 
         var targets = new Dictionary<EntityUid, List<SurgeryOperationPrototype>>();
 
-        foreach (var uid in uiState.Entities)
+        foreach (var uid in uiState.Parts)
         {
             if (!_entMan.TryGetComponent<BodyPartComponent>(uid, out var part))
             {
                 Logger.WarningS("surgery",
-                    $"Server sent entity {uid} without a {nameof(BodyPartComponent)} in {nameof(SurgeryUIState)}");
+                    $"Server sent entity {uid} without a {nameof(BodyPartComponent)} in {nameof(SelectOperationUiState)}");
                 continue;
             }
 
-            // TODO: possible surgeries *on part*
-            targets.Add(uid, _operation.PossibleSurgeries(part.PartType).ToList());
+            targets.Add(uid, _operation.PossibleSurgeries(part).ToList());
         }
 
         _window.SetTargets(targets);

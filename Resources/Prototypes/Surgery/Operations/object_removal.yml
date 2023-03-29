@@ -10,8 +10,6 @@
   - id: BoneSetter
   - id: BoneGel
   - id: Cauterization
-  effect:
-    !type:ObjectRemovalEffect
   parts:
   - Torso
   - Head

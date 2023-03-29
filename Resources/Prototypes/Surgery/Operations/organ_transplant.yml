@@ -8,9 +8,9 @@
   - id: Retraction
   - id: VesselCompression
   - id: Insertion
-    insertionHandler: !type:OrganSelection
-  - id: Cauterization
-  - id: Cauterization
+    insertionHandler: !type:InsertOrgan
+  - id: Cauterization # attach organ
+  - id: Cauterization # close up wound
   effect:
     !type:OrganExtractionEffect
   parts:

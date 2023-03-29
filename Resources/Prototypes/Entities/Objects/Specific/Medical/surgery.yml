@@ -26,8 +26,8 @@
   - type: SurgeryDrapes
   - type: UserInterface
     interfaces:
-    - key: enum.SurgeryUiKey.Key
-      type: SurgeryBoundUserInterface
+    - key: enum.SelectOperationUiKey.Key
+      type: SelectOperationBoundUserInterface
 
 # Cautery
 

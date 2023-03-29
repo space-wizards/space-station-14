@@ -20,9 +20,9 @@ public sealed class OperationSystem : EntitySystem
         _proto.EnumeratePrototypes<SurgeryOperationPrototype>().Where(op => !op.Hidden);
         // TODO: prerequisites like having ribcage/skull opened or for adding limbs, missing a limb
 
-    public IEnumerable<SurgeryOperationPrototype> PossibleSurgeries(BodyPartType partType)
+    public IEnumerable<SurgeryOperationPrototype> PossibleSurgeries(BodyPartComponent part)
     {
-        return AllSurgeries.Where(op => op.Parts.Contains(partType));
+        return AllSurgeries.Where(op => op.Parts.Contains(part.PartType));
     }
 
     public override void Initialize()

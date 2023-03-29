@@ -1,15 +1,13 @@
 - type: surgeryOperation
-  id: BoneRepair
-  name: Bone Repair
-  description: Mends broken bones and fractures.
+  id: RepairHairlineFracture
+  name: Repair Hairline Fracture
+  description: Mends hairline fractures in bones.
   steps:
   - id: Incision
-  - id: BoneGel
   - id: BoneSetter
-  - id: BoneGel
   - id: Cauterization
   effect:
-    !type:BoneRepairEffect
+    !type:HairlineRepairEffect
   parts:
   - Torso
   - Head
@@ -17,4 +15,23 @@
   - Hand
   - Leg
   - Foot
-  hidden: true # TODO SURGERY
+
+- type: surgeryOperation
+  id: RepairCompoundFracture
+  name: Repair Compound Fracture
+  description: Mends compound fractures in bones.
+  steps:
+  - id: Incision
+  - id: Retraction
+  - id: VesselCompression
+  - id: BoneSetter
+  - id: Cauterization
+  effect:
+    !type:CompoundRepairEffect
+  parts:
+  - Torso
+  - Head
+  - Arm
+  - Hand
+  - Leg
+  - Foot
