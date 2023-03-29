@@ -1,0 +1,51 @@
+﻿- type: trauma
+  id: Slash
+  wounds:
+    10: Welt
+    30: RoughAbrasion
+    50: OpenLaceration
+    100: WeepingAvulsion
+
+- type: entity
+  id: Welt
+  components:
+    - type: Wound
+      healthDamage: 2
+      integrityDamage: 0
+      severityPercentage: 100
+      baseHealingRate: 0.05
+      healingModifier: 0
+      healingMultiplier: 1.0
+
+- type: entity
+  id: RoughAbrasion
+  components:
+    - type: Wound
+      healthDamage: 2
+      integrityDamage: 0
+      severityPercentage: 100
+      baseHealingRate: 0.05
+      healingModifier: 0
+      healingMultiplier: 1.0
+
+- type: entity
+  id: OpenLaceration
+  components:
+    - type: Wound
+      healthDamage: 2
+      integrityDamage: 0
+      severityPercentage: 100
+      baseHealingRate: 0.05
+      healingModifier: 0
+      healingMultiplier: 1.0
+
+- type: entity
+  id: WeepingAvulsion
+  components:
+    - type: Wound
+      healthDamage: 2
+      integrityDamage: 0
+      severityPercentage: 100
+      baseHealingRate: 0.05
+      healingModifier: 0
+      healingMultiplier: 1.0

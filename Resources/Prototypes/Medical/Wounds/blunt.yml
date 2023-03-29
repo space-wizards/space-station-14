@@ -1,0 +1,53 @@
+﻿- type: trauma
+  id: Blunt
+  wounds:
+    10: Bruise
+    35: JointDislocation
+    50: HairlineFracture
+    80: CompoundFracture
+
+- type: entity
+  id: Bruise
+  components:
+    - type: Wound
+      healthDamage: 2
+      integrityDamage: 0
+      severityPercentage: 100
+      baseHealingRate: 0.05
+      healingModifier: 0
+      healingMultiplier: 1.0
+    - type: PainInflicter
+      pain: 10
+
+- type: entity
+  id: JointDislocation
+  components:
+    - type: Wound
+      healthDamage: 2
+      integrityDamage: 0
+      severityPercentage: 100
+      baseHealingRate: 0.05
+      healingModifier: 0
+      healingMultiplier: 1.0
+
+- type: entity
+  id: HairlineFracture
+  components:
+    - type: Wound
+      healthDamage: 2
+      integrityDamage: 0
+      severityPercentage: 100
+      baseHealingRate: 0.05
+      healingModifier: 0
+      healingMultiplier: 1.0
+
+- type: entity
+  id: CompoundFracture
+  components:
+    - type: Wound
+      healthDamage: 2
+      integrityDamage: 0
+      severityPercentage: 100
+      baseHealingRate: 0.05
+      healingModifier: 0
+      healingMultiplier: 1.0

@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Body.Systems;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Body.Organ;
@@ -7,9 +8,7 @@ namespace Content.Shared.Body.Organ;
 [Access(typeof(SharedBodySystem))]
 public sealed class OrganComponent : Component
 {
-    [DataField("body")]
-    public EntityUid? Body;
+    [DataField("body")] public EntityUid? Body;
 
-    [DataField("parent")]
-    public OrganSlot? ParentSlot;
+    [DataField("parent")] public OrganSlot? ParentSlot;
 }

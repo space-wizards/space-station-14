@@ -1,6 +1,7 @@
 using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
 using Content.Server.Body.Systems;
+using Content.Server.Medical.Bloodstream.Systems;
 
 namespace Content.Server.Chemistry.ReactionEffects
 {

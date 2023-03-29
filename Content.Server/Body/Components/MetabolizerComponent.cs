@@ -1,4 +1,5 @@
 ﻿using Content.Server.Body.Systems;
+using Content.Server.Medical.Bloodstream.Components;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;

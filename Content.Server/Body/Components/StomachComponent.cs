@@ -1,4 +1,5 @@
 ﻿using Content.Server.Body.Systems;
+using Content.Server.Medical.Bloodstream.Components;
 using Content.Shared.FixedPoint;
 
 namespace Content.Server.Body.Components

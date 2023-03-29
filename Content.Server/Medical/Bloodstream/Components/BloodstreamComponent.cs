@@ -1,5 +1,6 @@
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Medical.Bloodstream.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -7,7 +8,7 @@ using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Body.Components
+namespace Content.Server.Medical.Bloodstream.Components
 {
     [RegisterComponent, Access(typeof(BloodstreamSystem), (typeof(ChemistrySystem)))]
     public sealed class BloodstreamComponent : Component
@@ -29,25 +30,25 @@ namespace Content.Server.Body.Components
         ///     This generally corresponds to an amount of damage and can't go above 100.
         /// </remarks>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float BleedAmount;
+        public FixedPoint2 BleedAmount;
 
         /// <summary>
         ///     How much should bleeding should be reduced every update interval?
         /// </summary>
         [DataField("bleedReductionAmount")]
-        public float BleedReductionAmount = 1.0f;
+        public FixedPoint2 BleedReductionAmount = 1.0f;
 
         /// <summary>
         ///     How high can <see cref="BleedAmount"/> go?
         /// </summary>
         [DataField("maxBleedAmount")]
-        public float MaxBleedAmount = 20.0f;
+        public FixedPoint2 MaxBleedAmount = 20.0f;
 
         /// <summary>
         ///     What percentage of current blood is necessary to avoid dealing blood loss damage?
         /// </summary>
         [DataField("bloodlossThreshold")]
-        public float BloodlossThreshold = 0.9f;
+        public FixedPoint2 BloodlossThreshold = 0.9f;
 
         /// <summary>
         ///     The base bloodloss damage to be incurred if below <see cref="BloodlossThreshold"/>
@@ -72,7 +73,7 @@ namespace Content.Server.Body.Components
         ///     How much reagent of blood should be restored each update interval?
         /// </summary>
         [DataField("bloodRefreshAmount")]
-        public float BloodRefreshAmount = 0.1f;
+        public FixedPoint2 BloodRefreshAmount = 0.1f;
 
         /// <summary>
         ///     How much blood needs to be in the temporary solution in order to create a puddle?

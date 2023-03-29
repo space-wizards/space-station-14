@@ -11,6 +11,7 @@ using Content.Server.Inventory;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Chemistry.Components;
 using Content.Server.Emoting.Systems;
+using Content.Server.Medical.Bloodstream.Systems;
 using Content.Server.Speech.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Disease.Events;
