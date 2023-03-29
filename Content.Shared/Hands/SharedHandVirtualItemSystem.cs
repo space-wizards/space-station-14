@@ -48,6 +48,9 @@ public abstract class SharedHandVirtualItemSystem : EntitySystem
     /// </summary>
     public void DeleteInHandsMatching(EntityUid user, EntityUid matching)
     {
+        if (_net.IsClient)
+            return;
+
         foreach (var hand in _hands.EnumerateHands(user))
         {
             if (TryComp(hand.HeldEntity, out HandVirtualItemComponent? virt) && virt.BlockingEntity == matching)
