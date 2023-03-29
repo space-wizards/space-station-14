@@ -1,5 +1,3 @@
-using System.Threading;
-
 namespace Content.Server.Fluids.Components;
 
 [RegisterComponent]
@@ -17,6 +15,4 @@ public sealed class SpillableComponent : Component
 
     [DataField("spillDelay")]
     public float? SpillDelay;
-
-    public CancellationTokenSource? CancelToken;
 }

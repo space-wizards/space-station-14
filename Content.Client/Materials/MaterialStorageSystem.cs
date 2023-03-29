@@ -44,7 +44,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
     {
         if (!base.TryInsertMaterialEntity(user, toInsert, receiver, component))
             return false;
-        _transform.DetachParentToNull(Transform(toInsert));
+        _transform.DetachParentToNull(toInsert, Transform(toInsert));
         return true;
     }
 }

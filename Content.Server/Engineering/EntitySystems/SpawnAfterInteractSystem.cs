@@ -2,6 +2,7 @@ using Content.Server.Coordinates.Helpers;
 using Content.Server.DoAfter;
 using Content.Server.Engineering.Components;
 using Content.Server.Stack;
+using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Stacks;

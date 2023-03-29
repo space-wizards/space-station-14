@@ -13,6 +13,16 @@
   - type: Tag
     tags:
     - Ore
+  - type: Fixtures
+    fixtures:
+      - shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 20
+        mask:
+          - ItemMask
+        restitution: 0.3
+        friction: 0.2
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

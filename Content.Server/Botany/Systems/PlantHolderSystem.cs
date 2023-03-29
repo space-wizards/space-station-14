@@ -23,6 +23,7 @@ using Robust.Shared.Timing;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Content.Server.Coordinates.Helpers;
 
 namespace Content.Server.Botany.Systems
 {
@@ -32,7 +33,7 @@ namespace Content.Server.Botany.Systems
         [Dependency] private readonly IPrototypeManager _prototype = default!;
         [Dependency] private readonly MutationSystem _mutation = default!;
         [Dependency] private readonly AppearanceSystem _appearance = default!;
-        [Dependency] private readonly AudioSystem _audio = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
@@ -78,8 +79,8 @@ namespace Content.Server.Botany.Systems
             {
                 var displayName = Loc.GetString(component.Seed.DisplayName);
                 args.PushMarkup(Loc.GetString("plant-holder-component-something-already-growing-message",
-                                      ("seedName", displayName),
-                                      ("toBeForm", displayName.EndsWith('s') ? "are" : "is")));
+                        ("seedName", displayName),
+                        ("toBeForm", displayName.EndsWith('s') ? "are" : "is")));
 
                 if (component.Health <= component.Seed.Endurance / 2)
                 {
@@ -133,7 +134,7 @@ namespace Content.Server.Botany.Systems
                 if (component.Seed == null)
                 {
                     if (!_botanySystem.TryGetSeed(seeds, out var seed))
-                        return ;
+                        return;
 
                     var name = Loc.GetString(seed.Name);
                     var noun = Loc.GetString(seed.Noun);
@@ -209,7 +210,7 @@ namespace Content.Server.Botany.Systems
 
                 _audio.PlayPvs(spray.SpraySound, args.Used, AudioParams.Default.WithVariation(0.125f));
 
-                var split =_solutionSystem.Drain(solutionEntity, solution, amount);
+                var split = _solutionSystem.Drain(solutionEntity, solution, amount);
 
                 if (split.Volume == 0)
                 {
@@ -222,7 +223,7 @@ namespace Content.Server.Botany.Systems
                     ("owner", uid),
                     ("amount", split.Volume)), args.User, PopupType.Medium);
 
-               _solutionSystem.TryAddSolution(targetEntity, targetSolution, split);
+                _solutionSystem.TryAddSolution(targetEntity, targetSolution, split);
 
                 ForceUpdateByExternalCause(uid, component);
 
@@ -250,12 +251,17 @@ namespace Content.Server.Botany.Systems
                 }
 
                 component.Seed.Unique = false;
-                var seed = _botanySystem.SpawnSeedPacket(component.Seed, Transform(args.User).Coordinates);
+                var seed = _botanySystem.SpawnSeedPacket(component.Seed, Transform(args.User).Coordinates, args.User);
                 seed.RandomOffset(0.25f);
                 var displayName = Loc.GetString(component.Seed.DisplayName);
                 _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",
                     ("seedName", displayName)), args.User);
                 component.Health -= (_random.Next(3, 5) * 10);
+
+                if (component.Seed != null && component.Seed.CanScream)
+                {
+                    _audio.PlayPvs(component.Seed.ScreamSound, uid, AudioParams.Default.WithVolume(-2));
+                }
 
                 if (_random.Prob(0.3f))
                     component.Sampled = true;
@@ -283,8 +289,8 @@ namespace Content.Server.Botany.Systems
                 if (_solutionSystem.TryGetSolution(args.Used, produce.SolutionName, out var solution2))
                 {
                     // This deliberately discards overfill.
-                   _solutionSystem.TryAddSolution(args.Used, solution2,
-                       _solutionSystem.SplitSolution(args.Used, solution2, solution2.Volume));
+                    _solutionSystem.TryAddSolution(args.Used, solution2,
+                        _solutionSystem.SplitSolution(args.Used, solution2, solution2.Volume));
 
                     ForceUpdateByExternalCause(uid, component);
                 }
@@ -302,6 +308,7 @@ namespace Content.Server.Botany.Systems
         {
             // TODO
         }
+
 
         public void Update(EntityUid uid, PlantHolderComponent? component = null)
         {
@@ -331,12 +338,29 @@ namespace Content.Server.Botany.Systems
             }
 
             // Weeds like water and nutrients! They may appear even if there's not a seed planted.
-            if (component.WaterLevel > 10 && component.NutritionLevel > 2 && _random.Prob(component.Seed == null ? 0.05f : 0.01f))
+            if (component.WaterLevel > 10 && component.NutritionLevel > 2)
             {
-                component.WeedLevel += 1 * HydroponicsSpeedMultiplier * component.WeedCoefficient;
+                var chance = 0f;
+                if (component.Seed == null)
+                    chance = 0.05f;
+                else if (component.Seed.TurnIntoKudzu)
+                    chance = 1f;
+                else
+                    chance = 0.01f;
+
+                if (_random.Prob(chance))
+                    component.WeedLevel += 1 + HydroponicsSpeedMultiplier * component.WeedCoefficient;
 
                 if (component.DrawWarnings)
                     component.UpdateSpriteAfterUpdate = true;
+            }
+
+            if (component.Seed != null && component.Seed.TurnIntoKudzu
+                && component.WeedLevel >= component.Seed.WeedHighLevelThreshold)
+            {
+                Spawn(component.Seed.KudzuPrototype, Transform(uid).Coordinates.SnapToGrid(EntityManager));
+                component.Seed.TurnIntoKudzu = false;
+                component.Health = 0;
             }
 
             // There's a chance for a weed explosion to happen if weeds take over.
@@ -399,7 +423,7 @@ namespace Content.Server.Botany.Systems
             if (!component.Seed.Viable)
             {
                 AffectGrowth(uid, -1, component);
-                component.Health -= 6*healthMod;
+                component.Health -= 6 * healthMod;
             }
 
             // Make sure the plant is not starving.
@@ -435,6 +459,7 @@ namespace Content.Server.Botany.Systems
                 if (component.DrawWarnings)
                     component.UpdateSpriteAfterUpdate = true;
             }
+
             var environment = _atmosphere.GetContainingMixture(uid, true, true) ?? GasMixture.SpaceGas;
 
             if (component.Seed.ConsumeGasses.Count > 0)
@@ -547,7 +572,8 @@ namespace Content.Server.Botany.Systems
             }
             else if (component.Age < 0) // Revert back to seed packet!
             {
-                _botanySystem.SpawnSeedPacket(component.Seed, Transform(uid).Coordinates);
+                // will put it in the trays hands if it has any, please do not try doing this
+                _botanySystem.SpawnSeedPacket(component.Seed, Transform(uid).Coordinates, uid);
                 RemovePlant(uid, component);
                 component.ForceUpdate = true;
                 Update(uid, component);
@@ -669,6 +695,9 @@ namespace Content.Server.Botany.Systems
 
             component.Harvest = false;
             component.LastProduce = component.Age;
+
+            if (component.Seed != null && component.Seed.CanScream)
+                _audio.PlayPvs(component.Seed.ScreamSound, uid, AudioParams.Default.WithVolume(-2));
 
             if (component.Seed?.HarvestRepeat == HarvestType.NoRepeat)
                 RemovePlant(uid, component);
@@ -832,8 +861,7 @@ namespace Content.Server.Botany.Systems
             {
                 if (component.DrawWarnings)
                 {
-                    _appearance.SetData(uid, PlantHolderVisuals.HealthLight,
-                        component.Health <= component.Seed.Endurance / 2f);
+                    _appearance.SetData(uid, PlantHolderVisuals.HealthLight, component.Health <= component.Seed.Endurance / 2f);
                 }
 
                 if (component.Dead)

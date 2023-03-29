@@ -27,7 +27,7 @@ public sealed partial class BuckleSystem
         SubscribeLocalEvent<StrapComponent, DestructionEventArgs>((_,c,_) => StrapRemoveAll(c));
         SubscribeLocalEvent<StrapComponent, BreakageEventArgs>((_, c, _) => StrapRemoveAll(c));
         SubscribeLocalEvent<StrapComponent, ConstructionBeforeDeleteEvent>((_, c, _) => StrapRemoveAll(c));
-        SubscribeLocalEvent<StrapComponent, DragDropEvent>(OnStrapDragDrop);
+        SubscribeLocalEvent<StrapComponent, DragDropTargetEvent>(OnStrapDragDrop);
     }
 
     private void OnStrapGetState(EntityUid uid, StrapComponent component, ref ComponentGetState args)
@@ -185,9 +185,9 @@ public sealed partial class BuckleSystem
         Dirty(strap);
     }
 
-    private void OnStrapDragDrop(EntityUid uid, StrapComponent component, DragDropEvent args)
+    private void OnStrapDragDrop(EntityUid uid, StrapComponent component, ref DragDropTargetEvent args)
     {
-        if (!StrapCanDragDropOn(uid, args.User, args.Target, args.Dragged, component))
+        if (!StrapCanDragDropOn(uid, args.User, uid, args.Dragged, component))
             return;
 
         args.Handled = TryBuckle(args.Dragged, args.User, uid);
