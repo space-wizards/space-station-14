@@ -30,34 +30,27 @@ namespace Content.Server.Silicons.Bots
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<MedibotComponent, InteractNoHandEvent>(PlayerInject);
+            SubscribeLocalEvent<MedibotComponent, InteractNoHandEvent>((uid, component, args) => StartInject(uid, args.Target, component));
             SubscribeLocalEvent<MedibotComponent, DoAfterEvent<MedibotInjectData>>(OnDoAfter);
         }
-
-        /// Yeah it's not super ideal that players have a different code path to start injecting,
-        /// but they have parity in being able to do it now unlike before.
-        private void PlayerInject(EntityUid uid, MedibotComponent component, InteractNoHandEvent args)
-        {
-            if (args.Target == null)
-                return;
-
-            if (args.Target == uid)
-                return;
-
-            if (!SharedInjectChecks(uid, args.Target.Value, out var injectable))
-                return;
-
-            TryStartInject(uid, component, args.Target.Value, injectable);
-        }
-        public bool NPCStartInject(EntityUid uid, EntityUid target, MedibotComponent? component = null)
+        public bool StartInject(EntityUid uid, EntityUid? target, MedibotComponent? component = null)
         {
             if (!Resolve(uid, ref component))
                 return false;
 
-            if (!SharedInjectChecks(uid, target, out var injectable))
+            if (target == null || target == uid)
                 return false;
 
-            return TryStartInject(uid, component, target, injectable);
+            if (_mobs.IsDead(target.Value))
+                return false;
+
+            if (HasComp<NPCRecentlyInjectedComponent>(target))
+                return false;
+
+            if (!_solution.TryGetInjectableSolution(target.Value, out var injectableSol))
+                return false;
+
+            return TryStartInject(uid, component, target.Value, injectableSol);
         }
 
         private void OnDoAfter(EntityUid uid, MedibotComponent component, DoAfterEvent<MedibotInjectData> args)
@@ -74,7 +67,6 @@ namespace Content.Server.Silicons.Bots
             args.Handled = true;
         }
 
-
         private bool TryStartInject(EntityUid performer, MedibotComponent component, EntityUid target, Solution injectable)
         {
             if (component.IsInjecting)
@@ -87,7 +79,7 @@ namespace Content.Server.Silicons.Bots
                 return false;
 
             // Hold still, please
-            if (TryComp<PhysicsComponent>(target, out var physics) && physics.LinearVelocity.Length != 0f)
+            if (TryComp<PhysicsComponent>(target, out var physics) && physics.LinearVelocity.Length > 0.00001f)
                 return false;
 
             // Figure out which drug we're going to inject, if any.
@@ -117,30 +109,13 @@ namespace Content.Server.Silicons.Bots
             return true;
         }
 
-        private bool SharedInjectChecks(EntityUid uid, EntityUid target, [NotNullWhen(true)] out Solution? injectable)
-        {
-            injectable = null;
-            if (_mobs.IsDead(target))
-                return false;
-
-            if (HasComp<NPCRecentlyInjectedComponent>(target))
-                return false;
-
-            if (!_solution.TryGetInjectableSolution(target, out var injectableSol))
-                return false;
-
-            injectable = injectableSol;
-
-            return true;
-        }
-
         /// <summary>
         /// Chooses which drug to inject based on info about the target.
         /// With a small rewrite shouldn't be hard to make different kinds of medibots.
         /// </summary>
-        private bool ChooseDrug(EntityUid target, MedibotComponent component, out string drug, out float injectAmount, DamageableComponent? damage = null)
+        private bool ChooseDrug(EntityUid target, MedibotComponent component, [NotNullWhen(true)] out string? drug, out float injectAmount, DamageableComponent? damage = null)
         {
-            drug = "None";
+            drug = null;
             injectAmount = 0;
             if (!Resolve(target, ref damage))
                 return false;

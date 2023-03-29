@@ -32,7 +32,7 @@ public sealed class MedibotInjectOperator : HTNOperator
 
         if (medibot.InjectTarget == null)
         {
-            if (_medibotSystem.NPCStartInject(owner, target, medibot))
+            if (_medibotSystem.StartInject(owner, target, medibot))
                 return HTNOperatorStatus.Continuing;
             else
                 return HTNOperatorStatus.Failed;

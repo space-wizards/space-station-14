@@ -210,6 +210,5 @@
     makeSentient: true
     allowSpeech: true
     allowMovement: true
-    whitelistRequired: false
     name: ghost-role-information-medibot-name
     description: ghost-role-information-medibot-description
