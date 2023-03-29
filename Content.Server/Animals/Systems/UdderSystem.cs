@@ -2,11 +2,11 @@ using Content.Server.Animals.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
-using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 
@@ -19,6 +19,7 @@ namespace Content.Server.Animals.Systems
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly HungerSystem _hunger = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public override void Initialize()
@@ -41,10 +42,8 @@ namespace Content.Server.Animals.Systems
                     // Actually there is food digestion so no problem with instant reagent generation "OnFeed"
                     if (EntityManager.TryGetComponent<HungerComponent?>(udder.Owner, out var hunger))
                     {
-                        hunger.HungerThresholds.TryGetValue(HungerThreshold.Peckish, out var targetThreshold);
-
                         // Is there enough nutrition to produce reagent?
-                        if (hunger.CurrentHunger < targetThreshold)
+                        if (_hunger.GetHungerThreshold(hunger) < HungerThreshold.Peckish)
                             continue;
                     }
 
