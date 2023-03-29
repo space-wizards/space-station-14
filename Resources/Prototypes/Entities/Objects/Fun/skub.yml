@@ -7,11 +7,9 @@
   - type: Sprite
     sprite: Objects/Misc/skub.rsi
     state: icon
+    netsync: false
   - type: Item
     sprite: Objects/Misc/skub.rsi
   - type: ItemCooldown
-  - type: EmitSoundOnUse
-    sound:
-      path: /Audio/Items/skub.ogg
   - type: UseDelay
     delay: 2.0
