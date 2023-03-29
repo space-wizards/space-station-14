@@ -1,27 +1,28 @@
 using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Chemistry.ReactionEffects;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.HealthExaminable;
+using Content.Server.Medical.Bloodstream.Components;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Drunk;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Popups;
-using Content.Shared.Drunk;
+using Content.Shared.Medical.Wounds.Systems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-namespace Content.Server.Body.Systems;
+namespace Content.Server.Medical.Bloodstream.Systems;
 
 public sealed class BloodstreamSystem : EntitySystem
 {
@@ -46,6 +47,42 @@ public sealed class BloodstreamSystem : EntitySystem
         SubscribeLocalEvent<BloodstreamComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         SubscribeLocalEvent<BloodstreamComponent, ReactionAttemptEvent>(OnReactionAttempt);
         SubscribeLocalEvent<BloodstreamComponent, RejuvenateEvent>(OnRejuvenate);
+        SubscribeLocalEvent<BloodstreamComponent, WoundAddedEvent>(OnWoundAdded);
+        SubscribeLocalEvent<BloodstreamComponent, WoundSeverityChangedEvent>(OnWoundSeverityUpdate);
+        SubscribeLocalEvent<BloodstreamComponent, WoundCauterizedEvent>(OnWoundCauterizeUpdate);
+    }
+
+    private void OnWoundCauterizeUpdate(EntityUid uid, BloodstreamComponent component, ref WoundCauterizedEvent args)
+    {
+        if (!TryComp(args.WoundEntity, out BleedInflicterComponent? bleed))
+            return;
+
+        if (args.OldState)
+        {
+            //Add bleeding back if we are reopening a wound
+            TryModifyBleedAmount(uid, bleed.BloodLoss*args.WoundComponent.Severity, component);
+        }
+        else
+        {
+            //Remove bleeding if we are cauterizing
+            TryModifyBleedAmount(uid, - bleed.BloodLoss*args.WoundComponent.Severity, component);
+        }
+    }
+
+    private void OnWoundSeverityUpdate(EntityUid uid, BloodstreamComponent component, ref WoundSeverityChangedEvent args)
+    {
+        if (!TryComp(args.WoundEntity, out BleedInflicterComponent? bleed) || args.WoundComponent.Cauterized)
+            return;
+        var severityDelta = args.WoundComponent.Severity - args.OldSeverity;
+        var bleedDelta = severityDelta * bleed.BloodLoss;
+        TryModifyBleedAmount(uid, bleedDelta, component);
+    }
+
+    private void OnWoundAdded(EntityUid uid, BloodstreamComponent component, ref WoundAddedEvent args)
+    {
+        if (!TryComp(args.WoundEntity, out BleedInflicterComponent? bleed) ||  args.WoundComponent.Cauterized)
+            return;
+        TryModifyBleedAmount(uid, bleed.BloodLoss*args.WoundComponent.Severity, component);
     }
 
     private void OnReactionAttempt(EntityUid uid, BloodstreamComponent component, ReactionAttemptEvent args)
@@ -116,7 +153,7 @@ public sealed class BloodstreamSystem : EntitySystem
                 // Apply dizziness as a symptom of bloodloss.
                 // So, threshold is 0.9, you have 0.85 percent blood, it adds (5 * 1.05) or 5.25 seconds of drunkenness.
                 // So, it'd max at 1.9 by default with 0% blood.
-                _drunkSystem.TryApplyDrunkenness(uid, bloodstream.UpdateInterval * (1 + (bloodstream.BloodlossThreshold - bloodPercentage)), false);
+                _drunkSystem.TryApplyDrunkenness(uid, bloodstream.UpdateInterval * (1 + (bloodstream.BloodlossThreshold - bloodPercentage)).Float(), false);
             }
             else
             {
@@ -302,13 +339,13 @@ public sealed class BloodstreamSystem : EntitySystem
     /// <summary>
     ///     Tries to make an entity bleed more or less
     /// </summary>
-    public bool TryModifyBleedAmount(EntityUid uid, float amount, BloodstreamComponent? component = null)
+    public bool TryModifyBleedAmount(EntityUid uid, FixedPoint2 amount, BloodstreamComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))
             return false;
 
         component.BleedAmount += amount;
-        component.BleedAmount = Math.Clamp(component.BleedAmount, 0, component.MaxBleedAmount);
+        component.BleedAmount = FixedPoint2.Clamp(component.BleedAmount, 0, component.MaxBleedAmount);
 
         return true;
     }

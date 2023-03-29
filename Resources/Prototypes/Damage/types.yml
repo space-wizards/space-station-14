@@ -18,7 +18,7 @@
   id: Blunt
   armorCoefficientPrice: 2
   armorFlatPrice: 10
-  
+
 - type: damageType
   id: Cellular
   armorCoefficientPrice: 5
@@ -64,6 +64,7 @@
   id: Slash
   armorCoefficientPrice: 2
   armorFlatPrice: 10
+  trauma: Slash
 
 # Damage represent structures internal integrity.
 # Exclusive for structures such as walls, airlocks and others.

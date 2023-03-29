@@ -1,0 +1,51 @@
+﻿- type: trauma
+  id: Burn
+  wounds:
+    10: FirstDegreeBurn
+    30: SecondDegreeBurn
+    65: ThirdDegreeBurn
+    100: FourthDegreeBurn
+
+- type: entity
+  id: FirstDegreeBurn
+  components:
+    - type: Wound
+      healthDamage: 2
+      integrityDamage: 0
+      severityPercentage: 100
+      baseHealingRate: 0.05
+      healingModifier: 0
+      healingMultiplier: 1.0
+
+- type: entity
+  id: SecondDegreeBurn
+  components:
+    - type: Wound
+      healthDamage: 2
+      integrityDamage: 0
+      severityPercentage: 100
+      baseHealingRate: 0.05
+      healingModifier: 0
+      healingMultiplier: 1.0
+
+- type: entity
+  id: ThirdDegreeBurn
+  components:
+    - type: Wound
+      healthDamage: 2
+      integrityDamage: 0
+      severityPercentage: 100
+      baseHealingRate: 0.05
+      healingModifier: 0
+      healingMultiplier: 1.0
+
+- type: entity
+  id: FourthDegreeBurn
+  components:
+    - type: Wound
+      healthDamage: 2
+      integrityDamage: 0
+      severityPercentage: 100
+      baseHealingRate: 0.05
+      healingModifier: 0
+      healingMultiplier: 1.0

@@ -2,6 +2,7 @@ using Content.Shared.Disease;
 using Content.Shared.FixedPoint;
 using Content.Shared.Chemistry.Reagent;
 using Content.Server.Body.Components;
+using Content.Server.Medical.Bloodstream.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Disease.Cures
