@@ -1,10 +1,4 @@
 Entries:
-- author: AJCM-git
-  changes:
-  - {message: NT has been convinced to replace the discomfortable beds that made even
-      the dead move with ones that are at least barely bearable!, type: Fix}
-  id: 2787
-  time: '2022-12-20T22:24:50.0000000+00:00'
 - author: moonheart08
   changes:
   - {message: Christmas trees with gifts under them now grant gifts to all crew members!
@@ -2921,3 +2915,9 @@ Entries:
   - {message: Added diona plushie, type: Add}
   id: 3286
   time: '2023-03-29T22:36:54.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed high-pressure protection not actually providing any protection.,
+    type: Fix}
+  id: 3287
+  time: '2023-03-29T23:45:56.0000000+00:00'
