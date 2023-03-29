@@ -16,8 +16,12 @@ public sealed class OperationStep
     [DataField("conditional")]
     public readonly IOperationStepConditional? Conditional;
 
+    /// <summary>
+    /// Define custom behavior for this step.
+    /// The default is to check the tool type and add the step to the operation's tags.
+    /// </summary>
     [DataField("behavior")]
-    public readonly IStepBehavior? Behavior = new AddTag();
+    public readonly StepBehavior Behavior = new();
 
     /// <summary>
     /// Defines what handles inserting items into the patient on this step

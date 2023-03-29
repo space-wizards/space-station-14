@@ -2,16 +2,16 @@ using Content.Shared.Body.Surgery.Systems;
 
 namespace Content.Shared.Body.Surgery.Operation.Step.Behavior;
 
-public sealed class OrganSelection : IStepBehavior
+public sealed class OrganSelection : StepBehavior
 {
-    public bool CanPerform(SurgeryStepContext context)
+    public override bool CanPerform(SurgeryStepContext context)
     {
-        return context.Operation.SelectedOrgan == null;
+        return base.CanPerform(context) && context.Operation.SelectedOrgan == null;
     }
 
-    public bool Perform(SurgeryStepContext context)
+    public override bool Perform(SurgeryStepContext context)
     {
         context.SurgerySystem.SelectOrgan(context.Operation.Part, context.Surgeon, context.Target);
-        return true;
+        return base.Perform(context);
     }
 }

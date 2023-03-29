@@ -21,6 +21,13 @@ public sealed class OperationComponent : Component
     public EntityUid Part;
 
     /// <summary>
+    /// The drapes used to start the operation.
+    /// Used to open the organ selection UI.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public EntityUid Drapes;
+
+    /// <summary>
     /// Prototype of the operation being done.
     /// </summary>
     [ViewVariables]
@@ -50,13 +57,15 @@ public sealed class OperationComponent : Component
 public sealed class OperationComponentState : ComponentState
 {
     public EntityUid Part;
-    public List<SurgeryTag> Tags;
+    public EntityUid Drapes;
+    public string Prototype;
     public EntityUid? SelectedOrgan;
 
-    public OperationComponentState(EntityUid part, List<SurgeryTag> tags, EntityUid? selectedOrgan)
+    public OperationComponentState(EntityUid part, EntityUid drapes, string prototype, EntityUid? selectedOrgan)
     {
         Part = part;
-        Tags = tags;
+        Drapes = drapes;
+        Prototype = prototype;
         SelectedOrgan = selectedOrgan;
     }
 }

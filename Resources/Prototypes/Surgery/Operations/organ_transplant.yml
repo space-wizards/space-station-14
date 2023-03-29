@@ -11,8 +11,6 @@
     insertionHandler: !type:InsertOrgan
   - id: Cauterization # attach organ
   - id: Cauterization # close up wound
-  effect:
-    !type:OrganExtractionEffect
   parts:
   - Torso
   - Head

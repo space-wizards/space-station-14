@@ -13,8 +13,10 @@ surgery-step-success-self-popup = {$user} {$action} {POSS-ADJ($target)} {$part}
 surgery-step-success-no-zone-popup = {$user} {$action} the {THE($part)}
 
 surgery-step-not-useful = You see no useful way to do that.
+surgery-step-no-organ-selected = You need to select an organ to extract first.
 
 surgery-aborted = {$user} cauterizes {$target}'s botched surgery!
 
-### Surgery window
-ui-surgery-window-title = Surgeries
+### Windows
+ui-surgery-operations-window-title = Operations
+ui-surgery-organs-window-title = Organs

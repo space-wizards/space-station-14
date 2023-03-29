@@ -28,6 +28,8 @@
     interfaces:
     - key: enum.SelectOperationUiKey.Key
       type: SelectOperationBoundUserInterface
+    - key: enum.SelectOrganUiKey.Key
+      type: SelectOrganBoundUserInterface
 
 # Cautery
 
@@ -186,6 +188,7 @@
   - type: SurgeryTool
     steps:
     - VesselCompression
+    - Extraction
     delay: 3
 
 - type: entity
@@ -200,7 +203,7 @@
     heldPrefix: setter
   - type: SurgeryTool
     steps:
-    - Setting
+    - BoneSetter
     # TODO: get actual number not pulled out of thin air
     delay: 6
 # Saws

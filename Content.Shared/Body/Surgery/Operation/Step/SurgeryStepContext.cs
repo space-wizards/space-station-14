@@ -26,9 +26,9 @@ public sealed class SurgeryStepContext
     public readonly SurgeryToolComponent Tool;
 
     /// <summary>
-    /// Step to be completed.
+    /// Id of the step to be completed.
     /// </summary>
-    public readonly OperationStep Step;
+    public readonly string Step;
 
     /// <summary>
     /// Reference to the operation system
@@ -45,7 +45,7 @@ public sealed class SurgeryStepContext
         EntityUid surgeon,
         OperationComponent operation,
         SurgeryToolComponent tool,
-        OperationStep step,
+        string step,
         OperationSystem operationSystem,
         SharedSurgerySystem surgerySystem)
     {

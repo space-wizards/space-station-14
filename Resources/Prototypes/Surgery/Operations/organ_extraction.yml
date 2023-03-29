@@ -4,13 +4,13 @@
   description: Extracts an organ from a bodypart.
   steps:
   - id: Incision
+  - id: VesselCompression
   - id: Retraction
-  - id: Extraction
   - id: Incision
     behavior: !type:OrganSelection
+  - id: Extraction
+    behavior: !type:OrganExtraction
   - id: Cauterization
-  effect:
-    !type:OrganExtractionEffect
   parts:
   - Torso
   - Head

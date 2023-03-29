@@ -2,6 +2,7 @@ using Content.Shared.Body.Part;
 using Content.Shared.Body.Surgery.Components;
 using Content.Shared.Body.Surgery.Operation;
 using Content.Shared.Body.Surgery.Operation.Step;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -35,7 +36,7 @@ public sealed class OperationSystem : EntitySystem
 
     private void OnGetState(EntityUid uid, OperationComponent comp, ref ComponentGetState args)
     {
-        args.State = new OperationComponentState(comp.Part, comp.Tags, comp.SelectedOrgan);
+        args.State = new OperationComponentState(comp.Part, comp.Drapes, comp.Prototype!.ID, comp.SelectedOrgan);
     }
 
     private void OnHandleState(EntityUid uid, OperationComponent comp, ref ComponentHandleState args)
@@ -44,8 +45,8 @@ public sealed class OperationSystem : EntitySystem
             return;
 
         comp.Part = state.Part;
-        comp.Tags.Clear();
-        comp.Tags.AddRange(state.Tags);
+        comp.Drapes = state.Drapes;
+        comp.Prototype = _proto.Index<SurgeryOperationPrototype>(state.Prototype);
         comp.SelectedOrgan = state.SelectedOrgan;
     }
 
@@ -53,12 +54,13 @@ public sealed class OperationSystem : EntitySystem
     /// Start a new operation on an entity.
     /// </summary>
     /// <returns>true if starting it succeeds, false otherwise</returns>
-    public bool StartOperation(EntityUid uid, EntityUid part, string id, [NotNullWhen(true)] out OperationComponent? comp)
+    public bool StartOperation(EntityUid uid, EntityUid part, EntityUid drapes, string id, [NotNullWhen(true)] out OperationComponent? comp)
     {
         if (_proto.TryIndex<SurgeryOperationPrototype>(id, out var prototype))
         {
             comp = AddComp<OperationComponent>(uid);
             comp.Part = part;
+            comp.Drapes = drapes;
             comp.Prototype = prototype;
             return true;
         }
@@ -100,7 +102,7 @@ public sealed class OperationSystem : EntitySystem
         if (step == null)
             return false;
 
-        var context = new SurgeryStepContext(target, surgeon, comp, tool, step, this, _surgery);
+        var context = new SurgeryStepContext(target, surgeon, comp, tool, step.ID, this, _surgery);
         return step.CanPerform(context);
     }
 
@@ -114,7 +116,7 @@ public sealed class OperationSystem : EntitySystem
         if (step == null)
             return false;
 
-        var context = new SurgeryStepContext(target, surgeon, comp, tool, step, this, _surgery);
+        var context = new SurgeryStepContext(target, surgeon, comp, tool, step.ID, this, _surgery);
         if (step.CanPerform(context) && step.Perform(context))
         {
             Logger.InfoS("surgery", $"{surgeon} completed step {step.ID} on {target}'s {comp.Prototype!.Name} operation");
@@ -128,7 +130,7 @@ public sealed class OperationSystem : EntitySystem
 
     public bool CanAddSurgeryTag(OperationComponent comp, SurgeryTag tag)
     {
-        // TODO SURGERY fix this for intermediary unnecessary steps
+        // TODO SURGERY: fix this for intermediary unnecessary steps
         // probably needs a while loop not sure
         var step = GetNextStep(comp);
         return (step?.Necessary(comp) ?? false) && step.ID == tag.ID;
@@ -188,6 +190,7 @@ public sealed class OperationSystem : EntitySystem
     public void SelectOrgan(OperationComponent comp, EntityUid? organ)
     {
         comp.SelectedOrgan = organ;
+        Dirty(comp);
     }
 
     /// <summary>
@@ -196,41 +199,39 @@ public sealed class OperationSystem : EntitySystem
     public void SetBusy(OperationComponent comp, bool busy)
     {
         comp.Busy = busy;
+        Dirty(comp);
     }
 
     public void DoBeginPopups(EntityUid surgeon, EntityUid target, EntityUid part, string id)
     {
-        id = id.ToLowerInvariant();
-
-        var action = Loc.GetString($"surgery-step-{id}-begin");
-        // if the targeted entity is the same as the operated-on bodypart, there is no specific area being operated on
-        // i.e. doing surgery on a grape or a severed limb
-        id = (part == target)
-            ? "surgery-step-begin-no-zone-popup"
-            : (surgeon == target)
-                ? "surgery-step-begin-self-popup"
-                : "surgery-step-begin-popup";
-        var msg = Loc.GetString(id, ("user", surgeon), ("action", action), ("target", target), ("part", part));
-        _popup.PopupEntity(msg, surgeon, surgeon);
+        DoPopups(surgeon, target, part, id, "begin");
     }
 
     public void DoSuccessPopups(EntityUid surgeon, EntityUid target, EntityUid part, string id)
     {
-        id = id.ToLowerInvariant();
-
-        var action = Loc.GetString($"surgery-step-{id}-success");
-        id = (part == target)
-            ? "surgery-step-success-no-zone-popup"
-            : (surgeon == target)
-                ? "surgery-step-success-self-popup"
-                : "surgery-step-success-popup";
-
-        var msg = Loc.GetString(id, ("user", surgeon), ("action", action), ("target", target), ("part", part));
-        _popup.PopupEntity(msg, surgeon, surgeon);
+        DoPopups(surgeon, target, part, id, "success");
     }
 
-    public void DoFailurePopup(EntityUid user)
+    private void DoPopups(EntityUid user, EntityUid target, EntityUid part, string id, string type)
     {
-        _popup.PopupEntity(Loc.GetString("surgery-step-not-useful"), user, user);
+        id = id.ToLowerInvariant();
+
+        var action = Loc.GetString($"surgery-step-{id}-{type}");
+        // if the targeted entity is the same as the operated-on bodypart, there is no specific area being operated on
+        // i.e. doing surgery on a grape or a severed limb
+        id = (part == target)
+            ? $"surgery-step-{type}-no-zone-popup"
+            : (user == target)
+                ? $"surgery-step-{type}-self-popup"
+                : $"surgery-step-{type}-popup";
+        var userName = Identity.Name(user, EntityManager);
+        var targetName = Identity.Name(target, EntityManager);
+        var msg = Loc.GetString(id, ("user", userName), ("action", action), ("target", targetName), ("part", part));
+        Popup(msg, user);
+    }
+
+    public void Popup(string msg, EntityUid user)
+    {
+        _popup.PopupEntity(msg, user);
     }
 }

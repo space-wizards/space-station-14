@@ -21,4 +21,4 @@ public sealed class SurgeryToolComponent : Component
     public float Delay = 1f;
 }
 
-public record struct SurgeryToolData;
+public record struct UseToolDoAfter;

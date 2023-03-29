@@ -6,7 +6,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
 using System;
 using System.Collections.Generic;
 
