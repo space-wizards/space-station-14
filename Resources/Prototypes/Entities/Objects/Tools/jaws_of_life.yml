@@ -51,6 +51,12 @@
   - type: Sprite
     sprite: Objects/Tools/jaws_of_life.rsi
     state: syn_jaws_pry
+  - type: Item
+    size: 35
+  - type: Tool
+    qualities:
+      - Prying
+    speed: 3.0
   - type: MultipleTool
     entries:
       - behavior: Prying
