@@ -18,6 +18,7 @@ using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
+using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
