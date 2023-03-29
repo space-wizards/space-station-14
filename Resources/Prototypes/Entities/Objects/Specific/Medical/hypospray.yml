@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: hypospray
   parent: BaseItem
   description: A sterile injector for rapid administration of drugs to patients.
@@ -53,13 +53,13 @@
   id: ChemicalMedipen
   components:
   - type: Sprite
-    sprite: Objects/Specific/Medical/medipen.rsi
+    sprite: Objects/Specific/Medical/medipen/medipen.rsi
     netsync: false
     layers:
     - state: medipen
       map: ["enum.SolutionContainerLayers.Fill"]
   - type: Item
-    sprite: Objects/Specific/Medical/medipen.rsi
+    sprite: Objects/Specific/Medical/medipen/medipen.rsi
     size: 3
   - type: SolutionContainerManager
     solutions:
@@ -129,7 +129,7 @@
   description: Contains a mix of chemicals that protect you from the deadly effects of space.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Medical/medipen.rsi
+    sprite: Objects/Specific/Medical/medipen/medipen.rsi
     netsync: false
     layers:
     - state: hypovolemic
@@ -161,7 +161,7 @@
   description: Contains enough stimulants for you to have the chemical's effect for 5 minutes. Use it when you're sure you're ready to throw down.
   components:
   - type: Item
-    sprite: Objects/Specific/Medical/medipen.rsi
+    sprite: Objects/Specific/Medical/medipen/stimpack.rsi
     size: 10
   - type: SolutionContainerManager
     solutions:
@@ -185,7 +185,7 @@
   description: A microinjector of stimulants that give you about one minute of the chemical's effects.
   components:
   - type: Item
-    sprite: Objects/Specific/Medical/medipen.rsi
+    sprite: Objects/Specific/Medical/medipen/stimpackmini.rsi
     size: 5
   - type: SolutionContainerManager
     solutions:
@@ -203,10 +203,10 @@
   name: experimental stimulant injector
   parent: ChemicalMedipen
   id: StimpackExperimental
-  description: There's a red label on the side of it. It says "PRODUCT HAS EXTREME SIDE EFFECTS, PRODUCTION HALTED. DO NOT DISTRIBUTE."
+  description: There's a black label on the side of it. It says "PRODUCT HAS EXTREME SIDE EFFECTS, PRODUCTION HALTED. DO NOT DISTRIBUTE."
   components:
   - type: Item
-    sprite: Objects/Specific/Medical/medipen.rsi
+    sprite: Objects/Specific/Medical/medipen/stimpackexperimental.rsi
     size: 10
   - type: SolutionContainerManager
     solutions:

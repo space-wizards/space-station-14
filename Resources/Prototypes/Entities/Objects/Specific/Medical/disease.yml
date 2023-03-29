@@ -25,7 +25,7 @@
   - type: Item
     size: 3
   - type: Sprite
-    sprite: Objects/Specific/Medical/medipen.rsi
+    sprite: Objects/Specific/Medical/medipen/medipen.rsi
     netsync: false
     state: salpen
   - type: DiseaseVaccine
