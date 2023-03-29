@@ -1,9 +1,4 @@
 Entries:
-- author: Chief-Engineer
-  changes:
-  - {message: Nanotrasen has begun experiments with advanced locker technology., type: Add}
-  id: 2782
-  time: '2022-12-20T03:47:38.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'Added the Node Scanner, which can identify the ID of an artifact''s
@@ -2926,3 +2921,8 @@ Entries:
   - {message: Fixed skub sound existing., type: Fix}
   id: 3281
   time: '2023-03-29T07:24:54.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix votes overlapping the menu bar for the default game screen., type: Fix}
+  id: 3282
+  time: '2023-03-29T08:36:31.0000000+00:00'
