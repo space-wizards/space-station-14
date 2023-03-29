@@ -33,6 +33,8 @@ public abstract class SharedContentEyeSystem : EntitySystem
             .Bind(ContentKeyFunctions.ZoomOut, new ScrollInputCmdHandler(false, this))
             .Bind(ContentKeyFunctions.ResetZoom, new ResetZoomInputCmdHandler(this))
             .Register<SharedContentEyeSystem>();
+
+        Sawmill.Level = LogLevel.Info;
     }
 
     public override void Shutdown()
