@@ -102,6 +102,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
             return;
 
         component.TargetZoom = Vector2.One;
+        EnsureComp<ActiveContentEyeComponent>(uid);
         Dirty(component);
     }
 
