@@ -14,6 +14,7 @@
     # TODO: Fill this out more.
     whitelist:
       tags:
+        - Powerdrill
         - Wirecutter
         - Crowbar
         - Screwdriver
@@ -36,6 +37,10 @@
         - Geiger
   - type: ItemMapper
     mapLayers:
+      drill:
+        whitelist:
+          tags:
+          - Powerdrill
       cutters_red:
         whitelist:
           tags:
@@ -450,7 +455,6 @@
     whitelist:
       components:
         - Gun
-        - MeleeWeapon
         - BallisticAmmoProvider
         - CartridgeAmmo
 
@@ -480,7 +484,7 @@
   parent: ClothingBeltStorageBase
   id: ClothingBeltMilitaryWebbingMed
   name: medical chest rig
-  description: A set of tactical webbing worn by Gorlax Marauder medic operatives.
+  description: A set of tactical webbing worn by Gorlex Marauder medic operatives.
   components:
   - type: Sprite
     sprite: Clothing/Belt/militarywebbingmed.rsi

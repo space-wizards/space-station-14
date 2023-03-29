@@ -4,8 +4,6 @@
   parent: SimpleSpaceMobBase
   description: It looks friendly. Why don't you give it a hug?
   components:
-  - type: InputMover
-  - type: MobMover
   - type: HTN
     rootTask: SimpleHostileCompound
   - type: Faction
@@ -13,36 +11,36 @@
     - SimpleHostile
   - type: Sprite
     drawdepth: Mobs
+    netsync: false
+    sprite: Mobs/Animals/bear.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: bear
-      sprite: Mobs/Animals/bear.rsi
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: glow
+      shader: unshaded
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
-        radius: 0.48
-      density: 400
+        radius: 0.40
+      density: 100
       mask:
       - MobMask
       layer:
       - MobLayer
-  - type: MovementAlwaysTouching
-  - type: MobState
-    allowedStates:
-      - Alive
-      - Dead
   - type: MobThresholds
     thresholds:
       0: Alive
+      100: Critical
       150: Dead
   - type: Stamina
     excess: 150
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
         Base: bear
+        BaseUnshaded: glow
       Critical:
         Base: bear_dead
       Dead:
@@ -55,7 +53,8 @@
       amount: 1
       prob: 0.3
   - type: Bloodstream
-    bloodMaxVolume: 500
+    bloodMaxVolume: 300
+    bloodReagent: Cryoxadone
   - type: CombatMode
     disarmAction:
       enabled: false
@@ -71,12 +70,32 @@
     angle: 0
     animation: WeaponArcClaw
     damage:
-      groups:
-        Brute: 15
+      types:
+        Brute: 5
+        Slash: 10
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - FootstepSound
+  - type: Puller
+    needsHands: false
   - type: ReplacementAccent
     accent: genericAggressive
+  - type: Vocal
+    sounds:
+      Unsexed: Bear
+  - type: InteractionPopup
+    successChance: 0.25
+    interactSuccessString: petting-success-bear
+    interactFailureString: petting-failure-bear
+    interactSuccessSound:
+      path: /Audio/Animals/sloth_squeak.ogg
+  - type: PointLight
+    radius: 1.2
+    energy: 2
+    color: "#4faffb"
   - type: GhostTakeoverAvailable
-    prob: 0.05
+    prob: 0.25
     name: space bear
     description: |
       You're a bear! Do bear things.
@@ -87,7 +106,7 @@
   suffix: "Salvage Ruleset"
   components:
   - type: GhostTakeoverAvailable
-    prob: 0.05
+    prob: 0.25
     name: space bear on salvage wreck
     description: |
       Defend the loot inside the salvage wreck!

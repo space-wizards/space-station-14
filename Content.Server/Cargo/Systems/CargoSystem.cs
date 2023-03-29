@@ -2,6 +2,7 @@ using Content.Server.Cargo.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Cargo;
 using Content.Shared.Containers.ItemSlots;
+using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Cargo.Systems;
@@ -44,9 +45,20 @@ public sealed partial class CargoSystem : SharedCargoSystem
         UpdateTelepad(frameTime);
     }
 
-    // please don't delete this thank you
+    [PublicAPI]
     public void UpdateBankAccount(StationBankAccountComponent component, int balanceAdded)
     {
         component.Balance += balanceAdded;
+        // TODO: Code bad
+        foreach (var comp in EntityQuery<CargoOrderConsoleComponent>())
+        {
+            if (!_uiSystem.IsUiOpen(comp.Owner, CargoConsoleUiKey.Orders)) continue;
+
+            var station = _station.GetOwningStation(comp.Owner);
+            if (station != component.Owner)
+                continue;
+
+            UpdateOrderState(comp, station);
+        }
     }
 }

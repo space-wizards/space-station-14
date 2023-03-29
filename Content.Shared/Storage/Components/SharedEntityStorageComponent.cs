@@ -11,7 +11,6 @@ namespace Content.Shared.Storage.Components;
 public abstract class SharedEntityStorageComponent : Component
 {
     public readonly float MaxSize = 1.0f; // maximum width or height of an entity allowed inside the storage.
-    public const float GasMixVolume = 70f;
 
     public static readonly TimeSpan InternalOpenAttemptDelay = TimeSpan.FromSeconds(0.5);
     public TimeSpan LastInternalOpenAttempt;

@@ -27,6 +27,37 @@
 
 - type: entity
   parent: MaterialBase
+  id: MaterialCardboard
+  name: cardboard
+  suffix: Full
+  components:
+  - type: Material
+    materials:
+      Cardboard: 100
+  - type: Stack
+    stackType: Cardboard
+  - type: Sprite
+    state: cardboard_3
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - cardboard
+      - cardboard_2
+      - cardboard_3
+
+- type: entity
+  parent: MaterialCardboard
+  id: MaterialCardboard1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: cardboard
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: MaterialBase
   id: MaterialCloth
   name: cloth
   suffix: Full
@@ -108,6 +139,13 @@
     stackType: WoodPlank
   - type: Sprite
     state: wood
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - wood
+      - wood_2
+      - wood_3
   - type: Item
     heldPrefix: wood
 
@@ -151,16 +189,28 @@
   name: bear hide
   components:
   - type: Sprite
+    netsync: false
     sprite: Objects/Materials/materials.rsi
-    state: bearpelt
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: bearpelt
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: bearpelt_glow
+      shader: unshaded
   - type: Item
     sprite: Clothing/Head/Misc/hides.rsi
     heldPrefix: bear
   - type: Clothing
+    netsync: false
     sprite: Clothing/Head/Misc/hides.rsi
     equippedPrefix: bear
     slots:
       - HEAD
+  - type: PointLight
+    radius: 1.2
+    energy: 1.5
+    color: "#4faffb"
+    slots:
 
 - type: entity
   parent: MaterialBase
