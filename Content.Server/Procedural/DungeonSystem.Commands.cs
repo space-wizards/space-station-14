@@ -155,6 +155,7 @@ public sealed partial class DungeonSystem
         }
 
         grid.SetTiles(tiles);
+        shell.WriteLine(Loc.GetString("cmd-dungen_pack_vis"));
     }
 
     [AdminCommand(AdminFlags.Mapping)]
@@ -195,6 +196,7 @@ public sealed partial class DungeonSystem
         }
 
         grid.SetTiles(tiles);
+        shell.WriteLine(Loc.GetString("cmd-dungen_pack_vis"));
     }
 
     private CompletionResult PresetCallback(IConsoleShell shell, string[] args)
