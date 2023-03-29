@@ -1,12 +1,4 @@
 Entries:
-- author: Chief-Engineer
-  changes:
-  - {message: NT has begun distribution of 'Robert's Rules of Escalation' to stations,
-    type: Add}
-  - {message: NT has begun distribution of books from the 'Newton's Guide to Atmos'
-      series to stations, type: Add}
-  id: 2786
-  time: '2022-12-20T04:11:36.0000000+00:00'
 - author: AJCM-git
   changes:
   - {message: NT has been convinced to replace the discomfortable beds that made even
@@ -2924,3 +2916,8 @@ Entries:
   - {message: Fix HandVirtualItem exceptions., type: Fix}
   id: 3285
   time: '2023-03-29T11:04:22.0000000+00:00'
+- author: dontbetank
+  changes:
+  - {message: Added diona plushie, type: Add}
+  id: 3286
+  time: '2023-03-29T22:36:54.0000000+00:00'
