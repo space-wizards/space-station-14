@@ -80,7 +80,7 @@
     suitstorage: YellowOxygenTankFilled
     shoes: ClothingShoesChameleonNoSlips
     id: CentcomPDA
-    pocket1:EnergySword
+    pocket1: EnergySword
     belt: ClothingBeltChiefEngineerFilled
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackDuffelSyndicateAmmo
