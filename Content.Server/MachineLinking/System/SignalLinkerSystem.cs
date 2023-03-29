@@ -138,7 +138,10 @@ namespace Content.Server.MachineLinking.System
                 return;
 
             foreach (var receiver in receivers)
-                RaiseLocalEvent(receiver.Uid, new SignalReceivedEvent(receiver.Port), false);
+            {
+                var eventArgs = new SignalReceivedEvent(receiver.Port);
+                RaiseLocalEvent(receiver.Uid, eventArgs);
+            }
         }
 
         private void OnTransmitterStartup(EntityUid uid, SignalTransmitterComponent transmitter, ComponentStartup args)

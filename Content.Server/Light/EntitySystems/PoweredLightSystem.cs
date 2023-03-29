@@ -363,7 +363,7 @@ namespace Content.Server.Light.EntitySystems
             _appearance.SetData(uid, PoweredLightVisuals.Blinking, isNowBlinking, appearance);
         }
 
-        private void OnSignalReceived(EntityUid uid, PoweredLightComponent component, SignalReceivedEvent args)
+        private void OnSignalReceived(EntityUid uid, PoweredLightComponent component, ref SignalReceivedEvent args)
         {
             if (args.Port == component.OffPort)
                 SetState(uid, false, component);

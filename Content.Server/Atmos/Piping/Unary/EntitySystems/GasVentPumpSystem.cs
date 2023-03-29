@@ -214,7 +214,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 _signalSystem.EnsureSinkPorts(uid, component.PressurizePort, component.DepressurizePort);
         }
 
-        private void OnSignalReceived(EntityUid uid, GasVentPumpComponent component, SignalReceivedEvent args)
+        private void OnSignalReceived(EntityUid uid, GasVentPumpComponent component, ref SignalReceivedEvent args)
         {
             if (!component.CanLink)
                 return;

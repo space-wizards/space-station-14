@@ -14,7 +14,7 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<TriggerOnSignalComponent,ComponentInit>(OnInit);
         }
 
-        private void OnSignalReceived(EntityUid uid, TriggerOnSignalComponent component, SignalReceivedEvent args)
+        private void OnSignalReceived(EntityUid uid, TriggerOnSignalComponent component, ref SignalReceivedEvent args)
         {
             if (args.Port != component.Port)
                 return;

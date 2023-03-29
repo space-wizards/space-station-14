@@ -93,7 +93,7 @@ namespace Content.Server.Physics.Controllers
             _appearance.SetData(component.Owner, ConveyorVisuals.State, isPowered ? component.State : ConveyorState.Off);
         }
 
-        private void OnSignalReceived(EntityUid uid, ConveyorComponent component, SignalReceivedEvent args)
+        private void OnSignalReceived(EntityUid uid, ConveyorComponent component, ref SignalReceivedEvent args)
         {
             if (args.Port == component.OffPort)
                 SetState(uid, ConveyorState.Off, component);

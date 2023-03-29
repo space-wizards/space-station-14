@@ -25,7 +25,7 @@ namespace Content.Server.DeviceLinking.Systems
             _signalSystem.EnsureSinkPorts(uid, component.OpenPort, component.ClosePort, component.TogglePort);
         }
 
-        private void OnSignalReceived(EntityUid uid, DoorSignalControlComponent component, SignalReceivedEvent args)
+        private void OnSignalReceived(EntityUid uid, DoorSignalControlComponent component, ref SignalReceivedEvent args)
         {
             if (!TryComp(uid, out DoorComponent? door))
                 return;
