@@ -253,7 +253,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             // prevent deathnettles injecting through hardsuits
             if (!comp.PierceArmor && _inventory.TryGetSlotEntity(entity, "outerClothing", out var suit) && _tag.HasTag(suit.Value, "Hardsuit"))
             {
-                PopupSystem.PopupEntity(Loc.GetString("melee-inject-failed-hardsuit", ("weapon", owner)), PopupType.SmallCaution);
+                PopupSystem.PopupEntity(Loc.GetString("melee-inject-failed-hardsuit", ("weapon", owner)), args.User, args.User, PopupType.SmallCaution);
                 continue;
             }
 
