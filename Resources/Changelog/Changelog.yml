@@ -1,9 +1,4 @@
 Entries:
-- author: checkraze
-  changes:
-  - {message: Added a Party crate to cargo, type: Add}
-  id: 2784
-  time: '2022-12-20T04:02:02.0000000+00:00'
 - author: timothyteakettle
   changes:
   - {message: 'ability to mix reactions with certain entities, included example being
@@ -2925,3 +2920,8 @@ Entries:
   - {message: Fix muzzle flash exceptions., type: Fix}
   id: 3283
   time: '2023-03-29T08:50:54.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix vote stacking., type: Fix}
+  id: 3284
+  time: '2023-03-29T09:18:56.0000000+00:00'
