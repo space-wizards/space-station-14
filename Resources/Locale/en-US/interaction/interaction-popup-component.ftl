@@ -22,6 +22,7 @@ petting-success-tarantula = You pet {THE($target)} on {POSS-ADJ($target)} hairy 
 petting-success-holo = You pet {THE($target)} on {POSS-ADJ($target)} metallic spiky head.
 petting-success-dragon = Dodging teeth, claws, and flames, you pet {THE($target)} on {POSS-ADJ($target)} massive scaled head.
 petting-success-hamster = You pet {THE($target)} on {POSS-ADJ($target)} fluffy little head.
+petting-success-bear = You reluctantly pet {THE($target)} on {POSS-ADJ($target)} mystical head.
 
 petting-failure-generic = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} aloof towards you.
 
@@ -35,6 +36,7 @@ petting-failure-sloth = You reach out to pet {THE($target)}, but {SUBJECT($targe
 petting-failure-holo = You reach out to pet {THE($target)}, but {POSS-ADJ($target)} spikes almost impale your hand!
 petting-failure-dragon = You raise your hand, but as {THE($target)} roars, you decide you'd rather not be toasty carp food.
 petting-failure-hamster = You reach out to pet {THE($target)}, but {SUBJECT($target)} attempts to bite your finger and only your quick reflexes save you from an almost fatal injury.
+petting-failure-bear = You reach out to pet {THE($target)}, but {SUBJECT($target)} growls, making you think twice.
 
 ## Petting silicons
 
