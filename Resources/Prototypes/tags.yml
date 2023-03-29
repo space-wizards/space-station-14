@@ -183,6 +183,15 @@
   id: DiscreteHealthAnalyzer #So construction recipes don't eat medical PDAs
 
 - type: Tag
+  id: DockArrivals
+
+- type: Tag
+  id: DockCargo
+
+- type: Tag
+  id: DockEmergency
+
+- type: Tag
   id: Document
 
 - type: Tag
@@ -322,6 +331,9 @@
 
 - type: Tag
   id: Knife
+
+- type: Tag
+  id: LavaBrig
 
 - type: Tag
   id: Machete

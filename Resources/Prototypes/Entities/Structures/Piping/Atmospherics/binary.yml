@@ -183,6 +183,60 @@
 
 - type: entity
   parent: GasBinaryBase
+  id: SignalControlledValve
+  name: signal valve
+  description: A pipe with a valve that can be controlled with signals.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Piping/Atmospherics/pump.rsi
+    layers:
+    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+      state: pipeStraight
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+    - state: pumpSignalValve
+      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.FilterVisuals.Enabled:
+        enabled:
+          True: { state: pumpSignalValveOn }
+          False: { state: pumpSignalValve }
+  - type: PipeColorVisuals
+  - type: GasValve
+  - type: SignalControlledValve
+  - type: SignalReceiver
+    inputs:
+      Open: []
+      Close: []
+      Toggle: []
+  - type: NodeContainer
+    nodes:
+      inlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: North
+        volume: 100
+      outlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
+        volume: 100
+  - type: Construction
+    graph: GasBinary
+    node: signalvalve
+  - type: AmbientSound
+    enabled: false
+    volume: -9
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/gas_hiss.ogg
+
+- type: entity
+  parent: GasBinaryBase
   id: GasPort
   name: connector port
   description: For connecting portable devices related to atmospherics control.
