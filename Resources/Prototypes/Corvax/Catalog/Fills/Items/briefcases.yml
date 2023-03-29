@@ -1,7 +1,7 @@
 - type: entity
   id: BriefcaseIAAFilled
   parent: BriefcaseBrown
-  suffix: Filled
+  suffix: IAA
   components:
     - type: StorageFill
       contents:
