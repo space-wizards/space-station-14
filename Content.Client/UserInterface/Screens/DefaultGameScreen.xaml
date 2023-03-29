@@ -21,7 +21,7 @@
             <!-- Buffer so big votes don't skew it -->
             <Control/>
         </BoxContainer>
-        <Control Name="VoteMenu" Access="Public" Margin="0 10 0 10"/>
+        <BoxContainer Name="VoteMenu" Access="Public" Margin="0 10 0 10" Orientation="Vertical"/>
     </BoxContainer>
     <widgets:GhostGui Name="Ghost" Access="Protected" />
     <hotbar:HotbarGui Name="Hotbar" Access="Protected" />
