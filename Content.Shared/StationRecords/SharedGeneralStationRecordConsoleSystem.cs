@@ -56,4 +56,12 @@ public sealed class SelectGeneralStationRecord : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public sealed class StationRecordArrestButtonPressed : BoundUserInterfaceMessage
 {
+    public string? Reason;
+    public string? Name;
+
+    public StationRecordArrestButtonPressed(string? reason, string? name)
+    {
+        Reason = reason;
+        Name = name;
+    }
 }
