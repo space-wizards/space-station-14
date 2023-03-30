@@ -19,3 +19,6 @@ ent-CrateMaterialPlasteel = { ent-CrateGenericSteel }
 ent-CrateMaterialPlasma = { ent-CrateGenericSteel }
     .desc = { ent-CrateGenericSteel.desc }
     .suffix = { "" }
+ent-CrateMaterialCardboard = { ent-CrateGenericSteel }
+    .desc = { ent-CrateGenericSteel.desc }
+    .suffix = { "" }

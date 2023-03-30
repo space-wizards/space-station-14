@@ -1,6 +1,12 @@
 ent-MaterialBase = { ent-BaseItem }
     .desc = A raw material.
     .suffix = { "" }
+ent-MaterialCardboard = cardboard
+    .suffix = Full
+    .desc = { ent-MaterialBase.desc }
+ent-MaterialCardboard1 = { ent-MaterialCardboard }
+    .suffix = Single
+    .desc = { ent-MaterialCardboard.desc }
 ent-MaterialCloth = cloth
     .suffix = Full
     .desc = { ent-MaterialBase.desc }

@@ -12,3 +12,5 @@ ent-CrateMaterialPlasteel = ящик листов пластали
     .desc = 90 листов пластали.
 ent-CrateMaterialPlasma = ящик твёрдой плазмы
     .desc = 90 листов плазмы.
+ent-CrateMaterialCardboard = Cardboard crate
+    .desc = 60 pieces of cardboard.

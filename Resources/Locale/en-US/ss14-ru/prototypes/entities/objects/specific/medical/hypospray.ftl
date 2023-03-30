@@ -1,8 +1,8 @@
 ent-Hypospray = hypospray
     .desc = A sterile injector for rapid administration of drugs to patients.
     .suffix = { "" }
-ent-SyndiHypo = gorlax hypospray
-    .desc = Using reverse engineered designs from NT, Cybersun produced these in limited quantities for gorlax marauder operatives.
+ent-SyndiHypo = gorlex hypospray
+    .desc = Using reverse engineered designs from NT, Cybersun produced these in limited quantities for Gorlex Marauder operatives.
     .suffix = { "" }
 ent-ChemicalMedipen = chemical medipen
     .desc = A sterile injector for rapid administration of drugs to patients. This one can't be refilled.
