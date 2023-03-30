@@ -8,9 +8,6 @@ public enum GeneralStationRecordConsoleKey : byte
     Key
 }
 
-// [Serializable, NetSerializable]
-// public type StationRecordListingType = Dictionary<StationRecordKey, RecordListingValue>;
-
 /// <summary>
 ///     General station records console state. There are a few states:
 ///     - SelectedKey null, Record null, RecordListing null
@@ -26,17 +23,6 @@ public enum GeneralStationRecordConsoleKey : byte
 ///     Other states are erroneous.
 /// </summary>
 [Serializable, NetSerializable]
-public struct RecordListingValue
-{
-    public string name;
-    public string fingerPrint;
-    public RecordListingValue(string personName, string? print)
-    {
-        fingerPrint = (print == null) ? "" : print;
-        name = personName;
-    }
-}
-[Serializable, NetSerializable]
 public sealed class GeneralStationRecordConsoleState : BoundUserInterfaceState
 {
     /// <summary>
@@ -44,9 +30,9 @@ public sealed class GeneralStationRecordConsoleState : BoundUserInterfaceState
     /// </summary>
     public StationRecordKey? SelectedKey { get; }
     public GeneralStationRecord? Record { get; }
-    public Dictionary<StationRecordKey, RecordListingValue>? RecordListing { get; }
+    public Dictionary<StationRecordKey, string>? RecordListing { get; }
     public GeneralStationRecordConsoleState(StationRecordKey? key,
-        GeneralStationRecord? record, Dictionary<StationRecordKey, RecordListingValue>? recordListing)
+        GeneralStationRecord? record, Dictionary<StationRecordKey, string>? recordListing)
     {
         SelectedKey = key;
         Record = record;

@@ -13,6 +13,8 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 {
     public Action<StationRecordKey?>? OnKeySelected;
 
+    public Action<StationRecordConsoleFiltersMsg>? OnFiltersChanged;
+
     private bool _isPopulating;
 
     private string _fingerPrintsFilter = "";
@@ -41,18 +43,20 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 
         RecordListingFingerPrintsFilter.OnPressed += _ =>
         {
-            string fingerPrints = RecordListinFingerPrintsLine.Text;
-            if (fingerPrints.Length > 0 && fingerPrints != _fingerPrintsFilter)
+            if (_isPopulating)
             {
-                FilterRecordListingForFingerPrints(fingerPrints);
+                return;
             }
+
+            string fingerPrints = RecordListinFingerPrintsLine.Text;
+            StationRecordConsoleFiltersMsg newFilters = new(fingerPrints);
+            OnFiltersChanged?.Invoke(newFilters);
         };
 
-        RecordListingFingerPrintsReset.OnPressed += _ =>
-        {
-            RecordListinFingerPrintsLine.Text = "";
-            FilterRecordListingForFingerPrints("");
-        };
+        // RecordListingFingerPrintsReset.OnPressed += _ =>
+        // {
+        //     RecordListinFingerPrintsLine.Text = "";
+        // };
     }
 
     public void UpdateState(GeneralStationRecordConsoleState state, bool setState = true)
@@ -92,22 +96,15 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
         }
     }
 
-    private void PopulateRecordListing(Dictionary<StationRecordKey, RecordListingValue> listing, StationRecordKey? selected)
+    private void PopulateRecordListing(Dictionary<StationRecordKey, string> listing, StationRecordKey? selected)
     {
         RecordListing.Clear();
         RecordListing.ClearSelected();
 
         _isPopulating = true;
 
-        foreach ((StationRecordKey key, RecordListingValue value) in listing)
+        foreach ((StationRecordKey key, string personalName) in listing)
         {
-            if (_fingerPrintsFilter.Length > 0 && !CheckFingerPrint(value.fingerPrint))
-            {
-                continue;
-            }
-
-            string personalName = value.name;
-
             var item = RecordListing.AddItem(personalName);
             item.Metadata = key;
             if (selected != null && key.ID == selected.Value.ID)
@@ -159,18 +156,5 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
         {
             RecordContainer.AddChild(control);
         }
-    }
-    private void FilterRecordListingForFingerPrints(string fingerPrints)
-    {
-        if (_state != null)
-        {
-            _fingerPrintsFilter = fingerPrints.ToLower();
-            UpdateState(_state, false);
-        }
-    }
-    private bool CheckFingerPrint(string print = "")
-    {
-        string lowerCasePrints = print.ToLower();
-        return lowerCasePrints.StartsWith(_fingerPrintsFilter);
     }
 }

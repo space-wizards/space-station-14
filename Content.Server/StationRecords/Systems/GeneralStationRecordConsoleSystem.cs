@@ -14,6 +14,7 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
     {
         SubscribeLocalEvent<GeneralStationRecordConsoleComponent, BoundUIOpenedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<GeneralStationRecordConsoleComponent, SelectGeneralStationRecord>(OnKeySelected);
+        SubscribeLocalEvent<GeneralStationRecordConsoleComponent, StationRecordConsoleFiltersMsg>(OnFiltersChanged);
         SubscribeLocalEvent<GeneralStationRecordConsoleComponent, RecordModifiedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<GeneralStationRecordConsoleComponent, AfterGeneralRecordCreatedEvent>(UpdateUserInterface);
     }
@@ -28,6 +29,12 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
     {
         component.ActiveKey = msg.SelectedKey;
         UpdateUserInterface(uid, component);
+    }
+
+    private void OnFiltersChanged(EntityUid uid,
+        GeneralStationRecordConsoleComponent component, StationRecordConsoleFiltersMsg msg)
+    {
+        Logger.Debug($"filter values  gived me! {msg.fingerPrints}");
     }
 
     private void UpdateUserInterface(EntityUid uid,
@@ -49,11 +56,11 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
         var consoleRecords =
             _stationRecordsSystem.GetRecordsOfType<GeneralStationRecord>(owningStation.Value, stationRecordsComponent);
 
-        var listing = new Dictionary<StationRecordKey, RecordListingValue>();
+        var listing = new Dictionary<StationRecordKey, string>();
+
         foreach (var pair in consoleRecords)
         {
-            RecordListingValue listingValue = new RecordListingValue(pair.Item2.Name, pair.Item2.Fingerprint);
-            listing.Add(pair.Item1, listingValue);
+            listing.Add(pair.Item1, pair.Item2.Name);
         }
 
         if (listing.Count == 0)
@@ -69,14 +76,15 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
                 stationRecordsComponent);
         }
 
-        GeneralStationRecordConsoleState newState = 
+        GeneralStationRecordConsoleState newState =
             new GeneralStationRecordConsoleState(console.ActiveKey, record, listing);
 
         SetStateForInterface(uid, newState);
     }
 
-    private void SetEmptyStateForInterface(EntityUid uid) {
-        GeneralStationRecordConsoleState state = 
+    private void SetEmptyStateForInterface(EntityUid uid)
+    {
+        GeneralStationRecordConsoleState state =
             new GeneralStationRecordConsoleState(null, null, null);
         SetStateForInterface(uid, state);
     }
