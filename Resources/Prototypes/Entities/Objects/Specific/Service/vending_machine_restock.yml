@@ -84,7 +84,6 @@
     - AtmosDrobeInventory
     - BarDrobeInventory
     - CargoDrobeInventory
-    - CentDrobeInventory
     - ChefDrobeInventory
     - ChemDrobeInventory
     - DetDrobeInventory
@@ -104,6 +103,16 @@
     - state: green_bit
       shader: unshaded
     - state: refill_clothes
+
+- type: entity
+  parent: VendingMachineRestockClothes
+  id: VendingMachineRestockClothesCentCom
+  name: wardrobe restock box (CentCom)
+  description: Even Central Command needs to get their clothes from somewhere! Place inside a CentComn clothes vendor restock slot.
+  components:
+  - type: VendingMachineRestock
+    canrestock:
+    - CentDrobeInventory
 
 - type: entity
   parent: BaseVendingMachineRestock
