@@ -16,6 +16,7 @@ GITHUB_API_URL    = os.environ.get("GITHUB_API_URL", "https://api.github.com")
 GITHUB_REPOSITORY = os.environ["GITHUB_REPOSITORY"]
 GITHUB_RUN        = os.environ["GITHUB_RUN_ID"]
 GITHUB_TOKEN      = os.environ["GITHUB_TOKEN"]
+GITHUB_REF        = os.environ["GITHUB_REF"]
 
 DISCORD_WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL")
 
@@ -73,7 +74,8 @@ def get_past_runs(sess: requests.Session, current_run: Any) -> Any:
     """
     params = {
         "status": "success",
-        "created": f"<={current_run['created_at']}"
+        "created": f"<={current_run['created_at']}",
+        "branch": GITHUB_REF
     }
     resp = sess.get(f"{current_run['workflow_url']}/runs", params=params)
     resp.raise_for_status()
