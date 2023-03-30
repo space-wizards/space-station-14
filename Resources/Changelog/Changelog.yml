@@ -1,15 +1,4 @@
 Entries:
-- author: moonheart08
-  changes:
-  - {message: Christmas trees with gifts under them now grant gifts to all crew members!
-      No presents are provided before or after December., type: Add}
-  - {message: Ghosts can see the contents of gifts., type: Add}
-  - {message: Some gifts may have slightly absurd or game breaking content if you're
-      lucky., type: Add}
-  - {message: Admins will have an easier time running santa-related events (as santa
-      can see inside gifts), type: Add}
-  id: 2788
-  time: '2022-12-20T22:34:34.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'Added technology disks, which can be inserted into a research server
@@ -2921,3 +2910,9 @@ Entries:
     type: Fix}
   id: 3287
   time: '2023-03-29T23:45:56.0000000+00:00'
+- author: QuietlyWhisper
+  changes:
+  - {message: CentCom has changed clothing suppliers. CentCom clothing will no longer
+      appear in wardrobe restock boxes from cargo., type: Fix}
+  id: 3288
+  time: '2023-03-30T16:15:10.0000000+00:00'
