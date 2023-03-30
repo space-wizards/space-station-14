@@ -71,6 +71,7 @@ namespace Content.Client.Changelog
             NewChangelogEntriesChanged?.Invoke();
         }
 
+        // Corvax-MultiChangelog-Start
         public async Task<List<ChangelogEntry>> LoadChangelog()
         {
             var paths = _resource.ContentFindFiles("/Changelog/")
@@ -85,6 +86,7 @@ namespace Content.Client.Changelog
             }
             return result.OrderBy(x => x.Time).ToList();
         }
+        // Corvax-MultiChangelog-End
 
         private Task<List<ChangelogEntry>> LoadChangelogFile(ResourcePath path)
         {
