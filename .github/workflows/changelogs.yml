@@ -17,16 +17,6 @@ jobs:
       with:
         submodules: 'recursive'
 
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 6.0.100
-
-    - name: Get Engine Tag
-      run: |
-        cd RobustToolbox
-        git fetch --depth=1
-
     - name: Publish changelog
       run: Tools/actions_changelogs_since_last_run.py
       env:
