@@ -1,0 +1,36 @@
+<Document>
+# Surgery
+Surgery is the hardest part of medical: fixing people without the use of magic chemicals.
+
+If nobody is seriously injured you can even turn your friend into a pizza or implant grenades inside of fools.
+
+# Equipment
+Everything you need can be found in a surgery crate, or your medic's duffelbag if you're a nukie.
+
+<GuideEntityEmbed Entity="Drapes" Caption=""/>
+Drapes are what you use to start operations, and cancel them if you haven't used any tools yet.
+
+Simply use them on the mob you want to operate on and select an operation on one of the bodyparts listed.
+
+After that examine your patient to see the steps, like in construction.
+
+<Box>
+<GuideEntityEmbed Entity="Scalpel" Caption=""/>
+<GuideEntityEmbed Entity="Hemostat" Caption=""/>
+<GuideEntityEmbed Entity="Retractors" Caption=""/>
+</Box>
+These 3 are your main tools, used at the start of almost every operation.
+
+The [color=#a4885c]scalpel[/color] is used to make incisions in the skin or organs. It will cause light bleeding, so use the [color=#a4885c]hemostat[/color] as soon as possible.
+
+The [color=#a4885c]hemostat[/color] clamps blood vessels to stop bleeding from incisions. However, it won't fix arterial bleeding which is a more involved process.
+They can also be used to extract items such as organs.
+
+The [color=#a4885c]retractors[/color] open up the skin/muscles/whatever to let you operate on what lies within.
+
+<GuideEntityEmbed Entity="Cautery" Caption=""/>
+The [color=#a4885c]cautery[/color] is used to end operations and stop bleeding from some steps.
+
+You can use it prematurely if you mess up badly and need to abort the operation.
+
+</Document>

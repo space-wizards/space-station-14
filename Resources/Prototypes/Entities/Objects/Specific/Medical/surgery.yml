@@ -9,6 +9,9 @@
     netsync: false
   - type: StaticPrice
     price: 60
+  - type: GuideHelp
+    guides:
+    - Surgery
 
 # Drapes
 

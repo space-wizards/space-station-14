@@ -5,6 +5,7 @@
   children:
   - Botany
   - Engineering
+  - Medical
   - Science
 
 - type: guideEntry

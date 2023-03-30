@@ -484,6 +484,9 @@
     radius: 1.5
     energy: 1.6
     color: "#1f8c28"
+  - type: GuideHelp
+    guides:
+    - Surgery
 
 - type: entity
   parent: BaseComputer
