@@ -3604,19 +3604,19 @@ entities:
     type: GridAtmosphere
   - type: GasTileOverlay
 - uid: 2
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 0.5,-0.5
     parent: 1
     type: Transform
 - uid: 3
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 0.5,0.5
     parent: 1
     type: Transform
 - uid: 4
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 0.5,1.5
     parent: 1
@@ -3640,13 +3640,13 @@ entities:
     parent: 1
     type: Transform
 - uid: 8
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 0.5,2.5
     parent: 1
     type: Transform
 - uid: 9
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 0.5,-1.5
     parent: 1
@@ -3664,13 +3664,13 @@ entities:
     parent: 1
     type: Transform
 - uid: 12
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 0.5,-3.5
     parent: 1
     type: Transform
 - uid: 13
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 0.5,4.5
     parent: 1
@@ -3694,7 +3694,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 17
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 22.5,1.5
     parent: 1
@@ -3718,37 +3718,37 @@ entities:
     parent: 1
     type: Transform
 - uid: 21
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 22.5,0.5
     parent: 1
     type: Transform
 - uid: 22
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 22.5,-0.5
     parent: 1
     type: Transform
 - uid: 23
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 22.5,4.5
     parent: 1
     type: Transform
 - uid: 24
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 22.5,-3.5
     parent: 1
     type: Transform
 - uid: 25
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 22.5,-1.5
     parent: 1
     type: Transform
 - uid: 26
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 22.5,2.5
     parent: 1
@@ -3784,19 +3784,19 @@ entities:
     parent: 1
     type: Transform
 - uid: 32
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 0.5,6.5
     parent: 1
     type: Transform
 - uid: 33
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 7.5,9.5
     parent: 1
     type: Transform
 - uid: 34
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 0.5,7.5
     parent: 1
@@ -3820,25 +3820,25 @@ entities:
     parent: 1
     type: Transform
 - uid: 38
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 7.5,10.5
     parent: 1
     type: Transform
 - uid: 39
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 7.5,8.5
     parent: 1
     type: Transform
 - uid: 40
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 22.5,6.5
     parent: 1
     type: Transform
 - uid: 41
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 22.5,7.5
     parent: 1
@@ -3850,61 +3850,61 @@ entities:
     parent: 1
     type: Transform
 - uid: 43
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 10.5,8.5
     parent: 1
     type: Transform
 - uid: 44
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 10.5,9.5
     parent: 1
     type: Transform
 - uid: 45
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 10.5,10.5
     parent: 1
     type: Transform
 - uid: 46
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 15.5,10.5
     parent: 1
     type: Transform
 - uid: 47
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 15.5,9.5
     parent: 1
     type: Transform
 - uid: 48
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 22.5,-5.5
     parent: 1
     type: Transform
 - uid: 49
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 22.5,-6.5
     parent: 1
     type: Transform
 - uid: 50
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 18.5,5.5
     parent: 1
     type: Transform
 - uid: 51
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 18.5,6.5
     parent: 1
     type: Transform
 - uid: 52
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 11.5,10.5
     parent: 1
@@ -3916,7 +3916,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 54
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 14.5,10.5
     parent: 1
@@ -3928,328 +3928,328 @@ entities:
     parent: 1
     type: Transform
 - uid: 56
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 0.5,-5.5
     parent: 1
     type: Transform
 - uid: 57
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 0.5,-6.5
     parent: 1
     type: Transform
 - uid: 58
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 4.5,6.5
     parent: 1
     type: Transform
 - uid: 59
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 4.5,5.5
     parent: 1
     type: Transform
 - uid: 60
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 15.5,8.5
     parent: 1
     type: Transform
 - uid: 61
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 12.5,8.5
     parent: 1
     type: Transform
 - uid: 62
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 12.5,9.5
     parent: 1
     type: Transform
 - uid: 63
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 12.5,10.5
     parent: 1
     type: Transform
 - uid: 64
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 4.5,4.5
     parent: 1
     type: Transform
 - uid: 65
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 7.5,4.5
     parent: 1
     type: Transform
 - uid: 66
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 8.5,4.5
     parent: 1
     type: Transform
 - uid: 67
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 8.5,5.5
     parent: 1
     type: Transform
 - uid: 68
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 8.5,6.5
     parent: 1
     type: Transform
 - uid: 69
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 8.5,7.5
     parent: 1
     type: Transform
 - uid: 70
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 9.5,7.5
     parent: 1
     type: Transform
 - uid: 71
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 10.5,7.5
     parent: 1
     type: Transform
 - uid: 72
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 8.5,10.5
     parent: 1
     type: Transform
 - uid: 73
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 12.5,7.5
     parent: 1
     type: Transform
 - uid: 74
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 13.5,7.5
     parent: 1
     type: Transform
 - uid: 75
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 14.5,7.5
     parent: 1
     type: Transform
 - uid: 76
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 14.5,6.5
     parent: 1
     type: Transform
 - uid: 77
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 14.5,5.5
     parent: 1
     type: Transform
 - uid: 78
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 14.5,4.5
     parent: 1
     type: Transform
 - uid: 79
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 15.5,4.5
     parent: 1
     type: Transform
 - uid: 80
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 18.5,4.5
     parent: 1
     type: Transform
 - uid: 81
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 4.5,7.5
     parent: 1
     type: Transform
 - uid: 82
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 7.5,7.5
     parent: 1
     type: Transform
 - uid: 83
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 15.5,7.5
     parent: 1
     type: Transform
 - uid: 84
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 18.5,7.5
     parent: 1
     type: Transform
 - uid: 85
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 4.5,8.5
     parent: 1
     type: Transform
 - uid: 86
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 4.5,-3.5
     parent: 1
     type: Transform
 - uid: 87
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 4.5,13.5
     parent: 1
     type: Transform
 - uid: 88
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 4.5,14.5
     parent: 1
     type: Transform
 - uid: 89
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 4.5,15.5
     parent: 1
     type: Transform
 - uid: 90
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 5.5,15.5
     parent: 1
     type: Transform
 - uid: 91
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 17.5,15.5
     parent: 1
     type: Transform
 - uid: 92
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 18.5,15.5
     parent: 1
     type: Transform
 - uid: 93
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 18.5,14.5
     parent: 1
     type: Transform
 - uid: 94
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 18.5,13.5
     parent: 1
     type: Transform
 - uid: 95
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - rot: -1.5707963267948966 rad
     pos: 13.5,15.5
     parent: 1
     type: Transform
 - uid: 96
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 10.5,15.5
     parent: 1
     type: Transform
 - uid: 97
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 11.5,15.5
     parent: 1
     type: Transform
 - uid: 98
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 18.5,9.5
     parent: 1
     type: Transform
 - uid: 99
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 18.5,8.5
     parent: 1
     type: Transform
 - uid: 100
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 12.5,15.5
     parent: 1
     type: Transform
 - uid: 101
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - rot: -1.5707963267948966 rad
     pos: 9.5,15.5
     parent: 1
     type: Transform
 - uid: 102
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 4.5,10.5
     parent: 1
     type: Transform
 - uid: 103
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 4.5,11.5
     parent: 1
     type: Transform
 - uid: 104
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 4.5,12.5
     parent: 1
     type: Transform
 - uid: 105
-  type: WallShuttle
+  type: InflatableWall
   components:
   - rot: -1.5707963267948966 rad
     pos: 6.5,15.5
     parent: 1
     type: Transform
 - uid: 106
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 7.5,15.5
     parent: 1
     type: Transform
 - uid: 107
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 8.5,15.5
     parent: 1
     type: Transform
 - uid: 108
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 14.5,15.5
     parent: 1
     type: Transform
 - uid: 109
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 15.5,15.5
     parent: 1
@@ -4262,19 +4262,19 @@ entities:
     parent: 1
     type: Transform
 - uid: 111
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 18.5,12.5
     parent: 1
     type: Transform
 - uid: 112
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 18.5,11.5
     parent: 1
     type: Transform
 - uid: 113
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 18.5,10.5
     parent: 1
@@ -4298,7 +4298,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 117
-  type: WallShuttle
+  type: InflatableWall
   components:
   - rot: -1.5707963267948966 rad
     pos: 16.5,15.5
@@ -4354,85 +4354,85 @@ entities:
     parent: 1
     type: Transform
 - uid: 126
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 0.5,12.5
     parent: 1
     type: Transform
 - uid: 127
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 0.5,13.5
     parent: 1
     type: Transform
 - uid: 128
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 1.5,13.5
     parent: 1
     type: Transform
 - uid: 129
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 0.5,8.5
     parent: 1
     type: Transform
 - uid: 130
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 22.5,8.5
     parent: 1
     type: Transform
 - uid: 131
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 22.5,12.5
     parent: 1
     type: Transform
 - uid: 132
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 22.5,13.5
     parent: 1
     type: Transform
 - uid: 133
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 21.5,13.5
     parent: 1
     type: Transform
 - uid: 134
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 21.5,14.5
     parent: 1
     type: Transform
 - uid: 135
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 21.5,17.5
     parent: 1
     type: Transform
 - uid: 136
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 21.5,18.5
     parent: 1
     type: Transform
 - uid: 137
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 20.5,18.5
     parent: 1
     type: Transform
 - uid: 138
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 9.5,18.5
     parent: 1
     type: Transform
 - uid: 139
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 8.5,18.5
     parent: 1
@@ -4444,13 +4444,13 @@ entities:
     parent: 1
     type: Transform
 - uid: 141
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 16.5,18.5
     parent: 1
     type: Transform
 - uid: 142
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 15.5,18.5
     parent: 1
@@ -4468,19 +4468,19 @@ entities:
     parent: 1
     type: Transform
 - uid: 145
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 12.5,18.5
     parent: 1
     type: Transform
 - uid: 146
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 11.5,18.5
     parent: 1
     type: Transform
 - uid: 147
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 10.5,18.5
     parent: 1
@@ -4498,175 +4498,175 @@ entities:
     parent: 1
     type: Transform
 - uid: 150
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 7.5,18.5
     parent: 1
     type: Transform
 - uid: 151
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 6.5,18.5
     parent: 1
     type: Transform
 - uid: 152
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 20.5,19.5
     parent: 1
     type: Transform
 - uid: 153
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 12.5,-6.5
     parent: 1
     type: Transform
 - uid: 154
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 20.5,20.5
     parent: 1
     type: Transform
 - uid: 155
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 2.5,18.5
     parent: 1
     type: Transform
 - uid: 156
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 1.5,18.5
     parent: 1
     type: Transform
 - uid: 157
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 1.5,17.5
     parent: 1
     type: Transform
 - uid: 158
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 2.5,20.5
     parent: 1
     type: Transform
 - uid: 159
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 13.5,18.5
     parent: 1
     type: Transform
 - uid: 160
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 1.5,14.5
     parent: 1
     type: Transform
 - uid: 161
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 14.5,18.5
     parent: 1
     type: Transform
 - uid: 162
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 6.5,19.5
     parent: 1
     type: Transform
 - uid: 163
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 6.5,20.5
     parent: 1
     type: Transform
 - uid: 164
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 6.5,21.5
     parent: 1
     type: Transform
 - uid: 165
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 3.5,19.5
     parent: 1
     type: Transform
 - uid: 166
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 2.5,21.5
     parent: 1
     type: Transform
 - uid: 167
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 2.5,22.5
     parent: 1
     type: Transform
 - uid: 168
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 16.5,19.5
     parent: 1
     type: Transform
 - uid: 169
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 16.5,20.5
     parent: 1
     type: Transform
 - uid: 170
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 16.5,21.5
     parent: 1
     type: Transform
 - uid: 171
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 19.5,19.5
     parent: 1
     type: Transform
 - uid: 172
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 20.5,22.5
     parent: 1
     type: Transform
 - uid: 173
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 20.5,21.5
     parent: 1
     type: Transform
 - uid: 174
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 3.5,22.5
     parent: 1
     type: Transform
 - uid: 175
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 6.5,22.5
     parent: 1
     type: Transform
 - uid: 176
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 16.5,22.5
     parent: 1
     type: Transform
 - uid: 177
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 19.5,22.5
     parent: 1
     type: Transform
 - uid: 178
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 7.5,22.5
     parent: 1
@@ -4678,31 +4678,31 @@ entities:
     parent: 1
     type: Transform
 - uid: 180
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 8.5,-3.5
     parent: 1
     type: Transform
 - uid: 181
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 10.5,22.5
     parent: 1
     type: Transform
 - uid: 182
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 11.5,22.5
     parent: 1
     type: Transform
 - uid: 183
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 12.5,22.5
     parent: 1
     type: Transform
 - uid: 184
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 13.5,22.5
     parent: 1
@@ -4714,7 +4714,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 186
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 15.5,22.5
     parent: 1
@@ -4732,7 +4732,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 189
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 4.5,9.5
     parent: 1
@@ -4756,13 +4756,13 @@ entities:
     parent: 1
     type: Transform
 - uid: 193
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 9.5,22.5
     parent: 1
     type: Transform
 - uid: 194
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 2.5,19.5
     parent: 1
@@ -4810,73 +4810,73 @@ entities:
     parent: 1
     type: Transform
 - uid: 202
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 0.5,9.5
     parent: 1
     type: Transform
 - uid: 203
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 0.5,10.5
     parent: 1
     type: Transform
 - uid: 204
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 0.5,11.5
     parent: 1
     type: Transform
 - uid: 205
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 1.5,15.5
     parent: 1
     type: Transform
 - uid: 206
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 1.5,16.5
     parent: 1
     type: Transform
 - uid: 207
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 21.5,16.5
     parent: 1
     type: Transform
 - uid: 208
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 21.5,15.5
     parent: 1
     type: Transform
 - uid: 209
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 22.5,11.5
     parent: 1
     type: Transform
 - uid: 210
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 22.5,10.5
     parent: 1
     type: Transform
 - uid: 211
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 22.5,9.5
     parent: 1
     type: Transform
 - uid: 212
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 3.5,23.5
     parent: 1
     type: Transform
 - uid: 213
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 19.5,23.5
     parent: 1
@@ -5032,169 +5032,169 @@ entities:
     parent: 1
     type: Transform
 - uid: 239
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 3.5,24.5
     parent: 1
     type: Transform
 - uid: 240
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 3.5,25.5
     parent: 1
     type: Transform
 - uid: 241
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 3.5,26.5
     parent: 1
     type: Transform
 - uid: 242
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 4.5,26.5
     parent: 1
     type: Transform
 - uid: 243
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 4.5,27.5
     parent: 1
     type: Transform
 - uid: 244
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 5.5,27.5
     parent: 1
     type: Transform
 - uid: 245
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 6.5,27.5
     parent: 1
     type: Transform
 - uid: 246
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 6.5,28.5
     parent: 1
     type: Transform
 - uid: 247
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 7.5,28.5
     parent: 1
     type: Transform
 - uid: 248
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 8.5,28.5
     parent: 1
     type: Transform
 - uid: 249
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 9.5,28.5
     parent: 1
     type: Transform
 - uid: 250
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 10.5,28.5
     parent: 1
     type: Transform
 - uid: 251
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 11.5,28.5
     parent: 1
     type: Transform
 - uid: 252
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 12.5,28.5
     parent: 1
     type: Transform
 - uid: 253
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 13.5,28.5
     parent: 1
     type: Transform
 - uid: 254
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 14.5,28.5
     parent: 1
     type: Transform
 - uid: 255
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 15.5,28.5
     parent: 1
     type: Transform
 - uid: 256
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 16.5,28.5
     parent: 1
     type: Transform
 - uid: 257
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 16.5,27.5
     parent: 1
     type: Transform
 - uid: 258
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 17.5,27.5
     parent: 1
     type: Transform
 - uid: 259
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 18.5,27.5
     parent: 1
     type: Transform
 - uid: 260
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 18.5,26.5
     parent: 1
     type: Transform
 - uid: 261
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 19.5,26.5
     parent: 1
     type: Transform
 - uid: 262
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 19.5,25.5
     parent: 1
     type: Transform
 - uid: 263
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 19.5,24.5
     parent: 1
     type: Transform
 - uid: 264
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 15.5,-8.5
     parent: 1
     type: Transform
 - uid: 265
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 12.5,-7.5
     parent: 1
     type: Transform
 - uid: 266
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 18.5,-7.5
     parent: 1
@@ -5206,37 +5206,37 @@ entities:
     parent: 1
     type: Transform
 - uid: 268
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 6.5,-3.5
     parent: 1
     type: Transform
 - uid: 269
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 7.5,-3.5
     parent: 1
     type: Transform
 - uid: 270
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 18.5,-10.5
     parent: 1
     type: Transform
 - uid: 271
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 18.5,-11.5
     parent: 1
     type: Transform
 - uid: 272
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 17.5,-11.5
     parent: 1
     type: Transform
 - uid: 273
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 16.5,-11.5
     parent: 1
@@ -5248,61 +5248,61 @@ entities:
     parent: 1
     type: Transform
 - uid: 275
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 15.5,-14.5
     parent: 1
     type: Transform
 - uid: 276
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 15.5,-15.5
     parent: 1
     type: Transform
 - uid: 277
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 14.5,-15.5
     parent: 1
     type: Transform
 - uid: 278
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 4.5,-10.5
     parent: 1
     type: Transform
 - uid: 279
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 4.5,-8.5
     parent: 1
     type: Transform
 - uid: 280
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 4.5,-9.5
     parent: 1
     type: Transform
 - uid: 281
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 17.5,-8.5
     parent: 1
     type: Transform
 - uid: 282
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 18.5,-4.5
     parent: 1
     type: Transform
 - uid: 283
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 15.5,-3.5
     parent: 1
     type: Transform
 - uid: 284
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 16.5,-3.5
     parent: 1
@@ -5314,13 +5314,13 @@ entities:
     parent: 1
     type: Transform
 - uid: 286
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 18.5,-3.5
     parent: 1
     type: Transform
 - uid: 287
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 18.5,-13.5
     parent: 1
@@ -5332,13 +5332,13 @@ entities:
     parent: 1
     type: Transform
 - uid: 289
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 15.5,-12.5
     parent: 1
     type: Transform
 - uid: 290
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 16.5,-14.5
     parent: 1
@@ -5350,13 +5350,13 @@ entities:
     parent: 1
     type: Transform
 - uid: 292
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 18.5,-12.5
     parent: 1
     type: Transform
 - uid: 293
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 18.5,-8.5
     parent: 1
@@ -5368,13 +5368,13 @@ entities:
     parent: 1
     type: Transform
 - uid: 295
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 12.5,-11.5
     parent: 1
     type: Transform
 - uid: 296
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 17.5,-14.5
     parent: 1
@@ -5386,7 +5386,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 298
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 14.5,-11.5
     parent: 1
@@ -5398,7 +5398,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 300
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 7.5,-11.5
     parent: 1
@@ -5410,25 +5410,25 @@ entities:
     parent: 1
     type: Transform
 - uid: 302
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 0.5,-7.5
     parent: 1
     type: Transform
 - uid: 303
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 0.5,-8.5
     parent: 1
     type: Transform
 - uid: 304
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 0.5,-9.5
     parent: 1
     type: Transform
 - uid: 305
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 0.5,-10.5
     parent: 1
@@ -5452,49 +5452,49 @@ entities:
     parent: 1
     type: Transform
 - uid: 309
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 0.5,-11.5
     parent: 1
     type: Transform
 - uid: 310
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 0.5,-12.5
     parent: 1
     type: Transform
 - uid: 311
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 1.5,-12.5
     parent: 1
     type: Transform
 - uid: 312
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 1.5,-13.5
     parent: 1
     type: Transform
 - uid: 313
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 12.5,-4.5
     parent: 1
     type: Transform
 - uid: 314
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 11.5,-7.5
     parent: 1
     type: Transform
 - uid: 315
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 15.5,-11.5
     parent: 1
     type: Transform
 - uid: 316
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 18.5,-14.5
     parent: 1
@@ -5506,85 +5506,85 @@ entities:
     parent: 1
     type: Transform
 - uid: 318
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 5.5,-3.5
     parent: 1
     type: Transform
 - uid: 319
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 4.5,-4.5
     parent: 1
     type: Transform
 - uid: 320
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 4.5,-5.5
     parent: 1
     type: Transform
 - uid: 321
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 8.5,-7.5
     parent: 1
     type: Transform
 - uid: 322
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 8.5,-6.5
     parent: 1
     type: Transform
 - uid: 323
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 4.5,-6.5
     parent: 1
     type: Transform
 - uid: 324
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 4.5,-7.5
     parent: 1
     type: Transform
 - uid: 325
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 9.5,-3.5
     parent: 1
     type: Transform
 - uid: 326
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 10.5,-3.5
     parent: 1
     type: Transform
 - uid: 327
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 11.5,-3.5
     parent: 1
     type: Transform
 - uid: 328
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 12.5,-3.5
     parent: 1
     type: Transform
 - uid: 329
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 8.5,-5.5
     parent: 1
     type: Transform
 - uid: 330
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 8.5,-4.5
     parent: 1
     type: Transform
 - uid: 331
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 9.5,-7.5
     parent: 1
@@ -5596,49 +5596,49 @@ entities:
     parent: 1
     type: Transform
 - uid: 333
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 11.5,-15.5
     parent: 1
     type: Transform
 - uid: 334
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 10.5,-15.5
     parent: 1
     type: Transform
 - uid: 335
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 10.5,-14.5
     parent: 1
     type: Transform
 - uid: 336
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 10.5,-13.5
     parent: 1
     type: Transform
 - uid: 337
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 7.5,-15.5
     parent: 1
     type: Transform
 - uid: 338
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 1.5,-15.5
     parent: 1
     type: Transform
 - uid: 339
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 1.5,-17.5
     parent: 1
     type: Transform
 - uid: 340
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 1.5,-16.5
     parent: 1
@@ -5650,7 +5650,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 342
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 1.5,-14.5
     parent: 1
@@ -5662,13 +5662,13 @@ entities:
     parent: 1
     type: Transform
 - uid: 344
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 2.5,-17.5
     parent: 1
     type: Transform
 - uid: 345
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 2.5,-18.5
     parent: 1
@@ -5680,61 +5680,61 @@ entities:
     parent: 1
     type: Transform
 - uid: 347
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 17.5,-3.5
     parent: 1
     type: Transform
 - uid: 348
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 12.5,-8.5
     parent: 1
     type: Transform
 - uid: 349
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 18.5,-6.5
     parent: 1
     type: Transform
 - uid: 350
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 18.5,-5.5
     parent: 1
     type: Transform
 - uid: 351
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 3.5,-18.5
     parent: 1
     type: Transform
 - uid: 352
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 7.5,-18.5
     parent: 1
     type: Transform
 - uid: 353
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 22.5,-7.5
     parent: 1
     type: Transform
 - uid: 354
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 22.5,-8.5
     parent: 1
     type: Transform
 - uid: 355
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 22.5,-9.5
     parent: 1
     type: Transform
 - uid: 356
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 22.5,-10.5
     parent: 1
@@ -5758,25 +5758,25 @@ entities:
     parent: 1
     type: Transform
 - uid: 360
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 22.5,-11.5
     parent: 1
     type: Transform
 - uid: 361
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 22.5,-12.5
     parent: 1
     type: Transform
 - uid: 362
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 21.5,-12.5
     parent: 1
     type: Transform
 - uid: 363
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 21.5,-13.5
     parent: 1
@@ -5794,37 +5794,37 @@ entities:
     parent: 1
     type: Transform
 - uid: 366
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 21.5,-16.5
     parent: 1
     type: Transform
 - uid: 367
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 21.5,-17.5
     parent: 1
     type: Transform
 - uid: 368
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 20.5,-17.5
     parent: 1
     type: Transform
 - uid: 369
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 20.5,-18.5
     parent: 1
     type: Transform
 - uid: 370
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 6.5,-18.5
     parent: 1
     type: Transform
 - uid: 371
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 19.5,-18.5
     parent: 1
@@ -5836,205 +5836,205 @@ entities:
     parent: 1
     type: Transform
 - uid: 373
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 5.5,-7.5
     parent: 1
     type: Transform
 - uid: 374
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 18.5,-9.5
     parent: 1
     type: Transform
 - uid: 375
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 7.5,-7.5
     parent: 1
     type: Transform
 - uid: 376
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 7.5,-14.5
     parent: 1
     type: Transform
 - uid: 377
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 6.5,-14.5
     parent: 1
     type: Transform
 - uid: 378
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 4.5,-12.5
     parent: 1
     type: Transform
 - uid: 379
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 4.5,-11.5
     parent: 1
     type: Transform
 - uid: 380
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 5.5,-14.5
     parent: 1
     type: Transform
 - uid: 381
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 4.5,-14.5
     parent: 1
     type: Transform
 - uid: 382
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 4.5,-13.5
     parent: 1
     type: Transform
 - uid: 383
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 11.5,-11.5
     parent: 1
     type: Transform
 - uid: 384
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 10.5,-11.5
     parent: 1
     type: Transform
 - uid: 385
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 10.5,-12.5
     parent: 1
     type: Transform
 - uid: 386
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 8.5,-15.5
     parent: 1
     type: Transform
 - uid: 387
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 9.5,-15.5
     parent: 1
     type: Transform
 - uid: 388
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 8.5,-11.5
     parent: 1
     type: Transform
 - uid: 389
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 7.5,-12.5
     parent: 1
     type: Transform
 - uid: 390
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 7.5,-13.5
     parent: 1
     type: Transform
 - uid: 391
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 5.5,-11.5
     parent: 1
     type: Transform
 - uid: 392
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 21.5,-15.5
     parent: 1
     type: Transform
 - uid: 393
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 21.5,-14.5
     parent: 1
     type: Transform
 - uid: 394
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 8.5,-18.5
     parent: 1
     type: Transform
 - uid: 395
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 9.5,-18.5
     parent: 1
     type: Transform
 - uid: 396
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 10.5,-18.5
     parent: 1
     type: Transform
 - uid: 397
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 11.5,-18.5
     parent: 1
     type: Transform
 - uid: 398
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 12.5,-18.5
     parent: 1
     type: Transform
 - uid: 399
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 13.5,-18.5
     parent: 1
     type: Transform
 - uid: 400
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 14.5,-18.5
     parent: 1
     type: Transform
 - uid: 401
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 15.5,-18.5
     parent: 1
     type: Transform
 - uid: 402
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 16.5,-18.5
     parent: 1
     type: Transform
 - uid: 403
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 20.5,-19.5
     parent: 1
     type: Transform
 - uid: 404
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 20.5,-20.5
     parent: 1
     type: Transform
 - uid: 405
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 20.5,-21.5
     parent: 1
     type: Transform
 - uid: 406
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 19.5,-21.5
     parent: 1
@@ -6058,85 +6058,85 @@ entities:
     parent: 1
     type: Transform
 - uid: 410
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 12.5,-27.5
     parent: 1
     type: Transform
 - uid: 411
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 18.5,-25.5
     parent: 1
     type: Transform
 - uid: 412
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 12.5,-26.5
     parent: 1
     type: Transform
 - uid: 413
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 5.5,-26.5
     parent: 1
     type: Transform
 - uid: 414
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 8.5,-25.5
     parent: 1
     type: Transform
 - uid: 415
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 16.5,-19.5
     parent: 1
     type: Transform
 - uid: 416
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 16.5,-20.5
     parent: 1
     type: Transform
 - uid: 417
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 16.5,-21.5
     parent: 1
     type: Transform
 - uid: 418
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 12.5,-19.5
     parent: 1
     type: Transform
 - uid: 419
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 12.5,-20.5
     parent: 1
     type: Transform
 - uid: 420
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 12.5,-21.5
     parent: 1
     type: Transform
 - uid: 421
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 12.5,-22.5
     parent: 1
     type: Transform
 - uid: 422
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 12.5,-23.5
     parent: 1
     type: Transform
 - uid: 423
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 12.5,-24.5
     parent: 1
@@ -6148,7 +6148,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 425
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 12.5,-25.5
     parent: 1
@@ -6160,7 +6160,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 427
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 4.5,-25.5
     parent: 1
@@ -6190,43 +6190,43 @@ entities:
     parent: 1
     type: Transform
 - uid: 432
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 3.5,-21.5
     parent: 1
     type: Transform
 - uid: 433
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 2.5,-21.5
     parent: 1
     type: Transform
 - uid: 434
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 2.5,-20.5
     parent: 1
     type: Transform
 - uid: 435
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 2.5,-19.5
     parent: 1
     type: Transform
 - uid: 436
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 6.5,-19.5
     parent: 1
     type: Transform
 - uid: 437
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 6.5,-20.5
     parent: 1
     type: Transform
 - uid: 438
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 6.5,-21.5
     parent: 1
@@ -6265,67 +6265,67 @@ entities:
       id: docking
     type: Fixtures
 - uid: 440
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 17.5,-26.5
     parent: 1
     type: Transform
 - uid: 441
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 14.5,-25.5
     parent: 1
     type: Transform
 - uid: 442
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 7.5,-27.5
     parent: 1
     type: Transform
 - uid: 443
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 7.5,-26.5
     parent: 1
     type: Transform
 - uid: 444
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 7.5,-25.5
     parent: 1
     type: Transform
 - uid: 445
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 13.5,-25.5
     parent: 1
     type: Transform
 - uid: 446
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 9.5,-25.5
     parent: 1
     type: Transform
 - uid: 447
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 10.5,-25.5
     parent: 1
     type: Transform
 - uid: 448
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 15.5,-25.5
     parent: 1
     type: Transform
 - uid: 449
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 15.5,-26.5
     parent: 1
     type: Transform
 - uid: 450
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 15.5,-27.5
     parent: 1
@@ -6337,115 +6337,115 @@ entities:
     parent: 1
     type: Transform
 - uid: 452
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 10.5,-26.5
     parent: 1
     type: Transform
 - uid: 453
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 10.5,-27.5
     parent: 1
     type: Transform
 - uid: 454
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 3.5,-25.5
     parent: 1
     type: Transform
 - uid: 455
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 4.5,-26.5
     parent: 1
     type: Transform
 - uid: 456
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 5.5,-27.5
     parent: 1
     type: Transform
 - uid: 457
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 6.5,-27.5
     parent: 1
     type: Transform
 - uid: 458
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 7.5,-28.5
     parent: 1
     type: Transform
 - uid: 459
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 8.5,-28.5
     parent: 1
     type: Transform
 - uid: 460
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 9.5,-28.5
     parent: 1
     type: Transform
 - uid: 461
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 10.5,-28.5
     parent: 1
     type: Transform
 - uid: 462
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 11.5,-28.5
     parent: 1
     type: Transform
 - uid: 463
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 12.5,-28.5
     parent: 1
     type: Transform
 - uid: 464
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 13.5,-28.5
     parent: 1
     type: Transform
 - uid: 465
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 14.5,-28.5
     parent: 1
     type: Transform
 - uid: 466
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 15.5,-28.5
     parent: 1
     type: Transform
 - uid: 467
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 16.5,-27.5
     parent: 1
     type: Transform
 - uid: 468
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 17.5,-27.5
     parent: 1
     type: Transform
 - uid: 469
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 18.5,-26.5
     parent: 1
     type: Transform
 - uid: 470
-  type: WallShuttle
+  type: InflatableWall
   components:
   - pos: 19.5,-25.5
     parent: 1
@@ -7126,37 +7126,37 @@ entities:
     parent: 1
     type: Transform
 - uid: 550
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 19.5,-22.5
     parent: 1
     type: Transform
 - uid: 551
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 19.5,-23.5
     parent: 1
     type: Transform
 - uid: 552
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 19.5,-24.5
     parent: 1
     type: Transform
 - uid: 553
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 3.5,-24.5
     parent: 1
     type: Transform
 - uid: 554
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 3.5,-23.5
     parent: 1
     type: Transform
 - uid: 555
-  type: ShuttleWindow
+  type: InflatableWall
   components:
   - pos: 3.5,-22.5
     parent: 1
