@@ -26,15 +26,7 @@ public sealed class CuffableSystem : SharedCuffableSystem
             return;
 
         component.Cuffing = state.Cuffing;
-
-        if (state.IconState == string.Empty)
-            return;
-
-        if (TryComp<SpriteComponent>(uid, out var sprite))
-        {
-            // If you think this should be an explicit layer look at the YML and see https://github.com/space-wizards/space-station-14/issues/14771
-            sprite.LayerSetState(0, state.IconState);
-        }
+        component.OverlayIconState = state.IconState;
     }
 
     private void OnCuffableShutdown(EntityUid uid, CuffableComponent component, ComponentShutdown args)
