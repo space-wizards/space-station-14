@@ -30,7 +30,8 @@
         amount: 1
       - id: PlushieAtmosian
         amount: 1
-
+      - id: PlushieDiona
+        amount: 1
 
 - type: entity
   id: CrateFunInstruments
