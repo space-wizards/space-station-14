@@ -395,7 +395,7 @@
   id: ClothingHeadHelmetHardsuitSyndieElite
   noSpawn: true
   name: syndicate elite helmet
-  description: A variant of the blood red helmet designed by the gorlax marauders to be exceptionally fireproof and pressure proof.
+  description: A variant of the blood red helmet designed by the Gorlex Marauders to be exceptionally fireproof and pressure proof.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/syndieelite.rsi

@@ -262,6 +262,10 @@
         Base: dead-3
       Dead:
         Base: splat-3
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatRat
+      amount: 1
   - type: DiseaseCarrier
     carrierDiseases:
     - VentCough
