@@ -18,6 +18,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Shared.Construction.Components;
+using Content.Shared.Materials;
+using Serilog;
 
 namespace Content.IntegrationTests.Tests;
 
@@ -51,6 +53,7 @@ public sealed class MaterialArbitrageTest
         var compFact = server.ResolveDependency<IComponentFactory>();
 
         var constructionName = compFact.GetComponentName(typeof(ConstructionComponent));
+        var compositionName = compFact.GetComponentName(typeof(PhysicalCompositionComponent));
         var destructibleName = compFact.GetComponentName(typeof(DestructibleComponent));
         var stackName = compFact.GetComponentName(typeof(StackComponent));
 
@@ -149,6 +152,21 @@ public sealed class MaterialArbitrageTest
                 spawnedOnDestroy.Add(proto.ID, (spawnedEnts, spawnedMats));
         }
 
+        // create phyiscal composition dictionary
+        // this doesn't account for the chemicals in the composition
+        Dictionary<string, PhysicalCompositionComponent> physicalCompositions = new();
+        foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
+        {
+            if (proto.NoSpawn || proto.Abstract)
+                continue;
+
+            if (!proto.Components.TryGetValue(compositionName, out var composition))
+                continue;
+
+            var comp = (PhysicalCompositionComponent) composition.Component;
+            physicalCompositions.Add(proto.ID, comp);
+        }
+
         // This is the main loop where we actually check for destruction arbitrage
         Assert.Multiple(async () =>
         {
@@ -180,6 +198,16 @@ public sealed class MaterialArbitrageTest
                     {
                         if (spawnedMats.TryGetValue(matId, out var numSpawned))
                             Assert.LessOrEqual(numSpawned, amount, $"destroying a {id} spawns more {matId} than required to construct it.");
+                    }
+                }
+
+                // Check composition.
+                if (physicalCompositions.TryGetValue(id, out var composition))
+                {
+                    foreach (var (matId, amount) in composition.MaterialComposition)
+                    {
+                        if (spawnedMats.TryGetValue(matId, out var numSpawned))
+                            Assert.LessOrEqual(numSpawned, amount, $"destroying a {id} spawns more {matId} than its physical composition.");
                     }
                 }
             }
@@ -253,6 +281,18 @@ public sealed class MaterialArbitrageTest
                     {
                         if (deconstructedMats.TryGetValue(matId, out var numSpawned))
                             Assert.LessOrEqual(numSpawned, amount, $"deconstructing a {id} spawns more {matId} than required to construct it.");
+                    }
+                }
+
+                // Check composition.
+                if (physicalCompositions.TryGetValue(id, out var composition))
+                {
+                    foreach (var (matId, amount) in composition.MaterialComposition)
+                    {
+                        if (deconstructedMats.TryGetValue(matId, out var numSpawned))
+                        {
+                            Assert.LessOrEqual(numSpawned, amount, $"deconstructing a {id} spawns more {matId} than its physical composition.");
+                        }
                     }
                 }
             }

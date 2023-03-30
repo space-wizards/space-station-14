@@ -20,3 +20,6 @@
     node: boxcardboard
     containers:
       - entity_storage
+  - type: PhysicalComposition
+    materialComposition:
+      Cardboard: 10000

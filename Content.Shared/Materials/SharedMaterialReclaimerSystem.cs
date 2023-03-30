@@ -65,7 +65,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
 
         if (component.Whitelist != null && !component.Whitelist.IsValid(item))
             return false;
-        
+
         if (component.Blacklist != null && component.Blacklist.IsValid(item))
             return false;
 
