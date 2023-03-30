@@ -19,6 +19,13 @@ public sealed class MaterialReclaimerComponent : Component
     public bool Powered;
 
     /// <summary>
+    /// How efficiently the materials are reclaimed.
+    /// In practice, a multiplier per material when calculating the output of the reclaimer.
+    /// </summary>
+    [DataField("efficiency"), ViewVariables(VVAccess.ReadWrite)]
+    public float Efficiency = 1f;
+
+    /// <summary>
     /// How quickly it takes to consume X amount of materials per second.
     /// For example, with a rate of 50, an entity with 100 total material takes 2 seconds to process.
     /// </summary>

@@ -57,6 +57,8 @@
     BoardName: "reclaimer"
     LayoutId: Reclaimer
   - type: MaterialReclaimer
+  - type: MaterialStorage
+    insertOnInteract: false
   - type: ContainerContainer
     containers:
       active-material-reclaimer-container: !type:Container

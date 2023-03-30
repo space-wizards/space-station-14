@@ -74,15 +74,27 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
 
         // scales the output if the process was interrupted.
         var completion = 1f - Math.Clamp((float) Math.Round((active.EndTime - Timing.CurTime) / active.Duration), 0f, 1f);
-
         var xform = Transform(uid);
-        foreach (var (material, amount) in compositionComponent.MaterialComposition)
+
+        if (TryComp<MaterialStorageComponent>(uid, out var materialStorage))
         {
-            var stacks = _materialStorage.SpawnMultipleFromMaterial((int) (amount * completion), material, xform.Coordinates);
-            foreach (var stack in stacks)
+            foreach (var (material, amount) in compositionComponent.MaterialComposition)
             {
-                if (Exists(stack)) // make sure we don't merge it out of existence
-                    _stack.TryMergeToContacts(stack);
+                var outputAmount = (int) (amount * completion * component.Efficiency);
+                _materialStorage.TryChangeMaterialAmount(uid, material, outputAmount, materialStorage);
+
+                foreach (var (storedMaterial, storedAmount) in materialStorage.Storage)
+                {
+                    var stacks = _materialStorage.SpawnMultipleFromMaterial(storedAmount, material, xform.Coordinates,
+                        out var materialOverflow);
+                    var amountConsumed = storedAmount - materialOverflow;
+                    _materialStorage.TryChangeMaterialAmount(uid, storedMaterial, -amountConsumed, materialStorage);
+                    foreach (var stack in stacks)
+                    {
+                        if (Exists(stack)) // make sure we don't merge it out of existence
+                            _stack.TryMergeToContacts(stack);
+                    }
+                }
             }
         }
 
@@ -92,8 +104,9 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         };
         foreach (var (reagent, amount) in compositionComponent.ChemicalComposition)
         {
-            _solutionContainer.TryAddReagent(uid, component.OutputSolution, reagent, amount, out var accepted);
-            var overflowAmount = amount - accepted;
+            var outputAmount = amount * completion * component.Efficiency;
+            _solutionContainer.TryAddReagent(uid, component.OutputSolution, reagent, outputAmount, out var accepted);
+            var overflowAmount = outputAmount - accepted;
             if (overflowAmount > 0)
             {
                 overflow.AddReagent(reagent, overflowAmount);
@@ -105,6 +118,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
             _spillable.SpillAt(uid, overflow, component.PuddleId, transformComponent: xform);
         }
 
+        Del(item);
         return true;
     }
 }
