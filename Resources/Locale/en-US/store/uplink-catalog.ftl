@@ -239,7 +239,7 @@ uplink-balloon-name = Syndie Balloon
 uplink-balloon-desc = Handed out to the bravest souls who survived the "atomic twister" ride at Syndieland.
 
 uplink-wand-death-name = Wand of Instant Death
-uplink-wand-death-desc = A Wand that provides its target with instant, very violent, and very painful death.
+uplink-wand-death-desc = A Wand that provides its target with an instant, very violent, and very painful death.
 
 uplink-wand-cluwne-name = Wand of Cluwne-ification
 uplink-wand-cluwne-desc =  A Wand of mass destruction, that allows the holder to instantly curse their target with cluwne-ification.
@@ -260,7 +260,7 @@ uplink-fireball-spellbook-name = Fireball Spellbook
 uplink-fireball-spellbook-desc = A Spellbook, often regarded as a classic, that allows it's user to cast an explosive fireball, as long as they hold the book out.
 
 uplink-spawn-spellbook-name = Spellbook of Spawning
-uplink-spawn-spellbook-desc = A Spellbook that creates a hostile Magicarp, as long as they hold the book out.
+uplink-spawn-spellbook-desc = A Spellbook that either creates a hostile Magicarp, or flash rune, as long as they hold the book out.
 
 uplink-blink-spellbook-name = Blink Spellbook
 uplink-blink-spellbook-desc = A Spellbook that allows it's user to teleport a short distance, as long as they hold the book out.

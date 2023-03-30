@@ -1001,7 +1001,7 @@
   description: uplink-wand-death-desc
   productEntity: WeaponWandDeath
   cost:
-    Telecrystal: 12
+    Telecrystal: 13
   categories:
     - UplinkMagic
   conditions:
@@ -1061,7 +1061,7 @@
   description: uplink-smite-spellbook-desc
   productEntity: SmiteBook
   cost:
-    Telecrystal: 16
+    Telecrystal: 20
   categories:
     - UplinkMagic
   conditions:
