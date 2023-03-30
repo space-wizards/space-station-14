@@ -1,5 +1,5 @@
 reagent-name-thermite = thermite
-reagent-desc-thermite = A mixture that becomes extremely hot when ignited, and which can burn straight through walls when applied and ignited. It'll slowly inflict burn damage to anybody dumb enough to ingest it, but can't be ignited inside inside said dumb person.
+reagent-desc-thermite = A mixture that becomes extremely hot when ignited, and would burn through walls if someone bothered to code it.
 
 reagent-name-napalm = napalm
 reagent-desc-napalm = It's just a little flammable.
@@ -8,7 +8,7 @@ reagent-name-phlogiston = phlogiston
 reagent-desc-phlogiston = Catches you on fire and makes you ignite.
 
 reagent-name-chlorine-trifluoride = CLF3
-reagent-desc-chlorine-trifluoride = You really, REALLY don't want to get this shit anywhere near you.
+reagent-desc-chlorine-trifluoride = You really, REALLY don't want to get this anywhere near you.
 
 reagent-name-foaming-agent = foaming agent
 reagent-desc-foaming-agent = Makes foam such as that's required in metal foam grenades.

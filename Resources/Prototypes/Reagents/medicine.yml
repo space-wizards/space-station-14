@@ -57,12 +57,6 @@
         - !type:ReagentThreshold
           min: 30
         probability: 0.02
-    Alcohol:
-      effects:
-      - !type:Drunk
-        conditions:
-        - !type:ReagentThreshold
-          min: 15
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: -10
@@ -149,9 +143,6 @@
         conditions:
         - !type:ReagentThreshold
           min: 30
-    Alcohol:
-      effects:
-      - !type:Drunk
 
 - type: reagent
   id: Cryoxadone
@@ -207,7 +198,7 @@
         damage:
           types:
             Asphyxiation: 1
-        groups:
+          groups:
             Brute: 0.5
       - !type:Jitter
         conditions:
@@ -803,7 +794,7 @@
         messages: ["ethyloxyephedrine-effect-feeling-awake", "ethyloxyephedrine-effect-clear-mind"]
         type: Local
         probability: 0.1
-        
+
 - type: reagent
   id: Sigynate
   name: reagent-name-sigynate
@@ -818,7 +809,7 @@
       - !type:HealthChange
         damage:
           types:
-            Caustic: -3
+            Caustic: -1
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
