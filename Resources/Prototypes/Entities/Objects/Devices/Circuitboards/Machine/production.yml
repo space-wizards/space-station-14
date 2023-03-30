@@ -612,6 +612,21 @@
           ExamineName: Cryostasis Beaker
 
 - type: entity
+  id: MaterialReclaimerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: material reclaimer machine board
+  components:
+    - type: Sprite
+      state: supply
+    - type: MachineBoard
+      prototype: MaterialReclaimer
+      requirements:
+        Manipulator: 2
+      materialRequirements:
+        Steel: 5
+        Plastic: 5
+
+- type: entity
   id: OreProcessorMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: ore processor machine board

@@ -1,0 +1,72 @@
+- type: entity
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  id: MaterialReclaimer
+  name: material reclaimer
+  description: Cannot reclaim immaterial things, like motivation.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/material_reclaimer.rsi
+    snapCardinals: true
+    netsync: false
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: gear-active
+      map: ["enum.DamageStateVisualLayers.Base"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: fill-6
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: fill-
+  - type: WiresVisuals
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.DamageStateVisualLayers.Base:
+          True: { state: gear-active}
+          False: { state: gear-idle }
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: AmbientSound
+    enabled: false
+    range: 5
+    volume: -8
+    sound:
+      path: /Audio/Ambience/Objects/crushing.ogg
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Machine
+    board: MaterialReclaimerMachineCircuitboard
+  - type: Wires
+    BoardName: "reclaimer"
+    LayoutId: Reclaimer
+  - type: MaterialReclaimer
+  - type: ContainerContainer
+    containers:
+      active-material-reclaimer-container: !type:Container
+  - type: SolutionContainerManager
+    solutions:
+      output:
+        maxVol: 100
+  - type: DrainableSolution
+    solution: output
+  - type: ExaminableSolution
+    solution: output
+  - type: StaticPrice
+    price: 500

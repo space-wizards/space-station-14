@@ -305,6 +305,7 @@
       - DawInstrumentMachineCircuitboard
       - CloningConsoleComputerCircuitboard
       - StasisBedMachineCircuitboard
+      - MaterialReclaimerMachineCircuitboard
       - OreProcessorMachineCircuitboard
       - RipleyCentralElectronics
       - RipleyPeripheralsElectronics

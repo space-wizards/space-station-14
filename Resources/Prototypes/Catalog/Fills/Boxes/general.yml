@@ -6,6 +6,9 @@
   components:
   - type: Sprite
     state: box
+  - type: PhysicalComposition
+    materialComposition:
+      Cardboard: 100
 
 - type: entity
   name: mousetrap box
