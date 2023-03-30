@@ -142,14 +142,13 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitClown
-  name: clown suit
-  description: HONK!
+  name: security jumpsuit
+  description: A jumpsuit made of strong material, providing robust protection.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/clown.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/security.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/clown.rsi
-    femaleMask: UniformTop
+    sprite: Clothing/Uniforms/Jumpsuit/security.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -242,57 +241,57 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitHoS
-  name: head of security's jumpsuit
-  description: It's bright red and rather crisp, much like security's victims tend to be.
+  name: mime suit
+  description: ...
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/hos.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/mime.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/hos.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/mime.rsi
 
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitHoSAlt
-  name: head of security's turtleneck
-  description: It's a turtleneck worn by those strong and disciplined enough to achieve the position of Head of Security. Its sturdy fabric provides minor protection from mechanical damage.
+  name: mime suit
+  description: ...
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/hos_alt.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/mime.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/hos_alt.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/mime.rsi
 
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitHoSBlue
-  name: head of security's blue jumpsuit
-  description: A blue jumpsuit of Head of Security.
+  name: mime suit
+  description: ...
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/hos_blue.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/mime.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/hos_blue.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/mime.rsi
 
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitHoSGrey
-  name: head of security's grey jumpsuit
-  description: A grey jumpsuit of Head of Security, which make him look somewhat like a passenger.
+  name: mime suit
+  description: ...
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/hos_grey.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/mime.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/hos_grey.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/mime.rsi
 
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitHoSParadeMale
-  name: head of security's parade uniform
-  description: A male head of security's luxury-wear, for special occasions.
+  name: mime suit
+  description: ...
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/hos_parade.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/mime.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/hos_parade.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/mime.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -332,13 +331,13 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitMime
-  name: mime suit
-  description: ...
+  name: head of security's jumpsuit
+  description: It's bright red and rather crisp, much like security's victims tend to be.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/mime.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/hos.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/mime.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/hos.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -415,13 +414,14 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitSec
-  name: security jumpsuit
-  description: A jumpsuit made of strong material, providing robust protection.
+  name: clown suit
+  description: HONK!
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/security.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/clown.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/security.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/clown.rsi
+    femaleMask: UniformTop
 
 - type: entity
   parent: ClothingUniformBase

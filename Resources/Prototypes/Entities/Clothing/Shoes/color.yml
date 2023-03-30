@@ -88,6 +88,10 @@
 
 - type: entity
   parent: ClothingShoesBaseButcherable
+  id: ClothingShoesBootsJackHoS
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
   id: ClothingShoesColorYellow
   name: yellow shoes
   description: Stylish yellow shoes.

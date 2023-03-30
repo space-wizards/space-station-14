@@ -17,13 +17,13 @@
 - type: entity
   parent: ClothingMaskGas
   id: ClothingMaskGasSecurity
-  name: security gas mask
-  description: A standard issue Security gas mask.
+  name: clown wig and mask
+  description: A true prankster's facial attire. A clown is incomplete without his wig and mask.
   components:
   - type: Sprite
-    sprite: Clothing/Mask/gassecurity.rsi
+    sprite: Clothing/Mask/clown.rsi
   - type: Clothing
-    sprite: Clothing/Mask/gassecurity.rsi
+    sprite: Clothing/Mask/clown.rsi
 
 - type: entity
   parent: ClothingMaskGas
@@ -142,13 +142,13 @@
 - type: entity
   parent: ClothingMaskBase
   id: ClothingMaskClown
-  name: clown wig and mask
-  description: A true prankster's facial attire. A clown is incomplete without his wig and mask.
+  name: security gas mask
+  description: A standard issue Security gas mask.
   components:
   - type: Sprite
-    sprite: Clothing/Mask/clown.rsi
+    sprite: Clothing/Mask/gassecurity.rsi
   - type: Clothing
-    sprite: Clothing/Mask/clown.rsi
+    sprite: Clothing/Mask/gassecurity.rsi
   - type: BreathMask
   - type: IdentityBlocker
 
@@ -167,6 +167,19 @@
 - type: entity
   parent: ClothingMaskBase
   id: ClothingMaskMime
+  name: security gas mask
+  description: A standard issue Security gas mask.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/gassecurity.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/gassecurity.rsi
+  - type: BreathMask
+  - type: IdentityBlocker
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskHoS
   name: mime mask
   description: The traditional mime's mask. It has an eerie facial posture.
   components:
@@ -174,8 +187,6 @@
     sprite: Clothing/Mask/mime.rsi
   - type: Clothing
     sprite: Clothing/Mask/mime.rsi
-  - type: BreathMask
-  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskPullableBase

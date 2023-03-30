@@ -30,11 +30,11 @@
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackClown
-  name: giggles von honkerton
-  description: It's a backpack made by Honk! Co.
+  name: security backpack
+  description: It's a very robust backpack.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/clown.rsi
+    sprite: Clothing/Back/Backpacks/security.rsi
   - type: Storage
     storageOpenSound:
       collection: BikeHorn
@@ -42,11 +42,20 @@
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackSecurity
-  name: security backpack
-  description: It's a very robust backpack.
+  name: giggles von honkerton
+  description: It's a backpack made by Honk! Co.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/security.rsi
+    sprite: Clothing/Back/Backpacks/clown.rsi
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackHOS
+  name: mime backpack
+  description: A silent backpack made for those silent workers. Silence Co.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/clown.rsi
 
 - type: entity
   parent: ClothingBackpack
@@ -78,11 +87,11 @@
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackMime
-  name: mime backpack
-  description: A silent backpack made for those silent workers. Silence Co.
+  name: security backpack
+  description: It's a very robust backpack.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/mime.rsi
+    sprite: Clothing/Back/Backpacks/security.rsi
 
 - type: entity
   parent: ClothingBackpack

@@ -105,7 +105,7 @@
 
 - type: entity
   noSpawn: true
-  parent: ClothingBackpackSecurity
+  parent: ClothingBackpackHOS
   id: ClothingBackpackHOSFilled
   components:
   - type: StorageFill

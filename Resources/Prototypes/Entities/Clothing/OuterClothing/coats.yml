@@ -44,13 +44,12 @@
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatHoSTrench
-  name: head of security's trenchcoat
-  description: This trenchcoat was specifically designed for asserting superior authority.
+  name: mime winter coat
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
+    sprite: Clothing/OuterClothing/WinterCoats/coatmime.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
+    sprite: Clothing/OuterClothing/WinterCoats/coatmime.rsi
   - type: Armor
     modifiers:
       coefficients:
@@ -185,13 +184,13 @@
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterClownPriest
-  name: robes of the honkmother
-  description: Meant for a clown of the cloth.
+  name: kevlar vest
+  description: An armor vest made of synthetic fibers.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/clownpriest.rsi
+    sprite: Clothing/OuterClothing/Vests/kevlar.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/clownpriest.rsi
+    sprite: Clothing/OuterClothing/Vests/kevlar.rsi
 
 - type: entity
   parent: ClothingOuterStorageBase

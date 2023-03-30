@@ -12,13 +12,13 @@
 - type: entity
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesBootsJack
-  name: jackboots
-  description: Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time.
+  name: clown shoes
+  description: "The prankster's standard-issue clowning shoes. Damn they're huge!"
   components:
   - type: Sprite
-    sprite: Clothing/Shoes/Boots/jackboots.rsi
+    sprite: Clothing/Shoes/Specific/clown.rsi
   - type: Clothing
-    sprite: Clothing/Shoes/Boots/jackboots.rsi
+    sprite: Clothing/Shoes/Specific/clown.rsi
 
 - type: entity
   parent: ClothingShoesBaseButcherable
@@ -45,13 +45,13 @@
 - type: entity
   parent: ClothingShoesStorageBase
   id: ClothingShoesBootsCombat
-  name: combat boots
-  description: Robust combat boots for combat scenarios or combat situations. All combat, all the time.
+  name: white shoes
+  description: Don't take them off at your office Christmas party.
   components:
   - type: Sprite
-    sprite: Clothing/Shoes/Boots/combatboots.rsi
+    sprite: Clothing/Shoes/Color/white.rsi
   - type: Clothing
-    sprite: Clothing/Shoes/Boots/combatboots.rsi
+    sprite: Clothing/Shoes/Color/white.rsi
   - type: Storage
     whitelist:
       tags:

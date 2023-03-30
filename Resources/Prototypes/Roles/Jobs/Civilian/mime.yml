@@ -22,7 +22,8 @@
     head: ClothingHeadHatBeret
     belt: ClothingBeltSuspenders
     gloves: ClothingHandsGlovesLatex
-    shoes: ClothingShoesColorWhite
+    shoes: ClothingShoesMime
+    outerClothing: ClothingOuterWinterMime
     pocket1: CrayonMime
     pocket2: Paper
     mask: ClothingMaskMime

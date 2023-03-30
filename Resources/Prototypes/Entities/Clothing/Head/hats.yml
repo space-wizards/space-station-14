@@ -12,13 +12,13 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBeret
-  name: beret
-  description: A beret, an artists favorite headwear.
+  name: head of security's beret
+  description: A black beret with a commander's rank emblem. For officers that are more inclined towards style than safety.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/beret.rsi
+    sprite: Clothing/Head/Hats/beret_hos.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hats/beret.rsi
+    sprite: Clothing/Head/Hats/beret_hos.rsi
 
 - type: entity
   parent: ClothingHeadBase
@@ -34,13 +34,13 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretHoS
-  name: head of security's beret
-  description: A black beret with a commander's rank emblem. For officers that are more inclined towards style than safety.
+  name: beret
+  description: A beret, an artists favorite headwear.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/beret_hos.rsi
+    sprite: Clothing/Head/Hats/beret.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hats/beret_hos.rsi
+    sprite: Clothing/Head/Hats/beret.rsi
 
 - type: entity
   parent: ClothingHeadBase

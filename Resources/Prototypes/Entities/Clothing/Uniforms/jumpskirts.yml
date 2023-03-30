@@ -139,35 +139,35 @@
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtHoS
-  name: head of security's jumpskirt
-  description: It's bright red and rather crisp, much like security's victims tend to be.
+  name: mime jumpskirt
+  description: ...
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/hos.rsi
+    sprite: Clothing/Uniforms/Jumpskirt/mime.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/hos.rsi
+    sprite: Clothing/Uniforms/Jumpskirt/mime.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtHoSAlt
-  name: head of security's turtleneck
-  description: It's a turtleneck worn by those strong and disciplined enough to achieve the position of Head of Security. Its sturdy fabric provides minor protection from mechanical damage.
+  name: mime jumpskirt
+  description: ...
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/hos_alt.rsi
+    sprite: Clothing/Uniforms/Jumpskirt/mime.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/hos_alt.rsi
+    sprite: Clothing/Uniforms/Jumpskirt/mime.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtHoSParadeMale
-  name: head of security's parade uniform
-  description: A head of security's luxury-wear, for special occasions.
+  name: mime jumpskirt
+  description: ...
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/hos_parade.rsi
+    sprite: Clothing/Uniforms/Jumpskirt/mime.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/hos_parade.rsi
+    sprite: Clothing/Uniforms/Jumpskirt/mime.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -207,13 +207,13 @@
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtMime
-  name: mime jumpskirt
-  description: ...
+  name: head of security's jumpskirt
+  description: It's bright red and rather crisp, much like security's victims tend to be.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/mime.rsi
+    sprite: Clothing/Uniforms/Jumpskirt/hos.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/mime.rsi
+    sprite: Clothing/Uniforms/Jumpskirt/hos.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -279,13 +279,14 @@
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtSec
-  name: security jumpskirt
-  description: A jumpskirt made of strong material, providing robust protection.
+  name: clown suit
+  description: HONK!
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/security.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/clown.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/security.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/clown.rsi
+    femaleMask: UniformTop
 
 - type: entity
   parent: ClothingUniformSkirtBase

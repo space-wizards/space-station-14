@@ -57,11 +57,11 @@
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelClown
-  name: clown duffel bag
-  description: A large duffel bag for holding extra honk goods.
+  name: security duffel bag
+  description: A large duffel bag for holding extra security related goods.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Duffels/clown.rsi
+    sprite: Clothing/Back/Duffels/security.rsi
   - type: Storage
     storageOpenSound:
       collection: BikeHorn
@@ -69,11 +69,20 @@
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelSecurity
-  name: security duffel bag
-  description: A large duffel bag for holding extra security related goods.
+  name: clown duffel bag
+  description: A large duffel bag for holding extra honk goods.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Duffels/security.rsi
+    sprite: Clothing/Back/Duffels/clown.rsi
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelHOS
+  name: mime duffel bag
+  description: A large duffel bag for holding... mime... stuff.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/mime.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -96,11 +105,11 @@
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelMime
-  name: mime duffel bag
-  description: A large duffel bag for holding... mime... stuff.
+  name: security duffel bag
+  description: A large duffel bag for holding extra security related goods.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Duffels/mime.rsi
+    sprite: Clothing/Back/Duffels/security.rsi
     storageOpenSound:
       collection: null
     storageInsertSound:

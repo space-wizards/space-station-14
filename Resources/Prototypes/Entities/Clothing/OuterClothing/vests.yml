@@ -41,13 +41,13 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterVestKevlar
-  name: kevlar vest
-  description: An armor vest made of synthetic fibers.
+  name: robes of the honkmother
+  description: Meant for a clown of the cloth.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Vests/kevlar.rsi
+    sprite: Clothing/OuterClothing/Coats/clownpriest.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Vests/kevlar.rsi
+    sprite: Clothing/OuterClothing/Coats/clownpriest.rsi
   - type: Armor
     modifiers:
       coefficients:

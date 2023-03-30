@@ -28,9 +28,10 @@
     jumpsuit: ClothingUniformJumpsuitClown
     back: ClothingBackpackClownFilled
     shoes: ClothingShoesClown
+    outerClothing: ClothingOuterClownPriest
     mask: ClothingMaskClown
     pocket1: BikeHorn
     id: ClownPDA
     ears: ClothingHeadsetService
-  satchel: ClothingBackpackSatchelFilled
+  satchel: ClothingBackpackSatchelSecurityFilled
   duffelbag: ClothingBackpackDuffelClownFilled

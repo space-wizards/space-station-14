@@ -212,12 +212,13 @@
 - type: entity
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterMime
-  name: mime winter coat
+  name: head of security's trenchcoat
+  description: This trenchcoat was specifically designed for asserting superior authority.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/WinterCoats/coatmime.rsi
+    sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/WinterCoats/coatmime.rsi
+    sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
 
 - type: entity
   parent: ClothingOuterWinterCoat
