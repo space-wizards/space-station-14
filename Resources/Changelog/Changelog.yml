@@ -1,12 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'Added technology disks, which can be inserted into a research server
-      to unlock a new lathe recipe.', type: Add}
-  - {message: 'Added the technology disk terminal, where you can exchange 2500 research
-      points for a random technology disk.', type: Add}
-  id: 2789
-  time: '2022-12-20T22:39:58.0000000+00:00'
 - author: TemporalOroboros
   changes:
   - {message: PA now activates the singularity generator again., type: Fix}
@@ -2916,3 +2908,8 @@ Entries:
       appear in wardrobe restock boxes from cargo., type: Fix}
   id: 3288
   time: '2023-03-30T16:15:10.0000000+00:00'
+- author: Skyedra
+  changes:
+  - {message: 'New game mode:  Oops, All Captains!', type: Add}
+  id: 3289
+  time: '2023-03-30T23:54:39.0000000+00:00'
