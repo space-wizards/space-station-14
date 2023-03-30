@@ -3,7 +3,7 @@
 - type: entity
   id: PartHumanoidFox
   parent: BaseItem
-  name: "reptilian body part"
+  name: "fox body part"
   abstract: true
   components:
   - type: Damageable
@@ -19,7 +19,7 @@
 
 - type: entity
   id: TorsoHumanoidFox
-  name: "reptilian torso"
+  name: "fox torso"
   parent: PartHumanoidFox
   components:
   - type: Sprite
@@ -34,7 +34,7 @@
 
 - type: entity
   id: HeadHumanoidFox
-  name: "reptilian head"
+  name: "fox head"
   parent: PartHumanoidFox
   components:
   - type: Sprite
@@ -60,7 +60,7 @@
 
 - type: entity
   id: LeftArmHumanoidFox
-  name: "left reptilian arm"
+  name: "left fox arm"
   parent: PartHumanoidFox
   components:
   - type: Sprite
@@ -76,7 +76,7 @@
 
 - type: entity
   id: RightArmHumanoidFox
-  name: "right reptilian arm"
+  name: "right fox arm"
   parent: PartHumanoidFox
   components:
   - type: Sprite
@@ -92,7 +92,7 @@
 
 - type: entity
   id: LeftHandHumanoidFox
-  name: "left reptilian hand"
+  name: "left fox hand"
   parent: PartHumanoidFox
   components:
   - type: Sprite
@@ -108,7 +108,7 @@
 
 - type: entity
   id: RightHandHumanoidFox
-  name: "right reptilian hand"
+  name: "right fox hand"
   parent: PartHumanoidFox
   components:
   - type: Sprite
@@ -124,7 +124,7 @@
 
 - type: entity
   id: LeftLegHumanoidFox
-  name: "left reptilian leg"
+  name: "left fox leg"
   parent: PartHumanoidFox
   components:
   - type: Sprite
@@ -143,7 +143,7 @@
 
 - type: entity
   id: RightLegHumanoidFox
-  name: "right reptilian leg"
+  name: "right fox leg"
   parent: PartHumanoidFox
   components:
   - type: Sprite
@@ -162,7 +162,7 @@
 
 - type: entity
   id: LeftFootHumanoidFox
-  name: "left reptilian foot"
+  name: "left fox foot"
   parent: PartHumanoidFox
   components:
   - type: Sprite
@@ -178,7 +178,7 @@
 
 - type: entity
   id: RightFootHumanoidFox
-  name: "right reptilian foot"
+  name: "right fox foot"
   parent: PartHumanoidFox
   components:
   - type: Sprite
