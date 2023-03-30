@@ -1,7 +1,7 @@
 - type: species
   id: Skeleton
   name: Skeleton
-  roundStart: false
+  roundStart: true
   prototype: MobSkeletonPerson
   sprites: MobSkeletonSprites
   markingLimits: MobHumanMarkingLimits
