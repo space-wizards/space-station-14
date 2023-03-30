@@ -239,6 +239,21 @@
   - UplinkUtility
 
 - type: listing
+  id: UplinkWandBelt
+  name: uplink-wand-belt-name
+  description: uplink-wand-belt-desc
+  productEntity: ClothingBeltWand
+  cost:
+    Telecrystal: 1
+  categories:
+    - UplinkUtility
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+
+- type: listing
   id: UplinkEmag
   name: uplink-emag-name
   description: uplink-emag-desc
@@ -663,6 +678,23 @@
   - UplinkArmor
 
 - type: listing
+  id: UplinkHardsuitWizard
+  name: uplink-hardsuit-wizard-name
+  description: uplink-hardsuit-wizard-desc
+  icon: { sprite: /Textures/Clothing/OuterClothing/Hardsuits/wizard.rsi, state: icon }
+  productEntity: ClothingOuterHardsuitWizard
+  cost:
+    Telecrystal: 8
+  categories:
+    - UplinkArmor
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+
+
+- type: listing
   id: UplinkClothingShoesBootsMagSyndie
   name: uplink-clothing-shoes-boots-mag-syndie-name
   description: uplink-clothing-shoes-boots-mag-syndie-desc
@@ -815,6 +847,258 @@
     blacklist:
       components:
       - SurplusBundle
+
+ # Magics. April Fools!
+
+- type: listing
+  id: UplinkRGBStaff
+  name: uplink-staff-rgb-name
+  description: uplink-staff-rgb-desc
+  productEntity: RGBStaff #RGB staff, for the People. Everything else is Nukie-Only.
+  cost:
+    Telecrystal: 3
+  categories:
+    - UplinkMagic
+
+- type: listing
+  id: UplinkCluwneWand
+  name: uplink-wand-cluwne-name
+  description: uplink-wand-cluwne-desc
+  productEntity: WeaponWandCluwne
+  cost:
+    Telecrystal: 5
+  categories:
+    - UplinkMagic
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+
+- type: listing
+  id: UplinkHealingStaff
+  name: uplink-staff-heal-name
+  description: uplink-staff-heal-desc
+  productEntity: WeaponStaffHealing
+  cost:
+    Telecrystal: 8
+  categories:
+    - UplinkMagic
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+
+- type: listing
+  id: UplinkEntranceWand
+  name: uplink-wand-entry-name
+  description: uplink-wand-entry-desc
+  productEntity: WeaponWandPolymorphDoor
+  cost:
+    Telecrystal: 10
+  categories:
+    - UplinkMagic
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+
+- type: listing
+  id: UplinkEntranceStaff
+  name: uplink-staff-entry-name
+  description: uplink-staff-entry-desc
+  productEntity: WeaponStaffPolymorphDoor
+  cost:
+    Telecrystal: 12
+  categories:
+    - UplinkMagic
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+
+- type: listing
+  id: UplinkPolymorphCarpWand
+  name: uplink-wand-carp-name
+  description: uplink-wand-carp-desc
+  productEntity: WeaponWandPolymorphCarp
+  cost:
+    Telecrystal: 5
+  categories:
+    - UplinkMagic
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+
+- type: listing
+  id: UplinkPolymorphMonkeyWand
+  name: uplink-wand-monkey-name
+  description: uplink-wand-monkey-desc
+  productEntity: WeaponWandPolymorphMonkey
+  cost:
+    Telecrystal: 9
+  categories:
+    - UplinkMagic
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+
+- type: listing
+  id: UplinkSpawnSpellbook
+  name: uplink-spawn-spellbook-name
+  description: uplink-spawn-spellbook-desc
+  productEntity: SpawnSpellbook
+  cost:
+    Telecrystal: 6
+  categories:
+    - UplinkMagic
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+
+- type: listing
+  id: UplinkScrollRunes
+  name: uplink-rune-scroll-name
+  description: uplink-rune-scroll-desc
+  productEntity: ScrollRunes
+  cost:
+    Telecrystal: 6
+  categories:
+    - UplinkMagic
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+
+- type: listing
+  id: UplinkFireballWand
+  name: uplink-wand-fireball-name
+  description: uplink-wand-fireball-desc
+  productEntity: WeaponWandFireball
+  cost:
+    Telecrystal: 6
+  categories:
+    - UplinkMagic
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+
+- type: listing
+  id: UplinkDeathWand
+  name: uplink-wand-death-name
+  description: uplink-wand-death-desc
+  productEntity: WeaponWandDeath
+  cost:
+    Telecrystal: 13
+  categories:
+    - UplinkMagic
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+
+- type: listing
+  id: UplinkFireballSpellbook
+  name: uplink-fireball-spellbook-name
+  description: uplink-fireball-spellbook-desc
+  productEntity: FireballSpellbook
+  cost:
+    Telecrystal: 8
+  categories:
+    - UplinkMagic
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+
+- type: listing
+  id: UplinkForceWallSpellbook
+  name: uplink-forcewall-spellbook-name
+  description: uplink-forcewall-spellbook-desc
+  productEntity: ForceWallSpellbook
+  cost:
+    Telecrystal: 10
+  categories:
+    - UplinkMagic
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+
+- type: listing
+  id: UplinkBlinkBook
+  name: uplink-blink-spellbook-name
+  description: uplink-blink-spellbook-desc
+  productEntity: BlinkBook
+  cost:
+    Telecrystal: 12
+  categories:
+    - UplinkMagic
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+
+- type: listing
+  id: UplinkSmiteSpellbook
+  name: uplink-smite-spellbook-name
+  description: uplink-smite-spellbook-desc
+  productEntity: SmiteBook
+  cost:
+    Telecrystal: 20
+  categories:
+    - UplinkMagic
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+
+- type: listing
+  id: UplinkMagicalLamp
+  name: uplink-magic-lamp-name
+  description: uplink-magic-lamp-desc
+  productEntity: MagicalLamp
+  cost:
+    Telecrystal: 14
+  categories:
+    - UplinkMagic
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
+
+- type: listing
+  id: UplinkKnockSpellbook
+  name: uplink-knock-spellbook-name
+  description: uplink-knock-spellbook-desc
+  productEntity: KnockSpellbook
+  cost:
+    Telecrystal: 14
+  categories:
+    - UplinkMagic
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink
 
  # Pointless
 

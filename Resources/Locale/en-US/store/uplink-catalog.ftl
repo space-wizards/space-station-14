@@ -238,3 +238,59 @@ uplink-operative-skirt-desc = A skirt given to our nuclear operatives with fine 
 uplink-balloon-name = Syndie Balloon
 uplink-balloon-desc = Handed out to the bravest souls who survived the "atomic twister" ride at Syndieland.
 
+uplink-wand-death-name = Wand of Instant Death
+uplink-wand-death-desc = A Wand that provides its target with an instant, very violent, and very painful death.
+
+uplink-wand-cluwne-name = Wand of Cluwne-ification
+uplink-wand-cluwne-desc =  A Wand of mass destruction, that allows the holder to instantly curse their target with cluwne-ification.
+
+uplink-wand-entry-name = Wand of Entrance
+uplink-wand-entry-desc = A Wand that allows you to make an entrance practically anywhere, besides People.
+
+uplink-wand-carp-name = Wand of Carp Polymorph
+uplink-wand-carp-desc = A Wand that allows the holder to polymorph their target into a helpless space carp. Grr!
+
+uplink-wand-monkey-name = Wand of Monkey Polymorph
+uplink-wand-monkey-desc = A Wand that allows the holder to polymorph their target into a helpless monkey. Ook ook!
+
+uplink-wand-fireball-name = Fireball Wand
+uplink-wand-fireball-desc = A Wand that shoots an explosive fireball anywhere the user desires.
+
+uplink-fireball-spellbook-name = Fireball Spellbook
+uplink-fireball-spellbook-desc = A Spellbook, often regarded as a classic, that allows it's user to cast an explosive fireball, as long as they hold the book out.
+
+uplink-spawn-spellbook-name = Spellbook of Spawning
+uplink-spawn-spellbook-desc = A Spellbook that either creates a hostile Magicarp, or flash rune, as long as they hold the book out.
+
+uplink-blink-spellbook-name = Blink Spellbook
+uplink-blink-spellbook-desc = A Spellbook that allows it's user to teleport a short distance, as long as they hold the book out.
+
+uplink-smite-spellbook-name = Smite Spellbook
+uplink-smite-spellbook-desc = A Spellbook that allows the user to instantly destroys their target without flaw, as long as they hold the book out.
+
+uplink-knock-spellbook-name = Knock Spellbook
+uplink-knock-spellbook-desc = A Spellbook that allows it's user to open nearby doors for a short period of time, as long as they hold the book out.
+
+uplink-forcewall-spellbook-name = Force Wall Spellbook
+uplink-forcewall-spellbook-desc = A Spellbook that allows it's user to cast a 1x3 wall in front of themself, as long as they hold the book out.
+
+uplink-staff-rgb-name = Staff Of RGB
+uplink-staff-rgb-desc = A wonderful bit of Wizard technology that instantly RGB-ifies nearby lights! The future is NOW, old man.
+
+uplink-staff-heal-name = Staff Of Healing
+uplink-staff-heal-desc =  A staff that heals either it's user, or the person who it's targeted by.
+
+uplink-staff-entry-name = Staff Of Entrance
+uplink-staff-entry-desc = A staff that can make practically anything an entrance... Besides a person.
+
+uplink-rune-scroll-name = Rune Scroll
+uplink-rune-scroll-desc = A scroll that allows the user to utilize a number of different runes, varying in usefulness.
+
+uplink-magic-lamp-name = Magical Lamp
+uplink-magic-lamp-desc = A lamp used as a discount method to hold an Ifrit, ready for bonding. Budget cuts must've hit them hard...
+
+uplink-hardsuit-wizard-name = Magical Hardsuit
+uplink-hardsuit-wizard-desc = A magical hardsuit passed down from eons of great Wizards, all the way down to you. A criminal.
+
+uplink-wand-belt-name = Wand Belt
+uplink-wand-belt-desc = A magical little belt that holds your poles of mass destruction! Ages 10 and up.

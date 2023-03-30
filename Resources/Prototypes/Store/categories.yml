@@ -59,9 +59,14 @@
   priority: 8
 
 - type: storeCategory
+  id: UplinkMagic
+  name: store-category-magic
+  priority: 9
+
+- type: storeCategory
   id: UplinkPointless
   name: store-category-pointless
-  priority: 9
+  priority: 10
 
 #revenant
 - type: storeCategory
