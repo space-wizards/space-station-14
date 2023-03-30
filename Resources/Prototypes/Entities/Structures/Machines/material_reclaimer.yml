@@ -38,7 +38,7 @@
   - type: AmbientSound
     enabled: false
     range: 5
-    volume: -8
+    volume: -5
     sound:
       path: /Audio/Ambience/Objects/crushing.ogg
   - type: Destructible

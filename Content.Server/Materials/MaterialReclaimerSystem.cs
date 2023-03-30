@@ -2,6 +2,7 @@
 using Content.Server.Construction;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Power.Components;
+using Content.Server.Stack;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Materials;
@@ -14,6 +15,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
     [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly SpillableSystem _spillable = default!;
+    [Dependency] private readonly StackSystem _stack = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -22,6 +24,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
 
         SubscribeLocalEvent<MaterialReclaimerComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<MaterialReclaimerComponent, RefreshPartsEvent>(OnRefreshParts);
+        SubscribeLocalEvent<MaterialReclaimerComponent, UpgradeExamineEvent>(OnUpgradeExamine);
         SubscribeLocalEvent<MaterialReclaimerComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<ActiveMaterialReclaimerComponent, PowerChangedEvent>(OnActivePowerChanged);
     }
@@ -29,6 +32,11 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
     private void OnStartup(EntityUid uid, MaterialReclaimerComponent component, ComponentStartup args)
     {
         component.OutputSolution = _solutionContainer.EnsureSolution(uid, component.SolutionContainerId);
+    }
+
+    private void OnUpgradeExamine(EntityUid uid, MaterialReclaimerComponent component, UpgradeExamineEvent args)
+    {
+        args.AddPercentageUpgrade(Loc.GetString("material-reclaimer-upgrade-process-rate"), component.MaterialProcessRate / component.BaseMaterialProcessRate);
     }
 
     private void OnRefreshParts(EntityUid uid, MaterialReclaimerComponent component, RefreshPartsEvent args)
@@ -70,7 +78,12 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         var xform = Transform(uid);
         foreach (var (material, amount) in compositionComponent.MaterialComposition)
         {
-            _materialStorage.SpawnMultipleFromMaterial((int) (amount * completion), material, xform.Coordinates);
+            var stacks = _materialStorage.SpawnMultipleFromMaterial((int) (amount * completion), material, xform.Coordinates);
+            foreach (var stack in stacks)
+            {
+                if (Exists(stack)) // make sure we don't merge it out of existence
+                    _stack.TryMergeToContacts(stack);
+            }
         }
 
         var overflow = new Solution
