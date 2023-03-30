@@ -63,6 +63,12 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         if (IsBusy(uid))
             return false;
 
+        if (component.Whitelist != null && !component.Whitelist.IsValid(item))
+            return false;
+        
+        if (component.Blacklist != null && component.Blacklist.IsValid(item))
+            return false;
+
         var ev = new GetMaterialReclaimedEvent();
         RaiseLocalEvent(item, ref ev);
 

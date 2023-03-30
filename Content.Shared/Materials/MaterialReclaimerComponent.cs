@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Chemistry.Components;
 using Content.Shared.Construction.Prototypes;
+using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -67,6 +68,18 @@ public sealed class MaterialReclaimerComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public Solution OutputSolution = default!;
+
+    /// <summary>
+    /// a whitelist for what entities can be inserted into this reclaimer
+    /// </summary>
+    [DataField("whitelist")]
+    public EntityWhitelist? Whitelist;
+
+    /// <summary>
+    /// a blacklist for what entities cannot be inserted into this reclaimer
+    /// </summary>
+    [DataField("blacklist")]
+    public EntityWhitelist? Blacklist;
 }
 
 [Serializable, NetSerializable]
@@ -86,6 +99,5 @@ public sealed class MaterialReclaimerComponentState : ComponentState
 /// <summary>
 /// Event raised when an entity is being reclaimed by a <see cref="MaterialReclaimerComponent"/>
 /// </summary>
-/// <param name="Reclaimer"></param>
 [ByRefEvent]
 public readonly record struct GetMaterialReclaimedEvent;
