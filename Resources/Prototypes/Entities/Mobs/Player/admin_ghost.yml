@@ -18,6 +18,17 @@
   - type: CombatMode
   - type: Actions
   - type: InputMover
+  - type: Sprite
+    overrideContainerOcclusion: true
+    netsync: false
+    noRot: true
+    drawdepth: Ghosts
+    sprite: Mobs/Ghosts/ghost_human.rsi
+    state: animated
+    color: "#FF8C00"
+    layers:
+      - state: animated
+        shader: unshaded
   - type: MovementSpeedModifier
     baseSprintSpeed: 12
     baseWalkSpeed: 8
