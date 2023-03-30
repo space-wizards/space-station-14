@@ -16,4 +16,10 @@ public sealed class ActiveMicrowaveComponent : Component
 
     [ViewVariables]
     public (FoodRecipePrototype?, int) PortionedRecipe;
+
+    [ViewVariables]
+    public bool Haywire;
+
+    [ViewVariables]
+    public float HaywireTimeRemaining;
 }
