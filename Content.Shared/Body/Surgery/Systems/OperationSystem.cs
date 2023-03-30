@@ -106,10 +106,14 @@ public sealed class OperationSystem : EntitySystem
         return step.CanPerform(context);
     }
 
+    /// <summary>
+    /// Use a tool in an operation, if possible.
+    /// </summary>
     public bool TryPerform(
         EntityUid target,
         EntityUid surgeon,
         OperationComponent comp,
+        EntityUid toolId,
         SurgeryToolComponent tool)
     {
         var step = GetNextStep(comp);
@@ -119,8 +123,19 @@ public sealed class OperationSystem : EntitySystem
         var context = new SurgeryStepContext(target, surgeon, comp, tool, step.ID, this, _surgery);
         if (step.CanPerform(context) && step.Perform(context))
         {
-            Logger.InfoS("surgery", $"{surgeon} completed step {step.ID} on {target}'s {comp.Prototype!.Name} operation");
+            Logger.InfoS("surgery", $"{ToPrettyString(surgeon):player} completed step {step.ID} of {comp.Prototype!.Name} on {ToPrettyString(target):target}");
             step.OnPerformSuccess(context);
+            return true;
+        }
+
+        // if using a cautery, stop the operation regardless of stage
+        if (HasComp<CauteryComponent>(toolId))
+        {
+            Logger.InfoS("surgery", $"{ToPrettyString(surgeon):player} aborted operation {comp.Prototype!.Name} on {ToPrettyString(target):target}");
+            var userName = Identity.Name(surgeon, EntityManager);
+            var targetName = Identity.Name(target, EntityManager);
+            Popup(Loc.GetString("surgery-aborted", ("user", userName), ("target", targetName)), surgeon);
+            RemComp<OperationComponent>(target);
             return true;
         }
 
@@ -179,7 +194,7 @@ public sealed class OperationSystem : EntitySystem
                 return;
         }
 
-        Logger.InfoS("surgery", $"User {user} completed operation {comp.Prototype!.Name} on part {comp.Part}");
+        Logger.InfoS("surgery", $"{ToPrettyString(user):player} completed operation {comp.Prototype!.Name} on {ToPrettyString(comp.Part):part}");
         comp.Prototype.Effect?.Execute(user, comp);
         RemComp<OperationComponent>(uid);
     }

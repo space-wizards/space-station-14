@@ -2,17 +2,20 @@
   id: LimbReplacement
   name: Limb Replacement
   description: Replacing missing limbs or severed heads.
+  # TODO SURGERY: require a missing limb
   steps:
-  - id: Amputation
-    conditional: !type:StumpConditional
-  - id: LimbAttachment
-    insertionHandler: !type:InsertOrgan
+  - id: Incision
+  # TODO SURGERY: start bleeding
   - id: VesselCompression
+  # TODO SURGERY: stop bleeding
+  - id: Retraction
+  - id: LimbAttachment
+    insertionHandler: !type:InsertLimb
+  # TODO SURGERY: start bleeding in new limb
   - id: Cauterization
+  # TODO SURGERY: stop bleeding
+  # TODO SURGERY: simply require that a target part has children instead of this
   parts:
-  - Head
+  - Torso
   - Arm
-  - Hand
   - Leg
-  - Foot
-  - Tail

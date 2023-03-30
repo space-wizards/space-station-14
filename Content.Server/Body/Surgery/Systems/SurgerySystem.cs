@@ -32,7 +32,7 @@ public sealed class SurgerySystem : SharedSurgerySystem
         // TODO SURGERY: validate all input here
         if (Operation.StartOperation(msg.Target, msg.Part, uid, msg.Operation, out var operation))
         {
-            Logger.InfoS("surgery", $"Player {ToPrettyString(msg.User):player} started operation {operation.Prototype!.Name} on {ToPrettyString(msg.Target):target} (part {msg.Part})");
+            Logger.InfoS("surgery", $"{ToPrettyString(msg.User):player} started operation {operation.Prototype!.Name} on {ToPrettyString(msg.Target):target} (part {msg.Part})");
             DoDrapesStartPopups(msg.User, msg.Part, operation);
         }
     }
@@ -72,9 +72,7 @@ public sealed class SurgerySystem : SharedSurgerySystem
         }
 
         args.Handled = true;
-        // TODO: remove when doafter work
-//        if (comp.Delay <= 0)
-        if (true)
+        if (comp.Delay <= 0)
         {
             HandleTool(uid, comp, user, target, operation);
             return;
@@ -120,21 +118,7 @@ public sealed class SurgerySystem : SharedSurgerySystem
 
     private void HandleTool(EntityUid uid, SurgeryToolComponent comp, EntityUid user, EntityUid target, OperationComponent operation)
     {
-        if (!Operation.TryPerform(target, user, operation, comp))
-        {
-            // if using a cautery, immediately stop the surgery
-            if (HasComp<CauteryComponent>(uid))
-            {
-                var userName = Identity.Name(user, EntityManager);
-                var targetName = Identity.Name(target, EntityManager);
-                Popup.PopupEntity(Loc.GetString("surgery-aborted", ("user", userName), ("target", targetName)), user, user);
-                RemComp<OperationComponent>(target);
-            }
-            else
-            {
-                Popup.PopupEntity(Loc.GetString("surgery-step-not-useful"), user, user);
-            }
-        }
+        Operation.TryPerform(target, user, operation, uid, comp);
     }
 
     private void OnOperationAfterInteractUsing(EntityUid uid, OperationComponent comp, AfterInteractUsingEvent args)
