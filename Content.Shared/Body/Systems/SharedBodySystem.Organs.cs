@@ -100,10 +100,10 @@ public partial class SharedBodySystem
         foreach (var slot in parent.Organs.Values)
         {
             if (slot.Child == null)
-                continue;
-
-            InsertOrgan(childId, slot, child);
-            return true;
+            {
+                InsertOrgan(childId, slot, child);
+                return true;
+            }
         }
 
         return false;

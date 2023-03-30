@@ -1,2 +1,2 @@
-surgery-step-retraction-begin = to retract
-surgery-step-retraction-success = retracts
+surgery-step-retraction-begin = to retract skin
+surgery-step-retraction-success = retracts skin

@@ -13,6 +13,7 @@ using Content.Shared.Popups;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using System.Linq;
 
 namespace Content.Shared.Body.Surgery.Systems;
@@ -20,20 +21,18 @@ namespace Content.Shared.Body.Surgery.Systems;
 public abstract class SharedSurgerySystem : EntitySystem
 {
     [Dependency] private readonly SharedBodySystem _body = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] protected readonly OperationSystem Operation = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<SurgeryDrapesComponent, AfterInteractEvent>(OnDrapesAfterInteract);
-
-        SubscribeLocalEvent<SurgeryToolComponent, AfterInteractEvent>(OnToolAfterInteract);
 
         foreach (var operation in _proto.EnumeratePrototypes<SurgeryOperationPrototype>())
         {
@@ -50,7 +49,7 @@ public abstract class SharedSurgerySystem : EntitySystem
 
     private void OnDrapesAfterInteract(EntityUid uid, SurgeryDrapesComponent comp, AfterInteractEvent args)
     {
-        if (args.Target == null)
+        if (args.Target == null || !_timing.IsFirstTimePredicted)
             return;
 
         // cancelling an operation
@@ -60,7 +59,8 @@ public abstract class SharedSurgerySystem : EntitySystem
         {
             if (operation.Tags.Count == 0)
             {
-                DoDrapesCancelPopups(uid, user, target);
+                if (_net.IsClient)
+                    DoDrapesCancelPopups(uid, user, target);
                 RemComp<OperationComponent>(target);
             }
 
@@ -84,71 +84,6 @@ public abstract class SharedSurgerySystem : EntitySystem
         var id = $"surgery-prepare-cancel{self}{zone}-popup";
         var msg = Loc.GetString(id, ("user", user), ("drapes", drapes), ("target", target), ("part", part));
         Popup.PopupEntity(msg, target);
-    }
-
-    private void OnToolAfterInteract(EntityUid uid, SurgeryToolComponent comp, AfterInteractEvent args)
-    {
-        if (args.Target == null || !TryComp<OperationComponent>(args.Target, out var operation) || operation.Busy)
-            return;
-
-        var target = args.Target.Value;
-        var user = args.User;
-        if (!Operation.CanPerform(target, user, operation, comp, out var step))
-        {
-            // can always use cautery to stop an operation
-            if (!HasComp<CauteryComponent>(uid))
-            {
-                Popup.PopupEntity(Loc.GetString("surgery-step-not-useful"), user, user);
-                return;
-            }
-        }
-
-        args.Handled = true;
-        if (comp.Delay <= 0)
-        {
-            HandleTool(uid, comp, user, target, operation);
-            return;
-        }
-
-        // only do popup on client
-        if (step != null && _net.IsClient)
-        {
-            var context = new SurgeryStepContext(target, user, operation, comp, step.ID, Operation, this);
-            step.OnPerformDelayBegin(context);
-        }
-
-        var doAfter = new DoAfterEventArgs(user, comp.Delay, target: target, used: uid)
-        {
-            RaiseOnUser = false,
-            RaiseOnTarget = false,
-            RaiseOnUsed = true,
-            BreakOnStun = true,
-            BreakOnTargetMove = true,
-            BreakOnUserMove = true,
-            NeedHand = true // copy pasted this from sticky, it might not be needed
-        };
-        if (_net.IsServer)
-            _doAfter.DoAfter(doAfter, new UseToolDoAfter());
-        Operation.SetBusy(operation, true);
-    }
-
-    protected void HandleTool(EntityUid uid, SurgeryToolComponent comp, EntityUid user, EntityUid target, OperationComponent operation)
-    {
-        if (!Operation.TryPerform(target, user, operation, comp))
-        {
-            // if using a cautery, immediately stop the surgery
-            if (HasComp<CauteryComponent>(uid))
-            {
-                var userName = Identity.Name(user, EntityManager);
-                var targetName = Identity.Name(target, EntityManager);
-                Popup.PopupEntity(Loc.GetString("surgery-aborted", ("user", userName), ("target", targetName)), user, user);
-                RemComp<OperationComponent>(target);
-            }
-            else
-            {
-                Popup.PopupEntity(Loc.GetString("surgery-step-not-useful"), user, user);
-            }
-        }
     }
 
     /// <summary>

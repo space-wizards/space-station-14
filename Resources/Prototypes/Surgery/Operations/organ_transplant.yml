@@ -5,8 +5,8 @@
   # TODO: prerequisite ribcage/skull opening
   steps:
   - id: Incision
-  - id: Retraction
   - id: VesselCompression
+  - id: Retraction
   - id: Insertion
     insertionHandler: !type:InsertOrgan
   - id: Cauterization # attach organ

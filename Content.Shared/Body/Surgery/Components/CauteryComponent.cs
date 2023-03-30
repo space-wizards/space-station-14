@@ -1,4 +1,4 @@
-namespace Content.Shared.Body.Components;
+namespace Content.Shared.Body.Surgery.Components;
 
 /// <summary>
 /// Marker component for tools that end surgical operations.

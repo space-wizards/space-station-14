@@ -17,7 +17,6 @@ namespace Content.Client.Body.Surgery.UI;
 public sealed class SelectOrganBoundUserInterface : BoundUserInterface
 {
     [Dependency] private readonly IEntityManager _entMan = default!;
-    [Dependency] private readonly IEntitySystemManager _systemMan = default!;
 
     private SelectOrganWindow? _window;
     private EntityUid _target = EntityUid.Invalid;

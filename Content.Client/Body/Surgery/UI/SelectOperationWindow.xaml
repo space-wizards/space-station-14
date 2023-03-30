@@ -1,4 +1,4 @@
-<DefaultWindow Title="{Loc ui-surgery-operation-window-title}"
+<DefaultWindow Title="{Loc ui-surgery-operations-window-title}"
     xmlns="https://spacestation14.io"
     xmlns:cc="clr-namespace:Robust.Client.UserInterface.CustomControls;assembly=Robust.Client">
     <TabContainer Name="Operations" TabTitle="{Loc ui-surgery-window-title}"/>

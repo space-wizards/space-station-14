@@ -227,11 +227,16 @@ public sealed class OperationSystem : EntitySystem
         var userName = Identity.Name(user, EntityManager);
         var targetName = Identity.Name(target, EntityManager);
         var msg = Loc.GetString(id, ("user", userName), ("action", action), ("target", targetName), ("part", part));
-        Popup(msg, user);
+        PopupAll(msg, user);
     }
 
     public void Popup(string msg, EntityUid user)
     {
         _popup.PopupEntity(msg, user);
+    }
+
+    public void PopupAll(string msg, EntityUid user)
+    {
+        _popup.PopupEntity(msg, user, user);
     }
 }

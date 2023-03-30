@@ -1,4 +1,4 @@
-<DefaultWindow Title="{Loc ui-surgery-organ-window-title}"
+<DefaultWindow Title="{Loc ui-surgery-organs-window-title}"
     xmlns="https://spacestation14.io"
     xmlns:cc="clr-namespace:Robust.Client.UserInterface.CustomControls;assembly=Robust.Client">
     <BoxContainer Orientation="Vertical">

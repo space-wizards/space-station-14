@@ -15,6 +15,11 @@ surgery-step-success-no-zone-popup = {$user} {$action} the {THE($part)}
 surgery-step-not-useful = You see no useful way to do that.
 surgery-step-no-organ-selected = You need to select an organ to extract first.
 
+surgery-insert-success-popup = {$user} inserts {$item} into {$target}'s {$part}
+surgery-insert-success-self-popup = {$user} inserts {$item} into {POSS-ADJ($user)} {$part}
+surgery-insert-success-no-zone-popup = {$user} inserts {$item} into the {THE($part)}
+surgery-insert-success-self-no-zone-popup = {$user} inserts {$item} into {REFLEXIVE($user)}
+
 surgery-aborted = {$user} cauterizes {$target}'s botched surgery!
 
 ### Windows
