@@ -86,7 +86,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
                 overflow.AddReagent(reagent, overflowAmount);
             }
         }
-        
+
         if (overflow.Volume > 0)
         {
             _spillable.SpillAt(uid, overflow, component.PuddleId, transformComponent: xform);
