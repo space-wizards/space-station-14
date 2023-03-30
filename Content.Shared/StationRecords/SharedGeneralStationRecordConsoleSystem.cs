@@ -8,6 +8,9 @@ public enum GeneralStationRecordConsoleKey : byte
     Key
 }
 
+// [Serializable, NetSerializable]
+// public type StationRecordListingType = Dictionary<StationRecordKey, RecordListingValue>;
+
 /// <summary>
 ///     General station records console state. There are a few states:
 ///     - SelectedKey null, Record null, RecordListing null

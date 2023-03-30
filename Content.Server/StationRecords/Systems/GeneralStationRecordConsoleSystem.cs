@@ -30,7 +30,8 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
         UpdateUserInterface(uid, component);
     }
 
-    private void UpdateUserInterface(EntityUid uid, GeneralStationRecordConsoleComponent? console = null)
+    private void UpdateUserInterface(EntityUid uid,
+        GeneralStationRecordConsoleComponent? console = null)
     {
         if (!Resolve(uid, ref console))
         {
@@ -39,18 +40,17 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
         var owningStation = _stationSystem.GetOwningStation(uid);
 
-
-
         if (!TryComp<StationRecordsComponent>(owningStation, out var stationRecordsComponent))
         {
-            _userInterface.GetUiOrNull(uid, GeneralStationRecordConsoleKey.Key)?.SetState(new GeneralStationRecordConsoleState(null, null, null));
+            SetEmptyStateForInterface(uid);
             return;
         }
 
-        var enumerator = _stationRecordsSystem.GetRecordsOfType<GeneralStationRecord>(owningStation.Value, stationRecordsComponent);
+        var consoleRecords =
+            _stationRecordsSystem.GetRecordsOfType<GeneralStationRecord>(owningStation.Value, stationRecordsComponent);
 
         var listing = new Dictionary<StationRecordKey, RecordListingValue>();
-        foreach (var pair in enumerator)
+        foreach (var pair in consoleRecords)
         {
             RecordListingValue listingValue = new RecordListingValue(pair.Item2.Name, pair.Item2.Fingerprint);
             listing.Add(pair.Item1, listingValue);
@@ -58,7 +58,7 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
         if (listing.Count == 0)
         {
-            _userInterface.GetUiOrNull(uid, GeneralStationRecordConsoleKey.Key)?.SetState(new GeneralStationRecordConsoleState(null, null, null));
+            SetEmptyStateForInterface(uid);
             return;
         }
 
@@ -69,8 +69,22 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
                 stationRecordsComponent);
         }
 
+        GeneralStationRecordConsoleState newState = 
+            new GeneralStationRecordConsoleState(console.ActiveKey, record, listing);
+
+        SetStateForInterface(uid, newState);
+    }
+
+    private void SetEmptyStateForInterface(EntityUid uid) {
+        GeneralStationRecordConsoleState state = 
+            new GeneralStationRecordConsoleState(null, null, null);
+        SetStateForInterface(uid, state);
+    }
+
+    private void SetStateForInterface(EntityUid uid, GeneralStationRecordConsoleState newState)
+    {
         _userInterface
-            .GetUiOrNull(uid, GeneralStationRecordConsoleKey.Key)?
-            .SetState(new GeneralStationRecordConsoleState(console.ActiveKey, record, listing));
+            .GetUiOrNull(uid, GeneralStationRecordConsoleKey.Key)
+            ?.SetState(newState);
     }
 }
