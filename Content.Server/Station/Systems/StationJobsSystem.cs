@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Rules;
 using Content.Server.Station.Components;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
@@ -26,7 +25,6 @@ public sealed partial class StationJobsSystem : EntitySystem
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly AllCaptainsRuleSystem _allCaptainsRule = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -35,8 +33,6 @@ public sealed partial class StationJobsSystem : EntitySystem
         SubscribeLocalEvent<StationJobsComponent, StationRenamedEvent>(OnStationRenamed);
         SubscribeLocalEvent<StationJobsComponent, ComponentShutdown>(OnStationDeletion);
         SubscribeLocalEvent<PlayerJoinedLobbyEvent>(OnPlayerJoinedLobby);
-        SubscribeLocalEvent<GameRuleStartedEvent>(OnGameRuleStarted);
-        SubscribeLocalEvent<GameRuleEndedEvent>(OnGameRuleEnded);
         _configurationManager.OnValueChanged(CCVars.GameDisallowLateJoins, _ => UpdateJobsAvailable(), true);
     }
 
@@ -140,9 +136,6 @@ public sealed partial class StationJobsSystem : EntitySystem
 
         var jobList = stationJobs.JobList;
 
-        if (_allCaptainsRule != null && _allCaptainsRule.RuleStarted)
-           jobList = _allCaptainsRule.GetJobs(station).JobList;
-
         // This should:
         // - Return true when zero slots are added/removed.
         // - Return true when you add.
@@ -220,11 +213,6 @@ public sealed partial class StationJobsSystem : EntitySystem
             throw new ArgumentException("Tried to set a job to have a negative number of slots!", nameof(amount));
 
         var jobList = stationJobs.JobList;
-
-        // If all captains mode, override job list with the allcaptains job list -- prevents modifying the "real" job list
-        // in case mode changes later.
-        if (_allCaptainsRule != null && _allCaptainsRule.RuleStarted)
-           jobList = _allCaptainsRule.GetJobs(station).JobList;
 
         switch (jobList.ContainsKey(jobPrototypeId))
         {
@@ -325,11 +313,7 @@ public sealed partial class StationJobsSystem : EntitySystem
         if (!Resolve(station, ref stationJobs))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
-        var jobList = stationJobs.JobList;
-        if (_allCaptainsRule != null && _allCaptainsRule.RuleStarted)
-           jobList = _allCaptainsRule.GetJobs(station).JobList;
-
-        if (jobList.TryGetValue(jobPrototypeId, out var job))
+        if (stationJobs.JobList.TryGetValue(jobPrototypeId, out var job))
         {
             slots = job;
             return true;
@@ -353,9 +337,6 @@ public sealed partial class StationJobsSystem : EntitySystem
         if (!Resolve(station, ref stationJobs))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
-        if (_allCaptainsRule != null && _allCaptainsRule.RuleStarted)
-            return _allCaptainsRule.GetJobs(station).JobList.Where(x => x.Value != 0).Select(x => x.Key).ToHashSet();
-
         return stationJobs.JobList.Where(x => x.Value != 0).Select(x => x.Key).ToHashSet();
     }
 
@@ -370,9 +351,6 @@ public sealed partial class StationJobsSystem : EntitySystem
     {
         if (!Resolve(station, ref stationJobs))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
-
-        if (_allCaptainsRule != null && _allCaptainsRule.RuleStarted)
-            return _allCaptainsRule.GetJobs(station).OverflowJobs.ToHashSet();
 
         return stationJobs.OverflowJobs.ToHashSet();
     }
@@ -389,9 +367,6 @@ public sealed partial class StationJobsSystem : EntitySystem
         if (!Resolve(station, ref stationJobs))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
-        if (_allCaptainsRule != null && _allCaptainsRule.RuleStarted)
-            return _allCaptainsRule.GetJobs(station).JobList;
-
         return stationJobs.JobList;
     }
 
@@ -406,9 +381,6 @@ public sealed partial class StationJobsSystem : EntitySystem
     {
         if (!Resolve(station, ref stationJobs))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
-
-        if (_allCaptainsRule != null && _allCaptainsRule.RuleStarted)
-            return _allCaptainsRule.GetJobs(station).RoundStartJobList;
 
         return stationJobs.RoundStartJobList;
     }
@@ -495,8 +467,6 @@ public sealed partial class StationJobsSystem : EntitySystem
         foreach (var station in _stationSystem.Stations)
         {
             var list = Comp<StationJobsComponent>(station).JobList.ToDictionary(x => x.Key, x => x.Value);
-            if (_allCaptainsRule != null && _allCaptainsRule.RuleStarted)
-                list = _allCaptainsRule.GetJobs(station).JobList.ToDictionary(x => x.Key, x => x.Value);
             jobs.Add(station, list);
             stationNames.Add(station, Name(station));
         }
@@ -519,18 +489,6 @@ public sealed partial class StationJobsSystem : EntitySystem
     private void OnStationRenamed(EntityUid uid, StationJobsComponent component, StationRenamedEvent args)
     {
         UpdateJobsAvailable();
-    }
-
-    private void OnGameRuleStarted(GameRuleStartedEvent msg)
-    {
-        if (msg.Rule.ID == "AllCaptains")
-            UpdateJobsAvailable();
-    }
-
-    private void OnGameRuleEnded(GameRuleEndedEvent msg)
-    {
-        if (msg.Rule.ID == "AllCaptains")
-            UpdateJobsAvailable();
     }
 
     #endregion
