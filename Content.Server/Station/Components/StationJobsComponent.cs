@@ -1,5 +1,4 @@
-﻿using Content.Server.GameTicking.Rules;
-using Content.Server.Station.Systems;
+﻿using Content.Server.Station.Systems;
 using Content.Shared.Roles;
 using JetBrains.Annotations;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
@@ -10,7 +9,7 @@ namespace Content.Server.Station.Components;
 /// <summary>
 /// Stores information about a station's job selection.
 /// </summary>
-[RegisterComponent, Access(typeof(StationJobsSystem), typeof(AllCaptainsRuleSystem)), PublicAPI]
+[RegisterComponent, Access(typeof(StationJobsSystem)), PublicAPI]
 public sealed class StationJobsComponent : Component
 {
     /// <summary>
