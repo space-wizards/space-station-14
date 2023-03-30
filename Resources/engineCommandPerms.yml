@@ -124,3 +124,8 @@
 - Flags: QUERY
   Commands:
   - forall
+
+- Flags: FUN
+  Commands:
+  - clippy
+  - tip

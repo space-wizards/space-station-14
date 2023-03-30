@@ -1549,5 +1549,9 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> ConfigPresetDebug =
             CVarDef.Create("config.preset_debug", true, CVar.SERVERONLY);
+
+        // april fools
+        public static readonly CVarDef<string> ClippyEntity =
+            CVarDef.Create("clippy.entity", "Tippy", CVar.SERVER | CVar.REPLICATED);
     }
 }
