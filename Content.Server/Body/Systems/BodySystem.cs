@@ -100,7 +100,7 @@ public sealed class BodySystem : SharedBodySystem
     {
         var oldBody = CompOrNull<BodyPartComponent>(partId)?.Body;
 
-        if (!base.DropPart(partId, part))
+        if (partId == null || !Resolve(partId.Value, ref part, false) || !base.DropPart(partId, part))
             return false;
 
         if (oldBody == null || !TryComp<HumanoidAppearanceComponent>(oldBody, out var humanoid))
