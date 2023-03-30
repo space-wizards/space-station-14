@@ -25,7 +25,6 @@ public sealed class CuffableSystem : SharedCuffableSystem
         if (args.Current is not HandcuffComponentState state)
             return;
 
-        component.Cuffing = state.Cuffing;
         component.OverlayIconState = state.IconState;
     }
 
