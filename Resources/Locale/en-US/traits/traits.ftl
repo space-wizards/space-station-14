@@ -19,3 +19,6 @@ trait-muted-desc = You can't speak
 
 trait-paracusia-name = Paracusia
 trait-paracusia-desc = You hear sounds that aren't really there
+
+trait-truly-good-and-honest-pure-of-heart-christian-boy-name = Truly Good and Honest Pure of Heart Christian Boy
+trait-truly-good-and-honest-pure-of-heart-christian-boy-desc = Through the glorious light of Our Father, you realize that impure speech is a one way sentence to Hell.

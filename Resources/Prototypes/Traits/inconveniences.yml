@@ -20,3 +20,11 @@
   components:
     - type: LightweightDrunk
       boozeStrengthMultiplier: 2
+
+- type: trait
+  id: TrulyGoodAndHonestPureOfHeartChristianBoy
+  name: trait-truly-good-and-honest-pure-of-heart-christian-boy-name
+  description: trait-truly-good-and-honest-pure-of-heart-christian-boy-desc
+  components:
+  - type: TrulyGoodAndHonestPureOfHeartChristianBoyAccent
+  - type: BibleUser
