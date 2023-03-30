@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Afk;
 using Content.Server.Afk.Events;
 using Content.Server.GameTicking;
+using Content.Server.GameTicking.Rules;
 using Content.Server.Roles;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
@@ -28,6 +29,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly PlayTimeTrackingManager _tracking = default!;
+    [Dependency] private readonly AllCaptainsRuleSystem _allCaptainsRule = default!;
 
     public override void Initialize()
     {
@@ -159,7 +161,8 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
     {
         if (!_prototypes.TryIndex<JobPrototype>(role, out var job) ||
             job.Requirements == null ||
-            !_cfg.GetCVar(CCVars.GameRoleTimers))
+            !_cfg.GetCVar(CCVars.GameRoleTimers) ||
+            (_allCaptainsRule != null && _allCaptainsRule.RuleStarted))
             return true;
 
         var playTimes = _tracking.GetTrackerTimes(player);
@@ -170,7 +173,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
     public HashSet<string> GetDisallowedJobs(IPlayerSession player)
     {
         var roles = new HashSet<string>();
-        if (!_cfg.GetCVar(CCVars.GameRoleTimers))
+        if (!_cfg.GetCVar(CCVars.GameRoleTimers) || (_allCaptainsRule != null && _allCaptainsRule.RuleStarted))
             return roles;
 
         var playTimes = _tracking.GetTrackerTimes(player);
@@ -197,7 +200,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
     public void RemoveDisallowedJobs(NetUserId userId, ref List<string> jobs)
     {
-        if (!_cfg.GetCVar(CCVars.GameRoleTimers))
+        if (!_cfg.GetCVar(CCVars.GameRoleTimers) || (_allCaptainsRule != null && _allCaptainsRule.RuleStarted))
             return;
 
         var player = _playerManager.GetSessionByUserId(userId);
