@@ -1,8 +1,8 @@
 - type: entity
-  name: wirecutter
+  name: haycutters
   parent: BaseItem
   id: Wirecutter
-  description: This kills the wire.
+  description: This kills the wire. Moo!
   components:
   - type: EmitSoundOnLand
     sound:
@@ -12,12 +12,9 @@
     - PlantSampleTaker
     - Wirecutter
   - type: Sprite
-    sprite: Objects/Tools/wirecutters.rsi
+    sprite: Objects/Tools/Cowtools/haycutters.rsi
+    state: haycutters
     netsync: false
-    layers:
-    - state: cutters
-      map: [ "enum.DamageStateVisualLayers.Base" ]
-    - state: cutters-cutty-thingy
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:
@@ -28,21 +25,17 @@
       - Cutting
     useSound:
       path: /Audio/Items/wirecutter.ogg
-  - type: RandomSprite
-    available:
-      - enum.DamageStateVisualLayers.Base:
-          cutters: Rainbow
   - type: Item
-    sprite: Objects/Tools/wirecutters.rsi
+    sprite: Objects/Tools/Cowtools/haycutters.rsi
   - type: LatticeCutting
   - type: StaticPrice
     price: 40
 
 - type: entity
-  name: screwdriver
+  name: moodriver
   parent: BaseItem
   id: Screwdriver
-  description: Industrial grade torque in a small screwdriving package.
+  description: Industrial grade torque in a small moodriving package. Moo!
   components:
   - type: EmitSoundOnLand
     sound:
@@ -51,14 +44,11 @@
     tags:
     - Screwdriver
   - type: Sprite
-    sprite: Objects/Tools/screwdriver.rsi
+    sprite: Objects/Tools/Cowtools/moodriver.rsi
+    state: moodriver
     netsync: false
-    layers:
-      - state: screwdriver
-        map: [ "enum.DamageStateVisualLayers.Base" ]
-      - state: screwdriver-screwybits
   - type: Item
-    sprite: Objects/Tools/screwdriver.rsi
+    sprite: Objects/Tools/Cowtools/moodriver.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
     attackRate: 1.5
@@ -70,18 +60,14 @@
       - Screwing
     useSound:
       collection: Screwdriver
-  - type: RandomSprite
-    available:
-      - enum.DamageStateVisualLayers.Base:
-          screwdriver: Rainbow
   - type: StaticPrice
     price: 40
 
 - type: entity
-  name: wrench
+  name: wronch
   parent: BaseItem
   id: Wrench
-  description: 'A common tool for assembly and disassembly. Remember: righty tighty, lefty loosey.'
+  description: Wronch thing. Moo!
   components:
   - type: EmitSoundOnLand
     sound:
@@ -90,11 +76,11 @@
     tags:
     - Wrench
   - type: Sprite
-    sprite: Objects/Tools/wrench.rsi
-    state: icon
+    sprite: Objects/Tools/Cowtools/wronch.rsi
+    state: wronch
     netsync: false
   - type: Item
-    sprite: Objects/Tools/wrench.rsi
+    sprite: Objects/Tools/Cowtools/wronch.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
     attackRate: 1.5
@@ -110,10 +96,10 @@
     price: 40
 
 - type: entity
-  name: crowbar
+  name: cowbar
   parent: BaseItem
   id: Crowbar
-  description: A multipurpose tool to pry open doors and fight interdimensional invaders.
+  description: A multipurpose tool to pry open doors and fight interdimensional cows. Moo!
   components:
   - type: EmitSoundOnLand
     sound:
@@ -122,11 +108,11 @@
     tags:
     - Crowbar
   - type: Sprite
-    sprite: Objects/Tools/crowbar.rsi
-    state: icon
+    sprite: Objects/Tools/Cowtools/cowbar.rsi
+    state: cowbar
     netsync: false
   - type: Item
-    sprite: Objects/Tools/crowbar.rsi
+    sprite: Objects/Tools/Cowtools/cowbar.rsi
     size: 10
   - type: ItemCooldown
   - type: MeleeWeapon
@@ -143,41 +129,25 @@
     price: 40
 
 - type: entity
-  name: emergency crowbar
   parent: Crowbar
   id: CrowbarRed
-  components:
-  - type: Tag
-    tags:
-    - Crowbar
-    - CrowbarRed
-  - type: Sprite
-    sprite: Objects/Tools/crowbar.rsi
-    state: red-icon
-  - type: Item
-    sprite: Objects/Tools/crowbar.rsi
-    size: 10
-    heldPrefix: red
 
 - type: entity
-  name: multitool
+  name: mooltitool
   parent: BaseItem
   id: Multitool
-  description: An advanced tool to copy, store, and send electrical pulses and signals through wires and machines
+  description: An advanced tool to copy, store, and send electrical pulses and signals through wires and machines. Moo!
   components:
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Items/multitool_drop.ogg
   - type: Sprite
-    sprite: Objects/Tools/multitool.rsi
-    layers:
-    - state: icon
-    - state: green-unlit
-      shader: unshaded
+    sprite: Objects/Tools/Cowtools/mooltitool.rsi
+    state: mooltitool
   - type: Item
     size: 5
   - type: Clothing
-    sprite: Objects/Tools/multitool.rsi
+    sprite: Objects/Tools/Cowtools/mooltitool.rsi
     quickEquip: false
     slots:
     - Belt

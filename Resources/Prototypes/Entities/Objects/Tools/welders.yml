@@ -1,14 +1,14 @@
 - type: entity
-  name: welding tool
+  name: cowelding tool
   parent: BaseItem
   id: Welder
-  description: "Melts anything as long as it's fueled, don't forget your eye protection!"
+  description: "Melts anything as long as it's fueled, don't forget your eye protection! Moo!"
   components:
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Items/welder_drop.ogg
   - type: Sprite
-    sprite: Objects/Tools/welder.rsi
+    sprite: Objects/Tools/Cowtools/cowelder.rsi
     netsync: false
     layers:
     - state: icon
@@ -19,7 +19,7 @@
       visible: false
   - type: Item
     size: 10
-    sprite: Objects/Tools/welder.rsi
+    sprite: Objects/Tools/Cowtools/cowelder.rsi
   - type: ToggleableLightVisuals
     spriteLayer: flame
     inhandVisuals:
