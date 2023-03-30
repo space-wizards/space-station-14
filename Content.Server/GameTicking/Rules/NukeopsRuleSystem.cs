@@ -190,9 +190,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         SubscribeLocalEvent<NukeOperativeComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<NukeOperativeComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<NukeOperativeComponent, ComponentRemove>(OnComponentRemove);
-        
+        SubscribeLocalEvent<NukeOpsShuttleComponent, FTLStartedEvent>(OnShuttleFTLTravel);
+
         SubscribeLocalEvent<CommunicationConsoleCallShuttleAttemptEvent>(OnShuttleCallAttempt);
-        SubscribeLocalEvent<ShuttleFTLTravelEvent>(OnFTLTravel);
         SubscribeLocalEvent<ShuttleConsoleFTLTravelAttemptEvent>(OnFTLTravelAttempt);
     }
 
@@ -260,6 +260,25 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
     }
 
+    private void OnShuttleFTLTravel(EntityUid uid, NukeOpsShuttleComponent component, ref FTLStartedEvent ev)
+    {
+        if (!RuleAdded)
+            return;
+
+        if (_nukieOutpost == null)
+        {
+            return;
+        }
+        var mapOutpost = Transform(_nukieOutpost.Value).MapID;
+        var mapShuttle = Transform(uid).MapID;
+
+        if (mapOutpost == mapShuttle)
+        {
+            _leftOutpost = true;
+            _warDeclaratorSystem.RefreshAllDeclaratorsUI();
+        }
+    }
+
     private void OnShuttleCallAttempt(ref CommunicationConsoleCallShuttleAttemptEvent ev)
     {
         if (!RuleAdded || _nukeopsRuleConfig.PreventShuttleInDelay == false)
@@ -273,26 +292,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                 ev.Cancelled = true;
                 ev.Reason = Loc.GetString("war-ops-shuttle-call-unavailable");
             }
-        }
-    }
-
-    private void OnFTLTravel(ref ShuttleFTLTravelEvent ev)
-    {
-        var shuttle = ev.Shuttle.Owner;
-    	if (!RuleAdded)
-            return;
-
-        if (_nukieOutpost == null)
-        {
-            return;
-        }
-        var mapOutpost = EntityManager.GetComponent<TransformComponent>(_nukieOutpost.Value).MapID;
-        var mapShuttle = EntityManager.GetComponent<TransformComponent>(shuttle).MapID;
-
-        if (mapOutpost == mapShuttle)
-        {
-            _leftOutpost = true;
-            _warDeclaratorSystem.RefreshAllDeclaratorsUI();
         }
     }
 
@@ -827,6 +826,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         {
             _shuttle.TryFTLDock(shuttleId, shuttle, _nukieOutpost.Value);
         }
+        AddComp<NukeOpsShuttleComponent>(shuttleId);
 
         _nukiePlanet = mapId;
         _nukieShuttle = shuttleId;
