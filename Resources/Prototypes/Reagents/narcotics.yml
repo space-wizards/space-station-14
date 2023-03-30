@@ -332,7 +332,7 @@
         time: 10
         refresh: false
       - !type:ChemVomit # Vomiting is a symptom of brain damage
-        probability: 0.1
+        probability: 0.05
       - !type:Drunk # Headaches and slurring are major symptoms of brain damage, this is close enough
         boozePower: 20
 
