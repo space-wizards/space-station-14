@@ -48,3 +48,5 @@
   - type: Anchorable
   - type: Transform
     anchored: true
+  - type: Physics
+    canCollide: false
