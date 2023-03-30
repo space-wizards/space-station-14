@@ -15,15 +15,9 @@ public sealed class CuffableSystem : SharedCuffableSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<CuffableComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<CuffableComponent, ComponentShutdown>(OnCuffableShutdown);
         SubscribeLocalEvent<CuffableComponent, ComponentHandleState>(OnCuffableHandleState);
         SubscribeLocalEvent<HandcuffComponent, ComponentHandleState>(OnHandcuffHandleState);
-    }
-
-    private void OnShutdown(EntityUid uid, CuffableComponent component, ComponentShutdown args)
-    {
-        if (TryComp<SpriteComponent>(uid, out var sprite))
-            sprite.LayerSetVisible(HumanoidVisualLayers.Handcuffs, false);
     }
 
     private void OnHandcuffHandleState(EntityUid uid, HandcuffComponent component, ref ComponentHandleState args)
@@ -31,13 +25,14 @@ public sealed class CuffableSystem : SharedCuffableSystem
         if (args.Current is not HandcuffComponentState state)
             return;
 
-        if (state.IconState == string.Empty)
-            return;
+        component.Cuffing = state.Cuffing;
+        component.OverlayIconState = state.IconState;
+    }
 
+    private void OnCuffableShutdown(EntityUid uid, CuffableComponent component, ComponentShutdown args)
+    {
         if (TryComp<SpriteComponent>(uid, out var sprite))
-        {
-            sprite.LayerSetState(HumanoidVisualLayers.Handcuffs, state.IconState);
-        }
+            sprite.LayerSetVisible(HumanoidVisualLayers.Handcuffs, false);
     }
 
     private void OnCuffableHandleState(EntityUid uid, CuffableComponent component, ref ComponentHandleState args)

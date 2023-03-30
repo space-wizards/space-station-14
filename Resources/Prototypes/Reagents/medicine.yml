@@ -6,6 +6,17 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: medicine
   color: "#081a80"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:GenericStatusEffect
+        key: Stutter
+        component: ScrambledAccent
+    Alcohol:
+      effects:
+      - !type:Drunk
+        slurSpeech: false
+        boozePower: 20
 
 - type: reagent
   id: Dylovene
@@ -22,12 +33,41 @@
         damage:
           types:
             Poison: -1
-    # TODO overdose: vomit, dizzy effect (drunkenness?)
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        damage:
+          types:
+            Brute: 0.5
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        type: Local
+        visualType: Medium
+        messages: [ "generic-reagent-effect-nauseous" ]
+        probability: 0.2
+      - !type:ChemVomit
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        probability: 0.02
+    Alcohol:
+      effects:
+      - !type:Drunk
+        conditions:
+        - !type:ReagentThreshold
+          min: 15
   plantMetabolism:
-    - !type:PlantAdjustToxins
-      amount: -10
-    - !type:PlantAdjustHealth
-      amount: 1
+  - !type:PlantAdjustToxins
+    amount: -10
+  - !type:PlantAdjustHealth
+    amount: 1
 
 - type: reagent
   id: Diphenhydramine

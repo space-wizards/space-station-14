@@ -3,7 +3,6 @@ using Content.Server.Buckle.Systems;
 using Content.Server.Storage.Components;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Foldable;
-using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -21,18 +20,9 @@ namespace Content.Server.Foldable
         {
             base.Initialize();
 
-            SubscribeLocalEvent<FoldableComponent, StorageOpenAttemptEvent>(OnFoldableOpenAttempt);
             SubscribeLocalEvent<FoldableComponent, GetVerbsEvent<AlternativeVerb>>(AddFoldVerb);
-            SubscribeLocalEvent<FoldableComponent, StoreMobInItemContainerAttemptEvent>(OnStoreThisAttempt);
 
         }
-
-        private void OnFoldableOpenAttempt(EntityUid uid, FoldableComponent component, ref StorageOpenAttemptEvent args)
-        {
-            if (component.IsFolded)
-                args.Cancelled = true;
-        }
-
         public bool TryToggleFold(EntityUid uid, FoldableComponent comp)
         {
             return TrySetFolded(uid, comp, !comp.IsFolded);
@@ -78,6 +68,7 @@ namespace Content.Server.Foldable
         /// <summary>
         /// Set the folded state of the given <see cref="FoldableComponent"/>
         /// </summary>
+        /// <param name="uid"></param>
         /// <param name="component"></param>
         /// <param name="folded">If true, the component will become folded, else unfolded</param>
         public override void SetFolded(EntityUid uid, FoldableComponent component, bool folded)
@@ -86,14 +77,6 @@ namespace Content.Server.Foldable
 
             // You can't buckle an entity to a folded object
             _buckle.StrapSetEnabled(uid, !component.IsFolded);
-        }
-
-        public void OnStoreThisAttempt(EntityUid uid, FoldableComponent comp, ref StoreMobInItemContainerAttemptEvent args)
-        {
-            args.Handled = true;
-
-            if (comp.IsFolded)
-                args.Cancelled = true;
         }
 
         #region Verb

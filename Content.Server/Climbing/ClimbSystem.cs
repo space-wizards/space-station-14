@@ -117,6 +117,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
+            BreakOnStun = true,
             BreakOnDamage = true
         };
 
