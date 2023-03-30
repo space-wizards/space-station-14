@@ -271,15 +271,11 @@ namespace Content.Server.Kitchen.EntitySystems
                     var random = new RobustRandom();
 
                     // Make it look like the microwave exploded
-                    var machineFrame = Spawn("MachineFrameDestroyed", new Robust.Shared.Map.EntityCoordinates(uid, Vector2.Zero));
+                    var machineFrame = Spawn("MachineFrameDestroyed", Transform(uid).Coordinates);
                     Comp<TransformComponent>(machineFrame).Anchored = false;
                     _throwingSystem.TryThrow(machineFrame, new Vector2(random.NextFloat()*20-10, random.NextFloat()*20-10), 10);
 
-                    // This doesn't seem to be spawning the microwave board, maybe someone else can figure out why?
-                    // It gets created and then instantly deleted, even with godmode and explosive resistance
-                    var board = Spawn("MicrowaveMachineCircuitboard", new Robust.Shared.Map.EntityCoordinates(uid, Vector2.Zero));
-                    var godmodeSystem = EntitySystem.Get<GodmodeSystem>();
-                    godmodeSystem.EnableGodmode(board);
+                    var board = Spawn("MicrowaveMachineCircuitboard", Transform(uid).Coordinates);
                     _throwingSystem.TryThrow(board, new Vector2(random.NextFloat()*20-10, random.NextFloat()*20-10), 10);
 
                     _explosionSystem.QueueExplosion(component.Owner, "Default", 5, 0.5f, 10, canCreateVacuum: false);
