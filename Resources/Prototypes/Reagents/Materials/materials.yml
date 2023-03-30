@@ -20,7 +20,7 @@
   name: materials-cloth
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: cloth }
   color: "#e7e7de"
-  price: 0.025
+  price: 0.05
 
 - type: material
   id: Durathread
