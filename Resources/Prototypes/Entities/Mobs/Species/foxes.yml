@@ -1,0 +1,28 @@
+- type: entity
+  save: false
+  name: Urist McFox
+  parent: BaseMobOrganic
+  id: BaseMobHumanoidFox
+  abstract: true
+  components:
+  - type: HumanoidAppearance
+    species: HumanoidFoxes
+  - type: Hunger
+  - type: Thirst
+  - type: Icon
+    sprite: Mobs/Species/HumanoidFox/parts.rsi
+    state: full
+  - type: Body
+    prototype: HumanoidFox
+    requiredLegs: 2
+
+- type: entity
+  save: false
+  name: Urist McHands
+  parent: MobHumanDummy
+  id: MobHumanoidFoxDummy
+  noSpawn: true
+  description: A dummy fox meant to be used in character setup.
+  components:
+  - type: HumanoidAppearance
+    species: HumanoidFoxes

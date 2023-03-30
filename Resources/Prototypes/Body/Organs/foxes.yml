@@ -1,0 +1,7 @@
+﻿- type: entity
+  id: OrganHumanoidFoxStomach
+  parent: OrganAnimalStomach
+  noSpawn: true
+  components:
+  - type: Stomach
+    maxVolume: 50

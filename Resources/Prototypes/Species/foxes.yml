@@ -1,0 +1,139 @@
+- type: species
+  id: HumanoidFoxes
+  name: Foxes
+  roundStart: true
+  prototype: MobHumanoidFox
+  sprites: MobHumanoidFoxSprites
+  defaultSkinTone: "#34a223"
+  markingLimits: MobHumanoidFoxMarkingLimits
+  dollPrototype: MobHumanoidFoxDummy
+  skinColoration: Hues
+
+- type: speciesBaseSprites
+  id: MobHumanoidFoxSprites
+  sprites:
+    Head: MobHumanoidFoxHead
+    Hair: MobHumanoidAnyMarking
+    FacialHair: MobHumanoidAnyMarking
+    Snout: MobHumanoidAnyMarking
+    Chest: MobHumanoidFoxTorso
+    HeadTop: MobHumanoidAnyMarking
+    HeadSide: MobHumanoidAnyMarking
+    Tail: MobHumanoidAnyMarking
+    Eyes: MobHumanoidEyes
+    LArm: MobHumanoidFoxLArm
+    RArm: MobHumanoidFoxRArm
+    LHand: MobHumanoidFoxLHand
+    RHand: MobHumanoidFoxRHand
+    LLeg: MobHumanoidFoxLLeg
+    RLeg: MobHumanoidFoxRLeg
+    LFoot: MobHumanoidFoxLFoot
+    RFoot: MobHumanoidFoxRFoot
+
+- type: markingPoints
+  id: MobHumanoidFoxMarkingLimits
+  points:
+    Hair:
+      points: 1
+      required: false
+    FacialHair:
+      points: 1
+      required: false
+    Tail:
+      points: 1
+      required: true
+      defaultMarkings: [ FoxTail ]
+    Snout:
+      points: 1
+      required: true
+      defaultMarkings: [ FoxSnout ]
+    HeadTop:
+      points: 1
+      required: false
+    HeadSide:
+      points: 1
+      required: false
+
+- type: humanoidBaseSprite
+  id: MobHumanoidFoxHead
+  baseSprite:
+    sprite: Mobs/Species/HumanoidFox/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobHumanoidFoxHeadMale
+  baseSprite:
+    sprite: Mobs/Species/HumanoidFox/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobHumanoidFoxHeadFemale
+  baseSprite:
+    sprite: Mobs/Species/HumanoidFox/parts.rsi
+    state: head_f
+
+- type: humanoidBaseSprite
+  id: MobHumanoidFoxTorso
+  baseSprite:
+    sprite: Mobs/Species/HumanoidFox/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobHumanoidFoxTorsoMale
+  baseSprite:
+    sprite: Mobs/Species/HumanoidFox/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobHumanoidFoxTorsoFemale
+  baseSprite:
+    sprite: Mobs/Species/HumanoidFox/parts.rsi
+    state: torso_f
+
+- type: humanoidBaseSprite
+  id: MobHumanoidFoxLLeg
+  baseSprite:
+    sprite: Mobs/Species/HumanoidFox/parts.rsi
+    state: l_leg
+
+- type: humanoidBaseSprite
+  id: MobHumanoidFoxLHand
+  baseSprite:
+    sprite: Mobs/Species/HumanoidFox/parts.rsi
+    state: l_hand
+
+- type: humanoidBaseSprite
+  id: MobHumanoidFoxLArm
+  baseSprite:
+    sprite: Mobs/Species/HumanoidFox/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
+  id: MobHumanoidFoxLFoot
+  baseSprite:
+    sprite: Mobs/Species/HumanoidFox/parts.rsi
+    state: l_foot
+
+- type: humanoidBaseSprite
+  id: MobHumanoidFoxRLeg
+  baseSprite:
+    sprite: Mobs/Species/HumanoidFox/parts.rsi
+    state: r_leg
+
+- type: humanoidBaseSprite
+  id: MobHumanoidFoxRHand
+  baseSprite:
+    sprite: Mobs/Species/HumanoidFox/parts.rsi
+    state: r_hand
+
+- type: humanoidBaseSprite
+  id: MobHumanoidFoxRArm
+  baseSprite:
+    sprite: Mobs/Species/HumanoidFox/parts.rsi
+    state: r_arm
+
+- type: humanoidBaseSprite
+  id: MobHumanoidFoxRFoot
+  baseSprite:
+    sprite: Mobs/Species/HumanoidFox/parts.rsi
+    state: r_foot

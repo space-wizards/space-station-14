@@ -1,0 +1,57 @@
+- type: marking
+  id: PawSocks
+  markingCategory: Overlay
+  bodyPart: RFoot #highest possible layer
+  speciesRestriction: [HumanoidFoxes]
+  sprites:
+    - sprite: Mobs/Customization/fox_markings.rsi
+      state: pawsocks
+
+- type: marking
+  id: FoxTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [HumanoidFoxes]
+  sprites:
+    - sprite: Mobs/Customization/fox_markings.rsi
+      state: vulp_tail
+
+- type: marking
+  id: FoxEar
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [HumanoidFoxes]
+  sprites:
+    - sprite: Mobs/Customization/fox_markings.rsi
+      state: vulp_ear
+    - sprite: Mobs/Customization/fox_markings.rsi
+      state: vulp_ear_inner
+
+- type: marking
+  id: WolfTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [HumanoidFoxes]
+  sprites:
+    - sprite: Mobs/Customization/fox_markings.rsi
+      state: wolf_tail
+    - sprite: Mobs/Customization/fox_markings.rsi
+      state: wolf_tail_inner
+
+- type: marking
+  id: FoxBelly
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [HumanoidFoxes]
+  sprites:
+    - sprite: Mobs/Customization/fox_markings.rsi
+      state: vulp_belly-torso
+
+- type: marking
+  id: FoxSnout
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [HumanoidFoxes]
+  sprites:
+    - sprite: Mobs/Customization/fox_markings.rsi
+      state: vulp_face
