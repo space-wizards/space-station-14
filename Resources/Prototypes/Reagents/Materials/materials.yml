@@ -12,7 +12,7 @@
   name: materials-cardboard
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: cardboard }
   color: "#70736c"
-  price: 0.05
+  price: 0.005
 
 - type: material
   id: Cloth
@@ -20,7 +20,7 @@
   name: materials-cloth
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: cloth }
   color: "#e7e7de"
-  price: 0.05
+  price: 0.025
 
 - type: material
   id: Durathread
