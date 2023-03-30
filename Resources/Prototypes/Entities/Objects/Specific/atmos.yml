@@ -1,15 +1,13 @@
 ﻿- type: entity
-  name: gas analyzer
+  name: milkalyzer
   parent: BaseItem
   id: GasAnalyzer
-  description: A hand-held environmental scanner which reports current gas levels.
+  description: A hand-held environmental scanner which reports current gas levels. Moo!
   components:
   - type: Sprite
-    sprite: Objects/Specific/Atmos/gasanalyzer.rsi
+    sprite: Objects/Tools/Cowtools/milkalyzer.rsi
     layers:
-      - state: icon
-        map: ["analyzer"]
-    netsync: false
+    - state: milkalyzer
   - type: GasAnalyzer
   - type: ActivatableUI
     inHandsOnly: true
@@ -21,12 +19,6 @@
     - key: enum.GasAnalyzerUiKey.Key
       type: GasAnalyzerBoundUserInterface
   - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-        enum.GasAnalyzerVisuals.Enabled:
-          enabled:
-            True: { state: working }
-            False: { state: icon }
   - type: Tag
     tags:
       - DroneUsable
