@@ -1,0 +1,49 @@
+﻿- type: body
+  name: "reptilian"
+  id: HumanoidFox
+  root: torso
+  slots:
+    head:
+      part: HeadHumanoidFox
+      connections:
+      - torso
+      organs:
+        brain: OrganHumanBrain
+        eyes: OrganHumanEyes
+    torso:
+      part: TorsoHumanoidFox
+      organs:
+        heart: OrganAnimalHeart
+        lungs: OrganHumanLungs
+        stomach: OrganHumanoidFoxStomach
+        liver: OrganAnimalLiver
+        kidneys: OrganHumanKidneys
+      connections:
+      - left arm
+      - right arm
+      - left leg
+      - right leg
+    right arm:
+      part: RightArmHumanoidFox
+      connections:
+      - right hand
+    left arm:
+      part: LeftArmHumanoidFox
+      connections:
+      - left hand
+    right hand:
+      part: RightHandHumanoidFox
+    left hand:
+      part: LeftHandHumanoidFox
+    right leg:
+      part: RightLegHumanoidFox
+      connections:
+      - right foot
+    left leg:
+      part: LeftLegHumanoidFox
+      connections:
+      - left foot
+    right foot:
+      part: RightFootHumanoidFox
+    left foot:
+      part: LeftFootHumanoidFox
