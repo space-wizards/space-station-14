@@ -1,156 +1,118 @@
 ﻿- type: entity
-  name: haycutters
-  parent: BaseItem
+  name: wirecutter
+  parent: Wirecutter
   id: Haycutters
-  description: This kills the wire. Moo!
+  description: This kills the wire.
   components:
-  - type: Tag
-    tags:
-    - PlantSampleTaker
   - type: Sprite
-    sprite: Objects/Tools/Cowtools/haycutters.rsi
-    state: haycutters
-  - type: ItemCooldown
-  - type: MeleeWeapon
-    damage:
-      types:
-        Blunt: 10
-  - type: Tool
-    qualities:
-    - Cutting
-    useSound:
-      path: /Audio/Items/wirecutter.ogg
-    speed: 0.05
+    sprite: Objects/Tools/wirecutters.rsi
+    netsync: false
+    layers:
+    - state: cutters
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+    - state: cutters-cutty-thingy
   - type: Item
-    sprite: Objects/Tools/Cowtools/haycutters.rsi
+    sprite: Objects/Tools/wirecutters.rsi
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          cutters: Rainbow
 
 - type: entity
-  name: moodriver
-  parent: BaseItem
+  name: screwdriver
+  parent: Screwdriver
   id: Moodriver
-  description: Turn to use. Moo!
+  description: Industrial grade torque in a small screwdriving package.
   components:
   - type: Sprite
-    sprite: Objects/Tools/Cowtools/moodriver.rsi
-    state: moodriver
+    sprite: Objects/Tools/screwdriver.rsi
+    layers:
+      - state: screwdriver
+        map: [ "enum.DamageStateVisualLayers.Base" ]
+      - state: screwdriver-screwybits
   - type: Item
-    sprite: Objects/Tools/Cowtools/moodriver.rsi
-  - type: ItemCooldown
-  - type: MeleeWeapon
-    damage:
-      types:
-        Piercing: 10
-  - type: Tool
-    qualities:
-    - Screwing
-    useSound:
-      collection: Screwdriver
-    speed: 0.05
+    sprite: Objects/Tools/screwdriver.rsi
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          screwdriver: Rainbow
 
 - type: entity
-  name: wronch
-  parent: BaseItem
+  name: wrench
+  parent: Wrench
   id: Wronch
-  description: Wronch thing. Moo!
+  description: 'A common tool for assembly and disassembly. Remember: righty tighty, lefty loosey.'
   components:
   - type: Sprite
-    sprite: Objects/Tools/Cowtools/wronch.rsi
-    state: wronch
+    sprite: Objects/Tools/wrench.rsi
+    state: icon
+    netsync: false
   - type: Item
-    sprite: Objects/Tools/Cowtools/wronch.rsi
-  - type: ItemCooldown
-  - type: MeleeWeapon
-    damage:
-      types:
-        Blunt: 10
-  - type: Tool
-    qualities:
-    - Anchoring
-    useSound:
-      path: /Audio/Items/ratchet.ogg
-    speed: 0.05
+    sprite: Objects/Tools/wrench.rsi
 
 - type: entity
-  name: cowbar
-  parent: BaseItem
+  name: crowbar
+  parent: Crowbar
   id: Cowbar
-  description: Cow your problems away. Moo!
+  description: A multipurpose tool to pry open doors and fight interdimensional invaders.
   components:
   - type: Sprite
-    sprite: Objects/Tools/Cowtools/cowbar.rsi
-    state: cowbar
+    sprite: Objects/Tools/crowbar.rsi
+    state: icon
+    netsync: false
   - type: Item
-    sprite: Objects/Tools/Cowtools/cowbar.rsi
-  - type: ItemCooldown
-  - type: MeleeWeapon
-    damage:
-      types:
-        Blunt: 10
-  - type: Tool
-    qualities:
-    - Prying
-    useSound:
-      path: /Audio/Items/crowbar.ogg
-    speed: 0.05
-  - type: TilePrying
+    sprite: Objects/Tools/crowbar.rsi
 
 - type: entity
-  name: mooltitool
-  parent: BaseItem
+  name: multitool
+  parent: Multitool
   id: Mooltitool
-  description: An crude tool to copy, store, and send electrical pulses and signals through wires and machines. Moo!
+  description: An advanced tool to copy, store, and send electrical pulses and signals through wires and machines
   components:
   - type: Sprite
-    sprite: Objects/Tools/Cowtools/mooltitool.rsi
-    state: mooltitool
-  - type: Item
-    sprite: Objects/Tools/Cowtools/mooltitool.rsi
-  - type: Tool
-    qualities:
-    - Pulsing
-  - type: SignalLinker
+    sprite: Objects/Tools/multitool.rsi
+    layers:
+    - state: icon
+    - state: green-unlit
+      shader: unshaded
+  - type: Clothing
+    sprite: Objects/Tools/multitool.rsi
 
 - type: entity
-  name: cowelding tool
+  name: welding tool
   parent: Welder
   id: Cowelder
-  description: "Melts anything as long as it's fueled, don't forget your eye protection! Moo!"
+  description: "Melts anything as long as it's fueled, don't forget your eye protection!"
   components:
   - type: Sprite
-    sprite: Objects/Tools/Cowtools/cowelder.rsi
+    sprite: Objects/Tools/welder.rsi
   - type: Item
-    size: 10
-    sprite: Objects/Tools/Cowtools/cowelder.rsi
-  - type: Tool
-    speed: 0.05
-  - type: Welder
-    litMeleeDamageBonus:
-      types: # When lit, negate standard melee damage and replace with heat
-        Heat: 0.5
-        Blunt: -10
+    sprite: Objects/Tools/welder.rsi
 
 - type: entity
-  name: milkalyzer
-  parent: BaseItem
+  name: gas analyzer
+  parent: GasAnalyzer
   id: Milkalyzer
-  description: A hand-held environmental scanner which reports current gas levels. Moo!
+  description: A hand-held environmental scanner which reports current gas levels.
   components:
   - type: Sprite
-    sprite: Objects/Tools/Cowtools/milkalyzer.rsi
+    sprite: Objects/Specific/Atmos/gasanalyzer.rsi
     layers:
-    - state: milkalyzer
-  - type: GasAnalyzer
-  - type: UserInterface
-    interfaces:
-    - key: enum.GasAnalyzerUiKey.Key
-      type: GasAnalyzerBoundUserInterface
-  - type: Appearance
+      - state: icon
+        map: ["analyzer"]
+    netsync: false
+  - type: GenericVisualizer
+    visuals:
+        enum.GasAnalyzerVisuals.Enabled:
+          enabled:
+            True: { state: working }
+            False: { state: icon }
 
 - type: entity
   name: cow toolbox
   parent: ToolboxBase
   id: CowToolbox
-  description: A weirdly shaped box, stocked with... tools?
+  description: A weirdly shaped box stocked with normal tools!
   components:
   - type: Sprite
     sprite: Objects/Tools/Cowtools/cow_toolbox.rsi
