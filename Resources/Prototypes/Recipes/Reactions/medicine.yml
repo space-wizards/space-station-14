@@ -243,11 +243,10 @@
 - type: reaction
   id: Impedrezene
   minTemp: 370
-  priority: 300
   reactants:
     Mercury:
       amount: 1
-    Potassium:
+    Oxygen:
       amount: 1
     Water:
       amount: 1
