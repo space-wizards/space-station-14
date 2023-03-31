@@ -1,10 +1,15 @@
-﻿using Content.Server.Chemistry.EntitySystems;
+﻿using System.Linq;
+using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Fluids.EntitySystems;
+using Content.Server.Nutrition.Components;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
+using Content.Server.Wires;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
+using Content.Shared.Interaction;
 using Content.Shared.Materials;
 using Robust.Shared.Utility;
 
@@ -27,6 +32,8 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         SubscribeLocalEvent<MaterialReclaimerComponent, UpgradeExamineEvent>(OnUpgradeExamine);
         SubscribeLocalEvent<MaterialReclaimerComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<ActiveMaterialReclaimerComponent, PowerChangedEvent>(OnActivePowerChanged);
+        SubscribeLocalEvent<MaterialReclaimerComponent, InteractUsingEvent>(OnInteractUsing,
+            before: new []{typeof(WiresSystem), typeof(SolutionTransferSystem)});
     }
 
     private void OnStartup(EntityUid uid, MaterialReclaimerComponent component, ComponentStartup args)
@@ -52,6 +59,30 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         Dirty(component);
     }
 
+    private void OnInteractUsing(EntityUid uid, MaterialReclaimerComponent component, InteractUsingEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        // if we're trying to get a solution out of the reclaimer, don't destroy it
+        if (component.OutputSolution.Contents.Any())
+        {
+            if (TryComp<SolutionContainerManagerComponent>(args.Used, out var managerComponent) &&
+                managerComponent.Solutions.Any(s => s.Value.AvailableVolume > 0))
+            {
+                if (TryComp<DrinkComponent>(args.Used, out var drink) &&
+                    !drink.Opened)
+                    return;
+
+                if (TryComp<SolutionTransferComponent>(args.Used, out var transfer) &&
+                    transfer.CanReceive)
+                    return;
+            }
+        }
+
+        args.Handled = TryStartProcessItem(uid, args.Used, component, args.User);
+    }
+
     private void OnActivePowerChanged(EntityUid uid, ActiveMaterialReclaimerComponent component, ref PowerChangedEvent args)
     {
         if (!args.Powered)
@@ -68,6 +99,8 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
 
         if (active.ReclaimingContainer.ContainedEntities.FirstOrNull() is not { } item)
             return false;
+
+        QueueDel(item);
 
         if (!TryComp<PhysicalCompositionComponent>(item, out var compositionComponent))
             return false;
@@ -102,7 +135,22 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         {
             MaxVolume = compositionComponent.ChemicalComposition.Values.Sum()
         };
-        foreach (var (reagent, amount) in compositionComponent.ChemicalComposition)
+        var totalChemicals = compositionComponent.ChemicalComposition;
+
+        // if the item we inserted has reagents, add it in.
+        if (TryComp<SolutionContainerManagerComponent>(item, out var solutionContainer))
+        {
+            foreach (var solution in solutionContainer.Solutions.Values)
+            {
+                foreach (var quantity in solution.Contents)
+                {
+                    totalChemicals[quantity.ReagentId] =
+                        totalChemicals.GetValueOrDefault(quantity.ReagentId) + quantity.Quantity;
+                }
+            }
+        }
+
+        foreach (var (reagent, amount) in totalChemicals)
         {
             var outputAmount = amount * completion * component.Efficiency;
             _solutionContainer.TryAddReagent(uid, component.OutputSolution, reagent, outputAmount, out var accepted);
@@ -117,8 +165,6 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         {
             _spillable.SpillAt(uid, overflow, component.PuddleId, transformComponent: xform);
         }
-
-        Del(item);
         return true;
     }
 }

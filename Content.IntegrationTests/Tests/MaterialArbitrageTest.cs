@@ -320,7 +320,7 @@ public sealed class MaterialArbitrageTest
                     {
                         var actualAmount = SharedLatheSystem.AdjustMaterial(amount, recipe.ApplyMaterialDiscount, multiplier);
                         if (compositionComponent.MaterialComposition.TryGetValue(matId, out var numSpawned))
-                            Assert.LessOrEqual(numSpawned, actualAmount, $"deconstructing {id} spawns more {matId} than its physical composition.");
+                            Assert.LessOrEqual(numSpawned, actualAmount, $"The physical composition of {id} has more {matId} than required to produce via an (upgraded) lathe.");
                     }
                 }
 
@@ -330,7 +330,7 @@ public sealed class MaterialArbitrageTest
                     foreach (var (matId, amount) in constructionMats)
                     {
                         if (compositionComponent.MaterialComposition.TryGetValue(matId, out var numSpawned))
-                            Assert.LessOrEqual(numSpawned, amount, $"deconstructing a {id} spawns more {matId} than its physical composition.");
+                            Assert.LessOrEqual(numSpawned, amount, $"The physical composition of {id} has more {matId} than required to construct it.");
                     }
                 }
             }

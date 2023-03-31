@@ -1,6 +1,7 @@
 ﻿using System.Linq;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
-using Content.Shared.Interaction;
+using Content.Shared.Database;
 using Content.Shared.Stacks;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -11,6 +12,7 @@ namespace Content.Shared.Materials;
 
 public abstract class SharedMaterialReclaimerSystem : EntitySystem
 {
+    [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
@@ -23,8 +25,8 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
     {
         SubscribeLocalEvent<MaterialReclaimerComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<MaterialReclaimerComponent, ComponentHandleState>(OnHandleState);
-        SubscribeLocalEvent<MaterialReclaimerComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<ActiveMaterialReclaimerComponent, ComponentStartup>(OnActiveStartup);
+        SubscribeLocalEvent<ActiveMaterialReclaimerComponent, EntityUnpausedEvent>(OnUnpaused);
     }
 
     private void OnGetState(EntityUid uid, MaterialReclaimerComponent component, ref ComponentGetState args)
@@ -40,21 +42,19 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         component.MaterialProcessRate = state.MaterialProcessRate;
     }
 
-    private void OnInteractUsing(EntityUid uid, MaterialReclaimerComponent component, InteractUsingEvent args)
-    {
-        if (args.Handled)
-            return;
-        args.Handled = TryStartProcessItem(uid, args.Used, component);
-    }
-
     private void OnActiveStartup(EntityUid uid, ActiveMaterialReclaimerComponent component, ComponentStartup args)
     {
         component.ReclaimingContainer = _container.EnsureContainer<Container>(uid, ActiveReclaimerContainerId);
     }
 
-    public bool TryStartProcessItem(EntityUid uid, EntityUid item, MaterialReclaimerComponent? component = null, PhysicalCompositionComponent? composition = null)
+    private void OnUnpaused(EntityUid uid, ActiveMaterialReclaimerComponent component, ref EntityUnpausedEvent args)
     {
-        if (!Resolve(uid, ref component) || !Resolve(item, ref composition, false))
+        component.EndTime += args.PausedTime;
+    }
+
+    public bool TryStartProcessItem(EntityUid uid, EntityUid item, MaterialReclaimerComponent? component = null, EntityUid? user = null)
+    {
+        if (!Resolve(uid, ref component))
             return false;
 
         if (!component.Powered)
@@ -69,6 +69,9 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         if (component.Blacklist != null && component.Blacklist.IsValid(item))
             return false;
 
+        if (user != null)
+            _adminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(user.Value):player} destroyed {ToPrettyString(item)} in the material reclaimer, {ToPrettyString(uid)}");
+
         var ev = new GetMaterialReclaimedEvent();
         RaiseLocalEvent(item, ref ev);
 
@@ -76,7 +79,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
             _ambientSound.SetAmbience(uid, true);
 
         var active = EnsureComp<ActiveMaterialReclaimerComponent>(uid);
-        var duration = GetReclaimingDuration(uid, item, component, composition);
+        var duration = GetReclaimingDuration(uid, item, component);
         active.Duration = duration;
         active.EndTime = Timing.CurTime + duration;
         active.ReclaimingContainer.Insert(item);
@@ -115,8 +118,11 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         MaterialReclaimerComponent? reclaimerComponent = null,
         PhysicalCompositionComponent? compositionComponent = null)
     {
-        if (!Resolve(reclaimer, ref reclaimerComponent) || !Resolve(item, ref compositionComponent))
+        if (!Resolve(reclaimer, ref reclaimerComponent))
             return TimeSpan.Zero;
+
+        if (!Resolve(item, ref compositionComponent, false))
+            return reclaimerComponent.MinimumProcessDuration;
 
         var materialSum = compositionComponent.MaterialComposition.Values.Sum();
         materialSum *= CompOrNull<StackComponent>(item)?.Count ?? 1;

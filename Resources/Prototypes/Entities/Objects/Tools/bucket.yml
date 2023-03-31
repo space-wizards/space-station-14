@@ -52,3 +52,6 @@
   - type: Tag
     tags:
       - Bucket
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 50

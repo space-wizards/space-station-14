@@ -455,6 +455,9 @@ public sealed class WiresSystem : SharedWiresSystem
 
     private void OnInteractUsing(EntityUid uid, WiresComponent component, InteractUsingEvent args)
     {
+        if (args.Handled)
+            return;
+
         if (!TryComp<ToolComponent>(args.Used, out var tool) || !TryComp<WiresPanelComponent>(uid, out var panel))
             return;
         if (panel.Open &&

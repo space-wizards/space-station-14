@@ -259,6 +259,10 @@
     sprintModifier: 0.75
   - type: Item
     size: 100
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - HighRiskItem
   - type: ExplosionResistance
     damageCoefficient: 0.1
   - type: ToggleableClothing

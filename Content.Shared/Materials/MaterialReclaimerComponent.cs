@@ -30,7 +30,7 @@ public sealed class MaterialReclaimerComponent : Component
     /// For example, with a rate of 50, an entity with 100 total material takes 2 seconds to process.
     /// </summary>
     [DataField("baseMaterialProcessRate"), ViewVariables(VVAccess.ReadWrite)]
-    public float BaseMaterialProcessRate = 50f;
+    public float BaseMaterialProcessRate = 100f;
 
     /// <summary>
     /// How quickly it takes to consume X amount of materials per second.
