@@ -14,7 +14,7 @@ namespace Content.Shared.Rotation
         /// <summary>
         ///     Standing up
         /// </summary>
-        Vertical,
+        Vertical = 0, // default if no data is specified.
 
         /// <summary>
         ///     Laying down

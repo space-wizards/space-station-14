@@ -77,13 +77,13 @@ public sealed partial class ReplayManager
         var timeBase = _timing.TimeBase;
         var checkPoints = new List<CheckpointState>(1 + states.Count / _checkpointInterval);
         var state0 = states[0];
-        checkPoints.Add(new CheckpointState(state0, timeBase, cvars, 0));
 
         var entSpan = state0.EntityStates.Span;
         Dictionary<EntityUid, EntityState> entStates = new(entSpan.Length);
         foreach (var entState in entSpan)
         {
-            entStates.Add(entState.Uid, entState);
+            var modifiedState = AddImplicitData(entState);
+            entStates.Add(entState.Uid, modifiedState);
         }
 
         var playerSpan = state0.PlayerStates.Span;
@@ -92,6 +92,14 @@ public sealed partial class ReplayManager
         {
             playerStates.Add(player.UserId, player);
         }
+
+        state0 = new GameState(GameTick.Zero,
+            state0.ToSequence,
+            default,
+            entStates.Values.ToArray(),
+            playerStates.Values.ToArray(),
+            Array.Empty<EntityUid>());
+        checkPoints.Add(new CheckpointState(state0, timeBase, cvars, 0));
 
         HashSet<EntityUid> deletions = new();
 
@@ -158,11 +166,12 @@ public sealed partial class ReplayManager
         {
             if (!entStates.TryGetValue(entState.Uid, out var oldEntState))
             {
-                entStates[entState.Uid] = entState;
+                var modifiedState = AddImplicitData(entState);
+                entStates[entState.Uid] = modifiedState;
                 spawnedTracker++;
 
 #if DEBUG
-                foreach (var state in entState.ComponentChanges.Span)
+                foreach (var state in modifiedState.ComponentChanges.Span)
                 {
                     DebugTools.Assert(state.State is not IComponentDeltaState delta || delta.FullState);
                 }
@@ -172,45 +181,54 @@ public sealed partial class ReplayManager
 
             stateTracker++;
             DebugTools.Assert(oldEntState.Uid == entState.Uid);
-            var newCompStates = entState.ComponentChanges.Value.ToDictionary(x => x.NetID);
-            var combinedCompStates = oldEntState.ComponentChanges.Value.ToList();
-
-            // remove any deleted components
-            if (entState.NetComponents != null)
-            {
-                for (var index = combinedCompStates.Count - 1; index >= 0; index--)
-                {
-                    if (!entState.NetComponents.Contains(combinedCompStates[index].NetID))
-                        combinedCompStates.RemoveSwap(index);
-                }
-            }
-
-            for (var index = combinedCompStates.Count - 1; index >= 0; index--)
-            {
-                var existing = combinedCompStates[index];
-
-                if (!newCompStates.TryGetValue(existing.NetID, out var newCompState))
-                    continue;
-
-                if (newCompState.State is not IComponentDeltaState delta || delta.FullState)
-                {
-                    combinedCompStates[index] = newCompState;
-                    continue;
-                }
-
-                DebugTools.Assert(existing.State is IComponentDeltaState fullDelta && fullDelta.FullState);
-                combinedCompStates[index] = new ComponentChange(existing.NetID, delta.CreateNewFullState(existing.State), newCompState.LastModifiedTick);
-            }
-
-            entStates[entState.Uid] = new EntityState(entState.Uid, combinedCompStates, entState.EntityLastModified, entState.NetComponents ?? oldEntState.NetComponents);
+            entStates[entState.Uid] = MergeStates(entState, oldEntState.ComponentChanges.Value, oldEntState.NetComponents);
 
 #if DEBUG
-            foreach (var state in combinedCompStates)
+            foreach (var state in entStates[entState.Uid].ComponentChanges.Span)
             {
                 DebugTools.Assert(state.State is not IComponentDeltaState delta || delta.FullState);
             }
 #endif
         }
+    }
+
+    private EntityState MergeStates(
+        EntityState newState,
+        IReadOnlyCollection<ComponentChange> oldState,
+        HashSet<ushort>? oldNetComps)
+    {
+        // TODO REPLAYS De-linquify
+        var combined = oldState.ToList();
+        var newCompStates = newState.ComponentChanges.Value.ToDictionary(x => x.NetID);
+
+        // remove any deleted components
+        if (newState.NetComponents != null)
+        {
+            for (var index = combined.Count - 1; index >= 0; index--)
+            {
+                if (!newState.NetComponents.Contains(combined[index].NetID))
+                    combined.RemoveSwap(index);
+            }
+        }
+
+        for (var index = combined.Count - 1; index >= 0; index--)
+        {
+            var existing = combined[index];
+
+            if (!newCompStates.TryGetValue(existing.NetID, out var newCompState))
+                continue;
+
+            if (newCompState.State is not IComponentDeltaState delta || delta.FullState)
+            {
+                combined[index] = newCompState;
+                continue;
+            }
+
+            DebugTools.Assert(existing.State is IComponentDeltaState fullDelta && fullDelta.FullState);
+            combined[index] = new ComponentChange(existing.NetID, delta.CreateNewFullState(existing.State), newCompState.LastModifiedTick);
+        }
+
+        return new EntityState(newState.Uid, combined, newState.EntityLastModified, newState.NetComponents ?? oldNetComps);
     }
 
     private void UpdatePlayerStates(ReadOnlySpan<PlayerState> span, Dictionary<NetUserId, PlayerState> playerStates)

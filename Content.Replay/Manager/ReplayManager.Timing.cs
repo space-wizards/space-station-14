@@ -108,6 +108,15 @@ public sealed partial class ReplayManager
         _uiMan.GetUIController<ChatUIController>().Repopulate();
         _gameState.UpdateFullRep(state, cloneDelta: true);
         _gameState.ApplyGameState(state, CurrentReplay.NextState);
+
+#if DEBUG
+        // TODO REPLAYS add asserts
+        // foreach entity
+        //  if networked
+        //    check last applied/modified tick
+        //    foreach component
+        //      check creation, modified ticks
+#endif
         _timing.CurTick += 1;
 
         StopAudio();

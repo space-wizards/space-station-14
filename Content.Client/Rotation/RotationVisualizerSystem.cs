@@ -23,11 +23,11 @@ public sealed class RotationVisualizerSystem : VisualizerSystem<RotationVisualsC
     {
         base.OnAppearanceChange(uid, component, ref args);
 
-        if (!AppearanceSystem.TryGetData<RotationState>(uid, RotationVisuals.RotationState, out var state, args.Component) ||
-            args.Sprite == null)
-        {
+        if (args.Sprite == null)
             return;
-        }
+
+        // default behaviour is RotationState.Vertical if try-get fails.
+        AppearanceSystem.TryGetData<RotationState>(uid, RotationVisuals.RotationState, out var state, args.Component);
 
         switch (state)
         {

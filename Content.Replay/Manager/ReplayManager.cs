@@ -27,6 +27,7 @@ public sealed partial class ReplayManager
     [Dependency] private readonly IClientGameStateManager _gameState = default!;
     [Dependency] private readonly IClientRobustSerializer _serializer = default!;
     [Dependency] private readonly IClientNetConfigurationManager _netConf = default!;
+    [Dependency] private readonly IComponentFactory _factory = default!;
 
     public ReplayData? CurrentReplay { get; private set; }
 
@@ -67,5 +68,6 @@ public sealed partial class ReplayManager
         _confMan.OnValueChanged(GameConfigVars.CheckpointInterval, (value) => _checkpointInterval = value, true);
         _confMan.OnValueChanged(GameConfigVars.CheckpointEntitySpawnThreshold, (value) => _checkpointEntitySpawnThreshold = value, true);
         _confMan.OnValueChanged(GameConfigVars.CheckpointEntityStateThreshold, (value) => _checkpointEntityStateThreshold = value, true);
+        _metaId = _factory.GetRegistration(typeof(MetaDataComponent)).NetID!.Value;
     }
 }
