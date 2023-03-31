@@ -106,7 +106,7 @@
 
   - type: Store
 
-    preset: StorePresetERT
+    preset: StorePresetClown
 
     balance: 
 
