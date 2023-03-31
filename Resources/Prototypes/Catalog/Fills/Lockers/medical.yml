@@ -70,6 +70,7 @@
       - id: NitrousOxideTankFilled
         prob: 0.3
       - id: ClothingMaskSterile
+      - id: WeaponTaser
 
 - type: entity
   id: LockerWallMedicalDoctorFilled
