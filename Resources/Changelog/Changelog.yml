@@ -1,11 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: All humanoid metabolized reagents should apply effects proportional
-      to how much was taken in. Eating 0.1u of a paralyzation drug will stun you for
-      1/5 the time as eating 0.5u., type: Fix}
-  id: 2794
-  time: '2022-12-21T14:51:49.0000000+00:00'
 - author: Prentor
   changes:
   - {message: Added bag for carrying books and cargo order to get more of them, type: Add}
@@ -2914,3 +2907,8 @@ Entries:
   - {message: Skub noise has been re-added., type: Add}
   id: 3293
   time: '2023-03-31T04:25:46.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Added Plush Dion to spawn pools, type: Add}
+  id: 3294
+  time: '2023-03-31T04:30:06.0000000+00:00'
