@@ -1,14 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed IFF consoles being able to be opened without power., type: Fix}
-  id: 2798
-  time: '2022-12-22T02:43:46.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Jobs now have tooltip descriptions in the lobby., type: Add}
-  id: 2799
-  time: '2022-12-23T23:36:12.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Popups will use your UI scaling now., type: Fix}
@@ -2913,3 +2903,16 @@ Entries:
   - {message: Bandanas and caps can now be butchered., type: Tweak}
   id: 3297
   time: '2023-03-31T04:33:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix docking config in some instances. This mainly affected Aspid with
+      the shuttle blocking the 4-port docking configuration for the emergency shuttle.,
+    type: Fix}
+  id: 3298
+  time: '2023-03-31T04:45:15.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Changed foam dart box sprite., type: Tweak}
+  - {message: Fixed some boxes not having icons., type: Fix}
+  id: 3299
+  time: '2023-03-31T04:46:07.0000000+00:00'
