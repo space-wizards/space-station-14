@@ -1,0 +1,35 @@
+﻿- type: entity
+  id: SurgeryRealmCamera
+  components:
+  - type: Mind
+  - type: Physics
+    bodyType: Dynamic
+    fixedRotation: false
+  - type: InputMover
+  - type: Eye
+    drawFov: false
+  - type: Input
+    context: "ghost"
+  - type: MovementSpeedModifier
+  - type: MovementIgnoreGravity
+  - type: RelayInputMover
+  - type: MobMover
+
+- type: entity
+  id: SurgeryRealmHeart
+  name: heart
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Human/organs.rsi
+    state: heart-on
+  - type: SurgeryRealmHeart
+  - type: InputMover
+  - type: Transform
+    noRot: true
+  - type: MovementIgnoreGravity
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 4
+    baseSprintSpeed : 4
+  - type: Input
+    context: "ghost"

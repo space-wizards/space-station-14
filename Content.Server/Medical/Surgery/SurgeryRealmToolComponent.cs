@@ -10,5 +10,5 @@ public sealed class SurgeryRealmToolComponent : Component
 
     [ViewVariables] public MapCoordinates? Position;
 
-    [DataField("heart", required: true)] public string HeartPrototype = "OrganHumanHeart";
+    [DataField("heart")] public string HeartPrototype = "SurgeryRealmHeart";
 }

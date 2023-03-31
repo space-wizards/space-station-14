@@ -1,8 +1,9 @@
-﻿using Content.Server.Physics.Controllers;
+﻿using Content.Server.Mind;
+using Content.Server.Mind.Components;
+using Content.Server.Physics.Controllers;
 using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
 using Content.Shared.Medical.Surgery;
-using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -17,8 +18,10 @@ public sealed class SurgeryRealmSystem : EntitySystem
 
     [Dependency] private readonly IMapManager _maps = default!;
 
+    [Dependency] private readonly MindSystem _minds = default!;
     [Dependency] private readonly MoverController _mover = default!;
     [Dependency] private readonly ViewSubscriberSystem _viewSubscriber = default!;
+    [Dependency] private readonly PhysicsSystem _physics = default!;
 
     private MapId _surgeryRealmMap = MapId.Nullspace;
     private int _sections;
@@ -83,12 +86,14 @@ public sealed class SurgeryRealmSystem : EntitySystem
         tool.Victims.Add(victimEntity);
 
         victim.Heart = Spawn(tool.HeartPrototype, tool.Position.Value);
-        EnsureComp<SurgeryRealmHeartComponent>(victim.Heart);
-        EnsureComp<InputMoverComponent>(victim.Heart);
-        var relay = EnsureComp<RelayInputMoverComponent>(victimEntity);
-        _mover.SetRelay(victimEntity, victim.Heart, relay);
 
         var camera = CreateCamera(victimPlayer, tool.Position.Value);
+
+        _mover.SetRelay(camera, victim.Heart);
+
+        var mind = EnsureComp<MindComponent>(victimEntity);
+        mind.Mind?.Visit(camera);
+
         RaiseNetworkEvent(new SurgeryRealmStartEvent(camera));
     }
 
@@ -146,7 +151,7 @@ public sealed class SurgeryRealmSystem : EntitySystem
 
     private EntityUid CreateCamera(IPlayerSession player, MapCoordinates position)
     {
-        var camera = EntityManager.SpawnEntity(null, position);
+        var camera = EntityManager.SpawnEntity("SurgeryRealmCamera", position);
 
         var eyeComponent = EnsureComp<EyeComponent>(camera);
         eyeComponent.DrawFov = false;
