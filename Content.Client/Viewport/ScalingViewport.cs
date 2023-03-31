@@ -272,7 +272,7 @@ namespace Content.Client.Viewport
                 _lowerPorts[i].ClearColor = Color.Blue.WithAlpha(0.02f);
 
                 _lowerPorts[i].Eye = _lowerEyes[i];
-                _lowerPorts[i].Eye!.Zoom =  _lowerPorts[i].Eye!.Zoom * (0.98f - i * 0.02f);
+                _lowerPorts[i].Eye!.Zoom =  _lowerPorts[i].Eye!.Zoom * (1.02f + i * 0.02f);
             }
 
             _viewport.RenderScale = (renderScale, renderScale);
