@@ -4,6 +4,7 @@ using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Fluids.EntitySystems;
+using Content.Server.Forensics;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Administration.Logs;
@@ -377,6 +378,10 @@ namespace Content.Server.Nutrition.EntitySystems
 
             component.ForceDrink = false;
             args.Handled = true;
+
+            var comp = EnsureComp<ForensicsComponent>(uid);
+            if (TryComp<DnaComponent>(args.Args.Target, out var dna))
+                comp.DNAs.Add(dna.DNA);
         }
 
         private void AddDrinkVerb(EntityUid uid, DrinkComponent component, GetVerbsEvent<AlternativeVerb> ev)

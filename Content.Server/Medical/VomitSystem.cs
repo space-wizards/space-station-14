@@ -2,6 +2,7 @@ using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.Components;
+using Content.Server.Forensics;
 using Content.Server.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Popups;
@@ -48,6 +49,10 @@ namespace Content.Server.Medical
                 _stunSystem.TrySlowdown(uid, TimeSpan.FromSeconds(solutionSize), true, 0.5f, 0.5f, status);
 
             var puddle = EntityManager.SpawnEntity("PuddleVomit", Transform(uid).Coordinates);
+
+            var forensics = EnsureComp<ForensicsComponent>(puddle);
+            if (TryComp<DnaComponent>(uid, out var dna))
+                forensics.DNAs.Add(dna.DNA);
 
             var puddleComp = Comp<PuddleComponent>(puddle);
 
