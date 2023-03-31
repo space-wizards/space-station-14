@@ -90,8 +90,6 @@
       rule: Dragon
     - announcement: terror-revenant
       rule: RevenantSpawn
-    - announcement: terror-pirates
-      rule: Pirates
 
 - type: gameRule
   id: RevenantSpawn
