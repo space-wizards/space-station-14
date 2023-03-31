@@ -32,6 +32,5 @@
     pocket1: BikeHorn
     id: ClownPDA
     ears: ClothingHeadsetService
-    pocket1: UplinkClown
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelClownFilled
