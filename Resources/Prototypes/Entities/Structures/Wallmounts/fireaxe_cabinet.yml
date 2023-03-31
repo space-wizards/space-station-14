@@ -34,7 +34,7 @@
   - type: Appearance
   - type: Lock
   - type: AccessReader
-    access: [["Atmospherics"]], [["Command"]]
+    access: [["Atmospherics"], ["Command"]]
   - type: ItemSlots
   - type: ContainerContainer
     containers:
