@@ -184,7 +184,7 @@ namespace Content.Client.Viewport
             var drawBox = GetDrawBox();
             var drawBoxGlobal = drawBox.Translated(GlobalPixelPosition);
             _viewport.RenderScreenOverlaysBelow(handle, this, drawBoxGlobal);
-            foreach (var viewport in _lowerPorts)
+            foreach (var viewport in _lowerPorts.Reverse())
             {
                 handle.DrawTextureRect(viewport.RenderTarget.Texture, drawBox);
             }
@@ -272,6 +272,7 @@ namespace Content.Client.Viewport
                 _lowerPorts[i].ClearColor = Color.Blue.WithAlpha(0.02f);
 
                 _lowerPorts[i].Eye = _lowerEyes[i];
+                _lowerPorts[i].Eye!.Zoom =  _lowerPorts[i].Eye!.Zoom * (0.98f - i * 0.02f);
             }
 
             _viewport.RenderScale = (renderScale, renderScale);

@@ -96,7 +96,7 @@ public abstract class SharedZViewSystem : EntitySystem
                 continue;
             Array.Resize(ref maps, amt);
             var currPos = _xformSystem.GetWorldPosition(xform);
-            foreach (var map in maps.Reverse())
+            foreach (var map in maps)
             {
                 view.DownViewEnts.Add(SpawnViewEnt(uid, new MapCoordinates(currPos, map)));
             }

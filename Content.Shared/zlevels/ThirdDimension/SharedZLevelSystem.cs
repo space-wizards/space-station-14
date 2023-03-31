@@ -5,6 +5,7 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Ghost;
 using Content.Shared.Gravity;
+using Content.Shared.Movement.Components;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -37,6 +38,8 @@ public sealed class SharedZLevelSystem : EntitySystem
     public IReadOnlyList<MapId?> MapAbove => _mapAbove;
     public IReadOnlyList<MapId?> MapBelow => _mapBelow;
 
+    private bool DontDrop = false; //HACK: oh god
+
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -51,7 +54,7 @@ public sealed class SharedZLevelSystem : EntitySystem
 
     private void OnMove(ref MoveEvent ev)
     {
-        if (_mapBelow[(int) ev.Component.MapID] == null || HasComp<MapGridComponent>(ev.Sender) || _gravity.IsWeightless(ev.Sender) || HasComp<SharedGhostComponent>(ev.Sender))
+        if (DontDrop || _mapBelow[(int) ev.Component.MapID] == null || HasComp<MapGridComponent>(ev.Sender) || _gravity.IsWeightless(ev.Sender) || HasComp<SharedGhostComponent>(ev.Sender) || !HasComp<PhysicsComponent>(ev.Sender))
             return; // get out!
 
         var mapEid = _map.GetMapEntityId(ev.Component.MapID);
@@ -59,8 +62,16 @@ public sealed class SharedZLevelSystem : EntitySystem
         if (ev.Component.Coordinates.EntityId != mapEid)
             return; // Can't fall through the map if we're not on it!
 
+        if (TryComp<MapGridComponent>(mapEid, out var grid))
+        {
+            if (grid.TryGetTileRef(_xformSystem.GetWorldPosition(ev.Component), out var tile) && !tile.Tile.IsEmpty)
+            {
+                return; // Can't fall through grids.
+            }
+        }
+
         var phys = Comp<PhysicsComponent>(ev.Sender);
-        if (phys.Momentum.Length < 0.2)
+        if (phys.Momentum.Length < 0.2 || HasComp<InputMoverComponent>(ev.Sender) || HasComp<MobMoverComponent>(ev.Sender))
         {
             TryTraverse(false, ev.Sender);
             // THWACK
@@ -166,7 +177,9 @@ public sealed class SharedZLevelSystem : EntitySystem
             return false;
 
         var coords = EntityCoordinates.FromMap(_map, new MapCoordinates(worldPosition, newMap.Value));
+        DontDrop = true;
         _xformSystem.SetCoordinates(traverser, coords);
+        DontDrop = false;
 
         return true;
     }
