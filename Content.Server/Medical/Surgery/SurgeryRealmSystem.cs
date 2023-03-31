@@ -1,5 +1,4 @@
-﻿using Content.Server.Mind;
-using Content.Server.Mind.Components;
+﻿using Content.Server.Mind.Components;
 using Content.Server.Physics.Controllers;
 using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
@@ -7,6 +6,7 @@ using Content.Shared.Medical.Surgery;
 using Content.Shared.Movement.Events;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 
@@ -16,12 +16,11 @@ public sealed class SurgeryRealmSystem : EntitySystem
 {
     private const int SectionSeparation = 100;
 
+    [Dependency] private readonly IConsoleHost _console = default!;
     [Dependency] private readonly IMapManager _maps = default!;
 
-    [Dependency] private readonly MindSystem _minds = default!;
     [Dependency] private readonly MoverController _mover = default!;
     [Dependency] private readonly ViewSubscriberSystem _viewSubscriber = default!;
-    [Dependency] private readonly PhysicsSystem _physics = default!;
 
     private MapId _surgeryRealmMap = MapId.Nullspace;
     private int _sections;
@@ -42,22 +41,27 @@ public sealed class SurgeryRealmSystem : EntitySystem
     private void OnInteractUsing(InteractUsingEvent args)
     {
         if (!HasComp<SurgeryRealmToolComponent>(args.Used))
-            return;
-
-        if (HasComp<SurgeryRealmVictimComponent>(args.User) ||
-            HasComp<SurgeryRealmVictimComponent>(args.Target))
         {
             return;
         }
 
-        if (!TryComp(args.User, out ActorComponent? userActor) ||
-            !TryComp(args.Target, out ActorComponent? targetActor))
+        if (!HasComp<SurgeryRealmVictimComponent>(args.User) &&
+            TryComp(args.User, out ActorComponent? userActor))
         {
-            return;
+            StartOperation(userActor.PlayerSession, args.Used);
         }
 
-        StartOperation(userActor.PlayerSession, args.Used);
-        StartOperation(targetActor.PlayerSession, args.Used);
+
+        if (args.User != args.Target)
+        {
+            if (HasComp<SurgeryRealmVictimComponent>(args.Target) ||
+                !TryComp(args.Target, out ActorComponent? targetActor))
+            {
+                return;
+            }
+
+            StartOperation(targetActor.PlayerSession, args.Used);
+        }
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent ev)
@@ -85,7 +89,13 @@ public sealed class SurgeryRealmSystem : EntitySystem
 
         tool.Victims.Add(victimEntity);
 
-        victim.Heart = Spawn(tool.HeartPrototype, tool.Position.Value);
+        victim.Heart = Spawn(tool.HeartPrototype, tool.Position.Value.Offset(0, -5));
+        _console.ExecuteCommand($"scale {victim.Heart} 2.5");
+
+        var clown = Spawn("SurgeryRealmClown", tool.Position.Value.Offset(0, 3));
+        _console.ExecuteCommand($"scale {clown} 5");
+
+        SpawnEdges(tool.Position.Value);
 
         var camera = CreateCamera(victimPlayer, tool.Position.Value);
 
@@ -95,6 +105,21 @@ public sealed class SurgeryRealmSystem : EntitySystem
         mind.Mind?.Visit(camera);
 
         RaiseNetworkEvent(new SurgeryRealmStartEvent(camera));
+    }
+
+    private void SpawnEdges(MapCoordinates coordinates)
+    {
+        for (var x = -5; x < 6; x++)
+        {
+            Spawn("SurgeryRealmEdge", coordinates.Offset(x, -1));
+            Spawn("SurgeryRealmEdge", coordinates.Offset(x, -7));
+        }
+
+        for (var y = -7; y < 0; y++)
+        {
+            Spawn("SurgeryRealmEdge", coordinates.Offset(6, y));
+            Spawn("SurgeryRealmEdge", coordinates.Offset(-6, y));
+        }
     }
 
     private void StopOperation(IPlayerSession victim, EntityUid toolId)

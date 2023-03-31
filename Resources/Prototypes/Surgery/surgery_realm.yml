@@ -32,8 +32,12 @@
     fixtures:
     - shape:
         !type:PhysShapeCircle
-        radius: 0.35
+        radius: 0.15
       density: 15
+      layer:
+      - WallLayer
+      mask:
+      - WallLayer
   - type: InputMover
   - type: Input
     context: "ghost"
@@ -41,3 +45,33 @@
     baseSprintSpeed: 4
     baseWalkSpeed: 4
   - type: MovementIgnoreGravity
+
+- type: entity
+  id: SurgeryRealmClown
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Surgery/clown.rsi
+    state: down
+  - type: Transform
+    noRot: true
+
+- type: entity
+  id: SurgeryRealmEdge
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Surgery/edge.rsi
+    state: full
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.5,-0.5,0.5,0.5"
+      density: 100
+      mask:
+      - FullTileMask
+      layer:
+      - WallLayer
