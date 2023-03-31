@@ -12,3 +12,8 @@
   id: BananiumHorn
   files:
   - /Audio/Items/airhorn.ogg
+
+- type: soundCollection
+  id: DeskBell
+  files:
+  - /Audio/Items/desk_bell_ring.ogg

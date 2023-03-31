@@ -101,4 +101,131 @@ public sealed partial class DungeonSystem
 
         return CompletionResult.Empty;
     }
+
+    [AdminCommand(AdminFlags.Mapping)]
+    private void DungeonPackVis(IConsoleShell shell, string argstr, string[] args)
+    {
+        if (args.Length != 2)
+        {
+            return;
+        }
+
+        if (!int.TryParse(args[0], out var mapInt))
+        {
+            return;
+        }
+
+        var mapId = new MapId(mapInt);
+        var mapUid = _mapManager.GetMapEntityId(mapId);
+
+        if (!_prototype.TryIndex<DungeonRoomPackPrototype>(args[1], out var pack))
+        {
+            return;
+        }
+
+        var grid = EnsureComp<MapGridComponent>(mapUid);
+        var tile = new Tile(_tileDefManager["FloorSteel"].TileId);
+        var tiles = new List<(Vector2i, Tile)>();
+
+        foreach (var room in pack.Rooms)
+        {
+            for (var x = room.Left; x < room.Right; x++)
+            {
+                for (var y = room.Bottom; y < room.Top; y++)
+                {
+                    var index = new Vector2i(x, y);
+                    tiles.Add((index, tile));
+                }
+            }
+        }
+
+        // Fill the rest out with a blank tile to make it easier to see
+        var dummyTile = new Tile(_tileDefManager["FloorAsteroidIronsand1"].TileId);
+
+        for (var x = 0; x < pack.Size.X; x++)
+        {
+            for (var y = 0; y < pack.Size.Y; y++)
+            {
+                var index = new Vector2i(x, y);
+                if (tiles.Contains((index, tile)))
+                    continue;
+
+                tiles.Add((index, dummyTile));
+            }
+        }
+
+        grid.SetTiles(tiles);
+        shell.WriteLine(Loc.GetString("cmd-dungen_pack_vis"));
+    }
+
+    [AdminCommand(AdminFlags.Mapping)]
+    private void DungeonPresetVis(IConsoleShell shell, string argstr, string[] args)
+    {
+        if (args.Length != 2)
+        {
+            return;
+        }
+
+        if (!int.TryParse(args[0], out var mapInt))
+        {
+            return;
+        }
+
+        var mapId = new MapId(mapInt);
+        var mapUid = _mapManager.GetMapEntityId(mapId);
+
+        if (!_prototype.TryIndex<DungeonPresetPrototype>(args[1], out var preset))
+        {
+            return;
+        }
+
+        var grid = EnsureComp<MapGridComponent>(mapUid);
+        var tile = new Tile(_tileDefManager["FloorSteel"].TileId);
+        var tiles = new List<(Vector2i, Tile)>();
+
+        foreach (var room in preset.RoomPacks)
+        {
+            for (var x = room.Left; x < room.Right; x++)
+            {
+                for (var y = room.Bottom; y < room.Top; y++)
+                {
+                    var index = new Vector2i(x, y);
+                    tiles.Add((index, tile));
+                }
+            }
+        }
+
+        grid.SetTiles(tiles);
+        shell.WriteLine(Loc.GetString("cmd-dungen_pack_vis"));
+    }
+
+    private CompletionResult PresetCallback(IConsoleShell shell, string[] args)
+    {
+        if (args.Length == 1)
+        {
+            return CompletionResult.FromHintOptions(CompletionHelper.MapIds(EntityManager), Loc.GetString("cmd-dungen-hint-map"));
+        }
+
+        if (args.Length == 2)
+        {
+            return CompletionResult.FromOptions(CompletionHelper.PrototypeIDs<DungeonPresetPrototype>(proto: _prototype));
+        }
+
+        return CompletionResult.Empty;
+    }
+
+    private CompletionResult PackCallback(IConsoleShell shell, string[] args)
+    {
+        if (args.Length == 1)
+        {
+            return CompletionResult.FromHintOptions(CompletionHelper.MapIds(EntityManager), Loc.GetString("cmd-dungen-hint-map"));
+        }
+
+        if (args.Length == 2)
+        {
+            return CompletionResult.FromOptions(CompletionHelper.PrototypeIDs<DungeonRoomPackPrototype>(proto: _prototype));
+        }
+
+        return CompletionResult.Empty;
+    }
 }
