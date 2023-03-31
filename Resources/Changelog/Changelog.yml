@@ -1,13 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Mechs can no longer pick up the pilot inside the mech., type: Fix}
-  - {message: Mechs can no longer be piloted by non-humanoids., type: Fix}
-  - {message: Hydraulic clamps can no longer pick up living creatures. (too wriggly),
-    type: Fix}
-  - {message: You can no longer repair a mech from inside of it., type: Fix}
-  id: 2801
-  time: '2022-12-24T21:33:08.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: NPCs will ignore stationary allies for separation. Pets in particular
@@ -2918,3 +2909,8 @@ Entries:
       Drinking leaves DNA on items.', type: Add}
   id: 3300
   time: '2023-03-31T04:49:25.0000000+00:00'
+- author: MilenVolf
+  changes:
+  - {message: Wall recharges now work as intended, type: Fix}
+  id: 3301
+  time: '2023-03-31T05:53:07.0000000+00:00'
