@@ -1,4 +1,10 @@
 - type: gameRule
+  id: AllCaptains
+  config:
+    !type:GenericGameRuleConfiguration
+    id: AllCaptains
+
+- type: gameRule
   id: DeathMatch
   config:
     !type:GenericGameRuleConfiguration

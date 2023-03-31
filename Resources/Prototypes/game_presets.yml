@@ -119,3 +119,23 @@
   rules:
     - Pirates
     - BasicStationEventScheduler
+
+- type: gamePreset
+  id: OopsAllCaptains
+  alias:
+    - captains
+    - captain
+    - onlycaptains
+    - OnlyCaptains
+    - oopsonlycaptains
+    - oopsallcaptains
+    - allcaptains
+    - AllCaptains
+  name: "Oops! All Captains."
+  description: "Look at you.  You're the captain now."
+  showInVote: true
+  rules:
+    - AllCaptains
+    - Traitor
+    - BasicStationEventScheduler
+

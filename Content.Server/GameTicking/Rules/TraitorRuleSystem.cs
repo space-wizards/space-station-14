@@ -36,6 +36,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly AllCaptainsRuleSystem _allCaptainsRule = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -178,7 +179,8 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         foreach (var player in candidates.Keys)
         {
             // Role prevents antag.
-            if (!(player.Data.ContentData()?.Mind?.AllRoles.All(role => role is not Job { CanBeAntag: false }) ?? false))
+            if (!(_allCaptainsRule != null && _allCaptainsRule.RuleStarted) && // all captains mode lets some of the captains be traitors :3
+                !(player.Data.ContentData()?.Mind?.AllRoles.All(role => role is not Job { CanBeAntag: false }) ?? false))
             {
                 continue;
             }
@@ -296,7 +298,8 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         if (ev.JobId == null || !_prototypeManager.TryIndex<JobPrototype>(ev.JobId, out var job))
             return;
 
-        if (!job.CanBeAntag)
+        if (!job.CanBeAntag &&
+            !(_allCaptainsRule != null && _allCaptainsRule.RuleStarted)) // all captains mode lets some of the captains be traitors :3
             return;
 
         // Before the announcement is made, late-joiners are considered the same as players who readied.
