@@ -122,6 +122,15 @@
 
 - type: entity
   parent: ClothingBackpack
+  id: ClothingBackpackGenetics
+  name: genetics backpack
+  description: A backpack designed to be super tough, just in case someone hulks out on you.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/genetics.rsi
+
+- type: entity
+  parent: ClothingBackpack
   id: ClothingBackpackSalvage
   name: salvage bag
   description: A robust backpack for stashing your loot.
