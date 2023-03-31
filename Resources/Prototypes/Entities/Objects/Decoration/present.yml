@@ -87,6 +87,8 @@
         orGroup: GiftPool
       - id: ToyAmongPequeno
         orGroup: GiftPool
+      - id: PlushieDiona
+        orGroup: GiftPool
       - id: ToyMouse
         orGroup: GiftPool
       - id: ToyAi

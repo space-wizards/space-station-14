@@ -20,7 +20,7 @@ reagent-name-lemon-lime = lemon-lime
 reagent-desc-lemon-lime = tangy lime and lemon soda
 
 reagent-name-pwr-game = Pwr Game
-reagent-desc-pwr-game = The only drink with the PWR that true gamers crave.
+reagent-desc-pwr-game = The only drink with the PWR that true gamers crave. When a gamer talks about gamerfuel, this is what they're literally referring to.
 
 reagent-name-root-beer = root beer
 reagent-desc-root-beer = A very sweet, carbonated drink reminiscent of sarsparilla. Goes well with ice cream.
@@ -39,3 +39,7 @@ reagent-desc-starkist = A sweet, orange flavored soft drink.
 
 reagent-name-fourteen-loko = Fourteen Loko
 reagent-desc-fourteen-loko = A highly processed liquid substance barely-passing intergalatic health standards for a soft drink.
+
+reagent-name-shamblers-juice = Shambler's Juice
+reagent-desc-shamblers-juice = ~Shake me up some of that Shambler's Juice!~
+

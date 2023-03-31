@@ -512,3 +512,32 @@
           - ReagentId: CapsaicinOil
             Quantity: 6
 # What do Europeans eat instead of enchiladas? 25.4 millimeter-iladas.
+
+
+- type: entity
+  name: melon fruit bowl
+  parent: FoodMealBase
+  id: FoodSaladWatermelonFruitBowl
+  description: The only salad where you can eat the bowl.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - fruity
+      - sour
+  - type: Sprite
+    state: melonfruitbowl
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 65
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 30
+        - ReagentId: Vitamin
+          Quantity: 15
+        - ReagentId: Water
+          Quantity: 5
+        - ReagentId: Bicaridine
+          Quantity: 5
+        - ReagentId: Kelotane
+          Quantity: 5
