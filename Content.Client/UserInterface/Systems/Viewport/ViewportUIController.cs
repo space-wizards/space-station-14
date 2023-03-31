@@ -1,5 +1,7 @@
+using System.Linq;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Gameplay;
+using Content.Shared._Afterlight.ThirdDimension;
 using Content.Shared.CCVar;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -77,6 +79,8 @@ public sealed class ViewportUIController : UIController
 
         base.FrameUpdate(e);
 
+
+
         Viewport.Viewport.Eye = _eyeManager.CurrentEye;
 
         // verify that the current eye is not "null". Fuck IEyeManager.
@@ -86,6 +90,14 @@ public sealed class ViewportUIController : UIController
             return;
 
         _entMan.TryGetComponent(ent, out EyeComponent? eye);
+        if (_entMan.TryGetComponent(ent, out ZViewComponent? view))
+        {
+            Viewport.Viewport.LowerEyes = view.DownViewEnts.Select(x =>
+            {
+                var eye = _entMan.GetComponent<EyeComponent>(x);
+                return eye.Eye!;
+            }).ToArray();
+        }
 
         if (eye?.Eye == _eyeManager.CurrentEye
             && _entMan.GetComponent<TransformComponent>(ent.Value).WorldPosition == default)

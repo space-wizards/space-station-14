@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
@@ -24,7 +25,9 @@ namespace Content.Client.Viewport
 
         // Internal viewport creation is deferred.
         private IClydeViewport? _viewport;
+        private IClydeViewport[] _lowerPorts = new IClydeViewport[] {};
         private IEye? _eye;
+        private IEye[] _lowerEyes = new IEye[] {};
         private Vector2i _viewportSize;
         private int _curRenderScale;
         private ScalingViewportStretchMode _stretchMode = ScalingViewportStretchMode.Bilinear;
@@ -47,6 +50,15 @@ namespace Content.Client.Viewport
 
                 if (_viewport != null)
                     _viewport.Eye = value;
+            }
+        }
+
+        public IEye[] LowerEyes
+        {
+            get => _lowerEyes;
+            set
+            {
+                _lowerEyes = value;
             }
         }
 
@@ -137,6 +149,11 @@ namespace Content.Client.Viewport
 
             _viewport!.Render();
 
+            foreach (var viewport in _lowerPorts)
+            {
+                viewport.Render();
+            }
+
             if (_queuedScreenshots.Count != 0)
             {
                 var callbacks = _queuedScreenshots.ToArray();
@@ -155,6 +172,10 @@ namespace Content.Client.Viewport
             var drawBox = GetDrawBox();
             var drawBoxGlobal = drawBox.Translated(GlobalPixelPosition);
             _viewport.RenderScreenOverlaysBelow(handle, this, drawBoxGlobal);
+            foreach (var viewport in _lowerPorts)
+            {
+                handle.DrawTextureRect(viewport.RenderTarget.Texture, drawBox);
+            }
             handle.DrawTextureRect(_viewport.RenderTarget.Texture, drawBox);
             _viewport.RenderScreenOverlaysAbove(handle, this, drawBoxGlobal);
         }
@@ -225,6 +246,20 @@ namespace Content.Client.Viewport
                     Filter = StretchMode == ScalingViewportStretchMode.Bilinear,
                 });
 
+            Array.Resize(ref _lowerPorts, _lowerEyes.Length);
+            for (var i = 0; i < _lowerEyes.Length; i++)
+            {
+                _lowerPorts[i] = _clyde.CreateViewport(
+                    ViewportSize * renderScale,
+                    new TextureSampleParameters
+                    {
+                        Filter = StretchMode == ScalingViewportStretchMode.Bilinear,
+                    });
+                _lowerPorts[i].RenderScale = (renderScale, renderScale);
+
+                _lowerPorts[i].Eye = _lowerEyes[i];
+            }
+
             _viewport.RenderScale = (renderScale, renderScale);
 
             _viewport.Eye = _eye;
@@ -291,7 +326,7 @@ namespace Content.Client.Viewport
 
         private void EnsureViewportCreated()
         {
-            if (_viewport == null)
+            if (_viewport == null || _lowerPorts.Length != _lowerEyes.Length)
             {
                 RegenerateViewport();
             }
