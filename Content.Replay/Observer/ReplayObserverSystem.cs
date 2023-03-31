@@ -19,6 +19,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.LayoutContainer;
 
 namespace Content.Replay.Observer;
@@ -146,7 +147,7 @@ public sealed partial class ReplayObserverSystem : EntitySystem
             }),
 
             Text = "Observe",
-            IconTexture = "/Textures/Interface/VerbIcons/vv.svg.192dpi.png",
+            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/vv.svg.192dpi.png"))
         };
 
         ev.Verbs.Add(verb);
