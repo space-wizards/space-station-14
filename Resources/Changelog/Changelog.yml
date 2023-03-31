@@ -1,12 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: NPCs will ignore stationary allies for separation. Pets in particular
-      will move through other stationary pets., type: Tweak}
-  id: 2802
-  time: '2022-12-25T00:30:01.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Bump NPC avoidance range and fix some instances of unapproved dancing.,
     type: Fix}
   id: 2803
@@ -2914,3 +2908,8 @@ Entries:
   - {message: Wall recharges now work as intended, type: Fix}
   id: 3301
   time: '2023-03-31T05:53:07.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Update engine to 0.96.0.3, type: Tweak}
+  id: 3302
+  time: '2023-03-31T06:28:08.0000000+00:00'
