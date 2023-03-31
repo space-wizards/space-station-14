@@ -260,8 +260,10 @@
       amount: 1
     Plasma:
       amount: 1
+    Fluorine:
+      amount: 1
   products:
-    Lexorin: 2
+    Lexorin: 3
 
 - type: reaction
   id: Lipozine
