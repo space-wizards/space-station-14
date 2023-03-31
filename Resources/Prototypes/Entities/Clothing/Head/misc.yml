@@ -168,3 +168,14 @@
   - type: Clothing
     sprite: Clothing/Head/Misc/squiddy.rsi
   - type: IngestionBlocker
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadCrocHat
+  name: comedically large croc
+  description: "How else would you wear it?"
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/crochat.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/crochat.rsi

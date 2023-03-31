@@ -63,7 +63,7 @@
         prob: 0.5
       - id: BoxMRE
         prob: 0.1
-        
+
 - type: entity
   id: ClosetFireFilled
   parent: ClosetFire
@@ -135,6 +135,8 @@
           prob: 0.1
         - id: ClothingHandsGlovesColorYellowBudget
           prob: 0.25
+        - id: ClothingHeadCrocHat
+          prob: 0.10
 
 - type: entity
   id: ClosetWallMaintenanceFilledRandom
