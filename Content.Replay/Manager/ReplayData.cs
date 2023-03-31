@@ -22,12 +22,24 @@ public sealed class ReplayData
     public GameState? NextState => CurrentIndex + 1 < States.Count ? States[CurrentIndex + 1] : null;
     public ReplayMessage CurMessages => Messages[CurrentIndex];
 
-    // TODO figure out a way to undo prototype and resource uploading. Currently uploading disables time rewinding....
-    // or if I can't figure out a way: at least allow people to just rewind anyways but after first accepting a warning pop-up.
-    // I imagine most of the time it won't cause issues, because admins will upload NEW prototypes instead of overwriting old ones.
-    public bool RewindUnsafe = false;
-    public bool OverrideUnsafeRewind = false;
-    public bool RewindDisabled => RewindUnsafe && !OverrideUnsafeRewind;
+    // TODO REPLAYS figure out a way to undo prototype and resource uploading. Currently uploading disables time rewinding.
+    /// <summary>
+    ///     If true, blocks this rewinding time, probably due to resource/prototype uploads
+    /// </summary>
+    public bool BlockRewind
+    {
+        get => _blockRewind;
+        set => _blockRewind |= value;
+    }
+
+    private bool _blockRewind = false;
+
+    /// <summary>
+    ///     If true, thhis will case <see cref="BlockRewind"/> to be ignored.
+    /// </summary>
+    public bool RewindOverride = false;
+
+    public bool RewindDisabled => _blockRewind && !RewindOverride;
 
     public ReplayData(
         List<GameState> states,
@@ -63,7 +75,7 @@ public readonly struct CheckpointState : IComparable<CheckpointState>
     }
 
     /// <summary>
-    ///     Get a dummy state for use with binary searches.
+    ///     Get a dummy state for use with bisection searches.
     /// </summary>
     public static CheckpointState DummyState(int index)
     {

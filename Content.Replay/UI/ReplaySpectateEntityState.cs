@@ -7,6 +7,7 @@ using static Robust.Client.UserInterface.Controls.LayoutContainer;
 
 namespace Content.Replay.UI;
 
+// TODO REPLAYS figure out what to do with gamestates & screens
 /// <summary>
 ///     Gameplay state when observing/spectating an entity during a replay.
 /// </summary>

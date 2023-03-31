@@ -60,9 +60,12 @@ public sealed partial class ReplayManager
         _timing.CurTick += 1;
         _entMan.TickUpdate(args.DeltaSeconds, noPredictions: true);
 
-        // This is somewhat of a hack. For replays, we do not want to run predictions (noPredictions: true).
-        // However, the observer still needs to be able to move. The rigorous way to do this would be to
-        // re-implement some sort of movement code. But I will just re-use existing movement controllers + physics
+        // TODO REPLAYS fix this shit.
+        // This is extremely hacky. Seeing as the client isn't actually running physics/predictions while playing back a
+        // replay (noPredictions: true), but we still need the observer/ghost to move somehow.
+        // Maybe I should just add custom mover code that is specific to replays???
+        //
+        // For now: I will just re-use existing movement controllers + physics
         // by relying on the fact that only the player's currently controlled entity gets predicted:
         if (_player.LocalPlayer?.ControlledEntity is { } player && player.IsClientSide() && _entMan.HasComponent<ReplayObserverComponent>(player))
         {
@@ -89,32 +92,38 @@ public sealed partial class ReplayManager
 
         foreach (var message in replayMessageList.Messages)
         {
+            // TODO REPLAYS find a better/more extensible way of handling messages than this giant switch statement.
             switch (message)
             {
                 case ReplayPrototypeUploadMsg prototype:
-                    CurrentReplay.RewindUnsafe = true;
+                    CurrentReplay.BlockRewind = true;
                     _netMan.DispatchLocalNetMessage(new GamePrototypeLoadMessage { PrototypeData = prototype.PrototypeData });
                     break;
                 case ReplayResourceUploadMsg resource:
-                    CurrentReplay.RewindUnsafe = true;
+                    CurrentReplay.BlockRewind = true;
                     _netMan.DispatchLocalNetMessage(new NetworkResourceUploadMessage { RelativePath = resource.RelativePath, Data = resource.Data });
                     break;
                 case ChatMessage chat:
+                    // Just pass on the chat message to the UI controller, but skip speech-bubbles if we are fast-forwarding.
                     _uiMan.GetUIController<ChatUIController>().ProcessChatMessage(chat, speechBubble: !skipEffectEvents);
+                    break;
+                case CvarChangeMsg cvars:
+                    _netMan.DispatchLocalNetMessage(new MsgConVars { Tick = _timing.CurTick, NetworkedVars = cvars.ReplicatedCvars });
                     break;
                 case RoundEndMessageEvent:
 
                     if (skipEffectEvents)
                         continue;
 
-                    // TODO REPLAYS handle round end windows properly to window duplication. The round-end logic just
-                    // needs to properly track the window. Clients should also be able to re-open the window after
-                    // having closed it.
+                    // TODO REPLAYS handle round end windows properly to prevent window duplication.
+                    // The round-end logic just needs to properly track the window. Clients should also be able to
+                    // re-open the window after having closed it.
 
                     if (!_uiMan.WindowRoot.Children.Any(x => x.GetType() == typeof(RoundEndSummaryWindow)))
                         _entMan.DispatchReceivedNetworkMsg((EntityEventArgs) message);
                     break;
                 //
+                // TODO REPLAYS figure out a cleaner way of doing this. This sucks.
                 // Next: we want to avoid spamming animations, sounds, and pop-ups while scrubbing or rewinding time
                 // (e.g., to rewind 1 tick, we really rewind ~60 and then fast forward 59). Currently, this is
                 // effectively an EntityEvent blacklist. But this is kinda shit and should be done differently somehow.
@@ -128,14 +137,12 @@ public sealed partial class ReplayManager
                 case ImpactEffectEvent:
                 case MuzzleFlashEvent:
                 case DamageEffectEvent:
-                    if (!skipEffectEvents) 
+                    if (!skipEffectEvents)
                         _entMan.DispatchReceivedNetworkMsg((EntityEventArgs)message);
                     break;
                 case EntityEventArgs args:
+                    // Just raise the event and let systems handle it.
                     _entMan.DispatchReceivedNetworkMsg(args);
-                    break;
-                case CvarChangeMsg cvars:
-                    _netMan.DispatchLocalNetMessage(new MsgConVars { Tick = _timing.CurTick, NetworkedVars = cvars.ReplicatedCvars });
                     break;
             }
         }

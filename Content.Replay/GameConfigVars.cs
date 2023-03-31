@@ -9,8 +9,12 @@ public sealed class GameConfigVars: CVars
     /// <summary>
     ///     Determines the threshold before visual events (muzzle flashes, chat pop-ups, etc) are suppressed when jumping forward in time.
     /// </summary>
+    /// <remarks>
+    ///     Effects should still show up when jumping forward ~ 1 second, but definitely not when skipping a minute or two of a gunfight.
+    /// </remarks>
     public static readonly CVarDef<int> VisualEventThreshold = CVarDef.Create("replay.visual_event_threshold", 20);
 
+    // TODO REPLAYS scale with replay tickrate?
     /// <summary>
     ///     Maximum number of ticks before a new checkpoint tick is generated.
     /// </summary>

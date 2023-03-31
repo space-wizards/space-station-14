@@ -5,6 +5,7 @@ using Content.Client.UserInterface.Systems.Hotbar.Widgets;
 
 namespace Content.Replay.UI;
 
+// TODO REPLAYS figure out what to do with gamestates & screens
 /// <summary>
 ///     Gameplay state when moving around a replay as a ghost.
 /// </summary>

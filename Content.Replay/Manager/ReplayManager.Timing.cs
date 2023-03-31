@@ -33,7 +33,7 @@ public sealed partial class ReplayManager
         {
             if (CurrentReplay.RewindDisabled)
                 return;
-            
+
             skipEffectEvents = true;
             ResetToNearestCheckpoint(value, false);
         }
@@ -58,7 +58,7 @@ public sealed partial class ReplayManager
             _gameState.ApplyGameState(state, CurrentReplay.NextState);
             ProcessMessages(CurrentReplay.CurMessages, skipEffectEvents);
 
-            // TODO find a way to just block audio/midi from starting, instead of stopping it after every application.
+            // TODO REPLAYS find a way to just block audio/midi from starting, instead of stopping it after every application.
             StopAudio();
 
             DebugTools.Assert(CurrentReplay.LastApplied + 1 == state.ToSequence);
@@ -75,7 +75,7 @@ public sealed partial class ReplayManager
     /// <param name="flushEntities">Whether to delete all entities</param>
     private void ResetToNearestCheckpoint(int index, bool flushEntities)
     {
-        // TODO REPLAYS unload prototypes & resoruces
+        // TODO REPLAYS unload prototypes & resources
 
         if (CurrentReplay == null)
             return;
@@ -100,6 +100,10 @@ public sealed partial class ReplayManager
         _gameState.PartialStateReset(state, false, false);
         _entMan.EntitySysManager.GetEntitySystem<ClientDirtySystem>().Reset();
         _entMan.EntitySysManager.GetEntitySystem<TransformSystem>().Reset();
+
+        // TODO REPLAYS add a proper custom chat control?
+        // Maybe one that allows players to skip directly to players via their names?
+        // I don't like having to just manipulate ChatUiController like this.
         _uiMan.GetUIController<ChatUIController>().History.RemoveAll(x => x.Item1 > _timing.CurTick);
         _uiMan.GetUIController<ChatUIController>().Repopulate();
         _gameState.UpdateFullRep(state, cloneDelta: true);
@@ -120,12 +124,12 @@ public sealed partial class ReplayManager
         // TODO REPLAYS properly stop all midi streams
         /*
          * Vera's comments on stopping midi:
-         * 
+         *
          * midipanic is meant to reset the state of all synthesizers, it is generally meant to be used to clear any stuck notes, not to stop MIDI entirely.
          * What you would want would be:
          * 1. Stop InstrumentComponent's logic.
          * 2. Somehow clear the MIDI scheduler. Fluidsynth might or might not have an API for this. And if the API does exist, NFluidsynth might or might not wrap this API.
-         * 3. Run midipanic logic 
+         * 3. Run midipanic logic
          *
          */
     }

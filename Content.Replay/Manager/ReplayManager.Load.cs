@@ -60,7 +60,7 @@ public sealed partial class ReplayManager
             decompressStream.CopyTo(decompressedStream, uncompressedSize);
             decompressedStream.Position = 0;
 
-            while (decompressedStream.Position < decompressedStream.Length) 
+            while (decompressedStream.Position < decompressedStream.Length)
             {
                 _serializer.DeserializeDirect(decompressedStream, out GameState state);
                 _serializer.DeserializeDirect(decompressedStream, out ReplayMessage msg);
@@ -92,6 +92,7 @@ public sealed partial class ReplayManager
 
         if (!typeHash.SequenceEqual(_serializer.GetSerializableTypesHash()))
         {
+            // TODO REPLAYS make this show an informative pop-up instead of just throwing an exception.
             throw new Exception($"{nameof(IRobustSerializer)} hashes do not match. Loading replays using a bad replay-client version?");
         }
 
@@ -106,7 +107,7 @@ public sealed partial class ReplayManager
 
         _timing.CurTick = new GameTick(uint.Parse(startTick));
         _timing.TimeBase = (new TimeSpan(long.Parse(timeBaseTimespan)), new GameTick(uint.Parse(timeBaseTick)));
-        
+
         var initFile = new ResourcePath("init_messages.dat").ToRootedPath();
         if (directory.Exists(initFile))
         {

@@ -9,7 +9,7 @@
                          Stretch="KeepCentered" />
             <Label Name="Subtext"
                    Access="Public"
-                   Text="Replay Client"/>
+                   Text="Replay Client"/> <!--TODO: LOC-->
             <OptionButton Name="ReplaySelect"
                           Access="Public"/>
             <Button Name="LoadButton"

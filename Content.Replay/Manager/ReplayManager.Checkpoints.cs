@@ -11,6 +11,7 @@ namespace Content.Replay.Manager;
 
 // This partial class contains codes for generating "checkpoint" states, which are basically just full states that allow
 // the client to jump to some point in time without having to re-process the whole replay up to that point.
+// I.e., so that when jumping to tick 1001 the client only has to apply states for tick 1000 and 1001, instead of 0, 1, 2, ....
 public sealed partial class ReplayManager
 {
     public CheckpointState GetLastCheckpoint(ReplayData data, int index)
@@ -44,26 +45,24 @@ public sealed partial class ReplayManager
 
     private CheckpointState[] GenerateCheckpoints(HashSet<string> initialCvars, List<GameState> states, List<ReplayMessage> messages)
     {
-        // given a set of states [0 to X], [X to X+1], [X+1 to X+2] ..... we want to generate additional states like [0
-        // to x+60 ], [0 to x+120], etc this makes scrubbing/jumping to a state much faster, but requires pre-processing
-        // all of the states.
-
+        // given a set of states [0 to X], [X to X+1], [X+1 to X+2] ... we want to generate additional states like [0
+        // to x+60 ], [0 to x+120], etc. This will make scrubbing/jumping to a state much faster, but requires some
+        // pre-processing all of the states.
+        // TODO REPLAYS maybe only generate checkpoints as the replay gets played back, instead of pre-processing?
+        //
         // This whole mess of a function uses a painful amount of LINQ conversion. but sadly the networked data is
         // generally sent as a list of values, which makes sense if the list contains simple state delta data that all
         // needs to be applied. But here we need to inspect existing states and combine/merge them, so things generally
-        // need to be converted into a dictionary.
+        // need to be converted into a dictionary.But even with that requirement there are a bunch of performance
+        // improvements to be made even without just de-LINQuifing or changing the networked data.
         //
-        // But even with that requirement there are a bunch of performance improvements to be made even without just
-        // de-LINQuifing or changing the networked data.E.g., the cumulative full state of map data in this function
-        // SHOULDN"T be using `GridDatum`, as that uses a list of chunks it should use its own struct that gets
-        // converted to a grid datum when copying.
-
-        // if we end up using long (e.g., 5 minute) checkpoint intervals, that might still mean that scrubbing/rewinding
+        // TODO REPLAYS Add dynamic checkpoints.
+        // If we end up using long (e.g., 5 minute) checkpoint intervals, that might still mean that scrubbing/rewinding
         // short time periods will be super stuttery. So its probably worth keeping a dynamic checkpoint following the
         // users current tick. E.g. while a replay is being replayed, keep a dynamic checkpoint that is ~30 secs behind
         // the current tick. that way the user can always go back up to ~30 seconds without having to go back to the
         // last checkpoint.
-
+        //
         // Alternatively maybe just generate reverse states? I.e. states containing data that is required to go from
         // tick X to X-1? (currently any ent that had any changes will reset ALL of its components, not just the states
         // that actually need resetting. basically: iterate forwards though states. anytime a new  comp state gets

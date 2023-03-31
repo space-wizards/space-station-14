@@ -14,7 +14,7 @@ public sealed partial class ReplayObserverSystem : EntitySystem
     private void InitializeBlockers()
     {
         // Block most interactions to avoid mispredicts
-
+        // This **shouldn't** be required, but just in case.
         SubscribeLocalEvent<ReplayObserverComponent, UseAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<ReplayObserverComponent, PickupAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<ReplayObserverComponent, ThrowAttemptEvent>(OnAttempt);
@@ -35,6 +35,7 @@ public sealed partial class ReplayObserverSystem : EntitySystem
 
     private void OnUpdateCanMove(EntityUid uid, ReplayObserverComponent component, CancellableEntityEventArgs args)
     {
+        // TODO REPLAYS fix replay movement shit-code.
         if (!uid.IsClientSide())
             args.Cancel();
     }

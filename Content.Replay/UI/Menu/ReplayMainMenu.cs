@@ -9,6 +9,14 @@ using Robust.Shared.Utility;
 
 namespace Content.Replay.UI.Menu;
 
+// TODO REPLAYS maybe just remove this?
+// The neccesity for this screen depends entirely on how replays end up being launched.
+// If its via an un-sandboxed standalone exe, this should just use a file selection dialog
+// If its a sandboxed exe, I guess the current %appdata% dropdown is fine?
+// If its via the launcher somehow.. uhhh.... I guess this isn't needed outside of debug?
+// Also:
+// TODO REPLAYS
+// localize button text.
 /// <summary>
 ///     Main menu screen that is the first screen to be displayed when the game starts.
 /// </summary>
@@ -35,6 +43,8 @@ public sealed class ReplayMainScreen : State
         _mainMenuControl.RefreshButton.OnPressed += OnRefreshPressed;
         _mainMenuControl.LoadButton.OnPressed += OnLoadpressed;
 
+        // TODO REPLAYS why is this try catch here again?
+        // This seems very fishy
         try
         {
             _directory ??= _resourceMan.UserData.OpenSubdirectory(DefaultReplayDirectory);
