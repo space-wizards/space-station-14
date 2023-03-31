@@ -38,6 +38,8 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 400
+  - type: StaticPrice
+    price: 20
 
 - type: entity
   parent: GasTankBase

@@ -16,6 +16,6 @@
       price: 100
     - type: PhysicalComposition
       materialComposition:
-        Glass: 400
+        Glass: 200
       chemicalComposition:
         Silicon: 20
