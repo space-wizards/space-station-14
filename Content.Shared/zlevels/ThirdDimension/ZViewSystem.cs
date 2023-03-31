@@ -90,7 +90,6 @@ public abstract class SharedZViewSystem : EntitySystem
             {
                 QueueDel(e);
             }
-
             view.DownViewEnts.Clear();
             var maps = new MapId[ViewDepth];
             var amt = _zLevel.AllMapsBelow(xform.MapID, ref maps);
