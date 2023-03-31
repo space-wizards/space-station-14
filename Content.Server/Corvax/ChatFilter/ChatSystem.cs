@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Content.Server.Chat.Systems;
@@ -132,8 +133,10 @@ public sealed partial class ChatSystem
 
         return Regex.Replace(message, "\\b(\\w+)\\b", match =>
         {
+            bool isUpperCase = match.Value.All(Char.IsUpper);
+
             if (SlangReplace.TryGetValue(match.Value.ToLower(), out var replacement))
-                return replacement;
+                return isUpperCase ? replacement.ToUpper() : replacement;
             return match.Value;
         });
     }
