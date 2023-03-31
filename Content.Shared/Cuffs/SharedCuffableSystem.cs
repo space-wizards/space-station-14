@@ -134,11 +134,11 @@ namespace Content.Shared.Cuffs
 
         private void OnCuffsRemovedFromContainer(EntityUid uid, CuffableComponent component, EntRemovedFromContainerMessage args)
         {
-            if (args.Container.ID == component.Container.ID)
-            {
-                _handVirtualItem.DeleteInHandsMatching(uid, args.Entity);
-                UpdateCuffState(uid, component);
-            }
+            if (args.Container.ID != component.Container.ID)
+                return;
+
+            _handVirtualItem.DeleteInHandsMatching(uid, args.Entity);
+            UpdateCuffState(uid, component);
         }
 
         private void OnCuffsInsertedIntoContainer(EntityUid uid, CuffableComponent component, ContainerModifiedMessage args)
