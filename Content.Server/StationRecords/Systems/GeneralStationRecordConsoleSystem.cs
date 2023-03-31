@@ -1,6 +1,7 @@
 using Content.Server.Station.Systems;
 using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
+using System.Linq;
 
 namespace Content.Server.StationRecords.Systems;
 
@@ -14,7 +15,7 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
     {
         SubscribeLocalEvent<GeneralStationRecordConsoleComponent, BoundUIOpenedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<GeneralStationRecordConsoleComponent, SelectGeneralStationRecord>(OnKeySelected);
-        SubscribeLocalEvent<GeneralStationRecordConsoleComponent, StationRecordConsoleFiltersMsg>(OnFiltersChanged);
+        SubscribeLocalEvent<GeneralStationRecordConsoleComponent, GeneralStationRecordPrintsMsg>(OnFiltersChanged);
         SubscribeLocalEvent<GeneralStationRecordConsoleComponent, RecordModifiedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<GeneralStationRecordConsoleComponent, AfterGeneralRecordCreatedEvent>(UpdateUserInterface);
     }
@@ -32,9 +33,14 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
     }
 
     private void OnFiltersChanged(EntityUid uid,
-        GeneralStationRecordConsoleComponent component, StationRecordConsoleFiltersMsg msg)
+        GeneralStationRecordConsoleComponent component, GeneralStationRecordPrintsMsg msg)
     {
-        Logger.Debug($"filter values  gived me! {msg.fingerPrints}");
+        string prints = msg.printsMsg;
+        if (component.printsFilter != prints)
+        {
+            component.printsFilter = prints.Length > 0 ? prints.ToLower() : "";
+            UpdateUserInterface(uid, component);
+        }
     }
 
     private void UpdateUserInterface(EntityUid uid,
@@ -49,7 +55,8 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
         if (!TryComp<StationRecordsComponent>(owningStation, out var stationRecordsComponent))
         {
-            SetEmptyStateForInterface(uid);
+            GeneralStationRecordConsoleState state = new(null, null, null, null);
+            SetStateForInterface(uid, state);
             return;
         }
 
@@ -60,13 +67,26 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
         foreach (var pair in consoleRecords)
         {
+            if (console != null && console.printsFilter != null && pair.Item2.Fingerprint != null)
+            {
+                if (IsFilterPrints(pair.Item2.Fingerprint, console.printsFilter))
+                {
+                    continue;
+                }
+            }
+
             listing.Add(pair.Item1, pair.Item2.Name);
         }
 
         if (listing.Count == 0)
         {
-            SetEmptyStateForInterface(uid);
+            GeneralStationRecordConsoleState state = new(null, null, null, console.printsFilter);
+            SetStateForInterface(uid, state);
             return;
+        }
+        else if (listing.Count == 1)
+        {
+            console.ActiveKey = listing.Keys.First();
         }
 
         GeneralStationRecord? record = null;
@@ -76,17 +96,8 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
                 stationRecordsComponent);
         }
 
-        GeneralStationRecordConsoleState newState =
-            new GeneralStationRecordConsoleState(console.ActiveKey, record, listing);
-
+        GeneralStationRecordConsoleState newState = new(console.ActiveKey, record, listing, console.printsFilter);
         SetStateForInterface(uid, newState);
-    }
-
-    private void SetEmptyStateForInterface(EntityUid uid)
-    {
-        GeneralStationRecordConsoleState state =
-            new GeneralStationRecordConsoleState(null, null, null);
-        SetStateForInterface(uid, state);
     }
 
     private void SetStateForInterface(EntityUid uid, GeneralStationRecordConsoleState newState)
@@ -94,5 +105,11 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
         _userInterface
             .GetUiOrNull(uid, GeneralStationRecordConsoleKey.Key)
             ?.SetState(newState);
+    }
+
+    private bool IsFilterPrints(string printsValue, string filter)
+    {
+        string lowerValue = printsValue.ToLower();
+        return filter.Length > 0 && !lowerValue.StartsWith(filter);
     }
 }

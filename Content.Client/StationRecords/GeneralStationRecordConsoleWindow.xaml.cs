@@ -13,13 +13,11 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 {
     public Action<StationRecordKey?>? OnKeySelected;
 
-    public Action<StationRecordConsoleFiltersMsg>? OnFiltersChanged;
+    public Action<string>? OnFiltersChanged;
 
     private bool _isPopulating;
 
     private string _fingerPrintsFilter = "";
-
-    private GeneralStationRecordConsoleState? _state;
 
     public GeneralStationRecordConsoleWindow()
     {
@@ -41,41 +39,37 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
                 OnKeySelected?.Invoke(null);
         };
 
-        RecordListingFingerPrintsFilter.OnPressed += _ =>
+        StationRecordFilters.OnPressed += _ =>
         {
-            if (_isPopulating)
-            {
-                return;
-            }
-
-            string fingerPrints = RecordListinFingerPrintsLine.Text;
-            StationRecordConsoleFiltersMsg newFilters = new(fingerPrints);
-            OnFiltersChanged?.Invoke(newFilters);
+            FilterRecordListings(StationRecordsFilterPrints.Text);
         };
 
-        // RecordListingFingerPrintsReset.OnPressed += _ =>
-        // {
-        //     RecordListinFingerPrintsLine.Text = "";
-        // };
+        StationRecordFiltersReset.OnPressed += _ =>
+        {
+            FilterRecordListings();
+        };
     }
 
-    public void UpdateState(GeneralStationRecordConsoleState state, bool setState = true)
+    public void UpdateState(GeneralStationRecordConsoleState state)
     {
+        if (state.printsFilter != null && state.printsFilter != StationRecordsFilterPrints.Text)
+        {
+            StationRecordsFilterPrints.Text = state.printsFilter;
+        }
+
         if (state.RecordListing == null)
         {
             RecordListingStatus.Visible = true;
             RecordListing.Visible = false;
             RecordListingStatus.Text = Loc.GetString("general-station-record-console-empty-state");
+            RecordContainer.Visible = false;
+            RecordContainerStatus.Visible = false;
             return;
-        }
-
-        if (setState)
-        {
-            _state = state;
         }
 
         RecordListingStatus.Visible = false;
         RecordListing.Visible = true;
+        RecordContainer.Visible = true;
 
         PopulateRecordListing(state.RecordListing!, state.SelectedKey);
 
@@ -155,6 +149,14 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
         foreach (var control in recordControls)
         {
             RecordContainer.AddChild(control);
+        }
+    }
+
+    private void FilterRecordListings(string _prints = "")
+    {
+        if (!_isPopulating)
+        {
+            OnFiltersChanged?.Invoke(_prints);
         }
     }
 }

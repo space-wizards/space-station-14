@@ -27,9 +27,9 @@ public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInt
         SendMessage(new SelectGeneralStationRecord(key));
     }
 
-    private void OnFiltersChanged(StationRecordConsoleFiltersMsg filters)
+    private void OnFiltersChanged(string prints)
     {
-        SendMessage(filters);
+        SendMessage(new GeneralStationRecordPrintsMsg(prints));
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

@@ -31,15 +31,18 @@ public sealed class GeneralStationRecordConsoleState : BoundUserInterfaceState
     public StationRecordKey? SelectedKey { get; }
     public GeneralStationRecord? Record { get; }
     public Dictionary<StationRecordKey, string>? RecordListing { get; }
-    public GeneralStationRecordConsoleState(StationRecordKey? key,
-        GeneralStationRecord? record, Dictionary<StationRecordKey, string>? recordListing)
+    public string? printsFilter { get; }
+    public GeneralStationRecordConsoleState(StationRecordKey? key, GeneralStationRecord? record,
+        Dictionary<StationRecordKey, string>? recordListing, string? prints)
     {
         SelectedKey = key;
         Record = record;
         RecordListing = recordListing;
+        printsFilter = prints;
     }
 
-    public bool IsEmpty() => SelectedKey == null && Record == null && RecordListing == null;
+    public bool IsEmpty() => SelectedKey == null
+        && Record == null && RecordListing == null && printsFilter == null;
 }
 
 [Serializable, NetSerializable]
@@ -50,5 +53,16 @@ public sealed class SelectGeneralStationRecord : BoundUserInterfaceMessage
     public SelectGeneralStationRecord(StationRecordKey? selectedKey)
     {
         SelectedKey = selectedKey;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class GeneralStationRecordPrintsMsg : BoundUserInterfaceMessage
+{
+    public string printsMsg { get; } = "";
+
+    public GeneralStationRecordPrintsMsg(string prints)
+    {
+        printsMsg = prints;
     }
 }

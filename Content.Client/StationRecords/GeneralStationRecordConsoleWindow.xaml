@@ -2,33 +2,19 @@
                Title="{Loc 'general-station-record-console-window-title'}"
                MinSize="750 500">
     <BoxContainer Orientation="Vertical">
-        <PanelContainer StyleClasses="BackgroundDark"></PanelContainer>
-        <BoxContainer Orientation="Vertical" Margin="20 5"
+        <BoxContainer Orientation="Vertical" Margin="5 10 5 5"
                 HorizontalExpand="true">
-            <BoxContainer Margin="5" HorizontalExpand="true">
-                <!-- the first column with filters -->
-                <BoxContainer Margin="0 0 10 0" Orientation="Vertical" HorizontalExpand="true">
-                    <Label Text="{Loc 'general-station-record-filter-name'}"/>
-                    <LineEdit StyleClasses="actionSearchBox" Margin="0 0 0 5" Name="StationRecordsFilterName"
-                        PlaceHolder="{Loc 'general-station-record-set-filter-name'}" HorizontalExpand="True"/>
-                    <!-- <Label Text="Name 2 filter:"/>
-                    <LineEdit StyleClasses="actionSearchBox" Margin="0 0 0 5" HorizontalExpand="True"/> -->
-                </BoxContainer>
-                <!-- the second column with filters -->
-                <BoxContainer Margin="10 0 0 0" Orientation="Vertical" HorizontalExpand="true">
-                    <Label Text="{Loc 'general-station-record-filter-prints'}"/>
-                    <LineEdit Name="StationRecordsFilterPrints"
-                        StyleClasses="actionSearchBox" HorizontalExpand="True"
-                        PlaceHolder="{Loc 'general-station-record-console-set-fingerprint-code'}"/>
-                    <!-- <Label Text="Name 3 filter:"/>
-                    <LineEdit StyleClasses="actionSearchBox" Margin="0 0 0 5" HorizontalExpand="True"/> -->
-                </BoxContainer>
+            <BoxContainer Margin="0 0 0 5" HorizontalExpand="true">
+                <Label Text="{Loc 'general-station-record-filter-prints'}" Margin="0 0 10 0"/>
+                <LineEdit Name="StationRecordsFilterPrints"
+                    StyleClasses="actionSearchBox" HorizontalExpand="True"
+                    PlaceHolder="{Loc 'general-station-record-console-set-fingerprint-code'}"/>
             </BoxContainer>
-            <BoxContainer Margin="5" HorizontalAlignment="Right" HorizontalExpand="true"
+            <BoxContainer Margin="0 0 0 5" HorizontalAlignment="Right" HorizontalExpand="true"
                 VerticalAlignment="Center">
-                <Button Name="RecordListingFingerPrintsFilter"
+                <Button Name="StationRecordFilters"
                     Text="{Loc 'general-station-record-console-search-records'}"/>
-                <Button Name="RecordListingFingerPrintsReset"
+                <Button Name="StationRecordFiltersReset"
                     Text="{Loc 'general-station-record-console-reset-filters'}"/>
             </BoxContainer>
         </BoxContainer>

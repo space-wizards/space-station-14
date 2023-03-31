@@ -6,4 +6,5 @@ namespace Content.Server.StationRecords;
 public sealed class GeneralStationRecordConsoleComponent : Component
 {
     public StationRecordKey? ActiveKey { get; set; }
+    public string? printsFilter { get; set; }
 }
