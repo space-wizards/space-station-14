@@ -385,7 +385,7 @@
     Sodium Carbonate:
       amount: 1
   products:
-    Diphenylmethylamine: 2
+    Diphenylmethylamine: 3
 
 - type: reaction
   id: SodiumCarbonate
