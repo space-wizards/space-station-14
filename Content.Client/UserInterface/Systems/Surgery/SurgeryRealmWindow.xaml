@@ -1,0 +1,7 @@
+﻿<DefaultWindow
+    xmlns="https://spacestation14.io"
+    xmlns:viewport="clr-namespace:Content.Client.Viewport"
+    MinWidth="500"
+    MinHeight="436">
+    <viewport:ScalingViewport Name="ScalingVp" MouseFilter="Stop" RenderScaleMode="CeilInt" />
+</DefaultWindow>

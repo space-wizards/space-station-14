@@ -9,6 +9,8 @@
     netsync: false
   - type: StaticPrice
     price: 60
+  - type: SurgeryRealmTool
+    heart: OrganHumanHeart
 
 # Cautery
 
