@@ -1,0 +1,1787 @@
+
+
+
+
+
+
+# UPLINK
+
+
+
+
+
+
+
+- type: entity
+
+  name: honkul
+
+  parent: BaseItem
+
+  id: TelecrystalClown
+
+  suffix: 20
+
+  description: The crystal developed by Honkmother has a size of about 1 cm in diameter and has the shape of a regular octahedron. It is made of pure silicon and has high hardness and strength.
+
+  components:
+
+  - type: Sprite
+
+    color: "#0000FF"
+
+    sprite: Objects/Specific/Syndicate/telecrystal.rsi
+
+    netsync: false
+
+    state: telecrystal
+
+  - type: Item
+
+    color: "#0000FF"
+
+    sprite: Objects/Specific/Syndicate/telecrystal.rsi
+
+  - type: Stack
+
+    count: 20
+
+    max: 999999 # todo: add support for unlimited stacks
+
+    stackType: TelecrystalClown
+
+  - type: StackPrice
+
+    price: 200
+
+  - type: Currency
+
+    price:
+
+      TelecrystalClown: 1
+
+
+
+- type: entity
+
+  noSpawn: true
+
+  parent: BaseItem
+
+  id: BaseUplinkPurkClown
+
+  name: ClownUplink
+
+  description: Only clowns know how to use it.
+
+  components:
+
+  - type: Sprite
+
+    sprite: Objects/Devices/communication.rsi
+
+    layers:
+
+    - state: old-radio
+
+    netsync: false
+
+  - type: Item
+
+    sprite: Objects/Devices/communication.rsi
+
+    heldPrefix: old-radio
+
+  - type: UserInterface
+
+    interfaces:
+
+    - key: enum.StoreUiKey.Key
+
+      type: StoreBoundUserInterface
+
+  - type: ActivatableUI
+
+    key: enum.StoreUiKey.Key
+
+  - type: Store
+
+    preset: StorePresetERT
+
+    balance: 
+
+      TelecrystalClown: 0
+
+
+
+- type: stack
+
+  id: TelecrystalClown
+
+  name: TelecrystalClown
+
+  icon: Objects/Specific/Syndicate/telecrystal.rsi
+
+  spawn: TelecrystalClown
+
+
+
+- type: entity
+
+  parent: BaseUplinkPurkClown
+
+  id: UplinkClown
+
+  name: Honkomother store
+
+  suffix: 40
+
+  components:
+
+  - type: Store
+
+    preset: StorePresetClown
+
+    balance:
+
+      TelecrystalClown: 40
+
+
+
+- type: currency
+
+  id: TelecrystalClown
+
+  displayName: store-currency-display-telecrystal
+
+  cash: 
+
+    1: TelecrystalClown
+
+  canWithdraw: true
+
+
+
+- type: storePreset
+
+  id: StorePresetClown
+
+  storeName: Honkmother store
+
+  categories:
+
+  - UplinkUselesC
+
+  - UplinkThingC
+
+  - UplinkClothingC
+
+  - UplinkFoodC
+
+  - UplinkWeaponC
+
+  currencyWhitelist:
+
+  - TelecrystalClown
+
+
+
+
+
+
+
+ # STOOOORE
+
+
+
+
+
+
+
+- type: storeCategory
+
+  id: UplinkUselesC
+
+  name: Trinkets
+
+  priority: -1
+
+
+
+- type: storeCategory
+
+  id: UplinkThingC
+
+  name: Pranks
+
+  priority: 0
+
+
+
+- type: storeCategory
+
+  id: UplinkClothingC
+
+  name: Clothes
+
+  priority: 1
+
+
+
+- type: storeCategory
+
+  id: UplinkFoodC
+
+  name: Food
+
+  priority: 2
+
+
+
+- type: storeCategory
+
+  id: UplinkWeaponC
+
+  name: WEAPON
+
+  priority: 3
+
+
+
+
+
+
+
+# UplinkUselesC
+
+
+
+
+
+
+
+- type: listing
+
+  id: UplinkBananaPeel
+
+  name: "banana peel"
+
+  description: "What could be funnier than an officer detaining a clown for a peel under his feet?"
+
+  productEntity: TrashBananaPeel #
+
+  cost:
+
+    TelecrystalClown: 1
+
+  categories:
+
+  - UplinkUselesC
+
+ 
+
+- type: listing
+
+  id: UplinkSpeedLoaderCap
+
+  name: "speedloder pistons"
+
+  description: "Kill kill kill reloading and kill kill kill"
+
+  productEntity: SpeedLoaderCap #
+
+  cost:
+
+    TelecrystalClown: 1
+
+  categories:
+
+  - UplinkUselesC
+
+
+
+- type: listing
+
+  id: UplinkRubberStampClown
+
+  name: "the clown's seal"
+
+  description: "Ruin the documents for your boss."
+
+  productEntity: RubberStampClown #
+
+  cost:
+
+    TelecrystalClown: 1
+
+  categories:
+
+  - UplinkUselesC
+
+
+
+- type: listing
+
+  id: UplinkLampBanana
+
+  name: "banana lamp"
+
+  description: "Works on honkoenergy, illuminates the way to a bright future!"
+
+  productEntity: LampBanana #
+
+  cost:
+
+    TelecrystalClown: 2
+
+  categories:
+
+  - UplinkUselesC
+
+ 
+
+- type: listing
+
+  id: UplinkBananaPhoneInstrument
+
+  name: "bananaphone"
+
+  description: "You can call a representative of the Honkmother directly, or play your favorite song about security."
+
+  productEntity: BananaPhoneInstrument #
+
+  cost:
+
+    TelecrystalClown: 3
+
+  categories:
+
+  - UplinkUselesC
+
+ 
+
+- type: listing
+
+  id: UplinkToyHonk
+
+  name: "Toy Honk"
+
+  description: "Best mech."
+
+  productEntity: ToyHonk #
+
+  cost:
+
+    TelecrystalClown: 1
+
+  categories:
+
+  - UplinkUselesC
+
+ 
+
+- type: listing
+
+  id: UplinkHappyHonkCluwne
+
+  name: "Happyhonk cluwne"
+
+  description: "From HappyHonk.INC, contains 1 bike horn cluwne. Stylish gift box."
+
+  productEntity: HappyHonkCluwne #
+
+  cost:
+
+    TelecrystalClown: 1
+
+  categories:
+
+  - UplinkUselesC
+
+ 
+
+- type: listing
+
+  id: UplinkPlushieSharkPink
+
+  name: "pink honkula"
+
+  description: "Honkula! uwu"
+
+  productEntity: PlushieSharkPink #
+
+  cost:
+
+    TelecrystalClown: 2
+
+  categories:
+
+  - UplinkUselesC
+
+ 
+
+- type: listing
+
+  id: UplinkPlushieSharkGrey
+
+  name: "grey honkula"
+
+  description: "Honkula! owo"
+
+  productEntity: PlushieSharkGrey #
+
+  cost:
+
+    TelecrystalClown: 2
+
+  categories:
+
+  - UplinkUselesC
+
+ 
+
+- type: listing
+
+  id: UplinkPlushieSharkBlue
+
+  name: "blue honkula"
+
+  description: "Honkula! ^w^"
+
+  productEntity: PlushieSharkBlue #
+
+  cost:
+
+    TelecrystalClown: 2
+
+  categories:
+
+  - UplinkUselesC
+
+
+
+
+
+
+
+# UplinkThingC
+
+ 
+
+
+
+
+
+- type: listing
+
+  id: UplinkBikeHorn
+
+  name: "bike horn"
+
+  description: "hoooonk"
+
+  productEntity: BikeHorn
+
+  cost:
+
+    TelecrystalClown: 1
+
+  categories:
+
+  - UplinkThingC
+
+ 
+
+- type: listing
+
+  id: UplinkGoldenBikeHorn
+
+  name: "golden bike horn"
+
+  description: "sooo premium"
+
+  productEntity: GoldenBikeHorn
+
+  cost:
+
+    TelecrystalClown: 3
+
+  categories:
+
+  - UplinkThingC
+
+ 
+
+- type: listing
+
+  id: UplinkBikeHornInstrument
+
+  name: "musical bike horn"
+
+  description: "maybe play some Atomic Heart OST?"
+
+  productEntity: BikeHornInstrument
+
+  cost:
+
+    TelecrystalClown: 2
+
+  categories:
+
+  - UplinkThingC
+
+ 
+
+- type: listing
+
+  id: UplinkLauncherCreamPie
+
+  name: "launcher cream pie"
+
+  description: "Arrange Giggles to the Security officer. Do not forget to ask the Honkmother to get rid of clumsiness"
+
+  productEntity: LauncherCreamPie
+
+  cost:
+
+    TelecrystalClown: 6
+
+  categories:
+
+  - UplinkThingC
+
+ 
+
+- type: listing
+
+  id: UplinkWeaponImprovisedPneumaticCannon
+
+  name: "improvised pneumatic cannon"
+
+  description: "Shoots far, and accurately. Don't forget to ask the Honkmother to get rid of clumsiness."
+
+  productEntity: WeaponImprovisedPneumaticCannon
+
+  cost:
+
+    TelecrystalClown: 6
+
+  categories:
+
+  - UplinkThingC
+
+ 
+
+- type: listing
+
+  id: UplinkStealthBoxClown
+
+  name: "stealth box"
+
+  description: "Become invisible if it does not move."
+
+  productEntity: StealthBox
+
+  cost:
+
+    TelecrystalClown: 10
+
+  categories:
+
+  - UplinkThingC
+
+
+
+- type: listing
+
+  id: UplinkSoapOmega
+
+  name: "Omega Soap"
+
+  description: "Sends - far away, and for a long time."
+
+  productEntity: SoapOmega
+
+  cost:
+
+    TelecrystalClown: 3
+
+  categories:
+
+  - UplinkThingC
+
+ 
+
+- type: listing
+
+  id: UplinkSoapSyndie
+
+  name: "Soap"
+
+  description: "Sends - far away, but not for long."
+
+  productEntity: SoapSyndie
+
+  cost:
+
+    TelecrystalClown: 2
+
+  categories:
+
+  - UplinkThingC
+
+ 
+
+- type: listing
+
+  id: UplinkRGBStaff
+
+  name: "RGB stick"
+
+  description: "Become the party!"
+
+  productEntity: RGBStaff
+
+  cost:
+
+    TelecrystalClown: 15
+
+  categories:
+
+  - UplinkThingC
+
+ 
+
+- type: listing
+
+  id: UplinkToySword
+
+  name: "toy sword"
+
+  description: "Become dark force."
+
+  productEntity: ToySword
+
+  cost:
+
+    TelecrystalClown: 3
+
+  categories:
+
+  - UplinkThingC
+
+ 
+
+- type: listing
+
+  id: UplinkRevolverCapGun
+
+  name: "cap gun"
+
+  description: "Shoot your abusers! Do not forget to ask the Honkmother to get rid of clumsiness."
+
+  productEntity: RevolverCapGun
+
+  cost:
+
+    TelecrystalClown: 1
+
+  categories:
+
+  - UplinkThingC
+
+ 
+
+- type: listing
+
+  id: UplinkSyndicateIDCard
+
+  name: "syndicate id card replica"
+
+  description: "HoP be happy"
+
+  productEntity: SyndicateIDCard
+
+  cost:
+
+    TelecrystalClown: 3
+
+  categories:
+
+  - UplinkThingC
+
+
+
+
+
+
+
+# UplinkClothingC
+
+ 
+
+
+
+
+
+- type: listing
+
+  id: UplinkClothingNeckCloakMoth
+
+  name: "moth cloak"
+
+  description: "Run around the station, to the sounds of BZZ-BZZ-BZZ!"
+
+  productEntity: ClothingNeckCloakMoth
+
+  cost:
+
+    TelecrystalClown: 1
+
+  categories:
+
+  - UplinkClothingC
+
+
+
+- type: listing
+
+  id: UplinkClothingOuterWinterClown
+
+  name: "clowns winter coat"
+
+  description: "Jokes certainly prolong life, but they will not save you from the atmos error."
+
+  productEntity: ClothingOuterWinterClown
+
+  cost:
+
+    TelecrystalClown: 1
+
+  categories:
+
+  - UplinkClothingC
+
+ 
+
+- type: listing
+
+  id: UplinkClothingUniformJumpsuitClown
+
+  name: "clown jumpsuit"
+
+  description: "Stay cool."
+
+  productEntity: ClothingUniformJumpsuitClown
+
+  cost:
+
+    TelecrystalClown: 1
+
+  categories:
+
+  - UplinkClothingC
+
+ 
+
+- type: listing
+
+  id: UplinkClothingClothingMaskClown
+
+  name: "clown mask"
+
+  description: "Don't lost"
+
+  productEntity: ClothingMaskClown
+
+  cost:
+
+    TelecrystalClown: 1
+
+  categories:
+
+  - UplinkClothingC
+
+
+
+- type: listing
+
+  id: UplinkClothingOuterClownPriest
+
+  name: "clown pritest"
+
+  description: "For madness fans"
+
+  productEntity: ClothingOuterClownPriest
+
+  cost:
+
+    TelecrystalClown: 1
+
+  categories:
+
+  - UplinkClothingC
+
+ 
+
+- type: listing
+
+  id: UplinkClothingBackpackERTClown
+
+  name: "ERT clown backpack"
+
+  description: "This is how many bananas can be placed..."
+
+  productEntity: ClothingBackpackERTClown
+
+  cost:
+
+    TelecrystalClown: 20
+
+  categories:
+
+  - UplinkClothingC
+
+ 
+
+- type: listing
+
+  id: UplinkClothingNeckCloakHos
+
+  name: "HoS cloak"
+
+  description: "King Kong cloak"
+
+  productEntity: ClothingNeckCloakHos
+
+  cost:
+
+    TelecrystalClown: 15
+
+  categories:
+
+  - UplinkClothingC
+
+ 
+
+- type: listing
+
+  id: UplinkClothingNeckCloakCapFormal
+
+  name: "cap cloak"
+
+  description: "You're the best"
+
+  productEntity: ClothingNeckCloakCapFormal
+
+  cost:
+
+    TelecrystalClown: 15
+
+  categories:
+
+  - UplinkClothingC
+
+ 
+
+- type: listing
+
+  id: UplinkClothingOuterGhostSheet
+
+  name: "ghot sheet"
+
+  description: "Frighten assistants in technical rooms. Boo!"
+
+  productEntity: ClothingOuterGhostSheet
+
+  cost:
+
+    TelecrystalClown: 2
+
+  categories:
+
+  - UplinkClothingC
+
+ 
+
+- type: listing
+
+  id: UplinkClothingShoesBling
+
+  name: "golden clown shoes"
+
+  description: "Meow."
+
+  productEntity: ClothingShoesBling
+
+  cost:
+
+    TelecrystalClown: 5
+
+  categories:
+
+  - UplinkClothingC
+
+  
+
+- type: listing
+
+  id: UplinkBedsheetCentcom
+
+  name: "centcom bedsheet"
+
+  description: "Hype bedsheet"
+
+  productEntity: BedsheetCentcom
+
+  cost:
+
+    TelecrystalClown: 2
+
+  categories:
+
+  - UplinkClothingC
+
+  
+
+- type: listing
+
+  id: UplinkClothingHeadHatCentcom
+
+  name: "Centcom hat"
+
+  description: "Did they think you were the lowest chain in evolution? BUT! This hat proves the opposite, show me who's in charge here."
+
+  productEntity: ClothingHeadHatCentcom
+
+  cost:
+
+    TelecrystalClown: 3
+
+  categories:
+
+  - UplinkClothingC
+
+ 
+
+- type: listing
+
+  id: UplinkClothingMaskGasSyndicate
+
+  name: "replica gas mask syndicate"
+
+  description: "A tight-fitting replica of a tactical mask that can be connected to a breathing balloon."
+
+  productEntity: ClothingMaskGasSyndicate
+
+  cost:
+
+    TelecrystalClown: 4
+
+  categories:
+
+  - UplinkClothingC
+
+ 
+
+
+
+
+
+# UplinkFoodC
+
+ 
+
+
+
+
+
+- type: listing
+
+  id: UplinkFoodSoupChiliClown
+
+  name: "chili soup"
+
+  description: "Will encourage even the dead!"
+
+  productEntity: FoodSoupChiliClown
+
+  cost:
+
+    TelecrystalClown: 1
+
+  categories:
+
+  - UplinkFoodC
+
+ 
+
+- type: listing
+
+  id: UplinkFoodSoupClown
+
+  name: "tears of a clown"
+
+  description: "Sweet, with notes of sadness."
+
+  productEntity: FoodSoupClown
+
+  cost:
+
+    TelecrystalClown: 1
+
+  categories:
+
+  - UplinkFoodC
+
+ 
+
+- type: listing
+
+  id: UplinkDrinkBananaHonkGlass
+
+  name: "banana honk"
+
+  description: "Delicious, and it can also save you from the monkey virus."
+
+  productEntity: DrinkBananaHonkGlass
+
+  cost:
+
+    TelecrystalClown: 1
+
+  categories:
+
+  - UplinkFoodC
+
+ 
+
+- type: listing
+
+  id: UplinkFoodTomato
+
+  name: "tomato"
+
+  description: "Just tomato, bruh."
+
+  productEntity: FoodTomato
+
+  cost:
+
+    TelecrystalClown: 1
+
+  categories:
+
+  - UplinkFoodC
+
+
+
+- type: listing
+
+  id: UplinkFoodBreadBanana
+
+  name: "banana bread"
+
+  description: "It has... a banana?"
+
+  productEntity: FoodBreadBanana
+
+  cost:
+
+    TelecrystalClown: 1
+
+  categories:
+
+  - UplinkFoodC
+
+
+
+- type: listing
+
+  id: UplinkFoodTinBeans
+
+  name: "jar of beans"
+
+  description: "Are they really fresh?"
+
+  productEntity: FoodTinBeans
+
+  cost:
+
+    TelecrystalClown: 1
+
+  categories:
+
+  - UplinkFoodC
+
+
+
+- type: listing
+
+  id: UplinkFoodTinPeaches
+
+  name: "jar of beans"
+
+  description: "Yey!!!"
+
+  productEntity: FoodTinPeaches
+
+  cost:
+
+    TelecrystalClown: 1
+
+  categories:
+
+  - UplinkFoodC
+
+
+
+- type: listing
+
+  id: UplinkFoodBoxDonkpocketDink
+
+  name: "dink-pocket"
+
+  description: "Yummy, can cure bo-bo if eaten warm."
+
+  productEntity: FoodBoxDonkpocketDink
+
+  cost:
+
+    TelecrystalClown: 2
+
+  categories:
+
+  - UplinkFoodC
+
+
+
+- type: listing
+
+  id: UplinkFoodBoxDonkpocket
+
+  name: "donk-pocket"
+
+  description: "Yummy, can cure bo-bo if eaten warm."
+
+  productEntity: FoodBoxDonkpocket
+
+  cost:
+
+    TelecrystalClown: 2
+
+  categories:
+
+  - UplinkFoodC
+
+
+
+- type: listing
+
+  id: UplinkFoodBoxDonkpocketHonk
+
+  name: "honk-pocket"
+
+  description: "Yummy, can cure bo-bo if eaten warm."
+
+  productEntity: FoodBoxDonkpocketHonk
+
+  cost:
+
+    TelecrystalClown: 2
+
+  categories:
+
+  - UplinkFoodC
+
+
+
+
+
+
+
+# UplinkWeaponC
+
+ 
+
+
+
+
+
+- type: listing
+
+  id: UplinkFoodPieBananaCream
+
+  name: "cream pie"
+
+  description: "Fucking pies..."
+
+  productEntity: FoodPieBananaCream
+
+  cost:
+
+    TelecrystalClown: 1
+
+  categories:
+
+  - UplinkWeaponC
+
+
+
+- type: listing
+
+  id: UplinkNukeDiskFake
+
+  name: "nuke disk (fake)"
+
+  description: "HoS be like."
+
+  productEntity: NukeDiskFake
+
+  cost:
+
+    TelecrystalClown: 1
+
+  categories:
+
+  - UplinkWeaponC
+
+
+
+- type: listing
+
+  id: UplinkSyndicateBombFake
+
+  name: "clown's mini-bomb (not real)"
+
+  description: "A funny device for spot pranks, for example, the rapid destruction of the morality of a cadet of the SB, SSB or something else. The timer is set for 15 seconds, after which it disappears."
+
+  productEntity: SyndicateBombFake
+
+  cost:
+
+    TelecrystalClown: 4
+
+  categories:
+
+  - UplinkWeaponC
+
+
+
+- type: listing
+
+  id: UplinkC4Clown
+
+  name: "С-4 (not real)"
+
+  description: "It is used for making neat, not too big, giggles in the places of the bookmark. A favorite means of clowns to induce fear. The timer is set for 100 seconds, after which it disappears. It takes 50 seconds to detach from the surface."
+
+  productEntity: C4Clown
+
+  cost:
+
+    TelecrystalClown: 4
+
+  categories:
+
+  - UplinkWeaponC
+
+
+
+- type: listing
+
+  id: UplinkSawImprovClown
+
+  name: "improv saw"
+
+  description: "Time to comb your wig... or your abuser."
+
+  productEntity: SawImprov
+
+  cost:
+
+    TelecrystalClown: 3
+
+  categories:
+
+  - UplinkWeaponC
+
+
+
+- type: listing
+
+  id: UplinkSprayBottleSpaceLubeClown
+
+  name: "Spacelube"
+
+  description: "Spray volume 400u space lubricant!"
+
+  productEntity: SprayBottleSpaceLubeClown
+
+  cost:
+
+    TelecrystalClown: 8
+
+  categories:
+
+  - UplinkWeaponC
+
+
+
+- type: listing
+
+  id: UplinkWeaponDisablerPracticeClown
+
+  name: "disabler (practice)"
+
+  description: "Bj-Bj!"
+
+  productEntity: WeaponDisablerPractice
+
+  cost:
+
+    TelecrystalClown: 3
+
+  categories:
+
+  - UplinkWeaponC
+
+
+
+- type: listing
+
+  id: UplinkWeaponLaserCarbinePracticeClown
+
+  name: "laser carabine (practice)"
+
+  description: "Pew-Pew!"
+
+  productEntity: WeaponLaserCarbinePractice
+
+  cost:
+
+    TelecrystalClown: 3
+
+  categories:
+
+  - UplinkWeaponC
+
+
+
+- type: listing
+
+  id: UplinkReinforcementRadioHonkBotClown
+
+  name: "buy honkbot"
+
+  description: "It destroy all station."
+
+  productEntity: ReinforcementRadioHonkBotClown
+
+  cost:
+
+    TelecrystalClown: 5
+
+  categories:
+
+  - UplinkWeaponC
+
+
+
+- type: listing
+
+  id: UplinkReinforcementMobCluwneClown
+
+  name: "buy cluwne"
+
+  description: "Creature for annihilation of all life on the station."
+
+  productEntity: ReinforcementRadioMobCluwneClown
+
+  cost:
+
+    TelecrystalClown: 10
+
+  categories:
+
+  - UplinkWeaponC
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# CUSTOM ITEMS
+
+
+
+
+
+
+
+- type: entity
+
+  name: syndicate bomb
+
+  description: A funny device for point pranks, for example, quickly destroying the morale of a cadet of the Security Service, GDI or something else. It says "FAKE" on it.
+
+  parent: GrenadeBase
+
+  id: SyndicateBombFake
+
+  components:
+
+  - type: Sprite
+
+    sprite: Objects/Weapons/Grenades/syndgrenade.rsi
+
+  - type: OnUseTimerTrigger
+
+    delay: 15
+
+  - type: ExplodeOnTrigger
+
+  - type: Explosive
+
+    explosionType: Default
+
+    totalIntensity: 0
+
+    intensitySlope: 0 #Will destroy the tile under it reliably, space 1-2 more to rods. Only does any significant damage in a 5-tile cross.
+
+    maxIntensity: 0
+
+  - type: Appearance
+
+    visuals:
+
+    - type: TimerTriggerVisualizer
+
+      countdown_sound:
+
+        path: /Audio/Effects/minibombcountdown.ogg
+
+
+
+- type: entity
+
+  name: explosives C-4
+
+  description: It is used for making neat, not too big, chicks in the places of laying. A favorite means of clowns to induce fear. It says "FAKE" on it. 
+
+  parent: BaseItem
+
+  id: C4Clown
+
+  components:
+
+    - type: Sprite
+
+      sprite: Objects/Weapons/Bombs/c4.rsi
+
+      state: icon
+
+    - type: Item
+
+      sprite: Objects/Weapons/Bombs/c4.rsi
+
+      size: 10
+
+    - type: OnUseTimerTrigger
+
+      delay: 100
+
+      delayOptions: [100]
+
+      initialBeepDelay: 0
+
+      beepSound: /Audio/Machines/Nuke/general_beep.ogg
+
+      startOnStick: true
+
+      canToggleStartOnStick: false
+
+    - type: Sticky
+
+      stickDelay: 5
+
+      unstickDelay: 50
+
+      stickPopupStart: comp-sticky-start-stick-bomb
+
+      stickPopupSuccess: comp-sticky-success-stick-bomb
+
+      unstickPopupStart: comp-sticky-start-unstick-bomb
+
+      unstickPopupSuccess: comp-sticky-success-unstick-bomb
+
+      whitelist: # can't stick it to other items
+
+        components:
+
+          - Airtight
+
+    - type: Explosive # Powerful explosion in a very small radius. Doesn't break underplating.
+
+      explosionType: DemolitionCharge
+
+      totalIntensity: 0
+
+      intensitySlope: 0
+
+      maxIntensity: 0
+
+      canCreateVacuum: false 
+
+    - type: ExplodeOnTrigger
+
+    - type: StickyVisualizer
+
+    - type: Appearance
+
+      visuals:
+
+        - type: GenericEnumVisualizer
+
+          key: enum.Trigger.TriggerVisuals.VisualState
+
+          states:
+
+            enum.Trigger.TriggerVisualState.Primed: primed
+
+            enum.Trigger.TriggerVisualState.Unprimed: complete
+
+
+
+- type: entity
+
+  name: improv saw
+
+  id: SawImprovClown
+
+  parent: Saw
+
+  description: opsi. # It would make a pretty decent weapon, given there are more space for some tool mods too.
+
+  components:
+
+  - type: Sprite
+
+    state: improv
+
+  - type: Item
+
+    heldPrefix: improv
+
+  - type: MeleeWeapon
+
+    damage:
+
+      groups:
+
+        Brute: 16
+
+    soundHit:
+
+      path: /Audio/Weapons/bladeslice.ogg
+
+  - type: Tool
+
+    qualities:
+
+      - Sawing
+
+    speed: 1.5
+
+
+
+- type: entity
+
+  name: spacelube
+
+  description: Psh-psh, normal flight!
+
+  id: SprayBottleSpaceLubeClown
+
+  parent: SprayBottle
+
+  components:
+
+  - type: SolutionContainerManager
+
+    solutions:
+
+      spray:
+
+        maxVol: 400
+
+        reagents:
+
+        - ReagentId: SpaceLube
+
+          Quantity: 400
+
+  - type: Tag
+
+    tags:
+
+      - Spray
+
+      - DroneUsable #They don't have any other chem stuff on their whitelist so they can't refill it
+
+
+
+- type: entity
+
+  parent: BaseItem
+
+  id: ReinforcementRadioHonkBotClown
+
+  name: bluespace honkbot teleporter 
+
+  description: A super technological teleporter, this device is capable of instantly moving people and objects from one point to another. It works on the basis of transmitting data on the state of the object to be teleported over long distances via satellites and special devices. Such a teleporter can be used to quickly move people and goods in hard-to-reach places.
+
+  components:
+
+  - type: Sprite
+
+    sprite: Objects/Devices/communication.rsi
+
+    layers:
+
+    - state: old-radio
+
+    netsync: false
+
+  - type: GhostRoleMobSpawner
+
+    prototype: MobHonkBot
+
+    name: Honkbot
+
+    description: be funny.
+
+    rules: Obey the clown.
+
+  - type: EmitSoundOnUse
+
+    sound: /Audio/Misc/emergency_meeting.ogg
+
+  - type: ItemCooldown
+
+  - type: UseDelay
+
+    delay: 30
+
+
+
+- type: entity
+
+  parent: BaseItem
+
+  id: ReinforcementRadioMobCluwneClown
+
+  name: bluespace teleporter cluwne 
+
+  description: A super technological teleporter, this device is capable of instantly moving people and objects from one point to another. It works on the basis of transmitting data on the state of the object to be teleported over long distances via satellites and special devices. Such a teleporter can be used to quickly move people and goods in hard-to-reach places.
+
+  components:
+
+  - type: Sprite
+
+    sprite: Objects/Devices/communication.rsi
+
+    layers:
+
+    - state: old-radio
+
+    netsync: false
+
+  - type: GhostRoleMobSpawner
+
+    prototype: MobCluwne
+
+    name: Cluwne
+
+    description: HAHAHAHAHAHHAHAHAHAHAHHA
+
+    rules: Obey the clown in everything, create house, within the rules.
+
+  - type: EmitSoundOnUse
+
+    sound: /Audio/Misc/emergency_meeting.ogg
+
+  - type: ItemCooldown
+
+  - type: UseDelay
+
+    delay: 30
