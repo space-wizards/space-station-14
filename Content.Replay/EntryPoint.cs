@@ -8,29 +8,6 @@ using Robust.Shared.Timing;
 
 namespace Content.Replay;
 
-// TODO REPLAYS
-// - observer movement.
-// -- Add "ghost on move" like behavior.
-// - Split UI layout.
-// - ReplayGhostState code de-duplication
-// - command to jump to a specific tick (not index)
-// - command variants for time instead of index
-// - command localizations
-// - Functional StopAudio() / midi handling.
-// - teleport UI (players, grids, etc).
-// - dynamic checkpoints? See comments in GenerateCheckpoints()
-// - reverse states?  See comments in GenerateCheckpoints()
-// - hold down fast forward button.
-// - properly handle RoundEndMessageEvent
-// - improve visual event handling?
-// - predicted examine.
-// - verbs
-// - Figure out a better way of handling screen states (see comments below).
-
-// Currently in order to properly mimic what a given player sees in game, we simply re-use the normal game play screen
-// state while directly observing from a player's POV. But this means you can't access the time widget... so ... uhhh. I
-// dunno.
-
 public sealed class EntryPoint : GameClient
 {
     [Dependency] private readonly IBaseClient _client = default!;
