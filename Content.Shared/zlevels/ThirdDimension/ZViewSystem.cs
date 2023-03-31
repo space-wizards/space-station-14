@@ -59,7 +59,6 @@ public abstract class SharedZViewSystem : EntitySystem
             var amt = _zLevel.AllMapsBelow(xform.MapID, ref maps);
             if (amt == 0)
                 continue;
-            Array.Resize(ref maps, amt);
 
             var currPos = _xformSystem.GetWorldPosition(xform);
 
@@ -74,6 +73,9 @@ public abstract class SharedZViewSystem : EntitySystem
 
             foreach (var (ent, map) in view.DownViewEnts.Zip(maps))
             {
+                if (map == MapId.Nullspace)
+                    continue;
+
                 var coords = EntityCoordinates.FromMap(_map, new MapCoordinates(currPos, map));
                 _xformSystem.SetCoordinates(ent, coords);
             }
@@ -94,10 +96,11 @@ public abstract class SharedZViewSystem : EntitySystem
             var amt = _zLevel.AllMapsBelow(xform.MapID, ref maps);
             if (amt == 0)
                 continue;
-            Array.Resize(ref maps, amt);
             var currPos = _xformSystem.GetWorldPosition(xform);
             foreach (var map in maps)
             {
+                if (map == MapId.Nullspace)
+                    continue;
                 view.DownViewEnts.Add(SpawnViewEnt(uid, new MapCoordinates(currPos, map)));
             }
 

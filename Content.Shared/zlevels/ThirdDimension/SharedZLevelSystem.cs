@@ -1,4 +1,5 @@
-﻿using Content.Shared.Administration;
+﻿using System.Linq;
+using Content.Shared.Administration;
 using Content.Shared.Administration.Managers;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -31,9 +32,9 @@ public sealed class SharedZLevelSystem : EntitySystem
     [Dependency] private readonly ISharedAdminManager _admin = default!;
 
     [ViewVariables]
-    private MapId?[] _mapAbove = new MapId?[] { };
+    private List<MapId?> _mapAbove = new();
     [ViewVariables]
-    private MapId?[] _mapBelow = new MapId?[] { };
+    private List<MapId?> _mapBelow = new();
 
     public IReadOnlyList<MapId?> MapAbove => _mapAbove;
     public IReadOnlyList<MapId?> MapBelow => _mapBelow;
@@ -197,8 +198,8 @@ public sealed class SharedZLevelSystem : EntitySystem
             return;
 
         //yoink
-        _mapAbove = ev.MapAbove;
-        _mapBelow = ev.MapBelow;
+        _mapAbove = ev.MapAbove.ToList();
+        _mapBelow = ev.MapBelow.ToList();
     }
 
     private void OnMapChanged(MapChangedEvent ev)
@@ -206,13 +207,13 @@ public sealed class SharedZLevelSystem : EntitySystem
         if (!ev.Created)
             return;
 
-        if ((int) ev.Map + 1 > _mapAbove.Length)
+        while ((int) ev.Map + 1 > _mapAbove.Count)
         {
             // Resize time.
-            Array.Resize(ref _mapAbove, (int) ev.Map + 1);
-            Array.Resize(ref _mapBelow, (int) ev.Map + 1);
-            UpdateMapList();
+            _mapAbove.Add(null);
+            _mapBelow.Add(null);
         }
+        UpdateMapList();
     }
 
     public void UpdateMapList()
@@ -220,7 +221,7 @@ public sealed class SharedZLevelSystem : EntitySystem
         if (!_net.IsServer)
             return;
 
-        RaiseNetworkEvent(new MapListChangedEvent(_mapAbove, _mapBelow));
+        RaiseNetworkEvent(new MapListChangedEvent(_mapAbove.ToArray(), _mapBelow.ToArray()));
     }
 
     [Serializable, NetSerializable]
