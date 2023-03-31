@@ -58,13 +58,3 @@
   components:
     - type: NukeOperative
     - type: RandomHumanoidAppearance
-
-# Wizards    
-- type: entity
-  noSpawn: true
-  name: Wizard
-  parent: MobHuman
-  id: MobHumanWizard
-  components:
-    - type: Wizard
-    - type: RandomHumanoidAppearance

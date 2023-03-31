@@ -15,14 +15,3 @@
   - UplinkPointless
   currencyWhitelist:
   - Telecrystal
-
-- type: storePreset
-  id: StorePresetSpellbook
-  storeName: Spellbook
-  categories:
-  - SpellbookBooks
-  - SpellbookStaves
-  - SpellbookWands
-  - SpellbookMisc
-  currencyWhitelist:
-  - Spellpoint

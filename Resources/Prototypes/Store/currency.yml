@@ -10,13 +10,6 @@
   displayName: store-currency-display-stolen-essence
   canWithdraw: false
 
-- type: currency
-  id: Spellpoint
-  displayName: store-currency-display-spell-points
-  cash: 
-    1: Spellpoint
-  canWithdraw: false
-  
 #debug
 - type: currency
   id: DebugDollar
