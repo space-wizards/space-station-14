@@ -94,7 +94,7 @@
       - id: EmergencyOxygenTankFilled
       - id: SpaceMedipen
       - id: EmergencyMedipen
-      - id: Flare
+      - id: UplinkClown
       - id: FoodTinMRE
   - type: Tag
     tags:
