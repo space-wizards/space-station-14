@@ -1,9 +1,4 @@
 Entries:
-- author: Velcroboy
-  changes:
-  - {message: added ChefVend, type: Add}
-  id: 2792
-  time: '2022-12-21T14:49:39.0000000+00:00'
 - author: Errant
   changes:
   - {message: Glass Airlocks have been added to the construction menu, type: Fix}
@@ -2914,3 +2909,8 @@ Entries:
     type: Tweak}
   id: 3291
   time: '2023-03-31T04:20:43.0000000+00:00'
+- author: furontier
+  changes:
+  - {message: NT brand advanced mops can now be researched., type: Add}
+  id: 3292
+  time: '2023-03-31T04:21:55.0000000+00:00'
