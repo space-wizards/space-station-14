@@ -25,6 +25,8 @@ command-whitelistremove-not-found = Unable to find '{$username}'
 command-kicknonwhitelisted-description = Kicks all non-whitelisted players from the server.
 command-kicknonwhitelisted-help = kicknonwhitelisted
 
+denied-issue-prevention = Allowing this connection may increase the amount of issues experienced by players. Please try again later.
+
 ban-banned-permanent = This ban will only be removed via appeal.
 ban-banned-permanent-appeal = This ban will only be removed via appeal. You can appeal at {$link}
 ban-expires = This ban is for {$duration} minutes and will expire at {$time} UTC.
