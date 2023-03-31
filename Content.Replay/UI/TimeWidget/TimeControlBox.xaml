@@ -1,0 +1,35 @@
+<tardis:TimeControlBox
+    xmlns="https://spacestation14.io"
+    xmlns:tardis="clr-namespace:Content.Replay.UI.TimeWidget"
+    xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    HorizontalExpand="True"
+    VerticalExpand="True">
+    <PanelContainer HorizontalExpand="True" VerticalExpand="True">
+        <PanelContainer.PanelOverride>
+            <graphics:StyleBoxFlat BackgroundColor="#25252AAA" />
+        </PanelContainer.PanelOverride>
+        <BoxContainer Orientation="Vertical" Margin="4 10 4 0">
+            <Label Name="IndexLabel" Access="Public"/>
+            <Label Name="TickLabel" Access="Public"/>
+            <Label Name="TimeLabel" Access="Public"/>
+            <Label Name="ServerTimeLabel" Access="Public"/>
+            <BoxContainer Orientation="Horizontal" Margin="4 10 4 0">
+                <Control MinSize="8 0" />
+                <Slider Name="TickSlider" Access="Public"
+                            HorizontalExpand="True"
+                            SetSize="800 26.5"
+                            Rounded="True" />
+            </BoxContainer>
+            <BoxContainer Orientation="Horizontal" Margin="4 10 4 0">
+                <Button Name="ResetButton" Access="Public" Text="⏮" />
+                <Button Name="RewindFiveButton" Access="Public" Text="⏪" />
+                <Button Name="RewindButton" Access="Public" Text="⏴" />
+                <Button Name="PlayButton" Access="Public" Text="⏯" ToggleMode="True" />
+                <Button Name="ForwardButton" Access="Public" Text="⏵" />
+                <Button Name="ForwardFiveButton" Access="Public" Text="⏩" />
+            </BoxContainer>
+            <CheckBox Name="DynamicScrubbingCheckbox" Access="Public" Text="Dynamic Scrubbing" Pressed="True" />
+            <Label Name="CheckpointLabel" Access="Public"/>
+        </BoxContainer>
+    </PanelContainer>
+</tardis:TimeControlBox>

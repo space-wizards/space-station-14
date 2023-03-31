@@ -1,0 +1,51 @@
+using Content.Client.Gameplay;
+using Content.Client.UserInterface.Systems.Chat;
+using Content.Client.UserInterface.Systems.MenuBar.Widgets;
+using Content.Replay.UI.TimeWidget;
+using Robust.Shared.Analyzers;
+using static Robust.Client.UserInterface.Controls.LayoutContainer;
+
+namespace Content.Replay.UI;
+
+/// <summary>
+///     Gameplay state when observing/spectating an entity during a replay.
+/// </summary>
+[Virtual]
+public class ReplaySpectateEntityState : GameplayState
+{
+    protected override void Startup()
+    {
+        base.Startup();
+
+        var screen = UserInterfaceManager.ActiveScreen;
+        if (screen == null)
+            return;
+
+        screen.ShowWidget<GameTopMenuBar>(false);
+
+        var box = screen.GetOrAddWidget<TimeControlBox>();
+        SetAnchorAndMarginPreset(box, LayoutPreset.TopLeft, margin: 10);
+
+        foreach (var chatbox in UserInterfaceManager.GetUIController<ChatUIController>().Chats)
+        {
+            chatbox.ChatInput.Visible = false;
+        }
+    }
+
+    protected override void Shutdown()
+    {
+        var screen = UserInterfaceManager.ActiveScreen;
+        if (screen != null)
+        {
+            screen.RemoveWidget<TimeControlBox>();
+            screen.ShowWidget<GameTopMenuBar>(true);
+        }
+
+        foreach (var chatbox in UserInterfaceManager.GetUIController<ChatUIController>().Chats)
+        {
+            chatbox.ChatInput.Visible = true;
+        }
+
+        base.Shutdown();
+    }
+}

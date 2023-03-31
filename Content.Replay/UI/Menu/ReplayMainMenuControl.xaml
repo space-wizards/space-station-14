@@ -1,0 +1,40 @@
+<Control xmlns="https://spacestation14.io"
+         xmlns:pllax="clr-namespace:Content.Client.Parallax;assembly=Content.Client">
+    <pllax:ParallaxControl />
+    <LayoutContainer>
+        <BoxContainer Name="VBox"
+                      Orientation="Vertical"
+                      StyleIdentifier="mainMenuVBox">
+            <TextureRect Name="Logo"
+                         Stretch="KeepCentered" />
+            <Label Name="Subtext"
+                   Access="Public"
+                   Text="Replay Client"/>
+            <OptionButton Name="ReplaySelect"
+                          Access="Public"/>
+            <Button Name="LoadButton"
+                    Access="Public"
+                    Text="Load File"
+                    TextAlign="Center"
+                    StyleIdentifier="mainMenu"
+                    Disabled="True"/>
+            <Button Name="RefreshButton"
+                    Access="Public"
+                    Text="Refresh Replays"
+                    TextAlign="Center"
+                    StyleIdentifier="mainMenu" />
+            <Control MinSize="0 2" />
+            <Button Name="OptionsButton"
+                    Access="Public"
+                    Text="{Loc 'main-menu-options-button'}"
+                    TextAlign="Center"
+                    StyleIdentifier="mainMenu" />
+            <Button Name="QuitButton"
+                    Access="Public"
+                    Text="{Loc 'main-menu-quit-button'}"
+                    TextAlign="Center"
+                    StyleIdentifier="mainMenu" />
+        </BoxContainer>
+        <Label Name="VersionLabel" Text="v0.1" />
+    </LayoutContainer>
+</Control>

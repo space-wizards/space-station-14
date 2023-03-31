@@ -9,9 +9,6 @@ public interface IGamePrototypeLoadManager
     public void SendGamePrototype(string prototype);
 }
 
-// TODO REPLAYS
-// Figure out a way to just directly save NetMessage objects to replays. This just uses IRobustSerializer as a crutch.
-
 [Serializable, NetSerializable]
 public sealed class ReplayPrototypeUploadMsg
 {
