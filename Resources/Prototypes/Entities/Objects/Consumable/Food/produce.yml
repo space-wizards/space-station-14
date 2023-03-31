@@ -1093,6 +1093,10 @@
   - type: SliceableFood
     count: 5
     slice: FoodWatermelonSlice
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: ClothingHeadClothingHeadHatWatermelon
 
 - type: entity
   name: watermelon
