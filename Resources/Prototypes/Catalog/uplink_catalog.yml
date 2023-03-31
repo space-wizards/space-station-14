@@ -290,7 +290,7 @@
   productEntity: ReinforcementRadioSyndicate
   icon: { sprite: Objects/Devices/communication.rsi, state: old-radio }
   cost:
-    Telecrystal: 16
+    Telecrystal: 5
   categories:
   - UplinkUtility
 
