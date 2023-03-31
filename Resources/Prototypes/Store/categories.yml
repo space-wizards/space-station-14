@@ -63,27 +63,6 @@
   name: store-category-pointless
   priority: 9
 
-#wizard
-- type: storeCategory
-  id: SpellbookBooks
-  name: store-category-books
-  priority: 0
-
-- type: storeCategory
-  id: SpellbookStaves
-  name: store-category-staves
-  priority: 1
-
-- type: storeCategory
-  id: SpellbookWands
-  name: store-category-wands
-  priority: 2
-
-- type: storeCategory
-  id: SpellbookMisc
-  name: store-category-misc
-  priority: 3
-
 #revenant
 - type: storeCategory
   id: RevenantAbilities

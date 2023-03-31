@@ -1,6 +1,0 @@
-- type: antag
-  id: Wizard
-  name: roles-antag-wizard-name
-  antagonist: true
-  setPreference: true
-  objective: roles-antag-wizard-objective

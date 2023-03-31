@@ -70,22 +70,4 @@
       - sprite: Structures/Wallmounts/signs.rsi
         state: radiation
 
-- type: entity
-  noSpawn: true
-  id: SpawnPointGhostWizard
-  name: ghost role spawn point
-  suffix: wizard
-  parent: MarkerBase
-  components:
-  - type: GhostRoleMobSpawner
-    prototype: MobHumanWizard
-    rules: You are a wizard tasked with making the station a more magical place. As an antagonist, do whatever is required to complete this task.
-  - type: WizardSpawner
-  - type: Sprite
-    sprite: Markers/jobs.rsi
-    layers:
-      - state: green
-      - sprite: Clothing/Head/Hats/wizardhat.rsi
-        state: icon
-
 

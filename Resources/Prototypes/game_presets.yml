@@ -95,19 +95,6 @@
     - BasicStationEventScheduler
 
 - type: gamePreset
-  id: Wizard
-  alias:
-    - wizard
-    - wizards
-    - wiznerds
-  name: wizard-title
-  description: wizard-description
-  showInVote: false
-  rules:
-    - Wizard
-    - RampingStationEventScheduler
-    
-- type: gamePreset
   id: Zombie
   alias:
     - zombie
