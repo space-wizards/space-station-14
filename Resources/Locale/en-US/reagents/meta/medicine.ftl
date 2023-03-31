@@ -29,7 +29,7 @@ reagent-name-epinephrine = epinephrine
 reagent-desc-epinephrine = An effective stabilizing chemical used to keep a critical person from dieing to asphyxiation while patching up minor damage during crit. Flushes lexorin out the blood stream at the cost of more epinephrine, but may add histamine. Helps reduce stun time. Commonly found in the form of emergency medipens.
 
 reagent-name-hyronalin = hyronalin
-reagent-desc-hyronalin = A weak treatment for radiation damage. A precursor to arithrazine and phalanximine. Can cause the user to vomit.
+reagent-desc-hyronalin = A weak treatment for radiation damage. A precursor to arithrazine and phalanximine. Can cause vomitting.
 
 reagent-name-ipecac = ipecac
 reagent-desc-ipecac = A rapid-acting emetic. Useful for stopping unmetabolized poisons, or mass-vomiting sessions.
@@ -68,7 +68,7 @@ reagent-name-synaptizine = synaptizine
 reagent-desc-synaptizine = A toxic chemical that halves the duration of stuns and knockdowns.
 
 reagent-name-tranexamic-acid = tranexamic acid
-reagent-desc-tranexamic-acid = A blood-clotting medicine used to prevent profuse bleeding. Causes heavier bleeding on overdose. Commonly found at small doses in emergency medipens.
+reagent-desc-tranexamic-acid = A blood-clotting medicine used to prevent profuse bleeding. Causes heavier bleeding on overdose. Commonly found in small doses within emergency medipens.
 
 reagent-name-tricordrazine = tricordrazine
 reagent-desc-tricordrazine = A wide-spectrum stimulant, originally derived from cordrazine. Treats minor damage of all basic health types as long as the user is not heavily wounded. Best used as an additive to other chemicals.
