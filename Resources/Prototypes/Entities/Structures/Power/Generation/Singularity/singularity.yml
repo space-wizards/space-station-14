@@ -1,7 +1,7 @@
 - type: entity
   id: Singularity
-  name: gravitational singularity
-  description: A mesmerizing swirl of darkness that sucks in everything. If it's moving towards you, run.
+  name: gravitational pizzalarity
+  description: A mesmerizing swirl of pizza that sucks in everything. If it's moving towards you, then it's pizza time! (Don't let the chef to be sucked into it)
   components:
   - type: Clickable
   - type: AmbientSound
@@ -33,7 +33,6 @@
     canBreachContainment: false
     horizonFixtureId: EventHorizon
   - type: RandomWalk # To make the singularity move around.
-  - type: SingularityDistortion
   - type: RadiationSource
     slope: 0.2 # its emit really far away
   - type: Sprite
@@ -49,4 +48,4 @@
     guides: [ Singularity, Power ]
   - type: WarpPoint
     follow: true
-    location: singularity
+    location: pizzalarity
