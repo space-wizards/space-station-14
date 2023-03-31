@@ -21,7 +21,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.Database;
 using Robust.Shared.Asynchronous;
-using PlayerData = Content.Server.Players.PlayerData;
 
 namespace Content.Server.GameTicking
 {
@@ -321,12 +320,12 @@ namespace Content.Server.GameTicking
                 var connected = false;
                 var observer = mind.AllRoles.Any(role => role is ObserverRole);
                 // Continuing
-                if (userId != null && _playerManager.ValidSessionId(userId.Value))
+                if (_playerManager.TryGetSessionById(userId, out var ply))
                 {
                     connected = true;
                 }
                 PlayerData? contentPlayerData = null;
-                if (userId != null && _playerManager.TryGetPlayerData(userId.Value, out var playerData))
+                if (_playerManager.TryGetPlayerData(userId, out var playerData))
                 {
                     contentPlayerData = playerData.ContentData();
                 }

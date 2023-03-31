@@ -141,6 +141,28 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitVirology
+  name: virology jumpsuit
+  description: It's made of a special fiber that gives special protection against biohazards. It has a virologist rank stripe on it.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/virology.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/virology.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitGenetics
+  name: genetics jumpsuit
+  description: It's made of a special fiber that gives special protection against biohazards. It has a geneticist rank stripe on it.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/genetics.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/genetics.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitClown
   name: clown suit
   description: HONK!

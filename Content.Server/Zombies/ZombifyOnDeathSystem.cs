@@ -24,7 +24,6 @@ using Content.Shared.Popups;
 using Content.Server.Atmos.Miasma;
 using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
-using Content.Server.Mind;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -55,7 +54,6 @@ namespace Content.Server.Zombies
         [Dependency] private readonly EmoteOnDamageSystem _emoteOnDamage = default!;
         [Dependency] private readonly IChatManager _chatMan = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
-        [Dependency] private readonly MindSystem _mindSystem = default!;
 
         public override void Initialize()
         {
@@ -198,16 +196,16 @@ namespace Content.Server.Zombies
             _identity.QueueIdentityUpdate(target);
 
             //He's gotta have a mind
-            var mindComp = EnsureComp<MindContainerComponent>(target);
-            if (_mindSystem.TryGetMind(target, out var mind, mindComp) && _mindSystem.TryGetSession(mind, out var session))
+            var mindcomp = EnsureComp<MindComponent>(target);
+            if (mindcomp.Mind != null && mindcomp.Mind.TryGetSession(out var session))
             {
                 //Zombie role for player manifest
-                _mindSystem.AddRole(mind, new TraitorRole(mind, _proto.Index<AntagPrototype>(zombiecomp.ZombieRoleId)));
+                mindcomp.Mind.AddRole(new TraitorRole(mindcomp.Mind, _proto.Index<AntagPrototype>(zombiecomp.ZombieRoleId)));
                 //Greeting message for new bebe zombers
                 _chatMan.DispatchServerMessage(session, Loc.GetString("zombie-infection-greeting"));
             }
 
-            if (!HasComp<GhostRoleMobSpawnerComponent>(target) && !mindComp.HasMind) //this specific component gives build test trouble so pop off, ig
+            if (!HasComp<GhostRoleMobSpawnerComponent>(target) && !mindcomp.HasMind) //this specific component gives build test trouble so pop off, ig
             {
                 //yet more hardcoding. Visit zombie.ftl for more information.
                 EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(target, out var ghostcomp);
