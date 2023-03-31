@@ -102,7 +102,6 @@ tilemap:
 entities:
 - uid: 0
   components:
-  - type: ProtectedGrid
   - type: MetaData
   - type: EscapePod
   - parent: invalid

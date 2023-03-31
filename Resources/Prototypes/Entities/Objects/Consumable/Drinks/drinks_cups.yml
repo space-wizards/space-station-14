@@ -46,7 +46,7 @@
   parent: DrinkBaseCup
   id: DrinkBaseMug
   abstract: true
-  name: mug
+  name: base mug
   description: A mug.
   components:
   - type: Sprite
@@ -55,7 +55,6 @@
       - state: icon-0
       - map: ["enum.SolutionContainerLayers.Fill"]
         state: icon-3
-        visible: false
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 3
@@ -73,7 +72,7 @@
 - type: entity
   parent: DrinkBaseMug
   id: DrinkMugBlack
-  name: black mug
+  name: mug black
   description: A sleek black mug.
   components:
   - type: Sprite
@@ -82,7 +81,7 @@
 - type: entity
   parent: DrinkBaseMug
   id: DrinkMugBlue
-  name: blue mug
+  name: mug blue
   description: A blue and black mug.
   components:
   - type: Sprite
@@ -91,7 +90,7 @@
 - type: entity
   parent: DrinkBaseMug
   id: DrinkMugGreen
-  name: green mug
+  name: mug green
   description: A pale green and pink mug.
   components:
   - type: Sprite
@@ -110,7 +109,7 @@
 - type: entity
   parent: DrinkBaseMug
   id: DrinkMugHeart
-  name: heart mug
+  name: mug heart
   description: A white mug, it prominently features a red heart.
   components:
   - type: Sprite
@@ -119,7 +118,7 @@
 - type: entity
   parent: DrinkBaseMug
   id: DrinkMugMetal
-  name: metal mug
+  name: mug metal
   description: A metal mug. You're not sure which metal.
   components:
   - type: Sprite
@@ -128,7 +127,7 @@
 - type: entity
   parent: DrinkBaseMug
   id: DrinkMugMoebius
-  name: moebius mug
+  name: mug moebius
   description: A mug with a Moebius Laboratories logo on it. Not even your morning coffee is safe from corporate advertising.
   components:
   - type: Sprite
@@ -146,7 +145,7 @@
 - type: entity
   parent: DrinkBaseMug
   id: DrinkMugRainbow
-  name: rainbow mug
+  name: mug rainbow
   description: A rainbow mug. The colors are almost as blinding as a welder.
   components:
   - type: Sprite
@@ -155,7 +154,7 @@
 - type: entity
   parent: DrinkBaseMug
   id: DrinkMugRed
-  name: red mug
+  name: mug red
   description: A red and black mug.
   components:
   - type: Sprite

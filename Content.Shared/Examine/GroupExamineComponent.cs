@@ -73,14 +73,14 @@ namespace Content.Shared.Examine
     /// <summary>
     ///     An entry used when showing examine details
     /// </summary>
-    [Serializable, NetSerializable, DataDefinition]
+    [Serializable, NetSerializable]
     public sealed class ExamineEntry
     {
         /// <summary>
         ///     Which component does this entry relate to?
         /// </summary>
-        [DataField("component", required: true)]
-        public string ComponentName;
+        [DataField("component")]
+        public string ComponentName = string.Empty;
 
         /// <summary>
         ///     What priority has this entry - entries are sorted high to low.
@@ -91,8 +91,8 @@ namespace Content.Shared.Examine
         /// <summary>
         ///     The FormattedMessage of this entry.
         /// </summary>
-        [DataField("message", required: true)]
-        public FormattedMessage Message;
+        [DataField("message")]
+        public FormattedMessage Message = new();
 
         /// <param name="componentName">Should be set to _componentFactory.GetComponentName(component.GetType()) to properly function.</param>
         public ExamineEntry(string componentName, float priority, FormattedMessage message)
@@ -100,13 +100,6 @@ namespace Content.Shared.Examine
             ComponentName = componentName;
             Priority = priority;
             Message = message;
-        }
-
-        private ExamineEntry()
-        {
-            // parameterless ctor is required for data-definition serialization
-            Message = default!;
-            ComponentName = default!;
         }
     }
 

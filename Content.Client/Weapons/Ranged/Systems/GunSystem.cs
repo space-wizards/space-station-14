@@ -169,8 +169,7 @@ public sealed partial class GunSystem : SharedGunSystem
         });
     }
 
-    public override void Shoot(EntityUid gunUid, GunComponent gun, List<(EntityUid? Entity, IShootable Shootable)> ammo,
-        EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid? user = null, bool throwItems = false)
+    public override void Shoot(EntityUid gunUid, GunComponent gun, List<(EntityUid? Entity, IShootable Shootable)> ammo, EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid? user = null)
     {
         // Rather than splitting client / server for every ammo provider it's easier
         // to just delete the spawned entities. This is for programmer sanity despite the wasted perf.
@@ -179,16 +178,6 @@ public sealed partial class GunSystem : SharedGunSystem
 
         foreach (var (ent, shootable) in ammo)
         {
-            if (throwItems)
-            {
-                Recoil(user, direction);
-                if (ent!.Value.IsClientSide())
-                    Del(ent.Value);
-                else
-                    RemComp<AmmoComponent>(ent.Value);
-                continue;
-            }
-
             switch (shootable)
             {
                 case CartridgeAmmoComponent cartridge:
@@ -256,9 +245,6 @@ public sealed partial class GunSystem : SharedGunSystem
         else if (TryComp<TransformComponent>(uid, out var xform))
             coordinates = xform.Coordinates;
         else
-            return;
-
-        if (!coordinates.IsValid(EntityManager))
             return;
 
         var ent = Spawn(message.Prototype, coordinates);

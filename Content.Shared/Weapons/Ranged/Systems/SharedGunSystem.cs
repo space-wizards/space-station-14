@@ -238,6 +238,7 @@ public abstract partial class SharedGunSystem : EntitySystem
             return;
         }
 
+
         var curTime = Timing.CurTime;
 
         // Need to do this to play the clicking sound for empty automatic weapons
@@ -312,7 +313,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         }
 
         // Shoot confirmed - sounds also played here in case it's invalid (e.g. cartridge already spent).
-        Shoot(gunUid, gun, ev.Ammo, fromCoordinates, toCoordinates.Value, user, throwItems: attemptEv.ThrowItems);
+        Shoot(gunUid, gun, ev.Ammo, fromCoordinates, toCoordinates.Value, user);
         var shotEv = new GunShotEvent(user);
         RaiseLocalEvent(gunUid, ref shotEv);
         // Projectiles cause impulses especially important in non gravity environments
@@ -330,11 +331,10 @@ public abstract partial class SharedGunSystem : EntitySystem
         EntityUid ammo,
         EntityCoordinates fromCoordinates,
         EntityCoordinates toCoordinates,
-        EntityUid? user = null,
-        bool throwItems = false)
+        EntityUid? user = null)
     {
         var shootable = EnsureComp<AmmoComponent>(ammo);
-        Shoot(gunUid, gun, new List<(EntityUid? Entity, IShootable Shootable)>(1) { (ammo, shootable) }, fromCoordinates, toCoordinates, user, throwItems);
+        Shoot(gunUid, gun, new List<(EntityUid? Entity, IShootable Shootable)>(1) { (ammo, shootable) }, fromCoordinates, toCoordinates, user);
     }
 
     public abstract void Shoot(
@@ -343,8 +343,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         List<(EntityUid? Entity, IShootable Shootable)> ammo,
         EntityCoordinates fromCoordinates,
         EntityCoordinates toCoordinates,
-        EntityUid? user = null,
-        bool throwItems = false);
+        EntityUid? user = null);
 
     protected abstract void Popup(string message, EntityUid? uid, EntityUid? user);
 
@@ -402,7 +401,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         var toMap = toCoordinates.ToMapPos(EntityManager, Transform);
         var shotDirection = (toMap - fromMap).Normalized;
 
-        const float impulseStrength = 25.0f;
+        const float impulseStrength = 5.0f;
         var impulseVector =  shotDirection * impulseStrength;
         Physics.ApplyLinearImpulse(user, -impulseVector, body: userPhysics);
     }
@@ -439,9 +438,8 @@ public abstract partial class SharedGunSystem : EntitySystem
 /// </remarks>
 /// <param name="User">The user that attempted to fire this gun.</param>
 /// <param name="Cancelled">Set this to true if the shot should be cancelled.</param>
-/// <param name="ThrowItems">Set this to true if the ammo shouldn't actually be fired, just thrown.</param>
 [ByRefEvent]
-public record struct AttemptShootEvent(EntityUid User, bool Cancelled = false, bool ThrowItems = false);
+public record struct AttemptShootEvent(EntityUid User, bool Cancelled=false);
 
 /// <summary>
 ///     Raised directed on the gun after firing.

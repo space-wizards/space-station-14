@@ -71,4 +71,3 @@
   - type: Sprite
     layers:
       - state: box_security
-      - state: forensic

@@ -14,7 +14,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.Medical.CrewMonitoring
 {
     [GenerateTypedNameReferences]
-    public sealed partial class CrewMonitoringWindow : FancyWindow
+    public sealed partial class CrewMonitoringWindow : DefaultWindow
     {
         private List<Control> _rowsContent = new();
         private List<(DirectionIcon Icon, Vector2 Position)> _directionIcons = new();
@@ -41,25 +41,15 @@ namespace Content.Client.Medical.CrewMonitoring
             // add a row for each sensor
             foreach (var sensor in stSensors.OrderBy(a => a.Name))
             {
-                // add users name
-                // format: UserName
+                // add users name and job
+                // format: UserName (Job)
                 var nameLabel = new Label()
                 {
-                    Text = sensor.Name,
-                    HorizontalExpand = true
+                    Text = $"{sensor.Name} ({sensor.Job})"
                 };
+                nameLabel.HorizontalExpand = true;
                 SensorsTable.AddChild(nameLabel);
                 _rowsContent.Add(nameLabel);
-
-                // add users job
-                // format: JobName
-                var jobLabel = new Label()
-                {
-                    Text = sensor.Job,
-                    HorizontalExpand = true
-                };
-                SensorsTable.AddChild(jobLabel);
-                _rowsContent.Add(jobLabel);
 
                 // add users status and damage
                 // format: IsAlive (TotalDamage)
@@ -132,7 +122,7 @@ namespace Content.Client.Medical.CrewMonitoring
         {
             foreach (var child in _rowsContent)
             {
-                SensorsTable.RemoveChild(child);
+               SensorsTable.RemoveChild(child);
             }
             _rowsContent.Clear();
         }

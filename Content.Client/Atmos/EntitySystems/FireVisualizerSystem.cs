@@ -27,13 +27,8 @@ public sealed class FireVisualizerSystem : VisualizerSystem<FireVisualsComponent
             component.LightEntity = null;
         }
 
-        // Need LayerMapTryGet because Init fails if there's no existing sprite / appearancecomp
-        // which means in some setups (most frequently no AppearanceComp) the layer never exists.
-        if (TryComp<SpriteComponent>(uid, out var sprite) &&
-            sprite.LayerMapTryGet(FireVisualLayers.Fire, out var layer))
-        {
-            sprite.RemoveLayer(layer);
-        }
+        if (TryComp<SpriteComponent>(uid, out var sprite))
+            sprite.RemoveLayer(FireVisualLayers.Fire);
     }
 
     private void OnComponentInit(EntityUid uid, FireVisualsComponent component, ComponentInit args)

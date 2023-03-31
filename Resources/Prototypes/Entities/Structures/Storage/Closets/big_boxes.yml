@@ -50,11 +50,6 @@
       tags:
         - DoorBumpOpener
     - type: InteractionOutline
-    - type: Construction
-      graph: BaseBigBox
-      node: basebigbox
-      containers:
-        - entity_storage
 
 - type: entity
   id: StealthBox

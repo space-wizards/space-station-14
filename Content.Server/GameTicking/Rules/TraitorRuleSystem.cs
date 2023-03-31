@@ -6,7 +6,6 @@ using Content.Server.Roles;
 using Content.Server.Traitor;
 using Content.Server.Traitor.Uplink;
 using Content.Server.NPC.Systems;
-using Content.Server.Shuttles.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.Preferences;
@@ -172,23 +171,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem
 
     public List<IPlayerSession> FindPotentialTraitors(in Dictionary<IPlayerSession, HumanoidCharacterProfile> candidates)
     {
-        var list = new List<IPlayerSession>();
-        var pendingQuery = GetEntityQuery<PendingClockInComponent>();
-
-        foreach (var player in candidates.Keys)
-        {
-            // Role prevents antag.
-            if (!(player.Data.ContentData()?.Mind?.AllRoles.All(role => role is not Job { CanBeAntag: false }) ?? false))
-            {
-                continue;
-            }
-
-            // Latejoin
-            if (player.AttachedEntity != null && pendingQuery.HasComponent(player.AttachedEntity.Value))
-                continue;
-
-            list.Add(player);
-        }
+        var list = new List<IPlayerSession>(candidates.Keys).Where(x =>
+            x.Data.ContentData()?.Mind?.AllRoles.All(role => role is not Job { CanBeAntag: false }) ?? false
+        ).ToList();
 
         var prefList = new List<IPlayerSession>();
 

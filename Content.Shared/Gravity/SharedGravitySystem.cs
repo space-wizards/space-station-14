@@ -88,18 +88,17 @@ namespace Content.Shared.Gravity
 
         private void OnGravityChange(ref GravityChangedEvent ev)
         {
-            var alerts = AllEntityQuery<AlertsComponent, TransformComponent>();
-            while(alerts.MoveNext(out var uid, out var comp, out var xform))
+            foreach (var (comp, xform) in EntityQuery<AlertsComponent, TransformComponent>(true))
             {
                 if (xform.GridUid != ev.ChangedGridIndex) continue;
 
                 if (!ev.HasGravity)
                 {
-                    _alerts.ShowAlert(uid, AlertType.Weightless);
+                    _alerts.ShowAlert(comp.Owner, AlertType.Weightless);
                 }
                 else
                 {
-                    _alerts.ClearAlert(uid, AlertType.Weightless);
+                    _alerts.ClearAlert(comp.Owner, AlertType.Weightless);
                 }
             }
         }
@@ -118,7 +117,7 @@ namespace Content.Shared.Gravity
 
         private void OnAlertsParentChange(EntityUid uid, AlertsComponent component, ref EntParentChangedMessage args)
         {
-            if (IsWeightless(uid))
+            if (IsWeightless(component.Owner))
             {
                 _alerts.ShowAlert(uid, AlertType.Weightless);
             }

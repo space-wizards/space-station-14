@@ -149,14 +149,8 @@ public sealed class PricingSystem : EntitySystem
         var price = ev.Price;
         price += GetMaterialsPrice(prototype);
         price += GetSolutionsPrice(prototype);
-        // Can't use static price with stackprice
-        var oldPrice = price;
         price += GetStackPrice(prototype);
-
-        if (oldPrice.Equals(price))
-        {
-            price += GetStaticPrice(prototype);
-        }
+        price += GetStaticPrice(prototype);
 
         // TODO: Proper container support.
 
@@ -185,15 +179,8 @@ public sealed class PricingSystem : EntitySystem
         // DO NOT FORGET TO UPDATE ESTIMATED PRICING
         price += GetMaterialsPrice(uid);
         price += GetSolutionsPrice(uid);
-
-        // Can't use static price with stackprice
-        var oldPrice = price;
         price += GetStackPrice(uid);
-
-        if (oldPrice.Equals(price))
-        {
-            price += GetStaticPrice(uid);
-        }
+        price += GetStaticPrice(uid);
 
         if (TryComp<ContainerManagerComponent>(uid, out var containers))
         {

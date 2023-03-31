@@ -29,7 +29,6 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
     {
         base.Initialize();
         SubscribeLocalEvent<CardboardBoxComponent, StorageAfterOpenEvent>(AfterStorageOpen);
-        SubscribeLocalEvent<CardboardBoxComponent, StorageBeforeOpenEvent>(BeforeStorageOpen);
         SubscribeLocalEvent<CardboardBoxComponent, StorageAfterCloseEvent>(AfterStorageClosed);
         SubscribeLocalEvent<CardboardBoxComponent, InteractedNoHandEvent>(OnNoHandInteracted);
         SubscribeLocalEvent<CardboardBoxComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
@@ -47,22 +46,19 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         _storage.OpenStorage(uid);
     }
 
-    private void BeforeStorageOpen(EntityUid uid, CardboardBoxComponent component, ref StorageBeforeOpenEvent args)
+    private void AfterStorageOpen(EntityUid uid, CardboardBoxComponent component, ref StorageAfterOpenEvent args)
     {
-        //Play effect & sound
+        //Remove the mover after the box is opened and play the effect if it hasn't been played yet.
         if (component.Mover != null)
         {
             if (_timing.CurTime > component.EffectCooldown)
             {
-                RaiseNetworkEvent(new PlayBoxEffectMessage(uid, component.Mover.Value));
-                _audio.PlayPvs(component.EffectSound, uid);
+                RaiseNetworkEvent(new PlayBoxEffectMessage(component.Owner, component.Mover.Value), Filter.PvsExcept(component.Owner));
+                _audio.PlayPvs(component.EffectSound, component.Owner);
                 component.EffectCooldown = _timing.CurTime + CardboardBoxComponent.MaxEffectCooldown;
             }
         }
-    }
 
-    private void AfterStorageOpen(EntityUid uid, CardboardBoxComponent component, ref StorageAfterOpenEvent args)
-    {
         // If this box has a stealth/chameleon effect, disable the stealth effect while the box is open.
         _stealth.SetEnabled(uid, false);
     }

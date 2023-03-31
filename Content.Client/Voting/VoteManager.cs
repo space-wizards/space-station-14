@@ -95,13 +95,6 @@ namespace Content.Client.Voting
             }
 
             _popupContainer = container;
-            SetVoteData();
-        }
-
-        private void SetVoteData()
-        {
-            if (_popupContainer == null)
-                return;
 
             foreach (var (vId, vote) in _votes)
             {
@@ -128,13 +121,9 @@ namespace Content.Client.Voting
                 @new = true;
                 IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>()
                     .PlayGlobal("/Audio/Effects/voteding.ogg", Filter.Local(), false);
-
-                // Refresh
-                var container = _popupContainer;
-                ClearPopupContainer();
-
-                if (container != null)
-                    SetPopupContainer(container);
+                // TODO: It would be better if this used a per-state container, i.e. a container
+                // for the lobby and each HUD layout.
+                SetPopupContainer(_userInterfaceManager.WindowRoot);
 
                 // New vote from the server.
                 var vote = new ActiveVote(voteId)
@@ -153,7 +142,6 @@ namespace Content.Client.Voting
                 _votes.Remove(voteId);
                 if (_votePopups.TryGetValue(voteId, out var toRemove))
                 {
-
                     toRemove.Orphan();
                     _votePopups.Remove(voteId);
                 }

@@ -41,17 +41,7 @@ public sealed partial class EmergencyShuttleSystem
     private readonly TimeSpan _bufferTime = TimeSpan.FromSeconds(5);
 
     /// <summary>
-    /// <see cref="CCVars.EmergencyShuttleMinTransitTime"/>
-    /// </summary>
-    public float MinimumTransitTime { get; private set; }
-
-    /// <summary>
-    /// <see cref="CCVars.EmergencyShuttleMaxTransitTime"/>
-    /// </summary>
-    public float MaximumTransitTime { get; private set; }
-
-    /// <summary>
-    /// How long it will take for the emergency shuttle to arrive at CentComm.
+    /// <see cref="CCVars.EmergencyShuttleTransitTime"/>
     /// </summary>
     public float TransitTime { get; private set; }
 
@@ -79,8 +69,7 @@ public sealed partial class EmergencyShuttleSystem
 
     private void InitializeEmergencyConsole()
     {
-        _configManager.OnValueChanged(CCVars.EmergencyShuttleMinTransitTime, SetMinTransitTime, true);
-        _configManager.OnValueChanged(CCVars.EmergencyShuttleMaxTransitTime, SetMaxTransitTime, true);
+        _configManager.OnValueChanged(CCVars.EmergencyShuttleTransitTime, SetTransitTime, true);
         _configManager.OnValueChanged(CCVars.EmergencyShuttleAuthorizeTime, SetAuthorizeTime, true);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, ComponentStartup>(OnEmergencyStartup);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleAuthorizeMessage>(OnEmergencyAuthorize);
@@ -106,22 +95,15 @@ public sealed partial class EmergencyShuttleSystem
         _authorizeTime = obj;
     }
 
-    private void SetMinTransitTime(float obj)
+    private void SetTransitTime(float obj)
     {
-        MinimumTransitTime = obj;
-        MaximumTransitTime = Math.Max(MaximumTransitTime, MinimumTransitTime);
-    }
-
-    private void SetMaxTransitTime(float obj)
-    {
-        MaximumTransitTime = Math.Max(MinimumTransitTime, obj);
+        TransitTime = obj;
     }
 
     private void ShutdownEmergencyConsole()
     {
         _configManager.UnsubValueChanged(CCVars.EmergencyShuttleAuthorizeTime, SetAuthorizeTime);
-        _configManager.UnsubValueChanged(CCVars.EmergencyShuttleMinTransitTime, SetMinTransitTime);
-        _configManager.UnsubValueChanged(CCVars.EmergencyShuttleMaxTransitTime, SetMaxTransitTime);
+        _configManager.UnsubValueChanged(CCVars.EmergencyShuttleTransitTime, SetTransitTime);
     }
 
     private void OnEmergencyStartup(EntityUid uid, EmergencyShuttleConsoleComponent component, ComponentStartup args)
@@ -301,9 +283,6 @@ public sealed partial class EmergencyShuttleSystem
         _consoleAccumulator = float.MinValue;
         EarlyLaunchAuthorized = false;
         EmergencyShuttleArrived = false;
-        TransitTime = MinimumTransitTime + (MaximumTransitTime - MinimumTransitTime) * _random.NextFloat();
-        // Round to nearest 10
-        TransitTime = MathF.Round(TransitTime / 10f) * 10f;
     }
 
     private void UpdateAllEmergencyConsoles()

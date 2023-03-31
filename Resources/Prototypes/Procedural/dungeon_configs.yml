@@ -5,8 +5,6 @@
       - SalvageExperiment
     presets:
       - Cross
-      - SpaceMan
-      - FourSquare
   postGeneration:
     - !type:MiddleConnectionPostGen
       overlapCount: 3
@@ -66,8 +64,6 @@
       - LavaBrig
     presets:
       - Cross
-      - SpaceMan
-      - FourSquare
   postGeneration:
     - !type:MiddleConnectionPostGen
       overlapCount: 3

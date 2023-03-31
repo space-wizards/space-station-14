@@ -167,8 +167,8 @@ namespace Content.Server.Medical
                     return MedicalScannerStatus.Open;
 
                 if (!TryComp<MobStateComponent>(body.Value, out var state))
-                {   // Is not alive or dead or critical
-                    return MedicalScannerStatus.Yellow;
+                {
+                    return MedicalScannerStatus.Open;
                 }
 
                 return GetStatusFromDamageState(body.Value, state);
@@ -213,14 +213,13 @@ namespace Content.Server.Medical
 
             _updateDif -= UpdateRate;
 
-            var query = EntityQueryEnumerator<MedicalScannerComponent>();
-            while(query.MoveNext(out var uid, out var scanner))
+            foreach (var scanner in EntityQuery<MedicalScannerComponent>())
             {
-                UpdateAppearance(uid, scanner);
+                UpdateAppearance(scanner.Owner, scanner);
             }
         }
 
-        public void InsertBody(EntityUid uid, EntityUid to_insert, MedicalScannerComponent? scannerComponent)
+        public void InsertBody(EntityUid uid, EntityUid user, MedicalScannerComponent? scannerComponent)
         {
             if (!Resolve(uid, ref scannerComponent))
                 return;
@@ -228,10 +227,10 @@ namespace Content.Server.Medical
             if (scannerComponent.BodyContainer.ContainedEntity != null)
                 return;
 
-            if (!HasComp<BodyComponent>(to_insert))
+            if (!HasComp<MobStateComponent>(user))
                 return;
 
-            scannerComponent.BodyContainer.Insert(to_insert);
+            scannerComponent.BodyContainer.Insert(user);
             UpdateAppearance(uid, scannerComponent);
         }
 

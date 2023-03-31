@@ -101,7 +101,12 @@ public sealed class PlanetCommand : IConsoleCommand
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
-            return CompletionResult.FromHintOptions(CompletionHelper.MapIds(_entManager), "Map Id");
+        {
+            var options = _entManager.EntityQuery<MapComponent>(true)
+                .Select(o => new CompletionOption(o.WorldMap.ToString(), "MapId"));
+
+            return CompletionResult.FromOptions(options);
+        }
 
         if (args.Length == 2)
         {

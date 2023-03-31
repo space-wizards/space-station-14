@@ -15,5 +15,3 @@ general-station-record-filter-prints = Finger prints:
 general-station-record-console-set-fingerprint-code = Enter the fingerprints code
 general-station-record-console-search-records = Search records
 general-station-record-console-reset-filters = Reset filter
-
-general-station-record-console-record-dna = DNA: {$dna}

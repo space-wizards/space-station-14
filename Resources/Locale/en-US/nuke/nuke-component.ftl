@@ -35,5 +35,5 @@ nuke-label-syndicate = SYN-{$serial}
 
 # Codes
 nuke-codes-message = [color=red]TOP SECRET![/color]
-nuke-codes-list = {$name} code: {$code}
+ Nuclear device activation code: {$name} - {$code}
 nuke-codes-fax-paper-name = nuclear authentication codes

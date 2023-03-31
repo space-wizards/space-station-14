@@ -18,6 +18,3 @@ ent-CrateMaterialPlasteel = Plasteel crate
 
 ent-CrateMaterialPlasma = Solid plasma crate
     .desc = 90 sheets of plasma.
-
-ent-CrateMaterialCardboard = Cardboard crate
-    .desc = 60 pieces of cardboard.

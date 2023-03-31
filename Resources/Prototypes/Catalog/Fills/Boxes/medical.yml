@@ -97,10 +97,6 @@
     contents:
       - id: DiseaseSwab
         amount: 30
-  - type: Sprite
-    layers:
-      - state: box
-      - state: swab
 
 - type: entity
   name: body bag box

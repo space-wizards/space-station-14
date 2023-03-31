@@ -38,4 +38,3 @@
   - type: Sprite
     layers:
       - state: box
-      - state: holo

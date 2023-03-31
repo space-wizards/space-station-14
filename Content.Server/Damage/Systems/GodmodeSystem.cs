@@ -74,8 +74,6 @@ namespace Content.Server.Damage.Systems
             {
                 _damageable.SetDamage(uid, damageable, godmode.OldDamage);
             }
-
-            RemComp<GodmodeComponent>(uid);
         }
 
         /// <summary>

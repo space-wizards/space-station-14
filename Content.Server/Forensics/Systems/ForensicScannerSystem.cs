@@ -47,7 +47,6 @@ namespace Content.Server.Forensics
             var state = new ForensicScannerBoundUserInterfaceState(
                 component.Fingerprints,
                 component.Fibers,
-                component.DNAs,
                 component.LastScannedName,
                 component.PrintCooldown,
                 component.PrintReadyAt);
@@ -70,14 +69,12 @@ namespace Content.Server.Forensics
                 {
                     scanner.Fingerprints = new();
                     scanner.Fibers = new();
-                    scanner.DNAs = new();
                 }
 
                 else
                 {
                     scanner.Fingerprints = forensics.Fingerprints.ToList();
                     scanner.Fibers = forensics.Fibers.ToList();
-                    scanner.DNAs = forensics.DNAs.ToList();
                 }
 
                 scanner.LastScannedName = MetaData(args.Args.Target.Value).EntityName;
@@ -214,12 +211,6 @@ namespace Content.Server.Forensics
             {
                 text.AppendLine(fiber);
             }
-            text.AppendLine();
-            text.AppendLine(Loc.GetString("forensic-scanner-interface-dnas"));
-            foreach (var dna in component.DNAs)
-            {
-                text.AppendLine(dna);
-            }
 
             _paperSystem.SetContent(printed, text.ToString());
             _audioSystem.PlayPvs(component.SoundPrint, uid,
@@ -239,7 +230,6 @@ namespace Content.Server.Forensics
 
             component.Fingerprints = new();
             component.Fibers = new();
-            component.DNAs = new();
             component.LastScannedName = string.Empty;
 
             UpdateUserInterface(uid, component);
