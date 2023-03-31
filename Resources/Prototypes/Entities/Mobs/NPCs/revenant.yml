@@ -42,6 +42,8 @@
   - type: Examiner
   - type: NoSlip
   - type: Actions
+  - type: TTS
+    voice: Kelthuzad
   - type: Eye
     drawFov: false
   - type: DoAfter
