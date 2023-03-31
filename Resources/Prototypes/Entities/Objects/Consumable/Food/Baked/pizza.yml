@@ -29,6 +29,10 @@
   - type: Tag
     tags:
     - Pizza
+  - type: SinguloFood
+    energy: 100
+  - type: AnnounceOnAbsorb
+    text: pizza-lord-speech
 
 - type: entity
   parent: FoodInjectableBase # Not sliceable
@@ -386,6 +390,10 @@
     - state: pineapple
   - type: SliceableFood
     slice: FoodPizzaPineappleSlice
+  - type: SinguloFood
+    energy: -9999
+  - type: AnnounceOnAbsorb
+    text: pizza-lord-pineapple
 
 - type: entity
   name: slice of pineapple pizza

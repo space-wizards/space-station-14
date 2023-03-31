@@ -17,6 +17,13 @@
   extendedAccess:
   - Hydroponics
   - Bar
+  special:
+  - !type:AddComponentSpecial
+    components:
+  - type: SinguloFood
+    energy: 700
+  - type: AnnounceOnAbsorb
+    text: pizza-lord-chef
 
 - type: startingGear
   id: ChefGear
