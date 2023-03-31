@@ -62,7 +62,8 @@ public sealed partial class GunSystem : SharedGunSystem
         args.Price += price * component.UnspawnedCount;
     }
 
-    public override void Shoot(EntityUid gunUid, GunComponent gun, List<(EntityUid? Entity, IShootable Shootable)> ammo, EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid? user = null)
+    public override void Shoot(EntityUid gunUid, GunComponent gun, List<(EntityUid? Entity, IShootable Shootable)> ammo,
+        EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid? user = null, bool throwItems = false)
     {
         // Try a clumsy roll
         // TODO: Who put this here
@@ -110,6 +111,21 @@ public sealed partial class GunSystem : SharedGunSystem
 
         foreach (var (ent, shootable) in ammo)
         {
+            // pneumatic cannon doesn't shoot bullets it just throws them, ignore ammo handling
+            if (throwItems)
+            {
+                if (!HasComp<ProjectileComponent>(ent!.Value))
+                {
+                    RemComp<AmmoComponent>(ent.Value);
+                    // TODO: Someone can probably yeet this a billion miles so need to pre-validate input somewhere up the call stack.
+                    ThrowingSystem.TryThrow(ent.Value, mapDirection, gun.ProjectileSpeed, user);
+                    continue;
+                }
+
+                ShootProjectile(ent.Value, mapDirection, gunVelocity, user, gun.ProjectileSpeed);
+                continue;
+            }
+
             switch (shootable)
             {
                 // Cartridge shoots something else

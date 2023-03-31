@@ -109,6 +109,8 @@ namespace Content.Server.Administration.Systems
         {
             _webhookUrl = url;
 
+            RaiseNetworkEvent(new BwoinkDiscordRelayUpdated(!string.IsNullOrWhiteSpace(url)));
+
             if (url == string.Empty)
                 return;
 
@@ -395,13 +397,11 @@ namespace Content.Server.Administration.Systems
                 _messageQueues[msg.UserId].Enqueue(GenerateAHelpMessage(senderSession.Name, str, !personalChannel, admins.Count == 0));
             }
 
-            if (admins.Count != 0)
+            if (admins.Count != 0 || sendsWebhook)
                 return;
 
             // No admin online, let the player know
-            var systemText = sendsWebhook ?
-                Loc.GetString("bwoink-system-starmute-message-no-other-users-webhook") :
-                Loc.GetString("bwoink-system-starmute-message-no-other-users");
+            var systemText = Loc.GetString("bwoink-system-starmute-message-no-other-users");
             var starMuteMsg = new BwoinkTextMessage(message.UserId, SystemUserId, systemText);
             RaiseNetworkEvent(starMuteMsg, senderSession.ConnectedClient);
         }

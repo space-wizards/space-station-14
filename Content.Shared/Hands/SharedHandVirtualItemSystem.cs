@@ -48,6 +48,11 @@ public abstract class SharedHandVirtualItemSystem : EntitySystem
     /// </summary>
     public void DeleteInHandsMatching(EntityUid user, EntityUid matching)
     {
+        // Client can't currently predict deleting network entities atm and this might happen due to the
+        // hands leaving PVS for example, in which case we wish to ignore it.
+        if (_net.IsClient)
+            return;
+
         foreach (var hand in _hands.EnumerateHands(user))
         {
             if (TryComp(hand.HeldEntity, out HandVirtualItemComponent? virt) && virt.BlockingEntity == matching)
