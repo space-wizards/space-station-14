@@ -2,7 +2,7 @@
   parent: BaseStructure
   id: ContainmentFieldGenerator
   name: containment field generator
-  description: A machine that generates a containment field when powered by an emitter. Keeps the Singularity docile.
+  description: A machine that generates a containment field when powered by an emitter. Keeps the Pizzalarity docile.
   components:
   - type: Fixtures
     fixtures:
