@@ -109,11 +109,12 @@ public sealed partial class EmergencyShuttleSystem
     private void SetMinTransitTime(float obj)
     {
         MinimumTransitTime = obj;
+        MaximumTransitTime = Math.Max(MaximumTransitTime, MinimumTransitTime);
     }
 
     private void SetMaxTransitTime(float obj)
     {
-        MaximumTransitTime = obj;
+        MaximumTransitTime = Math.Max(MinimumTransitTime, obj);
     }
 
     private void ShutdownEmergencyConsole()
@@ -300,8 +301,9 @@ public sealed partial class EmergencyShuttleSystem
         _consoleAccumulator = float.MinValue;
         EarlyLaunchAuthorized = false;
         EmergencyShuttleArrived = false;
-        // Just default to the average.
-        TransitTime = MinimumTransitTime + (MaximumTransitTime - MinimumTransitTime) / 2f;
+        TransitTime = MinimumTransitTime + (MaximumTransitTime - MinimumTransitTime) * _random.NextFloat();
+        // Round to nearest 10
+        TransitTime = MathF.Round(TransitTime / 10f) * 10f;
     }
 
     private void UpdateAllEmergencyConsoles()

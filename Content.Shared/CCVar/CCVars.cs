@@ -1123,7 +1123,7 @@ namespace Content.Shared.CCVar
         /// Whether the emergency shuttle is enabled or should the round just end.
         /// </summary>
         public static readonly CVarDef<bool> EmergencyShuttleEnabled =
-            CVarDef.Create("shuttle.emergency_enabled", true, CVar.SERVERONLY);
+            CVarDef.Create("shuttle.emergency", true, CVar.SERVERONLY);
 
         /// <summary>
         ///     The percentage of time passed from the initial call to when the shuttle can no longer be recalled.
