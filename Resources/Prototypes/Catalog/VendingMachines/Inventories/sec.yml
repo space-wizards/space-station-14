@@ -1,6 +1,7 @@
 - type: vendingMachineInventory
   id: SecTechInventory
   startingInventory:
+    MagazinePistol: 8
     Handcuffs: 8
     GrenadeFlashBang: 4
     Flash: 5
