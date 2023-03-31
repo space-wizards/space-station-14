@@ -3,8 +3,11 @@ using Content.Shared.Administration.Managers;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
+using Content.Shared.Ghost;
+using Content.Shared.Gravity;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
@@ -19,13 +22,16 @@ public sealed class SharedZLevelSystem : EntitySystem
 {
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IConsoleHost _conHost = default!;
     [Dependency] private readonly ISharedAdminManager _admin = default!;
 
+    [ViewVariables]
     private MapId?[] _mapAbove = new MapId?[] { };
+    [ViewVariables]
     private MapId?[] _mapBelow = new MapId?[] { };
 
     public IReadOnlyList<MapId?> MapAbove => _mapAbove;
@@ -45,7 +51,7 @@ public sealed class SharedZLevelSystem : EntitySystem
 
     private void OnMove(ref MoveEvent ev)
     {
-        if (_mapBelow[(int) ev.Component.MapID] == null)
+        if (_mapBelow[(int) ev.Component.MapID] == null || HasComp<MapGridComponent>(ev.Sender) || _gravity.IsWeightless(ev.Sender) || HasComp<SharedGhostComponent>(ev.Sender))
             return; // get out!
 
         var mapEid = _map.GetMapEntityId(ev.Component.MapID);
@@ -113,7 +119,7 @@ public sealed class SharedZLevelSystem : EntitySystem
             }
             case "traverse":
             {
-                var dir = args[2].ToLowerInvariant();
+                var dir = args[1].ToLowerInvariant();
 
                 if (dir != "above" && dir != "below")
                     return;
@@ -154,6 +160,7 @@ public sealed class SharedZLevelSystem : EntitySystem
         {
             newMap = MapBelow[(int)xform.MapID];
         }
+        Logger.Debug($"Traversing to {newMap}..");
 
         if (newMap is null)
             return false;
@@ -195,7 +202,7 @@ public sealed class SharedZLevelSystem : EntitySystem
         }
     }
 
-    private void UpdateMapList()
+    protected void UpdateMapList()
     {
         if (!_net.IsServer)
             return;

@@ -58,7 +58,19 @@ namespace Content.Client.Viewport
             get => _lowerEyes;
             set
             {
+                var old = value;
                 _lowerEyes = value;
+                if (old.Length != value.Length)
+                {
+                    InvalidateViewport();
+                    Logger.Debug("Eyes updated..");
+                }
+
+
+                foreach (var (eye, port) in _lowerEyes.Zip(_lowerPorts))
+                {
+                    port.Eye = eye;
+                }
             }
         }
 
@@ -245,6 +257,7 @@ namespace Content.Client.Viewport
                 {
                     Filter = StretchMode == ScalingViewportStretchMode.Bilinear,
                 });
+            _viewport.ClearColor = Color.Blue.WithAlpha(0.02f);
 
             Array.Resize(ref _lowerPorts, _lowerEyes.Length);
             for (var i = 0; i < _lowerEyes.Length; i++)
@@ -256,6 +269,7 @@ namespace Content.Client.Viewport
                         Filter = StretchMode == ScalingViewportStretchMode.Bilinear,
                     });
                 _lowerPorts[i].RenderScale = (renderScale, renderScale);
+                _lowerPorts[i].ClearColor = Color.Blue.WithAlpha(0.02f);
 
                 _lowerPorts[i].Eye = _lowerEyes[i];
             }
@@ -276,6 +290,11 @@ namespace Content.Client.Viewport
         {
             _viewport?.Dispose();
             _viewport = null;
+            foreach (var port in _lowerPorts)
+            {
+                port.Dispose();
+            }
+            _lowerPorts = new IClydeViewport[]{};
         }
 
         public MapCoordinates ScreenToMap(Vector2 coords)

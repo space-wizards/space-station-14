@@ -8,7 +8,7 @@ public sealed class ZViewSystem : SharedZViewSystem
 {
     [Dependency] private readonly ViewSubscriberSystem _view = default!;
 
-    public override EntityUid SpawnViewEnt(EntityUid source, SharedEyeComponent eye, MapCoordinates loc)
+    public override EntityUid SpawnViewEnt(EntityUid source, MapCoordinates loc)
     {
         var ent = Spawn(null, loc);
         EnsureComp<EyeComponent>(ent);

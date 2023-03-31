@@ -1,13 +1,15 @@
-﻿using Robust.Shared.Serialization;
+﻿using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared._Afterlight.ThirdDimension;
 
 /// <summary>
 /// This is used for...
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed class ZViewComponent : Component
 {
+    [ViewVariables]
     public List<EntityUid> DownViewEnts = new();
 }
 

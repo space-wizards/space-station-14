@@ -3,6 +3,7 @@ using Content.Shared.Body.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
+using Robust.Shared.Players;
 
 namespace Content.Shared._Afterlight.ThirdDimension;
 
@@ -13,6 +14,7 @@ public abstract class SharedZViewSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IMapManager _map = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
     [Dependency] private readonly SharedZLevelSystem _zLevel = default!;
 
@@ -22,6 +24,7 @@ public abstract class SharedZViewSystem : EntitySystem
     {
         SubscribeLocalEvent<ZViewComponent, ComponentHandleState>(ZViewComponentHandleState);
         SubscribeLocalEvent<ZViewComponent, ComponentGetState>(ZViewComponentGetState);
+
     }
 
     private void ZViewComponentGetState(EntityUid uid, ZViewComponent component, ref ComponentGetState args)
@@ -47,7 +50,8 @@ public abstract class SharedZViewSystem : EntitySystem
     public override void FrameUpdate(float frameTime)
     {
         var query = EntityQueryEnumerator<SharedEyeComponent>();
-        while (query.MoveNext(out var uid, out var eye))
+        var toUpdate = new List<EntityUid>();
+        while (query.MoveNext(out var uid, out _))
         {
             var view = EnsureComp<ZViewComponent>(uid);
             var xform = Transform(uid);
@@ -63,19 +67,9 @@ public abstract class SharedZViewSystem : EntitySystem
             {
                 if (_net.IsClient || !CanSetup(uid))
                     continue;
-
-                foreach (var e in view.DownViewEnts)
-                {
-                    Del(e);
-                }
-
-                view.DownViewEnts.Clear();
-
-                foreach (var map in maps.Reverse())
-                {
-                    view.DownViewEnts.Add(SpawnViewEnt(uid, eye, new MapCoordinates(currPos, map)));
-                    Dirty(view);
-                }
+                toUpdate.Add(uid);
+                Logger.Debug("Queued Z view update.");
+                continue;
             }
 
             foreach (var (ent, map) in view.DownViewEnts.Zip(maps))
@@ -84,9 +78,34 @@ public abstract class SharedZViewSystem : EntitySystem
                 _xformSystem.SetCoordinates(ent, coords);
             }
         }
+
+        foreach (var uid in toUpdate)
+        {
+            Logger.Debug("Did z view update.");
+            var view = EnsureComp<ZViewComponent>(uid);
+            var xform = Transform(uid);
+            foreach (var e in view.DownViewEnts)
+            {
+                QueueDel(e);
+            }
+
+            view.DownViewEnts.Clear();
+            var maps = new MapId[ViewDepth];
+            var amt = _zLevel.AllMapsBelow(xform.MapID, ref maps);
+            if (amt == 0)
+                continue;
+            Array.Resize(ref maps, amt);
+            var currPos = _xformSystem.GetWorldPosition(xform);
+            foreach (var map in maps.Reverse())
+            {
+                view.DownViewEnts.Add(SpawnViewEnt(uid, new MapCoordinates(currPos, map)));
+            }
+
+            Dirty(view);
+        }
     }
 
-    public abstract EntityUid SpawnViewEnt(EntityUid source, SharedEyeComponent eye, MapCoordinates loc);
+    public abstract EntityUid SpawnViewEnt(EntityUid source, MapCoordinates loc);
     public abstract bool CanSetup(EntityUid source);
 
 }
