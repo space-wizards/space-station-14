@@ -106,7 +106,7 @@ public sealed class SharedZLevelSystem : EntitySystem
                 if (dir != "above" && dir != "below")
                     return;
 
-                if (dir == "above")
+                if (dir != "above")
                 {
                     LinkMaps(baseMap, linkedMap);
                 }
@@ -202,7 +202,7 @@ public sealed class SharedZLevelSystem : EntitySystem
         }
     }
 
-    protected void UpdateMapList()
+    public void UpdateMapList()
     {
         if (!_net.IsServer)
             return;

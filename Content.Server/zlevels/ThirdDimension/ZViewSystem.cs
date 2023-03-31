@@ -1,12 +1,22 @@
 ﻿using Content.Shared._Afterlight.ThirdDimension;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 
 namespace Content.Server._Afterlight.ThirdDimension;
 
 public sealed class ZViewSystem : SharedZViewSystem
 {
     [Dependency] private readonly ViewSubscriberSystem _view = default!;
+    [Dependency] private readonly SharedZLevelSystem _zLevel = default!;
+    [Dependency] private readonly IServerNetManager _serverNet = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        _serverNet.Connected += (sender, args) => _zLevel.UpdateMapList();
+    }
 
     public override EntityUid SpawnViewEnt(EntityUid source, MapCoordinates loc)
     {
