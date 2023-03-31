@@ -25,7 +25,7 @@ namespace Content.Client.Viewport
 
         // Internal viewport creation is deferred.
         private IClydeViewport? _viewport;
-        private IClydeViewport[] _lowerPorts = new IClydeViewport[] {};
+        private List<IClydeViewport> _lowerPorts = new();
         private IEye? _eye;
         private IEye[] _lowerEyes = new IEye[] {};
         private Vector2i _viewportSize;
@@ -184,7 +184,7 @@ namespace Content.Client.Viewport
             var drawBox = GetDrawBox();
             var drawBoxGlobal = drawBox.Translated(GlobalPixelPosition);
             _viewport.RenderScreenOverlaysBelow(handle, this, drawBoxGlobal);
-            foreach (var viewport in _lowerPorts.Reverse())
+            foreach (var viewport in _lowerPorts.AsEnumerable().Reverse())
             {
                 handle.DrawTextureRect(viewport.RenderTarget.Texture, drawBox);
             }
@@ -259,15 +259,15 @@ namespace Content.Client.Viewport
                 });
             _viewport.ClearColor = Color.Blue.WithAlpha(0.02f);
 
-            Array.Resize(ref _lowerPorts, _lowerEyes.Length);
+            _lowerPorts.Clear();
             for (var i = 0; i < _lowerEyes.Length; i++)
             {
-                _lowerPorts[i] = _clyde.CreateViewport(
+                _lowerPorts.Add(_clyde.CreateViewport(
                     ViewportSize * renderScale,
                     new TextureSampleParameters
                     {
                         Filter = StretchMode == ScalingViewportStretchMode.Bilinear,
-                    });
+                    }));
                 _lowerPorts[i].RenderScale = (renderScale, renderScale);
                 _lowerPorts[i].ClearColor = Color.Blue.WithAlpha(0.02f);
 
@@ -295,7 +295,7 @@ namespace Content.Client.Viewport
             {
                 port.Dispose();
             }
-            _lowerPorts = new IClydeViewport[]{};
+            _lowerPorts = new();
         }
 
         public MapCoordinates ScreenToMap(Vector2 coords)
@@ -346,7 +346,7 @@ namespace Content.Client.Viewport
 
         private void EnsureViewportCreated()
         {
-            if (_viewport == null || _lowerPorts.Length != _lowerEyes.Length)
+            if (_viewport == null || _lowerPorts.Count != _lowerEyes.Length)
             {
                 RegenerateViewport();
             }
