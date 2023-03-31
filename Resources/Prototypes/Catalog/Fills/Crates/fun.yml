@@ -5,32 +5,19 @@
   - type: StorageFill
     contents:
       - id: PlushieBee
-        amount: 1
       - id: PlushieNar
-        amount: 1
       - id: PlushieCarp
-        amount: 1
       - id: PlushieNuke
-        amount: 1
       - id: PlushieSlime
-        amount: 1
       - id: PlushieSnake
-        amount: 1
       - id: PlushieLizard
-        amount: 1
       - id: PlushieSpaceLizard
-        amount: 1
       - id: PlushieVox
-        amount: 1
       - id: PlushieRouny
-        amount: 1
       - id: PlushieRatvar
-        amount: 1
       - id: PlushieSharkBlue
-        amount: 1
       - id: PlushieAtmosian
-        amount: 1
-
+      - id: PlushieDiona
 
 - type: entity
   id: CrateFunInstruments
@@ -39,31 +26,18 @@
   - type: StorageFill
     contents:
       - id: SynthesizerInstrument
-        amount: 1
       - id: AcousticGuitarInstrument
-        amount: 1
       - id: ViolinInstrument
-        amount: 1
       - id: TrumpetInstrument
-        amount: 1
       - id: ElectricGuitarInstrument
-        amount: 1
       - id: AccordionInstrument
-        amount: 1
       - id: HarmonicaInstrument
-        amount: 1
       - id: RecorderInstrument
-        amount: 1
       - id: TromboneInstrument
-        amount: 1
       - id: SaxophoneInstrument
-        amount: 1
       - id: GlockenspielInstrument
-        amount: 1
       - id: BanjoInstrument
-        amount: 1
       - id: BikeHornInstrument
-        amount: 1
 
 - type: entity
   id: CrateFunBrass
@@ -78,9 +52,7 @@
       - id: FrenchHornInstrument
         amount: 2
       - id: EuphoniumInstrument
-        amount: 1
       - id: TubaInstrument
-        amount: 1
 
 - type: entity
   id: CrateFunArtSupplies
@@ -89,9 +61,7 @@
   - type: StorageFill
     contents:
       - id: CrayonBox
-        amount: 1
       - id: CrayonWhite
-        amount: 1
 
 - type: entity
   id: CrateFunBoardGames
@@ -100,13 +70,9 @@
   - type: StorageFill
     contents:
       - id: ChessBoard
-        amount: 1
       - id: BackgammonBoard
-        amount: 1
       - id: ParchisBoard
-        amount: 1
       - id: CheckerBoard
-        amount: 1
       - id: d6Dice
         amount: 4
 
@@ -117,9 +83,7 @@
   - type: StorageFill
     contents:
       - id: VehicleATV
-        amount: 1
       - id: VehicleKeyATV
-        amount: 1
 
 - type: entity
   id: CrateFunSadTromboneImplants
@@ -156,11 +120,9 @@
       - id: GlowstickYellow
         amount: 2
       - id: FoodCakeBirthday
-        amount: 1
       - id: DrinkLean
         amount: 4
       - id: KnifePlastic
-        amount: 1
 
 - type: entity
   id: CrateFunSyndicateSegway
@@ -169,6 +131,4 @@
     - type: StorageFill
       contents:
         - id: VehicleSyndicateSegway
-          amount: 1
         - id: VehicleKeySyndicateSegway
-          amount: 1
