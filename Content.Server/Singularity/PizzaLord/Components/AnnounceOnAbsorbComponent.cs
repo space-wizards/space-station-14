@@ -27,7 +27,7 @@ namespace Content.Server.Singularity.PizzaLord.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("color")]
-        public Color AnnouncementColor = Color.Orange;
+        public Color AnnouncementColor = Color.OrangeRed;
         
         /// <summary>
         /// Announce sound file path

@@ -20,10 +20,10 @@
   special:
   - !type:AddComponentSpecial
     components:
-  - type: SinguloFood
-    energy: 700
-  - type: AnnounceOnAbsorb
-    text: pizza-lord-chef
+    - type: SinguloFood
+      energy: 750
+    - type: AnnounceOnAbsorb
+      text: pizza-lord-chef
 
 - type: startingGear
   id: ChefGear

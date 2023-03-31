@@ -16,9 +16,10 @@ public sealed class AnnounceOnAbsorbSystem : EntitySystem
         SubscribeLocalEvent<AnnounceOnAbsorbComponent, EventHorizonConsumedEntityEvent>(OnAbsorb);
     }
 
-    private void OnAbsorb(EntityUid uid, AnnounceOnAbsorbComponent comp, ref EventHorizonConsumedEntityEvent args)
+    private void OnAbsorb(EntityUid uid, AnnounceOnAbsorbComponent comp, EventHorizonConsumedEntityEvent args)
     {
-        var msg = Loc.GetString(comp.Text, ("absorbed", Name(uid)));
-        _chatSystem.DispatchGlobalAnnouncement(msg, comp.Title, announcementSound: comp.AnnouncementSound, colorOverride: comp.AnnouncementColor);
+        var msg = Loc.GetString(comp.Text, ("object", Name(uid)));
+        var title = Loc.GetString(comp.Title);
+        _chatSystem.DispatchGlobalAnnouncement(msg, title, announcementSound: comp.AnnouncementSound, colorOverride: comp.AnnouncementColor);
     }
 }

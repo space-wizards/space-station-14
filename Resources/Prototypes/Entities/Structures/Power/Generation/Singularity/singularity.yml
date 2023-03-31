@@ -33,7 +33,6 @@
     canBreachContainment: false
     horizonFixtureId: EventHorizon
   - type: RandomWalk # To make the singularity move around.
-  - type: SingularityDistortion
   - type: RadiationSource
     slope: 0.2 # its emit really far away
   - type: Sprite
@@ -49,4 +48,4 @@
     guides: [ Singularity, Power ]
   - type: WarpPoint
     follow: true
-    location: singularity
+    location: pizzalarity

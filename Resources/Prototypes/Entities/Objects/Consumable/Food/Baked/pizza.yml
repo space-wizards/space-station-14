@@ -62,6 +62,10 @@
   - type: Tag
     tags:
     - Pizza
+  - type: SinguloFood
+    energy: 20
+  - type: AnnounceOnAbsorb
+    text: pizza-lord-speech
 
 # Pizza
 
@@ -411,6 +415,10 @@
   - type: Sprite
     layers:
     - state: pineapple-slice
+  - type: SinguloFood
+    energy: -9999
+  - type: AnnounceOnAbsorb
+    text: pizza-lord-pineapple
 # Tastes like crust, tomato, cheese, pineapple, ham.
 
 #TODO: This is a meme pizza from /tg/. It has specially coded mechanics.
