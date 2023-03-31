@@ -1,5 +1,7 @@
+using System.Linq;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Gameplay;
+using Content.Shared._Afterlight.ThirdDimension;
 using Content.Shared.CCVar;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -77,15 +79,27 @@ public sealed class ViewportUIController : UIController
 
         base.FrameUpdate(e);
 
+
         Viewport.Viewport.Eye = _eyeManager.CurrentEye;
 
         // verify that the current eye is not "null". Fuck IEyeManager.
 
         var ent = _playerMan.LocalPlayer?.ControlledEntity;
+        if (_entMan.TryGetComponent(ent, out ZViewComponent? view))
+        {
+            Viewport.Viewport.LowerEyes = view.DownViewEnts.Select(x =>
+            {
+                var eye = _entMan.GetComponent<EyeComponent>(x);
+                eye.Rotation = _eyeManager.CurrentEye.Rotation;
+                eye.DrawFov = false; // We're z leveling, no FoV.
+                return eye.Eye!;
+            }).ToArray();
+        }
         if (_eyeManager.CurrentEye.Position != default || ent == null)
             return;
 
         _entMan.TryGetComponent(ent, out EyeComponent? eye);
+
 
         if (eye?.Eye == _eyeManager.CurrentEye
             && _entMan.GetComponent<TransformComponent>(ent.Value).WorldPosition == default)
