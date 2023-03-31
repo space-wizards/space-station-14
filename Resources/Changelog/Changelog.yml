@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Popups will use your UI scaling now., type: Fix}
-  id: 2800
-  time: '2022-12-24T21:07:00.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Mechs can no longer pick up the pilot inside the mech., type: Fix}
@@ -2916,3 +2911,10 @@ Entries:
   - {message: Fixed some boxes not having icons., type: Fix}
   id: 3299
   time: '2023-03-31T04:46:07.0000000+00:00'
+- author: ficcialfaint
+  changes:
+  - {message: 'Added DNA for people. You can scan a blood puddle, vomit, glasses,
+      glass shards and other liquid containers using forensic scanner to get DNA.
+      Drinking leaves DNA on items.', type: Add}
+  id: 3300
+  time: '2023-03-31T04:49:25.0000000+00:00'
