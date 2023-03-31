@@ -8,6 +8,7 @@ general-station-record-console-record-title = Job: {$job}
 general-station-record-console-record-species = Species: {$species}
 general-station-record-console-record-gender = Gender: {$gender}
 general-station-record-console-record-fingerprint = Fingerprint: {$fingerprint}
+general-station-record-console-record-dna = DNA: {$dna}
 
 general-station-record-filter-name = Name:
 general-station-record-set-filter-name = Enter the person name
