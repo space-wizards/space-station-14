@@ -32,7 +32,7 @@ reagent-name-mindbreaker-toxin = mindbreaker toxin
 reagent-desc-mindbreaker-toxin = A potent hallucinogenic compound that is formerly known as LSD. Does nothing on its own, but a required reagent in heartbreaker toxin.
 
 reagent-name-histamine = histamine
-reagent-desc-histamine = A chemical caused by allergenics reacting with antibodies. Lethal at a large quantities.
+reagent-desc-histamine = A chemical caused by allergenics reacting with antibodies. Lethal at large quantities.
 
 reagent-name-theobromine = theobromine
 reagent-desc-theobromine = A bitter alkaloid of the cacao plant, commonly found in chocolate. Do not feed to lizards.
@@ -53,4 +53,4 @@ reagent-name-allicin = allicin
 reagent-desc-allicin = An organosulfur compound found in alliums like garlic, onions, and related plants.
 
 reagent-name-pax = pax
-reagent-desc-pax = A psychiatric drug which prevents the patient from directly harming anyone.
+reagent-desc-pax = A psychiatric chemical which prevents the patient from directly harming anyone.

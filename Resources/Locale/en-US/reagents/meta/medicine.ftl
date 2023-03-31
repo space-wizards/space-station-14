@@ -1,8 +1,8 @@
 reagent-name-cryptobiolin = cryptobiolin
-reagent-desc-cryptobiolin = Causes confusion and dizziness. An essential reagent to make Spaceacillin.
+reagent-desc-cryptobiolin = Causes confusion and dizziness. An essential reagent to make spaceacillin.
 
 reagent-name-dylovene = dylovene
-reagent-desc-dylovene = A broad spectrum anti-toxin, which treats toxin damage in the blood stream. Overdosing will cause vomiting, dizzyness and pain. A required reagent for other advanced drugs.
+reagent-desc-dylovene = A broad spectrum anti-toxin, which treats toxin damage in the blood stream. Overdosing will cause vomiting, dizzyness and pain.
 
 reagent-name-diphenhydramine = diphenhydramine
 reagent-desc-diphenhydramine = Rapidly purges the body of histamine and reduces jitteriness.
@@ -26,7 +26,7 @@ reagent-name-dexalin-plus = dexalin plus
 reagent-desc-dexalin-plus = Used in treatment of extreme cases of oxygen deprivation and bloodloss. Flushes lexorin out the blood stream.
 
 reagent-name-epinephrine = epinephrine
-reagent-desc-epinephrine = An effective stabilizing drug used to keep a critical person from dieing to asphyxiation while patching up minor damage during crit. Flushes lexorin out the blood stream at the cost of more epinephrine, but may add histamine. Helps reduce stun time. Commonly found in the form of emergency medipens.
+reagent-desc-epinephrine = An effective stabilizing chemical used to keep a critical person from dieing to asphyxiation while patching up minor damage during crit. Flushes lexorin out the blood stream at the cost of more epinephrine, but may add histamine. Helps reduce stun time. Commonly found in the form of emergency medipens.
 
 reagent-name-hyronalin = hyronalin
 reagent-desc-hyronalin = A weak treatment for radiation damage. A precursor to arithrazine and phalanximine. Can cause the user to vomit.
@@ -38,7 +38,7 @@ reagent-name-inaprovaline = inaprovaline
 reagent-desc-inaprovaline = Inaprovaline is a synaptic stimulant and cardiostimulant, commonly used to treat asphyxiation damage caused during critical states and reduce bleeding. Used in many advanced medicine.
 
 reagent-name-kelotane = kelotane
-reagent-desc-kelotane = A weak yet simple and effective medicine used to aid in treating minor burn damage. A necessary reagent for dermaline.
+reagent-desc-kelotane = A weak yet simple and effective medicine used to aid in treating minor burn damage.
 
 reagent-name-leporazine = leporazine
 reagent-desc-leporazine = A chemical used to stabilize body temperature and rapidly cure cold damage. Great for unprotected EVA travel, but prevents use of cryogenic tubes.
@@ -47,7 +47,7 @@ reagent-name-barozine = barozine
 reagent-desc-barozine = A potent chemical that prevents pressure damage. Causes extreme stress on the body. Commonly found in the form of space medipens.
 
 reagent-name-phalanximine = phalanximine
-reagent-desc-phalanximine = An advanced chemical used in the treatment of cancer. Causes moderate radiation poisoning. A necessary reagent in romerol.
+reagent-desc-phalanximine = An advanced chemical used in the treatment of cancer. Causes moderate radiation poisoning.
 
 reagent-name-romerol = romerol
 reagent-desc-romerol = A complex chemical used in the reversal of the zombification process - ten units are enough to negate the spread. Tastes like death.
@@ -68,10 +68,10 @@ reagent-name-synaptizine = synaptizine
 reagent-desc-synaptizine = A toxic chemical that halves the duration of stuns and knockdowns.
 
 reagent-name-tranexamic-acid = tranexamic acid
-reagent-desc-tranexamic-acid = A blood-clotting medicine used to prevent profuse bleeding. Causes heavier bleeding on overdose. Commonly found in emergency medipens.
+reagent-desc-tranexamic-acid = A blood-clotting medicine used to prevent profuse bleeding. Causes heavier bleeding on overdose. Commonly found at small doses in emergency medipens.
 
 reagent-name-tricordrazine = tricordrazine
-reagent-desc-tricordrazine = A wide-spectrum stimulant, originally derived from cordrazine. Treats minor damage of all basic health types as long as the user is not heavily wounded. Best used as an additive to other drugs.
+reagent-desc-tricordrazine = A wide-spectrum stimulant, originally derived from cordrazine. Treats minor damage of all basic health types as long as the user is not heavily wounded. Best used as an additive to other chemicals.
 
 reagent-name-lipozine = lipozine
 reagent-desc-lipozine = A chemical that accelerates metabolism, causing the user to hunger faster.
@@ -92,7 +92,7 @@ reagent-name-cognizine = cognizine
 reagent-desc-cognizine = A mysterious chemical which is able to make any non-sentient creature sentient.
 
 reagent-name-ethyloxyephedrine = ethyloxyephedrine
-reagent-desc-ethyloxyephedrine = An unstable medicine derived from desoxyephedrine. With the main effects of desoxyephedrine neutralized, it may be useful for something else.
+reagent-desc-ethyloxyephedrine = A mildly unstable medicine derived from desoxyephedrine, primarily used to combat narcolepsy.
 
 reagent-name-diphenylmethylamine = diphenylmethylamine
 reagent-desc-diphenylmethylamine = A more stable medicine than ethyloxyephedrine. Useful for keeping someone awake.
