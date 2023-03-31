@@ -1,9 +1,4 @@
 Entries:
-- author: TemporalOroboros
-  changes:
-  - {message: PA now activates the singularity generator again., type: Fix}
-  id: 2790
-  time: '2022-12-20T23:54:57.0000000+00:00'
 - author: lapatison
   changes:
   - {message: 'Added new animal, pig, and new chef''s pet-companion.', type: Add}
@@ -2913,3 +2908,8 @@ Entries:
   - {message: 'New game mode:  Oops, All Captains!', type: Add}
   id: 3289
   time: '2023-03-30T23:54:39.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: TRays are now clientside with a higher range., type: Tweak}
+  id: 3290
+  time: '2023-03-31T03:40:38.0000000+00:00'
