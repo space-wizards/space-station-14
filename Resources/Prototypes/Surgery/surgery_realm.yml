@@ -4,7 +4,6 @@
   - type: Mind
   - type: Physics
     bodyType: Dynamic
-    fixedRotation: false
   - type: InputMover
   - type: Eye
     drawFov: false
@@ -24,12 +23,21 @@
     sprite: Mobs/Species/Human/organs.rsi
     state: heart-on
   - type: SurgeryRealmHeart
-  - type: InputMover
   - type: Transform
     noRot: true
-  - type: MovementIgnoreGravity
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 4
-    baseSprintSpeed : 4
+  - type: Physics
+    bodyType: KinematicController
+    fixedRotation: true
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      density: 15
+  - type: InputMover
   - type: Input
     context: "ghost"
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 4
+    baseWalkSpeed: 4
+  - type: MovementIgnoreGravity
