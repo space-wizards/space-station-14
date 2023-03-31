@@ -55,7 +55,7 @@
         maxVol: 10000
   - type: Explosive
     explosionType: Default
-    totalIntensity: 200
+    totalIntensity: 140
 
 # Water
 
