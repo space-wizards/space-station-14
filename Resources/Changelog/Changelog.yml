@@ -1,9 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: 'Added new animal, pig, and new chef''s pet-companion.', type: Add}
-  id: 2791
-  time: '2022-12-21T14:48:35.0000000+00:00'
 - author: Velcroboy
   changes:
   - {message: added ChefVend, type: Add}
@@ -2913,3 +2908,9 @@ Entries:
   - {message: TRays are now clientside with a higher range., type: Tweak}
   id: 3290
   time: '2023-03-31T03:40:38.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Emergency shuttle FTL time is now randomised from 60 to 180 seconds.,
+    type: Tweak}
+  id: 3291
+  time: '2023-03-31T04:20:43.0000000+00:00'
