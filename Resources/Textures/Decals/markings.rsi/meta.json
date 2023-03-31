@@ -204,6 +204,12 @@
     },
     {
       "name": "warn_line_greyscale_w"
+    },
+    {
+      "name": "hatch_small"
+    },
+    {
+      "name": "vent_small"
     }
   ]
 }

@@ -4,6 +4,7 @@ using Content.Shared.StatusEffect;
 using JetBrains.Annotations;
 using Robust.Shared.Physics.Dynamics;
 using Content.Shared.Throwing;
+using Robust.Shared.Physics.Events;
 
 namespace Content.Server.Stunnable
 {
@@ -39,7 +40,7 @@ namespace Content.Server.Stunnable
                     component.WalkSpeedMultiplier, component.RunSpeedMultiplier, status);
             }
         }
-        private void HandleCollide(EntityUid uid, StunOnCollideComponent component, StartCollideEvent args)
+        private void HandleCollide(EntityUid uid, StunOnCollideComponent component, ref StartCollideEvent args)
         {
             if (args.OurFixture.ID != component.FixtureID) return;
 

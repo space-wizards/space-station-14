@@ -5,11 +5,14 @@
   components:
   - type: Item
     size: 5
-  - type: StaticPrice
-    price: 5
   - type: Clickable
   - type: InteractionOutline
   - type: MovedByPressure
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Effects/drop.ogg
+      params:
+        volume: 2
   - type: DamageOnHighSpeedImpact
     damage:
       types:
@@ -27,7 +30,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.25,-0.25,0.25,0.25"
-      mass: 5
+      density: 20
       mask:
       - ItemMask
       restitution: 0.3  # fite me
@@ -48,4 +51,8 @@
     interfaces:
     - key: enum.StorageUiKey.Key
       type: StorageBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
 

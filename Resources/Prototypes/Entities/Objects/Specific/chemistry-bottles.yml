@@ -21,6 +21,7 @@
     solutions:
       drink: # This solution name and target volume is hard-coded in ChemMasterComponent
         maxVol: 30
+        canMix: true
   - type: RefillableSolution
     solution: drink
   - type: DrainableSolution
@@ -37,9 +38,14 @@
     - key: enum.TransferAmountUiKey.Key
       type: TransferAmountBoundUserInterface
   - type: Item
+    size: 3
     sprite: Objects/Specific/Chemistry/beaker.rsi
   - type: Spillable
     solution: drink
+  - type: TrashOnEmpty
+    solution: drink
+  - type: StaticPrice
+    price: 0
 
 - type: entity
   name: bottle
@@ -54,10 +60,9 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 6
-      fillBaseName: bottle-1-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: bottle-1-
 
 - type: entity
   name: bottle
@@ -72,10 +77,9 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 6
-      fillBaseName: bottle-2-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: bottle-2-
 
 - type: entity
   name: bottle
@@ -90,10 +94,9 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 6
-      fillBaseName: bottle-3-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: bottle-3-
 
 - type: entity
   name: bottle
@@ -108,10 +111,9 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 6
-      fillBaseName: bottle-4-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: bottle-4-
 
 - type: entity
   id: EpinephrineChemistryBottle
@@ -125,6 +127,9 @@
         reagents:
         - ReagentId: Epinephrine
           Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
 
 - type: entity
   id: RobustHarvestChemistryBottle
@@ -139,6 +144,26 @@
         reagents:
         - ReagentId: RobustHarvest
           Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
+  id: UnstableMutagenChemistryBottle
+  name: unstable mutagen bottle
+  description: This will cause rapid mutations in your plants.
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: UnstableMutagen
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
 
 - type: entity
   id: NocturineChemistryBottle
@@ -153,6 +178,9 @@
         reagents:
         - ReagentId: Nocturine
           Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
 
 - type: entity
   id: EphedrineChemistryBottle
@@ -161,11 +189,14 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink: 
+      drink:
         maxVol: 30
         reagents:
         - ReagentId: Ephedrine
           Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
 
 - type: entity
   id: OmnizineChemistryBottle
@@ -174,8 +205,11 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink: 
+      drink:
         maxVol: 30
         reagents:
         - ReagentId: Omnizine
           Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle

@@ -8,9 +8,10 @@
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
-    size: 10
   - type: TemperatureProtection
     coefficient: 0.1
+  - type: Item
+    size: 10
   - type: Armor
     modifiers:
       coefficients:
@@ -76,6 +77,17 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatcentcom.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatcentcom.rsi
+    
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterChef
+  name: chef's freezer coat
+  description: A coat specifically designed for work inside cold storage, sorely needed by cold-blooded lizard chefs.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatchef.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatchef.rsi
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -86,6 +98,10 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatchem.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatchem.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.75
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -96,6 +112,10 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatcmo.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatcmo.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.75
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -126,6 +146,10 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatgen.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatgen.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.9
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -166,6 +190,10 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatjani.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatjani.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.9
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -176,6 +204,10 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatmed.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatmed.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.9
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -206,6 +238,10 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatparamed.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatparamed.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.9
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -226,6 +262,10 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatrd.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatrd.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.9
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -246,6 +286,10 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatsci.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatsci.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.9
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -266,6 +310,10 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatviro.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatviro.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.9
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -284,3 +332,16 @@
         Slash: 0.8
         Piercing: 0.6 #slightly less bulletproof than wardens normal coat
         Heat: 0.75
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterMusician
+  name: musician's winter coat
+  description: An oversized, plasticine space tuxedo that'll have people asking "do you know me?"
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatnomi.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatnomi.rsi
+
+

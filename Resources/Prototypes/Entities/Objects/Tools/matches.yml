@@ -6,7 +6,7 @@
   - type: Storage
     capacity: 10
   - type: Item
-    size: 6
+    size: 10
 
 - type: entity
   name: match stick
@@ -27,7 +27,7 @@
       - state: match_unlit
   - type: Item
     sprite: Objects/Tools/matches.rsi
-    HeldPrefix: unlit
+    heldPrefix: unlit
     size: 1
   - type: Matchstick
     duration: 10
@@ -43,6 +43,17 @@
         unlitIcon: match_unlit
         litIcon: match_lit
         burntIcon: match_burnt
+
+- type: entity
+  parent: Matchstick
+  id: MatchstickSpent
+  suffix: spent
+  components:
+  - type: Sprite
+    layers:
+      - state: match_burnt
+  - type: Matchstick
+    state: Burnt
 
 - type: entity
   name: match box
@@ -61,14 +72,15 @@
       - state: matchbox
   - type: Item
     sprite: Objects/Tools/matches.rsi
-    HeldPrefix: matchbox
+    heldPrefix: matchbox
+    size: 10
   - type: StorageFill
     contents:
       - id: Matchstick
         amount: 6
   - type: ItemCounter
     count:
-      tags: [Cigar]
+      tags: [Matchstick]
   - type: Appearance
     visuals:
       - type: BagOpenCloseVisualizer

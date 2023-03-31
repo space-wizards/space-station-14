@@ -1,6 +1,8 @@
 using Content.Client.Viewport;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.State;
+using Robust.Client.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -16,6 +18,8 @@ namespace Content.Client.Flash
         [Dependency] private readonly IClyde _displayManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
         private readonly ShaderInstance _shader;
@@ -46,6 +50,12 @@ namespace Content.Client.Flash
 
         protected override void Draw(in OverlayDrawArgs args)
         {
+            if (!_entityManager.TryGetComponent(_playerManager.LocalPlayer?.ControlledEntity, out EyeComponent? eyeComp))
+                return;
+
+            if (args.Viewport.Eye != eyeComp.Eye)
+                return;
+
             var percentComplete = (float) ((_gameTiming.CurTime.TotalSeconds - _startTime) / _lastsFor);
             if (percentComplete >= 1.0f)
                 return;
@@ -60,11 +70,13 @@ namespace Content.Client.Flash
             {
                 screenSpaceHandle.DrawTextureRect(_screenshotTexture, screenSize);
             }
+
+            screenSpaceHandle.UseShader(null);
         }
 
         protected override void DisposeBehavior()
         {
-            base.Dispose();
+            base.DisposeBehavior();
             _screenshotTexture = null;
         }
     }

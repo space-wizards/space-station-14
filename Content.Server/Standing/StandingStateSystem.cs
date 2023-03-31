@@ -2,6 +2,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Standing;
 using Content.Shared.Throwing;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.Standing;
@@ -49,7 +50,7 @@ public sealed class StandingStateSystem : EntitySystem
 
     /// <summary>
     /// Raised after an entity falls down.
-    /// <summary>
+    /// </summary>
     public sealed class FellDownEvent : EntityEventArgs
     {
         public EntityUid Uid { get; }

@@ -1,0 +1,24 @@
+- type: dataset
+  id: skeletonNamesFirst
+  values:
+  - Sternum
+  - Ribs
+  - Vertebrae
+  - Sacrum
+  - Mandible
+  - Clavicle
+  - Scapula
+  - Humerus
+  - Radius
+  - Ulna
+  - Carpals
+  - Phanages
+  - Pelvis
+  - Femur
+  - Tibia
+  - Fibula
+  - Marrow
+  - Tarsalls
+  - Patella
+  - Tailbone
+  - Boner

@@ -4,6 +4,7 @@ using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Server.RCD.Components;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -11,6 +12,7 @@ using Content.Shared.Maps;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 
 namespace Content.Server.RCD.Systems
@@ -73,17 +75,18 @@ namespace Content.Server.RCD.Systems
                 return;
             // Try to fix it (i.e. if clicking on space)
             // Note: Ideally there'd be a better way, but there isn't right now.
-            var gridID = clickLocationMod.GetGridId(EntityManager);
-            if (!gridID.IsValid())
+            var gridIdOpt = clickLocationMod.GetGridUid(EntityManager);
+            if (!(gridIdOpt is EntityUid gridId) || !gridId.IsValid())
             {
                 clickLocationMod = clickLocationMod.AlignWithClosestGridTile();
-                gridID = clickLocationMod.GetGridId(EntityManager);
+                gridIdOpt = clickLocationMod.GetGridUid(EntityManager);
+                // Check if fixing it failed / get final grid ID
+                if (!(gridIdOpt is EntityUid gridId2) || !gridId2.IsValid())
+                    return;
+                gridId = gridId2;
             }
-            // Check if fixing it failed / get final grid ID
-            if (!gridID.IsValid())
-                return;
 
-            var mapGrid = _mapManager.GetGrid(gridID);
+            var mapGrid = _mapManager.GetGrid(gridId);
             var tile = mapGrid.GetTileRef(clickLocationMod);
             var snapPos = mapGrid.TileIndicesFor(clickLocationMod);
 
@@ -113,15 +116,15 @@ namespace Content.Server.RCD.Systems
             {
                 //Floor mode just needs the tile to be a space tile (subFloor)
                 case RcdMode.Floors:
-                    mapGrid.SetTile(snapPos, new Tile(_tileDefinitionManager["floor_steel"].TileId));
-                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to set grid: {tile.GridIndex} {snapPos} to floor_steel");
+                    mapGrid.SetTile(snapPos, new Tile(_tileDefinitionManager["FloorSteel"].TileId));
+                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to set grid: {tile.GridUid} {snapPos} to FloorSteel");
                     break;
                 //We don't want to place a space tile on something that's already a space tile. Let's do the inverse of the last check.
                 case RcdMode.Deconstruct:
                     if (!tile.IsBlockedTurf(true)) //Delete the turf
                     {
                         mapGrid.SetTile(snapPos, Tile.Empty);
-                        _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to set grid: {tile.GridIndex} tile: {snapPos} to space");
+                        _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to set grid: {tile.GridUid} tile: {snapPos} to space");
                     }
                     else //Delete what the user targeted
                     {
@@ -137,12 +140,12 @@ namespace Content.Server.RCD.Systems
                 case RcdMode.Walls:
                     var ent = EntityManager.SpawnEntity("WallSolid", mapGrid.GridTileToLocal(snapPos));
                     Transform(ent).LocalRotation = Angle.Zero; // Walls always need to point south.
-                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(ent)} at {snapPos} on grid {mapGrid.Index}");
+                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(ent)} at {snapPos} on grid {mapGrid.Owner}");
                     break;
                 case RcdMode.Airlock:
                     var airlock = EntityManager.SpawnEntity("Airlock", mapGrid.GridTileToLocal(snapPos));
                     Transform(airlock).LocalRotation = Transform(rcd.Owner).LocalRotation; //Now apply icon smoothing.
-                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(airlock)} at {snapPos} on grid {mapGrid.Index}");
+                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(airlock)} at {snapPos} on grid {mapGrid.Owner}");
                     break;
                 default:
                     args.Handled = true;
@@ -154,12 +157,12 @@ namespace Content.Server.RCD.Systems
             args.Handled = true;
         }
 
-        private bool IsRCDStillValid(RCDComponent rcd, AfterInteractEvent eventArgs, IMapGrid mapGrid, TileRef tile, RcdMode startingMode)
+        private bool IsRCDStillValid(RCDComponent rcd, AfterInteractEvent eventArgs, MapGridComponent mapGrid, TileRef tile, RcdMode startingMode)
         {
             //Less expensive checks first. Failing those ones, we need to check that the tile isn't obstructed.
             if (rcd.CurrentAmmo <= 0)
             {
-                _popup.PopupEntity(Loc.GetString("rcd-component-no-ammo-message"), rcd.Owner, Filter.Entities(eventArgs.User));
+                _popup.PopupEntity(Loc.GetString("rcd-component-no-ammo-message"), rcd.Owner, eventArgs.User);
                 return false;
             }
 
@@ -181,7 +184,7 @@ namespace Content.Server.RCD.Systems
                 case RcdMode.Floors:
                     if (!tile.Tile.IsEmpty)
                     {
-                        _popup.PopupEntity(Loc.GetString("rcd-component-cannot-build-floor-tile-not-empty-message"), rcd.Owner, Filter.Entities(eventArgs.User));
+                        _popup.PopupEntity(Loc.GetString("rcd-component-cannot-build-floor-tile-not-empty-message"), rcd.Owner, eventArgs.User);
                         return false;
                     }
 
@@ -196,13 +199,13 @@ namespace Content.Server.RCD.Systems
                     //They tried to decon a turf but the turf is blocked
                     if (eventArgs.Target == null && tile.IsBlockedTurf(true))
                     {
-                        _popup.PopupEntity(Loc.GetString("rcd-component-tile-obstructed-message"), rcd.Owner, Filter.Entities(eventArgs.User));
+                        _popup.PopupEntity(Loc.GetString("rcd-component-tile-obstructed-message"), rcd.Owner, eventArgs.User);
                         return false;
                     }
                     //They tried to decon a non-turf but it's not in the whitelist
                     if (eventArgs.Target != null && !_tagSystem.HasTag(eventArgs.Target.Value, "RCDDeconstructWhitelist"))
                     {
-                        _popup.PopupEntity(Loc.GetString("rcd-component-deconstruct-target-not-on-whitelist-message"), rcd.Owner, Filter.Entities(eventArgs.User));
+                        _popup.PopupEntity(Loc.GetString("rcd-component-deconstruct-target-not-on-whitelist-message"), rcd.Owner, eventArgs.User);
                         return false;
                     }
 
@@ -211,25 +214,25 @@ namespace Content.Server.RCD.Systems
                 case RcdMode.Walls:
                     if (tile.Tile.IsEmpty)
                     {
-                        _popup.PopupEntity(Loc.GetString("rcd-component-cannot-build-wall-tile-not-empty-message"), rcd.Owner, Filter.Entities(eventArgs.User));
+                        _popup.PopupEntity(Loc.GetString("rcd-component-cannot-build-wall-tile-not-empty-message"), rcd.Owner, eventArgs.User);
                         return false;
                     }
 
                     if (tile.IsBlockedTurf(true))
                     {
-                        _popup.PopupEntity(Loc.GetString("rcd-component-tile-obstructed-message"), rcd.Owner, Filter.Entities(eventArgs.User));
+                        _popup.PopupEntity(Loc.GetString("rcd-component-tile-obstructed-message"), rcd.Owner, eventArgs.User);
                         return false;
                     }
                     return true;
                 case RcdMode.Airlock:
                     if (tile.Tile.IsEmpty)
                     {
-                        _popup.PopupEntity(Loc.GetString("rcd-component-cannot-build-airlock-tile-not-empty-message"), rcd.Owner, Filter.Entities(eventArgs.User));
+                        _popup.PopupEntity(Loc.GetString("rcd-component-cannot-build-airlock-tile-not-empty-message"), rcd.Owner, eventArgs.User);
                         return false;
                     }
                     if (tile.IsBlockedTurf(true))
                     {
-                        _popup.PopupEntity(Loc.GetString("rcd-component-tile-obstructed-message"), rcd.Owner, Filter.Entities(eventArgs.User));
+                        _popup.PopupEntity(Loc.GetString("rcd-component-tile-obstructed-message"), rcd.Owner, eventArgs.User);
                         return false;
                     }
                     return true;
@@ -247,7 +250,7 @@ namespace Content.Server.RCD.Systems
             rcd.Mode = (RcdMode) mode;
 
             var msg = Loc.GetString("rcd-component-change-mode", ("mode", rcd.Mode.ToString()));
-            _popup.PopupEntity(msg, rcd.Owner, Filter.Entities(user));
+            _popup.PopupEntity(msg, rcd.Owner, user);
         }
     }
 }

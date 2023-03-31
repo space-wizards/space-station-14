@@ -17,7 +17,10 @@
     netsync: false
   - type: Toilet
   - type: SecretStash
-    secretPartName: the toilet cistern
+    secretPartName: secret-stash-part-toilet
+  - type: ContainerContainer
+    containers:
+      stash: !type:ContainerSlot {}
   - type: SolutionContainerManager
     solutions:
       toilet:
@@ -28,6 +31,7 @@
     graph: Toilet
     node: toilet
   - type: Appearance
+
 - type: entity
   id: ToiletDirtyWater
   parent: ToiletEmpty

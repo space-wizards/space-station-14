@@ -1,13 +1,15 @@
+using Content.Server.Administration.Logs;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Server.UserInterface;
 using Content.Shared.AirlockPainter;
 using Content.Shared.AirlockPainter.Prototypes;
+using Content.Shared.DoAfter;
+using Content.Shared.Database;
 using Content.Shared.Doors.Components;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
 namespace Content.Server.AirlockPainter
@@ -18,9 +20,12 @@ namespace Content.Server.AirlockPainter
     [UsedImplicitly]
     public sealed class AirlockPainterSystem : SharedAirlockPainterSystem
     {
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {
@@ -29,24 +34,26 @@ namespace Content.Server.AirlockPainter
             SubscribeLocalEvent<AirlockPainterComponent, AfterInteractEvent>(AfterInteractOn);
             SubscribeLocalEvent<AirlockPainterComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<AirlockPainterComponent, AirlockPainterSpritePickedMessage>(OnSpritePicked);
-            SubscribeLocalEvent<AirlockPainterDoAfterComplete>(OnDoAfterComplete);
-            SubscribeLocalEvent<AirlockPainterDoAfterCancelled>(OnDoAfterCancelled);
+            SubscribeLocalEvent<AirlockPainterComponent, DoAfterEvent<AirlockPainterData>>(OnDoAfter);
         }
 
-        private void OnDoAfterComplete(AirlockPainterDoAfterComplete ev)
+        private void OnDoAfter(EntityUid uid, AirlockPainterComponent component, DoAfterEvent<AirlockPainterData> args)
         {
-            ev.Component.IsSpraying = false;
-            if (TryComp<AppearanceComponent>(ev.Target, out var appearance) &&
-                TryComp<PaintableAirlockComponent>(ev.Target, out PaintableAirlockComponent? airlock))
+            if (args.Handled || args.Cancelled)
             {
-                SoundSystem.Play(ev.Component.SpraySound.GetSound(), Filter.Pvs(ev.User, entityManager:EntityManager), ev.User);
-                appearance.SetData(DoorVisuals.BaseRSI, ev.Sprite);
+                component.IsSpraying = false;
+                return;
             }
-        }
 
-        private void OnDoAfterCancelled(AirlockPainterDoAfterCancelled ev)
-        {
-            ev.Component.IsSpraying = false;
+            if (args.Args.Target != null)
+            {
+                _audio.Play(component.SpraySound, Filter.Pvs(uid, entityManager:EntityManager), uid, true);
+                _appearance.SetData(args.Args.Target.Value, DoorVisuals.BaseRSI, args.AdditionalData.Sprite);
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.Args.User):user} painted {ToPrettyString(args.Args.Target.Value):target}");
+                component.IsSpraying = false;
+            }
+
+            args.Handled = true;
         }
 
         private void OnActivate(EntityUid uid, AirlockPainterComponent component, ActivateInWorldEvent args)
@@ -76,47 +83,24 @@ namespace Content.Server.AirlockPainter
             if (!grp.StylePaths.TryGetValue(style, out var sprite))
             {
                 string msg = Loc.GetString("airlock-painter-style-not-available");
-                _popupSystem.PopupEntity(msg, args.User, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(msg, args.User, args.User);
                 return;
             }
             component.IsSpraying = true;
-            var doAfterEventArgs = new DoAfterEventArgs(args.User, component.SprayTime, default, target)
+
+            var airlockPainterData = new AirlockPainterData(sprite);
+            var doAfterEventArgs = new DoAfterEventArgs(args.User, component.SprayTime, target:target, used:uid)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 BreakOnDamage = true,
                 BreakOnStun = true,
                 NeedHand = true,
-                BroadcastFinishedEvent = new AirlockPainterDoAfterComplete(uid, target, sprite, component),
-                BroadcastCancelledEvent = new AirlockPainterDoAfterCancelled(component),
             };
-            _doAfterSystem.DoAfter(doAfterEventArgs);
-        }
+            _doAfterSystem.DoAfter(doAfterEventArgs, airlockPainterData);
 
-        private sealed class AirlockPainterDoAfterComplete : EntityEventArgs
-        {
-            public readonly EntityUid User;
-            public readonly EntityUid Target;
-            public readonly string Sprite;
-            public readonly AirlockPainterComponent Component;
-
-            public AirlockPainterDoAfterComplete(EntityUid user, EntityUid target, string sprite, AirlockPainterComponent component)
-            {
-                User = user;
-                Target = target;
-                Sprite = sprite;
-                Component = component;
-            }
-        }
-
-        private sealed class AirlockPainterDoAfterCancelled : EntityEventArgs
-        {
-            public readonly AirlockPainterComponent Component;
-
-            public AirlockPainterDoAfterCancelled(AirlockPainterComponent component)
-            {
-                Component = component;
-            }
+            // Log attempt
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):user} is painting {ToPrettyString(uid):target} to '{style}' at {Transform(uid).Coordinates:targetlocation}");
         }
 
         private void OnSpritePicked(EntityUid uid, AirlockPainterComponent component, AirlockPainterSpritePickedMessage args)
@@ -133,6 +117,11 @@ namespace Content.Server.AirlockPainter
 
             _userInterfaceSystem.TrySetUiState(uid, AirlockPainterUiKey.Key,
                 new AirlockPainterBoundUserInterfaceState(component.Index));
+        }
+
+        private record struct AirlockPainterData(string Sprite)
+        {
+            public string Sprite = Sprite;
         }
     }
 }

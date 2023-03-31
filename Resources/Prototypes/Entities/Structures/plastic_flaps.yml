@@ -20,7 +20,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.49,-0.49,0.49,0.49"
-      mass: 100
+      density: 100
       mask:
       - TabletopMachineMask
       layer:
@@ -42,6 +42,8 @@
   - type: Construction
     graph: PlasticFlapsGraph
     node: plasticFlaps
+  - type: StaticPrice
+    price: 150
 
 - type: entity
   id: PlasticFlapsOpaque
@@ -55,15 +57,13 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.49,-0.49,0.49,0.49"
-      mass: 100
+      density: 100
       mask:
       - TabletopMachineMask
       layer:
       - Opaque
       - MidImpassable
   - type: Occluder
-    sizeX: 32
-    sizeY: 32
 
 - type: entity
   id: PlasticFlapsAirtightClear

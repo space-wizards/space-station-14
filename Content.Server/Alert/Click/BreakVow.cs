@@ -11,9 +11,11 @@ namespace Content.Server.Alert.Click
     {
         public void AlertClicked(EntityUid player)
         {
-           if (IoCManager.Resolve<IEntityManager>().TryGetComponent<MimePowersComponent?>(player, out var mimePowers))
+            var entManager = IoCManager.Resolve<IEntityManager>();
+
+           if (entManager.TryGetComponent<MimePowersComponent?>(player, out var mimePowers))
            {
-                EntitySystem.Get<MimePowersSystem>().BreakVow(player, mimePowers);
+                entManager.System<MimePowersSystem>().BreakVow(player, mimePowers);
            }
         }
     }

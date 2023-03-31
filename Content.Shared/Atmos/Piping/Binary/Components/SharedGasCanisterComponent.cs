@@ -22,6 +22,7 @@ namespace Content.Shared.Atmos.Piping.Binary.Components
     {
         PressureState,
         TankInserted,
+        Locked
     }
 
     #endregion

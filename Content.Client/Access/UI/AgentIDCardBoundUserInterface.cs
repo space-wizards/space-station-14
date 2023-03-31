@@ -10,7 +10,7 @@ namespace Content.Client.Access.UI
     {
         private AgentIDCardWindow? _window;
 
-        public AgentIDCardBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public AgentIDCardBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

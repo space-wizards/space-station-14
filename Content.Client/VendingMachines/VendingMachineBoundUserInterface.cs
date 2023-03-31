@@ -1,22 +1,20 @@
 using Content.Client.VendingMachines.UI;
 using Content.Shared.VendingMachines;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.ViewVariables;
-using static Content.Shared.VendingMachines.SharedVendingMachineComponent;
+using Robust.Client.UserInterface.Controls;
+using System.Linq;
 
 namespace Content.Client.VendingMachines
 {
     public sealed class VendingMachineBoundUserInterface : BoundUserInterface
     {
-        [ViewVariables] private VendingMachineMenu? _menu;
+        [ViewVariables]
+        private VendingMachineMenu? _menu;
 
-        public SharedVendingMachineComponent? VendingMachine { get; private set; }
+        private List<VendingMachineInventoryEntry> _cachedInventory = new();
 
-        public VendingMachineBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public VendingMachineBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
-            SendMessage(new InventorySyncRequestMessage());
         }
 
         protected override void Open()
@@ -24,33 +22,43 @@ namespace Content.Client.VendingMachines
             base.Open();
 
             var entMan = IoCManager.Resolve<IEntityManager>();
-            if (!entMan.TryGetComponent(Owner.Owner, out SharedVendingMachineComponent? vendingMachine))
-            {
-                return;
-            }
+            var vendingMachineSys = entMan.System<VendingMachineSystem>();
 
-            VendingMachine = vendingMachine;
+            _cachedInventory = vendingMachineSys.GetAllInventory(Owner.Owner);
 
-            _menu = new VendingMachineMenu(this) {Title = entMan.GetComponent<MetaDataComponent>(Owner.Owner).EntityName};
-            _menu.Populate(VendingMachine.AllInventory);
+            _menu = new VendingMachineMenu {Title = entMan.GetComponent<MetaDataComponent>(Owner.Owner).EntityName};
 
             _menu.OnClose += Close;
+            _menu.OnItemSelected += OnItemSelected;
+
+            _menu.Populate(_cachedInventory);
+
             _menu.OpenCentered();
         }
 
-        public void Eject(InventoryType type, string id)
+        protected override void UpdateState(BoundUserInterfaceState state)
         {
-            SendMessage(new VendingMachineEjectMessage(type, id));
+            base.UpdateState(state);
+
+            if (state is not VendingMachineInterfaceState newState)
+                return;
+
+            _cachedInventory = newState.Inventory;
+
+            _menu?.Populate(_cachedInventory);
         }
 
-        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+        private void OnItemSelected(ItemList.ItemListSelectedEventArgs args)
         {
-            switch (message)
-            {
-                case VendingMachineInventoryMessage msg:
-                    _menu?.Populate(msg.Inventory);
-                    break;
-            }
+            if (_cachedInventory.Count == 0)
+                return;
+
+            var selectedItem = _cachedInventory.ElementAtOrDefault(args.ItemIndex);
+
+            if (selectedItem == null)
+                return;
+
+            SendMessage(new VendingMachineEjectMessage(selectedItem.Type, selectedItem.ID));
         }
 
         protected override void Dispose(bool disposing)
@@ -59,7 +67,12 @@ namespace Content.Client.VendingMachines
             if (!disposing)
                 return;
 
-            _menu?.Dispose();
+            if (_menu == null)
+                return;
+
+            _menu.OnItemSelected -= OnItemSelected;
+            _menu.OnClose -= Close;
+            _menu.Dispose();
         }
     }
 }

@@ -18,7 +18,7 @@
           Quantity: 10
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
-    HeldPrefix: packet
+    heldPrefix: packet
     size: 3
 # Snacks
 
@@ -31,10 +31,12 @@
   id: FoodSnackBoritos
   description: Crunchy, salty tortilla chips. You could probably make nachos with these.
   components:
+  - type: FlavorProfile
+    flavors:
+      - boritos
   - type: Sprite
     state: boritos
   - type: Item
-    color: blue
   - type: Food
     trash: FoodPacketBoritosTrash
 
@@ -44,10 +46,13 @@
   id: FoodSnackCheesie
   description: Bite sized cheesie snacks that will honk all over your mouth.
   components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - funny
   - type: Sprite
     state: cheesiehonkers
   - type: Item
-    color: orange
   - type: Food
     trash: FoodPacketCheesieTrash
 
@@ -57,10 +62,14 @@
   id: FoodSnackChips
   description: Commander Riker's What-The-Crisps.
   components:
+  - type: FlavorProfile
+    flavors:
+      - oily
+      - salty
+      - potatoes
   - type: Sprite
     state: chips
   - type: Item
-    color: green
   - type: Food
     trash: FoodPacketChipsTrash
 
@@ -75,7 +84,7 @@
     state: chocolatebar
     netsync: false
   - type: Item
-    HeldPrefix: chocolatebar
+    heldPrefix: chocolatebar
     size: 3
   - type: SpawnItemsOnUse
     items:
@@ -90,10 +99,12 @@
   id: FoodSnackChocolateBar
   description: Tastes like cardboard.
   components:
+  - type: FlavorProfile
+    flavors:
+      - chocolate
   - type: Sprite
     state: chocolatebar-open
   - type: Item
-    color: brown
   - type: SolutionContainerManager
     solutions:
       food:
@@ -113,7 +124,6 @@
   - type: Sprite
     state: energybar
   - type: Item
-    color: lime
   - type: SpawnItemsOnUse
     items:
       - id: FoodPacketEnergyTrash
@@ -127,10 +137,15 @@
   id: FoodSnackEnergyBar
   description: An energy bar with a lot of punch.
   components:
+  - type: FlavorProfile
+    flavors:
+      - nutty
+      - oats
+      - fiber
+      - sweet
   - type: Sprite
     state: energybar-open
   - type: Item
-    color: yellow
 
 - type: entity
   name: popcorn
@@ -138,10 +153,15 @@
   id: FoodSnackPopcorn
   description: Grown on an unknown planet, by an unknown farmer, popped by some jerk on a space station.
   components:
+  - type: FlavorProfile
+    flavors:
+      - corn
+      - salt
+      - butter
   - type: Sprite
     state: popcorn
   - type: Item
-    HeldPrefix: popcorn
+    heldPrefix: popcorn
   - type: Food
     trash: FoodPacketPopcornTrash
 
@@ -151,10 +171,12 @@
   id: FoodSnackRaisins
   description: Best raisins in the universe. Not sure why.
   components:
+  - type: FlavorProfile
+    flavors:
+      - raisins
   - type: Sprite
     state: raisins
   - type: Item
-    color: red
   - type: Food
     trash: FoodPacketRaisinsTrash
 
@@ -164,10 +186,12 @@
   id: FoodSnackSus
   description: Something about this packet makes you feel incredibly uneasy. Jerky's good though.
   components:
+  - type: FlavorProfile
+    flavors:
+      - susjerky
   - type: Sprite
     state: susjerky
   - type: Item
-    color: red
   - type: Food
     trash: FoodPacketSusTrash
 
@@ -177,23 +201,29 @@
   id: FoodSnackSyndi
   description: An extremely moist snack cake that tastes just as good after being nuked.
   components:
+  - type: FlavorProfile
+    flavors:
+      - syndicakes
   - type: Sprite
     state: syndicakes
   - type: Item
-    color: white
   - type: Food
     trash: FoodPacketSyndiTrash
-    
+
 - type: entity
   name: chow mein
   parent: FoodSnackBase
   id: FoodSnackChowMein
   description: A salty fried noodle snack. Looks like they forgot the vegetables.
   components:
+  - type: FlavorProfile
+    flavors:
+      - cheapnoodles
+      - salty
+      - oily
   - type: Sprite
     state: chinese1
   - type: Item
-    color: red
   - type: SolutionContainerManager
     solutions:
       food:
@@ -205,13 +235,18 @@
           Quantity: 2
   - type: Food
     trash: FoodPacketChowMeinTrash
-          
+
 - type: entity
   name: dan dan noodles
   parent: FoodSnackBase
   id: FoodSnackDanDanNoodles
   description: A spicy Sichuan noodle snack. The chili oil slick pools on top.
   components:
+  - type: FlavorProfile
+    flavors:
+      - cheapnoodles
+      - oily
+      - spicy
   - type: Sprite
     state: chinese2
   - type: Item
@@ -235,6 +270,9 @@
   id: FoodSnackCookieFortune
   description: A boring cardboard tasting snack with a fortune inside. Surprise! You're boring too.
   components:
+  - type: FlavorProfile
+    flavors:
+      - fortunecookie
   - type: Sprite
     state: cookie_fortune
   - type: SolutionContainerManager
@@ -246,7 +284,7 @@
           Quantity: 1
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
-    HeldPrefix: packet
+    heldPrefix: packet
     size: 1
   - type: Food
     trash: FoodCookieFortune
@@ -276,6 +314,9 @@
   name: nutribrick
   description: A carefully synthesized brick designed to contain the highest ratio of nutriment to volume. Tastes like shit.
   components:
+  - type: FlavorProfile
+    flavors:
+      - nutribrick
   - type: Item
     size: 10
   - type: Sprite
@@ -291,7 +332,7 @@
 
 - type: entity
   id: FoodSnackMREBrownie
-  parent: BaseItem  
+  parent: BaseItem
   name: brownie
   description: A precisely mixed brownie, made to withstand blunt trauma and harsh conditions. Tastes like shit.
   components:
@@ -305,7 +346,7 @@
       - id: FoodSnackMREBrownieOpen
     sound:
       path: /Audio/Effects/unwrap.ogg
-  
+
 
 - type: entity
   id: FoodSnackMREBrownieOpen
@@ -313,6 +354,9 @@
   name: brownie
   description: A precisely mixed brownie, made to withstand blunt trauma and harsh conditions. Tastes like shit.
   components:
+  - type: FlavorProfile
+    flavors:
+      - mrebrownie
   - type: Sprite
     state: mre-brownie-open
   - type: Food
@@ -339,12 +383,14 @@
     netsync: false
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
-    HeldPrefix: packet
+    heldPrefix: packet
   - type: Tag
     tags:
     - Trash
   - type: Recyclable
   - type: SpaceGarbage
+  - type: StaticPrice
+    price: 0
 
 - type: entity
   noSpawn: true
@@ -355,7 +401,6 @@
   - type: Sprite
     state: boritos-trash
   - type: Item
-    color: blue
 
 - type: entity
   noSpawn: true
@@ -366,7 +411,6 @@
   - type: Sprite
     state: cheesiehonkers-trash
   - type: Item
-    color: orange
 
 - type: entity
   noSpawn: true
@@ -377,7 +421,6 @@
   - type: Sprite
     state: chips-trash
   - type: Item
-    color: green
 
 - type: entity
   noSpawn: true
@@ -388,7 +431,6 @@
   - type: Sprite
     state: chocolatebar-trash
   - type: Item
-    color: red
 
 - type: entity
   noSpawn: true
@@ -399,7 +441,6 @@
   - type: Sprite
     state: energybar-trash
   - type: Item
-    color: green
 
 - type: entity
   noSpawn: true
@@ -410,7 +451,6 @@
   - type: Sprite
     state: pistachio-trash
   - type: Item
-    color: green
 
 - type: entity
   noSpawn: true
@@ -421,7 +461,6 @@
   - type: Sprite
     state: popcorn-trash
   - type: Item
-    state: blue
 
 - type: entity
   noSpawn: true
@@ -432,7 +471,6 @@
   - type: Sprite
     state: raisins-trash
   - type: Item
-    color: red
 
 - type: entity
   noSpawn: true
@@ -443,7 +481,6 @@
   - type: Sprite
     state: semki-trash
   - type: Item
-    color: orange
 
 - type: entity
   noSpawn: true
@@ -454,7 +491,6 @@
   - type: Sprite
     state: susjerky-trash
   - type: Item
-    color: red
 
 - type: entity
   noSpawn: true
@@ -465,7 +501,6 @@
   - type: Sprite
     state: syndicakes-trash
   - type: Item
-    color: white
 
 - type: entity
   noSpawn: true
@@ -476,8 +511,7 @@
   - type: Sprite
     state: chinese1
   - type: Item
-    color: red
-    
+
 - type: entity
   noSpawn: true
   parent: FoodPacketTrash
@@ -487,8 +521,7 @@
   - type: Sprite
     state: chinese2
   - type: Item
-    color: white
-    
+
 - type: entity
   noSpawn: true
   parent: FoodPacketTrash
@@ -499,7 +532,8 @@
   - type: Sprite
     state: fortune
   - type: Item
-    color: white
+  - type: RandomMetadata
+    descriptionSegments: [CookieFortuneDescriptions]
 
 - type: entity
   noSpawn: true

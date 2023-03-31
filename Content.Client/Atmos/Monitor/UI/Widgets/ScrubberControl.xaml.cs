@@ -11,113 +11,114 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Localization;
 
-namespace Content.Client.Atmos.Monitor.UI.Widgets
+namespace Content.Client.Atmos.Monitor.UI.Widgets;
+
+[GenerateTypedNameReferences]
+public sealed partial class ScrubberControl : BoxContainer
 {
-    [GenerateTypedNameReferences]
-    public sealed partial class ScrubberControl : BoxContainer
+    private GasVentScrubberData _data;
+    private string _address;
+
+    public event Action<string, IAtmosDeviceData>? ScrubberDataChanged;
+
+    private CheckBox _enabled => CEnableDevice;
+    private CollapsibleHeading _addressLabel => CAddress;
+    private OptionButton _pumpDirection => CPumpDirection;
+    private FloatSpinBox _volumeRate => CVolumeRate;
+    private CheckBox _wideNet => CWideNet;
+
+    private GridContainer _gases => CGasContainer;
+    private Dictionary<Gas, Button> _gasControls = new();
+
+    public ScrubberControl(GasVentScrubberData data, string address)
     {
-        private GasVentScrubberData _data;
-        private string _address;
+        RobustXamlLoader.Load(this);
 
-        public event Action<string, IAtmosDeviceData>? ScrubberDataChanged;
+        Name = address;
 
-        private CheckBox _enabled => CEnableDevice;
-        private CollapsibleHeading _addressLabel => CAddress;
-        private OptionButton _pumpDirection => CPumpDirection;
-        private FloatSpinBox _volumeRate => CVolumeRate;
-        private CheckBox _wideNet => CWideNet;
+        _data = data;
+        _address = address;
 
-        private GridContainer _gases => CGasContainer;
-        private Dictionary<Gas, Button> _gasControls = new();
+        _addressLabel.Title = Loc.GetString("air-alarm-ui-atmos-net-device-label", ("address", $"{address}"));
 
-        public ScrubberControl(GasVentScrubberData data, string address)
+        _enabled.Pressed = data.Enabled;
+        _enabled.OnToggled += _ =>
         {
-            RobustXamlLoader.Load(this);
+            _data.Enabled = _enabled.Pressed;
+            ScrubberDataChanged?.Invoke(_address, _data);
+        };
 
-            this.Name = address;
+        _wideNet.Pressed = data.WideNet;
+        _wideNet.OnToggled += _ =>
+        {
+            _data.WideNet = _wideNet.Pressed;
+            ScrubberDataChanged?.Invoke(_address, _data);
+        };
 
-            _data = data;
-            _address = address;
+        _volumeRate.Value = _data.VolumeRate;
+        _volumeRate.OnValueChanged += _ =>
+        {
+            _data.VolumeRate = _volumeRate.Value;
+            ScrubberDataChanged?.Invoke(_address, _data);
+        };
+        _volumeRate.IsValid += value => value >= 0;
 
-            _addressLabel.Title = Loc.GetString("air-alarm-ui-atmos-net-device-label", ("address", $"{address}"));
-
-            _enabled.Pressed = data.Enabled;
-            _enabled.OnToggled += _ =>
-            {
-                _data.Enabled = _enabled.Pressed;
-                ScrubberDataChanged?.Invoke(_address, _data);
-            };
-
-            _wideNet.Pressed = data.WideNet;
-            _wideNet.OnToggled += _ =>
-            {
-                _data.WideNet = _wideNet.Pressed;
-                ScrubberDataChanged?.Invoke(_address, _data);
-            };
-
-            _volumeRate.Value = _data.VolumeRate;
-            _volumeRate.OnValueChanged += _ =>
-            {
-                _data.VolumeRate = _volumeRate.Value;
-                ScrubberDataChanged?.Invoke(_address, _data);
-            };
-            _volumeRate.IsValid += value => value >= 0;
-
-            foreach (var value in Enum.GetValues<ScrubberPumpDirection>())
-                _pumpDirection.AddItem(Loc.GetString($"{value}"), (int) value);
-
-            _pumpDirection.SelectId((int) _data.PumpDirection);
-            _pumpDirection.OnItemSelected += args =>
-            {
-                _pumpDirection.SelectId(args.Id);
-                _data.PumpDirection = (ScrubberPumpDirection) args.Id;
-                ScrubberDataChanged?.Invoke(_address, _data);
-            };
-
-            foreach (var value in Enum.GetValues<Gas>())
-            {
-                var gasButton = new Button
-                {
-                    Name = value.ToString(),
-                    Text = Loc.GetString($"{value}"),
-                    ToggleMode = true,
-                    HorizontalExpand = true,
-                    Pressed = _data.FilterGases.Contains(value)
-                };
-                gasButton.OnToggled += args =>
-                {
-                    if (args.Pressed)
-                        _data.FilterGases.Add(value);
-                    else
-                        _data.FilterGases.Remove(value);
-
-                    ScrubberDataChanged?.Invoke(_address, _data);
-                };
-                _gasControls.Add(value, gasButton);
-                _gases.AddChild(gasButton);
-            }
-
+        foreach (var value in Enum.GetValues<ScrubberPumpDirection>())
+        {
+            _pumpDirection.AddItem(Loc.GetString($"{value}"), (int) value);
         }
 
-        public void ChangeData(GasVentScrubberData data)
+        _pumpDirection.SelectId((int) _data.PumpDirection);
+        _pumpDirection.OnItemSelected += args =>
         {
-            _data.Enabled = data.Enabled;
-            _enabled.Pressed = _data.Enabled;
+            _pumpDirection.SelectId(args.Id);
+            _data.PumpDirection = (ScrubberPumpDirection) args.Id;
+            ScrubberDataChanged?.Invoke(_address, _data);
+        };
 
-            _data.PumpDirection = data.PumpDirection;
-            _pumpDirection.Select((int) _data.PumpDirection);
+        foreach (var value in Enum.GetValues<Gas>())
+        {
+            var gasButton = new Button
+            {
+                Name = value.ToString(),
+                Text = Loc.GetString($"{value}"),
+                ToggleMode = true,
+                HorizontalExpand = true,
+                Pressed = _data.FilterGases.Contains(value)
+            };
+            gasButton.OnToggled += args =>
+            {
+                if (args.Pressed)
+                    _data.FilterGases.Add(value);
+                else
+                    _data.FilterGases.Remove(value);
 
-            _data.VolumeRate = data.VolumeRate;
-            _volumeRate.Value = _data.VolumeRate;
+                ScrubberDataChanged?.Invoke(_address, _data);
+            };
+            _gasControls.Add(value, gasButton);
+            _gases.AddChild(gasButton);
+        }
 
-            _data.WideNet = data.WideNet;
-            _wideNet.Pressed = _data.WideNet;
+    }
 
-            var intersect = _data.FilterGases.Intersect(data.FilterGases);
+    public void ChangeData(GasVentScrubberData data)
+    {
+        _data.Enabled = data.Enabled;
+        _enabled.Pressed = _data.Enabled;
 
-            foreach (var value in Enum.GetValues<Gas>())
-                if (!intersect.Contains(value))
-                    _gasControls[value].Pressed = false;
+        _data.PumpDirection = data.PumpDirection;
+        _pumpDirection.Select((int) _data.PumpDirection);
+
+        _data.VolumeRate = data.VolumeRate;
+        _volumeRate.Value = _data.VolumeRate;
+
+        _data.WideNet = data.WideNet;
+        _wideNet.Pressed = _data.WideNet;
+        _data.FilterGases = data.FilterGases;
+
+        foreach (var value in Enum.GetValues<Gas>())
+        {
+            _gasControls[value].Pressed = data.FilterGases.Contains(value);
         }
     }
 }

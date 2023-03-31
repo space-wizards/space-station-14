@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.NodeContainer.Nodes
 {
@@ -8,7 +9,7 @@ namespace Content.Server.NodeContainer.Nodes
     /// </summary>
     public static class NodeHelpers
     {
-        public static IEnumerable<Node> GetNodesInTile(EntityQuery<NodeContainerComponent> nodeQuery, IMapGrid grid, Vector2i coords)
+        public static IEnumerable<Node> GetNodesInTile(EntityQuery<NodeContainerComponent> nodeQuery, MapGridComponent grid, Vector2i coords)
         {
             foreach (var entityUid in grid.GetAnchoredEntities(coords))
             {
@@ -24,7 +25,7 @@ namespace Content.Server.NodeContainer.Nodes
 
         public static IEnumerable<(Direction dir, Node node)> GetCardinalNeighborNodes(
             EntityQuery<NodeContainerComponent> nodeQuery,
-            IMapGrid grid,
+            MapGridComponent grid,
             Vector2i coords,
             bool includeSameTile = true)
         {
@@ -42,7 +43,7 @@ namespace Content.Server.NodeContainer.Nodes
 
         [SuppressMessage("ReSharper", "EnforceForeachStatementBraces")]
         public static IEnumerable<(Direction dir, EntityUid entity)> GetCardinalNeighborCells(
-            IMapGrid grid,
+            MapGridComponent grid,
             Vector2i coords,
             bool includeSameTile = true)
         {

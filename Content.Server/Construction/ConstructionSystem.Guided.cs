@@ -5,11 +5,15 @@ using Content.Shared.Construction.Steps;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Construction
 {
     public sealed partial class ConstructionSystem
     {
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
+
         private readonly Dictionary<ConstructionPrototype, ConstructionGuide> _guideCache = new();
 
         private void InitializeGuided()
@@ -41,7 +45,8 @@ namespace Content.Server.Construction
             //verb.Category = VerbCategories.Construction;
             //TODO VERBS add more construction verbs? Until then, removing construction category
             verb.Text = Loc.GetString("deconstructible-verb-begin-deconstruct");
-            verb.IconTexture = "/Textures/Interface/hammer_scaled.svg.192dpi.png";
+            verb.Icon = new SpriteSpecifier.Texture(
+                new ResourcePath("/Textures/Interface/hammer_scaled.svg.192dpi.png"));
 
             verb.Act = () =>
             {
@@ -49,11 +54,11 @@ namespace Content.Server.Construction
                 if (component.TargetNode == null)
                 {
                     // Maybe check, but on the flip-side a better solution might be to not make it undeconstructible in the first place, no?
-                    component.Owner.PopupMessage(args.User, Loc.GetString("deconstructible-verb-activate-no-target-text"));
+                    _popup.PopupEntity(Loc.GetString("deconstructible-verb-activate-no-target-text"), uid, uid);
                 }
                 else
                 {
-                    component.Owner.PopupMessage(args.User, Loc.GetString("deconstructible-verb-activate-text"));
+                    _popup.PopupEntity(Loc.GetString("deconstructible-verb-activate-text"), args.User, args.User);
                 }
             };
 
@@ -94,7 +99,6 @@ namespace Content.Server.Construction
 
                 if (!preventStepExamine && component.StepIndex < edge.Steps.Count)
                     edge.Steps[component.StepIndex].DoExamine(args);
-                return;
             }
         }
 

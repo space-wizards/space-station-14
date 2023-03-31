@@ -11,7 +11,10 @@ cmd-roleban-hint-4 = [duration in minutes, leave out or 0 for permanent ban]
 
 cmd-roleban-hint-duration-1 = Permanent
 cmd-roleban-hint-duration-2 = 1 day
-cmd-roleban-hint-duration-3 = 1 week
+cmd-roleban-hint-duration-3 = 3 days
+cmd-roleban-hint-duration-4 = 1 week
+cmd-roleban-hint-duration-5 = 2 week
+cmd-roleban-hint-duration-6 = 1 month
 
 
 ### Localization for role unban command
@@ -31,3 +34,18 @@ cmd-rolebanlist-help = Usage: <name or user ID> [include unbanned]
 ## Completion result hints
 cmd-rolebanlist-hint-1 = <name or user ID>
 cmd-rolebanlist-hint-2 = [include unbanned]
+
+
+cmd-roleban-minutes-parse = {$time} is not a valid amount of minutes.\n{$help}
+cmd-roleban-arg-count = Invalid amount of arguments.
+cmd-roleban-job-parse = Job {$job} does not exist.
+cmd-roleban-name-parse = Unable to find a player with that name.
+cmd-roleban-existing = {$target} already has a role ban for {$role}.
+cmd-roleban-success = Role banned {$target} from {$role} with reason {$reason} {$length}.
+
+cmd-roleban-inf = permanently
+cmd-roleban-until =  until {$expires}
+
+# Department bans
+cmd-departmentban-desc = Bans a player from the roles comprising a department
+cmd-departmentban-help = Usage: departmentban <name or user ID> <department> <reason> [duration in minutes, leave out or 0 for permanent ban]

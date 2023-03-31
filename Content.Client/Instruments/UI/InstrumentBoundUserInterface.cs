@@ -12,7 +12,7 @@ namespace Content.Client.Instruments.UI
 
         public InstrumentComponent? Instrument { get; set; }
 
-        public InstrumentBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public InstrumentBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

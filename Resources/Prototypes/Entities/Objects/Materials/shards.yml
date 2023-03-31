@@ -5,18 +5,25 @@
   description: It's a shard of some unknown material.
   components:
   - type: Sprite
-    sprite: Objects/Materials/Shards/shard.rsi
-    state: shard1
-  - type: RandomSpriteState
-    spriteStates:
-    - shard1
-    - shard2
-    - shard3
+    layers:
+      - sprite: Objects/Materials/Shards/shard.rsi
+        state: shard1
+        map: [ "enum.DamageStateVisualLayers.Base" ]
+    netsync: false
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          shard1: ""
+      - enum.DamageStateVisualLayers.Base:
+          shard2: ""
+      - enum.DamageStateVisualLayers.Base:
+          shard3: ""
   - type: ItemCooldown
   - type: MeleeWeapon
+    attackRate: 1.5
     damage:
       types:
-        Slash: 5
+        Slash: 3.5
   - type: Item
     sprite: Objects/Materials/Shards/shard.rsi
   - type: CollisionWake
@@ -33,7 +40,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.2,-0.2,0.2,0.2"
-      mass: 5
+      density: 30
       mask:
       - ItemMask
   - type: DamageOtherOnHit
@@ -69,6 +76,9 @@
     damage:
       types:
         Piercing: 5
+  - type: DeleteOnTrigger
+  - type: StaticPrice
+    price: 0
 
 - type: entity
   parent: ShardBase
@@ -78,8 +88,6 @@
   components:
   - type: Sprite
     color: "#bbeeff"
-  - type: Item
-    color: "#bbeeff"
   - type: WelderRefinable
     refineResult:
     - SheetGlass1
@@ -87,6 +95,10 @@
     damage:
       types:
         Piercing: 5
+  - type: Tag
+    tags:
+      - GlassShard
+      - Trash
 
 - type: entity
   parent: ShardBase
@@ -95,8 +107,6 @@
   description: A small piece of reinforced glass.
   components:
   - type: Sprite
-    color: "#96cdef"
-  - type: Item
     color: "#96cdef"
   - type: WelderRefinable
     refineResult:
@@ -114,8 +124,6 @@
   description: A small piece of plasma glass.
   components:
   - type: Sprite
-    color: "#f3b489"
-  - type: Item
     color: "#f3b489"
   - type: WelderRefinable
     refineResult:

@@ -12,6 +12,9 @@
     netsync: false
   - type: GasAnalyzer
   - type: ActivatableUI
+    inHandsOnly: true
+    singleUser: true
+    closeOnHandDeselect: false
     key: enum.GasAnalyzerUiKey.Key
   - type: UserInterface
     interfaces:
@@ -20,10 +23,12 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.GasAnalyzerVisuals.VisualState:
-        analyzer:
-          Off: { state: icon }
-          Working: { state: working }
+        enum.GasAnalyzerVisuals.Enabled:
+          enabled:
+            True: { state: working }
+            False: { state: icon }
   - type: Tag
     tags:
       - DroneUsable
+  - type: StaticPrice
+    price: 80

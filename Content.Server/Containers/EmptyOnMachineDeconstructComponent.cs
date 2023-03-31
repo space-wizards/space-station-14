@@ -6,7 +6,6 @@ namespace Content.Server.Containers
     [RegisterComponent]
     public sealed class EmptyOnMachineDeconstructComponent : Component
     {
-        [ViewVariables]
         [DataField("containers")]
         public HashSet<string> Containers { get; set; } = new();
     }

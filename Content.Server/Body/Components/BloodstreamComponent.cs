@@ -1,10 +1,10 @@
 using Content.Server.Body.Systems;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
-using Content.Shared.Sound;
-using Content.Server.Chemistry.EntitySystems;
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Body.Components
@@ -53,13 +53,13 @@ namespace Content.Server.Body.Components
         ///     The base bloodloss damage to be incurred if below <see cref="BloodlossThreshold"/>
         /// </summary>
         [DataField("bloodlossDamage", required: true)]
-        public DamageSpecifier BloodlossDamage = default!;
+        public DamageSpecifier BloodlossDamage = new();
 
         /// <summary>
         ///     The base bloodloss damage to be healed if above <see cref="BloodlossThreshold"/>
         /// </summary>
         [DataField("bloodlossHealDamage", required: true)]
-        public DamageSpecifier BloodlossHealDamage = default!;
+        public DamageSpecifier BloodlossHealDamage = new();
 
         /// <summary>
         ///     How frequently should this bloodstream update, in seconds?
@@ -72,7 +72,7 @@ namespace Content.Server.Body.Components
         ///     How much reagent of blood should be restored each update interval?
         /// </summary>
         [DataField("bloodRefreshAmount")]
-        public float BloodRefreshAmount = 0.2f;
+        public float BloodRefreshAmount = 0.3f;
 
         /// <summary>
         ///     How much blood needs to be in the temporary solution in order to create a puddle?

@@ -1,5 +1,6 @@
 using Content.Shared.Atmos;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using static Content.Server.Explosion.EntitySystems.ExplosionSystem;
 
 namespace Content.Server.Explosion.EntitySystems;
@@ -9,7 +10,7 @@ namespace Content.Server.Explosion.EntitySystems;
 /// </summary>
 public sealed class ExplosionGridTileFlood : ExplosionTileFlood
 {
-    public IMapGrid Grid;
+    public MapGridComponent Grid;
     private bool _needToTransform = false;
 
     private Matrix3 _matrix = Matrix3.Identity;
@@ -35,7 +36,7 @@ public sealed class ExplosionGridTileFlood : ExplosionTileFlood
     private Dictionary<Vector2i, NeighborFlag> _edgeTiles;
 
     public ExplosionGridTileFlood(
-        IMapGrid grid,
+        MapGridComponent grid,
         Dictionary<Vector2i, TileData> airtightMap,
         float maxIntensity,
         float intensityStepSize,
@@ -63,11 +64,11 @@ public sealed class ExplosionGridTileFlood : ExplosionTileFlood
             }
         }
 
-        if (referenceGrid == Grid.GridEntityId)
+        if (referenceGrid == Grid.Owner)
             return;
 
         _needToTransform = true;
-        var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Grid.GridEntityId);
+        var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Grid.Owner);
         var size = (float) Grid.TileSize;
 
         _matrix.R0C2 = size / 2;
@@ -179,14 +180,18 @@ public sealed class ExplosionGridTileFlood : ExplosionTileFlood
             if (EnteredBlockedTiles.Contains(tile))
                 return;
 
-            // Did the explosion already attempt to enter this tile from some other direction? 
+            // Did the explosion already attempt to enter this tile from some other direction?
             if (!UnenteredBlockedTiles.Add(tile))
                 return;
 
             NewBlockedTiles.Add(tile);
 
             // At what explosion iteration would this blocker be destroyed?
-            var clearIteration = iteration + (int) MathF.Ceiling(tileData.ExplosionTolerance[_typeIndex] / _intensityStepSize);
+            var required = tileData.ExplosionTolerance[_typeIndex];
+            if (required > _maxIntensity)
+                return; // blocker is never destroyed.
+
+            var clearIteration = iteration + (int) MathF.Ceiling(required / _intensityStepSize);
             if (FreedTileLists.TryGetValue(clearIteration, out var list))
                 list.Add(tile);
             else
@@ -199,7 +204,7 @@ public sealed class ExplosionGridTileFlood : ExplosionTileFlood
         if (!EnteredBlockedTiles.Add(tile))
             return;
 
-        // Did the explosion already attempt to enter this tile from some other direction? 
+        // Did the explosion already attempt to enter this tile from some other direction?
         if (UnenteredBlockedTiles.Contains(tile))
         {
             NewFreedTiles.Add(tile);
@@ -275,7 +280,7 @@ public sealed class ExplosionGridTileFlood : ExplosionTileFlood
 
             // This tile has one or more airtight entities anchored to it blocking the explosion from traveling in
             // some directions. First, check whether this blocker can even be destroyed by this explosion?
-            if (sealIntegrity > _maxIntensity || float.IsNaN(sealIntegrity))
+            if (sealIntegrity > _maxIntensity)
                 continue;
 
             // At what explosion iteration would this blocker be destroyed?

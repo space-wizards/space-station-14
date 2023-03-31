@@ -9,12 +9,13 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Dynamic
+    canCollide: false
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
         radius: 0.4
-      mass: 50
+      density: 100
       mask:
       - MachineMask
       layer:
@@ -22,6 +23,7 @@
   - type: Sprite
     netsync: false
     sprite: Structures/Piping/Atmospherics/Portable/portable_scrubber.rsi
+    noRot: true
     layers:
     - state: icon
       map: ["enum.PortableScrubberVisualLayers.IsRunning"]
@@ -88,3 +90,7 @@
             acts: [ "Destruction" ]
   - type: CollideOnAnchor
     enable: true
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container

@@ -1,11 +1,10 @@
-using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Shared.Administration;
-using Content.Shared.Body.Components;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands
 {
-    [AdminCommand(AdminFlags.Fun)]
+    [AdminCommand(AdminFlags.Admin)]
     public sealed class RemoveMechanismCommand : IConsoleCommand
     {
         public string Command => "rmmechanism";
@@ -27,15 +26,11 @@ namespace Content.Server.Administration.Commands
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
+            var bodySystem = entityManager.System<BodySystem>();
 
-            if (!entityManager.TryGetComponent<TransformComponent>(entityUid, out var transform)) return;
-
-            var parent = transform.ParentUid;
-
-            if (entityManager.TryGetComponent<BodyPartComponent>(parent, out var body) &&
-                entityManager.TryGetComponent<MechanismComponent>(entityUid, out var part))
+            if (bodySystem.DropOrgan(entityUid))
             {
-                body.RemoveMechanism(part);
+                shell.WriteLine($"Removed organ {entityManager.ToPrettyString(entityUid)}");
             }
             else
             {

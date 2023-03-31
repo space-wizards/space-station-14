@@ -3,6 +3,7 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 
 namespace Content.Server.Nutrition.Components
 {
@@ -21,7 +22,7 @@ namespace Content.Server.Nutrition.Components
             set => _baseDecayRate = value;
         }
         [DataField("baseDecayRate")]
-        private float _baseDecayRate = 0.1f;
+        private float _baseDecayRate = 0.01666666666f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float ActualDecayRate
@@ -44,16 +45,19 @@ namespace Content.Server.Nutrition.Components
             get => _currentHunger;
             set => _currentHunger = value;
         }
-        private float _currentHunger;
+        [DataField("startingHunger")]
+        private float _currentHunger = -1f;
 
         [ViewVariables(VVAccess.ReadOnly)]
         public Dictionary<HungerThreshold, float> HungerThresholds => _hungerThresholds;
-        private readonly Dictionary<HungerThreshold, float> _hungerThresholds = new()
+
+        [DataField("thresholds", customTypeSerializer: typeof(DictionarySerializer<HungerThreshold, float>))]
+        private Dictionary<HungerThreshold, float> _hungerThresholds = new()
         {
-            { HungerThreshold.Overfed, 600.0f },
-            { HungerThreshold.Okay, 450.0f },
-            { HungerThreshold.Peckish, 300.0f },
-            { HungerThreshold.Starving, 150.0f },
+            { HungerThreshold.Overfed, 200.0f },
+            { HungerThreshold.Okay, 150.0f },
+            { HungerThreshold.Peckish, 100.0f },
+            { HungerThreshold.Starving, 50.0f },
             { HungerThreshold.Dead, 0.0f },
         };
 
@@ -123,10 +127,15 @@ namespace Content.Server.Nutrition.Components
         protected override void Startup()
         {
             base.Startup();
-            // Similar functionality to SS13. Should also stagger people going to the chef.
-            _currentHunger = _random.Next(
-                (int)_hungerThresholds[HungerThreshold.Peckish] + 10,
-                (int)_hungerThresholds[HungerThreshold.Okay] - 1);
+            // Do not change behavior unless starting hunger is explicitly defined
+            if (_currentHunger < 0)
+            {
+                // Similar functionality to SS13. Should also stagger people going to the chef.
+                _currentHunger = _random.Next(
+                    (int) _hungerThresholds[HungerThreshold.Peckish] + 10,
+                    (int) _hungerThresholds[HungerThreshold.Okay] - 1);
+            }
+
             _currentHungerThreshold = GetHungerThreshold(_currentHunger);
             _lastHungerThreshold = HungerThreshold.Okay; // TODO: Potentially change this -> Used Okay because no effects.
             HungerThresholdEffect(true);
@@ -151,18 +160,15 @@ namespace Content.Server.Nutrition.Components
 
         public void UpdateFood(float amount)
         {
-            _currentHunger = Math.Min(_currentHunger + amount, HungerThresholds[HungerThreshold.Overfed]);
+            _currentHunger = Math.Clamp(_currentHunger + amount, HungerThresholds[HungerThreshold.Dead], HungerThresholds[HungerThreshold.Overfed]);
         }
 
         // TODO: If mob is moving increase rate of consumption?
         //  Should use a multiplier as something like a disease would overwrite decay rate.
         public void OnUpdate(float frametime)
         {
-            _currentHunger -= frametime * ActualDecayRate;
+            UpdateFood(- frametime * ActualDecayRate);
             UpdateCurrentThreshold();
-
-            if (_currentHungerThreshold != HungerThreshold.Dead)
-                return;
         }
 
         private void UpdateCurrentThreshold()

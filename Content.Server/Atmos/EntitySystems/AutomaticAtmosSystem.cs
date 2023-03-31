@@ -2,6 +2,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Maps;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Atmos.EntitySystems;
 
@@ -20,7 +21,7 @@ public sealed class AutomaticAtmosSystem : EntitySystem
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
     }
 
-    private void OnTileChanged(TileChangedEvent ev)
+    private void OnTileChanged(ref TileChangedEvent ev)
     {
         // Only if a atmos-holding tile has been added or removed.
         // Also, these calls are surprisingly slow.

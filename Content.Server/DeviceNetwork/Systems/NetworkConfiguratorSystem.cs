@@ -1,23 +1,22 @@
-﻿using Content.Server.DeviceNetwork.Components;
-using Content.Server.UserInterface;
+using System.Linq;
+using Content.Server.DeviceNetwork.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Movement;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Server.DeviceNetwork.Systems;
 
 [UsedImplicitly]
-public sealed class NetworkConfiguratorSystem : EntitySystem
+public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 {
     [Dependency] private readonly DeviceListSystem _deviceListSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
@@ -29,6 +28,8 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<NetworkConfiguratorComponent, MapInitEvent>(OnMapInit);
 
         //Interaction
         SubscribeLocalEvent<NetworkConfiguratorComponent, AfterInteractEvent>((uid, component, args) => OnUsed(uid, component, args.Target, args.User, args.CanReach)); //TODO: Replace with utility verb?
@@ -52,15 +53,23 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
 
         foreach (var component in EntityManager.EntityQuery<NetworkConfiguratorComponent>())
         {
+            var uid = component.Owner;
+
             if (component.ActiveDeviceList != null && EntityManager.EntityExists(component.ActiveDeviceList.Value) &&
-                _interactionSystem.InRangeUnobstructed(component.Owner, component.ActiveDeviceList.Value))
+                _interactionSystem.InRangeUnobstructed(uid, component.ActiveDeviceList.Value))
             {
-                return;
+                continue;
             }
 
             //The network configurator is a handheld device. There can only ever be an ui session open for the player holding the device.
-            _uiSystem.GetUiOrNull(component.Owner, NetworkConfiguratorUiKey.Configure)?.CloseAll();
+            _uiSystem.GetUiOrNull(uid, NetworkConfiguratorUiKey.Configure)?.CloseAll();
         }
+    }
+
+    private void OnMapInit(EntityUid uid, NetworkConfiguratorComponent component, MapInitEvent args)
+    {
+        component.Devices.Clear();
+        UpdateUiState(uid, component);
     }
 
     private void TryAddNetworkDevice(EntityUid? targetUid, EntityUid configuratorUid, EntityUid userUid,
@@ -77,21 +86,37 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
         if (!targetUid.HasValue || !Resolve(targetUid.Value, ref device, false))
             return;
 
-        if (string.IsNullOrEmpty(device.Address))
+        var address = device.Address;
+        if (string.IsNullOrEmpty(address))
         {
-            _popupSystem.PopupCursor(Loc.GetString("network-configurator-device-failed", ("device", targetUid)), Filter.Entities(userUid));
-            return;
+            // This primarily checks if the entity in question is pre-map init or not.
+            // This is because otherwise, anything that uses DeviceNetwork will not
+            // have an address populated, as all devices that use DeviceNetwork
+            // obtain their address on map init. If the entity is post-map init,
+            // and it still doesn't have an address, it will fail. Otherwise,
+            // it stores the entity's UID as a string for visual effect, that way
+            // a mapper can reference the devices they've gathered by UID, instead of
+            // by device network address. These entries, if the multitool is still in
+            // the map after it being saved, are cleared upon mapinit.
+            if (MetaData(targetUid.Value).EntityLifeStage == EntityLifeStage.MapInitialized)
+            {
+                _popupSystem.PopupCursor(Loc.GetString("network-configurator-device-failed", ("device", targetUid)),
+                    userUid);
+                return;
+            }
+
+            address = $"UID: {targetUid.Value.ToString()}";
         }
 
         if (configurator.Devices.ContainsValue(targetUid.Value))
         {
-            _popupSystem.PopupCursor(Loc.GetString("network-configurator-device-already-saved", ("device", targetUid)), Filter.Entities(userUid));
+            _popupSystem.PopupCursor(Loc.GetString("network-configurator-device-already-saved", ("device", targetUid)), userUid);
             return;
         }
 
-        configurator.Devices.Add(device.Address, targetUid.Value);
+        configurator.Devices.Add(address, targetUid.Value);
         _popupSystem.PopupCursor(Loc.GetString("network-configurator-device-saved", ("address", device.Address), ("device", targetUid)),
-            Filter.Entities(userUid), PopupType.Medium);
+            userUid, PopupType.Medium);
 
         UpdateUiState(configurator.Owner, configurator);
     }
@@ -105,14 +130,14 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
             return true;
 
         SoundSystem.Play(component.SoundNoAccess.GetSound(), Filter.Pvs(user.Value), target, AudioParams.Default.WithVolume(-2f).WithPitchScale(1.2f));
-        _popupSystem.PopupEntity(Loc.GetString("network-configurator-device-access-denied"), target, Filter.Entities(user.Value));
+        _popupSystem.PopupEntity(Loc.GetString("network-configurator-device-access-denied"), target, user.Value);
 
         return false;
     }
 
     private void OnComponentRemoved(EntityUid uid, DeviceListComponent component, ComponentRemove args)
     {
-        _uiSystem.GetUiOrNull(component.Owner, NetworkConfiguratorUiKey.Configure)?.CloseAll();
+        _uiSystem.GetUiOrNull(uid, NetworkConfiguratorUiKey.Configure)?.CloseAll();
     }
 
     #region Interactions
@@ -151,7 +176,9 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
         UtilityVerb verb = new()
         {
             Text = Loc.GetString(isDeviceList ? "network-configurator-configure" : "network-configurator-save-device"),
-            IconTexture = isDeviceList ? "/Textures/Interface/VerbIcons/settings.svg.192dpi.png" : "/Textures/Interface/VerbIcons/in.svg.192dpi.png",
+            Icon = isDeviceList ?
+                new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")) :
+                new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/in.svg.192dpi.png")),
             Act = () => OnUsed(uid, component, args.Target, args.User),
             Impact = LogImpact.Low
         };
@@ -173,7 +200,7 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
         AlternativeVerb verb = new()
         {
             Text = Loc.GetString("network-configurator-save-device"),
-            IconTexture = "/Textures/Interface/VerbIcons/in.svg.192dpi.png",
+            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/in.svg.192dpi.png")),
             Act = () => TryAddNetworkDevice(args.Target, args.Using.Value, args.User),
             Impact = LogImpact.Low
         };
@@ -193,7 +220,14 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
             return;
 
         configurator.ActiveDeviceList = targetUid;
+        Dirty(configurator);
         _uiSystem.GetUiOrNull(configurator.Owner, NetworkConfiguratorUiKey.Configure)?.Open(actor.PlayerSession);
+        _uiSystem.TrySetUiState(
+            configurator.Owner,
+            NetworkConfiguratorUiKey.Configure,
+            new DeviceListUserInterfaceState(
+                _deviceListSystem.GetDeviceList(configurator.ActiveDeviceList.Value)
+                    .Select(v => (v.Key, MetaData(v.Value).EntityName)).ToHashSet()));
     }
 
     /// <summary>
@@ -259,26 +293,42 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
         if (!component.ActiveDeviceList.HasValue)
             return;
 
+        var result = DeviceListUpdateResult.NoComponent;
         switch (args.ButtonKey)
         {
             case NetworkConfiguratorButtonKey.Set:
-                _deviceListSystem.UpdateDeviceList(component.ActiveDeviceList.Value, new HashSet<EntityUid>(component.Devices.Values));
+                result = _deviceListSystem.UpdateDeviceList(component.ActiveDeviceList.Value, new HashSet<EntityUid>(component.Devices.Values));
                 break;
             case NetworkConfiguratorButtonKey.Add:
-                _deviceListSystem.UpdateDeviceList(component.ActiveDeviceList.Value, new HashSet<EntityUid>(component.Devices.Values), true);
+                result = _deviceListSystem.UpdateDeviceList(component.ActiveDeviceList.Value, new HashSet<EntityUid>(component.Devices.Values), true);
                 break;
             case NetworkConfiguratorButtonKey.Clear:
-                _deviceListSystem.UpdateDeviceList(component.ActiveDeviceList.Value, new HashSet<EntityUid>());
+                result = _deviceListSystem.UpdateDeviceList(component.ActiveDeviceList.Value, new HashSet<EntityUid>());
                 break;
             case NetworkConfiguratorButtonKey.Copy:
                 component.Devices = _deviceListSystem.GetDeviceList(component.ActiveDeviceList.Value);
                 UpdateUiState(uid, component);
-                break;
+                return;
             case NetworkConfiguratorButtonKey.Show:
-                _deviceListSystem.ToggleVisualization(component.ActiveDeviceList.Value);
+                // This should be done client-side.
+                // _deviceListSystem.ToggleVisualization(component.ActiveDeviceList.Value);
                 break;
         }
-    }
 
+        var resultText = result switch
+        {
+            DeviceListUpdateResult.TooManyDevices => Loc.GetString("network-configurator-too-many-devices"),
+            DeviceListUpdateResult.UpdateOk => Loc.GetString("network-configurator-update-ok"),
+            _ => "error"
+        };
+
+        _popupSystem.PopupCursor(Loc.GetString(resultText), args.Session, PopupType.Medium);
+        _uiSystem.TrySetUiState(
+            component.Owner,
+            NetworkConfiguratorUiKey.Configure,
+            new DeviceListUserInterfaceState(
+                _deviceListSystem.GetDeviceList(component.ActiveDeviceList.Value)
+                    .Select(v => (v.Key, MetaData(v.Value).EntityName)).ToHashSet()));
+    }
     #endregion
 }

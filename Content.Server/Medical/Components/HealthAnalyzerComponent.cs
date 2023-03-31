@@ -1,8 +1,9 @@
 using System.Threading;
 using Content.Server.UserInterface;
-using Content.Shared.MedicalScanner;
 using Content.Shared.Disease;
+using Content.Shared.MedicalScanner;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Medical.Components
@@ -18,13 +19,21 @@ namespace Content.Server.Medical.Components
         /// How long it takes to scan someone.
         /// </summary>
         [DataField("scanDelay")]
-        [ViewVariables]
         public float ScanDelay = 0.8f;
-        /// <summary>
-        ///     Token for interrupting scanning do after.
-        /// </summary>
-        public CancellationTokenSource? CancelToken;
+
         public BoundUserInterface? UserInterface => Owner.GetUIOrNull(HealthAnalyzerUiKey.Key);
+
+        /// <summary>
+        ///     Sound played on scanning begin
+        /// </summary>
+        [DataField("scanningBeginSound")]
+        public SoundSpecifier? ScanningBeginSound = null;
+
+        /// <summary>
+        ///     Sound played on scanning end
+        /// </summary>
+        [DataField("scanningEndSound")]
+        public SoundSpecifier? ScanningEndSound = null;
 
         /// <summary>
         /// The disease this will give people.

@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Stunnable;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
-using Content.Server.Weapon.Melee;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
@@ -14,17 +11,19 @@ using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
+using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
+using Content.Shared.Weapons.Melee.Events;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Atmos.EntitySystems
 {
-    internal sealed class FlammableSystem : EntitySystem
+    public sealed class FlammableSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
@@ -34,13 +33,15 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly FixtureSystem _fixture = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
-        private const float MinimumFireStacks = -10f;
-        private const float MaximumFireStacks = 20f;
+        public const float MinimumFireStacks = -10f;
+        public const float MaximumFireStacks = 20f;
         private const float UpdateTime = 1f;
 
-        private const float MinIgnitionTemperature = 373.15f;
+        public const float MinIgnitionTemperature = 373.15f;
         public const string FlammableFixtureID = "flammable";
 
         private float _timer = 0f;
@@ -52,10 +53,11 @@ namespace Content.Server.Atmos.EntitySystems
             UpdatesAfter.Add(typeof(AtmosphereSystem));
 
             SubscribeLocalEvent<FlammableComponent, MapInitEvent>(OnMapInit);
-            SubscribeLocalEvent<FlammableComponent, InteractUsingEvent>(OnInteractUsingEvent);
-            SubscribeLocalEvent<FlammableComponent, StartCollideEvent>(OnCollideEvent);
-            SubscribeLocalEvent<FlammableComponent, IsHotEvent>(OnIsHotEvent);
-            SubscribeLocalEvent<FlammableComponent, TileFireEvent>(OnTileFireEvent);
+            SubscribeLocalEvent<FlammableComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<FlammableComponent, StartCollideEvent>(OnCollide);
+            SubscribeLocalEvent<FlammableComponent, IsHotEvent>(OnIsHot);
+            SubscribeLocalEvent<FlammableComponent, TileFireEvent>(OnTileFire);
+            SubscribeLocalEvent<FlammableComponent, RejuvenateEvent>(OnRejuvenate);
             SubscribeLocalEvent<IgniteOnCollideComponent, StartCollideEvent>(IgniteOnCollide);
             SubscribeLocalEvent<IgniteOnMeleeHitComponent, MeleeHitEvent>(OnMeleeHit);
         }
@@ -70,10 +72,9 @@ namespace Content.Server.Atmos.EntitySystems
                 flammable.FireStacks += component.FireStacks;
                 Ignite(entity, flammable);
             }
-
         }
 
-        private void IgniteOnCollide(EntityUid uid, IgniteOnCollideComponent component, StartCollideEvent args)
+        private void IgniteOnCollide(EntityUid uid, IgniteOnCollideComponent component, ref StartCollideEvent args)
         {
             var otherFixture = args.OtherFixture.Body.Owner;
 
@@ -93,15 +94,11 @@ namespace Content.Server.Atmos.EntitySystems
             if (!TryComp<PhysicsComponent>(uid, out var body))
                 return;
 
-            _fixture.TryCreateFixture(body, new Fixture(body, component.FlammableCollisionShape)
-            {
-                Hard = false,
-                ID = FlammableFixtureID,
-                CollisionMask = (int) CollisionGroup.FullTileLayer
-            });
+            _fixture.TryCreateFixture(uid, component.FlammableCollisionShape, FlammableFixtureID, hard: false,
+                collisionMask: (int) CollisionGroup.FullTileLayer, body: body);
         }
 
-        private void OnInteractUsingEvent(EntityUid uid, FlammableComponent flammable, InteractUsingEvent args)
+        private void OnInteractUsing(EntityUid uid, FlammableComponent flammable, InteractUsingEvent args)
         {
             if (args.Handled)
                 return;
@@ -116,7 +113,7 @@ namespace Content.Server.Atmos.EntitySystems
             args.Handled = true;
         }
 
-        private void OnCollideEvent(EntityUid uid, FlammableComponent flammable, StartCollideEvent args)
+        private void OnCollide(EntityUid uid, FlammableComponent flammable, ref StartCollideEvent args)
         {
             var otherUid = args.OtherFixture.Body.Owner;
 
@@ -154,12 +151,12 @@ namespace Content.Server.Atmos.EntitySystems
             }
         }
 
-        private void OnIsHotEvent(EntityUid uid, FlammableComponent flammable, IsHotEvent args)
+        private void OnIsHot(EntityUid uid, FlammableComponent flammable, IsHotEvent args)
         {
             args.IsHot = flammable.OnFire;
         }
 
-        private void OnTileFireEvent(EntityUid uid, FlammableComponent flammable, ref TileFireEvent args)
+        private void OnTileFire(EntityUid uid, FlammableComponent flammable, ref TileFireEvent args)
         {
             var tempDelta = args.Temperature - MinIgnitionTemperature;
 
@@ -170,13 +167,18 @@ namespace Content.Server.Atmos.EntitySystems
                 _fireEvents[flammable] = tempDelta;
         }
 
+        private void OnRejuvenate(EntityUid uid, FlammableComponent component, RejuvenateEvent args)
+        {
+            Extinguish(uid, component);
+        }
+
         public void UpdateAppearance(EntityUid uid, FlammableComponent? flammable = null, AppearanceComponent? appearance = null)
         {
             if (!Resolve(uid, ref flammable, ref appearance))
                 return;
 
-            appearance.SetData(FireVisuals.OnFire, flammable.OnFire);
-            appearance.SetData(FireVisuals.FireStacks, flammable.FireStacks);
+            _appearance.SetData(uid, FireVisuals.OnFire, flammable.OnFire, appearance);
+            _appearance.SetData(uid, FireVisuals.FireStacks, flammable.FireStacks, appearance);
         }
 
         public void AdjustFireStacks(EntityUid uid, float relativeFireStacks, FlammableComponent? flammable = null)
@@ -270,7 +272,7 @@ namespace Content.Server.Atmos.EntitySystems
             _timer -= UpdateTime;
 
             // TODO: This needs cleanup to take off the crust from TemperatureComponent and shit.
-            foreach (var (flammable, physics, transform) in EntityManager.EntityQuery<FlammableComponent, IPhysBody, TransformComponent>())
+            foreach (var (flammable, transform) in EntityManager.EntityQuery<FlammableComponent, TransformComponent>())
             {
                 var uid = flammable.Owner;
 
@@ -319,24 +321,25 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     _atmosphereSystem.HotspotExpose(transform.GridUid.Value,
                         _transformSystem.GetGridOrMapTilePosition(uid, transform),
-                        700f, 50f, true);
+                        700f, 50f, uid, true);
 
                 }
 
-                foreach (var otherUid in flammable.Collided.ToArray())
+                for (var i = flammable.Collided.Count - 1; i >= 0; i--)
                 {
+                    var otherUid = flammable.Collided[i];
+
                     if (!otherUid.IsValid() || !EntityManager.EntityExists(otherUid))
                     {
-                        flammable.Collided.Remove(otherUid);
+                        flammable.Collided.RemoveAt(i);
                         continue;
                     }
 
-                    var otherPhysics = EntityManager.GetComponent<IPhysBody>(uid);
-
                     // TODO: Sloth, please save our souls!
-                    if (!physics.GetWorldAABB().Intersects(otherPhysics.GetWorldAABB()))
+                    // no
+                    if (!_lookup.GetWorldAABB(uid, transform).Intersects(_lookup.GetWorldAABB(otherUid)))
                     {
-                        flammable.Collided.Remove(otherUid);
+                        flammable.Collided.RemoveAt(i);
                     }
                 }
             }

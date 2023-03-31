@@ -38,13 +38,13 @@ public sealed class RoleBanCommand : IConsoleCommand
 
                 if (!uint.TryParse(args[3], out minutes))
                 {
-                    shell.WriteLine($"{args[3]} is not a valid amount of minutes.\n{Help}");
+                    shell.WriteError(Loc.GetString("cmd-roleban-minutes-parse", ("time", args[3]), ("help", Help)));
                     return;
                 }
 
                 break;
             default:
-                shell.WriteLine($"Invalid amount of arguments.");
+                shell.WriteError(Loc.GetString("cmd-roleban-arg-count"));
                 shell.WriteLine(Help);
                 return;
         }
@@ -58,7 +58,10 @@ public sealed class RoleBanCommand : IConsoleCommand
         {
             new("0", Loc.GetString("cmd-roleban-hint-duration-1")),
             new("1440", Loc.GetString("cmd-roleban-hint-duration-2")),
-            new("10080", Loc.GetString("cmd-roleban-hint-duration-3")),
+            new("4320", Loc.GetString("cmd-roleban-hint-duration-3")),
+            new("10080", Loc.GetString("cmd-roleban-hint-duration-4")),
+            new("20160", Loc.GetString("cmd-roleban-hint-duration-5")),
+            new("43800", Loc.GetString("cmd-roleban-hint-duration-6")),
         };
 
         return args.Length switch

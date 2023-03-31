@@ -10,11 +10,12 @@ namespace Content.Client.Power.SMES
     [UsedImplicitly]
     public sealed class SmesVisualizer : AppearanceVisualizer
     {
+        [Obsolete("Subscribe to your component being initialised instead.")]
         public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(entity);
 
             sprite.LayerMapSet(Layers.Input, sprite.AddLayerState("smes-oc0"));
             sprite.LayerSetShader(Layers.Input, "unshaded");
@@ -25,11 +26,12 @@ namespace Content.Client.Power.SMES
             sprite.LayerSetShader(Layers.Output, "unshaded");
         }
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
 
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(component.Owner);
             if (!component.TryGetData<int>(SmesVisuals.LastChargeLevel, out var level) || level == 0)
             {
                 sprite.LayerSetVisible(Layers.Charge, false);

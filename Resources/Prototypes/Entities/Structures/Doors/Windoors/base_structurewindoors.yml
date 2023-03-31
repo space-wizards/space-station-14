@@ -16,8 +16,8 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-        bounds: "-0.49,-0.49,0.49,-0.3"
-      mass: 50
+        bounds: "-0.49,-0.39,0.49,-0.36"
+      density: 1500
       mask:
       - TabletopMachineMask
       layer:
@@ -43,6 +43,12 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
+  - type: DoorSignalControl
+  - type: SignalReceiver
+    inputs:
+      Open: []
+      Close: []
+      Toggle: []
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass
@@ -72,12 +78,18 @@
         acts: [ "Destruction" ]
   - type: AccessReader
   - type: Airlock
+    keepOpenIfClicked: true
     openPanelVisible: true
     # needed so that windoors will close regardless of whether there are people in it; it doesn't crush after all
     safety: false
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
   - type: Door
     canCrush: false
-    board: DoorElectronics
     openSound:
       path: /Audio/Machines/windoor_open.ogg
     closeSound:
@@ -89,7 +101,7 @@
     usesApcPower: true
   - type: Wires
     BoardName: "Windoor Control"
-    LayoutId: Windoors
+    LayoutId: Airlock
   - type: UserInterface
     interfaces:
     - key: enum.WiresUiKey.Key
@@ -101,7 +113,7 @@
         denyAnimationTime: 0.4
         animatedPanel: false
         openUnlitVisible: true
-      - type: WiresVisualizer
+  - type: WiresVisuals
   - type: Airtight
     fixVacuum: true
     noAirWhenFullyAirBlocked: false
@@ -110,6 +122,10 @@
   - type: Construction
     graph: Windoor
     node: windoor
+    containers:
+    - board
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   id: BaseSecureWindoor
@@ -137,8 +153,6 @@
     - state: panel_open
       map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       visible: false
-  - type: Wires
-    LayoutId: Secure Windoors
   - type: Destructible
     thresholds:
     - trigger:

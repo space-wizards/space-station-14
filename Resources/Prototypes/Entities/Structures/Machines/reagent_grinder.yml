@@ -1,6 +1,6 @@
 - type: entity
   id: KitchenReagentGrinder
-  parent: BaseMachinePowered
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   name: reagent grinder
   description: From BlenderTech. Will It Blend? Let's find out!
   suffix: grinder/juicer
@@ -8,14 +8,6 @@
   - type: Transform
     anchored: true
   - type: ReagentGrinder
-    beakerSlot:
-      insertSound: /Audio/Machines/machine_switch.ogg
-      ejectSound: /Audio/Machines/machine_switch.ogg
-      soundOptions:
-        volume: -2
-      whitelist:
-        components:
-        - FitsInDispenser
   - type: ActivatableUI
     key: enum.ReagentGrinderUiKey.Key
   - type: UserInterface
@@ -23,8 +15,12 @@
     - key: enum.ReagentGrinderUiKey.Key
       type: ReagentGrinderBoundUserInterface
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: ReagentGrinderVisualizer
+      enum.ReagentGrinderVisualState.BeakerAttached:
+        grinder:
+          True: {state: "juicer1"}
+          False: {state: "juicer0"}
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -38,7 +34,27 @@
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/juicer.rsi
-    state: juicer0
     drawdepth: SmallObjects
+    snapCardinals: true
+    layers:
+    - map: [ "grinder" ]
+      state: "juicer0"
   - type: ApcPowerReceiver
     powerLoad: 300
+  - type: UpgradePowerDraw
+    powerDrawMultiplier: 0.75
+    scaling: Exponential
+  - type: ItemSlots
+    slots:
+      beakerSlot:
+        whitelist:
+          components:
+          - FitsInDispenser
+  - type: Machine
+    board: ReagentGrinderMachineCircuitboard
+  - type: ContainerContainer
+    containers:
+      beakerSlot: !type:ContainerSlot
+      inputContainer: !type:Container
+      machine_board: !type:Container
+      machine_parts: !type:Container

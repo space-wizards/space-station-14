@@ -1,5 +1,5 @@
-using Content.Shared.Sound;
 using Content.Shared.Whitelist;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -31,7 +31,7 @@ public sealed class BallisticAmmoProviderComponent : Component
     public Container Container = default!;
 
     // TODO: Make this use stacks when the typeserializer is done.
-    [ViewVariables, DataField("entities")]
+    [DataField("entities")]
     public List<EntityUid> Entities = new();
 
     /// <summary>
@@ -45,4 +45,10 @@ public sealed class BallisticAmmoProviderComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("cycled")]
     public bool Cycled = true;
+
+    /// <summary>
+    /// Is it okay for this entity to directly transfer its valid ammunition into another provider?
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("mayTransfer")]
+    public bool MayTransfer = false;
 }

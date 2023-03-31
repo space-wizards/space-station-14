@@ -7,7 +7,7 @@ namespace Content.Server.Construction.Completions
     public sealed class RaiseEvent : IGraphAction
     {
         [DataField("event", required:true)]
-        public EntityEventArgs? Event { get; } = null;
+        public EntityEventArgs? Event { get; }
 
         [DataField("directed")]
         public bool Directed { get; } = true;
@@ -21,7 +21,7 @@ namespace Content.Server.Construction.Completions
                 return;
 
             if(Directed)
-                entityManager.EventBus.RaiseLocalEvent(uid, (object)Event, false);
+                entityManager.EventBus.RaiseLocalEvent(uid, (object)Event);
 
             if(Broadcast)
                 entityManager.EventBus.RaiseEvent(EventSource.Local, (object)Event);

@@ -20,9 +20,11 @@ namespace Content.Server.Disposal.Unit.Components
         ///     The current pressure of this disposal unit.
         ///     Prevents it from flushing if it is not equal to or bigger than 1.
         /// </summary>
-        [ViewVariables]
         [DataField("pressure")]
         public float Pressure = 1f;
+
+        [DataField("autoEngageEnabled")]
+        public bool AutomaticEngage = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("autoEngageTime")]

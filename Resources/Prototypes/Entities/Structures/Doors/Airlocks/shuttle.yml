@@ -9,6 +9,7 @@
   - type: Sprite
     netsync: false
     sprite: Structures/Doors/Airlocks/Standard/shuttle.rsi
+    snapCardinals: false
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
@@ -31,7 +32,6 @@
     bumpOpen: false
     closeTimeTwo: 0.4
     openTimeTwo: 0.4
-    board: DoorElectronics
     crushDamage:
       types:
         Blunt: 15
@@ -52,6 +52,9 @@
       - ForceNoFixRotations
   - type: PaintableAirlock
     group: Shuttle
+  - type: Construction
+    graph: AirlockShuttle
+    node: airlock
 
 - type: entity
   id: AirlockGlassShuttle
@@ -64,6 +67,7 @@
   - type: Sprite
     netsync: false
     sprite: Structures/Doors/Airlocks/Glass/shuttle.rsi
+    snapCardinals: false
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
@@ -86,3 +90,22 @@
     group: ShuttleGlass
   - type: Door
     occludes: false
+
+- type: entity
+  id: AirlockShuttleAssembly
+  parent: AirlockAssembly
+  name: external airlock assembly
+  suffix: Docking
+  description: An incomplete structure necessary for connecting two space craft together.
+  components:
+  - type: Transform
+    anchored: true
+    noRot: false
+  - type: Rotatable
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Doors/Airlocks/Glass/shuttle.rsi
+    state: closed
+  - type: Construction
+    graph: AirlockShuttle
+    node: assembly

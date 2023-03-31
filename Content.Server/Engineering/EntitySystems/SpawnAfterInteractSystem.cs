@@ -2,6 +2,7 @@ using Content.Server.Coordinates.Helpers;
 using Content.Server.DoAfter;
 using Content.Server.Engineering.Components;
 using Content.Server.Stack;
+using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Stacks;
@@ -60,7 +61,7 @@ namespace Content.Server.Engineering.EntitySystems
             if (component.Deleted || Deleted(component.Owner))
                 return;
 
-            if (EntityManager.TryGetComponent<SharedStackComponent?>(component.Owner, out var stackComp)
+            if (EntityManager.TryGetComponent<StackComponent?>(component.Owner, out var stackComp)
                 && component.RemoveOnInteract && !_stackSystem.Use(uid, 1, stackComp))
             {
                 return;

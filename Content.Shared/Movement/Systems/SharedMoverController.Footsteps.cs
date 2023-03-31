@@ -1,5 +1,5 @@
 using Content.Shared.Movement.Components;
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 

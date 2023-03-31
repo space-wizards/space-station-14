@@ -5,6 +5,8 @@ using Content.Shared.CCVar;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
+using Robust.Shared.Replays;
+using Robust.Shared.Serialization.Markdown.Mapping;
 
 namespace Content.Server.Administration;
 
@@ -15,6 +17,7 @@ public sealed class NetworkResourceManager : SharedNetworkResourceManager
     [Dependency] private readonly IServerNetManager _serverNetManager = default!;
     [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly IServerDbManager _serverDb = default!;
+    [Dependency] private readonly IReplayRecordingManager _replay = default!;
 
     [ViewVariables] public bool Enabled { get; private set; } = true;
     [ViewVariables] public float SizeLimit { get; private set; } = 0f;
@@ -30,6 +33,16 @@ public sealed class NetworkResourceManager : SharedNetworkResourceManager
         _cfgManager.OnValueChanged(CCVars.ResourceUploadingStoreEnabled, value => StoreUploaded = value, true);
 
         AutoDelete(_cfgManager.GetCVar(CCVars.ResourceUploadingStoreDeletionDays));
+        //_replay.OnRecordingStarted += OnStartReplayRecording;
+    }
+
+    private void OnStartReplayRecording((MappingDataNode, List<object>) initReplayData)
+    {
+        // replays will need information about currently loaded extra resources
+        foreach (var (path, data) in ContentRoot.GetAllFiles())
+        {
+            initReplayData.Item2.Add(new ReplayResourceUploadMsg { RelativePath = path, Data = data });
+        }
     }
 
     /// <summary>
@@ -62,6 +75,8 @@ public sealed class NetworkResourceManager : SharedNetworkResourceManager
         {
             channel.SendMessage(msg);
         }
+
+        _replay.QueueReplayMessage(new ReplayResourceUploadMsg { RelativePath = msg.RelativePath, Data = msg.Data });
 
         if (!StoreUploaded)
             return;

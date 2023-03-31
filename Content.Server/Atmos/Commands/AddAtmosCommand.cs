@@ -3,6 +3,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Atmos.Commands
 {
@@ -31,7 +32,7 @@ namespace Content.Server.Atmos.Commands
                 return;
             }
 
-            if (!entMan.HasComponent<IMapGridComponent>(euid))
+            if (!entMan.HasComponent<MapGridComponent>(euid))
             {
                 shell.WriteError($"Euid '{euid}' does not exist or is not a grid.");
                 return;

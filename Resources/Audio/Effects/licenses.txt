@@ -20,6 +20,8 @@ poster_being_set.ogg taken from https://github.com/tgstation/tgstation/blob/2834
 saw.ogg taken from https://freesound.org/people/domiscz/sounds/461728/ and clipped - CC0-1.0
 *It's actually an angle grinder
 
+double_beep.ogg taken from https://freesound.org/people/andersmmg/sounds/511492/ under CC BY 4.0
+
 smoke.ogg taken from https://github.com/tgstation/tgstation/blob/a5d362ce84e4f0c61026236d5ec84d3c81553664/sound/effects/smoke.ogg
 
 voteding.ogg taken from "Bike, Bell Ding, Single, 01-01.wav" by InspectorJ (www.jshaw.co.uk) of Freesound.org at https://freesound.org/people/InspectorJ/sounds/484344/ under CC BY 3.0. The volume has been reduced.
@@ -39,3 +41,13 @@ The following sounds are taken from TGstation github (licensed under CC by 3.0):
     demon_dies.ogg: taken at https://github.com/tgstation/tgstation/commit/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0
 
 pop.ogg licensed under CC0 1.0 by mirrorcult
+
+box_deploy.ogg and chime.ogg taken from Citadel Station at commit: https://github.com/Citadel-Station-13/Citadel-Station-13/commit/b604390f334343be80045d955705cf48ee056c61
+
+
+ - files:
+     - "drop.ogg"
+   license: "Royalty free"
+   copyright: "Sonniss.com - GDC 2016 - Game Audio Bundle - Levan Nadashvili - Soldier Footsteps - FS Concrete Soldier Crouch N02, mixed from stereo to mono"
+
+# Do not add to this list, I only did the above because yaml scheme validator doesn't like custom licenses.

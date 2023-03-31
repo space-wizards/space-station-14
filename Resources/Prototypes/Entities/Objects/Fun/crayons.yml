@@ -27,6 +27,8 @@
           Quantity: 3
         - ReagentId: MindbreakerToxin
           Quantity: 2
+  - type: StaticPrice
+    price: 5
 
 - type: entity
   parent: Crayon
@@ -39,7 +41,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 1
-    HeldPrefix: white
+    heldPrefix: white
   - type: Crayon
     color: white
     capacity: 5
@@ -62,7 +64,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 1
-    HeldPrefix: mime
+    heldPrefix: mime
   - type: Crayon
     color: white
     capacity: 5
@@ -85,7 +87,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 1
-    HeldPrefix: rainbow
+    heldPrefix: rainbow
   - type: Crayon
     color: Red
     selectableColor: true
@@ -108,7 +110,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 1
-    HeldPrefix: black
+    heldPrefix: black
   - type: Crayon
     color: black
     capacity: 5
@@ -131,7 +133,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 1
-    HeldPrefix: red
+    heldPrefix: red
   - type: Crayon
     color: red
     capacity: 5
@@ -154,7 +156,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 1
-    HeldPrefix: orange
+    heldPrefix: orange
   - type: Crayon
     color: orange
     capacity: 5
@@ -177,7 +179,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 1
-    HeldPrefix: yellow
+    heldPrefix: yellow
   - type: Crayon
     color: yellow
     capacity: 5
@@ -200,7 +202,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 1
-    HeldPrefix: green
+    heldPrefix: green
   - type: Crayon
     color: green
     capacity: 5
@@ -223,7 +225,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 1
-    HeldPrefix: blue
+    heldPrefix: blue
   - type: Crayon
     color: lightblue
     capacity: 5
@@ -246,7 +248,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 1
-    HeldPrefix: purple
+    heldPrefix: purple
   - type: Crayon
     color: purple
     capacity: 5
@@ -273,7 +275,7 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: 7
-    HeldPrefix: box
+    heldPrefix: box
   - type: StorageFill
     contents:
     - id: CrayonRed
@@ -313,7 +315,4 @@
         whitelist:
           tags:
           - CrayonYellow
-
   - type: Appearance
-    visuals:
-    - type: MappedItemVisualizer

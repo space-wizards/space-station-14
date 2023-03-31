@@ -11,12 +11,12 @@ namespace Content.Server.Suspicion.Roles
         public SuspicionTraitorRole(Mind.Mind mind, AntagPrototype antagPrototype) : base(mind)
         {
             Prototype = antagPrototype;
-            Name = antagPrototype.Name;
+            Name = Loc.GetString(antagPrototype.Name);
             Antagonist = antagPrototype.Antagonist;
         }
 
         public override string Name { get; }
-        public string Objective => Prototype.Objective;
+        public string Objective => Loc.GetString(Prototype.Objective);
         public override bool Antagonist { get; }
 
         public void GreetSuspicion(List<SuspicionTraitorRole> traitors, IChatManager chatMgr)

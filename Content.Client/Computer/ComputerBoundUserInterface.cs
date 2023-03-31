@@ -26,7 +26,7 @@ namespace Content.Client.Computer
         }
 
         // Alas, this constructor has to be copied to the subclass. :(
-        public ComputerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) {}
+        public ComputerBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey) {}
 
         protected override void UpdateState(BoundUserInterfaceState state)
         {
@@ -52,13 +52,13 @@ namespace Content.Client.Computer
     }
 
     /// <summary>
-    /// This class is to avoid a lot of <> being written when we just want to refer to SendMessage.
+    /// This class is to avoid a lot of &lt;&gt; being written when we just want to refer to SendMessage.
     /// We could instead qualify a lot of generics even further, but that is a waste of time.
     /// </summary>
     [Virtual]
     public class ComputerBoundUserInterfaceBase : BoundUserInterface
     {
-        public ComputerBoundUserInterfaceBase(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) {}
+        public ComputerBoundUserInterfaceBase(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey) {}
 
         public new void SendMessage(BoundUserInterfaceMessage msg)
         {

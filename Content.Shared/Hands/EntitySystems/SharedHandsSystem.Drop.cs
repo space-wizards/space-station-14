@@ -90,7 +90,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
     /// <summary>
     ///     Attempts to move a held item from a hand into a container that is not another hand, without dropping it on the floor in-between.
     /// </summary>
-    public bool TryDropIntoContainer(EntityUid uid, EntityUid entity, BaseContainer targetContainer, bool checkActionBlocker = true, SharedHandsComponent? handsComp = null)
+    public bool TryDropIntoContainer(EntityUid uid, EntityUid entity, IContainer targetContainer, bool checkActionBlocker = true, SharedHandsComponent? handsComp = null)
     {
         if (!Resolve(uid, ref handsComp))
             return false;
@@ -143,9 +143,9 @@ public abstract partial class SharedHandsSystem : EntitySystem
 
         var entity = hand.Container.ContainedEntity.Value;
 
-        if (!hand.Container!.Remove(entity, EntityManager))
+        if (!hand.Container.Remove(entity, EntityManager))
         {
-            Logger.Error($"{nameof(SharedHandsComponent)} on {uid} could not remove {entity} from {hand.Container}.");
+            Logger.Error($"Failed to remove {ToPrettyString(entity)} from users hand container when dropping. User: {ToPrettyString(uid)}. Hand: {hand.Name}.");
             return;
         }
 

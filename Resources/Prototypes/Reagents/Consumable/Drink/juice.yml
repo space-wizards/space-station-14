@@ -4,6 +4,7 @@
   parent: BaseDrink
   desc: reagent-desc-juice-apple
   physicalDesc: reagent-physical-desc-crisp
+  flavor: apple
   color: "#FDAD01"
 
 - type: reagent
@@ -12,6 +13,7 @@
   parent: BaseDrink
   desc: reagent-desc-juice-banana
   physicalDesc: reagent-physical-desc-crisp
+  flavor: banana
   color: "#FFE777"
 
 - type: reagent
@@ -20,6 +22,7 @@
   parent: BaseDrink
   desc: reagent-desc-juice-berry
   physicalDesc: reagent-physical-desc-sweet
+  flavor: juice
   color: "#660099"
 
 - type: reagent
@@ -27,6 +30,7 @@
   name: reagent-name-juice-berry-poison
   desc: reagent-desc-juice-berry-poison
   physicalDesc: reagent-physical-desc-sickly
+  flavor: bitter
   color: "#6600CC"
   metabolisms:
     Drink:
@@ -56,7 +60,19 @@
   parent: BaseDrink
   desc: reagent-desc-juice-carrot
   physicalDesc: reagent-physical-desc-crisp
+  flavor: carrot
   color: "#FF8820"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Oculine
+        amount: 0.15
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.5
 
 - type: reagent
   id: JuiceGrape
@@ -64,6 +80,7 @@
   parent: BaseDrink
   desc: reagent-desc-juice-grape
   physicalDesc: reagent-physical-desc-crisp
+  flavor: juice
   color: "#512284"
 
 - type: reagent
@@ -72,6 +89,7 @@
   parent: BaseDrink
   desc: reagent-desc-juice-lemon
   physicalDesc: reagent-physical-desc-citric
+  flavor: sour
   color: "#fff690"
 
 - type: reagent
@@ -80,6 +98,7 @@
   parent: BaseDrink
   desc: reagent-desc-juice-lime
   physicalDesc: reagent-physical-desc-citric
+  flavor: sour
   color: "#99bb43"
 
 # /datum/reagent/drink/orangejuice/on_mob_life(var/mob/living/M)
@@ -96,6 +115,7 @@
   parent: BaseDrink
   desc: reagent-desc-juice-orange
   physicalDesc: reagent-physical-desc-citric
+  flavor: orange
   color: "#E78108"
 
 - type: reagent
@@ -104,6 +124,7 @@
   parent: BaseDrink
   desc: reagent-desc-juice-pineapple
   physicalDesc: reagent-physical-desc-tropical
+  flavor: pineapple
   color: yellow
 
 - type: reagent
@@ -112,6 +133,7 @@
   parent: BaseDrink
   desc: reagent-desc-juice-potato
   physicalDesc: reagent-physical-desc-starchy
+  flavor: potatoes
   color: "#302000"
 
 - type: reagent
@@ -120,6 +142,7 @@
   parent: BaseDrink
   desc: reagent-desc-juice-tomato
   physicalDesc: reagent-physical-desc-saucey
+  flavor: tomato
   color: "#731008"
 
 - type: reagent
@@ -128,4 +151,5 @@
   parent: BaseDrink
   desc: reagent-desc-juice-watermelon
   physicalDesc: reagent-physical-desc-sweet
+  flavor: watermelon
   color: "#EF3520"

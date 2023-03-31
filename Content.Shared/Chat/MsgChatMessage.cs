@@ -1,9 +1,40 @@
 using JetBrains.Annotations;
 using Lidgren.Network;
 using Robust.Shared.Network;
+using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
+using System.IO;
 
 namespace Content.Shared.Chat
 {
+    [Serializable, NetSerializable]
+    public sealed class ChatMessage
+    {
+        public ChatChannel Channel;
+        public string Message;
+        public string WrappedMessage;
+        public EntityUid SenderEntity;
+        public bool HideChat;
+        public Color? MessageColorOverride;
+        public string? AudioPath;
+        public float AudioVolume;
+
+        [NonSerialized]
+        public bool Read;
+
+        public ChatMessage(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat = false, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0)
+        {
+            Channel = channel;
+            Message = message;
+            WrappedMessage = wrappedMessage;
+            SenderEntity = source;
+            HideChat = hideChat;
+            MessageColorOverride = colorOverride;
+            AudioPath = audioPath;
+            AudioVolume = audioVolume;
+        }
+    }
+
     /// <summary>
     ///     Sent from server to client to notify the client about a new chat message.
     /// </summary>
@@ -12,73 +43,21 @@ namespace Content.Shared.Chat
     {
         public override MsgGroups MsgGroup => MsgGroups.Command;
 
-        /// <summary>
-        ///     The channel the message is on. This can also change whether certain params are used.
-        /// </summary>
-        public ChatChannel Channel { get; set; }
+        public ChatMessage Message = default!;
 
-        /// <summary>
-        ///     The actual message contents.
-        /// </summary>
-        public string Message { get; set; } = string.Empty;
-
-        /// <summary>
-        ///     What to "wrap" the message contents with. Example is stuff like 'Joe says: "{0}"'
-        /// </summary>
-        public string MessageWrap { get; set; } = string.Empty;
-
-        /// <summary>
-        ///     The sending entity.
-        ///     Only applies to <see cref="ChatChannel.Local"/>, <see cref="ChatChannel.Dead"/> and <see cref="ChatChannel.Emotes"/>.
-        /// </summary>
-        public EntityUid SenderEntity { get; set; }
-
-        /// <summary>
-        /// The override color of the message
-        /// </summary>
-        public Color MessageColorOverride { get; set; } = Color.Transparent;
-
-        public bool HideChat { get; set; }
-
-
-        public override void ReadFromBuffer(NetIncomingMessage buffer)
+        public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
         {
-            Channel = (ChatChannel) buffer.ReadInt16();
-            Message = buffer.ReadString();
-            MessageWrap = buffer.ReadString();
-
-            switch (Channel)
-            {
-                case ChatChannel.Local:
-                case ChatChannel.Whisper:
-                case ChatChannel.Dead:
-                case ChatChannel.Admin:
-                case ChatChannel.Emotes:
-                    SenderEntity = buffer.ReadEntityUid();
-                    break;
-            }
-            MessageColorOverride = buffer.ReadColor();
-            HideChat = buffer.ReadBoolean();
+            var length = buffer.ReadVariableInt32();
+            using var stream = buffer.ReadAlignedMemory(length);
+            serializer.DeserializeDirect(stream, out Message);
         }
 
-        public override void WriteToBuffer(NetOutgoingMessage buffer)
+        public override void WriteToBuffer(NetOutgoingMessage buffer, IRobustSerializer serializer)
         {
-            buffer.Write((short)Channel);
-            buffer.Write(Message);
-            buffer.Write(MessageWrap);
-
-            switch (Channel)
-            {
-                case ChatChannel.Local:
-                case ChatChannel.Whisper:
-                case ChatChannel.Dead:
-                case ChatChannel.Admin:
-                case ChatChannel.Emotes:
-                    buffer.Write(SenderEntity);
-                    break;
-            }
-            buffer.Write(MessageColorOverride);
-            buffer.Write(HideChat);
+            var stream = new MemoryStream();
+            serializer.SerializeDirect(stream, Message);
+            buffer.WriteVariableInt32((int) stream.Length);
+            buffer.Write(stream.AsSpan());
         }
     }
 }

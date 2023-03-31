@@ -1,16 +1,9 @@
 ﻿- type: vendingMachineInventory
   id: RobustSoftdrinksInventory
-  name: Robust Softdrinks
-  animationDuration: 1.1
-  spriteName: cola
   startingInventory:
-    DrinkColaCan: 2
-    DrinkEnergyDrinkCan: 2
-    DrinkGrapeCan: 3
+    DrinkColaCan: 4
+    DrinkGrapeCan: 2
     DrinkRootBeerCan: 2
     DrinkIcedTeaCan: 2
     DrinkLemonLimeCan: 2
-    DrinkSpaceMountainWindCan: 2
-    DrinkSpaceUpCan: 2
-    DrinkStarkistCan: 2
     DrinkFourteenLokoCan: 2

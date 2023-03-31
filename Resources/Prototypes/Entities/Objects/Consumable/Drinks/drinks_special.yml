@@ -2,7 +2,7 @@
   parent: BaseItem
   id: DrinkShaker
   name: shaker
-  description: ''
+  description: The trusty mixing buddy of the bartender.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -16,8 +16,12 @@
     solution: drink
   - type: RefillableSolution
     solution: drink
+  - type: DrainableSolution
+    solution: drink
   - type: SolutionTransfer
     canChangeTransferAmount: true
+  - type: Spillable
+    solution: drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shaker.rsi
     state: icon
@@ -30,22 +34,30 @@
   parent: DrinkGlassBase
   id: DrinkShotGlass
   name: shot glass
-  description: ''
+  description: Perfect for slamming down onto the table angrily.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 7
+  - type: SolutionTransfer
+    transferAmount: 10
+    minTransferAmount: 10
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shotglass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkCarafe
-  name: pitcher
-  description: A handled glass pitcher.
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/carafe.rsi
-    state: icon-10
+    layers:
+      - state: icon
+        map: [ "enum.SolutionContainerLayers.Base" ]
+      - state: fill1
+        map: [ "enum.SolutionContainerLayers.Fill" ]
+        visible: false
+      - state: icon-front
+        map: [ "enum.SolutionContainerLayers.Overlay" ]
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: fill
 
 - type: entity
   parent: DrinkGlassBase

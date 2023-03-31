@@ -8,6 +8,16 @@
   components:
   - type: Damageable
     damageContainer: Biological
+  - type: BodyPart
+  - type: ContainerContainer
+    containers:
+      bodypart: !type:Container
+        ents: []
+  - type: StaticPrice
+    price: 100
+  - type: Tag
+    tags:
+      - Trash
 
 - type: entity
   id: TorsoHuman
@@ -23,16 +33,6 @@
     state: "torso_m"
   - type: BodyPart
     partType: Torso
-    size: 14
-    compatibility: Biological
-    mechanisms:
-    - OrganHumanHeart
-    - OrganHumanLungs
-    - OrganHumanStomach
-    - OrganHumanLiver
-    - OrganHumanKidneys
-#    criticalThreshold: 100
-#    deadThreshold: 150
 
 - type: entity
   id: HeadHuman
@@ -48,14 +48,7 @@
     state: "head_m"
   - type: BodyPart
     partType: Head
-    size: 7
-    compatibility: Biological
     vital: true
-    mechanisms:
-    - OrganHumanBrain
-    - OrganHumanEyes
-#    criticalThreshold: 50
-#    deadThreshold: 120
   - type: Input
     context: "ghost"
   - type: MovementSpeedModifier
@@ -63,6 +56,9 @@
     baseSprintSpeed: 0
   - type: InputMover
   - type: GhostOnMove
+  - type: Tag
+    tags:
+      - Head
 
 - type: entity
   id: LeftArmHuman
@@ -78,11 +74,7 @@
     state: "l_arm"
   - type: BodyPart
     partType: Arm
-    size: 5
-    compatibility: Biological
     symmetry: Left
-#    criticalThreshold: 40
-#    deadThreshold: 80
 
 - type: entity
   id: RightArmHuman
@@ -98,11 +90,7 @@
     state: "r_arm"
   - type: BodyPart
     partType: Arm
-    size: 5
-    compatibility: Biological
     symmetry: Right
-#    criticalThreshold: 40
-#    deadThreshold: 80
 
 - type: entity
   id: LeftHandHuman
@@ -118,11 +106,7 @@
     state: "l_hand"
   - type: BodyPart
     partType: Hand
-    size: 3
-    compatibility: Biological
     symmetry: Left
-#    criticalThreshold: 30
-#    deadThreshold: 60
 
 - type: entity
   id: RightHandHuman
@@ -138,11 +122,7 @@
     state: "r_hand"
   - type: BodyPart
     partType: Hand
-    size: 3
-    compatibility: Biological
     symmetry: Right
-#    criticalThreshold: 30
-#    deadThreshold: 60
 
 - type: entity
   id: LeftLegHuman
@@ -158,11 +138,8 @@
     state: "l_leg"
   - type: BodyPart
     partType: Leg
-    size: 6
-    compatibility: Biological
     symmetry: Left
-#    criticalThreshold: 45
-#    deadThreshold: 90
+  - type: MovementSpeedModifier
 
 - type: entity
   id: RightLegHuman
@@ -178,11 +155,8 @@
     state: "r_leg"
   - type: BodyPart
     partType: Leg
-    size: 6
-    compatibility: Biological
     symmetry: Right
-#    criticalThreshold: 45
-#    deadThreshold: 90
+  - type: MovementSpeedModifier
 
 - type: entity
   id: LeftFootHuman
@@ -198,11 +172,7 @@
     state: "l_foot"
   - type: BodyPart
     partType: Foot
-    size: 2
-    compatibility: Biological
     symmetry: Left
-#    criticalThreshold: 30
-#    deadThreshold: 60
 
 - type: entity
   id: RightFootHuman
@@ -218,8 +188,4 @@
     state: "r_foot"
   - type: BodyPart
     partType: Foot
-    size: 2
-    compatibility: Biological
     symmetry: Right
-#    criticalThreshold: 30
-#    deadThreshold: 60

@@ -12,7 +12,7 @@ public sealed class InstantSpawnSpellEvent : InstantActionEvent
     [DataField("prototype", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Prototype = default!;
 
-    [ViewVariables, DataField("preventCollide")]
+    [DataField("preventCollide")]
     public bool PreventCollideWithCaster = true;
 
     /// <summary>

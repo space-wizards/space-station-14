@@ -13,7 +13,7 @@ namespace Content.Client.Disposal.UI
     {
         private DisposalTaggerWindow? _window;
 
-        public DisposalTaggerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public DisposalTaggerBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

@@ -5,5 +5,15 @@
   components:
   - type: Sprite
     netsync: false
-  - type: Clothing
-    size: 5
+  - type: Tag
+    tags:
+      - WhitelistChameleon
+  - type: StaticPrice
+    price: 15
+
+- type: entity
+  abstract: true
+  id: GeigerCounterClothing
+  components:
+    - type: Geiger
+      attachedToSuit: true

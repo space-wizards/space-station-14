@@ -1,14 +1,16 @@
 using System.Linq;
+using Content.Server.Administration.Commands;
 using Content.Server.Cargo.Systems;
 using Content.Server.Chat.Managers;
-using Content.Server.GameTicking.Rules.Configurations;
-using Content.Server.RoundEnd;
+using Content.Server.Preferences.Managers;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
-using Content.Shared.CharacterAppearance;
+using Content.Shared.Humanoid;
+using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -16,6 +18,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Robust.Shared.Enums;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -28,12 +31,13 @@ public sealed class PiratesRuleSystem : GameRuleSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IMapLoader _mapLoader = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IServerPreferencesManager _prefs = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
-    [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
     [Dependency] private readonly PricingSystem _pricingSystem = default!;
+    [Dependency] private readonly MapLoaderSystem _map = default!;
+    [Dependency] private readonly NamingSystem _namingSystem = default!;
 
     [ViewVariables]
     private List<Mind.Mind> _pirates = new();
@@ -145,10 +149,12 @@ public sealed class PiratesRuleSystem : GameRuleSystem
             ops[i] = _random.PickAndTake(ev.PlayerPool);
         }
 
-        var map = "/Maps/pirate.yml";
+        var map = "/Maps/Shuttles/pirate.yml";
+        var xformQuery = GetEntityQuery<TransformComponent>();
 
         var aabbs = _stationSystem.Stations.SelectMany(x =>
-            Comp<StationDataComponent>(x).Grids.Select(x => _mapManager.GetGridComp(x).Grid.WorldAABB)).ToArray();
+            Comp<StationDataComponent>(x).Grids.Select(x => xformQuery.GetComponent(x).WorldMatrix.TransformBox(_mapManager.GetGridComp(x).LocalAABB))).ToArray();
+
         var aabb = aabbs[0];
 
         for (var i = 1; i < aabbs.Length; i++)
@@ -156,7 +162,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem
             aabb.Union(aabbs[i]);
         }
 
-        var (_, gridId) = _mapLoader.LoadBlueprint(GameTicker.DefaultMap, map, new MapLoadOptions
+        var gridId = _map.LoadGrid(GameTicker.DefaultMap, map, new MapLoadOptions
         {
             Offset = aabb.Center + MathF.Max(aabb.Height / 2f, aabb.Width / 2f) * 2.5f
         });
@@ -195,8 +201,9 @@ public sealed class PiratesRuleSystem : GameRuleSystem
         for (var i = 0; i < ops.Length; i++)
         {
             var sex = _random.Prob(0.5f) ? Sex.Male : Sex.Female;
+            var gender = sex == Sex.Male ? Gender.Male : Gender.Female;
 
-            var name = sex.GetName("Human", _prototypeManager, _random);
+            var name = _namingSystem.GetName("Human", gender);
 
             var session = ops[i];
             var newMind = new Mind.Mind(session.UserId)
@@ -209,7 +216,8 @@ public sealed class PiratesRuleSystem : GameRuleSystem
             MetaData(mob).EntityName = name;
 
             newMind.TransferTo(mob);
-            _stationSpawningSystem.EquipStartingGear(mob, pirateGear, null);
+            var profile = _prefs.GetPreferences(session.UserId).SelectedCharacter as HumanoidCharacterProfile;
+            _stationSpawningSystem.EquipStartingGear(mob, pirateGear, profile);
 
             _pirates.Add(newMind);
 
@@ -228,7 +236,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem
     {
         if (!mind.OwnedEntity.HasValue)
             return;
-        _stationSpawningSystem.EquipStartingGear(mind.OwnedEntity.Value, _prototypeManager.Index<StartingGearPrototype>("PirateGear"), null);
+        SetOutfitCommand.SetOutfit(mind.OwnedEntity.Value, "PirateGear", EntityManager);
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
@@ -248,7 +256,6 @@ public sealed class PiratesRuleSystem : GameRuleSystem
         {
             _chatManager.DispatchServerAnnouncement(Loc.GetString("nukeops-no-one-ready"));
             ev.Cancel();
-            return;
         }
     }
 }

@@ -9,11 +9,12 @@ namespace Content.Client.Power
     [UsedImplicitly]
     public sealed class PowerDeviceVisualizer : AppearanceVisualizer
     {
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
 
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(component.Owner);
             var powered = component.TryGetData(PowerDeviceVisuals.Powered, out bool poweredVar) && poweredVar;
             sprite.LayerSetVisible(PowerDeviceVisualLayers.Powered, powered);
         }

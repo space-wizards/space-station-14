@@ -1,10 +1,13 @@
-using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Server.Popups;
+using Content.Shared.Body.Components;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
-using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -14,7 +17,10 @@ public sealed class ImmovableRodSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IMapManager _map = default!;
+
+    [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     public override void Update(float frameTime)
     {
@@ -25,7 +31,8 @@ public sealed class ImmovableRodSystem : EntitySystem
         {
             if (!rod.DestroyTiles)
                 continue;
-            if (!_map.TryGetGrid(trans.GridID, out var grid))
+
+            if (!_map.TryGetGrid(trans.GridUid, out var grid))
                 continue;
 
             grid.SetTile(trans.Coordinates, Tile.Empty);
@@ -45,9 +52,9 @@ public sealed class ImmovableRodSystem : EntitySystem
     {
         if (EntityManager.TryGetComponent(uid, out PhysicsComponent? phys))
         {
-            phys.LinearDamping = 0f;
-            phys.Friction = 0f;
-            phys.BodyStatus = BodyStatus.InAir;
+            _physics.SetLinearDamping(phys, 0f);
+            _physics.SetFriction(phys, 0f);
+            _physics.SetBodyStatus(phys, BodyStatus.InAir);
 
             if (!component.RandomizeVelocity)
                 return;
@@ -59,12 +66,12 @@ public sealed class ImmovableRodSystem : EntitySystem
                 _ => xform.WorldRotation.RotateVec(component.DirectionOverride.ToVec()) * _random.NextFloat(component.MinSpeed, component.MaxSpeed)
             };
 
-            phys.ApplyLinearImpulse(vel);
+            _physics.ApplyLinearImpulse(uid, vel, body: phys);
             xform.LocalRotation = (vel - xform.WorldPosition).ToWorldAngle() + MathHelper.PiOver2;
         }
     }
 
-    private void OnCollide(EntityUid uid, ImmovableRodComponent component, StartCollideEvent args)
+    private void OnCollide(EntityUid uid, ImmovableRodComponent component, ref StartCollideEvent args)
     {
         var ent = args.OtherFixture.Body.Owner;
 
@@ -77,8 +84,7 @@ public sealed class ImmovableRodSystem : EntitySystem
         {
             // oh god.
             var coords = Transform(uid).Coordinates;
-            _popup.PopupCoordinates(Loc.GetString("immovable-rod-collided-rod-not-good"), coords,
-                Filter.Pvs(uid), PopupType.LargeCaution);
+            _popup.PopupCoordinates(Loc.GetString("immovable-rod-collided-rod-not-good"), coords, PopupType.LargeCaution);
 
             Del(uid);
             Del(ent);
@@ -92,9 +98,8 @@ public sealed class ImmovableRodSystem : EntitySystem
         {
             component.MobCount++;
 
-            _popup.PopupEntity(Loc.GetString("immovable-rod-penetrated-mob", ("rod", uid), ("mob", ent)), uid,
-                Filter.Pvs(uid), PopupType.LargeCaution);
-            body.Gib();
+            _popup.PopupEntity(Loc.GetString("immovable-rod-penetrated-mob", ("rod", uid), ("mob", ent)), uid, PopupType.LargeCaution);
+            _bodySystem.GibBody(ent, body: body);
         }
 
         QueueDel(ent);

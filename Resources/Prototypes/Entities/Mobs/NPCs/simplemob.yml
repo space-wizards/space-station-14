@@ -4,6 +4,7 @@
   id: SimpleSpaceMobBase # Mob without barotrauma, freezing and asphyxiation (for space carps!?)
   suffix: AI
   components:
+  - type: LagCompensation
   - type: Tag
     tags:
     - DoorBumpOpener
@@ -14,14 +15,11 @@
       Acidic: [Touch, Ingestion]
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    # - Clothing
-    - Idle
-    # No hunger and thirst for space mobs (need a way to eat station tiles for space carps)
+  - type: HTN
+    rootTask: IdleCompound
   - type: Input
     context: "human"
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleNeutral
   - type: MovementSpeedModifier
@@ -55,7 +53,7 @@
         # Circles, cuz rotation of rectangles looks very bad
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 20
+      density: 50
       mask:
       - MobMask
       layer:
@@ -72,6 +70,7 @@
           -0.25
   - type: Damageable
     damageContainer: Biological
+  - type: RadiationReceiver
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
@@ -91,10 +90,12 @@
       types:
         Heat : 0.1 #per second, scales with temperature & other constants
   - type: MobState
+  - type: MobThresholds
     thresholds:
       0: Alive
       50: Critical
       100: Dead
+  - type: Stamina
   - type: Destructible
     thresholds:
     - trigger:
@@ -111,20 +112,23 @@
     - SlowedDown
     - Stutter
     - Electrocution
+    - ForcedSleep
+    - TemporaryBlindness
+    - Pacified
   - type: Body
-    template: AnimalTemplate
-    preset: AnimalPreset
+    prototype: Animal
+  - type: InjectableSolution
+    solution: chemicals
   - type: Examiner
   - type: MeleeWeapon
-    range: 1.5
-    arcwidth: 0
-    arc: bite
+    hidden: true
+    angle: 0
+    animation: WeaponArcBite
     damage:
       groups:
         Brute: 5
   - type: Appearance
-    visuals:
-    - type: BuckleVisualizer
+  - type: RotationVisuals
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Generic_mob_burning
@@ -135,7 +139,6 @@
   - type: Polymorphable
   - type: Pullable
   - type: Buckle
-  - type: DiseaseCarrier
   - type: Recyclable
     safe: false
   - type: StandingState
@@ -159,13 +162,22 @@
   components:
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - Idle
-    # - Hunger TODO: eating on the floor and fix weird AI endless stomach
-    # - Thirst
   - type: Hunger
+    thresholds: # only animals and rats are derived from this prototype so let's override it here and in rats' proto
+      Overfed: 100
+      Okay: 50
+      Peckish: 25
+      Starving: 10
+      Dead: 0
+    baseDecayRate: 0.00925925925926 # it is okay for animals to eat and drink less than humans, but more frequently
   - type: Thirst
+    thresholds:
+      OverHydrated: 200
+      Okay: 150
+      Thirsty: 100
+      Parched: 50
+      Dead: 0
+    baseDecayRate: 0.04
   - type: Barotrauma
     damage:
       types:
@@ -177,6 +189,9 @@
       - SlowedDown
       - Stutter
       - Electrocution
+      - ForcedSleep
+      - TemporaryBlindness
+      - Pacified
   - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100
@@ -207,4 +222,8 @@
     bloodMaxVolume: 150
   - type: MobPrice
     price: 150
+  - type: Appearance
+  - type: FloatingVisuals
+  - type: Puller
+    needsHands: false
 

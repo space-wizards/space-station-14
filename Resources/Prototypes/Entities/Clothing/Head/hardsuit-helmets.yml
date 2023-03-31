@@ -20,13 +20,6 @@
     addPrefix: false
   - type: ToggleableLightVisuals
     spriteLayer: light
-    inhandVisuals:
-      left:
-      - state: inhand-left-light
-        shader: unshaded
-      right:
-      - state: inhand-right-light
-        shader: unshaded
     clothingVisuals:
       head:
       - state: equipped-head-light
@@ -37,15 +30,8 @@
       - state: equipped-head
       - state: equipped-head-unshaded
         shader: unshaded
-    inhandVisuals:
-      left:
-      - state: inhand-left
-      - state: inhand-left-unshaded
-        shader: unshaded
-      right:
-      - state: inhand-right
-      - state: inhand-right-unshaded
-        shader: unshaded
+  - type: PointLight
+    color: "#adffe6"
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 10000
@@ -59,7 +45,7 @@
         Radiation: 0.5
   - type: TemperatureProtection
     coefficient: 0.005
- 
+
 - type: entity
   parent: ClothingHeadHardsuitBase
   id: ClothingHeadHelmetHardsuitCap
@@ -101,6 +87,8 @@
     sprite: Clothing/Head/Hardsuits/engineering.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/engineering.rsi
+  - type: PointLight
+    color: "#ffdbad"
   - type: PressureProtection
     highPressureMultiplier: 0.1
     lowPressureMultiplier: 1000
@@ -116,6 +104,8 @@
     sprite: Clothing/Head/Hardsuits/engineering-white.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/engineering-white.rsi
+  - type: PointLight
+    color: "#daffad"
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
@@ -146,6 +136,8 @@
     sprite: Clothing/Head/Hardsuits/medical.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/medical.rsi
+  - type: PointLight
+    color: "#adf1ff"
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 5500
@@ -163,6 +155,8 @@
     sprite: Clothing/Head/Hardsuits/rd.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/rd.rsi
+  - type: PointLight
+    color: "#d6adff"
   - type: PressureProtection
     highPressureMultiplier: 0.60
     lowPressureMultiplier: 5500
@@ -186,7 +180,7 @@
       coefficients:
         Blunt: 0.8
         Slash: 0.8
-        Piercing: 0.8 
+        Piercing: 0.8
   - type: PointLight
     radius: 7
     energy: 3
@@ -202,6 +196,8 @@
     sprite: Clothing/Head/Hardsuits/security.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/security.rsi
+  - type: PointLight
+    color: "#ffeead"
   - type: PressureProtection
     highPressureMultiplier: 0.525
     lowPressureMultiplier: 10000
@@ -211,7 +207,7 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.8
-        
+
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitSecurityRed
@@ -223,8 +219,33 @@
     sprite: Clothing/Head/Hardsuits/security-red.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/security-red.rsi
+  - type: PointLight
+    color: "#ffeead"
   - type: PressureProtection
     highPressureMultiplier: 0.45
+    lowPressureMultiplier: 10000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitWarden
+  noSpawn: true
+  name: warden's hardsuit helmet
+  description: A modified riot helmet. Oddly comfortable.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/security-warden.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/security-warden.rsi
+  - type: PointLight
+    color: "#ffeead"
+  - type: PressureProtection
+    highPressureMultiplier: 0.525
     lowPressureMultiplier: 10000
   - type: Armor
     modifiers:
@@ -269,6 +290,8 @@
     sprite: Clothing/Head/Hardsuits/wizard.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/wizard.rsi
+  - type: PointLight
+    color: "#ffadfb"
   - type: PressureProtection
     highPressureMultiplier: 0.27
     lowPressureMultiplier: 1000
@@ -287,13 +310,13 @@
   - type: PressureProtection
     highPressureMultiplier: 0.225
     lowPressureMultiplier: 10000
-    
+
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitSpatio
   noSpawn: true
   name: spationaut hardsuit helmet
-  description: A sturdy helmet designed for complex industrial operations in space. 
+  description: A sturdy helmet designed for complex industrial operations in space.
   components:
   - type: Sprite
     netsync: false
@@ -308,13 +331,7 @@
       map: [ "light" ]
   - type: HandheldLight
     addPrefix: false
-    inhandVisuals:
-      left:
-      - state: inhand-left-light
-        shader: unshaded
-      right:
-      - state: inhand-right-light
-        shader: unshaded
+  - type: ToggleableLightVisuals
     clothingVisuals:
       head:
       - state: equipped-head-light
@@ -325,15 +342,6 @@
       - state: equipped-head
       - state: equipped-head-unshaded
         shader: unshaded
-    inhandVisuals:
-      left:
-      - state: inhand-left
-      - state: inhand-left-unshaded
-        shader: unshaded
-      right:
-      - state: inhand-right
-      - state: inhand-right-unshaded
-        shader: unshaded   
   - type: PressureProtection
     highPressureMultiplier: 0.72
     lowPressureMultiplier: 10000
@@ -351,7 +359,7 @@
     sprite: Clothing/Head/Hardsuits/cybersun.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.3
-    lowPressureMultiplier: 1000    
+    lowPressureMultiplier: 1000
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -383,7 +391,7 @@
   id: ClothingHeadHelmetHardsuitSyndieElite
   noSpawn: true
   name: syndicate elite helmet
-  description: A variant of the blood red helmet designed by the gorlax marauders to be exceptionally fireproof and pressure proof.
+  description: A variant of the blood red helmet designed by the Gorlex Marauders to be exceptionally fireproof and pressure proof.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/syndieelite.rsi
@@ -395,7 +403,7 @@
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
   - type: TemperatureProtection
-    coefficient: 0.005    
+    coefficient: 0.005
   - type: Armor
     modifiers:
       coefficients:
@@ -409,7 +417,7 @@
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetCBURN
   noSpawn: true
-  name: syndicate elite helmet
+  name: CBURN exosuit helmet
   description: A pressure resistant and fireproof hood worn by special cleanup units.
   components:
   - type: Sprite
@@ -429,22 +437,13 @@
       - state: equipped-head
       - state: equipped-head-unshaded
         shader: unshaded
-    inhandVisuals:
-      left:
-      - state: inhand-left
-      - state: inhand-left-unshaded
-        shader: unshaded
-      right:
-      - state: inhand-right
-      - state: inhand-right-unshaded
-        shader: unshaded
   - type: PointLight
     color: orange
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
   - type: TemperatureProtection
-    coefficient: 0.005    
+    coefficient: 0.005
   - type: Armor
     modifiers:
       coefficients:
@@ -467,7 +466,9 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertleader.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertleader.rsi
-    
+  - type: PointLight
+    color: "#addbff"
+
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTLeader
   id: ClothingHeadHelmetHardsuitERTEngineer
@@ -477,7 +478,9 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertengineer.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertengineer.rsi
-    
+  - type: PointLight
+    color: "#f4ffad"
+
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTLeader
   id: ClothingHeadHelmetHardsuitERTMedical
@@ -487,7 +490,9 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertmedical.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertmedical.rsi
-    
+  - type: PointLight
+    color: "#adffec"
+
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTLeader
   id: ClothingHeadHelmetHardsuitERTSecurity
@@ -497,7 +502,9 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertsecurity.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertsecurity.rsi
-    
+  - type: PointLight
+    color: "#ffadc6"
+
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTLeader
   id: ClothingHeadHelmetHardsuitERTJanitor
@@ -507,3 +514,5 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertjanitor.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertjanitor.rsi
+  - type: PointLight
+    color: "#cbadff"

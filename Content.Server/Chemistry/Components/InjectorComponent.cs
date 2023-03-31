@@ -1,4 +1,3 @@
-using System.Threading;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 
@@ -18,9 +17,31 @@ namespace Content.Server.Chemistry.Components
         /// Whether or not the injector is able to draw from containers or if it's a single use
         /// device that can only inject.
         /// </summary>
-        [ViewVariables]
         [DataField("injectOnly")]
         public bool InjectOnly;
+
+        /// <summary>
+        /// Whether or not the injector is able to draw from or inject from mobs
+        /// </summary>
+        /// <remarks>
+        ///     for example: droppers would ignore mobs
+        /// </remarks>
+        [DataField("ignoreMobs")]
+        public bool IgnoreMobs = false;
+
+        /// <summary>
+        ///     The minimum amount of solution that can be transferred at once from this solution.
+        /// </summary>
+        [DataField("minTransferAmount")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public FixedPoint2 MinimumTransferAmount { get; set; } = FixedPoint2.New(5);
+
+        /// <summary>
+        ///     The maximum amount of solution that can be transferred at once from this solution.
+        /// </summary>
+        [DataField("maxTransferAmount")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public FixedPoint2 MaximumTransferAmount { get; set; } = FixedPoint2.New(50);
 
         /// <summary>
         /// Amount to inject or draw on each usage. If the injector is inject only, it will
@@ -41,13 +62,7 @@ namespace Content.Server.Chemistry.Components
         [DataField("delay")]
         public float Delay = 5;
 
-        /// <summary>
-        ///     Token for interrupting a do-after action (e.g., injection another player). If not null, implies
-        ///     component is currently "in use".
-        /// </summary>
-        public CancellationTokenSource? CancelToken;
-
-        private InjectorToggleMode _toggleState;
+        [DataField("toggleState")] private InjectorToggleMode _toggleState;
 
         /// <summary>
         /// The state of the injector. Determines it's attack behavior. Containers must have the

@@ -8,6 +8,18 @@
   },
   "states": [
     {
+      "name": "magic",
+      "directions": 4
+    },
+    {
+      "name": "tech",
+      "directions": 4
+    },
+    {
+      "name": "miner",
+      "directions": 4
+    },
+    {
       "name": "magic_flare",
       "directions": 4
     },

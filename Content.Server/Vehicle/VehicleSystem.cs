@@ -1,33 +1,25 @@
-using Content.Server.Buckle.Components;
-using Content.Shared.Vehicle.Components;
-using Content.Shared.Vehicle;
+using Content.Server.Buckle.Systems;
+using Content.Server.Hands.Systems;
+using Content.Server.Light.Components;
+using Content.Shared.Actions;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Movement.Components;
-using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Actions;
-using Content.Shared.Audio;
-using Content.Server.Light.Components;
-using Content.Server.Hands.Systems;
-using Content.Shared.Tag;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Vehicle;
+using Content.Shared.Vehicle.Components;
 using Robust.Shared.Audio;
-using Robust.Shared.Containers;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
-using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Server.Vehicle
 {
     public sealed partial class VehicleSystem : SharedVehicleSystem
     {
+        [Dependency] private readonly BuckleSystem _buckle = default!;
         [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
-        [Dependency] private readonly MetaDataSystem _metadata = default!;
-        [Dependency] private readonly MovementSpeedModifierSystem _modifier = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-        [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
+        [Dependency] private readonly SharedJointSystem _joints = default!;
         [Dependency] private readonly SharedMoverController _mover = default!;
-        [Dependency] private readonly TagSystem _tagSystem = default!;
-
-        private const string KeySlot = "key_slot";
 
         public override void Initialize()
         {
@@ -37,8 +29,6 @@ namespace Content.Server.Vehicle
 
             SubscribeLocalEvent<VehicleComponent, HonkActionEvent>(OnHonk);
             SubscribeLocalEvent<VehicleComponent, BuckleChangeEvent>(OnBuckleChange);
-            SubscribeLocalEvent<VehicleComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
-            SubscribeLocalEvent<VehicleComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
         }
 
         /// <summary>
@@ -94,9 +84,8 @@ namespace Content.Server.Vehicle
                 component.Rider = args.BuckledEntity;
 
                 var relay = EnsureComp<RelayInputMoverComponent>(args.BuckledEntity);
-                relay.RelayEntity = uid;
+                _mover.SetRelay(args.BuckledEntity, uid, relay);
                 rider.Vehicle = uid;
-                component.HasRider = true;
 
                 // Update appearance stuff, add actions
                 UpdateBuckleOffset(Transform(uid), component);
@@ -112,6 +101,8 @@ namespace Content.Server.Vehicle
                     _actionsSystem.AddAction(args.BuckledEntity, component.HornAction, uid, actions);
                 }
 
+                _joints.ClearJoints(args.BuckledEntity);
+
                 return;
             }
 
@@ -126,43 +117,7 @@ namespace Content.Server.Vehicle
             RemComp<RelayInputMoverComponent>(args.BuckledEntity);
 
             // Reset component
-            component.HasRider = false;
             component.Rider = null;
-        }
-
-        /// <summary>
-        /// Handle adding keys to the ignition, give stuff the InVehicleComponent so it can't be picked
-        /// up by people not in the vehicle.
-        /// </summary>
-        private void OnEntInserted(EntityUid uid, VehicleComponent component, EntInsertedIntoContainerMessage args)
-        {
-            if (args.Container.ID != KeySlot ||
-                !_tagSystem.HasTag(args.Entity, "VehicleKey")) return;
-
-            // Enable vehicle
-            var inVehicle = AddComp<InVehicleComponent>(args.Entity);
-            inVehicle.Vehicle = component;
-
-            component.HasKey = true;
-
-            // Audiovisual feedback
-            _ambientSound.SetAmbience(uid, true);
-            _tagSystem.AddTag(uid, "DoorBumpOpener");
-            _modifier.RefreshMovementSpeedModifiers(uid);
-        }
-
-        /// <summary>
-        /// Turn off the engine when key is removed.
-        /// </summary>
-        private void OnEntRemoved(EntityUid uid, VehicleComponent component, EntRemovedFromContainerMessage args)
-        {
-            if (args.Container.ID != KeySlot || !RemComp<InVehicleComponent>(args.Entity)) return;
-
-            // Disable vehicle
-            component.HasKey = false;
-            _ambientSound.SetAmbience(uid, false);
-            _tagSystem.RemoveTag(uid, "DoorBumpOpener");
-            _modifier.RefreshMovementSpeedModifiers(uid);
         }
     }
 }

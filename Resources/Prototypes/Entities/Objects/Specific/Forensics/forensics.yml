@@ -13,3 +13,6 @@
     layers:
     - state: paper
       color: yellow
+  - type: Tag
+    tags:
+    - Document

@@ -13,6 +13,7 @@
   - type: Sprite
     netsync: false
     sprite: Structures/Doors/Airlocks/Standard/basic.rsi
+    snapCardinals: true
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
@@ -35,13 +36,18 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
-      mass: 100
+      density: 100
       mask:
       - FullTileMask
       layer:
       - AirlockLayer
+  - type: LayerChangeOnWeld
+    unWeldedLayer: AirlockLayer
+    weldedLayer: WallLayer
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronics ]
   - type: Door
-    board: DoorElectronics
     crushDamage:
       types:
         Blunt: 15
@@ -61,7 +67,7 @@
   - type: Appearance
     visuals:
     - type: AirlockVisualizer
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: ApcPowerReceiver
     powerLoad: 20
   - type: ExtensionCableReceiver
@@ -71,6 +77,12 @@
   - type: Wires
     BoardName: "Airlock Control"
     LayoutId: Airlock
+  - type: DoorSignalControl
+  - type: SignalReceiver
+    inputs:
+      Open: []
+      Close: []
+      Toggle: []
   - type: UserInterface
     interfaces:
     - key: enum.WiresUiKey.Key
@@ -78,6 +90,8 @@
   - type: Airtight
     fixVacuum: true
     noAirWhenFullyAirBlocked: false
+  - type: RadiationBlocker
+    resistance: 3
   - type: Occluder
   - type: Damageable
     damageContainer: Inorganic
@@ -93,10 +107,14 @@
   - type: Construction
     graph: Airlock
     node: airlock
+    containers:
+    - board
   - type: IconSmooth
     key: walls
     mode: NoSprite
   - type: PaintableAirlock
     group: Standard
+  - type: StaticPrice
+    price: 150
   placement:
     mode: SnapgridCenter

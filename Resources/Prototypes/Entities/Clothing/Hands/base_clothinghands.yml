@@ -6,6 +6,6 @@
   - type: Sprite
     state: icon
   - type: Clothing
-    Slots: [gloves]
+    slots: [gloves]
   - type: DiseaseProtection
     protection: 0.05

@@ -1,13 +1,18 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
+using Content.Server.Administration.Logs;
+using Content.Server.Mind.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.UserInterface;
+using Content.Shared.Database;
 // using Content.Server.WireHacking;
 using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 // using static Content.Shared.Wires.SharedWiresComponent;
 using Timer = Robust.Shared.Timing.Timer;
@@ -25,6 +30,7 @@ namespace Content.Server.ParticleAccelerator.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         [ViewVariables]
         private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ParticleAcceleratorControlBoxUiKey.Key);
@@ -94,14 +100,7 @@ namespace Content.Server.ParticleAccelerator.Components
 
             Owner.EnsureComponent(out _apcPowerReceiverComponent);
 
-            _apcPowerReceiverComponent!.Load = 250;
-        }
-
-        protected override void Startup()
-        {
-            base.Startup();
-
-            // UpdateWireStatus();
+            _apcPowerReceiverComponent.Load = 250;
         }
 
         // This is the power state for the PA control box itself.
@@ -133,21 +132,21 @@ namespace Content.Server.ParticleAccelerator.Components
                 case ParticleAcceleratorSetEnableMessage enableMessage:
                     if (enableMessage.Enabled)
                     {
-                        SwitchOn();
+                        SwitchOn(obj.Session);
                     }
                     else
                     {
-                        SwitchOff();
+                        SwitchOff(obj.Session);
                     }
 
                     break;
 
                 case ParticleAcceleratorSetPowerStateMessage stateMessage:
-                    SetStrength(stateMessage.State);
+                    SetStrength(stateMessage.State, obj.Session);
                     break;
 
                 case ParticleAcceleratorRescanPartsMessage _:
-                    RescanParts();
+                    RescanParts(obj.Session);
                     break;
             }
 
@@ -186,7 +185,15 @@ namespace Content.Server.ParticleAccelerator.Components
 
         protected override void OnRemove()
         {
-            UserInterface?.CloseAll();
+            _fireCancelTokenSrc?.Cancel();
+            _fireCancelTokenSrc = null;
+
+            Master = null;
+            foreach (var part in AllParts())
+            {
+                part.Master = null;
+            }
+
             base.OnRemove();
         }
 
@@ -310,9 +317,9 @@ namespace Content.Server.ParticleAccelerator.Components
         }
         */
 
-        public void RescanParts()
+        public void RescanParts(IPlayerSession? playerSession = null)
         {
-            SwitchOff();
+            SwitchOff(playerSession, true);
             foreach (var part in AllParts())
             {
                 part.Master = null;
@@ -326,12 +333,12 @@ namespace Content.Server.ParticleAccelerator.Components
             _partEmitterCenter = null;
             _partEmitterRight = null;
 
+            var xform = _entMan.GetComponent<TransformComponent>(Owner);
+
             // Find fuel chamber first by scanning cardinals.
-            if (_entMan.GetComponent<TransformComponent>(Owner).Anchored)
+            if (xform.Anchored && _entMan.TryGetComponent(xform.GridUid, out MapGridComponent? grid))
             {
-                var grid = _mapManager.GetGrid(_entMan.GetComponent<TransformComponent>(Owner).GridUid!.Value);
-                var coords = _entMan.GetComponent<TransformComponent>(Owner).Coordinates;
-                foreach (var maybeFuel in grid.GetCardinalNeighborCells(coords))
+                foreach (var maybeFuel in grid.GetCardinalNeighborCells(xform.Coordinates))
                 {
                     if (_entMan.TryGetComponent(maybeFuel, out _partFuelChamber))
                     {
@@ -349,7 +356,7 @@ namespace Content.Server.ParticleAccelerator.Components
             // Align ourselves to match fuel chamber orientation.
             // This means that if you mess up the orientation of the control box it's not a big deal,
             // because the sprite is far from obvious about the orientation.
-            _entMan.GetComponent<TransformComponent>(Owner).LocalRotation = _entMan.GetComponent<TransformComponent>(_partFuelChamber.Owner).LocalRotation;
+            xform.LocalRotation = _entMan.GetComponent<TransformComponent>(_partFuelChamber.Owner).LocalRotation;
 
             var offsetEndCap = RotateOffset((1, 1));
             var offsetPowerBox = RotateOffset((1, -1));
@@ -439,7 +446,7 @@ namespace Content.Server.ParticleAccelerator.Components
                 yield return _partEmitterRight;
         }
 
-        public void SwitchOn()
+        public void SwitchOn(IPlayerSession? playerSession = null)
         {
             DebugTools.Assert(_isAssembled);
 
@@ -447,6 +454,11 @@ namespace Content.Server.ParticleAccelerator.Components
             {
                 return;
             }
+
+            // Logging
+            _entMan.TryGetComponent(playerSession?.AttachedEntity, out MindComponent? mindComponent);
+            if(mindComponent != null)
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{_entMan.ToPrettyString(mindComponent.Owner):player} has set {_entMan.ToPrettyString(Owner)} to on");
 
             _isEnabled = true;
             UpdatePowerDraw();
@@ -465,8 +477,13 @@ namespace Content.Server.ParticleAccelerator.Components
             _partPowerBox!.PowerConsumerComponent!.DrawRate = PowerDrawFor(_selectedStrength);
         }
 
-        public void SwitchOff()
+        public void SwitchOff(IPlayerSession? playerSession = null, bool rescan = false)
         {
+            // Logging
+            _entMan.TryGetComponent(playerSession?.AttachedEntity, out MindComponent? mindComponent);
+            if(mindComponent != null)
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{_entMan.ToPrettyString(mindComponent.Owner):player} has set {_entMan.ToPrettyString(Owner)} to off{(rescan ? " via rescan" : "")}");
+
             _isEnabled = false;
             PowerOff();
             UpdateUI();
@@ -501,7 +518,7 @@ namespace Content.Server.ParticleAccelerator.Components
             UpdatePartVisualStates();
         }
 
-        public void SetStrength(ParticleAcceleratorPowerState state)
+        public void SetStrength(ParticleAcceleratorPowerState state, IPlayerSession? playerSession = null)
         {
             if (_wireStrengthCut)
             {
@@ -516,6 +533,27 @@ namespace Content.Server.ParticleAccelerator.Components
             _selectedStrength = state;
             UpdateAppearance();
             UpdatePartVisualStates();
+
+            // Logging
+            _entMan.TryGetComponent(playerSession?.AttachedEntity, out MindComponent? mindComponent);
+            LogImpact impact;
+            switch (state)
+            {
+                default:
+                case ParticleAcceleratorPowerState.Standby:
+                case ParticleAcceleratorPowerState.Level0:
+                    impact = LogImpact.Low;
+                    break;
+                case ParticleAcceleratorPowerState.Level1:
+                    impact = LogImpact.High;
+                    break;
+                case ParticleAcceleratorPowerState.Level2:
+                case ParticleAcceleratorPowerState.Level3:
+                    impact = LogImpact.Extreme;
+                    break;
+            }
+            if(mindComponent != null)
+                _adminLogger.Add(LogType.Action, impact, $"{_entMan.ToPrettyString(mindComponent.Owner):player} has set the strength of {_entMan.ToPrettyString(Owner)} to {state}");
 
             if (_isEnabled)
             {
@@ -643,7 +681,7 @@ namespace Content.Server.ParticleAccelerator.Components
             appearanceComponent.SetData(ParticleAcceleratorVisuals.VisualState, state);
         }
 
-        public override void Rotated()
+        public override void Moved()
         {
             // We rotate OURSELVES when scanning for parts, so don't actually run rescan on rotate.
             // That would be silly.

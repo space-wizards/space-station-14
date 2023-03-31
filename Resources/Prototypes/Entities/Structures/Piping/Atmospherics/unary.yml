@@ -15,6 +15,9 @@
           !type:PipeNode
           nodeGroupID: Pipe
           pipeDirection: South
+    - type: CollideOnAnchor
+    - type: StaticPrice
+      price: 200
 
 - type: entity
   parent: GasUnaryBase
@@ -31,9 +34,27 @@
       receiveFrequencyId: AtmosMonitor
       transmitFrequencyId: AtmosMonitor
       prefix: device-address-prefix-vent
-    - type: AtmosAlarmable
-      alarmedBy:
-      - AirAlarm
+      sendBroadcastAttemptEvent: true
+      examinableAddress: true
+    - type: WiredNetworkConnection
+    - type: DeviceNetworkRequiresPower
+    - type: AtmosDevice
+    - type: AtmosMonitor
+      temperatureThreshold: stationTemperature
+      pressureThreshold: stationPressure
+      gasThresholds:
+        Oxygen: stationOxygen
+        Nitrogen: ignore
+        CarbonDioxide: stationCO2
+        Plasma: danger # everything below is usually bad
+        Tritium: danger
+        WaterVapor: stationWaterVapor
+        Miasma: stationMiasma
+        NitrousOxide: stationNO
+        Frezon: danger
+    - type: Tag
+      tags:
+        - GasVent
     - type: Sprite
       netsync: false
       drawdepth: FloorObjects
@@ -107,9 +128,24 @@
       receiveFrequencyId: AtmosMonitor
       transmitFrequencyId: AtmosMonitor
       prefix: device-address-prefix-scrubber
-    - type: AtmosAlarmable
-      alarmedBy:
-      - AirAlarm
+      examinableAddress: true
+    - type: DeviceNetworkRequiresPower
+    - type: AtmosMonitor
+      temperatureThreshold: stationTemperature
+      pressureThreshold: stationPressure
+      gasThresholds:
+        Oxygen: stationOxygen
+        Nitrogen: ignore
+        CarbonDioxide: stationCO2
+        Plasma: danger # everything below is usually bad
+        Tritium: danger
+        WaterVapor: stationWaterVapor
+        Miasma: stationMiasma
+        NitrousOxide: stationNO
+        Frezon: danger
+    - type: Tag
+      tags:
+        - GasScrubber
     - type: Sprite
       netsync: false
       drawdepth: FloorObjects
@@ -163,7 +199,7 @@
           map: [ "enum.SubfloorLayers.FirstLayer" ]
         - state: injector-unshaded
           shader: unshaded
-          map: [ "unshaded" ]
+          map: [ "enum.LightLayers.Unshaded" ]
           color: "#990000"
     - type: GenericVisualizer
       visuals:
@@ -181,10 +217,10 @@
     - type: SubFloorHide
       visibleLayers:
       - enum.SubfloorLayers.FirstLayer
-      - unshaded
+      - enum.LightLayers.Unshaded
 
 - type: entity
-  parent: BaseMachinePowered
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   id: BaseGasThermoMachine
   name: thermomachine
   abstract: true
@@ -194,6 +230,7 @@
     - type: Sprite
       netsync: false
       sprite: Structures/Piping/Atmospherics/thermomachine.rsi
+      noRot: true
     - type: Appearance
     - type: PipeColorVisuals
     - type: Rotatable
@@ -207,9 +244,6 @@
     - type: ActivatableUI
       inHandsOnly: false
       key: enum.ThermomachineUiKey.Key
-    - type: Construction
-      graph: Machine
-      node: machine
     - type: Wires
       BoardName: "Thermomachine"
       LayoutId: Thermomachine
@@ -219,6 +253,10 @@
           !type:PipeNode
           nodeGroupID: Pipe
           pipeDirection: South
+    - type: StaticPrice
+      price: 500
+    - type: Transform
+      noRot: false
 
 - type: entity
   parent: BaseGasThermoMachine
@@ -244,10 +282,6 @@
       mode: Freezer
     - type: Machine
       board: ThermomachineFreezerMachineCircuitBoard
-    - type: ContainerContainer
-      containers:
-        machine_parts: !type:Container
-        machine_board: !type:Container
 
 - type: entity
   parent: BaseGasThermoMachine
@@ -273,7 +307,3 @@
       mode: Heater
     - type: Machine
       board: ThermomachineHeaterMachineCircuitBoard
-    - type: ContainerContainer
-      containers:
-        machine_parts: !type:Container
-        machine_board: !type:Container

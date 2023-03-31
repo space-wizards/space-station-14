@@ -33,3 +33,21 @@ signal-port-description-pressurize = Causes the device to starts releasing air u
 
 signal-port-name-depressurize = Depressurize
 signal-port-description-depressurize = Causes the device to starts siphoning air until some target pressure is reached.
+
+signal-port-name-pod-sender = Cloning pod
+signal-port-description-pod-sender = Cloning pod signal sender
+
+signal-port-name-pod-receiver = Cloning pod
+signal-port-description-pod-receiver = Cloning pod signal receiver
+
+signal-port-name-med-scanner-sender = Medical scanner
+signal-port-description-med-scanner-sender = Medical scanner signal sender
+
+signal-port-name-med-scanner-receiver = Medical scanner
+signal-port-description-med-scanner-receiver = Medical scanner signal receiver
+
+signal-port-name-artifact-analyzer-sender = Console
+signal-port-description-artifact-analyzer-sender = Analysis console signal sender
+
+signal-port-name-artifact-analyzer-receiver = Pad
+signal-port-description-artifact-analyzer-receiver = Artifact analyzer signal receiver

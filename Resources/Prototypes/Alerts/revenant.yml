@@ -1,0 +1,48 @@
+﻿- type: alert
+  id: Essence
+  category: Health #it's like ghostie health
+  icons:
+  - sprite: /Textures/Interface/Alerts/essence_counter.rsi
+    state: essence0
+  - sprite: /Textures/Interface/Alerts/essence_counter.rsi
+    state: essence1
+  - sprite: /Textures/Interface/Alerts/essence_counter.rsi
+    state: essence2
+  - sprite: /Textures/Interface/Alerts/essence_counter.rsi
+    state: essence3
+  - sprite: /Textures/Interface/Alerts/essence_counter.rsi
+    state: essence4
+  - sprite: /Textures/Interface/Alerts/essence_counter.rsi
+    state: essence5
+  - sprite: /Textures/Interface/Alerts/essence_counter.rsi
+    state: essence6
+  - sprite: /Textures/Interface/Alerts/essence_counter.rsi
+    state: essence7
+  - sprite: /Textures/Interface/Alerts/essence_counter.rsi
+    state: essence8
+  - sprite: /Textures/Interface/Alerts/essence_counter.rsi
+    state: essence9
+  - sprite: /Textures/Interface/Alerts/essence_counter.rsi
+    state: essence10
+  - sprite: /Textures/Interface/Alerts/essence_counter.rsi
+    state: essence11
+  - sprite: /Textures/Interface/Alerts/essence_counter.rsi
+    state: essence12
+  - sprite: /Textures/Interface/Alerts/essence_counter.rsi
+    state: essence13
+  - sprite: /Textures/Interface/Alerts/essence_counter.rsi
+    state: essence14
+  - sprite: /Textures/Interface/Alerts/essence_counter.rsi
+    state: essence15
+  - sprite: /Textures/Interface/Alerts/essence_counter.rsi
+    state: essence16
+  name: Essence
+  description: The power of souls. It sustains you and is used for abilities. It regenerates slowly over time.
+  minSeverity: 0
+  maxSeverity: 16
+
+- type: alert
+  id: Corporeal
+  icons: [ /Textures/Mobs/Ghosts/revenant.rsi/icon.png ]
+  name: "Corporeal"
+  description: You have manifested physically. People around you can see and hurt you.

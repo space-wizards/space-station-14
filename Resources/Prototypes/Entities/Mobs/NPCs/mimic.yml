@@ -9,10 +9,7 @@
     - FootstepSound
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - UnarmedAttackHostiles
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleHostile
   - type: Hands
@@ -30,18 +27,17 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.35,-0.35,0.35,0.35"
-      mass: 500
+      density: 1000
       mask:
       - MobMask
       layer:
       - MachineLayer
-  - type: CharacterInfo
   - type: HumanoidAppearance
   - type: AnimationPlayer
   - type: MeleeWeapon
-    range: 1.5
-    arcwidth: 0
-    arc: fist
+    hidden: true
+    angle: 0
+    animation: WeaponArcFist
     damage:
       types:
         Blunt: 20

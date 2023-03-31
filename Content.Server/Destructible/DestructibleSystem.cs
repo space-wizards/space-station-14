@@ -1,16 +1,19 @@
+using Content.Server.Body.Systems;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Destructible.Thresholds;
 using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Server.Destructible.Thresholds.Triggers;
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.Fluids.EntitySystems;
 using Content.Server.Stack;
 using Content.Shared.Damage;
+using Content.Shared.Destructible;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Content.Shared.Destructible;
 
 namespace Content.Server.Destructible
 {
@@ -21,10 +24,13 @@ namespace Content.Server.Destructible
         public new IEntityManager EntityManager => base.EntityManager;
 
         [Dependency] public readonly AudioSystem AudioSystem = default!;
+        [Dependency] public readonly BodySystem BodySystem = default!;
         [Dependency] public readonly ConstructionSystem ConstructionSystem = default!;
         [Dependency] public readonly ExplosionSystem ExplosionSystem = default!;
         [Dependency] public readonly StackSystem StackSystem = default!;
         [Dependency] public readonly TriggerSystem TriggerSystem = default!;
+        [Dependency] public readonly SolutionContainerSystem SolutionContainerSystem = default!;
+        [Dependency] public readonly SpillableSystem SpillableSystem = default!;
         [Dependency] public readonly IPrototypeManager PrototypeManager = default!;
         [Dependency] public readonly IComponentFactory ComponentFactory = default!;
 
@@ -45,7 +51,7 @@ namespace Content.Server.Destructible
                 {
                     RaiseLocalEvent(uid, new DamageThresholdReached(component, threshold), true);
 
-                    threshold.Execute(uid, this, EntityManager);
+                    threshold.Execute(uid, this, EntityManager, args.Origin);
                 }
 
                 // if destruction behavior (or some other deletion effect) occurred, don't run other triggers.

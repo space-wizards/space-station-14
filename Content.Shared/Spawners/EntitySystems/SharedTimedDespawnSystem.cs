@@ -7,6 +7,12 @@ public abstract class SharedTimedDespawnSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
 
+    public override void Initialize()
+    {
+        base.Initialize();
+        UpdatesOutsidePrediction = true;
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);

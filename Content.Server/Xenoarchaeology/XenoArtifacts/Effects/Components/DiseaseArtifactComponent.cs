@@ -1,4 +1,5 @@
 using Content.Shared.Disease;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 /// <summary>
@@ -8,10 +9,15 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 public sealed class DiseaseArtifactComponent : Component
 {
     /// <summary>
-    /// Disease the artifact will spawn
-    /// If empty, picks a random one from its list
+    /// The diseases that the artifact can use.
     /// </summary>
-    [DataField("disease")]
+    [DataField("diseasePrototype", customTypeSerializer: typeof(PrototypeIdListSerializer<DiseasePrototype>))]
+    public List<string> DiseasePrototypes = new();
+
+    /// <summary>
+    /// Disease the artifact will spawn
+    /// Picks a random one from its list
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public DiseasePrototype? SpawnDisease;
 
@@ -19,7 +25,6 @@ public sealed class DiseaseArtifactComponent : Component
     /// How far away it will check for people
     /// If empty, picks a random one from its list
     /// </summary>
-    [DataField("range")]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("range"), ViewVariables(VVAccess.ReadWrite)]
     public float Range = 5f;
 }

@@ -6,7 +6,8 @@
   - type: Sprite
     layers:
       - state: red
-      - texture: Structures/Wallmounts/paintings.rsi/painting8.png
+      - sprite: Structures/Wallmounts/paintings.rsi
+        state: painting8
   - type: RandomSpawner
     offset: 0
     prototypes:
@@ -17,4 +18,18 @@
       - PaintingTheGreatWave
       - PaintingCafeTerraceAtNight
       - PaintingNightHawks
+      - PaintingSkeletonCigarette
+      - PaintingPrayerHands
+      - PaintingOldGuitarist
+      - PaintingOlympia
+      - PaintingSaturn
+      - PaintingSleepingGypsy
+      - PaintingRedBlueYellow
+      - PaintingHelloWorld
     chance: 1
+    rarePrototypes:
+      - PaintingSkeletonBoof
+      - PaintingEmpty
+      - PaintingMoony
+      - PaintingAmogusTriptych
+    rareChance: 0.01

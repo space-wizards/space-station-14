@@ -7,6 +7,7 @@
   components:
   - type: Sprite
     netsync: false
+    snapCardinals: true
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
@@ -14,7 +15,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.4,-0.4,0.4,0.4"
-      mass: 100
+      density: 155
       mask:
       - MachineMask
       layer:
@@ -29,17 +30,24 @@
         damageType: Heat
         damage: 5
       behaviors:
-      #spill BEFORE exploding, so that one day explosions can ignite puddles
-      - !type:SpillBehavior
+      - !type:SolutionExplosionBehavior
         solution: tank
-      - !type:ExplodeBehavior
-        #note: only actually explodes if entity has ExplosiveComponent.
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Piercing
+        damage: 5
+      behaviors:
+      - !type:SolutionExplosionBehavior
+        solution: tank
     - trigger:
         !type:DamageTrigger
         damage: 10
       behaviors:
       - !type:SpillBehavior
         solution: tank
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: SolutionContainerManager

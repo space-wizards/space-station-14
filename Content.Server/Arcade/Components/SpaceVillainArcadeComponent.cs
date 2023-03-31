@@ -1,13 +1,14 @@
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Arcade;
-using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
+
+// TODO: ECS.
 
 namespace Content.Server.Arcade.Components
 {
@@ -55,8 +56,21 @@ namespace Content.Server.Arcade.Components
         {
             "ToyMouse", "ToyAi", "ToyNuke", "ToyAssistant", "ToyGriffin", "ToyHonk", "ToyIan",
             "ToyMarauder", "ToyMauler", "ToyGygax", "ToyOdysseus", "ToyOwlman", "ToyDeathRipley",
-            "ToyPhazon", "ToyFireRipley", "ToyReticence", "ToyRipley", "ToySeraph", "ToyDurand", "ToySkeleton"
+            "ToyPhazon", "ToyFireRipley", "ToyReticence", "ToyRipley", "ToySeraph", "ToyDurand", "ToySkeleton",
+            "FoamCrossbow", "RevolverCapGun", "PlushieLizard", "PlushieAtmosian", "PlushieSpaceLizard",
+            "PlushieNuke", "PlushieCarp", "PlushieRatvar", "PlushieNar", "PlushieSnake", "Basketball", "Football",
+            "PlushieRouny", "PlushieBee", "PlushieSlime", "BalloonCorgi", "ToySword", "CrayonBox", "BoxDonkSoftBox", "BoxCartridgeCap",
+            "HarmonicaInstrument", "OcarinaInstrument", "RecorderInstrument", "GunpetInstrument", "BirdToyInstrument"
         };
+
+        [DataField("rewardMinAmount")]
+        public int _rewardMinAmount;
+
+        [DataField("rewardMaxAmount")]
+        public int _rewardMaxAmount;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int _rewardAmount = 0;
 
         protected override void Initialize()
         {
@@ -66,6 +80,10 @@ namespace Content.Server.Arcade.Components
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
+
+            // Random amount of prizes
+            _rewardAmount = new Random().Next(_rewardMinAmount, _rewardMaxAmount + 1);
+
         }
 
         public void OnPowerStateChanged(PowerChangedEvent e)
@@ -110,8 +128,11 @@ namespace Content.Server.Arcade.Components
         /// </summary>
         public void ProcessWin()
         {
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            entityManager.SpawnEntity(_random.Pick(_possibleRewards), entityManager.GetComponent<TransformComponent>(Owner).MapPosition);
+            if (_rewardAmount > 0)
+            {
+                _entityManager.SpawnEntity(_random.Pick(_possibleRewards), _entityManager.GetComponent<TransformComponent>(Owner).Coordinates);
+                _rewardAmount--;
+            }
         }
 
         /// <summary>

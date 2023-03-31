@@ -1,14 +1,14 @@
 using Content.Server.Botany.Components;
 using Content.Server.Botany.Systems;
 using Content.Shared.Atmos;
+using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Utility;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Botany;
-
-
 
 [Prototype("seed")]
 public sealed class SeedPrototype : SeedData, IPrototype
@@ -63,25 +63,29 @@ public struct SeedChemQuantity
 
 // TODO reduce the number of friends to a reasonable level. Requires ECS-ing things like plant holder component.
 [Virtual, DataDefinition]
-[Access(typeof(BotanySystem), typeof(PlantHolderSystem), typeof(SeedExtractorSystem), typeof(PlantHolderComponent))]
+[Access(typeof(BotanySystem), typeof(PlantHolderSystem), typeof(SeedExtractorSystem), typeof(PlantHolderComponent), typeof(ReagentEffect), typeof(MutationSystem))]
 public class SeedData
 {
     #region Tracking
+
     /// <summary>
     ///     The name of this seed. Determines the name of seed packets.
     /// </summary>
-    [DataField("name")] public string Name = string.Empty;
+    [DataField("name")]
+    public string Name { get; private set; } = "";
 
     /// <summary>
     ///     The noun for this type of seeds. E.g. for fungi this should probably be "spores" instead of "seeds". Also
     ///     used to determine the name of seed packets.
     /// </summary>
-    [DataField("noun")] public string Noun = "seeds";
+    [DataField("noun")]
+    public string Noun { get; private set; } = "";
 
     /// <summary>
     ///     Name displayed when examining the hydroponics tray. Describes the actual plant, not the seed itself.
     /// </summary>
-    [DataField("displayName")] public string DisplayName = string.Empty;
+    [DataField("displayName")]
+    public string DisplayName { get; private set; } = "";
 
     [DataField("mysterious")] public bool Mysterious;
 
@@ -125,18 +129,20 @@ public class SeedData
 
     [DataField("waterConsumption")] public float WaterConsumption = 3f;
     [DataField("idealHeat")] public float IdealHeat = 293f;
-    [DataField("heatTolerance")] public float HeatTolerance = 20f;
+    [DataField("heatTolerance")] public float HeatTolerance = 10f;
     [DataField("idealLight")] public float IdealLight = 7f;
-    [DataField("lightTolerance")] public float LightTolerance = 5f;
+    [DataField("lightTolerance")] public float LightTolerance = 3f;
     [DataField("toxinsTolerance")] public float ToxinsTolerance = 4f;
 
-    [DataField("lowPressureTolerance")] public float LowPressureTolerance = 25f;
+    [DataField("lowPressureTolerance")] public float LowPressureTolerance = 81f;
 
-    [DataField("highPressureTolerance")] public float HighPressureTolerance = 200f;
+    [DataField("highPressureTolerance")] public float HighPressureTolerance = 121f;
 
     [DataField("pestTolerance")] public float PestTolerance = 5f;
 
     [DataField("weedTolerance")] public float WeedTolerance = 5f;
+
+    [DataField("weedHighLevelThreshold")] public float WeedHighLevelThreshold = 10f;
 
     #endregion
 
@@ -149,9 +155,33 @@ public class SeedData
     [DataField("maturation")] public float Maturation;
     [DataField("production")] public float Production;
     [DataField("growthStages")] public int GrowthStages = 6;
+
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("harvestRepeat")] public HarvestType HarvestRepeat = HarvestType.NoRepeat;
 
     [DataField("potency")] public float Potency = 1f;
+
+    /// <summary>
+    ///     If true, cannot be harvested for seeds. Balances hybrids and
+    ///     mutations.
+    /// </summary>
+    [DataField("seedless")] public bool Seedless = false;
+
+    /// <summary>
+    ///     If true, rapidly decrease health while growing. Used to kill off
+    ///     plants with "bad" mutations.
+    /// </summary>
+    [DataField("viable")] public bool Viable = true;
+
+    /// <summary>
+    ///     If true, fruit slips players.
+    /// </summary>
+    [DataField("slip")] public bool Slip = false;
+
+    /// <summary>
+    ///     If true, fruits are sentient.
+    /// </summary>
+    [DataField("sentient")] public bool Sentient = false;
 
     /// <summary>
     ///     If true, a sharp tool is required to harvest this plant.
@@ -180,10 +210,20 @@ public class SeedData
 
     [DataField("plantIconState")] public string PlantIconState { get; set; } = "produce";
 
-    [DataField("bioluminescent")] public bool Bioluminescent { get; set; }
+    [DataField("screamSound")]
+    public SoundSpecifier ScreamSound = new SoundPathSpecifier("/Audio/Voice/Human/malescream_1.ogg");
 
+
+    [DataField("screaming")] public bool CanScream;
+
+    [DataField("bioluminescent")] public bool Bioluminescent;
     [DataField("bioluminescentColor")] public Color BioluminescentColor { get; set; } = Color.White;
 
+    public float BioluminescentRadius = 2f;
+
+    [DataField("kudzuPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))] public string KudzuPrototype = "WeakKudzu";
+
+    [DataField("turnIntoKudzu")] public bool TurnIntoKudzu;
     [DataField("splatPrototype")] public string? SplatPrototype { get; set; }
 
     #endregion
@@ -226,13 +266,19 @@ public class SeedData
             HarvestRepeat = HarvestRepeat,
             Potency = Potency,
 
+            Seedless = Seedless,
+            Viable = Viable,
+            Slip = Slip,
+            Sentient = Sentient,
+            Ligneous = Ligneous,
+
             PlantRsi = PlantRsi,
             PlantIconState = PlantIconState,
             Bioluminescent = Bioluminescent,
+            CanScream = CanScream,
+            TurnIntoKudzu = TurnIntoKudzu,
             BioluminescentColor = BioluminescentColor,
             SplatPrototype = SplatPrototype,
-
-            Ligneous = Ligneous,
 
             // Newly cloned seed is unique. No need to unnecessarily clone if repeatedly modified.
             Unique = true,

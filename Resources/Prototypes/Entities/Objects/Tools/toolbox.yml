@@ -17,7 +17,7 @@
     damage:
       types:
         Blunt: 10
-    hitSound:
+    soundHit:
       path: "/Audio/Weapons/smash.ogg"
   - type: Tag
     tags:

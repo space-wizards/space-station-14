@@ -1,9 +1,13 @@
 - type: entity
   id: BaseSpeedLoaderMagnum
-  name: "speed loader (.40 magnum)"
+  name: "speed loader (.45 magnum)"
   parent: BaseItem
   abstract: true
   components:
+  - type: Tag
+    tags:
+      - SpeedLoaderMagnum
+  - type: SpeedLoader
   - type: BallisticAmmoProvider
     whitelist:
       tags:
@@ -11,10 +15,14 @@
     capacity: 6
   - type: Sprite
     netsync: false
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
 
 - type: entity
   id: SpeedLoaderMagnum
-  name: "speed loader (.40 magnum)"
+  name: "speed loader (.45 magnum)"
   parent: BaseSpeedLoaderMagnum
   components:
   - type: BallisticAmmoProvider
@@ -34,7 +42,7 @@
 
 - type: entity
   id: SpeedLoaderMagnumHighVelocity
-  name: "speed loader (.40 magnum high-velocity)"
+  name: "speed loader (.45 magnum high-velocity)"
   parent: BaseSpeedLoaderMagnum
   components:
   - type: BallisticAmmoProvider
@@ -54,7 +62,7 @@
 
 - type: entity
   id: SpeedLoaderMagnumPractice
-  name: "speed loader (.40 magnum practice)"
+  name: "speed loader (.45 magnum practice)"
   parent: BaseSpeedLoaderMagnum
   components:
   - type: BallisticAmmoProvider
@@ -74,7 +82,7 @@
 
 - type: entity
   id: SpeedLoaderMagnumRubber
-  name: "speed loader (.40 magnum rubber)"
+  name: "speed loader (.45 magnum rubber)"
   parent: BaseSpeedLoaderMagnum
   components:
   - type: BallisticAmmoProvider

@@ -1,42 +1,41 @@
-using Content.Shared.Drone;
+using Content.Server.Body.Systems;
 using Content.Server.Drone.Components;
-using Content.Shared.Actions;
-using Content.Server.Light.Components;
-using Content.Shared.MobState;
-using Content.Shared.MobState.Components;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Interaction.Components;
-using Content.Shared.Examine;
-using Content.Shared.Tag;
-using Content.Shared.Throwing;
-using Content.Shared.Item;
-using Content.Shared.Emoting;
-using Content.Shared.Body.Components;
-using Content.Server.Popups;
-using Content.Server.Mind.Components;
 using Content.Server.Ghost.Components;
 using Content.Server.Ghost.Roles.Components;
-using Content.Server.Hands.Components;
+using Content.Server.Mind.Components;
+using Content.Server.Popups;
+using Content.Server.Tools.Innate;
 using Content.Server.UserInterface;
-using Robust.Shared.Player;
-using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Popups;
-using Content.Shared.Storage;
-using Robust.Shared.Random;
-using Robust.Shared.Timing;
+using Content.Shared.Body.Components;
+using Content.Shared.Drone;
+using Content.Shared.Emoting;
+using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Interaction.Components;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Item;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
+using Content.Shared.Popups;
+using Content.Shared.Tag;
+using Content.Shared.Throwing;
+using Robust.Server.GameObjects;
+using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Drone
 {
     public sealed class DroneSystem : SharedDroneSystem
     {
+        [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-        [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly InnateToolSystem _innateToolSystem = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {
@@ -53,12 +52,10 @@ namespace Content.Server.Drone
 
         private void OnInteractionAttempt(EntityUid uid, DroneComponent component, InteractionAttemptEvent args)
         {
-            if (!component.ApplyLaws)
-                return;
             if (args.Target != null && !HasComp<UnremoveableComponent>(args.Target) && NonDronesInRange(uid, component))
                 args.Cancel();
 
-            if (HasComp<SharedItemComponent>(args.Target) && !HasComp<UnremoveableComponent>(args.Target))
+            if (HasComp<ItemComponent>(args.Target) && !HasComp<UnremoveableComponent>(args.Target))
             {
                 if (!_tagSystem.HasAnyTag(args.Target.Value, "DroneUsable", "Trash"))
                     args.Cancel();
@@ -67,8 +64,6 @@ namespace Content.Server.Drone
 
         private void OnActivateUIAttempt(EntityUid uid, DroneComponent component, UserOpenActivatableUIAttemptEvent args)
         {
-            if (!component.ApplyLaws)
-                return;
             if (!_tagSystem.HasTag(args.Target, "DroneUsable"))
             {
                 args.Cancel();
@@ -89,63 +84,21 @@ namespace Content.Server.Drone
 
         private void OnMobStateChanged(EntityUid uid, DroneComponent drone, MobStateChangedEvent args)
         {
-            if (args.Component.IsDead())
+            if (args.NewMobState == MobState.Dead)
             {
-                var body = Comp<SharedBodyComponent>(uid); //There's no way something can have a mobstate but not a body...
+                if (TryComp<InnateToolComponent>(uid, out var innate))
+                    _innateToolSystem.Cleanup(uid, innate);
 
-                foreach (var item in drone.ToolUids)
-                {
-                    if (_tagSystem.HasTag(item, "Drone"))
-                    {
-                        RemComp<UnremoveableComponent>(item);
-                    }
-                    else
-                    {
-                        Del(item);
-                    }
-                }
-
-                body.Gib();
-                Del(uid);
+                if (TryComp<BodyComponent>(uid, out var body))
+                    _bodySystem.GibBody(uid, body: body);
+                QueueDel(uid);
             }
         }
 
         private void OnMindAdded(EntityUid uid, DroneComponent drone, MindAddedMessage args)
         {
             UpdateDroneAppearance(uid, DroneStatus.On);
-            _popupSystem.PopupEntity(Loc.GetString("drone-activated"), uid,
-                Filter.Pvs(uid), PopupType.Large);
-
-            if (drone.AlreadyAwoken == false)
-            {
-                var spawnCoord = Transform(uid).Coordinates;
-
-                if (drone.Tools.Count == 0) return;
-
-                if (TryComp<HandsComponent>(uid, out var hands) && hands.Count >= drone.Tools.Count)
-                {
-                    var items = EntitySpawnCollection.GetSpawns(drone.Tools, _robustRandom);
-                    foreach (var entry in items)
-                    {
-                        var item = Spawn(entry, spawnCoord);
-                        AddComp<UnremoveableComponent>(item);
-                        if (!_handsSystem.TryPickupAnyHand(uid, item, checkActionBlocker: false))
-                        {
-                            QueueDel(item);
-                            Logger.Error($"Drone ({ToPrettyString(uid)}) failed to pick up innate item ({ToPrettyString(item)})");
-                            continue;
-                        }
-                        drone.ToolUids.Add(item);
-                    }
-                }
-
-                if (TryComp<ActionsComponent>(uid, out var actions) && TryComp<UnpoweredFlashlightComponent>(uid, out var flashlight))
-                {
-                    _actionsSystem.AddAction(uid, flashlight.ToggleAction, null, actions);
-                }
-
-                drone.AlreadyAwoken = true;
-            }
+            _popupSystem.PopupEntity(Loc.GetString("drone-activated"), uid, PopupType.Large);
         }
 
         private void OnMindRemoved(EntityUid uid, DroneComponent drone, MindRemovedMessage args)
@@ -169,7 +122,7 @@ namespace Content.Server.Drone
         {
             if (TryComp<AppearanceComponent>(uid, out var appearance))
             {
-                appearance.SetData(DroneVisuals.Status, status);
+                _appearance.SetData(uid, DroneVisuals.Status, status, appearance);
             }
         }
 
@@ -182,10 +135,10 @@ namespace Content.Server.Drone
                 if (HasComp<MindComponent>(entity) && !HasComp<DroneComponent>(entity) && !HasComp<GhostComponent>(entity))
                 {
                     // Filter out dead ghost roles. Dead normal players are intended to block.
-                    if ((TryComp<MobStateComponent>(entity, out var entityMobState) && HasComp<GhostTakeoverAvailableComponent>(entity) && entityMobState.IsDead()))
+                    if ((TryComp<MobStateComponent>(entity, out var entityMobState) && HasComp<GhostTakeoverAvailableComponent>(entity) && _mobStateSystem.IsDead(entity, entityMobState)))
                         continue;
                     if (_gameTiming.IsFirstTimePredicted)
-                        _popupSystem.PopupEntity(Loc.GetString("drone-too-close", ("being", Identity.Entity(entity, EntityManager))), uid, Filter.Entities(uid));
+                        _popupSystem.PopupEntity(Loc.GetString("drone-too-close", ("being", Identity.Entity(entity, EntityManager))), uid, uid);
                     return true;
                 }
             }

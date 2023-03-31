@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
 using Robust.Shared.Serialization;
@@ -18,13 +17,15 @@ namespace Content.Server.Atmos
         public static GasMixture SpaceGas => new() {Volume = Atmospherics.CellVolume, Temperature = Atmospherics.TCMB, Immutable = true};
 
         // This must always have a length that is a multiple of 4 for SIMD acceleration.
-        [DataField("moles")] [ViewVariables]
+        [DataField("moles")]
+        [ViewVariables(VVAccess.ReadWrite)]
         public float[] Moles = new float[Atmospherics.AdjustedNumberOfGases];
 
-        [DataField("temperature")] [ViewVariables]
+        [DataField("temperature")]
+        [ViewVariables(VVAccess.ReadWrite)]
         private float _temperature = Atmospherics.TCMB;
 
-        [DataField("immutable")] [ViewVariables]
+        [DataField("immutable")]
         public bool Immutable { get; private set; }
 
         [ViewVariables]
@@ -62,7 +63,8 @@ namespace Content.Server.Atmos
             }
         }
 
-        [DataField("volume")] [ViewVariables]
+        [DataField("volume")]
+        [ViewVariables(VVAccess.ReadWrite)]
         public float Volume { get; set; }
 
         public GasMixture()
@@ -170,6 +172,11 @@ namespace Content.Server.Atmos
             }
 
             return removed;
+        }
+
+        public GasMixture RemoveVolume(float vol)
+        {
+            return RemoveRatio(vol / Volume);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

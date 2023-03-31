@@ -1,6 +1,7 @@
 - type: entity
   id: Emitter
   name: emitter
+  parent: ConstructibleMachine
   description: A heavy duty industrial laser. Shoots non-stop when turned on.
   placement:
     mode: SnapgridCenter
@@ -14,7 +15,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.25,-0.25,0.25,0.25"
-      mass: 100
+      density: 400
       mask:
       - MachineMask
       layer:
@@ -29,10 +30,20 @@
     - state: beam
       shader: unshaded
       visible: false
+      map: ["enum.EmitterVisualLayers.Lights"]
     - state: lock
       shader: unshaded
       visible: false
+      map: ["enum.StorageVisualLayers.Lock"]
   - type: Emitter
+  - type: Gun
+    showExamineText: false
+    fireRate: 10 #just has to be fast enough to keep up with upgrades
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/emitter.ogg
   - type: PowerConsumer
     voltage: Medium
   - type: NodeContainer
@@ -43,7 +54,7 @@
         nodeGroupID: MVPower
   - type: Damageable
     damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageModifierSet: StrongMetallic
   - type: Destructible
     thresholds:
       - trigger:
@@ -64,14 +75,11 @@
   - type: Pullable
   - type: Rotatable
   - type: Appearance
-    visuals:
-    - type: EmitterVisualizer
   - type: Lock
     locked: false
   - type: AccessReader
     access: [[ "Engineering" ]]
-  - type: Construction
-    graph: Machine
-    node: machine
   - type: Machine
     board: EmitterCircuitboard
+  - type: GuideHelp
+    guides: [ Singularity, Power ]

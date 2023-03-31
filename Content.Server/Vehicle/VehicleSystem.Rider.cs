@@ -1,8 +1,7 @@
-using Content.Server.Buckle.Components;
-using Content.Shared.Vehicle.Components;
-using Content.Shared.MobState;
 using Content.Server.Standing;
 using Content.Shared.Hands;
+using Content.Shared.Mobs;
+using Content.Shared.Vehicle.Components;
 using Robust.Shared.GameStates;
 
 namespace Content.Server.Vehicle
@@ -11,36 +10,10 @@ namespace Content.Server.Vehicle
     {
         private void InitializeRider()
         {
-            SubscribeLocalEvent<RiderComponent, ComponentStartup>(OnRiderStartup);
-            SubscribeLocalEvent<RiderComponent, ComponentShutdown>(OnRiderShutdown);
-            SubscribeLocalEvent<RiderComponent, MetaFlagRemoveAttemptEvent>(OnRiderRemoval);
             SubscribeLocalEvent<RiderComponent, ComponentGetState>(OnRiderGetState);
-            SubscribeLocalEvent<RiderComponent, ComponentGetStateAttemptEvent>(OnRiderGetStateAttempt);
             SubscribeLocalEvent<RiderComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
             SubscribeLocalEvent<RiderComponent, FellDownEvent>(OnFallDown);
             SubscribeLocalEvent<RiderComponent, MobStateChangedEvent>(OnMobStateChanged);
-        }
-
-        private void OnRiderRemoval(EntityUid uid, RiderComponent component, ref MetaFlagRemoveAttemptEvent args)
-        {
-            if ((args.ToRemove & MetaDataFlags.EntitySpecific) != 0x0)
-                args.ToRemove = MetaDataFlags.None;
-        }
-
-        private void OnRiderStartup(EntityUid uid, RiderComponent component, ComponentStartup args)
-        {
-            _metadata.AddFlag(uid, MetaDataFlags.EntitySpecific);
-        }
-
-        private void OnRiderShutdown(EntityUid uid, RiderComponent component, ComponentShutdown args)
-        {
-            _metadata.RemoveFlag(uid, MetaDataFlags.EntitySpecific);
-        }
-
-        private void OnRiderGetStateAttempt(EntityUid uid, RiderComponent component, ref ComponentGetStateAttemptEvent args)
-        {
-            if (uid != args.Player.AttachedEntity)
-                args.Cancelled = true;
         }
 
         private void OnRiderGetState(EntityUid uid, RiderComponent component, ref ComponentGetState args)
@@ -75,7 +48,7 @@ namespace Content.Server.Vehicle
         /// </summary>
         private void OnMobStateChanged(EntityUid uid, RiderComponent rider, MobStateChangedEvent args)
         {
-            if (args.Component.IsCritical() || args.Component.IsDead())
+            if (args.NewMobState is MobState.Critical or MobState.Dead)
             {
                 UnbuckleFromVehicle(uid);
             }
@@ -83,10 +56,7 @@ namespace Content.Server.Vehicle
 
         public void UnbuckleFromVehicle(EntityUid uid)
         {
-            if (!TryComp<BuckleComponent>(uid, out var buckle))
-                return;
-
-            buckle.TryUnbuckle(uid, true);
+            _buckle.TryUnbuckle(uid, uid, true);
         }
     }
 }

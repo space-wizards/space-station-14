@@ -14,7 +14,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.45,-0.45,0.45,0.45"
-      mass: 25
+      density: 190
       mask:
       - MachineMask
       layer:
@@ -25,6 +25,7 @@
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/collector.rsi
     netsync: false
+    snapCardinals: true
     layers:
       - state: ca_on
         map: ["enum.RadiationCollectorVisualLayers.Main"]
@@ -46,9 +47,12 @@
   - type: BatteryDischarger
     # This is JUST a default. It has to be dynamically adjusted to ensure that the battery doesn't discharge "too fast" & run out immediately, while still scaling by input power.
     activeSupplyRate: 100000
+  - type: RadiationReceiver
   - type: Anchorable
   - type: Rotatable
   - type: Pullable
   - type: PowerNetworkBattery
     maxSupply: 1000000000
     supplyRampTolerance: 1000000000
+  - type: GuideHelp
+    guides: [ Singularity, Power ]

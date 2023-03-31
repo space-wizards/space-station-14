@@ -45,7 +45,7 @@ public sealed class GeneratedParallaxTextureSource : IParallaxTextureSource
     /// </summary>
     private ResourcePath PreviousParallaxConfigPath => new($"/parallax_{Identifier}config_old");
 
-    async Task<Texture> IParallaxTextureSource.GenerateTexture(CancellationToken cancel = default)
+    async Task<Texture> IParallaxTextureSource.GenerateTexture(CancellationToken cancel)
     {
         var parallaxConfig = GetParallaxConfig();
         if (parallaxConfig == null)
@@ -76,7 +76,7 @@ public sealed class GeneratedParallaxTextureSource : IParallaxTextureSource
         catch (Exception ex)
         {
             Logger.ErrorS("parallax", $"Couldn't retrieve parallax cached texture: {ex}");
-            // The show must go on.
+
             try
             {
                 // Also try to at least sort of fix this if we've been fooled by a config backup
@@ -84,6 +84,7 @@ public sealed class GeneratedParallaxTextureSource : IParallaxTextureSource
             }
             catch (Exception)
             {
+                // The show must go on.
             }
             return Texture.Transparent;
         }

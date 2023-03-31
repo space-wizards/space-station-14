@@ -1,7 +1,5 @@
 ﻿- type: entity
   id: CrateArtifactContainer
-  name: artifact container
-  description: Used to safely contain and move artifacts.
   parent: BaseStructureDynamic
   components:
     - type: Transform
@@ -30,7 +28,7 @@
         - shape:
             !type:PhysShapeCircle
             radius: 0.45
-          mass: 150
+          density: 75
           mask:
           - MachineMask
           layer:
@@ -46,6 +44,7 @@
     - type: Weldable
     - type: SuppressArtifactContainer
     - type: PlaceableSurface
+      isPlaceable: false
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic
@@ -69,3 +68,10 @@
         - type: StorageVisualizer
           state_open: artifact_container_open
           state_closed: artifact_container_door
+    - type: ItemSlots
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+        paper_label: !type:ContainerSlot
+    - type: StaticPrice
+      price: 250

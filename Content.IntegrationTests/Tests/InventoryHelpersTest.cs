@@ -28,7 +28,7 @@ namespace Content.IntegrationTests.Tests
   id: InventoryJumpsuitJanitorDummy
   components:
   - type: Clothing
-    Slots: [innerclothing]
+    slots: [innerclothing]
 
 - type: entity
   name: InventoryIDCardDummy
@@ -36,7 +36,7 @@ namespace Content.IntegrationTests.Tests
   components:
   - type: Clothing
     QuickEquip: false
-    Slots:
+    slots:
     - idcard
   - type: PDA
 ";
@@ -52,9 +52,6 @@ namespace Content.IntegrationTests.Tests
             {
                 var mapMan = IoCManager.Resolve<IMapManager>();
                 var systemMan = IoCManager.Resolve<IEntitySystemManager>();
-
-                mapMan.CreateNewMapEntity(MapId.Nullspace);
-
                 var human = sEntities.SpawnEntity("InventoryStunnableDummy", MapCoordinates.Nullspace);
                 var invSystem = systemMan.GetEntitySystem<InventorySystem>();
 

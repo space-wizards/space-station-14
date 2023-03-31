@@ -3,6 +3,7 @@ using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
 namespace Content.Server.NodeContainer.Nodes
@@ -18,7 +19,6 @@ namespace Content.Server.NodeContainer.Nodes
         /// <summary>
         ///     The directions in which this pipe can connect to other pipes around it.
         /// </summary>
-        [ViewVariables]
         [DataField("pipeDirection")]
         private PipeDirection _originalPipeDirection;
 
@@ -97,7 +97,6 @@ namespace Content.Server.NodeContainer.Nodes
             }
         }
 
-        [ViewVariables]
         [DataField("volume")]
         public float Volume { get; set; } = DefaultVolume;
 
@@ -114,7 +113,7 @@ namespace Content.Server.NodeContainer.Nodes
             CurrentPipeDirection = _originalPipeDirection.RotatePipeDirection(xform.LocalRotation);
         }
 
-        bool IRotatableNode.RotateEvent(ref RotateEvent ev)
+        bool IRotatableNode.RotateNode(in MoveEvent ev)
         {
             if (_originalPipeDirection == PipeDirection.Fourway)
                 return false;
@@ -154,7 +153,7 @@ namespace Content.Server.NodeContainer.Nodes
         public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
             EntityQuery<NodeContainerComponent> nodeQuery,
             EntityQuery<TransformComponent> xformQuery,
-            IMapGrid? grid,
+            MapGridComponent? grid,
             IEntityManager entMan)
         {
             if (_alwaysReachable != null)
@@ -197,7 +196,7 @@ namespace Content.Server.NodeContainer.Nodes
         /// <summary>
         ///     Gets the pipes that can connect to us from entities on the tile or adjacent in a direction.
         /// </summary>
-        private IEnumerable<PipeNode> LinkableNodesInDirection(Vector2i pos, PipeDirection pipeDir, IMapGrid grid,
+        private IEnumerable<PipeNode> LinkableNodesInDirection(Vector2i pos, PipeDirection pipeDir, MapGridComponent grid,
             EntityQuery<NodeContainerComponent> nodeQuery)
         {
             foreach (var pipe in PipesInDirection(pos, pipeDir, grid, nodeQuery))
@@ -213,7 +212,7 @@ namespace Content.Server.NodeContainer.Nodes
         /// <summary>
         ///     Gets the pipes from entities on the tile adjacent in a direction.
         /// </summary>
-        protected IEnumerable<PipeNode> PipesInDirection(Vector2i pos, PipeDirection pipeDir, IMapGrid grid,
+        protected IEnumerable<PipeNode> PipesInDirection(Vector2i pos, PipeDirection pipeDir, MapGridComponent grid,
             EntityQuery<NodeContainerComponent> nodeQuery)
         {
             var offsetPos = pos.Offset(pipeDir.ToDirection());

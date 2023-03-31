@@ -6,9 +6,9 @@
   graph: TileSteel
   startNode: start
   targetNode: steeltile
-  category: Tiles
+  category: construction-category-tiles
   description: "Four steel station tiles."
-  icon: Objects/Tiles/tile.rsi/steel.png
+  icon: { sprite: Objects/Tiles/tile.rsi, state: steel }
   objectType: Item
 
 - type: construction
@@ -17,9 +17,9 @@
   graph: TileWood
   startNode: start
   targetNode: woodtile
-  category: Tiles
+  category: construction-category-tiles
   description: "Four pieces of wooden station flooring."
-  icon: Objects/Tiles/tile.rsi/wood.png
+  icon: { sprite: Objects/Tiles/tile.rsi, state: wood }
   objectType: Item
 
 - type: construction
@@ -28,9 +28,9 @@
   graph: TileWhite
   startNode: start
   targetNode: whitetile
-  category: Tiles
+  category: construction-category-tiles
   description: "Four white station tiles."
-  icon: Objects/Tiles/tile.rsi/white.png
+  icon: { sprite: Objects/Tiles/tile.rsi, state: white }
   objectType: Item
 
 - type: construction
@@ -39,9 +39,9 @@
   graph: TileDark
   startNode: start
   targetNode: darktile
-  category: Tiles
+  category: construction-category-tiles
   description: "Four dark station tiles."
-  icon: Objects/Tiles/tile.rsi/dark.png
+  icon: { sprite: Objects/Tiles/tile.rsi, state: dark }
   objectType: Item
 
 # - type: construction
@@ -50,9 +50,9 @@
 #   graph: tileTechmaint
 #   startNode: start
 #   targetNode: techmainttile
-#   category: Tiles
+#   category: construction-category-tiles
 #   description: "A piece of techmaint flooring."
-#   icon: Objects/Tiles/tile.rsi/steel_techfloor_grid.png
+#   icon: { sprite: Objects/Tiles/tile.rsi, state: steel_techfloor_grid }
 #   objectType: Item
 #
 # - type: construction
@@ -61,9 +61,9 @@
 #   graph: tileFreezer
 #   startNode: start
 #   targetNode: freezertile
-#   category: Tiles
+#   category: construction-category-tiles
 #   description: "A freezer station tile."
-#   icon: Objects/Tiles/tile.rsi/showroom.png
+#   icon: { sprite: Objects/Tiles/tile.rsi, state: showroom }
 #   objectType: Item
 #
 # - type: construction
@@ -72,9 +72,9 @@
 #   graph: tileShowroom
 #   startNode: start
 #   targetNode: showroomtile
-#   category: Tiles
+#   category: construction-category-tiles
 #   description: "A showroom station tile."
-#   icon: Objects/Tiles/tile.rsi/showroom.png
+#   icon: { sprite: Objects/Tiles/tile.rsi, state: showroom }
 #   objectType: Item
 #
 # - type: construction
@@ -83,9 +83,9 @@
 #   graph: tileGCircuit
 #   startNode: start
 #   targetNode: gcircuittile
-#   category: Tiles
+#   category: construction-category-tiles
 #   description: "A piece of green-circuit flooring."
-#   icon: Objects/Tiles/tile.rsi/gcircuit.png
+#   icon: { sprite: Objects/Tiles/tile.rsi, state: gcircuit }
 #   objectType: Item
 #
 # - type: construction
@@ -94,9 +94,9 @@
 #   graph: tileGold
 #   startNode: start
 #   targetNode: goldtile
-#   category: Tiles
+#   category: construction-category-tiles
 #   description: "A piece of gold flooring."
-#   icon: Objects/Tiles/tile.rsi/gold.png
+#   icon: { sprite: Objects/Tiles/tile.rsi, state: gold }
 #   objectType: Item
 #
 # - type: construction
@@ -105,9 +105,9 @@
 #   graph: tileReinforced
 #   startNode: start
 #   targetNode: reinforcedtile
-#   category: Tiles
+#   category: construction-category-tiles
 #   description: "A reinforced station tile."
-#   icon: Objects/Tiles/tile.rsi/reinforced.png
+#   icon: { sprite: Objects/Tiles/tile.rsi, state: reinforced }
 #   objectType: Item
 #
 # - type: construction
@@ -116,9 +116,9 @@
 #   graph: tileMono
 #   startNode: start
 #   targetNode: monotile
-#   category: Tiles
+#   category: construction-category-tiles
 #   description: "A mono station tile."
-#   icon: Objects/Tiles/tile.rsi/white_monofloor.png
+#   icon: { sprite: Objects/Tiles/tile.rsi, state: white_monofloor }
 #   objectType: Item
 #
 # - type: construction
@@ -127,9 +127,9 @@
 #   graph: tileLino
 #   startNode: start
 #   targetNode: linotile
-#   category: Tiles
+#   category: construction-category-tiles
 #   description: "A piece of linoleum flooring."
-#   icon: Objects/Tiles/tile.rsi/white_monofloor.png
+#   icon: { sprite: Objects/Tiles/tile.rsi, state: white_monofloor }
 #   objectType: Item
 #
 # - type: construction
@@ -138,9 +138,9 @@
 #   graph: tileHydro
 #   startNode: start
 #   targetNode: hydrotile
-#   category: Tiles
+#   category: construction-category-tiles
 #   description: "A hydro station tile."
-#   icon: Objects/Tiles/tile.rsi/hydro.png
+#   icon: { sprite: Objects/Tiles/tile.rsi, state: hydro }
 #   objectType: Item
 #
 # - type: construction
@@ -149,7 +149,7 @@
 #   graph: tileDirty
 #   startNode: start
 #   targetNode: dirtytile
-#   category: Tiles
+#   category: construction-category-tiles
 #   description: "A dirty station tile."
-#   icon: Objects/Tiles/tile.rsi/dirty.png
+#   icon: { sprite: Objects/Tiles/tile.rsi, state: dirty }
 #   objectType: Item

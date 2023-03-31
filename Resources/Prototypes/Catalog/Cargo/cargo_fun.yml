@@ -1,71 +1,89 @@
 - type: cargoProduct
-  name: "big band instrument collection"
   id: FunInstruments
-  description: "Get your sad station movin' and groovin' with this fine collection! Contains thirteen different instruments"
   icon:
     sprite: Objects/Fun/Instruments/accordion.rsi
     state: icon
   product: CrateFunInstruments
-  cost: 5000
+  cost: 3000
   category: Fun
   group: market
 
 - type: cargoProduct
-  name: "brass instrument ensemble crate"
   id: FunBrass
-  description: "Bring some jazz to the station with the brass ensemble. Contains a variety of brass instruments for the whole station to play."
   icon:
-    sprite: Structures/Furniture/instruments.rsi
+    sprite: Objects/Fun/Instruments/structureinstruments.rsi
     state: tuba
   product: CrateFunBrass
-  cost: 3500
+  cost: 2500
   category: Fun
   group: market
 
 - type: cargoProduct
-  name: "art supplies"
   id: FunArtSupplies
-  description: "Make some happy little accidents with lots of crayons!"
   icon:
     sprite: Objects/Fun/crayons.rsi
     state: box
   product: CrateFunArtSupplies
+  cost: 500
+  category: Fun
+  group: market
+
+- type: cargoProduct
+  id: FunParty
+  icon:
+    sprite: Objects/Consumable/Food/Baked/cake.rsi
+    state: birthday
+  product: CrateFunParty
   cost: 1000
   category: Fun
   group: market
 
 - type: cargoProduct
-  name: "plushie crate"
   id: FunPlushies
-  description: "A buncha soft plushies. Throw them around and then wonder how you're gonna explain this purchase to NT"
   icon:
     sprite: Objects/Fun/toys.rsi
     state: plushie_h
   product: CrateFunPlushie
-  cost: 5000
+  cost: 1000
   category: Fun
   group: market
 
 - type: cargoProduct
-  name: "board game crate"
   id: FunBoardGames
-  description: "Game nights have been proven to either decrease boredom or increase murderous rage depending on the game"
   icon:
     sprite: Objects/Fun/dice.rsi
-    state: d66
+    state: d6_6
   product: CrateFunBoardGames
   cost: 1500
   category: Fun
   group: market
 
 - type: cargoProduct
-  name: "ATV crate"
   id: FunATV
-  description: "An Absolutely Taxable Vehicle to help cargo with hauling."
   icon:
     sprite: Objects/Vehicles/atv.rsi
     state: vehicle
   product: CrateFunATV
-  cost: 6000
+  cost: 1500
+  category: Fun
+  group: market
+
+- type: cargoProduct
+  id: FunSadTromboneImplants
+  icon:
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    state: syringe_base0
+  product: CrateFunSadTromboneImplants
+  cost: 1000
+  category: Fun
+  group: market
+
+- type: cargoProduct
+  id: FunLightImplants
+  icon:
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    state: syringe_base0
+  product: CrateFunLightImplants
+  cost: 1000
   category: Fun
   group: market

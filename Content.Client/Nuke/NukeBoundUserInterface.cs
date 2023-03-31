@@ -10,7 +10,7 @@ namespace Content.Client.Nuke
     {
         private NukeMenu? _menu;
 
-        public NukeBoundUserInterface([NotNull] ClientUserInterfaceComponent owner, [NotNull] object uiKey) : base(owner, uiKey)
+        public NukeBoundUserInterface([NotNull] ClientUserInterfaceComponent owner, [NotNull] Enum uiKey) : base(owner, uiKey)
         {
         }
 

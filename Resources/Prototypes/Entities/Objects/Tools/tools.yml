@@ -13,8 +13,10 @@
     - Wirecutter
   - type: Sprite
     sprite: Objects/Tools/wirecutters.rsi
+    netsync: false
     layers:
-    - state: cutters-map
+    - state: cutters
+      map: [ "enum.DamageStateVisualLayers.Base" ]
     - state: cutters-cutty-thingy
   - type: ItemCooldown
   - type: MeleeWeapon
@@ -26,18 +28,15 @@
       - Cutting
     useSound:
       path: /Audio/Items/wirecutter.ogg
-  - type: RandomSpriteColor
-    state: cutters
-    colors:
-      blue: "#1861d5"
-      red: "#951710"
-      pink: "#d5188d"
-      brown: "#a05212"
-      green: "#0e7f1b"
-      cyan: "#18a2d5"
-      yellow: "#d58c18"
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          cutters: Rainbow
   - type: Item
     sprite: Objects/Tools/wirecutters.rsi
+  - type: LatticeCutting
+  - type: StaticPrice
+    price: 40
 
 - type: entity
   name: screwdriver
@@ -53,31 +52,30 @@
     - Screwdriver
   - type: Sprite
     sprite: Objects/Tools/screwdriver.rsi
+    netsync: false
     layers:
-      - state: screwdriver-map
+      - state: screwdriver
+        map: [ "enum.DamageStateVisualLayers.Base" ]
       - state: screwdriver-screwybits
   - type: Item
     sprite: Objects/Tools/screwdriver.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
+    attackRate: 1.5
     damage:
       types:
-        Piercing: 10
+        Piercing: 7
   - type: Tool
     qualities:
       - Screwing
     useSound:
       collection: Screwdriver
-  - type: RandomSpriteColor
-    state: screwdriver
-    colors:
-      blue: "#1861d5"
-      red: "#ff0000"
-      pink: "#d5188d"
-      brown: "#a05212"
-      green: "#0e7f1b"
-      cyan: "#18a2d5"
-      yellow: "#ffa500"
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          screwdriver: Rainbow
+  - type: StaticPrice
+    price: 40
 
 - type: entity
   name: wrench
@@ -99,14 +97,17 @@
     sprite: Objects/Tools/wrench.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
+    attackRate: 1.5
     damage:
       types:
-        Blunt: 10
+        Blunt: 6.5
   - type: Tool
     qualities:
       - Anchoring
     useSound:
       path: /Audio/Items/ratchet.ogg
+  - type: StaticPrice
+    price: 40
 
 - type: entity
   name: crowbar
@@ -138,6 +139,8 @@
     useSound:
       path: /Audio/Items/crowbar.ogg
   - type: TilePrying
+  - type: StaticPrice
+    price: 40
 
 - type: entity
   name: emergency crowbar
@@ -154,7 +157,7 @@
   - type: Item
     sprite: Objects/Tools/crowbar.rsi
     size: 10
-    HeldPrefix: red
+    heldPrefix: red
 
 - type: entity
   name: multitool
@@ -171,11 +174,12 @@
     - state: icon
     - state: green-unlit
       shader: unshaded
-  - type: Clothing
+  - type: Item
     size: 5
+  - type: Clothing
     sprite: Objects/Tools/multitool.rsi
     quickEquip: false
-    Slots:
+    slots:
     - Belt
   - type: Tool
     qualities:
@@ -196,6 +200,8 @@
   - type: Tag
     tags:
       - DroneUsable
+  - type: StaticPrice
+    price: 60
 
 - type: entity
   name: power drill
@@ -211,11 +217,12 @@
     state: drill_screw
   - type: Item
     sprite: Objects/Tools/drill.rsi
-    size: 20
+    size: 10
   - type: Tool
     qualities:
       - Screwing
     speed: 1.5
+    useSound: /Audio/Items/drill_use.ogg
   - type: MultipleTool
     statusShowBehavior: true
     entries:
@@ -235,6 +242,8 @@
           path: /Audio/Items/drill_use.ogg
         changeSound:
           path: /Audio/Items/change_drill.ogg
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   name: RCD
@@ -248,12 +257,23 @@
   - type: Sprite
     sprite: Objects/Tools/rcd.rsi
     state: icon
-  - type: Clothing
+  - type: Item
     size: 20
+  - type: Clothing
     sprite: Objects/Tools/rcd.rsi
     quickEquip: false
-    Slots:
+    slots:
     - Belt
+  - type: StaticPrice
+    price: 100
+
+- type: entity
+  id: RCDEmpty
+  parent: RCD
+  suffix: Empty
+  components:
+  - type: RCD
+    ammo: 0
 
 - type: entity
   name: RCD Ammo
@@ -267,7 +287,9 @@
     state: ammo
   - type: Item
     sprite: Objects/Tools/rcd.rsi
-    HeldPrefix: ammo
+    heldPrefix: ammo
+  - type: StaticPrice
+    price: 60
 
 - type: entity
   name: shovel
@@ -303,10 +325,17 @@
     size: 20
   - type: TilePrying
   - type: SignalLinker
+    requiredQuality: Pulsing
+  - type: UserInterface
+    interfaces:
+      - key: enum.SignalLinkerUiKey.Key
+        type: SignalPortSelectorBoundUserInterface
   - type: Tool
     qualities:
       - Screwing
     speed: 1.2 # Kept for future adjustments. Currently 1.2x for balance
+    useSound: /Audio/Items/drill_use.ogg
+  - type: LatticeCutting
   - type: MultipleTool
     statusShowBehavior: true
     entries:

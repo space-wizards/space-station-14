@@ -1,12 +1,16 @@
 using Content.Client.Administration.Managers;
 using Robust.Client.Graphics;
+using Robust.Client.ResourceManagement;
 
 namespace Content.Client.Administration.Systems
 {
     public sealed partial class AdminSystem
     {
+        [Dependency] private readonly IOverlayManager _overlayManager = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IClientAdminManager _adminManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
 
         private AdminNameOverlay _adminNameOverlay = default!;
 
@@ -15,7 +19,7 @@ namespace Content.Client.Administration.Systems
 
         private void InitializeOverlay()
         {
-            _adminNameOverlay = new AdminNameOverlay(this, _entityManager, _eyeManager, _resourceCache, _entityLookup);
+            _adminNameOverlay = new AdminNameOverlay(this, EntityManager, _eyeManager, _resourceCache, _entityLookup);
             _adminManager.AdminStatusUpdated += OnAdminStatusUpdated;
         }
 

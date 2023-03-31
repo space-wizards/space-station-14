@@ -60,14 +60,24 @@ namespace Content.Shared.Chat
         Dead = 1 << 9,
 
         /// <summary>
-        ///     Admin chat
+        ///     Misc admin messages
         /// </summary>
         Admin = 1 << 10,
 
         /// <summary>
+        ///     Admin alerts, messages likely of elevated importance to admins
+        /// </summary>
+        AdminAlert = 1 << 11,
+
+        /// <summary>
+        ///     Admin chat
+        /// </summary>
+        AdminChat = 1 << 12,
+
+        /// <summary>
         ///     Unspecified.
         /// </summary>
-        Unspecified = 1 << 11,
+        Unspecified = 1 << 13,
 
         /// <summary>
         ///     Channels considered to be IC.

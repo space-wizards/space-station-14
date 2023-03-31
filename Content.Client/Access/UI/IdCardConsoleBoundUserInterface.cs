@@ -1,10 +1,10 @@
 using Content.Client.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.CrewManifest;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
 using static Content.Shared.Access.Components.SharedIdCardConsoleComponent;
-
 namespace Content.Client.Access.UI
 {
     public sealed class IdCardConsoleBoundUserInterface : BoundUserInterface
@@ -12,10 +12,9 @@ namespace Content.Client.Access.UI
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
-        public IdCardConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public IdCardConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
-
         private IdCardConsoleWindow? _window;
 
         protected override void Open()
@@ -36,6 +35,7 @@ namespace Content.Client.Access.UI
 
             _window = new IdCardConsoleWindow(this, _prototypeManager, accessLevels) {Title = _entityManager.GetComponent<MetaDataComponent>(Owner.Owner).EntityName};
 
+            _window.CrewManifestButton.OnPressed += _ => SendMessage(new CrewManifestOpenUiMessage());
             _window.PrivilegedIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(PrivilegedIdCardSlotId));
             _window.TargetIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(TargetIdCardSlotId));
 
@@ -57,7 +57,7 @@ namespace Content.Client.Access.UI
             _window?.UpdateState(castState);
         }
 
-        public void SubmitData(string newFullName, string newJobTitle, List<string> newAccessList)
+        public void SubmitData(string newFullName, string newJobTitle, List<string> newAccessList, string newJobPrototype)
         {
             if (newFullName.Length > MaxFullNameLength)
                 newFullName = newFullName[..MaxFullNameLength];
@@ -68,7 +68,8 @@ namespace Content.Client.Access.UI
             SendMessage(new WriteToTargetIdMessage(
                 newFullName,
                 newJobTitle,
-                newAccessList));
+                newAccessList,
+                newJobPrototype));
         }
     }
 }

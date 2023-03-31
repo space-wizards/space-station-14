@@ -1,11 +1,17 @@
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
-using Content.Shared.Movement;
+using Content.Shared.Bed.Sleep;
+using Content.Shared.Database;
+using Content.Shared.Hands;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Standing;
@@ -25,11 +31,21 @@ namespace Content.Shared.Stunnable
         [Dependency] private readonly StandingStateSystem _standingStateSystem = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectSystem = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+
+        /// <summary>
+        /// Friction modifier for knocked down players.
+        /// Doesn't make them faster but makes them slow down... slower.
+        /// </summary>
+        public const float KnockDownModifier = 0.4f;
 
         public override void Initialize()
         {
             SubscribeLocalEvent<KnockedDownComponent, ComponentInit>(OnKnockInit);
-            SubscribeLocalEvent<KnockedDownComponent, ComponentRemove>(OnKnockRemove);
+            SubscribeLocalEvent<KnockedDownComponent, ComponentShutdown>(OnKnockShutdown);
+            SubscribeLocalEvent<KnockedDownComponent, StandAttemptEvent>(OnStandAttempt);
 
             SubscribeLocalEvent<SlowedDownComponent, ComponentInit>(OnSlowInit);
             SubscribeLocalEvent<SlowedDownComponent, ComponentShutdown>(OnSlowRemove);
@@ -47,15 +63,51 @@ namespace Content.Shared.Stunnable
             SubscribeLocalEvent<KnockedDownComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<SlowedDownComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
 
+            SubscribeLocalEvent<KnockedDownComponent, TileFrictionEvent>(OnKnockedTileFriction);
+
             // Attempt event subscriptions.
+            SubscribeLocalEvent<StunnedComponent, ChangeDirectionAttemptEvent>(OnAttempt);
             SubscribeLocalEvent<StunnedComponent, UpdateCanMoveEvent>(OnMoveAttempt);
-            SubscribeLocalEvent<StunnedComponent, InteractionAttemptEvent>(OnInteractAttempt);
-            SubscribeLocalEvent<StunnedComponent, UseAttemptEvent>(OnUseAttempt);
-            SubscribeLocalEvent<StunnedComponent, ThrowAttemptEvent>(OnThrowAttempt);
-            SubscribeLocalEvent<StunnedComponent, DropAttemptEvent>(OnDropAttempt);
-            SubscribeLocalEvent<StunnedComponent, PickupAttemptEvent>(OnPickupAttempt);
+            SubscribeLocalEvent<StunnedComponent, InteractionAttemptEvent>(OnAttempt);
+            SubscribeLocalEvent<StunnedComponent, UseAttemptEvent>(OnAttempt);
+            SubscribeLocalEvent<StunnedComponent, ThrowAttemptEvent>(OnAttempt);
+            SubscribeLocalEvent<StunnedComponent, DropAttemptEvent>(OnAttempt);
+            SubscribeLocalEvent<StunnedComponent, AttackAttemptEvent>(OnAttempt);
+            SubscribeLocalEvent<StunnedComponent, PickupAttemptEvent>(OnAttempt);
             SubscribeLocalEvent<StunnedComponent, IsEquippingAttemptEvent>(OnEquipAttempt);
             SubscribeLocalEvent<StunnedComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
+            SubscribeLocalEvent<MobStateComponent, MobStateChangedEvent>(OnMobStateChanged);
+        }
+
+
+
+        private void OnMobStateChanged(EntityUid uid, MobStateComponent component, MobStateChangedEvent args)
+        {
+            if (!TryComp<StatusEffectsComponent>(uid, out var status))
+            {
+                return;
+            }
+            switch (args.NewMobState)
+            {
+                case MobState.Alive:
+                {
+                    break;
+                }
+                case MobState.Critical:
+                {
+                    _statusEffectSystem.TryRemoveStatusEffect(uid, "Stun");
+                    break;
+                }
+                case MobState.Dead:
+                {
+                    _statusEffectSystem.TryRemoveStatusEffect(uid, "Stun");
+                    break;
+                }
+                case MobState.Invalid:
+                default:
+                    return;
+            }
+
         }
 
         private void UpdateCanMove(EntityUid uid, StunnedComponent component, EntityEventArgs args)
@@ -96,9 +148,15 @@ namespace Content.Shared.Stunnable
             _standingStateSystem.Down(uid);
         }
 
-        private void OnKnockRemove(EntityUid uid, KnockedDownComponent component, ComponentRemove args)
+        private void OnKnockShutdown(EntityUid uid, KnockedDownComponent component, ComponentShutdown args)
         {
             _standingStateSystem.Stand(uid);
+        }
+
+        private void OnStandAttempt(EntityUid uid, KnockedDownComponent component, StandAttemptEvent args)
+        {
+            if (component.LifeStage <= ComponentLifeStage.Running)
+                args.Cancel();
         }
 
         private void OnSlowInit(EntityUid uid, SlowedDownComponent component, ComponentInit args)
@@ -132,7 +190,10 @@ namespace Content.Shared.Stunnable
             if (!Resolve(uid, ref status, false))
                 return false;
 
-            return _statusEffectSystem.TryAddStatusEffect<StunnedComponent>(uid, "Stun", time, refresh);
+            if (!_statusEffectSystem.TryAddStatusEffect<StunnedComponent>(uid, "Stun", time, refresh))
+                return false;
+            _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} stunned for {time.Seconds} seconds");
+            return true;
         }
 
         /// <summary>
@@ -198,16 +259,23 @@ namespace Content.Shared.Stunnable
             if (args.Handled || knocked.HelpTimer > 0f)
                 return;
 
+            // TODO: This should be an event.
+            if (HasComp<SleepingComponent>(uid))
+                return;
+
             // Set it to half the help interval so helping is actually useful...
             knocked.HelpTimer = knocked.HelpInterval/2f;
 
             _statusEffectSystem.TryRemoveTime(uid, "KnockedDown", TimeSpan.FromSeconds(knocked.HelpInterval));
-
-            SoundSystem.Play(knocked.StunAttemptSound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.05f));
-
-            knocked.Dirty();
+            _audio.PlayPredicted(knocked.StunAttemptSound, uid, args.User);
+            Dirty(knocked);
 
             args.Handled = true;
+        }
+
+        private void OnKnockedTileFriction(EntityUid uid, KnockedDownComponent component, ref TileFrictionEvent args)
+        {
+            args.Modifier *= KnockDownModifier;
         }
 
         #region Attempt Event Handling
@@ -220,27 +288,7 @@ namespace Content.Shared.Stunnable
             args.Cancel();
         }
 
-        private void OnInteractAttempt(EntityUid uid, StunnedComponent stunned, InteractionAttemptEvent args)
-        {
-            args.Cancel();
-        }
-
-        private void OnUseAttempt(EntityUid uid, StunnedComponent stunned, UseAttemptEvent args)
-        {
-            args.Cancel();
-        }
-
-        private void OnThrowAttempt(EntityUid uid, StunnedComponent stunned, ThrowAttemptEvent args)
-        {
-            args.Cancel();
-        }
-
-        private void OnDropAttempt(EntityUid uid, StunnedComponent stunned, DropAttemptEvent args)
-        {
-            args.Cancel();
-        }
-
-        private void OnPickupAttempt(EntityUid uid, StunnedComponent stunned, PickupAttemptEvent args)
+        private void OnAttempt(EntityUid uid, StunnedComponent stunned, CancellableEntityEventArgs args)
         {
             args.Cancel();
         }

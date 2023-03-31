@@ -2,9 +2,7 @@ using Content.Server.Morgue.Components;
 using Content.Shared.Morgue;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
-using Robust.Shared.Audio;
 using Content.Server.Storage.Components;
-using System.Threading;
 using Content.Shared.Verbs;
 using Content.Shared.Database;
 using Content.Shared.Interaction.Events;
@@ -16,11 +14,14 @@ using Content.Shared.Examine;
 using Content.Shared.Standing;
 using Content.Shared.Storage;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Storage.Components;
 
 namespace Content.Server.Morgue;
 
 public sealed class CrematoriumSystem : EntitySystem
 {
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -31,9 +32,9 @@ public sealed class CrematoriumSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<CrematoriumComponent, ExaminedEvent>(OnExamine);
-        SubscribeLocalEvent<CrematoriumComponent, StorageOpenAttemptEvent>(OnAttemptOpen);
         SubscribeLocalEvent<CrematoriumComponent, GetVerbsEvent<AlternativeVerb>>(AddCremateVerb);
         SubscribeLocalEvent<CrematoriumComponent, SuicideEvent>(OnSuicide);
+        SubscribeLocalEvent<ActiveCrematoriumComponent, StorageOpenAttemptEvent>(OnAttemptOpen);
     }
 
     private void OnExamine(EntityUid uid, CrematoriumComponent component, ExaminedEvent args)
@@ -41,18 +42,23 @@ public sealed class CrematoriumSystem : EntitySystem
         if (!TryComp<AppearanceComponent>(uid, out var appearance))
             return;
 
-        if (appearance.TryGetData(CrematoriumVisuals.Burning, out bool isBurning) && isBurning)
+        if (_appearance.TryGetData<bool>(uid, CrematoriumVisuals.Burning, out var isBurning, appearance) && isBurning)
+        {
             args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-is-burning", ("owner", uid)));
-        if (appearance.TryGetData(StorageVisuals.HasContents, out bool hasContents) && hasContents)
+        }
+        if (_appearance.TryGetData<bool>(uid, StorageVisuals.HasContents, out var hasContents, appearance) && hasContents)
+        {
             args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-has-contents"));
+        }
         else
+        {
             args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-empty"));
+        }
     }
 
-    private void OnAttemptOpen(EntityUid uid, CrematoriumComponent component, StorageOpenAttemptEvent args)
+    private void OnAttemptOpen(EntityUid uid, ActiveCrematoriumComponent component, ref StorageOpenAttemptEvent args)
     {
-        if (component.Cooking)
-            args.Cancel();
+        args.Cancelled = true;
     }
 
     private void AddCremateVerb(EntityUid uid, CrematoriumComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -60,7 +66,10 @@ public sealed class CrematoriumSystem : EntitySystem
         if (!TryComp<EntityStorageComponent>(uid, out var storage))
             return;
 
-        if (!args.CanAccess || !args.CanInteract || args.Hands == null || component.Cooking || storage.Open)
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null || storage.Open)
+            return;
+
+        if (HasComp<ActiveCrematoriumComponent>(uid))
             return;
 
         AlternativeVerb verb = new()
@@ -73,58 +82,56 @@ public sealed class CrematoriumSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    public void Cremate(EntityUid uid, CrematoriumComponent? component = null, EntityStorageComponent? storage = null)
+    public bool Cremate(EntityUid uid, CrematoriumComponent? component = null, EntityStorageComponent? storage = null)
     {
         if (!Resolve(uid, ref component, ref storage))
-            return;
+            return false;
 
-        if (TryComp<AppearanceComponent>(uid, out var app))
-            app.SetData(CrematoriumVisuals.Burning, true);
-        component.Cooking = true;
+        if (HasComp<ActiveCrematoriumComponent>(uid))
+            return false;
 
-        SoundSystem.Play(component.CrematingSound.GetSound(), Filter.Pvs(uid), uid);
+        _audio.PlayPvs(component.CremateStartSound, uid);
+        _appearance.SetData(uid, CrematoriumVisuals.Burning, true);
 
-        component.CremateCancelToken?.Cancel();
-        component.CremateCancelToken = new CancellationTokenSource();
-        uid.SpawnTimer(component.BurnMilis, () =>
-        {
-            if (Deleted(uid))
-                return;
-            if (TryComp<AppearanceComponent>(uid, out var app))
-                app.SetData(CrematoriumVisuals.Burning, false);
-            component.Cooking = false;
+        _audio.PlayPvs(component.CrematingSound, uid);
 
-            if (storage.Contents.ContainedEntities.Count > 0)
-            {
-                for (var i = storage.Contents.ContainedEntities.Count - 1; i >= 0; i--)
-                {
-                    var item = storage.Contents.ContainedEntities[i];
-                    storage.Contents.Remove(item);
-                    EntityManager.DeleteEntity(item);
-                }
-
-                var ash = Spawn("Ash", Transform(uid).Coordinates);
-                storage.Contents.Insert(ash);
-            }
-
-            _entityStorage.OpenStorage(uid, storage);
-
-            SoundSystem.Play(component.CremateFinishSound.GetSound(), Filter.Pvs(uid), uid);
-
-        }, component.CremateCancelToken.Token);
+        AddComp<ActiveCrematoriumComponent>(uid);
+        return true;
     }
 
-    public void TryCremate(EntityUid uid, CrematoriumComponent component, EntityStorageComponent? storage = null)
+    public bool TryCremate(EntityUid uid, CrematoriumComponent? component = null, EntityStorageComponent? storage = null)
+    {
+        if (!Resolve(uid, ref component, ref storage))
+            return false;
+
+        if (storage.Open || storage.Contents.ContainedEntities.Count < 1)
+            return false;
+
+        return Cremate(uid, component, storage);
+    }
+
+    private void FinishCooking(EntityUid uid, CrematoriumComponent component, EntityStorageComponent? storage = null)
     {
         if (!Resolve(uid, ref storage))
             return;
 
-        if (component.Cooking || storage.Open || storage.Contents.ContainedEntities.Count < 1)
-            return;
+        _appearance.SetData(uid, CrematoriumVisuals.Burning, false);
+        RemComp<ActiveCrematoriumComponent>(uid);
 
-        SoundSystem.Play(component.CremateStartSound.GetSound(), Filter.Pvs(uid), uid);
+        if (storage.Contents.ContainedEntities.Count > 0)
+        {
+            for (var i = storage.Contents.ContainedEntities.Count - 1; i >= 0; i--)
+            {
+                var item = storage.Contents.ContainedEntities[i];
+                storage.Contents.Remove(item);
+                EntityManager.DeleteEntity(item);
+            }
+            var ash = Spawn("Ash", Transform(uid).Coordinates);
+            storage.Contents.Insert(ash);
+        }
 
-        Cremate(uid, component, storage);
+        _entityStorage.OpenStorage(uid, storage);
+        _audio.PlayPvs(component.CremateFinishSound, uid);
     }
 
     private void OnSuicide(EntityUid uid, CrematoriumComponent component, SuicideEvent args)
@@ -140,13 +147,13 @@ public sealed class CrematoriumSystem : EntitySystem
 
             if (mind.OwnedEntity is { Valid: true } entity)
             {
-                _popup.PopupEntity(Loc.GetString("crematorium-entity-storage-component-suicide-message"), entity, Filter.Pvs(entity));
+                _popup.PopupEntity(Loc.GetString("crematorium-entity-storage-component-suicide-message"), entity);
             }
         }
 
         _popup.PopupEntity(Loc.GetString("crematorium-entity-storage-component-suicide-message-others",
             ("victim", Identity.Entity(victim, EntityManager))),
-            victim, Filter.PvsExcept(victim), PopupType.LargeCaution);
+            victim, Filter.PvsExcept(victim), true, PopupType.LargeCaution);
 
         if (_entityStorage.CanInsert(uid))
         {
@@ -160,5 +167,18 @@ public sealed class CrematoriumSystem : EntitySystem
         }
         _entityStorage.CloseStorage(uid);
         Cremate(uid, component);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        foreach (var (act, crem) in EntityQuery<ActiveCrematoriumComponent, CrematoriumComponent>())
+        {
+            act.Accumulator += frameTime;
+
+            if (act.Accumulator >= crem.CookTime)
+                FinishCooking(act.Owner, crem);
+        }
     }
 }

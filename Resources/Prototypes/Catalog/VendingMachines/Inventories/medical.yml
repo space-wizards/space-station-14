@@ -1,8 +1,5 @@
 - type: vendingMachineInventory
   id: NanoMedPlusInventory
-  name: NanoMed Plus
-  animationDuration: 1.8
-  spriteName: medical
   startingInventory:
     HandheldHealthAnalyzer: 3
     Brutepack: 5

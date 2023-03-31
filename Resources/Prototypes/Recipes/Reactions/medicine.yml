@@ -85,19 +85,6 @@
     Epinephrine: 6
 
 - type: reaction
-  id: Clonexadone
-  reactants:
-    Cryoxadone:
-      amount: 1
-    Sodium:
-      amount: 1
-    Plasma:
-      amount: 5
-      catalyst: true
-  products:
-    Clonexadone: 2
-
-- type: reaction
   id: Dermaline
   reactants:
     Kelotane:
@@ -244,9 +231,9 @@
     Tricordrazine: 2
 
 - type: reaction
-  id: HeartbreakerToxin #heat to 37C once temperatures supported
+  id: HeartbreakerToxin
   reactants:
-    Dexalin:
+    DexalinPlus:
       amount: 1
     MindbreakerToxin:
       amount: 1
@@ -269,7 +256,7 @@
   id: Lexorin
   impact: High
   reactants:
-    Ammonia:
+    HeartbreakerToxin:
       amount: 1
     Plasma:
       amount: 1
@@ -290,6 +277,7 @@
 
 - type: reaction
   id: MindbreakerToxin
+  minTemp: 370
   reactants:
     Silicon:
       amount: 1
@@ -324,6 +312,20 @@
     Ultravasculine: 2
 
 - type: reaction
+  id: Oculine
+  reactants:
+    TableSalt:
+      amount: 1
+    Blood:
+      amount: 1
+    Carbon:
+      amount: 1
+    Hydrogen:
+      amount: 1
+  products:
+    Oculine: 4
+
+- type: reaction
   id: Siderlac
   reactants:
     Aloe:
@@ -342,3 +344,31 @@
       amount: 1
   products:
     Spaceacillin: 2
+
+- type: reaction
+  id: Cognizine
+  reactants:
+    CarpoToxin:
+      amount: 1
+    Siderlac:
+      amount: 1
+    Acetone:
+      amount: 1
+  products:
+    Cognizine: 1
+
+- type: reaction
+  id: Sigynate
+  impact: Medium
+  minTemp: 370
+  reactants:
+    SodiumCarbonate: 
+      amount: 1
+    Kelotane:
+      amount: 1
+    Water:
+      amount: 1
+    Sugar: 
+      amount: 1
+  products:
+    Sigynate: 4

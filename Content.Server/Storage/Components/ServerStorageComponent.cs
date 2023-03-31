@@ -1,6 +1,6 @@
-using Content.Shared.Sound;
 using Content.Shared.Storage;
 using Content.Shared.Whitelist;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using System.Threading;
 
@@ -29,11 +29,6 @@ namespace Content.Server.Storage.Components
 
         [DataField("areaInsert")]
         public bool AreaInsert = false;  // "Attacking" with the storage entity causes it to insert all nearby storables after a delay
-
-        /// <summary>
-        /// Token for interrupting area insert do after.
-        /// </summary>
-        public CancellationTokenSource? CancelToken;
 
         [DataField("areaInsertRadius")]
         public int AreaInsertRadius = 1;

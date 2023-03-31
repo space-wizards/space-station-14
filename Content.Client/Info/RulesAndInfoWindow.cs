@@ -1,5 +1,4 @@
-using Content.Client.EscapeMenu.UI;
-using Content.Shared.CCVar;
+using Content.Client.UserInterface.Systems.EscapeMenu;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -11,17 +10,12 @@ namespace Content.Client.Info
 {
     public sealed class RulesAndInfoWindow : DefaultWindow
     {
-        [Dependency] private readonly RulesManager _rulesManager = default!;
         [Dependency] private readonly IResourceCache _resourceManager = default!;
-        [Dependency] private readonly IConfigurationManager _cfgManager = default!;
-
-        private OptionsMenu optionsMenu;
+        [Dependency] private readonly RulesManager _rules = default!;
 
         public RulesAndInfoWindow()
         {
             IoCManager.InjectDependencies(this);
-
-            optionsMenu = new OptionsMenu();
 
             Title = Loc.GetString("ui-info-title");
 
@@ -36,17 +30,12 @@ namespace Content.Client.Info
             TabContainer.SetTabTitle(rulesList, Loc.GetString("ui-info-tab-rules"));
             TabContainer.SetTabTitle(tutorialList, Loc.GetString("ui-info-tab-tutorial"));
 
-            PopulateRules(rulesList);
+            AddSection(rulesList, _rules.RulesSection());
             PopulateTutorial(tutorialList);
 
             Contents.AddChild(rootContainer);
 
             SetSize = (650, 650);
-        }
-
-        private void PopulateRules(Info rulesList)
-        {
-            AddSection(rulesList, MakeRules(_cfgManager, _resourceManager));
         }
 
         private void PopulateTutorial(Info tutorialList)
@@ -57,7 +46,7 @@ namespace Content.Client.Info
             AddSection(tutorialList, Loc.GetString("ui-info-header-gameplay"), "Gameplay.txt", true);
             AddSection(tutorialList, Loc.GetString("ui-info-header-sandbox"), "Sandbox.txt", true);
 
-            infoControlSection.ControlsButton.OnPressed += _ => optionsMenu.OpenCentered();
+            infoControlSection.ControlsButton.OnPressed += _ => UserInterfaceManager.GetUIController<OptionsUIController>().OpenWindow();
         }
 
         private static void AddSection(Info info, Control control)
@@ -75,9 +64,5 @@ namespace Content.Client.Info
             return new InfoSection(title, res.ContentFileReadAllText($"/Server Info/{path}"), markup);
         }
 
-        public static Control MakeRules(IConfigurationManager cfg, IResourceManager res)
-        {
-            return MakeSection(Loc.GetString("ui-rules-header"), cfg.GetCVar(CCVars.RulesFile), true, res);
-        }
     }
 }

@@ -44,6 +44,7 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/rndpointsource.rsi
+    netsync: false
     layers:
     - state: rndpointsource-off
     - state: rndpointsource
@@ -51,7 +52,7 @@
       map: ["enum.PowerDeviceVisualLayers.Powered"]
   - type: ResearchClient
   - type: ResearchPointSource
-    pointspersecond: 100
+    pointspersecond: 25
     active: true
   - type: PointLight
     radius: 1.5

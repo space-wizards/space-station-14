@@ -7,7 +7,7 @@ namespace Content.Server.Shuttles.Components;
 [RegisterComponent]
 public sealed class RecentlyDockedComponent : Component
 {
-    [ViewVariables, DataField("lastDocked")]
+    [DataField("lastDocked")]
     public EntityUid LastDocked;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("radius")]

@@ -11,13 +11,12 @@
   - type: Physics
     bodyType: KinematicController
     fixedRotation: true
-    status: OnGround
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 5
+      density: 15
       mask:
       - GhostImpassable
   - type: InputMover
@@ -27,9 +26,10 @@
   - type: Input
     context: "ghost"
   - type: Examiner
-    DoRangeCheck: false
+    skipChecks: true
   - type: Ghost
-  - type: IntrinsicRadio
+  - type: IntrinsicRadioReceiver
+  - type: ActiveRadio
     channels:
     - Common
     - Command

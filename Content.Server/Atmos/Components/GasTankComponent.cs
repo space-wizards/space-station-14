@@ -1,6 +1,5 @@
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Atmos;
-using Content.Shared.Sound;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Atmos.Components
@@ -8,10 +7,12 @@ namespace Content.Server.Atmos.Components
     [RegisterComponent]
     public sealed class GasTankComponent : Component, IGasMixtureHolder
     {
-        public const float MaxExplosionRange = 14f;
+        public const float MaxExplosionRange = 80f;
+        private const float DefaultLowPressure = 0f;
         private const float DefaultOutputPressure = Atmospherics.OneAtmosphere;
 
         public int Integrity = 3;
+        public bool IsLowPressure => (Air?.Pressure ?? 0F) <= TankLowPressure;
 
         [ViewVariables(VVAccess.ReadWrite), DataField("ruptureSound")]
         public SoundSpecifier RuptureSound = new SoundPathSpecifier("/Audio/Effects/spray.ogg");
@@ -31,19 +32,34 @@ namespace Content.Server.Atmos.Components
         public IPlayingAudioStream? ConnectStream;
         public IPlayingAudioStream? DisconnectStream;
 
-        [DataField("air")] [ViewVariables] public GasMixture Air { get; set; } = new();
+        [DataField("air")] public GasMixture Air { get; set; } = new();
+
+        /// <summary>
+        ///     Pressure at which tank should be considered 'low' such as for internals.
+        /// </summary>
+        [DataField("tankLowPressure")]
+        public float TankLowPressure { get; set; } = DefaultLowPressure;
 
         /// <summary>
         ///     Distributed pressure.
         /// </summary>
         [DataField("outputPressure")]
-        [ViewVariables]
         public float OutputPressure { get; set; } = DefaultOutputPressure;
 
         /// <summary>
         ///     Tank is connected to internals.
         /// </summary>
-        [ViewVariables] public bool IsConnected { get; set; }
+        [ViewVariables] public bool IsConnected => User != null;
+
+        [ViewVariables]
+        public EntityUid? User;
+
+        /// <summary>
+        ///     True if this entity was recently moved out of a container. This might have been a hand -> inventory
+        ///     transfer, or it might have been the user dropping the tank. This indicates the tank needs to be checked.
+        /// </summary>
+        [ViewVariables]
+        public bool CheckUser;
 
         /// <summary>
         ///     Pressure at which tanks start leaking.

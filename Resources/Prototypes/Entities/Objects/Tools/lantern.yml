@@ -6,6 +6,29 @@
   components:
     - type: HandheldLight
       addPrefix: true
+      blinkingBehaviourId: blinking
+      radiatingBehaviourId: radiating
+    - type: LightBehaviour
+      behaviours:
+        - !type:FadeBehaviour
+          id: radiating
+          interpolate: Linear
+          maxDuration: 2.0
+          startValue: 3.0
+          endValue: 2.0
+          isLooped: true
+          property: Radius
+          enabled: false
+          reverseWhenFinished: true
+        - !type:PulseBehaviour
+          id: blinking
+          interpolate: Nearest
+          maxDuration: 1.0
+          minValue: 0.1
+          maxValue: 2.0
+          isLooped: true
+          property: Radius
+          enabled: false
     - type: Sprite
       sprite: Objects/Tools/lantern.rsi
       layers:
@@ -16,7 +39,7 @@
           map: [ "light" ]
     - type: Item
       sprite: Objects/Tools/lantern.rsi
-      HeldPrefix: off
+      heldPrefix: off
     - type: PointLight
       netsync: false
       enabled: false
@@ -24,12 +47,17 @@
       energy: 2.5
       color: "#FFC458"
     - type: Appearance
-      visuals:
-        - type: LanternVisualizer
     - type: ToggleableLightVisuals
     - type: PowerCellSlot
-      cellSlot:
-        startingItem: PowerCellMedium
+      cellSlotId: cell_slot
+    - type: ItemSlots
+      slots:
+        cell_slot:
+          name: power-cell-slot-component-slot-name-default
+          startingItem: PowerCellMedium
+    - type: ContainerContainer
+      containers:
+        cell_slot: !type:ContainerSlot {}
 
 - type: entity
   name: extra-bright lantern

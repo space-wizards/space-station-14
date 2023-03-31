@@ -4,6 +4,10 @@
   parent: BaseItem
   abstract: true
   components:
+  - type: Tag
+    tags:
+      - SpeedLoaderCap
+  - type: SpeedLoader
   - type: BallisticAmmoProvider
     whitelist:
       tags:
@@ -21,6 +25,10 @@
     steps: 7
     zeroVisible: false
   - type: Appearance
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
 
 - type: entity
   id: SpeedLoaderCap

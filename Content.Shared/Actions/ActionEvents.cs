@@ -9,7 +9,7 @@ namespace Content.Shared.Actions;
 
 /// <summary>
 ///     Event raised directed at items or clothing when they are equipped or held. In order for an item to grant actions some
-///     system can subscribe to this event and add actions to the <see cref="Actions"/> list. 
+///     system can subscribe to this event and add actions to the <see cref="Actions"/> list.
 /// </summary>
 /// <remarks>
 ///     Note that a system could also just manually add actions as a result of a <see cref="GotEquippedEvent"/> or <see
@@ -44,7 +44,7 @@ public sealed class RequestPerformActionEvent : EntityEventArgs
 {
     public readonly ActionType Action;
     public readonly EntityUid? EntityTarget;
-    public readonly MapCoordinates? MapTarget;
+    public readonly EntityCoordinates? EntityCoordinatesTarget;
 
     public RequestPerformActionEvent(InstantAction action)
     {
@@ -57,10 +57,10 @@ public sealed class RequestPerformActionEvent : EntityEventArgs
         EntityTarget = entityTarget;
     }
 
-    public RequestPerformActionEvent(WorldTargetAction action, MapCoordinates mapTarget)
+    public RequestPerformActionEvent(WorldTargetAction action, EntityCoordinates entityCoordinatesTarget)
     {
         Action = action;
-        MapTarget = mapTarget;
+        EntityCoordinatesTarget = entityCoordinatesTarget;
     }
 }
 
@@ -102,7 +102,7 @@ public abstract class WorldTargetActionEvent : BaseActionEvent
     /// <summary>
     ///     The coordinates of the location that the user targeted.
     /// </summary>
-    public MapCoordinates Target;
+    public EntityCoordinates Target;
 }
 
 /// <summary>

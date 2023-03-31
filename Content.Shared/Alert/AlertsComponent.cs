@@ -11,4 +11,6 @@ namespace Content.Shared.Alert;
 public sealed class AlertsComponent : Component
 {
     [ViewVariables] public Dictionary<AlertKey, AlertState> Alerts = new();
+
+    public override bool SendOnlyToOwner => true;
 }

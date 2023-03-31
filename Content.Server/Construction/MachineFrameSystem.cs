@@ -1,7 +1,9 @@
-﻿using Content.Server.Construction.Components;
+using Content.Server.Construction.Components;
 using Content.Server.Stack;
-using Content.Shared.Construction;
+using Content.Shared.Construction.Components;
+using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Stacks;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
 
@@ -22,6 +24,7 @@ public sealed class MachineFrameSystem : EntitySystem
         SubscribeLocalEvent<MachineFrameComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<MachineFrameComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<MachineFrameComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<MachineFrameComponent, ExaminedEvent>(OnMachineFrameExamined);
     }
 
     private void OnInit(EntityUid uid, MachineFrameComponent component, ComponentInit args)
@@ -45,16 +48,13 @@ public sealed class MachineFrameSystem : EntitySystem
     {
         if (!component.HasBoard && TryComp<MachineBoardComponent?>(args.Used, out var machineBoard))
         {
-            if (args.Used.TryRemoveFromContainer())
+            if (_container.TryRemoveFromContainer(args.Used))
             {
                 // Valid board!
                 component.BoardContainer.Insert(args.Used);
 
                 // Setup requirements and progress...
                 ResetProgressAndRequirements(component, machineBoard);
-
-                if (TryComp<AppearanceComponent?>(uid, out var appearance))
-                    appearance.SetData(MachineFrameVisuals.State, 2);
 
                 if (TryComp(uid, out ConstructionComponent? construction))
                 {
@@ -71,7 +71,7 @@ public sealed class MachineFrameSystem : EntitySystem
                     return;
 
                 if (component.Progress[machinePart.PartType] != component.Requirements[machinePart.PartType]
-                    && args.Used.TryRemoveFromContainer() && component.PartContainer.Insert(args.Used))
+                    && _container.TryRemoveFromContainer(args.Used) && component.PartContainer.Insert(args.Used))
                 {
                     component.Progress[machinePart.PartType]++;
                     args.Handled = true;
@@ -82,6 +82,8 @@ public sealed class MachineFrameSystem : EntitySystem
             if (TryComp<StackComponent?>(args.Used, out var stack))
             {
                 var type = stack.StackTypeId;
+                if (type == null)
+                    return;
                 if (!component.MaterialRequirements.ContainsKey(type))
                     return;
 
@@ -125,7 +127,8 @@ public sealed class MachineFrameSystem : EntitySystem
                 if (!HasComp(args.Used, registration.Type))
                     continue;
 
-                if (!args.Used.TryRemoveFromContainer() || !component.PartContainer.Insert(args.Used)) continue;
+                if (!_container.TryRemoveFromContainer(args.Used) || !component.PartContainer.Insert(args.Used))
+                    continue;
                 component.ComponentProgress[compName]++;
                 args.Handled = true;
                 return;
@@ -139,7 +142,8 @@ public sealed class MachineFrameSystem : EntitySystem
                 if (!_tag.HasTag(args.Used, tagName))
                     continue;
 
-                if (!args.Used.TryRemoveFromContainer() || !component.PartContainer.Insert(args.Used)) continue;
+                if (!_container.TryRemoveFromContainer(args.Used) || !component.PartContainer.Insert(args.Used))
+                    continue;
                 component.TagProgress[tagName]++;
                 args.Handled = true;
                 return;
@@ -181,7 +185,7 @@ public sealed class MachineFrameSystem : EntitySystem
 
     public void ResetProgressAndRequirements(MachineFrameComponent component, MachineBoardComponent machineBoard)
     {
-        component.Requirements = new Dictionary<MachinePart, int>(machineBoard.Requirements);
+        component.Requirements = new Dictionary<string, int>(machineBoard.Requirements);
         component.MaterialRequirements = new Dictionary<string, int>(machineBoard.MaterialIdRequirements);
         component.ComponentRequirements = new Dictionary<string, GenericPartInfo>(machineBoard.ComponentRequirements);
         component.TagRequirements = new Dictionary<string, GenericPartInfo>(machineBoard.TagRequirements);
@@ -214,12 +218,8 @@ public sealed class MachineFrameSystem : EntitySystem
 
     public void RegenerateProgress(MachineFrameComponent component)
     {
-        AppearanceComponent? appearance;
-
         if (!component.HasBoard)
         {
-            if (TryComp(component.Owner, out appearance)) appearance.SetData(MachineFrameVisuals.State, 1);
-
             component.TagRequirements.Clear();
             component.MaterialRequirements.Clear();
             component.ComponentRequirements.Clear();
@@ -236,8 +236,6 @@ public sealed class MachineFrameSystem : EntitySystem
 
         if (!TryComp<MachineBoardComponent>(board, out var machineBoard))
             return;
-
-        if (TryComp(component.Owner, out appearance)) appearance.SetData(MachineFrameVisuals.State, 2);
 
         ResetProgressAndRequirements(component, machineBoard);
 
@@ -259,6 +257,8 @@ public sealed class MachineFrameSystem : EntitySystem
             {
                 var type = stack.StackTypeId;
                 // Check this is part of the requirements...
+                if (type == null)
+                    continue;
                 if (!component.MaterialRequirements.ContainsKey(type))
                     continue;
 
@@ -294,5 +294,12 @@ public sealed class MachineFrameSystem : EntitySystem
                     component.TagProgress[tagName]++;
             }
         }
+    }
+    private void OnMachineFrameExamined(EntityUid uid, MachineFrameComponent component, ExaminedEvent args)
+    {
+        if (!args.IsInDetailsRange)
+            return;
+        if (component.HasBoard)
+            args.PushMarkup(Loc.GetString("machine-frame-component-on-examine-label", ("board", EntityManager.GetComponent<MetaDataComponent>(component.BoardContainer.ContainedEntities[0]).EntityName)));
     }
 }

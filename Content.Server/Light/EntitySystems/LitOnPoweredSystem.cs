@@ -14,7 +14,7 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<LitOnPoweredComponent, PowerNetBatterySupplyEvent>(OnPowerSupply);
         }
 
-        private void OnPowerChanged(EntityUid uid, LitOnPoweredComponent component, PowerChangedEvent args)
+        private void OnPowerChanged(EntityUid uid, LitOnPoweredComponent component, ref PowerChangedEvent args)
         {
             if (EntityManager.TryGetComponent<PointLightComponent>(uid, out var light))
             {
@@ -22,7 +22,7 @@ namespace Content.Server.Light.EntitySystems
             }
         }
 
-        private void OnPowerSupply(EntityUid uid, LitOnPoweredComponent component, PowerNetBatterySupplyEvent args)
+        private void OnPowerSupply(EntityUid uid, LitOnPoweredComponent component, ref PowerNetBatterySupplyEvent args)
         {
             if (EntityManager.TryGetComponent<PointLightComponent>(uid, out var light))
             {

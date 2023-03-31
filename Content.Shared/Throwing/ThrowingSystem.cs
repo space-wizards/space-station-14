@@ -3,6 +3,8 @@ using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Throwing;
@@ -19,6 +21,7 @@ public sealed class ThrowingSystem : EntitySystem
 
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly ThrownItemSystem _thrownSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
 
@@ -28,7 +31,6 @@ public sealed class ThrowingSystem : EntitySystem
     /// <param name="uid">The entity being thrown.</param>
     /// <param name="direction">A vector pointing from the entity to its destination.</param>
     /// <param name="strength">How much the direction vector should be multiplied for velocity.</param>
-    /// <param name="user"></param>
     /// <param name="pushbackRatio">The ratio of impulse applied to the thrower - defaults to 10 because otherwise it's not enough to properly recover from getting spaced</param>
     public void TryThrow(
         EntityUid uid,
@@ -58,7 +60,7 @@ public sealed class ThrowingSystem : EntitySystem
         comp.Thrower = user;
         // Give it a l'il spin.
         if (!_tagSystem.HasTag(uid, "NoSpinOnThrow"))
-            physics.ApplyAngularImpulse(ThrowAngularImpulse);
+            _physics.ApplyAngularImpulse(uid, ThrowAngularImpulse, body: physics);
         else
         {
             if (transform == null)
@@ -73,25 +75,25 @@ public sealed class ThrowingSystem : EntitySystem
             _interactionSystem.ThrownInteraction(user.Value, uid);
 
         var impulseVector = direction.Normalized * strength * physics.Mass;
-        physics.ApplyLinearImpulse(impulseVector);
+        _physics.ApplyLinearImpulse(uid, impulseVector, body: physics);
 
         // Estimate time to arrival so we can apply OnGround status and slow it much faster.
         var time = (direction / strength).Length;
 
         if (time < FlyTime)
         {
-            physics.BodyStatus = BodyStatus.OnGround;
-            _thrownSystem.LandComponent(comp);
+            _thrownSystem.LandComponent(uid, comp, physics);
         }
         else
         {
-            physics.BodyStatus = BodyStatus.InAir;
+            _physics.SetBodyStatus(physics, BodyStatus.InAir);
 
             Timer.Spawn(TimeSpan.FromSeconds(time - FlyTime), () =>
             {
-                if (physics.Deleted) return;
-                physics.BodyStatus = BodyStatus.OnGround;
-                _thrownSystem.LandComponent(comp);
+                if (physics.Deleted)
+                    return;
+
+                _thrownSystem.LandComponent(uid, comp, physics);
             });
         }
 
@@ -102,10 +104,10 @@ public sealed class ThrowingSystem : EntitySystem
             _gravity.IsWeightless(user.Value, userPhysics))
         {
             var msg = new ThrowPushbackAttemptEvent();
-            RaiseLocalEvent(physics.Owner, msg);
+            RaiseLocalEvent(uid, msg);
 
             if (!msg.Cancelled)
-                userPhysics.ApplyLinearImpulse(-impulseVector * pushbackRatio);
+                _physics.ApplyLinearImpulse(user.Value, -impulseVector * pushbackRatio, body: userPhysics);
         }
     }
 }

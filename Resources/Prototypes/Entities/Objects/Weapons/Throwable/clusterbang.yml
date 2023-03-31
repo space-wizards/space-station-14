@@ -9,10 +9,12 @@
     netsync: false
     state: base-0
   - type: Appearance
-    visuals:
-    - type: ClusterGrenadeVisualizer
-      state: base
+  - type: ClusterGrenadeVisuals
+    state: base
   - type: ClusterGrenade
+  - type: ContainerContainer
+    containers:
+      cluster-flash: !type:Container
 
 - type: entity
   parent: ClusterBang

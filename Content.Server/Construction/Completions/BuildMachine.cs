@@ -1,7 +1,9 @@
 using System.Linq;
 using Content.Server.Construction.Components;
 using Content.Shared.Construction;
+using Content.Shared.Construction.Components;
 using JetBrains.Annotations;
+using Robust.Server.Containers;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Construction.Completions
@@ -24,7 +26,7 @@ namespace Content.Server.Construction.Completions
                 return;
             }
 
-            if (!EntitySystem.Get<MachineFrameSystem>().IsComplete(machineFrame))
+            if (!entityManager.EntitySysManager.GetEntitySystem<MachineFrameSystem>().IsComplete(machineFrame))
             {
                 Logger.Warning($"Machine frame entity {uid} doesn't have all required parts to be built! Aborting build machine action.");
                 return;
@@ -57,24 +59,25 @@ namespace Content.Server.Construction.Completions
 
             entBoardContainer.Remove(board);
 
+            var containerSys = entityManager.EntitySysManager.GetEntitySystem<ContainerSystem>();
             var transform = entityManager.GetComponent<TransformComponent>(uid);
             var machine = entityManager.SpawnEntity(boardComponent.Prototype, transform.Coordinates);
             entityManager.GetComponent<TransformComponent>(machine).LocalRotation = transform.LocalRotation;
 
-            var boardContainer = machine.EnsureContainer<Container>(MachineFrameComponent.BoardContainerName, out var existed);
+            var boardContainer = containerSys.EnsureContainer<Container>(machine, MachineFrameComponent.BoardContainerName, out var existed);
 
             if (existed)
             {
                 // Clean that up...
-                boardContainer.CleanContainer();
+                containerSys.CleanContainer(boardContainer);
             }
 
-            var partContainer = machine.EnsureContainer<Container>(MachineFrameComponent.PartContainerName, out existed);
+            var partContainer = containerSys.EnsureContainer<Container>(machine, MachineFrameComponent.PartContainerName, out existed);
 
             if (existed)
             {
                 // Clean that up, too...
-                partContainer.CleanContainer();
+                containerSys.CleanContainer(partContainer);
             }
 
             boardContainer.Insert(board);

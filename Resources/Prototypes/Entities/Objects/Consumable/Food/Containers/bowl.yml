@@ -52,6 +52,9 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - Trash
 
 - type: entity
   name: broken bowl
@@ -68,6 +71,8 @@
     - Trash
   - type: Recyclable
   - type: SpaceGarbage
+  - type: StaticPrice
+    price: 0
 
 - type: entity
   name: bowl

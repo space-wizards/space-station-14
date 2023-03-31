@@ -21,7 +21,6 @@ public sealed class TargetOutlineSystem : EntitySystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly SpriteSystem _spriteSystem = default!;
 
     private bool _enabled = false;
 
@@ -72,8 +71,8 @@ public sealed class TargetOutlineSystem : EntitySystem
     {
         base.Initialize();
 
-        _shaderTargetValid = _prototypeManager.Index<ShaderPrototype>(ShaderTargetValid).Instance();
-        _shaderTargetInvalid = _prototypeManager.Index<ShaderPrototype>(ShaderTargetInvalid).Instance();
+        _shaderTargetValid = _prototypeManager.Index<ShaderPrototype>(ShaderTargetValid).InstanceUnique();
+        _shaderTargetInvalid = _prototypeManager.Index<ShaderPrototype>(ShaderTargetInvalid).InstanceUnique();
     }
 
     public void Disable()
@@ -118,7 +117,7 @@ public sealed class TargetOutlineSystem : EntitySystem
         // TODO: Duplicated in SpriteSystem and DragDropSystem. Should probably be cached somewhere for a frame?
         var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition).Position;
         var bounds = new Box2(mousePos - LookupSize / 2f, mousePos + LookupSize / 2f);
-        var pvsEntities = _lookup.GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, LookupFlags.Approximate | LookupFlags.Anchored);
+        var pvsEntities = _lookup.GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, LookupFlags.Approximate | LookupFlags.Static);
         var spriteQuery = GetEntityQuery<SpriteComponent>();
 
         foreach (var entity in pvsEntities)

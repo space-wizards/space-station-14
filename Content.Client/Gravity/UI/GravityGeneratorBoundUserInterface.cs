@@ -10,7 +10,7 @@ namespace Content.Client.Gravity.UI
     {
         private GravityGeneratorWindow? _window;
 
-        public GravityGeneratorBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base (owner, uiKey)
+        public GravityGeneratorBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base (owner, uiKey)
         {
         }
 

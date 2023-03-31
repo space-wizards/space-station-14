@@ -1,7 +1,7 @@
-using Content.Shared.Stacks;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 
 namespace Content.Shared.Materials
 {
@@ -13,33 +13,34 @@ namespace Content.Shared.Materials
     public sealed class MaterialPrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
-        [ParentDataField(typeof(AbstractPrototypeIdSerializer<MaterialPrototype>))]
-        public string? Parent { get; } = null;
+        [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<MaterialPrototype>))]
+        public string[]? Parents { get; }
 
         [ViewVariables]
         [AbstractDataFieldAttribute]
         public bool Abstract { get; } = false;
 
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
-        [ViewVariables]
-        [DataField("stack", customTypeSerializer:typeof(PrototypeIdSerializer<StackPrototype>))]
-        public string? StackId { get; } = null;
+        /// <summary>
+        ///     For material storage to be able to convert back and forth
+        ///     between the material and physical entities you can carry,
+        ///     include which stack we should spawn by default.
+        /// </summary>
+        [DataField("stackEntity", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string StackEntity { get; } = "";
 
-        [ViewVariables]
         [DataField("name")]
-        public string Name { get; } = "unobtanium";
+        public string Name = "";
 
-        [ViewVariables]
         [DataField("color")]
         public Color Color { get; } = Color.Gray;
 
         /// <summary>
         ///     An icon used to represent the material in graphic interfaces.
         /// </summary>
-        [ViewVariables]
         [DataField("icon")]
         public SpriteSpecifier Icon { get; } = SpriteSpecifier.Invalid;
 

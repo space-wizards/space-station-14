@@ -20,23 +20,23 @@ public sealed class UseDelaySystem : EntitySystem
         SubscribeLocalEvent<UseDelayComponent, ComponentHandleState>(OnHandleState);
 
         SubscribeLocalEvent<UseDelayComponent, EntityPausedEvent>(OnPaused);
+        SubscribeLocalEvent<UseDelayComponent, EntityUnpausedEvent>(OnUnpaused);
     }
 
-    private void OnPaused(EntityUid uid, UseDelayComponent component, EntityPausedEvent args)
+    private void OnPaused(EntityUid uid, UseDelayComponent component, ref EntityPausedEvent args)
     {
-        if (args.Paused)
-        {
-            // This entity just got paused, but wasn't before
-            if (component.DelayEndTime != null)
-                component.RemainingDelay = _gameTiming.CurTime - component.DelayEndTime;
+        // This entity just got paused, but wasn't before
+        if (component.DelayEndTime != null)
+            component.RemainingDelay = _gameTiming.CurTime - component.DelayEndTime;
 
-            _activeDelays.Remove(component);
-        }
-        else if (component.RemainingDelay == null)
-        {
-            // Got unpaused, but had no active delay
+        _activeDelays.Remove(component);
+        Dirty(component);
+    }
+
+    private void OnUnpaused(EntityUid uid, UseDelayComponent component, ref EntityUnpausedEvent args)
+    {
+        if (component.RemainingDelay == null)
             return;
-        }
 
         // We got unpaused, resume the delay/cooldown. Currently this takes for granted that ItemCooldownComponent
         // handles the pausing on its own. I'm not even gonna check, because I CBF fixing it if it doesn't.
@@ -73,12 +73,12 @@ public sealed class UseDelaySystem : EntitySystem
         var curTime = _gameTiming.CurTime;
         var mQuery = EntityManager.GetEntityQuery<MetaDataComponent>();
 
+        // TODO refactor this to use active components
         foreach (var delay in _activeDelays)
         {
             if (delay.DelayEndTime == null ||
                 curTime > delay.DelayEndTime ||
-                Deleted(delay.Owner, mQuery) ||
-                delay.CancellationTokenSource?.Token.IsCancellationRequested == true)
+                Deleted(delay.Owner, mQuery))
             {
                 toRemove.Add(delay);
             }
@@ -86,7 +86,6 @@ public sealed class UseDelaySystem : EntitySystem
 
         foreach (var delay in toRemove)
         {
-            delay.CancellationTokenSource = null;
             delay.DelayEndTime = null;
             _activeDelays.Remove(delay);
             Dirty(delay);
@@ -98,9 +97,8 @@ public sealed class UseDelaySystem : EntitySystem
         if (!Resolve(uid, ref component, false))
             return;
 
-        if (component.ActiveDelay || Deleted(uid)) return;
-
-        component.CancellationTokenSource = new CancellationTokenSource();
+        if (component.ActiveDelay)
+            return;
 
         DebugTools.Assert(!_activeDelays.Contains(component));
         _activeDelays.Add(component);
@@ -123,8 +121,6 @@ public sealed class UseDelaySystem : EntitySystem
 
     public void Cancel(UseDelayComponent component)
     {
-        component.CancellationTokenSource?.Cancel();
-        component.CancellationTokenSource = null;
         component.DelayEndTime = null;
         _activeDelays.Remove(component);
         Dirty(component);
@@ -133,12 +129,5 @@ public sealed class UseDelaySystem : EntitySystem
         {
             cooldown.CooldownEnd = _gameTiming.CurTime;
         }
-    }
-
-    public void Restart(UseDelayComponent component)
-    {
-        component.CancellationTokenSource?.Cancel();
-        component.CancellationTokenSource = null;
-        BeginDelay(component.Owner, component);
     }
 }

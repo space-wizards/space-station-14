@@ -1,23 +1,24 @@
 using System.Linq;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
-using Content.Shared.MobState.Components;
 using Content.Shared.Eye.Blinding;
-using Content.Shared.MobState.EntitySystems;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 using static Content.Shared.Interaction.SharedInteractionSystem;
 
 namespace Content.Shared.Examine
 {
-    public abstract class ExamineSystemShared : EntitySystem
+    public abstract partial class ExamineSystemShared : EntitySystem
     {
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-        [Dependency] protected readonly SharedMobStateSystem MobStateSystem = default!;
+        [Dependency] protected readonly MobStateSystem MobStateSystem = default!;
 
         public const float MaxRaycastRange = 100;
 
@@ -46,6 +47,9 @@ namespace Content.Shared.Examine
 
         public bool IsInDetailsRange(EntityUid examiner, EntityUid entity)
         {
+            if (entity.IsClientSide())
+                return true;
+
             // check if the mob is in critical or dead
             if (MobStateSystem.IsIncapacitated(examiner))
                 return false;
@@ -66,17 +70,36 @@ namespace Content.Shared.Examine
         [Pure]
         public bool CanExamine(EntityUid examiner, EntityUid examined)
         {
+            // special check for client-side entities stored in null-space for some UI guff.
+            if (examined.IsClientSide())
+                return true;
+
             return !Deleted(examined) && CanExamine(examiner, EntityManager.GetComponent<TransformComponent>(examined).MapPosition,
-                entity => entity == examiner || entity == examined);
+                entity => entity == examiner || entity == examined, examined);
         }
 
         [Pure]
-        public virtual bool CanExamine(EntityUid examiner, MapCoordinates target, Ignored? predicate = null)
+        public virtual bool CanExamine(EntityUid examiner, MapCoordinates target, Ignored? predicate = null, EntityUid? examined = null, ExaminerComponent? examinerComp = null)
         {
-            if (!EntityManager.TryGetComponent(examiner, out ExaminerComponent? examinerComponent))
+            // TODO occluded container checks
+            // also requires checking if the examiner has either a storage or stripping UI open, as the item may be accessible via that UI
+
+            if (!Resolve(examiner, ref examinerComp, false))
                 return false;
 
-            if (!examinerComponent.DoRangeCheck)
+            // Ghosts and admins skip examine checks.
+            if (examinerComp.SkipChecks)
+                return true;
+
+            if (examined != null)
+            {
+                var ev = new ExamineAttemptEvent(examiner);
+                RaiseLocalEvent(examined.Value, ev);
+                if (ev.Cancelled)
+                    return false;
+            }
+
+            if (!examinerComp.CheckInRangeUnOccluded)
                 return true;
 
             if (EntityManager.GetComponent<TransformComponent>(examiner).MapID != target.MapId)
@@ -101,6 +124,12 @@ namespace Content.Shared.Examine
                     return DeadExamineRange;
                 else if (MobStateSystem.IsCritical(examiner, mobState) || (TryComp<BlindableComponent>(examiner, out var blind) && blind.Sources > 0))
                     return CritExamineRange;
+
+                else if (TryComp<BlurryVisionComponent>(examiner, out var blurry) && blurry.Magnitude != 0)
+                {
+                    float range = ExamineRange - (2 * (8 - blurry.Magnitude));
+                    return Math.Clamp(range, 2, 16);
+                }
             }
             return ExamineRange;
         }
@@ -133,7 +162,8 @@ namespace Content.Shared.Examine
             var length = dir.Length;
 
             // If range specified also check it
-            if (range > 0f && length > range) return false;
+            // TODO: This rounding check is here because the API is kinda eh
+            if (range > 0f && length > range + 0.01f) return false;
 
             if (MathHelper.CloseTo(length, 0)) return true;
 
@@ -161,7 +191,8 @@ namespace Content.Shared.Examine
                     continue;
                 }
 
-                var bBox = o.BoundingBox.Translated(entMan.GetComponent<TransformComponent>(o.Owner).WorldPosition);
+                var bBox = o.BoundingBox;
+                bBox = bBox.Translated(entMan.GetComponent<TransformComponent>(o.Owner).WorldPosition);
 
                 if (bBox.Contains(origin.Position) || bBox.Contains(other.Position))
                 {
@@ -288,7 +319,7 @@ namespace Content.Shared.Examine
         /// <seealso cref="PushText"/>
         public void PushMessage(FormattedMessage message)
         {
-            if (message.Tags.Count == 0)
+            if (message.Nodes.Count == 0)
                 return;
 
             if (_doNewLine)
@@ -318,6 +349,19 @@ namespace Content.Shared.Examine
             var msg = new FormattedMessage();
             msg.AddText(text);
             PushMessage(msg);
+        }
+    }
+
+    /// <summary>
+    ///     Event raised directed at an entity that someone is attempting to examine
+    /// </summary>
+    public sealed class ExamineAttemptEvent : CancellableEntityEventArgs
+    {
+        public readonly EntityUid Examiner;
+
+        public ExamineAttemptEvent(EntityUid examiner)
+        {
+            Examiner = examiner;
         }
     }
 }

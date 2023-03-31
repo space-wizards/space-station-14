@@ -30,8 +30,8 @@ public sealed class OpenAdminNotesCommand : IConsoleCommand
             case 1 when Guid.TryParse(args[0], out notedPlayer):
                 break;
             case 1:
-                var db = IoCManager.Resolve<IServerDbManager>();
-                var dbGuid = await db.GetAssignedUserIdAsync(args[0]);
+                var locator = IoCManager.Resolve<IPlayerLocator>();
+                var dbGuid = await locator.LookupIdByNameAsync(args[0]);
 
                 if (dbGuid == null)
                 {
@@ -39,7 +39,7 @@ public sealed class OpenAdminNotesCommand : IConsoleCommand
                     return;
                 }
 
-                notedPlayer = dbGuid.Value;
+                notedPlayer = dbGuid.UserId;
                 break;
             default:
                 shell.WriteError($"Invalid arguments.\n{Help}");

@@ -6,6 +6,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Shared.Chunking;
 
@@ -77,19 +78,24 @@ public sealed class ChunkingSystem : EntitySystem
 
         foreach (var viewerUid in viewers)
         {
-            var xform = xformQuery.GetComponent(viewerUid);
+            if (!xformQuery.TryGetComponent(viewerUid, out var xform))
+            {
+                Logger.Error($"Player has deleted viewer entities? Viewers: {string.Join(", ", viewers.Select(x => ToPrettyString(x)))}");
+                continue;
+            }
+
             var pos = _transform.GetWorldPosition(xform, xformQuery);
             var bounds = _baseViewBounds.Translated(pos).Enlarged(viewEnlargement);
 
             foreach (var grid in _mapManager.FindGridsIntersecting(xform.MapID, bounds, true))
             {
-                if (!chunks.TryGetValue(grid.GridEntityId, out var set))
+                if (!chunks.TryGetValue(grid.Owner, out var set))
                 {
-                    chunks[grid.GridEntityId] = set = indexPool.Get();
+                    chunks[grid.Owner] = set = indexPool.Get();
                     DebugTools.Assert(set.Count == 0);
                 }
 
-                var enumerator = new ChunkIndicesEnumerator(_transform.GetInvWorldMatrix(grid.GridEntityId, xformQuery).TransformBox(bounds), chunkSize);
+                var enumerator = new ChunkIndicesEnumerator(_transform.GetInvWorldMatrix(grid.Owner, xformQuery).TransformBox(bounds), chunkSize);
 
                 while (enumerator.MoveNext(out var indices))
                 {

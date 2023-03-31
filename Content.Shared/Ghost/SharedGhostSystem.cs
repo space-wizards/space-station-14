@@ -1,5 +1,6 @@
 using Content.Shared.DragDrop;
 using Content.Shared.Emoting;
+using Content.Shared.Hands;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Robust.Shared.Serialization;
@@ -44,44 +45,50 @@ namespace Content.Shared.Ghost
     }
 
     /// <summary>
+    /// An individual place a ghost can warp to.
+    /// This is used as part of <see cref="GhostWarpsResponseEvent"/>
+    /// </summary>
+    [Serializable, NetSerializable]
+    public struct GhostWarp
+    {
+        public GhostWarp(EntityUid entity, string displayName, bool isWarpPoint)
+        {
+            Entity = entity;
+            DisplayName = displayName;
+            IsWarpPoint = isWarpPoint;
+        }
+
+        /// <summary>
+        /// The entity representing the warp point.
+        /// This is passed back to the server in <see cref="GhostWarpToTargetRequestEvent"/>
+        /// </summary>
+        public EntityUid Entity { get; }
+        /// <summary>
+        /// The display name to be surfaced in the ghost warps menu
+        /// </summary>
+        public string DisplayName { get; }
+        /// <summary>
+        /// Whether this warp represents a warp point or a player
+        /// </summary>
+        public bool IsWarpPoint { get;  }
+    }
+
+    /// <summary>
     /// A server to client response for a <see cref="GhostWarpsRequestEvent"/>.
     /// Contains players, and locations a ghost can warp to
     /// </summary>
     [Serializable, NetSerializable]
     public sealed class GhostWarpsResponseEvent : EntityEventArgs
     {
-        public GhostWarpsResponseEvent(List<string> locations, Dictionary<EntityUid, string> players)
+        public GhostWarpsResponseEvent(List<GhostWarp> warps)
         {
-            Locations = locations;
-            Players = players;
+            Warps = warps;
         }
 
         /// <summary>
-        /// A list of location names that can be warped to.
+        /// A list of warp points.
         /// </summary>
-        public List<string> Locations { get; }
-
-        /// <summary>
-        /// A dictionary containing the entity id, and name of players that can be warped to.
-        /// </summary>
-        public Dictionary<EntityUid, string> Players { get; }
-    }
-
-    /// <summary>
-    /// A client to server request for their ghost to be warped to a location
-    /// </summary>
-    [Serializable, NetSerializable]
-    public sealed class GhostWarpToLocationRequestEvent : EntityEventArgs
-    {
-        /// <summary>
-        /// The location name to warp to.
-        /// </summary>
-        public string Name { get; }
-
-        public GhostWarpToLocationRequestEvent(string locationName)
-        {
-            Name = locationName;
-        }
+        public List<GhostWarp> Warps { get; }
     }
 
     /// <summary>

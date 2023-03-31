@@ -1,5 +1,8 @@
+using Content.Server.Cargo.Systems;
+using Content.Server.Emp;
 using Content.Server.Power.Components;
 using Content.Shared.Examine;
+using Content.Shared.Rejuvenate;
 using JetBrains.Annotations;
 
 namespace Content.Server.Power.EntitySystems
@@ -12,9 +15,23 @@ namespace Content.Server.Power.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<ExaminableBatteryComponent, ExaminedEvent>(OnExamine);
+            SubscribeLocalEvent<PowerNetworkBatteryComponent, RejuvenateEvent>(OnNetBatteryRejuvenate);
+            SubscribeLocalEvent<BatteryComponent, RejuvenateEvent>(OnBatteryRejuvenate);
+            SubscribeLocalEvent<BatteryComponent, PriceCalculationEvent>(CalculateBatteryPrice);
+            SubscribeLocalEvent<BatteryComponent, EmpPulseEvent>(OnEmpPulse);
 
             SubscribeLocalEvent<NetworkBatteryPreSync>(PreSync);
             SubscribeLocalEvent<NetworkBatteryPostSync>(PostSync);
+        }
+
+        private void OnNetBatteryRejuvenate(EntityUid uid, PowerNetworkBatteryComponent component, RejuvenateEvent args)
+        {
+            component.NetworkBattery.CurrentStorage = component.NetworkBattery.Capacity;
+        }
+
+        private void OnBatteryRejuvenate(EntityUid uid, BatteryComponent component, RejuvenateEvent args)
+        {
+            component.CurrentCharge = component.MaxCharge;
         }
 
         private void OnExamine(EntityUid uid, ExaminableBatteryComponent component, ExaminedEvent args)
@@ -63,6 +80,20 @@ namespace Content.Server.Power.EntitySystems
                 if (batt.IsFullyCharged) continue;
                 batt.CurrentCharge += comp.AutoRechargeRate * frameTime;
             }
+        }
+
+        /// <summary>
+        /// Gets the price for the power contained in an entity's battery.
+        /// </summary>
+        private void CalculateBatteryPrice(EntityUid uid, BatteryComponent component, ref PriceCalculationEvent args)
+        {
+            args.Price += component.CurrentCharge * component.PricePerJoule;
+        }
+
+        private void OnEmpPulse(EntityUid uid, BatteryComponent component, ref EmpPulseEvent args)
+        {
+            args.Affected = true;
+            component.UseCharge(args.EnergyConsumption);   
         }
     }
 }

@@ -10,9 +10,9 @@ diagnoser-disease-report-cureresist-none = Spaceacillin Resistance: [color=green
 diagnoser-disease-report-cureresist-low = Spaceacillin Resistance: [color=yellow]Low[/color]
 diagnoser-disease-report-cureresist-medium = Spaceacillin Resistance: [color=orange]Medium[/color]
 diagnoser-disease-report-cureresist-high = Spaceacillin Resistance: [color=red]High[/color]
-diagnoser-cure-none = The disease has no specific cures.
+diagnoser-no-cures = The disease has no specific cures.
 diagnoser-cure-has = The disease has the following cures:
-diagnoser-cure-bedrest = Rest in bed for {$time} seconds.
+diagnoser-cure-bedrest = Rest in bed for {$time} seconds, or {$sleep} seconds if sleeping.
 diagnoser-cure-reagent = Consume at least {$units}u of {$reagent}.
 diagnoser-cure-wait = It will go away on its own after {$time} seconds.
 diagnoser-cure-temp = Reach a body temperature below {$max}°K or above {$min}°K.

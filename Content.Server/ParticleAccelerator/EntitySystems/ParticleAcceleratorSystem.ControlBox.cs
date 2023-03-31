@@ -10,7 +10,7 @@ public sealed partial class ParticleAcceleratorSystem
         SubscribeLocalEvent<ParticleAcceleratorControlBoxComponent, PowerChangedEvent>(OnControlBoxPowerChange);
     }
 
-    private static void OnControlBoxPowerChange(EntityUid uid, ParticleAcceleratorControlBoxComponent component, PowerChangedEvent args)
+    private static void OnControlBoxPowerChange(EntityUid uid, ParticleAcceleratorControlBoxComponent component, ref PowerChangedEvent args)
     {
         component.OnPowerStateChanged(args);
     }

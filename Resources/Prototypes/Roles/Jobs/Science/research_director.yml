@@ -1,11 +1,16 @@
 - type: job
   id: ResearchDirector
   name: job-name-rd
+  description: job-description-rd
+  playTimeTracker: JobResearchDirector
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Science
+      time: 18000
+    - !type:OverallPlaytimeRequirement
+      time: 108000
   weight: 10
   startingGear: ResearchDirectorGear
-  departments:
-  - Command
-  - Science
   icon: "ResearchDirector"
   requireAdminNotify: true
   supervisors: job-supervisors-captain
@@ -20,11 +25,11 @@
   id: ResearchDirectorGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitResearchDirector
-    back: ClothingBackpackScienceFilled
+    back: ClothingBackpackResearchDirectorFilled
     shoes: ClothingShoesColorBrown
     outerClothing: ClothingOuterCoatLab
     id: RnDPDA
     ears: ClothingHeadsetRD
   innerclothingskirt: ClothingUniformJumpskirtResearchDirector
-  satchel: ClothingBackpackSatchelScienceFilled
-  duffelbag: ClothingBackpackDuffelScienceFilled
+  satchel: ClothingBackpackSatchelResearchDirectorFilled
+  duffelbag: ClothingBackpackDuffelResearchDirectorFilled

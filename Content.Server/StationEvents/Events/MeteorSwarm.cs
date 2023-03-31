@@ -1,15 +1,15 @@
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Rules;
-using Content.Server.Projectiles.Components;
-using Content.Shared.Sound;
 using Content.Shared.Spawners.Components;
 using Robust.Shared.Map;
-using Robust.Shared.Random;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.StationEvents.Events
 {
     public sealed class MeteorSwarm : StationEventSystem
     {
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+
         public override string Prototype => "MeteorSwarm";
 
         private float _cooldown;
@@ -33,7 +33,8 @@ namespace Content.Server.StationEvents.Events
         public override void Started()
         {
             base.Started();
-            _waveCounter = RobustRandom.Next(MinimumWaves, MaximumWaves);
+            var mod = Math.Sqrt(GetSeverityModifier());
+            _waveCounter = (int) (RobustRandom.Next(MinimumWaves, MaximumWaves) * mod);
         }
 
         public override void Ended()
@@ -56,21 +57,23 @@ namespace Content.Server.StationEvents.Events
                 return;
             }
 
+            var mod = GetSeverityModifier();
+
             _cooldown -= frameTime;
 
-            if (_cooldown > 0f) return;
+            if (_cooldown > 0f)
+                return;
 
             _waveCounter--;
 
-            _cooldown += (MaximumCooldown - MinimumCooldown) * RobustRandom.NextFloat() + MinimumCooldown;
+            _cooldown += (MaximumCooldown - MinimumCooldown) * RobustRandom.NextFloat() / mod + MinimumCooldown;
 
             Box2? playableArea = null;
             var mapId = GameTicker.DefaultMap;
 
-            foreach (var grid in MapManager.GetAllGrids())
+            foreach (var grid in MapManager.GetAllMapGrids(mapId))
             {
-                if (grid.ParentMapId != mapId || !EntityManager.TryGetComponent(grid.GridEntityId, out PhysicsComponent? gridBody)) continue;
-                var aabb = gridBody.GetWorldAABB();
+                var aabb = _physics.GetWorldAABB(grid.Owner);
                 playableArea = playableArea?.Union(aabb) ?? aabb;
             }
 
@@ -92,15 +95,15 @@ namespace Content.Server.StationEvents.Events
                 var spawnPosition = new MapCoordinates(center + offset, mapId);
                 var meteor = EntityManager.SpawnEntity("MeteorLarge", spawnPosition);
                 var physics = EntityManager.GetComponent<PhysicsComponent>(meteor);
-                physics.BodyStatus = BodyStatus.InAir;
-                physics.LinearDamping = 0f;
-                physics.AngularDamping = 0f;
-                physics.ApplyLinearImpulse(-offset.Normalized * MeteorVelocity * physics.Mass);
-                physics.ApplyAngularImpulse(
-                    // Get a random angular velocity.
-                    physics.Mass * ((MaxAngularVelocity - MinAngularVelocity) * RobustRandom.NextFloat() +
-                                    MinAngularVelocity));
-                // TODO: God this disgusts me but projectile needs a refactor.
+                _physics.SetBodyStatus(physics, BodyStatus.InAir);
+                _physics.SetLinearDamping(physics, 0f);
+                _physics.SetAngularDamping(physics, 0f);
+                _physics.ApplyLinearImpulse(meteor, -offset.Normalized * MeteorVelocity * physics.Mass, body: physics);
+                _physics.ApplyAngularImpulse(
+                    meteor,
+                    physics.Mass * ((MaxAngularVelocity - MinAngularVelocity) * RobustRandom.NextFloat() + MinAngularVelocity),
+                    body: physics);
+
                 EnsureComp<TimedDespawnComponent>(meteor).Lifetime = 120f;
             }
         }

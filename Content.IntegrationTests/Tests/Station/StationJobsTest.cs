@@ -1,10 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Maps;
 using Content.Server.Station.Systems;
 using Content.Shared.Preferences;
+using Content.Shared.Roles;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
@@ -20,6 +21,9 @@ namespace Content.IntegrationTests.Tests.Station;
 public sealed class StationJobsTest
 {
     private const string Prototypes = @"
+- type: playTimeTracker
+  id: Dummy
+
 - type: gameMap
   id: FooStation
   minPlayers: 0
@@ -38,21 +42,26 @@ public sealed class StationJobsTest
 
 - type: job
   id: TAssistant
+  playTimeTracker: Dummy
 
 - type: job
   id: TMime
   weight: 20
+  playTimeTracker: Dummy
 
 - type: job
   id: TClown
   weight: -10
+  playTimeTracker: Dummy
 
 - type: job
   id: TCaptain
   weight: 10
+  playTimeTracker: Dummy
 
 - type: job
   id: TChaplain
+  playTimeTracker: Dummy
 ";
 
     private const int StationCount = 100;
@@ -146,7 +155,6 @@ public sealed class StationJobsTest
         var station = EntityUid.Invalid;
         await server.WaitPost(() =>
         {
-            mapManager.CreateNewMapEntity(MapId.Nullspace);
             station = stationSystem.InitializeNewStation(fooStationProto.Stations["Station"], null, $"Foo Station");
         });
 
@@ -178,6 +186,40 @@ public sealed class StationJobsTest
                 stationJobs.MakeJobUnlimited(station, "TChaplain");
                 Assert.That(stationJobs.IsJobUnlimited(station, "TChaplain"), "Could not make TChaplain unlimited.");
             });
+        });
+        await pairTracker.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task InvalidRoundstartJobsTest()
+    {
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+        var server = pairTracker.Pair.Server;
+
+        var prototypeManager = server.ResolveDependency<IPrototypeManager>();
+
+        await server.WaitAssertion(() =>
+        {
+            // invalidJobs contains all the jobs which can't be set for preference:
+            // i.e. all the jobs that shouldn't be available round-start.
+            var invalidJobs = new HashSet<string>();
+            foreach (var job in prototypeManager.EnumeratePrototypes<JobPrototype>())
+            {
+                if (!job.SetPreference)
+                    invalidJobs.Add(job.ID);
+            }
+
+            foreach (var gameMap in prototypeManager.EnumeratePrototypes<GameMapPrototype>())
+            {
+                foreach (var (stationId, station) in gameMap.Stations)
+                {
+                    foreach (var job in station.AvailableJobs.Keys)
+                    {
+                        Assert.That(invalidJobs.Contains(job), Is.False, $"Station {stationId} contains job prototype {job} which cannot be present roundstart.");
+                    }
+                }
+            }
+
         });
         await pairTracker.CleanReturnAsync();
     }

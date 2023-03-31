@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Roles
 {
-    [AdminCommand(AdminFlags.Fun)]
+    [AdminCommand(AdminFlags.Admin)]
     public sealed class ListRolesCommand : IConsoleCommand
     {
         public string Command => "listroles";

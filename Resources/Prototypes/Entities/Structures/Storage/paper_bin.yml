@@ -1,0 +1,78 @@
+- type: entity
+  parent: BaseStructureDynamic
+  id: PaperBin
+  name: paper bin
+  description: What secrets lie at the bottom of its endless stack?
+  suffix: Empty
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: paper_bin0
+    drawdepth: SmallObjects
+    noRot: true
+  - type: Appearance
+  - type: ItemMapper
+    sprite: Objects/Misc/bureaucracy.rsi
+    mapLayers:
+      paper_bin1:
+        whitelist:
+          tags:
+          - Document
+          - Write
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.10,-0.10,0.10,0.10"
+      density: 500
+      mask:
+        - TabletopMachineMask
+  - type: InteractionOutline
+  - type: Bin
+    whitelist:
+      tags:
+      - Document
+      - Write
+  - type: ContainerContainer
+    containers:
+      bin-container: !type:Container
+
+- type: entity
+  parent: PaperBin
+  id: PaperBin5
+  suffix: 5
+  components:
+  - type: Bin
+    initialContents:
+    - Paper
+    - Paper
+    - Paper
+    - Paper
+    - Paper
+    whitelist:
+      tags:
+      - Document
+      - Write
+
+- type: entity
+  parent: PaperBin
+  id: PaperBin10
+  suffix: 10
+  components:
+  - type: Bin
+    initialContents:
+    - Paper
+    - Paper
+    - Paper
+    - Paper
+    - Paper
+    - Paper
+    - Paper
+    - Paper
+    - Paper
+    - Paper
+    whitelist:
+      tags:
+      - Document
+      - Write

@@ -1,14 +1,14 @@
 - type: entity
   id: DoorElectronics
-  parent: BaseItem
+  parent: BaseElectronics
   name: door electronics
   description: An electronics board used in doors and airlocks
   components:
-    - type: Tag
-      tags:
-      - DoorElectronics
-      - DroneUsable
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: door_electronics
     - type: AccessReader
+    - type: Tag
+      tags:
+        - DoorElectronics
+        - DroneUsable

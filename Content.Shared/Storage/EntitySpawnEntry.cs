@@ -1,6 +1,6 @@
-﻿using Robust.Shared.Prototypes;
+﻿using System.Linq;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Storage;
@@ -10,17 +10,17 @@ namespace Content.Shared.Storage;
 /// </summary>
 [Serializable]
 [DataDefinition]
-public struct EntitySpawnEntry : IPopulateDefaultValues
+public struct EntitySpawnEntry
 {
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("id", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string PrototypeId;
+    [DataField("id", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string? PrototypeId = null;
 
     /// <summary>
     ///     The probability that an item will spawn. Takes decimal form so 0.05 is 5%, 0.50 is 50% etc.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("prob")] public float SpawnProbability;
+    [DataField("prob")] public float SpawnProbability = 1;
 
     /// <summary>
     ///     orGroup signifies to pick between entities designated with an ID.
@@ -44,10 +44,10 @@ public struct EntitySpawnEntry : IPopulateDefaultValues
     ///     </example>
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("orGroup")] public string? GroupId;
+    [DataField("orGroup")] public string? GroupId = null;
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("amount")] public int Amount;
+    [DataField("amount")] public int Amount = 1;
 
     /// <summary>
     ///     How many of this can be spawned, in total.
@@ -55,19 +55,14 @@ public struct EntitySpawnEntry : IPopulateDefaultValues
     ///     Otherwise, it chooses a random value between <see cref="Amount"/> and <see cref="MaxAmount"/> on spawn.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("maxAmount")] public int MaxAmount;
+    [DataField("maxAmount")] public int MaxAmount = 1;
 
-    public void PopulateDefaultValues()
-    {
-        Amount = 1;
-        MaxAmount = 1;
-        SpawnProbability = 1;
-    }
+    public EntitySpawnEntry() { }
 }
 
 public static class EntitySpawnCollection
 {
-    private sealed class OrGroup
+    public sealed class OrGroup
     {
         public List<EntitySpawnEntry> Entries { get; set; } = new();
         public float CumulativeProbability { get; set; } = 0f;
@@ -83,40 +78,22 @@ public static class EntitySpawnCollection
     /// <param name="entries">The entity spawn entries.</param>
     /// <param name="random">Resolve param.</param>
     /// <returns>A list of entity prototypes that should be spawned.</returns>
-    public static List<string> GetSpawns(IEnumerable<EntitySpawnEntry> entries,
+    public static List<string?> GetSpawns(IEnumerable<EntitySpawnEntry> entries,
         IRobustRandom? random = null)
     {
         IoCManager.Resolve(ref random);
 
-        var spawned = new List<string>();
-        var orGroupedSpawns = new Dictionary<string, OrGroup>();
+        var spawned = new List<string?>();
+        var ungrouped = CollectOrGroups(entries, out var orGroupedSpawns);
 
-        // collect groups together, create singular items that pass probability
-        foreach (var entry in entries)
+        foreach (var entry in ungrouped)
         {
-            // Handle "Or" groups
-            if (!string.IsNullOrEmpty(entry.GroupId))
-            {
-                if (!orGroupedSpawns.TryGetValue(entry.GroupId, out OrGroup? orGroup))
-                {
-                    orGroup = new();
-                    orGroupedSpawns.Add(entry.GroupId, orGroup);
-                }
-
-                orGroup.Entries.Add(entry);
-                orGroup.CumulativeProbability += entry.SpawnProbability;
-                continue;
-            }
-
-            // else
             // Check random spawn
             // ReSharper disable once CompareOfFloatsByEqualityOperator
-            if (entry.SpawnProbability != 1f && !random.Prob(entry.SpawnProbability)) continue;
+            if (entry.SpawnProbability != 1f && !random.Prob(entry.SpawnProbability))
+                continue;
 
-            var amount = entry.Amount;
-
-            if (entry.MaxAmount > amount)
-                amount = random.Next(amount, entry.MaxAmount);
+            var amount = (int) entry.GetAmount(random);
 
             for (var i = 0; i < amount; i++)
             {
@@ -124,25 +101,25 @@ public static class EntitySpawnCollection
             }
         }
 
-        // handle orgroup spawns
-        foreach (var spawnValue in orGroupedSpawns.Values)
+        // Handle OrGroup spawns
+        foreach (var spawnValue in orGroupedSpawns)
         {
             // For each group use the added cumulative probability to roll a double in that range
-            double diceRoll = random.NextDouble() * spawnValue.CumulativeProbability;
+            var diceRoll = random.NextDouble() * spawnValue.CumulativeProbability;
+
             // Add the entry's spawn probability to this value, if equals or lower, spawn item, otherwise continue to next item.
             var cumulative = 0.0;
+
             foreach (var entry in spawnValue.Entries)
             {
                 cumulative += entry.SpawnProbability;
-                if (diceRoll > cumulative) continue;
+                if (diceRoll > cumulative)
+                    continue;
+
                 // Dice roll succeeded, add item and break loop
+                var amount = (int) entry.GetAmount(random);
 
-                var amount = entry.Amount;
-
-                if (entry.MaxAmount > amount)
-                    amount = random.Next(amount, entry.MaxAmount);
-
-                for (var index = 0; index < amount; index++)
+                for (var i = 0; i < amount; i++)
                 {
                     spawned.Add(entry.PrototypeId);
                 }
@@ -152,5 +129,124 @@ public static class EntitySpawnCollection
         }
 
         return spawned;
+    }
+
+    public static List<string?> GetSpawns(IEnumerable<EntitySpawnEntry> entries,
+        System.Random random)
+    {
+        var spawned = new List<string?>();
+        var ungrouped = CollectOrGroups(entries, out var orGroupedSpawns);
+
+        foreach (var entry in ungrouped)
+        {
+            // Check random spawn
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            if (entry.SpawnProbability != 1f && !random.Prob(entry.SpawnProbability))
+                continue;
+
+            var amount = (int) entry.GetAmount(random);
+
+            for (var i = 0; i < amount; i++)
+            {
+                spawned.Add(entry.PrototypeId);
+            }
+        }
+
+        // Handle OrGroup spawns
+        foreach (var spawnValue in orGroupedSpawns)
+        {
+            // For each group use the added cumulative probability to roll a double in that range
+            var diceRoll = random.NextDouble() * spawnValue.CumulativeProbability;
+
+            // Add the entry's spawn probability to this value, if equals or lower, spawn item, otherwise continue to next item.
+            var cumulative = 0.0;
+
+            foreach (var entry in spawnValue.Entries)
+            {
+                cumulative += entry.SpawnProbability;
+                if (diceRoll > cumulative)
+                    continue;
+
+                // Dice roll succeeded, add item and break loop
+                var amount = (int) entry.GetAmount(random);
+
+                for (var i = 0; i < amount; i++)
+                {
+                    spawned.Add(entry.PrototypeId);
+                }
+
+                break;
+            }
+        }
+
+        return spawned;
+    }
+
+    public static double GetAmount(this EntitySpawnEntry entry, System.Random random, bool getAverage = false)
+    {
+        // Max amount is less or equal than amount, so just return the amount
+        if (entry.MaxAmount <= entry.Amount)
+            return entry.Amount;
+
+        // If we want the average, just calculate the expected amount
+        if (getAverage)
+            return (entry.Amount + entry.MaxAmount) / 2.0;
+
+        // Otherwise get a random value in between
+        return random.Next(entry.Amount, entry.MaxAmount);
+    }
+
+    /// <summary>
+    /// Collects all entries that belong together in an OrGroup, and then returns the leftover ungrouped entries.
+    /// </summary>
+    /// <param name="entries">A list of entries that will be collected into OrGroups.</param>
+    /// <param name="orGroups">A list of entries collected into OrGroups.</param>
+    /// <returns>A list of entries that are not in an OrGroup.</returns>
+    public static List<EntitySpawnEntry> CollectOrGroups(IEnumerable<EntitySpawnEntry> entries, out List<OrGroup> orGroups)
+    {
+        var ungrouped = new List<EntitySpawnEntry>();
+        var orGroupsDict = new Dictionary<string, OrGroup>();
+
+        foreach (var entry in entries)
+        {
+            // If the entry is in a group, collect it into an OrGroup. Otherwise just add it to a list of ungrouped
+            // entries.
+            if (!string.IsNullOrEmpty(entry.GroupId))
+            {
+                // Create a new OrGroup if necessary
+                if (!orGroupsDict.TryGetValue(entry.GroupId, out var orGroup))
+                {
+                    orGroup = new OrGroup();
+                    orGroupsDict.Add(entry.GroupId, orGroup);
+                }
+
+                orGroup.Entries.Add(entry);
+                orGroup.CumulativeProbability += entry.SpawnProbability;
+            }
+            else
+            {
+                ungrouped.Add(entry);
+            }
+        }
+
+        // We don't really need the group IDs anymore, so just return the values as a list
+        orGroups = orGroupsDict.Values.ToList();
+
+        return ungrouped;
+    }
+
+    public static double GetAmount(this EntitySpawnEntry entry, IRobustRandom? random = null, bool getAverage = false)
+    {
+        // Max amount is less or equal than amount, so just return the amount
+        if (entry.MaxAmount <= entry.Amount)
+            return entry.Amount;
+
+        // If we want the average, just calculate the expected amount
+        if (getAverage)
+            return (entry.Amount + entry.MaxAmount) / 2.0;
+
+        // Otherwise get a random value in between
+        IoCManager.Resolve(ref random);
+        return random.Next(entry.Amount, entry.MaxAmount);
     }
 }

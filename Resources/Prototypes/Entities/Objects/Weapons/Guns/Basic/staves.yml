@@ -10,13 +10,14 @@
     layers:
     - state: healing
   - type: Item
-    HeldPrefix: healing
+    heldPrefix: healing
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/Magic/staff_healing.ogg
   - type: BasicEntityAmmoProvider
     proto: ProjectileHealingBolt
     capacity: 10
+    count: 10
 
 - type: entity
   name: staff of entrance
@@ -28,10 +29,11 @@
     layers:
     - state: door
   - type: Item
-    HeldPrefix: door
+    heldPrefix: door
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/Magic/staff_door.ogg
   - type: BasicEntityAmmoProvider
     proto: ProjectilePolyboltDoor
     capacity: 10
+    count: 10

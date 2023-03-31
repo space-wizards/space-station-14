@@ -1,5 +1,5 @@
 using Content.Server.GameTicking.Presets;
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
@@ -11,7 +11,7 @@ namespace Content.Server.Announcements;
 [Prototype("roundAnnouncement")]
 public sealed class RoundAnnouncementPrototype : IPrototype
 {
-    [IdDataFieldAttribute]
+    [IdDataField]
     public string ID { get; } = default!;
 
     [DataField("sound")] public SoundSpecifier? Sound;

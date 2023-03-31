@@ -1,5 +1,6 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Shared.VendingMachines
 {
@@ -7,26 +8,16 @@ namespace Content.Shared.VendingMachines
     public sealed class VendingMachineInventoryPrototype : IPrototype
     {
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
-        [DataField("name")]
-        public string Name { get; } = string.Empty;
-
-        [DataField("animationDuration")]
-        public double AnimationDuration { get; }
-
-        // TODO make this a proper sprite specifier for yaml linting.
-        [DataField("spriteName")]
-        public string SpriteName { get; } = string.Empty;
-
-        [DataField("startingInventory")]
+        [DataField("startingInventory", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<uint, EntityPrototype>))]
         public Dictionary<string, uint> StartingInventory { get; } = new();
 
-        [DataField("emaggedInventory")]
+        [DataField("emaggedInventory", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<uint, EntityPrototype>))]
         public Dictionary<string, uint>? EmaggedInventory { get; }
 
-        [DataField("contrabandInventory")]
+        [DataField("contrabandInventory", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<uint, EntityPrototype>))]
         public Dictionary<string, uint>? ContrabandInventory { get; }
     }
 }

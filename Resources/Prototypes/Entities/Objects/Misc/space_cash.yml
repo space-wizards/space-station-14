@@ -11,7 +11,6 @@
     price: 0
   - type: Stack
     stackType: Credit
-    max: 1000000 # if you somehow get this rich consider buying a second station
     count: 1
   - type: Sprite
     sprite: Objects/Economy/cash.rsi
@@ -21,7 +20,7 @@
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - mass: 5
+    - density: 30
       shape:
         !type:PhysShapeAabb
         bounds: "-0.35,-0.2,0.25,0.1"
@@ -45,14 +44,14 @@
 - type: material
   id: Credit
   name: spacebuck
-  stack: Credit
-  icon: /Textures/Objects/Economy/cash.rsi/cash.png
+  stackEntity: SpaceCash
+  icon: { sprite: /Textures/Objects/Economy/cash.rsi, state: cash }
   price: 1
 
 - type: stack
   id: Credit
   name: spacebuck
-  icon: /Textures/Objects/Economy/cash.rsi/cash.png
+  icon: { sprite: /Textures/Objects/Economy/cash.rsi, state: cash }
   spawn: SpaceCash
 
 - type: entity

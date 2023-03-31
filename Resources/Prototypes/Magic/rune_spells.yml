@@ -9,3 +9,39 @@
     state: spell_default
   serverEvent: !type:InstantSpawnSpellEvent
     prototype: FlashRune
+
+- type: instantAction
+  id: ExplosionRune
+  name: action-name-spell-rune-explosion
+  description: action-description-spell-rune-explosion
+  useDelay: 20
+  itemIconStyle: BigAction
+  icon:
+    sprite: Objects/Magic/magicactions.rsi
+    state: spell_default
+  serverEvent: !type:InstantSpawnSpellEvent
+    prototype: ExplosionRune
+
+- type: instantAction
+  id: IgniteRune
+  name: action-name-spell-rune-ignite
+  description: action-description-spell-rune-ignite
+  useDelay: 15
+  itemIconStyle: BigAction
+  icon:
+    sprite: Objects/Magic/magicactions.rsi
+    state: spell_default
+  serverEvent: !type:InstantSpawnSpellEvent
+    prototype: IgniteRune
+
+- type: instantAction
+  id: StunRune
+  name: action-name-spell-rune-stun
+  description: action-description-spell-rune-stun
+  useDelay: 10
+  itemIconStyle: BigAction
+  icon:
+    sprite: Objects/Magic/magicactions.rsi
+    state: spell_default
+  serverEvent: !type:InstantSpawnSpellEvent
+    prototype: StunRune

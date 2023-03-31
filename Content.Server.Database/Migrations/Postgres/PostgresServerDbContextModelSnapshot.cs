@@ -19,7 +19,7 @@ namespace Content.Server.Database.Migrations.Postgres
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("ProductVersion", "6.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -506,6 +506,37 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.HasCheckConstraint("LastSeenAddressNotIPv6MappedIPv4", "NOT inet '::ffff:0.0.0.0/96' >>= last_seen_address");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.PlayTime", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("play_time_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("PlayerId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("player_id");
+
+                    b.Property<TimeSpan>("TimeSpent")
+                        .HasColumnType("interval")
+                        .HasColumnName("time_spent");
+
+                    b.Property<string>("Tracker")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("tracker");
+
+                    b.HasKey("Id")
+                        .HasName("PK_play_time");
+
+                    b.HasIndex("PlayerId", "Tracker")
+                        .IsUnique();
+
+                    b.ToTable("play_time", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.Preference", b =>
                 {
                     b.Property<int>("Id")
@@ -883,6 +914,33 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("server_unban", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.Trait", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("trait_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ProfileId")
+                        .HasColumnType("integer")
+                        .HasColumnName("profile_id");
+
+                    b.Property<string>("TraitName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("trait_name");
+
+                    b.HasKey("Id")
+                        .HasName("PK_trait");
+
+                    b.HasIndex("ProfileId")
+                        .HasDatabaseName("IX_trait_profile_id");
+
+                    b.ToTable("trait", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.UploadedResourceLog", b =>
                 {
                     b.Property<int>("Id")
@@ -1166,6 +1224,18 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("Ban");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.Trait", b =>
+                {
+                    b.HasOne("Content.Server.Database.Profile", "Profile")
+                        .WithMany("Traits")
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_trait_profile_profile_id");
+
+                    b.Navigation("Profile");
+                });
+
             modelBuilder.Entity("PlayerRound", b =>
                 {
                     b.HasOne("Content.Server.Database.Player", null)
@@ -1230,6 +1300,8 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("Antags");
 
                     b.Navigation("Jobs");
+
+                    b.Navigation("Traits");
                 });
 
             modelBuilder.Entity("Content.Server.Database.Round", b =>

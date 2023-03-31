@@ -54,6 +54,9 @@
   id: FoodSoupPea
   description: A humble split pea soup.
   components:
+  - type: FlavorProfile
+    flavors:
+      - peas
   - type: Sprite
     sprite: Objects/Consumable/Food/bowl.rsi
     layers:
@@ -79,6 +82,9 @@
   id: FoodSaladAesir
   description: Probably too incredible for mortals to fully enjoy.
   components:
+  - type: FlavorProfile
+    flavors:
+      - leafy
   - type: Sprite
     layers:
     - state: bowl
@@ -102,6 +108,10 @@
   id: FoodSaladHerb
   description: A tasty salad with apples on top.
   components:
+  - type: FlavorProfile
+    flavors:
+      - leafy
+      - apple
   - type: Sprite
     layers:
     - state: bowl
@@ -123,6 +133,12 @@
   id: FoodSaladValid
   description: It's just an herb salad with meatballs and fried potato slices. Nothing suspicious about it.
   components:
+  - type: FlavorProfile
+    flavors:
+      - leafy
+      - meaty
+      - potatoes
+      - validhunting
   - type: Sprite
     layers:
     - state: bowl
@@ -141,11 +157,97 @@
 # Tastes like leaves, potato, meat, valids.
 
 - type: entity
+  name: coleslaw
+  parent: FoodBowlBase
+  id: FoodSaladColeslaw
+  description: Shredded cabbage and red onions dressed with a vinaigrette.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - onion
+      - cabbage
+      - sour
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: coleslaw
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: Allicin
+          Quantity: 3
+# Tastes like cabbage, onion, sour.
+
+- type: entity
+  name: caesar salad
+  parent: FoodBowlBase
+  id: FoodSaladCaesar
+  description: A simple yet flavorful salad of onions, lettuce, croutons, and shreds of cheese dressed in oil. Comes with a slice of pita bread!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - onion
+      - cabbage
+      - bread
+      - cheesy
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: caesar
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 6
+# Tastes like cabbage, onion, croutons, cheese.
+
+- type: entity
+  name: kimchi salad
+  parent: FoodBowlBase
+  id: FoodSaladKimchi
+  description: It really is just a spicy salad.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - spicy
+      - cabbage
+      - carrot
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: kimchi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: Allicin
+          Quantity: 2
+# Tastes like spicy cabbage, carrots.
+
+- type: entity
   name: fruit salad
   parent: FoodBowlBase
   id: FoodSaladFruit
   description: Your standard fruit salad.
   components:
+  - type: FlavorProfile
+    flavors:
+      - fruity
   - type: Sprite
     layers:
     - state: bowl
@@ -167,6 +269,9 @@
   id: FoodSaladJungle
   description: Exotic fruits in a bowl.
   components:
+  - type: FlavorProfile
+    flavors:
+      - fruity
   - type: Sprite
     layers:
     - state: bowl
@@ -188,6 +293,10 @@
   id: FoodSaladCitrus
   description: Citrus overload!
   components:
+  - type: FlavorProfile
+    flavors:
+      - leafy
+      - sour
   - type: Sprite
     layers:
     - state: bowl
@@ -195,12 +304,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxvol: 15
+        maxvol: 38
         reagents:
         - ReagentId: Nutriment
-          Quantity: 7
+          Quantity: 18
         - ReagentId: Vitamin
-          Quantity: 5
+          Quantity: 15
 # Tastes like sourness, leaves.
 
 - type: entity
@@ -209,6 +318,9 @@
   id: FoodSaladEden
   description: A salad brimming with untapped potential.
   components:
+  - type: FlavorProfile
+    flavors:
+      - bitter
   - type: Sprite
     layers:
     - state: bowl
@@ -234,6 +346,9 @@
   id: FoodRiceBoiled
   description: A warm bowl of rice.
   components:
+  - type: FlavorProfile
+    flavors:
+      - rice
   - type: Sprite
     layers:
     - state: bowl
@@ -246,6 +361,10 @@
   id: FoodRiceEgg
   description: A bowl of rice with a fried egg.
   components:
+  - type: FlavorProfile
+    flavors:
+      - rice
+      - egg
   - type: Sprite
     layers:
     - state: bowl
@@ -266,6 +385,10 @@
   id: FoodRicePork
   description: Well, it looks like pork...
   components:
+  - type: FlavorProfile
+    flavors:
+      - rice
+      - meaty
   - type: Sprite
     layers:
     - state: bowl
@@ -291,6 +414,10 @@
   id: FoodRicePudding
   description: Everybody loves rice pudding!
   components:
+  - type: FlavorProfile
+    flavors:
+      - rice
+      - sweet
   - type: Sprite
     layers:
     - state: bowl
@@ -316,6 +443,12 @@
   id: FoodRiceGumbo
   description: A spicy and savory meat and rice dish.
   components:
+  - type: FlavorProfile
+    flavors:
+      - rice
+      - spicy
+      - meaty
+      - savory
   - type: Sprite
     layers:
     - state: bowl
@@ -341,6 +474,9 @@
   id: FoodOatmeal
   description: A nice bowl of oatmeal.
   components:
+  - type: FlavorProfile
+    flavors:
+      - oats
   - type: Sprite
     layers:
     - state: bowl
@@ -375,6 +511,10 @@
   id: FoodJellyAmanita
   description: It's evil, don't touch it!
   components:
+  - type: FlavorProfile
+    flavors:
+      - mushroom
+      - jelly
   - type: Sprite
     sprite: Objects/Consumable/Food/meals.rsi
     state: amanita-jelly
@@ -589,6 +729,8 @@
             Quantity: 5
           - ReagentId: Vitamin
             Quantity: 4
+          - ReagentId: Allicin
+            Quantity: 3
 # Tastes like hot peppers.
 
 - type: entity
@@ -633,6 +775,8 @@
             Quantity: 5
           - ReagentId: Vitamin
             Quantity: 4
+          - ReagentId: Allicin
+            Quantity: 3
 # Tastes like tomato, hot peppers, clown feet, kind of funny, someone's parents.
 
 - type: entity
@@ -858,6 +1002,8 @@
           - ReagentId: Nutriment
             Quantity: 1
           - ReagentId: Vitamin
+            Quantity: 5
+          - ReagentId: Allicin
             Quantity: 5
 # Tastes like onion, france.
 

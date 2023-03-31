@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Pointing.Components;
-using Content.Shared.MobState.Components;
 using Content.Shared.Pointing.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -16,21 +15,7 @@ namespace Content.Server.Pointing.EntitySystems
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ExplosionSystem _explosion = default!;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            SubscribeLocalEvent<RoguePointingArrowComponent, ComponentStartup>(OnStartup);
-        }
-
-        private void OnStartup(EntityUid uid, RoguePointingArrowComponent component, ComponentStartup args)
-        {
-            if (EntityManager.TryGetComponent(uid, out SpriteComponent? sprite))
-            {
-                sprite.DrawDepth = (int) DrawDepth.Overlays;
-            }
-        }
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         private EntityUid? RandomNearbyPlayer(EntityUid uid, RoguePointingArrowComponent? component = null, TransformComponent? transform = null)
         {
@@ -55,7 +40,7 @@ namespace Content.Server.Pointing.EntitySystems
             if (!Resolve(uid, ref component, ref transform, ref appearance) || component.Chasing == null)
                 return;
 
-            appearance.SetData(RoguePointingArrowVisuals.Rotation, transform.LocalRotation.Degrees);
+            _appearance.SetData(uid, RoguePointingArrowVisuals.Rotation, transform.LocalRotation.Degrees, appearance);
         }
 
         public void SetTarget(EntityUid arrow, EntityUid target, RoguePointingArrowComponent? component = null)
@@ -76,7 +61,7 @@ namespace Content.Server.Pointing.EntitySystems
                 if (component.Chasing is not {Valid: true} chasing || Deleted(chasing))
                 {
                     EntityManager.QueueDeleteEntity(uid);
-                    return;
+                    continue;
                 }
 
                 component.TurningDelay -= frameTime;
@@ -88,10 +73,10 @@ namespace Content.Server.Pointing.EntitySystems
                     var adjusted = angle.Degrees + 90;
                     var newAngle = Angle.FromDegrees(adjusted);
 
-                    transform.LocalRotation = newAngle;
+                    transform.WorldRotation = newAngle;
 
                     UpdateAppearance(uid, component, transform);
-                    return;
+                    continue;
                 }
 
                 transform.WorldRotation += Angle.FromDegrees(20);
@@ -106,8 +91,10 @@ namespace Content.Server.Pointing.EntitySystems
 
                 if (component.ChasingTime > 0)
                 {
-                    return;
+                    continue;
                 }
+
+
                 _explosion.QueueExplosion(uid, ExplosionSystem.DefaultExplosionPrototypeId, 50, 3, 10);
                 EntityManager.QueueDeleteEntity(uid);
             }

@@ -1,22 +1,18 @@
-using System.Collections.Generic;
-using Content.Client.HUD;
 using Content.Shared.Suspicion;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.ViewVariables;
+using Robust.Client.UserInterface;
+using static Robust.Client.UserInterface.Controls.LayoutContainer;
 
 namespace Content.Client.Suspicion
 {
     [RegisterComponent]
     public sealed class SuspicionRoleComponent : SharedSuspicionRoleComponent
     {
-        [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IUserInterfaceManager _ui = default!;
 
         private SuspicionGui? _gui;
         private string? _role;
@@ -72,7 +68,8 @@ namespace Content.Client.Suspicion
             }
 
             _overlayActive = true;
-            var overlay = new TraitorOverlay(IoCManager.Resolve<IEntityManager>(), IoCManager.Resolve<IPlayerManager>(), _resourceCache);
+            var entManager = IoCManager.Resolve<IEntityManager>();
+            var overlay = new TraitorOverlay(entManager, IoCManager.Resolve<IPlayerManager>(), _resourceCache, entManager.System<EntityLookupSystem>());
             _overlayManager.AddOverlay(overlay);
         }
 
@@ -101,25 +98,18 @@ namespace Content.Client.Suspicion
             Allies.AddRange(state.Allies);
         }
 
-        public void PlayerDetached()
+        public void RemoveUI()
         {
             _gui?.Parent?.RemoveChild(_gui);
             RemoveTraitorOverlay();
         }
 
-        public void PlayerAttached()
+        public void AddUI()
         {
-            if (_gui == null)
-            {
-                _gui = new SuspicionGui();
-            }
-            else
-            {
-                _gui.Parent?.RemoveChild(_gui);
-            }
-
-            _gameHud.SuspicionContainer.AddChild(_gui);
-            _gui.UpdateLabel();
+            // TODO move this out of the component
+            _gui = _ui.ActiveScreen?.GetOrAddWidget<SuspicionGui>();
+            _gui!.UpdateLabel();
+            SetAnchorAndMarginPreset(_gui, LayoutPreset.BottomLeft);
 
             if (_antagonist ?? false)
             {

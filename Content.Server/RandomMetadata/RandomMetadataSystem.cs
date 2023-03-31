@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Dataset;
+using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -21,16 +22,33 @@ public sealed class RandomMetadataSystem : EntitySystem
     {
         var meta = MetaData(uid);
 
-        if (component.NameSet != null)
+        if (component.NameSegments != null)
         {
-            var nameProto = _prototype.Index<DatasetPrototype>(component.NameSet);
-            meta.EntityName = _random.Pick(nameProto.Values);
+            meta.EntityName = GetRandomFromSegments(component.NameSegments, component.NameSeparator);
         }
 
-        if (component.DescriptionSet != null)
+        if (component.DescriptionSegments != null)
         {
-            var descProto = _prototype.Index<DatasetPrototype>(component.DescriptionSet);
-            meta.EntityDescription = _random.Pick(descProto.Values);
+            meta.EntityDescription = GetRandomFromSegments(component.DescriptionSegments, component.DescriptionSeparator);
         }
+    }
+
+    /// <summary>
+    /// Generates a random string from segments and a separator.
+    /// </summary>
+    /// <param name="segments">The segments that it will be generated from</param>
+    /// <param name="separator">The separator that will be inbetween each segment</param>
+    /// <returns>The newly generated string</returns>
+    [PublicAPI]
+    public string GetRandomFromSegments(List<string> segments, string? separator)
+    {
+        var outputSegments = new List<string>();
+        foreach (var segment in segments)
+        {
+            outputSegments.Add(_prototype.TryIndex<DatasetPrototype>(segment, out var proto)
+                ? _random.Pick(proto.Values)
+                : segment);
+        }
+        return string.Join(separator, outputSegments);
     }
 }

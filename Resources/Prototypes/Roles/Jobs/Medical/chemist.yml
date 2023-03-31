@@ -1,9 +1,13 @@
 - type: job
   id: Chemist
   name: job-name-chemist
+  description: job-description-chemist
+  playTimeTracker: JobChemist
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 1800
   startingGear: ChemistGear
-  departments:
-  - Medical
   icon: "Chemist"
   supervisors: job-supervisors-cmo
   access:
@@ -20,7 +24,7 @@
     outerClothing: ClothingOuterCoatLabChem
     id: ChemistryPDA
     ears: ClothingHeadsetMedical
-    belt: ClothingBeltMedical
+    belt: ChemBag
     pocket1: HandLabeler
     # the purple glasses?
   innerclothingskirt: ClothingUniformJumpskirtChemistry

@@ -12,14 +12,14 @@
     - type: Item
       sprite: Objects/Weapons/Melee/shields.rsi
       size: 100
-      HeldPrefix: riot
+      heldPrefix: riot
     - type: Blocking
       passiveBlockModifier: PassiveRiotShieldBlock
       activeBlockModifier: ActiveRiotShieldBlock
       blockingToggleAction:
         name: action-name-blocking
         description: action-description-blocking
-        icon: Objects/Weapons/Melee/shields.rsi/teleriot-icon.png
+        icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: teleriot-icon }
         iconOn: Objects/Weapons/Melee/shields.rsi/teleriot-on.png
         event: !type:ToggleActionEvent
     - type: Damageable
@@ -42,6 +42,8 @@
                 SheetGlass:
                   min: 5
                   max: 5
+    - type: StaticPrice
+      price: 50
 
 #Security Shields
 
@@ -50,6 +52,9 @@
   parent: BaseShield
   id: RiotShield
   description: A large tower shield. Good for controlling crowds.
+  components:
+    - type: StaticPrice
+      price: 100
 
 - type: entity
   name: riot laser shield
@@ -60,7 +65,7 @@
     - type: Sprite
       state: riot_laser-icon
     - type: Item
-      HeldPrefix: riot_laser
+      heldPrefix: riot_laser
     - type: Blocking
       passiveBlockModifier: PassiveRiotLaserShieldBlock
       activeBlockModifier: ActiveRiotLaserShieldBlock
@@ -74,7 +79,7 @@
     - type: Sprite
       state: riot_bullet-icon
     - type: Item
-      HeldPrefix: riot_bullet
+      heldPrefix: riot_bullet
     - type: Blocking
       passiveBlockModifier: PassiveRiotBulletShieldBlock
       activeBlockModifier: ActiveRiotBulletShieldBlock
@@ -90,7 +95,7 @@
     - type: Sprite
       state: buckler-icon
     - type: Item
-      HeldPrefix: buckler
+      heldPrefix: buckler
     - type: Blocking
       passiveBlockModifier: PassiveBucklerBlock
       activeBlockModifier: ActiveBucklerBlock
@@ -112,6 +117,8 @@
                 MaterialWoodPlank:
                   min: 5
                   max: 5
+    - type: StaticPrice
+      price: 150
 
 - type: entity
   name: makeshift shield
@@ -122,7 +129,7 @@
     - type: Sprite
       state: makeshift-icon
     - type: Item
-      HeldPrefix: metal
+      heldPrefix: metal
     - type: Blocking
       passiveBlockModifier: PassiveMakeshiftBlock
       activeBlockModifier: ActiveMakeshiftBlock
@@ -156,7 +163,7 @@
     - type: Sprite
       state: ratvarian-icon
     - type: Item
-      HeldPrefix: ratvarian
+      heldPrefix: ratvarian
     - type: Blocking
       passiveBlockModifier: PassiveClockworkShieldBlock
       activeBlockModifier: ActiveClockworkShieldBlock
@@ -171,7 +178,7 @@
     - type: Sprite
       state: mirror-icon
     - type: Item
-      HeldPrefix: mirror
+      heldPrefix: mirror
     - type: Blocking
       passiveBlockModifier: PassiveMirrorShieldBlock
       activeBlockModifier: ActiveMirrorShieldBlock

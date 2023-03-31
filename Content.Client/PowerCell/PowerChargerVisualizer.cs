@@ -9,11 +9,12 @@ namespace Content.Client.PowerCell
     [UsedImplicitly]
     public sealed class PowerChargerVisualizer : AppearanceVisualizer
     {
+        [Obsolete("Subscribe to your component being initialised instead.")]
         public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(entity);
 
             // Base item
             sprite.LayerMapSet(Layers.Base, sprite.AddLayerState("empty"));
@@ -23,11 +24,12 @@ namespace Content.Client.PowerCell
             sprite.LayerSetShader(Layers.Light, "unshaded");
         }
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
 
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(component.Owner);
 
             // Update base item
             if (component.TryGetData(CellVisual.Occupied, out bool occupied))

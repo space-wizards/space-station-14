@@ -1,7 +1,11 @@
 using Content.Server.Atmos.Components;
+using Content.Server.Clothing.Components;
 using Content.Shared.Alert;
 using Content.Shared.Clothing;
+using Content.Shared.Clothing.EntitySystems;
+using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using static Content.Shared.Clothing.MagbootsComponent;
 

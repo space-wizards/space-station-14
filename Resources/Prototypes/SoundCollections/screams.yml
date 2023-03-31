@@ -18,11 +18,15 @@
     - /Audio/Voice/Human/femalescream_5.ogg
 
 - type: soundCollection
-  id: ScientistScreams
+  id: ZombieScreams
   files:
-    - /Audio/Voice/Human/science_scream1.ogg
-    - /Audio/Voice/Human/science_scream2.ogg
-    - /Audio/Voice/Human/science_scream3.ogg
-    - /Audio/Voice/Human/science_scream4.ogg
-    - /Audio/Voice/Human/science_scream5.ogg
-    - /Audio/Voice/Human/science_scream6.ogg
+    - /Audio/Voice/Zombie/zombie-1.ogg
+    - /Audio/Voice/Zombie/zombie-2.ogg
+    - /Audio/Voice/Zombie/zombie-3.ogg
+
+- type: soundCollection
+  id: CluwneScreams
+  files:
+    - /Audio/Voice/Cluwne/cluwnelaugh1.ogg
+    - /Audio/Voice/Cluwne/cluwnelaugh2.ogg
+    - /Audio/Voice/Cluwne/cluwnelaugh3.ogg

@@ -2,6 +2,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Pinpointer;
 using System.Linq;
 using Robust.Shared.Utility;
+using Content.Server.Shuttles.Events;
 
 namespace Content.Server.Pinpointer
 {
@@ -13,12 +14,29 @@ namespace Content.Server.Pinpointer
         {
             base.Initialize();
             SubscribeLocalEvent<PinpointerComponent, ActivateInWorldEvent>(OnActivate);
+            SubscribeLocalEvent<FTLCompletedEvent>(OnLocateTarget);
         }
 
         private void OnActivate(EntityUid uid, PinpointerComponent component, ActivateInWorldEvent args)
         {
             TogglePinpointer(uid, component);
+            LocateTarget(uid, component);
+        }
 
+        private void OnLocateTarget(ref FTLCompletedEvent ev)
+        {
+            // This feels kind of expensive, but it only happens once per hyperspace jump
+
+            // todo: ideally, you would need to raise this event only on jumped entities
+            // this code update ALL pinpointers in game
+            foreach (var pinpointer in EntityQuery<PinpointerComponent>())
+            {
+                LocateTarget(pinpointer.Owner, pinpointer);
+            }
+        }
+
+        private void LocateTarget(EntityUid uid, PinpointerComponent component)
+        {
             // try to find target from whitelist
             if (component.IsActive && component.Component != null)
             {
@@ -40,9 +58,9 @@ namespace Content.Server.Pinpointer
 
             // because target or pinpointer can move
             // we need to update pinpointers arrow each frame
-            foreach (var uid in ActivePinpointers)
+            foreach (var pinpointer in EntityQuery<PinpointerComponent>())
             {
-                UpdateDirectionToTarget(uid);
+                UpdateDirectionToTarget(pinpointer.Owner, pinpointer);
             }
         }
 
@@ -67,14 +85,14 @@ namespace Content.Server.Pinpointer
 
             foreach (var comp in EntityManager.GetAllComponents(whitelist))
             {
-                if (!xformQuery.TryGetComponent(comp.Owner, out var compXform) ||
-                    compXform.MapID != mapId) continue;
+                if (!xformQuery.TryGetComponent(comp.Owner, out var compXform) || compXform.MapID != mapId)
+                    continue;
 
                 var dist = (_transform.GetWorldPosition(compXform, xformQuery) - worldPos).LengthSquared;
                 l.TryAdd(dist, comp.Owner);
             }
 
-            // return uid with a smallest distacne
+            // return uid with a smallest distance
             return l.Count > 0 ? l.First().Value : null;
         }
 
@@ -102,33 +120,34 @@ namespace Content.Server.Pinpointer
             if (!Resolve(uid, ref pinpointer))
                 return;
 
+            if (!pinpointer.IsActive)
+                return;
+
             var target = pinpointer.Target;
             if (target == null || !EntityManager.EntityExists(target.Value))
             {
-                SetDirection(uid, Direction.Invalid, pinpointer);
-                SetDistance(uid, Distance.UNKNOWN, pinpointer);
+                SetDistance(uid, Distance.Unknown, pinpointer);
                 return;
             }
 
             var dirVec = CalculateDirection(uid, target.Value);
             if (dirVec != null)
             {
-                var dir = dirVec.Value.GetDir();
-                SetDirection(uid, dir, pinpointer);
+                var angle = dirVec.Value.ToWorldAngle();
+                TrySetArrowAngle(uid, angle, pinpointer);
                 var dist = CalculateDistance(uid, dirVec.Value, pinpointer);
                 SetDistance(uid, dist, pinpointer);
             }
             else
             {
-                SetDirection(uid, Direction.Invalid, pinpointer);
-                SetDistance(uid, Distance.UNKNOWN, pinpointer);
+                SetDistance(uid, Distance.Unknown, pinpointer);
             }
         }
 
         /// <summary>
         ///     Calculate direction from pinUid to trgUid
         /// </summary>
-        /// <returns>Null if failed to caluclate distance between two entities</returns>
+        /// <returns>Null if failed to calculate distance between two entities</returns>
         private Vector2? CalculateDirection(EntityUid pinUid, EntityUid trgUid)
         {
             var xformQuery = GetEntityQuery<TransformComponent>();
@@ -151,17 +170,17 @@ namespace Content.Server.Pinpointer
         private Distance CalculateDistance(EntityUid uid, Vector2 vec, PinpointerComponent? pinpointer = null)
         {
             if (!Resolve(uid, ref pinpointer))
-                return Distance.UNKNOWN;
+                return Distance.Unknown;
 
             var dist = vec.Length;
             if (dist <= pinpointer.ReachedDistance)
-                return Distance.REACHED;
+                return Distance.Reached;
             else if (dist <= pinpointer.CloseDistance)
-                return Distance.CLOSE;
+                return Distance.Close;
             else if (dist <= pinpointer.MediumDistance)
-                return Distance.MEDIUM;
+                return Distance.Medium;
             else
-                return Distance.FAR;
+                return Distance.Far;
         }
     }
 }

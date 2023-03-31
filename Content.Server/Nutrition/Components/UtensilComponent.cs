@@ -1,5 +1,5 @@
 using Content.Server.Nutrition.EntitySystems;
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Nutrition.Components
 {
@@ -26,14 +26,12 @@ namespace Content.Server.Nutrition.Components
         /// The chance that the utensil has to break with each use.
         /// A value of 0 means that it is unbreakable.
         /// </summary>
-        [ViewVariables]
         [DataField("breakChance")]
         public float BreakChance;
 
         /// <summary>
         /// The sound to be played if the utensil breaks.
         /// </summary>
-        [ViewVariables]
         [DataField("breakSound")]
         public SoundSpecifier BreakSound = new SoundPathSpecifier("/Audio/Items/snap.ogg");
     }

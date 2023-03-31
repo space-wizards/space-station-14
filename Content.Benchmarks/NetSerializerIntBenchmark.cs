@@ -2,11 +2,13 @@
 using System.Buffers.Binary;
 using System.IO;
 using BenchmarkDotNet.Attributes;
+using Robust.Shared.Analyzers;
 
 namespace Content.Benchmarks
 {
     [SimpleJob]
-    public sealed class NetSerializerIntBenchmark
+    [Virtual]
+    public class NetSerializerIntBenchmark
     {
         private MemoryStream _writeStream;
         private MemoryStream _readStream;

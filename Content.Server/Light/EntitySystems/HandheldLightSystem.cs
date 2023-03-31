@@ -1,13 +1,11 @@
 using Content.Server.Actions;
-using Content.Server.Light.Components;
 using Content.Server.Popups;
-using Content.Server.Power.Components;
 using Content.Server.PowerCell;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Light.Component;
+using Content.Shared.Light;
 using Content.Shared.Rounding;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
@@ -23,12 +21,13 @@ using Robust.Shared.Utility;
 namespace Content.Server.Light.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class HandheldLightSystem : EntitySystem
+    public sealed class HandheldLightSystem : SharedHandheldLightSystem
     {
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly PowerCellSystem _powerCell = default!;
-        [Dependency] private readonly ActionsSystem _actionSystem = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         // TODO: Ideally you'd be able to subscribe to power stuff to get events at certain percentages.. or something?
         // But for now this will be better anyway.
@@ -38,7 +37,6 @@ namespace Content.Server.Light.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<HandheldLightComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<HandheldLightComponent, ComponentRemove>(OnRemove);
             SubscribeLocalEvent<HandheldLightComponent, ComponentGetState>(OnGetState);
 
@@ -60,7 +58,7 @@ namespace Content.Server.Light.EntitySystems
             EntInsertedIntoContainerMessage args)
         {
             // Not guaranteed to be the correct container for our slot, I don't care.
-            UpdateLevel(component);
+            UpdateLevel(uid, component);
         }
 
         private void OnEntRemoved(
@@ -69,7 +67,7 @@ namespace Content.Server.Light.EntitySystems
             EntRemovedFromContainerMessage args)
         {
             // Ditto above
-            UpdateLevel(component);
+            UpdateLevel(uid, component);
         }
 
         private void OnGetActions(EntityUid uid, HandheldLightComponent component, GetItemActionsEvent args)
@@ -90,38 +88,30 @@ namespace Content.Server.Light.EntitySystems
                 return;
 
             if (component.Activated)
-                TurnOff(component);
+                TurnOff(uid, component);
             else
-                TurnOn(args.Performer, component);
+                TurnOn(args.Performer, uid, component);
 
             args.Handled = true;
         }
 
         private void OnGetState(EntityUid uid, HandheldLightComponent component, ref ComponentGetState args)
         {
-            args.State = new SharedHandheldLightComponent.HandheldLightComponentState(component.Activated, GetLevel(component));
+            args.State = new HandheldLightComponent.HandheldLightComponentState(component.Activated, GetLevel(uid, component));
         }
 
-        private byte? GetLevel(HandheldLightComponent component)
+        private byte? GetLevel(EntityUid uid, HandheldLightComponent component)
         {
             // Curently every single flashlight has the same number of levels for status and that's all it uses the charge for
             // Thus we'll just check if the level changes.
 
-            if (!_powerCell.TryGetBatteryFromSlot(component.Owner, out var battery))
+            if (!_powerCell.TryGetBatteryFromSlot(uid, out var battery))
                 return null;
 
             if (MathHelper.CloseToPercent(battery.CurrentCharge, 0) || component.Wattage > battery.CurrentCharge)
                 return 0;
 
-            return (byte?) ContentHelpers.RoundToNearestLevels(battery.CurrentCharge / battery.MaxCharge * 255, 255, SharedHandheldLightComponent.StatusLevels);
-        }
-
-        private void OnInit(EntityUid uid, HandheldLightComponent component, ComponentInit args)
-        {
-            EntityManager.EnsureComponent<PointLightComponent>(uid);
-
-            // Want to make sure client has latest data on level so battery displays properly.
-            component.Dirty(EntityManager);
+            return (byte?) ContentHelpers.RoundToNearestLevels(battery.CurrentCharge / battery.MaxCharge * 255, 255, HandheldLightComponent.StatusLevels);
         }
 
         private void OnRemove(EntityUid uid, HandheldLightComponent component, ComponentRemove args)
@@ -131,9 +121,10 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnActivate(EntityUid uid, HandheldLightComponent component, ActivateInWorldEvent args)
         {
-            if (args.Handled) return;
+            if (args.Handled)
+                return;
 
-            if (ToggleStatus(args.User, component))
+            if (ToggleStatus(args.User, uid, component))
                 args.Handled = true;
         }
 
@@ -141,9 +132,9 @@ namespace Content.Server.Light.EntitySystems
         ///     Illuminates the light if it is not active, extinguishes it if it is active.
         /// </summary>
         /// <returns>True if the light's status was toggled, false otherwise.</returns>
-        public bool ToggleStatus(EntityUid user, HandheldLightComponent component)
+        public bool ToggleStatus(EntityUid user, EntityUid uid, HandheldLightComponent component)
         {
-            return component.Activated ? TurnOff(component) : TurnOn(user, component);
+            return component.Activated ? TurnOff(uid, component) : TurnOn(user, uid, component);
         }
 
         private void OnExamine(EntityUid uid, HandheldLightComponent component, ExaminedEvent args)
@@ -165,14 +156,16 @@ namespace Content.Server.Light.EntitySystems
 
             foreach (var handheld in _activeLights)
             {
+                var uid = handheld.Owner;
+
                 if (handheld.Deleted)
                 {
                     toRemove.Add(handheld);
                     continue;
                 }
 
-                if (Paused(handheld.Owner)) continue;
-                TryUpdate(handheld, frameTime);
+                if (Paused(uid)) continue;
+                TryUpdate(uid, handheld, frameTime);
             }
 
             foreach (var light in toRemove)
@@ -183,49 +176,47 @@ namespace Content.Server.Light.EntitySystems
 
         private void AddToggleLightVerb(EntityUid uid, HandheldLightComponent component, GetVerbsEvent<ActivationVerb> args)
         {
-            if (!args.CanAccess || !args.CanInteract) return;
+            if (!args.CanAccess || !args.CanInteract)
+                return;
 
             ActivationVerb verb = new()
             {
                 Text = Loc.GetString("verb-common-toggle-light"),
-                IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png",
+                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/light.svg.192dpi.png")),
                 Act = component.Activated
-                    ? () => TurnOff(component)
-                    : () => TurnOn(args.User, component)
+                    ? () => TurnOff(uid, component)
+                    : () => TurnOn(args.User, uid,  component)
             };
 
             args.Verbs.Add(verb);
         }
 
-        public bool TurnOff(HandheldLightComponent component, bool makeNoise = true)
+        public bool TurnOff(EntityUid uid, HandheldLightComponent component, bool makeNoise = true)
         {
-            if (!component.Activated) return false;
+            if (!component.Activated || !TryComp<PointLightComponent>(uid, out var pointLightComponent))
+            {
+                return false;
+            }
 
-            component.Activated = false;
-            if (component.ToggleAction != null)
-                _actionSystem.SetToggled(component.ToggleAction, false);
+            pointLightComponent.Enabled = false;
+            SetActivated(uid, false, component, makeNoise);
+            component.Level = null;
             _activeLights.Remove(component);
-            component.LastLevel = null;
-            Dirty(component);
-
-            if (TryComp(component.Owner, out AppearanceComponent? appearance))
-                appearance.SetData(ToggleableLightVisuals.Enabled, false);
-
-            if (makeNoise)
-                SoundSystem.Play(component.TurnOffSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner);
-
             return true;
         }
 
-        public bool TurnOn(EntityUid user, HandheldLightComponent component)
+        public bool TurnOn(EntityUid user, EntityUid uid, HandheldLightComponent component)
         {
-            if (component.Activated) return false;
-
-            if (!_powerCell.TryGetBatteryFromSlot(component.Owner, out var battery) &&
-                !TryComp(component.Owner, out battery))
+            if (component.Activated || !TryComp<PointLightComponent>(uid, out var pointLightComponent))
             {
-                SoundSystem.Play(component.TurnOnFailSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner);
-                _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-missing-message"), component.Owner, Filter.Entities(user));
+                return false;
+            }
+
+            if (!_powerCell.TryGetBatteryFromSlot(uid, out var battery) &&
+                !TryComp(uid, out battery))
+            {
+                _audio.PlayPvs(_audio.GetSound(component.TurnOnFailSound), uid);
+                _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-missing-message"), uid, user);
                 return false;
             }
 
@@ -234,64 +225,57 @@ namespace Content.Server.Light.EntitySystems
             // Simple enough.
             if (component.Wattage > battery.CurrentCharge)
             {
-                SoundSystem.Play(component.TurnOnFailSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner);
-                _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-dead-message"), component.Owner, Filter.Entities(user));
+                _audio.PlayPvs(_audio.GetSound(component.TurnOnFailSound), uid);
+                _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-dead-message"), uid, user);
                 return false;
             }
 
-            component.Activated = true;
-            if (component.ToggleAction != null)
-                _actionSystem.SetToggled(component.ToggleAction, true);
+            pointLightComponent.Enabled = true;
+            SetActivated(uid, true, component, true);
             _activeLights.Add(component);
-            component.LastLevel = GetLevel(component);
-            Dirty(component);
 
-            if (TryComp(component.Owner, out AppearanceComponent? appearance))
-                appearance.SetData(ToggleableLightVisuals.Enabled, true);
-
-            SoundSystem.Play(component.TurnOnSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner);
             return true;
         }
 
-        public void TryUpdate(HandheldLightComponent component, float frameTime)
+        public void TryUpdate(EntityUid uid, HandheldLightComponent component, float frameTime)
         {
-            if (!_powerCell.TryGetBatteryFromSlot(component.Owner, out var battery) &&
-                !TryComp(component.Owner, out battery))
+            if (!_powerCell.TryGetBatteryFromSlot(uid, out var battery) &&
+                !TryComp(uid, out battery))
             {
-                TurnOff(component, false);
+                TurnOff(uid, component, false);
                 return;
             }
 
-            var appearanceComponent = EntityManager.GetComponent<AppearanceComponent>(component.Owner);
+            var appearanceComponent = EntityManager.GetComponentOrNull<AppearanceComponent>(uid);
 
             var fraction = battery.CurrentCharge / battery.MaxCharge;
             if (fraction >= 0.30)
             {
-                appearanceComponent.SetData(HandheldLightVisuals.Power, HandheldLightPowerStates.FullPower);
+                _appearance.SetData(uid, HandheldLightVisuals.Power, HandheldLightPowerStates.FullPower, appearanceComponent);
             }
             else if (fraction >= 0.10)
             {
-                appearanceComponent.SetData(HandheldLightVisuals.Power, HandheldLightPowerStates.LowPower);
+                _appearance.SetData(uid, HandheldLightVisuals.Power, HandheldLightPowerStates.LowPower, appearanceComponent);
             }
             else
             {
-                appearanceComponent.SetData(HandheldLightVisuals.Power, HandheldLightPowerStates.Dying);
+                _appearance.SetData(uid, HandheldLightVisuals.Power, HandheldLightPowerStates.Dying, appearanceComponent);
             }
 
             if (component.Activated && !battery.TryUseCharge(component.Wattage * frameTime))
-                TurnOff(component, false);
+                TurnOff(uid, component, false);
 
-            UpdateLevel(component);
+            UpdateLevel(uid, component);
         }
 
-        private void UpdateLevel(HandheldLightComponent comp)
+        private void UpdateLevel(EntityUid uid, HandheldLightComponent comp)
         {
-            var level = GetLevel(comp);
+            var level = GetLevel(uid, comp);
 
-            if (level == comp.LastLevel)
+            if (level == comp.Level)
                 return;
 
-            comp.LastLevel = level;
+            comp.Level = level;
             Dirty(comp);
         }
     }

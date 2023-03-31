@@ -1,6 +1,5 @@
 using Content.Server.VendingMachines;
-using Content.Shared.Throwing;
-using Robust.Shared.Random;
+using Content.Shared.VendingMachines;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors
 {
@@ -24,23 +23,21 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         [DataField("max")]
         public int Max = 3;
 
-        public void Execute(EntityUid owner, DestructibleSystem system)
+        public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
         {
             if (!system.EntityManager.TryGetComponent<VendingMachineComponent>(owner, out var vendingcomp) ||
                 !system.EntityManager.TryGetComponent<TransformComponent>(owner, out var xform))
                 return;
 
-            var throwingsys = system.EntityManager.EntitySysManager.GetEntitySystem<ThrowingSystem>();
-            var totalItems = vendingcomp.AllInventory.Count;
+            var vendingMachineSystem = EntitySystem.Get<VendingMachineSystem>();
+            var inventory = vendingMachineSystem.GetAvailableInventory(owner, vendingcomp);
+            if (inventory.Count <= 0)
+                return;
 
-            var toEject = Math.Min(totalItems * Percent, Max);
+            var toEject = Math.Min(inventory.Count * Percent, Max);
             for (var i = 0; i < toEject; i++)
             {
-                var entity = system.EntityManager.SpawnEntity(system.Random.PickAndTake(vendingcomp.AllInventory).ID, xform.Coordinates);
-
-                float range = vendingcomp.NonLimitedEjectRange;
-                Vector2 direction = new Vector2(system.Random.NextFloat(-range, range), system.Random.NextFloat(-range, range));
-                throwingsys.TryThrow(entity, direction, vendingcomp.NonLimitedEjectForce);
+                vendingMachineSystem.EjectRandom(owner, throwItem: true, forceEject: true, vendingcomp);
             }
         }
     }

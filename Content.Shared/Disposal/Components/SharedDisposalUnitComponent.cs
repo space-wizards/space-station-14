@@ -6,12 +6,26 @@ namespace Content.Shared.Disposal.Components
     [NetworkedComponent]
     public abstract class SharedDisposalUnitComponent : Component
     {
+        public const string ContainerId = "DisposalUnit";
+
         // TODO: Could maybe turn the contact off instead far more cheaply as farseer (though not box2d) had support for it?
         // Need to suss it out.
         /// <summary>
         /// We'll track whatever just left disposals so we know what collision we need to ignore until they stop intersecting our BB.
         /// </summary>
         public List<EntityUid> RecentlyEjected = new();
+
+        [DataField("flushTime", required: true)]
+        public readonly float FlushTime;
+
+        [DataField("mobsCanEnter")]
+        public bool MobsCanEnter = true;
+
+        /// <summary>
+        /// Removes the pressure requirement for flushing.
+        /// </summary>
+        [DataField("disablePressure"), ViewVariables(VVAccess.ReadWrite)]
+        public bool DisablePressure = false;
 
         [Serializable, NetSerializable]
         public enum Visuals : byte
@@ -38,12 +52,12 @@ namespace Content.Shared.Disposal.Components
         }
 
         [Serializable, NetSerializable]
-        public enum LightState : byte
+        public enum LightStates : byte
         {
-            Off,
-            Charging,
-            Full,
-            Ready
+            Off = 0,
+            Charging = 1 << 0,
+            Full = 1 << 1,
+            Ready = 1 << 2
         }
 
         [Serializable, NetSerializable]

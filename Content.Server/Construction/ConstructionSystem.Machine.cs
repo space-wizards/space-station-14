@@ -1,14 +1,23 @@
+using System.Linq;
 using Content.Server.Construction.Components;
+using Content.Server.Examine;
+using Content.Shared.Construction.Components;
+using Content.Shared.Construction.Prototypes;
+using Content.Shared.Verbs;
 using Robust.Shared.Containers;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Construction;
 
 public sealed partial class ConstructionSystem
 {
+    [Dependency] private readonly ExamineSystem _examineSystem = default!;
+
     private void InitializeMachines()
     {
         SubscribeLocalEvent<MachineComponent, ComponentInit>(OnMachineInit);
         SubscribeLocalEvent<MachineComponent, MapInitEvent>(OnMachineMapInit);
+        SubscribeLocalEvent<MachineComponent, GetVerbsEvent<ExamineVerb>>(OnMachineExaminableVerb);
     }
 
     private void OnMachineInit(EntityUid uid, MachineComponent component, ComponentInit args)
@@ -21,6 +30,33 @@ public sealed partial class ConstructionSystem
     {
         CreateBoardAndStockParts(component);
         RefreshParts(component);
+    }
+
+    private void OnMachineExaminableVerb(EntityUid uid, MachineComponent component, GetVerbsEvent<ExamineVerb> args)
+    {
+        if (!args.CanInteract || !args.CanAccess)
+            return;
+
+        var markup = new FormattedMessage();
+        RaiseLocalEvent(uid, new UpgradeExamineEvent(ref markup));
+        if (markup.IsEmpty)
+            return; // Not upgradable.
+
+        markup = FormattedMessage.FromMarkup(markup.ToMarkup().TrimEnd('\n')); // Cursed workaround to https://github.com/space-wizards/RobustToolbox/issues/3371
+
+        var verb = new ExamineVerb()
+        {
+            Act = () =>
+            {
+                _examineSystem.SendExamineTooltip(args.User, uid, markup, getVerbs: false, centerAtCursor: false);
+            },
+            Text = Loc.GetString("machine-upgrade-examinable-verb-text"),
+            Message = Loc.GetString("machine-upgrade-examinable-verb-message"),
+            Category = VerbCategory.Examine,
+            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/pickup.svg.192dpi.png"))
+        };
+
+        args.Verbs.Add(verb);
     }
 
     public List<MachinePartComponent> GetAllParts(MachineComponent component)
@@ -36,11 +72,32 @@ public sealed partial class ConstructionSystem
         return parts;
     }
 
+    public Dictionary<string, float> GetPartsRatings(List<MachinePartComponent> parts)
+    {
+        var output = new Dictionary<string, float>();
+        foreach (var type in _prototypeManager.EnumeratePrototypes<MachinePartPrototype>())
+        {
+            var amount = 0f;
+            var sumRating = 0f;
+            foreach (var part in parts.Where(part => part.PartType == type.ID))
+            {
+                amount++;
+                sumRating += part.Rating;
+            }
+            var rating = amount != 0 ? sumRating / amount : 0;
+            output.Add(type.ID, rating);
+        }
+
+        return output;
+    }
+
     public void RefreshParts(MachineComponent component)
     {
-        EntityManager.EventBus.RaiseLocalEvent(component.Owner, new RefreshPartsEvent()
+        var parts = GetAllParts(component);
+        EntityManager.EventBus.RaiseLocalEvent(component.Owner, new RefreshPartsEvent
         {
-            Parts = GetAllParts(component),
+            Parts = parts,
+            PartRatings = GetPartsRatings(parts),
         }, true);
     }
 
@@ -69,14 +126,16 @@ public sealed partial class ConstructionSystem
             throw new Exception($"Entity with prototype {component.BoardPrototype} doesn't have a {nameof(MachineBoardComponent)}!");
         }
 
+        var xform = Transform(component.Owner);
         foreach (var (part, amount) in machineBoard.Requirements)
         {
+            var partProto = _prototypeManager.Index<MachinePartPrototype>(part);
             for (var i = 0; i < amount; i++)
             {
-                var p = EntityManager.SpawnEntity(MachinePartComponent.Prototypes[part], Transform(component.Owner).Coordinates);
+                var p = EntityManager.SpawnEntity(partProto.StockPartPrototype, xform.Coordinates);
 
                 if (!partContainer.Insert(p))
-                    throw new Exception($"Couldn't insert machine part of type {part} to machine with prototype {MetaData(component.Owner).EntityPrototype?.ID ?? "N/A"}!");
+                    throw new Exception($"Couldn't insert machine part of type {part} to machine with prototype {partProto.StockPartPrototype ?? "N/A"}!");
             }
         }
 
@@ -115,4 +174,46 @@ public sealed partial class ConstructionSystem
 public sealed class RefreshPartsEvent : EntityEventArgs
 {
     public IReadOnlyList<MachinePartComponent> Parts = new List<MachinePartComponent>();
+
+    public Dictionary<string, float> PartRatings = new Dictionary<string, float>();
+}
+
+public sealed class UpgradeExamineEvent : EntityEventArgs
+{
+    private FormattedMessage Message;
+
+    public UpgradeExamineEvent(ref FormattedMessage message)
+    {
+        Message = message;
+    }
+
+    /// <summary>
+    /// Add a line to the upgrade examine tooltip with a percentage-based increase or decrease.
+    /// </summary>
+    public void AddPercentageUpgrade(string upgradedLocId, float multiplier)
+    {
+        var percent = Math.Round(100 * MathF.Abs(multiplier - 1), 2);
+        var locId = multiplier switch {
+            < 1 => "machine-upgrade-decreased-by-percentage",
+            1 or float.NaN => "machine-upgrade-not-upgraded",
+            > 1 => "machine-upgrade-increased-by-percentage",
+        };
+        var upgraded = Loc.GetString(upgradedLocId);
+        this.Message.AddMarkup(Loc.GetString(locId, ("upgraded", upgraded), ("percent", percent)) + '\n');
+    }
+
+    /// <summary>
+    /// Add a line to the upgrade examine tooltip with a numeric increase or decrease.
+    /// </summary>
+    public void AddNumberUpgrade(string upgradedLocId, int number)
+    {
+        var difference = Math.Abs(number);
+        var locId = number switch {
+            < 0 => "machine-upgrade-decreased-by-amount",
+            0 => "machine-upgrade-not-upgraded",
+            > 0 => "machine-upgrade-increased-by-amount",
+        };
+        var upgraded = Loc.GetString(upgradedLocId);
+        this.Message.AddMarkup(Loc.GetString(locId, ("upgraded", upgraded), ("difference", difference)) + '\n');
+    }
 }

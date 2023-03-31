@@ -10,19 +10,20 @@ namespace Content.Server.Polymorph.Components
         /// The polymorph prototype, used to track various information
         /// about the polymorph
         /// </summary>
-        public PolymorphPrototype Prototype = default!;
+        [DataField("prototype", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<PolymorphPrototype>))]
+        public string Prototype = string.Empty;
 
         /// <summary>
         /// The original entity that the player will revert back into
         /// </summary>
         [DataField("parent", required: true)]
-        public EntityUid Parent = new();
+        public EntityUid Parent;
 
         /// <summary>
         /// The amount of time that has passed since the entity was created
         /// used for tracking the duration
         /// </summary>
         [DataField("time")]
-        public float Time = 0;
+        public float Time;
     }
 }

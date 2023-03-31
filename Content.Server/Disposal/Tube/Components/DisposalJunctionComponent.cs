@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Disposal.Unit.Components;
 using Robust.Shared.Random;
 
@@ -10,13 +10,14 @@ namespace Content.Server.Disposal.Tube.Components
     [ComponentReference(typeof(DisposalTubeComponent))]
     public class DisposalJunctionComponent : DisposalTubeComponent
     {
+        public override string ContainerId => "DisposalJunction";
+
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
         /// <summary>
         ///     The angles to connect to.
         /// </summary>
-        [ViewVariables]
         [DataField("degrees")]
         private List<Angle> _degrees = new();
 

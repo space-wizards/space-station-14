@@ -21,7 +21,7 @@
   - type: UseDelay
     delay: 1.0
   - type: MeleeWeapon
-    hitSound:
+    soundHit:
       collection: ToySqueak
     damage:
       types:
@@ -105,7 +105,7 @@
     sound:
       path: /Audio/Items/Toys/weh.ogg
   - type: MeleeWeapon
-    hitSound:
+    soundHit:
       path: /Audio/Items/Toys/weh.ogg
 
 - type: entity
@@ -126,8 +126,104 @@
     sound:
       path: /Audio/Items/Toys/muffled_weh.ogg
   - type: MeleeWeapon
-    hitSound:
+    soundHit:
       path: /Audio/Items/Toys/muffled_weh.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieDiona
+  name: diona plushie
+  description: An adorable stuffed toy that resembles a diona. Love water and cuddles. Do not wet!
+  components:
+    - type: Sprite
+      layers:
+        - state: plushie_diona
+        - state: plushie_diona1
+          map: [ "enum.SolutionContainerLayers.Fill" ]
+          visible: false
+    - type: EmitSoundOnUse
+      sound:
+        path: /Audio/Items/Toys/toy_rustle.ogg
+    - type: EmitSoundOnLand
+      sound:
+        path: /Audio/Items/Toys/toy_rustle.ogg
+    - type: EmitSoundOnActivate
+      sound:
+        path: /Audio/Items/Toys/toy_rustle.ogg
+    - type: MeleeWeapon
+      soundHit:
+        path: /Audio/Items/Toys/toy_rustle.ogg
+    - type: SolutionContainerManager
+      solutions:
+        plushie:
+          maxVol: 1
+    - type: RefillableSolution
+      solution: plushie
+    - type: SolutionContainerVisuals
+      maxFillLevels: 1
+      fillBaseName: plushie_diona
+      changeColor: false
+    - type: Appearance
+    - type: Reactive
+      reactions:
+        - reagents: [ Water ]
+          methods: [ Touch ]
+          effects:
+            - !type:AddToSolutionReaction
+              solution: plushie
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.3,-0.3,0.3,0.3"
+          density: 15
+          mask:
+            - ItemMask
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.3,-0.3,0.3,0.3"
+          id: "rehydrate"
+          hard: false
+          layer:
+            - LowImpassable
+    - type: CollisionWake
+      enabled: false
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieSharkBlue
+  name: blue shark soft toy
+  description: Big and safe to have by your side if you want to discover the world below the surface of the ocean.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/sharkplush.rsi
+    state: blue
+  - type: Item
+    heldPrefix: blue
+
+- type: entity
+  parent: PlushieSharkBlue
+  id: PlushieSharkPink
+  name: pink shark soft toy
+  description: Hehe shonk :)
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/sharkplush.rsi
+    state: pink
+  - type: Item
+    heldPrefix: pink
+
+- type: entity
+  parent: PlushieSharkBlue
+  id: PlushieSharkGrey
+  name: grey shark soft toy
+  description: A quiet, reserved kind of shonk. Loves to ride the grey tide.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/sharkplush.rsi
+    state: grey
+  - type: Item
+    heldPrefix: grey
 
 - type: entity
   parent: BasePlushie
@@ -157,7 +253,7 @@
   - type: Sprite
     state: carpplush
   - type: Item
-    HeldPrefix: carpplush
+    heldPrefix: carpplush
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Effects/bite.ogg
@@ -168,7 +264,7 @@
     sound:
       path: /Audio/Effects/bite.ogg
   - type: MeleeWeapon
-    hitSound:
+    soundHit:
       path: /Audio/Effects/bite.ogg
 
 - type: entity
@@ -192,7 +288,7 @@
     sound:
       path: /Audio/Items/Toys/rattle.ogg
   - type: MeleeWeapon
-    hitSound:
+    soundHit:
       path: /Audio/Items/Toys/rattle.ogg
 
 - type: entity
@@ -207,7 +303,7 @@
     sound:
       path: /Audio/Items/Toys/mousesqueek.ogg
   - type: MeleeWeapon
-    hitSound:
+    soundHit:
       path: /Audio/Items/Toys/mousesqueek.ogg
 
 - type: entity
@@ -222,7 +318,7 @@
   - type: Clothing
     quickEquip: false
     sprite: Objects/Fun/ducky.rsi
-    Slots:
+    slots:
     - HEAD
   - type: EmitSoundOnUse
     sound:
@@ -244,8 +340,18 @@
     sound:
       path: /Audio/Voice/Vox/shriek1.ogg
   - type: MeleeWeapon
-    hitSound:
+    soundHit:
       path: /Audio/Voice/Vox/shriek1.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieAtmosian
+  name: atmosian plushie
+  description: An adorable stuffed toy that resembles a brave atmosian. Unfortunately, he won't fix those depressurizations for you.
+  components:
+  - type: Sprite
+    state: plushie_atmosian
+
 ## Figurines
 
 - type: entity
@@ -279,7 +385,7 @@
     state: doll
   - type: Item
     sprite: Objects/Fun/toys.rsi
-    HeldPrefix: doll
+    heldPrefix: doll
 
 - type: entity
   parent: BaseItem
@@ -313,7 +419,7 @@
     sound:
       path: /Audio/Items/Toys/ian.ogg
   - type: MeleeWeapon
-    hitSound:
+    soundHit:
       path: /Audio/Items/Toys/ian.ogg
 
 - type: entity
@@ -463,7 +569,6 @@
     netsync: false
   - type: Item
     size: 24
-    state: icon
 
 - type: entity
   parent: FoamWeaponBase
@@ -477,7 +582,7 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
-    HeldPrefix: foamcrossbow
+    heldPrefix: foamcrossbow
   - type: Gun
     fireRate: 0.5
     selectedMode: SemiAuto
@@ -488,10 +593,14 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - CartridgeRocket
+        - BulletFoam
     capacity: 1
     soundInsert:
       path: /Audio/Weapons/drawbow2.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
 
 - type: entity
   parent: BaseItem
@@ -516,21 +625,42 @@
       map: ["enum.GunVisualLayers.Base"]
   - type: Item
     sprite: Objects/Fun/toys.rsi
-    HeldPrefix: capgun
+    heldPrefix: capgun
   - type: Gun
     selectedMode: SemiAuto
     availableModes:
       - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
-  - type: BallisticAmmoProvider
+  - type: RevolverAmmoProvider
     whitelist:
       tags:
         - CartridgeCap
+        - SpeedLoaderCap
+    proto: CartridgeCap
     capacity: 6
-    autoCycle: true
+    chambers: [ True, True, True, True, True, True ]
+    ammoSlots: [ null, null, null, null, null, null ]
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+  - type: ContainerContainer
+    containers:
+      revolver-ammo: !type:Container
+
+- type: entity
+  parent: RevolverCapGun
+  id: RevolverCapGunFake
+  name: cap gun
+  description: Looks almost like the real thing! Ages 8 and up.
+  components:
+    - type: RevolverAmmoProvider
+      whitelist:
+        tags:
+          - CartridgeCap
+          - SpeedLoaderCap
+          - CartridgeMagnum
+          - SpeedLoaderMagnum
+      proto: CartridgeMagnum
 
 - type: entity
   parent: BaseItem
@@ -542,16 +672,16 @@
     sprite: Objects/Fun/toys.rsi
     state: foamblade
   - type: MeleeWeapon
-    range: 2.0
-    arcwidth: 0
-    arc: spear
+    attackRate: 1.5
+    angle: 0
+    animation: WeaponArcThrust
     damage:
       types:
         Blunt: 0
   - type: Item
-    size: 24
+    size: 20
     sprite: Objects/Fun/toys.rsi
-    HeldPrefix: foamblade
+    heldPrefix: foamblade
   - type: ItemCooldown
 
 # MISC
@@ -568,7 +698,7 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
-    HeldPrefix: bask
+    heldPrefix: bask
 
 - type: entity
   parent: BaseItem
@@ -582,7 +712,7 @@
   - type: Item
     size: 12
     sprite: Objects/Fun/toys.rsi
-    HeldPrefix: footb
+    heldPrefix: footb
 
 - type: entity
   parent: BaseItem
@@ -596,7 +726,7 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
-    HeldPrefix: synb
+    heldPrefix: synb
 
 - type: entity
   parent: BaseItem
@@ -610,7 +740,7 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
-    HeldPrefix: corgib
+    heldPrefix: corgib
 
 - type: entity
   parent: BaseItem
@@ -630,7 +760,7 @@
   - type: Item
     size: 12
     sprite: Objects/Fun/toys.rsi
-    HeldPrefix: singularitytoy
+    heldPrefix: singularitytoy
 
 - type: entity
   parent: BaseItem
@@ -648,4 +778,70 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
-    HeldPrefix: orb
+    heldPrefix: orb
+
+- type: entity
+  id: ToySword
+  name: toy sword
+  description: New Sandy-Cat plastic sword! Comes with realistic sound and full color! Looks almost like the real thing!
+  components:
+    - type: EnergySword
+      isSharp: false
+      colorOptions:
+        - DodgerBlue
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/e_sword.rsi
+      layers:
+        - state: e_sword
+        - state: e_sword_blade
+          color: "#FFFFFF"
+          visible: false
+          shader: unshaded
+          map: [ "blade" ]
+    - type: Item
+      size: 5
+      sprite: Objects/Weapons/Melee/e_sword.rsi
+    - type: UseDelay
+      delay: 1.0
+    - type: PointLight
+      netsync: false
+      enabled: false
+      radius: 2
+      energy: 2
+      color: white
+    - type: Appearance
+    - type: ToggleableLightVisuals
+      spriteLayer: blade
+      inhandVisuals:
+        left:
+          - state: inhand-left-blade
+            shader: unshaded
+        right:
+          - state: inhand-right-blade
+            shader: unshaded
+    - type: DisarmMalus
+      malus: 0
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 0
+
+- type: entity
+  parent: BasePlushie
+  id: ToyAmongPequeno
+  name: among pequeno
+  description: sus!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/pequeno.rsi
+    netsync: false
+    layers:
+    - state: base
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+    - state: visor
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          base: Sixteen
+  - type: StaticPrice
+    price: 3

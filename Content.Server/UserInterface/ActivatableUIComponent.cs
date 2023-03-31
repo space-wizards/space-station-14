@@ -3,7 +3,6 @@ using Robust.Server.Player;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
 
-
 namespace Content.Server.UserInterface
 {
     [RegisterComponent]
@@ -19,7 +18,6 @@ namespace Content.Server.UserInterface
         [DataField("inHandsOnly")]
         public bool InHandsOnly { get; set; } = false;
 
-        [ViewVariables]
         [DataField("singleUser")]
         public bool SingleUser { get; set; } = false;
 
@@ -40,14 +38,23 @@ namespace Content.Server.UserInterface
         ///     This should probably be true for most machines & computers, but there will still be UIs that represent a
         ///     more generic interaction / configuration that might not require hands.
         /// </remarks>
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("requireHands")]
         public bool RequireHands = true;
 
         /// <summary>
         ///     Whether spectators (non-admin ghosts) should be allowed to view this UI.
         /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("allowSpectator")]
         public bool AllowSpectator = true;
+
+        /// <summary>
+        ///     Whether the UI should close when the item is deselected due to a hand swap or drop
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("closeOnHandDeselect")]
+        public bool CloseOnHandDeselect = true;
 
         /// <summary>
         ///     The client channel currently using the object, or null if there's none/not single user.

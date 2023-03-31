@@ -1,8 +1,9 @@
 using Content.Server.Projectiles;
-using Content.Server.Projectiles.Components;
 using Content.Server.Singularity.Components;
+using Content.Shared.Projectiles;
 using Content.Shared.Singularity.Components;
-using Robust.Server.GameObjects;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.ParticleAccelerator.Components
@@ -18,14 +19,16 @@ namespace Content.Server.ParticleAccelerator.Components
         {
             State = state;
 
-            if (!_entMan.TryGetComponent<PhysicsComponent?>(Owner, out var physicsComponent))
+            if (!_entMan.TryGetComponent<PhysicsComponent>(Owner, out var physicsComponent))
             {
                 Logger.Error("ParticleProjectile tried firing, but it was spawned without a CollidableComponent");
                 return;
             }
-            physicsComponent.BodyStatus = BodyStatus.InAir;
 
-            if (!_entMan.TryGetComponent<ProjectileComponent?>(Owner, out var projectileComponent))
+            var physics = _entMan.System<SharedPhysicsSystem>();
+            physics.SetBodyStatus(physicsComponent, BodyStatus.InAir);
+
+            if (!_entMan.TryGetComponent<ProjectileComponent>(Owner, out var projectileComponent))
             {
                 Logger.Error("ParticleProjectile tried firing, but it was spawned without a ProjectileComponent");
                 return;
@@ -33,7 +36,7 @@ namespace Content.Server.ParticleAccelerator.Components
 
             _entMan.EntitySysManager.GetEntitySystem<ProjectileSystem>().SetShooter(projectileComponent, firer);
 
-            if (!_entMan.TryGetComponent<SinguloFoodComponent?>(Owner, out var singuloFoodComponent))
+            if (!_entMan.TryGetComponent<SinguloFoodComponent>(Owner, out var singuloFoodComponent))
             {
                 Logger.Error("ParticleProjectile tried firing, but it was spawned without a SinguloFoodComponent");
                 return;
@@ -49,24 +52,12 @@ namespace Content.Server.ParticleAccelerator.Components
             };
             singuloFoodComponent.Energy = 10 * multiplier;
 
-            var suffix = state switch
+            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
-                ParticleAcceleratorPowerState.Level0 => "0",
-                ParticleAcceleratorPowerState.Level1 => "1",
-                ParticleAcceleratorPowerState.Level2 => "2",
-                ParticleAcceleratorPowerState.Level3 => "3",
-                _ => "0"
-            };
-
-            if (!_entMan.TryGetComponent<SpriteComponent?>(Owner, out var spriteComponent))
-            {
-                Logger.Error("ParticleProjectile tried firing, but it was spawned without a SpriteComponent");
-                return;
+                appearance.SetData(ParticleAcceleratorVisuals.VisualState, state);
             }
-            spriteComponent.LayerSetState(0, $"particle{suffix}");
 
-            physicsComponent
-                .LinearVelocity = angle.ToWorldVec() * 20f;
+            physics.SetLinearVelocity(Owner, angle.ToWorldVec() * 20f, body: physicsComponent);
 
             _entMan.GetComponent<TransformComponent>(Owner).LocalRotation = angle;
             Timer.Spawn(3000, () => _entMan.DeleteEntity(Owner));

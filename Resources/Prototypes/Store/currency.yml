@@ -1,0 +1,16 @@
+- type: currency
+  id: Telecrystal
+  displayName: store-currency-display-telecrystal
+  cash: 
+    1: Telecrystal1
+  canWithdraw: true
+
+- type: currency
+  id: StolenEssence
+  displayName: store-currency-display-stolen-essence
+  canWithdraw: false
+
+#debug
+- type: currency
+  id: DebugDollar
+  displayName: store-currency-display-debugdollar

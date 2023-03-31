@@ -12,7 +12,7 @@ namespace Content.Client.MachineLinking.UI
         private string? _selectedTransmitterPort;
         private string? _selectedReceiverPort;
 
-        public SignalPortSelectorBoundUserInterface([NotNull] ClientUserInterfaceComponent owner, [NotNull] object uiKey) : base(owner, uiKey) { }
+        public SignalPortSelectorBoundUserInterface([NotNull] ClientUserInterfaceComponent owner, [NotNull] Enum uiKey) : base(owner, uiKey) { }
 
         protected override void Open()
         {

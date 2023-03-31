@@ -1,22 +1,71 @@
 - type: entity
   id: SalvageMagnet
-  parent: BaseMachine
+  parent: BaseMachinePowered
   name: salvage magnet
   description: "Pulls in salvage."
   components:
   - type: Sprite
+    netsync: false
+    sprite: Structures/Machines/salvage.rsi
     layers:
-      - sprite: Structures/Machines/salvage.rsi
-        state: salvage-magnet
-        # Ideally, there'd be lights indicating power usage and a big red lamp indicating loss
+      - state: salvage-magnet
+      - state: salvage-magnet-ready
+        visible: false
+        map: [ "ready" ]
+      - state: salvage-magnet-ready-blinking
+        visible: false
+        map: [ "readyBlinking" ]
+      - state: salvage-magnet-unready
+        visible: false
+        map: [ "unready" ]
+      - state: salvage-magnet-unready-blinking
+        visible: false
+        map: [ "unreadyBlinking" ]
+      - state: salvage-magnet-o4
+        map: ["chargeState"]
+        shader: unshaded
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.SalvageMagnetVisuals.ChargeState:
+        chargeState:
+          0: { state: salvage-magnet-o0, shader: "unshaded", visible: false }
+          1: { state: salvage-magnet-o0, shader: "unshaded", visible: true }
+          2: { state: salvage-magnet-o1, shader: "unshaded", visible: true }
+          3: { state: salvage-magnet-o2, shader: "unshaded", visible: true }
+          4: { state: salvage-magnet-o3, shader: "unshaded", visible: true }
+          5: { state: salvage-magnet-o4, shader: "unshaded", visible: true }
+      enum.SalvageMagnetVisuals.Ready:
+        ready:
+          False: { state: salvage-magnet-ready, visible: false, shader: "unshaded" }
+          True: { state: salvage-magnet-ready, visible: true, shader: "unshaded" }
+      enum.SalvageMagnetVisuals.ReadyBlinking:
+        readyBlinking:
+          False: { state: salvage-magnet-ready-blinking, visible: false, shader: "unshaded" }
+          True: { state: salvage-magnet-ready-blinking, visible: true, shader: "unshaded" }
+      enum.SalvageMagnetVisuals.Unready:
+        unready:
+          False: { state: salvage-magnet-unready, visible: false, shader: "unshaded" }
+          True: { state: salvage-magnet-unready, visible: true, shader: "unshaded" }
+      enum.SalvageMagnetVisuals.UnreadyBlinking:
+        unreadyBlinking:
+          False: { state: salvage-magnet-unready-blinking, visible: false, shader: "unshaded" }
+          True: { state: salvage-magnet-unready-blinking, visible: true, shader: "unshaded" }
   - type: Rotatable
   - type: Transform
     noRot: false
-  - type: IntrinsicRadio
+  - type: IntrinsicRadioReceiver
+  - type: ActiveRadio
     channels:
     - Supply
   - type: SalvageMagnet
-    offset: 0, -32
+    offset: 0, 0
+    offsetRadiusMin: 24
+    offsetRadiusMax: 48
+    attachingTime: 30
+    holdTime: 240
+    detachingTime: 30
+    cooldownTime: 60
   - type: ApcPowerReceiver
     powerLoad: 2500 # TODO change this to a HV power draw that really hits the grid hard WHEN active
 
@@ -28,7 +77,9 @@
   description: "Locates salvage."
   components:
   - type: SalvageMagnet
-    offset: 0, -12
+    offset: 0, 0
+    offsetRadiusMin: 12
+    offsetRadiusMax: 48
   - type: ApcPowerReceiver
     powerLoad: 1000
 

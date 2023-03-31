@@ -22,9 +22,10 @@ namespace Content.Client.Storage.Visualizers
         [DataField("state_closed")]
         private string? _stateClosed;
 
+        [Obsolete("Subscribe to your component being initialised instead.")]
         public override void InitializeEntity(EntityUid entity)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ISpriteComponent? sprite))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out SpriteComponent? sprite))
             {
                 return;
             }
@@ -40,12 +41,13 @@ namespace Content.Client.Storage.Visualizers
             }
         }
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
 
             var entities = IoCManager.Resolve<IEntityManager>();
-            if (!entities.TryGetComponent(component.Owner, out ISpriteComponent? sprite))
+            if (!entities.TryGetComponent(component.Owner, out SpriteComponent? sprite))
             {
                 return;
             }
@@ -63,7 +65,7 @@ namespace Content.Client.Storage.Visualizers
                         sprite.LayerSetState(StorageVisualLayers.Door, _stateOpen);
                         sprite.LayerSetVisible(StorageVisualLayers.Door, true);
                     }
-                        
+
                     if (_stateBaseAlt != null)
                         sprite.LayerSetState(0, _stateBaseAlt);
                 }

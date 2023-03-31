@@ -11,17 +11,21 @@
     sprite: Objects/Tools/jaws_of_life.rsi
     state: jaws_pry
     netsync: false
+  - type: Item
+    size: 50
   - type: Clothing
     sprite: Objects/Tools/jaws_of_life.rsi
-    size: 50
     quickEquip: false
-    Slots:
+    slots:
       - Belt
   - type: TilePrying
+  - type: LatticeCutting
   - type: Tool
     qualities:
       - Prying
     speed: 1.5
+    useSound: /Audio/Items/jaws_pry.ogg
+  - type: ToolForcePowered
   - type: MultipleTool
     statusShowBehavior: true
     entries:
@@ -47,6 +51,12 @@
   - type: Sprite
     sprite: Objects/Tools/jaws_of_life.rsi
     state: syn_jaws_pry
+  - type: Item
+    size: 35
+  - type: Tool
+    qualities:
+      - Prying
+    speed: 3.0
   - type: MultipleTool
     entries:
       - behavior: Prying

@@ -14,14 +14,12 @@ namespace Content.Server.Guardian
         /// <summary>
         /// Percentage of damage reflected from the guardian to the host
         /// </summary>
-        [ViewVariables]
         [DataField("damageShare")]
         public float DamageShare { get; set; } = 0.85f;
 
         /// <summary>
         /// Maximum distance the guardian can travel before it's forced to recall, use YAML to set
         /// </summary>
-        [ViewVariables]
         [DataField("distanceAllowed")]
         public float DistanceAllowed { get; set; } = 5f;
 

@@ -4,9 +4,9 @@
   graph: Spear
   startNode: start
   targetNode: spear
-  category: Weapons
+  category: construction-category-weapons
   description: A crude spear for when you need to put holes in somebody.
-  icon: Objects/Weapons/Melee/spear.rsi/spear.png
+  icon: { sprite: Objects/Weapons/Melee/spear.rsi, state: spear }
   objectType: Item
 
 - type: construction
@@ -15,20 +15,9 @@
   graph: Bola
   startNode: start
   targetNode: bola
-  category: Weapons
+  category: construction-category-weapons
   description: A simple weapon for tripping someone at a distance.
-  icon: Objects/Weapons/Throwable/bola.rsi/icon.png
-  objectType: Item
-
-- type: construction
-  name: makeshift laser
-  id: MakeshiftLaser
-  graph: MakeshiftLaser
-  startNode: start
-  targetNode: makeshiftLaser
-  category: Weapons
-  description: A make shift laser for the lasering enthusiast.
-  icon: Objects/Weapons/Guns/Battery/makeshift.rsi/icon.png
+  icon: { sprite: Objects/Weapons/Throwable/bola.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -37,9 +26,9 @@
   graph: WoodenBuckler
   startNode: start
   targetNode: woodenBuckler
-  category: Weapons
+  category: construction-category-weapons
   description: A nicely carved wooden shield!
-  icon: Objects/Weapons/Melee/shields.rsi/buckler-icon.png
+  icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: buckler-icon }
   objectType: Item
 
 - type: construction
@@ -48,7 +37,7 @@
   graph: MakeshiftShield
   startNode: start
   targetNode: makeshiftShield
-  category: Weapons
+  category: construction-category-weapons
   description: Crude and falling apart. Why would you make this?
-  icon: Objects/Weapons/Melee/shields.rsi/makeshift-icon.png
+  icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: makeshift-icon }
   objectType: Item

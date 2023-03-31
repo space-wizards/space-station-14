@@ -31,7 +31,7 @@ namespace Content.Server.Ghost.Roles.Components
         [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public string RoleName
         {
-            get => _roleName;
+            get => Loc.GetString(_roleName);
             set
             {
                 _roleName = value;
@@ -43,7 +43,7 @@ namespace Content.Server.Ghost.Roles.Components
         [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public string RoleDescription
         {
-            get => _roleDescription;
+            get => Loc.GetString(_roleDescription);
             set
             {
                 _roleDescription = value;
@@ -62,6 +62,14 @@ namespace Content.Server.Ghost.Roles.Components
                 EntitySystem.Get<GhostRoleSystem>().UpdateAllEui();
             }
         }
+
+        [DataField("allowSpeech")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool AllowSpeech { get; set; } = true;
+
+        [DataField("allowMovement")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool AllowMovement { get; set; }
 
         [ViewVariables(VVAccess.ReadOnly)]
         public bool Taken { get; set; }

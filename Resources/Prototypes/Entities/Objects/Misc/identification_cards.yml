@@ -8,12 +8,14 @@
   - type: Sprite
     sprite: Objects/Misc/id_cards.rsi
   - type: Clothing
-    Slots:
+    slots:
     - idcard
     sprite: Objects/Misc/id_cards.rsi
-    HeldPrefix: default
+  - type: Item
+    heldPrefix: default
   - type: Access
   - type: IdCard
+  - type: StationRecordKeyStorage
   - type: Tag
     tags:
     - DoorBumpOpener
@@ -58,6 +60,18 @@
 
 - type: entity
   parent: PassengerIDCard
+  id: ResearchAssistantIDCard
+  name: research assistant ID card
+  components:
+  - type: PresetIdCard
+    job: ResearchAssistant
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idintern-sci
+
+- type: entity
+  parent: PassengerIDCard
   id: SecurityCadetIDCard
   name: security cadet ID card
   components:
@@ -89,8 +103,8 @@
     layers:
     - state: gold
     - state: idcaptain
-  - type: Clothing
-    HeldPrefix: gold
+  - type: Item
+    heldPrefix: gold
   - type: PresetIdCard
     job: Captain
 
@@ -319,8 +333,8 @@
     layers:
     - state: silver
     - state: idheadofpersonnel
-  - type: Clothing
-    HeldPrefix: silver
+  - type: Item
+    heldPrefix: silver
   - type: PresetIdCard
     job: HeadOfPersonnel
 
@@ -333,8 +347,8 @@
     layers:
     - state: silver
     - state: idchiefengineer
-  - type: Clothing
-    HeldPrefix: silver
+  - type: Item
+    heldPrefix: silver
   - type: PresetIdCard
     job: ChiefEngineer
 
@@ -347,8 +361,8 @@
     layers:
     - state: silver
     - state: idchiefmedicalofficer
-  - type: Clothing
-    HeldPrefix: silver
+  - type: Item
+    heldPrefix: silver
   - type: PresetIdCard
     job: ChiefMedicalOfficer
 
@@ -361,8 +375,8 @@
     layers:
     - state: silver
     - state: idresearchdirector
-  - type: Clothing
-    HeldPrefix: silver
+  - type: Item
+    heldPrefix: silver
   - type: PresetIdCard
     job: ResearchDirector
 
@@ -375,8 +389,8 @@
     layers:
     - state: silver
     - state: idheadofsecurity
-  - type: Clothing
-    HeldPrefix: silver
+  - type: Item
+    heldPrefix: silver
   - type: PresetIdCard
     job: HeadOfSecurity
 
@@ -389,8 +403,8 @@
     layers:
     - state: gold
     - state: idcentcom
-  - type: Clothing
-    HeldPrefix: gold
+  - type: Item
+    heldPrefix: gold
   - type: IdCard
     jobTitle: Central Commander
   - type: Access
@@ -406,8 +420,8 @@
     layers:
     - state: gold
     - state: ert_commander # we have the sprites but don't need individual ID entities for now.
-  - type: Clothing
-    HeldPrefix: gold
+  - type: Item
+    heldPrefix: gold
 
 - type: entity
   parent: IDCardStandard
@@ -417,8 +431,8 @@
   - type: Sprite
     layers:
     - state: centcom
-  - type: Clothing
-    HeldPrefix: blue
+  - type: Item
+    heldPrefix: blue
   - type: IdCard
     jobTitle: Central Commander
   - type: Access
@@ -445,8 +459,8 @@
   - type: Sprite
     layers:
     - state: centcom
-  - type: Clothing
-    HeldPrefix: blue
+  - type: Item
+    heldPrefix: blue
   - type: IdCard
     jobTitle: Centcom Agent
 
@@ -494,8 +508,8 @@
   components:
   - type: Sprite
     layers:
-    - state: idpsychologist
     - state: default
+    - state: idpsychologist
   - type: PresetIdCard
     job: Psychologist
 
@@ -506,11 +520,35 @@
   components:
   - type: Sprite
     layers:
-    - state: idreporter
     - state: default
+    - state: idreporter
   - type: PresetIdCard
     job: Reporter
 
+- type: entity
+  parent: IDCardStandard
+  id: BoxerIDCard
+  name: boxer ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idboxer
+  - type: PresetIdCard
+    job: Boxer
+
+- type: entity
+  parent: IDCardStandard
+  id: ZookeeperIDCard
+  name: zookeeper ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idzookeeper
+  - type: PresetIdCard
+    job: Zookeeper
+    
 - type: entity
   parent: IDCardStandard
   id: DetectiveIDCard
@@ -518,7 +556,34 @@
   components:
   - type: Sprite
     layers:
-    - state: iddetective
     - state: default
+    - state: iddetective
   - type: PresetIdCard
     job: Detective
+
+- type: entity
+  parent: CentcomIDCard
+  id: CBURNIDcard
+  name: CBURN ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: gold
+    - state: idcentcom
+  - type: Item
+    heldPrefix: gold
+    
+
+- type: entity
+  parent: IDCardStandard
+  id: CluwneIDCard
+  name: cluwne ID card
+  suffix: Unremoveable
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idcluwne
+  - type: IdCard
+    jobTitle: Cluwne
+  - type: Unremoveable

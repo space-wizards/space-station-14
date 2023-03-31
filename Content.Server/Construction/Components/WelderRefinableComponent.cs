@@ -11,7 +11,7 @@ namespace Content.Server.Construction.Components
     public sealed class WelderRefinableComponent : Component
     {
         [DataField("refineResult")]
-        public HashSet<string>? RefineResult = new() { };
+        public HashSet<string>? RefineResult = new();
 
         [DataField("refineTime")]
         public float RefineTime = 2f;

@@ -3,6 +3,7 @@
   abstract: true
   id: MobSiliconBase
   components:
+  - type: LagCompensation
   - type: Reactive
     groups:
       Acidic: [Touch]
@@ -25,7 +26,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 20
+      density: 50
       mask:
       - MobMask
       layer:
@@ -39,10 +40,7 @@
     netsync: false
   - type: Recyclable
     safe: false
-  - type: UtilityNPC
-    behaviorSets:
-    - Idle
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - SimpleNeutral
   - type: HealthExaminable
@@ -73,10 +71,17 @@
   - type: Tag
     tags:
     - DoorBumpOpener
+    - ShoesRequiredStepTriggerImmune
   - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
     thresholds:
       0: Alive
       120: Dead
+  - type: Stamina
+    excess: 120
   - type: Destructible
     thresholds:
     - trigger:
@@ -89,6 +94,8 @@
     context: "human"
   - type: InputMover
   - type: MobMover
+  - type: Body
+    prototype: Bot
 
 - type: entity
   parent: MobSiliconBase
@@ -99,9 +106,6 @@
   - type: SpamEmitSound
     sound:
       collection: BikeHorn
-  - type: UtilityNPC
-    behaviorSets:
-    - Idle
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Silicon/Bots/honkbot.rsi
@@ -110,17 +114,23 @@
     launchForwardsMultiplier: 6.0
   - type: StepTrigger
     intersectRatio: 0.2
+  - type: Physics
+    bodyType: Dynamic
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 8
+      id: "slips"
+      hard: false
+      layer:
+        - SlipLayer
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      density: 20
       mask:
       - MobMask
-      layer:
-      - MobLayer
-      - SlipLayer
   - type: Construction
     graph: HonkBot
     node: bot
@@ -128,6 +138,11 @@
     makeSentient: true
     name: honkbot
     description: An artificial being of pure evil.
+  - type: InteractionPopup
+    interactSuccessString: petting-success-honkbot
+    interactFailureString: petting-failure-honkbot
+    interactSuccessSound:
+      path: /Audio/Items/bikehorn.ogg
 
 - type: entity
   parent: MobSiliconBase
@@ -139,9 +154,6 @@
     drawdepth: Mobs
     sprite: Mobs/Silicon/Bots/cleanbot.rsi
     state: cleanbot
-  - type: UtilityNPC
-    behaviorSets:
-    - CleanBot
   - type: Drain
     range: 1
     unitsDestroyedPerSecond: 6
@@ -149,13 +161,24 @@
     graph: CleanBot
     node: bot
   - type: SentienceTarget
-    flavorKind: mechanical
+    flavorKind: station-event-random-sentience-flavor-mechanical
   - type: SolutionContainerManager
     solutions:
       drainBuffer:
         maxVol: 30
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 3
+  - type: NoSlip
+  - type: HTN
+    rootTask: CleanbotCompound
   - type: DrainableSolution
     solution: drainBuffer
+  - type: InteractionPopup
+    interactSuccessString: petting-success-cleanbot
+    interactFailureString: petting-failure-cleanbot
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
   parent: MobSiliconBase
@@ -163,15 +186,19 @@
   name: medibot
   description: No substitute for a doctor, but better than nothing.
   components:
-  - type: UtilityNPC
-    behaviorSets:
-    - MediBot
   - type: Medibot
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Silicon/Bots/medibot.rsi
     state: medibot
   - type: Speech
+  - type: HTN
+    rootTask: MedibotCompound
   - type: Construction
     graph: MediBot
     node: bot
+  - type: InteractionPopup
+    interactSuccessString: petting-success-medibot
+    interactFailureString: petting-failure-medibot
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg

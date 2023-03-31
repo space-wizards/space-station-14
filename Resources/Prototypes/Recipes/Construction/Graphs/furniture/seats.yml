@@ -34,18 +34,25 @@
         - to: chairComfy
           steps:
             - material: Steel
-              amount: 5
+              amount: 2
               doAfter: 1
         - to: chairPilotSeat
           steps:
             - material: Steel
-              amount: 5
+              amount: 2
               doAfter: 1
         - to: chairWood
           steps:
             - material: WoodPlank
               amount: 3
               doAfter: 1
+        - to: chairFolding
+          steps:
+            - material: Plastic
+              amount: 1
+              doAfter: 1
+            - material: MetalRod
+              amount: 2
 
     - node: chair
       entity: Chair
@@ -111,11 +118,11 @@
           completed:
             - !type:SpawnPrototype
               prototype: SheetSteel1
-              amount: 5
+              amount: 2
           steps:
             - tool: Screwing
               doAfter: 1
-              
+
     - node: chairPilotSeat
       entity: ChairPilotSeat
       edges:
@@ -123,7 +130,7 @@
           completed:
             - !type:SpawnPrototype
               prototype: SheetSteel1
-              amount: 5
+              amount: 2
           steps:
             - tool: Screwing
               doAfter: 2
@@ -139,3 +146,19 @@
           steps:
             - tool: Screwing
               doAfter: 1
+
+    - node: chairFolding
+      entity: ChairFolding
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlastic1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: PartRodMetal1
+              amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 1
+

@@ -28,6 +28,11 @@
   - type: Utensil
     types:
     - Fork
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Piercing: 5
 
 - type: entity
   parent: UtensilBase
@@ -38,13 +43,16 @@
   - type: Sprite
     state: plastic_fork
   - type: Item
-    color: white
   - type: Utensil
     types:
     - Fork
     breakChance: 0.20
   - type: Tag
-    tags: [ Plastic ]
+    tags:
+      - Plastic
+      - Trash
+  - type: StaticPrice
+    price: 0
 
 - type: entity
   parent: UtensilBase
@@ -58,10 +66,15 @@
   - type: Sprite
     state: spoon
   - type: Item
-    HeldPrefix: spoon
+    heldPrefix: spoon
   - type: Utensil
     types:
     - Spoon
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 1
 
 - type: entity
   parent: UtensilBase
@@ -72,11 +85,11 @@
   - type: Tag
     tags:
     - Plastic
+    - Trash
   - type: Sprite
     state: plastic_spoon
   - type: Item
-    color: white
-    HeldPrefix: spoon
+    heldPrefix: spoon
   - type: Utensil
     types:
     - Spoon
@@ -91,11 +104,13 @@
   - type: Tag
     tags:
     - Plastic
+    - Trash
   - type: Sprite
     state: plastic_knife
   - type: Item
-    color: white
   - type: Utensil
     types:
     - Knife
     breakChance: 0.20
+  - type: StaticPrice
+    price: 0

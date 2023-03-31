@@ -1,14 +1,14 @@
 - type: accessLevel
   id: Command
-  name: Command
+  name: id-card-access-level-command
 
 - type: accessLevel
   id: Captain
-  name: Captain
+  name: id-card-access-level-captain
 
 - type: accessLevel
   id: HeadOfPersonnel
-  name: Head of Personnel
+  name: id-card-access-level-head-of-personnel
 
 - type: accessGroup
   id: Command

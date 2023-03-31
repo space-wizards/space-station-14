@@ -14,7 +14,7 @@ namespace Content.Server.Damage.Systems
             SubscribeLocalEvent<DamageOnLandComponent, LandEvent>(DamageOnLand);
         }
 
-        private void DamageOnLand(EntityUid uid, DamageOnLandComponent component, LandEvent args)
+        private void DamageOnLand(EntityUid uid, DamageOnLandComponent component, ref LandEvent args)
         {
             _damageableSystem.TryChangeDamage(uid, component.Damage, component.IgnoreResistances);
         }

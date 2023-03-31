@@ -17,7 +17,7 @@ namespace Content.Server.Administration.Commands
             var loc = IoCManager.Resolve<ILocalizationManager>();
 
             // ReSharper disable once ConvertIfStatementToSwitchStatement
-            if (args.Length == 1 && TimeSpan.TryParseExact(args[0], Localization.TimeSpanMinutesFormats, loc.DefaultCulture, out var timeSpan))
+            if (args.Length == 1 && TimeSpan.TryParseExact(args[0], ContentLocalizationManager.TimeSpanMinutesFormats, loc.DefaultCulture, out var timeSpan))
             {
                 EntitySystem.Get<RoundEndSystem>().RequestRoundEnd(timeSpan, shell.Player?.AttachedEntity, false);
             }

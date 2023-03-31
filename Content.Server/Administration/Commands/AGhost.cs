@@ -40,11 +40,13 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var canReturn = mind.CurrentEntity != null;
+            var canReturn = mind.CurrentEntity != null
+                            && !_entities.HasComponent<GhostComponent>(mind.CurrentEntity);
             var coordinates = player.AttachedEntity != null
                 ? _entities.GetComponent<TransformComponent>(player.AttachedEntity.Value).Coordinates
                 : EntitySystem.Get<GameTicker>().GetObserverSpawnPoint();
-            var ghost = _entities.SpawnEntity("AdminObserver", coordinates.ToMap(_entities));
+            var ghost = _entities.SpawnEntity("AdminObserver", coordinates);
+            _entities.GetComponent<TransformComponent>(ghost).AttachToGridOrMap();
 
             if (canReturn)
             {

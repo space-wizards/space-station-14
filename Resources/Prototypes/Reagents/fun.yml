@@ -4,6 +4,7 @@
   group: Special
   desc: reagent-desc-carpetium
   physicalDesc: reagent-physical-desc-fibrous
+  flavor: carpet
   color: "#800000"
   tileReactions:
   - !type:CreateEntityTileReaction
@@ -31,6 +32,7 @@
   name: reagent-name-fiber
   desc: reagent-desc-fiber
   physicalDesc: reagent-physical-desc-fibrous
+  flavor: fiber
   color: "#808080"
 
 - type: reagent
@@ -39,6 +41,7 @@
   group: Toxins
   desc: reagent-desc-buzzochloric-bees
   physicalDesc: reagent-physical-desc-buzzy
+  flavor: bee
   color: "#FFD35D"
   tileReactions:
   - !type:CreateEntityTileReaction
@@ -131,6 +134,7 @@
   name: reagent-name-ground-bee
   desc: reagent-desc-ground-bee
   physicalDesc: reagent-physical-desc-bee-guts
+  flavor: bee
   color: "#86530E"
 
 - type: reagent
@@ -138,6 +142,7 @@
   name: reagent-name-saxoite
   desc: reagent-desc-saxoite
   physicalDesc: reagent-physical-desc-ground-brass
+  flavor: sax
   color: "#B8A603"
 
 - type: reagent
@@ -146,6 +151,7 @@
   group: Toxins
   desc: reagent-desc-licoxide
   physicalDesc: reagent-physical-desc-electric
+  flavor: shocking
   color: "#FDD023"
   metabolisms:
     Poison:

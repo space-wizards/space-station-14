@@ -12,15 +12,13 @@ namespace Content.Server.Medical.Components
     {
         public bool IsActive = false;
 
-        public CancellationTokenSource? CancelToken;
-
         [DataField("delay")]
         public float Delay = 2.5f;
 
         public EntityTargetAction Action = new()
         {
             Icon = new SpriteSpecifier.Texture(new ResourcePath("Clothing/Neck/Misc/stethoscope.rsi/icon.png")),
-            Name = "stethoscope-verb",
+            DisplayName = "stethoscope-verb",
             Priority = -1,
             Event = new StethoscopeActionEvent(),
         };

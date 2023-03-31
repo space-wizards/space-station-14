@@ -1,9 +1,13 @@
 - type: job
   id: AtmosphericTechnician
   name: job-name-atmostech
+  description: job-description-atmostech
+  playTimeTracker: JobAtmosphericTechnician
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 3600
   startingGear: AtmosphericTechnicianGear
-  departments:
-  - Engineering
   icon: "AtmosphericTechnician"
   supervisors: job-supervisors-ce
   canBeAntag: false
@@ -16,11 +20,10 @@
 - type: startingGear
   id: AtmosphericTechnicianGear
   equipment:
-    head:
     jumpsuit: ClothingUniformJumpsuitAtmos
     back: ClothingBackpackEngineeringFilled
     shoes: ClothingShoesColorWhite
-    outerClothing:
+    eyes: ClothingEyesGlassesMeson
     id: AtmosPDA
     belt: ClothingBeltUtilityFilled
     ears: ClothingHeadsetEngineering

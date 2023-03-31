@@ -1,5 +1,5 @@
-using Content.Shared.Sound;
 using Content.Shared.Weapons.Ranged.Components;
+using Robust.Shared.Audio;
 
 namespace Content.Shared.Weapons.Ranged;
 

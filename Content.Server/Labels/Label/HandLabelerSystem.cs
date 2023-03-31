@@ -1,10 +1,14 @@
 using Content.Server.Labels.Components;
 using Content.Server.UserInterface;
+using Content.Server.Popups;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Labels;
-using Content.Shared.Popups;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.Server.Labels
 {
@@ -15,6 +19,9 @@ namespace Content.Server.Labels
     public sealed class HandLabelerSystem : EntitySystem
     {
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly LabelSystem _labelSystem = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
         public override void Initialize()
         {
@@ -22,18 +29,44 @@ namespace Content.Server.Labels
 
             SubscribeLocalEvent<HandLabelerComponent, AfterInteractEvent>(AfterInteractOn);
             SubscribeLocalEvent<HandLabelerComponent, ActivateInWorldEvent>(OnActivate);
+            SubscribeLocalEvent<HandLabelerComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
             // Bound UI subscriptions
             SubscribeLocalEvent<HandLabelerComponent, HandLabelerLabelChangedMessage>(OnHandLabelerLabelChanged);
         }
 
+        private void OnUtilityVerb(EntityUid uid, HandLabelerComponent handLabeler, GetVerbsEvent<UtilityVerb> args)
+        {
+            if (args.Target is not { Valid: true } target || !handLabeler.Whitelist.IsValid(target) || !args.CanAccess)
+                return;
+
+            string labelerText = handLabeler.AssignedLabel == string.Empty ? Loc.GetString("hand-labeler-remove-label-text") : Loc.GetString("hand-labeler-add-label-text");
+
+            var verb = new UtilityVerb()
+            {
+                Act = () =>
+                {
+                    AddLabelTo(uid, handLabeler, target, out var result);
+                    if (result != null)
+                        _popupSystem.PopupEntity(result, args.User, args.User);
+                },
+                Text = labelerText
+            };
+
+            args.Verbs.Add(verb);
+        }
         private void AfterInteractOn(EntityUid uid, HandLabelerComponent handLabeler, AfterInteractEvent args)
         {
             if (args.Target is not {Valid: true} target || !handLabeler.Whitelist.IsValid(target) || !args.CanReach)
                 return;
 
             AddLabelTo(uid, handLabeler, target, out string? result);
-            if (result != null)
-                handLabeler.Owner.PopupMessage(args.User, result);
+            if (result == null)
+                return;
+            _popupSystem.PopupEntity(result, args.User, args.User);
+
+            // Log labeling
+            _adminLogger.Add(LogType.Action, LogImpact.Low,
+                $"{ToPrettyString(args.User):user} labeled {ToPrettyString(target):target} with {ToPrettyString(uid):labeler}");
         }
 
         private void AddLabelTo(EntityUid uid, HandLabelerComponent? handLabeler, EntityUid target, out string? result)
@@ -44,23 +77,14 @@ namespace Content.Server.Labels
                 return;
             }
 
-            LabelComponent label = target.EnsureComponent<LabelComponent>();
-
-            if (label.OriginalName != null)
-                EntityManager.GetComponent<MetaDataComponent>(target).EntityName = label.OriginalName;
-            label.OriginalName = null;
-
             if (handLabeler.AssignedLabel == string.Empty)
             {
-                label.CurrentLabel = null;
+                _labelSystem.Label(target, null);
                 result = Loc.GetString("hand-labeler-successfully-removed");
                 return;
             }
 
-            label.OriginalName = EntityManager.GetComponent<MetaDataComponent>(target).EntityName;
-            string val = EntityManager.GetComponent<MetaDataComponent>(target).EntityName + $" ({handLabeler.AssignedLabel})";
-            EntityManager.GetComponent<MetaDataComponent>(target).EntityName = val;
-            label.CurrentLabel = handLabeler.AssignedLabel;
+            _labelSystem.Label(target, handLabeler.AssignedLabel);
             result = Loc.GetString("hand-labeler-successfully-applied");
         }
 
@@ -75,8 +99,16 @@ namespace Content.Server.Labels
 
         private void OnHandLabelerLabelChanged(EntityUid uid, HandLabelerComponent handLabeler, HandLabelerLabelChangedMessage args)
         {
+            if (args.Session.AttachedEntity is not {Valid: true} player)
+                return;
+
             handLabeler.AssignedLabel = args.Label.Trim().Substring(0, Math.Min(handLabeler.MaxLabelChars, args.Label.Length));
             DirtyUI(uid, handLabeler);
+
+            // Log label change
+            _adminLogger.Add(LogType.Action, LogImpact.Low,
+                $"{ToPrettyString(player):user} set {ToPrettyString(uid):labeler} to apply label \"{handLabeler.AssignedLabel}\"");
+
         }
 
         private void DirtyUI(EntityUid uid,

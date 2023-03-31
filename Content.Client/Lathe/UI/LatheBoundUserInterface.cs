@@ -1,101 +1,65 @@
-using System.Collections.Generic;
-using Content.Client.Lathe.Components;
 using Content.Shared.Lathe;
-using Content.Shared.Research.Prototypes;
+using Content.Shared.Research.Components;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
-using Robust.Shared.ViewVariables;
-using static Content.Shared.Lathe.SharedLatheComponent;
 
 namespace Content.Client.Lathe.UI
 {
+    [UsedImplicitly]
     public sealed class LatheBoundUserInterface : BoundUserInterface
     {
-        [Dependency] private readonly IEntityManager _entMan = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [ViewVariables] private LatheMenu? _menu;
+        [ViewVariables] private LatheQueueMenu? _queueMenu;
 
-        [ViewVariables]
-        private LatheMenu? _menu;
-        [ViewVariables]
-        private LatheQueueMenu? _queueMenu;
+        public EntityUid Lathe;
 
-        public MaterialStorageComponent? Storage { get; private set; }
-        public SharedLatheComponent? Lathe { get; private set; }
-        public SharedLatheDatabaseComponent? Database { get; private set; }
-
-        [ViewVariables]
-        public Queue<LatheRecipePrototype> QueuedRecipes => _queuedRecipes;
-        private readonly Queue<LatheRecipePrototype> _queuedRecipes = new();
-
-        public LatheBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public LatheBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
-            SendMessage(new LatheSyncRequestMessage());
+            Lathe = owner.Owner;
         }
 
         protected override void Open()
         {
             base.Open();
 
-            if (!_entMan.TryGetComponent(Owner.Owner, out MaterialStorageComponent? storage)
-            ||  !_entMan.TryGetComponent(Owner.Owner, out SharedLatheComponent? lathe)
-            ||  !_entMan.TryGetComponent(Owner.Owner, out SharedLatheDatabaseComponent? database)) return;
-
-            Storage = storage;
-            Lathe = lathe;
-            Database = database;
-
             _menu = new LatheMenu(this);
-            _queueMenu = new LatheQueueMenu(this);
+            _queueMenu = new LatheQueueMenu();
 
             _menu.OnClose += Close;
 
-            _menu.Populate();
-            _menu.PopulateMaterials();
-
-            _menu.QueueButton.OnPressed += (_) => { _queueMenu.OpenCentered(); };
-
-            _menu.ServerConnectButton.OnPressed += (_) =>
+            _menu.OnQueueButtonPressed += _ =>
             {
-                SendMessage(new LatheServerSelectionMessage());
+                _queueMenu.OpenCenteredLeft();
             };
-
-            _menu.ServerSyncButton.OnPressed += (_) =>
+            _menu.OnServerListButtonPressed += _ =>
             {
-                SendMessage(new LatheServerSyncMessage());
+                SendMessage(new ConsoleServerSelectionMessage());
             };
-
-            storage.OnMaterialStorageChanged += _menu.PopulateDisabled;
-            storage.OnMaterialStorageChanged += _menu.PopulateMaterials;
+            _menu.OnServerSyncButtonPressed += _ =>
+            {
+                SendMessage(new ConsoleServerSyncMessage());
+            };
+            _menu.RecipeQueueAction += (recipe, amount) =>
+            {
+                SendMessage(new LatheQueueRecipeMessage(recipe, amount));
+            };
 
             _menu.OpenCentered();
         }
 
-        public void Queue(LatheRecipePrototype recipe, int quantity = 1)
+        protected override void UpdateState(BoundUserInterfaceState state)
         {
-            SendMessage(new LatheQueueRecipeMessage(recipe.ID, quantity));
-        }
+            base.UpdateState(state);
 
-        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
-        {
-            switch (message)
+            switch (state)
             {
-                case LatheProducingRecipeMessage msg:
-                    if (!_prototypeManager.TryIndex(msg.ID, out LatheRecipePrototype? recipe)) break;
-                    _queueMenu?.SetInfo(recipe);
-                    break;
-                case LatheStoppedProducingRecipeMessage _:
-                    _queueMenu?.ClearInfo();
-                    break;
-                case LatheFullQueueMessage msg:
-                    _queuedRecipes.Clear();
-                    foreach (var id in msg.Recipes)
-                    {
-                        if (!_prototypeManager.TryIndex(id, out LatheRecipePrototype? recipePrototype)) break;
-                        _queuedRecipes.Enqueue(recipePrototype);
-                    }
-                    _queueMenu?.PopulateList();
+                case LatheUpdateState msg:
+                    if (_menu != null)
+                        _menu.Recipes = msg.Recipes;
+                    _menu?.PopulateRecipes(Owner.Owner);
+                    _menu?.PopulateMaterials(Lathe);
+                    _queueMenu?.PopulateList(msg.Queue);
+                    _queueMenu?.SetInfo(msg.CurrentlyProducing);
                     break;
             }
         }
@@ -103,7 +67,8 @@ namespace Content.Client.Lathe.UI
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            if (!disposing) return;
+            if (!disposing)
+                return;
             _menu?.Dispose();
             _queueMenu?.Dispose();
         }

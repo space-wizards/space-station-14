@@ -1,194 +1,174 @@
-using System;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Physics;
 using Robust.Client.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Map;
-using Robust.Shared.Maths;
+using Robust.Shared.Collections;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Eye;
 
 public sealed class EyeLerpingSystem : EntitySystem
 {
-    [Dependency] private readonly IEyeManager _eyeManager = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly SharedMoverController _mover = default!;
 
-    // How fast the camera rotates in radians / s
-    private const float CameraRotateSpeed = MathF.PI;
-
-    // Safety override
-    private const float LerpTimeMax = 1.5f;
-
-    // Lerping information for the player's active eye.
-    private readonly EyeLerpInformation _playerActiveEye = new();
-
-    // Eyes other than the primary eye that are currently active.
-    private readonly Dictionary<EntityUid, EyeLerpInformation> _activeEyes = new();
-    private readonly List<EntityUid> _toRemove = new();
+    // Convenience variable for for VV.
+    [ViewVariables]
+    private IEnumerable<LerpingEyeComponent> ActiveEyes => EntityQuery<LerpingEyeComponent>();
 
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<EyeComponent, ComponentStartup>(OnEyeStartup);
         SubscribeLocalEvent<EyeComponent, ComponentShutdown>(OnEyeShutdown);
+        SubscribeLocalEvent<LerpingEyeComponent, EntParentChangedMessage>(HandleMapChange);
+        SubscribeLocalEvent<EyeComponent, PlayerAttachedEvent>(OnAttached);
+        SubscribeLocalEvent<LerpingEyeComponent, PlayerDetachedEvent>(OnDetached);
 
         UpdatesAfter.Add(typeof(TransformSystem));
         UpdatesAfter.Add(typeof(PhysicsSystem));
         UpdatesBefore.Add(typeof(EyeUpdateSystem));
+        UpdatesOutsidePrediction = true;
+    }
+
+    private void OnEyeStartup(EntityUid uid, EyeComponent component, ComponentStartup args)
+    {
+        if (_playerManager.LocalPlayer?.ControlledEntity == uid)
+            AddEye(uid, component, true);
     }
 
     private void OnEyeShutdown(EntityUid uid, EyeComponent component, ComponentShutdown args)
     {
-        RemoveEye(uid);
+        RemCompDeferred<LerpingEyeComponent>(uid);
     }
 
-    public void AddEye(EntityUid uid)
+    // TODO replace this with some way of automatically getting and including any eyes that are associated with a viewport / render able thingy.
+    public void AddEye(EntityUid uid, EyeComponent? component = null, bool automatic = false)
     {
-        if (!_activeEyes.ContainsKey(uid))
-        {
-            _activeEyes.Add(uid, new());
-        }
+        if (!Resolve(uid, ref component))
+            return;
+
+        var lerpInfo = EnsureComp<LerpingEyeComponent>(uid);
+        lerpInfo.TargetRotation = GetRotation(uid);
+        lerpInfo.LastRotation = lerpInfo.TargetRotation;
+        lerpInfo.ManuallyAdded |= !automatic;
+
+        if (component.Eye != null)
+            component.Eye.Rotation = lerpInfo.TargetRotation;
     }
 
     public void RemoveEye(EntityUid uid)
     {
-        if (_activeEyes.ContainsKey(uid))
+        if (!TryComp(uid, out LerpingEyeComponent? lerp))
+            return;
+
+        // If this is the currently controlled entity, we keep the component.
+        if (_playerManager.LocalPlayer?.ControlledEntity == uid)
+            lerp.ManuallyAdded = false;
+        else
+            RemComp(uid, lerp);
+    }
+
+    private void HandleMapChange(EntityUid uid, LerpingEyeComponent component, ref EntParentChangedMessage args)
+    {
+        // Is this actually a map change? If yes, stop any lerps
+        if (args.OldMapId != args.Transform.MapID)
+            component.LastRotation = GetRotation(uid, args.Transform);
+    }
+
+    private void OnAttached(EntityUid uid, EyeComponent component, PlayerAttachedEvent args)
+    {
+        AddEye(uid, component, true);
+    }
+
+    private void OnDetached(EntityUid uid, LerpingEyeComponent component, PlayerDetachedEvent args)
+    {
+        if (!component.ManuallyAdded)
+            RemCompDeferred(uid, component);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        if (!_gameTiming.IsFirstTimePredicted)
+            return;
+
+        // Set all of our eye rotations to the relevant values.
+        var query = AllEntityQuery<LerpingEyeComponent, TransformComponent>();
+
+        while (query.MoveNext(out var uid, out var lerpInfo, out var xform))
         {
-            _activeEyes.Remove(uid);
+            lerpInfo.LastRotation = lerpInfo.TargetRotation;
+            lerpInfo.TargetRotation = GetRotation(uid, xform);
         }
+    }
+
+    /// <summary>
+    /// Does the eye need to lerp or is its rotation matched.
+    /// </summary>
+    private bool NeedsLerp(InputMoverComponent? mover)
+    {
+        if (mover == null)
+            return false;
+
+        if (mover.RelativeRotation.Equals(mover.TargetRelativeRotation))
+            return false;
+
+        return true;
+    }
+
+    private Angle GetRotation(EntityUid uid, TransformComponent? xform = null, InputMoverComponent? mover = null)
+    {
+        if (!Resolve(uid, ref xform))
+            return Angle.Zero;
+
+        // If we can move then tie our eye to our inputs (these also get lerped so it should be fine).
+        if (Resolve(uid, ref mover, false))
+        {
+            return -_mover.GetParentGridAngle(mover);
+        }
+
+        // if not tied to a mover then lock it to map / grid
+        var relative = xform.GridUid ?? xform.MapUid;
+        if (relative != null)
+            return -Transform(relative.Value).WorldRotation;
+
+        return Angle.Zero;
     }
 
     public override void FrameUpdate(float frameTime)
     {
-        if (!_gameTiming.IsFirstTimePredicted)
-            return;
+        var tickFraction = (float) _gameTiming.TickFraction / ushort.MaxValue;
+        const double lerpMinimum = 0.00001;
+        var query = AllEntityQuery<LerpingEyeComponent, EyeComponent, TransformComponent>();
 
-        // Always do this one.
-        LerpPlayerEye(frameTime);
-
-        foreach (var (entity, info) in _activeEyes)
+        while (query.MoveNext(out var entity, out var lerpInfo, out var eye, out var xform))
         {
-            LerpEntityEye(entity, info, frameTime);
-        }
+            TryComp<InputMoverComponent>(entity, out var mover);
 
-        if (_toRemove.Count != 0)
-        {
-            foreach (var entity in _toRemove)
+            // This needs to be recomputed every frame, as if this is simply the grid rotation, then we need to account for grid angle lerping.
+            lerpInfo.TargetRotation = GetRotation(entity, xform, mover);
+
+            if (!NeedsLerp(mover))
             {
-                RemoveEye(entity);
+                eye.Rotation = lerpInfo.TargetRotation;
+                continue;
             }
 
-            _toRemove.Clear();
-        }
-    }
+            var shortest = Angle.ShortestDistance(lerpInfo.LastRotation, lerpInfo.TargetRotation);
 
-    private void LerpPlayerEye(float frameTime)
-    {
-        if (_playerManager.LocalPlayer?.ControlledEntity is not {} mob || Deleted(mob))
-            return;
-
-        // We can't lerp if the mob can't move!
-        if (!TryComp(mob, out InputMoverComponent? mover))
-            return;
-
-        LerpEye(_eyeManager.CurrentEye, frameTime, mover.LastGridAngle, _playerActiveEye);
-    }
-
-    private void LerpEntityEye(EntityUid uid, EyeLerpInformation info, float frameTime)
-    {
-        if (!TryComp(uid, out TransformComponent? transform)
-            || !TryComp(uid, out EyeComponent? eye)
-            || eye.Eye == null
-            || !_mapManager.TryGetGrid(transform.GridUid, out var grid))
-        {
-            _toRemove.Add(uid);
-            return;
-        }
-
-        LerpEye(eye.Eye, frameTime, grid.WorldRotation, info);
-    }
-
-    private void LerpEye(IEye eye, float frameTime, Angle lastAngle, EyeLerpInformation lerpInfo)
-    {
-
-        // Let's not turn the camera into a washing machine when the game starts.
-        if (lerpInfo.LastGridAngle == null)
-        {
-            lerpInfo.LastGridAngle = lastAngle;
-            eye.Rotation = -lastAngle;
-            return;
-        }
-
-        // Check if the last lerp grid angle we have is not the same as the last mover grid angle...
-        if (!lerpInfo.LastGridAngle.Value.EqualsApprox(lastAngle))
-        {
-            // And now, we start lerping.
-            lerpInfo.LerpTo = lastAngle;
-            lerpInfo.LastGridAngle = lastAngle;
-            lerpInfo.LerpStartRotation = eye.Rotation;
-            lerpInfo.Accumulator = 0f;
-        }
-
-        if (lerpInfo.LerpTo != null)
-        {
-            lerpInfo.Accumulator += frameTime;
-
-            var lerpRot = -lerpInfo.LerpTo.Value.FlipPositive().Reduced();
-            var startRot = lerpInfo.LerpStartRotation.FlipPositive().Reduced();
-
-            var changeNeeded = Angle.ShortestDistance(startRot, lerpRot);
-
-            if (changeNeeded.EqualsApprox(Angle.Zero))
+            if (Math.Abs(shortest.Theta) < lerpMinimum)
             {
-                // Nothing to do here!
-                lerpInfo.Cleanup(eye);
-                return;
+                eye.Rotation = lerpInfo.TargetRotation;
+                continue;
             }
 
-            // Get how much the camera should have moved by now. Make it faster depending on the change needed.
-            var changeRot = (CameraRotateSpeed * Math.Max(1f, Math.Abs(changeNeeded) * 0.75f)) * lerpInfo.Accumulator * Math.Sign(changeNeeded);
-
-            // How close is this from reaching the end?
-            var percentage = (float)Math.Abs(changeRot / changeNeeded);
-
-            eye.Rotation = Angle.Lerp(startRot, lerpRot, percentage);
-
-            // Either we have overshot, or we have taken way too long on this, emergency reset time
-            if (percentage >= 1.0f || lerpInfo.Accumulator >= LerpTimeMax)
-            {
-                lerpInfo.Cleanup(eye);
-            }
-        }
-        else
-        {
-            // This makes it so rotating the camera manually is impossible...
-            // However, it is needed. Why? Because of a funny (hilarious, even) race condition involving
-            // ghosting, this system listening for attached mob changes, and the eye rotation being reset after our
-            // changes back to zero because of an EyeComponent state coming from the server being applied.
-            // At some point we'll need to come up with a solution for that. But for now, I just want to fix this.
-            eye.Rotation = -lastAngle;
-        }
-    }
-
-    private sealed class EyeLerpInformation
-    {
-        public Angle? LastGridAngle { get; set; }
-        public Angle? LerpTo { get; set; }
-        public Angle LerpStartRotation { get; set; }
-        public float Accumulator { get; set; }
-
-        public void Cleanup(IEye eye)
-        {
-            eye.Rotation = -LerpTo ?? Angle.Zero;
-            LerpStartRotation = eye.Rotation;
-            LerpTo = null;
-            Accumulator = 0;
+            eye.Rotation = shortest * tickFraction + lerpInfo.LastRotation;
         }
     }
 }

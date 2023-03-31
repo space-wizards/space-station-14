@@ -29,6 +29,26 @@
   revertOnDeath: true
 
 - type: polymorph
+  id: WizardForcedSkeleton
+  entity: MobSkeletonPerson
+  forced: true
+  inventory: Drop
+  transferName: true
+  transferDamage: true
+  revertOnCrit: false
+  revertOnDeath: false
+
+- type: polymorph
+  id: WizardForcedMonkey
+  entity: MobMonkey
+  forced: true
+  inventory: None
+  transferName: true
+  transferDamage: true
+  revertOnCrit: false
+  revertOnDeath: true
+
+- type: polymorph
   id: WizardWallDoor
   entity: WoodDoor
   forced: true
@@ -37,6 +57,15 @@
   transferDamage: false
   revertOnCrit: false
   revertOnDeath: false
+
+- type: polymorph
+  id: WizardForcedCluwne
+  entity: MobCluwne
+  forced: true
+  transferName: true
+  transferHumanoidAppearance: true
+  inventory: Transfer
+  revertOnDeath: true
 
 # this is a test for transferring some visual appearance stuff
 - type: polymorph

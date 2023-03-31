@@ -1,8 +1,8 @@
 {
     "version": 1,
     "size": {"x": 32, "y": 32},
-    "license": "From Goonstation at https://github.com/goonstation/goonstation/commit/ed3b3c552e384bb3eb7056468a125f6a8c661261",
-    "copyright": "CC-BY-NC-SA-3.0",
+    "license": "CC-BY-NC-SA-3.0",
+    "copyright": "From Goonstation at https://github.com/goonstation/goonstation/commit/ed3b3c552e384bb3eb7056468a125f6a8c661261",
     "states": [
         {"name": "mobilevision", "directions": 4, "delays": [[1.0], [1.0], [1.0], [1.0]]},
         {"name": "party", "directions": 1, "delays": [[1.0]]},

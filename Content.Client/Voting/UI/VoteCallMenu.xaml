@@ -1,6 +1,6 @@
 ﻿<ui:VoteCallMenu xmlns="https://spacestation14.io"
                  xmlns:ui="clr-namespace:Content.Client.Voting.UI"
-                 xmlns:hudUi="clr-namespace:Content.Client.HUD.UI"
+                 xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                  MouseFilter="Stop" MinSize="350 150">
     <PanelContainer StyleClasses="AngleRect" />
     <BoxContainer Orientation="Vertical">
@@ -10,7 +10,7 @@
             <TextureButton Name="CloseButton" StyleClasses="windowCloseButton"
                            VerticalAlignment="Center" />
         </BoxContainer>
-        <hudUi:HighDivider />
+        <controls:HighDivider />
 
         <BoxContainer Orientation="Vertical" Margin="8 2 8 0" VerticalExpand="True" VerticalAlignment="Top">
             <BoxContainer Orientation="Horizontal">

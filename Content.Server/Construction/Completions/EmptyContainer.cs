@@ -1,6 +1,8 @@
-﻿using System.Linq;
+using Content.Server.Hands.Components;
+using Content.Server.Hands.Systems;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
+using Robust.Server.Containers;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Construction.Completions
@@ -11,19 +13,27 @@ namespace Content.Server.Construction.Completions
     {
         [DataField("container")] public string Container { get; private set; } = string.Empty;
 
+        /// <summary>
+        ///     Whether or not the user should attempt to pick up the removed entities.
+        /// </summary>
+        [DataField("pickup")]
+        public bool Pickup = false;
+
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
             if (!entityManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager) ||
                 !containerManager.TryGetContainer(Container, out var container)) return;
 
-            // TODO: Use container system methods.
-            var transform = entityManager.GetComponent<TransformComponent>(uid);
-            foreach (var contained in container.ContainedEntities.ToArray())
+            var containerSys = entityManager.EntitySysManager.GetEntitySystem<ContainerSystem>();
+            var handSys = entityManager.EntitySysManager.GetEntitySystem<HandsSystem>();
+
+            HandsComponent? hands = null;
+            var pickup = Pickup && entityManager.TryGetComponent(userUid, out hands);
+
+            foreach (var ent in containerSys.EmptyContainer(container, true, reparent: !pickup))
             {
-                container.ForceRemove(contained);
-                var cTransform = entityManager.GetComponent<TransformComponent>(contained);
-                cTransform.Coordinates = transform.Coordinates;
-                cTransform.AttachToGridOrMap();
+                if (pickup)
+                    handSys.PickupOrDrop(userUid, ent, handsComp: hands);
             }
         }
     }

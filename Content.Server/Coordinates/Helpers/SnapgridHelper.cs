@@ -1,25 +1,19 @@
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Coordinates.Helpers
 {
     public static class SnapgridHelper
     {
-        public static void SnapToGrid(this EntityUid entity, IEntityManager? entMan = null, IMapManager? mapManager = null)
-        {
-            IoCManager.Resolve(ref entMan, ref mapManager);
-            var transform = entMan.GetComponent<TransformComponent>(entity);
-            transform.Coordinates = transform.Coordinates.SnapToGrid(entMan, mapManager);
-        }
-
         public static EntityCoordinates SnapToGrid(this EntityCoordinates coordinates, IEntityManager? entMan = null, IMapManager? mapManager = null)
         {
             IoCManager.Resolve(ref entMan, ref mapManager);
 
-            var gridId = coordinates.GetGridId(entMan);
+            var gridIdOpt = coordinates.GetGridUid(entMan);
 
             var tileSize = 1f;
 
-            if (gridId.IsValid())
+            if (gridIdOpt is EntityUid gridId && gridId.IsValid())
             {
                 var grid = mapManager.GetGrid(gridId);
                 tileSize = grid.TileSize;
@@ -33,7 +27,7 @@ namespace Content.Server.Coordinates.Helpers
             return new EntityCoordinates(coordinates.EntityId, x, y);
         }
 
-        public static EntityCoordinates SnapToGrid(this EntityCoordinates coordinates, IMapGrid grid)
+        public static EntityCoordinates SnapToGrid(this EntityCoordinates coordinates, MapGridComponent grid)
         {
             var tileSize = grid.TileSize;
 

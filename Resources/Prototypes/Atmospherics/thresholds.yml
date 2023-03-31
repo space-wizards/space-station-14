@@ -1,26 +1,64 @@
 - type: alarmThreshold
   id: stationTemperature
-  upperBound: 1465.75 # T20C * 5
-  lowerBound: 193.15 # T20C - 100
-  upperWarnAround: 0.25
-  lowerWarnAround: 1.1
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 393.15 # T20C + 200
+  lowerBound: !type:AlarmThresholdSetting
+    threshold: 193.15 # T20C - 100
+  upperWarnAround: !type:AlarmThresholdSetting
+    threshold: 0.8
+  lowerWarnAround: !type:AlarmThresholdSetting
+    threshold: 1.1
 
 - type: alarmThreshold
   id: stationPressure
-  upperBound: 550 # as defined in Atmospherics.cs
-  lowerBound: 20 # as defined in Atmospherics.cs
-  upperWarnAround: 0.7
-  lowerWarnAround: 2.5
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 550 # as defined in Atmospherics.cs
+  lowerBound: !type:AlarmThresholdSetting
+    threshold: 20 # as defined in Atmospherics.cs
+  upperWarnAround: !type:AlarmThresholdSetting
+    threshold: 0.7
+  lowerWarnAround: !type:AlarmThresholdSetting
+    threshold: 2.5
+
+# a reminder that all of these are percentages (where 1 is 100%),
+# so 0.01 is 1%,
+# 0.0001 is 0.01%
+# etc.
 
 - type: alarmThreshold
   id: stationOxygen
-  lowerBound: 0.0010
-  lowerWarnAround: 1.5
+  lowerBound: !type:AlarmThresholdSetting
+    threshold: 0.10
+  lowerWarnAround: !type:AlarmThresholdSetting
+    threshold: 1.5
 
 - type: alarmThreshold
   id: stationCO2
-  upperBound: 0.0025
-  upperWarnAround: 0.5
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 0.0025
+  upperWarnAround: !type:AlarmThresholdSetting
+    threshold: 0.5
+
+- type: alarmThreshold
+  id: stationWaterVapor
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 1.5
+  upperWarnAround: !type:AlarmThresholdSetting
+    threshold: 0.5
+
+- type: alarmThreshold
+  id: stationNO
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 0.01
+  upperWarnAround: !type:AlarmThresholdSetting
+    threshold: 0.5
+
+- type: alarmThreshold
+  id: stationMiasma
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 0.05
+  upperWarnAround: !type:AlarmThresholdSetting
+    threshold: 0.5
 
 - type: alarmThreshold
   id: ignore # just ignore nitrogen??? ??? ???
@@ -28,4 +66,5 @@
 
 - type: alarmThreshold
   id: danger # just any gas you don't want at all
-  upperBound: 0.0001
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 0.0001

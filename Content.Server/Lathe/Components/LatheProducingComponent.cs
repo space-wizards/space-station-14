@@ -1,9 +1,21 @@
-namespace Content.Server.Lathe.Components
+namespace Content.Server.Lathe.Components;
+
+/// <summary>
+/// For EntityQuery to keep track of which lathes are producing
+/// </summary>
+[RegisterComponent]
+public sealed class LatheProducingComponent : Component
 {
     /// <summary>
-    /// For EntityQuery to keep track of which lathes are producing
+    /// The time at which production began
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan StartTime;
+
     /// <summary>
-    [RegisterComponent]
-    public sealed class LatheProducingComponent : Component
-    {}
+    /// How long it takes to produce the recipe.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan ProductionLength;
 }
+

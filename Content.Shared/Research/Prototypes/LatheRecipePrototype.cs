@@ -11,20 +11,26 @@ namespace Content.Shared.Research.Prototypes
     public sealed class LatheRecipePrototype : IPrototype
     {
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
         [DataField("name")]
         private string _name = string.Empty;
 
-        [DataField("icon")]
-        private SpriteSpecifier _icon = SpriteSpecifier.Invalid;
-
         [DataField("description")]
         private string _description = string.Empty;
 
-        [DataField("result", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        private string _result = string.Empty;
+        /// <summary>
+        ///     The prototype name of the resulting entity when the recipe is printed.
+        /// </summary>
+        [DataField("result", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string Result = string.Empty;
+
+        /// <summary>
+        ///     An entity whose sprite is displayed in the ui in place of the actual recipe result.
+        /// </summary>
+        [DataField("icon")]
+        public SpriteSpecifier? Icon;
 
         [DataField("completetime")]
         private TimeSpan _completeTime = TimeSpan.FromSeconds(5);
@@ -42,8 +48,7 @@ namespace Content.Shared.Research.Prototypes
             {
                 if (_name.Trim().Length != 0) return _name;
                 var protoMan = IoCManager.Resolve<IPrototypeManager>();
-                if (protoMan == null) return _description;
-                protoMan.TryIndex(_result, out EntityPrototype? prototype);
+                protoMan.TryIndex(Result, out EntityPrototype? prototype);
                 if (prototype?.Name != null)
                     _name = prototype.Name;
                 return _name;
@@ -60,25 +65,12 @@ namespace Content.Shared.Research.Prototypes
             {
                 if (_description.Trim().Length != 0) return _description;
                 var protoMan = IoCManager.Resolve<IPrototypeManager>();
-                if (protoMan == null) return _description;
-                protoMan.TryIndex(_result, out EntityPrototype? prototype);
+                protoMan.TryIndex(Result, out EntityPrototype? prototype);
                 if (prototype?.Description != null)
                     _description = prototype.Description;
                 return _description;
             }
         }
-
-        /// <summary>
-        ///     Texture path used in the lathe GUI.
-        /// </summary>
-        [ViewVariables]
-        public SpriteSpecifier Icon => _icon;
-
-        /// <summary>
-        ///     The prototype name of the resulting entity when the recipe is printed.
-        /// </summary>
-        [ViewVariables]
-        public string Result => _result;
 
         /// <summary>
         ///     The materials required to produce this recipe.
@@ -98,5 +90,8 @@ namespace Content.Shared.Research.Prototypes
         /// </summary>
         [ViewVariables]
         public TimeSpan CompleteTime => _completeTime;
+
+        [DataField("applyMaterialDiscount")]
+        public bool ApplyMaterialDiscount = true;
     }
 }

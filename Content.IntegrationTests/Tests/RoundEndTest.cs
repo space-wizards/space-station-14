@@ -122,7 +122,7 @@ namespace Content.IntegrationTests.Tests
                 roundEndSystem.DefaultCooldownDuration = TimeSpan.FromSeconds(30);
                 roundEndSystem.DefaultCountdownDuration = TimeSpan.FromMinutes(4);
                 roundEndSystem.DefaultRestartRoundDuration = TimeSpan.FromMinutes(1);
-                EntitySystem.Get<GameTicker>().RestartRound();
+                ticker.RestartRound();
             });
             await PoolManager.ReallyBeIdle(pairTracker.Pair, 10);
 

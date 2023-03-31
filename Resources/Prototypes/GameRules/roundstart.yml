@@ -21,7 +21,7 @@
 - type: gameRule
   id: Nukeops
   config:
-    !type:GenericGameRuleConfiguration
+    !type:NukeopsRuleConfiguration
     id: Nukeops
 
 - type: gameRule
@@ -72,3 +72,9 @@
   config:
     !type:GenericGameRuleConfiguration
     id: BasicStationEventScheduler
+
+- type: gameRule
+  id: RampingStationEventScheduler
+  config:
+    !type:GenericGameRuleConfiguration
+    id: RampingStationEventScheduler

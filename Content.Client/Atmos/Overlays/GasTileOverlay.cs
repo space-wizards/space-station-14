@@ -1,5 +1,6 @@
 using Content.Client.Atmos.EntitySystems;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Prototypes;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -14,13 +15,11 @@ namespace Content.Client.Atmos.Overlays
 {
     public sealed class GasTileOverlay : Overlay
     {
-        private readonly GasTileOverlaySystem _system;
+        private readonly IEntityManager _entManager;
         private readonly IMapManager _mapManager;
-        
+
         public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities;
         private readonly ShaderInstance _shader;
-
-        public readonly Dictionary<EntityUid, Dictionary<Vector2i, GasOverlayChunk>> TileData = new();
 
         // Gas overlays
         private readonly float[] _timer;
@@ -41,16 +40,16 @@ namespace Content.Client.Atmos.Overlays
 
         private int _gasCount;
 
-        public const int GasOverlayZIndex = (int) Content.Shared.DrawDepth.DrawDepth.Effects; // Under ghosts, above mostly everything else
+        public const int GasOverlayZIndex = (int) Shared.DrawDepth.DrawDepth.Effects; // Under ghosts, above mostly everything else
 
-        public GasTileOverlay(GasTileOverlaySystem system, IResourceCache resourceCache, IPrototypeManager protoMan, SpriteSystem spriteSys)
+        public GasTileOverlay(GasTileOverlaySystem system, IEntityManager entManager, IResourceCache resourceCache, IPrototypeManager protoMan, SpriteSystem spriteSys)
         {
-            _system = system;
+            _entManager = entManager;
             _mapManager = IoCManager.Resolve<IMapManager>();
             _shader = protoMan.Index<ShaderPrototype>("unshaded").Instance();
             ZIndex = GasOverlayZIndex;
 
-            _gasCount = _system.VisibleGasId.Length;
+            _gasCount = system.VisibleGasId.Length;
             _timer = new float[_gasCount];
             _frameDelays = new float[_gasCount][];
             _frameCounter = new int[_gasCount];
@@ -58,7 +57,7 @@ namespace Content.Client.Atmos.Overlays
 
             for (var i = 0; i < _gasCount; i++)
             {
-                var gasPrototype = protoMan.Index<GasPrototype>(_system.VisibleGasId[i].ToString());
+                var gasPrototype = protoMan.Index<GasPrototype>(system.VisibleGasId[i].ToString());
 
                 SpriteSpecifier overlay;
 
@@ -138,14 +137,20 @@ namespace Content.Client.Atmos.Overlays
         protected override void Draw(in OverlayDrawArgs args)
         {
             var drawHandle = args.WorldHandle;
+            var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
+            var overlayQuery = _entManager.GetEntityQuery<GasTileOverlayComponent>();
 
             foreach (var mapGrid in _mapManager.FindGridsIntersecting(args.MapId, args.WorldBounds))
             {
-                if (!TileData.TryGetValue(mapGrid.GridEntityId, out var gridData))
+                if (!overlayQuery.TryGetComponent(mapGrid.Owner, out var comp) ||
+                    !xformQuery.TryGetComponent(mapGrid.Owner, out var gridXform))
+                {
                     continue;
+                }
 
-                drawHandle.SetTransform(mapGrid.WorldMatrix);
-                var floatBounds = mapGrid.InvWorldMatrix.TransformBox(in args.WorldBounds);
+                var (_, _, worldMatrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
+                drawHandle.SetTransform(worldMatrix);
+                var floatBounds = invMatrix.TransformBox(in args.WorldBounds).Enlarged(mapGrid.TileSize);
                 var localBounds = new Box2i(
                     (int) MathF.Floor(floatBounds.Left),
                     (int) MathF.Floor(floatBounds.Bottom),
@@ -157,22 +162,22 @@ namespace Content.Client.Atmos.Overlays
                 // by chunk, even though its currently slower.
 
                 drawHandle.UseShader(null);
-                foreach (var chunk in gridData.Values)
+                foreach (var chunk in comp.Chunks.Values)
                 {
                     var enumerator = new GasChunkEnumerator(chunk);
 
                     while (enumerator.MoveNext(out var gas))
                     {
-                        if (gas.Value.Opacity == null)
+                        if (gas.Opacity == null!)
                             continue;
 
-                        var tilePosition = chunk.Origin + (enumerator.X, enumerator.Y); 
+                        var tilePosition = chunk.Origin + (enumerator.X, enumerator.Y);
                         if (!localBounds.Contains(tilePosition))
                             continue;
 
                         for (var i = 0; i < _gasCount; i++)
                         {
-                            var opacity = gas.Value.Opacity[i];
+                            var opacity = gas.Opacity[i];
                             if (opacity > 0)
                                 drawHandle.DrawTexture(_frames[i][_frameCounter[i]], tilePosition, Color.White.WithAlpha(opacity));
                         }
@@ -181,20 +186,20 @@ namespace Content.Client.Atmos.Overlays
 
                 // And again for fire, with the unshaded shader
                 drawHandle.UseShader(_shader);
-                foreach (var chunk in gridData.Values)
+                foreach (var chunk in comp.Chunks.Values)
                 {
                     var enumerator = new GasChunkEnumerator(chunk);
 
                     while (enumerator.MoveNext(out var gas))
                     {
-                        if (gas.Value.FireState == 0)
+                        if (gas.FireState == 0)
                             continue;
 
                         var index = chunk.Origin + (enumerator.X, enumerator.Y);
                         if (!localBounds.Contains(index))
                             continue;
 
-                        var state = gas.Value.FireState - 1;
+                        var state = gas.FireState - 1;
                         var texture = _fireFrames[state][_fireFrameCounter[state]];
                         drawHandle.DrawTexture(texture, index);
                     }

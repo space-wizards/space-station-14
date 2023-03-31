@@ -1,5 +1,7 @@
 using Content.Shared.Atmos;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
+
 namespace Content.Server.Explosion.EntitySystems;
 
 // This partial part of the explosion system has all of the functions used to facilitate explosions moving across grids.
@@ -18,7 +20,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// </summary>
     private void OnGridStartup(GridStartupEvent ev)
     {
-        var grid = _mapManager.GetGrid(ev.GridId);
+        var grid = _mapManager.GetGrid(ev.EntityUid);
 
         Dictionary<Vector2i, NeighborFlag> edges = new();
         _gridEdges[ev.EntityUid] = edges;
@@ -57,7 +59,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (referenceGrid != null)
         {
             var targetGrid = _mapManager.GetGrid(referenceGrid.Value);
-            var xform = Transform(targetGrid.GridEntityId);
+            var xform = Transform(targetGrid.Owner);
             targetAngle = xform.WorldRotation;
             targetMatrix = xform.InvWorldMatrix;
             tileSize = targetGrid.TileSize;
@@ -91,7 +93,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             }
 
             var xforms = EntityManager.GetEntityQuery<TransformComponent>();
-            var xform = xforms.GetComponent(grid.GridEntityId);
+            var xform = xforms.GetComponent(grid.Owner);
             var  (_, gridWorldRotation, gridWorldMatrix, invGridWorldMatrid) = xform.GetWorldPositionRotationMatrixWithInv(xforms);
 
             var localEpicentre = (Vector2i) invGridWorldMatrid.Transform(epicentre.Position);
@@ -219,7 +221,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// <summary>
     ///     When a tile is updated, we might need to update the grid edge maps.
     /// </summary>
-    private void OnTileChanged(TileChangedEvent ev)
+    private void OnTileChanged(ref TileChangedEvent ev)
     {
         // only need to update the grid-edge map if a tile was added or removed from the grid.
         if (!ev.NewTile.Tile.IsEmpty && !ev.OldTile.IsEmpty)
@@ -289,7 +291,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     ///     Optionally ignore a specific Vector2i. Used by <see cref="OnTileChanged"/> when we already know that a
     ///     given tile is not space. This avoids unnecessary TryGetTileRef calls.
     /// </remarks>
-    private bool IsEdge(IMapGrid grid, Vector2i index, out NeighborFlag spaceDirections)
+    private bool IsEdge(MapGridComponent grid, Vector2i index, out NeighborFlag spaceDirections)
     {
         spaceDirections = NeighborFlag.Invalid;
         for (var i = 0; i < NeighbourVectors.Length; i++)

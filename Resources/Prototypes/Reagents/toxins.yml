@@ -3,6 +3,7 @@
   name: reagent-name-toxin
   group: Toxins
   desc: reagent-desc-toxin
+  flavor: bitter
   color: "#cf3600"
   physicalDesc: reagent-physical-desc-opaque
   plantMetabolism:
@@ -23,6 +24,7 @@
   name: reagent-name-carpotoxin
   group: Toxins
   desc: reagent-desc-carpotoxin
+  flavor: bitter
   color: "#e2a38c"
   physicalDesc: reagent-physical-desc-exotic-smelling
   plantMetabolism:
@@ -45,10 +47,43 @@
 
 
 - type: reagent
+  id: ChloralHydrate
+  name: reagent-name-chloral-hydrate
+  group: Toxins
+  desc: reagent-desc-chloral-hydrate
+  flavor: bitter
+  color: "#000067"
+  physicalDesc: reagent-physical-desc-nondescript
+  metabolisms:
+    Poison:
+      effects:
+      - !type:MovespeedModifier
+        walkSpeedModifier: 0.65
+        sprintSpeedModifier: 0.65
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          reagent: ChloralHydrate
+          min: 15
+        key: ForcedSleep
+        component: ForcedSleeping
+        refresh: false
+        type: Add
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          reagent: ChloralHydrate
+          min: 20
+        damage:
+          types:
+            Poison: 1.5
+
+- type: reagent
   id: Mold
   name: reagent-name-mold
   group: Toxins
   desc: reagent-desc-mold
+  flavor: bitter
   color: "#8a9a5b"
   physicalDesc: reagent-physical-desc-fuzzy
   metabolisms:
@@ -69,6 +104,8 @@
           - SpaceFlu
           - BirdFlew
           - Plague
+          - TongueTwister
+          - MemeticAmirmir
 
 - type: reagent
   id: PolytrinicAcid
@@ -76,6 +113,7 @@
   group: Toxins
   desc: reagent-desc-polytrinic-acid
   physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: acidic
   color: "#a1000b"
   boilingPoint: 78.2 # This isn't a real chemical...
   meltingPoint: -19.4
@@ -94,16 +132,17 @@
         scaleByQuantity: true
         ignoreResistances: false
         damage:
-          groups:
+          types:
             Caustic: 0.5
-      - !type:Scream
+      - !type:Emote
+        emote: Scream
         probability: 0.3
   metabolisms:
     Poison:
       effects:
       - !type:HealthChange
         damage:
-          groups:
+          types:
             Caustic: 2
       - !type:PopupMessage
         type: Local
@@ -117,6 +156,7 @@
   group: Toxins
   desc: reagent-desc-fluorosulfuric-acid
   physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: acidic
   color: "#5050ff"
   boilingPoint: 165
   meltingPoint: -87
@@ -128,16 +168,17 @@
         scaleByQuantity: true
         ignoreResistances: false
         damage:
-          groups:
+          types:
             Caustic: 0.3
-      - !type:Scream
+      - !type:Emote
+        emote: Scream
         probability: 0.2
   metabolisms:
     Poison:
       effects:
       - !type:HealthChange
         damage:
-          groups:
+          types:
             Caustic: 2
       - !type:PopupMessage
         type: Local
@@ -151,6 +192,7 @@
   group: Toxins
   desc: reagent-desc-sulfuric-acid
   physicalDesc: reagent-physical-desc-oily
+  flavor: acidic
   color: "#BF8C00"
   boilingPoint: 337.0
   meltingPoint: 10.31
@@ -169,9 +211,10 @@
         scaleByQuantity: true
         ignoreResistances: false
         damage:
-          groups:
+          types:
             Caustic: 0.1
-      - !type:Scream
+      - !type:Emote
+        emote: Scream
         probability: 0.1
   metabolisms:
     Poison:
@@ -179,7 +222,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 2
+            Caustic: 2
       - !type:PopupMessage
         type: Local
         visualType: Large
@@ -192,6 +235,7 @@
   group: Toxins
   desc: reagent-desc-unstable-mutagen
   physicalDesc: reagent-physical-desc-glowing
+  flavor: bitter
   color: "#00ff5f"
   boilingPoint: 340282300000000000000000000000000000000 # Ethidium bromide, which doesn't boil.
   meltingPoint: 261.0
@@ -245,6 +289,7 @@
   group: Toxins
   desc: reagent-desc-mindbreaker-toxin
   physicalDesc: reagent-physical-desc-opaque
+  flavor: bitter
   color: "#77b58e"
   plantMetabolism:
   - !type:PlantAdjustToxins
@@ -300,6 +345,7 @@
   boilingPoint: 554 # I'm not a chemist, but it boils at 295, lower than melting point, idk how it works so I gave it higher value
   metabolisms:
     Poison:
+      metabolismRate: 0.05
       effects:
       - !type:HealthChange
         conditions:
@@ -309,9 +355,9 @@
           type: Animal # Applying damage to the mobs with lower metabolism capabilities
         damage:
           types:
-            Poison: 4
+            Poison: 0.4
       - !type:ChemVomit
-        probability: 0.04
+        probability: 0.04 #Scaled for time, not metabolismrate.
         conditions:
           - !type:ReagentThreshold
             min: 3
@@ -338,6 +384,7 @@
   name: reagent-name-vent-crud
   desc: reagent-desc-vent-crud
   physicalDesc: reagent-physical-desc-sticky
+  flavor: bitter
   color: "#000000"
   metabolisms:
     Poison:
@@ -355,6 +402,7 @@
   name: reagent-name-corpium
   desc: reagent-desc-corpium
   physicalDesc: reagent-physical-desc-necrotic
+  flavor: bitter
   color: "#7668a1"
   metabolisms:
     Poison:
@@ -372,6 +420,7 @@
   name: reagent-name-uncooked-animal-proteins
   desc: reagent-desc-uncooked-animal-proteins
   physicalDesc: reagent-physical-desc-clumpy
+  flavor: bitter
   color: "#FFFFE5"
   metabolisms:
     Poison:
@@ -389,3 +438,39 @@
           type: Animal
         reagent: Protein
         amount: 0.5
+
+- type: reagent
+  id: Allicin
+  name: reagent-name-allicin
+  desc: reagent-desc-allicin
+  physicalDesc: reagent-physical-desc-pungent
+  flavor: bitter
+  color: "#F2E9D2"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.05
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Animal
+        damage:
+          types:
+            Poison: 0.06
+
+- type: reagent
+  id: Pax
+  name: reagent-name-pax
+  desc: reagent-desc-pax
+  physicalDesc: reagent-physical-desc-soothing
+  color: "#AAAAAA"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:GenericStatusEffect
+        key: Pacified
+        component: Pacified
+        refresh: false
+        type: Add

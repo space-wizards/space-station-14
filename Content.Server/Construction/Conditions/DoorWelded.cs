@@ -31,7 +31,7 @@ namespace Content.Server.Construction.Conditions
             var isWelded = door.State == DoorState.Welded;
             if (isWelded != Welded)
             {
-                if (Welded == true)
+                if (Welded)
                     args.PushMarkup(Loc.GetString("construction-examine-condition-door-weld", ("entityName", entMan.GetComponent<MetaDataComponent>(entity).EntityName)) + "\n");
                 else
                     args.PushMarkup(Loc.GetString("construction-examine-condition-door-unweld", ("entityName", entMan.GetComponent<MetaDataComponent>(entity).EntityName)) + "\n");

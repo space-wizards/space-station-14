@@ -20,9 +20,10 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/gar.rsi
   - type: MeleeWeapon
+    attackRate: 1.5
     damage:
       types:
-        Blunt: 10
+        Blunt: 7
 
 - type: entity
   parent: ClothingEyesBase
@@ -35,7 +36,9 @@
     state: icon-alt
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/gar.rsi
-    HeldPrefix: alt
+    equippedPrefix: alt
+  - type: Item
+    heldPrefix: alt
   - type: MeleeWeapon
     damage:
       types:
@@ -52,7 +55,9 @@
     state: icon-super
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/gar.rsi
-    HeldPrefix: super
+    equippedPrefix: super
+  - type: Item
+    heldPrefix: super
   - type: MeleeWeapon
     damage:
       types:
@@ -61,17 +66,14 @@
 - type: entity
   parent: ClothingEyesBase
   id: ClothingEyesGlassesMeson
-  name: optical meson scanners
-  description: The pinnacle of modern science, wallhacks in real life
+  name: engineering goggles #less confusion
+  description: Green-tinted goggles using a proprietary polymer that provides protection from eye damage of all types.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/meson.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/meson.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Radiation: 0.5
+  - type: EyeProtection
 
 - type: entity
   parent: ClothingEyesBase
@@ -83,6 +85,7 @@
     sprite: Clothing/Eyes/Glasses/glasses.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/glasses.rsi
+  - type: VisionCorrection
 
 - type: entity
   parent: ClothingEyesBase
@@ -95,6 +98,8 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/sunglasses.rsi
   - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5
 
 - type: entity
   parent: ClothingEyesBase
@@ -107,6 +112,8 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/secglasses.rsi
   - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5
 
 #Make a scanner category when these actually function and we get the trayson
 - type: entity
@@ -123,3 +130,4 @@
     modifiers:
       coefficients:
         Heat: 0.95
+  - type: GroupExamine

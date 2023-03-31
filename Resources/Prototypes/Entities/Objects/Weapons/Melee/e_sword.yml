@@ -2,14 +2,15 @@
   name: energy sword
   parent: BaseItem
   id: EnergySword
-  description: A very dangerous energy sword. Can be stored in pockets when turned off. Makes a lot of noise when used or turned on.
+  description: Very loud and very dangerous. Can be stored in pockets when turned off.
   components:
   - type: EnergySword
     litDamageBonus:
         types:
-            Slash: 12.5
-            Heat: 12.5
-            Blunt: -7
+            Slash: 15
+            Heat: 15
+            Structural: 4
+            Blunt: -4.5
     litDisarmMalus: 0.6
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_sword.rsi
@@ -21,11 +22,12 @@
         shader: unshaded
         map: [ "blade" ]
   - type: MeleeWeapon
-    hitSound:
-      path: /Audio/Weapons/genhit1.ogg
+    attackRate: 1
+    soundHit:
+      path: /Audio/Weapons/eblade1.ogg
     damage:
       types:
-        Blunt: 7
+        Blunt: 4.5
   - type: Item
     size: 5
     sprite: Objects/Weapons/Melee/e_sword.rsi
@@ -58,12 +60,21 @@
   description: 'A dark ink pen.'
   components:
   - type: EnergySword
+    secret: true
     litDamageBonus:
         types:
             Slash: 7.5
             Heat: 7.5
             Blunt: -1
     litDisarmMalus: 0.4
+    activateSound: !type:SoundPathSpecifier
+      path: /Audio/Weapons/ebladeon.ogg
+      params:
+        volume: -6
+    deActivateSound: !type:SoundPathSpecifier
+      path: /Audio/Weapons/ebladeoff.ogg
+      params:
+        volume: -6
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_dagger.rsi
     layers:
@@ -74,6 +85,8 @@
         shader: unshaded
         map: [ "blade" ]
   - type: MeleeWeapon
+    attackRate: 1
+    hidden: true
     damage:
       types:
         Blunt: 1

@@ -2,16 +2,16 @@
   id: CaptainIDStealObjective
   issuer: syndicate
   difficultyOverride: 2.75
-  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
       conditions:
         - DieCondition
+    - !type:NotRoleRequirement
+      roleId: Captain
   conditions:
     - !type:StealCondition
       prototype: CaptainIDCard
-      owner: job-name-captain
 
 - type: objective
   id: KillRandomObjective
@@ -39,26 +39,14 @@
   canBeDuplicate: true
 
 - type: objective
-  id: StayAliveObjective
-  issuer: syndicate
-  requirements:
-    - !type:TraitorRequirement {}
-    - !type:IncompatibleConditionsRequirement
-        conditions:
-          - DieCondition
-  conditions:
-    - !type:StayAliveCondition {}
-
-- type: objective
   id: DieObjective
   issuer: syndicate
-  prob: 0.03
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
       conditions:
-        - StayAliveCondition
         - StealCondition
+        - EscapeShuttleCondition
   conditions:
     - !type:DieCondition {}
 
@@ -66,12 +54,13 @@
   id: CMOHyposprayStealObjective
   issuer: syndicate
   difficultyOverride: 2.75
-  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
       conditions:
         - DieCondition
+    - !type:NotRoleRequirement
+      roleId: ChiefMedicalOfficer
   conditions:
     - !type:StealCondition
       prototype: Hypospray
@@ -81,40 +70,70 @@
   id: RDHardsuitStealObjective
   issuer: syndicate
   difficultyOverride: 2.75
-  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
       conditions:
         - DieCondition
+    - !type:NotRoleRequirement
+      roleId: ResearchDirector
   conditions:
     - !type:StealCondition
       prototype: ClothingOuterHardsuitRd
       owner: job-name-rd
 
 - type: objective
+  id: HandTeleporterStealObjective
+  issuer: syndicate
+  difficultyOverride: 2.75
+  requirements:
+  - !type:TraitorRequirement {}
+  - !type:IncompatibleConditionsRequirement
+    conditions:
+    - DieCondition
+  - !type:NotRoleRequirement
+    roleId: ResearchDirector
+  conditions:
+  - !type:StealCondition
+    prototype: HandTeleporter
+    owner: job-name-rd
+
+- type: objective
   id: NukeDiskStealObjective
   issuer: syndicate
-  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
       conditions:
         - DieCondition
+    - !type:NotRoleRequirement
+      roleId: Captain
+    - !type:NotRoleRequirement
+      roleId: HeadOfSecurity
+    - !type:NotRoleRequirement
+      roleId: HeadOfPersonnel
+    - !type:NotRoleRequirement
+      roleId: ChiefEngineer
+    - !type:NotRoleRequirement
+      roleId: ChiefMedicalOfficer
+    - !type:NotRoleRequirement
+      roleId: ResearchDirector
   conditions:
     - !type:StealCondition
       prototype: NukeDisk
       owner: objective-condition-steal-station
 
+
 - type: objective
   id: IDComputerBoardStealObjective
   issuer: syndicate
-  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
       conditions:
         - DieCondition
+    - !type:NotRoleRequirement
+      roleId: HeadOfPersonnel
   conditions:
     - !type:StealCondition
       prototype: IDComputerCircuitboard
@@ -124,12 +143,13 @@
   id: MagbootsStealObjective
   issuer: syndicate
   difficultyOverride: 2.75
-  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
       conditions:
         - DieCondition
+    - !type:NotRoleRequirement
+      roleId: ChiefEngineer
   conditions:
     - !type:StealCondition
       prototype: ClothingShoesBootsMagAdv
@@ -138,26 +158,28 @@
 - type: objective
   id: SupplyConsoleBoardStealObjective
   issuer: syndicate
-  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
       conditions:
         - DieCondition
+    - !type:NotRoleRequirement
+      roleId: Quartermaster
   conditions:
     - !type:StealCondition
-      prototype: SupplyComputerCircuitboard
+      prototype: CargoRequestComputerCircuitboard
       owner: job-name-qm
 
 - type: objective
   id: CorgiMeatStealObjective
   issuer: syndicate
-  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
       conditions:
         - DieCondition
+    - !type:NotRoleRequirement
+      roleId: HeadOfPersonnel
   conditions:
     - !type:StealCondition
       prototype: FoodMeatCorgi
@@ -167,12 +189,13 @@
   id: CaptainGunStealObjective
   issuer: syndicate
   difficultyOverride: 2.75
-  prob: 0.1
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
       conditions:
         - DieCondition
+    - !type:NotRoleRequirement
+      roleId: Captain
   conditions:
     - !type:StealCondition
       prototype: WeaponAntiqueLaser
@@ -182,13 +205,34 @@
   id: CaptainJetpackStealObjective
   issuer: syndicate
   difficultyOverride: 2.75
-  prob: 0.1
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+    - !type:NotRoleRequirement
+      roleId: Captain
+  conditions:
+    - !type:StealCondition
+      prototype: JetpackCaptainFilled
+
+- type: objective
+  id: EscapeShuttleObjective
+  issuer: syndicate
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
       conditions:
         - DieCondition
   conditions:
-    - !type:StealCondition
-      prototype: JetpackCaptainFilled
-      owner: job-name-captain
+    - !type:EscapeShuttleCondition {}
+
+- type: objective
+  id: RandomTraitorProgressObjective
+  issuer: syndicate
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:MultipleTraitorsRequirement
+  conditions:
+    - !type:RandomTraitorProgressCondition {}
+  canBeDuplicate: true

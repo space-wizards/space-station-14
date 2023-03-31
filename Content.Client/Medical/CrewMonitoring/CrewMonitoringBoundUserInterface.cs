@@ -9,7 +9,7 @@ namespace Content.Client.Medical.CrewMonitoring
     {
         private CrewMonitoringWindow? _menu;
 
-        public CrewMonitoringBoundUserInterface([NotNull] ClientUserInterfaceComponent owner, [NotNull] object uiKey) : base(owner, uiKey)
+        public CrewMonitoringBoundUserInterface([NotNull] ClientUserInterfaceComponent owner, [NotNull] Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -27,7 +27,7 @@ namespace Content.Client.Medical.CrewMonitoring
             switch (state)
             {
                 case CrewMonitoringState st:
-                    _menu?.ShowSensors(st.Sensors, st.WorldPosition, st.WorldRotation, st.Snap, st.Precision);
+                    _menu?.ShowSensors(st.Sensors, st.WorldPosition, st.Snap, st.Precision);
                     break;
             }
         }

@@ -17,7 +17,7 @@ jobs:
       with:
         submodules: 'recursive'
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.100
 
@@ -57,3 +57,8 @@ jobs:
         key: ${{ secrets.CENTCOMM_WIZARDS_BUILDS_PUSH_KEY }}
         script: /home/wizards-build-push/push.ps1 ${{ github.sha }}
 
+    - name: Publish changelog
+      run: Tools/actions_changelogs_since_last_run.py
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DISCORD_WEBHOOK_URL: ${{ secrets.CHANGELOG_DISCORD_WEBHOOK }}

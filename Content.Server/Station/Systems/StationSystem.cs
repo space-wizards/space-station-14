@@ -1,6 +1,4 @@
 using System.Linq;
-using Content.Server.Chat;
-using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
 using Content.Server.Station.Components;
@@ -12,6 +10,7 @@ using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -25,7 +24,6 @@ namespace Content.Server.Station.Systems;
 [PublicAPI]
 public sealed class StationSystem : EntitySystem
 {
-    [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
@@ -59,8 +57,11 @@ public sealed class StationSystem : EntitySystem
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRoundEnd);
         SubscribeLocalEvent<PreGameMapLoad>(OnPreGameMapLoad);
         SubscribeLocalEvent<PostGameMapLoad>(OnPostGameMapLoad);
-        SubscribeLocalEvent<StationDataComponent, ComponentAdd>(OnStationStartup);
+        SubscribeLocalEvent<StationDataComponent, ComponentAdd>(OnStationAdd);
         SubscribeLocalEvent<StationDataComponent, ComponentShutdown>(OnStationDeleted);
+        SubscribeLocalEvent<StationDataComponent, EntParentChangedMessage>(OnParentChanged);
+        SubscribeLocalEvent<StationMemberComponent, ComponentShutdown>(OnStationGridDeleted);
+        SubscribeLocalEvent<StationMemberComponent, PostGridSplitEvent>(OnStationSplitEvent);
 
         _configurationManager.OnValueChanged(CCVars.StationOffset, x => _randomStationOffset = x, true);
         _configurationManager.OnValueChanged(CCVars.MaxStationOffset, x => _maxRandomStationOffset = x, true);
@@ -69,23 +70,44 @@ public sealed class StationSystem : EntitySystem
         _player.PlayerStatusChanged += OnPlayerStatusChanged;
     }
 
+    private void OnStationSplitEvent(EntityUid uid, StationMemberComponent component, ref PostGridSplitEvent args)
+    {
+        AddGridToStation(component.Station, args.Grid); // Add the new grid as a member.
+    }
+
+    private void OnStationGridDeleted(EntityUid uid, StationMemberComponent component, ComponentShutdown args)
+    {
+        if (!TryComp<StationDataComponent>(component.Station, out var stationData))
+            return;
+
+        stationData.Grids.Remove(uid);
+    }
+
     public override void Shutdown()
     {
         base.Shutdown();
         _player.PlayerStatusChanged -= OnPlayerStatusChanged;
     }
 
+    /// <summary>
+    ///     Called when the server shuts down or restarts to avoid uneccesarily logging mid-round station deletion errors.
+    /// </summary>
+    public void OnServerDispose()
+    {
+        _stations.Clear();
+    }
+
     private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
     {
         if (e.NewStatus == SessionStatus.Connected)
         {
-            RaiseNetworkEvent(new StationsUpdatedEvent(_stations), Filter.SinglePlayer(e.Session));
+            RaiseNetworkEvent(new StationsUpdatedEvent(_stations), e.Session);
         }
     }
 
     #region Event handlers
 
-    private void OnStationStartup(EntityUid uid, StationDataComponent component, ComponentAdd args)
+    private void OnStationAdd(EntityUid uid, StationDataComponent component, ComponentAdd args)
     {
         _stations.Add(uid);
 
@@ -94,9 +116,41 @@ public sealed class StationSystem : EntitySystem
 
     private void OnStationDeleted(EntityUid uid, StationDataComponent component, ComponentShutdown args)
     {
-        _stations.Remove(uid);
+        if (_stations.Contains(uid) && // Was not deleted via DeleteStation()
+            _gameTicker.RunLevel == GameRunLevel.InRound && // And not due to a round restart
+            _gameTicker.LobbyEnabled) // If there isn't a lobby, this is probably sandbox, single player, or a test
+        {
+            // printing a stack trace, rather than throwing an exception so that entity deletion continues as normal.
+            Logger.Error($"Station entity {ToPrettyString(uid)} is getting deleted mid-round. Trace: {Environment.StackTrace}");
+        }
 
+        foreach (var grid in component.Grids)
+        {
+            RemComp<StationMemberComponent>(grid);
+        }
+
+        _stations.Remove(uid);
         RaiseNetworkEvent(new StationsUpdatedEvent(_stations), Filter.Broadcast());
+    }
+
+    /// <summary>
+    ///     If a station data entity is getting re-parented mid-round, this will log an error.
+    /// </summary>
+    /// <remarks>
+    ///     This doesn't really achieve anything, it just for debugging any future station data bugs.
+    /// </remarks>
+    private void OnParentChanged(EntityUid uid, StationDataComponent component, ref EntParentChangedMessage args)
+    {
+        if (_gameTicker.RunLevel != GameRunLevel.InRound ||
+            MetaData(uid).EntityLifeStage >= EntityLifeStage.MapInitialized ||
+            component.LifeStage <= ComponentLifeStage.Initializing)
+        {
+            return;
+        }
+
+        // Yeah this doesn't actually stop the parent change..... it just ineffectually yells about it.
+        // STOP RIGHT THERE CRIMINAL SCUM
+        _sawmill.Error($"Station entity {ToPrettyString(uid)} is getting reparented from {ToPrettyString(args.OldParent ?? EntityUid.Invalid)} to {ToPrettyString(args.Transform.ParentUid)}");
     }
 
     private void OnPreGameMapLoad(PreGameMapLoad ev)
@@ -141,14 +195,12 @@ public sealed class StationSystem : EntitySystem
         if (!dict.Any())
         {
             // Oh jeez, no stations got loaded.
-            // We'll just take the first grid and setup that, then.
-
-            var grid = ev.Grids[0];
-
-            AddGrid("Station", grid);
+            // We'll yell about it, but the thing this used to do with creating a dummy is kinda pointless now.
+            _sawmill.Error($"There were no station grids for {ev.GameMap.ID}!");
         }
 
         // Iterate over all PartOfStation
+        // TODO: Remove this whenever pillar finally gets replaced. It's the sole user.
         foreach (var grid in ev.Grids)
         {
             if (!TryComp<PartOfStationComponent>(grid, out var partOfStation))
@@ -170,17 +222,45 @@ public sealed class StationSystem : EntitySystem
 
     private void OnRoundEnd(GameRunLevelChangedEvent eventArgs)
     {
-        if (eventArgs.New != GameRunLevel.PreRoundLobby) return;
+        if (eventArgs.New != GameRunLevel.PreRoundLobby)
+            return;
 
         foreach (var entity in _stations)
         {
-            Del(entity);
+            DeleteStation(entity);
         }
     }
 
     #endregion Event handlers
 
-    public Filter GetInStation(EntityUid source, float range = 32f)
+    /// <summary>
+    /// Gets the largest member grid from a station.
+    /// </summary>
+    public EntityUid? GetLargestGrid(StationDataComponent component)
+    {
+        EntityUid? largestGrid = null;
+        Box2 largestBounds = new Box2();
+
+        foreach (var gridUid in component.Grids)
+        {
+            if (!TryComp<MapGridComponent>(gridUid, out var grid) ||
+                grid.LocalAABB.Size.LengthSquared < largestBounds.Size.LengthSquared)
+                continue;
+
+            largestBounds = grid.LocalAABB;
+            largestGrid = gridUid;
+        }
+
+        return largestGrid;
+    }
+
+    /// <summary>
+    /// Tries to retrieve a filter for everything in the station the source is on.
+    /// </summary>
+    /// <param name="source">The entity to use to find the station.</param>
+    /// <param name="range">The range around the station</param>
+    /// <returns></returns>
+    public Filter GetInOwningStation(EntityUid source, float range = 32f)
     {
         var station = GetOwningStation(source);
 
@@ -206,7 +286,8 @@ public sealed class StationSystem : EntitySystem
         foreach (var gridUid in dataComponent.Grids)
         {
             if (!_mapManager.TryGetGrid(gridUid, out var grid) ||
-                !xformQuery.TryGetComponent(gridUid, out var xform)) continue;
+                !xformQuery.TryGetComponent(gridUid, out var xform))
+                continue;
 
             var mapId = xform.MapID;
             var position = _transform.GetWorldPosition(xform, xformQuery);
@@ -215,24 +296,27 @@ public sealed class StationSystem : EntitySystem
             bounds.Add(bound);
             if (!mapIds.Contains(mapId))
             {
-                mapIds.Add(grid.ParentMapId);
+                mapIds.Add(xform.MapID);
             }
         }
 
         foreach (var session in Filter.GetAllPlayers(_player))
         {
             var entity = session.AttachedEntity;
-            if (entity == null || !xformQuery.TryGetComponent(entity, out var xform)) continue;
+            if (entity == null || !xformQuery.TryGetComponent(entity, out var xform))
+                continue;
 
             var mapId = xform.MapID;
 
-            if (!mapIds.Contains(mapId)) continue;
+            if (!mapIds.Contains(mapId))
+                continue;
 
             var position = _transform.GetWorldPosition(xform, xformQuery);
 
             foreach (var bound in bounds)
             {
-                if (!bound.Contains(position)) continue;
+                if (!bound.Contains(position))
+                    continue;
 
                 filter.AddPlayer(session);
                 break;
@@ -261,8 +345,12 @@ public sealed class StationSystem : EntitySystem
     /// <returns>The initialized station.</returns>
     public EntityUid InitializeNewStation(StationConfig? stationConfig, IEnumerable<EntityUid>? gridIds, string? name = null)
     {
-        //HACK: This needs to go in null-space but that crashes currently.
         var station = Spawn(null, new MapCoordinates(0, 0, _gameTicker.DefaultMap));
+
+        // TODO SERIALIZATION The station data needs to be saveable somehow, but when a map gets saved, this entity
+        // won't be included because its in null-space. Also, what happens to shuttles on other maps?
+        _transform.DetachParentToNull(station, Transform(station));
+
         var data = AddComp<StationDataComponent>(station);
         var metaData = MetaData(station);
         data.StationConfig = stationConfig;
@@ -296,8 +384,9 @@ public sealed class StationSystem : EntitySystem
     /// <param name="station">Station to attach the grid to.</param>
     /// <param name="gridComponent">Resolve pattern, grid component of mapGrid.</param>
     /// <param name="stationData">Resolve pattern, station data component of station.</param>
+    /// <param name="name">The name to assign to the grid if any.</param>
     /// <exception cref="ArgumentException">Thrown when mapGrid or station are not a grid or station, respectively.</exception>
-    public void AddGridToStation(EntityUid station, EntityUid mapGrid, IMapGridComponent? gridComponent = null, StationDataComponent? stationData = null, string? name = null)
+    public void AddGridToStation(EntityUid station, EntityUid mapGrid, MapGridComponent? gridComponent = null, StationDataComponent? stationData = null, string? name = null)
     {
         if (!Resolve(mapGrid, ref gridComponent))
             throw new ArgumentException("Tried to initialize a station on a non-grid entity!", nameof(mapGrid));
@@ -324,7 +413,7 @@ public sealed class StationSystem : EntitySystem
     /// <param name="gridComponent">Resolve pattern, grid component of mapGrid.</param>
     /// <param name="stationData">Resolve pattern, station data component of station.</param>
     /// <exception cref="ArgumentException">Thrown when mapGrid or station are not a grid or station, respectively.</exception>
-    public void RemoveGridFromStation(EntityUid station, EntityUid mapGrid, IMapGridComponent? gridComponent = null, StationDataComponent? stationData = null)
+    public void RemoveGridFromStation(EntityUid station, EntityUid mapGrid, MapGridComponent? gridComponent = null, StationDataComponent? stationData = null)
     {
         if (!Resolve(mapGrid, ref gridComponent))
             throw new ArgumentException("Tried to initialize a station on a non-grid entity!", nameof(mapGrid));
@@ -374,6 +463,7 @@ public sealed class StationSystem : EntitySystem
         if (!Resolve(station, ref stationData))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
+        // component shutdown will error if the station was not removed from _stations prior to deletion.
         _stations.Remove(station);
         Del(station);
     }
@@ -398,7 +488,7 @@ public sealed class StationSystem : EntitySystem
             return entity;
         }
 
-        if (TryComp<IMapGridComponent>(entity, out _))
+        if (TryComp<MapGridComponent>(entity, out _))
         {
             // We are the station, just check ourselves.
             return CompOrNull<StationMemberComponent>(entity)?.Station;

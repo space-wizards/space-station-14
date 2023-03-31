@@ -8,6 +8,7 @@ shell-invalid-command = Invalid command.
 shell-invalid-command-specific = Invalid {$commandName} command.
 shell-cannot-run-command-from-server = You cannot run this command from the server.
 shell-only-players-can-run-this-command = Only players can run this command.
+shell-must-be-attached-to-entity = You must be attached to an entity to run this command.
 
 ## Arguments
 
@@ -17,6 +18,8 @@ shell-argument-must-be-number = Argument must be a number.
 shell-argument-must-be-boolean = Argument must be a boolean.
 shell-wrong-arguments-number = Wrong number of arguments.
 shell-need-between-arguments = Need {$lower} to {$upper} arguments!
+
+shell-argument-uid = EntityUid
 
 ## Guards
 

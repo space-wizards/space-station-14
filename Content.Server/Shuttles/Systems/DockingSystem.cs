@@ -1,5 +1,5 @@
-using Content.Server.Doors.Components;
 using Content.Server.Doors.Systems;
+using Content.Server.NPC.Pathfinding;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Shared.Doors;
@@ -8,8 +8,9 @@ using Content.Shared.Shuttles.Events;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
-using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics.Joints;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems
@@ -17,11 +18,14 @@ namespace Content.Server.Shuttles.Systems
     public sealed partial class DockingSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
-        [Dependency] private readonly SharedJointSystem _jointSystem = default!;
-        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-        [Dependency] private readonly ShuttleConsoleSystem _console = default!;
+        [Dependency] private readonly AirlockSystem _airlocks = default!;
         [Dependency] private readonly DoorSystem _doorSystem = default!;
+        [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
+        [Dependency] private readonly PathfindingSystem _pathfinding = default!;
+        [Dependency] private readonly ShuttleConsoleSystem _console = default!;
+        [Dependency] private readonly SharedJointSystem _jointSystem = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         private ISawmill _sawmill = default!;
         private const string DockingFixture = "docking";
@@ -66,10 +70,13 @@ namespace Content.Server.Shuttles.Systems
             // Assume the docking port itself (and its body) is valid
 
             if (!_mapManager.TryGetGrid(dockingXform.GridUid, out var grid) ||
-                !HasComp<ShuttleComponent>(grid.GridEntityId)) return null;
+                !HasComp<ShuttleComponent>(grid.Owner))
+            {
+                return null;
+            }
 
-            var transform = body.GetTransform();
-            var dockingFixture = _fixtureSystem.GetFixtureOrNull(body, DockingFixture);
+            var transform = _physics.GetPhysicsTransform(body.Owner, dockingXform);
+            var dockingFixture = _fixtureSystem.GetFixtureOrNull(body.Owner, DockingFixture);
 
             if (dockingFixture == null)
                 return null;
@@ -86,20 +93,22 @@ namespace Content.Server.Shuttles.Systems
             var enlargedAABB = aabb.Value.Enlarged(DockingRadius * 1.5f);
 
             // Get any docking ports in range on other grids.
-            _mapManager.FindGridsIntersectingEnumerator(dockingXform.MapID, enlargedAABB, out var enumerator);
-
-            while (enumerator.MoveNext(out var otherGrid))
+            foreach (var otherGrid in _mapManager.FindGridsIntersecting(dockingXform.MapID, enlargedAABB))
             {
-                if (otherGrid.GridEntityId == dockingXform.GridUid) continue;
+                if (otherGrid.Owner == dockingXform.GridUid)
+                    continue;
 
                 foreach (var ent in otherGrid.GetAnchoredEntities(enlargedAABB))
                 {
                     if (!TryComp(ent, out DockingComponent? otherDocking) ||
                         !otherDocking.Enabled ||
-                        !TryComp(ent, out PhysicsComponent? otherBody)) continue;
+                        !TryComp(ent, out FixturesComponent? otherBody))
+                    {
+                        continue;
+                    }
 
-                    var otherTransform = otherBody.GetTransform();
-                    var otherDockingFixture = _fixtureSystem.GetFixtureOrNull(otherBody, DockingFixture);
+                    var otherTransform = _physics.GetPhysicsTransform(ent);
+                    var otherDockingFixture = _fixtureSystem.GetFixtureOrNull(ent, DockingFixture, manager: otherBody);
 
                     if (otherDockingFixture == null)
                     {
@@ -134,12 +143,14 @@ namespace Content.Server.Shuttles.Systems
 
         private void Cleanup(DockingComponent dockA)
         {
-            _jointSystem.RemoveJoint(dockA.DockJoint!);
+            _pathfinding.RemovePortal(dockA.PathfindHandle);
+
+            if (dockA.DockJoint != null)
+                _jointSystem.RemoveJoint(dockA.DockJoint);
 
             var dockBUid = dockA.DockedWith;
 
             if (dockBUid == null ||
-                dockA.DockJoint == null ||
                 !TryComp(dockBUid, out DockingComponent? dockB))
             {
                 DebugTools.Assert(false);
@@ -177,9 +188,9 @@ namespace Content.Server.Shuttles.Systems
                 GridBUid = gridBUid!.Value,
             };
 
-            EntityManager.EventBus.RaiseLocalEvent(dockA.Owner, msg, false);
-            EntityManager.EventBus.RaiseLocalEvent(dockB.Owner, msg, false);
-            EntityManager.EventBus.RaiseEvent(EventSource.Local, msg);
+            RaiseLocalEvent(dockA.Owner, msg);
+            RaiseLocalEvent(dockB.Owner, msg);
+            RaiseLocalEvent(msg);
         }
 
         private void OnStartup(EntityUid uid, DockingComponent component, ComponentStartup args)
@@ -198,7 +209,7 @@ namespace Content.Server.Shuttles.Systems
                 var otherDock = EntityManager.GetComponent<DockingComponent>(component.DockedWith.Value);
                 DebugTools.Assert(otherDock.DockedWith != null);
 
-                Dock(component, otherDock);
+                Dock(uid, component, component.DockedWith.Value, otherDock);
                 DebugTools.Assert(component.Docked && otherDock.Docked);
             }
         }
@@ -224,7 +235,7 @@ namespace Content.Server.Shuttles.Systems
             var other = Comp<DockingComponent>(component.DockedWith!.Value);
 
             Undock(component);
-            Dock(component, other);
+            Dock(uid, component, component.DockedWith.Value, other);
             _console.RefreshShuttleConsoles();
         }
 
@@ -244,7 +255,7 @@ namespace Content.Server.Shuttles.Systems
                 return;
             }
 
-            _fixtureSystem.DestroyFixture(physicsComponent, DockingFixture);
+            _fixtureSystem.DestroyFixture(uid, DockingFixture, body: physicsComponent);
         }
 
         private void EnableDocking(EntityUid uid, DockingComponent component)
@@ -257,114 +268,116 @@ namespace Content.Server.Shuttles.Systems
 
             component.Enabled = true;
 
-            // TODO: WTF IS THIS GARBAGE
-            var shape = new PhysShapeCircle
-            {
-                // Want half of the unit vector
-                Position = new Vector2(0f, -0.5f),
-                Radius = DockingRadius
-            };
+            var shape = new PhysShapeCircle(DockingRadius, new Vector2(0f, -0.5f));
 
             // Listen it makes intersection tests easier; you can probably dump this but it requires a bunch more boilerplate
-            var fixture = new Fixture(physicsComponent, shape)
-            {
-                ID = DockingFixture,
-                Hard = false,
-            };
-
             // TODO: I want this to ideally be 2 fixtures to force them to have some level of alignment buuuttt
             // I also need collisionmanager for that yet again so they get dis.
-            _fixtureSystem.TryCreateFixture(physicsComponent, fixture);
+            _fixtureSystem.TryCreateFixture(uid, shape, DockingFixture, hard: false, body: physicsComponent);
         }
 
         /// <summary>
         /// Docks 2 ports together and assumes it is valid.
         /// </summary>
-        public void Dock(DockingComponent dockA, DockingComponent dockB)
+        public void Dock(EntityUid dockAUid, DockingComponent dockA, EntityUid dockBUid, DockingComponent dockB)
         {
-            if (dockB.Owner.GetHashCode() < dockA.Owner.GetHashCode())
+            if (dockBUid.GetHashCode() < dockAUid.GetHashCode())
             {
                 (dockA, dockB) = (dockB, dockA);
+                (dockAUid, dockBUid) = (dockBUid, dockAUid);
             }
 
-            _sawmill.Debug($"Docking between {dockA.Owner} and {dockB.Owner}");
+            _sawmill.Debug($"Docking between {dockAUid} and {dockBUid}");
 
             // https://gamedev.stackexchange.com/questions/98772/b2distancejoint-with-frequency-equal-to-0-vs-b2weldjoint
 
             // We could also potentially use a prismatic joint? Depending if we want clamps that can extend or whatever
-            var dockAXform = EntityManager.GetComponent<TransformComponent>(dockA.Owner);
-            var dockBXform = EntityManager.GetComponent<TransformComponent>(dockB.Owner);
+            var dockAXform = EntityManager.GetComponent<TransformComponent>(dockAUid);
+            var dockBXform = EntityManager.GetComponent<TransformComponent>(dockBUid);
 
             DebugTools.Assert(dockAXform.GridUid != null);
             DebugTools.Assert(dockBXform.GridUid != null);
             var gridA = dockAXform.GridUid!.Value;
             var gridB = dockBXform.GridUid!.Value;
 
-            SharedJointSystem.LinearStiffness(
-                2f,
-                0.7f,
-                EntityManager.GetComponent<PhysicsComponent>(gridA).Mass,
-                EntityManager.GetComponent<PhysicsComponent>(gridB).Mass,
-                out var stiffness,
-                out var damping);
-
-            // These need playing around with
-            // Could also potentially have collideconnected false and stiffness 0 but it was a bit more suss???
-            WeldJoint joint;
-
-            // Pre-existing joint so use that.
-            if (dockA.DockJointId != null)
+            // May not be possible if map or the likes.
+            if (TryComp<PhysicsComponent>(gridA, out var gridPhysicsA) &&
+                TryComp<PhysicsComponent>(gridB, out var gridPhysicsB))
             {
-                DebugTools.Assert(dockB.DockJointId == dockA.DockJointId);
-                joint = _jointSystem.GetOrCreateWeldJoint(gridA, gridB, dockA.DockJointId);
-            }
-            else
-            {
-                joint = _jointSystem.GetOrCreateWeldJoint(gridA, gridB, DockingJoint + dockA.Owner);
-            }
+                SharedJointSystem.LinearStiffness(
+                    2f,
+                    0.7f,
+                    EntityManager.GetComponent<PhysicsComponent>(gridA).Mass,
+                    EntityManager.GetComponent<PhysicsComponent>(gridB).Mass,
+                    out var stiffness,
+                    out var damping);
 
-            var gridAXform = EntityManager.GetComponent<TransformComponent>(gridA);
-            var gridBXform = EntityManager.GetComponent<TransformComponent>(gridB);
+                // These need playing around with
+                // Could also potentially have collideconnected false and stiffness 0 but it was a bit more suss???
+                WeldJoint joint;
 
-            var anchorA = dockAXform.LocalPosition + dockAXform.LocalRotation.ToWorldVec() / 2f;
-            var anchorB = dockBXform.LocalPosition + dockBXform.LocalRotation.ToWorldVec() / 2f;
+                // Pre-existing joint so use that.
+                if (dockA.DockJointId != null)
+                {
+                    DebugTools.Assert(dockB.DockJointId == dockA.DockJointId);
+                    joint = _jointSystem.GetOrCreateWeldJoint(gridA, gridB, dockA.DockJointId);
+                }
+                else
+                {
+                    joint = _jointSystem.GetOrCreateWeldJoint(gridA, gridB, DockingJoint + dockAUid);
+                }
 
-            joint.LocalAnchorA = anchorA;
-            joint.LocalAnchorB = anchorB;
-            joint.ReferenceAngle = (float) (gridBXform.WorldRotation - gridAXform.WorldRotation);
-            joint.CollideConnected = true;
-            joint.Stiffness = stiffness;
-            joint.Damping = damping;
+                var gridAXform = EntityManager.GetComponent<TransformComponent>(gridA);
+                var gridBXform = EntityManager.GetComponent<TransformComponent>(gridB);
 
-            dockA.DockedWith = dockB.Owner;
-            dockB.DockedWith = dockA.Owner;
+                var anchorA = dockAXform.LocalPosition + dockAXform.LocalRotation.ToWorldVec() / 2f;
+                var anchorB = dockBXform.LocalPosition + dockBXform.LocalRotation.ToWorldVec() / 2f;
 
-            dockA.DockJoint = joint;
-            dockA.DockJointId = joint.ID;
+                joint.LocalAnchorA = anchorA;
+                joint.LocalAnchorB = anchorB;
+                joint.ReferenceAngle = (float) (gridBXform.WorldRotation - gridAXform.WorldRotation);
+                joint.CollideConnected = true;
+                joint.Stiffness = stiffness;
+                joint.Damping = damping;
 
-            dockB.DockJoint = joint;
-            dockB.DockJointId = joint.ID;
+                dockA.DockJoint = joint;
+                dockA.DockJointId = joint.ID;
 
-            if (TryComp<AirlockComponent>(dockA.Owner, out var airlockA))
-            {
-                airlockA.SetBoltsWithAudio(true);
+                dockB.DockJoint = joint;
+                dockB.DockJointId = joint.ID;
             }
 
-            if (TryComp<AirlockComponent>(dockB.Owner, out var airlockB))
+            dockA.DockedWith = dockBUid;
+            dockB.DockedWith = dockAUid;
+
+            if (TryComp(dockAUid, out DoorComponent? doorA))
             {
-                airlockB.SetBoltsWithAudio(true);
+                if (_doorSystem.TryOpen(dockAUid, doorA))
+                {
+                    doorA.ChangeAirtight = false;
+                    if (TryComp<AirlockComponent>(dockAUid, out var airlockA))
+                    {
+                        _airlocks.SetBoltsWithAudio(dockAUid, airlockA, true);
+                    }
+                }
             }
 
-            if (TryComp(dockA.Owner, out DoorComponent? doorA))
+            if (TryComp(dockBUid, out DoorComponent? doorB))
             {
-                doorA.ChangeAirtight = false;
-                _doorSystem.StartOpening(doorA.Owner, doorA);
+                if (_doorSystem.TryOpen(dockBUid, doorB))
+                {
+                    doorB.ChangeAirtight = false;
+                    if (TryComp<AirlockComponent>(dockBUid, out var airlockB))
+                    {
+                        _airlocks.SetBoltsWithAudio(dockBUid, airlockB, true);
+                    }
+                }
             }
 
-            if (TryComp(dockB.Owner, out DoorComponent? doorB))
+            if (_pathfinding.TryCreatePortal(dockAXform.Coordinates, dockBXform.Coordinates, out var handle))
             {
-                doorB.ChangeAirtight = false;
-                _doorSystem.StartOpening(doorB.Owner, doorB);
+                dockA.PathfindHandle = handle;
+                dockB.PathfindHandle = handle;
             }
 
             var msg = new DockEvent
@@ -375,9 +388,9 @@ namespace Content.Server.Shuttles.Systems
                 GridBUid = gridB,
             };
 
-            EntityManager.EventBus.RaiseLocalEvent(dockA.Owner, msg, false);
-            EntityManager.EventBus.RaiseLocalEvent(dockB.Owner, msg, false);
-            EntityManager.EventBus.RaiseEvent(EventSource.Local, msg);
+            RaiseLocalEvent(dockAUid, msg);
+            RaiseLocalEvent(dockBUid, msg);
+            RaiseLocalEvent(msg);
         }
 
         private bool CanDock(DockingComponent dockA, DockingComponent dockB)
@@ -392,16 +405,16 @@ namespace Content.Server.Shuttles.Systems
                 return false;
             }
 
-            var fixtureA = _fixtureSystem.GetFixtureOrNull(bodyA, DockingFixture);
-            var fixtureB = _fixtureSystem.GetFixtureOrNull(bodyB, DockingFixture);
+            var fixtureA = _fixtureSystem.GetFixtureOrNull(bodyA.Owner, DockingFixture);
+            var fixtureB = _fixtureSystem.GetFixtureOrNull(bodyB.Owner, DockingFixture);
 
             if (fixtureA == null || fixtureB == null)
             {
                 return false;
             }
 
-            var transformA = bodyA.GetTransform();
-            var transformB = bodyB.GetTransform();
+            var transformA = _physics.GetPhysicsTransform(dockA.Owner);
+            var transformB = _physics.GetPhysicsTransform(dockB.Owner);
             var intersect = false;
 
             for (var i = 0; i < fixtureA.Shape.ChildCount; i++)
@@ -427,11 +440,11 @@ namespace Content.Server.Shuttles.Systems
         /// <summary>
         /// Attempts to dock 2 ports together and will return early if it's not possible.
         /// </summary>
-        private void TryDock(DockingComponent dockA, DockingComponent dockB)
+        private void TryDock(EntityUid dockAUid, DockingComponent dockA, EntityUid dockBUid, DockingComponent dockB)
         {
             if (!CanDock(dockA, dockB)) return;
 
-            Dock(dockA, dockB);
+            Dock(dockAUid, dockA, dockBUid, dockB);
         }
 
         public void Undock(DockingComponent dock)
@@ -441,33 +454,37 @@ namespace Content.Server.Shuttles.Systems
 
             if (TryComp<AirlockComponent>(dock.Owner, out var airlockA))
             {
-                airlockA.SetBoltsWithAudio(false);
+                _airlocks.SetBoltsWithAudio(dock.Owner, airlockA, false);
             }
 
             if (TryComp<AirlockComponent>(dock.DockedWith, out var airlockB))
             {
-                airlockB.SetBoltsWithAudio(false);
+                _airlocks.SetBoltsWithAudio(dock.DockedWith.Value, airlockB, false);
             }
 
             if (TryComp(dock.Owner, out DoorComponent? doorA))
             {
-                doorA.ChangeAirtight = true;
-                _doorSystem.TryClose(doorA.Owner, doorA);
+                if (_doorSystem.TryClose(doorA.Owner, doorA))
+                {
+                    doorA.ChangeAirtight = true;
+                }
             }
 
             if (TryComp(dock.DockedWith, out DoorComponent? doorB))
             {
-                doorB.ChangeAirtight = true;
-                _doorSystem.TryClose(doorB.Owner, doorB);
+                if (_doorSystem.TryClose(doorB.Owner, doorB))
+                {
+                    doorB.ChangeAirtight = true;
+                }
             }
 
-            if (!Deleted(dock.Owner))
+            if (LifeStage(dock.Owner) < EntityLifeStage.Terminating)
             {
                 var recentlyDocked = EnsureComp<RecentlyDockedComponent>(dock.Owner);
                 recentlyDocked.LastDocked = dock.DockedWith.Value;
             }
 
-            if (!Deleted(dock.DockedWith.Value))
+            if (TryComp(dock.DockedWith.Value, out MetaDataComponent? meta) && meta.EntityLifeStage < EntityLifeStage.Terminating)
             {
                 var recentlyDocked = EnsureComp<RecentlyDockedComponent>(dock.DockedWith.Value);
                 recentlyDocked.LastDocked = dock.DockedWith.Value;

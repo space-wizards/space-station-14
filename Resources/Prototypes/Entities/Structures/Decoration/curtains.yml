@@ -7,6 +7,7 @@
   - type: Occluder
   - type: Sprite
     netsync: false
+    snapCardinals: true
     sprite: Structures/Decoration/curtains.rsi
     layers:
     - state: closed
@@ -16,7 +17,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.49,-0.49,0.49,0.49"
-      mass: 100
+      density: 100
       mask:
       - FullTileMask
       layer:
@@ -26,9 +27,9 @@
     performCollisionCheck: false
     bumpOpen: false
     clickOpen: true
-    closeTimeOne: 0.1
+    closeTimeOne: 0.5
     closeTimeTwo: 0.1
-    openTimeOne: 0.1
+    openTimeOne: 0.5
     openTimeTwo: 0.1
     openSound:
       path: /Audio/Effects/curtain_openclose.ogg
@@ -66,3 +67,5 @@
     state: Open
   - type: Occluder
     enabled: false
+  - type: Physics
+    canCollide: false

@@ -69,14 +69,8 @@
   components:
   - type: StorageFill
     contents:
-      - id: Screwdriver
-      - id: Wrench
-      - id: Welder
-      - id: Crowbar
-      - id: Multitool
-      - id: Wirecutter
+      - id: ClothingBeltUtilityFilled
       - id: ClothingHandsGlovesCombat
-      - id: ClothingBeltSyndieHolster
       - id: ClothingMaskGasSyndicate
 
 - type: entity
@@ -88,9 +82,6 @@
   - type: StorageFill
     contents:
       - id: IngotGold
-        amount: 5
+        amount: 1
       - id: DrinkGoldenCup
         prob: 0.05
-        orGroup: CupOrGold
-      - id: IngotGold
-        orGroup: CupOrGold

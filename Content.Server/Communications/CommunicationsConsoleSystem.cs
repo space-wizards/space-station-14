@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Linq;
 using Content.Server.Access.Systems;
+using Content.Server.Administration.Logs;
 using Content.Server.AlertLevel;
 using Content.Server.Chat;
 using Content.Server.Chat.Systems;
@@ -13,6 +14,8 @@ using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Communications;
+using Content.Shared.Database;
+using Content.Shared.Emag.Components;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
@@ -27,12 +30,13 @@ namespace Content.Server.Communications
         [Dependency] private readonly InteractionSystem _interaction = default!;
         [Dependency] private readonly AlertLevelSystem _alertLevelSystem = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
+        [Dependency] private readonly EmergencyShuttleSystem _emergency = default!;
         [Dependency] private readonly IdCardSystem _idCardSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
-        [Dependency] private readonly ShuttleSystem _shuttle = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         private const int MaxMessageLength = 256;
         private const float UIUpdateInterval = 5.0f;
@@ -172,7 +176,7 @@ namespace Content.Server.Communications
             if (!_interaction.InRangeUnobstructed(console, user))
                 return false;
 
-            if (TryComp<AccessReaderComponent>(console, out var accessReaderComponent) && accessReaderComponent.Enabled)
+            if (TryComp<AccessReaderComponent>(console, out var accessReaderComponent) && !HasComp<EmaggedComponent>(console))
             {
                 return _accessReaderSystem.IsAllowed(user, accessReaderComponent);
             }
@@ -182,7 +186,7 @@ namespace Content.Server.Communications
         private bool CanCallOrRecall(CommunicationsConsoleComponent comp)
         {
             // Defer to what the round end system thinks we should be able to do.
-            if (_shuttle.EmergencyShuttleArrived || !_roundEndSystem.CanCallOrRecall())
+            if (_emergency.EmergencyShuttleArrived || !_roundEndSystem.CanCallOrRecall())
                 return false;
 
             // Calling shuttle checks
@@ -205,7 +209,7 @@ namespace Content.Server.Communications
             if (message.Session.AttachedEntity is not {Valid: true} mob) return;
             if (!CanUse(mob, uid))
             {
-                _popupSystem.PopupCursor(Loc.GetString("comms-console-permission-denied"), Filter.Entities(mob), PopupType.Medium);
+                _popupSystem.PopupCursor(Loc.GetString("comms-console-permission-denied"), message.Session, PopupType.Medium);
                 return;
             }
 
@@ -230,7 +234,7 @@ namespace Content.Server.Communications
 
                 if (!CanUse(mob, uid))
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, Filter.Entities(mob));
+                    _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, message.Session);
                     return;
                 }
 
@@ -251,9 +255,16 @@ namespace Content.Server.Communications
             if (comp.AnnounceGlobal)
             {
                 _chatSystem.DispatchGlobalAnnouncement(msg, title, announcementSound: comp.AnnouncementSound, colorOverride: comp.AnnouncementColor);
+
+                if (message.Session.AttachedEntity != null)
+                    _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(message.Session.AttachedEntity.Value):player} has sent the following global announcement: {msg}");
+
                 return;
             }
             _chatSystem.DispatchStationAnnouncement(uid, msg, title, colorOverride: comp.AnnouncementColor);
+
+            if (message.Session.AttachedEntity != null)
+                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(message.Session.AttachedEntity.Value):player} has sent the following station announcement: {msg}");
         }
 
         private void OnCallShuttleMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleCallEmergencyShuttleMessage message)
@@ -262,10 +273,11 @@ namespace Content.Server.Communications
             if (message.Session.AttachedEntity is not {Valid: true} mob) return;
             if (!CanUse(mob, uid))
             {
-                _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, Filter.Entities(mob));
+                _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, message.Session);
                 return;
             }
             _roundEndSystem.RequestRoundEnd(uid);
+            _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(mob):player} has called the shuttle.");
         }
 
         private void OnRecallShuttleMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleRecallEmergencyShuttleMessage message)
@@ -274,11 +286,12 @@ namespace Content.Server.Communications
             if (message.Session.AttachedEntity is not {Valid: true} mob) return;
             if (!CanUse(mob, uid))
             {
-                _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, Filter.Entities(mob));
+                _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, message.Session);
                 return;
             }
 
             _roundEndSystem.CancelRoundEndCountdown(uid);
+            _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(mob):player} has recalled the shuttle.");
         }
     }
 }

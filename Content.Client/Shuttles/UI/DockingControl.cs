@@ -16,15 +16,15 @@ public class DockingControl : Control
     private readonly IEntityManager _entManager;
     private readonly IMapManager _mapManager;
 
-    private const int MinimapMargin = 4;
-
     private float _range = 8f;
     private float _rangeSquared = 0f;
     private const float GridLinesDistance = 32f;
 
-    private int MidPoint => SizeFull / 2;
-    private int SizeFull => (int) ((RadarControl.MinimapRadius + MinimapMargin) * 2 * UIScale);
-    private int ScaledMinimapRadius => (int) (RadarControl.MinimapRadius * UIScale);
+    private int MinimapRadius => (int) Math.Min(Size.X, Size.Y) / 2;
+
+    private Vector2 MidPoint => (Size / 2) * UIScale;
+    private int SizeFull => (int) (MinimapRadius * 2 * UIScale);
+    private int ScaledMinimapRadius => (int) (MinimapRadius * UIScale);
     private float MinimapScale => _range != 0 ? ScaledMinimapRadius / _range : 0f;
 
     public EntityUid? ViewedDock;
@@ -52,8 +52,8 @@ public class DockingControl : Control
 
         var fakeAA = new Color(0.08f, 0.08f, 0.08f);
 
-        handle.DrawCircle((MidPoint, MidPoint), ScaledMinimapRadius + 1, fakeAA);
-        handle.DrawCircle((MidPoint, MidPoint), ScaledMinimapRadius, Color.Black);
+        handle.DrawCircle((MidPoint.X, MidPoint.Y), ScaledMinimapRadius + 1, fakeAA);
+        handle.DrawCircle((MidPoint.X, MidPoint.Y), ScaledMinimapRadius, Color.Black);
 
         var gridLines = new Color(0.08f, 0.08f, 0.08f);
         var gridLinesRadial = 8;
@@ -61,21 +61,21 @@ public class DockingControl : Control
 
         for (var i = 1; i < gridLinesEquatorial + 1; i++)
         {
-            handle.DrawCircle((MidPoint, MidPoint), GridLinesDistance * MinimapScale * i, gridLines, false);
+            handle.DrawCircle((MidPoint.X, MidPoint.Y), GridLinesDistance * MinimapScale * i, gridLines, false);
         }
 
         for (var i = 0; i < gridLinesRadial; i++)
         {
             Angle angle = (Math.PI / gridLinesRadial) * i;
             var aExtent = angle.ToVec() * ScaledMinimapRadius;
-            handle.DrawLine((MidPoint, MidPoint) - aExtent, (MidPoint, MidPoint) + aExtent, gridLines);
+            handle.DrawLine((MidPoint.X, MidPoint.Y) - aExtent, (MidPoint.X, MidPoint.Y) + aExtent, gridLines);
         }
 
         if (Coordinates == null ||
             Angle == null ||
             !_entManager.TryGetComponent<TransformComponent>(GridEntity, out var gridXform)) return;
 
-        var rotation = Matrix3.CreateRotation(Angle.Value);
+        var rotation = Matrix3.CreateRotation(-Angle.Value + Math.PI);
         var matrix = Matrix3.CreateTranslation(-Coordinates.Value.Position);
 
         // Draw the fixtures around the dock before drawing it
@@ -136,16 +136,19 @@ public class DockingControl : Control
         Matrix3.Multiply(in gridInvMatrix, in matrix, out var invMatrix);
 
         // TODO: Getting some overdraw so need to fix that.
+        var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
         foreach (var grid in _mapManager.FindGridsIntersecting(gridXform.MapID,
                      new Box2(worldPos - _range, worldPos + _range)))
         {
-            if (grid.GridEntityId == GridEntity) continue;
+            if (grid.Owner == GridEntity)
+                continue;
 
             // Draw the fixtures before drawing any docks in range.
-            if (!_entManager.TryGetComponent<FixturesComponent>(grid.GridEntityId, out var gridFixtures)) continue;
+            if (!_entManager.TryGetComponent<FixturesComponent>(grid.Owner, out var gridFixtures))
+                continue;
 
-            var gridMatrix = grid.WorldMatrix;
+            var gridMatrix = xformQuery.GetComponent(grid.Owner).WorldMatrix;
 
             Matrix3.Multiply(in gridMatrix, in invMatrix, out var matty);
 
@@ -192,7 +195,7 @@ public class DockingControl : Control
             }
 
             // Draw any docks on that grid
-            if (Docks.TryGetValue(grid.GridEntityId, out var gridDocks))
+            if (Docks.TryGetValue(grid.Owner, out var gridDocks))
             {
                 foreach (var dock in gridDocks)
                 {

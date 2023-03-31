@@ -1,0 +1,13 @@
+﻿- type: guideEntry
+  id: Jobs
+  name: guide-entry-jobs
+  text: "/Server Info/Guidebook/Jobs.xml"
+  children:
+  - Botany
+  - Engineering
+  - Science
+
+- type: guideEntry
+  id: Survival
+  name: guide-entry-survival
+  text: "/Server Info/Guidebook/Survival.xml"

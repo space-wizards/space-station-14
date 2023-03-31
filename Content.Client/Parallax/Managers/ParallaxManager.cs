@@ -18,10 +18,10 @@ public sealed class ParallaxManager : IParallaxManager
 
     public Vector2 ParallaxAnchor { get; set; }
 
-    private readonly ConcurrentDictionary<string, ParallaxLayerPrepared[]> _parallaxesLQ = new();
-    private readonly ConcurrentDictionary<string, ParallaxLayerPrepared[]> _parallaxesHQ = new();
+    private readonly Dictionary<string, ParallaxLayerPrepared[]> _parallaxesLQ = new();
+    private readonly Dictionary<string, ParallaxLayerPrepared[]> _parallaxesHQ = new();
 
-    private readonly ConcurrentDictionary<string, CancellationTokenSource> _loadingParallaxes = new();
+    private readonly Dictionary<string, CancellationTokenSource> _loadingParallaxes = new();
 
     public bool IsLoaded(string name) => _parallaxesLQ.ContainsKey(name);
 
@@ -32,7 +32,7 @@ public sealed class ParallaxManager : IParallaxManager
             return !_parallaxesLQ.TryGetValue(name, out var lq) ? Array.Empty<ParallaxLayerPrepared>() : lq;
         }
 
-        return !_parallaxesLQ.TryGetValue(name, out var hq) ? Array.Empty<ParallaxLayerPrepared>() : hq;
+        return !_parallaxesHQ.TryGetValue(name, out var hq) ? Array.Empty<ParallaxLayerPrepared>() : hq;
     }
 
     public void UnloadParallax(string name)
@@ -45,12 +45,13 @@ public sealed class ParallaxManager : IParallaxManager
         }
 
         if (!_parallaxesLQ.ContainsKey(name)) return;
-        _parallaxesLQ.Remove(name, out _);
-        _parallaxesHQ.Remove(name, out _);
+        _parallaxesLQ.Remove(name);
+        _parallaxesHQ.Remove(name);
     }
 
     public async void LoadDefaultParallax()
     {
+        _sawmill.Level = LogLevel.Info;
         await LoadParallaxByName("Default");
     }
 
@@ -64,7 +65,7 @@ public sealed class ParallaxManager : IParallaxManager
         var cancel = token.Token;
 
         // Begin (for real)
-        _sawmill.Info($"Loading parallax {name}");
+        _sawmill.Debug($"Loading parallax {name}");
 
         try
         {
@@ -89,10 +90,8 @@ public sealed class ParallaxManager : IParallaxManager
 
             if (token.Token.IsCancellationRequested) return;
 
-            _parallaxesLQ[name] = layers[0];
-            _parallaxesHQ[name] = layers[1];
-
-            _sawmill.Info($"Loaded parallax {name}");
+            _parallaxesLQ[name] = layers[1];
+            _parallaxesHQ[name] = layers[0];
 
         }
         catch (Exception ex)

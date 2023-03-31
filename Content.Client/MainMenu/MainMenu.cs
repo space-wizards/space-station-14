@@ -1,7 +1,6 @@
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Content.Client.EscapeMenu.UI;
 using Content.Client.MainMenu.UI;
+using Content.Client.UserInterface.Systems.EscapeMenu;
 using Robust.Client;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -28,14 +27,13 @@ namespace Content.Client.MainMenu
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
         private MainMenuControl _mainMenuControl = default!;
-        private OptionsMenu _optionsMenu = default!;
         private bool _isConnecting;
 
         // ReSharper disable once InconsistentNaming
         private static readonly Regex IPv6Regex = new(@"\[(.*:.*:.*)](?::(\d+))?");
 
         /// <inheritdoc />
-        public override void Startup()
+        protected override void Startup()
         {
             _mainMenuControl = new MainMenuControl(_resourceCache, _configurationManager);
             _userInterfaceManager.StateRoot.AddChild(_mainMenuControl);
@@ -44,30 +42,33 @@ namespace Content.Client.MainMenu
             _mainMenuControl.OptionsButton.OnPressed += OptionsButtonPressed;
             _mainMenuControl.DirectConnectButton.OnPressed += DirectConnectButtonPressed;
             _mainMenuControl.AddressBox.OnTextEntered += AddressBoxEntered;
+            _mainMenuControl.ChangelogButton.OnPressed += ChangelogButtonPressed;
 
             _client.RunLevelChanged += RunLevelChanged;
-
-            _optionsMenu = new OptionsMenu();
         }
 
         /// <inheritdoc />
-        public override void Shutdown()
+        protected override void Shutdown()
         {
             _client.RunLevelChanged -= RunLevelChanged;
             _netManager.ConnectFailed -= _onConnectFailed;
 
             _mainMenuControl.Dispose();
-            _optionsMenu.Dispose();
+        }
+
+        private void ChangelogButtonPressed(BaseButton.ButtonEventArgs args)
+        {
+            _userInterfaceManager.GetUIController<ChangelogUIController>().ToggleWindow();
+        }
+
+        private void OptionsButtonPressed(BaseButton.ButtonEventArgs args)
+        {
+            _userInterfaceManager.GetUIController<OptionsUIController>().ToggleWindow();
         }
 
         private void QuitButtonPressed(BaseButton.ButtonEventArgs args)
         {
             _controllerProxy.Shutdown();
-        }
-
-        private void OptionsButtonPressed(BaseButton.ButtonEventArgs args)
-        {
-            _optionsMenu.OpenCentered();
         }
 
         private void DirectConnectButtonPressed(BaseButton.ButtonEventArgs args)

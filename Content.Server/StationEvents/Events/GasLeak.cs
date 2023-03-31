@@ -15,10 +15,12 @@ namespace Content.Server.StationEvents.Events
 
         public override string Prototype => "GasLeak";
 
-        private static readonly Gas[] LeakableGases = {
+        private static readonly Gas[] LeakableGases =
+        {
             Gas.Miasma,
             Gas.Plasma,
             Gas.Tritium,
+            Gas.Frezon,
         };
 
         /// <summary>
@@ -57,6 +59,8 @@ namespace Content.Server.StationEvents.Events
         {
             base.Started();
 
+            var mod = MathF.Sqrt(GetSeverityModifier());
+
             // Essentially we'll pick out a target amount of gas to leak, then a rate to leak it at, then work out the duration from there.
             if (TryFindRandomTile(out _targetTile, out _targetStation, out _targetGrid, out _targetCoords))
             {
@@ -64,7 +68,7 @@ namespace Content.Server.StationEvents.Events
 
                 _leakGas = RobustRandom.Pick(LeakableGases);
                 // Was 50-50 on using normal distribution.
-                var totalGas = (float) RobustRandom.Next(MinimumGas, MaximumGas);
+                var totalGas = RobustRandom.Next(MinimumGas, MaximumGas) * mod;
                 var startAfter = ((StationEventRuleConfiguration) Configuration).StartAfter;
                 _molesPerSecond = RobustRandom.Next(MinimumMolesPerSecond, MaximumMolesPerSecond);
                 _endAfter = totalGas / _molesPerSecond + startAfter;
@@ -135,7 +139,7 @@ namespace Content.Server.StationEvents.Events
 
                 // Don't want it to be so obnoxious as to instantly murder anyone in the area but enough that
                 // it COULD start potentially start a bigger fire.
-                _atmosphere.HotspotExpose(_targetGrid, _targetTile, 700f, 50f, true);
+                _atmosphere.HotspotExpose(_targetGrid, _targetTile, 700f, 50f, null, true);
                 SoundSystem.Play("/Audio/Effects/sparks4.ogg", Filter.Pvs(_targetCoords), _targetCoords);
             }
         }

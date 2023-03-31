@@ -24,10 +24,17 @@
           True: { visible: False }
           False: { visible: True }
   - type: RechargeBasicEntityAmmo
-    minRechargeCooldown: 3
-    maxRechargeCooldown: 5
+    minRechargeCooldown: 1.5
+    maxRechargeCooldown: 1.5
     rechargeSound:
       path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
   - type: BasicEntityAmmoProvider
     proto: BulletKinetic
     capacity: 1
+    count: 1
+  - type: Clothing
+    #sprite: WRITEMEWRITEMEWRITEME
+    quickEquip: false
+    slots:
+    - suitStorage
+    - Belt

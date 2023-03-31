@@ -6,15 +6,16 @@ using Content.Shared.Inventory;
 using Content.Shared.Mousetrap;
 using Content.Shared.StepTrigger;
 using Content.Shared.StepTrigger.Systems;
+using Robust.Server.GameObjects;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 
 namespace Content.Server.Mousetrap;
 
 public sealed class MousetrapSystem : EntitySystem
 {
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly TriggerSystem _triggerSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -31,7 +32,7 @@ public sealed class MousetrapSystem : EntitySystem
             ? Loc.GetString("mousetrap-on-activate")
             : Loc.GetString("mousetrap-on-deactivate"),
             uid,
-            Filter.Entities(args.User));
+            args.User);
 
         UpdateVisuals(uid);
     }
@@ -67,7 +68,7 @@ public sealed class MousetrapSystem : EntitySystem
             return;
         }
 
-        appearance.SetData(MousetrapVisuals.Visual,
-            mousetrap.IsActive ? MousetrapVisuals.Armed : MousetrapVisuals.Unarmed);
+        _appearance.SetData(uid, MousetrapVisuals.Visual,
+            mousetrap.IsActive ? MousetrapVisuals.Armed : MousetrapVisuals.Unarmed, appearance);
     }
 }

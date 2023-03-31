@@ -1,6 +1,6 @@
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Prototypes;
 using Content.Shared.Actions.ActionTypes;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Bible.Components
@@ -31,16 +31,14 @@ namespace Content.Server.Bible.Components
         public InstantAction SummonAction = new()
         {
             Icon = new SpriteSpecifier.Texture(new ResourcePath("Clothing/Head/Hats/witch.rsi/icon.png")),
-            Name = "bible-summon-verb",
+            DisplayName = "bible-summon-verb",
             Description = "bible-summon-verb-desc",
             Event = new SummonActionEvent(),
         };
 
         /// Used for respawning
-        [ViewVariables]
         [DataField("accumulator")]
         public float Accumulator = 0f;
-        [ViewVariables]
         [DataField("respawnTime")]
         public float RespawnTime = 180f;
     }

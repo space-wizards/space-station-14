@@ -1,104 +1,21 @@
-﻿using Content.Shared.Body.Components;
+﻿using Content.Shared.Body.Systems;
+using Robust.Shared.Serialization;
 
-namespace Content.Shared.Body.Part
+namespace Content.Shared.Body.Part;
+
+[Serializable, NetSerializable]
+[Access(typeof(SharedBodySystem))]
+[DataRecord]
+public sealed record BodyPartSlot(string Id, EntityUid Parent, BodyPartType? Type)
 {
-    public sealed class BodyPartSlot
+    public EntityUid? Child { get; set; }
+
+    // Rider doesn't suggest explicit properties during deconstruction without this
+    public void Deconstruct(out EntityUid? child, out string id, out EntityUid parent, out BodyPartType? type)
     {
-        public BodyPartSlot(string id, BodyPartType partType, IEnumerable<BodyPartSlot> connections)
-        {
-            Id = id;
-            PartType = partType;
-            Connections = new HashSet<BodyPartSlot>(connections);
-        }
-
-        public BodyPartSlot(string id, BodyPartType partType)
-        {
-            Id = id;
-            PartType = partType;
-            Connections = new HashSet<BodyPartSlot>();
-        }
-
-        /// <summary>
-        ///     The ID of this slot.
-        /// </summary>
-        [ViewVariables]
-        public string Id { get; }
-
-        /// <summary>
-        ///     The part type that this slot accepts.
-        /// </summary>
-        [ViewVariables]
-        public BodyPartType PartType { get; }
-
-        /// <summary>
-        ///     The part currently in this slot, if any.
-        /// </summary>
-        [ViewVariables]
-        public SharedBodyPartComponent? Part { get; private set; }
-
-        /// <summary>
-        ///     List of slots that this slot connects to.
-        /// </summary>
-        [ViewVariables]
-        public HashSet<BodyPartSlot> Connections { get; private set; }
-
-        public event Action<SharedBodyPartComponent>? PartAdded;
-
-        public event Action<SharedBodyPartComponent>? PartRemoved;
-
-        internal void SetConnectionsInternal(IEnumerable<BodyPartSlot> connections)
-        {
-            Connections = new HashSet<BodyPartSlot>(connections);
-        }
-
-        public bool CanAddPart(SharedBodyPartComponent part)
-        {
-            return Part == null && part.PartType == PartType;
-        }
-
-        public bool TryAddPart(SharedBodyPartComponent part)
-        {
-            if (!CanAddPart(part))
-            {
-                return false;
-            }
-
-            SetPart(part);
-            return true;
-        }
-
-        public void SetPart(SharedBodyPartComponent part)
-        {
-            if (Part != null)
-            {
-                RemovePart();
-            }
-
-            Part = part;
-            PartAdded?.Invoke(part);
-        }
-
-        public bool RemovePart()
-        {
-            if (Part == null)
-            {
-                return false;
-            }
-
-            var old = Part;
-            Part = null;
-
-            PartRemoved?.Invoke(old);
-
-            return true;
-        }
-
-        public void Shutdown()
-        {
-            Part = null;
-            Connections.Clear();
-            PartAdded = null;
-            PartRemoved = null;
-        }
+        child = Child;
+        id = Id;
+        parent = Parent;
+        type = Type;
     }
 }

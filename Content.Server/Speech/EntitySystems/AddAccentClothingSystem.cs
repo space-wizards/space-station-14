@@ -1,5 +1,5 @@
-﻿using Content.Server.Clothing.Components;
 using Content.Server.Speech.Components;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory.Events;
 
 namespace Content.Server.Speech.EntitySystems;
@@ -22,7 +22,7 @@ public sealed class AddAccentClothingSystem : EntitySystem
 
         // check if entity was actually used as clothing
         // not just taken in pockets or something
-        var isCorrectSlot = clothing.SlotFlags.HasFlag(args.SlotFlags);
+        var isCorrectSlot = clothing.Slots.HasFlag(args.SlotFlags);
         if (!isCorrectSlot) return;
 
         // does the user already has this accent?

@@ -1,1 +1,1 @@
-{"version": 1, "size": {"x": 32, "y": 32}, "states": [{"name": "mirror", "delays": [[1.0]]}, {"name": "mirror_broke", "delays": [[1.0]]}]}
+{"version":1,"size":{"x":32,"y":32},"copyright":"Taken from tgstation","license":"CC-BY-SA-3.0","states":[{"name":"mirror"},{"name":"mirror_broke"}]}

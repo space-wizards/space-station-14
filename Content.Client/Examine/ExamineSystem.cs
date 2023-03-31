@@ -1,6 +1,5 @@
-using System.Linq;
-using System.Threading;
 using Content.Client.Verbs;
+using Content.Shared.Eye.Blinding;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
@@ -14,6 +13,8 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
+using System.Linq;
+using System.Threading;
 using static Content.Shared.Interaction.SharedInteractionSystem;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
@@ -30,9 +31,12 @@ namespace Content.Client.Examine
         public const string StyleClassEntityTooltip = "entity-tooltip";
 
         private EntityUid _examinedEntity;
+        private EntityUid _lastExaminedEntity;
         private EntityUid _playerEntity;
         private Popup? _examineTooltipOpen;
+        private ScreenCoordinates _popupPos;
         private CancellationTokenSource? _requestCancelTokenSource;
+        private int _idCounter;
 
         public override void Initialize()
         {
@@ -45,6 +49,8 @@ namespace Content.Client.Examine
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ExamineEntity, new PointerInputCmdHandler(HandleExamine, outsidePrediction: true))
                 .Register<ExamineSystem>();
+
+            _idCounter = 0;
         }
 
         public override void Update(float frameTime)
@@ -62,13 +68,23 @@ namespace Content.Client.Examine
             base.Shutdown();
         }
 
-        public override bool CanExamine(EntityUid examiner, MapCoordinates target, Ignored? predicate = null)
+        public override bool CanExamine(EntityUid examiner, MapCoordinates target, Ignored? predicate = null, EntityUid? examined = null, ExaminerComponent? examinerComp = null)
         {
-            var b = _eyeManager.GetWorldViewbounds();
-            if (!b.Contains(target.Position))
+            if (!Resolve(examiner, ref examinerComp, false))
                 return false;
 
-            return base.CanExamine(examiner, target, predicate);
+            if (examinerComp.SkipChecks)
+                return true;
+
+            if (examinerComp.CheckInRangeUnOccluded)
+            {
+                // TODO fix this. This should be using the examiner's eye component, not eye manager.
+                var b = _eyeManager.GetWorldViewbounds();
+                if (!b.Contains(target.Position))
+                    return false;
+            }
+
+            return base.CanExamine(examiner, target, predicate, examined, examinerComp);
         }
 
         private bool HandleExamine(in PointerInputCmdHandler.PointerInputCmdArgs args)
@@ -101,7 +117,7 @@ namespace Content.Client.Examine
             // Center it on the entity if they use the verb instead.
             verb.Act = () => DoExamine(args.Target, false);
             verb.Text = Loc.GetString("examine-verb-name");
-            verb.IconTexture = "/Textures/Interface/VerbIcons/examine.svg.192dpi.png";
+            verb.Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/examine.svg.192dpi.png"));
             verb.ShowOnExamineTooltip = false;
             verb.ClientExclusive = true;
             args.Verbs.Add(verb);
@@ -113,10 +129,14 @@ namespace Content.Client.Examine
             if (player == null)
                 return;
 
+            // Prevent updating a new tooltip.
+            if (ev.Id != 0 && ev.Id != _idCounter)
+                return;
+
             // Tooltips coming in from the server generally prioritize
             // opening at the old tooltip rather than the cursor/another entity,
             // since there's probably one open already if it's coming in from the server.
-            OpenTooltip(player.Value, ev.EntityUid, ev.CenterAtCursor, ev.OpenAtOldTooltip);
+            OpenTooltip(player.Value, ev.EntityUid, ev.CenterAtCursor, ev.OpenAtOldTooltip, ev.KnowTarget);
             UpdateTooltipInfo(player.Value, ev.EntityUid, ev.Message, ev.Verbs);
         }
 
@@ -131,32 +151,31 @@ namespace Content.Client.Examine
         ///     not fill it with information. This is done when the server sends examine info/verbs,
         ///     or immediately if it's entirely clientside.
         /// </summary>
-        public void OpenTooltip(EntityUid player, EntityUid target, bool centeredOnCursor=true, bool openAtOldTooltip=true)
+        public void OpenTooltip(EntityUid player, EntityUid target, bool centeredOnCursor=true, bool openAtOldTooltip=true, bool knowTarget = true)
         {
             // Close any examine tooltip that might already be opened
             // Before we do that, save its position. We'll prioritize opening any new popups there if
             // openAtOldTooltip is true.
-            var oldTooltipPos = _examineTooltipOpen?.ScreenCoordinates;
+            ScreenCoordinates? oldTooltipPos = _examineTooltipOpen != null ? _popupPos : null;
             CloseTooltip();
 
             // cache entity for Update function
             _examinedEntity = target;
 
             const float minWidth = 300;
-            ScreenCoordinates popupPos;
 
             if (openAtOldTooltip && oldTooltipPos != null)
             {
-                popupPos = _userInterfaceManager.ScreenToUIPosition(oldTooltipPos.Value);
+                _popupPos = oldTooltipPos.Value;
             }
             else if (centeredOnCursor)
             {
-                popupPos = _userInterfaceManager.MousePositionScaled;
+                _popupPos = _userInterfaceManager.MousePositionScaled;
             }
             else
             {
-                popupPos = _eyeManager.CoordinatesToScreen(Transform(target).Coordinates);
-                popupPos = _userInterfaceManager.ScreenToUIPosition(popupPos);
+                _popupPos = _eyeManager.CoordinatesToScreen(Transform(target).Coordinates);
+                _popupPos = _userInterfaceManager.ScreenToUIPosition(_popupPos);
             }
 
             // Actually open the tooltip.
@@ -182,7 +201,7 @@ namespace Content.Client.Examine
 
             vBox.AddChild(hBox);
 
-            if (EntityManager.TryGetComponent(target, out ISpriteComponent? sprite))
+            if (EntityManager.TryGetComponent(target, out SpriteComponent? sprite))
             {
                 hBox.AddChild(new SpriteView
                 {
@@ -191,16 +210,27 @@ namespace Content.Client.Examine
                 });
             }
 
-            hBox.AddChild(new Label
+            if (knowTarget)
             {
-                Text = Identity.Name(target, EntityManager, player),
-                HorizontalExpand = true,
-            });
+                hBox.AddChild(new Label
+                {
+                    Text = Identity.Name(target, EntityManager, player),
+                    HorizontalExpand = true,
+                });
+            }
+            else
+            {
+                hBox.AddChild(new Label
+                {
+                    Text = "???",
+                    HorizontalExpand = true,
+                });
+            }
 
             panel.Measure(Vector2.Infinity);
             var size = Vector2.ComponentMax((minWidth, 0), panel.DesiredSize);
 
-            _examineTooltipOpen.Open(UIBox2.FromDimensions(popupPos.Position, size));
+            _examineTooltipOpen.Open(UIBox2.FromDimensions(_popupPos.Position, size));
         }
 
         /// <summary>
@@ -214,9 +244,15 @@ namespace Content.Client.Examine
                 return;
             }
 
-            foreach (var msg in message.Tags.OfType<FormattedMessage.TagText>())
+            foreach (var msg in message.Nodes)
             {
-                if (string.IsNullOrWhiteSpace(msg.Text)) continue;
+                if (msg.Name != null)
+                    continue;
+
+                var text = msg.Value.StringValue ?? "";
+
+                if (string.IsNullOrWhiteSpace(text))
+                    continue;
 
                 var richLabel = new RichTextLabel() { Margin = new Thickness(4, 4, 0, 4)};
                 richLabel.SetMessage(message);
@@ -250,7 +286,7 @@ namespace Content.Client.Examine
                 if (verb is not ExamineVerb examine)
                     continue;
 
-                if (examine.IconTexture == null)
+                if (examine.Icon == null)
                     continue;
 
                 if (!examine.ShowOnExamineTooltip)
@@ -284,6 +320,8 @@ namespace Content.Client.Examine
             if (obj.Button is ExamineButton button)
             {
                 _verbSystem.ExecuteVerb(_examinedEntity, button.Verb);
+                if (button.Verb.CloseMenu ?? button.Verb.CloseMenuDefault)
+                    CloseTooltip();
             }
         }
 
@@ -294,7 +332,13 @@ namespace Content.Client.Examine
                 return;
 
             FormattedMessage message;
-            OpenTooltip(playerEnt.Value, entity, centeredOnCursor, false);
+
+            // Basically this just predicts that we can't make out the entity if we have poor vision.
+            var canSeeClearly = true;
+            if (HasComp<BlurryVisionComponent>(playerEnt))
+                canSeeClearly = false;
+
+            OpenTooltip(playerEnt.Value, entity, centeredOnCursor, false, knowTarget: canSeeClearly);
             if (entity.IsClientSide())
             {
                 message = GetExamineText(entity, playerEnt);
@@ -304,8 +348,13 @@ namespace Content.Client.Examine
             else
             {
                 // Ask server for extra examine info.
-                RaiseNetworkEvent(new ExamineSystemMessages.RequestExamineInfoMessage(entity, true));
+                if (entity != _lastExaminedEntity)
+                    _idCounter += 1;
+                if (_idCounter == int.MaxValue)
+                    _idCounter = 0;
+                RaiseNetworkEvent(new ExamineSystemMessages.RequestExamineInfoMessage(entity, _idCounter, true));
             }
+            _lastExaminedEntity = entity;
         }
 
         private void CloseTooltip()

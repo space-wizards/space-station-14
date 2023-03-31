@@ -6,7 +6,8 @@
   - type: Sprite
     layers:
       - state: red
-      - texture: Structures/Wallmounts/posters.rsi/random_anything.png
+      - sprite: Structures/Wallmounts/posters.rsi
+        state: random_anything
   - type: RandomSpawner
     offset: 0
     prototypes:
@@ -25,7 +26,8 @@
   - type: Sprite
     layers:
       - state: red
-      - texture: Structures/Wallmounts/posters.rsi/random_contraband.png
+      - sprite: Structures/Wallmounts/posters.rsi
+        state: random_contraband
   - type: RandomSpawner
     offset: 0
     prototypes:
@@ -76,12 +78,13 @@
       - PosterContrabandFreeSyndicateEncryptionKey
       - PosterContrabandBountyHunters
       - PosterContrabandTheBigGasTruth
-      - PosterContrabandGotWood
       - PosterContrabandWehWatches
       - PosterContrabandVoteWeh
       - PosterContrabandBeachStarYamamoto
       - PosterContrabandHighEffectEngineering
       - PosterContrabandNuclearDeviceInformational
+      - PosterContrabandRevolt
+      - PosterContrabandRise
     chance: 1
 
 - type: entity
@@ -92,7 +95,8 @@
   - type: Sprite
     layers:
       - state: red
-      - texture: Structures/Wallmounts/posters.rsi/random_legit.png
+      - sprite: Structures/Wallmounts/posters.rsi
+        state: random_legit
   - type: RandomSpawner
     offset: 0
     prototypes:
@@ -133,4 +137,6 @@
       - PosterLegitCarbonDioxide
       - PosterLegitDickGumshue
       - PosterLegitThereIsNoGasGiant
+      - PosterLegitJustAWeekAway
+      - PosterLegitSecWatch
     chance: 1

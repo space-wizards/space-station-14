@@ -1,5 +1,6 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Administration.Managers;
+using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Station.Components;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
@@ -15,6 +16,7 @@ public sealed partial class StationJobsSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly RoleBanManager _roleBanManager = default!;
+    [Dependency] private readonly PlayTimeTrackingSystem _playTime = default!;
 
     private Dictionary<int, HashSet<string>> _jobsByWeight = default!;
     private List<int> _orderedWeights = default!;
@@ -49,20 +51,20 @@ public sealed partial class StationJobsSystem
     /// as there may end up being more round-start slots than available slots, which can cause weird behavior.
     /// A warning to all who enter ye cursed lands: This function is long and mildly incomprehensible. Best used without touching.
     /// </remarks>
-    public Dictionary<NetUserId, (string, EntityUid)> AssignJobs(Dictionary<NetUserId, HumanoidCharacterProfile> profiles, IReadOnlyList<EntityUid> stations, bool useRoundStartJobs = true)
+    public Dictionary<NetUserId, (string?, EntityUid)> AssignJobs(Dictionary<NetUserId, HumanoidCharacterProfile> profiles, IReadOnlyList<EntityUid> stations, bool useRoundStartJobs = true)
     {
         DebugTools.Assert(stations.Count > 0);
 
         InitializeRoundStart();
 
         if (profiles.Count == 0)
-            return new Dictionary<NetUserId, (string, EntityUid)>();
+            return new Dictionary<NetUserId, (string?, EntityUid)>();
 
         // We need to modify this collection later, so make a copy of it.
         profiles = profiles.ShallowClone();
 
         // Player <-> (job, station)
-        var assigned = new Dictionary<NetUserId, (string, EntityUid)>(profiles.Count);
+        var assigned = new Dictionary<NetUserId, (string?, EntityUid)>(profiles.Count);
 
         // The jobs left on the stations. This collection is modified as jobs are assigned to track what's available.
         var stationJobs = new Dictionary<EntityUid, Dictionary<string, uint?>>();
@@ -270,7 +272,7 @@ public sealed partial class StationJobsSystem
     /// <param name="allPlayersToAssign">All players that might need an overflow assigned.</param>
     /// <param name="profiles">Player character profiles.</param>
     /// <param name="stations">The stations to consider for spawn location.</param>
-    public void AssignOverflowJobs(ref Dictionary<NetUserId, (string, EntityUid)> assignedJobs,
+    public void AssignOverflowJobs(ref Dictionary<NetUserId, (string?, EntityUid)> assignedJobs,
         IEnumerable<NetUserId> allPlayersToAssign, IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> profiles, IReadOnlyList<EntityUid> stations)
     {
         var givenStations = stations.ToList();
@@ -286,8 +288,11 @@ public sealed partial class StationJobsSystem
 
             var profile = profiles[player];
             if (profile.PreferenceUnavailable != PreferenceUnavailableMode.SpawnAsOverflow)
+            {
+                assignedJobs.Add(player, (null, EntityUid.Invalid));
                 continue;
-
+            }
+            
             _random.Shuffle(givenStations);
 
             foreach (var station in givenStations)
@@ -339,11 +344,15 @@ public sealed partial class StationJobsSystem
         foreach (var (player, profile) in profiles)
         {
             var roleBans = _roleBanManager.GetJobBans(player);
+            var profileJobs = profile.JobPriorities.Keys.ToList();
+            _playTime.RemoveDisallowedJobs(player, ref profileJobs);
 
             List<string>? availableJobs = null;
 
-            foreach (var (jobId, priority) in profile.JobPriorities)
+            foreach (var jobId in profileJobs)
             {
+                var priority = profile.JobPriorities[jobId];
+
                 if (!(priority == selectedPriority || selectedPriority is null))
                     continue;
 
@@ -357,7 +366,6 @@ public sealed partial class StationJobsSystem
                     continue;
 
                 availableJobs ??= new List<string>(profile.JobPriorities.Count);
-
                 availableJobs.Add(jobId);
             }
 

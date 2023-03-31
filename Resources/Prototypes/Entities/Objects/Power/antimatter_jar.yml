@@ -12,3 +12,7 @@
     state: jar
     netsync: false
   - type: AMEFuelContainer
+  - type: StaticPrice
+    price: 500
+  - type: GuideHelp
+    guides: [ AME, Power ]

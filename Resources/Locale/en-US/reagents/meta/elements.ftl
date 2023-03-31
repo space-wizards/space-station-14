@@ -1,8 +1,14 @@
 reagent-name-aluminium = aluminium
 reagent-desc-aluminium = A silver, soft, non-magnetic, and ductile metal.
 
+reagent-name-ash = ash
+reagent-desc-ash = A light grey powdery residue
+
 reagent-name-carbon = carbon
 reagent-desc-carbon = A black, crystalline solid.
+
+reagent-name-charcoal = charcoal
+reagent-desc-charcoal = A black, porous solid
 
 reagent-name-chlorine = chlorine
 reagent-desc-chlorine = A yellow-green gas which is toxic to humans.
@@ -50,7 +56,7 @@ reagent-name-sulfur = sulfur
 reagent-desc-sulfur = A yellow, crystalline solid.
 
 reagent-name-sodium = sodium
-reagent-desc-sodium = A silvery-white alkali metal. Highly reactive in its pure form. #thanks visne <3
+reagent-desc-sodium = A silvery-white alkali metal. Highly reactive in its pure form.
 
 reagent-name-uranium = uranium
 reagent-desc-uranium = A grey metallic chemical element in the actinide series, weakly radioactive.

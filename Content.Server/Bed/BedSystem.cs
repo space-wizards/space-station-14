@@ -1,20 +1,33 @@
-using Content.Shared.Damage;
+using Content.Server.Actions;
 using Content.Server.Bed.Components;
-using Content.Server.Buckle.Components;
+using Content.Server.Bed.Sleep;
 using Content.Server.Body.Systems;
-using Content.Shared.Buckle.Components;
-using Content.Shared.Body.Components;
-using Content.Shared.Bed;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Bed;
+using Content.Shared.Bed.Sleep;
+using Content.Shared.Body.Components;
+using Content.Shared.Buckle.Components;
+using Content.Shared.Damage;
+using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
-using Content.Shared.MobState.Components;
+using Content.Server.Construction;
+using Content.Shared.Mobs.Systems;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Bed
 {
     public sealed class BedSystem : EntitySystem
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly ActionsSystem _actionsSystem = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly SleepingSystem _sleepingSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
 
         public override void Initialize()
         {
@@ -23,18 +36,27 @@ namespace Content.Server.Bed
             SubscribeLocalEvent<StasisBedComponent, BuckleChangeEvent>(OnBuckleChange);
             SubscribeLocalEvent<StasisBedComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<StasisBedComponent, GotEmaggedEvent>(OnEmagged);
+            SubscribeLocalEvent<StasisBedComponent, RefreshPartsEvent>(OnRefreshParts);
+            SubscribeLocalEvent<StasisBedComponent, UpgradeExamineEvent>(OnUpgradeExamine);
         }
 
         private void ManageUpdateList(EntityUid uid, HealOnBuckleComponent component, BuckleChangeEvent args)
         {
+            _prototypeManager.TryIndex<InstantActionPrototype>("Sleep", out var sleepAction);
             if (args.Buckling)
             {
                 AddComp<HealOnBuckleHealingComponent>(uid);
+                component.NextHealTime = _timing.CurTime + TimeSpan.FromSeconds(component.HealTime);
+                if (sleepAction != null)
+                    _actionsSystem.AddAction(args.BuckledEntity, new InstantAction(sleepAction), null);
                 return;
             }
 
+            if (sleepAction != null)
+                _actionsSystem.RemoveAction(args.BuckledEntity, sleepAction);
+
+            _sleepingSystem.TryWaking(args.BuckledEntity);
             RemComp<HealOnBuckleHealingComponent>(uid);
-            component.Accumulator = 0;
         }
 
         public override void Update(float frameTime)
@@ -43,59 +65,57 @@ namespace Content.Server.Bed
 
             foreach (var (_, bedComponent, strapComponent) in EntityQuery<HealOnBuckleHealingComponent, HealOnBuckleComponent, StrapComponent>())
             {
-                bedComponent.Accumulator += frameTime;
-
-                if (bedComponent.Accumulator < bedComponent.HealTime)
+                if (_timing.CurTime < bedComponent.NextHealTime)
                     continue;
 
-                bedComponent.Accumulator -= bedComponent.HealTime;
+                bedComponent.NextHealTime += TimeSpan.FromSeconds(bedComponent.HealTime);
 
                 if (strapComponent.BuckledEntities.Count == 0) continue;
 
-                var mobStateQuery = GetEntityQuery<MobStateComponent>();
-
                 foreach (var healedEntity in strapComponent.BuckledEntities)
                 {
-                    if (mobStateQuery.TryGetComponent(healedEntity, out var state) && state.IsDead())
+                    if (_mobStateSystem.IsDead(healedEntity))
                         continue;
 
-                    _damageableSystem.TryChangeDamage(healedEntity, bedComponent.Damage, true);
+                    var damage = bedComponent.Damage;
+
+                    if (HasComp<SleepingComponent>(healedEntity))
+                        damage *= bedComponent.SleepMultiplier;
+
+                    _damageableSystem.TryChangeDamage(healedEntity, damage, true, origin: bedComponent.Owner);
                 }
             }
         }
 
         private void UpdateAppearance(EntityUid uid, bool isOn)
         {
-            if (!TryComp<AppearanceComponent>(uid, out var appearance))
-                return;
-
-            appearance.SetData(StasisBedVisuals.IsOn, isOn);
+            _appearance.SetData(uid, StasisBedVisuals.IsOn, isOn);
         }
 
         private void OnBuckleChange(EntityUid uid, StasisBedComponent component, BuckleChangeEvent args)
         {
             // In testing this also received an unbuckle event when the bed is destroyed
             // So don't worry about that
-            if (!TryComp<SharedBodyComponent>(args.BuckledEntity, out var body))
+            if (!HasComp<BodyComponent>(args.BuckledEntity))
                 return;
 
             if (!this.IsPowered(uid, EntityManager))
                 return;
 
-            var metabolicEvent = new ApplyMetabolicMultiplierEvent()
+            var metabolicEvent = new ApplyMetabolicMultiplierEvent
                 {Uid = args.BuckledEntity, Multiplier = component.Multiplier, Apply = args.Buckling};
-            RaiseLocalEvent(args.BuckledEntity, metabolicEvent, false);
+            RaiseLocalEvent(args.BuckledEntity, metabolicEvent);
         }
 
-        private void OnPowerChanged(EntityUid uid, StasisBedComponent component, PowerChangedEvent args)
+        private void OnPowerChanged(EntityUid uid, StasisBedComponent component, ref PowerChangedEvent args)
         {
             UpdateAppearance(uid, args.Powered);
             UpdateMetabolisms(uid, component, args.Powered);
         }
 
-        private void OnEmagged(EntityUid uid, StasisBedComponent component, GotEmaggedEvent args)
+        private void OnEmagged(EntityUid uid, StasisBedComponent component, ref GotEmaggedEvent args)
         {
-            // Repeatable
+            args.Repeatable = true;
             // Reset any metabolisms first so they receive the multiplier correctly
             UpdateMetabolisms(uid, component, false);
             component.Multiplier = 1 / component.Multiplier;
@@ -110,11 +130,23 @@ namespace Content.Server.Bed
 
             foreach (var buckledEntity in strap.BuckledEntities)
             {
-                var metabolicEvent = new ApplyMetabolicMultiplierEvent()
+                var metabolicEvent = new ApplyMetabolicMultiplierEvent
                     {Uid = buckledEntity, Multiplier = component.Multiplier, Apply = shouldApply};
-                RaiseLocalEvent(buckledEntity, metabolicEvent, false);
+                RaiseLocalEvent(buckledEntity, metabolicEvent);
             }
+        }
+
+        private void OnRefreshParts(EntityUid uid, StasisBedComponent component, RefreshPartsEvent args)
+        {
+            var metabolismRating = args.PartRatings[component.MachinePartMetabolismModifier];
+            component.Multiplier = component.BaseMultiplier * metabolismRating; //linear scaling so it's not OP
+            if (HasComp<EmaggedComponent>(uid))
+                component.Multiplier = 1f / component.Multiplier;
+        }
+
+        private void OnUpgradeExamine(EntityUid uid, StasisBedComponent component, UpgradeExamineEvent args)
+        {
+            args.AddPercentageUpgrade("stasis-bed-component-upgrade-stasis", component.Multiplier / component.BaseMultiplier);
         }
     }
 }
-

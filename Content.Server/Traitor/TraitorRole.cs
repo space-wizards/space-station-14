@@ -11,7 +11,7 @@ namespace Content.Server.Traitor
         public TraitorRole(Mind.Mind mind, AntagPrototype antagPrototype) : base(mind)
         {
             Prototype = antagPrototype;
-            Name = antagPrototype.Name;
+            Name = Loc.GetString(antagPrototype.Name);
             Antagonist = antagPrototype.Antagonist;
         }
 

@@ -16,7 +16,7 @@
   id: ProtolatheMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: protolathe machine board
-  description: A machine printed circuit board for a protolathe
+  description: A machine printed circuit board for a protolathe.
   components:
     - type: MachineBoard
       prototype: Protolathe
@@ -33,8 +33,10 @@
   id: SecurityTechFabCircuitboard
   parent: BaseMachineCircuitboard
   name: security techfab machine board
-  description: A machine printed circuit board for a security techfab
+  description: A machine printed circuit board for a security techfab.
   components:
+    - type: Sprite
+      state: security
     - type: MachineBoard
       prototype: SecurityTechFab
       requirements:
@@ -50,8 +52,10 @@
   id: MedicalTechFabCircuitboard
   parent: BaseMachineCircuitboard
   name: medical techfab machine board
-  description: A machine printed circuit board for a medical techfab
+  description: A machine printed circuit board for a medical techfab.
   components:
+    - type: Sprite
+      state: medical
     - type: MachineBoard
       prototype: MedicalTechFab
       requirements:
@@ -68,6 +72,8 @@
   parent: BaseMachineCircuitboard
   name: circuit imprinter machine board
   components:
+  - type: Sprite
+    state: science
   - type: MachineBoard
     prototype: CircuitImprinter
     requirements:
@@ -80,6 +86,21 @@
         ExamineName: Glass Beaker
 
 - type: entity
+  id: ExosuitFabricatorMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: exosuit fabricator machine board
+  components:
+  - type: Sprite
+    state: science
+  - type: MachineBoard
+    prototype: ExosuitFabricator
+    requirements:
+      MatterBin: 1
+      Manipulator: 3
+    materialRequirements:
+      Glass: 5
+
+- type: entity
   id: UniformPrinterMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: uniform printer machine board
@@ -88,14 +109,15 @@
     prototype: UniformPrinter
     requirements:
       MatterBin: 1
-      Manipulator: 1
-      Laser: 1
+      Laser: 2
 
 - type: entity
   id: VaccinatorMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: vaccinator machine board
   components:
+  - type: Sprite
+    state: medical
   - type: MachineBoard
     prototype: Vaccinator
     requirements:
@@ -114,6 +136,8 @@
   parent: BaseMachineCircuitboard
   name: diagnoser machine board
   components:
+  - type: Sprite
+    state: medical
   - type: MachineBoard
     prototype: DiseaseDiagnoser
     requirements:
@@ -123,11 +147,78 @@
       Cable: 5
 
 - type: entity
+  id: ArtifactAnalyzerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: artifact analyzer machine board
+  description: A machine printed circuit board for an artifact analyzer.
+  components:
+    - type: Sprite
+      state: science
+    - type: MachineBoard
+      prototype: MachineArtifactAnalyzer
+      requirements:
+        ScanningModule: 3
+        Capacitor: 1
+      materialRequirements:
+        Glass: 5
+
+- type: entity
+  id: TraversalDistorterMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: traversal distorter machine board
+  description: A machine printed circuit board for a traversal distorter.
+  components:
+    - type: Sprite
+      state: science
+    - type: MachineBoard
+      prototype: MachineTraversalDistorter
+      requirements:
+        ScanningModule: 1
+        Capacitor: 2
+      materialRequirements:
+        Steel: 5
+        Cable: 1
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: AnomalyVesselCircuitboard
+  name: anomaly vessel machine board
+  description: A machine printed circuit board for an anomaly vessel.
+  components:
+    - type: Sprite
+      state: science
+    - type: MachineBoard
+      prototype: MachineAnomalyVessel
+      requirements:
+        ScanningModule: 5
+      materialRequirements:
+        Cable: 1
+        PlasmaGlass: 10
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: APECircuitboard
+  name: A.P.E. machine board
+  description: A machine printed circuit board for an A.P.E.
+  components:
+    - type: Sprite
+      state: science
+    - type: MachineBoard
+      prototype: MachineAPE
+      requirements:
+        Capacitor: 1
+        Laser: 3
+      materialRequirements:
+        Cable: 1
+
+- type: entity
   id: ThermomachineFreezerMachineCircuitBoard
   parent: BaseMachineCircuitboard
   name: freezer thermomachine machine board
   description: Looks like you could use a screwdriver to change the board type.
   components:
+  - type: Sprite
+    state: engineering
   - type: MachineBoard
     prototype: GasThermoMachineFreezer
     requirements:
@@ -136,6 +227,7 @@
     materialRequirements:
       Cable: 5
   - type: Construction
+    deconstructionTarget: null
     graph: ThermomachineBoard
     node: freezer
 
@@ -145,6 +237,8 @@
   name: heater thermomachine machine board
   description: Looks like you could use a screwdriver to change the board type.
   components:
+  - type: Sprite
+    state: engineering
   - type: MachineBoard
     prototype: GasThermoMachineHeater
     requirements:
@@ -154,6 +248,7 @@
       Cable: 5
   - type: Construction
     graph: ThermomachineBoard
+    deconstructionTarget: null
     node: heater
 
 - type: entity
@@ -162,21 +257,25 @@
   name: portable scrubber machine board
   description: A PCB for a portable scrubber.
   components:
+  - type: Sprite
+    state: engineering
   - type: MachineBoard
     prototype: PortableScrubber
     requirements:
       MatterBin: 3
-      Laser: 2
-      ScanningModule: 1
+      Manipulator: 2
     materialRequirements:
       Cable: 5
+      Glass: 2
 
 - type: entity
   id: CloningPodMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: cloning pod machine board
-  description: A machine printed circuit board for a cloning pod
+  description: A machine printed circuit board for a cloning pod.
   components:
+    - type: Sprite
+      state: medical
     - type: MachineBoard
       prototype: CloningPod
       requirements:
@@ -190,14 +289,48 @@
   id: MedicalScannerMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: medical scanner machine board
-  description: A machine printed circuit board for a medical scanner
+  description: A machine printed circuit board for a medical scanner.
   components:
+    - type: Sprite
+      state: medical
     - type: MachineBoard
       prototype: MedicalScanner
       requirements:
+        ScanningModule: 2
+        Capacitor: 1
+      materialRequirements:
+        Glass: 5
+        Cable: 1
+
+- type: entity
+  id: CrewMonitoringServerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: crew monitoring server machine board
+  description: A machine printed circuit board for a crew monitoring server.
+  components:
+    - type: MachineBoard
+      prototype: CrewMonitoringServer
+      requirements:
+        Capacitor: 1
+        ScanningModule: 2
+      materialRequirements:
+        Steel: 1
+        Cable: 2
+
+- type: entity
+  id: CryoPodMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: cryo pod machine board
+  description: A machine printed circuit board for a cryo pod.
+  components:
+    - type: Sprite
+      state: medical
+    - type: MachineBoard
+      prototype: CryoPod
+      requirements:
         ScanningModule: 1
         Manipulator: 1
-        Laser: 1
+        MatterBin: 2
       materialRequirements:
         Glass: 1
         Cable: 1
@@ -206,8 +339,10 @@
   id: ChemMasterMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: ChemMaster 4000 machine board
-  description: A machine printed circuit board for a ChemMaster 4000
+  description: A machine printed circuit board for a ChemMaster 4000.
   components:
+    - type: Sprite
+      state: medical
     - type: MachineBoard
       prototype: chem_master
       requirements:
@@ -224,8 +359,10 @@
   id: ChemDispenserMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: chem dispenser machine board
-  description: A machine printed circuit board for a chem dispenser
+  description: A machine printed circuit board for a chem dispenser.
   components:
+    - type: Sprite
+      state: medical
     - type: MachineBoard
       prototype: chem_dispenser
       requirements:
@@ -236,11 +373,38 @@
         Glass: 1
 
 - type: entity
+  id: BiomassReclaimerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: biomass reclaimer machine board
+  description: A machine printed circuit board for a biomass reclaimer.
+  components:
+    - type: MachineBoard
+      prototype: BiomassReclaimer
+      requirements:
+        Laser: 1
+        Manipulator: 1
+      tagRequirements:
+        Pipe:
+          Amount: 1
+          DefaultPrototype: GasPipeStraight
+          ExamineName: pipe
+        BorgArm:
+          Amount: 3
+          DefaultPrototype: LeftArmBorg
+          ExamineName: borg arm
+        Knife:
+          Amount: 3
+          DefaultPrototype: KitchenKnife
+          ExamineName: knife
+
+- type: entity
   id: HydroponicsTrayMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: hydroponics tray machine board
-  description: A machine printed circuit board for a hydroponics tray
+  description: A machine printed circuit board for a hydroponics tray.
   components:
+    - type: Sprite
+      state: service
     - type: MachineBoard
       prototype: hydroponicsTray
       # See: https://github.com/vgstation-coders/vgstation13/blob/e9a806f30b4db0efa2a68b9eb42e3120d2321b6a/code/modules/hydroponics/hydro_tray.dm#L57
@@ -258,16 +422,34 @@
           ExamineName: Glass Beaker
 
 - type: entity
+  id: SeedExtractorMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: seed extractor machine board
+  description: A machine printed circuit board for a seed extractor.
+  components:
+    - type: Sprite
+      state: service
+    - type: MachineBoard
+      prototype: SeedExtractor
+      requirements:
+        Manipulator: 2
+        Capacitor: 1
+      materialRequirements:
+        # replacing the console screen
+        Glass: 1
+        Cable: 2
+
+- type: entity
   id: SMESMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: SMES machine board
-  description: A machine printed circuit board for a SMES
+  description: A machine printed circuit board for a SMES.
   components:
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: power_mod
     - type: MachineBoard
-      prototype: SMESBasic
+      prototype: SMESBasicEmpty
       requirements:
         Capacitor: 10
 
@@ -275,10 +457,10 @@
   id: SubstationMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: substation machine board
-  description: A machine printed circuit board for a substation
+  description: A machine printed circuit board for a substation.
   components:
     - type: MachineBoard
-      prototype: SubstationBasic
+      prototype: SubstationBasicEmpty
       requirements:
         Capacitor: 3
       materialRequirements:
@@ -325,6 +507,8 @@
   parent: BaseMachineCircuitboard
   name: generator (plasma) machine board
   components:
+    - type: Sprite
+      state: engineering
     - type: MachineBoard
       prototype: GeneratorPlasma
       requirements:
@@ -333,10 +517,38 @@
         CableHV: 5
 
 - type: entity
+  id: ThrusterMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: thruster machine board
+  components:
+  - type: MachineBoard
+    prototype: Thruster
+    requirements:
+      Laser: 4
+      Capacitor: 1
+    materialRequirements:
+      Steel: 5
+
+- type: entity
+  id: GyroscopeMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: gyroscope machine board
+  components:
+  - type: MachineBoard
+    prototype: Gyroscope
+    requirements:
+      ScanningModule: 2
+      Capacitor: 1
+    materialRequirements:
+      Glass: 2
+
+- type: entity
   id: GeneratorUraniumMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: generator (uranium) machine board
   components:
+    - type: Sprite
+      state: engineering
     - type: MachineBoard
       prototype: GeneratorUranium
       requirements:
@@ -348,14 +560,14 @@
   id: ReagentGrinderMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: reagent grinder machine board
-  description: A machine printed circuit board for a reagent grinder
+  description: A machine printed circuit board for a reagent grinder.
   components:
     - type: MachineBoard
       prototype: KitchenReagentGrinder
       requirements:
-        Laser: 1
-        ScanningModule: 1
+        Capacitor: 1
         MatterBin: 2
+        Manipulator: 2
       tagRequirements:
         GlassBeaker:
           Amount: 1
@@ -363,10 +575,25 @@
           ExamineName: Glass Beaker
 
 - type: entity
+  id: HotplateMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: hotplate machine board
+  description: A machine printed circuit board for a hotplate.
+  components:
+    - type: MachineBoard
+      prototype: ChemistryHotplate
+      requirements:
+        Laser: 2
+      materialRequirements:
+        Steel: 2
+
+- type: entity
   id: StasisBedMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: Stasis Bed (Machine Board)
   components:
+    - type: Sprite
+      state: medical
     - type: MachineBoard
       prototype: StasisBed
       requirements:
@@ -389,6 +616,8 @@
   parent: BaseMachineCircuitboard
   name: ore processor machine board
   components:
+    - type: Sprite
+      state: supply
     - type: MachineBoard
       prototype: OreProcessor
       requirements:
@@ -403,10 +632,12 @@
   parent: BaseMachineCircuitboard
   name: microwave machine board
   components:
+    - type: Sprite
+      state: service
     - type: MachineBoard
       prototype: KitchenMicrowave
       requirements:
-        MatterBin: 1
+        Capacitor: 1
         Laser: 1
       materialRequirements:
         Glass: 2
@@ -417,6 +648,8 @@
   parent: BaseMachineCircuitboard
   name: emitter machine board
   components:
+    - type: Sprite
+      state: engineering
     - type: MachineBoard
       prototype: Emitter
       requirements:
@@ -430,7 +663,7 @@
   id: SurveillanceCameraRouterCircuitboard
   parent: BaseMachineCircuitboard
   name: surveillance camera router board
-  description: A machine printed circuit board for a surveillance camera router
+  description: A machine printed circuit board for a surveillance camera router.
   components:
     - type: MachineBoard
       prototype: SurveillanceCameraRouterConstructed
@@ -441,7 +674,7 @@
   id: SurveillanceCameraWirelessRouterCircuitboard
   parent: BaseMachineCircuitboard
   name: surveillance camera wireless router board
-  description: A machine printed circuit board for a surveillance camera wireless router
+  description: A machine printed circuit board for a surveillance camera wireless router.
   components:
     - type: MachineBoard
       prototype: SurveillanceCameraWirelessRouterConstructed
@@ -453,7 +686,7 @@
   id: SurveillanceWirelessCameraMovableCircuitboard
   parent: BaseMachineCircuitboard
   name: movable wireless camera board
-  description: A machine printed circuit board for a movable wireless camera
+  description: A machine printed circuit board for a movable wireless camera.
   components:
     - type: MachineBoard
       prototype: SurveillanceWirelessCameraMovableConstructed
@@ -468,7 +701,7 @@
   id: SurveillanceWirelessCameraAnchoredCircuitboard
   parent: BaseMachineCircuitboard
   name: wireless camera board
-  description: A machine printed circuit board for a wireless camera
+  description: A machine printed circuit board for a wireless camera.
   components:
     - type: MachineBoard
       prototype: SurveillanceWirelessCameraAnchoredConstructed
@@ -477,4 +710,70 @@
         Capacitor: 4
       materialRequirements:
         Glass: 2
+        Cable: 2
+
+- type: entity
+  id: GasRecyclerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: gas recycler board
+  description: A printed circuit board for a gas recycler.
+  components:
+  - type: MachineBoard
+    prototype: GasRecycler
+    requirements:
+      Laser: 2
+      Manipulator: 2
+    materialRequirements:
+      Steel: 10
+      Plasma: 5
+      
+- type: entity
+  id: BoozeDispenserMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: booze dispenser machine board
+  description: A machine printed circuit board for a booze dispenser.
+  components:
+    - type: Sprite
+      state: service
+    - type: MachineBoard
+      prototype: BoozeDispenser
+      materialRequirements:
+        Steel: 5
+      tagRequirements:
+          GlassBeaker:
+            Amount: 1
+            DefaultPrototype: Beaker
+            ExamineName: Glass Beaker
+
+- type: entity
+  id: SodaDispenserMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: soda dispenser machine board
+  description: A machine printed circuit board for a soda dispenser.
+  components:
+    - type: Sprite
+      state: service
+    - type: MachineBoard
+      prototype: soda_dispenser
+      materialRequirements:
+        Steel: 5
+      tagRequirements:
+          GlassBeaker:
+            Amount: 1
+            DefaultPrototype: Beaker
+            ExamineName: Glass Beaker
+
+- type: entity
+  id: TelecomServerCircuitboard
+  parent: BaseMachineCircuitboard
+  name: telecommunication server machine board 
+  description: A machine printed circuit board for an telecommunication server.
+  components:
+    - type: MachineBoard
+      prototype: TelecomServer
+      requirements:
+        Capacitor: 1
+        ScanningModule: 2
+      materialRequirements:
+        Steel: 1
         Cable: 2

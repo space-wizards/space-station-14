@@ -13,11 +13,11 @@ public sealed class GunSpreadOverlay : Overlay
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
     private IEntityManager _entManager;
-    private IEyeManager _eye;
-    private IGameTiming _timing;
-    private IInputManager _input;
-    private IPlayerManager _player;
-    private GunSystem _guns;
+    private readonly IEyeManager _eye;
+    private readonly IGameTiming _timing;
+    private readonly IInputManager _input;
+    private readonly IPlayerManager _player;
+    private readonly GunSystem _guns;
 
     public GunSpreadOverlay(IEntityManager entManager, IEyeManager eyeManager, IGameTiming timing, IInputManager input, IPlayerManager player, GunSystem system)
     {
@@ -36,20 +36,24 @@ public sealed class GunSpreadOverlay : Overlay
         var player = _player.LocalPlayer?.ControlledEntity;
 
         if (player == null ||
-            !_entManager.TryGetComponent<TransformComponent>(player, out var xform)) return;
+            !_entManager.TryGetComponent<TransformComponent>(player, out var xform))
+        {
+            return;
+        }
 
         var mapPos = xform.MapPosition;
 
-        if (mapPos.MapId == MapId.Nullspace) return;
+        if (mapPos.MapId == MapId.Nullspace)
+            return;
 
-        var gun = _guns.GetGun(player.Value);
-
-        if (gun == null) return;
+        if (!_guns.TryGetGun(player.Value, out var gunUid, out var gun))
+            return;
 
         var mouseScreenPos = _input.MouseScreenPosition;
         var mousePos = _eye.ScreenToMap(mouseScreenPos);
 
-        if (mapPos.MapId != mousePos.MapId) return;
+        if (mapPos.MapId != mousePos.MapId)
+            return;
 
         // (☞ﾟヮﾟ)☞
         var maxSpread = gun.MaxAngle;

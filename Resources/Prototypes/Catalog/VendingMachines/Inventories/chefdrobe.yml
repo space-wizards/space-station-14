@@ -1,10 +1,9 @@
 - type: vendingMachineInventory
   id: ChefDrobeInventory
-  name: ChefDrobe
-  spriteName: chefdrobe
   startingInventory:
     ClothingHeadsetService: 2
     ClothingOuterApronChef: 3
+    ClothingOuterWinterChef: 2
     ClothingOuterJacketChef: 1
     ClothingUniformJumpsuitChef: 1
     ClothingUniformJumpskirtChef:  2

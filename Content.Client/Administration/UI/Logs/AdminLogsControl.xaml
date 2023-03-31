@@ -1,8 +1,6 @@
 ﻿<Control xmlns="https://spacestation14.io"
          xmlns:aui="clr-namespace:Content.Client.Administration.UI.CustomControls"
-         xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-         MinWidth="1000"
-         MinHeight="400">
+         xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
     <PanelContainer>
         <PanelContainer.PanelOverride>
             <gfx:StyleBoxFlat BackgroundColor="#25252A"/>
@@ -34,6 +32,8 @@
                     <BoxContainer Orientation="Vertical" MinWidth="200">
                         <LineEdit Name="PlayerSearch" Access="Public" StyleClasses="actionSearchBox"
                                   HorizontalExpand="true" PlaceHolder="{Loc admin-logs-search-players-placeholder}"/>
+                        <Button Name="IncludeNonPlayersButton" Text="{Loc admin-logs-include-non-player}"
+                                MinWidth="100" StyleClasses="ButtonSquare" ToggleMode="True" />
                         <BoxContainer Orientation="Horizontal">
                             <Button Name="SelectAllPlayersButton" Text="{Loc admin-logs-select-all}"
                                     MinWidth="100" StyleClasses="ButtonSquare" />

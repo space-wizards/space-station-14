@@ -10,6 +10,9 @@
       sprite: Objects/Misc/stock_parts.rsi
     - type: MachinePart
       rating: 1
+    - type: GuideHelp
+      guides:
+      - MachineUpgrading
 
 # Rating 1
 

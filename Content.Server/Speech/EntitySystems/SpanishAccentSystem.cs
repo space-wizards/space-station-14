@@ -24,11 +24,11 @@ namespace Content.Server.Speech.EntitySystems
             var msg = message.Replace(" s", " es").Replace(" S", " Es");
 
             // Still need to check if the beginning of the message starts
-            if (msg.StartsWith("s"))
+            if (msg.StartsWith("s", StringComparison.Ordinal))
             {
                 return msg.Remove(0, 1).Insert(0, "es");
             }
-            else if (msg.StartsWith("S"))
+            else if (msg.StartsWith("S", StringComparison.Ordinal))
             {
                 return msg.Remove(0, 1).Insert(0, "Es");
             }
@@ -42,7 +42,7 @@ namespace Content.Server.Speech.EntitySystems
             var msg = "";
             foreach (var s in sentences)
             {
-                if (s.EndsWith("?")) // We've got a question => add ¿ to the beginning
+                if (s.EndsWith("?", StringComparison.Ordinal)) // We've got a question => add ¿ to the beginning
                 {
                     // Because we don't split by whitespace, we may have some spaces in front of the sentence.
                     // So we add the symbol before the first non space char

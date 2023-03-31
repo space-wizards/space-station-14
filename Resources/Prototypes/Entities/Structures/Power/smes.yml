@@ -2,7 +2,7 @@
 - type: entity
   abstract: true
   id: BaseSMES
-  parent: BaseMachine
+  parent: [ BaseMachine, ConstructibleMachine ]
   name: SMES
   description: A high-capacity superconducting magnetic energy storage (SMES) unit.
   placement:
@@ -16,14 +16,17 @@
     - type: Sprite
       netsync: false
       sprite: Structures/Power/smes.rsi
+      snapCardinals: true
       layers:
         - state: smes
     - type: Smes
+    - type: UpgradeBattery
+      maxChargeMultiplier: 2
+      baseMaxCharge: 8000000
     - type: Appearance
       visuals:
         - type: SmesVisualizer
     - type: Battery
-      maxCharge: 10000000
       startingCharge: 0
     - type: ExaminableBattery
     - type: NodeContainer
@@ -51,27 +54,31 @@
       energy: 1.6
       color: "#c9c042"
       castShadows: false
-    - type: Construction
-      graph: Machine
-      node: machine
     - type: Wires
       BoardName: "SMES"
       LayoutId: SMES
     - type: Machine
       board: SMESMachineCircuitboard
-    - type: ContainerContainer
-      containers:
-        machine_parts: !type:Container
-        machine_board: !type:Container
     - type: StationInfiniteBatteryTarget
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: StrongMetallic
 
 # SMES' in use
 
 - type: entity
   parent: BaseSMES
   id: SMESBasic
-  suffix: Basic, 10MW
+  suffix: Basic, 8MW
   components:
   - type: Battery
-    maxCharge: 10000000
-    startingCharge: 10000000
+    maxCharge: 8000000
+    startingCharge: 8000000
+
+- type: entity
+  parent: SMESBasic
+  id: SMESBasicEmpty
+  suffix: Empty
+  components:
+  - type: Battery
+    startingCharge: 0

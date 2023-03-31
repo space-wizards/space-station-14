@@ -1,5 +1,6 @@
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Projectiles
@@ -11,19 +12,18 @@ namespace Content.Shared.Projectiles
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<SharedProjectileComponent, PreventCollideEvent>(PreventCollision);
+            SubscribeLocalEvent<ProjectileComponent, PreventCollideEvent>(PreventCollision);
         }
 
-        private void PreventCollision(EntityUid uid, SharedProjectileComponent component, PreventCollideEvent args)
+        private void PreventCollision(EntityUid uid, ProjectileComponent component, ref PreventCollideEvent args)
         {
             if (component.IgnoreShooter && args.BodyB.Owner == component.Shooter)
             {
-                args.Cancel();
-                return;
+                args.Cancelled = true;
             }
         }
 
-        public void SetShooter(SharedProjectileComponent component, EntityUid uid)
+        public void SetShooter(ProjectileComponent component, EntityUid uid)
         {
             if (component.Shooter == uid) return;
 
@@ -32,7 +32,7 @@ namespace Content.Shared.Projectiles
         }
 
         [NetSerializable, Serializable]
-        protected sealed class ProjectileComponentState : ComponentState
+        public sealed class ProjectileComponentState : ComponentState
         {
             public ProjectileComponentState(EntityUid shooter, bool ignoreShooter)
             {
@@ -45,7 +45,7 @@ namespace Content.Shared.Projectiles
         }
 
         [Serializable, NetSerializable]
-        protected sealed class ImpactEffectEvent : EntityEventArgs
+        public sealed class ImpactEffectEvent : EntityEventArgs
         {
             public string Prototype;
             public EntityCoordinates Coordinates;

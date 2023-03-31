@@ -9,7 +9,11 @@ using Content.Shared.Throwing;
 using Content.Shared.Vapor;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.EntitySystems
@@ -19,6 +23,7 @@ namespace Content.Server.Chemistry.EntitySystems
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwing = default!;
 
@@ -30,11 +35,11 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<VaporComponent, StartCollideEvent>(HandleCollide);
         }
 
-        private void HandleCollide(EntityUid uid, VaporComponent component, StartCollideEvent args)
+        private void HandleCollide(EntityUid uid, VaporComponent component, ref StartCollideEvent args)
         {
             if (!EntityManager.TryGetComponent(uid, out SolutionContainerManagerComponent? contents)) return;
 
-            foreach (var (_, value) in contents.Solutions)
+            foreach (var value in contents.Solutions.Values)
             {
                 value.DoEntityReaction(args.OtherFixture.Body.Owner, ReactionMethod.Touch);
             }
@@ -55,8 +60,8 @@ namespace Content.Server.Chemistry.EntitySystems
             // Set Move
             if (EntityManager.TryGetComponent(vapor.Owner, out PhysicsComponent? physics))
             {
-                physics.LinearDamping = 0f;
-                physics.AngularDamping = 0f;
+                _physics.SetLinearDamping(physics, 0f);
+                _physics.SetAngularDamping(physics, 0f);
 
                 _throwing.TryThrow(vapor.Owner, dir * speed, user: user, pushbackRatio: 50f);
 
@@ -68,7 +73,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         internal bool TryAddSolution(VaporComponent vapor, Solution solution)
         {
-            if (solution.TotalVolume == 0)
+            if (solution.Volume == 0)
             {
                 return false;
             }
@@ -103,11 +108,11 @@ namespace Content.Server.Chemistry.EntitySystems
 
             vapor.ReactTimer += frameTime;
 
-            if (vapor.ReactTimer >= ReactTime && TryComp(xform.GridUid, out IMapGridComponent? gridComp))
+            if (vapor.ReactTimer >= ReactTime && TryComp(xform.GridUid, out MapGridComponent? gridComp))
             {
                 vapor.ReactTimer = 0;
 
-                var tile = gridComp.Grid.GetTileRef(xform.Coordinates.ToVector2i(EntityManager, _mapManager));
+                var tile = gridComp.GetTileRef(xform.Coordinates.ToVector2i(EntityManager, _mapManager));
                 foreach (var reagentQuantity in contents.Contents.ToArray())
                 {
                     if (reagentQuantity.Quantity == FixedPoint2.Zero) continue;
@@ -117,7 +122,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 }
             }
 
-            if (contents.CurrentVolume == 0)
+            if (contents.Volume == 0)
             {
                 // Delete this
                 EntityManager.QueueDeleteEntity(entity);

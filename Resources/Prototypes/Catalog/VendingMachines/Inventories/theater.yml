@@ -1,10 +1,14 @@
 - type: vendingMachineInventory
   id: AutoDrobeInventory
-  name: AutoDrobe
-  spriteName: theater
   startingInventory:
+    ClothingHeadHatJester: 1
+    ClothingUniformJumpsuitJester: 1
+    ClothingHeadHatJesterAlt: 1
+    ClothingUniformJumpsuitJesterAlt: 1
+    ClothingShoesJester: 1
     ClothingOuterWinterClown: 1
     ClothingOuterWinterMime: 1
+    ClothingOuterWinterMusician: 1
     ClothingMaskJoy: 2
     ClothingHeadHatCardborg: 2
     ClothingOuterCardborg: 2
@@ -27,5 +31,10 @@
     ClothingHeadPaperSack: 2
     ClothingHeadPaperSackSmile: 2
     ClothingEyesBlindfold: 1
+    ClothingHeadRastaHat: 2
+    ClothingUniformJumpsuitDameDane: 2
+    ClothingShoesDameDane: 2
+    ClothingOuterDameDane: 2
+    ClothingOuterClownPriest: 1
   emaggedInventory:
     ClothingShoesBling: 1

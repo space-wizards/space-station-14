@@ -49,8 +49,8 @@ src_img = PIL.Image.open(input_name)
 input_row = src_img.size[0] // tile_w
 
 tiles = []
-# 48 is the amount of tiles that usually exist
-for i in range(48):
+# 48 is the amount of tiles that usually exist, but 56 covers walls with diagonal variants.
+for i in range(56):
     tile = PIL.Image.new("RGBA", (tile_w, tile_h))
     tx = i % input_row
     ty = i // input_row

@@ -1,15 +1,17 @@
 ﻿- type: entity
   id: SeedExtractor
   name: seed extractor
-  parent: BaseMachinePowered
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   description: Extracts seeds from produce.
   components:
   - type: Sprite
     sprite: Structures/Machines/seed_extractor.rsi
+    snapCardinals: true
     layers:
     - state: seedextractor-off
     - state: seedextractor-unlit
       shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
     netsync: false
   - type: Physics
     bodyType: Static
@@ -18,9 +20,21 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.25,-0.4,0.25,0.4"
-      mass: 25
+      density: 190
       mask:
       - MachineMask
       layer:
       - MachineLayer
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
   - type: SeedExtractor
+  - type: Machine
+    board: SeedExtractorMachineCircuitboard
+  - type: UpgradePowerDraw
+    powerDrawMultiplier: 0.75
+    scaling: Exponential

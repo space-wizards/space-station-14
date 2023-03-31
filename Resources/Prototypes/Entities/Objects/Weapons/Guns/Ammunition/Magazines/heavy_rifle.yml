@@ -10,6 +10,7 @@
   - type: Item
     size: 10
   - type: BallisticAmmoProvider
+    mayTransfer: true
     capacity: 100
   - type: ContainerContainer
     containers:

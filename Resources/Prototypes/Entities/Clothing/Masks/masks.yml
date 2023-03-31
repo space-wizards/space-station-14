@@ -36,6 +36,8 @@
   - type: Clothing
     sprite: Clothing/Mask/gassyndicate.rsi
   - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5
 
 - type: entity
   parent: ClothingMaskGas
@@ -114,6 +116,9 @@
   - type: IngestionBlocker
   - type: DiseaseProtection
     protection: 0.10
+  - type: Tag
+    tags:
+    - PetWearable
 
 - type: entity
   parent: ClothingMaskPullableBase
@@ -129,6 +134,10 @@
   - type: IngestionBlocker
   - type: DiseaseProtection
     protection: 0.05
+  - type: Tag
+    tags:
+    - PetWearable
+  - type: Recyclable
 
 - type: entity
   parent: ClothingMaskBase
@@ -141,6 +150,7 @@
   - type: Clothing
     sprite: Clothing/Mask/clown.rsi
   - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskBase
@@ -165,6 +175,7 @@
   - type: Clothing
     sprite: Clothing/Mask/mime.rsi
   - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskPullableBase
@@ -194,6 +205,9 @@
     - type: AddAccentClothing
       accent: ReplacementAccent
       replacement: mumble
+    - type: Construction
+      graph: Muzzle
+      node: muzzle
 
 - type: entity
   parent: ClothingMaskPullableBase
@@ -209,3 +223,19 @@
   - type: IngestionBlocker
   - type: DiseaseProtection
     protection: 0.1
+  - type: IdentityBlocker
+
+- type: entity
+  parent: ClothingMaskClown
+  id: ClothingMaskCluwne
+  name: cluwne face and hair
+  suffix: Unremoveable
+  description: Cursed cluwne face and hair.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/cluwne.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/cluwne.rsi
+  - type: Unremoveable
+  - type: AddAccentClothing
+    accent: StutteringAccent

@@ -24,7 +24,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
         private void CallShuttleTimeOnOnTextChanged(LineEdit.LineEditEventArgs obj)
         {
             var loc = IoCManager.Resolve<ILocalizationManager>();
-            _callShuttleButton.Disabled = !TimeSpan.TryParseExact(obj.Text, Localization.TimeSpanMinutesFormats, loc.DefaultCulture, out _);
+            _callShuttleButton.Disabled = !TimeSpan.TryParseExact(obj.Text, ContentLocalizationManager.TimeSpanMinutesFormats, loc.DefaultCulture, out _);
             _callShuttleButton.Command = $"callshuttle {obj.Text}";
         }
     }

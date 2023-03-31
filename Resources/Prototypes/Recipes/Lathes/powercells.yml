@@ -1,8 +1,5 @@
 - type: latheRecipe
   id: PowerCellSmall
-  icon:
-    sprite: Objects/Power/power_cells.rsi
-    state: small
   result: PowerCellSmallPrinted
   completetime: 1
   materials:
@@ -11,9 +8,6 @@
 
 - type: latheRecipe
   id: PowerCellMedium
-  icon:
-    sprite: Objects/Power/power_cells.rsi
-    state: medium
   result: PowerCellMediumPrinted
   completetime: 6
   materials:
@@ -24,9 +18,6 @@
 
 - type: latheRecipe
   id: PowerCellHigh
-  icon:
-    sprite: Objects/Power/power_cells.rsi
-    state: high
   result: PowerCellHighPrinted
   completetime: 10
   materials:

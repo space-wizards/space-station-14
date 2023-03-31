@@ -1,7 +1,9 @@
+using Content.Shared.Configurable;
 using Content.Shared.Interaction;
 using Content.Shared.Tools.Components;
 using Robust.Server.GameObjects;
-using static Content.Shared.Configurable.SharedConfigurationComponent;
+using Robust.Shared.Containers;
+using static Content.Shared.Configurable.ConfigurationComponent;
 
 namespace Content.Server.Configurable;
 
@@ -16,8 +18,9 @@ public sealed class ConfigurationSystem : EntitySystem
         SubscribeLocalEvent<ConfigurationComponent, ConfigurationUpdatedMessage>(OnUpdate);
         SubscribeLocalEvent<ConfigurationComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<ConfigurationComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<ConfigurationComponent, ContainerIsInsertingAttemptEvent>(OnInsert);
     }
-    
+
     private void OnInteractUsing(EntityUid uid, ConfigurationComponent component, InteractUsingEvent args)
     {
         if (args.Handled)
@@ -57,8 +60,31 @@ public sealed class ConfigurationSystem : EntitySystem
 
         UpdateUi(uid, component);
 
-        // TODO raise event.
+        var updatedEvent = new ConfigurationUpdatedEvent(component);
+        RaiseLocalEvent(uid, updatedEvent, false);
+
         // TODO support float (spinbox) and enum (drop-down) configurations
         // TODO support verbs.
+    }
+
+    private void OnInsert(EntityUid uid, ConfigurationComponent component, ContainerIsInsertingAttemptEvent args)
+    {
+        if (!TryComp(args.EntityUid, out ToolComponent? tool) || !tool.Qualities.Contains(component.QualityNeeded))
+            return;
+
+        args.Cancel();
+    }
+
+    /// <summary>
+    /// Sent when configuration values got changes
+    /// </summary>
+    public sealed class ConfigurationUpdatedEvent : EntityEventArgs
+    {
+        public ConfigurationComponent Configuration;
+
+        public ConfigurationUpdatedEvent(ConfigurationComponent configuration)
+        {
+            Configuration = configuration;
+        }
     }
 }

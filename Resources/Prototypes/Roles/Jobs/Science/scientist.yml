@@ -1,9 +1,13 @@
 - type: job
   id: Scientist
   name: job-name-scientist
+  description: job-description-scientist
+  playTimeTracker: JobScientist
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Science
+      time: 1800
   startingGear: ScientistGear
-  departments:
-  - Science
   icon: "Scientist"
   supervisors: job-supervisors-rd
   access:

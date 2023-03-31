@@ -8,14 +8,17 @@ ui-options-tab-network = Network
 
 ui-options-apply = Apply
 ui-options-reset-all = Reset All
+ui-options-default = Default
 
 ## Audio menu
 
 ui-options-master-volume = Master Volume:
 ui-options-midi-volume = MIDI (Instrument) Volume:
 ui-options-ambience-volume = Ambience volume:
+ui-options-lobby-volume = Lobby & Round-end volume:
 ui-options-ambience-max-sounds = Ambience simultaneous sounds:
 ui-options-lobby-music = Lobby & Round-end Music
+ui-options-restart-sounds = Round Restart Sounds
 ui-options-event-music = Event Music
 ui-options-admin-sounds = Play Admin Sounds
 ui-options-station-ambience = Station Ambience
@@ -55,6 +58,8 @@ ui-options-vp-integer-scaling-tooltip = If this option is enabled, the viewport 
 ui-options-vp-low-res = Low-resolution viewport
 ui-options-parallax-low-quality = Low-quality Parallax (background)
 ui-options-fps-counter = Show FPS counter
+ui-options-vp-width = Viewport width: { $width }
+ui-options-hud-layout = HUD layout:
 
 ## Controls menu
 
@@ -65,6 +70,7 @@ ui-options-bind-reset = Reset
 ui-options-key-prompt = Press a key...
 
 ui-options-header-movement = Movement
+ui-options-header-camera = Camera
 ui-options-header-interaction-basic = Basic Interaction
 ui-options-header-interaction-adv = Advanced Interaction
 ui-options-header-ui = User Interface
@@ -83,7 +89,13 @@ ui-options-function-move-down = Move Down
 ui-options-function-move-right = Move Right
 ui-options-function-walk = Walk
 
+ui-options-function-camera-rotate-left = Rotate left
+ui-options-function-camera-rotate-right = Rotate right
+ui-options-function-camera-reset = Reset
+
 ui-options-function-use = Use
+ui-options-function-use-secondary = Use secondary
+ui-options-function-alt-use = Alt use
 ui-options-function-wide-attack = Wide attack
 ui-options-function-activate-item-in-hand = Activate item in hand
 ui-options-function-alt-activate-item-in-hand = Alternative activate item in hand
@@ -115,13 +127,14 @@ ui-options-function-open-character-menu = Open character menu
 ui-options-function-open-context-menu = Open context menu
 ui-options-function-open-crafting-menu = Open crafting menu
 ui-options-function-open-inventory-menu = Open inventory
-ui-options-function-open-info = Open admin help
+ui-options-function-open-a-help = Open admin help
 ui-options-function-open-abilities-menu = Open action menu
 ui-options-function-open-entity-spawn-window = Open entity spawn menu
 ui-options-function-open-sandbox-window = Open sandbox menu
 ui-options-function-open-tile-spawn-window = Open tile spawn menu
 ui-options-function-open-decal-spawn-window = Open decal spawn menu
 ui-options-function-open-admin-menu = Open admin menu
+ui-options-function-open-guidebook = Open guidebook
 
 ui-options-function-take-screenshot = Take screenshot
 ui-options-function-take-screenshot-no-ui = Take screenshot (without UI)
@@ -157,6 +170,7 @@ ui-options-function-loadout6 = Hotbar Loadout 6
 ui-options-function-loadout7 = Hotbar Loadout 7
 ui-options-function-loadout8 = Hotbar Loadout 8
 ui-options-function-loadout9 = Hotbar Loadout 9
+ui-options-function-loadout0 = Hotbar Loadout 0
 
 ui-options-function-shuttle-strafe-up = Strafe up
 ui-options-function-shuttle-strafe-right = Strafe right
@@ -168,4 +182,36 @@ ui-options-function-shuttle-brake = Brake
 
 ## Network menu
 
-ui-options-net-interp-ratio = Network Smoothing
+ui-options-net-predict = Client-side prediction
+
+ui-options-net-interp-ratio = State buffer size
+ui-options-net-interp-ratio-tooltip = Increasing this will generally make the game more resistant
+                                      to server->client packet-loss, however in doing so it
+                                      effectively adds slightly more latency and requires the
+                                      client to predict more future ticks.
+
+ui-options-net-predict-tick-bias = Prediction tick bias
+ui-options-net-predict-tick-bias-tooltip = Increasing this will generally make the game more resistant
+                                           to client->server packet-loss, however in doing so it
+                                           effectively adds slightly more latency and requires the
+                                           client to predict more future ticks.
+
+ui-options-net-pvs-spawn = PVS entity spawn budget
+ui-options-net-pvs-spawn-tooltip = This limits the rate at which the server will send newly spawned
+                                       entities to the client. Lowering this can help reduce
+                                       stuttering due to entity spawning, but can lead to pop-in.
+
+ui-options-net-pvs-entry = PVS entity budget
+ui-options-net-pvs-entry-tooltip = This limits the rate at which the server will send newly visible
+                                       entities to the client. Lowering this can help reduce
+                                       stuttering, but can lead to pop-in.
+
+ui-options-net-pvs-leave = PVS detach rate
+ui-options-net-pvs-leave-tooltip = This limits the rate at which the client will remove
+                                       out-of-view entities. Lowering this can help reduce
+                                       stuttering when walking around, but could occasionally
+                                       lead to mispredicts and other issues.
+
+## Toggle window console command
+cmd-options-desc = Opens options menu, optionally with a specific tab selected.
+cmd-options-help = Usage: options [tab]

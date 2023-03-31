@@ -4,6 +4,7 @@
   parent: BaseSoda
   desc: reagent-desc-cola
   physicalDesc: reagent-physical-desc-fizzy
+  flavor: soda
   color: "#422912"
 
 - type: reagent
@@ -12,6 +13,7 @@
   parent: BaseSoda
   desc: reagent-desc-changeling-sting
   physicalDesc: reagent-physical-desc-fizzy
+  flavor: soda
   color: "#2E6671"
 
 - type: reagent
@@ -20,6 +22,7 @@
   parent: BaseSoda
   desc: reagent-desc-dr-gibb
   physicalDesc: reagent-physical-desc-fizzy
+  flavor: soda
   color: "#102000"
 
 - type: reagent
@@ -28,6 +31,7 @@
   parent: BaseSoda
   desc: reagent-desc-energy-drink
   physicalDesc: reagent-physical-desc-fizzy
+  flavor: soda
   color: "#ffffbf"
   metabolisms:
     Drink:
@@ -44,6 +48,7 @@
   parent: BaseSoda
   desc: reagent-desc-grape-soda
   physicalDesc: reagent-physical-desc-fizzy
+  flavor: soda
   color: "#ae94a6"
 
 - type: reagent
@@ -52,8 +57,11 @@
   parent: BaseSoda
   desc: reagent-desc-ice-cream
   physicalDesc: reagent-physical-desc-creamy
+  flavor: soda
   color: "#fffbd6"
-  spritePath: icecreamglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/icecreamglass.rsi
+    state: icon
 
 - type: reagent
   id: LemonLime
@@ -61,8 +69,11 @@
   parent: BaseSoda
   desc: reagent-desc-lemon-lime
   physicalDesc: reagent-physical-desc-fizzy
+  flavor: soda
   color: "#878F00"
-  spritePath: lemonlime.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/lemonlime.rsi
+    state: icon
 
 - type: reagent
   id: PwrGame
@@ -70,6 +81,7 @@
   parent: BaseSoda
   desc: reagent-desc-pwr-game
   physicalDesc: reagent-physical-desc-fizzy
+  flavor: soda
   color: "#9385bf"
 
 - type: reagent
@@ -78,8 +90,11 @@
   parent: BaseSoda
   desc: reagent-desc-root-beer
   physicalDesc: reagent-physical-desc-fizzy
+  flavor: soda
   color: "#381c07"
-  spritePath: rootbeerglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/rootbeerglass.rsi
+    state: icon
 
 - type: reagent
   id: RootBeerFloat
@@ -87,8 +102,11 @@
   parent: BaseSoda
   desc: reagent-desc-root-beer-float
   physicalDesc: reagent-physical-desc-fizzy and creamy
+  flavor: soda
   color: "#4f361f"
-  spritePath: rootbeerfloatglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/rootbeerfloatglass.rsi
+    state: icon
 
 - type: reagent
   id: SpaceMountainWind
@@ -96,6 +114,7 @@
   parent: BaseSoda
   desc: reagent-desc-space-mountain-wind
   physicalDesc: reagent-physical-desc-fizzy
+  flavor: soda
   color: "#102000"
 
 - type: reagent
@@ -104,6 +123,7 @@
   parent: BaseSoda
   desc: reagent-desc-space-up
   physicalDesc: reagent-physical-desc-fizzy
+  flavor: soda
   color: "#00FF00"
 
 - type: reagent
@@ -112,6 +132,7 @@
   parent: BaseSoda
   desc: reagent-desc-starkist
   physicalDesc: reagent-physical-desc-fizzy
+  flavor: soda
   color: "#9F3400"
 
 - type: reagent
@@ -120,6 +141,7 @@
   parent: BaseSoda
   desc: reagent-desc-fourteen-loko
   physicalDesc: reagent-physical-desc-fizzy
+  flavor: soda
   color: "#deb928"
   metabolisms:
     Drink:
@@ -135,3 +157,12 @@
         damage:
           types:
             Poison: 1
+            
+- type: reagent
+  id: ShamblersJuice
+  name: reagent-name-shamblers-juice
+  parent: BaseSoda
+  desc: reagent-desc-shamblers-juice
+  physicalDesc: reagent-physical-desc-fizzy
+  flavor: metallic
+  color: "#66538F"

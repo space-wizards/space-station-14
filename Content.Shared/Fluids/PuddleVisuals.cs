@@ -6,7 +6,8 @@ namespace Content.Shared.Fluids
     public enum PuddleVisuals : byte
     {
         VolumeScale,
+        CurrentVolume,
         SolutionColor,
-        ForceWetFloorSprite
+        IsEvaporatingVisual
     }
 }

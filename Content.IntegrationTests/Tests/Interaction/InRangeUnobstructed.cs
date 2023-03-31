@@ -12,7 +12,7 @@ namespace Content.IntegrationTests.Tests.Interaction
     [TestOf(typeof(SharedInteractionSystem))]
     public sealed class InRangeUnobstructed
     {
-        private const string HumanId = "MobHumanBase";
+        private const string HumanId = "MobHuman";
 
         private const float InteractionRange = SharedInteractionSystem.InteractionRange;
 
@@ -21,6 +21,8 @@ namespace Content.IntegrationTests.Tests.Interaction
         private readonly (float, float) _interactionRangeDivided15X = (InteractionRangeDivided15, 0f);
 
         private const float InteractionRangeDivided15Times3 = InteractionRangeDivided15 * 3;
+
+        private const float HumanRadius = 0.35f;
 
         [Test]
         public async Task EntityEntityTest()
@@ -74,7 +76,7 @@ namespace Content.IntegrationTests.Tests.Interaction
                 Assert.True(interactionSys.InRangeUnobstructed(mapCoordinates, origin));
 
                 // Move them out of range
-                sEntities.GetComponent<TransformComponent>(origin).LocalPosition += _interactionRangeDivided15X;
+                sEntities.GetComponent<TransformComponent>(origin).LocalPosition += new Vector2(InteractionRangeDivided15 + HumanRadius * 2f, 0f);
 
                 // Entity <-> Entity
                 Assert.False(interactionSys.InRangeUnobstructed(origin, other));

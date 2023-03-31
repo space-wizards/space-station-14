@@ -80,6 +80,6 @@ public sealed partial class PowerMonitoringWindow : DefaultWindow, IComputerWind
 [UsedImplicitly]
 public sealed class PowerMonitoringConsoleBoundUserInterface : ComputerBoundUserInterface<PowerMonitoringWindow, PowerMonitoringConsoleBoundInterfaceState>
 {
-    public PowerMonitoringConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) {}
+    public PowerMonitoringConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey) {}
 }
 

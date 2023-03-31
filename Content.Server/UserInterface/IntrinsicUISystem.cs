@@ -51,7 +51,8 @@ public sealed class IntrinsicUISystem : EntitySystem
 
         var attempt = new IntrinsicUIOpenAttemptEvent(uid, key);
         RaiseLocalEvent(uid, attempt, false);
-        if (attempt.Cancelled) return false;
+        if (attempt.Cancelled)
+            return false;
 
         ui.Toggle(actor.PlayerSession);
         return true;

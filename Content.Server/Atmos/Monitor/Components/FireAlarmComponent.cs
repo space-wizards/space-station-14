@@ -1,7 +1,6 @@
-namespace Content.Server.Atmos.Monitor.Components
+namespace Content.Server.Atmos.Monitor.Components;
+
+[RegisterComponent]
+public sealed class FireAlarmComponent : Component
 {
-    [RegisterComponent]
-    public sealed class FireAlarmComponent : Component
-    {
-    }
 }

@@ -22,14 +22,17 @@
     sprite: Objects/Tools/cable-coils.rsi
   - type: CablePlacer
   - type: Clickable
+  - type: StaticPrice
+    price: 0
   - type: StackPrice
-    price: 0.5
+    price: 5
 
 - type: entity
   id: CableHVStack
   parent: CableStack
   name: HV cable coil
   suffix: Full
+  description: HV cables for connecting engines to heavy duty machinery, SMESes, and substations.
   components:
   - type: Stack
     stackType: CableHV
@@ -37,7 +40,7 @@
     state: coilhv-30
   - type: Item
     size: 10
-    HeldPrefix: coilhv
+    heldPrefix: coilhv
   - type: CablePlacer
     cablePrototypeID: CableHV
     blockingWireType: HighVoltage
@@ -66,6 +69,7 @@
   id: CableMVStack
   name: MV cable coil
   suffix: Full
+  description: MV cables for connecting substations to APCs, and also powering a select few things like emitters.
   components:
   - type: Stack
     stackType: CableMV
@@ -73,7 +77,7 @@
     state: coilmv-30
   - type: Item
     size: 10
-    HeldPrefix: coilmv
+    heldPrefix: coilmv
   - type: CablePlacer
     cablePrototypeID: CableMV
     blockingWireType: MediumVoltage
@@ -108,7 +112,7 @@
     state: coillv-30
   - type: Item
     size: 10
-    HeldPrefix: coillv
+    heldPrefix: coillv
   - type: CablePlacer
     cablePrototypeID: CableApcExtension
     blockingWireType: Apc

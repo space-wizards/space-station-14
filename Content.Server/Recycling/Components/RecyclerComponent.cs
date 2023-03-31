@@ -1,5 +1,5 @@
 using Content.Shared.Recycling;
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Recycling.Components
 {
@@ -10,16 +10,8 @@ namespace Content.Server.Recycling.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        [ViewVariables]
         [DataField("enabled")]
-        public bool Enabled = true;
-
-        /// <summary>
-        ///     Whether or not sentient beings will be recycled
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("safe")]
-        internal bool Safe = true;
+        public bool Enabled;
 
         /// <summary>
         ///     The percentage of material that will be recovered
@@ -27,14 +19,6 @@ namespace Content.Server.Recycling.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("efficiency")]
         internal float Efficiency = 0.25f;
-
-        private void Clean()
-        {
-            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
-            {
-                appearance.SetData(RecyclerVisuals.Bloody, false);
-            }
-        }
 
         /// <summary>
         /// Default sound to play when recycling
@@ -44,5 +28,7 @@ namespace Content.Server.Recycling.Components
 
         // Ratelimit sounds to avoid spam
         public TimeSpan LastSound;
+
+        public int ItemsProcessed;
     }
 }

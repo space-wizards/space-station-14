@@ -7,8 +7,19 @@
   components:
   - type: Sprite
     netsync: false
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
+    quickEquip: false
+    slots:
+    - Back
   - type: Item
     size: 60
+  - type: StaticPrice
+    price: 500
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
 
 - type: entity
   name: china lake
@@ -21,7 +32,7 @@
     layers:
       - state: icon
         map: ["enum.GunVisualLayers.Base"]
-  - type: Item
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
   - type: Gun
     fireRate: 1
@@ -53,7 +64,7 @@
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
   - type: Gun
     fireRate: 0.5
@@ -62,15 +73,15 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - Cartridge
+        - CartridgeRocket
     proto: CartridgeRocket
     capacity: 1
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
   - type: MagazineVisuals
     magState: mag
-    steps: 1
-    zeroVisible: true
+    steps: 2
+    zeroVisible: false
   - type: Appearance
 
 - type: entity
@@ -86,7 +97,7 @@
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
   - type: Gun
     fireRate: 6
@@ -107,3 +118,30 @@
     steps: 1
     zeroVisible: true
   - type: Appearance
+
+# Admeme
+- type: entity
+  name: meteor launcher
+  parent: WeaponLauncherMultipleRocket
+  id: WeaponLauncherAdmemeMeteorLarge
+  suffix: Admeme
+  description: It fires large meteors
+  components:
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeRocket
+    proto: MeteorLarge
+
+- type: entity
+  name: immovable rod launcher
+  parent: WeaponLauncherAdmemeMeteorLarge
+  id: WeaponLauncherAdmemeImmovableRodSlow
+  suffix: Admeme
+  description: It fires slow immovable rods.
+  components:
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeRocket
+    proto: ImmovableRodSlow

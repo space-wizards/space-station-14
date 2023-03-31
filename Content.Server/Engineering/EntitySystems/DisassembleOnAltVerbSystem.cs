@@ -1,5 +1,6 @@
 using Content.Server.DoAfter;
 using Content.Server.Engineering.Components;
+using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
@@ -65,8 +66,6 @@ namespace Content.Server.Engineering.EntitySystems
             _handsSystem.TryPickup(user, entity);
 
             EntityManager.DeleteEntity(component.Owner);
-
-            return;
         }
     }
 }

@@ -1,6 +1,6 @@
 - type: entity
   id: BaseCartridgeMagnum
-  name: cartridge (.40 magnum)
+  name: cartridge (.45 magnum)
   parent: BaseCartridge
   abstract: true
   components:
@@ -18,10 +18,12 @@
       map: ["enum.AmmoVisualLayers.Base"]
   - type: Appearance
   - type: SpentAmmoVisuals
+  - type: StaticPrice
+    price: 10
 
 - type: entity
   id: CartridgeMagnum
-  name: cartridge (.40 magnum)
+  name: cartridge (.45 magnum)
   parent: BaseCartridgeMagnum
   components:
   - type: CartridgeAmmo
@@ -29,7 +31,7 @@
 
 - type: entity
   id: CartridgeMagnumHighVelocity
-  name: cartridge (.40 magnum high-velocity)
+  name: cartridge (.45 magnum high-velocity)
   parent: BaseCartridgeMagnum
   components:
   - type: CartridgeAmmo
@@ -37,7 +39,7 @@
 
 - type: entity
   id: CartridgeMagnumPractice
-  name: cartridge (.40 magnum practice)
+  name: cartridge (.45 magnum practice)
   parent: BaseCartridgeMagnum
   components:
   - type: CartridgeAmmo
@@ -45,7 +47,7 @@
 
 - type: entity
   id: CartridgeMagnumRubber
-  name: cartridge (.40 magnum rubber)
+  name: cartridge (.45 magnum rubber)
   parent: BaseCartridgeMagnum
   components:
   - type: CartridgeAmmo

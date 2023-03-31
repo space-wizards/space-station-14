@@ -10,7 +10,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 5  # Should have the same or less damage than a regular pellet
+        Piercing: 8  # Should have the same or less damage than a regular pellet
 
 - type: entity
   id: PelletShotgunBeanbag
@@ -40,7 +40,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 5
+        Piercing: 12
 
 - type: entity
   id: PelletShotgunIncendiary
@@ -100,6 +100,7 @@
     solution: ammo
   - type: SolutionInjectOnCollide
     transferAmount: 15
+    blockSlots: NONE #tranquillizer darts shouldn't be blocked by a mask
   - type: InjectableSolution
     solution: ammo
 

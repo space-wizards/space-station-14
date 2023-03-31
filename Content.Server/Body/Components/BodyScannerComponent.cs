@@ -26,7 +26,7 @@ namespace Content.Server.Body.Components
         /// <summary>
         ///     Copy BodyTemplate and BodyPart data into a common data class that the client can read.
         /// </summary>
-        private BodyScannerUIState InterfaceState(SharedBodyComponent body)
+        private BodyScannerUIState InterfaceState(BodyComponent body)
         {
             return new(body.Owner);
         }

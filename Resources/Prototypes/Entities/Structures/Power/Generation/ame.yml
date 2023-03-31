@@ -9,6 +9,7 @@
   - type: InteractionOutline
   - type: Sprite
     netsync: false
+    snapCardinals: true
     sprite: Structures/Power/Generation/ame.rsi
     state: control
   - type: Physics
@@ -17,7 +18,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.45,-0.45,0.45,0.45"
-      mass: 25
+      density: 190
       mask:
       - FullTileMask
       layer:
@@ -69,6 +70,11 @@
 #  - type: ExtensionCableReceiver
   - type: PowerSupplier
     supplyRate: 0
+  - type: ContainerContainer
+    containers:
+      AMEController-fuelJarContainer: !type:ContainerSlot {}
+  - type: GuideHelp
+    guides: [ AME, Power ]
 
 - type: entity
   noSpawn: true
@@ -98,7 +104,8 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-      mass: 25
+        bounds: "-0.5,-0.5,0.5,0.5"
+      density: 190
       mask:
       - FullTileMask
       layer:
@@ -141,3 +148,5 @@
   - type: Construction
     graph: AMEShielding
     node: ameShielding
+  - type: GuideHelp
+    guides: [ AME, Power ]

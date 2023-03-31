@@ -1,10 +1,10 @@
 - type: construction
-  name: Modular Grenade
+  name: modular grenade
   id: ModularGrenadeRecipe
   graph: ModularGrenadeGraph
   startNode: start
   targetNode: grenade
-  category: Weapons
+  category: construction-category-weapons
   description: Construct a grenade using a trigger and a payload.
   icon:
     sprite: Objects/Weapons/Grenades/modular.rsi
@@ -12,12 +12,12 @@
   objectType: Item
 
 - type: construction
-  name: Modular Mine
+  name: modular mine
   id: ModularMineRecipe
   graph: ModularMineGraph
   startNode: start
   targetNode: mine
-  category: Weapons
+  category: construction-category-weapons
   description: Construct a landmine using a payload.
   icon:
     sprite: Objects/Misc/uglymine.rsi

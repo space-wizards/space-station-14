@@ -1,12 +1,10 @@
-using Content.Server.Power.EntitySystems;
 using Content.Server.Power.NodeGroups;
 using Content.Shared.APC;
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Power.Components;
 
 [RegisterComponent]
-[Access(typeof(ApcSystem))]
 public sealed class ApcComponent : BaseApcNetComponent
 {
     [DataField("onReceiveMessageSound")]
@@ -16,14 +14,19 @@ public sealed class ApcComponent : BaseApcNetComponent
     public ApcChargeState LastChargeState;
     public TimeSpan LastChargeStateTime;
 
+    /// <summary>
+    ///     Is the panel open for this entity's APC?
+    /// </summary>
+    [DataField("open")]
+    public bool IsApcOpen { get; set; }
+
     [ViewVariables]
     public ApcExternalPowerState LastExternalState;
     public TimeSpan LastUiUpdate;
 
     [ViewVariables]
     public bool MainBreakerEnabled = true;
-
-    public bool Emagged = false;
+    public bool HasAccess = false;
 
     public const float HighPowerThreshold = 0.9f;
     public static TimeSpan VisualsChangeDelay = TimeSpan.FromSeconds(1);
@@ -38,4 +41,11 @@ public sealed class ApcComponent : BaseApcNetComponent
     {
         apcNet.RemoveApc(this);
     }
+
+    [DataField("screwdriverOpenSound")]
+    public SoundSpecifier ScrewdriverOpenSound = new SoundPathSpecifier("/Audio/Machines/screwdriveropen.ogg");
+
+    [DataField("screwdriverCloseSound")]
+    public SoundSpecifier ScrewdriverCloseSound = new SoundPathSpecifier("/Audio/Machines/screwdriverclose.ogg");
+
 }

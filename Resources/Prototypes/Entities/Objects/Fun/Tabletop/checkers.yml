@@ -35,8 +35,6 @@
     netsync: false
     noRot: true
   - type: Appearance
-    visuals:
-    - type: TabletopItemVisualizer
 
 # The pieces
 - type: entity

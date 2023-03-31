@@ -44,17 +44,19 @@ namespace Content.Client.Singularity.Visualizers
             }
         }
 
+        [Obsolete("Subscribe to your component being initialised instead.")]
         public override void InitializeEntity(EntityUid entity)
         {
             IoCManager.Resolve<IEntityManager>().EnsureComponent<AnimationPlayerComponent>(entity);
         }
 
+        [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
 
             var entities = IoCManager.Resolve<IEntityManager>();
-            if (!entities.TryGetComponent(component.Owner, out ISpriteComponent? sprite)) return;
+            if (!entities.TryGetComponent(component.Owner, out SpriteComponent? sprite)) return;
             if (!entities.TryGetComponent(component.Owner, out AnimationPlayerComponent? animPlayer)) return;
             if (!component.TryGetData(RadiationCollectorVisuals.VisualState, out RadiationCollectorVisualState state))
             {

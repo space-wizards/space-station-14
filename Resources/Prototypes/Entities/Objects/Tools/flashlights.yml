@@ -10,10 +10,33 @@
     - DroneUsable
   - type: HandheldLight
     addPrefix: false
+    blinkingBehaviourId: blinking
+    radiatingBehaviourId: radiating
+  - type: LightBehaviour
+    behaviours:
+      - !type:FadeBehaviour
+        id: radiating
+        interpolate: Linear
+        maxDuration: 2.0
+        startValue: 3.0
+        endValue: 2.0
+        isLooped: true
+        property: Radius
+        enabled: false
+        reverseWhenFinished: true
+      - !type:PulseBehaviour
+        id: blinking
+        interpolate: Nearest
+        maxDuration: 1.0
+        minValue: 0.1
+        maxValue: 2.0
+        isLooped: true
+        property: Radius
+        enabled: false
     toggleAction:
       name: action-name-toggle-light
       description: action-description-toggle-light
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       event: !type:ToggleActionEvent
   - type: ToggleableLightVisuals
@@ -26,11 +49,15 @@
       - state: inhand-right-light
         shader: unshaded
   - type: PowerCellSlot
-    cellSlot:
-      startingItem: PowerCellMedium
+    cellSlotId: cell_slot
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
   - type: Sprite
     sprite: Objects/Tools/flashlight.rsi
     netsync: false
@@ -47,10 +74,10 @@
     enabled: false
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
-    radius: 3
+    radius: 6
   - type: Appearance
-    visuals:
-      - type: FlashLightVisualizer
+  - type: StaticPrice
+    price: 40
 
 - type: entity
   name: seclite
@@ -58,11 +85,17 @@
   id: FlashlightSeclite
   description: A robust flashlight used by security.
   components:
-  - type: PowerCellSlot
-    cellSlot:
-      startingItem: PowerCellHigh
+  - type: Tag
+    tags:
+      - SecBeltEquip
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
   - type: HandheldLight
     addPrefix: false
+  - type: ToggleableLightVisuals
     inhandVisuals:
       left:
       - state: inhand-left-light
@@ -82,4 +115,14 @@
     sprite: Objects/Tools/seclite.rsi
   - type: PointLight
     enabled: false
-    radius: 4
+    radius: 8
+
+- type: entity
+  parent: FlashlightLantern
+  id: EmptyFlashlightLantern
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default

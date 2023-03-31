@@ -43,22 +43,7 @@ public sealed class FollowerSystemTest
 
             followerSystem.StartFollowingEntity(follower, followed);
 
-            foreach (var ent in entMan.GetEntities().ToArray())
-            {
-                // Let's skip entities that have been deleted, as we want to get their TransformComp for extra info.
-                if (entMan.Deleted(ent))
-                {
-                    logger.Info($"Skipping {entMan.ToPrettyString(ent)}...");
-                    continue;
-                }
-
-                // Log some information about the entity before we delete it.
-                var transform = entMan.GetComponent<TransformComponent>(ent);
-                logger.Info($"Deleting entity {entMan.ToPrettyString(ent)}... Parent: {entMan.ToPrettyString(transform.ParentUid)} | Children: {string.Join(", ", transform.Children.Select(c => entMan.ToPrettyString(c.Owner)))}");
-
-                // Actually delete the entity now.
-                entMan.DeleteEntity(ent);
-            }
+            entMan.DeleteEntity(mapMan.GetMapEntityId(map));
         });
         await pairTracker.CleanReturnAsync();
     }

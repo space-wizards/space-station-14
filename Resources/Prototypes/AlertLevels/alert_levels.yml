@@ -43,7 +43,7 @@
       sound:
         path: /Audio/Misc/delta.ogg
         params:
-          volume: -5
+          volume: -3
       disableSelection: true
       color: DarkRed
       emergencyLightColor: Orange

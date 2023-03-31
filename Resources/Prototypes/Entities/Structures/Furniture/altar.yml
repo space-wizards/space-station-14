@@ -8,6 +8,7 @@
   - type: Anchorable
   - type: Transform
     noRot: true
+  - type: Prayable
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -17,13 +18,14 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.45,-0.45,0.45,0.45"
-      mass: 50
+      density: 55
       mask: #mouse can pass under, but I think this is can understandable by logic
       - TableMask
       layer:
       - TableLayer
   - type: Sprite
     netsync: false
+    snapCardinals: true
   - type: Climbable
   - type: Clickable
 

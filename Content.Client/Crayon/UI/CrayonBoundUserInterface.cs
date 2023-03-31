@@ -10,7 +10,7 @@ namespace Content.Client.Crayon.UI
 {
     public sealed class CrayonBoundUserInterface : BoundUserInterface
     {
-        public CrayonBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public CrayonBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

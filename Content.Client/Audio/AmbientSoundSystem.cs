@@ -1,18 +1,16 @@
-using System.Collections.Generic;
-using System.Linq;
 using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Log;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
+using Robust.Shared.Physics;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Client.Audio
 {
@@ -24,28 +22,33 @@ namespace Content.Client.Audio
     /// </summary>
     public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
     {
-        [Dependency] private EntityLookupSystem _lookup = default!;
+        [Dependency] private readonly AmbientSoundTreeSystem _treeSys = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+
+        protected override void QueueUpdate(EntityUid uid, AmbientSoundComponent ambience)
+            => _treeSys.QueueTreeUpdate(uid, ambience);
 
         private AmbientSoundOverlay? _overlay;
         private int _maxAmbientCount;
         private bool _overlayEnabled;
         private float _maxAmbientRange;
         private float _cooldown;
-        private float _accumulator;
+        private TimeSpan _targetTime = TimeSpan.Zero;
         private float _ambienceVolume = 0.0f;
+
+        private static AudioParams _params = AudioParams.Default.WithVariation(0.01f).WithLoop(true).WithAttenuation(Attenuation.LinearDistance);
 
         /// <summary>
         /// How many times we can be playing 1 particular sound at once.
         /// </summary>
         private int MaxSingleSound => (int) (_maxAmbientCount / (16.0f / 6.0f));
 
-        private Dictionary<AmbientSoundComponent, (IPlayingAudioStream? Stream, string Sound)> _playingSounds = new();
-
-        private const float RangeBuffer = 3f;
+        private readonly Dictionary<AmbientSoundComponent, (IPlayingAudioStream? Stream, string Sound)> _playingSounds = new();
+        private readonly Dictionary<string, int> _playingCount = new();
 
         public bool OverlayEnabled
         {
@@ -58,7 +61,7 @@ namespace Content.Client.Audio
 
                 if (_overlayEnabled)
                 {
-                    _overlay = new AmbientSoundOverlay(EntityManager, this, Get<EntityLookupSystem>());
+                    _overlay = new AmbientSoundOverlay(EntityManager, this, EntityManager.System<EntityLookupSystem>());
                     overlayManager.AddOverlay(_overlay);
                 }
                 else
@@ -83,6 +86,7 @@ namespace Content.Client.Audio
         {
             base.Initialize();
             UpdatesOutsidePrediction = true;
+            UpdatesAfter.Add(typeof(AmbientSoundTreeSystem));
 
             _cfg.OnValueChanged(CCVars.AmbientCooldown, SetCooldown, true);
             _cfg.OnValueChanged(CCVars.MaxAmbientSources, SetAmbientCount, true);
@@ -93,8 +97,13 @@ namespace Content.Client.Audio
 
         private void OnShutdown(EntityUid uid, AmbientSoundComponent component, ComponentShutdown args)
         {
-            if (_playingSounds.Remove(component, out var sound))
-                sound.Stream?.Stop();
+            if (!_playingSounds.Remove(component, out var sound))
+                return;
+
+            sound.Stream?.Stop();
+            _playingCount[sound.Sound] -= 1;
+            if (_playingCount[sound.Sound] == 0)
+                _playingCount.Remove(sound.Sound);
         }
 
         private void SetAmbienceVolume(float value) => _ambienceVolume = value;
@@ -119,7 +128,8 @@ namespace Content.Client.Audio
 
             foreach (var (_, (_, sound)) in _playingSounds)
             {
-                if (sound.Equals(countSound)) count++;
+                if (sound.Equals(countSound))
+                    count++;
             }
 
             return count;
@@ -129,171 +139,165 @@ namespace Content.Client.Audio
         {
             base.Update(frameTime);
 
-            if (!_gameTiming.IsFirstTimePredicted) return;
+            if (!_gameTiming.IsFirstTimePredicted)
+                return;
 
             if (_cooldown <= 0f)
-            {
-                _accumulator = 0f;
                 return;
-            }
 
-            _accumulator += frameTime;
-            if (_accumulator < _cooldown) return;
-            _accumulator -= _cooldown;
+            if (_gameTiming.CurTime < _targetTime)
+                return;
+
+            _targetTime = _gameTiming.CurTime+TimeSpan.FromSeconds(_cooldown);
 
             var player = _playerManager.LocalPlayer?.ControlledEntity;
-            if (!EntityManager.TryGetComponent(player, out TransformComponent? playerManager))
+            if (!EntityManager.TryGetComponent(player, out TransformComponent? xform))
             {
                 ClearSounds();
                 return;
             }
 
-            var coordinates = playerManager.Coordinates;
-
-            ProcessNearbyAmbience(coordinates);
+            ProcessNearbyAmbience(xform);
         }
 
         private void ClearSounds()
         {
-            foreach (var (_, (stream, _)) in _playingSounds)
+            foreach (var (stream, _) in _playingSounds.Values)
             {
                 stream?.Stop();
             }
 
             _playingSounds.Clear();
+            _playingCount.Clear();
         }
 
-        private Dictionary<string, List<AmbientSoundComponent>> GetNearbySources(EntityCoordinates coordinates)
+        private readonly struct QueryState
         {
-            //TODO: Make this produce a hashset of nearby entities again.
-            var sourceDict = new Dictionary<string, List<AmbientSoundComponent>>(16);
-            var ambientQuery = GetEntityQuery<AmbientSoundComponent>();
-            var xformQuery = GetEntityQuery<TransformComponent>();
+            public readonly Dictionary<string, List<(float Importance, AmbientSoundComponent)>> SourceDict = new();
+            public readonly Vector2 MapPos;
+            public readonly TransformComponent Player;
+            public readonly EntityQuery<TransformComponent> Query;
 
-            foreach (var entity in _lookup.GetEntitiesInRange(coordinates, _maxAmbientRange + RangeBuffer, LookupFlags.Anchored | LookupFlags.Approximate))
+            public QueryState(Vector2 mapPos, TransformComponent player, EntityQuery<TransformComponent> query)
             {
-                if (!ambientQuery.TryGetComponent(entity, out var ambientComp) ||
-                    !ambientComp.Enabled ||
-                    !xformQuery.GetComponent(entity).Coordinates.TryDistance(EntityManager, coordinates, out var range) ||
-                    range > ambientComp.Range)
-                {
-                    continue;
-                }
-
-                var key = ambientComp.Sound.GetSound();
-
-                if (!sourceDict.ContainsKey(key))
-                    sourceDict[key] = new List<AmbientSoundComponent>(MaxSingleSound);
-
-                sourceDict[key].Add(ambientComp);
+                MapPos = mapPos;
+                Player = player;
+                Query = query;
             }
+        }
 
-            foreach (var (key, val) in sourceDict)
-            {
-                sourceDict[key] = val.OrderByDescending(x =>
-                    Transform(x.Owner).Coordinates.TryDistance(EntityManager, coordinates, out var dist) ? dist * (x.Volume + 32) : float.MaxValue).ToList();
-            }
+        private static bool Callback(
+            ref QueryState state,
+            in ComponentTreeEntry<AmbientSoundComponent> value)
+        {
+            var (ambientComp, xform) = value;
 
-            return sourceDict;
+            DebugTools.Assert(ambientComp.Enabled);
+
+            var delta = xform.ParentUid == state.Player.ParentUid
+                ? xform.LocalPosition - state.Player.LocalPosition
+                : xform.WorldPosition - state.MapPos;
+
+            var range = delta.Length;
+            if (range >= ambientComp.Range)
+                return true;
+
+            string key;
+
+            if (ambientComp.Sound is SoundPathSpecifier path)
+                key = path.Path?.ToString() ?? string.Empty;
+            else
+                key = ((SoundCollectionSpecifier) ambientComp.Sound).Collection ?? string.Empty;
+
+            // Prioritize far away & loud sounds.
+            var importance = range * (ambientComp.Volume + 32);
+            state.SourceDict.GetOrNew(key).Add((importance, ambientComp));
+            return true;
         }
 
         /// <summary>
         /// Get a list of ambient components in range and determine which ones to start playing.
         /// </summary>
-        private void ProcessNearbyAmbience(EntityCoordinates coordinates)
+        private void ProcessNearbyAmbience(TransformComponent playerXform)
         {
-            var compsInRange= GetNearbySources(coordinates);
+            var query = GetEntityQuery<TransformComponent>();
+            var metaQuery = GetEntityQuery<MetaDataComponent>();
+            var mapPos = playerXform.MapPosition;
 
-            var keys = compsInRange.Keys.ToHashSet();
-
-            while (keys.Count != 0)
+            // Remove out-of-range ambiences
+            foreach (var (comp, sound) in _playingSounds)
             {
-                if (_playingSounds.Count >= _maxAmbientCount)
-                {
-                    /*
-                    // Go through and remove everything from compSet
-                    foreach (var toRemove in keys.SelectMany(key => compsInRange[key]))
-                    {
-                        compSet.Remove(toRemove.Owner);
-                    }
-                    */
+                var entity = comp.Owner;
 
-                    break;
+                if (comp.Enabled &&
+                    query.TryGetComponent(entity, out var xform) &&
+                    xform.MapID == playerXform.MapID &&
+                    !metaQuery.GetComponent(entity).EntityPaused)
+                {
+                    var distance = (xform.ParentUid == playerXform.ParentUid)
+                        ? xform.LocalPosition - playerXform.LocalPosition
+                        : xform.WorldPosition - mapPos.Position;
+
+                    if (distance.LengthSquared < comp.Range * comp.Range)
+                        continue;
                 }
 
-                foreach (var key in keys)
+                sound.Stream?.Stop();
+                _playingSounds.Remove(comp);
+                _playingCount[sound.Sound] -= 1;
+                if (_playingCount[sound.Sound] == 0)
+                    _playingCount.Remove(sound.Sound);
+            }
+
+            if (_playingSounds.Count >= _maxAmbientCount)
+                return;
+
+            var pos = mapPos.Position;
+            var state = new QueryState(pos, playerXform, query);
+            var worldAabb = new Box2(pos - _maxAmbientRange, pos + _maxAmbientRange);
+            _treeSys.QueryAabb(ref state, Callback, mapPos.MapId, worldAabb);
+
+            // Add in range ambiences
+            foreach (var (key, sources) in state.SourceDict)
+            {
+                if (_playingSounds.Count >= _maxAmbientCount)
+                    break;
+
+                if (_playingCount.TryGetValue(key, out var playingCount) && playingCount >= MaxSingleSound)
+                    continue;
+
+                sources.Sort(static (a, b) => b.Importance.CompareTo(a.Importance));
+
+                foreach (var (_, comp) in sources)
                 {
-                    if (_playingSounds.Count >= _maxAmbientCount)
-                        break;
+                    var uid = comp.Owner;
 
-                    if (compsInRange[key].Count == 0)
-                    {
-                        keys.Remove(key);
-                        continue;
-                    }
-
-                    var comp = compsInRange[key].Pop();
-                    if (_playingSounds.ContainsKey(comp))
+                    if (_playingSounds.ContainsKey(comp) ||
+                        metaQuery.GetComponent(uid).EntityPaused)
                         continue;
 
-                    var sound = comp.Sound.GetSound();
-
-                    if (PlayingCount(sound) >= MaxSingleSound)
-                    {
-                        keys.Remove(key);
-                        /*foreach (var toRemove in compsInRange[key])
-                        {
-                            Logger.Debug($"removing {toRemove.Owner} from set.");
-                            compSet.Remove(toRemove.Owner);
-                        }*/
-                        compsInRange[key].Clear(); // reduce work later should we overrun the max sounds.
-                        continue;
-                    }
-
-                    var audioParams = AudioHelpers
-                        .WithVariation(0.01f)
-                        .WithVolume(comp.Volume + _ambienceVolume)
-                        .WithLoop(true)
-                        .WithAttenuation(Attenuation.LinearDistance)
+                    var audioParams = _params
+                        .AddVolume(comp.Volume + _ambienceVolume)
                         // Randomise start so 2 sources don't increase their volume.
                         .WithPlayOffset(_random.NextFloat(0.0f, 100.0f))
                         .WithMaxDistance(comp.Range);
 
-                    var stream = SoundSystem.Play(sound,
-                        Filter.Local(),
-                        comp.Owner, audioParams);
+                    var stream = _audio.PlayPvs(comp.Sound, uid, audioParams);
+                    if (stream == null)
+                        continue;
 
-                    if (stream == null) continue;
+                    _playingSounds[comp] = (stream, key);
+                    playingCount++;
 
-                    _playingSounds[comp] = (stream, sound);
+                    if (_playingSounds.Count >= _maxAmbientCount)
+                        break;
                 }
+
+                if (playingCount != 0)
+                    _playingCount[key] = playingCount;
             }
 
-            foreach (var (comp, sound) in _playingSounds)
-            {
-                var entity = comp.Owner;
-                if (comp.Deleted || // includes entity deletion
-                    !comp.Enabled ||
-                    !EntityManager.GetComponent<TransformComponent>(entity).Coordinates
-                        .TryDistance(EntityManager, coordinates, out var range) ||
-                    range > comp.Range)
-                {
-                    sound.Stream?.Stop();
-                    _playingSounds.Remove(comp);
-                }
-            }
-
-            //TODO: Put this code back in place! Currently not done this way because of GetEntitiesInRange being funny.
-            /*
-            foreach (var (comp, sound) in _playingSounds)
-            {
-                if (compSet.Contains(comp.Owner)) continue;
-
-                Logger.Debug($"Cancelled {comp.Owner}");
-                _playingSounds[comp].Stream?.Stop();
-                _playingSounds.Remove(comp);
-            }
-            */
+            DebugTools.Assert(_playingCount.All(x => x.Value == PlayingCount(x.Key)));
         }
     }
 }

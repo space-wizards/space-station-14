@@ -20,7 +20,7 @@
   - type: Appearance
     visuals:
     - type: AirlockVisualizer
-    - type: WiresVisualizer
+  - type: WiresVisuals
   - type: PaintableAirlock
     group: External
 

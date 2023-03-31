@@ -10,7 +10,7 @@ public sealed class RadarConsoleBoundUserInterface : BoundUserInterface
 {
     private RadarConsoleWindow? _window;
 
-    public RadarConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) {}
+    public RadarConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey) {}
 
     protected override void Open()
     {

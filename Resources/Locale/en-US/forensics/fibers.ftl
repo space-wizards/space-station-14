@@ -8,6 +8,7 @@ fibers-durathread = durathread
 fibers-latex = latex
 fibers-nitrile = nitrile
 fibers-nanomachines = insulative nanomachine
+fibers-chameleon = holographic chameleon
 
 fibers-purple = purple
 fibers-red = red

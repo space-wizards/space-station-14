@@ -1,20 +1,20 @@
 using Content.Shared.ActionBlocker;
+using Content.Shared.Destructible;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
-using Content.Shared.Sound;
 using Content.Shared.Verbs;
-using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
-using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Destructible;
-using Robust.Shared.Network;
 using Robust.Shared.Utility;
+using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
+using Robust.Shared.Network;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Containers.ItemSlots
 {
@@ -23,12 +23,14 @@ namespace Content.Shared.Containers.ItemSlots
     /// </summary>
     public sealed class ItemSlotsSystem : EntitySystem
     {
+        [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly INetManager _netManager = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containers = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-        [Dependency] private readonly INetManager _netMan = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -109,7 +111,7 @@ namespace Content.Shared.Containers.ItemSlots
         /// </summary>
         public void RemoveItemSlot(EntityUid uid, ItemSlot slot, ItemSlotsComponent? itemSlots = null)
         {
-            if (slot.ContainerSlot == null)
+            if (Terminating(uid) || slot.ContainerSlot == null)
                 return;
 
             slot.ContainerSlot.Shutdown();
@@ -125,6 +127,16 @@ namespace Content.Shared.Containers.ItemSlots
                 EntityManager.RemoveComponent(uid, itemSlots);
             else
                 Dirty(itemSlots);
+        }
+
+        public bool TryGetSlot(EntityUid uid, string slotId, [NotNullWhen(true)] out ItemSlot? itemSlot, ItemSlotsComponent? component = null)
+        {
+            itemSlot = null;
+
+            if (!Resolve(uid, ref component))
+                return false;
+
+            return component.Slots.TryGetValue(slotId, out itemSlot);
         }
         #endregion
 
@@ -215,32 +227,14 @@ namespace Content.Shared.Containers.ItemSlots
         /// Useful for predicted interactions</param>
         private void Insert(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user, bool excludeUserAudio = false)
         {
-            slot.ContainerSlot?.Insert(item);
+            var inserted = slot.ContainerSlot?.Insert(item);
             // ContainerSlot automatically raises a directed EntInsertedIntoContainerMessage
 
-            PlaySound(uid, slot.InsertSound, slot.SoundOptions, excludeUserAudio ? user : null);
-            var ev = new ItemSlotChangedEvent();
-            RaiseLocalEvent(uid, ref ev, true);
-        }
+            // Logging
+            if (inserted != null && inserted.Value && user != null)
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user.Value)} inserted {ToPrettyString(item)} into {slot.ContainerSlot?.ID + " slot of "}{ToPrettyString(uid)}");
 
-        /// <summary>
-        ///     Plays a sound
-        /// </summary>
-        /// <param name="uid">Source of the sound</param>
-        /// <param name="sound">The sound</param>
-        /// <param name="excluded">Optional (server-side) argument used to prevent sending the audio to a specific
-        /// user. When run client-side, exclusion does nothing.</param>
-        private void PlaySound(EntityUid uid, SoundSpecifier? sound, AudioParams audioParams, EntityUid? excluded)
-        {
-            if (sound == null || !_gameTiming.IsFirstTimePredicted)
-                return;
-
-            var filter = Filter.Pvs(uid, entityManager: EntityManager);
-
-            if (excluded != null && _netMan.IsServer)
-                filter = filter.RemoveWhereAttachedEntity(entity => entity == excluded.Value);
-
-            SoundSystem.Play(sound.GetSound(), filter, uid, audioParams);
+            _audioSystem.PlayPredicted(slot.InsertSound, uid, excludeUserAudio ? user : null);
         }
 
         /// <summary>
@@ -261,8 +255,8 @@ namespace Content.Shared.Containers.ItemSlots
 
             if (slot.Whitelist != null && !slot.Whitelist.IsValid(usedUid))
             {
-                if (popup.HasValue && !string.IsNullOrWhiteSpace(slot.WhitelistFailPopup))
-                    _popupSystem.PopupEntity(Loc.GetString(slot.WhitelistFailPopup), uid, Filter.Entities(popup.Value));
+                if (_netManager.IsClient && _timing.IsFirstTimePredicted && popup.HasValue && !string.IsNullOrWhiteSpace(slot.WhitelistFailPopup))
+                    _popupSystem.PopupEntity(Loc.GetString(slot.WhitelistFailPopup), uid, popup.Value);
                 return false;
             }
 
@@ -340,12 +334,14 @@ namespace Content.Shared.Containers.ItemSlots
         /// Useful for predicted interactions</param>
         private void Eject(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user, bool excludeUserAudio = false)
         {
-            slot.ContainerSlot?.Remove(item);
+            var ejected = slot.ContainerSlot?.Remove(item);
             // ContainerSlot automatically raises a directed EntRemovedFromContainerMessage
 
-            PlaySound(uid, slot.EjectSound, slot.SoundOptions, excludeUserAudio ? user : null);
-            var ev = new ItemSlotChangedEvent();
-            RaiseLocalEvent(uid, ref ev, true);
+            // Logging
+            if (ejected != null && ejected.Value && user != null)
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user.Value)} ejected {ToPrettyString(item)} from {slot.ContainerSlot?.ID + " slot of "}{ToPrettyString(uid)}");
+
+            _audioSystem.PlayPredicted(slot.EjectSound, uid, excludeUserAudio ? user : null, slot.SoundOptions);
         }
 
         /// <summary>
@@ -503,14 +499,18 @@ namespace Content.Shared.Containers.ItemSlots
                 if (slot.InsertVerbText != null)
                 {
                     insertVerb.Text = Loc.GetString(slot.InsertVerbText);
-                    insertVerb.IconTexture = "/Textures/Interface/VerbIcons/insert.svg.192dpi.png";
+                    insertVerb.Icon =
+                        new SpriteSpecifier.Texture(
+                            new ResourcePath("/Textures/Interface/VerbIcons/insert.svg.192dpi.png"));
                 }
                 else if(slot.EjectOnInteract)
                 {
                     // Inserting/ejecting is a primary interaction for this entity. Instead of using the insert
                     // category, we will use a single "Place <item>" verb.
                     insertVerb.Text = Loc.GetString("place-item-verb-text", ("subject", verbSubject));
-                    insertVerb.IconTexture = "/Textures/Interface/VerbIcons/drop.svg.192dpi.png";
+                    insertVerb.Icon =
+                        new SpriteSpecifier.Texture(
+                            new ResourcePath("/Textures/Interface/VerbIcons/drop.svg.192dpi.png"));
                 }
                 else
                 {
@@ -545,16 +545,20 @@ namespace Content.Shared.Containers.ItemSlots
             foreach (var slot in component.Slots.Values)
             {
                 if (slot.EjectOnBreak && slot.HasItem)
+                {
+                    SetLock(uid, slot, false, component);
                     TryEject(uid, slot, null, out var _);
+                }
             }
         }
 
         /// <summary>
         ///     Get the contents of some item slot.
         /// </summary>
-        public EntityUid? GetItem(EntityUid uid, string id, ItemSlotsComponent? itemSlots = null)
+        /// <returns>The item in the slot, or null if the slot is empty or the entity doesn't have an <see cref="ItemSlotsComponent"/>.</returns>
+        public EntityUid? GetItemOrNull(EntityUid uid, string id, ItemSlotsComponent? itemSlots = null)
         {
-            if (!Resolve(uid, ref itemSlots))
+            if (!Resolve(uid, ref itemSlots, logMissing: false))
                 return null;
 
             return itemSlots.Slots.GetValueOrDefault(id)?.Item;
@@ -625,10 +629,4 @@ namespace Content.Shared.Containers.ItemSlots
             args.State = new ItemSlotsComponentState(component.Slots);
         }
     }
-
-    /// <summary>
-    /// Raised directed on an entity when one of its item slots changes.
-    /// </summary>
-    [ByRefEvent]
-    public readonly struct ItemSlotChangedEvent {}
 }

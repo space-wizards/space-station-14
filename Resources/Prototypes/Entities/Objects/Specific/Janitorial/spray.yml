@@ -8,6 +8,7 @@
   - type: Tag
     tags:
     - Spray
+    - Trash
   - type: Sprite
     netsync: false
     sprite: Objects/Specific/Janitorial/janitorial.rsi
@@ -29,6 +30,8 @@
     sprayVelocity: 2
     spraySound:
       path: /Audio/Effects/spray2.ogg
+  - type: TrashOnEmpty
+    solution: spray
 
 - type: entity
   name: spray bottle
@@ -36,6 +39,9 @@
   suffix: Filled
   parent: SprayBottle
   components:
+  - type: Tag
+    tags:
+    - Spray
   - type: SolutionContainerManager
     solutions:
       spray:
@@ -95,5 +101,4 @@
       - FullTileMask
       - Opaque
   - type: Appearance
-    visuals:
-    - type: VaporVisualizer
+  - type: VaporVisuals

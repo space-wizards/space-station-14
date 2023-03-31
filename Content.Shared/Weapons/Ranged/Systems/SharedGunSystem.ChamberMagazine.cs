@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
-using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -16,15 +15,19 @@ public abstract partial class SharedGunSystem
     protected virtual void InitializeChamberMagazine()
     {
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, TakeAmmoEvent>(OnChamberMagazineTakeAmmo);
-        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, GetVerbsEvent<Verb>>(OnMagazineVerb);
-        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, ItemSlotChangedEvent>(OnMagazineSlotChange);
-        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, ActivateInWorldEvent>(OnMagazineActivate);
+        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, GetVerbsEvent<AlternativeVerb>>(OnMagazineVerb);
+        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, EntInsertedIntoContainerMessage>(OnMagazineSlotChange);
+        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, EntRemovedFromContainerMessage>(OnMagazineSlotChange);
+        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, UseInHandEvent>(OnMagazineUse);
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, ExaminedEvent>(OnChamberMagazineExamine);
     }
 
     private void OnChamberMagazineExamine(EntityUid uid, ChamberMagazineAmmoProviderComponent component, ExaminedEvent args)
     {
-        var (count, _) = GetChamberMagazineCountCapacity(component);
+        if (!args.IsInDetailsRange)
+            return;
+
+        var (count, _) = GetChamberMagazineCountCapacity(uid, component);
         args.PushMarkup(Loc.GetString("gun-magazine-examine", ("color", AmmoExamineColor), ("count", count)));
     }
 
@@ -38,7 +41,9 @@ public abstract partial class SharedGunSystem
         }
 
         entity = slot.ContainedEntity;
-        if (entity == null) return false;
+        if (entity == null)
+            return false;
+
         container.Remove(entity.Value);
         return true;
     }
@@ -54,10 +59,10 @@ public abstract partial class SharedGunSystem
         return slot.ContainedEntity;
     }
 
-    protected (int, int) GetChamberMagazineCountCapacity(ChamberMagazineAmmoProviderComponent component)
+    protected (int, int) GetChamberMagazineCountCapacity(EntityUid uid, ChamberMagazineAmmoProviderComponent component)
     {
-        var count = GetChamberEntity(component.Owner) != null ? 1 : 0;
-        var (magCount, magCapacity) = GetMagazineCountCapacity(component);
+        var count = GetChamberEntity(uid) != null ? 1 : 0;
+        var (magCount, magCapacity) = GetMagazineCountCapacity(uid, component);
         return (count + magCount, magCapacity);
     }
 
@@ -78,7 +83,7 @@ public abstract partial class SharedGunSystem
 
         if (TryTakeChamberEntity(uid, out var chamberEnt))
         {
-            args.Ammo.Add(EnsureComp<AmmoComponent>(chamberEnt.Value));
+            args.Ammo.Add((chamberEnt.Value, EnsureComp<AmmoComponent>(chamberEnt.Value)));
         }
 
         var magEnt = GetMagazineEntity(uid);
@@ -87,15 +92,15 @@ public abstract partial class SharedGunSystem
         if (magEnt != null)
         {
             // We pass in Shots not Shots - 1 as we'll take the last entity and move it into the chamber.
-            var relayedArgs = new TakeAmmoEvent(args.Shots, new List<IShootable>(), args.Coordinates, args.User);
-            RaiseLocalEvent(magEnt.Value, relayedArgs, false);
+            var relayedArgs = new TakeAmmoEvent(args.Shots, new List<(EntityUid? Entity, IShootable Shootable)>(), args.Coordinates, args.User);
+            RaiseLocalEvent(magEnt.Value, relayedArgs);
 
             // Put in the nth slot back into the chamber
             // Rest of the ammo gets shot
             if (relayedArgs.Ammo.Count > 0)
             {
-                var newChamberEnt = ((AmmoComponent) relayedArgs.Ammo[^1]).Owner;
-                TryInsertChamber(uid, newChamberEnt);
+                var newChamberEnt = relayedArgs.Ammo[^1].Entity;
+                TryInsertChamber(uid, newChamberEnt!.Value);
             }
 
             // Anything above the chamber-refill amount gets fired.
@@ -106,7 +111,7 @@ public abstract partial class SharedGunSystem
         }
         else
         {
-            appearance?.SetData(AmmoVisuals.MagLoaded, false);
+            Appearance.SetData(uid, AmmoVisuals.MagLoaded, false, appearance);
             return;
         }
 
@@ -114,7 +119,7 @@ public abstract partial class SharedGunSystem
         const int capacity = 1;
 
         var ammoEv = new GetAmmoCountEvent();
-        RaiseLocalEvent(magEnt.Value, ref ammoEv, false);
+        RaiseLocalEvent(magEnt.Value, ref ammoEv);
 
         FinaliseMagazineTakeAmmo(uid, component, args, count + ammoEv.Count, capacity + ammoEv.Capacity, appearance);
     }

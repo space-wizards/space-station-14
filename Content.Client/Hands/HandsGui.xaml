@@ -1,6 +1,0 @@
-﻿<Control xmlns="https://spacestation14.io">
-    <BoxContainer Orientation="Vertical">
-        <Control Name="StatusContainer" />
-        <BoxContainer Name="HandsContainer" Orientation="Horizontal" HorizontalAlignment="Center" />
-    </BoxContainer>
-</Control>

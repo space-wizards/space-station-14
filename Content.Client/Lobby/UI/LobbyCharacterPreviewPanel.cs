@@ -1,22 +1,17 @@
 using System.Linq;
-using Content.Client.HUD.UI;
+using Content.Client.Humanoid;
 using Content.Client.Inventory;
 using Content.Client.Preferences;
 using Content.Client.UserInterface.Controls;
-using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.GameTicking;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
-using Content.Shared.Species;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
@@ -99,7 +94,7 @@ namespace Content.Client.Lobby.UI
         {
             return new()
             {
-                Sprite = _entityManager.GetComponent<ISpriteComponent>(entity),
+                Sprite = _entityManager.GetComponent<SpriteComponent>(entity),
                 OverrideDirection = direction,
                 Scale = (2, 2)
             };
@@ -133,7 +128,7 @@ namespace Content.Client.Lobby.UI
                     _viewBox.AddChild(viewWest);
                     _viewBox.AddChild(viewEast);
                     _summaryLabel.Text = selectedCharacter.Summary;
-                    EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy.Value, selectedCharacter);
+                    EntitySystem.Get<HumanoidAppearanceSystem>().LoadProfile(_previewDummy.Value, selectedCharacter);
                     GiveDummyJobClothes(_previewDummy.Value, selectedCharacter);
                 }
             }
@@ -147,7 +142,7 @@ namespace Content.Client.Lobby.UI
 
             var highPriorityJob = profile.JobPriorities.FirstOrDefault(p => p.Value == JobPriority.High).Key;
 
-            // ReSharper disable once ConstantNullCoalescingCondition
+            // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract (what is resharper smoking?)
             var job = protoMan.Index<JobPrototype>(highPriorityJob ?? SharedGameTicker.FallbackOverflowJob);
 
             if (job.StartingGear != null && invSystem.TryGetSlots(dummy, out var slots))

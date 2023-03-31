@@ -9,7 +9,7 @@ namespace Content.Client.PDA.Ringer
     {
         private RingtoneMenu? _menu;
 
-        public RingerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public RingerBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

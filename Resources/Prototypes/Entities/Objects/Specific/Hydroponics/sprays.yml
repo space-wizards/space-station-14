@@ -22,7 +22,7 @@
     solution: spray
   - type: Item
     sprite: Objects/Tools/Hydroponics/sprays.rsi
-    HeldPrefix: plantbgone
+    heldPrefix: plantbgone
 
 - type: entity
   name: weed spray
@@ -46,6 +46,9 @@
   - type: Spillable
     solution: spray
   - type: ItemCooldown
+  - type: Tag
+    tags:
+    - Spray
   - type: Spray
     transferAmount: 1
   - type: Item

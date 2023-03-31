@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,19 +11,14 @@ using Robust.Shared.Utility;
 
 namespace Content.YAMLLinter
 {
-    internal class Program
+    internal static class Program
     {
-        private static int Main(string[] args)
-        {
-            return new Program().Run();
-        }
-
-        private int Run()
+        private static async Task<int> Main(string[] args)
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var errors = RunValidation().Result;
+            var errors = await RunValidation();
 
             if (errors.Count == 0)
             {
@@ -43,7 +38,7 @@ namespace Content.YAMLLinter
             return -1;
         }
 
-        private async Task<Dictionary<string, HashSet<ErrorNode>>> ValidateClient()
+        private static async Task<Dictionary<string, HashSet<ErrorNode>>> ValidateClient()
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{DummyTicker = true, Disconnected = true});
             var client = pairTracker.Pair.Client;
@@ -61,7 +56,7 @@ namespace Content.YAMLLinter
             return clientErrors;
         }
 
-        private async Task<Dictionary<string, HashSet<ErrorNode>>> ValidateServer()
+        private static async Task<Dictionary<string, HashSet<ErrorNode>>> ValidateServer()
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{DummyTicker = true, Disconnected = true});
             var server = pairTracker.Pair.Server;
@@ -79,7 +74,7 @@ namespace Content.YAMLLinter
             return serverErrors;
         }
 
-        public async Task<Dictionary<string, HashSet<ErrorNode>>> RunValidation()
+        public static async Task<Dictionary<string, HashSet<ErrorNode>>> RunValidation()
         {
             var allErrors = new Dictionary<string, HashSet<ErrorNode>>();
 
@@ -88,15 +83,28 @@ namespace Content.YAMLLinter
 
             foreach (var (key, val) in serverErrors)
             {
+                // Include all server errors marked as always relevant
                 var newErrors = val.Where(n => n.AlwaysRelevant).ToHashSet();
-                if (clientErrors.TryGetValue(key, out var clientVal))
-                {
-                    newErrors.UnionWith(val.Intersect(clientVal));
-                    newErrors.UnionWith(clientVal.Where(n => n.AlwaysRelevant));
-                }
 
-                if (newErrors.Count == 0) continue;
-                allErrors[key] = newErrors;
+                // We include sometimes-relevant errors if they exist both for the client & server
+                if (clientErrors.TryGetValue(key, out var clientVal))
+                    newErrors.UnionWith(val.Intersect(clientVal));
+
+                if (newErrors.Count != 0)
+                    allErrors[key] = newErrors;
+            }
+
+            // Finally add any always-relevant client errors.
+            foreach (var (key, val) in clientErrors)
+            {
+                var newErrors = val.Where(n => n.AlwaysRelevant).ToHashSet();
+                if (newErrors.Count == 0)
+                    continue;
+
+                if (allErrors.TryGetValue(key, out var errors))
+                    errors.UnionWith(val.Where(n => n.AlwaysRelevant));
+                else
+                    allErrors[key] = newErrors;
             }
 
             return allErrors;

@@ -13,24 +13,29 @@
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - id: DeleteCircle
+    - id: EventHorizon
       shape:
         !type:PhysShapeCircle
           radius: 0.5
       restitution: 0.9
-      mass: 99999
+      density: 99999
       mask:
       - AllMask
       layer:
       - AllMask
   - type: Singularity
-    radsPerLevel: 1 # determines RadiationPulse's radiation per second.
+    energy: 180
+    level: 1
+    radsPerLevel: 2
+  - type: GravityWell # To make the singularity attract things.
+  - type: EventHorizon # To make the singularity consume things.
+    radius: 0.5
+    canBreachContainment: false
+    horizonFixtureId: EventHorizon
+  - type: RandomWalk # To make the singularity move around.
   - type: SingularityDistortion
-  - type: RadiationPulse
-    range: 10
-    decay: false
-    minPulseLifespan: 1
-    maxPulseLifespan: 1
+  - type: RadiationSource
+    slope: 0.2 # its emit really far away
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
     state: singularity_1
@@ -40,5 +45,8 @@
     enabled: true
     radius: 10
   - type: Appearance
-    visuals:
-    - type: SingularityVisualizer
+  - type: GuideHelp
+    guides: [ Singularity, Power ]
+  - type: WarpPoint
+    follow: true
+    location: singularity

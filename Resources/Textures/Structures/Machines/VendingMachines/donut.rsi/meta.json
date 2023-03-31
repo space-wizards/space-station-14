@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from TauCetiStation at https://github.com/TauCetiStation/TauCetiClassic/commit/8f79f8dac1d41d5050262e1669c83e9d0fff245f",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "normal-unshaded",
+      "delays": [
+        [
+          2.5, 0.2, 0.2, 0.2,
+          2.5, 0.2, 0.2, 0.2,
+          2.5, 0.2, 0.2, 0.2,
+          2.5, 0.2, 0.2, 0.2,
+          2.5, 0.2, 0.2, 0.2,
+          2.5, 0.2, 0.2, 0.2,
+          2.5, 0.2, 0.2, 0.2
+        ]
+      ]
+    },
+    {
+      "name": "broken"
+    },
+    {
+      "name": "off"
+    },
+    {
+      "name": "panel"
+    }
+  ]
+}

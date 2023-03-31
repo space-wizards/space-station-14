@@ -5,12 +5,14 @@
   name: foamdart box
   components:
   - type: BallisticAmmoProvider
-    whitelist:
-      tags:
-        - CartridgeRocket
+    mayTransfer: true
     capacity: 30
   - type: Sprite
     netsync: false
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
 
 # Boxes
 - type: entity
@@ -19,8 +21,11 @@
   name: foam dart box
   components:
   - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - BulletFoam
     capacity: 40
-    proto: BulletDonkSoft
+    proto: BulletFoam
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: foambox
@@ -31,6 +36,9 @@
   name: cap gun cartridge box
   components:
   - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeCap
     capacity: 20
     proto: CartridgeCap
   - type: Sprite

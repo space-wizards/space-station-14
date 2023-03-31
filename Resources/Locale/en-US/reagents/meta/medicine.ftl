@@ -16,9 +16,6 @@ reagent-desc-bicaridine = An analgesic which is highly effective at treating bru
 reagent-name-cryoxadone = cryoxadone
 reagent-desc-cryoxadone = Required for the proper function of cryogenics. Heals all standard types of damage very swiftly, but only works in temperatures under 170K (usually this means cryo cells). Can also slowly heal clone damage, such as caused by cloning or Slimes.
 
-reagent-name-clonexadone = clonexadone
-reagent-desc-clonexadone = Heals standard damage in the same as Cryoxadone, with the same temperature requirement. Significantly more effective than the former at treating cellular damage, although both can be used simultaneously. Best used in cryo cells.
-
 reagent-name-dermaline = dermaline
 reagent-desc-dermaline = An advanced chemical that is more effective at treating burn damage than Kelotane.
 
@@ -47,7 +44,7 @@ reagent-name-leporazine = leporazine
 reagent-desc-leporazine = This keeps a patient's body temperature stable. High doses can allow short periods of unprotected EVA, but prevents use of the cryogenics tubes.
 
 reagent-name-barozine = barozine
-reagent-desc-barozine = A somewhat toxic medicine that prevents pressure damage. Causes extreme pain and jittering. Very poisonous when overdosed.
+reagent-desc-barozine = A potent drug that prevents pressure damage. Causes extreme pain and jittering. Very poisonous when overdosed.
 
 reagent-name-phalanximine = phalanximine
 reagent-desc-phalanximine = Used in the treatment of cancer. Causes moderate radiation poisoning.
@@ -85,5 +82,20 @@ reagent-desc-omnizine = A soothing milky liquid with an iridescent gleam. A well
 reagent-name-ultravasculine = ultravasculine
 reagent-desc-ultravasculine = Rapidly flushes toxins from the body, but places some stress on the veins. Do not overdose.
 
+reagent-name-oculine = oculine
+reagent-desc-oculine = Heals eye damage.
+
 reagent-name-ethylredoxrazine = ethylredoxrazine
 reagent-desc-ethylredoxrazine = Neutralises the effects of alcohol in the blood stream. Though it is commonly needed, it is rarely requested.
+
+reagent-name-cognizine = cognizine
+reagent-desc-cognizine = A mysterious chemical which is able to make any non-sentient creature sentient.
+
+reagent-name-ethyloxyephedrine = ethyloxyephedrine
+reagent-desc-ethyloxyephedrine = An unstable medicine derived from desoxyephedrine. With the main effects of desoxyephedrine neutralized, it may be useful for something else.
+
+reagent-name-diphenylmethylamine = diphenylmethylamine
+reagent-desc-diphenylmethylamine = A more stable medicine than ethyloxyephedrine. Useful for keeping someone awake.
+
+reagent-name-sigynate = sigynate
+reagent-desc-sigynate = A thick pink syrup useful for neutralizing acids and soothing trauma caused by acids.  Tastes sweet!

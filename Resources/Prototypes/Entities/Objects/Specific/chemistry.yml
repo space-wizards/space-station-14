@@ -20,6 +20,7 @@
     solutions:
       beaker:
         maxVol: 50
+        canMix: true
   - type: FitsInDispenser
     solution: beaker
   - type: RefillableSolution
@@ -40,11 +41,11 @@
       type: TransferAmountBoundUserInterface
   - type: Drink
     isOpen: true
+    solution: beaker
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 6
-      fillBaseName: beaker
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: beaker
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass
@@ -79,6 +80,8 @@
     damage:
       types:
         Blunt: 5
+  - type: StaticPrice
+    price: 30
 
 - type: entity
   name: beaker
@@ -105,16 +108,19 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Item
+    size: 10
     sprite: Objects/Specific/Chemistry/beaker_large.rsi
   - type: SolutionContainerManager
     solutions:
       beaker:
         maxVol: 100
+        canMix: true
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 6
-      fillBaseName: beakerlarge
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: beakerlarge
+  - type: StaticPrice
+    price: 40
 
 - type: entity
   name: cryostasis beaker
@@ -165,6 +171,7 @@
     solutions:
       beaker:
         maxVol: 300
+        canMix: true
 
 - type: entity
   name: dropper
@@ -182,38 +189,38 @@
         visible: false
   - type: SolutionContainerManager
     solutions:
-      dropper:
+      injector:
         maxVol: 5
-  - type: RefillableSolution
-    solution: dropper
-  - type: DrainableSolution
-    solution: dropper
+  - type: Injector
+    injectOnly: false
+    ignoreMobs: true
+    minTransferAmount: 1
+    maxTransferAmount: 5
+    transferAmount: 1
+    toggleState: 1 # draw
   - type: ExaminableSolution
     solution: dropper
-  - type: SolutionTransfer
-    minTransferAmount: 1
-    transferAmount: 1
-    maxTransferAmount: 5
-    canChangeTransferAmount: true
   - type: UserInterface
     interfaces:
     - key: enum.TransferAmountUiKey.Key
       type: TransferAmountBoundUserInterface
   - type: Spillable
-    solution: dropper
+    solution: injector
   - type: Item
     sprite: Objects/Specific/Chemistry/dropper.rsi
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 1
-      fillBaseName: dropper
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    fillBaseName: dropper
+  - type: StaticPrice
+    price: 40
 
 - type: entity
   name: syringe
   parent: BaseItem
   description: Used to draw blood samples from mobs, or to inject them with reagents.
-  id: Syringe
+  id: BaseSyringe
+  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/syringe.rsi
@@ -224,9 +231,12 @@
         visible: false
       - state: syringe_base0
         map: ["enum.SolutionContainerLayers.Base"]
+  - type: Icon
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    state: "syringe_base0"
   - type: Item
     sprite: Objects/Specific/Chemistry/syringe.rsi
-    HeldPrefix: 0
+    heldPrefix: 0
   - type: SolutionContainerManager
     solutions:
       injector:
@@ -235,19 +245,24 @@
     injectOnly: false
   - type: Spillable
     solution: injector
+  - type: TrashOnEmpty
+    solution: injector
   - type: Appearance
-    visuals:
-      # this visualizer used for reagent inside
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 4
-      fillBaseName: syringe
-      # this one for syrigine itself (plunger)
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 4
-      fillBaseName: syringe_base
-      emptySpriteName: syringe_base0
-      layer: Base
-      changeColor: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: syringe
+  - type: Tag
+    tags:
+    - Syringe
+
+- type: entity
+  parent: BaseSyringe
+  id: Syringe
+  components:
+  - type: Tag
+    tags:
+    - Syringe
+    - Trash
 
 - type: entity
   name: pill
@@ -269,6 +284,8 @@
     transferAmount: null
     eatMessage: food-swallow
     useSound: /Audio/Items/pill.ogg
+  - type: FlavorProfile
+    ignoreReagents: []
   - type: SolutionContainerManager
     solutions:
       food:
@@ -278,12 +295,14 @@
   - type: DeleteOnTrigger
   - type: Extractable
     grindableSolutionName: food
+  - type: StaticPrice
+    price: 0
 
 - type: entity
   name: pill canister
   id: PillCanister
   parent: BaseStorageItem
-  description: Holds up to 12 pills.
+  description: Holds up to 9 pills.
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/pills_canister.rsi
@@ -294,10 +313,13 @@
     tags:
       - PillCanister
   - type: Storage
-    capacity: 12
+    capacity: 9
     quickInsert: true
     areaInsert: true
     areaInsertRadius: 1
+    storageInsertSound: /Audio/Effects/pill_insert.ogg
+    storageRemoveSound: /Audio/Effects/pill_remove.ogg
     whitelist:
       tags:
         - Pill
+  - type: Dumpable

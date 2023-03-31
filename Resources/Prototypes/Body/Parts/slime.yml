@@ -7,6 +7,16 @@
   components:
   - type: Damageable
     damageContainer: Biological
+  - type: BodyPart
+  - type: ContainerContainer
+    containers:
+      bodypart: !type:Container
+        ents: []
+  - type: StaticPrice
+    price: 100
+  - type: Tag
+    tags:
+      - Trash
 
 - type: entity
   id: TorsoSlime
@@ -22,13 +32,6 @@
       state: "torso_m"
     - type: BodyPart
       partType: Torso
-      size: 14
-      compatibility: Slime
-      mechanisms:
-        - SentientSlimeCore
-        - OrganSlimeLungs
-#    criticalThreshold: 100
-#    deadThreshold: 150
 
 - type: entity
   id: HeadSlime
@@ -44,11 +47,7 @@
       state: "head_m"
     - type: BodyPart
       partType: Head
-      size: 7
-      compatibility: Slime
       vital: true
-    #    criticalThreshold: 50
-    #    deadThreshold: 120
     - type: Input
       context: "ghost"
     - type: MovementSpeedModifier
@@ -56,6 +55,9 @@
       baseSprintSpeed: 0
     - type: InputMover
     - type: GhostOnMove
+    - type: Tag
+      tags:
+        - Head
 
 - type: entity
   id: LeftArmSlime
@@ -71,11 +73,7 @@
       state: "l_arm"
     - type: BodyPart
       partType: Arm
-      size: 5
-      compatibility: Slime
       symmetry: Left
-    #    criticalThreshold: 40
-    #    deadThreshold: 80
 
 - type: entity
   id: RightArmSlime
@@ -91,11 +89,7 @@
       state: "r_arm"
     - type: BodyPart
       partType: Arm
-      size: 5
-      compatibility: Slime
       symmetry: Right
-    #    criticalThreshold: 40
-    #    deadThreshold: 80
 
 - type: entity
   id: LeftHandSlime
@@ -111,11 +105,7 @@
       state: "l_hand"
     - type: BodyPart
       partType: Hand
-      size: 3
-      compatibility: Slime
       symmetry: Left
-    #    criticalThreshold: 30
-    #    deadThreshold: 60
 
 - type: entity
   id: RightHandSlime
@@ -131,11 +121,7 @@
       state: "r_hand"
     - type: BodyPart
       partType: Hand
-      size: 3
-      compatibility: Slime
       symmetry: Right
-    #    criticalThreshold: 30
-    #    deadThreshold: 60
 
 - type: entity
   id: LeftLegSlime
@@ -151,9 +137,8 @@
       state: "l_leg"
     - type: BodyPart
       partType: Leg
-      size: 6
-      compatibility: Slime
       symmetry: Left
+    - type: MovementSpeedModifier
 
 - type: entity
   id: RightLegSlime
@@ -169,11 +154,8 @@
       state: "r_leg"
     - type: BodyPart
       partType: Leg
-      size: 6
-      compatibility: Slime
       symmetry: Right
-    #    criticalThreshold: 45
-    #    deadThreshold: 90
+    - type: MovementSpeedModifier
 
 - type: entity
   id: LeftFootSlime
@@ -189,11 +171,7 @@
       state: "l_foot"
     - type: BodyPart
       partType: Foot
-      size: 2
-      compatibility: Slime
       symmetry: Left
-#    criticalThreshold: 30
-#    deadThreshold: 60
 
 - type: entity
   id: RightFootSlime
@@ -209,8 +187,4 @@
       state: "r_foot"
     - type: BodyPart
       partType: Foot
-      size: 2
-      compatibility: Slime
       symmetry: Right
-#    criticalThreshold: 30
-#    deadThreshold: 60

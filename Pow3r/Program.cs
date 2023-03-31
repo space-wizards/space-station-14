@@ -227,7 +227,7 @@ namespace Pow3r
 
             while (!GLFW.WindowShouldClose(_window.WindowPtr))
             {
-                _window.ProcessEvents();
+                NativeWindow.ProcessWindowEvents(false);
 
                 var tickSpan = TimeSpan.FromSeconds(1f / _tps);
                 while (curTime - lastTick > tickSpan)

@@ -1,0 +1,469 @@
+{
+  "copyright" : "Taken from https://github.com/tgstation/tgstation at at https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a",
+  "license" : "CC-BY-SA-3.0",
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "honker",
+      "directions": 4,
+      "delays": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "honker-open"
+    },
+    {
+      "name": "honker-broken"
+    },
+    {
+      "name": "reticence",
+      "directions": 4
+    },
+    {
+      "name": "reticence-open"
+    },
+    {
+      "name": "reticence-broken"
+    },
+    {
+      "name": "ripley",
+      "directions": 4
+    },
+    {
+      "name": "ripley-empty",
+      "directions": 4
+    },
+    {
+      "name": "ripley-open"
+    },
+    {
+      "name": "ripley-broken"
+    },
+    {
+      "name": "marauder",
+      "directions": 4
+    },
+    {
+      "name": "marauder-open",
+      "delays": [
+        [
+          0.5,
+          0.1,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "marauder-broken"
+    },
+    {
+      "name": "seraph",
+      "directions": 4
+    },
+    {
+      "name": "seraph-open",
+      "delays": [
+        [
+          0.5,
+          0.1,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "seraph-broken"
+    },
+    {
+      "name": "phazon",
+      "directions": 4
+    },
+    {
+      "name": "phazon-open"
+    },
+    {
+      "name": "phazon-phase",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "phazon-broken"
+    },
+    {
+      "name": "ripley-old",
+      "directions": 4
+    },
+    {
+      "name": "ripley-broken-old"
+    },
+    {
+      "name": "mauler",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "mauler-open",
+      "delays": [
+        [
+          0.5,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "mauler-broken"
+    },
+    {
+      "name": "odysseus",
+      "directions": 4
+    },
+    {
+      "name": "odysseus-open"
+    },
+    {
+      "name": "odysseus-broken"
+    },
+    {
+      "name": "firefighter",
+      "directions": 4
+    },
+    {
+      "name": "firefighter-open"
+    },
+    {
+      "name": "firefighter-broken"
+    },
+    {
+      "name": "deathripley",
+      "directions": 4
+    },
+    {
+      "name": "deathripley-open"
+    },
+    {
+      "name": "deathripley-broken"
+    },
+    {
+      "name": "darkgygax",
+      "directions": 4
+    },
+    {
+      "name": "darkgygax-open",
+      "delays": [
+        [
+          0.1,
+          0.05,
+          0.05,
+          0.05,
+          0.1,
+          0.05,
+          0.05,
+          0.05,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "darkgygax-broken",
+      "delays": [
+        [
+          0.3,
+          0.5,
+          0.3,
+          0.5,
+          0.3,
+          0.4,
+          0.5,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "durand",
+      "directions": 4
+    },
+    {
+      "name": "durand-open",
+      "delays": [
+        [
+          1,
+          0.1,
+          0.1,
+          0.5,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "durand-broken",
+      "delays": [
+        [
+          0.5,
+          1,
+          0.5,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "gygax",
+      "directions": 4
+    },
+    {
+      "name": "gygax-open",
+      "delays": [
+        [
+          0.1,
+          0.05,
+          0.05,
+          0.05,
+          0.1,
+          0.05,
+          0.05,
+          0.05,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "gygax-broken",
+      "delays": [
+        [
+          5,
+          0.05,
+          0.05,
+          0.05,
+          0.1,
+          0.1,
+          0.5,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "ripley-g",
+      "directions": 4
+    },
+    {
+      "name": "ripley-g-open"
+    },
+    {
+      "name": "ripley-g-full",
+      "directions": 4
+    },
+    {
+      "name": "ripley-g-full-open"
+    },
+    {
+      "name": "darkhonker",
+      "directions": 4,
+      "delays": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "darkhonker-open"
+    },
+    {
+      "name": "darkhonker-broken"
+    },
+    {
+      "name": "ripleymkii",
+      "directions": 4
+    },
+    {
+      "name": "ripleymkii-open"
+    },
+    {
+      "name": "ripleymkii-broken"
+    },
+    {
+      "name": "clarke",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.05,
+          0.05
+        ],
+        [
+          0.1,
+          0.05,
+          0.05
+        ],
+        [
+          0.1,
+          0.05,
+          0.05
+        ],
+        [
+          0.1,
+          0.05,
+          0.05
+        ]
+      ]
+    },
+    {
+      "name": "clarke-open"
+    },
+    {
+      "name": "clarke-broken"
+    },
+    {
+      "name": "hauler",
+      "directions": 4
+    },
+    {
+      "name": "hauler-empty",
+      "directions": 4
+    },
+    {
+      "name": "hauler-open"
+    },
+    {
+      "name": "hauler-broken"
+    }
+  ]
+}

@@ -15,7 +15,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.2
-      mass: 10
+      density: 100
       mask:
       - TableMask
   - type: Sprite
@@ -40,6 +40,8 @@
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/metalbreak.ogg
+  - type: StaticPrice
+    price: 50
 
 - type: entity
   name: chair
@@ -48,8 +50,6 @@
   components:
   - type: Transform
     anchored: true
-  - type: RandomMetadata
-    nameSet: chair
   - type: Anchorable
   - type: Rotatable
   - type: Sprite
@@ -120,6 +120,7 @@
   - type: Transform
     anchored: true
   - type: Anchorable
+  - type: Rotatable
   - type: Sprite
     state: comfy
   - type: Construction
@@ -174,6 +175,8 @@
   - type: Tag
     tags:
     - Wooden
+  - type: StaticPrice
+    price: 75
 
 - type: entity
   name: ritual chair
@@ -215,3 +218,39 @@
           path: /Audio/Voice/Human/womanlaugh.ogg
     graph: RitualSeat
     node: chairCursed
+
+- type: entity
+  parent: [SeatBase, BaseFoldable]
+  id: ChairFolding
+  name: folding chair
+  description: If you carry six of these you become the coolest kid at church.
+  components:
+  - type: Rotatable
+  - type: Sprite
+    sprite: Structures/Furniture/folding_chair.rsi
+    layers:
+    - state: folding
+      map: ["unfoldedLayer"]
+    - state: folding_folded
+      map: ["foldedLayer"]
+      visible: false
+  - type: Item
+    size: 50
+  - type: Appearance
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 15
+  - type: Construction
+    graph: Seat
+    node: chairFolding
+
+- type: entity
+  parent: ChairFolding
+  id: ChairFoldingSpawnFolded
+  suffix: folded
+  placement:
+    mode: PlaceFree
+  components:
+  - type: Foldable
+    folded: true

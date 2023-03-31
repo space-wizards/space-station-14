@@ -11,6 +11,12 @@ namespace Content.Shared.Chemistry.Components
     public abstract class SharedInjectorComponent : Component
     {
         /// <summary>
+        /// Checks to see if the entity being injected
+        /// </summary>
+        [DataField("isInjecting")]
+        public bool IsInjecting;
+
+        /// <summary>
         /// Component data used for net updates. Used by client for item status ui
         /// </summary>
         [Serializable, NetSerializable]
@@ -20,7 +26,7 @@ namespace Content.Shared.Chemistry.Components
             public FixedPoint2 TotalVolume { get; }
             public InjectorToggleMode CurrentMode { get; }
 
-            public InjectorComponentState(FixedPoint2 currentVolume, FixedPoint2 totalVolume, SharedInjectorComponent.InjectorToggleMode currentMode)
+            public InjectorComponentState(FixedPoint2 currentVolume, FixedPoint2 totalVolume, InjectorToggleMode currentMode)
             {
                 CurrentVolume = currentVolume;
                 TotalVolume = totalVolume;

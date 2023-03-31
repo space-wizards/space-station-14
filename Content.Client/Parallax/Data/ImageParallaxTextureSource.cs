@@ -18,9 +18,9 @@ public sealed class ImageParallaxTextureSource : IParallaxTextureSource
     [DataField("path", required: true)]
     public ResourcePath Path { get; } = default!;
 
-    async Task<Texture> IParallaxTextureSource.GenerateTexture(CancellationToken cancel = default)
+    Task<Texture> IParallaxTextureSource.GenerateTexture(CancellationToken cancel)
     {
-        return StaticIoC.ResC.GetTexture(Path);
+        return Task.FromResult(StaticIoC.ResC.GetTexture(Path));
     }
 }
 

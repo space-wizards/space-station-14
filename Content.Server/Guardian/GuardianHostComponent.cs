@@ -27,7 +27,7 @@ namespace Content.Server.Guardian
         [DataField("action")]
         public InstantAction Action = new()
         {
-            Name = "action-name-guardian",
+            DisplayName = "action-name-guardian",
             Description = "action-description-guardian",
             Icon = new SpriteSpecifier.Texture(new ResourcePath("Interface/Actions/manifest.png")),
             UseDelay = TimeSpan.FromSeconds(2),

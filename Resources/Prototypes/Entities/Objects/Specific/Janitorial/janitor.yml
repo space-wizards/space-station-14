@@ -8,6 +8,15 @@
   - type: Sprite
     sprite: Objects/Specific/Janitorial/mop.rsi
     state: mop
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 5
   - type: Item
     size: 15
     sprite: Objects/Specific/Janitorial/mop.rsi
@@ -30,9 +39,12 @@
   - type: Clickable
   - type: Sprite
     sprite: Objects/Specific/Janitorial/janitorial.rsi
+    noRot: true
     layers:
     - state: mopbucket
-    - state: mopbucket_water
+    - state: mopbucket_water-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
     drawdepth: Objects
   - type: InteractionOutline
   - type: SolutionContainerManager
@@ -43,9 +55,12 @@
         - ReagentId: Water
           Quantity: 250 # half-full at roundstart to leave room for puddles
   - type: Spillable
+    spillDelay: 3.0
   - type: DrainableSolution
     solution: bucket
   - type: RefillableSolution
+    solution: bucket
+  - type: ExaminableSolution
     solution: bucket
   - type: Tag
     tags:
@@ -59,12 +74,19 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.25,-0.40,0.25,0.25"
-      mass: 20
+      density: 60
       mask:
       - MobMask
       layer:
       - MobLayer
   - type: Pullable
+  - type: Drink
+    isOpen: true
+    solution: bucket
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    fillBaseName: mopbucket_water-
 
 - type: entity
   name: wet floor sign
@@ -94,8 +116,9 @@
       sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
       layers:
         - state: cart
-        - state: cart_water_1
+        - state: cart_water-1
           map: ["enum.SolutionContainerLayers.Fill"]
+          visible: false
     - type: Rotatable
     - type: InteractionOutline
     - type: Storage
@@ -123,12 +146,13 @@
       - shape:
           !type:PhysShapeCircle
           radius: 0.3
-        mass: 100
+        density: 350
         layer:
         - MobLayer
         mask:
         - MobMask
     - type: Spillable
+      spillDelay: 3.0
     - type: SolutionContainerManager
       solutions:
         bucket:
@@ -196,19 +220,24 @@
           whitelist:
             tags:
               - WetFloorSign
+      sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
     - type: Appearance
-      visuals:
-        - type: MappedItemVisualizer
-          sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
-        - type: SolutionContainerVisualizer
-          maxFillLevels: 3
-          fillBaseName: cart_water_
-          changeColor: false
+    - type: SolutionContainerVisuals
+      maxFillLevels: 3
+      fillBaseName: cart_water-
     - type: UserInterface
       interfaces:
       - key: enum.StorageUiKey.Key
         type: StorageBoundUserInterface
-
+    - type: Drink
+      isOpen: true
+      solution: bucket
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          ents: []
+        mop_slot: !type:ContainerSlot {}
+        trashbag_slot: !type:ContainerSlot {}
 
 - type: entity
   id: FloorDrain
@@ -228,6 +257,7 @@
       anchored: true
     - type: Physics
       bodyType: Static
+      canCollide: false
     - type: Drain
     - type: AmbientSound
       enabled: false
@@ -241,4 +271,17 @@
           maxVol: 500
     - type: DrainableSolution
       solution: drainBuffer
-
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                path: /Audio/Effects/metalbreak.ogg

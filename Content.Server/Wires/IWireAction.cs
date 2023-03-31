@@ -41,28 +41,27 @@ public interface IWireAction
     public bool AddWire(Wire wire, int count);
 
     /// <summary>
-    ///     What happens when this wire is cut.
+    ///     What happens when this wire is cut. If this returns false, the wire will not actually get cut.
     /// </summary>
     /// <param name="user">The user attempting to interact with the wire.</param>
     /// <param name="wire">The wire being interacted with.</param>
-    /// <returns>true if successful, false otherwise.</summary>
+    /// <returns>true if successful, false otherwise.</returns>
     public bool Cut(EntityUid user, Wire wire);
 
     /// <summary>
-    ///     What happens when this wire is mended.
+    ///     What happens when this wire is mended. If this returns false, the wire will not actually get cut.
     /// </summary>
     /// <param name="user">The user attempting to interact with the wire.</param>
     /// <param name="wire">The wire being interacted with.</param>
-    /// <returns>true if successful, false otherwise.</summary>
+    /// <returns>true if successful, false otherwise.</returns>
     public bool Mend(EntityUid user, Wire wire);
 
     /// <summary>
-    ///     What happens when this wire is pulsed.
+    ///     This method gets called when the wire is pulsed..
     /// </summary>
     /// <param name="user">The user attempting to interact with the wire.</param>
     /// <param name="wire">The wire being interacted with.</param>
-    /// <returns>true if successful, false otherwise.</summary>
-    public bool Pulse(EntityUid user, Wire wire);
+    public void Pulse(EntityUid user, Wire wire);
 
     /// <summary>
     ///     Used when a wire's state on an entity needs to be updated.

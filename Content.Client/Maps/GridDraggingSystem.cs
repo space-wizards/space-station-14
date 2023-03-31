@@ -1,10 +1,10 @@
-using Content.Client.Administration.Managers;
 using Content.Shared.Maps;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Maps;
@@ -23,6 +23,23 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
     private EntityUid? _dragging;
     private Vector2 _localPosition;
     private MapCoordinates? _lastMousePosition;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeNetworkEvent<GridDragToggleMessage>(OnToggleMessage);
+    }
+
+    private void OnToggleMessage(GridDragToggleMessage ev)
+    {
+        if (Enabled == ev.Enabled)
+            return;
+
+        Enabled = ev.Enabled;
+
+        if (!Enabled)
+            StopDragging();
+    }
 
     private void StartDragging(EntityUid grid, Vector2 localPosition)
     {
@@ -83,7 +100,7 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
             if (!_mapManager.TryFindGridAt(mousePos, out var grid))
                 return;
 
-            StartDragging(grid.GridEntityId, Transform(grid.GridEntityId).InvWorldMatrix.Transform(mousePos.Position));
+            StartDragging(grid.Owner, Transform(grid.Owner).InvWorldMatrix.Transform(mousePos.Position));
         }
 
         if (!TryComp<TransformComponent>(_dragging, out var xform))

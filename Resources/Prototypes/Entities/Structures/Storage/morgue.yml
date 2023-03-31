@@ -2,6 +2,8 @@
   id: Morgue
   name: morgue
   description: Used to store bodies until someone fetches them. Includes a high-tech alert system for false-positives!
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Sprite
     netsync: false
@@ -26,7 +28,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.5,-0.5,0.5,0.5"
-      mass: 25
+      density: 190
       mask:
       - MachineMask
       layer:
@@ -45,7 +47,6 @@
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container
-      morgue_tray: !type:ContainerSlot
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -68,33 +69,15 @@
   - type: Transform
     anchored: true
   - type: AntiRottingContainer
-
-#needs to be removed
-- type: entity
-  id: MorgueTray
-  name: morgue tray
-  description: If you lay down to have a rest on this, you'll soon have a problem.
-  noSpawn: true
-  components:
-  - type: Physics
-    bodyType: Static
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.5,0.5"
-      mass: 25
-      mask:
-      - Impassable
-  - type: Sprite
-    netsync: false
-    sprite: Structures/Storage/morgue.rsi
-    state: morgue_tray
+  - type: StaticPrice
+    price: 200
 
 - type: entity
   id: Crematorium
   name: crematorium
   description: A human incinerator. Works well on barbecue nights.
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Sprite
     netsync: false
@@ -107,7 +90,11 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: crema_contents_light
       visible: false
-      map: ["enum.CrematoriumVisualLayers.Light"]
+      map: ["enum.CrematoriumVisualLayers.LightContent"]
+      shader: unshaded
+    - state: crema_active_light
+      visible: false
+      map: ["enum.CrematoriumVisualLayers.LightBurning"]
       shader: unshaded
   - type: Clickable
   - type: InteractionOutline
@@ -118,7 +105,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.5,-0.5,0.5,0.5"
-      mass: 25
+      density: 190
       mask:
       - MachineMask
       layer:
@@ -134,26 +121,24 @@
       path: /Audio/Items/deconstruct.ogg
   - type: EntityStorageLayingDownOverride
   - type: Crematorium
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
   - type: Appearance
     visuals:
     - type: StorageVisualizer
       state: crema_closed
       state_alt: crema_open
       state_open: crema_tray
-  - type: CrematoriumVisuals
-    lightContents: crema_contents_light
-    lightBurning: crema_active_light
+  - type: GenericVisualizer
+    visuals:
+      enum.CrematoriumVisuals.Burning:
+        enum.CrematoriumVisualLayers.LightBurning:
+          True: { visible: true }
+          False: { visible: false }
+      enum.StorageVisuals.HasContents:
+        enum.CrematoriumVisualLayers.LightContent:
+          True: { visible: true }
+          False: { visible: false }
   - type: Transform
     anchored: true
-
-#needs to be removed
-- type: entity
-  id: CrematoriumTray
-  name: crematorium tray
-  parent: MorgueTray
-  noSpawn: true
-  components:
-  - type: Sprite
-    netsync: false
-    sprite: Structures/Storage/morgue.rsi
-    state: crema_tray

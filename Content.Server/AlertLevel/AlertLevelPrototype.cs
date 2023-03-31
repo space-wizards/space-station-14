@@ -1,5 +1,4 @@
-using System.Collections.Specialized;
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.AlertLevel;

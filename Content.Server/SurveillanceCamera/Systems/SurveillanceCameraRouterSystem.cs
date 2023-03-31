@@ -86,7 +86,7 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
         }
     }
 
-    private void OnPowerChanged(EntityUid uid, SurveillanceCameraRouterComponent component, PowerChangedEvent args)
+    private void OnPowerChanged(EntityUid uid, SurveillanceCameraRouterComponent component, ref PowerChangedEvent args)
     {
         component.MonitorRoutes.Clear();
         component.Active = args.Powered;

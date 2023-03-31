@@ -1,6 +1,5 @@
 - type: entity
   id: CrateFunPlushie
-  name: plushie crate
   parent: CrateGenericSteel
   components:
   - type: StorageFill
@@ -27,11 +26,14 @@
         amount: 1
       - id: PlushieRatvar
         amount: 1
+      - id: PlushieSharkBlue
+        amount: 1
+      - id: PlushieAtmosian
+        amount: 1
+
 
 - type: entity
   id: CrateFunInstruments
-  name: big band instrument collection
-  description: Get your sad station movin' and groovin' with this fine collection! Contains thirteen different instruments.
   parent: CrateGenericSteel
   components:
   - type: StorageFill
@@ -65,8 +67,6 @@
 
 - type: entity
   id: CrateFunBrass
-  name: brass instrument ensemble crate
-  description: Bring some jazz to the station with the brass ensemble. Contains a variety of brass instruments for the whole station to play.
   parent: CrateGenericSteel
   components:
   - type: StorageFill
@@ -84,7 +84,6 @@
 
 - type: entity
   id: CrateFunArtSupplies
-  name: art supplies
   parent: CrateGenericSteel
   components:
   - type: StorageFill
@@ -96,7 +95,6 @@
 
 - type: entity
   id: CrateFunBoardGames
-  name: board game crate
   parent: CrateGenericSteel
   components:
   - type: StorageFill
@@ -114,19 +112,58 @@
 
 - type: entity
   id: CrateFunATV
-  name: ATV crate
   parent: CrateLivestock
   components:
   - type: StorageFill
     contents:
-    - id: VehicleATV
-      amount: 1
-    - id: VehicleKeyATV
-      amount: 1
+      - id: VehicleATV
+        amount: 1
+      - id: VehicleKeyATV
+        amount: 1
+
+- type: entity
+  id: CrateFunSadTromboneImplants
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: SadTromboneImplanter
+        amount: 3
+
+- type: entity
+  id: CrateFunLightImplants
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: LightImplanter
+        amount: 3
+
+- type: entity
+  id: CrateFunParty
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: GlowstickBase
+        amount: 2
+      - id: GlowstickBlue
+        amount: 2
+      - id: GlowstickPurple
+        amount: 2
+      - id: GlowstickRed
+        amount: 2
+      - id: GlowstickYellow
+        amount: 2
+      - id: FoodCakeBirthday
+        amount: 1
+      - id: DrinkLean
+        amount: 4
+      - id: KnifePlastic
+        amount: 1
 
 - type: entity
   id: CrateFunSyndicateSegway
-  name: syndicate segway crate
   parent: CrateLivestock
   components:
     - type: StorageFill

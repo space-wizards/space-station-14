@@ -1,4 +1,4 @@
-namespace Content.Shared.Inventory.Events;
+﻿namespace Content.Shared.Inventory.Events;
 
 public abstract class EquippedEventBase : EntityEventArgs
 {
@@ -18,6 +18,11 @@ public abstract class EquippedEventBase : EntityEventArgs
     public readonly string Slot;
 
     /// <summary>
+    /// The slot group the entity got equipped in.
+    /// </summary>
+    public readonly string SlotGroup;
+
+    /// <summary>
     /// Slotflags of the slot the entity just got equipped to.
     /// </summary>
     public readonly SlotFlags SlotFlags;
@@ -27,6 +32,7 @@ public abstract class EquippedEventBase : EntityEventArgs
         Equipee = equipee;
         Equipment = equipment;
         Slot = slotDefinition.Name;
+        SlotGroup = slotDefinition.SlotGroup;
         SlotFlags = slotDefinition.SlotFlags;
     }
 }

@@ -1,12 +1,11 @@
 - type: entity
   save: false
   name: Urist McHands
-  parent: MobHumanBase
+  parent: BaseMobHuman
   id: MobHuman
-  description: A miserable pile of secrets.
   components:
   - type: CombatMode
-    canDisarm: true
+    disarm: null
   - type: InteractionPopup
     successChance: 1
     interactSuccessString: hugging-success-generic
@@ -31,160 +30,31 @@
   - type: CameraRecoil
   - type: Examiner
   - type: CanHostGuardian
-  - type: AiFactionTag
+  - type: Faction
     factions:
     - NanoTrasen
 
+#Syndie
 - type: entity
-  name: CentCom official
   parent: MobHuman
-  id: MobHumanCentcomOfficial
+  id: MobHumanSyndicateAgent
+  name: Syndicate Agent
   components:
-  - type: Icon
-    sprite: Markers/jobs.rsi
-    state: centcom
-  - type: GhostTakeoverAvailable
-    name: CentCom official
-    description: Inspect the station, jot down performance reviews for heads of staff, bug the Captain.
-  - type: Loadout
-    prototype: CentcomGear
-  - type: RandomHumanoidAppearance
+    - type: Loadout
+      prototype: SyndicateOperativeGearExtremelyBasic
+      prototypes: [SyndicateOperativeGearExtremelyBasic]
+    - type: RandomMetadata
+      nameSegments: [names_death_commando]
+    - type: Faction
+      factions:
+      - Syndicate
 
-# ERT Leader
+# Nuclear Operative
 - type: entity
-  name: ERT leader
+  noSpawn: true
+  name: Nuclear Operative
   parent: MobHuman
-  id: MobHumanERTLeader
+  id: MobHumanNukeOp
   components:
-  - type: Icon
-    sprite: Markers/jobs.rsi
-    state: ertleader
-  - type: GhostTakeoverAvailable
-    name: ERT Leader
-    description: Lead a team of specialists to resolve the stations issues.
-  - type: Loadout
-    prototype: ERTLeaderGear
-  - type: RandomMetadata
-    nameSet: NamesFirstMilitaryLeader
-  - type: RandomHumanoidAppearance
-    randomizeName: false
-
-- type: entity
-  name: ERT leader
-  suffix: EVA
-  parent: MobHumanERTLeader
-  id: MobHumanERTLeaderEVA
-  components:
-  - type: Icon
-    sprite: Markers/jobs.rsi
-    state: ertleadereva
-  - type: Loadout
-    prototype: ERTLeaderGearEVA
-
-# ERT Engineer
-- type: entity
-  name: ERT engineer
-  parent: MobHumanERTLeader
-  id: MobHumanERTEngineer
-  components:
-  - type: Icon
-    sprite: Markers/jobs.rsi
-    state: ertengineer
-  - type: GhostTakeoverAvailable
-    name: ERT Engineer
-    description: Assist with engineering efforts to resolve the stations issues.
-  - type: Loadout
-    prototype: ERTEngineerGear
-
-- type: entity
-  name: ERT engineer
-  suffix: EVA
-  parent: MobHumanERTEngineer
-  id: MobHumanERTEngineerEVA
-  components:
-  - type: Icon
-    sprite: Markers/jobs.rsi
-    state: ertengineereva
-  - type: Loadout
-    prototype: ERTEngineerGearEVA
-
-# ERT Security
-- type: entity
-  name: ERT security
-  parent: MobHumanERTLeader
-  id: MobHumanERTSecurity
-  components:
-  - type: Icon
-    sprite: Markers/jobs.rsi
-    state: ertsecurity
-  - type: GhostTakeoverAvailable
-    name: ERT Security
-    description: Assist with security efforts to resolve the stations issues.
-  - type: Loadout
-    prototype: ERTSecurityGear
-
-- type: entity
-  name: ERT security
-  suffix: EVA
-  parent: MobHumanERTEngineer
-  id: MobHumanERTSecurityEVA
-  components:
-  - type: Icon
-    sprite: Markers/jobs.rsi
-    state: ertsecurityeva
-  - type: Loadout
-    prototype: ERTSecurityGearEVA
-
-# ERT Medical
-- type: entity
-  name: ERT medic
-  parent: MobHumanERTLeader
-  id: MobHumanERTMedical
-  components:
-  - type: Icon
-    sprite: Markers/jobs.rsi
-    state: ertmedical
-  - type: GhostTakeoverAvailable
-    name: ERT Medic
-    description: Assist with medical efforts to resolve the stations issues.
-  - type: Loadout
-    prototype: ERTMedicalGear
-
-- type: entity
-  name: ERT medic
-  suffix: EVA
-  parent: MobHumanERTMedical
-  id: MobHumanERTMedicalEVA
-  components:
-  - type: Icon
-    sprite: Markers/jobs.rsi
-    state: ertmedicaleva
-  - type: Loadout
-    prototype: ERTMedicalGearEVA
-
-# ERT Janitor
-- type: entity
-  name: ERT janitor
-  parent: MobHumanERTLeader
-  id: MobHumanERTJanitor
-  components:
-  - type: Icon
-    sprite: Markers/jobs.rsi
-    state: ertjanitor
-  - type: GhostTakeoverAvailable
-    name: ERT Janitor
-    description: Assist with custodial efforts to resolve the stations issues.
-  - type: Loadout
-    prototype: ERTJanitorGear
-
-- type: entity
-  name: ERT janitor
-  suffix: EVA
-  parent: MobHumanERTJanitor
-  id: MobHumanERTJanitorEVA
-  components:
-  - type: Icon
-    sprite: Markers/jobs.rsi
-    state: ertjanitoreva
-  - type: Loadout
-    prototype: ERTJanitorGearEVA
+    - type: NukeOperative
+    - type: RandomHumanoidAppearance

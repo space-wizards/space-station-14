@@ -71,7 +71,7 @@
   - type: WallMount
   - type: Damageable
     damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageModifierSet: StrongMetallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -92,6 +92,63 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: StationInfiniteBatteryTarget
+  - type: StaticPrice
+    price: 500
+
+# APC under construction
+- type: entity
+  noSpawn: true
+  id: APCFrame
+  name: APC frame
+  description: A control terminal for the area's electrical systems, lacking the electronics.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    drawdepth: WallMountedItems
+    netsync: false
+    sprite: Structures/Power/apc.rsi
+    state: apcframe
+  - type: Construction
+    graph: APC
+    node: apcFrame
+  - type: WallMount
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors: #excess damage, don't spawn entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+# Constructed APC
+- type: entity
+  parent: BaseAPC
+  id: APCConstructed
+  suffix: Open
+  components:
+  - type: Apc
+    voltage: Apc
+    open: true
 
 # APCs in use
 - type: entity

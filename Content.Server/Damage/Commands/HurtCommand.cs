@@ -109,11 +109,11 @@ namespace Content.Server.Damage.Commands
 
             EntityUid target;
             var entMan = IoCManager.Resolve<IEntityManager>();
-            if (args.Length == 5)
+            if (args.Length == 4)
             {
-                if (!EntityUid.TryParse(args[4], out target) || !entMan.EntityExists(target))
+                if (!EntityUid.TryParse(args[3], out target) || !entMan.EntityExists(target))
                 {
-                    shell.WriteLine(Loc.GetString("damage-command-error-euid", ("arg", args[4])));
+                    shell.WriteLine(Loc.GetString("damage-command-error-euid", ("arg", args[3])));
                     return;
                 }
             }

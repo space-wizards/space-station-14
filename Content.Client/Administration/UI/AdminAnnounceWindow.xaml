@@ -10,6 +10,9 @@
         </BoxContainer>
         <LineEdit Name="Announcement" Access="Public" PlaceHolder="{Loc admin-announce-announcement-placeholder}"/>
 
-        <Button Name="AnnounceButton" Access="Public" Disabled="True" Text="{Loc admin-announce-button}" HorizontalAlignment="Center"/>
+        <GridContainer Rows="1">
+            <CheckBox Name="KeepWindowOpen" Access="Public" Text="{Loc 'admin-announce-keep-open'}" />
+            <Button Name="AnnounceButton" Access="Public" Disabled="True" Text="{Loc admin-announce-button}" HorizontalAlignment="Center"/>
+        </GridContainer>
     </GridContainer>
 </DefaultWindow>

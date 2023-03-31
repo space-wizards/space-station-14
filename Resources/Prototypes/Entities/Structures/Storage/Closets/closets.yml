@@ -127,8 +127,52 @@
   parent: ClosetBase
   description: It's a storage unit.
   components:
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: generic_open
-      state_closed: generic_door
+    - type: Appearance
+      visuals:
+        - type: StorageVisualizer
+          state_open: generic_open
+          state_closed: generic_door
+
+# Bluespace closet
+- type: entity
+  id: ClosetBluespace
+  name: suspicious closet
+  suffix: Bluespace
+  parent: ClosetMaintenance
+  description: It's a storage unit... right?
+  components:
+    - type: BluespaceLocker
+      pickLinksFromSameMap: true
+      minBluespaceLinks: 1
+      behaviorProperties:
+        bluespaceEffectOnTeleportSource: true
+      autoLinksBidirectional: true
+      autoLinksUseProperties: true
+      autoLinkProperties:
+        bluespaceEffectOnTeleportSource: true
+
+# Unstable bluespace closet
+- type: entity
+  id: ClosetBluespaceUnstable
+  name: suspicious closet
+  suffix: Bluespace unstable
+  parent: ClosetMaintenance
+  description: It's a storage unit... right?
+  components:
+    - type: BluespaceLocker
+      pickLinksFromSameMap: true
+      minBluespaceLinks: 1
+      behaviorProperties:
+        clearLinksDebluespaces: true
+        transportEntities: false
+        bluespaceEffectOnTeleportSource: true
+        clearLinksEvery: 2
+      autoLinksBidirectional: true
+      autoLinksUseProperties: true
+      usesSinceLinkClear: -1 # hacky
+      autoLinkProperties:
+        invalidateOneWayLinks: true
+        transportEntities: false
+        bluespaceEffectOnTeleportSource: true
+        destroyAfterUses: 2
+        destroyType: DeleteComponent

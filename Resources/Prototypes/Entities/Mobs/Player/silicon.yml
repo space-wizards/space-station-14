@@ -34,7 +34,7 @@
         # Circles, cuz rotation of rectangles looks very bad
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 20
+      density: 50
       mask:
       - MobMask
       layer:
@@ -51,8 +51,7 @@
   - type: Hands
     showInHands: false
   - type: Body
-    template: DroneTemplate
-    preset: DronePreset
+    prototype: Drone
   - type: DoAfter
   - type: Pullable
   - type: Examiner
@@ -61,6 +60,9 @@
     safe: false
   - type: StandingState
   - type: Alerts
+  - type: Tag
+    tags:
+      - ShoesRequiredStepTriggerImmune
 
 - type: entity
   name: drone
@@ -68,6 +70,7 @@
   parent: PlayerSiliconBase
   components:
   - type: Drone
+  - type: InnateTool
     tools:
       - id: ClothingBackpackSatchelDrone
       - id: trayScanner
@@ -95,6 +98,10 @@
     baseWalkSpeed : 5
     baseSprintSpeed : 5
   - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
     thresholds:
       0: Alive
       60: Dead
@@ -128,7 +135,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 20
+      density: 50
       mask:
       - SmallMobMask
       layer:
@@ -151,7 +158,7 @@
     toggleAction:
       name: action-name-toggle-light
       description: action-description-toggle-light
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       event: !type:ToggleActionEvent
   - type: PointLight
@@ -162,6 +169,7 @@
     autoRot: true
   - type: Tag
     tags:
+      - ShoesRequiredStepTriggerImmune
       - CannotSuicide
 
 - type: entity
@@ -169,8 +177,7 @@
   id: Onestar
   parent: PlayerSiliconBase
   components:
-  - type: Drone
-    applyLaws: false
+  - type: InnateTool
     tools:
       - id: WeaponMinigun
       - id: EnergySword
@@ -184,11 +191,15 @@
     makeSentient: true
     name: Onestar Mecha
     description: You are an experimental mecha created by who-knows-what, all you know is that you have weapons and you detect fleshy moving targets nearby...
-    rules: Use your weapons to cause havok. You are an antagonist.
+    rules: Use your weapons to cause havoc. You are an antagonist.
   - type: MovementSpeedModifier
     baseWalkSpeed : 3
     baseSprintSpeed : 2
   - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
     thresholds:
       0: Alive
       1000: Dead
@@ -207,7 +218,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 1
-      mass: 500
+      density: 160
       mask:
       - LargeMobMask
       layer:

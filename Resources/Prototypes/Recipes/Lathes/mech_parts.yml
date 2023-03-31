@@ -1,0 +1,47 @@
+- type: latheRecipe
+  id: RipleyHarness
+  result: RipleyHarness
+  completetime: 10
+  materials:
+    Steel: 3000
+    Glass: 1200
+
+- type: latheRecipe
+  id: RipleyLArm
+  result: RipleyLArm
+  completetime: 10
+  materials:
+    Steel: 3000
+    Glass: 1200
+
+- type: latheRecipe
+  id: RipleyLLeg
+  result: RipleyLLeg
+  completetime: 10
+  materials:
+    Steel: 3000
+    Glass: 1200
+
+- type: latheRecipe
+  id: RipleyRLeg
+  result: RipleyRLeg
+  completetime: 10
+  materials:
+    Steel: 3000
+    Glass: 1200
+
+- type: latheRecipe
+  id: RipleyRArm
+  result: RipleyRArm
+  completetime: 10
+  materials:
+    Steel: 3000
+    Glass: 1200
+
+- type: latheRecipe
+  id: MechEquipmentGrabber
+  result: MechEquipmentGrabber
+  completetime: 10
+  materials:
+    Steel: 500
+    Plastic: 200
