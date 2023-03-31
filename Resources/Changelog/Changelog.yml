@@ -1,11 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Retractors are now properly printable again., type: Fix}
-  id: 2797
-  time: '2022-12-21T20:47:10.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Fixed IFF consoles being able to be opened without power., type: Fix}
   id: 2798
   time: '2022-12-22T02:43:46.0000000+00:00'
@@ -2913,3 +2908,8 @@ Entries:
     type: Tweak}
   id: 3296
   time: '2023-03-31T04:32:19.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Bandanas and caps can now be butchered., type: Tweak}
+  id: 3297
+  time: '2023-03-31T04:33:20.0000000+00:00'
