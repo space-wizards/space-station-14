@@ -229,3 +229,10 @@
   components:
   - type: TimedDespawn
     lifetime: 0.5
+
+- type: entity
+  id: SurgeryRealmToolDuel
+  parent: Scalpel
+  name: scalpel from the underground
+  components:
+  - type: SurgeryRealmToolDuel

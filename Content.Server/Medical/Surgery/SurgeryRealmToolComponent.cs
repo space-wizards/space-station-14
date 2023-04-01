@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Map;
+﻿using Robust.Server.Player;
+using Robust.Shared.Map;
 
 namespace Content.Server.Medical.Surgery;
 
@@ -6,7 +7,7 @@ namespace Content.Server.Medical.Surgery;
 [Access(typeof(SurgeryRealmSystem))]
 public sealed class SurgeryRealmToolComponent : Component
 {
-    [ViewVariables] public readonly HashSet<EntityUid> Victims = new();
+    [ViewVariables] public readonly HashSet<IPlayerSession> Victims = new();
 
     [ViewVariables] public MapCoordinates? Position;
 

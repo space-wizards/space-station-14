@@ -7,6 +7,4 @@ public sealed class SurgeryRealmVictimComponent : Component
     [ViewVariables] public EntityUid Heart;
 
     [ViewVariables] public EntityUid Tool;
-
-    [ViewVariables] public bool Successful;
 }

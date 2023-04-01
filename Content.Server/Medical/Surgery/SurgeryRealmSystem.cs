@@ -200,17 +200,31 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
 
         if (args.User != args.Target)
         {
+            if (!HasComp<SurgeryRealmToolDuelComponent>(args.Used))
+                return;
+
+            if (!TryComp(args.User, out ActorComponent? userActor) ||
+                !TryComp(args.Target, out ActorComponent? targetActor))
+            {
+                return;
+            }
+
+            StartDuel(new List<IPlayerSession> {userActor.PlayerSession, targetActor.PlayerSession}, args.Used);
+
             return;
         }
 
-        if (HasComp<SurgeryRealmVictimComponent>(args.User) ||
-            !TryComp(args.User, out ActorComponent? userActor))
         {
-            return;
+            if (HasComp<SurgeryRealmVictimComponent>(args.User) ||
+                !TryComp(args.User, out ActorComponent? userActor))
+            {
+                return;
+            }
+
+            var ev = new SurgeryRealmRequestSelfEvent();
+            RaiseNetworkEvent(ev, userActor.PlayerSession);
         }
 
-        var ev = new SurgeryRealmRequestSelfEvent();
-        RaiseNetworkEvent(ev, userActor.PlayerSession);
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent ev)
@@ -241,7 +255,7 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
         tool.Fight++;
         var fight = tool.Fight;
 
-        tool.Victims.Add(victimEntity);
+        tool.Victims.Add(victimPlayer);
 
         victim.Heart = Spawn(tool.HeartPrototype, tool.Position.Value.Offset(0, -5));
         _console.ExecuteCommand($"scale {victim.Heart} 2.5");
@@ -310,7 +324,7 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
             if (tool.Position == null || fight != tool.Fight)
                 return;
 
-            SpawnVerticallySlidingPdas(tool.Position.Value);
+            SpawnOppositeBananaWallsHoles(tool.Position.Value);
         });
 
         Timer.Spawn(17000, () =>
@@ -329,12 +343,12 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
             SpawnVerticallySlidingPdas(tool.Position.Value);
         });
 
-        Timer.Spawn(35000, () =>
+        Timer.Spawn(45000, () =>
         {
             if (tool.Position == null || fight != tool.Fight)
                 return;
 
-            StopOperation(victimPlayer);
+            StopOperation(victimPlayer, true);
         });
     }
 
@@ -359,7 +373,7 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
         if (tool.Position == null || tool.Victims.Count == 0)
             tool.Position = new MapCoordinates(GetNextPosition(), _surgeryRealmMap);
 
-        tool.Victims.UnionWith(victimEntities);
+        tool.Victims.UnionWith(victimPlayers);
 
         var clown = Spawn("SurgeryRealmClown", tool.Position.Value.Offset(0, 3));
         _console.ExecuteCommand($"scale {clown} 5");
@@ -370,7 +384,7 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
         {
             var victimEntity = victimEntities[i];
             var victimPlayer = victimPlayers[i];
-            var victim = EnsureComp<SurgeryRealmVictimComponent>(firstPlayerEntity);
+            var victim = EnsureComp<SurgeryRealmVictimComponent>(victimEntity);
             victim.Tool = toolId.Value;
             victim.Heart = Spawn(tool.HeartPrototype, tool.Position.Value.Offset(0, -5));
             _console.ExecuteCommand($"scale {victim.Heart} 2.5");
@@ -456,11 +470,25 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
                 SpawnVerticallySlidingPdas(tool.Position.Value, speedMultiplier);
             });
 
-            Timer.Spawn(thirdStage + 3000, () =>
+            Timer.Spawn(thirdStage + 13000, () =>
             {
                 if (tool.Victims.Count > 1 && tool.Position != null && fight == tool.Fight)
                 {
                     A(speedMultiplier * 2);
+                }
+                else
+                {
+                    foreach (var toolVictim in tool.Victims)
+                    {
+                        if (tool.Victims.Count == 1)
+                        {
+                            StopOperation(toolVictim, true);
+                        }
+                        else
+                        {
+                            StopOperation(toolVictim);
+                        }
+                    }
                 }
             });
         }
@@ -581,7 +609,7 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
         Physics.SetLinearVelocity(pda, new Vector2(0, -20));
     }
 
-    public void StopOperation(IPlayerSession victimPlayer)
+    public void StopOperation(IPlayerSession victimPlayer, bool successful = false)
     {
         if (victimPlayer.AttachedEntity is not { } victimEntity)
             return;
@@ -599,12 +627,12 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
 
         if (TryComp(victimEntity, out SurgeryRealmVictimComponent? victim))
         {
-            if (victim.Successful)
+            if (successful)
                 RaiseLocalEvent(victimEntity, new RejuvenateEvent());
 
             if (TryComp(victim.Tool, out SurgeryRealmToolComponent? tool))
             {
-                tool.Victims.Remove(victimEntity);
+                tool.Victims.Remove(victimPlayer);
                 if (tool.Victims.Count == 0)
                     tool.Position = null;
             }
