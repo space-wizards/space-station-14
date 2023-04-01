@@ -68,20 +68,20 @@ namespace Content.IntegrationTests.Tests.DoAfter
 
             var entityManager = server.ResolveDependency<IEntityManager>();
             var doAfterSystem = entityManager.EntitySysManager.GetEntitySystem<SharedDoAfterSystem>();
-            var data = new TestDoAfterEvent();
+            var ev = new TestDoAfterEvent();
 
             // That it finishes successfully
             await server.WaitPost(() =>
             {
                 var tickTime = 1.0f / IoCManager.Resolve<IGameTiming>().TickRate;
                 var mob = entityManager.SpawnEntity("Dummy", MapCoordinates.Nullspace);
-                var args = new DoAfterArgs(mob, tickTime / 2, new TestDoAfterEvent(), null) { Broadcast = true };
+                var args = new DoAfterArgs(mob, tickTime / 2, ev, null) { Broadcast = true };
                 Assert.That(doAfterSystem.TryStartDoAfter(args));
-                Assert.That(data.Cancelled, Is.False);
+                Assert.That(ev.Cancelled, Is.False);
             });
 
             await server.WaitRunTicks(1);
-            Assert.That(data.Cancelled, Is.False);
+            Assert.That(ev.Cancelled, Is.False);
 
             await pairTracker.CleanReturnAsync();
         }
