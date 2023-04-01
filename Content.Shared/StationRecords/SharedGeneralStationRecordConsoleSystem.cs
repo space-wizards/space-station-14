@@ -20,6 +20,10 @@ public enum GeneralStationRecordConsoleKey : byte
 ///     - SelectedKey non-null, Record non-null, RecordListing non-null
 ///         - The selected key has a record tied to it, and the record has been sent.
 ///
+///     - there is added new filters and so added new states
+///         -SelectedKey null, Record null, RecordListing null, filters non-null
+///            the station may have data, but they all did not pass through the filters
+///
 ///     Other states are erroneous.
 /// </summary>
 [Serializable, NetSerializable]
