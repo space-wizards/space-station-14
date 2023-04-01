@@ -472,6 +472,9 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
 
             Timer.Spawn(thirdStage + 13000, () =>
             {
+                if (fight != tool.Fight)
+                    return;
+
                 if (tool.Victims.Count > 1 && tool.Position != null && fight == tool.Fight)
                 {
                     A(speedMultiplier * 2);
