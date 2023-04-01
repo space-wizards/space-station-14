@@ -165,7 +165,9 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     public bool TryStartDoAfter(DoAfterArgs args, [NotNullWhen(true)] out DoAfterId? id, DoAfterComponent? comp = null)
     {
         DebugTools.Assert(args.Broadcast || Exists(args.EventTarget) || args.Event.GetType() == typeof(AwaitedDoAfterEvent));
-        DebugTools.Assert(args.Event.GetType().HasCustomAttribute<NetSerializableAttribute>(), "Do after event is not serializable");
+        DebugTools.Assert(args.Event.GetType().HasCustomAttribute<NetSerializableAttribute>()
+            || args.Event.GetType().Namespace is {} ns && ns.StartsWith("Content.IntegrationTests"), // classes defined in tests cannot be marked as serializable.
+            $"Do after event is not serializable. Event: {args.Event.GetType()}");
 
         if (!Resolve(args.User, ref comp))
         {
@@ -219,6 +221,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         comp.DoAfters.Add(doAfter.Index, doAfter);
         EnsureComp<ActiveDoAfterComponent>(args.User);
         Dirty(comp);
+        args.Event.DoAfter = doAfter;
         return true;
     }
 

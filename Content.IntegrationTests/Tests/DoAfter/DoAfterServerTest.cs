@@ -24,22 +24,8 @@ namespace Content.IntegrationTests.Tests.DoAfter
   - type: DoAfter
 ";
 
-        public sealed class TestDoAfterSystem : EntitySystem
-        {
-            public override void Initialize()
-            {
-                SubscribeLocalEvent<TestDoAfterEvent>(OnTestDoAfterFinishEvent);
-            }
-
-            private void OnTestDoAfterFinishEvent(TestDoAfterEvent ev)
-            {
-                ev.Cancelled = ev.Cancelled;
-            }
-        }
-
         private sealed class TestDoAfterEvent : DoAfterEvent
         {
-            public bool Cancelled;
             public override DoAfterEvent Clone()
             {
                 return this;
