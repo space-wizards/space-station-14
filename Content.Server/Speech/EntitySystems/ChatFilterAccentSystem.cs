@@ -1,9 +1,14 @@
 ﻿using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
+using Content.Shared.CCVar;
+using Robust.Shared.Configuration;
+
 namespace Content.Server.Speech.EntitySystems;
 
 public sealed class ChatFilterAccentSystem : EntitySystem
 {
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+
     private static readonly Dictionary<string, string> DirectReplacements = new()
     {
         { "fuck", "####" },
@@ -64,9 +69,15 @@ public sealed class ChatFilterAccentSystem : EntitySystem
     {
         var msg = message;
 
-        foreach (var (first, replace) in DirectReplacements)
+        if (_cfg.GetCVar(CCVars.GameChatFilter) == true)
         {
-            msg = Regex.Replace(msg, $@"{first}", replace, RegexOptions.IgnoreCase);
+
+            foreach (var (first, replace) in DirectReplacements)
+            {
+                msg = Regex.Replace(msg, $@"{first}", replace, RegexOptions.IgnoreCase);
+            }
+
+            return msg;
         }
 
         return msg;

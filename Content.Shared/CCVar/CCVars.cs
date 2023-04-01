@@ -276,6 +276,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> GameTableBonk =
             CVarDef.Create("game.table_bonk", false, CVar.SERVERONLY);
 
+        /// <summary>
+        /// Enables the Roblox chat filter. True by default.
+        /// </summary>
+        public static readonly CVarDef<bool> GameChatFilter =
+            CVarDef.Create("game.chat_filter", true, CVar.SERVERONLY);
+
 #if EXCEPTION_TOLERANCE
         /// <summary>
         ///     Amount of times round start must fail before the server is shut down.
