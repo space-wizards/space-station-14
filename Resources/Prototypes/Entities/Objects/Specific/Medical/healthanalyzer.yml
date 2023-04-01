@@ -39,7 +39,6 @@
   suffix: admin abuse
   components:
   - type: HealthAnalyzer
-    fake: true
     disease: OwOnavirus
 
 - type: entity
@@ -49,5 +48,4 @@
   suffix: Active
   components:
   - type: HealthAnalyzer
-    fake: true
     disease: ActiveZombieVirus
