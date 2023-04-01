@@ -383,6 +383,9 @@
       name: Cluwne
       description: Become a pitiful cluwne, your only goal in life is to find a sweet release from your suffering (usually by being beaten to death). A cluwne is not an antagonist but may defend itself. Crewmembers may murder cluwnes freely.
     - type: Cluwne
+    
+    
+- type: entity
   id: RandomHumanoidSpawnerWizard
   name: Wizard
   components:
