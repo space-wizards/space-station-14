@@ -223,14 +223,15 @@ namespace Content.Server.Construction
             // The DoAfter events can only perform special logic when we're not validating events.
             if (ev is ConstructionInteractDoAfterEvent interactDoAfter)
             {
-                construction.DoAfter = null;
+                if (!validation)
+                    construction.DoAfter = null;
 
-                if (interactDoAfter.Used == null || interactDoAfter.Cancelled)
+                if (interactDoAfter.Cancelled)
                     return HandleResult.False;
 
                 ev = new InteractUsingEvent(
                     interactDoAfter.User,
-                    interactDoAfter.Used.Value,
+                    interactDoAfter.Used!.Value,
                     uid,
                     interactDoAfter.ClickLocation);
 
@@ -281,7 +282,7 @@ namespace Content.Server.Construction
                     {
                         var doAfterEv = new ConstructionInteractDoAfterEvent(interactUsing);
 
-                        var doAfterEventArgs = new DoAfterArgs(interactUsing.User, step.DoAfter, doAfterEv, uid, uid)
+                        var doAfterEventArgs = new DoAfterArgs(interactUsing.User, step.DoAfter, doAfterEv, uid, uid, interactUsing.Used)
                         {
                             BreakOnDamage = false,
                             BreakOnTargetMove = true,
@@ -290,7 +291,18 @@ namespace Content.Server.Construction
                         };
 
                         var started  = _doAfterSystem.TryStartDoAfter(doAfterEventArgs, out construction.DoAfter);
-                        return started ? HandleResult.DoAfter : HandleResult.False;
+
+                        if (!started)
+                            return HandleResult.False;
+
+#if DEBUG
+                        // Verify that the resulting DoAfter event will be handled by the current construction state.
+                        // if it can't what is even the point of raising this DoAfter?
+                        doAfterEv.DoAfter = new(default, doAfterEventArgs, default);
+                        var result = HandleInteraction(uid, doAfterEv, step, validation: true, out _, construction);
+                        DebugTools.Assert(result == HandleResult.Validated);
+#endif
+                        return HandleResult.DoAfter;
                     }
 
                     // Material steps, which use stacks, are handled specially. Instead of inserting the whole item,
