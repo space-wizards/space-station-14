@@ -1,12 +1,6 @@
 Entries:
 - author: Whisper
   changes:
-  - {message: 'Scalpels can now be used to butcher in emergencies, 50% slower than
-      standard tools.', type: Add}
-  id: 2807
-  time: '2022-12-26T22:09:00.0000000+00:00'
-- author: Whisper
-  changes:
   - {message: 'Pill canisters will now fit in coat storage, at the cost of having
       less space for pills. (12 -> 9)', type: Tweak}
   id: 2808
@@ -2909,3 +2903,8 @@ Entries:
     type: Fix}
   id: 3306
   time: '2023-04-01T14:00:48.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed ghost lighting being disabled when any ghost is removed., type: Fix}
+  id: 3307
+  time: '2023-04-01T22:56:01.0000000+00:00'
