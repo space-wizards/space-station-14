@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
@@ -25,9 +24,7 @@ namespace Content.Client.Viewport
 
         // Internal viewport creation is deferred.
         private IClydeViewport? _viewport;
-        private List<IClydeViewport> _lowerPorts = new();
         private IEye? _eye;
-        private IEye[] _lowerEyes = new IEye[] {};
         private Vector2i _viewportSize;
         private int _curRenderScale;
         private ScalingViewportStretchMode _stretchMode = ScalingViewportStretchMode.Bilinear;
@@ -50,27 +47,6 @@ namespace Content.Client.Viewport
 
                 if (_viewport != null)
                     _viewport.Eye = value;
-            }
-        }
-
-        public IEye[] LowerEyes
-        {
-            get => _lowerEyes;
-            set
-            {
-                var old = value;
-                _lowerEyes = value;
-                if (old.Length != value.Length)
-                {
-                    InvalidateViewport();
-                    Logger.Debug("Eyes updated..");
-                }
-
-
-                foreach (var (eye, port) in _lowerEyes.Zip(_lowerPorts))
-                {
-                    port.Eye = eye;
-                }
             }
         }
 
@@ -161,11 +137,6 @@ namespace Content.Client.Viewport
 
             _viewport!.Render();
 
-            foreach (var viewport in _lowerPorts)
-            {
-                viewport.Render();
-            }
-
             if (_queuedScreenshots.Count != 0)
             {
                 var callbacks = _queuedScreenshots.ToArray();
@@ -184,10 +155,6 @@ namespace Content.Client.Viewport
             var drawBox = GetDrawBox();
             var drawBoxGlobal = drawBox.Translated(GlobalPixelPosition);
             _viewport.RenderScreenOverlaysBelow(handle, this, drawBoxGlobal);
-            foreach (var viewport in _lowerPorts.AsEnumerable().Reverse())
-            {
-                handle.DrawTextureRect(viewport.RenderTarget.Texture, drawBox);
-            }
             handle.DrawTextureRect(_viewport.RenderTarget.Texture, drawBox);
             _viewport.RenderScreenOverlaysAbove(handle, this, drawBoxGlobal);
         }
@@ -257,23 +224,6 @@ namespace Content.Client.Viewport
                 {
                     Filter = StretchMode == ScalingViewportStretchMode.Bilinear,
                 });
-            _viewport.ClearColor = Color.Blue.WithAlpha(0.02f);
-
-            _lowerPorts.Clear();
-            for (var i = 0; i < _lowerEyes.Length; i++)
-            {
-                _lowerPorts.Add(_clyde.CreateViewport(
-                    ViewportSize * renderScale,
-                    new TextureSampleParameters
-                    {
-                        Filter = StretchMode == ScalingViewportStretchMode.Bilinear,
-                    }));
-                _lowerPorts[i].RenderScale = (renderScale, renderScale);
-                _lowerPorts[i].ClearColor = Color.Blue.WithAlpha(0.02f);
-
-                _lowerPorts[i].Eye = _lowerEyes[i];
-                _lowerPorts[i].Eye!.Zoom =  _lowerPorts[i].Eye!.Zoom * (1.02f + i * 0.02f);
-            }
 
             _viewport.RenderScale = (renderScale, renderScale);
 
@@ -291,11 +241,6 @@ namespace Content.Client.Viewport
         {
             _viewport?.Dispose();
             _viewport = null;
-            foreach (var port in _lowerPorts)
-            {
-                port.Dispose();
-            }
-            _lowerPorts = new();
         }
 
         public MapCoordinates ScreenToMap(Vector2 coords)
@@ -346,7 +291,7 @@ namespace Content.Client.Viewport
 
         private void EnsureViewportCreated()
         {
-            if (_viewport == null || _lowerPorts.Count != _lowerEyes.Length)
+            if (_viewport == null)
             {
                 RegenerateViewport();
             }

@@ -1,5 +1,4 @@
 using Content.Client.Parallax.Managers;
-using Content.Shared._Afterlight.ThirdDimension;
 using Content.Shared.CCVar;
 using Content.Shared.Parallax.Biomes;
 using Robust.Client.Graphics;
@@ -20,7 +19,6 @@ public sealed class ParallaxOverlay : Overlay
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IParallaxManager _manager = default!;
     private readonly ParallaxSystem _parallax;
-    private readonly SharedZLevelSystem _zlevel = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowWorld;
 
@@ -29,12 +27,11 @@ public sealed class ParallaxOverlay : Overlay
         ZIndex = ParallaxSystem.ParallaxZIndex;
         IoCManager.InjectDependencies(this);
         _parallax = _entManager.System<ParallaxSystem>();
-        _zlevel = _entManager.System<SharedZLevelSystem>();
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
     {
-        if (args.MapId == MapId.Nullspace || _entManager.HasComponent<BiomeComponent>(_mapManager.GetMapEntityId(args.MapId)) || _zlevel.MapBelow[(int)args.MapId] != null)
+        if (args.MapId == MapId.Nullspace || _entManager.HasComponent<BiomeComponent>(_mapManager.GetMapEntityId(args.MapId)))
             return false;
 
         return true;
