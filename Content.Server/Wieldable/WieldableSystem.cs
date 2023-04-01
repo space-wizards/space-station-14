@@ -129,8 +129,7 @@ namespace Content.Server.Wieldable
             var doargs = new DoAfterArgs(user, component.WieldTime, new WieldableDoAfterEvent(), used, used: used)
             {
                 BreakOnUserMove = false,
-                BreakOnDamage = true,
-                BreakOnTargetMove = true
+                BreakOnDamage = true
             };
 
             _doAfter.TryStartDoAfter(doargs);
