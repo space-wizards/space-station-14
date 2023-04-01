@@ -2,6 +2,7 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using System;
 
 namespace Content.Shared.Medical.Treatments.Components;
 
@@ -19,7 +20,7 @@ public sealed class TreatmentComponent : Component
 
     [DataField("targetUsable")] public bool TargetUsable = true;
 }
-[NetSerializable]
+[Serializable, NetSerializable]
 public sealed class TreatmentComponentState : ComponentState
 {
     public string TreatmentType;

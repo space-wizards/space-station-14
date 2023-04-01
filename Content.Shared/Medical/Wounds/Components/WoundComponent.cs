@@ -1,5 +1,6 @@
 ﻿using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Treatments.Prototypes;
+using Content.Shared.Medical.Treatments.Systems;
 using Content.Shared.Medical.Wounds.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -10,7 +11,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Medical.Wounds.Components;
 
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(WoundSystem))]
+[Access(typeof(WoundSystem), typeof(TreatmentSystem))]
 public sealed class WoundComponent : Component
 {
     //what wound should be created if this wound is healed normally?
