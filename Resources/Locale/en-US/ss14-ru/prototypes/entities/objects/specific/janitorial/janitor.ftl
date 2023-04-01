@@ -1,6 +1,9 @@
 ent-MopItem = mop
     .desc = A mop that can't be stopped, viscera cleanup detail awaits.
     .suffix = { "" }
+ent-AdvMopItem = advanced mop
+    .desc = Motorized mop that have a bigger reservoir and can mop multiple puddles at once. Automatic Clown Countermeasure no included.
+    .suffix = { "" }
 ent-MopBucket = mop bucket
     .desc = Holds water and the tears of the janitor.
     .suffix = Full
