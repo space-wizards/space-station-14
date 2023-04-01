@@ -1,11 +1,4 @@
 Entries:
-- author: Carbonhell
-  changes:
-  - {message: 'Medbay can now obtain cryo pods, specialized cryogenics machines used
-      to lower the temperature of a patient to extreme values somewhat safely to use
-      specific chemicals, such as cryoxadone.', type: Add}
-  id: 2805
-  time: '2022-12-25T11:35:51.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: You can no longer spam print technology disks., type: Fix}
@@ -2912,3 +2905,8 @@ Entries:
       to have something in them first to anchor them., type: Tweak}
   id: 3304
   time: '2023-04-01T08:29:34.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix context menu and storage range checks., type: Fix}
+  id: 3305
+  time: '2023-04-01T09:53:00.0000000+00:00'
