@@ -378,13 +378,28 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
             Physics.SetLinearVelocity(projectile2, new Vector2(-xSpeed, 0));
         }
 
+        Timer.Spawn(250, () =>
+        {
+            for (var y = -6; y < -1; y++)
+            {
+                var projectile1 = Spawn("SurgeryRealmBananaProjectile", coordinates.Offset(6, y - 0.25f));
+                var projectile2 = Spawn("SurgeryRealmBananaProjectile", coordinates.Offset(6, y + 0.25f));
+
+                Physics.SetLinearVelocity(projectile1, new Vector2(xSpeed, 0));
+                Physics.SetLinearVelocity(projectile2, new Vector2(xSpeed, 0));
+            }
+        });
+
         Timer.Spawn(500, () =>
         {
-            var projectile2 = Spawn("SurgeryRealmBananaProjectile", coordinates.Offset(6, -6 - 0.25f));
-            var projectile3 = Spawn("SurgeryRealmBananaProjectile", coordinates.Offset(6, -6 + 0.25f));
+            for (var y = -6; y < -1; y++)
+            {
+                var projectile1 = Spawn("SurgeryRealmBananaProjectile", coordinates.Offset(6, y - 0.25f));
+                var projectile2 = Spawn("SurgeryRealmBananaProjectile", coordinates.Offset(6, y + 0.25f));
 
-            Physics.SetLinearVelocity(projectile2, new Vector2(-xSpeed, 0));
-            Physics.SetLinearVelocity(projectile3, new Vector2(-xSpeed, 0));
+                Physics.SetLinearVelocity(projectile1, new Vector2(xSpeed, 0));
+                Physics.SetLinearVelocity(projectile2, new Vector2(xSpeed, 0));
+            }
         });
 
         if (chain)
