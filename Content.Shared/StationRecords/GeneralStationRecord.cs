@@ -1,3 +1,4 @@
+using Content.Shared.Security;
 using Robust.Shared.Enums;
 using Robust.Shared.Serialization;
 
@@ -62,4 +63,10 @@ public sealed class GeneralStationRecord
     /// </summary>
     [ViewVariables]
     public string? Fingerprint;
+
+    /// <summary>
+    ///     Status of the person (None, Wanted, Detained).
+    /// </summary>
+    [ViewVariables]
+    public SecurityStatus? Status = SecurityStatus.None;
 }

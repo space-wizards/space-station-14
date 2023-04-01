@@ -1,6 +1,11 @@
+using System.Security.AccessControl;
+using Content.Server.Database;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Station.Systems;
+using Content.Shared.Preferences;
 using Content.Shared.Radio;
+using Content.Shared.Security;
+using Content.Server.Security.Components;
 using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
@@ -22,6 +27,7 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
         SubscribeLocalEvent<GeneralStationRecordConsoleComponent, RecordModifiedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<GeneralStationRecordConsoleComponent, AfterGeneralRecordCreatedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<GeneralStationRecordConsoleComponent, StationRecordArrestButtonPressed>(OnButtonPressed);
+        SubscribeLocalEvent<GeneralStationRecordConsoleComponent, StatusOptionButtonSelected>(OnStatusSelected);
     }
 
     private void UpdateUserInterface<T>(EntityUid uid, GeneralStationRecordConsoleComponent component, T ev)
@@ -39,10 +45,46 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
     private void OnButtonPressed(EntityUid uid, GeneralStationRecordConsoleComponent component,
         StationRecordArrestButtonPressed msg)
     {
-        if (msg.Reason != null && msg.Name != null)
-        {
-            _radioSystem.SendRadioMessage(component.Owner, $"{msg.Name} has been detained for {msg.Reason}",
+        if (msg.Reason != null && msg.Name != null && msg.Session.AttachedEntity != null)
+            _radioSystem.SendRadioMessage(component.Owner, $"{msg.Name} has been detained for {msg.Reason} by {Name(msg.Session.AttachedEntity.Value)}",
                 _prototypeManager.Index<RadioChannelPrototype>("Security"));
+
+        else if (msg.Reason == null && msg.Name != null && msg.Session.AttachedEntity != null)
+            _radioSystem.SendRadioMessage(component.Owner, $"{msg.Name} has been detained by {Name(msg.Session.AttachedEntity.Value)}",
+                _prototypeManager.Index<RadioChannelPrototype>("Security"));
+
+        var station = _stationSystem.GetOwningStation(uid);
+        _stationRecordsSystem.Synchronize(station!.Value);
+    }
+
+    private void OnStatusSelected(EntityUid uid, GeneralStationRecordConsoleComponent component,
+        StatusOptionButtonSelected msg)
+    {
+        if (msg.Status != null)
+        {
+            TryComp<SecurityInfoComponent>(msg.Session.AttachedEntity, out var secInfo);
+
+            if (msg.Reason != null && msg.Status != null && secInfo != null && msg.Session.AttachedEntity != null)
+            {
+                secInfo.Status = msg.Status;
+
+                _radioSystem.SendRadioMessage(component.Owner, $"{msg.Name} is wanted for {msg.Reason} by {Name(msg.Session.AttachedEntity.Value)}",
+                    _prototypeManager.Index<RadioChannelPrototype>("Security"));
+
+                var station = _stationSystem.GetOwningStation(uid);
+                _stationRecordsSystem.Synchronize(station!.Value);
+            }
+
+            else if (msg.Reason == null && msg.Status != null && secInfo != null && msg.Session.AttachedEntity != null)
+            {
+                secInfo.Status = msg.Status;
+
+                _radioSystem.SendRadioMessage(component.Owner, $"{msg.Name} is wanted by {Name(msg.Session.AttachedEntity.Value)}",
+                    _prototypeManager.Index<RadioChannelPrototype>("Security"));
+                var station = _stationSystem.GetOwningStation(uid);
+                _stationRecordsSystem.Synchronize(station!.Value);
+            }
+
         }
     }
 

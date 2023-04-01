@@ -1,3 +1,4 @@
+using Content.Shared.Security;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.StationRecords;
@@ -61,6 +62,21 @@ public sealed class StationRecordArrestButtonPressed : BoundUserInterfaceMessage
 
     public StationRecordArrestButtonPressed(string? reason, string? name)
     {
+        Reason = reason;
+        Name = name;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class StatusOptionButtonSelected : BoundUserInterfaceMessage
+{
+    public SecurityStatus Status;
+    public string? Reason;
+    public string? Name;
+
+    public StatusOptionButtonSelected(SecurityStatus status, string? reason, string? name)
+    {
+        Status = status;
         Reason = reason;
         Name = name;
     }

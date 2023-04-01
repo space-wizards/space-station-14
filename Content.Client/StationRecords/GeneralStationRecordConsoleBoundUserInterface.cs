@@ -20,7 +20,8 @@ public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInt
 
         _window.OpenCentered();
 
-        _window.OnArrestButtonPressed += (_, a, b) => SendMessage(new StationRecordArrestButtonPressed(a, b));
+        _window.OnArrestButtonPressed += (_, reason, name) => SendMessage(new StationRecordArrestButtonPressed(reason, name));
+        _window.OnStatusOptionButtonSelected += (_, status, reason, name) => SendMessage(new StatusOptionButtonSelected(status, reason, name));
     }
 
     private void OnKeySelected(StationRecordKey? key)
