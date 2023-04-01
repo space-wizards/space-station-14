@@ -85,13 +85,16 @@ public sealed partial class RevenantSystem
 
     private void BeginSoulSearchDoAfter(EntityUid uid, EntityUid target, RevenantComponent revenant)
     {
-        _popup.PopupEntity(Loc.GetString("revenant-soul-searching", ("target", target)), uid, uid, PopupType.Medium);
         var searchDoAfter = new DoAfterArgs(uid, revenant.SoulSearchDuration, new SoulEvent(), uid, target: target)
         {
             BreakOnUserMove = true,
             DistanceThreshold = 2
         };
-        _doAfter.TryStartDoAfter(searchDoAfter);
+
+        if (!_doAfter.TryStartDoAfter(searchDoAfter))
+            return;
+
+        _popup.PopupEntity(Loc.GetString("revenant-soul-searching", ("target", target)), uid, uid, PopupType.Medium);
     }
 
     private void OnSoulSearch(EntityUid uid, RevenantComponent component, SoulEvent args)
@@ -139,8 +142,11 @@ public sealed partial class RevenantSystem
         {
             DistanceThreshold = 2,
             BreakOnUserMove = true,
-            NeedHand = false
+            RequireCanInteract = false, // stuns itself
         };
+
+        if (!_doAfter.TryStartDoAfter(doAfter))
+            return;
 
         _appearance.SetData(uid, RevenantVisuals.Harvesting, true);
 
@@ -148,7 +154,6 @@ public sealed partial class RevenantSystem
             target, PopupType.Large);
 
         TryUseAbility(uid, revenant, 0, revenant.HarvestDebuffs);
-        _doAfter.TryStartDoAfter(doAfter);
     }
 
     private void OnHarvest(EntityUid uid, RevenantComponent component, HarvestEvent args)
