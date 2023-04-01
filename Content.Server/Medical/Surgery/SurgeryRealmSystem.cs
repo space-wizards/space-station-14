@@ -1,4 +1,5 @@
-﻿using Content.Server.Damage.Systems;
+﻿using System.Linq;
+using Content.Server.Damage.Systems;
 using Content.Server.Hands.Components;
 using Content.Server.Lightning;
 using Content.Server.Lightning.Components;
@@ -41,7 +42,7 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
     [Dependency] private readonly TransformSystem _transform = default!;
 
     private MapId _surgeryRealmMap = MapId.Nullspace;
-    private int _sections;
+    private int _sections = 1;
 
     public override void Initialize()
     {
@@ -63,7 +64,7 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
     {
         if (HasComp<SurgeryRealmEdgeComponent>(args.OtherFixture.Body.Owner))
         {
-            if (_timing.CurTick > MetaData(uid).CreationTick + 90)
+            if (_timing.CurTick > MetaData(uid).CreationTick + 60)
                 QueueDel(uid);
         }
 
@@ -81,6 +82,9 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
 
     private void SubtractHealth(SurgeryRealmHeartComponent heart)
     {
+        if (heart.Health == 0)
+            return;
+
         heart.Health--;
         Dirty(heart);
 
@@ -93,6 +97,7 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
             return;
 
         StopOperation(actor.PlayerSession);
+        QueueDel(heart.Owner);
     }
 
     private void OnHeartCollide(EntityUid uid, SurgeryRealmHeartComponent component, ref StartCollideEvent args)
@@ -125,11 +130,13 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
 
         _audio.Play(new SoundPathSpecifier("/Audio/Surgery/blast.ogg"), Filter.Empty().AddInRange(sliding.SectionPos, 10), sliding.Owner, true, AudioParams.Default.WithVolume(10));
 
+        var slidingPos = _transform.GetWorldPosition(sliding.Owner);
+        var y = sliding.SectionPos.Y + sliding.FinalY;
+        _transform.SetWorldPosition(sliding.Owner, (slidingPos.X, y));
+
         Timer.Spawn(1000, () =>
         {
-            var slidingPos = _transform.GetWorldPosition(sliding.Owner);
-            var x = -(sliding.SectionPos.X + slidingPos.X) * 2;
-            var y = sliding.SectionPos.Y + sliding.FinalY;
+            var x = sliding.SectionPos.X - (slidingPos.X - sliding.SectionPos.X);
             var opposite = Spawn("", new MapCoordinates(x, y, sliding.SectionPos.MapId));
             var controller = Spawn("SurgeryRealmVirtualBeamEntityController", sliding.SectionPos);
 
@@ -154,7 +161,7 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
     {
         if (HasComp<SurgeryRealmEdgeComponent>(args.OtherFixture.Body.Owner))
         {
-            if (_timing.CurTick > MetaData(uid).CreationTick + 90)
+            if (_timing.CurTick > MetaData(uid).CreationTick + 60)
                 QueueDel(uid);
         }
 
@@ -168,7 +175,7 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
     {
         if (HasComp<SurgeryRealmEdgeComponent>(args.OtherFixture.Body.Owner))
         {
-            if (_timing.CurTick > MetaData(uid).CreationTick + 90)
+            if (_timing.CurTick > MetaData(uid).CreationTick + 60)
                 QueueDel(uid);
         }
 
@@ -191,31 +198,19 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
             return;
         }
 
-        if (args.User == args.Target)
+        if (args.User != args.Target)
         {
-            if (!HasComp<SurgeryRealmVictimComponent>(args.User) &&
-                TryComp(args.User, out ActorComponent? userActor))
-            {
-                var ev = new SurgeryRealmRequestSelfEvent();
-                RaiseNetworkEvent(ev, userActor.PlayerSession);
-            }
+            return;
         }
-        else
+
+        if (HasComp<SurgeryRealmVictimComponent>(args.User) ||
+            !TryComp(args.User, out ActorComponent? userActor))
         {
-            if (!HasComp<SurgeryRealmVictimComponent>(args.User) &&
-                TryComp(args.User, out ActorComponent? userActor))
-            {
-                StartOperation(userActor.PlayerSession, args.Used);
-            }
-
-            if (HasComp<SurgeryRealmVictimComponent>(args.Target) ||
-                !TryComp(args.Target, out ActorComponent? targetActor))
-            {
-                return;
-            }
-
-            StartOperation(targetActor.PlayerSession, args.Used);
+            return;
         }
+
+        var ev = new SurgeryRealmRequestSelfEvent();
+        RaiseNetworkEvent(ev, userActor.PlayerSession);
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent ev)
@@ -225,7 +220,7 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
 
         _maps.DeleteMap(_surgeryRealmMap);
         _surgeryRealmMap = MapId.Nullspace;
-        _sections = 0;
+        _sections = 1;
     }
 
     public void StartOperation(IPlayerSession victimPlayer, EntityUid? toolId, SurgeryRealmMusic? music = null)
@@ -236,11 +231,15 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
         toolId ??= Spawn("Scalpel", Transform(victimEntity).Coordinates);
         var tool = EnsureComp<SurgeryRealmToolComponent>(toolId.Value);
         var victim = EnsureComp<SurgeryRealmVictimComponent>(victimEntity);
+        victim.Tool = toolId.Value;
 
         EnsureMap();
 
         if (tool.Position == null || tool.Victims.Count == 0)
             tool.Position = new MapCoordinates(GetNextPosition(), _surgeryRealmMap);
+
+        tool.Fight++;
+        var fight = tool.Fight;
 
         tool.Victims.Add(victimEntity);
 
@@ -275,9 +274,9 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
         {
             switch (_random.NextFloat())
             {
-                case var x when x < 0.25:
-                    RaiseNetworkEvent(new SurgeryRealmStartEvent(camera), victimPlayer);
-                    break;
+                // case var x when x < 0.25:
+                    // RaiseNetworkEvent(new SurgeryRealmStartEvent(camera), victimPlayer);
+                    // break;
                 case var x when x < 0.95:
                     _audio.PlayEntity(new SoundPathSpecifier("/Audio/Surgery/megalovania.ogg"), camera, camera, AudioParams.Default.WithVolume(2));
                     break;
@@ -290,9 +289,9 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
         {
             switch (music)
             {
-                case SurgeryRealmMusic.Midi:
-                    RaiseNetworkEvent(new SurgeryRealmStartEvent(camera), victimPlayer);
-                    break;
+                // case SurgeryRealmMusic.Midi:
+                //     RaiseNetworkEvent(new SurgeryRealmStartEvent(camera), victimPlayer);
+                //     break;
                 case SurgeryRealmMusic.Megalovania:
                     _audio.PlayEntity(new SoundPathSpecifier("/Audio/Surgery/megalovania.ogg"), camera, camera, AudioParams.Default.WithVolume(2));
                     break;
@@ -308,23 +307,165 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
 
         Timer.Spawn(2000, () =>
         {
-            SpawnOppositeBananaWallsHoles(tool.Position.Value);
+            if (tool.Position == null || fight != tool.Fight)
+                return;
+
+            SpawnVerticallySlidingPdas(tool.Position.Value);
         });
 
         Timer.Spawn(17000, () =>
         {
+            if (tool.Position == null || fight != tool.Fight)
+                return;
+
             SpawnAlternatingBananaPillars(tool.Position.Value);
         });
 
         Timer.Spawn(32000, () =>
         {
+            if (tool.Position == null || fight != tool.Fight)
+                return;
+
             SpawnVerticallySlidingPdas(tool.Position.Value);
         });
 
         Timer.Spawn(35000, () =>
         {
+            if (tool.Position == null || fight != tool.Fight)
+                return;
+
             StopOperation(victimPlayer);
         });
+    }
+
+    public void StartDuel(List<IPlayerSession> victimPlayers, EntityUid? toolId, SurgeryRealmMusic? music = null)
+    {
+        if (victimPlayers.Count == 0)
+            return;
+
+        if (victimPlayers.Any(player => player.AttachedEntity == null))
+            return;
+
+        var victimEntities = victimPlayers.Select(player => player.AttachedEntity!.Value).ToArray();
+
+        var firstPlayerEntity = victimEntities[0];
+        toolId ??= Spawn("Scalpel", Transform(firstPlayerEntity).Coordinates);
+        var tool = EnsureComp<SurgeryRealmToolComponent>(toolId.Value);
+        tool.Fight++;
+        var fight = tool.Fight;
+
+        EnsureMap();
+
+        if (tool.Position == null || tool.Victims.Count == 0)
+            tool.Position = new MapCoordinates(GetNextPosition(), _surgeryRealmMap);
+
+        tool.Victims.UnionWith(victimEntities);
+
+        var clown = Spawn("SurgeryRealmClown", tool.Position.Value.Offset(0, 3));
+        _console.ExecuteCommand($"scale {clown} 5");
+
+        SpawnEdges(tool.Position.Value);
+
+        for (var i = 0; i < victimEntities.Length; i++)
+        {
+            var victimEntity = victimEntities[i];
+            var victimPlayer = victimPlayers[i];
+            var victim = EnsureComp<SurgeryRealmVictimComponent>(firstPlayerEntity);
+            victim.Tool = toolId.Value;
+            victim.Heart = Spawn(tool.HeartPrototype, tool.Position.Value.Offset(0, -5));
+            _console.ExecuteCommand($"scale {victim.Heart} 2.5");
+
+            var camera = EntityManager.SpawnEntity("SurgeryRealmCamera", tool.Position.Value);
+            EnsureComp<SurgeryRealmHeartComponent>(victim.Heart).Camera = camera;
+
+            var mind = EnsureComp<MindComponent>(victimEntity);
+            var cameraComp = EnsureComp<SurgeryRealmCameraComponent>(camera);
+            cameraComp.OldEntity = victimEntity;
+            cameraComp.Mind = mind.Mind;
+
+            var eyeComponent = EnsureComp<EyeComponent>(camera);
+            eyeComponent.DrawFov = false;
+            _viewSubscriber.AddViewSubscriber(camera, victimPlayer);
+            _mover.SetRelay(camera, victim.Heart);
+            _godmode.EnableGodmode(victimEntity);
+
+            mind.Mind?.Visit(camera);
+
+            if (music == null)
+            {
+                switch (_random.NextFloat())
+                {
+                    // case var x when x < 0.25:
+                    //     if (i == 0)
+                    //         RaiseNetworkEvent(new SurgeryRealmStartEvent(camera), victimPlayer);
+                    //     break;
+                    case var x when x < 0.95:
+                        _audio.PlayEntity(new SoundPathSpecifier("/Audio/Surgery/megalovania.ogg"), camera, camera, AudioParams.Default.WithVolume(2));
+                        break;
+                    default:
+                        _audio.PlayEntity(new SoundPathSpecifier("/Audio/Surgery/undermale.ogg"), camera, camera, AudioParams.Default.WithVolume(6));
+                        break;
+                }
+            }
+            else
+            {
+                switch (music)
+                {
+                    // case SurgeryRealmMusic.Midi:
+                    //     if (i == 0)
+                    //         RaiseNetworkEvent(new SurgeryRealmStartEvent(camera), victimPlayer);
+                    //     break;
+                    case SurgeryRealmMusic.Megalovania:
+                        _audio.PlayEntity(new SoundPathSpecifier("/Audio/Surgery/megalovania.ogg"), camera, camera, AudioParams.Default.WithVolume(2));
+                        break;
+                    case SurgeryRealmMusic.Undermale:
+                        _audio.PlayEntity(new SoundPathSpecifier("/Audio/Surgery/undermale.ogg"), camera, camera, AudioParams.Default.WithVolume(6));
+                        break;
+                    case null:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(music), music, null);
+                }
+            }
+        }
+
+        void A(float speedMultiplier)
+        {
+            Timer.Spawn(2000, () =>
+            {
+                if (tool.Position == null || fight != tool.Fight)
+                    return;
+
+                SpawnOppositeBananaWallsHoles(tool.Position.Value, speedMultiplier);
+            });
+
+            Timer.Spawn(17000, () =>
+            {
+                if (tool.Position == null || fight != tool.Fight)
+                    return;
+
+                SpawnAlternatingBananaPillars(tool.Position.Value, speedMultiplier);
+            });
+
+            var thirdStage = (int) (17000 + 15000 / speedMultiplier);
+            Timer.Spawn(thirdStage, () =>
+            {
+                if (tool.Position == null || fight != tool.Fight)
+                    return;
+
+                SpawnVerticallySlidingPdas(tool.Position.Value, speedMultiplier);
+            });
+
+            Timer.Spawn(thirdStage + 3000, () =>
+            {
+                if (tool.Victims.Count > 1 && tool.Position != null && fight == tool.Fight)
+                {
+                    A(speedMultiplier * 2);
+                }
+            });
+        }
+
+        A(1);
     }
 
     private void SpawnEdges(MapCoordinates coordinates)
@@ -342,9 +483,9 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
         }
     }
 
-    private void SpawnOppositeBananaWallsHoles(MapCoordinates coordinates, bool chain = true)
+    private void SpawnOppositeBananaWallsHoles(MapCoordinates coordinates, float speedMultiplier = 1, bool chain = true)
     {
-        const float xSpeed = 4f;
+        var xSpeed = 4f * speedMultiplier;
         var skip = _random.Next(-5, -1);
 
         for (var y = -6; y < -1; y++)
@@ -375,14 +516,14 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
         {
             for (var i = 1; i < 9; i++)
             {
-                Timer.Spawn(1500 * i, () => SpawnOppositeBananaWallsHoles(coordinates, false));
+                Timer.Spawn(1500 * i, () => SpawnOppositeBananaWallsHoles(coordinates, speedMultiplier, false));
             }
         }
     }
 
-    private void SpawnAlternatingBananaPillars(MapCoordinates coordinates, bool chain = true)
+    private void SpawnAlternatingBananaPillars(MapCoordinates coordinates, float speedMultiplier = 1, bool chain = true)
     {
-        const float xSpeed = 8f;
+        var xSpeed = 8f * speedMultiplier;
 
         for (var y = -6; y < -1; y++)
         {
@@ -409,18 +550,18 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
         {
             for (var i = 1; i < 9; i++)
             {
-                Timer.Spawn(1500 * i, () => SpawnAlternatingBananaPillars(coordinates, false));
+                Timer.Spawn(1500 * i, () => SpawnAlternatingBananaPillars(coordinates, speedMultiplier, false));
             }
         }
     }
 
-    private void SpawnVerticallySlidingPdas(MapCoordinates coordinates)
+    private void SpawnVerticallySlidingPdas(MapCoordinates coordinates, float speedMultiplier = 1)
     {
         var yPositions = new[] { -5, -5, -4, -5, -5, -4, -3, -3, -4 };
         for (var i = 1; i < 10; i++)
         {
             var i1 = i;
-            Timer.Spawn(1000 * i1, () =>
+            Timer.Spawn((int) (1000 * i1 / speedMultiplier), () =>
             {
                 var x = i1 % 2 == 0 ? 8 : -8;
                 SpawnSinglePda(coordinates, (x, yPositions[i1 - 1]));
@@ -462,12 +603,17 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
                 RaiseLocalEvent(victimEntity, new RejuvenateEvent());
 
             if (TryComp(victim.Tool, out SurgeryRealmToolComponent? tool))
+            {
                 tool.Victims.Remove(victimEntity);
+                if (tool.Victims.Count == 0)
+                    tool.Position = null;
+            }
         }
 
         RemComp<SurgeryRealmVictimComponent>(victimEntity);
 
         camera.OldEntity = null;
+        QueueDel(camera.Owner);
     }
 
     private void EnsureMap()

@@ -101,6 +101,8 @@
     netsync: false
     state: pda
   - type: SurgeryRealmProjectile
+  - type: TimedDespawn
+    lifetime: 10
 
 - type: entity
   id: SurgeryRealmBananaProjectile
@@ -124,6 +126,8 @@
     netsync: false
     state: banana
   - type: SurgeryRealmProjectile
+  - type: TimedDespawn
+    lifetime: 10
 
 - type: entity
   id: SurgeryRealmBananaBlueProjectile
@@ -147,6 +151,8 @@
     netsync: false
     state: banana_blue
   - type: SurgeryRealmAntiProjectile
+  - type: TimedDespawn
+    lifetime: 10
 
 - type: entity
   id: SurgeryRealmBananaOrangeProjectile
@@ -170,6 +176,8 @@
     netsync: false
     state: banana_orange
   - type: SurgeryRealmOrangeProjectile
+  - type: TimedDespawn
+    lifetime: 10
 
 - type: entity
   id: SurgeryRealmPDA
@@ -189,6 +197,8 @@
     netsync: false
     state: pda
   - type: SurgeryRealmSliding
+  - type: TimedDespawn
+    lifetime: 10
 
 - type: entity
   id: SurgeryRealmChargedLightning
