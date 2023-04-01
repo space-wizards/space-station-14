@@ -1,0 +1,5 @@
+﻿- type: soundCollection
+  id: NukeMusic
+  files:
+    - /Audio/StationEvents/RunningOut.ogg
+    - /Audio/StationEvents/countdown.ogg
