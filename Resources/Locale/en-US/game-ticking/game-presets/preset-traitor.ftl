@@ -50,4 +50,4 @@ traitor-role-codewords =
     The codewords are:
     {$codewords}.
     Codewords can be used in regular conversation to identify yourself discretely to other syndicate agents.
-    Listen for them, and keep them secret.
+    Listen for them, and keep them secret, don't snitch pussy.

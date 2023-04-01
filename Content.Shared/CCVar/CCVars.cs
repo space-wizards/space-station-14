@@ -342,6 +342,9 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<int> TraitorCodewordCount =
             CVarDef.Create("traitor.codeword_count", 4);
+        
+        public static readonly CVarDef<int> TraitorPhraseCount =
+            CVarDef.Create("traitor.phrase_count", 1);
 
         public static readonly CVarDef<int> TraitorStartingBalance =
             CVarDef.Create("traitor.starting_balance", 20);
@@ -351,6 +354,28 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<int> TraitorMaxPicks =
             CVarDef.Create("traitor.max_picks", 20);
+         
+        /*
+         * Sleeper Agents
+         */
+         
+        public static readonly CVarDef<int> AgentMinPlayers =
+            CVarDef.Create("agent.min_players", 5);
+        
+        public static readonly CVarDef<int> AgentMaxAgents =
+            CVarDef.Create("agent.max_agents", 12);
+            
+        public static readonly CVarDef<int> AgentPlayersPerAgent =
+            CVarDef.Create("agent.players_per_agent", 8);
+            
+        public static readonly CVarDef<int> AgentStartingBalance =
+            CVarDef.Create("agent.starting_balance", 0); //If you're robust enough you could buy some syndie items, but when you start you're on your own
+            
+        public static readonly CVarDef<int> AgentMaxDifficulty =
+            CVarDef.Create("agent.max_difficulty", 5);
+            
+        public static readonly CVarDef<int> AgentMaxPicks =
+            CVarDef.Create("agent.max_picks", 25);
 
         public static readonly CVarDef<float> TraitorStartDelay =
             CVarDef.Create("traitor.start_delay", 4f * 60f);

@@ -37,6 +37,18 @@
   conditions:
     - !type:RandomTraitorAliveCondition {}
   canBeDuplicate: true
+  
+- type: objective
+  id: ActivateSleeperAgentObjective
+  issuer: syndicate
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:SleeperAgentInfiltrationRequirement
+    - !type:NotRoleRequirement
+      roleId: Mime
+  conditions:
+    - !type:ActivateSleeperAgentCondition {}
+  canBeDuplicate: true
 
 - type: objective
   id: DieObjective

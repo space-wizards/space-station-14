@@ -222,3 +222,16 @@
     earliestStart: 50
     weight: 2.5
     endAfter: 1
+    maxOccurrences: 1
+
+- type: gameRule
+  id: AgentActivation
+  config:
+    !type:StationEventRuleConfiguration
+    id: AgentActivation
+    startAnnouncement: station-event-agent-activation-announcement
+    startAudio:
+      path: /// adding this later once I can make a cool sound
+      earliestStart: 30
+      weight: 10
+      maxOccurences: 1

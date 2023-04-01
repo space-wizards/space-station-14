@@ -99,6 +99,20 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         if (!RuleAdded)
             return;
 
+        if (_gameTicker.Preset?.Rules.Contains(SleeperAgent) ?? true)
+        {
+        MakePhrases();
+        if (!RuleAdded)
+            return;
+        }
+
+        // If the current preset doesn't explicitly contain the traitor game rule, just carry on and remove self.
+        if (_gameTicker.Preset?.Rules.Contains(Prototype) ?? false)
+        {
+            _gameTicker.EndGameRule(_prototypeManager.Index<GameRulePrototype>(Prototype));
+            return;
+        }
+
         var minPlayers = _cfg.GetCVar(CCVars.TraitorMinPlayers);
         if (!ev.Forced && ev.Players.Length < minPlayers)
         {
@@ -146,6 +160,18 @@ public sealed class TraitorRuleSystem : GameRuleSystem
             MakeTraitor(traitor);
 
         SelectionStatus = SelectionState.SelectionMade;
+    private void MakePhrases()
+    {
+
+        var phraseCount = cfg.GetCvar(CCVars.TraitorPhraseCount);
+        var phrases = _prototypeManager.Index<DatasetPrototype>("phrases").Values;
+        var phrasePool = phrases.ToList();
+        var finalPhraseCount = Math.min(phraseCount, phrasePool.count);
+        Phrases = new string[finalPhraseCount];
+        for (var i = 0; i < finalPhraseCount; i++)
+        {
+            Phrases[i] = _random.PickAndTake(phrasePool);
+        }
     }
 
     private void OnPlayersSpawned(RulePlayerJobsAssignedEvent ev)
@@ -157,6 +183,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         {
             if (!ev.Profiles.ContainsKey(player.UserId))
                 continue;
+        var numTraitors = MathHelper.Clamp(ev.Players.Length / _playersPerTraitor, 1, _maxTraitors);
+        var codewordCount = _cfg.GetCVar(CCVars.TraitorCodewordCount);
+        var phraseCount = _cfg.GetCVar(CCVars.TraitorPhraseCount);
 
             _startCandidates[player] = ev.Profiles[player.UserId];
         }
@@ -278,6 +307,13 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         traitorRole.Mind.Briefing = Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", Codewords)));
 
         _audioSystem.PlayGlobal(_addedSound, Filter.Empty().AddPlayer(traitor), false, AudioParams.Default);
+        //This gives traitors the agent activation phrase if they have the objective to activate agents.
+        //TODO: Make this automatically fail if the activation event is scheduled (Would just be a freebie)
+        if (ActivateSleeperAgentObjective = true);
+        traitorRole.Mind.Briefing = Loc.GetString("traitor-role-phrases", ("phrases", string.Join(", ", Phrases)));
+
+
+        SoundSystem.Play(_addedSound.GetSound(), Filter.Empty().AddPlayer(traitor), AudioParams.Default);
         return true;
     }
 
