@@ -1,6 +1,7 @@
 ﻿using Content.Server.Damage.Systems;
 using Content.Server.Hands.Components;
 using Content.Server.Lightning;
+using Content.Server.Lightning.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Physics.Controllers;
 using Content.Shared.GameTicking;
@@ -52,8 +53,33 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
         SubscribeLocalEvent<SurgeryRealmHeartComponent, CanWeightlessMoveEvent>(OnHeartCanWeightlessMove);
         SubscribeLocalEvent<SurgeryRealmProjectileComponent, StartCollideEvent>(OnProjectileCollide);
         SubscribeLocalEvent<SurgeryRealmAntiProjectileComponent, StartCollideEvent>(OnAntiProjectileCollide);
+        SubscribeLocalEvent<SurgeryRealmHeartComponent, StartCollideEvent>(OnHeartCollide);
 
         SubscribeNetworkEvent<SurgeryRealmAcceptSelfEvent>(OnSurgeryRealmAcceptSelf);
+    }
+
+    private void SubtractHealth(SurgeryRealmHeartComponent heart)
+    {
+        heart.Health--;
+        Dirty(heart);
+
+        if (heart.Health > 0)
+            return;
+
+        heart.Health = 0;
+
+        if (!TryComp(heart.Camera, out ActorComponent? actor))
+            return;
+
+        StopOperation(actor.PlayerSession);
+    }
+
+    private void OnHeartCollide(EntityUid uid, SurgeryRealmHeartComponent component, ref StartCollideEvent args)
+    {
+        if (!HasComp<LightningComponent>(args.OtherFixture.Body.Owner))
+            return;
+
+        SubtractHealth(component);
     }
 
     private void OnSurgeryRealmAcceptSelf(SurgeryRealmAcceptSelfEvent msg, EntitySessionEventArgs args)
@@ -76,7 +102,7 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
 
         sliding.Fired = true;
 
-        _audio.Play(new SoundPathSpecifier("/Audio/Surgery/blast.ogg"), Filter.Empty().AddInRange(sliding.SectionPos, 10), sliding.Owner, true);
+        _audio.Play(new SoundPathSpecifier("/Audio/Surgery/blast.ogg"), Filter.Empty().AddInRange(sliding.SectionPos, 10), sliding.Owner, true, AudioParams.Default.WithVolume(10));
 
         Timer.Spawn(1000, () =>
         {
@@ -114,18 +140,7 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
         if (!TryComp(args.OtherFixture.Body.Owner, out SurgeryRealmHeartComponent? heart))
             return;
 
-        heart.Health--;
-        Dirty(heart);
-
-        if (heart.Health > 0)
-            return;
-
-        heart.Health = 0;
-
-        if (!TryComp(heart.Owner, out ActorComponent? actor))
-            return;
-
-        StopOperation(actor.PlayerSession);
+        SubtractHealth(heart);
     }
 
     private void OnAntiProjectileCollide(EntityUid uid, SurgeryRealmAntiProjectileComponent component, ref StartCollideEvent args)
@@ -228,6 +243,7 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
         SpawnEdges(tool.Position.Value);
 
         var camera = EntityManager.SpawnEntity("SurgeryRealmCamera", tool.Position.Value);
+        EnsureComp<SurgeryRealmHeartComponent>(victim.Heart).Camera = camera;
 
         var mind = EnsureComp<MindComponent>(victimEntity);
         var cameraComp = EnsureComp<SurgeryRealmCameraComponent>(camera);

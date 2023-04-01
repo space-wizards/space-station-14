@@ -10,6 +10,8 @@ public sealed class SurgeryRealmHeartComponent : Component
     [ViewVariables] public int Health = 5;
 
     [ViewVariables] public bool Flying;
+
+    [ViewVariables] public EntityUid Camera;
 }
 
 [Serializable, NetSerializable]

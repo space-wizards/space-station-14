@@ -184,6 +184,11 @@
   - type: SurgeryRealmLightning
   - type: TimedDespawn
     lifetime: 0.5
+  - type: Physics
+    bodyType: Dynamic
+    canCollide: true
+    linearDamping: 0
+    angularDamping: 0
 
 - type: entity
   id: SurgeryRealmVirtualBeamEntityController
