@@ -53,9 +53,41 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
         SubscribeLocalEvent<SurgeryRealmHeartComponent, CanWeightlessMoveEvent>(OnHeartCanWeightlessMove);
         SubscribeLocalEvent<SurgeryRealmProjectileComponent, StartCollideEvent>(OnProjectileCollide);
         SubscribeLocalEvent<SurgeryRealmAntiProjectileComponent, StartCollideEvent>(OnAntiProjectileCollide);
+        SubscribeLocalEvent<SurgeryRealmOrangeProjectileComponent, StartCollideEvent>(OnOrangeProjectileCollide);
         SubscribeLocalEvent<SurgeryRealmHeartComponent, StartCollideEvent>(OnHeartCollide);
 
         SubscribeNetworkEvent<SurgeryRealmAcceptSelfEvent>(OnSurgeryRealmAcceptSelf);
+    }
+
+    private void OnOrangeProjectileCollide(EntityUid uid, SurgeryRealmOrangeProjectileComponent component, ref StartCollideEvent args)
+    {
+        if (HasComp<SurgeryRealmEdgeComponent>(args.OtherFixture.Body.Owner))
+        {
+            if (_timing.CurTick > MetaData(uid).CreationTick + 90)
+                QueueDel(uid);
+        }
+
+        if (!TryComp(args.OtherFixture.Body.Owner, out SurgeryRealmHeartComponent? heart))
+            return;
+
+        if (!TryComp(heart.Owner, out InputMoverComponent? input) ||
+            input.HeldMoveButtons != 0)
+        {
+            return;
+        }
+
+        heart.Health--;
+        Dirty(heart);
+
+        if (heart.Health > 0)
+            return;
+
+        heart.Health = 0;
+
+        if (!TryComp(heart.Owner, out ActorComponent? actor))
+            return;
+
+        StopOperation(actor.PlayerSession);
     }
 
     private void SubtractHealth(SurgeryRealmHeartComponent heart)
@@ -378,27 +410,15 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
             Physics.SetLinearVelocity(projectile2, new Vector2(-xSpeed, 0));
         }
 
-        Timer.Spawn(250, () =>
-        {
-            for (var y = -6; y < -1; y++)
-            {
-                var projectile1 = Spawn("SurgeryRealmBananaProjectile", coordinates.Offset(6, y - 0.25f));
-                var projectile2 = Spawn("SurgeryRealmBananaProjectile", coordinates.Offset(6, y + 0.25f));
-
-                Physics.SetLinearVelocity(projectile1, new Vector2(xSpeed, 0));
-                Physics.SetLinearVelocity(projectile2, new Vector2(xSpeed, 0));
-            }
-        });
-
         Timer.Spawn(500, () =>
         {
             for (var y = -6; y < -1; y++)
             {
-                var projectile1 = Spawn("SurgeryRealmBananaProjectile", coordinates.Offset(6, y - 0.25f));
-                var projectile2 = Spawn("SurgeryRealmBananaProjectile", coordinates.Offset(6, y + 0.25f));
+                var projectile1 = Spawn("SurgeryRealmBananaOrangeProjectile", coordinates.Offset(6, y - 0.25f));
+                var projectile2 = Spawn("SurgeryRealmBananaOrangeProjectile", coordinates.Offset(6, y + 0.25f));
 
-                Physics.SetLinearVelocity(projectile1, new Vector2(xSpeed, 0));
-                Physics.SetLinearVelocity(projectile2, new Vector2(xSpeed, 0));
+                Physics.SetLinearVelocity(projectile1, new Vector2(-xSpeed, 0));
+                Physics.SetLinearVelocity(projectile2, new Vector2(-xSpeed, 0));
             }
         });
 

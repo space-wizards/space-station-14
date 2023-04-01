@@ -149,6 +149,29 @@
   - type: SurgeryRealmAntiProjectile
 
 - type: entity
+  id: SurgeryRealmBananaOrangeProjectile
+  components:
+  - type: Physics
+    bodyType: Dynamic
+    canCollide: true
+    linearDamping: 0
+    angularDamping: 0
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.24,-0.24,0.24,0.24"
+      hard: false
+      layer:
+      - GhostImpassable
+      - BulletImpassable
+  - type: Sprite
+    sprite: Surgery/projectiles.rsi
+    netsync: false
+    state: banana_orange
+  - type: SurgeryRealmOrangeProjectile
+
+- type: entity
   id: SurgeryRealmPDA
   components:
   - type: Physics
