@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Added hot plates for heating up beakers. No longer are chemists bound
-      to the humble microwave., type: Add}
-  id: 2804
-  time: '2022-12-25T01:59:52.0000000+00:00'
 - author: Carbonhell
   changes:
   - {message: 'Medbay can now obtain cryo pods, specialized cryogenics machines used
@@ -2912,3 +2906,9 @@ Entries:
   - {message: TRay scanner will work in any inventory slot or hand again., type: Fix}
   id: 3303
   time: '2023-04-01T01:53:25.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Changed certain chairs and potted plants to be wrench-able. Plants need
+      to have something in them first to anchor them., type: Tweak}
+  id: 3304
+  time: '2023-04-01T08:29:34.0000000+00:00'
