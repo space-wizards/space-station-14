@@ -4,6 +4,7 @@ using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.Disposal.Unit.EntitySystems;
+using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Placeable;
 using Content.Shared.Storage;
@@ -31,11 +32,14 @@ namespace Content.Server.Storage.EntitySystems
 
         private void OnAfterInteract(EntityUid uid, DumpableComponent component, AfterInteractEvent args)
         {
-            if (!args.CanReach)
+            if (!args.CanReach || args.Handled)
                 return;
 
-            if (HasComp<DisposalUnitComponent>(args.Target) || HasComp<PlaceableSurfaceComponent>(args.Target))
-                StartDoAfter(uid, args.Target.Value, args.User, component);
+            if (!HasComp<DisposalUnitComponent>(args.Target) && !HasComp<PlaceableSurfaceComponent>(args.Target))
+                return;
+
+            StartDoAfter(uid, args.Target.Value, args.User, component);
+            args.Handled = true;
         }
 
         private void AddDumpVerb(EntityUid uid, DumpableComponent dumpable, GetVerbsEvent<AlternativeVerb> args)
