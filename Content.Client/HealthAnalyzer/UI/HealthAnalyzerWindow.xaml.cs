@@ -8,7 +8,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using System.Text;
-using static Content.Shared.MedicalScanner.SharedHealthAnalyzerComponent;
+using Content.Shared.MedicalScanner;
 
 namespace Content.Client.HealthAnalyzer.UI
 {
@@ -27,13 +27,12 @@ namespace Content.Client.HealthAnalyzer.UI
 
             if (msg.TargetEntity != null && entities.TryGetComponent<DamageableComponent>(msg.TargetEntity, out var damageable))
             {
-                string entityName = "Unknown";
-                if (msg.TargetEntity != null &&
-                    entities.TryGetComponent<MetaDataComponent>(msg.TargetEntity.Value, out var metaData))
+                var entityName = "Unknown";
+                if (msg.TargetEntity != null)
                     entityName = Identity.Name(msg.TargetEntity.Value, entities);
 
-                IReadOnlyDictionary<string, FixedPoint2> DamagePerGroup = damageable.DamagePerGroup;
-                IReadOnlyDictionary<string, FixedPoint2> DamagePerType = damageable.Damage.DamageDict;
+                IReadOnlyDictionary<string, FixedPoint2> damagePerGroup = damageable.DamagePerGroup;
+                IReadOnlyDictionary<string, FixedPoint2> damagePerType = damageable.Damage.DamageDict;
 
                 text.Append($"{Loc.GetString("health-analyzer-window-entity-health-text", ("entityName", entityName))}\n");
 
@@ -54,14 +53,14 @@ namespace Content.Client.HealthAnalyzer.UI
                 var protos = IoCManager.Resolve<IPrototypeManager>();
 
                 // Show the total damage and type breakdown for each damage group.
-                foreach (var (damageGroupId, damageAmount) in DamagePerGroup)
+                foreach (var (damageGroupId, damageAmount) in damagePerGroup)
                 {
                     text.Append($"\n{Loc.GetString("health-analyzer-window-damage-group-text", ("damageGroup", Loc.GetString("health-analyzer-window-damage-group-" + damageGroupId)), ("amount", damageAmount))}");
                     // Show the damage for each type in that group.
                     var group = protos.Index<DamageGroupPrototype>(damageGroupId);
                     foreach (var type in group.DamageTypes)
                     {
-                        if (DamagePerType.TryGetValue(type, out var typeAmount))
+                        if (damagePerType.TryGetValue(type, out var typeAmount))
                         {
                             // If damage types are allowed to belong to more than one damage group, they may appear twice here. Mark them as duplicate.
                             if (!shownTypes.Contains(type))

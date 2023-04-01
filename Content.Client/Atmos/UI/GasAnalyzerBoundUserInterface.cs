@@ -1,5 +1,5 @@
-﻿using Robust.Client.GameObjects;
-using static Content.Shared.Atmos.Components.SharedGasAnalyzerComponent;
+﻿using Content.Shared.Atmos.Components;
+using Robust.Client.GameObjects;
 
 namespace Content.Client.Atmos.UI
 {

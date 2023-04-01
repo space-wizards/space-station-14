@@ -1,14 +1,13 @@
 using Content.Server.DoAfter;
-using Content.Server.Medical.Components;
 using Content.Server.Disease;
 using Content.Server.Popups;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.MedicalScanner;
 using Content.Shared.Mobs.Components;
 using Robust.Server.GameObjects;
-using static Content.Shared.MedicalScanner.SharedHealthAnalyzerComponent;
 
 namespace Content.Server.Medical
 {
@@ -30,7 +29,10 @@ namespace Content.Server.Medical
 
         private void HandleActivateInWorld(EntityUid uid, HealthAnalyzerComponent healthAnalyzer, ActivateInWorldEvent args)
         {
-            OpenUserInterface(args.User, healthAnalyzer);
+            if (!TryComp<ActorComponent>(args.User, out var actor))
+                return;
+
+            _uiSystem.TryOpen(uid, HealthAnalyzerUiKey.Key, actor.PlayerSession);
         }
 
         private void OnAfterInteract(EntityUid uid, HealthAnalyzerComponent healthAnalyzer, AfterInteractEvent args)
@@ -84,27 +86,25 @@ namespace Content.Server.Medical
             args.Handled = true;
         }
 
-        private void OpenUserInterface(EntityUid user, HealthAnalyzerComponent healthAnalyzer)
-        {
-            if (!TryComp<ActorComponent>(user, out var actor) || healthAnalyzer.UserInterface == null)
-                return;
-
-            _uiSystem.OpenUi(healthAnalyzer.UserInterface ,actor.PlayerSession);
-        }
-
         public void UpdateScannedUser(EntityUid uid, EntityUid user, EntityUid? target, HealthAnalyzerComponent? healthAnalyzer)
         {
             if (!Resolve(uid, ref healthAnalyzer))
                 return;
 
-            if (target == null || healthAnalyzer.UserInterface == null)
+            if (target == null)
                 return;
 
             if (!HasComp<DamageableComponent>(target))
                 return;
 
-            OpenUserInterface(user, healthAnalyzer);
-            _uiSystem.SendUiMessage(healthAnalyzer.UserInterface, new HealthAnalyzerScannedUserMessage(target));
+            if (!TryComp<ActorComponent>(user, out var actor))
+                return;
+
+            if (_uiSystem.GetUiOrNull(uid, HealthAnalyzerUiKey.Key) is not { } ui)
+                return;
+
+            _uiSystem.OpenUi(ui, actor.PlayerSession);
+            _uiSystem.SendUiMessage(ui, new HealthAnalyzerScannedUserMessage(target));
         }
     }
 }
