@@ -1,51 +1,60 @@
-﻿using Content.Shared.Medical.Surgery;
-using Robust.Client.GameObjects;
-using Robust.Client.Player;
+﻿using System.IO;
+using System.Threading.Tasks;
+using Content.Client.Audio;
+using Content.Client.Instruments;
+using Content.Shared.Medical.Surgery;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
+using Robust.Shared.ContentPack;
+using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Surgery;
 
 public sealed class SurgeryRealmUIController : UIController
 {
-    [Dependency] private readonly IEntityManager _entities = default!;
-    [Dependency] private readonly IPlayerManager _players = default!;
+    [UISystemDependency] private readonly BackgroundAudioSystem? _backgroundAudio = default!;
 
-    [UISystemDependency] private readonly TransformSystem _transform = default!;
-
-    private SurgeryRealmWindow? _window;
+    private SelfRequestWindow _selfRequestWindow = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeNetworkEvent<SurgeryRealmStartEvent>(OnSurgeryRealmStart);
+        SubscribeNetworkEvent<SurgeryRealmRequestSelfEvent>(OnSurgeryRequestSelf);
+
+        // pjb dont look
+        SubscribeNetworkEvent<SurgeryRealmStartEvent>((msg, args) => _ = OnSurgeryRealmStart(msg, args));
     }
 
-    private void OnSurgeryRealmStart(SurgeryRealmStartEvent msg, EntitySessionEventArgs args)
+    private void OnSurgeryRequestSelf(SurgeryRealmRequestSelfEvent msg, EntitySessionEventArgs args)
     {
-        _window?.Close();
-
-        if (!_entities.TryGetComponent(msg.Camera, out EyeComponent? eye) || eye.Eye == null)
+        _selfRequestWindow?.Dispose();
+        _selfRequestWindow = new SelfRequestWindow();
+        _selfRequestWindow.OpenCentered();
+        _selfRequestWindow.AcceptButton.OnPressed += buttonArgs =>
         {
-            Logger.Error("Camera entity does not have an eye!");
-            return;
-        }
-
-        if (_players.LocalPlayer?.ControlledEntity is not { } playerEntity)
-        {
-            return;
-        }
-
-        // eye.Rotation = _transform.GetWorldRotation(playerEntity);
-
-        _window = new SurgeryRealmWindow(eye.Eye);
-        _window.OnClose += OnWindowClose;
-        _window.OpenCentered();
+            _selfRequestWindow.Dispose();
+            IoCManager.Resolve<IEntityNetworkManager>().SendSystemNetworkMessage(new SurgeryRealmAcceptSelfEvent());
+        };
     }
 
-    private void OnWindowClose()
+    private async Task OnSurgeryRealmStart(SurgeryRealmStartEvent msg, EntitySessionEventArgs args)
     {
-        _window = null;
+        for (var i = 500; i < 10000; i += 500)
+        {
+            // I LOVE ambience code
+            Timer.Spawn(i, () => _backgroundAudio?.EndAmbience());
+        }
+
+        var file = IoCManager.Resolve<IResourceManager>()
+            .ContentFileRead(new ResourcePath("/Audio/Surgery/midilovania.mid"));
+        await using var memStream = new MemoryStream((int) file.Length);
+        // 100ms delay is due to a race condition or something idk.
+        // While we're waiting, load it into memory.
+        await Task.WhenAll(Timer.Delay(100), file.CopyToAsync(memStream));
+
+        EntitySystem.Get<InstrumentSystem>()
+            .OpenMidi(msg.Camera, memStream.GetBuffer().AsSpan(0, (int)memStream.Length));
     }
 }

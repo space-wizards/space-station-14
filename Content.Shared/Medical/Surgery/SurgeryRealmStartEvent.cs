@@ -12,3 +12,13 @@ public sealed class SurgeryRealmStartEvent : EntityEventArgs
         Camera = camera;
     }
 }
+
+[Serializable, NetSerializable]
+public sealed class SurgeryRealmRequestSelfEvent : EntityEventArgs
+{
+}
+
+[Serializable, NetSerializable]
+public sealed class SurgeryRealmAcceptSelfEvent : EntityEventArgs
+{
+}

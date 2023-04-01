@@ -5,7 +5,6 @@ using Content.Server.Lightning.Components;
 using Content.Shared.Lightning;
 using Robust.Server.GameObjects;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Random;
 
@@ -67,10 +66,10 @@ public sealed class LightningSystem : SharedLightningSystem
     /// <param name="user">Where the lightning fires from</param>
     /// <param name="target">Where the lightning fires to</param>
     /// <param name="lightningPrototype">The prototype for the lightning to be created</param>
-    public void ShootLightning(EntityUid user, EntityUid target, string lightningPrototype = "Lightning")
+    public void ShootLightning(EntityUid user, EntityUid target, string lightningPrototype = "Lightning", EntityUid? controller = null)
     {
         var spriteState = LightningRandomizer();
-        _beam.TryCreateBeam(user, target, lightningPrototype, spriteState);
+        _beam.TryCreateBeam(user, target, lightningPrototype, spriteState, controller: controller);
     }
 
     /// <summary>

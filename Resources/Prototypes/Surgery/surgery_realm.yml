@@ -13,15 +13,17 @@
   - type: MovementIgnoreGravity
   - type: RelayInputMover
   - type: MobMover
+  - type: Instrument
+    program: 1
+    bank: 1
 
 - type: entity
   id: SurgeryRealmHeart
-  name: heart
   components:
   - type: Sprite
     netsync: false
-    sprite: Mobs/Species/Human/organs.rsi
-    state: heart-on
+    sprite: Surgery/heart.rsi
+    state: heart
   - type: SurgeryRealmHeart
   - type: Transform
     noRot: true
@@ -34,10 +36,9 @@
         !type:PhysShapeCircle
         radius: 0.15
       density: 15
-      layer:
-      - WallLayer
       mask:
       - WallLayer
+      - GhostImpassable
   - type: InputMover
   - type: Input
     context: "ghost"
@@ -69,9 +70,124 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.5,0.5"
+        bounds: "-0.45,-0.45,0.45,0.45"
       density: 100
       mask:
       - FullTileMask
+      - BulletImpassable
       layer:
       - WallLayer
+  - type: SurgeryRealmEdge
+
+- type: entity
+  id: SurgeryRealmPDAProjectile
+  components:
+  - type: Physics
+    bodyType: Dynamic
+    canCollide: true
+    linearDamping: 0
+    angularDamping: 0
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.24,-0.24,0.24,0.24"
+      hard: false
+      layer:
+      - GhostImpassable
+      - BulletImpassable
+  - type: Sprite
+    sprite: Surgery/projectiles.rsi
+    netsync: false
+    state: pda
+  - type: SurgeryRealmProjectile
+
+- type: entity
+  id: SurgeryRealmBananaProjectile
+  components:
+  - type: Physics
+    bodyType: Dynamic
+    canCollide: true
+    linearDamping: 0
+    angularDamping: 0
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.24,-0.24,0.24,0.24"
+      hard: false
+      layer:
+      - GhostImpassable
+      - BulletImpassable
+  - type: Sprite
+    sprite: Surgery/projectiles.rsi
+    netsync: false
+    state: banana
+  - type: SurgeryRealmProjectile
+
+- type: entity
+  id: SurgeryRealmBananaBlueProjectile
+  components:
+  - type: Physics
+    bodyType: Dynamic
+    canCollide: true
+    linearDamping: 0
+    angularDamping: 0
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.24,-0.24,0.24,0.24"
+      hard: false
+      layer:
+      - GhostImpassable
+      - BulletImpassable
+  - type: Sprite
+    sprite: Surgery/projectiles.rsi
+    netsync: false
+    state: banana_blue
+  - type: SurgeryRealmAntiProjectile
+
+- type: entity
+  id: SurgeryRealmPDA
+  components:
+  - type: Physics
+    bodyType: Dynamic
+    canCollide: true
+    linearDamping: 0
+    angularDamping: 0
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.24,-0.24,0.24,0.24"
+  - type: Sprite
+    sprite: Surgery/projectiles.rsi
+    netsync: false
+    state: pda
+  - type: SurgeryRealmSliding
+
+- type: entity
+  id: SurgeryRealmChargedLightning
+  parent: ChargedLightning
+  components:
+  - type: TimedDespawn
+    lifetime: 0.5
+
+- type: entity
+  id: SurgeryRealmLightning
+  parent: ChargedLightning
+  components:
+  - type: Lightning
+    canArc: false
+    lightningPrototype: SurgeryRealmChargedLightning
+  - type: SurgeryRealmLightning
+  - type: TimedDespawn
+    lifetime: 0.5
+
+- type: entity
+  id: SurgeryRealmVirtualBeamEntityController
+  parent: VirtualBeamEntityController
+  components:
+  - type: TimedDespawn
+    lifetime: 0.5

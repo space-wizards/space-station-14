@@ -1,0 +1,11 @@
+﻿<DefaultWindow xmlns="https://spacestation14.io"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               Title="You feel like you are going to have a bad time"
+               MinWidth="400">
+    <BoxContainer Orientation="Vertical">
+        <Label Text="Begin surgery on yourself?" HorizontalExpand="True" />
+        <BoxContainer Orientation="Horizontal">
+            <Button Name="AcceptButton" Access="Public" Text="Accept" />
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

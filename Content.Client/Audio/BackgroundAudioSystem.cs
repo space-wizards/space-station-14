@@ -203,7 +203,7 @@ public sealed class BackgroundAudioSystem : EntitySystem
             _ambientParams.WithVolume(_ambientParams.Volume + _configManager.GetCVar(CCVars.AmbienceVolume)));
     }
 
-    private void EndAmbience()
+    public void EndAmbience()
     {
         _playingCollection = null;
         _ambientStream?.Stop();
