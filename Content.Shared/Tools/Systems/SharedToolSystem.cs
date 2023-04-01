@@ -26,10 +26,10 @@ public abstract partial class SharedToolSystem : EntitySystem
         var ev = args.WrappedEvent;
         ev.DoAfter = args.DoAfter;
 
-        if (args.Used != null)
-            RaiseLocalEvent(args.Used.Value, ev);
+        if (args.OriginalTarget != null)
+            RaiseLocalEvent(args.OriginalTarget.Value, (object) ev);
         else
-            RaiseLocalEvent(ev);
+            RaiseLocalEvent((object) ev);
     }
 
     public void PlayToolSound(EntityUid uid, ToolComponent tool, EntityUid? user)
@@ -47,7 +47,7 @@ public abstract partial class SharedToolSystem : EntitySystem
     /// <param name="tool">The tool to use</param>
     /// <param name="user">The entity using the tool</param>
     /// <param name="target">The entity that the tool is being used on. This is also the entity that will receive the
-    /// event.</param>
+    /// event. If null, the event will be broadcast</param>
     /// <param name="doAfterDelay">The base tool use delay (seconds). This will be modified by the tool's quality</param>
     /// <param name="toolQualitiesNeeded">The qualities needed for this tool to work.</param>
     /// <param name="doAfterEv">The event that will be raised when the tool has finished (including cancellation). Event
@@ -58,7 +58,7 @@ public abstract partial class SharedToolSystem : EntitySystem
     public bool UseTool(
         EntityUid tool,
         EntityUid user,
-        EntityUid target,
+        EntityUid? target,
         float doAfterDelay,
         IEnumerable<string> toolQualitiesNeeded,
         DoAfterEvent doAfterEv,
@@ -83,7 +83,7 @@ public abstract partial class SharedToolSystem : EntitySystem
     /// <param name="tool">The tool to use</param>
     /// <param name="user">The entity using the tool</param>
     /// <param name="target">The entity that the tool is being used on. This is also the entity that will receive the
-    /// event.</param>
+    /// event. If null, the event will be broadcast</param>
     /// <param name="delay">The base tool use delay. This will be modified by the tool's quality</param>
     /// <param name="toolQualitiesNeeded">The qualities needed for this tool to work.</param>
     /// <param name="doAfterEv">The event that will be raised when the tool has finished (including cancellation). Event
@@ -96,7 +96,7 @@ public abstract partial class SharedToolSystem : EntitySystem
     public bool UseTool(
         EntityUid tool,
         EntityUid user,
-        EntityUid target,
+        EntityUid? target,
         TimeSpan delay,
         IEnumerable<string> toolQualitiesNeeded,
         DoAfterEvent doAfterEv,
@@ -132,7 +132,7 @@ public abstract partial class SharedToolSystem : EntitySystem
     /// <param name="tool">The tool to use</param>
     /// <param name="user">The entity using the tool</param>
     /// <param name="target">The entity that the tool is being used on. This is also the entity that will receive the
-    /// event.</param>
+    /// event. If null, the event will be broadcast</param>
     /// <param name="doAfterDelay">The base tool use delay (seconds). This will be modified by the tool's quality</param>
     /// <param name="toolQualityNeeded">The quality needed for this tool to work.</param>
     /// <param name="doAfterEv">The event that will be raised when the tool has finished (including cancellation). Event
@@ -145,14 +145,22 @@ public abstract partial class SharedToolSystem : EntitySystem
     public bool UseTool(
         EntityUid tool,
         EntityUid user,
-        EntityUid target,
+        EntityUid? target,
         float doAfterDelay,
         string toolQualityNeeded,
         DoAfterEvent doAfterEv,
         float fuel = 0,
         ToolComponent? toolComponent = null)
     {
-        return UseTool(tool, user, target, doAfterDelay, new[] { toolQualityNeeded }, doAfterEv, fuel, toolComponent);
+        return UseTool(tool,
+            user,
+            target,
+            TimeSpan.FromSeconds(doAfterDelay),
+            new[] { toolQualityNeeded },
+            doAfterEv,
+            out _,
+            fuel,
+            toolComponent);
     }
 
     /// <summary>
@@ -199,7 +207,7 @@ public abstract partial class SharedToolSystem : EntitySystem
         public readonly float Fuel;
 
         /// <summary>
-        ///     Entity that the wrapped do after event will get directed at. If null, event gets broadcasted.
+        ///     Entity that the wrapped do after event will get directed at. If null, event will be broadcast.
         /// </summary>
         [DataField("target")]
         public readonly EntityUid? OriginalTarget;
