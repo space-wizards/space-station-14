@@ -167,7 +167,7 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
         _sections = 0;
     }
 
-    public void StartOperation(IPlayerSession victimPlayer, EntityUid? toolId)
+    public void StartOperation(IPlayerSession victimPlayer, EntityUid? toolId, SurgeryRealmMusic? music = null)
     {
         if (victimPlayer.AttachedEntity is not { } victimEntity)
             return;
@@ -198,17 +198,39 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
         var mind = EnsureComp<MindComponent>(victimEntity);
         mind.Mind?.Visit(camera);
 
-        switch (_random.NextFloat())
+        if (music == null)
         {
-            case var x when x < 0.25:
-                RaiseNetworkEvent(new SurgeryRealmStartEvent(camera), victimPlayer);
-                break;
-            case var x when x < 0.95:
-                _audio.PlayEntity(new SoundPathSpecifier("/Audio/Surgery/megalovania.ogg"), camera, camera, AudioParams.Default.WithVolume(-2));
-                break;
-            default:
-                _audio.PlayEntity(new SoundPathSpecifier("/Audio/Surgery/undermale.ogg"), camera, camera, AudioParams.Default.WithVolume(-2));
-                break;
+            switch (_random.NextFloat())
+            {
+                case var x when x < 0.25:
+                    RaiseNetworkEvent(new SurgeryRealmStartEvent(camera), victimPlayer);
+                    break;
+                case var x when x < 0.95:
+                    _audio.PlayEntity(new SoundPathSpecifier("/Audio/Surgery/megalovania.ogg"), camera, camera, AudioParams.Default.WithVolume(2));
+                    break;
+                default:
+                    _audio.PlayEntity(new SoundPathSpecifier("/Audio/Surgery/undermale.ogg"), camera, camera, AudioParams.Default.WithVolume(6));
+                    break;
+            }
+        }
+        else
+        {
+            switch (music)
+            {
+                case SurgeryRealmMusic.Midi:
+                    RaiseNetworkEvent(new SurgeryRealmStartEvent(camera), victimPlayer);
+                    break;
+                case SurgeryRealmMusic.Megalovania:
+                    _audio.PlayEntity(new SoundPathSpecifier("/Audio/Surgery/megalovania.ogg"), camera, camera, AudioParams.Default.WithVolume(2));
+                    break;
+                case SurgeryRealmMusic.Undermale:
+                    _audio.PlayEntity(new SoundPathSpecifier("/Audio/Surgery/undermale.ogg"), camera, camera, AudioParams.Default.WithVolume(6));
+                    break;
+                case null:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(music), music, null);
+            }
         }
 
         SpawnOppositeBananaWallsHoles(tool.Position.Value);
@@ -242,7 +264,7 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
     private void SpawnOppositeBananaWallsHoles(MapCoordinates coordinates, bool chain = true)
     {
         const float xSpeed = 4f;
-        var skip = _random.Next(-5, 0);
+        var skip = _random.Next(-5, -1);
 
         for (var y = -6; y < -1; y++)
         {
@@ -290,7 +312,7 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
             Physics.SetLinearVelocity(projectile2, new Vector2(-xSpeed, 0));
         }
 
-        Timer.Spawn(1250, () =>
+        Timer.Spawn(500, () =>
         {
             var projectile2 = Spawn("SurgeryRealmBananaProjectile", coordinates.Offset(6, -6 - 0.25f));
             var projectile3 = Spawn("SurgeryRealmBananaProjectile", coordinates.Offset(6, -6 + 0.25f));

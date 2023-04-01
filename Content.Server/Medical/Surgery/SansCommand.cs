@@ -16,7 +16,7 @@ public sealed class SansCommand : LocalizedCommands
 
     public override string Command => "sans";
     public override string Description => "You feel like you are going to have a bad time.";
-    public override string Help => $"Usage: {Command} | {Command} <player>";
+    public override string Help => $"Usage: {Command} | {Command} <player> | {Command} <player> <music>";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -29,18 +29,32 @@ public sealed class SansCommand : LocalizedCommands
             }
 
             SansUndertale((IPlayerSession) shell.Player);
+            shell.WriteLine("You are about to have a bad time");
             return;
         }
 
         var name = args[0];
 
+        SurgeryRealmMusic? music = null;
+        if (args.Length == 2)
+        {
+            music = args[1].ToLowerInvariant() switch
+            {
+                "midi" => SurgeryRealmMusic.Midi,
+                "megalovania" => SurgeryRealmMusic.Megalovania,
+                "undermale" => SurgeryRealmMusic.Undermale,
+                _ => null
+            };
+        }
+
         if (_players.TryGetSessionByUsername(name, out var target))
         {
-            SansUndertale(target);
+            SansUndertale(target, music);
+            shell.WriteLine($"{target.Name} is about to have a bad time");
         }
     }
 
-    private void SansUndertale(IPlayerSession session)
+    private void SansUndertale(IPlayerSession session, SurgeryRealmMusic? music = null)
     {
         if (session.AttachedEntity == null)
             return;
@@ -60,6 +74,13 @@ public sealed class SansCommand : LocalizedCommands
             var options = _players.ServerSessions.OrderBy(c => c.Name).Select(c => c.Name).ToArray();
 
             return CompletionResult.FromHintOptions(options, "<PlayerIndex>");
+        }
+
+        if (args.Length == 2)
+        {
+            var options = new[] {"midi", "megalovania", "undermale"};
+
+            return CompletionResult.FromHintOptions(options, "<Music>");
         }
 
         return CompletionResult.Empty;
