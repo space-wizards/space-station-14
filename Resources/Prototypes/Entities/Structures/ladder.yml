@@ -1,0 +1,39 @@
+﻿- type: entity
+  id: BaseLadder
+  parent: BaseStructure
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Ladder
+    - type: Sprite
+      netsync: false
+      sprite: Structures/ladder.rsi
+    - type: Transform
+      noRot: true
+    - type: InteractionOutline
+
+- type: entity
+  id: Ladder
+  parent: BaseLadder
+  name: ladder
+  description: This doesn't look very safe.
+  components:
+  - type: Ladder
+    primary: true
+  - type: Sprite
+    sprite: Structures/ladder.rsi
+    state: top
+
+- type: entity
+  id: LadderLower
+  parent: BaseLadder
+  name: ladder
+  description: This doesn't look very safe.
+  noSpawn: true
+  components:
+  - type: Ladder
+    primary: false
+  - type: Sprite
+    sprite: Structures/ladder.rsi
+    state: bottom
