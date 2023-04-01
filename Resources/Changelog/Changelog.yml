@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: You can no longer spam print technology disks., type: Fix}
-  - {message: Changed some of the internal logic regarding research server syncing.,
-    type: Tweak}
-  id: 2806
-  time: '2022-12-25T21:22:24.0000000+00:00'
 - author: Whisper
   changes:
   - {message: 'Scalpels can now be used to butcher in emergencies, 50% slower than
@@ -2910,3 +2903,9 @@ Entries:
   - {message: Fix context menu and storage range checks., type: Fix}
   id: 3305
   time: '2023-04-01T09:53:00.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fixed lobby votes. It also won't overlap the topleft menu anymore.,
+    type: Fix}
+  id: 3306
+  time: '2023-04-01T14:00:48.0000000+00:00'
