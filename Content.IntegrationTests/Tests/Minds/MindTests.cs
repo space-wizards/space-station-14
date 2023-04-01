@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Ghost;
+using Content.Server.Ghost.Roles;
 using Content.Server.Mind;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
@@ -14,7 +15,9 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Roles;
 using NUnit.Framework;
+using Robust.Client.Console;
 using Robust.Client.Player;
+using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -378,6 +381,63 @@ public sealed class MindTests
     [Test]
     public async Task TestGhostDoesNotInfiniteLoop()
     {
-        // TODO Implement
+        // Client is needed to spawn session
+        await using var pairTracker = await PoolManager.GetServerClient();
+        var server = pairTracker.Pair.Server;
+        var client = pairTracker.Pair.Server;
+
+        var entMan = server.ResolveDependency<IServerEntityManager>();
+        var playerMan = server.ResolveDependency<IPlayerManager>();
+        var serverConsole = server.ResolveDependency<IServerConsoleHost>();
+
+        var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
+
+        EntityUid entity = default!;
+        EntityUid mouse = default!;
+        EntityUid ghost = default!;
+        Mind mind = default!;
+        IPlayerSession player = playerMan.ServerSessions.Single();
+
+        await server.WaitAssertion(() =>
+        {
+            entity = entMan.SpawnEntity(null, new MapCoordinates());
+            var mindComp = entMan.EnsureComponent<MindContainerComponent>(entity);
+
+            mind = mindSystem.CreateMind(player.UserId, "Mindy McThinker");
+
+            Assert.That(mind.UserId, Is.EqualTo(player.UserId));
+
+            mindSystem.TransferTo(mind, entity);
+            Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind));
+
+            mouse = entMan.SpawnEntity("MobMouse", new MapCoordinates());
+        });
+
+        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+
+        await server.WaitAssertion(() =>
+        {
+            serverConsole.ExecuteCommand(player, "aghost");
+        });
+
+        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+
+        await server.WaitAssertion(() =>
+        {
+            entMan.EntitySysManager.GetEntitySystem<GhostRoleSystem>().Takeover(player, 0);
+        });
+
+        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+
+        await server.WaitAssertion(() =>
+        {
+            serverConsole.ExecuteCommand(player, "aghost");
+            Assert.That(player.AttachedEntity != null);
+            ghost = player.AttachedEntity!.Value;
+        });
+
+        await PoolManager.RunTicksSync(pairTracker.Pair, 60);
+
+        await pairTracker.CleanReturnAsync();
     }
 }
