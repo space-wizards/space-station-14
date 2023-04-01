@@ -3,7 +3,7 @@
 [RegisterComponent]
 public sealed class SurgeryRealmCameraComponent : Component
 {
-    [ViewVariables] public EntityUid OldEntity;
+    [ViewVariables] public EntityUid? OldEntity;
 
     [ViewVariables] public Mind.Mind? Mind;
 }

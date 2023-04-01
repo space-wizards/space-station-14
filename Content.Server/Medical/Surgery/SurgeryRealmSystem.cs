@@ -76,18 +76,7 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
             return;
         }
 
-        heart.Health--;
-        Dirty(heart);
-
-        if (heart.Health > 0)
-            return;
-
-        heart.Health = 0;
-
-        if (!TryComp(heart.Owner, out ActorComponent? actor))
-            return;
-
-        StopOperation(actor.PlayerSession);
+        SubtractHealth(heart);
     }
 
     private void SubtractHealth(SurgeryRealmHeartComponent heart)
@@ -192,18 +181,7 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
             return;
         }
 
-        heart.Health--;
-        Dirty(heart);
-
-        if (heart.Health > 0)
-            return;
-
-        heart.Health = 0;
-
-        if (!TryComp(heart.Owner, out ActorComponent? actor))
-            return;
-
-        StopOperation(actor.PlayerSession);
+        SubtractHealth(heart);
     }
 
     private void OnInteractUsing(InteractUsingEvent args)
@@ -341,6 +319,11 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
         Timer.Spawn(32000, () =>
         {
             SpawnVerticallySlidingPdas(tool.Position.Value);
+        });
+
+        Timer.Spawn(35000, () =>
+        {
+            StopOperation(victimPlayer);
         });
     }
 
@@ -483,6 +466,8 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
         }
 
         RemComp<SurgeryRealmVictimComponent>(victimEntity);
+
+        camera.OldEntity = null;
     }
 
     private void EnsureMap()
