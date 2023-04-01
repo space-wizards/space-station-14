@@ -51,8 +51,8 @@
       tank:
         reagents:
         - ReagentId: WeldingFuel
-          Quantity: 10000
-        maxVol: 10000
+          Quantity: 5000
+        maxVol: 5000
   - type: Explosive
     explosionType: Default
     totalIntensity: 140
