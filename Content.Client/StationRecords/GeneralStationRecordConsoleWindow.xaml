@@ -12,9 +12,9 @@
             </BoxContainer>
             <BoxContainer Margin="0 0 0 5" HorizontalAlignment="Right" HorizontalExpand="true"
                 VerticalAlignment="Center">
-                <Button Name="StationRecordFilters"
+                <Button Name="StationRecordsFilters"
                     Text="{Loc 'general-station-record-console-search-records'}"/>
-                <Button Name="StationRecordFiltersReset"
+                <Button Name="StationRecordsFiltersReset"
                     Text="{Loc 'general-station-record-console-reset-filters'}"/>
             </BoxContainer>
         </BoxContainer>

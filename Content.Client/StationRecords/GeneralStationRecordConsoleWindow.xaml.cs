@@ -17,8 +17,6 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 
     private bool _isPopulating;
 
-    private string _fingerPrintsFilter = "";
-
     public GeneralStationRecordConsoleWindow()
     {
         RobustXamlLoader.Load(this);
@@ -39,14 +37,14 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
                 OnKeySelected?.Invoke(null);
         };
 
-        StationRecordFilters.OnPressed += _ =>
+        StationRecordsFilters.OnPressed += _ =>
         {
-            FilterRecordListings(StationRecordsFilterPrints.Text);
+            FilterListingOfRecords(StationRecordsFilterPrints.Text);
         };
 
-        StationRecordFiltersReset.OnPressed += _ =>
+        StationRecordsFiltersReset.OnPressed += _ =>
         {
-            FilterRecordListings();
+            FilterListingOfRecords();
         };
     }
 
@@ -156,7 +154,7 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
         }
     }
 
-    private void FilterRecordListings(string _prints = "")
+    private void FilterListingOfRecords(string _prints = "")
     {
         if (!_isPopulating)
         {

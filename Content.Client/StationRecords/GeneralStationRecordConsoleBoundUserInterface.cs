@@ -29,7 +29,7 @@ public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInt
 
     private void OnFiltersChanged(string prints)
     {
-        SendMessage(new GeneralStationRecordPrintsMsg(prints));
+        SendMessage(new GeneralStationRecordsPrintsMsg(prints));
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

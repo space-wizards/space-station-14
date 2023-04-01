@@ -57,11 +57,11 @@ public sealed class SelectGeneralStationRecord : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public sealed class GeneralStationRecordPrintsMsg : BoundUserInterfaceMessage
+public sealed class GeneralStationRecordsPrintsMsg : BoundUserInterfaceMessage
 {
     public string printsMsg { get; } = "";
 
-    public GeneralStationRecordPrintsMsg(string prints)
+    public GeneralStationRecordsPrintsMsg(string prints)
     {
         printsMsg = prints;
     }
