@@ -1,11 +1,14 @@
-﻿using Content.Server.Hands.Components;
+﻿using Content.Server.Damage.Systems;
+using Content.Server.Hands.Components;
 using Content.Server.Lightning;
 using Content.Server.Mind.Components;
 using Content.Server.Physics.Controllers;
 using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
 using Content.Shared.Medical.Surgery;
+using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
+using Content.Shared.Rejuvenate;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -31,6 +34,7 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
 
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly LightningSystem _lightning = default!;
+    [Dependency] private readonly GodmodeSystem _godmode = default!;
     [Dependency] private readonly MoverController _mover = default!;
     [Dependency] private readonly ViewSubscriberSystem _viewSubscriber = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
@@ -107,8 +111,21 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
                 QueueDel(uid);
         }
 
-        if (!HasComp<SurgeryRealmHeartComponent>(args.OtherFixture.Body.Owner))
+        if (!TryComp(args.OtherFixture.Body.Owner, out SurgeryRealmHeartComponent? heart))
             return;
+
+        heart.Health--;
+        Dirty(heart);
+
+        if (heart.Health > 0)
+            return;
+
+        heart.Health = 0;
+
+        if (!TryComp(heart.Owner, out ActorComponent? actor))
+            return;
+
+        StopOperation(actor.PlayerSession);
     }
 
     private void OnAntiProjectileCollide(EntityUid uid, SurgeryRealmAntiProjectileComponent component, ref StartCollideEvent args)
@@ -119,8 +136,27 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
                 QueueDel(uid);
         }
 
-        if (!HasComp<SurgeryRealmHeartComponent>(args.OtherFixture.Body.Owner))
+        if (!TryComp(args.OtherFixture.Body.Owner, out SurgeryRealmHeartComponent? heart))
             return;
+
+        if (!TryComp(heart.Owner, out InputMoverComponent? input) ||
+            input.HeldMoveButtons == 0)
+        {
+            return;
+        }
+
+        heart.Health--;
+        Dirty(heart);
+
+        if (heart.Health > 0)
+            return;
+
+        heart.Health = 0;
+
+        if (!TryComp(heart.Owner, out ActorComponent? actor))
+            return;
+
+        StopOperation(actor.PlayerSession);
     }
 
     private void OnInteractUsing(InteractUsingEvent args)
@@ -191,11 +227,22 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
 
         SpawnEdges(tool.Position.Value);
 
-        var camera = CreateCamera(victimPlayer, tool.Position.Value);
+        var camera = EntityManager.SpawnEntity("SurgeryRealmCamera", tool.Position.Value);
+
+        var mind = EnsureComp<MindComponent>(victimEntity);
+        var cameraComp = EnsureComp<SurgeryRealmCameraComponent>(camera);
+        cameraComp.OldEntity = victimEntity;
+        cameraComp.Mind = mind.Mind;
+
+        var eyeComponent = EnsureComp<EyeComponent>(camera);
+
+        eyeComponent.DrawFov = false;
+        _viewSubscriber.AddViewSubscriber(camera, victimPlayer);
 
         _mover.SetRelay(camera, victim.Heart);
 
-        var mind = EnsureComp<MindComponent>(victimEntity);
+        _godmode.EnableGodmode(victimEntity);
+
         mind.Mind?.Visit(camera);
 
         if (music == null)
@@ -233,14 +280,17 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
             }
         }
 
-        SpawnOppositeBananaWallsHoles(tool.Position.Value);
+        Timer.Spawn(2000, () =>
+        {
+            SpawnOppositeBananaWallsHoles(tool.Position.Value);
+        });
 
-        Timer.Spawn(15000, () =>
+        Timer.Spawn(17000, () =>
         {
             SpawnAlternatingBananaPillars(tool.Position.Value);
         });
 
-        Timer.Spawn(30000, () =>
+        Timer.Spawn(32000, () =>
         {
             SpawnVerticallySlidingPdas(tool.Position.Value);
         });
@@ -356,15 +406,32 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
         Physics.SetLinearVelocity(pda, new Vector2(0, -20));
     }
 
-    private void StopOperation(IPlayerSession victim, EntityUid toolId)
+    public void StopOperation(IPlayerSession victimPlayer)
     {
-        if (victim.AttachedEntity is not { } victimEntity ||
-            !TryComp(toolId, out SurgeryRealmToolComponent? tool))
-        {
+        if (victimPlayer.AttachedEntity is not { } victimEntity)
             return;
+
+        if (!TryComp(victimEntity, out SurgeryRealmCameraComponent? camera))
+            return;
+
+        if (Deleted(camera.OldEntity))
+            return;
+
+        camera.Mind?.UnVisit();
+
+        victimEntity = victimPlayer.AttachedEntity.Value;
+        _godmode.DisableGodmode(victimEntity);
+
+        if (TryComp(victimEntity, out SurgeryRealmVictimComponent? victim))
+        {
+            if (victim.Successful)
+                RaiseLocalEvent(victimEntity, new RejuvenateEvent());
+
+            if (TryComp(victim.Tool, out SurgeryRealmToolComponent? tool))
+                tool.Victims.Remove(victimEntity);
         }
 
-        tool.Victims.Remove(victimEntity);
+        RemComp<SurgeryRealmVictimComponent>(victimEntity);
     }
 
     private void EnsureMap()
@@ -406,16 +473,5 @@ public sealed class SurgeryRealmSystem : SharedSurgeryRealmSystem
             return new Vector2i(-k + (m - n), k);
 
         return new Vector2i(k, k - (m - n - t));
-    }
-
-    private EntityUid CreateCamera(IPlayerSession player, MapCoordinates position)
-    {
-        var camera = EntityManager.SpawnEntity("SurgeryRealmCamera", position);
-
-        var eyeComponent = EnsureComp<EyeComponent>(camera);
-        eyeComponent.DrawFov = false;
-        _viewSubscriber.AddViewSubscriber(camera, player);
-
-        return camera;
     }
 }

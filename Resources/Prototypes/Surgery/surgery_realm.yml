@@ -34,7 +34,7 @@
     fixtures:
     - shape:
         !type:PhysShapeCircle
-        radius: 0.15
+        radius: 0.07
       density: 15
       mask:
       - WallLayer

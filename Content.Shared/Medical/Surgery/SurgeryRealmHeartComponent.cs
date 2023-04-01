@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Medical.Surgery;
 
@@ -6,5 +7,18 @@ namespace Content.Shared.Medical.Surgery;
 [Access(typeof(SharedSurgeryRealmSystem))]
 public sealed class SurgeryRealmHeartComponent : Component
 {
-    public bool Flying;
+    [ViewVariables] public int Health = 5;
+
+    [ViewVariables] public bool Flying;
+}
+
+[Serializable, NetSerializable]
+public sealed class SurgeryRealmHeartComponentState : ComponentState
+{
+    public int Health { get; }
+
+    public SurgeryRealmHeartComponentState(int health)
+    {
+        Health = health;
+    }
 }

@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Content.Client.Audio;
 using Content.Client.Instruments;
 using Content.Shared.Medical.Surgery;
+using Robust.Client.Graphics;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.ContentPack;
@@ -16,10 +18,15 @@ public sealed class SurgeryRealmUIController : UIController
     [UISystemDependency] private readonly BackgroundAudioSystem? _backgroundAudio = default!;
 
     private SelfRequestWindow _selfRequestWindow = default!;
+    private SurgeryRealmOverlay _overlay = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        _overlay = new SurgeryRealmOverlay(EntityManager, IoCManager.Resolve<IEyeManager>(),
+            IoCManager.Resolve<IResourceCache>());
+        IoCManager.Resolve<IOverlayManager>().AddOverlay(_overlay);
 
         SubscribeNetworkEvent<SurgeryRealmRequestSelfEvent>(OnSurgeryRequestSelf);
 

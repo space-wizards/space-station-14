@@ -19,6 +19,9 @@ public abstract class SharedSurgeryRealmSystem : EntitySystem
 
         SubscribeLocalEvent<SurgeryRealmSlidingComponent, ComponentGetState>(OnSlidingGetState);
         SubscribeLocalEvent<SurgeryRealmSlidingComponent, ComponentHandleState>(OnSlidingHandleState);
+
+        SubscribeLocalEvent<SurgeryRealmHeartComponent, ComponentGetState>(OnHeartGetState);
+        SubscribeLocalEvent<SurgeryRealmHeartComponent, ComponentHandleState>(OnHeartHandleState);
     }
 
     private void OnSlidingGetState(EntityUid uid, SurgeryRealmSlidingComponent component, ref ComponentGetState args)
@@ -33,6 +36,19 @@ public abstract class SharedSurgeryRealmSystem : EntitySystem
 
         component.FinalY = state.FinalY;
         component.SectionPos = state.SectionPos;
+    }
+
+    private void OnHeartGetState(EntityUid uid, SurgeryRealmHeartComponent component, ref ComponentGetState args)
+    {
+        args.State = new SurgeryRealmHeartComponentState(component.Health);
+    }
+
+    private void OnHeartHandleState(EntityUid uid, SurgeryRealmHeartComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not SurgeryRealmHeartComponentState state)
+            return;
+
+        component.Health = state.Health;
     }
 
     protected virtual void Fire(SurgeryRealmSlidingComponent sliding)
