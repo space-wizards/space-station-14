@@ -28,7 +28,6 @@
   suffix: gigacancer
   components:
   - type: HealthAnalyzer
-    fake: true
     disease: Ultragigacancer
 
 ## I know admins will want this
