@@ -71,7 +71,7 @@ public sealed class BloodstreamSystem : EntitySystem
 
     private void OnWoundSeverityUpdate(EntityUid uid, BloodstreamComponent component, ref WoundSeverityChangedEvent args)
     {
-        if (!TryComp(args.WoundEntity, out BleedInflicterComponent? bleed) || args.WoundComponent.Cauterized)
+        if (!TryComp(args.WoundEntity, out BleedInflicterComponent? bleed) || args.WoundComponent.CanBleed)
             return;
         var severityDelta = args.WoundComponent.Severity - args.OldSeverity;
         var bleedDelta = severityDelta * bleed.BloodLoss;
@@ -80,7 +80,7 @@ public sealed class BloodstreamSystem : EntitySystem
 
     private void OnWoundAdded(EntityUid uid, BloodstreamComponent component, ref WoundAddedEvent args)
     {
-        if (!TryComp(args.WoundEntity, out BleedInflicterComponent? bleed) ||  args.WoundComponent.Cauterized)
+        if (!TryComp(args.WoundEntity, out BleedInflicterComponent? bleed) ||  args.WoundComponent.CanBleed)
             return;
         TryModifyBleedAmount(uid, bleed.BloodLoss*args.WoundComponent.Severity, component);
     }

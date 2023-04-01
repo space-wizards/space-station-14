@@ -34,6 +34,7 @@ public sealed partial class WoundSystem : EntitySystem
 
         SubscribeLocalEvent<WoundableComponent, ComponentGetState>(OnWoundableGetState);
         SubscribeLocalEvent<WoundableComponent, ComponentHandleState>(OnWoundableHandleState);
+        SubscribeLocalEvent<WoundableComponent, ComponentInit>(OnWoundableInit);
 
         SubscribeLocalEvent<WoundComponent, ComponentGetState>(OnWoundGetState);
         SubscribeLocalEvent<WoundComponent, ComponentHandleState>(OnWoundHandleState);
@@ -42,45 +43,55 @@ public sealed partial class WoundSystem : EntitySystem
         SubscribeLocalEvent<BodyComponent, RejuvenateEvent>(OnBodyRejuvenate);
     }
 
+    private void OnWoundableInit(EntityUid uid, WoundableComponent component, ComponentInit args)
+    {
+        if (component.Health <= 0)
+            component.Health = component.MaxIntegrity;
+        if (component.Integrity <= 0)
+            component.Integrity = component.MaxIntegrity;
+    }
+
     private void OnBodyRejuvenate(EntityUid uid, BodyComponent component, RejuvenateEvent args)
     {
         HealAllWounds(uid, component);
         //TODO: reset bodypart health/structure values
     }
 
-    private void OnWoundableGetState(EntityUid uid, WoundableComponent component, ref ComponentGetState args)
+    private void OnWoundableGetState(EntityUid uid, WoundableComponent woundable, ref ComponentGetState args)
     {
         args.State = new WoundableComponentState(
-            component.AllowedTraumaTypes,
-            component.TraumaResistance,
-            component.TraumaPenResistance,
-            component.Health,
-            component.HealthCap,
-            component.HealthCapDamage,
-            component.BaseHealingRate,
-            component.HealingModifier,
-            component.HealingMultiplier,
-            component.Integrity,
-            component.DestroyWoundId
+            woundable.AllowedTraumaTypes,
+            woundable.TraumaResistance,
+            woundable.TraumaPenResistance,
+            woundable.Health,
+            woundable.HealthCap,
+            woundable.HealthCapDamage,
+            woundable.BaseHealingRate,
+            woundable.HealingModifier,
+            woundable.HealingMultiplier,
+            woundable.Integrity,
+            woundable.MaxIntegrity,
+            woundable.DestroyWoundId
         );
     }
 
-    private void OnWoundableHandleState(EntityUid uid, WoundableComponent component, ref ComponentHandleState args)
+    private void OnWoundableHandleState(EntityUid uid, WoundableComponent woundable, ref ComponentHandleState args)
     {
         if (args.Current is not WoundableComponentState state)
             return;
 
-        component.AllowedTraumaTypes = state.AllowedTraumaTypes;
-        component.TraumaResistance = state.TraumaResistance;
-        component.TraumaPenResistance = state.TraumaPenResistance;
-        component.Health = state.Health;
-        component.HealthCap = state.HealthCap;
-        component.HealthCapDamage = state.HealthCapDamage;
-        component.BaseHealingRate = state.BaseHealingRate;
-        component.HealingModifier = state.HealingModifier;
-        component.HealingMultiplier = state.HealingMultiplier;
-        component.Integrity = state.Integrity;
-        component.DestroyWoundId = state.DestroyWoundId;
+        woundable.AllowedTraumaTypes = state.AllowedTraumaTypes;
+        woundable.TraumaResistance = state.TraumaResistance;
+        woundable.TraumaPenResistance = state.TraumaPenResistance;
+        woundable.Health = state.Health;
+        woundable.HealthCap = state.HealthCap;
+        woundable.HealthCapDamage = state.HealthCapDamage;
+        woundable.BaseHealingRate = state.BaseHealingRate;
+        woundable.HealingModifier = state.HealingModifier;
+        woundable.HealingMultiplier = state.HealingMultiplier;
+        woundable.Integrity = state.Integrity;
+        woundable.MaxIntegrity = state.MaxIntegrity;
+        woundable.DestroyWoundId = state.DestroyWoundId;
     }
 
     private void OnWoundGetState(EntityUid uid, WoundComponent wound, ref ComponentGetState args)
@@ -93,7 +104,8 @@ public sealed partial class WoundSystem : EntitySystem
             wound.BaseHealingRate,
             wound.HealingModifier,
             wound.HealingMultiplier,
-            wound.Cauterized
+            wound.CanBleed,
+            wound.ValidTreatments
         );
     }
 
@@ -109,7 +121,8 @@ public sealed partial class WoundSystem : EntitySystem
         wound.BaseHealingRate = state.BaseHealingRate;
         wound.HealingModifier = state.HealingModifier;
         wound.HealingMultiplier = state.HealingMultiplier;
-        wound.Cauterized = state.Cauterized;
+        wound.CanBleed = state.CanBleed;
+        wound.ValidTreatments = state.ValidTreatments;
     }
 
     private void CacheWoundData()

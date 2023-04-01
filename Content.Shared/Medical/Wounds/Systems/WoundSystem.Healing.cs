@@ -129,12 +129,12 @@ public sealed partial class WoundSystem
     }
 
     private bool SetWoundCauterize(EntityUid woundableId, EntityUid woundId, WoundableComponent woundable,
-        WoundComponent wound, bool cauterized)
+        WoundComponent wound, bool canBleed)
     {
-        if (wound.Cauterized == cauterized)
+        if (wound.CanBleed == canBleed)
             return false;
-        var oldState = wound.Cauterized;
-        wound.Cauterized = cauterized;
+        var oldState = wound.CanBleed;
+        wound.CanBleed = canBleed;
         var ev = new WoundCauterizedEvent(woundableId, woundId, woundable, wound, oldState);
         RaiseLocalEvent(woundableId, ref ev, true);
         var bodyId = CompOrNull<BodyPartComponent>(woundableId)?.Body;
