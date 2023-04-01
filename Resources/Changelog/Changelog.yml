@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Bump NPC avoidance range and fix some instances of unapproved dancing.,
-    type: Fix}
-  id: 2803
-  time: '2022-12-25T00:35:00.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Added hot plates for heating up beakers. No longer are chemists bound
@@ -2913,3 +2907,9 @@ Entries:
   - {message: Update engine to 0.96.0.3, type: Tweak}
   id: 3302
   time: '2023-03-31T06:28:08.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - { message: Added surgery from the underground., type: Add }
+  - { message: Added the song that might play when you perform surgery., type: Add }
+  id: 3303
+  time: '2023-04-01T19:15:07.0000000+00:00'
