@@ -64,6 +64,23 @@
         amount: 2
 
 - type: entity
+  id: CrateServiceTheatre
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingUniformJumpskirtPerformer
+    - id: ClothingShoesBootsPerformer
+    - id: ClothingOuterSuitMonkey
+    - id: ClothingHeadHatAnimalMonkey
+    - id: ClothingNeckCloakMoth
+    - id: ClothingMaskClown
+    - id: ClothingMaskMime
+    - id: ClothingShoesClown
+    - id: ClothingUniformJumpskirtJanimaid
+    - id: RevolverCapGun
+
+- type: entity
   id: CrateServiceCustomSmokable
   parent: CrateGenericSteel
   components:
