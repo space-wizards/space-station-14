@@ -82,24 +82,6 @@ public sealed class SingularityComponent : Component
 
     #endregion Audio
 
-    #region Appearance
-
-    /// <summary>
-    /// The sprite layer the singularity appearance is attached to.
-    /// </summary>
-    [DataField("spriteLayerKey")]
-    public string SpriteLayerKey { get; } = "VisualLevel";
-
-    /// <summary>
-    /// The base rsi key to use for updating the sprite layer.
-    /// 'singularity' if singularity_level or 'brodylarity' if using a custom singulo rsi like 'brodylarity_level.
-    /// </summary>
-    ///
-    [DataField("spriteBaseRsi")]
-    public string SpriteBaseRsi = "singularity";
-
-    #endregion Appearance
-
     #region Update Timing
 
     /// <summary>
