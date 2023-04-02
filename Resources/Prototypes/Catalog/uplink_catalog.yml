@@ -572,6 +572,23 @@
     whitelist:
     - Botanist
 
+
+- type: listing
+  id: uplinkGypshyBoxingGloves
+  name: uplink-Gypshy-boxing-gloves-name
+  description: uplink-Gypshy-boxing-gloves-desc
+  productEntity: ClothingHandsGlovesBoxingGypshy
+  cost:
+    Telecrystal: 5
+  categories:
+    - UplinkJob
+  conditions:
+    - !type:BuyerJobCondition
+      whitelist:
+        - Passenger
+        - Boxer
+        - Botanist
+
 - type: listing
   id: uplinkNecronomicon
   name: uplink-necronomicon-name
@@ -908,3 +925,4 @@
     Telecrystal: 20
   categories:
   - UplinkPointless
+

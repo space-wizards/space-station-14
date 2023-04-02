@@ -25,6 +25,21 @@
     fiberColor: fibers-red
   - type: FingerprintMask
 
+
+- type: entity
+  parent: ClothingHandsGlovesBoxingBlue
+  id: ClothingHandsGlovesBoxingGypshy
+  name: blue boxing gloves
+  description: Huh, gypshy gloves that's weird.
+  components:
+  - type: StaminaDamageOnHit
+    damage: 20
+  - type: MeleeWeapon
+    attackRate: 1.4
+    damage:
+      types:
+        Blunt: 7
+
 - type: entity
   parent: ClothingHandsGlovesBoxingRed
   id: ClothingHandsGlovesBoxingBlue
