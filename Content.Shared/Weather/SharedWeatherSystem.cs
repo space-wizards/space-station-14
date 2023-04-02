@@ -36,7 +36,11 @@ public abstract class SharedWeatherSystem : EntitySystem
         }
     }
 
-    public bool CanWeatherAffect(MapGridComponent grid, TileRef tileRef, EntityQuery<PhysicsComponent> bodyQuery)
+    public bool CanWeatherAffect(
+        MapGridComponent grid,
+        TileRef tileRef,
+        EntityQuery<IgnoreWeatherComponent> weatherIgnoreQuery,
+        EntityQuery<PhysicsComponent> bodyQuery)
     {
         if (tileRef.Tile.IsEmpty)
             return true;
@@ -50,7 +54,10 @@ public abstract class SharedWeatherSystem : EntitySystem
 
         while (anchoredEnts.MoveNext(out var ent))
         {
-            if (bodyQuery.TryGetComponent(ent, out var body) && body.CanCollide)
+            if (!weatherIgnoreQuery.HasComponent(ent.Value) &&
+                bodyQuery.TryGetComponent(ent, out var body) &&
+                body.Hard &&
+                body.CanCollide)
             {
                 return false;
             }

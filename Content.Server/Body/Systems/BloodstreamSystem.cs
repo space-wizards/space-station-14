@@ -2,6 +2,7 @@ using Content.Server.Body.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Chemistry.ReactionEffects;
 using Content.Server.Fluids.EntitySystems;
+using Content.Server.Forensics;
 using Content.Server.HealthExaminable;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
@@ -15,6 +16,7 @@ using Content.Shared.Drunk;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Rejuvenate;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -31,12 +33,8 @@ public sealed class BloodstreamSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
-
+    [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly SharedDrunkSystem _drunkSystem = default!;
-
-    // TODO here
-    // Update over time. Modify bloodloss damage in accordance with (amount of blood / max blood level), and reduce bleeding over time
-    // Sub to damage changed event and modify bloodloss if incurring large hits of slashing/piercing
 
     public override void Initialize()
     {
@@ -82,7 +80,8 @@ public sealed class BloodstreamSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var bloodstream in EntityManager.EntityQuery<BloodstreamComponent>())
+        var query = EntityQueryEnumerator<BloodstreamComponent>();
+        while (query.MoveNext(out var uid, out var bloodstream))
         {
             bloodstream.AccumulatedFrametime += frameTime;
 
@@ -91,7 +90,6 @@ public sealed class BloodstreamSystem : EntitySystem
 
             bloodstream.AccumulatedFrametime -= bloodstream.UpdateInterval;
 
-            var uid = bloodstream.Owner;
             if (TryComp<MobStateComponent>(uid, out var state) && _mobStateSystem.IsDead(uid, state))
                 continue;
 
@@ -149,6 +147,10 @@ public sealed class BloodstreamSystem : EntitySystem
         if (args.DamageDelta is null)
             return;
 
+        // definitely don't make them bleed if they got healed
+        if (!args.DamageIncreased)
+            return;
+
         // TODO probably cache this or something. humans get hurt a lot
         if (!_prototypeManager.TryIndex<DamageModifierSetPrototype>(component.DamageBleedModifiers, out var modifiers))
             return;
@@ -168,7 +170,7 @@ public sealed class BloodstreamSystem : EntitySystem
         if (totalFloat > 0 && _robustRandom.Prob(prob))
         {
             TryModifyBloodLevel(uid, (-total) / 5, component);
-            SoundSystem.Play(component.InstantBloodSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default);
+            _audio.PlayPvs(component.InstantBloodSound, uid);
         }
         else if (totalFloat < 0 && oldBleedAmount > 0 && _robustRandom.Prob(healPopupProb))
         {
@@ -176,7 +178,7 @@ public sealed class BloodstreamSystem : EntitySystem
             // because it's burn damage that cauterized their wounds.
 
             // We'll play a special sound and popup for feedback.
-            SoundSystem.Play(component.BloodHealedSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default);
+            _audio.PlayPvs(component.BloodHealedSound, uid);
             _popupSystem.PopupEntity(Loc.GetString("bloodstream-component-wounds-cauterized"), uid,
                 uid, PopupType.Medium);
         }
@@ -291,7 +293,14 @@ public sealed class BloodstreamSystem : EntitySystem
             // Pass some of the chemstream into the spilled blood.
             var temp = component.ChemicalSolution.SplitSolution(component.BloodTemporarySolution.Volume / 10);
             component.BloodTemporarySolution.AddSolution(temp, _prototypeManager);
-            _spillableSystem.SpillAt(uid, component.BloodTemporarySolution, "PuddleBlood", false);
+            var puddle = _spillableSystem.SpillAt(uid, component.BloodTemporarySolution, "PuddleBlood", false);
+            if (puddle != null)
+            {
+                var comp = EnsureComp<ForensicsComponent>(puddle.Owner); //TODO: Get rid of .Owner
+                if (TryComp<DnaComponent>(uid, out var dna))
+                    comp.DNAs.Add(dna.DNA);
+            }
+
             component.BloodTemporarySolution.RemoveAllSolution();
         }
 
@@ -330,6 +339,13 @@ public sealed class BloodstreamSystem : EntitySystem
         component.BloodTemporarySolution.RemoveAllSolution();
         tempSol.AddSolution(component.ChemicalSolution, _prototypeManager);
         component.ChemicalSolution.RemoveAllSolution();
-        _spillableSystem.SpillAt(uid, tempSol, "PuddleBlood", true);
+        var puddle = _spillableSystem.SpillAt(uid, tempSol, "PuddleBlood", true);
+
+        if (puddle != null)
+        {
+            var comp = EnsureComp<ForensicsComponent>(puddle.Owner); //TODO: Get rid of .Owner
+            if (TryComp<DnaComponent>(uid, out var dna))
+                comp.DNAs.Add(dna.DNA);
+        }
     }
 }

@@ -55,6 +55,14 @@ namespace Content.Client.IconSmoothing
             sprite.LayerSetDirOffset(CornerLayers.NW, DirectionOffset.Flip);
             sprite.LayerMapSet(CornerLayers.SW, sprite.AddLayerState(state0));
             sprite.LayerSetDirOffset(CornerLayers.SW, DirectionOffset.Clockwise);
+
+            if (component.Shader != null)
+            {
+                sprite.LayerSetShader(CornerLayers.SE, component.Shader);
+                sprite.LayerSetShader(CornerLayers.NE, component.Shader);
+                sprite.LayerSetShader(CornerLayers.NW, component.Shader);
+                sprite.LayerSetShader(CornerLayers.SW, component.Shader);
+            }
         }
 
         private void OnShutdown(EntityUid uid, IconSmoothComponent component, ComponentShutdown args)

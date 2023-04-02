@@ -3,7 +3,6 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Mech.Components;
 using Content.Server.Power.Components;
-using Content.Server.Wires;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
@@ -15,6 +14,7 @@ using Content.Shared.Mech.EntitySystems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Tools.Components;
 using Content.Shared.Verbs;
+using Content.Shared.Wires;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
@@ -72,7 +72,7 @@ public sealed class MechSystem : SharedMechSystem
     }
     private void OnInteractUsing(EntityUid uid, MechComponent component, InteractUsingEvent args)
     {
-        if (TryComp<WiresComponent>(uid, out var wires) && !wires.IsPanelOpen)
+        if (TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
             return;
 
         if (component.BatterySlot.ContainedEntity == null && TryComp<BatteryComponent>(args.Used, out var battery))
@@ -89,7 +89,10 @@ public sealed class MechSystem : SharedMechSystem
             var doAfterEventArgs = new DoAfterEventArgs(args.User, component.BatteryRemovalDelay, target: uid, used: args.Target)
             {
                 BreakOnTargetMove = true,
-                BreakOnUserMove = true
+                BreakOnUserMove = true,
+                RaiseOnTarget = true,
+                RaiseOnUsed = false,
+                RaiseOnUser = false,
             };
 
             _doAfter.DoAfter(doAfterEventArgs, removeBattery);
@@ -168,6 +171,9 @@ public sealed class MechSystem : SharedMechSystem
                     {
                         BreakOnUserMove = true,
                         BreakOnStun = true,
+                        RaiseOnTarget = true,
+                        RaiseOnUsed = false,
+                        RaiseOnUser = false,
                     };
 
                     _doAfter.DoAfter(doAfterEventArgs, mechEntryEvent);
@@ -189,7 +195,7 @@ public sealed class MechSystem : SharedMechSystem
                 Priority = 1, // Promote to top to make ejecting the ALT-click action
                 Act = () =>
                 {
-                    if (args.User == component.PilotSlot.ContainedEntity)
+                    if (args.User == uid || args.User == component.PilotSlot.ContainedEntity)
                     {
                         TryEject(uid, component);
                         return;
@@ -200,7 +206,10 @@ public sealed class MechSystem : SharedMechSystem
                     {
                         BreakOnUserMove = true,
                         BreakOnTargetMove = true,
-                        BreakOnStun = true
+                        BreakOnStun = true,
+                        RaiseOnTarget = true,
+                        RaiseOnUsed = false,
+                        RaiseOnUser = false,
                     };
 
                     _doAfter.DoAfter(doAfterEventArgs, mechExitEvent);
