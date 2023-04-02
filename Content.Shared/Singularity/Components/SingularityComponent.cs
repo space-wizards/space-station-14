@@ -87,14 +87,16 @@ public sealed class SingularityComponent : Component
     /// <summary>
     /// The sprite layer the singularity appearance is attached to.
     /// </summary>
-    [DataField("layer")]
-    public int Layer { get; } = 0;
+    [DataField("spriteLayerKey")]
+    public string SpriteLayerKey { get; } = "VisualLevel";
 
     /// <summary>
-    /// The base sprite file and state of the singularity.
+    /// The base rsi key to use for updating the sprite layer.
+    /// 'singularity' if singularity_level or 'brodylarity' if using a custom singulo rsi.
     /// </summary>
-    [DataField("baseSprite")]
-    public SpriteSpecifier.Rsi BaseSprite = new SpriteSpecifier.Rsi(new ResourcePath("Structures/Power/Generation/Singularity/singularity"), "singularity");
+    ///
+    [DataField("spriteBaseRsi")]
+    public string SpriteBaseRsi = "singularity";
 
     #endregion Appearance
 

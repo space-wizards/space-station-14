@@ -366,7 +366,7 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <param name="args">The event arguments.</param>
     private void UpdateAppearance(EntityUid uid, AppearanceComponent comp, SingularityLevelChangedEvent args)
     {
-        _visualizer.SetData(uid, SingularityVisuals.Level, args.NewValue, comp);
+        _visualizer.SetData(uid, SingularityAppearanceKeys.Singularity, args.NewValue, comp);
     }
 
     /// <summary>

@@ -45,7 +45,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
         base.OnSingularityStartup(uid, comp, args);
         if (TryComp<SpriteComponent>(uid, out var sprite))
         {
-            sprite.LayerMapReserveBlank(comp.Layer);
+            sprite.LayerMapReserveBlank(comp.SpriteLayerKey);
         }
     }
 
@@ -57,10 +57,9 @@ public sealed class SingularitySystem : SharedSingularitySystem
         if (args.Sprite == null)
             return;
 
-        if(!_appearanceSystem.TryGetData<byte>(uid, SingularityVisuals.Level, out var level, args.Component))
+        if(!_appearanceSystem.TryGetData<byte>(uid, SingularityAppearanceKeys.Singularity, out var level, args.Component))
             return;
 
-        args.Sprite.LayerSetSprite(comp.Layer,
-            new SpriteSpecifier.Rsi(new ResourcePath($"{comp.BaseSprite.RsiPath}_{level}.rsi"), $"{comp.BaseSprite.RsiState}_{level}"));
+        args.Sprite.LayerSetState("VisualLevel", comp.SpriteBaseRsi + "_" + level ) ;
     }
 }
