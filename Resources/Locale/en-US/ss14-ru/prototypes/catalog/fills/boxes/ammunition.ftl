@@ -1,3 +1,6 @@
+ent-BoxMagazine = box of magazines
+    .desc = A box full of magazines.
+    .suffix = { "" }
 ent-BoxMagazinePistolCaselessRifle = box of .25 caseless magazines
     .desc = A box full of .25 caseless magazines.
     .suffix = { "" }
@@ -85,8 +88,8 @@ ent-BoxMagazineShotgunSlug = box of (.50 slug) ammo drums
 ent-BoxMagazineShotgunIncendiary = box of (.50 incendiary) ammo drums
     .desc = A box full of (.50 incendiary) ammo drums.
     .suffix = { "" }
-ent-BoxAmmoProvider = { ent-BoxCardboard }
-    .desc = { ent-BoxCardboard.desc }
+ent-BoxAmmoProvider = { ent-BoxMagazine }
+    .desc = { ent-BoxMagazine.desc }
     .suffix = { "" }
 ent-BoxBeanbag = box of shotgun beanbag cartridges
     .desc = A box full of beanbag shots, designed for riot shotguns.

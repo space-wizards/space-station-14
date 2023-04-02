@@ -1,6 +1,9 @@
 ent-ClothingHeadBase = { ent-Clothing }
     .desc = { ent-Clothing.desc }
     .suffix = { "" }
+ent-ClothingHeadBaseButcherable = { ent-ClothingHeadBase }
+    .desc = { ent-ClothingHeadBase.desc }
+    .suffix = { "" }
 ent-HatBase = { ent-Clothing }
     .desc = { ent-Clothing.desc }
     .suffix = { "" }
