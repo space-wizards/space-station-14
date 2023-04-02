@@ -13,9 +13,9 @@
     bodyType: Dynamic
   - type: EventHorizon # To make the singularity consume things.
     radius: 0.5
-  - type: GravityWell # To make the singularity attract things.
     canBreachContainment: false
     horizonFixtureId: EventHorizon
+  - type: GravityWell # To make the singularity attract things.
   - type: Fixtures
     fixtures:
     - id: EventHorizon
@@ -42,12 +42,14 @@
     radius: 10
   - type: Appearance
   - type: GuideHelp
-    guides: [ Singularity, Power ]
+    guides: [ Singularity, Power ] # uhhh.. I would hoped they'd  have read the manual before ever getting in viewing distance...
   - type: WarpPoint
     follow: true
     location: singularity
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
+    shader: unshaded
+    netsync: false
     layers:
     - map: [ "VisualLevel" ]
       state: singularity_1
@@ -58,15 +60,19 @@
           1:
             sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
             state: singularity_1
+            scale: 1.0,1.0
           2:
             sprite: Structures/Power/Generation/Singularity/singularity_2.rsi
             state: singularity_2
+            scale: 1.0,1.0
           3:
             sprite: Structures/Power/Generation/Singularity/singularity_3.rsi
             state: singularity_3
+            scale: 1.0,1.0
           4:
             sprite: Structures/Power/Generation/Singularity/singularity_4.rsi
             state: singularity_4
+            scale: 1.0,1.0
           5:
             sprite: Structures/Power/Generation/Singularity/singularity_5.rsi
             state: singularity_5

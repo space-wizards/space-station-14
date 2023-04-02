@@ -126,7 +126,7 @@ public abstract class SharedSingularitySystem : EntitySystem
 
         RaiseLocalEvent(uid, new SingularityLevelChangedEvent(singularity.Level, oldValue, singularity));
         if (singularity.Level <= 0)
-            EntityManager.DeleteEntity(singularity.Owner);
+            QueueDel(uid);
     }
 
     /// <summary>
