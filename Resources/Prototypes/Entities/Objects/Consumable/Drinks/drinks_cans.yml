@@ -292,7 +292,7 @@
   parent: DrinkCanBaseFull
   id: DrinkNukieCan
   name: robust nukie drink
-  description: An encouraging drink... very encouraging, it is filled with green liquid, after use it is recommended to consult a doctor.
+  description: An encouraging drink... very encouraging. It is filled with green liquid, after use it is recommended to consult a doctor.
   components:
   - type: SolutionContainerManager
     solutions:
