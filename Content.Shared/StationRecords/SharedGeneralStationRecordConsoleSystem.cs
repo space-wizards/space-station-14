@@ -61,12 +61,23 @@ public sealed class SelectGeneralStationRecord : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public sealed class GeneralStationRecordsPrintsMsg : BoundUserInterfaceMessage
+public sealed class GeneralStationRecordsFilterMsg : BoundUserInterfaceMessage
 {
-    public string printsMsg { get; } = "";
+    public string value { get; }
+    public GeneralStationRecordFilterType type { get; }
 
-    public GeneralStationRecordsPrintsMsg(string prints)
+    public GeneralStationRecordsFilterMsg(GeneralStationRecordFilterType filterType,
+        string  filterValue)
     {
-        printsMsg = prints;
+        type = filterType;
+        value = filterValue;
     }
+}
+
+[Serializable, NetSerializable]
+public enum GeneralStationRecordFilterType : byte
+{
+    Name,
+    Prints,
+    DNA,
 }

@@ -13,9 +13,17 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 {
     public Action<StationRecordKey?>? OnKeySelected;
 
-    public Action<string>? OnFiltersChanged;
+    public Action<GeneralStationRecordFilterType, string>? OnFiltersChanged;
 
     private bool _isPopulating;
+
+    private int _currentFilterType = 0;
+
+    private GeneralStationRecordFilterType[] _filterTypes = {
+        GeneralStationRecordFilterType.Name,
+        GeneralStationRecordFilterType.Prints,
+        GeneralStationRecordFilterType.DNA,
+    };
 
     public GeneralStationRecordConsoleWindow()
     {
@@ -37,9 +45,25 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
                 OnKeySelected?.Invoke(null);
         };
 
+        for (int i = 0; i < _filterTypes.Length; i++)
+        {
+            StationRecordsFilterType.AddItem(GetTypeFilterLocals(i));
+        }
+
+        StationRecordsFilterType.SelectId(_currentFilterType);
+
+        StationRecordsFilterType.OnItemSelected += eventArgs =>
+        {
+            if (_currentFilterType != eventArgs.Id)
+            {
+                _currentFilterType = eventArgs.Id;
+                FilterListingOfRecords(StationRecordsFiltersValue.Text);
+            }
+        };
+
         StationRecordsFilters.OnPressed += _ =>
         {
-            FilterListingOfRecords(StationRecordsFilterPrints.Text);
+            FilterListingOfRecords(StationRecordsFiltersValue.Text);
         };
 
         StationRecordsFiltersReset.OnPressed += _ =>
@@ -50,10 +74,7 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 
     public void UpdateState(GeneralStationRecordConsoleState state)
     {
-        if (state.printsFilter != null && state.printsFilter != StationRecordsFilterPrints.Text)
-        {
-            StationRecordsFilterPrints.Text = state.printsFilter;
-        }
+        UpdateFilters();
 
         if (state.RecordListing == null)
         {
@@ -88,6 +109,11 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
         }
     }
 
+    private void UpdateFilters()
+    {
+        StationRecordsFilterType.SelectId(_currentFilterType);
+        StationRecordsFiltersValue.PlaceHolder = GetTypeFilterLocals(_currentFilterType, false);
+    }
     private void PopulateRecordListing(Dictionary<StationRecordKey, string> listing, StationRecordKey? selected)
     {
         RecordListing.Clear();
@@ -154,11 +180,37 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
         }
     }
 
-    private void FilterListingOfRecords(string _prints = "")
+    private void FilterListingOfRecords(string text = "")
     {
         if (!_isPopulating)
         {
-            OnFiltersChanged?.Invoke(_prints);
+            OnFiltersChanged?.Invoke(_filterTypes[_currentFilterType], text);
+        }
+    }
+
+    private string GetTypeFilterLocals(int id, bool isForButton = true)
+    {
+        string type = "";
+        switch (_filterTypes[id])
+        {
+            case GeneralStationRecordFilterType.Name:
+                type = "name";
+                break;
+            case GeneralStationRecordFilterType.Prints:
+                type = "FingerPrints";
+                break;
+            case GeneralStationRecordFilterType.DNA:
+                type = "dna";
+                break;
+        }
+
+        if (isForButton)
+        {
+            return new String($"general-station-record-{type}-filter");
+        }
+        else
+        {
+            return new String($"general-station-record-for-{type}-placeholder");
         }
     }
 }

@@ -15,7 +15,7 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
     {
         SubscribeLocalEvent<GeneralStationRecordConsoleComponent, BoundUIOpenedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<GeneralStationRecordConsoleComponent, SelectGeneralStationRecord>(OnKeySelected);
-        SubscribeLocalEvent<GeneralStationRecordConsoleComponent, GeneralStationRecordsPrintsMsg>(OnFiltersChanged);
+        SubscribeLocalEvent<GeneralStationRecordConsoleComponent, GeneralStationRecordsFilterMsg>(OnFiltersChanged);
         SubscribeLocalEvent<GeneralStationRecordConsoleComponent, RecordModifiedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<GeneralStationRecordConsoleComponent, AfterGeneralRecordCreatedEvent>(UpdateUserInterface);
     }
@@ -33,14 +33,15 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
     }
 
     private void OnFiltersChanged(EntityUid uid,
-        GeneralStationRecordConsoleComponent component, GeneralStationRecordsPrintsMsg msg)
+        GeneralStationRecordConsoleComponent component, GeneralStationRecordsFilterMsg msg)
     {
-        string prints = msg.printsMsg;
-        if (component.printsFilter != prints)
-        {
-            component.printsFilter = prints.Length > 0 ? prints.ToLower() : "";
-            UpdateUserInterface(uid, component);
-        }
+        Logger.Debug($"select new filters {msg.type} {msg.value}");
+        // string prints = msg.printsMsg;
+        // if (component.printsFilter != prints)
+        // {
+        //     component.printsFilter = prints.Length > 0 ? prints.ToLower() : "";
+        //     UpdateUserInterface(uid, component);
+        // }
     }
 
     private void UpdateUserInterface(EntityUid uid,
