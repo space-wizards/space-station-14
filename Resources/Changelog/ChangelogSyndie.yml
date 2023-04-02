@@ -1,12 +1,4 @@
 Entries:
-- author: Lekar
-  changes:
-  - message: "\u0427\u0430\u0441\u0442\u0438\u0447\u043D\u044B\u0439 \u043F\u0435\u0440\
-      \u0435\u0432\u043E\u0434 \u043D\u0430 \u0440\u0443\u0441\u0441\u043A\u0438\u0439\
-      \ \u044F\u0437\u044B\u043A."
-    type: Add
-  id: 52
-  time: '2022-02-19T20:52:31.0000000+00:00'
 - author: Morty
   changes:
   - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u0447\u0430\u0441\u0442\
@@ -4236,3 +4228,10 @@ Entries:
     type: Fix
   id: 551
   time: '2023-04-02T13:19:28.0000000+00:00'
+- author: no_mad
+  changes:
+  - message: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u0430 \u0441\u0442\u0430\u043D\
+      \u0446\u0438\u044F \u043F\u0440\u0438\u0431\u044B\u0442\u0438\u044F!"
+    type: Tweak
+  id: 552
+  time: '2023-04-02T13:22:35.0000000+00:00'
