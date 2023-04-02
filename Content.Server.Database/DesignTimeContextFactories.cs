@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿#if TOOLS
+
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using SQLitePCL;
 
@@ -29,3 +31,5 @@ public sealed class DesignTimeContextFactorySqlite : IDesignTimeDbContextFactory
         return new SqliteServerDbContext(optionsBuilder.Options);
     }
 }
+
+#endif
