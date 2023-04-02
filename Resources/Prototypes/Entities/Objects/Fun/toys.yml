@@ -858,5 +858,8 @@
   - type: EmitSoundOnUse
     sound:
       collection: ClownRecorder
+  - type: EmitSoundOnActivate
+    sound:
+      collection: ClownRecorder
   - type: UseDelay
     delay: 30.0
