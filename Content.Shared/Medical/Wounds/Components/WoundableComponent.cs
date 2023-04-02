@@ -39,9 +39,13 @@ public sealed class WoundableComponent : Component
     [DataField("healingMultiplier")] public FixedPoint2 HealingMultiplier = 1.0f;
 
     //How well is this woundable holding up, when this reaches 0 the entity is destroyed/gibbed!
-    [DataField("integrity", required: true)]
-    public FixedPoint2 Integrity;
+    [DataField("startingIntegrity")] public FixedPoint2 Integrity = -1;
 
+    //The maximum value of integrity that a bodypart may have
+    [DataField("integrity", required: true)]
+    public FixedPoint2 MaxIntegrity;
+
+    //Wound that is spawned on the part's parent when this part is destroyed
     [DataField("destroyWound", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? DestroyWoundId;
 }
@@ -59,6 +63,7 @@ public sealed class WoundableComponentState : ComponentState
     public FixedPoint2 HealingModifier;
     public FixedPoint2 HealingMultiplier;
     public FixedPoint2 Integrity;
+    public FixedPoint2 MaxIntegrity;
     public string? DestroyWoundId;
 
     public WoundableComponentState(
@@ -72,6 +77,7 @@ public sealed class WoundableComponentState : ComponentState
         FixedPoint2 healingModifier,
         FixedPoint2 healingMultiplier,
         FixedPoint2 integrity,
+        FixedPoint2 maxIntegrity,
         string? destroyWoundId)
     {
         AllowedTraumaTypes = allowedTraumaTypes;
@@ -84,6 +90,7 @@ public sealed class WoundableComponentState : ComponentState
         HealingModifier = healingModifier;
         HealingMultiplier = healingMultiplier;
         Integrity = integrity;
+        MaxIntegrity = maxIntegrity;
         DestroyWoundId = destroyWoundId;
     }
 }

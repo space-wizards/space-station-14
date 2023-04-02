@@ -1,8 +1,8 @@
 ﻿using Content.Shared.FixedPoint;
-using Content.Shared.Medical.Wounds.Prototypes;
+using Content.Shared.Medical.Treatments.Prototypes;
+using Content.Shared.Medical.Treatments.Systems;
 using Content.Shared.Medical.Wounds.Systems;
 using Robust.Shared.GameStates;
-using Robust.Shared.Map.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -11,7 +11,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Medical.Wounds.Components;
 
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(WoundSystem))]
+[Access(typeof(WoundSystem), typeof(TreatmentSystem))]
 public sealed class WoundComponent : Component
 {
     //what wound should be created if this wound is healed normally?
@@ -33,8 +33,11 @@ public sealed class WoundComponent : Component
     //How much to multiply the Healing modifier
     [DataField("healingMultiplier")] public FixedPoint2 HealingMultiplier;
 
-    //Is this wound cauterized?
-    [DataField("cauterized")] public bool Cauterized;
+    //Is this wound actively bleeding?
+    [DataField("canBleed")] public bool CanBleed;
+
+    [DataField("validTreatments" , customTypeSerializer: typeof(PrototypeIdHashSetSerializer<TreatmentTypePrototype>))]
+    public HashSet<string> ValidTreatments = new();
 }
 
 [Serializable, NetSerializable]
@@ -47,11 +50,12 @@ public sealed class WoundComponentState : ComponentState
     public FixedPoint2 BaseHealingRate;
     public FixedPoint2 HealingModifier;
     public FixedPoint2 HealingMultiplier;
-    public bool Cauterized;
+    public HashSet<string> ValidTreatments;
+    public bool CanBleed;
 
     public WoundComponentState(string? scarWound, FixedPoint2 healthCapDamage,
         FixedPoint2 integrityDamage, FixedPoint2 severity, FixedPoint2 baseHealingRate, FixedPoint2 healingModifier,
-        FixedPoint2 healingMultiplier, bool cauterized)
+        FixedPoint2 healingMultiplier, bool canBleed,  HashSet<string> validTreatments)
     {
         ScarWound = scarWound;
         HealthCapDamage = healthCapDamage;
@@ -60,6 +64,7 @@ public sealed class WoundComponentState : ComponentState
         BaseHealingRate = baseHealingRate;
         HealingModifier = healingModifier;
         HealingMultiplier = healingMultiplier;
-        Cauterized = cauterized;
+        CanBleed = canBleed;
+        ValidTreatments = validTreatments;
     }
 }
