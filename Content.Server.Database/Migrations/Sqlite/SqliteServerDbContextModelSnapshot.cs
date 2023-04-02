@@ -687,6 +687,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("banning_admin");
 
+                    b.Property<int>("ExemptFlags")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("exempt_flags");
+
                     b.Property<DateTime?>("ExpirationTime")
                         .HasColumnType("TEXT")
                         .HasColumnName("expiration_time");
@@ -714,6 +718,25 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.ToTable("server_ban", (string)null);
 
                     b.HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR user_id IS NOT NULL OR hwid IS NOT NULL");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.ServerBanExemption", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("user_id");
+
+                    b.Property<int>("Flags")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("flags");
+
+                    b.HasKey("UserId")
+                        .HasName("PK_server_ban_exemption");
+
+                    b.ToTable("server_ban_exemption", (string)null);
+
+                    b.HasCheckConstraint("FlagsNotZero", "flags != 0");
                 });
 
             modelBuilder.Entity("Content.Server.Database.ServerBanHit", b =>
