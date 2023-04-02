@@ -39,11 +39,6 @@
     intensity: 20
   - type: RadiationSource
     slope: 0.2 # its emit really far away
-  - type: Sprite
-    sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
-    state: singularity_1
-    shader: unshaded
-    netsync: false
   - type: PointLight
     enabled: true
     radius: 10
