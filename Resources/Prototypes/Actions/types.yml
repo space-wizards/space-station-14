@@ -1,6 +1,5 @@
 - type: instantAction
-  id: Fart
-  useDelay: 10
+  id: Fart #TODO - I removed the cooldown on this, I need to add the butt organ and farting your ass off, together with sfarts.
   icon: Interface/Actions/butt.png
   name: action-name-fart
   description: action-description-fart
@@ -8,8 +7,7 @@
   checkCanInteract: false
 
 - type: instantAction
-  id: Scream
-  useDelay: 10
+  id: Scream #TODO - I removed the cooldown on this, we need to add something to deal oxy damage. That's if oxy damage is in yet. idk
   icon: Interface/Actions/scream.png
   name: action-name-scream
   description: action-description-scream
