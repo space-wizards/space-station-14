@@ -1,0 +1,139 @@
+- type: entity
+  name: strange pill
+  parent: Pill
+  id: StrangePill
+  description: This unusual pill bears no markings. Theres no telling what it contains.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+  - type: RandomFillSolution
+    solution: food
+    randomlist:
+    # Medicines
+    - weight: 10
+      randreagents:
+        reagents:
+        - ReagentId: Cryptobiolin
+          Quantity: 15
+    - weight: 10
+      randreagents:
+        reagents:
+        - ReagentId: Ipecac
+          Quantity: 10
+    - weight: 10
+      randreagents:
+        reagents:
+        - ReagentId: Omnizine
+          Quantity: 5
+    - weight: 5
+      randreagents:
+        reagents:
+        - ReagentId: Omnizine
+          Quantity: 10
+    - weight: 10
+      randreagents:
+        reagents:
+        - ReagentId: Tricordrazine
+          Quantity: 30
+    # Narcotics
+    - weight: 10
+      randreagents:
+        reagents:
+        - ReagentId: Desoxyephedrine
+          Quantity: 10
+    - weight: 10
+      randreagents:
+        reagents:
+        - ReagentId: Ephedrine
+          Quantity: 10
+    - weight: 15
+      randreagents:
+        reagents:
+        - ReagentId: SpaceDrugs
+          Quantity: 10
+    - weight: 10
+      randreagents:
+        reagents:
+        - ReagentId: Nocturine
+          Quantity: 15
+    - weight: 10
+      randreagents:
+        reagents:
+        - ReagentId: MuteToxin
+          Quantity: 25
+    - weight: 10
+      randreagents:
+        reagents:
+        - ReagentId: NorepinephricAcid
+          Quantity: 25
+    # Toxins
+    - weight: 10
+      randreagents:
+        reagents:
+        - ReagentId: ChloralHydrate
+          Quantity: 18
+    - weight: 10
+      randreagents:
+        reagents:
+        - ReagentId: Mold
+          Quantity: 5
+    - weight: 10
+      randreagents:
+        reagents:
+        - ReagentId: Pax
+          Quantity: 25
+    - weight: 10
+      randreagents:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 10
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/pills.rsi
+    netsync: false
+    layers:
+    - state: pill1
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          pill1: ""
+      - enum.DamageStateVisualLayers.Base:
+          pill2: ""
+      - enum.DamageStateVisualLayers.Base:
+          pill3: ""
+      - enum.DamageStateVisualLayers.Base:
+          pill4: ""
+      - enum.DamageStateVisualLayers.Base:
+          pill5: ""
+      - enum.DamageStateVisualLayers.Base:
+          pill6: ""
+      - enum.DamageStateVisualLayers.Base:
+          pill7: ""
+      - enum.DamageStateVisualLayers.Base:
+          pill8: ""
+      - enum.DamageStateVisualLayers.Base:
+          pill9: ""
+      - enum.DamageStateVisualLayers.Base:
+          pill10: ""
+      - enum.DamageStateVisualLayers.Base:
+          pill11: ""
+      - enum.DamageStateVisualLayers.Base:
+          pill12: ""
+      - enum.DamageStateVisualLayers.Base:
+          pill13: ""
+      - enum.DamageStateVisualLayers.Base:
+          pill14: ""
+      - enum.DamageStateVisualLayers.Base:
+          pill15: ""
+      - enum.DamageStateVisualLayers.Base:
+          pill16: ""
+      - enum.DamageStateVisualLayers.Base:
+          pill17: ""
+      - enum.DamageStateVisualLayers.Base:
+          pill18: ""
+      - enum.DamageStateVisualLayers.Base:
+          pill19: ""
+      - enum.DamageStateVisualLayers.Base:
+          pill20: ""

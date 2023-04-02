@@ -53,6 +53,7 @@
         - ClothingUnderSocksBee
         - ClothingUnderSocksCoder
         - ClothingHeadHatSquid
+        - StrangePill
       chance: 0.6
       offset: 0.0
 
