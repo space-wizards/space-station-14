@@ -44,7 +44,11 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
         ArrestButton.OnPressed += e => OnArrestButtonPressed?.Invoke(e, ReasonLineEdit.Text, RecordName);
 
         StatusOptionButton.OnItemSelected += args =>
-            OnStatusOptionButtonSelected?.Invoke(args, (SecurityStatus) StatusOptionButton.GetItemMetadata(args.Id)!, ReasonLineEdit.Text, RecordName);
+        {
+            args.Button.SelectId(args.Id);
+            OnStatusOptionButtonSelected?.Invoke(args, (SecurityStatus) StatusOptionButton.GetItemMetadata(args.Id)!,
+                ReasonLineEdit.Text, RecordName);
+        };
 
     }
 

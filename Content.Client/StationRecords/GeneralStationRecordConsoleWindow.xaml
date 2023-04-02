@@ -14,9 +14,11 @@
             <BoxContainer Name="RecordContainer" Orientation="Vertical" />
             <PanelContainer Name="CriminalDivider" StyleClasses="LowDivider" Visible="False" Margin="0 5 0 5" />
             <BoxContainer Orientation="Vertical" Margin="5 5 5 5">
-                <LineEdit Name="ReasonLineEdit" HorizontalExpand="True" Visible="False" />
-                <OptionButton Name="StatusOptionButton" Visible="False" />
-                <Button Name="ArrestButton" Text="Arrest/Unarrest" Visible="False" />
+                <LineEdit Name="ReasonLineEdit" HorizontalExpand="True" Visible="False" PlaceHolder="Reason"/>
+                <BoxContainer Orientation="Horizontal" Margin="5 5 5 5" >
+                    <Button Name="ArrestButton" Text="Arrest/Unarrest" Visible="False" HorizontalExpand="True" />
+                    <OptionButton Name="StatusOptionButton" Visible="False" HorizontalExpand="True" />
+                </BoxContainer>
             </BoxContainer>
         </BoxContainer>
         <BoxContainer Orientation="Vertical" Margin="5 5 5 5">

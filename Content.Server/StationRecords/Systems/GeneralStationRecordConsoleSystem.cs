@@ -45,46 +45,77 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
     private void OnButtonPressed(EntityUid uid, GeneralStationRecordConsoleComponent component,
         StationRecordArrestButtonPressed msg)
     {
-        if (msg.Reason != null && msg.Name != null && msg.Session.AttachedEntity != null)
-            _radioSystem.SendRadioMessage(component.Owner, $"{msg.Name} has been detained for {msg.Reason} by {Name(msg.Session.AttachedEntity.Value)}",
-                _prototypeManager.Index<RadioChannelPrototype>("Security"));
+        TryComp<SecurityInfoComponent>(msg.Session.AttachedEntity, out var secInfo);
 
-        else if (msg.Reason == null && msg.Name != null && msg.Session.AttachedEntity != null)
-            _radioSystem.SendRadioMessage(component.Owner, $"{msg.Name} has been detained by {Name(msg.Session.AttachedEntity.Value)}",
-                _prototypeManager.Index<RadioChannelPrototype>("Security"));
+        if (msg.Reason != string.Empty && msg.Name != null && msg.Session.AttachedEntity != null && secInfo != null)
+        {
+            secInfo.Status = secInfo.Status == SecurityStatus.Detained ? SecurityStatus.None : SecurityStatus.Detained;
 
-        var station = _stationSystem.GetOwningStation(uid);
+            var messages = new Dictionary<SecurityStatus, string>()
+            {
+                { SecurityStatus.Detained, $"{msg.Name} has been detained for {msg.Reason} by {Name(msg.Session.AttachedEntity.Value)}" },
+                { SecurityStatus.None, $"{msg.Name} has been released from the detention for {msg.Reason} by {Name(msg.Session.AttachedEntity.Value)}" }
+            };
+
+            _radioSystem.SendRadioMessage(uid, messages[secInfo.Status], _prototypeManager.Index<RadioChannelPrototype>("Security"));
+        }
+
+        else if (msg.Reason == string.Empty && msg.Name != null && msg.Session.AttachedEntity != null && secInfo != null)
+        {
+            secInfo.Status = secInfo.Status == SecurityStatus.Detained ? SecurityStatus.None : SecurityStatus.Detained;
+
+            var messages = new Dictionary<SecurityStatus, string>()
+            {
+                { SecurityStatus.Detained, $"{msg.Name} has been detained for by {Name(msg.Session.AttachedEntity.Value)}" },
+                { SecurityStatus.None, $"{msg.Name} has been released from the detention by {Name(msg.Session.AttachedEntity.Value)}" }
+            };
+
+            _radioSystem.SendRadioMessage(uid, messages[secInfo.Status], _prototypeManager.Index<RadioChannelPrototype>("Security"));
+        }
+
+        var station = _stationSystem.GetOwningStation(msg.Session.AttachedEntity!.Value);
         _stationRecordsSystem.Synchronize(station!.Value);
+        UpdateUserInterface(uid, component);
     }
 
     private void OnStatusSelected(EntityUid uid, GeneralStationRecordConsoleComponent component,
         StatusOptionButtonSelected msg)
     {
-        if (msg.Status != null)
+        TryComp<SecurityInfoComponent>(msg.Session.AttachedEntity, out var secInfo);
+
+        if (msg.Reason != string.Empty && secInfo != null && msg.Session.AttachedEntity != null)
         {
-            TryComp<SecurityInfoComponent>(msg.Session.AttachedEntity, out var secInfo);
+            secInfo.Status = secInfo.Status == SecurityStatus.None ? SecurityStatus.Wanted : SecurityStatus.None;
 
-            if (msg.Reason != null && msg.Status != null && secInfo != null && msg.Session.AttachedEntity != null)
+            var messages = new Dictionary<SecurityStatus, string>()
             {
-                secInfo.Status = msg.Status;
+                { SecurityStatus.Wanted, $"{msg.Name} is wanted for {msg.Reason} by {Name(msg.Session.AttachedEntity.Value)}" },
+                { SecurityStatus.None, $"{msg.Name} is not wanted anymore for {msg.Reason} by {Name(msg.Session.AttachedEntity.Value)}" }
+            };
 
-                _radioSystem.SendRadioMessage(component.Owner, $"{msg.Name} is wanted for {msg.Reason} by {Name(msg.Session.AttachedEntity.Value)}",
-                    _prototypeManager.Index<RadioChannelPrototype>("Security"));
+            _radioSystem.SendRadioMessage(uid, messages[secInfo.Status],
+                _prototypeManager.Index<RadioChannelPrototype>("Security"));
 
-                var station = _stationSystem.GetOwningStation(uid);
-                _stationRecordsSystem.Synchronize(station!.Value);
-            }
+            var station = _stationSystem.GetOwningStation(msg.Session.AttachedEntity!.Value);
+            _stationRecordsSystem.Synchronize(station!.Value);
+            UpdateUserInterface(uid, component);
+        }
 
-            else if (msg.Reason == null && msg.Status != null && secInfo != null && msg.Session.AttachedEntity != null)
+        else if (msg.Reason == string.Empty && secInfo != null && msg.Session.AttachedEntity != null)
+        {
+            secInfo.Status = secInfo.Status == SecurityStatus.None ? SecurityStatus.Wanted : SecurityStatus.None;
+
+            var messages = new Dictionary<SecurityStatus, string>()
             {
-                secInfo.Status = msg.Status;
+                { SecurityStatus.Wanted, $"{msg.Name} is wanted by {Name(msg.Session.AttachedEntity.Value)}" },
+                { SecurityStatus.None, $"{msg.Name} is not wanted anymore by {Name(msg.Session.AttachedEntity.Value)}" }
+            };
 
-                _radioSystem.SendRadioMessage(component.Owner, $"{msg.Name} is wanted by {Name(msg.Session.AttachedEntity.Value)}",
-                    _prototypeManager.Index<RadioChannelPrototype>("Security"));
-                var station = _stationSystem.GetOwningStation(uid);
-                _stationRecordsSystem.Synchronize(station!.Value);
-            }
-
+            _radioSystem.SendRadioMessage(uid, messages[secInfo.Status],
+                _prototypeManager.Index<RadioChannelPrototype>("Security"));
+            var station = _stationSystem.GetOwningStation(msg.Session.AttachedEntity!.Value);
+            _stationRecordsSystem.Synchronize(station!.Value);
+            UpdateUserInterface(uid, component);
         }
     }
 
