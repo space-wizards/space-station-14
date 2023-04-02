@@ -20,5 +20,5 @@ guide-entry-xenoarchaeology = Ксеноархеология
 guide-entry-artifact-reports = Отчёты об артефактах
 guide-entry-traversal-distorter = Поперечный искатель
 guide-entry-ss14 = Космическая станция 14
-guide-entry-security = Security
-guide-entry-dna = DNA
+guide-entry-security = Безопасность станции
+guide-entry-dna = ДНК

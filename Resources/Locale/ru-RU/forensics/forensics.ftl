@@ -1,7 +1,7 @@
 forensic-scanner-interface-title = Криминалистический сканер
 forensic-scanner-interface-fingerprints = Отпечатки
 forensic-scanner-interface-fibers = Волокна
-forensic-scanner-interface-dnas = DNAs
+forensic-scanner-interface-dnas = ДНК
 forensic-scanner-interface-no-data = Нет данных для сканирования
 forensic-scanner-interface-print = Распечатать
 forensic-scanner-interface-clear = Очистить

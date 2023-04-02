@@ -5,5 +5,5 @@ ent-WeaponCapacitorRecharger = зарядник
     .desc = { ent-PowerCellRecharger.desc }
     .suffix = { "" }
 ent-WallWeaponCapacitorRecharger = настенный зарядник
-    .desc = { ent-PowerCellRecharger.desc }
+    .desc = { ent-WeaponCapacitorRecharger.desc }
     .suffix = { "" }
