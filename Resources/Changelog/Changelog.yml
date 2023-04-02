@@ -1,10 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: 'Pill canisters will now fit in coat storage, at the cost of having
-      less space for pills. (12 -> 9)', type: Tweak}
-  id: 2808
-  time: '2022-12-29T03:57:28.0000000+00:00'
 - author: Ungle McBumblefuck
   changes:
   - {message: 'Spaceacillin use now seems to impair brain function. A worthy risk?
@@ -2908,3 +2902,10 @@ Entries:
   - {message: Fixed ghost lighting being disabled when any ghost is removed., type: Fix}
   id: 3307
   time: '2023-04-01T22:56:01.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: Energy sword can now reflect kinetic projectiles (low chance) and energetic
+      shots like laser and disabler (50/50), type: Add}
+  - {message: Increased energy sword TC cost (6 => 8), type: Tweak}
+  id: 3308
+  time: '2023-04-02T13:48:33.0000000+00:00'
