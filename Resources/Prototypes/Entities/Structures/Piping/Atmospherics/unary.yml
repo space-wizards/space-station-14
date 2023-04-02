@@ -247,6 +247,7 @@
     - type: Wires
       BoardName: "Thermomachine"
       LayoutId: Thermomachine
+    - type: WiresVisuals
     - type: NodeContainer
       nodes:
         pipe:
@@ -269,17 +270,17 @@
     - type: Sprite
       layers:
         - state: freezerOff
-          map: [ "enum.GasThermoMachineVisualLayers.MachineBody" ]
-        - state: freezerPanelClose
+          map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        - state: freezerPanelOpen
           map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
         - state: pipe
           map: [ "enum.PipeVisualLayers.Pipe" ]
-    - type: GasThermoMachineVisuals
-      offState: freezerOff
-      onState: freezerOn
-      panelOpen: freezerPanelOpen
-      panelClose: freezerPanelClose
-      panelOn : freezerPanelOn
+    - type: GenericVisualizer
+      visuals:
+        enum.PowerDeviceVisuals.Powered:
+          enum.PowerDeviceVisualLayers.Powered:
+            True: { state: freezerOn }
+            False: { state: freezerOff }
     - type: GasThermoMachine
       mode: Freezer
     - type: ApcPowerReceiver
@@ -308,17 +309,17 @@
     - type: Sprite
       layers:
         - state: heaterOff
-          map: [ "enum.GasThermoMachineVisualLayers.MachineBody" ]
-        - state: heaterPanelClose
+          map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        - state: heaterPanelOpen
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
         - state: pipe
           map: [ "enum.PipeVisualLayers.Pipe" ]
-    - type: GasThermoMachineVisuals
-      offState: heaterOff
-      onState: heaterOn
-      panelOpen: heaterPanelOpen
-      panelClose: heaterPanelClose
-      panelOn : heaterPanelOn
+    - type: GenericVisualizer
+      visuals:
+        enum.PowerDeviceVisuals.Powered:
+          enum.PowerDeviceVisualLayers.Powered:
+            True: { state: heaterOn }
+            False: { state: heaterOff }
     - type: GasThermoMachine
       mode: Heater
     - type: ApcPowerReceiver

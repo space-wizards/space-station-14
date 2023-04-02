@@ -5,11 +5,9 @@ using Content.Server.Construction;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
-using Content.Shared.Atmos.Piping.Unary.Visuals;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Examine;
 
@@ -27,12 +25,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<GasThermoMachineComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<GasThermoMachineComponent, AtmosDeviceUpdateEvent>(OnThermoMachineUpdated);
-            SubscribeLocalEvent<GasThermoMachineComponent, AtmosDeviceDisabledEvent>(OnThermoMachineLeaveAtmosphere);
             SubscribeLocalEvent<GasThermoMachineComponent, RefreshPartsEvent>(OnGasThermoRefreshParts);
             SubscribeLocalEvent<GasThermoMachineComponent, UpgradeExamineEvent>(OnGasThermoUpgradeExamine);
-            SubscribeLocalEvent<GasThermoMachineComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<GasThermoMachineComponent, ExaminedEvent>(OnExamined);
 
             // UI events
@@ -40,20 +35,10 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             SubscribeLocalEvent<GasThermoMachineComponent, GasThermomachineChangeTemperatureMessage>(OnChangeTemperature);
         }
 
-        private void OnInit(EntityUid uid, GasThermoMachineComponent thermoMachine, ComponentInit args)
-        {
-            UpdateState(uid, thermoMachine);
-        }
-
-        private void OnPowerChanged(EntityUid uid, GasThermoMachineComponent thermoMachine, ref PowerChangedEvent args)
-        {
-            UpdateState(uid, thermoMachine);
-        }
-
         private void OnThermoMachineUpdated(EntityUid uid, GasThermoMachineComponent thermoMachine, AtmosDeviceUpdateEvent args)
         {
 
-            if (!thermoMachine.IsRunning
+            if (!(thermoMachine.Enabled && _power.IsPowered(uid))
                 || !TryComp(uid, out NodeContainerComponent? nodeContainer)
                 || !nodeContainer.TryGetNode(thermoMachine.InletName, out PipeNode? inlet))
             {
@@ -68,11 +53,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 var combinedEnergy = thermoMachine.HeatCapacity * thermoMachine.TargetTemperature + airHeatCapacity * inlet.Air.Temperature;
                 inlet.Air.Temperature = combinedEnergy / combinedHeatCapacity;
             }
-        }
-
-        private void OnThermoMachineLeaveAtmosphere(EntityUid uid, GasThermoMachineComponent thermoMachine, AtmosDeviceDisabledEvent args)
-        {
-            UpdateState(uid, thermoMachine);
         }
 
         private void OnGasThermoRefreshParts(EntityUid uid, GasThermoMachineComponent thermoMachine, RefreshPartsEvent args)
@@ -117,7 +97,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         private void OnToggleMessage(EntityUid uid, GasThermoMachineComponent thermoMachine, GasThermomachineToggleMessage args)
         {
             SetEnabled(uid, thermoMachine, _power.TogglePower(uid));
-            UpdateState(uid, thermoMachine);
             DirtyUI(uid, thermoMachine);
         }
 
@@ -136,19 +115,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             _userInterfaceSystem.TrySetUiState(uid, ThermomachineUiKey.Key,
                 new GasThermomachineBoundUserInterfaceState(thermoMachine.MinTemperature, thermoMachine.MaxTemperature, thermoMachine.TargetTemperature, thermoMachine.Enabled, thermoMachine.Mode), null, ui);
-        }
-
-        /// <summary>
-        ///      Updates the running state of the machine, adjust the power consumption accordingly and updates its appearance.
-        /// </summary>
-        private void UpdateState(EntityUid uid, GasThermoMachineComponent? thermoMachine = null, AppearanceComponent? appearance = null)
-        {
-            if (!Resolve(uid, ref thermoMachine, ref appearance, false))
-                return;
-
-            thermoMachine.IsRunning = thermoMachine.Enabled && _power.IsPowered(uid);
-
-            _appearance.SetData(uid, ThermoMachineVisuals.Running, thermoMachine.IsRunning, appearance);
         }
 
         private void SetEnabled(EntityUid uid, GasThermoMachineComponent thermoMachine, bool enabled)

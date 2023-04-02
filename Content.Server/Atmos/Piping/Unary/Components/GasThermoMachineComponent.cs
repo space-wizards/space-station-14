@@ -16,12 +16,6 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         public bool Enabled = false;
 
         /// <summary>
-        ///      Whether the power switch is on AND the machine has enough power
-        /// </summary>
-        [ViewVariables]
-        public bool IsRunning = false;
-
-        /// <summary>
         ///     Current maximum temperature, calculated from <see cref="BaseHeatCapacity"/> and the quality of matter
         ///     bins. The heat capacity effectively determines the rate at which the thermo machine can add or remove
         ///     heat from a pipenet.
