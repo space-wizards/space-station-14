@@ -26,6 +26,22 @@ namespace Content.Server.Atmos.Components
         ///     These are the inventory slots that are checked for pressure protection. If a slot is missing protection, no protection is applied.
         /// </summary>
         [DataField("protectionSlots")]
-        public List<string> ProtectionSlots = new() { "head", "outerClothing" }; 
+        public List<string> ProtectionSlots = new() { "head", "outerClothing" };
+
+        /// <summary>
+        /// Cached protection values gained from the entity equipment
+        /// </summary>
+        [ViewVariables]
+        public float HighPressureMultiplier = 1f;
+        [ViewVariables]
+        public float HighPressureModifier = 0f;
+        [ViewVariables]
+        public float LowPressureMultiplier = 1f;
+        [ViewVariables]
+        public float LowPressureModifier = 0f;
+
+        [ViewVariables]
+        public bool Immuned = false;
+
     }
 }

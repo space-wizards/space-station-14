@@ -6,6 +6,7 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Atmos.EntitySystems
@@ -23,124 +24,144 @@ namespace Content.Server.Atmos.EntitySystems
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<PressureProtectionComponent, HighPressureEvent>(OnHighPressureEvent);
-            SubscribeLocalEvent<PressureProtectionComponent, LowPressureEvent>(OnLowPressureEvent);
+            SubscribeLocalEvent<PressureProtectionComponent, GotEquippedEvent>(OnPressureProtectionEquipped);
+            SubscribeLocalEvent<PressureProtectionComponent, GotUnequippedEvent>(OnPressureProtectionUnequipped);
+            SubscribeLocalEvent<PressureProtectionComponent, ComponentInit>(OnPressureProtectionInit);
+            SubscribeLocalEvent<PressureProtectionComponent, ComponentRemove>(OnPressureProtectionRemove);
 
-            SubscribeLocalEvent<PressureImmunityComponent, HighPressureEvent>(OnHighPressureImmuneEvent);
-            SubscribeLocalEvent<PressureImmunityComponent, LowPressureEvent>(OnLowPressureImmuneEvent);
-
+            SubscribeLocalEvent<PressureImmunityComponent, ComponentInit>(OnPressureImmuneInit);
+            SubscribeLocalEvent<PressureImmunityComponent, ComponentRemove>(OnPressureImmuneRemove);
         }
 
-        private void OnHighPressureEvent(EntityUid uid, PressureProtectionComponent component, HighPressureEvent args)
+        private void OnPressureImmuneInit(EntityUid uid, PressureImmunityComponent pressureImmunity, ComponentInit args)
         {
-            args.Modifier += component.HighPressureModifier;
-            args.Multiplier *= component.HighPressureMultiplier;
+            if (TryComp<BarotraumaComponent>(uid, out var barotrauma))
+            {
+                barotrauma.Immuned = true;
+            }
         }
 
-        private void OnLowPressureEvent(EntityUid uid, PressureProtectionComponent component, LowPressureEvent args)
+        private void OnPressureImmuneRemove(EntityUid uid, PressureImmunityComponent pressureImmunity, ComponentRemove args)
         {
-            args.Modifier += component.LowPressureModifier;
-            args.Multiplier *= component.LowPressureMultiplier;
+            if (TryComp<BarotraumaComponent>(uid, out var barotrauma))
+            {
+                barotrauma.Immuned = false;
+            }
+
         }
 
+        private void OnPressureProtectionInit(EntityUid uid, PressureProtectionComponent pressureImmunity, ComponentInit args)
+        {
+            if (TryComp<BarotraumaComponent>(uid, out var barotrauma))
+            {
+                UpdateCachedResistances(uid, barotrauma);
+            }
+        }
+
+        private void OnPressureProtectionRemove(EntityUid uid, PressureProtectionComponent pressureImmunity, ComponentRemove args)
+        {
+            if (TryComp<BarotraumaComponent>(uid, out var barotrauma))
+            {
+                UpdateCachedResistances(uid, barotrauma);
+            }
+
+        }
+
+        private void OnPressureProtectionEquipped(EntityUid uid, PressureProtectionComponent pressureProtection, GotEquippedEvent args)
+        {
+            if (TryComp<BarotraumaComponent>(args.Equipee, out var barotrauma) && barotrauma.ProtectionSlots.Contains(args.Slot))
+            {
+                UpdateCachedResistances(args.Equipee, barotrauma);
+            }
+
+        }
+
+        private void OnPressureProtectionUnequipped(EntityUid uid, PressureProtectionComponent pressureProtection, GotUnequippedEvent args)
+        {
+            if (TryComp<BarotraumaComponent>(args.Equipee, out var barotrauma) && barotrauma.ProtectionSlots.Contains(args.Slot))
+            {
+                UpdateCachedResistances(args.Equipee, barotrauma);
+            }
+        }
 
         /// <summary>
-        /// Completely prevent high pressure damage
+        /// Computes the pressure resistance for the entity coming from the equipment and any innate resistance.
+        /// The ProtectionSlots field of the Barotrauma component specifies which parts must be protected for the protection to have any effet.
         /// </summary>
-        private void OnHighPressureImmuneEvent(EntityUid uid, PressureImmunityComponent component, HighPressureEvent args)
+        private void UpdateCachedResistances(EntityUid uid, BarotraumaComponent barotrauma)
         {
-            args.Multiplier = 0;
-        }
 
-        /// <summary>
-        /// Completely prevent low pressure damage
-        /// </summary>
-        private void OnLowPressureImmuneEvent(EntityUid uid, PressureImmunityComponent component, LowPressureEvent args)
-        {
-            args.Modifier = 100;
-            args.Multiplier = 10000;
-        }
-
-        public float GetFeltLowPressure(EntityUid uid, BarotraumaComponent baro, float environmentPressure)
-        {
-            var modifier = float.MaxValue;
-            var multiplier = float.MaxValue;
-
-            TryComp(uid, out InventoryComponent? inv);
-            TryComp(uid, out ContainerManagerComponent? contMan);
-
-            // TODO: cache this & update when equipment changes?
-            // This continuously raises events for every player in space.
-
-            if (baro.ProtectionSlots.Count == 0)
+            if (!TryComp(uid, out InventoryComponent? inv) || !TryComp(uid, out ContainerManagerComponent? contMan))
             {
-                modifier = 0;
-                multiplier = 1;
+                return;
             }
 
-            // First, check if for protective equipment
-            foreach (var slot in baro.ProtectionSlots)
-            {
-                if (!_inventorySystem.TryGetSlotEntity(uid, slot, out var equipment, inv, contMan)
-                    || ! TryComp(equipment, out PressureProtectionComponent? protection))
-                {
-                    // Missing protection, skin is exposed.
-                    modifier = 0;
-                    multiplier = 1;
-                    break;
-                }
+            var hPModifier = float.MinValue;
+            var hPMultiplier = float.MinValue;
+            var lPModifier = float.MaxValue;
+            var lPMultiplier = float.MaxValue;
 
-                modifier = Math.Min(protection.LowPressureModifier, modifier);
-                multiplier = Math.Min(protection.LowPressureMultiplier, multiplier);
-            }
-
-            // Then apply any generic, non-clothing related modifiers.
-            var lowPressureEvent = new LowPressureEvent(environmentPressure);
-            RaiseLocalEvent(uid, lowPressureEvent);
-
-            return (environmentPressure + modifier + lowPressureEvent.Modifier)
-                   * (multiplier * lowPressureEvent.Multiplier);
-        }
-
-        public float GetFeltHighPressure(EntityUid uid, BarotraumaComponent baro, float environmentPressure)
-        {
-            var modifier = float.MinValue;
-            var multiplier = float.MinValue;
-
-            TryComp(uid, out InventoryComponent? inv);
-            TryComp(uid, out ContainerManagerComponent? contMan);
-
-            // TODO: cache this & update when equipment changes?
-            // Not as import and as low-pressure, but probably still useful.
-
-            if (baro.ProtectionSlots.Count == 0)
-            {
-                modifier = 0;
-                multiplier = 1;
-            }
-
-            // First, check if for protective equipment
-            foreach (var slot in baro.ProtectionSlots)
+            foreach (var slot in barotrauma.ProtectionSlots)
             {
                 if (!_inventorySystem.TryGetSlotEntity(uid, slot, out var equipment, inv, contMan)
                     || !TryComp(equipment, out PressureProtectionComponent? protection))
                 {
                     // Missing protection, skin is exposed.
-                    modifier = 0;
-                    multiplier = 1;
+                    hPModifier = 0f;
+                    hPMultiplier = 1f;
+                    lPModifier = 0f;
+                    lPMultiplier = 1f;
                     break;
                 }
 
-                modifier = Math.Max(protection.HighPressureModifier, modifier);
-                multiplier = Math.Max(protection.HighPressureMultiplier, multiplier);
+                // The entity is as protected as its weakest part protection
+                hPModifier = Math.Max(hPModifier, protection.HighPressureModifier);
+                hPMultiplier = Math.Max(hPMultiplier, protection.HighPressureMultiplier);
+                lPModifier = Math.Min(lPModifier, protection.LowPressureModifier);
+                lPMultiplier = Math.Min(lPMultiplier, protection.LowPressureMultiplier);
+
             }
 
-            // Then apply any generic, non-clothing related modifiers.
-            var highPressureEvent = new HighPressureEvent(environmentPressure);
-            RaiseLocalEvent(uid, highPressureEvent);
+            barotrauma.HighPressureModifier = hPModifier;
+            barotrauma.HighPressureMultiplier = hPMultiplier;
+            barotrauma.LowPressureModifier = lPModifier;
+            barotrauma.LowPressureMultiplier = lPMultiplier;
 
-            return (environmentPressure + modifier + highPressureEvent.Modifier)
-                   * (multiplier * highPressureEvent.Multiplier);
+            // any innate pressure resistance ?
+            if (TryComp<PressureProtectionComponent>(uid, out var innatePressureProtection))
+            {
+                barotrauma.HighPressureModifier = hPModifier + innatePressureProtection.HighPressureModifier;
+                barotrauma.HighPressureMultiplier = hPMultiplier * innatePressureProtection.HighPressureMultiplier;
+                barotrauma.LowPressureModifier = lPModifier + innatePressureProtection.LowPressureModifier;
+                barotrauma.LowPressureMultiplier = lPMultiplier * innatePressureProtection.LowPressureMultiplier;
+            }
+
+        }
+
+        /// <summary>
+        /// Returns adjusted pressure after having applied resistances from equipment and innate (if any), to check against a low pressure hazard threshold
+        /// </summary>
+        public float GetFeltLowPressure(EntityUid uid, BarotraumaComponent barotrauma, float environmentPressure)
+        {
+            if (barotrauma.Immuned)
+            {
+                return Atmospherics.OneAtmosphere;
+            }
+
+            return (environmentPressure + barotrauma.LowPressureModifier) * (barotrauma.LowPressureMultiplier);
+        }
+
+        /// <summary>
+        /// Returns adjusted pressure after having applied resistances from equipment and innate (if any), to check against a high pressure hazard threshold
+        /// </summary>
+        public float GetFeltHighPressure(EntityUid uid, BarotraumaComponent barotrauma, float environmentPressure)
+        {
+            if (barotrauma.Immuned)
+            {
+                return Atmospherics.OneAtmosphere;
+            }
+
+            return (environmentPressure + barotrauma.HighPressureModifier) * (barotrauma.HighPressureMultiplier);
         }
 
         public override void Update(float frameTime)
@@ -203,7 +224,7 @@ namespace Content.Server.Atmos.EntitySystems
                     case >= Atmospherics.WarningHighPressure:
                         pressure = GetFeltHighPressure(uid, barotrauma, pressure);
 
-                        if(pressure < Atmospherics.WarningHighPressure)
+                        if (pressure < Atmospherics.WarningHighPressure)
                             goto default;
 
                         var damageScale = MathF.Min((pressure / Atmospherics.HazardHighPressure) * Atmospherics.PressureDamageCoefficient, Atmospherics.MaxHighPressureDamage);
