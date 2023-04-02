@@ -519,6 +519,17 @@ namespace Content.Server.Database
         /// </summary>
         public ServerUnban? Unban { get; set; }
 
+        /// <summary>
+        /// Whether this ban should be automatically deleted from the database when it expires.
+        /// </summary>
+        /// <remarks>
+        /// This isn't done automatically by the game,
+        /// you will need to set up something like a cron job to clear this from your database,
+        /// using a command like this:
+        /// psql -d ss14 -c "DELETE FROM server_ban WHERE auto_delete AND expiration_time &lt; NOW()"
+        /// </remarks>
+        public bool AutoDelete { get; set; }
+
         public List<ServerBanHit> BanHits { get; set; } = null!;
     }
 
