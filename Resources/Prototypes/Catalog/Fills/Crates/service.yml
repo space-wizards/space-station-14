@@ -121,6 +121,7 @@
         - id: BoxCardboard
           amount: 6
 
+- type: entity
   id: CrateJanitorBiosuit
   parent: CratePlastic
   components:
