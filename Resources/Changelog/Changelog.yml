@@ -1,10 +1,4 @@
 Entries:
-- author: Ungle McBumblefuck
-  changes:
-  - {message: 'Spaceacillin use now seems to impair brain function. A worthy risk?
-      maybe not...', type: Tweak}
-  id: 2809
-  time: '2022-12-29T04:44:53.0000000+00:00'
 - author: Carbonhell
   changes:
   - {message: 'Cryo pods now properly transfer the reagents from the contained beaker
@@ -2909,3 +2903,8 @@ Entries:
   - {message: Increased energy sword TC cost (6 => 8), type: Tweak}
   id: 3308
   time: '2023-04-02T13:48:33.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix audio leak with bullet fly-bys., type: Fix}
+  id: 3309
+  time: '2023-04-02T14:08:16.0000000+00:00'
