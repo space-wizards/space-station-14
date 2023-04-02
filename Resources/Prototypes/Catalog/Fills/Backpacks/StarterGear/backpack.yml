@@ -286,3 +286,14 @@
       contents:
         - id: BoxSurvival
 
+- type: entity
+  parent: ClothingBackpackSatchelLeather
+  id: ClothingBackpackPirateFilled
+  suffix: Filled, Pirate
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+        - id: Cutlass
+        - id: WeaponRevolverPirate
+        - id: ClothingEyesEyepatch
