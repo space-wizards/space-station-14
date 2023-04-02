@@ -1,11 +1,4 @@
 Entries:
-- author: Carbonhell
-  changes:
-  - {message: 'Cryo pods now properly transfer the reagents from the contained beaker
-      to the patient. There''s also a wiki page explaining how cryo pods work, be
-      sure to read it if you need help!', type: Fix}
-  id: 2810
-  time: '2022-12-30T14:34:59.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Puddles now become sparkles as soon as you finish mopping them. Still
@@ -2908,3 +2901,9 @@ Entries:
   - {message: Fix audio leak with bullet fly-bys., type: Fix}
   id: 3309
   time: '2023-04-02T14:08:16.0000000+00:00'
+- author: Ilya246
+  changes:
+  - {message: 'The Syndicate has downscaled thieving glove nanotech, making it no
+      longer identifiable on inspection.', type: Tweak}
+  id: 3310
+  time: '2023-04-02T19:34:56.0000000+00:00'
