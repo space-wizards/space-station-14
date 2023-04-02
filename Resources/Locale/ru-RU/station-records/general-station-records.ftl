@@ -7,3 +7,4 @@ general-station-record-console-record-title = Должность: { $job }
 general-station-record-console-record-species = Раса: { $species }
 general-station-record-console-record-gender = Гендер: { $gender }
 general-station-record-console-record-fingerprint = Отпечатки пальцев: { $fingerprint }
+general-station-record-console-record-dna = DNA: { $dna }
