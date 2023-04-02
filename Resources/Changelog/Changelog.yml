@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Puddles now become sparkles as soon as you finish mopping them. Still
-      be careful of wet floors!, type: Tweak}
-  - {message: Blood stains now fade out instead of becoming sparkles., type: Fix}
-  id: 2811
-  time: '2022-12-30T17:45:05.0000000+00:00'
 - author: Theomund
   changes:
   - {message: Added missing locale string for the carpotoxin physical reagent description.,
@@ -2907,3 +2900,8 @@ Entries:
       longer identifiable on inspection.', type: Tweak}
   id: 3310
   time: '2023-04-02T19:34:56.0000000+00:00'
+- author: adamsong
+  changes:
+  - {message: Fixed ghosts being unable to hear radio cross-map, type: Fix}
+  id: 3311
+  time: '2023-04-02T23:56:07.0000000+00:00'
