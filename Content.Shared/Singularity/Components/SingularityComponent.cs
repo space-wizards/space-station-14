@@ -92,7 +92,7 @@ public sealed class SingularityComponent : Component
 
     /// <summary>
     /// The base rsi key to use for updating the sprite layer.
-    /// 'singularity' if singularity_level or 'brodylarity' if using a custom singulo rsi.
+    /// 'singularity' if singularity_level or 'brodylarity' if using a custom singulo rsi like 'brodylarity_level.
     /// </summary>
     ///
     [DataField("spriteBaseRsi")]
