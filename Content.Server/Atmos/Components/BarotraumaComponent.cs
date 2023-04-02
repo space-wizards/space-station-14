@@ -29,7 +29,7 @@ namespace Content.Server.Atmos.Components
         public List<string> ProtectionSlots = new() { "head", "outerClothing" };
 
         /// <summary>
-        /// Cached protection values gained from the entity equipment
+        /// Cached pressure protection values
         /// </summary>
         [ViewVariables]
         public float HighPressureMultiplier = 1f;

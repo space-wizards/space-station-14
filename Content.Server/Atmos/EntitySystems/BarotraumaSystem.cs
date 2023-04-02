@@ -91,49 +91,51 @@ namespace Content.Server.Atmos.EntitySystems
         private void UpdateCachedResistances(EntityUid uid, BarotraumaComponent barotrauma)
         {
 
-            if (!TryComp(uid, out InventoryComponent? inv) || !TryComp(uid, out ContainerManagerComponent? contMan))
+            if (barotrauma.ProtectionSlots.Count != 0)
             {
-                return;
-            }
-
-            var hPModifier = float.MinValue;
-            var hPMultiplier = float.MinValue;
-            var lPModifier = float.MaxValue;
-            var lPMultiplier = float.MaxValue;
-
-            foreach (var slot in barotrauma.ProtectionSlots)
-            {
-                if (!_inventorySystem.TryGetSlotEntity(uid, slot, out var equipment, inv, contMan)
-                    || !TryComp(equipment, out PressureProtectionComponent? protection))
+                if (!TryComp(uid, out InventoryComponent? inv) || !TryComp(uid, out ContainerManagerComponent? contMan))
                 {
-                    // Missing protection, skin is exposed.
-                    hPModifier = 0f;
-                    hPMultiplier = 1f;
-                    lPModifier = 0f;
-                    lPMultiplier = 1f;
-                    break;
+                    return;
+                }
+                var hPModifier = float.MinValue;
+                var hPMultiplier = float.MinValue;
+                var lPModifier = float.MaxValue;
+                var lPMultiplier = float.MaxValue;
+
+                foreach (var slot in barotrauma.ProtectionSlots)
+                {
+                    if (!_inventorySystem.TryGetSlotEntity(uid, slot, out var equipment, inv, contMan)
+                        || !TryComp(equipment, out PressureProtectionComponent? protection))
+                    {
+                        // Missing protection, skin is exposed.
+                        hPModifier = 0f;
+                        hPMultiplier = 1f;
+                        lPModifier = 0f;
+                        lPMultiplier = 1f;
+                        break;
+                    }
+
+                    // The entity is as protected as its weakest part protection
+                    hPModifier = Math.Max(hPModifier, protection.HighPressureModifier);
+                    hPMultiplier = Math.Max(hPMultiplier, protection.HighPressureMultiplier);
+                    lPModifier = Math.Min(lPModifier, protection.LowPressureModifier);
+                    lPMultiplier = Math.Min(lPMultiplier, protection.LowPressureMultiplier);
+
                 }
 
-                // The entity is as protected as its weakest part protection
-                hPModifier = Math.Max(hPModifier, protection.HighPressureModifier);
-                hPMultiplier = Math.Max(hPMultiplier, protection.HighPressureMultiplier);
-                lPModifier = Math.Min(lPModifier, protection.LowPressureModifier);
-                lPMultiplier = Math.Min(lPMultiplier, protection.LowPressureMultiplier);
-
+                barotrauma.HighPressureModifier = hPModifier;
+                barotrauma.HighPressureMultiplier = hPMultiplier;
+                barotrauma.LowPressureModifier = lPModifier;
+                barotrauma.LowPressureMultiplier = lPMultiplier;
             }
-
-            barotrauma.HighPressureModifier = hPModifier;
-            barotrauma.HighPressureMultiplier = hPMultiplier;
-            barotrauma.LowPressureModifier = lPModifier;
-            barotrauma.LowPressureMultiplier = lPMultiplier;
 
             // any innate pressure resistance ?
             if (TryComp<PressureProtectionComponent>(uid, out var innatePressureProtection))
             {
-                barotrauma.HighPressureModifier = hPModifier + innatePressureProtection.HighPressureModifier;
-                barotrauma.HighPressureMultiplier = hPMultiplier * innatePressureProtection.HighPressureMultiplier;
-                barotrauma.LowPressureModifier = lPModifier + innatePressureProtection.LowPressureModifier;
-                barotrauma.LowPressureMultiplier = lPMultiplier * innatePressureProtection.LowPressureMultiplier;
+                barotrauma.HighPressureModifier += innatePressureProtection.HighPressureModifier;
+                barotrauma.HighPressureMultiplier *= innatePressureProtection.HighPressureMultiplier;
+                barotrauma.LowPressureModifier += innatePressureProtection.LowPressureModifier;
+                barotrauma.LowPressureMultiplier *= innatePressureProtection.LowPressureMultiplier;
             }
 
         }
