@@ -3,8 +3,8 @@
 namespace Content.Shared.Singularity
 {
     [Serializable, NetSerializable]
-    public enum SingularityVisuals
+    public enum SingularityAppearanceKeys
     {
-        Level
+        Singularity
     }
 }
