@@ -1,0 +1,249 @@
+- type: entity
+  name: chair
+  id: SeatBase
+  abstract: true
+  description: You sit in this. Either by will or force.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+  - type: Anchorable
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.2
+      density: 100
+      mask:
+      - TableMask
+  - type: Sprite
+    sprite: Structures/Furniture/chairs.rsi
+    noRot: true
+    netsync: false
+  - type: Strap
+    position: Stand
+    buckleOffset: "0,0.15"
+  - type: Pullable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+  - type: StaticPrice
+    price: 50
+
+- type: entity
+  name: chair
+  id: Chair
+  parent: SeatBase
+  components:
+  - type: Transform
+    anchored: true
+  - type: Rotatable
+  - type: Sprite
+    state: chair
+  - type: Construction
+    graph: Seat
+    node: chair
+
+- type: entity
+  name: stool
+  id: Stool
+  parent: SeatBase
+  description: Apply butt.
+  components:
+  - type: Sprite
+    state: stool
+  - type: Construction
+    graph: Seat
+    node: stool
+
+- type: entity
+  name: bar stool
+  id: StoolBar
+  parent: SeatBase
+  components:
+  - type: Transform
+    anchored: true
+  - type: Rotatable
+    rotateWhileAnchored: true
+  - type: Sprite
+    state: bar
+  - type: Construction
+    graph: Seat
+    node: stoolBar
+
+- type: entity
+  name: white office chair
+  id: ChairOfficeLight
+  parent: SeatBase
+  components:
+  - type: Rotatable
+    rotateWhileAnchored: true
+  - type: Sprite
+    state: office-white
+  - type: Construction
+    graph: Seat
+    node: chairOffice
+
+- type: entity
+  name: dark office chair
+  id: ChairOfficeDark
+  parent: ChairOfficeLight
+  components:
+  - type: Sprite
+    state: office-dark
+  - type: Construction
+    graph: Seat
+    node: chairOfficeDark
+
+- type: entity
+  name: comfy chair
+  id: ComfyChair
+  parent: SeatBase
+  description: It looks comfy.
+  components:
+  - type: Transform
+    anchored: true
+  - type: Rotatable
+  - type: Sprite
+    state: comfy
+  - type: Construction
+    graph: Seat
+    node: chairComfy
+
+- type: entity
+  name: pilot seat
+  id: ChairPilotSeat
+  parent: SeatBase
+  description: The pilot seat of a prestigious ship.
+  components:
+  - type: Transform
+    anchored: true
+  - type: Rotatable
+  - type: Sprite
+    state: shuttle
+  - type: Construction
+    graph: Seat
+    node: chairPilotSeat
+
+- type: entity
+  name: wooden chair
+  id: ChairWood
+  parent: SeatBase
+  components:
+  - type: Sprite
+    state: wooden
+  - type: Rotatable
+  - type: Construction
+    graph: Seat
+    node: chairWood
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/woodhit.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 1
+            max: 1
+  - type: Tag
+    tags:
+    - Wooden
+  - type: StaticPrice
+    price: 75
+
+- type: entity
+  name: ritual chair
+  id: ChairRitual
+  parent: SeatBase
+  description: Looks uncomfortable.
+  components:
+  - type: Rotatable
+  - type: Sprite
+    state: ritual
+  - type: Construction
+    graph: RitualSeat
+    node: chairRitual
+
+- type: entity
+  name: cursed chair
+  id: ChairCursed
+  parent: SeatBase
+  description: It's staring back.
+  components:
+  - type: Rotatable
+  - type: Sprite
+    state: cursed
+  - type: Strap
+    buckleSound:
+      collection: MaleScreams
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Voice/Human/womanlaugh.ogg
+    graph: RitualSeat
+    node: chairCursed
+
+- type: entity
+  parent: [SeatBase, BaseFoldable]
+  id: ChairFolding
+  name: folding chair
+  description: If you carry six of these you become the coolest kid at church.
+  components:
+  - type: Rotatable
+  - type: Sprite
+    sprite: Structures/Furniture/folding_chair.rsi
+    layers:
+    - state: folding
+      map: ["unfoldedLayer"]
+    - state: folding_folded
+      map: ["foldedLayer"]
+      visible: false
+  - type: Item
+    size: 50
+  - type: Appearance
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 15
+  - type: Construction
+    graph: Seat
+    node: chairFolding
+
+- type: entity
+  parent: ChairFolding
+  id: ChairFoldingSpawnFolded
+  suffix: folded
+  placement:
+    mode: PlaceFree
+  components:
+  - type: Foldable
+    folded: true

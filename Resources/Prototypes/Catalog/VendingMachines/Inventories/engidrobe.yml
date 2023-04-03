@@ -1,0 +1,16 @@
+- type: vendingMachineInventory
+  id: EngiDrobeInventory
+  startingInventory:
+    ClothingBackpackDuffelEngineering: 3
+    ClothingBackpackSatchelEngineering: 3
+    ClothingBackpackEngineering: 3
+    ClothingUniformJumpsuitEngineering: 3
+    ClothingUniformJumpskirtEngineering: 3
+    ClothingUniformJumpsuitEngineeringHazard: 3
+    ClothingShoesColorBlack: 3
+    ClothingOuterVestHazard: 3
+    ClothingShoesBootsWork: 3
+    ClothingHeadHatHardhatYellow: 3
+    ClothingHeadHatHardhatOrange: 3
+    ClothingHeadsetEngineering: 3
+    ClothingOuterWinterEngi: 2

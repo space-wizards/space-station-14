@@ -1,0 +1,89 @@
+- type: entity
+  name: captain's sabre
+  parent: BaseItem
+  id: CaptainSabre
+  description: A ceremonial weapon belonging to the captain of the station.
+  components:
+  - type: Sharp
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/captain_sabre.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 17 #cmon, it has to be at least BETTER than the rest.
+  - type: Item
+    size: 15
+    sprite: Objects/Weapons/Melee/captain_sabre.rsi
+  - type: Tag
+    tags:
+    - CaptainSabre
+  - type: DisarmMalus
+
+- type: entity
+  name: katana
+  parent: BaseItem
+  id: Katana
+  description: Ancient craftwork made with not so ancient plasteel.
+  components:
+  - type: Sharp
+  - type: Tag
+    tags:
+    - Katana
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/katana.rsi
+    state: icon
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 25
+  - type: Item
+    size: 15
+    sprite: Objects/Weapons/Melee/katana.rsi
+  - type: DisarmMalus
+
+- type: entity
+  name: machete
+  parent: BaseItem
+  id: Machete
+  description: A large, vicious looking blade.
+  components:
+  - type: Sharp
+  - type: Tag
+    tags:
+    - Machete
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/machete.rsi
+    state: icon
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 20
+  - type: Item
+    size: 15
+    sprite: Objects/Weapons/Melee/machete.rsi
+  - type: DisarmMalus
+
+- type: entity
+  name: claymore
+  parent: BaseItem
+  id: Claymore
+  description: An ancient war blade.
+  components:
+  - type: Sharp
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/claymore.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 0.75
+    damage:
+      types:
+        Slash: 33
+  - type: Item
+    size: 20
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/claymore.rsi
+    slots:
+    - back
+  - type: DisarmMalus

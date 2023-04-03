@@ -1,0 +1,7 @@
+﻿- type: advertisementsPack
+  id: AutoDrobeAds
+  advertisements:
+  - advertisement-theater-1
+  - advertisement-theater-2
+  - advertisement-theater-3
+  - advertisement-theater-4

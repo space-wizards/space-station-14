@@ -1,0 +1,152 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/Citadel-Station-13/Citadel-Station-13/commit/06689416691093474d600924242f69eb7d223f3e",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "lightning_1",
+      "delays": [
+        [
+          0.120000005,
+          0.08
+        ]
+      ]
+    },
+    {
+      "name": "lightning_2",
+      "delays": [
+        [
+          0.120000005,
+          0.08
+        ]
+      ]
+    },
+    {
+      "name": "lightning_3",
+      "delays": [
+        [
+          0.120000005,
+          0.08
+        ]
+      ]
+    },
+    {
+      "name": "lightning_4",
+      "delays": [
+        [
+          0.120000005,
+          0.08
+        ]
+      ]
+    },
+    {
+      "name": "lightning_5",
+      "delays": [
+        [
+          0.120000005,
+          0.08
+        ]
+      ]
+    },
+    {
+      "name": "lightning_6",
+      "delays": [
+        [
+          0.120000005,
+          0.08
+        ]
+      ]
+    },
+    {
+      "name": "lightning_7",
+      "delays": [
+        [
+          0.120000005,
+          0.08
+        ]
+      ]
+    },
+    {
+      "name": "lightning_8",
+      "delays": [
+        [
+          0.120000005,
+          0.08
+        ]
+      ]
+    },
+    {
+      "name": "lightning_9",
+      "delays": [
+        [
+          0.120000005,
+          0.08
+        ]
+      ]
+    },
+    {
+      "name": "lightning_10",
+      "delays": [
+        [
+          0.120000005,
+          0.08
+        ]
+      ]
+    },
+    {
+      "name": "lightning_11",
+      "delays": [
+        [
+          0.120000005,
+          0.08
+        ]
+      ]
+    },
+    {
+      "name": "lightning_12",
+      "delays": [
+        [
+          0.120000005,
+          0.08
+        ]
+      ]
+    },
+    {
+      "name": "yellow_lightning",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "blue_lightning",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "red_lightning",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    }
+  ]
+}

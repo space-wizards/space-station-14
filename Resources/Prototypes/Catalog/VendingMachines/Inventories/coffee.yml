@@ -1,0 +1,5 @@
+﻿- type: vendingMachineInventory
+  id: HotDrinksMachineInventory
+  startingInventory:
+    DrinkHotCoffee: 10
+    DrinkTeacup: 10

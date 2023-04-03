@@ -1,0 +1,95 @@
+- type: entity
+  abstract: true
+  parent: Clothing
+  id: ClothingOuterBase
+  components:
+  - type: Clothing
+    slots:
+    - outerClothing
+  - type: Sprite
+    state: icon
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterBase
+  id: ClothingOuterBaseLarge
+  components:
+  - type: Item
+    size: 80
+  - type: Clothing
+    slots:
+    - outerClothing
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterBase
+  id: ClothingOuterStorageBase
+  components:
+  - type: Item
+    size: 10
+  - type: Storage
+    capacity: 10
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+  - type: StaticPrice
+    price: 80
+
+- type: entity
+  abstract: true
+  parent: [ClothingOuterBase, GeigerCounterClothing]
+  id: ClothingOuterHardsuitBase
+  name: base hardsuit
+  components:
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.001 # yes it needs to be this low, fires are fucking deadly apparently!!!!
+  - type: ClothingSpeedModifier
+    walkModifier: 0.4
+    sprintModifier: 0.6
+  - type: Item
+    size: 121
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.90
+        Slash: 0.90
+        Piercing: 0.95
+        Heat: 0.90
+        Radiation: 0.25
+  - type: DiseaseProtection
+    protection: 0.05
+  - type: ToggleableClothing
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
+  - type: GroupExamine
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterBase
+  id: ClothingOuterEVASuitBase
+  name: base EVA Suit
+  components:
+  - type: PressureProtection
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.01 # Not complete protection from fire
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: Item
+    size: 80
+  - type: DiseaseProtection
+    protection: 0.05

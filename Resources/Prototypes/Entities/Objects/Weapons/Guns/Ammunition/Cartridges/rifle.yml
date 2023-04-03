@@ -1,0 +1,54 @@
+- type: entity
+  id: BaseCartridgeRifle
+  name: cartridge (.20 rifle)
+  parent: BaseCartridge
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+      - Cartridge
+      - CartridgeRifle
+  - type: CartridgeAmmo
+    proto: BulletRifle
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Appearance
+  - type: SpentAmmoVisuals
+  - type: StaticPrice
+    price: 10
+
+- type: entity
+  id: CartridgeRifle
+  name: cartridge (.20 rifle)
+  parent: BaseCartridgeRifle
+  components:
+  - type: CartridgeAmmo
+    proto: BulletRifle
+
+- type: entity
+  id: CartridgeRifleHighVelocity
+  name: cartridge (.20 rifle high-velocity)
+  parent: BaseCartridgeRifle
+  components:
+  - type: CartridgeAmmo
+    proto: BulletRifleHighVelocity
+
+- type: entity
+  id: CartridgeRiflePractice
+  name: cartridge (.20 rifle practice)
+  parent: BaseCartridgeRifle
+  components:
+  - type: CartridgeAmmo
+    proto: BulletRiflePractice
+
+- type: entity
+  id: CartridgeRifleRubber
+  name: cartridge (.20 rifle rubber)
+  parent: BaseCartridgeRifle
+  components:
+  - type: CartridgeAmmo
+    proto: BulletRifleRubber

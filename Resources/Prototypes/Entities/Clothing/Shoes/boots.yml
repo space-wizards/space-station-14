@@ -1,0 +1,69 @@
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesBootsWork
+  name: workboots
+  description: Engineering lace-up work boots for the especially blue-collar.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/workboots.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/workboots.rsi
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesBootsJack
+  name: jackboots
+  description: Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/jackboots.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/jackboots.rsi
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesBootsSalvage
+  name: salvage boots
+  description: Steel-toed salvage boots for salvaging in hazardous environments.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/explorer.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/explorer.rsi
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesBootsPerformer
+  name: performer's boots
+  description: These boots provide great traction for when you're up on stage.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/performer.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/performer.rsi
+
+- type: entity
+  parent: ClothingShoesStorageBase
+  id: ClothingShoesBootsCombat
+  name: combat boots
+  description: Robust combat boots for combat scenarios or combat situations. All combat, all the time.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/combatboots.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/combatboots.rsi
+  - type: Storage
+    whitelist:
+      tags:
+        - Knife
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesBootsLaceup
+  name: laceup shoes
+  description: The height of fashion, and they're pre-polished!
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/laceups.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/laceups.rsi

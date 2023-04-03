@@ -1,0 +1,63 @@
+- type: alertLevels
+  id: stationAlerts
+  defaultLevel: green
+  levels:
+    green:
+      announcement: alert-level-green-announcement
+      color: Green
+      shuttleTime: 600
+    blue:
+      announcement: alert-level-blue-announcement
+      sound: /Audio/Misc/bluealert.ogg
+      color: DodgerBlue
+    violet:
+      announcement: alert-level-violet-announcement
+      sound: /Audio/Misc/notice1.ogg
+      color: Violet
+      emergencyLightColor: Violet
+      shuttleTime: 600
+    yellow:
+      announcement: alert-level-yellow-announcement
+      sound: /Audio/Misc/notice1.ogg
+      color: Yellow
+      emergencyLightColor: Goldenrod
+      shuttleTime: 400
+    red:
+      announcement: alert-level-red-announcement
+      sound: /Audio/Misc/redalert.ogg
+      color: Red
+    gamma:
+      announcement: alert-level-gamma-announcement
+      selectable: false
+      sound:
+        path: /Audio/Misc/siren.ogg
+        params:
+          volume: -2
+      disableSelection: true
+      color: PaleVioletRed
+      emergencyLightColor: PaleVioletRed
+      forceEnableEmergencyLights: true
+    delta:
+      announcement: alert-level-delta-announcement
+      selectable: false
+      sound:
+        path: /Audio/Misc/delta.ogg
+        params:
+          volume: -3
+      disableSelection: true
+      color: DarkRed
+      emergencyLightColor: Orange
+      forceEnableEmergencyLights: true
+      shuttleTime: 1200
+    epsilon:
+      announcement: alert-level-epsilon-announcement
+      selectable: false
+      sound:
+        path: /Audio/Misc/epsilon.ogg
+        params:
+          volume: -2
+      disableSelection: true
+      color: DarkViolet
+      emergencyLightColor: DarkViolet
+      forceEnableEmergencyLights: true
+      shuttleTime: 1200

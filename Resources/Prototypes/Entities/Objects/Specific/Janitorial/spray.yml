@@ -1,0 +1,104 @@
+- type: entity
+  name: spray bottle
+  id: SprayBottle
+  parent: BaseItem
+  suffix: Empty
+  description: A spray bottle with an unscrewable top.
+  components:
+  - type: Tag
+    tags:
+    - Spray
+    - Trash
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    state: cleaner
+  - type: Item
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 100
+  - type: RefillableSolution
+    solution: spray
+  - type: DrainableSolution
+    solution: spray
+  - type: SolutionTransfer
+  - type: ItemCooldown
+  - type: Spray
+    transferAmount: 10
+    sprayVelocity: 2
+    spraySound:
+      path: /Audio/Effects/spray2.ogg
+  - type: TrashOnEmpty
+    solution: spray
+
+- type: entity
+  name: spray bottle
+  id: SprayBottleWater
+  suffix: Filled
+  parent: SprayBottle
+  components:
+  - type: Tag
+    tags:
+    - Spray
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 100
+        reagents:
+        - ReagentId: Water
+          Quantity: 100
+
+- type: entity
+  name: space cleaner
+  description: BLAM!-brand non-foaming space cleaner!
+  id: SprayBottleSpaceCleaner
+  parent: SprayBottle
+  suffix: ""
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 100
+        reagents:
+        - ReagentId: SpaceCleaner
+          Quantity: 100
+  - type: Tag
+    tags:
+      - Spray
+      - DroneUsable #They don't have any other chem stuff on their whitelist so they can't refill it
+
+# Vapor
+
+- type: entity
+  id: Vapor
+  name: "vapor"
+  noSpawn: true
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      vapor:
+        maxVol: 50
+  - type: Vapor
+  - type: AnimationPlayer
+  - type: Sprite
+    netsync: false
+    sprite: Effects/chempuff.rsi
+    rotation: 90
+    layers:
+    - state: chempuff
+      map: ["enum.VaporVisualLayers.Base"]
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.25,-0.25,0.25,0.25"
+      hard: false
+      mask:
+      - FullTileMask
+      - Opaque
+  - type: Appearance
+  - type: VaporVisuals

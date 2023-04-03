@@ -1,0 +1,10 @@
+- type: vendingMachineInventory
+  id: EngiVendInventory
+  startingInventory:
+    ClothingEyesGlassesMeson: 4
+    ClothingHeadHatWelding: 6
+    Multitool: 4
+    PowerCellMedium: 5
+    ClothingHandsGlovesColorYellow: 6
+    InflatableWallStack1: 24
+    InflatableDoorStack1: 8

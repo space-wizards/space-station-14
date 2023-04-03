@@ -1,0 +1,47 @@
+﻿- type: entity
+  id: PowerSink
+  parent: BaseMachine
+  name: power sink
+  description: Drains immense amounts of electricity from the grid.
+  components:
+    - type: Item
+      size: 150
+    - type: NodeContainer
+      examinable: true
+      nodes:
+        input:
+          !type:CableDeviceNode
+          nodeGroupID: HVPower
+    - type: Transform
+      anchored: true
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.40,-0.40,0.40,0.40"
+        density: 90
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 25
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - type: PowerSink
+    - type: Battery
+      maxCharge: 7500000
+      pricePerJoule: 0.0003
+    - type: ExaminableBattery
+    - type: PowerConsumer
+      voltage: High
+      drawRate: 1000000
+    - type: Sprite
+      netsync: false
+      sprite: Objects/Power/powersink.rsi
+      state: powersink

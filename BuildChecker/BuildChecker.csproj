@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This is a dummy .csproj file to check things like submodules.
+Better this than other errors.
+
+If you want to create this kind of file yourself, you have to create an empty .NET application,
+Then strip it of everything until you have the <Project> tags.
+VS refuses to load the project if you make a bare project file and use Add -> Existing Project... for some reason.
+
+You want to handle the Build, Clean and Rebuild tasks to prevent missing task errors on build.
+
+If you want to learn more about these kinds of things, check out Microsoft's official documentation about MSBuild:
+https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild
+-->
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Python>python3</Python>
+    <Python Condition="'$(OS)'=='Windows_NT' Or '$(OS)'=='Windows'">py -3</Python>
+    <ProjectGuid>{C899FCA4-7037-4E49-ABC2-44DE72487110}</ProjectGuid>
+    <TargetFrameworkMoniker>.NETFramework, Version=v4.7.2</TargetFrameworkMoniker>
+    <RestorePackages>false</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Tools|AnyCPU' ">
+    <OutputPath>bin\Tools\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugOpt|AnyCPU' ">
+    <OutputPath>bin\DebugOpt\</OutputPath>
+  </PropertyGroup>
+  <Target Name="Build">
+    <Exec Command="$(Python) git_helper.py" CustomErrorRegularExpression="^Error" />
+  </Target>
+  <Target Name="Rebuild" DependsOnTargets="Build" />
+  <Target Name="Clean">
+    <Message Importance="low" Text="Ignoring 'Clean' target." />
+  </Target>
+  <Target Name="Compile">
+  </Target>
+  <Target Name="CoreCompile">
+  </Target>
+</Project>

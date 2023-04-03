@@ -1,0 +1,29 @@
+- type: constructionGraph
+  id: CratePlastic
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: crateplastic
+          steps:
+            - material: Plastic
+              amount: 5
+              doAfter: 5
+
+
+    - node: crateplastic
+      entity: CratePlastic
+      edges:
+        - to: start
+          steps:
+            - tool: Screwing
+              doAfter: 5
+          conditions:
+            - !type:StorageWelded
+              welded: false
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlastic1
+              amount: 5
+            - !type:EmptyAllContainers
+            - !type:DeleteEntity

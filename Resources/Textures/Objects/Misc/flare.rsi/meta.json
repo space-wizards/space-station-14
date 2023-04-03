@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/0f6496a55ceefa0f1bf1668fcef49b5182471695",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "flare_base"
+    },
+    {
+      "name": "flare_spent"
+    },
+    {
+      "name": "flare_unlit"
+    },
+    {
+      "name": "flare_burn",
+      "delays": [
+        [
+          0.05,
+          0.05,
+          0.05,
+          0.05
+        ]
+      ]
+    },
+    {
+      "name": "lit-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "lit-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "unlit-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "unlit-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "equipped-BELT",
+      "directions": 4
+    }
+  ]
+}

@@ -1,0 +1,546 @@
+# Base
+
+- type: entity
+  parent: FoodBase
+  id: FoodSnackBase
+  abstract: true
+  components:
+  - type: Food
+  - type: Sprite
+    sprite: Objects/Consumable/Food/snacks.rsi
+    netsync: false
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30 # Room for extra condiments
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+  - type: Item
+    sprite: Objects/Consumable/Food/snacks.rsi
+    heldPrefix: packet
+    size: 3
+# Snacks
+
+# "Snacks" means food in a packet. Down the line this stuff can have multiple
+# reagents and shit for healing or different effects.
+
+- type: entity
+  name: boritos
+  parent: FoodSnackBase
+  id: FoodSnackBoritos
+  description: Crunchy, salty tortilla chips. You could probably make nachos with these.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - boritos
+  - type: Sprite
+    state: boritos
+  - type: Item
+  - type: Food
+    trash: FoodPacketBoritosTrash
+
+- type: entity
+  name: cheesie honkers
+  parent: FoodSnackBase
+  id: FoodSnackCheesie
+  description: Bite sized cheesie snacks that will honk all over your mouth.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - funny
+  - type: Sprite
+    state: cheesiehonkers
+  - type: Item
+  - type: Food
+    trash: FoodPacketCheesieTrash
+
+- type: entity
+  name: chips
+  parent: FoodSnackBase
+  id: FoodSnackChips
+  description: Commander Riker's What-The-Crisps.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - oily
+      - salty
+      - potatoes
+  - type: Sprite
+    state: chips
+  - type: Item
+  - type: Food
+    trash: FoodPacketChipsTrash
+
+- type: entity
+  name: chocolate bar
+  parent: BaseItem
+  id: FoodSnackChocolate
+  description: Tastes like cardboard.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/snacks.rsi
+    state: chocolatebar
+    netsync: false
+  - type: Item
+    heldPrefix: chocolatebar
+    size: 3
+  - type: SpawnItemsOnUse
+    items:
+      - id: FoodPacketChocolateTrash
+      - id: FoodSnackChocolateBar
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+- type: entity
+  name: chocolate bar
+  parent: FoodSnackBase
+  id: FoodSnackChocolateBar
+  description: Tastes like cardboard.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - chocolate
+  - type: Sprite
+    state: chocolatebar-open
+  - type: Item
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Theobromine
+          Quantity: 3
+
+- type: entity
+  name: energy bar
+  parent: FoodSnackBase
+  id: FoodSnackEnergy
+  description: An energy bar with a lot of punch.
+  components:
+  - type: Sprite
+    state: energybar
+  - type: Item
+  - type: SpawnItemsOnUse
+    items:
+      - id: FoodPacketEnergyTrash
+      - id: FoodSnackEnergyBar
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+- type: entity
+  name: energy bar
+  parent: FoodSnackBase
+  id: FoodSnackEnergyBar
+  description: An energy bar with a lot of punch.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - nutty
+      - oats
+      - fiber
+      - sweet
+  - type: Sprite
+    state: energybar-open
+  - type: Item
+
+- type: entity
+  name: popcorn
+  parent: FoodSnackBase
+  id: FoodSnackPopcorn
+  description: Grown on an unknown planet, by an unknown farmer, popped by some jerk on a space station.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - corn
+      - salt
+      - butter
+  - type: Sprite
+    state: popcorn
+  - type: Item
+    heldPrefix: popcorn
+  - type: Food
+    trash: FoodPacketPopcornTrash
+
+- type: entity
+  name: 4no raisins
+  parent: FoodSnackBase
+  id: FoodSnackRaisins
+  description: Best raisins in the universe. Not sure why.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - raisins
+  - type: Sprite
+    state: raisins
+  - type: Item
+  - type: Food
+    trash: FoodPacketRaisinsTrash
+
+- type: entity
+  name: Sus Jerky
+  parent: FoodSnackBase
+  id: FoodSnackSus
+  description: Something about this packet makes you feel incredibly uneasy. Jerky's good though.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - susjerky
+  - type: Sprite
+    state: susjerky
+  - type: Item
+  - type: Food
+    trash: FoodPacketSusTrash
+
+- type: entity
+  name: syndi-cakes
+  parent: FoodSnackBase
+  id: FoodSnackSyndi
+  description: An extremely moist snack cake that tastes just as good after being nuked.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - syndicakes
+  - type: Sprite
+    state: syndicakes
+  - type: Item
+  - type: Food
+    trash: FoodPacketSyndiTrash
+
+- type: entity
+  name: chow mein
+  parent: FoodSnackBase
+  id: FoodSnackChowMein
+  description: A salty fried noodle snack. Looks like they forgot the vegetables.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheapnoodles
+      - salty
+      - oily
+  - type: Sprite
+    state: chinese1
+  - type: Item
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30 # Room for extra condiments
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Soysauce
+          Quantity: 2
+  - type: Food
+    trash: FoodPacketChowMeinTrash
+
+- type: entity
+  name: dan dan noodles
+  parent: FoodSnackBase
+  id: FoodSnackDanDanNoodles
+  description: A spicy Sichuan noodle snack. The chili oil slick pools on top.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheapnoodles
+      - oily
+      - spicy
+  - type: Sprite
+    state: chinese2
+  - type: Item
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30 # Room for extra condiments
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: CapsaicinOil
+          Quantity: 2
+        - ReagentId: Soysauce
+          Quantity: 2
+  - type: Food
+    trash: FoodPacketDanDanTrash
+
+- type: entity
+  name: fortune cookie
+  parent: FoodSnackBase
+  id: FoodSnackCookieFortune
+  description: A boring cardboard tasting snack with a fortune inside. Surprise! You're boring too.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - fortunecookie
+  - type: Sprite
+    state: cookie_fortune
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 1
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1
+  - type: Item
+    sprite: Objects/Consumable/Food/snacks.rsi
+    heldPrefix: packet
+    size: 1
+  - type: Food
+    trash: FoodCookieFortune
+
+- type: entity
+  id: FoodSnackNutribrick
+  parent: BaseItem
+  name: nutribrick
+  description: A carefully synthesized brick designed to contain the highest ratio of nutriment to volume. Tastes like shit.
+  components:
+  - type: Item
+    size: 10
+  - type: Sprite
+    sprite: Objects/Consumable/Food/snacks.rsi
+    state: nutribrick
+    netsync: false
+  - type: SpawnItemsOnUse
+    items:
+      - id: FoodPacketMRETrash
+      - id: FoodSnackNutribrickOpen
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+- type: entity
+  id: FoodSnackNutribrickOpen
+  parent: FoodSnackBase
+  name: nutribrick
+  description: A carefully synthesized brick designed to contain the highest ratio of nutriment to volume. Tastes like shit.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - nutribrick
+  - type: Item
+    size: 10
+  - type: Sprite
+    state: nutribrick-open
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 25
+
+- type: entity
+  id: FoodSnackMREBrownie
+  parent: BaseItem
+  name: brownie
+  description: A precisely mixed brownie, made to withstand blunt trauma and harsh conditions. Tastes like shit.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/snacks.rsi
+    state: mre-brownie
+    netsync: false
+  - type: SpawnItemsOnUse
+    items:
+      - id: FoodPacketMRETrash
+      - id: FoodSnackMREBrownieOpen
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+
+- type: entity
+  id: FoodSnackMREBrownieOpen
+  parent: FoodSnackBase
+  name: brownie
+  description: A precisely mixed brownie, made to withstand blunt trauma and harsh conditions. Tastes like shit.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - mrebrownie
+  - type: Sprite
+    state: mre-brownie-open
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Theobromine
+          Quantity: 3
+
+# Trash
+
+- type: entity
+  noSpawn: true
+  parent: BaseItem
+  id: FoodPacketTrash
+  description: This is rubbish.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/snacks.rsi
+    netsync: false
+  - type: Item
+    sprite: Objects/Consumable/Food/snacks.rsi
+    heldPrefix: packet
+  - type: Tag
+    tags:
+    - Trash
+  - type: Recyclable
+  - type: SpaceGarbage
+  - type: StaticPrice
+    price: 0
+
+- type: entity
+  noSpawn: true
+  parent: FoodPacketTrash
+  id: FoodPacketBoritosTrash
+  name: boritos bag
+  components:
+  - type: Sprite
+    state: boritos-trash
+  - type: Item
+
+- type: entity
+  noSpawn: true
+  parent: FoodPacketTrash
+  id: FoodPacketCheesieTrash
+  name: cheesie honkers
+  components:
+  - type: Sprite
+    state: cheesiehonkers-trash
+  - type: Item
+
+- type: entity
+  noSpawn: true
+  parent: FoodPacketTrash
+  id: FoodPacketChipsTrash
+  name: chips
+  components:
+  - type: Sprite
+    state: chips-trash
+  - type: Item
+
+- type: entity
+  noSpawn: true
+  parent: FoodPacketTrash
+  id: FoodPacketChocolateTrash
+  name: chocolate wrapper
+  components:
+  - type: Sprite
+    state: chocolatebar-trash
+  - type: Item
+
+- type: entity
+  noSpawn: true
+  parent: FoodPacketTrash
+  id: FoodPacketEnergyTrash
+  name: energybar wrapper
+  components:
+  - type: Sprite
+    state: energybar-trash
+  - type: Item
+
+- type: entity
+  noSpawn: true
+  parent: FoodPacketTrash
+  id: FoodPacketPistachioTrash
+  name: pistachios packet
+  components:
+  - type: Sprite
+    state: pistachio-trash
+  - type: Item
+
+- type: entity
+  noSpawn: true
+  parent: FoodPacketTrash
+  id: FoodPacketPopcornTrash
+  name: popcorn box
+  components:
+  - type: Sprite
+    state: popcorn-trash
+  - type: Item
+
+- type: entity
+  noSpawn: true
+  parent: FoodPacketTrash
+  id: FoodPacketRaisinsTrash
+  name: 4no raisins
+  components:
+  - type: Sprite
+    state: raisins-trash
+  - type: Item
+
+- type: entity
+  noSpawn: true
+  parent: FoodPacketTrash
+  id: FoodPacketSemkiTrash
+  name: semki packet
+  components:
+  - type: Sprite
+    state: semki-trash
+  - type: Item
+
+- type: entity
+  noSpawn: true
+  parent: FoodPacketTrash
+  id: FoodPacketSusTrash
+  name: sus jerky
+  components:
+  - type: Sprite
+    state: susjerky-trash
+  - type: Item
+
+- type: entity
+  noSpawn: true
+  parent: FoodPacketTrash
+  id: FoodPacketSyndiTrash
+  name: syndi-cakes box
+  components:
+  - type: Sprite
+    state: syndicakes-trash
+  - type: Item
+
+- type: entity
+  noSpawn: true
+  parent: FoodPacketTrash
+  id: FoodPacketChowMeinTrash
+  name: empty chow mein box
+  components:
+  - type: Sprite
+    state: chinese1
+  - type: Item
+
+- type: entity
+  noSpawn: true
+  parent: FoodPacketTrash
+  id: FoodPacketDanDanTrash
+  name: empty dan dan box
+  components:
+  - type: Sprite
+    state: chinese2
+  - type: Item
+
+- type: entity
+  noSpawn: true
+  parent: FoodPacketTrash
+  id: FoodCookieFortune
+  name: cookie fortune
+  description: "The fortune reads: The end is near...and it's all your fault."
+  components:
+  - type: Sprite
+    state: fortune
+  - type: Item
+  - type: RandomMetadata
+    descriptionSegments: [CookieFortuneDescriptions]
+
+- type: entity
+  noSpawn: true
+  parent: FoodPacketTrash
+  id: FoodPacketMRETrash
+  name: MRE wrapper
+  description: A general purpose wrapper for a variety of military food goods.
+  components:
+  - type: Sprite
+    state: mre-wrapper

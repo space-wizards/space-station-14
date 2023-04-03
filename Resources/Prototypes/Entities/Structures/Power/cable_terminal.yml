@@ -1,0 +1,44 @@
+- type: entity
+  id: CableTerminal
+  name: cable terminal
+  description: You see a small warning on the red cables in grungy black ink. "CONNECT RED TO BATTERY FOR CHARGE."
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      sprite: Structures/Power/cable_terminal.rsi
+      state: term
+      netsync: false
+      drawdepth: BelowFloor
+    - type: Clickable
+    - type: InteractionOutline
+    - type: CollideOnAnchor
+    - type: Transform
+      anchored: true
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+    - type: SubFloorHide
+      blockAmbience: false
+      blockInteractions: false
+    - type: Construction
+      graph: CableTerminal
+      node: cable_terminal
+    - type: NodeContainer
+      nodes:
+        # Just define nodes for both MV and HV. One will end up unused in 99% of cases
+        # but it means one cable terminal type.
+        powerHV:
+          !type:CableTerminalNode
+          nodeGroupID: HVPower
+        powerMV:
+          !type:CableTerminalNode
+          nodeGroupID: MVPower

@@ -1,0 +1,18 @@
+﻿<widgets:ActionsBar
+    xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Actions.Widgets"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Systems.Actions.Controls"
+    VerticalExpand="False"
+    Orientation="Horizontal"
+    HorizontalExpand="False"
+>
+    <BoxContainer Orientation="Vertical">
+        <controls:ActionButtonContainer
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Name="ActionsContainer"
+            Access="Public"/>
+        <controls:ActionPageButtons Name="PageButtons" Access="Public"/>
+    </BoxContainer>
+</widgets:ActionsBar>

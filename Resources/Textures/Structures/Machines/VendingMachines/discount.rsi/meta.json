@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from vgstation at https://github.com/vgstation-coders/vgstation13/commit/7c41613c521b6fab647ae98e1283f86b3cef382a",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "broken"
+    },
+    {
+      "name": "normal-unshaded",
+      "delays": [
+        [
+          4,
+          0.1,
+          0.6
+        ]
+      ]
+    },
+    {
+      "name": "off"
+    }
+  ]
+}

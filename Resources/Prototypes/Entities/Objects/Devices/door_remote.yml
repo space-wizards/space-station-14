@@ -1,0 +1,140 @@
+- type: entity
+  parent: BaseItem
+  id: DoorRemoteDefault
+  name: door remote
+  description: A gadget which can open and bolt doors remotely.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/door_remote.rsi
+    netsync: false
+  - type: Access
+  - type: DoorRemote
+
+- type: entity
+  parent: DoorRemoteDefault
+  id: DoorRemoteCommand
+  name: command door remote
+  components:
+  - type: Sprite
+    layers:
+    - state: door_remotebase
+    - state: door_remotelightscolour
+      color: "#e6e600"
+    - state: door_remotescreencolour
+      color: "#9f9f00"
+  - type: Access
+    groups:
+    - Command
+
+- type: entity
+  parent: DoorRemoteDefault
+  id: DoorRemoteSecurity
+  name: security door remote
+  components:
+  - type: Sprite
+    layers:
+    - state: door_remotebase
+    - state: door_remotelightscolour
+      color: "#cb0000"
+    - state: door_remotescreencolour
+      color: "#830000"
+  - type: Access
+    groups:
+    - Security
+
+- type: entity
+  parent: DoorRemoteDefault
+  id: DoorRemoteArmory
+  name: armory door remote
+  components:
+  - type: Sprite
+    layers:
+    - state: door_remotebase
+    - state: door_remotelightscolour
+      color: "#e80000"
+    - state: door_remotescreencolour
+      color: "#a80000"
+  - type: Access
+    groups:
+    - Armory
+
+- type: entity
+  parent: DoorRemoteDefault
+  id: DoorRemoteService
+  name: service door remote
+  components:
+  - type: Sprite
+    layers:
+    - state: door_remotebase
+    - state: door_remotelightscolour
+      color: "#58c800"
+    - state: door_remotescreencolour
+      color: "#3a7231"
+  - type: Access
+    groups:
+    - Service
+
+- type: entity
+  parent: DoorRemoteDefault
+  id: DoorRemoteResearch
+  name: research door remote
+  components:
+  - type: Sprite
+    layers:
+    - state: door_remotebase
+    - state: door_remotelightscolour
+      color: "#a53aaa"
+    - state: door_remotescreencolour
+      color: "#652368"
+  - type: Access
+    groups:
+    - Research
+
+- type: entity
+  parent: DoorRemoteDefault
+  id: DoorRemoteCargo
+  name: cargo door remote
+  components:
+  - type: Sprite
+    layers:
+    - state: door_remotebase
+    - state: door_remotelightscolour
+      color: "#b18644"
+    - state: door_remotescreencolour
+      color: "#5b4523"
+  - type: Access
+    groups:
+    - Cargo
+
+- type: entity
+  parent: DoorRemoteDefault
+  id: DoorRemoteMedical
+  name: medical door remote
+  components:
+  - type: Sprite
+    layers:
+    - state: door_remotebase
+    - state: door_remotelightscolour
+      color: "#68aed6"
+    - state: door_remotescreencolour
+      color: "#325f7a"
+  - type: Access
+    groups:
+    - Medical
+
+- type: entity
+  parent: DoorRemoteDefault
+  id: DoorRemoteEngineering
+  name: engineering door remote
+  components:
+  - type: Sprite
+    layers:
+    - state: door_remotebase
+    - state: door_remotelightscolour
+      color: "#ffa62b"
+    - state: door_remotescreencolour
+      color: "#bc5b00"
+  - type: Access
+    groups:
+    - Engineering

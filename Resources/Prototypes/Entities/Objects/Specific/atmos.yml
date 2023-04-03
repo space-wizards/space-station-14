@@ -1,0 +1,34 @@
+﻿- type: entity
+  name: gas analyzer
+  parent: BaseItem
+  id: GasAnalyzer
+  description: A hand-held environmental scanner which reports current gas levels.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Atmos/gasanalyzer.rsi
+    layers:
+      - state: icon
+        map: ["analyzer"]
+    netsync: false
+  - type: GasAnalyzer
+  - type: ActivatableUI
+    inHandsOnly: true
+    singleUser: true
+    closeOnHandDeselect: false
+    key: enum.GasAnalyzerUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.GasAnalyzerUiKey.Key
+      type: GasAnalyzerBoundUserInterface
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+        enum.GasAnalyzerVisuals.Enabled:
+          enabled:
+            True: { state: working }
+            False: { state: icon }
+  - type: Tag
+    tags:
+      - DroneUsable
+  - type: StaticPrice
+    price: 80

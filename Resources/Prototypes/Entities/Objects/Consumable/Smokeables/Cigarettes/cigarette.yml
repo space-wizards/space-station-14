@@ -1,0 +1,55 @@
+- type: entity
+  id: Cigarette
+  parent: BaseCigar
+  name: cigarette
+  description: A roll of tobacco and nicotine.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi
+    netsync: false
+    state: unlit-icon
+  - type: Tag
+    tags:
+      - Cigarette
+      - Trash
+  - type: Recyclable
+  - type: SpaceGarbage
+  - type: Clothing
+    sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi
+    slots: [ mask ]
+    equippedPrefix: unlit
+  - type: Item
+    size: 1
+  - type: Construction
+    graph: smokeableCigarette
+    node: cigarette
+
+- type: entity
+  id: CigaretteSpent
+  parent: Cigarette
+  suffix: spent
+  components:
+  - type: Sprite
+    state: burnt-icon
+  - type: Smokable
+    state: Burnt
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 20
+
+- type: entity
+  id: CigaretteSyndicate
+  suffix: syndicate
+  parent: Cigarette
+  name: cigarette
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 20
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+          - ReagentId: Omnizine
+            Quantity: 10

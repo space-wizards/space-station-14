@@ -1,0 +1,8 @@
+- type: roundAnnouncement
+  id: Welcome
+  sound: /Audio/Announcements/welcome.ogg
+  presets:
+  - Survival
+  - Sandbox
+  - Secret
+  - Traitor

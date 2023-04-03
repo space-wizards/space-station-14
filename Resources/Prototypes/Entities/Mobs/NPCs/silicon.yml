@@ -1,0 +1,204 @@
+- type: entity
+  save: false
+  abstract: true
+  id: MobSiliconBase
+  components:
+  - type: LagCompensation
+  - type: Reactive
+    groups:
+      Acidic: [Touch]
+  - type: Clickable
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Bloodstream
+    bloodReagent: Oil
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -1
+  - type: InteractionOutline
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      density: 50
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3
+    baseSprintSpeed : 4
+  - type: Sprite
+    noRot: true
+    drawdepth: Mobs
+    netsync: false
+  - type: Recyclable
+    safe: false
+  - type: Faction
+    factions:
+    - SimpleNeutral
+  - type: HealthExaminable
+    examinableTypes:
+    - Blunt
+    - Slash
+    - Piercing
+    - Heat
+    - Shock
+  - type: MovedByPressure
+  - type: Physics
+    bodyType: KinematicController # Same for all inheritors
+  - type: DrawableSolution
+    solution: bloodstream
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
+    - Stutter
+    - Electrocution
+  - type: NameIdentifier
+    group: GenericNumber
+  - type: Repairable
+    fuelcost: 15
+    doAfterDelay: 8
+  - type: Pullable
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - ShoesRequiredStepTriggerImmune
+  - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      120: Dead
+  - type: Stamina
+    excess: 120
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 120
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Input
+    context: "human"
+  - type: InputMover
+  - type: MobMover
+  - type: Body
+    prototype: Bot
+
+- type: entity
+  parent: MobSiliconBase
+  id: MobHonkBot
+  name: honkbot
+  description: Horrifying.
+  components:
+  - type: SpamEmitSound
+    sound:
+      collection: BikeHorn
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Silicon/Bots/honkbot.rsi
+    state: honkbot
+  - type: Slippery
+    launchForwardsMultiplier: 6.0
+  - type: StepTrigger
+    intersectRatio: 0.2
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      id: "slips"
+      hard: false
+      layer:
+        - SlipLayer
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      density: 20
+      mask:
+      - MobMask
+  - type: Construction
+    graph: HonkBot
+    node: bot
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: honkbot
+    description: An artificial being of pure evil.
+  - type: InteractionPopup
+    interactSuccessString: petting-success-honkbot
+    interactFailureString: petting-failure-honkbot
+    interactSuccessSound:
+      path: /Audio/Items/bikehorn.ogg
+
+- type: entity
+  parent: MobSiliconBase
+  id: MobCleanBot
+  name: cleanbot
+  description: The creep of automation now threatening space janitors.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Silicon/Bots/cleanbot.rsi
+    state: cleanbot
+  - type: Drain
+    range: 1
+    unitsDestroyedPerSecond: 6
+  - type: Construction
+    graph: CleanBot
+    node: bot
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-mechanical
+  - type: SolutionContainerManager
+    solutions:
+      drainBuffer:
+        maxVol: 30
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 3
+  - type: NoSlip
+  - type: HTN
+    rootTask: CleanbotCompound
+  - type: DrainableSolution
+    solution: drainBuffer
+  - type: InteractionPopup
+    interactSuccessString: petting-success-cleanbot
+    interactFailureString: petting-failure-cleanbot
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+
+- type: entity
+  parent: MobSiliconBase
+  id: MobMedibot
+  name: medibot
+  description: No substitute for a doctor, but better than nothing.
+  components:
+  - type: Medibot
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Silicon/Bots/medibot.rsi
+    state: medibot
+  - type: Speech
+  - type: HTN
+    rootTask: MedibotCompound
+  - type: Construction
+    graph: MediBot
+    node: bot
+  - type: InteractionPopup
+    interactSuccessString: petting-success-medibot
+    interactFailureString: petting-failure-medibot
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg

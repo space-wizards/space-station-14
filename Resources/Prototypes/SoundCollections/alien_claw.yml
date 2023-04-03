@@ -1,0 +1,6 @@
+- type: soundCollection
+  id: AlienClaw
+  files:
+    - /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
+    - /Audio/Weapons/Xeno/alien_claw_flesh2.ogg
+    - /Audio/Weapons/Xeno/alien_claw_flesh3.ogg

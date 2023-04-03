@@ -1,0 +1,19 @@
+﻿<DefaultWindow xmlns="https://spacestation14.io"
+            Title="{Loc 'disposal-tagger-window-title'}"
+            MinSize="500 110"
+            SetSize="500 110">
+    <BoxContainer Orientation="Vertical">
+        <Label Text="{Loc 'disposal-tagger-window-tag-input-label'}" />
+        <Control MinSize="0 10" />
+        <BoxContainer Orientation="Horizontal">
+            <LineEdit Name="TagInput"
+                      Access="Public"
+                      HorizontalExpand="True"
+                      MinSize="320 0" />
+            <Control MinSize="10 0" />
+            <Button Name="Confirm"
+                    Access="Public"
+                    Text="{Loc 'disposal-tagger-window-tag-confirm-button'}" />
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

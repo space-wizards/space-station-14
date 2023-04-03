@@ -1,0 +1,54 @@
+- type: entity
+  id: BaseCartridgeMagnum
+  name: cartridge (.45 magnum)
+  parent: BaseCartridge
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+      - Cartridge
+      - CartridgeMagnum
+  - type: CartridgeAmmo
+    proto: BulletMagnum
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Appearance
+  - type: SpentAmmoVisuals
+  - type: StaticPrice
+    price: 10
+
+- type: entity
+  id: CartridgeMagnum
+  name: cartridge (.45 magnum)
+  parent: BaseCartridgeMagnum
+  components:
+  - type: CartridgeAmmo
+    proto: BulletMagnum
+
+- type: entity
+  id: CartridgeMagnumHighVelocity
+  name: cartridge (.45 magnum high-velocity)
+  parent: BaseCartridgeMagnum
+  components:
+  - type: CartridgeAmmo
+    proto: BulletMagnumHighVelocity
+
+- type: entity
+  id: CartridgeMagnumPractice
+  name: cartridge (.45 magnum practice)
+  parent: BaseCartridgeMagnum
+  components:
+  - type: CartridgeAmmo
+    proto: BulletMagnumPractice
+
+- type: entity
+  id: CartridgeMagnumRubber
+  name: cartridge (.45 magnum rubber)
+  parent: BaseCartridgeMagnum
+  components:
+  - type: CartridgeAmmo
+    proto: BulletMagnumRubber

@@ -1,0 +1,11 @@
+- type: entity
+  name: drag shadow
+  id: dragshadow
+  noSpawn: true
+  components:
+  - type: Tag
+    tags:
+    - HideContextMenu
+  - type: Sprite
+    layers:
+    - shader: unshaded

@@ -1,0 +1,39 @@
+- type: entity
+  id: CrateArmorySMG
+  parent: CrateWeaponSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponSubMachineGunWt550
+        amount: 2
+      - id: MagazinePistolSubMachineGunTopMounted
+        amount: 4
+
+- type: entity
+  id: CrateArmoryShotgun
+  parent: CrateWeaponSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponShotgunEnforcer
+        amount: 2
+      - id: BoxLethalshot
+        amount: 3
+
+- type: entity
+  id: CrateTrackingImplants
+  parent: CrateWeaponSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: TrackingImplanter
+        amount: 5
+
+- type: entity
+  id: CrateArmoryLaser
+  parent: CrateWeaponSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponLaserGun
+        amount: 3

@@ -1,0 +1,6 @@
+﻿<controls:BanListWindow
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.Administration.UI.BanList"
+    SetSize="1400 400">
+    <controls:BanListControl Name="BanList" Access="Public"/>
+</controls:BanListWindow>

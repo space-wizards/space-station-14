@@ -1,0 +1,179 @@
+﻿- type: constructionGraph
+  id: Shutters
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: frame1
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Steel
+              amount: 3
+              doAfter: 1
+
+
+    - node: frame1
+      entity: ShuttersFrame
+      edges:
+        - to: frame2
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - material: Cable
+              amount: 2
+              doAfter: 1
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 3
+            - !type:DeleteEntity {}
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Welding
+              doAfter: 1
+
+    - node: frame2
+      edges:
+        - to: frame3
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tag: DoorElectronics
+              name: Door Electronics
+              icon:
+                sprite: "Objects/Misc/module.rsi"
+                state: "door_electronics"
+        - to: frame1
+          completed:
+            - !type:SpawnPrototype
+              prototype: CableApcStack1
+              amount: 2
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Cutting
+              doAfter: 1.5
+
+    - node: frame3
+      edges:
+        - to: frame4
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Screwing
+              doAfter: 0.25
+
+    - node: frame4
+      edges:
+        - to: Shutters
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+        - to: ShuttersWindowFrame
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - material: Glass
+              amount: 2
+              doAfter: 2
+        - to: ShuttersRadiationFrame
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 2
+        - to: frame2
+          completed:
+            - !type:SpawnPrototype
+              prototype: DoorElectronics
+              amount: 1
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Screwing
+              doAfter: 0.75
+
+    - node: Shutters
+      entity: ShuttersNormalOpen
+      edges:
+        - to: frame4
+          conditions:
+            - !type:DoorWelded
+              welded: true
+          steps:
+            - tool: Anchoring
+              doAfter: 0.25
+
+    - node: ShuttersWindowFrame
+      edges:
+        - to: ShuttersWindow
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+        - to: frame4
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetGlass1
+              amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 1
+
+
+    - node: ShuttersWindow
+      entity: ShuttersWindowOpen
+      edges:
+        - to: ShuttersWindowFrame
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+
+    - node: ShuttersRadiationFrame
+      edges:
+        - to: ShuttersRadiation
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+        - to: frame4
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 1
+
+    - node: ShuttersRadiation
+      entity: ShuttersRadiationOpen
+      edges:
+        - to: frame4
+          conditions:
+            - !type:DoorWelded
+              welded: true
+          steps:
+            - tool: Anchoring
+              doAfter: 0.25

@@ -1,0 +1,102 @@
+- type: entity
+  id: ToolboxBase
+  parent: BaseStorageItem
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/toolbox_drop.ogg
+  - type: Storage
+    capacity: 60
+  - type: Item
+    size: 9999
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
+    soundHit:
+      path: "/Audio/Weapons/smash.ogg"
+  - type: Tag
+    tags:
+      - DroneUsable
+
+- type: entity
+  name: emergency toolbox
+  parent: ToolboxBase
+  id: ToolboxEmergency
+  description: A bright red toolbox, stocked with emergency tools.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Toolboxes/toolbox_red.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/Toolboxes/toolbox_red.rsi
+
+- type: entity
+  name: mechanical toolbox
+  parent: ToolboxBase
+  id: ToolboxMechanical
+  description: A blue box, stocked with mechanical tools.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Toolboxes/toolbox_blue.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/Toolboxes/toolbox_blue.rsi
+
+- type: entity
+  name: electrical toolbox
+  parent: ToolboxBase
+  id: ToolboxElectrical
+  description: A toolbox typically stocked with electrical gear.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Toolboxes/toolbox_yellow.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/Toolboxes/toolbox_yellow.rsi
+
+- type: entity
+  name: artistic toolbox
+  parent: ToolboxBase
+  id: ToolboxArtistic
+  description: A toolbox typically stocked with artistic supplies.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Toolboxes/toolbox_green.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/Toolboxes/toolbox_green.rsi
+
+- type: entity
+  name: suspicious toolbox
+  parent: ToolboxBase
+  id: ToolboxSyndicate
+  description: A sinister looking toolbox filled with elite syndicate tools.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Toolboxes/toolbox_syn.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/Toolboxes/toolbox_syn.rsi
+  - type: Storage
+    capacity: 120
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 20
+
+- type: entity
+  name: golden toolbox
+  parent: ToolboxBase
+  id: ToolboxGolden
+  description: A solid gold toolbox. A rapper would kill for this.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Toolboxes/toolbox_gold.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/Toolboxes/toolbox_gold.rsi

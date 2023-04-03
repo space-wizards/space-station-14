@@ -1,0 +1,39 @@
+- type: cargoProduct
+  id: ArmorySmg
+  icon:
+    sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
+    state: icon
+  product: CrateArmorySMG
+  cost: 3000
+  category: Armory
+  group: market
+
+- type: cargoProduct
+  id: ArmoryShotgun
+  icon:
+    sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
+    state: icon
+  product: CrateArmoryShotgun
+  cost: 2500
+  category: Armory
+  group: market
+
+- type: cargoProduct
+  id: TrackingImplant
+  icon:
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    state: syringe_base0
+  product: CrateTrackingImplants
+  cost: 1000
+  category: Armory
+  group: market
+
+- type: cargoProduct
+  id: ArmoryLaser
+  icon:
+    sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
+    state: icon
+  product: CrateArmoryLaser
+  cost: 1600
+  category: Armory
+  group: market

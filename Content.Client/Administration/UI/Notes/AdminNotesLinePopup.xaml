@@ -1,0 +1,21 @@
+﻿<Popup xmlns="https://spacestation14.io"
+       xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
+    <PanelContainer>
+        <PanelContainer.PanelOverride>
+            <gfx:StyleBoxFlat BackgroundColor="#25252A"/>
+        </PanelContainer.PanelOverride>
+        <BoxContainer Orientation="Vertical">
+            <Label Name="IdLabel"/>
+            <Label Name="RoundIdLabel"/>
+            <Label Name="CreatedByLabel"/>
+            <Label Name="CreatedAtLabel"/>
+            <Label Name="EditedByLabel"/>
+            <Label Name="EditedAtLabel"/>
+            <BoxContainer Orientation="Horizontal">
+                <Button Name="EditButton" Text="{Loc admin-notes-edit}"/>
+                <Control HorizontalExpand="True"/>
+                <Button Name="DeleteButton" Text="{Loc admin-notes-delete}" HorizontalAlignment="Right"/>
+            </BoxContainer>
+        </BoxContainer>
+    </PanelContainer>
+</Popup>

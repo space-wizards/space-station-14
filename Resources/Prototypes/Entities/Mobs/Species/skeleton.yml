@@ -1,0 +1,79 @@
+- type: entity
+  save: false
+  name: Urist McSkelly
+  parent: BaseMobOrganic
+  id: BaseMobSkeletonPerson
+  abstract: true
+  components:
+  - type: HumanoidAppearance
+    species: Skeleton
+  - type: Icon
+    sprite: Mobs/Species/Skeleton/parts.rsi
+    state: full
+  - type: Body
+    prototype: Skeleton
+    requiredLegs: 2
+    gibSound: /Audio/Effects/bone_rattle.ogg
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Skeleton
+  - type: Barotrauma #no space damage.
+    damage:
+      types:
+        Blunt: 0
+  - type: Bloodstream
+    maxBleedAmount: 0
+    bloodReagent: Milk
+    bloodlossDamage: #no bloodloss damage. overriding base components
+      types:
+        Bloodloss: 0
+    bloodlossHealDamage:
+      types:
+        Bloodloss: 0
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Critical
+      150: Dead
+  - type: TransferMindOnGib
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:GibBehavior { }
+  - type: SlowOnDamage #modified speeds because they're so weak
+    speedModifierThresholds:
+      60: 0.9
+      80: 0.7
+  - type: Speech
+  - type: Vocal
+    sounds:
+      Male: Skeleton
+      Female: Skeleton
+      Unsexed: Skeleton
+  - type: SkeletonAccent
+  - type: Fixtures
+    fixtures:
+      - shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 130
+        restitution: 0.0
+        mask:
+          - MobMask
+        layer:
+          - MobLayer
+
+- type: entity
+  save: false
+  name: Urist McSkelly
+  parent: BaseMobOrganicDummy
+  id: MobSkeletonPersonDummy
+  noSpawn: true
+  description: A dummy skeleton meant to be used in character setup.
+  components:
+    - type: HumanoidAppearance
+      species: Skeleton

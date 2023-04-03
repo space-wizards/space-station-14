@@ -1,0 +1,15 @@
+- type: soundCollection
+  id: RadiationPulse
+  files:
+    - /Audio/Effects/radpulse1.ogg
+    - /Audio/Effects/radpulse2.ogg
+    - /Audio/Effects/radpulse3.ogg
+    - /Audio/Effects/radpulse4.ogg
+    - /Audio/Effects/radpulse5.ogg
+    - /Audio/Effects/radpulse6.ogg
+    - /Audio/Effects/radpulse7.ogg
+    - /Audio/Effects/radpulse8.ogg
+    - /Audio/Effects/radpulse9.ogg
+    - /Audio/Effects/radpulse10.ogg
+    - /Audio/Effects/radpulse11.ogg
+    - /Audio/Effects/radpulse12.ogg

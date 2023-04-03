@@ -1,0 +1,26 @@
+﻿- type: entity
+  parent: BaseSign
+  id: PlaqueAtmos
+  name: atmos plaque
+  components:
+  - type: WallMount
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.3,-0.3,0.3,0.3"
+      layer:
+      - MidImpassable
+  - type: Sprite
+    layers:
+      - state: atmosplaque
+        map: ["plaque"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AtmosPlaqueVisuals.State:
+        plaque:
+          zumosplaque: { state: zumosplaque }
+          atmosplaque: { state: atmosplaque }
+  - type: AtmosPlaque

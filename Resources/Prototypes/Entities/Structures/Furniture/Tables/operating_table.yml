@@ -1,0 +1,55 @@
+- type: entity
+  id: OperatingTable
+  parent: BaseStructure
+  name: operating table
+  description: Special medical table for surgery. This one just seems to be a useless prop, though.
+  components:
+  - type: Strap
+    position: Down
+    rotation: -90
+    buckleOffset: "0,-0.15"
+    unbuckleOffset: "0,-0.15"
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: PlaceableSurface
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.45,-0.45,0.45,0.45"
+      density: 55
+      mask:
+      - TableMask
+      layer:
+      - TableLayer
+  - type: Climbable
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/optable.rsi
+    state: operating_table
+    noRot: true
+  - type: Icon
+    sprite: Structures/Furniture/Tables/optable.rsi
+    state: operating_table
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 0
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]

@@ -1,0 +1,18 @@
+- type: constructionGraph
+  id: AMEShielding
+  start: start
+  graph:
+    - node: start
+
+    - node: ameShielding
+      entity: AMEShielding
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: AMEPart
+              amount: 1
+            - !type:DeleteEntity
+          steps:
+            - tool: Welding
+              doAfter: 3

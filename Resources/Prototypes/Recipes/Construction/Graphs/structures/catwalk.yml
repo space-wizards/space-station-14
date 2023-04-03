@@ -1,0 +1,25 @@
+﻿- type: constructionGraph
+  id: Catwalk
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: Catwalk
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: MetalRod
+              amount: 2
+
+    - node: Catwalk
+      entity: Catwalk
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: PartRodMetal1
+                amount: 2
+          - !type:DeleteEntity {}
+          steps:
+            - tool: Cutting

@@ -1,0 +1,14 @@
+﻿<DefaultWindow xmlns="https://spacestation14.io"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               MinSize="300 120" Title="{Loc comp-gas-thermomachine-ui-title-freezer}">
+    <BoxContainer Name="VboxContainer" Orientation="Vertical" Margin="5 5 5 5" SeparationOverride="10">
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <Label Text="{Loc comp-gas-thermomachine-ui-toggle}"/>
+            <Control MinSize="5 0" />
+            <Button Access="Public" Name="ToggleStatusButton"/>
+        </BoxContainer>
+        <BoxContainer Name="SpinboxHBox" Orientation="Horizontal">
+            <Label Text="{Loc comp-gas-thermomachine-ui-temperature}"/>
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

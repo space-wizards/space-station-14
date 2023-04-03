@@ -1,0 +1,149 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commits https://github.com/tgstation/tgstation/commit/729d858807905263adab8b5a331c1d8a04982dd3, https://github.com/tgstation/tgstation/commit/79296e902cbdf2352c9303e4769ea39bf3b34e58",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "busha1"
+        },
+        {
+            "name": "busha2"
+        },
+        {
+            "name": "busha3"
+        },
+        {
+            "name": "bushb1"
+        },
+        {
+            "name": "bushb2"
+        },
+        {
+            "name": "bushb3"
+        },
+        {
+            "name": "bushc1"
+        },
+        {
+            "name": "bushc2"
+        },
+        {
+            "name": "bushc3"
+        },
+        {
+            "name": "bushd1"
+        },
+        {
+            "name": "bushd2"
+        },
+        {
+            "name": "bushd3"
+        },
+        {
+            "name": "bushd4"
+        },
+        {
+            "name": "bushe1"
+        },
+        {
+            "name": "bushe2"
+        },
+        {
+            "name": "bushe3"
+        },
+        {
+            "name": "bushe4"
+        },
+        {
+            "name": "bushf1"
+        },
+        {
+            "name": "bushf2"
+        },
+        {
+            "name": "bushf3"
+        },
+        {
+            "name": "bushg1"
+        },
+        {
+            "name": "bushg2"
+        },
+        {
+            "name": "bushg3"
+        },
+        {
+            "name": "bushg4"
+        },
+        {
+            "name": "bushh1"
+        },
+        {
+            "name": "bushh2"
+        },
+        {
+            "name": "bushh3"
+        },
+        {
+            "name": "bushi1"
+        },
+        {
+            "name": "bushi2"
+        },
+        {
+            "name": "bushi3"
+        },
+        {
+            "name": "bushi4"
+        },
+        {
+            "name": "bushj1"
+        },
+        {
+            "name": "bushj2"
+        },
+        {
+            "name": "bushj3"
+        },
+        {
+            "name": "bushk1"
+        },
+        {
+            "name": "bushk2"
+        },
+        {
+            "name": "bushk3"
+        },
+        {
+            "name": "bushl1"
+        },
+        {
+            "name": "bushl2"
+        },
+        {
+            "name": "bushl3"
+        },
+        {
+            "name": "bushl4"
+        },
+        {
+            "name": "bushm1"
+        },
+        {
+            "name": "bushm2"
+        },
+        {
+            "name": "bushm3"
+        },
+        {
+            "name": "bushm4"
+        },
+        {
+            "name": "bushn1"
+        }
+    ]
+}

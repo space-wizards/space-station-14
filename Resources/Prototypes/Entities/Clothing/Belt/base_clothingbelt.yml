@@ -1,0 +1,30 @@
+- type: entity
+  abstract: true
+  parent: Clothing
+  id: ClothingBeltBase
+  components:
+  - type: Sprite
+    state: icon
+  - type: Item
+    size: 50
+  - type: Clothing
+    slots: [belt]
+    quickEquip: false
+
+- type: entity
+  abstract: true
+  parent: ClothingBeltBase
+  id: ClothingBeltStorageBase
+  components:
+  - type: Storage
+    capacity: 40
+    equipSound:
+      path: /Audio/Items/belt_equip.ogg
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface

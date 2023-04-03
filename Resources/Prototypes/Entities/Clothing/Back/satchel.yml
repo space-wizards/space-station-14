@@ -1,0 +1,140 @@
+- type: entity
+  parent: Clothing
+  id: ClothingBackpackSatchel
+  name: satchel
+  description: A trendy looking satchel.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/satchel.rsi
+    state: icon
+  - type: Item
+    size: 9999
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - back
+  - type: Storage
+    capacity: 100
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelLeather
+  name: leather satchel
+  description: A trend-setting satchel from a bygone era.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/leather.rsi
+
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelEngineering
+  name: engineering satchel
+  description: A tough satchel with extra pockets.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/engineering.rsi
+
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelMedical
+  name: medical satchel
+  description: A sterile satchel used in medical departments.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/medical.rsi
+
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelChemistry
+  name: chemistry satchel
+  description: A sterile satchel with chemist colours.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/chemistry.rsi
+    
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelVirology
+  name: virology satchel
+  description: A satchel made of hypo-allergenic fibers. It's designed to help prevent the spread of disease. Smells like monkey.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/virology.rsi
+    
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelGenetics
+  name: genetics satchel
+  description: A sterile satchel with geneticist colours.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/genetics.rsi
+
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelScience
+  name: science satchel
+  description: Useful for holding research materials.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/science.rsi
+
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelSecurity
+  name: security satchel
+  description: A robust satchel for security related needs.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/security.rsi
+
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelCaptain
+  name: captain's satchel
+  description: An exclusive satchel for Nanotrasen officers.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/captain.rsi
+
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelHydroponics
+  name: hydroponics satchel
+  description: A satchel made of all natural fibers.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/hydroponics.rsi
+
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelSalvage
+  name: salvage satchel
+  description: A robust satchel for stashing your loot.
+  components:
+    - type: Sprite
+      sprite: Clothing/Back/Satchels/salvage.rsi
+
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelHolding
+  name: satchel of holding
+  description: A satchel that opens into a localized pocket of bluespace.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/holding.rsi
+    state: icon
+    layers:
+    - state: icon
+    - state: icon-unlit
+      shader: unshaded
+  - type: Storage
+    capacity: 9999

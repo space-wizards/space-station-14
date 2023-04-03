@@ -1,0 +1,206 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: SheetGlassBase
+  description: A sheet of glass, used often on the station in various applications.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Materials/Sheets/glass.rsi
+  - type: Item
+    sprite: Objects/Materials/Sheets/glass.rsi
+  - type: StaticPrice
+    price: 0
+  - type: ItemStatus
+  - type: Tag
+    tags:
+    - Sheet
+    - DroneUsable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Glass
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 0
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: SheetGlassBase
+  id: SheetGlass
+  name: glass
+  suffix: Full
+  components:
+  - type: Material
+    materials:
+      Glass: 100
+  - type: StackPrice
+    price: 5
+  - type: Stack
+    stackType: Glass
+  - type: Sprite
+    state: glass_3
+  - type: Item
+    heldPrefix: glass
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - glass
+      - glass_2
+      - glass_3
+  - type: FloorTile
+    outputs:
+    - FloorGlass
+  - type: Construction
+    graph: Glass
+    node: SheetGlass
+
+- type: entity
+  parent: SheetGlass
+  id: SheetGlass1
+  name: glass
+  suffix: Single
+  components:
+  - type: Sprite
+    state: glass
+  - type: Stack
+    stackType: Glass
+    count: 1
+
+- type: entity
+  parent: SheetGlassBase
+  id: SheetRGlass
+  name: reinforced glass
+  description: A reinforced sheet of glass.
+  suffix: Full
+  components:
+  - type: Material
+    materials:
+      ReinforcedGlass: 100
+  - type: Stack
+    stackType: ReinforcedGlass
+  - type: Sprite
+    state: rglass_3
+  - type: Item
+    heldPrefix: rglass
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - rglass
+      - rglass_2
+      - rglass_3
+  - type: FloorTile
+    outputs:
+    - FloorRGlass
+  - type: Construction
+    graph: Glass
+    node: SheetRGlass
+
+- type: entity
+  parent: SheetRGlass
+  id: SheetRGlass1
+  name: reinforced glass
+  suffix: Single
+  components:
+  - type: Sprite
+    state: rglass
+  - type: Stack
+    stackType: ReinforcedGlass
+    count: 1
+
+- type: entity
+  parent: SheetGlassBase
+  id: SheetPGlass
+  name: plasma glass
+  description: A sheet of translucent plasma.
+  suffix: Full
+  components:
+  - type: Material
+    materials:
+      PlasmaGlass: 100
+  - type: Stack
+    stackType: PlasmaGlass
+  - type: Sprite
+    state: pglass_3
+  - type: Item
+    heldPrefix: pglass
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - pglass
+      - pglass_2
+      - pglass_3
+  - type: Construction
+    graph: Glass
+    node: SheetPGlass
+
+- type: entity
+  parent: SheetPGlass
+  id: SheetPGlass1
+  name: plasma glass
+  suffix: Single
+  components:
+  - type: Sprite
+    state: pglass
+  - type: Stack
+    stackType: PlasmaGlass
+    count: 1
+
+- type: entity
+  parent: SheetGlassBase
+  id: SheetRPGlass
+  name: reinforced plasma glass
+  description: A reinforced sheet of translucent plasma.
+  suffix: Full
+  components:
+  - type: Material
+    materials:
+      ReinforcedPlasmaGlass: 100
+  - type: Stack
+    stackType: ReinforcedPlasmaGlass
+  - type: Sprite
+    state: rpglass_3
+  - type: Item
+    heldPrefix: rpglass
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - rpglass
+      - rpglass_2
+      - rpglass_3
+  - type: Construction
+    graph: Glass
+    node: SheetRPGlass
+
+- type: entity
+  parent: SheetRPGlass
+  id: SheetRPGlass1
+  name: reinforced plasma glass
+  suffix: Single
+  components:
+  - type: Sprite
+    state: rpglass
+  - type: Stack
+    stackType: ReinforcedPlasmaGlass
+    count: 1

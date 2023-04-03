@@ -1,0 +1,121 @@
+- type: gamePreset
+  id: Survival
+  alias:
+    - survival
+  name: survival-title
+  showInVote: false # secret
+  description: survival-description
+  rules:
+    - RampingStationEventScheduler
+
+- type: gamePreset
+  id: Extended
+  alias:
+  - extended
+  - shittersafari
+  name: extended-title
+  showInVote: false #2boring2vote
+  description: extended-description
+  rules:
+  - BasicStationEventScheduler
+
+- type: gamePreset
+  id: Secret
+  alias:
+    - secret
+    - sekrit
+  name: secret-title
+  showInVote: true
+  description: secret-description
+  rules:
+    - Secret
+
+- type: gamePreset
+  id: Sandbox
+  alias:
+    - sandbox
+  name: sandbox-title
+  description: sandbox-description
+  showInVote: true
+  maxPlayers: 5
+  rules:
+    - Sandbox
+
+- type: gamePreset
+  id: Traitor
+  alias:
+    - traitor
+  name: traitor-title
+  description: traitor-description
+  showInVote: false
+  rules:
+    - Traitor
+    - BasicStationEventScheduler
+
+- type: gamePreset
+  id: Suspicion
+  alias:
+    - suspicion
+    - sus
+  name: suspicion-title
+  description: suspicion-description
+  rules:
+    - Suspicion
+
+- type: gamePreset
+  id: Deathmatch
+  alias:
+    - deathmatch
+    - dm
+  name: death-match-title
+  description: death-match-description
+  rules:
+    - DeathMatch
+
+- type: gamePreset
+  id: TraitorDeathMatch
+  alias:
+    - traitordm
+    - traitordeathmatch
+  name: traitor-death-match-title
+  description: traitor-death-match-description
+  rules:
+    - TraitorDeathMatch
+    - MaxTimeRestart
+
+- type: gamePreset
+  id: Nukeops
+  alias:
+    - nukeops
+  name: nukeops-title
+  description: nukeops-description
+  showInVote: false
+  rules:
+    - Nukeops
+    - BasicStationEventScheduler
+
+- type: gamePreset
+  id: Zombie
+  alias:
+    - zombie
+    - zombies
+    - Zombies
+    - zz14
+    - zomber
+  name: zombie-title
+  description: zombie-description
+  showInVote: false
+  rules:
+    - Zombie
+    - BasicStationEventScheduler
+
+- type: gamePreset
+  id: Pirates
+  alias:
+    - pirates
+  name: pirates-title
+  description: pirates-description
+  showInVote: false
+  rules:
+    - Pirates
+    - BasicStationEventScheduler

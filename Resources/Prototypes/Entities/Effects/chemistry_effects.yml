@@ -1,0 +1,159 @@
+- type: entity
+  id: Smoke
+  name: smoke
+  noSpawn: true
+  components:
+  - type: Sprite
+    drawdepth: Effects
+    sprite: Effects/chemsmoke.rsi
+    state: chemsmoke
+  - type: Appearance
+  - type: SmokeVisuals
+  - type: Occluder
+  - type: Transform
+    anchored: true
+  - type: SmokeSolutionAreaEffect
+  - type: SolutionContainerManager
+    solutions:
+      solutionArea:
+        maxVol: 600
+        canReact: false
+
+- type: entity
+  id: Foam
+  name: foam
+  noSpawn: true
+  components:
+  - type: Sprite
+    netsync: false
+    drawdepth: Effects
+    color: "#ffffffcc" #Add some transparency
+    sprite: Effects/foam.rsi
+    state: foam
+    layers:
+      - state: foam
+        map: ["enum.FoamVisualLayers.Base"]
+  - type: AnimationPlayer
+  - type: Appearance
+  - type: FoamVisuals
+    animationTime: 0.6
+    animationState: foam-dissolve
+  - type: Transform
+    anchored: true
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - hard: false
+      shape:
+        !type:PhysShapeAabb
+        bounds: "-0.4,-0.4,0.4,0.4"
+      mask:
+      - ItemMask
+      layer:
+      - SlipLayer
+  - type: FoamSolutionAreaEffect
+  - type: SolutionContainerManager
+    solutions:
+      solutionArea:
+        maxVol: 600
+        canReact: false
+  - type: Slippery
+  - type: StepTrigger
+
+- type: entity
+  id: IronMetalFoam
+  name: iron metal foam
+  noSpawn: true
+  parent: Foam
+  components:
+  - type: Sprite
+    state: mfoam
+    layers:
+    - state: mfoam
+      map: ["enum.FoamVisualLayers.Base"]
+  - type: Appearance
+  - type: FoamVisuals
+    animationTime: 0.6
+    animationState: mfoam-dissolve
+  - type: FoamSolutionAreaEffect
+    foamedMetalPrototype: FoamedIronMetal
+
+- type: entity
+  id: AluminiumMetalFoam
+  name: aluminium metal foam
+  noSpawn: true
+  parent: Foam
+  components:
+  - type: Sprite
+    state: mfoam
+    layers:
+      - state: mfoam
+        map: ["enum.FoamVisualLayers.Base"]
+  - type: Appearance
+  - type: FoamVisuals
+    animationTime: 0.6
+    animationState: mfoam-dissolve
+  - type: FoamSolutionAreaEffect
+    foamedMetalPrototype: FoamedAluminiumMetal
+
+- type: entity
+  id: BaseFoamedMetal
+  name: base foamed metal
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+    snap:
+      - Wall
+  components:
+  - type: Tag
+    tags:
+      - RCDDeconstructWhitelist
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    netsync: false
+    drawdepth: Walls
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
+      layer:
+      - WallLayer
+      mask:
+      - WallLayer
+  - type: Occluder
+  - type: Transform
+    anchored: true
+  - type: Airtight
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  id: FoamedIronMetal
+  name: foamed iron metal
+  description: "For sealing hull breaches."
+  parent: BaseFoamedMetal
+  components:
+  - type: Sprite
+    sprite: Effects/foam.rsi
+    state: ironfoam
+
+- type: entity
+  id: FoamedAluminiumMetal
+  name: foamed aluminium metal
+  description: "For sealing hull breaches."
+  parent: BaseFoamedMetal
+  components:
+  - type: Sprite
+    sprite: Effects/foam.rsi
+    state: metalfoam

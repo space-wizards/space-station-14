@@ -1,0 +1,15 @@
+﻿- type: advertisementsPack
+  id: GetmoreChocolateCorpAds
+  advertisements:
+  - advertisement-snack-1
+  - advertisement-snack-2
+  - advertisement-snack-3
+  - advertisement-snack-4
+  - advertisement-snack-5
+  - advertisement-snack-6
+  - advertisement-snack-7
+  - advertisement-snack-8
+  - advertisement-snack-9
+  - advertisement-snack-10
+  - advertisement-snack-11
+  - advertisement-snack-12

@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from TGstation from this PR https://github.com/tgstation/tgstation/pull/27537, original sprite by TechnoAlchemisto (https://github.com/TechnoAlchemisto) and modified sprite by FantasticFwoosh (https://github.com/FantasticFwoosh)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+	{
+      "name": "equipped-NECK",
+      "directions": 4
+    }
+  ]
+}

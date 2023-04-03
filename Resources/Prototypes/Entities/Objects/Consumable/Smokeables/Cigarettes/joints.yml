@@ -1,0 +1,65 @@
+- type: entity
+  id: Joint
+  parent: BaseCigar
+  name: joint
+  description: A roll of dried plant matter wrapped in thin paper.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Smokeables/Cannabis/joint.rsi
+    netsync: false
+    state: unlit-icon
+  - type: Tag
+    tags:
+      - Cigarette
+      - Trash
+  - type: Recyclable
+  - type: SpaceGarbage
+  - type: Clothing
+    sprite: Objects/Consumable/Smokeables/Cannabis/joint.rsi
+    slots: [ mask ]
+    equippedPrefix: unlit
+  - type: Item
+    size: 1
+  - type: Construction
+    graph: smokeableJoint
+    node: joint
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 20
+        reagents:
+          - ReagentId: THC
+            Quantity: 10
+
+- type: entity
+  id: Blunt
+  parent: BaseCigar
+  name: blunt
+  description: A roll of dried plant matter wrapped in a dried tobacco leaf.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Smokeables/Cannabis/blunt.rsi
+    netsync: false
+    state: unlit-icon
+  - type: Tag
+    tags:
+      - Cigarette
+      - Trash
+  - type: Recyclable
+  - type: SpaceGarbage
+  - type: Clothing
+    sprite: Objects/Consumable/Smokeables/Cannabis/blunt.rsi
+    slots: [ mask ]
+    equippedPrefix: unlit
+  - type: Item
+    size: 1
+  - type: Construction
+    graph: smokeableBlunt
+    node: blunt
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 20
+        reagents:
+          - ReagentId: THC
+            Quantity: 10

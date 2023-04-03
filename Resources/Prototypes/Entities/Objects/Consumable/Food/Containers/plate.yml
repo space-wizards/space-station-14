@@ -1,0 +1,151 @@
+# Plate
+# In the future, I (Swept) want a system for putting stuff on plates and it'll provide more nutrition
+# If it's on that plate. I've modified all load/slices to fit on the plate, so all we need
+# is that system. Ideally, food on plates would have a system where when thrown, it would
+# break the plate and the loaf would fall off.
+
+# Large Plate
+
+- type: entity
+  name: large plate
+  parent: BaseItem
+  id: FoodPlate
+  description: A large plate, excellent for bread.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: plate
+    netsync: false
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 5
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 5
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FoodPlateTrash:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - Trash
+  - type: Recyclable
+  - type: SpaceGarbage
+
+- type: entity
+  name: broken plate
+  parent: BaseItem
+  id: FoodPlateTrash
+  description: A broken plate. Useless.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: plate-trash
+    netsync: false
+  - type: Tag
+    tags:
+    - Trash
+  - type: Recyclable
+  - type: SpaceGarbage
+
+# Small Plate
+
+- type: entity
+  name: small plate
+  parent: FoodPlate
+  id: FoodPlateSmall
+  description: A small plate. Delicate.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: plate-small
+# Needs the full thing because inherting is dumb sometimes.
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FoodPlateSmallTrash:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: FoodPlateTrash
+  id: FoodPlateSmallTrash
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: plate-small-trash
+    netsync: false
+
+# Plastic Plate
+
+- type: entity
+  name: plastic plate
+  parent: BaseItem
+  id: FoodPlatePlastic
+  description: A large blue plastic plate, excellent for a birthday cake.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: plate-plastic
+    netsync: false
+  - type: Tag
+    tags:
+    - Trash
+
+- type: entity
+  name: plastic plate
+  parent: BaseItem
+  id: FoodPlateSmallPlastic
+  description: A blue plastic plate, excellent for slices of birthday cake.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: plate-small-plastic
+    netsync: false
+  - type: Tag
+    tags:
+    - Trash
+
+# Pie Tin
+
+- type: entity
+  name: pie tin
+  parent: BaseItem
+  id: FoodPlateTin
+  description: A cheap foil tin for pies.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: tin
+    netsync: false
+  - type: Tag
+    tags:
+    - Trash
+  - type: Recyclable
+  - type: SpaceGarbage

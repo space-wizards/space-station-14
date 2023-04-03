@@ -1,0 +1,140 @@
+- type: entity
+  id: BannerBase
+  parent: BaseStructureDynamic
+  name: base banner
+  description: It's the concept of a banner, you shouldn't be seeing this.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/banner.rsi
+    state: banner
+    netsync: false
+    noRot: true
+  - type: Transform
+    noRot: true
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.2
+      density: 190
+      mask:
+      - MachineMask
+      layer:
+      - Opaque
+      - MidImpassable
+      - HighImpassable
+      - BulletImpassable
+  - type: InteractionOutline
+
+- type: entity
+  id: BannerNanotrasen
+  parent: BannerBase
+  name: nanotrasen banner
+  description: A banner displaying the Nanotrasen logo. It looks rather cheap.
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/banner.rsi
+    state: banner
+
+- type: entity
+  id: BannerCargo
+  parent: BannerBase
+  name: cargo banner
+  description: A banner displaying the colors of the cargo department. Not. Cargonia.
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/banner.rsi
+    state: banner_cargo
+
+- type: entity
+  id: BannerEngineering
+  parent: BannerBase
+  name: engineering banner
+  description: A banner displaying the colors of the engineering department. Scrungularty.
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/banner.rsi
+    state: banner_engineering
+
+- type: entity
+  id: BannerMedical
+  parent: BannerBase
+  name: medical banner
+  description: A banner displaying the colors of the medical department. How sterile.
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/banner.rsi
+    state: banner_medical
+
+- type: entity
+  id: BannerRevolution
+  parent: BannerBase
+  name: revolution banner
+  description: A banner displaying revolution. Viva!
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/banner.rsi
+    state: banner_revolution
+
+- type: entity
+  id: BannerScience
+  parent: BannerBase
+  name: science banner
+  description: A banner displaying the colors of the science department. Where stupidity is proven greater than the universe.
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/banner.rsi
+    state: banner_science
+
+- type: entity
+  id: BannerSecurity
+  parent: BannerBase
+  name: security banner
+  description: A banner displaying the colors of the shitcurity department. Security, my bad.
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/banner.rsi
+    state: banner_security
+
+- type: entity
+  id: BannerBlue
+  parent: BannerBase
+  name: blue banner
+  description: A banner displaying the color blue. Dabudidabudai.
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/banner.rsi
+    state: banner-blue
+
+- type: entity
+  id: BannerRed
+  parent: BannerBase
+  name: red banner
+  description: A banner displaying the color red. The edgy one.
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/banner.rsi
+    state: banner-red
+
+- type: entity
+  id: BannerYellow
+  parent: BannerBase
+  name: yellow banner
+  description: A banner displaying the color yellow. Reminds you of ducks and lemon stands.
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/banner.rsi
+    state: banner-yellow
+
+- type: entity
+  id: BannerGreen
+  parent: BannerBase
+  name: green banner
+  description: A banner displaying the color green. Grass, leaves, guacamole.
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/banner.rsi
+    state: banner-green
+
+

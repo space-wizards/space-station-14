@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "Created by EmoGarbage",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "unlit"
+    },
+    {
+      "name": "running",
+      "delays": [
+        [
+          0.625,
+          0.625,
+          0.625,
+          0.625,
+          0.625,
+          0.625,
+          0.625,
+          0.625
+        ]
+      ]
+    }
+  ]
+}

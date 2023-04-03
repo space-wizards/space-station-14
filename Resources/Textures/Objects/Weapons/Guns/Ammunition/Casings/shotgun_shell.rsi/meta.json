@@ -1,0 +1,53 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "https://github.com/discordia-space/CEV-Eris/raw/e1d495c3faf4642b6ec1c4be8acc7cd5bc51d785/icons/obj/ammo.dmi",
+    "states": [
+        {
+            "name": "base"
+        },
+        {
+            "name": "base-spent"
+        },
+        {
+            "name": "beanbag"
+        },
+        {
+            "name": "beanbag-spent"
+        },
+        {
+            "name": "blank"
+        },
+        {
+            "name": "blank-spent"
+        },
+        {
+            "name": "flare"
+        },
+        {
+            "name": "flare-spent"
+        },
+        {
+            "name": "incendiary"
+        },
+        {
+            "name": "incendiary-spent"
+        },
+        {
+            "name": "practice"
+        },
+        {
+            "name": "practice-spent"
+        },
+        {
+            "name": "slug"
+        },
+        {
+            "name": "slug-spent"
+        }
+    ]
+}

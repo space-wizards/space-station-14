@@ -1,0 +1,82 @@
+﻿- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseHandheldInstrument
+  description: That's an instrument.
+  components:
+  - type: Sprite
+    netsync: false
+  - type: Instrument
+  - type: ActivatableUI
+    inHandsOnly: true
+    singleUser: true
+    verbText: verb-instrument-openui
+    key: enum.InstrumentUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.InstrumentUiKey.Key
+      type: InstrumentBoundUserInterface
+  - type: Item
+    size: 24
+  - type: StaticPrice
+    price: 200
+
+#These are for instruments that are larger, can't be picked up, or have collision
+- type: entity
+  name: baseinstrument
+  id: BasePlaceableInstrument
+  parent: BaseStructureDynamic
+  abstract: true
+  components:
+  - type: Instrument
+  - type: ActivatableUI
+    allowSpectator: false # otherwise they can play client-side music
+    inHandsOnly: false
+    singleUser: true
+    requireHands: true
+    verbText: verb-instrument-openui
+    key: enum.InstrumentUiKey.Key
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/structureinstruments.rsi
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: UserInterface
+    interfaces:
+    - key: enum.InstrumentUiKey.Key
+      type: InstrumentBoundUserInterface
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.45
+      density: 80
+      mask:
+      - Impassable
+      - HighImpassable
+      - MidImpassable
+      layer:
+      - Opaque
+      - HighImpassable
+      - MidImpassable
+      - BulletImpassable
+  - type: StaticPrice
+    price: 300
+
+- type: entity
+  parent: BasePlaceableInstrument
+  id: BasePlaceableInstrumentRotatable
+  name: baseinstrumentrotatable
+  abstract: true
+  components:
+  - type: Rotatable
+    rotateWhileAnchored: true

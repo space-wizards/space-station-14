@@ -1,0 +1,140 @@
+- type: entity
+  name: filing cabinet
+  parent: BaseStructureDynamic
+  id: filingCabinet
+  suffix: Empty
+  description: A cabinet for all your filing needs.
+  components:
+  - type: Storage
+    capacity: 80
+    whitelist:
+      tags:
+        - Document
+        - Folder
+        - Write
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Storage/cabinets.rsi
+    state: filingcabinet
+    noRot: true
+  - type: Appearance
+    visuals:
+    - type: BagOpenCloseVisualizer
+      openIcon: filingcabinet-open
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+  - type: Transform
+    noRot: true
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.18,-0.48,0.18,0.48"
+      density: 200
+      mask:
+      - MachineMask
+      layer:
+      - MachineLayer
+  - type: InteractionOutline
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+
+- type: entity
+  name: tall cabinet
+  parent: filingCabinet
+  id: filingCabinetTall
+  suffix: Empty
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/cabinets.rsi
+    state: tallcabinet
+  - type: Appearance
+    visuals:
+    - type: BagOpenCloseVisualizer
+      openIcon: tallcabinet-open
+
+- type: entity
+  name: chest drawer
+  parent: BaseStructureDynamic
+  id: filingCabinetDrawer
+  suffix: Empty
+  description: A small drawer for all your filing needs, Now with wheels!
+  components:
+  - type: Storage
+    capacity: 50
+    whitelist:
+      tags:
+        - Document
+        - Folder
+        - Write
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Storage/cabinets.rsi
+    state: chestdrawer
+    noRot: true
+  - type: Appearance
+    visuals:
+    - type: BagOpenCloseVisualizer
+      openIcon: chestdrawer-open
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+  - type: Transform
+    noRot: true
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.22,-0.42,0.22,0.34"
+      density: 210
+      mask:
+      - MachineMask
+      layer:
+      - MachineLayer
+  - type: InteractionOutline
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+
+- type: entity
+  abstract: true
+  id: BaseBureaucraticStorageFill
+  components:
+  - type: StorageFill
+    contents:
+      - id: Pen
+        prob: 0.5
+      - id: PaperOffice
+        amount: 1
+        maxAmount: 3
+      - id: BoxFolderBlue
+        orGroup: Folder
+      - id: BoxFolderRed
+        orGroup: Folder
+      - id: BoxFolderYellow
+        orGroup: Folder
+      - id: BoxFolderWhite
+        orGroup: Folder
+      - id: BoxFolderGrey
+        orGroup: Folder
+      - id: BoxFolderBlack
+        orGroup: Folder
+
+- type: entity
+  parent: [filingCabinet, BaseBureaucraticStorageFill]
+  id: filingCabinetRandom
+  suffix: Random
+
+- type: entity
+  parent: [filingCabinetTall, BaseBureaucraticStorageFill]
+  id: filingCabinetTallRandom
+  suffix: Random
+
+- type: entity
+  parent: [filingCabinetDrawer, BaseBureaucraticStorageFill]
+  id: filingCabinetDrawerRandom
+  suffix: Random

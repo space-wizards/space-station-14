@@ -1,0 +1,22 @@
+﻿# Default human metabolism groups.
+- type: metabolismGroup
+  id: Poison
+
+- type: metabolismGroup
+  id: Medicine
+
+- type: metabolismGroup
+  id: Narcotic
+
+- type: metabolismGroup
+  id: Alcohol
+
+- type: metabolismGroup
+  id: Food
+
+- type: metabolismGroup
+  id: Drink
+
+# Used for gases that have effects on being inhaled
+- type: metabolismGroup
+  id: Gas

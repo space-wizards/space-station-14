@@ -1,0 +1,7 @@
+- type: soundCollection
+  id: Keyboard
+  files:
+  - /Audio/Machines/Keyboard/keyboard1.ogg
+  - /Audio/Machines/Keyboard/keyboard2.ogg
+  - /Audio/Machines/Keyboard/keyboard3.ogg
+  - /Audio/Machines/Keyboard/keyboard4.ogg

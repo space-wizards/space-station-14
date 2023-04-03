@@ -1,0 +1,37 @@
+﻿# non-projectile / "gun" staves
+
+# wand that gives lights an RGB effect.
+- type: entity
+  id: RGBStaff
+  parent: BaseItem
+  name: RGB Staff
+  description: Helps fix the underabundance of RGB gear on the station.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Basic/staves.rsi
+    layers:
+    - state: nothing
+    - state: nothing-unshaded
+      shader: unshaded
+  - type: ActionOnInteract
+    entityActions:
+    - whitelist: { components: [ PointLight ] }
+      charges: 25
+      sound: /Audio/Magic/blink.ogg
+      event: !type:ChangeComponentsSpellEvent
+        toAdd:
+        - type: RgbLightController
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: staff-inhand-left
+      - state: staff-inhand-left-unshaded
+        shader: unshaded
+      right:
+      - state: staff-inhand-right
+      - state: staff-inhand-right-unshaded
+        shader: unshaded
+  - type: RgbLightController
+  - type: PointLight
+    enabled: true
+    radius: 2

@@ -1,0 +1,50 @@
+- type: entity
+  name: pickaxe
+  parent: BaseItem
+  id: Pickaxe
+  description: Notched to perfection, for jamming it into rocks
+  components:
+  - type: Tag
+    tags:
+    - Pickaxe
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/pickaxe.rsi
+    state: pickaxe
+  - type: GatheringTool
+    damage:
+      types:
+        Structural: 50
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 10
+        Blunt: 4
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Melee/pickaxe.rsi
+
+- type: entity
+  name: mining drill
+  parent: BaseItem
+  id: MiningDrill
+  description: Powerful tool used to quickly drill through rocks
+  components:
+  - type: Tag
+    tags:
+      - Pickaxe
+  - type: Sprite
+    sprite: Objects/Tools/handdrill.rsi
+    state: handdrill
+  - type: GatheringTool
+    damage:
+      types:
+        Structural: 75
+    gatheringTime: 0.50
+    MaxGatheringEntities: 2
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 10
+        Blunt: 4
