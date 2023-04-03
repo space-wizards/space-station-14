@@ -1,6 +1,5 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.DoAfter;
 using Content.Server.Fluids.Components;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.Components;
@@ -17,6 +16,7 @@ using Robust.Shared.Prototypes;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.DoAfter;
+using Content.Shared.Spillable;
 
 namespace Content.Server.Fluids.EntitySystems;
 
@@ -29,7 +29,7 @@ public sealed class SpillableSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger= default!;
-    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
 
     public override void Initialize()
     {
@@ -38,7 +38,7 @@ public sealed class SpillableSystem : EntitySystem
         SubscribeLocalEvent<SpillableComponent, GetVerbsEvent<Verb>>(AddSpillVerb);
         SubscribeLocalEvent<SpillableComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<SpillableComponent, SolutionSpikeOverflowEvent>(OnSpikeOverflow);
-        SubscribeLocalEvent<SpillableComponent, DoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<SpillableComponent, SpillDoAfterEvent>(OnDoAfter);
     }
 
     private void OnSpikeOverflow(EntityUid uid, SpillableComponent component, SolutionSpikeOverflowEvent args)
@@ -128,29 +128,17 @@ public sealed class SpillableSystem : EntitySystem
         Verb verb = new();
         verb.Text = Loc.GetString("spill-target-verb-get-data-text");
         // TODO VERB ICONS spill icon? pouring out a glass/beaker?
-        if (component.SpillDelay == null)
+
+        verb.Act = () =>
         {
-            verb.Act = () =>
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(args.User, component.SpillDelay ?? 0, new SpillDoAfterEvent(), uid, target: uid)
             {
-                var puddleSolution = _solutionContainerSystem.SplitSolution(args.Target,
-                    solution, solution.Volume);
-                SpillAt(puddleSolution, Transform(args.Target).Coordinates, "PuddleSmear");
-            };
-        }
-        else
-        {
-            verb.Act = () =>
-            {
-                _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, component.SpillDelay.Value, target:uid)
-                {
-                    BreakOnTargetMove = true,
-                    BreakOnUserMove = true,
-                    BreakOnDamage = true,
-                    BreakOnStun = true,
-                    NeedHand = true
-                });
-            };
-        }
+                BreakOnTargetMove = true,
+                BreakOnUserMove = true,
+                BreakOnDamage = true,
+                NeedHand = true,
+            });
+        };
         verb.Impact = LogImpact.Medium; // dangerous reagent reaction are logged separately.
         verb.DoContactInteraction = true;
         args.Verbs.Add(verb);

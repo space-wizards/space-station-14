@@ -23,6 +23,9 @@
   id: BikeHorn
 
 - type: Tag
+  id: Bloodpack
+
+- type: Tag
   id: BodyBag
 
 - type: Tag

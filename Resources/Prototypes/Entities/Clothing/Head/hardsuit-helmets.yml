@@ -258,7 +258,7 @@
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitSyndie
   noSpawn: true
-  name: blood red hardsuit helmet
+  name: blood-red hardsuit helmet
   description: An advanced red hardsuit helmet designed for work in special operations.
   components:
   - type: Sprite

@@ -399,60 +399,6 @@ public sealed class RadarControl : Control
     {
         var rator = grid.GetAllTilesEnumerator();
         var edges = new ValueList<Vector2>();
-        var tileTris = new ValueList<Vector2>();
-
-        if (drawInterior)
-        {
-            var interiorTris = new ValueList<Vector2>();
-            // TODO: Engine pr
-            Span<Vector2> verts = new Vector2[8];
-
-            foreach (var fixture in fixturesComp.Fixtures.Values)
-            {
-                var invalid = false;
-                var poly = (PolygonShape) fixture.Shape;
-
-                for (var i = 0; i < poly.VertexCount; i++)
-                {
-                    var vert = poly.Vertices[i];
-                    vert = new Vector2(MathF.Round(vert.X), MathF.Round(vert.Y));
-
-                    vert = matrix.Transform(vert);
-
-                    if (vert.Length > RadarRange)
-                    {
-                        invalid = true;
-                        break;
-                    }
-
-                    verts[i] = vert;
-                }
-
-                if (invalid)
-                    continue;
-
-                Vector2 AdjustedVert(Vector2 vert)
-                {
-                    if (vert.Length > RadarRange)
-                    {
-                        vert = vert.Normalized * RadarRange;
-                    }
-
-                    vert.Y = -vert.Y;
-                    return ScalePosition(vert);
-                }
-
-                interiorTris.Add(AdjustedVert(verts[0]));
-                interiorTris.Add(AdjustedVert(verts[1]));
-                interiorTris.Add(AdjustedVert(verts[3]));
-
-                interiorTris.Add(AdjustedVert(verts[1]));
-                interiorTris.Add(AdjustedVert(verts[2]));
-                interiorTris.Add(AdjustedVert(verts[3]));
-            }
-
-            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, interiorTris.Span, color.WithAlpha(0.05f));
-        }
 
         while (rator.MoveNext(out var tileRef))
         {
@@ -511,7 +457,6 @@ public sealed class RadarControl : Control
             }
         }
 
-        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, tileTris.Span, color.WithAlpha(0.05f));
         handle.DrawPrimitives(DrawPrimitiveTopology.LineList, edges.Span, color);
     }
 

@@ -15,26 +15,28 @@
             <!-- LHS Controls -->
             <BoxContainer Name="LeftSide" Orientation="Vertical" SeparationOverride="4" HorizontalExpand="True">
                 <Control Name="DefaultState" VerticalExpand="True">
-                    <!-- Left Top Panel -->
-                    <PanelContainer StyleClasses="AngleRect" HorizontalAlignment="Left" Name = "LeftSideTop" VerticalAlignment="Top" >
-                        <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" MaxWidth="800">
-                            <info:LinkBanner Name="LinkBanner" VerticalExpand="false" HorizontalAlignment="Center" Margin="3 3 3 3"/>
-                            <controls:StripeBack>
-                                <BoxContainer Orientation="Horizontal" SeparationOverride="6" Margin="3 3 3 3">
-                                    <cc:UICommandButton Command="observe" Name="ObserveButton" Access="Public" Text="{Loc 'ui-lobby-observe-button'}" StyleClasses="ButtonBig"  WindowType="{x:Type lobbyUi:ObserveWarningWindow}"/>
-                                    <Label Name="StartTime"
-                                           Access="Public"
-                                           Align="Left"
-                                           FontColorOverride="{x:Static maths:Color.DarkGray}"
-                                           StyleClasses="LabelBig" HorizontalExpand="True" />
-                                    <Button Name="ReadyButton" Access="Public" ToggleMode="True" Text="{Loc 'ui-lobby-ready-up-button'}"
-                                            StyleClasses="ButtonBig" MinWidth="137"/>
-                                </BoxContainer>
-                            </controls:StripeBack>
-                        </BoxContainer>
-                    </PanelContainer>
-                    <!-- Voting Popups -->
-                    <BoxContainer Orientation="Vertical" SeparationOverride="4" Name="VoteContainer" Access="Public" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <BoxContainer Name="TopLeft" Orientation="Vertical">
+                        <!-- Left Top Panel -->
+                        <PanelContainer StyleClasses="AngleRect" HorizontalAlignment="Left" Name = "LeftSideTop" VerticalAlignment="Top" >
+                            <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" MaxWidth="800">
+                                <info:LinkBanner Name="LinkBanner" VerticalExpand="false" HorizontalAlignment="Center" Margin="3 3 3 3"/>
+                                <controls:StripeBack>
+                                    <BoxContainer Orientation="Horizontal" SeparationOverride="6" Margin="3 3 3 3">
+                                        <cc:UICommandButton Command="observe" Name="ObserveButton" Access="Public" Text="{Loc 'ui-lobby-observe-button'}" StyleClasses="ButtonBig"  WindowType="{x:Type lobbyUi:ObserveWarningWindow}"/>
+                                        <Label Name="StartTime"
+                                               Access="Public"
+                                               Align="Left"
+                                               FontColorOverride="{x:Static maths:Color.DarkGray}"
+                                               StyleClasses="LabelBig" HorizontalExpand="True" />
+                                        <Button Name="ReadyButton" Access="Public" ToggleMode="True" Text="{Loc 'ui-lobby-ready-up-button'}"
+                                                StyleClasses="ButtonBig" MinWidth="137"/>
+                                    </BoxContainer>
+                                </controls:StripeBack>
+                            </BoxContainer>
+                        </PanelContainer>
+                        <!-- Voting Popups -->
+                        <BoxContainer Orientation="Vertical" SeparationOverride="4" Name="VoteContainer" Access="Public" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0 8"/>
+                    </BoxContainer>
                     <!-- Vertical Padding-->
                     <Control VerticalExpand="True"/>
                     <!-- Left Bot Panel -->
