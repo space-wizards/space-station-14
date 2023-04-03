@@ -1,11 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: Hamster cages no longer clip through doors, type: Fix}
-  id: 2826
-  time: '2023-01-02T03:52:30.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: Air alarms should be less annoying around small quantities of water
       vapor., type: Tweak}
   id: 2827
@@ -2908,3 +2903,8 @@ Entries:
   - {message: Added new blood pack sprite!, type: Add}
   id: 3325
   time: '2023-04-03T07:50:33.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix shuttle airlocks., type: Fix}
+  id: 3326
+  time: '2023-04-03T18:28:27.0000000+00:00'
