@@ -55,10 +55,16 @@ namespace Content.Server.Speech.EntitySystems
                 // rather than using regex.replace
                 foreach (Match match in Regex.Matches(message, $@"(?<!\w){f}(?!\w)", RegexOptions.IgnoreCase))
                 {
-                    // Intelligently replace capitalization
                     var replacement = r;
 
-                    // second case here is weird--its specifically for single-word capitalization for I or A
+                    // Intelligently replace capitalization
+                    // two cases where we will do so:
+                    // - the string is all upper case (just uppercase the replacement too)
+                    // - the first letter of the word is capitalized (common, just uppercase the first letter too)
+                    // any other cases are not really useful or not viable, since the match & replacement can be different
+                    // lengths
+
+                    // second expression here is weird--its specifically for single-word capitalization for I or A
                     // dwarf expands I -> Ah, without that it would transform I -> AH
                     // so that second case will only fully-uppercase if the replacement length is also 1
                     if (!match.Value.Any(char.IsLower) && (match.Length > 1 || replacement.Length == 1))
