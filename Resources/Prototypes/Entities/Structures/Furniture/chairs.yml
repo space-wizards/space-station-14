@@ -9,7 +9,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-    bodyType: Dynamic
+  - type: Anchorable
   - type: Fixtures
     fixtures:
     - shape:
@@ -50,7 +50,6 @@
   components:
   - type: Transform
     anchored: true
-  - type: Anchorable
   - type: Rotatable
   - type: Sprite
     state: chair
@@ -64,7 +63,6 @@
   parent: SeatBase
   description: Apply butt.
   components:
-  - type: Anchorable
   - type: Sprite
     state: stool
   - type: Construction
@@ -80,7 +78,6 @@
     anchored: true
   - type: Rotatable
     rotateWhileAnchored: true
-  - type: Anchorable
   - type: Sprite
     state: bar
   - type: Construction
@@ -119,7 +116,6 @@
   components:
   - type: Transform
     anchored: true
-  - type: Anchorable
   - type: Rotatable
   - type: Sprite
     state: comfy
@@ -135,7 +131,6 @@
   components:
   - type: Transform
     anchored: true
-  - type: Anchorable
   - type: Rotatable
   - type: Sprite
     state: shuttle
@@ -184,7 +179,6 @@
   parent: SeatBase
   description: Looks uncomfortable.
   components:
-  - type: Anchorable
   - type: Rotatable
   - type: Sprite
     state: ritual
@@ -198,7 +192,6 @@
   parent: SeatBase
   description: It's staring back.
   components:
-  - type: Anchorable
   - type: Rotatable
   - type: Sprite
     state: cursed

@@ -17,7 +17,7 @@ namespace Content.Server.Database
             TypeMappingSourceDependencies dependencies,
             RelationalTypeMappingSourceDependencies relationalDependencies,
             ISqlGenerationHelper sqlGenerationHelper,
-            INpgsqlOptions? npgsqlOptions = null)
+            INpgsqlSingletonOptions npgsqlOptions)
             : base(dependencies, relationalDependencies, sqlGenerationHelper, npgsqlOptions)
         {
             StoreTypeMappings["inet"] =
