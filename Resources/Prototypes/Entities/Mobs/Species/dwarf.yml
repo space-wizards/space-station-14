@@ -37,6 +37,14 @@
       - MobMask
       layer:
       - MobLayer
+  - type: Vocal
+    sounds:
+      Male: UnisexDwarf
+      Female: UnisexDwarf
+      Unsexed: UnisexDwarf
+  - type: DwarfAccent
+  - type: Speech
+    speechSounds: Bass
 
 - type: entity
   save: false
