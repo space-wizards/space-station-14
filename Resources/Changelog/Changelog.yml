@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Grenade penguins no longer attack syndicate agents., type: Fix}
-  - {message: 'Grenade penguins are now only 5 TC and explode on death. You can still
-      trigger them manually, if you''d like.', type: Tweak}
-  id: 2825
-  time: '2023-01-02T01:18:48.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Hamster cages no longer clip through doors, type: Fix}
@@ -2862,11 +2855,18 @@ Entries:
   time: '2023-04-03T05:46:29.0000000+00:00'
 - author: Whisper
   changes:
-  - {message: The cautery now functions! It can be used to close bleeding wounds. (Use it as a melee), type: Add}
-  - {message: Added the blood pack! This item will very lightly reduce bleeding and restore 10 blood to the patient. It has been added to most first aid kits and medical spawns., type: Add}
-  - {message: Passive bleeding now properly exists! You can bleed at a maximum of 20u every 5 seconds., type: Add}
-  - {message: Critical bleed hit chance has been reduced. you shouldn't be dying from this as often anymore. It's the original reason why we thought bleeding was overpowered., type: Fix}
-  - {message: Iron has been tweaked to restore double the blood per unit. 50u iron pills will no longer be needed ideally., type: Tweak}
+  - {message: The cautery now functions! It can be used to close bleeding wounds.
+      (Use it as a melee), type: Add}
+  - {message: Added the blood pack! This item will very lightly reduce bleeding and
+      restore 10 blood to the patient. It has been added to most first aid kits and
+      medical spawns., type: Add}
+  - {message: Passive bleeding now properly exists! You can bleed at a maximum of
+      20u every 5 seconds., type: Add}
+  - {message: Critical bleed hit chance has been reduced. you shouldn't be dying from
+      this as often anymore. It's the original reason why we thought bleeding was
+      overpowered., type: Fix}
+  - {message: Iron has been tweaked to restore double the blood per unit. 50u iron
+      pills will no longer be needed ideally., type: Tweak}
   id: 3318
   time: '2023-04-03T05:59:51.0000000+00:00'
 - author: Naive817
@@ -2903,3 +2903,8 @@ Entries:
   - {message: Added robust nukie drink to vending machine cola., type: Add}
   id: 3324
   time: '2023-04-03T06:42:37.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Added new blood pack sprite!, type: Add}
+  id: 3325
+  time: '2023-04-03T07:50:33.0000000+00:00'
