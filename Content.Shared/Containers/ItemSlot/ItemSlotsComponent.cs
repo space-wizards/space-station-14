@@ -138,12 +138,10 @@ namespace Content.Shared.Containers.ItemSlots
         public bool EjectOnInteract = false;
 
         /// <summary>
-        ///     Whether the item slots system will attempt to eject this item to the user's hands when interacted with.
+        ///     Whether the item slots system will attempt to eject this item to the user's hands when alt interacted with.
         /// </summary>
         /// <remarks>
-        ///     For most item slots, this is probably not the case (eject is usually an alt-click interaction). But
-        ///     there are some exceptions. For example item cabinets and charging stations should probably eject their
-        ///     contents when clicked on normally.
+        ///     This is an override so that alt-interact will eject even if ejectOnInteract is set.
         /// </remarks>
         [DataField("ejectOnAltInteract")]
         public bool EjectOnAltInteract = false;
