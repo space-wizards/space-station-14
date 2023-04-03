@@ -51,7 +51,7 @@
 - type: cargoProduct
   id: FunInstrumentsSpecial
   icon:
-    sprite: Objects\Fun\Instruments\gunpet.rsi
+    sprite: Objects/Fun/nstruments/gunpet.rsi
     state: icon
   product: CrateFunInstrumentsSpecial
   cost: 10000
