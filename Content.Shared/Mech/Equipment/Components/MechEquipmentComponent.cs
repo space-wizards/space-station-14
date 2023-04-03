@@ -1,5 +1,7 @@
 ﻿using System.Threading;
+using Content.Shared.DoAfter;
 using Content.Shared.Mech.Components;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Mech.Equipment.Components;
 
@@ -12,14 +14,12 @@ public sealed class MechEquipmentComponent : Component
     /// <summary>
     /// How long does it take to install this piece of equipment
     /// </summary>
-    [DataField("installDuration")]
-    public float InstallDuration = 5;
+    [DataField("installDuration")] public float InstallDuration = 5;
 
     /// <summary>
     /// The mech that the equipment is inside of.
     /// </summary>
-    [ViewVariables]
-    public EntityUid? EquipmentOwner;
+    [ViewVariables] public EntityUid? EquipmentOwner;
 }
 
 /// <summary>
@@ -41,3 +41,14 @@ public sealed class MechEquipmentInstallFinished : EntityEventArgs
 public sealed class MechEquipmentInstallCancelled : EntityEventArgs
 {
 }
+
+[Serializable, NetSerializable]
+public sealed class GrabberDoAfterEvent : SimpleDoAfterEvent
+{
+}
+
+[Serializable, NetSerializable]
+public sealed class InsertEquipmentEvent : SimpleDoAfterEvent
+{
+}
+

@@ -258,6 +258,9 @@ public sealed partial class GunSystem : SharedGunSystem
         else
             return;
 
+        if (!coordinates.IsValid(EntityManager))
+            return;
+
         var ent = Spawn(message.Prototype, coordinates);
 
         var effectXform = Transform(ent);

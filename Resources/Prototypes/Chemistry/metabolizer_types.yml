@@ -24,3 +24,6 @@
 
 - type: metabolizerType
   id: Cluwne
+
+- type: metabolizerType
+  id: Dwarf

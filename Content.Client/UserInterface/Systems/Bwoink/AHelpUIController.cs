@@ -29,9 +29,18 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
+
     private BwoinkSystem? _bwoinkSystem;
     private MenuButton? AhelpButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.AHelpButton;
     public IAHelpUIHandler? UIHelper;
+    private bool _discordRelayActive;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeNetworkEvent<SharedBwoinkSystem.BwoinkDiscordRelayUpdated>(DiscordRelayUpdated);
+    }
 
     public void OnStateEntered(GameplayState state)
     {
@@ -70,7 +79,6 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
             return;
         EnsureUIHelper();
     }
-
 
     private void AHelpButtonPressed(BaseButton.ButtonEventArgs obj)
     {
@@ -129,6 +137,12 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
         UIHelper!.Receive(message);
     }
 
+    private void DiscordRelayUpdated(SharedBwoinkSystem.BwoinkDiscordRelayUpdated args, EntitySessionEventArgs session)
+    {
+        _discordRelayActive = args.DiscordRelayEnabled;
+        UIHelper?.DiscordRelayChanged(_discordRelayActive);
+    }
+
     public void EnsureUIHelper()
     {
         var isAdmin = _adminManager.HasFlag(AdminFlags.Adminhelp);
@@ -139,6 +153,7 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
         UIHelper?.Dispose();
         var ownerUserId = _playerManager.LocalPlayer!.UserId;
         UIHelper = isAdmin ? new AdminAHelpUIHandler(ownerUserId) : new UserAHelpUIHandler(ownerUserId);
+        UIHelper.DiscordRelayChanged(_discordRelayActive);
 
         UIHelper.SendMessageAction = (userId, textMessage) => _bwoinkSystem?.Send(userId, textMessage);
         UIHelper.OnClose += () => { SetAHelpPressed(false); };
@@ -161,14 +176,15 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
         EnsureUIHelper();
         if (UIHelper!.IsOpen)
             return;
-        UIHelper!.Open(localPlayer.UserId);
+        UIHelper!.Open(localPlayer.UserId, _discordRelayActive);
     }
+
     public void Open(NetUserId userId)
     {
         EnsureUIHelper();
         if (!UIHelper!.IsAdmin)
             return;
-        UIHelper?.Open(userId);
+        UIHelper?.Open(userId, _discordRelayActive);
     }
 
     public void ToggleWindow()
@@ -176,7 +192,6 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
         EnsureUIHelper();
         UIHelper?.ToggleWindow();
     }
-
 
     public void PopOut()
     {
@@ -223,8 +238,9 @@ public interface IAHelpUIHandler : IDisposable
     public bool IsOpen { get; }
     public void Receive(SharedBwoinkSystem.BwoinkTextMessage message);
     public void Close();
-    public void Open(NetUserId netUserId);
+    public void Open(NetUserId netUserId, bool relayActive);
     public void ToggleWindow();
+    public void DiscordRelayChanged(bool active);
     public event Action OnClose;
     public event Action OnOpen;
     public Action<NetUserId, string>? SendMessageAction { get; set; }
@@ -298,11 +314,15 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
             OpenWindow();
     }
 
+    public void DiscordRelayChanged(bool active)
+    {
+    }
+
     public event Action? OnClose;
     public event Action? OnOpen;
     public Action<NetUserId, string>? SendMessageAction { get; set; }
 
-    public void Open(NetUserId channelId)
+    public void Open(NetUserId channelId, bool relayActive)
     {
         SelectChannel(channelId);
         OpenWindow();
@@ -381,11 +401,12 @@ public sealed class UserAHelpUIHandler : IAHelpUIHandler
     public bool IsOpen => _window is { Disposed: false, IsOpen: true };
     private DefaultWindow? _window;
     private BwoinkPanel? _chatPanel;
+    private bool _discordRelayActive;
 
     public void Receive(SharedBwoinkSystem.BwoinkTextMessage message)
     {
         DebugTools.Assert(message.UserId == _ownerId);
-        EnsureInit();
+        EnsureInit(_discordRelayActive);
         _chatPanel!.ReceiveLine(message);
         _window!.OpenCentered();
     }
@@ -397,7 +418,7 @@ public sealed class UserAHelpUIHandler : IAHelpUIHandler
 
     public void ToggleWindow()
     {
-        EnsureInit();
+        EnsureInit(_discordRelayActive);
         if (_window!.IsOpen)
         {
             _window.Close();
@@ -413,27 +434,38 @@ public sealed class UserAHelpUIHandler : IAHelpUIHandler
     {
     }
 
+    public void DiscordRelayChanged(bool active)
+    {
+        _discordRelayActive = active;
+
+        if (_chatPanel != null)
+        {
+            _chatPanel.RelayedToDiscordLabel.Visible = active;
+        }
+    }
+
     public event Action? OnClose;
     public event Action? OnOpen;
     public Action<NetUserId, string>? SendMessageAction { get; set; }
 
-    public void Open(NetUserId channelId)
+    public void Open(NetUserId channelId, bool relayActive)
     {
-        EnsureInit();
+        EnsureInit(relayActive);
         _window!.OpenCentered();
     }
 
-    private void EnsureInit()
+    private void EnsureInit(bool relayActive)
     {
         if (_window is { Disposed: false })
             return;
         _chatPanel = new BwoinkPanel(text => SendMessageAction?.Invoke(_ownerId, text));
+        _chatPanel.RelayedToDiscordLabel.Visible = relayActive;
         _window = new DefaultWindow()
         {
             TitleClass="windowTitleAlert",
             HeaderClass="windowHeaderAlert",
             Title=Loc.GetString("bwoink-user-title"),
-            SetSize=(400, 200),
+            MinSize=(500, 200),
         };
         _window.OnClose += () => { OnClose?.Invoke(); };
         _window.OnOpen += () => { OnOpen?.Invoke(); };

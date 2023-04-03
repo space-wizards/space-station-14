@@ -5,6 +5,7 @@ using Content.Server.Pulling;
 using Content.Shared.Construction.Components;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Tools;
@@ -40,23 +41,29 @@ namespace Content.Server.Construction
 
         private void OnUnanchorComplete(EntityUid uid, AnchorableComponent component, TryUnanchorCompletedEvent args)
         {
+            if (args.Cancelled || args.Used is not { } used)
+                return;
+
             var xform = Transform(uid);
 
-            RaiseLocalEvent(uid, new BeforeUnanchoredEvent(args.User, args.Using));
+            RaiseLocalEvent(uid, new BeforeUnanchoredEvent(args.User, used));
             xform.Anchored = false;
-            RaiseLocalEvent(uid, new UserUnanchoredEvent(args.User, args.Using));
+            RaiseLocalEvent(uid, new UserUnanchoredEvent(args.User, used));
 
             _popup.PopupEntity(Loc.GetString("anchorable-unanchored"), uid);
 
             _adminLogger.Add(
                 LogType.Unanchor,
                 LogImpact.Low,
-                $"{EntityManager.ToPrettyString(args.User):user} unanchored {EntityManager.ToPrettyString(uid):anchored} using {EntityManager.ToPrettyString(args.Using):using}"
+                $"{EntityManager.ToPrettyString(args.User):user} unanchored {EntityManager.ToPrettyString(uid):anchored} using {EntityManager.ToPrettyString(used):using}"
             );
         }
 
         private void OnAnchorComplete(EntityUid uid, AnchorableComponent component, TryAnchorCompletedEvent args)
         {
+            if (args.Cancelled || args.Used is not { } used)
+                return;
+
             var xform = Transform(uid);
             if (TryComp<PhysicsComponent>(uid, out var anchorBody) &&
                 !TileFree(xform.Coordinates, anchorBody))
@@ -78,16 +85,16 @@ namespace Content.Server.Construction
             if (component.Snap)
                 xform.Coordinates = xform.Coordinates.SnapToGrid(EntityManager, _mapManager);
 
-            RaiseLocalEvent(uid, new BeforeAnchoredEvent(args.User, args.Using));
+            RaiseLocalEvent(uid, new BeforeAnchoredEvent(args.User, used));
             xform.Anchored = true;
-            RaiseLocalEvent(uid, new UserAnchoredEvent(args.User, args.Using));
+            RaiseLocalEvent(uid, new UserAnchoredEvent(args.User, used));
 
             _popup.PopupEntity(Loc.GetString("anchorable-anchored"), uid);
 
             _adminLogger.Add(
                 LogType.Anchor,
                 LogImpact.Low,
-                $"{EntityManager.ToPrettyString(args.User):user} anchored {EntityManager.ToPrettyString(uid):anchored} using {EntityManager.ToPrettyString(args.Using):using}"
+                $"{EntityManager.ToPrettyString(args.User):user} anchored {EntityManager.ToPrettyString(uid):anchored} using {EntityManager.ToPrettyString(used):using}"
             );
         }
 
@@ -182,8 +189,7 @@ namespace Content.Server.Construction
                 return;
             }
 
-            var toolEvData = new ToolEventData(new TryAnchorCompletedEvent(userUid, usingUid), targetEntity:uid);
-            _tool.UseTool(usingUid, userUid, uid, anchorable.Delay, usingTool.Qualities, toolEvData);
+            _tool.UseTool(usingUid, userUid, uid, anchorable.Delay, usingTool.Qualities, new TryAnchorCompletedEvent());
         }
 
         /// <summary>
@@ -204,8 +210,7 @@ namespace Content.Server.Construction
             if (!Valid(uid, userUid, usingUid, false))
                 return;
 
-            var toolEvData = new ToolEventData(new TryUnanchorCompletedEvent(userUid, usingUid), targetEntity:uid);
-            _tool.UseTool(usingUid, userUid, uid, anchorable.Delay, usingTool.Qualities, toolEvData);
+            _tool.UseTool(usingUid, userUid, uid, anchorable.Delay, usingTool.Qualities, new TryUnanchorCompletedEvent());
         }
 
         /// <summary>
@@ -234,33 +239,6 @@ namespace Content.Server.Construction
 
                 // Log anchor attempt
                 _adminLogger.Add(LogType.Anchor, LogImpact.Low, $"{ToPrettyString(userUid):user} is trying to anchor {ToPrettyString(uid):entity} to {transform.Coordinates:targetlocation}");
-            }
-        }
-
-        private abstract class AnchorEvent : EntityEventArgs
-        {
-            public EntityUid User;
-            public EntityUid Using;
-
-            protected AnchorEvent(EntityUid userUid, EntityUid usingUid)
-            {
-                User = userUid;
-                Using = usingUid;
-            }
-        }
-
-        private sealed class TryUnanchorCompletedEvent : AnchorEvent
-        {
-            public TryUnanchorCompletedEvent(EntityUid userUid, EntityUid usingUid) : base(userUid, usingUid)
-            {
-            }
-        }
-
-
-        private sealed class TryAnchorCompletedEvent : AnchorEvent
-        {
-            public TryAnchorCompletedEvent(EntityUid userUid, EntityUid usingUid) : base(userUid, usingUid)
-            {
             }
         }
     }
