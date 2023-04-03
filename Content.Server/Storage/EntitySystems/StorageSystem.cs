@@ -12,8 +12,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using System.Threading;
-using Content.Server.DoAfter;
 using Content.Server.Interaction;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Item;
@@ -33,7 +31,6 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DoAfter;
 using Content.Shared.Implants.Components;
 using Content.Shared.Lock;
-using Content.Shared.Movement.Events;
 using Content.Server.Ghost.Components;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
@@ -47,7 +44,7 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IAdminManager _admin = default!;
         [Dependency] private readonly ContainerSystem _containerSystem = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
         [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
         [Dependency] private readonly InteractionSystem _interactionSystem = default!;
@@ -81,7 +78,7 @@ namespace Content.Server.Storage.EntitySystems
             SubscribeLocalEvent<ServerStorageComponent, BoundUIClosedEvent>(OnBoundUIClosed);
             SubscribeLocalEvent<ServerStorageComponent, EntRemovedFromContainerMessage>(OnStorageItemRemoved);
 
-            SubscribeLocalEvent<ServerStorageComponent, DoAfterEvent<StorageData>>(OnDoAfter);
+            SubscribeLocalEvent<ServerStorageComponent, AreaPickupDoAfterEvent>(OnDoAfter);
 
             SubscribeLocalEvent<StorageFillComponent, MapInitEvent>(OnStorageFillMapInit);
         }
@@ -234,16 +231,14 @@ namespace Content.Server.Storage.EntitySystems
                 //If there's only one then let's be generous
                 if (validStorables.Count > 1)
                 {
-                    var storageData = new StorageData(validStorables);
-                    var doAfterArgs = new DoAfterEventArgs(args.User, 0.2f * validStorables.Count, target: uid)
+                    var doAfterArgs = new DoAfterArgs(args.User, 0.2f * validStorables.Count, new AreaPickupDoAfterEvent(validStorables), uid, target: uid)
                     {
-                        BreakOnStun = true,
                         BreakOnDamage = true,
                         BreakOnUserMove = true,
                         NeedHand = true
                     };
 
-                    _doAfterSystem.DoAfter(doAfterArgs, storageData);
+                    _doAfterSystem.TryStartDoAfter(doAfterArgs);
                 }
 
                 return;
@@ -278,7 +273,7 @@ namespace Content.Server.Storage.EntitySystems
             }
         }
 
-        private void OnDoAfter(EntityUid uid, ServerStorageComponent component, DoAfterEvent<StorageData> args)
+        private void OnDoAfter(EntityUid uid, ServerStorageComponent component, AreaPickupDoAfterEvent args)
         {
             if (args.Handled || args.Cancelled)
                 return;
@@ -289,7 +284,7 @@ namespace Content.Server.Storage.EntitySystems
             var xformQuery = GetEntityQuery<TransformComponent>();
             xformQuery.TryGetComponent(uid, out var xform);
 
-            foreach (var entity in args.AdditionalData.ValidStorables)
+            foreach (var entity in args.Entities)
             {
                 // Check again, situation may have changed for some entities, but we'll still pick up any that are valid
                 if (_containerSystem.IsEntityInContainer(entity)
@@ -666,11 +661,6 @@ namespace Content.Server.Storage.EntitySystems
                 return;
 
             _popupSystem.PopupEntity(Loc.GetString(message), player, player);
-        }
-
-        private record struct StorageData(List<EntityUid> validStorables)
-        {
-            public List<EntityUid> ValidStorables = validStorables;
         }
     }
 }

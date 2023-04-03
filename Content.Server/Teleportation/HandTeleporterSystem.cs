@@ -1,5 +1,4 @@
 using Content.Server.Administration.Logs;
-using Content.Server.DoAfter;
 using Content.Shared.DoAfter;
 using Content.Shared.Database;
 using Content.Shared.Interaction.Events;
@@ -17,14 +16,14 @@ public sealed class HandTeleporterSystem : EntitySystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly LinkedEntitySystem _link = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly DoAfterSystem _doafter = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doafter = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         SubscribeLocalEvent<HandTeleporterComponent, UseInHandEvent>(OnUseInHand);
 
-        SubscribeLocalEvent<HandTeleporterComponent, DoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<HandTeleporterComponent, TeleporterDoAfterEvent>(OnDoAfter);
     }
 
     private void OnDoAfter(EntityUid uid, HandTeleporterComponent component, DoAfterEvent args)
@@ -56,15 +55,14 @@ public sealed class HandTeleporterSystem : EntitySystem
             if (xform.ParentUid != xform.GridUid)
                 return;
 
-            var doafterArgs = new DoAfterEventArgs(args.User, component.PortalCreationDelay, used: uid)
+            var doafterArgs = new DoAfterArgs(args.User, component.PortalCreationDelay, new TeleporterDoAfterEvent(), uid, used: uid)
             {
                 BreakOnDamage = true,
-                BreakOnStun = true,
                 BreakOnUserMove = true,
                 MovementThreshold = 0.5f,
             };
 
-            _doafter.DoAfter(doafterArgs);
+            _doafter.TryStartDoAfter(doafterArgs);
         }
     }
 
