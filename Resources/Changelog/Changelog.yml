@@ -1,14 +1,6 @@
 Entries:
 - author: Theomund
   changes:
-  - {message: 'Flashlights now have an empty variant, which can be manufactured by
-      a protolathe.', type: Add}
-  - {message: Changed the protolathe recipe for flashlights to use the empty variant.,
-    type: Fix}
-  id: 2814
-  time: '2023-01-01T05:48:58.0000000+00:00'
-- author: Theomund
-  changes:
   - {message: Added logic for sorting crew manifest entries by job titles and names.,
     type: Fix}
   id: 2815
@@ -2905,3 +2897,9 @@ Entries:
       Cargo., type: Add}
   id: 3313
   time: '2023-04-03T02:45:42.0000000+00:00'
+- author: Visne
+  changes:
+  - {message: Text boxes now allow you to remove a word at a time using Ctrl+Backspace
+      and Ctrl+Delete., type: Tweak}
+  id: 3314
+  time: '2023-04-03T02:58:53.0000000+00:00'
