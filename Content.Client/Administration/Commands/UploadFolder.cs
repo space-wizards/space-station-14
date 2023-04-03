@@ -50,44 +50,29 @@ public sealed class UploadFolder : IConsoleCommand
             return; // bomb out if the folder doesnt exist in /UploadFolder
         }
 
-        //Run the top level directory first
-        foreach (var filename in resourceMan.UserData.Find($"{folderPath.ToRelativePath()}/*").files )
+        //Grab all files in specified folder and upload them
+        foreach (var filename in resourceMan.UserData.Find($"{folderPath.ToRelativePath()}/").files )
         {
-            //dont upload yaml files
-            if (filename.ToString().Contains(".yaml"))
-                break;
-
             await using var filestream = resourceMan.UserData.Open(filename,FileMode.Open);
             {
-
-            }
-        }
-
-        //Get all sub directories from top and loop over files in each directory.
-        foreach (var directory in resourceMan.UserData.Find($"{folderPath.ToRelativePath()}/*").directories)
-        {
-            foreach (var filename in resourceMan.UserData.Find($"{directory.ToRelativePath()}/*").files )
-            {
-                await using var filestream = resourceMan.UserData.Open(filename,FileMode.Open);
+                var sizeLimit = cfgMan.GetCVar(CCVars.ResourceUploadingLimitMb);
+                if (sizeLimit > 0f && filestream.Length * SharedNetworkResourceManager.BytesToMegabytes > sizeLimit)
                 {
-                    var sizeLimit = cfgMan.GetCVar(CCVars.ResourceUploadingLimitMb);
-                    if (sizeLimit > 0f && filestream.Length * SharedNetworkResourceManager.BytesToMegabytes > sizeLimit)
-                    {
-                        shell.WriteError($"File {filename} above the current size limit! It must be smaller than {sizeLimit} MB. skipping.");
-                        return;
-                    }
-
-                    var data = filestream.CopyToArray();
-
-                    var netManager = IoCManager.Resolve<INetManager>();
-                    var msg = netManager.CreateNetMessage<NetworkResourceUploadMessage>();
-
-                    msg.RelativePath = new ResourcePath($"{filename.ToString().Remove(0,14)}");
-                    msg.Data = data;
-
-                    netManager.ClientSendMessage(msg);
+                    shell.WriteError($"File {filename} above the current size limit! It must be smaller than {sizeLimit} MB. skipping.");
+                    return;
                 }
+
+                var data = filestream.CopyToArray();
+
+                var netManager = IoCManager.Resolve<INetManager>();
+                var msg = netManager.CreateNetMessage<NetworkResourceUploadMessage>();
+
+                msg.RelativePath = new ResourcePath($"{filename.ToString().Remove(0,14)}");
+                msg.Data = data;
+
+                netManager.ClientSendMessage(msg);
             }
         }
+
     }
 }
