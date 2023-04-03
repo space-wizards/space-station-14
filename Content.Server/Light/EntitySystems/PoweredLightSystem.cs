@@ -425,7 +425,8 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnEmpPulse(EntityUid uid, PoweredLightComponent component, ref EmpPulseEvent args)
         {
-            args.Affected = TryDestroyBulb(uid, component);
+            if (TryDestroyBulb(uid, component))
+                args.Affected = true;
         }
     }
 }
