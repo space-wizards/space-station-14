@@ -1,14 +1,6 @@
-using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.Storage.Components;
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Robust.Shared.Random;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -16,7 +8,6 @@ namespace Content.Server.Chemistry.EntitySystems
     {
         [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-
 
         public override void Initialize()
         {
@@ -29,7 +20,6 @@ namespace Content.Server.Chemistry.EntitySystems
         {
 
             var target = _solutionsSystem.EnsureSolution(uid, component.Solution);
-            //var randSolution = SelectWeightedEntry(component);
             var sumOfWeights = 0;
 
             foreach (var picked  in component.RandomList)
