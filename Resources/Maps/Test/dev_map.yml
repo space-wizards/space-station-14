@@ -562,8 +562,6 @@ entities:
     pos: 12.5,17.5
     parent: 179
     type: Transform
-  - bodyType: Static
-    type: Physics
 - uid: 91
   type: ClownPDA
   components:
@@ -1277,7 +1275,7 @@ entities:
 - uid: 179
   components:
   - type: MetaData
-  - parent: invalid
+  - parent: 962
     type: Transform
   - chunks:
       -1,0:
@@ -4475,8 +4473,6 @@ entities:
     pos: 14.5,6.5
     parent: 179
     type: Transform
-  - bodyType: Static
-    type: Physics
 - uid: 581
   type: Chair
   components:
@@ -4484,8 +4480,6 @@ entities:
     pos: 14.5,8.5
     parent: 179
     type: Transform
-  - bodyType: Static
-    type: Physics
 - uid: 582
   type: Chair
   components:
@@ -4493,8 +4487,6 @@ entities:
     pos: 14.5,7.5
     parent: 179
     type: Transform
-  - bodyType: Static
-    type: Physics
 - uid: 583
   type: chem_dispenser
   components:
@@ -7236,6 +7228,20 @@ entities:
   type: SpawnPointLatejoin
   components:
   - pos: -3.5,3.5
+    parent: 179
+    type: Transform
+- uid: 962
+  components:
+  - type: MetaData
+  - type: Transform
+  - type: Map
+  - type: PhysicsMap
+  - type: Broadphase
+  - type: OccluderTree
+- uid: 963
+  type: TelecomServerFilled
+  components:
+  - pos: -3.5,10.5
     parent: 179
     type: Transform
 ...
