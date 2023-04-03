@@ -35,13 +35,12 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
     private void OnFiltersChanged(EntityUid uid,
         GeneralStationRecordConsoleComponent component, GeneralStationRecordsFilterMsg msg)
     {
-        Logger.Debug($"select new filters {msg.type} {msg.value}");
-        // string prints = msg.printsMsg;
-        // if (component.printsFilter != prints)
-        // {
-        //     component.printsFilter = prints.Length > 0 ? prints.ToLower() : "";
-        //     UpdateUserInterface(uid, component);
-        // }
+        if (component.Filter == null ||
+            component.Filter.type != msg.type || component.Filter.value != msg.value)
+        {
+            component.Filter = new GeneralStationRecordsFilter(msg.type, msg.value);
+            UpdateUserInterface(uid, component);
+        }
     }
 
     private void UpdateUserInterface(EntityUid uid,
@@ -68,12 +67,10 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
         foreach (var pair in consoleRecords)
         {
-            if (console != null && console.printsFilter != null && pair.Item2.Fingerprint != null)
+            if (console != null && console.Filter != null
+                && IsSkippedRecord(console.Filter, pair.Item2))
             {
-                if (IsFilterPrints(pair.Item2.Fingerprint, console.printsFilter))
-                {
-                    continue;
-                }
+                continue;
             }
 
             listing.Add(pair.Item1, pair.Item2.Name);
@@ -81,7 +78,7 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
         if (listing.Count == 0)
         {
-            GeneralStationRecordConsoleState state = new(null, null, null, console.printsFilter);
+            GeneralStationRecordConsoleState state = new(null, null, null, console.Filter);
             SetStateForInterface(uid, state);
             return;
         }
@@ -97,7 +94,7 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
                 stationRecordsComponent);
         }
 
-        GeneralStationRecordConsoleState newState = new(console.ActiveKey, record, listing, console.printsFilter);
+        GeneralStationRecordConsoleState newState = new(console.ActiveKey, record, listing, console.Filter);
         SetStateForInterface(uid, newState);
     }
 
@@ -108,9 +105,48 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
             ?.SetState(newState);
     }
 
-    private bool IsFilterPrints(string printsValue, string filter)
+    private bool IsSkippedRecord(GeneralStationRecordsFilter filter,
+        GeneralStationRecord someRecord)
     {
-        string lowerValue = printsValue.ToLower();
-        return filter.Length > 0 && !lowerValue.StartsWith(filter);
+        bool isSkipRecord = false;
+        bool isFilter = filter.value.Length > 0;
+        string filterLowerCaseValue = "";
+
+        if (isFilter) {
+            filterLowerCaseValue = filter.value.ToLower();
+        }
+        
+        switch (filter.type)
+        {
+            case GeneralStationRecordFilterType.Name:
+                if (someRecord.Name != null)
+                {
+                    string loweName = someRecord.Name.ToLower();
+                    isSkipRecord = isFilter && !loweName.Contains(filterLowerCaseValue);
+                }
+                break;
+            case GeneralStationRecordFilterType.Prints:
+                if (someRecord.Fingerprint != null)
+                {
+                    isSkipRecord = isFilter
+                        && IsFilterWithCodeValue(someRecord.Fingerprint, filterLowerCaseValue);
+                }
+                break;
+            case GeneralStationRecordFilterType.DNA:
+                if (someRecord.DNA != null)
+                {
+                    isSkipRecord = isFilter
+                        && IsFilterWithCodeValue(someRecord.DNA,filterLowerCaseValue);
+                }
+                break;
+        }
+
+        return isSkipRecord;
+    }
+
+    private bool IsFilterWithCodeValue(string value, string filter)
+    {
+        string lowerValue = value.ToLower();
+        return !lowerValue.StartsWith(filter);
     }
 }

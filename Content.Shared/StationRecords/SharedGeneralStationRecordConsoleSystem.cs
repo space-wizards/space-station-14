@@ -35,18 +35,18 @@ public sealed class GeneralStationRecordConsoleState : BoundUserInterfaceState
     public StationRecordKey? SelectedKey { get; }
     public GeneralStationRecord? Record { get; }
     public Dictionary<StationRecordKey, string>? RecordListing { get; }
-    public string? printsFilter { get; }
+    public GeneralStationRecordsFilter? Filter { get; }
     public GeneralStationRecordConsoleState(StationRecordKey? key, GeneralStationRecord? record,
-        Dictionary<StationRecordKey, string>? recordListing, string? prints)
+        Dictionary<StationRecordKey, string>? recordListing, GeneralStationRecordsFilter? newFilter)
     {
         SelectedKey = key;
         Record = record;
         RecordListing = recordListing;
-        printsFilter = prints;
+        Filter = newFilter;
     }
 
     public bool IsEmpty() => SelectedKey == null
-        && Record == null && RecordListing == null && printsFilter == null;
+        && Record == null && RecordListing == null && Filter == null;
 }
 
 [Serializable, NetSerializable]
@@ -80,4 +80,16 @@ public enum GeneralStationRecordFilterType : byte
     Name,
     Prints,
     DNA,
+}
+
+[Serializable, NetSerializable]
+public sealed class GeneralStationRecordsFilter {
+    public GeneralStationRecordFilterType type { get; set; } =
+        GeneralStationRecordFilterType.Name;
+    public string value { get; set; } = "";
+    public GeneralStationRecordsFilter(GeneralStationRecordFilterType filterType,
+        string newValue = "") {
+            type = filterType;
+            value = newValue;
+    }
 }

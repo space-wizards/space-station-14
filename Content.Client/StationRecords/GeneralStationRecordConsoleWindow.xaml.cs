@@ -57,7 +57,7 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
             if (_currentFilterType != eventArgs.Id)
             {
                 _currentFilterType = eventArgs.Id;
-                FilterListingOfRecords(StationRecordsFiltersValue.Text);
+                FilterListingOfRecords();
             }
         };
 
@@ -74,7 +74,19 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 
     public void UpdateState(GeneralStationRecordConsoleState state)
     {
-        UpdateFilters();
+        if (state.Filter != null) {
+            if (state.Filter.type != _filterTypes[_currentFilterType]) {
+                int findedIndex = Array.IndexOf(_filterTypes, state.Filter.type);
+                _currentFilterType = findedIndex > 0 ? findedIndex : 0;
+            }
+
+            if (state.Filter.value != StationRecordsFiltersValue.Text) {
+                StationRecordsFiltersValue.Text = state.Filter.value;
+            }
+        }
+
+        StationRecordsFilterType.SelectId(_currentFilterType);
+        StationRecordsFiltersValue.PlaceHolder = GetTypeFilterLocals(_currentFilterType, false);
 
         if (state.RecordListing == null)
         {
@@ -107,12 +119,6 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
             RecordContainer.DisposeAllChildren();
             RecordContainer.RemoveAllChildren();
         }
-    }
-
-    private void UpdateFilters()
-    {
-        StationRecordsFilterType.SelectId(_currentFilterType);
-        StationRecordsFiltersValue.PlaceHolder = GetTypeFilterLocals(_currentFilterType, false);
     }
     private void PopulateRecordListing(Dictionary<StationRecordKey, string> listing, StationRecordKey? selected)
     {
