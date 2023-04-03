@@ -139,7 +139,7 @@ namespace Content.Server.Power.EntitySystems
 
             var netBattery = Comp<PowerNetworkBatteryComponent>(uid);
             float power = netBattery is not null ? netBattery.CurrentSupply : 0f;
-            if (_ui.TryGetUi(uid, ApcUiKey.Key, out var bui))
+            if (_ui.TryGetUi(uid, ApcUiKey.Key, out var bui, ui))
             {
                 var state = new ApcBoundInterfaceState(
                     apc.MainBreakerEnabled,
