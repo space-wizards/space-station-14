@@ -180,7 +180,7 @@ public sealed class BloodstreamSystem : EntitySystem
             _audio.PlayPvs(component.InstantBloodSound, uid);
         }
 
-        // Heat damage will always cauterize, this message simply has a chance of showing up as feedback to avoid spam.
+        // Heat damage will cauterize, causing the bleed rate to be reduced.
         else if (totalFloat < 0 && oldBleedAmount > 0)
         {
             // Magically, this damage has healed some bleeding, likely
