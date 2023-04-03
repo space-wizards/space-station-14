@@ -8,6 +8,7 @@ namespace Content.Server.Speech.EntitySystems;
 public sealed class MobsterAccentSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
 
     private static readonly Dictionary<string, string> DirectReplacements = new()
     {
@@ -37,18 +38,14 @@ public sealed class MobsterAccentSystem : EntitySystem
         SubscribeLocalEvent<MobsterAccentComponent, AccentGetEvent>(OnAccentGet);
     }
 
-    public string Accentuate(string message, MobsterAccentComponent component)
+    public string Accentuate(EntityUid uid, string message, MobsterAccentComponent component)
     {
         // Order:
         // Do text manipulations first
         // Then prefix/suffix funnyies
 
-        var msg = message;
-
-        foreach (var (first, replace) in DirectReplacements)
-        {
-            msg = Regex.Replace(msg, $@"(?<!\w){first}(?!\w)", replace, RegexOptions.IgnoreCase);
-        }
+        // direct word replacements
+        var msg = _replacement.ApplyReplacements(uid, message, "mobster");
 
         // thinking -> thinkin'
         // king -> king
@@ -91,6 +88,6 @@ public sealed class MobsterAccentSystem : EntitySystem
 
     private void OnAccentGet(EntityUid uid, MobsterAccentComponent component, AccentGetEvent args)
     {
-        args.Message = Accentuate(args.Message, component);
+        args.Message = Accentuate(uid, args.Message, component);
     }
 }
