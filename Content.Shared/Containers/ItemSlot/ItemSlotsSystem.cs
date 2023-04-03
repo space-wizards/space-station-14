@@ -418,7 +418,8 @@ namespace Content.Shared.Containers.ItemSlots
                 var canInsertAny = false;
                 foreach (var slot in itemSlots.Slots.Values)
                 {
-                    if (!CanInsert(uid, args.Using.Value, slot))
+                    // Disable slot insert if InsertOnInteract is true
+                    if (slot.InsertOnInteract || !CanInsert(uid, args.Using.Value, slot))
                         continue;
 
                     var verbSubject = slot.Name != string.Empty
