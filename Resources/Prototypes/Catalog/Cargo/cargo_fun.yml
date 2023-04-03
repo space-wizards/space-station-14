@@ -21,7 +21,7 @@
 - type: cargoProduct
   id: FunInstrumentsString
   icon:
-    sprite: Objects\Fun\Instruments\bassguitar.rsi
+    sprite: Objects/Fun/Instruments/bassguitar.rsi
     state: icon
   product: CrateFunInstrumentsString
   cost: 2500
