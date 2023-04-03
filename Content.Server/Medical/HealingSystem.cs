@@ -56,7 +56,7 @@ public sealed class HealingSystem : EntitySystem
 
         // Restores missing blood
         if (healing.ModifyBloodLevel != 0)
-            _bloodstreamSystem.TryModifyBloodLevel(uid, healing.HealingComponent.ModifyBloodLevel);
+            _bloodstreamSystem.TryModifyBloodLevel(uid, healing.ModifyBloodLevel);
 
         var healed = _damageable.TryChangeDamage(uid, healing.Damage, true, origin: args.Args.User);
 
