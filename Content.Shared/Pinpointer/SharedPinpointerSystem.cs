@@ -3,6 +3,7 @@ using Content.Shared.Database;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Robust.Shared.GameStates;
 
@@ -47,7 +48,33 @@ namespace Content.Shared.Pinpointer
             component.Target = args.Target;
             _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):player} set target of {ToPrettyString(uid):pinpointer} to {ToPrettyString(component.Target.Value):target}");
             if (component.UpdateTargetName)
-                component.TargetName = component.Target == null ? null : CompOrNull<MetaDataComponent>(component.Target.Value)?.EntityName;
+                component.TargetName = component.Target == null ? null : Identity.Name(component.Target.Value, EntityManager);
+        }
+
+        /// <summary>
+        ///     Set pinpointers target to track
+        /// </summary>
+        public void SetTarget(EntityUid uid, EntityUid? target, PinpointerComponent? pinpointer = null)
+        {
+            if (!Resolve(uid, ref pinpointer))
+                return;
+
+            if (pinpointer.Target == target)
+                return;
+
+            pinpointer.Target = target;
+            if (pinpointer.UpdateTargetName)
+                pinpointer.TargetName = target == null ? null : Identity.Name(target.Value, EntityManager);
+            if (pinpointer.IsActive)
+                UpdateDirectionToTarget(uid, pinpointer);
+        }
+
+        /// <summary>
+        ///     Update direction from pinpointer to selected target (if it was set)
+        /// </summary>
+        protected virtual void UpdateDirectionToTarget(EntityUid uid, PinpointerComponent? pinpointer = null)
+        {
+
         }
 
         private void OnExamined(EntityUid uid, PinpointerComponent component, ExaminedEvent args)

@@ -3,7 +3,7 @@ using Content.Shared.Pinpointer;
 using System.Linq;
 using Robust.Shared.Utility;
 using Content.Server.Shuttles.Events;
-using Content.Shared.Emag.Components;
+using Content.Shared.IdentityManagement;
 
 namespace Content.Server.Pinpointer
 {
@@ -102,27 +102,9 @@ namespace Content.Server.Pinpointer
         }
 
         /// <summary>
-        ///     Set pinpointers target to track
-        /// </summary>
-        public void SetTarget(EntityUid uid, EntityUid? target, PinpointerComponent? pinpointer = null)
-        {
-            if (!Resolve(uid, ref pinpointer))
-                return;
-
-            if (pinpointer.Target == target)
-                return;
-
-            pinpointer.Target = target;
-            if (pinpointer.UpdateTargetName)
-                pinpointer.TargetName = target == null ? null : CompOrNull<MetaDataComponent>(target.Value)?.EntityName;
-            if (pinpointer.IsActive)
-                UpdateDirectionToTarget(uid, pinpointer);
-        }
-
-        /// <summary>
         ///     Update direction from pinpointer to selected target (if it was set)
         /// </summary>
-        private void UpdateDirectionToTarget(EntityUid uid, PinpointerComponent? pinpointer = null)
+        protected override void UpdateDirectionToTarget(EntityUid uid, PinpointerComponent? pinpointer = null)
         {
             if (!Resolve(uid, ref pinpointer))
                 return;
