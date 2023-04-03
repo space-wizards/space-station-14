@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'Something about the mystical energy of the end of the round seems to
-      be causing artifacts to go absolutely crazy. Best keep them far away (or perhaps
-      really close?)', type: Add}
-  id: 2819
-  time: '2023-01-01T06:16:09.0000000+00:00'
 - author: Kupo
   changes:
   - {message: 'Radio channel ":h" will now use the headset''s department radio', type: Add}
@@ -2901,3 +2894,10 @@ Entries:
       should be in here..., type: Add}
   id: 3318
   time: '2023-04-03T05:59:51.0000000+00:00'
+- author: Naive817
+  changes:
+  - {message: Holobarrier projectors are now available to HoS and warden. It can make
+      soild but fragile holographic barriers to keep the crew from interfering with
+      the execution of the clown., type: Add}
+  id: 3319
+  time: '2023-04-03T06:20:15.0000000+00:00'
