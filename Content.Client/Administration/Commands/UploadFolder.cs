@@ -25,6 +25,7 @@ public sealed class UploadFolder : IConsoleCommand
     {
         var cfgMan = IoCManager.Resolve<IConfigurationManager>();
         var resourceMan = IoCManager.Resolve<IResourceManager>();
+        var fileCount = 0;
 
 
         if (!cfgMan.GetCVar(CCVars.ResourceUploadingEnabled))
@@ -40,7 +41,10 @@ public sealed class UploadFolder : IConsoleCommand
         }
 
         if (args[0].Contains(".."))
+        {
+            shell.WriteError($"Illegal characters found in folder path. Remove '..' from your folder path! ");
             return; // silent bomb out if the user is trying to escape the UploadFolder dir
+        }
 
         var folderPath = new ResourcePath(BaseUploadFolderPath + $"/{args[0]}");
 
@@ -67,12 +71,13 @@ public sealed class UploadFolder : IConsoleCommand
                 var netManager = IoCManager.Resolve<INetManager>();
                 var msg = netManager.CreateNetMessage<NetworkResourceUploadMessage>();
 
-                msg.RelativePath = new ResourcePath($"{filename.ToString().Remove(0,14)}");
+                msg.RelativePath = new ResourcePath($"{filename.ToString().Remove(0,14)}"); //removes /UploadFolder/ from path
                 msg.Data = data;
 
                 netManager.ClientSendMessage(msg);
+                fileCount++;
             }
         }
-
+        shell.WriteLine($"Uploaded {fileCount} files");
     }
 }
