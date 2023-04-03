@@ -1,11 +1,6 @@
 Entries:
 - author: Theomund
   changes:
-  - {message: Added missing interaction outline component to cardboard boxes., type: Fix}
-  id: 2813
-  time: '2023-01-01T00:42:36.0000000+00:00'
-- author: Theomund
-  changes:
   - {message: 'Flashlights now have an empty variant, which can be manufactured by
       a protolathe.', type: Add}
   - {message: Changed the protolathe recipe for flashlights to use the empty variant.,
@@ -2904,3 +2899,9 @@ Entries:
   - {message: Dwarf real;, type: Add}
   id: 3312
   time: '2023-04-03T00:06:24.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Added crate of theater supplies is now available for purchase through
+      Cargo., type: Add}
+  id: 3313
+  time: '2023-04-03T02:45:42.0000000+00:00'
