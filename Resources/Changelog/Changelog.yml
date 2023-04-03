@@ -1,9 +1,4 @@
 Entries:
-- author: Kupo
-  changes:
-  - {message: 'Radio channel ":h" will now use the headset''s department radio', type: Add}
-  id: 2820
-  time: '2023-01-01T06:20:04.0000000+00:00'
 - author: Vordenburg
   changes:
   - {message: All gas canisters now dump their contents when destroyed., type: Fix}
@@ -2901,3 +2896,8 @@ Entries:
       the execution of the clown., type: Add}
   id: 3319
   time: '2023-04-03T06:20:15.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: Added scientific beret, type: Add}
+  id: 3320
+  time: '2023-04-03T06:23:29.0000000+00:00'
