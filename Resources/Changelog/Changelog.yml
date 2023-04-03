@@ -1,16 +1,4 @@
 Entries:
-- author: Theomund
-  changes:
-  - {message: The warning popups when opening dangerous firelocks are now specific
-      to the user prying them open and are much more noticeable., type: Tweak}
-  id: 2822
-  time: '2023-01-01T19:42:22.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: Station mugs now have uniform capacity with vending machine coffee mugs
-      (10 -> 20), type: Tweak}
-  id: 2823
-  time: '2023-01-01T23:50:36.0000000+00:00'
 - author: keronshb
   changes:
   - {message: Added a delay for internals alerts to match the action button delay.,
@@ -2901,3 +2889,15 @@ Entries:
   - {message: Added watermelon helmet., type: Add}
   id: 3321
   time: '2023-04-03T06:25:14.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Nanotrasen has supplied engineering departments with high capacity fuel
+      tanks., type: Add}
+  id: 3322
+  time: '2023-04-03T06:26:58.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: 'Changed access to fire axe cabinet, now not only an atmospheric technician
+      can get a fire axe.', type: Tweak}
+  id: 3323
+  time: '2023-04-03T06:27:45.0000000+00:00'
