@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Added several new beneficial artifact effects., type: Add}
-  - {message: Fixed some broken artifact effects., type: Fix}
-  id: 2816
-  time: '2023-01-01T05:59:39.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed being unable to mop up blood stains., type: Fix}
@@ -2903,3 +2897,9 @@ Entries:
       interactions., type: Fix}
   id: 3315
   time: '2023-04-03T04:53:25.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Dwarves now have minor changes, including a lower mass, new accent,
+      and minor benefits from alcohol.', type: Tweak}
+  id: 3316
+  time: '2023-04-03T05:31:28.0000000+00:00'
