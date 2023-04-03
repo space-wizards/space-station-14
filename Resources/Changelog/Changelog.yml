@@ -1,10 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Added a delay for internals alerts to match the action button delay.,
-    type: Add}
-  id: 2824
-  time: '2023-01-02T00:03:19.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Grenade penguins no longer attack syndicate agents., type: Fix}
@@ -2901,3 +2895,8 @@ Entries:
       can get a fire axe.', type: Tweak}
   id: 3323
   time: '2023-04-03T06:27:45.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Added robust nukie drink to vending machine cola., type: Add}
+  id: 3324
+  time: '2023-04-03T06:42:37.0000000+00:00'
