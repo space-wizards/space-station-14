@@ -1,12 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: Air alarms should be less annoying around small quantities of water
-      vapor., type: Tweak}
-  id: 2827
-  time: '2023-01-02T05:05:37.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: 'Portals have been added, which teleport you randomly (if unlinked)
       or between portals (if linked). Expect to see them used more.', type: Add}
   - {message: 'The research director has received a new device, the ''hand teleporter''.
@@ -2908,3 +2902,8 @@ Entries:
   - {message: Fix shuttle airlocks., type: Fix}
   id: 3326
   time: '2023-04-03T18:28:27.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Getting drunk should no longer cause you to bleed, type: Fix}
+  id: 3327
+  time: '2023-04-03T22:48:58.0000000+00:00'
