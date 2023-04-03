@@ -53,7 +53,6 @@ public sealed class DwarfAccentSystem : EntitySystem
         { "not", "nae" },
         { "dad", "da" },
         { "mom", "maw" },
-        { "do", "dae"},
     };
 
     public override void Initialize()
