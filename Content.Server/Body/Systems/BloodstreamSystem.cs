@@ -174,7 +174,6 @@ public sealed class BloodstreamSystem : EntitySystem
         ///     Higher damage weapons have a higher chance to crit!
         /// </summary>
         var prob = Math.Clamp(totalFloat / 25, 0, 1);
-        var healPopupProb = Math.Clamp(Math.Abs(totalFloat) / 25, 0, 1);
         if (totalFloat > 0 && _robustRandom.Prob(prob))
         {
             TryModifyBloodLevel(uid, (-total) / 5, component);
@@ -182,7 +181,7 @@ public sealed class BloodstreamSystem : EntitySystem
         }
 
         // Heat damage will always cauterize, this message simply has a chance of showing up as feedback to avoid spam.
-        else if (totalFloat < 0 && oldBleedAmount > 0 && _robustRandom.Prob(healPopupProb))
+        else if (totalFloat < 0 && oldBleedAmount > 0)
         {
             // Magically, this damage has healed some bleeding, likely
             // because it's burn damage that cauterized their wounds.
