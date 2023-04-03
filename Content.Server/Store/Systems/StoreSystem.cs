@@ -32,6 +32,7 @@ public sealed partial class StoreSystem : EntitySystem
         SubscribeLocalEvent<StoreComponent, ComponentShutdown>(OnShutdown);
 
         InitializeUi();
+        InitializeCommand();
     }
 
     private void OnMapInit(EntityUid uid, StoreComponent component, MapInitEvent args)

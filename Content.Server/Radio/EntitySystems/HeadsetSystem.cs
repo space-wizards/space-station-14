@@ -98,7 +98,7 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
         }
     }
 
-    private void OnHeadsetReceive(EntityUid uid, HeadsetComponent component, RadioReceiveEvent args)
+    private void OnHeadsetReceive(EntityUid uid, HeadsetComponent component, ref RadioReceiveEvent args)
     {
         if (HasComp<EmpDisabledComponent>(uid))
             return;

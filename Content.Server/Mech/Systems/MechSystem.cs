@@ -1,9 +1,7 @@
 ﻿using System.Linq;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.DoAfter;
 using Content.Server.Mech.Components;
 using Content.Server.Power.Components;
-using Content.Server.Wires;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
@@ -15,6 +13,7 @@ using Content.Shared.Mech.EntitySystems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Tools.Components;
 using Content.Shared.Verbs;
+using Content.Shared.Wires;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
@@ -27,7 +26,7 @@ public sealed class MechSystem : SharedMechSystem
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
@@ -45,9 +44,9 @@ public sealed class MechSystem : SharedMechSystem
         SubscribeLocalEvent<MechComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<MechComponent, GetVerbsEvent<AlternativeVerb>>(OnAlternativeVerb);
         SubscribeLocalEvent<MechComponent, MechOpenUiEvent>(OnOpenUi);
-        SubscribeLocalEvent<MechComponent, DoAfterEvent<RemoveBatteryEvent>>(OnRemoveBattery);
-        SubscribeLocalEvent<MechComponent, DoAfterEvent<MechEntryEvent>>(OnMechEntry);
-        SubscribeLocalEvent<MechComponent, DoAfterEvent<MechExitEvent>>(OnMechExit);
+        SubscribeLocalEvent<MechComponent, RemoveBatteryEvent>(OnRemoveBattery);
+        SubscribeLocalEvent<MechComponent, MechEntryEvent>(OnMechEntry);
+        SubscribeLocalEvent<MechComponent, MechExitEvent>(OnMechExit);
 
         SubscribeLocalEvent<MechComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<MechComponent, MechEquipmentRemoveMessage>(OnRemoveEquipmentMessage);
@@ -72,7 +71,7 @@ public sealed class MechSystem : SharedMechSystem
     }
     private void OnInteractUsing(EntityUid uid, MechComponent component, InteractUsingEvent args)
     {
-        if (TryComp<WiresComponent>(uid, out var wires) && !wires.IsPanelOpen)
+        if (TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
             return;
 
         if (component.BatterySlot.ContainedEntity == null && TryComp<BatteryComponent>(args.Used, out var battery))
@@ -84,19 +83,17 @@ public sealed class MechSystem : SharedMechSystem
 
         if (TryComp<ToolComponent>(args.Used, out var tool) && tool.Qualities.Contains("Prying") && component.BatterySlot.ContainedEntity != null)
         {
-            var removeBattery = new RemoveBatteryEvent();
-
-            var doAfterEventArgs = new DoAfterEventArgs(args.User, component.BatteryRemovalDelay, target: uid, used: args.Target)
+            var doAfterEventArgs = new DoAfterArgs(args.User, component.BatteryRemovalDelay, new RemoveBatteryEvent(), uid, target: uid, used: args.Target)
             {
                 BreakOnTargetMove = true,
-                BreakOnUserMove = true
+                BreakOnUserMove = true,
             };
 
-            _doAfter.DoAfter(doAfterEventArgs, removeBattery);
+            _doAfter.TryStartDoAfter(doAfterEventArgs);
         }
     }
 
-    private void OnRemoveBattery(EntityUid uid, MechComponent component, DoAfterEvent<RemoveBatteryEvent> args)
+    private void OnRemoveBattery(EntityUid uid, MechComponent component, RemoveBatteryEvent args)
     {
         if (args.Cancelled || args.Handled)
             return;
@@ -163,14 +160,12 @@ public sealed class MechSystem : SharedMechSystem
                 Text = Loc.GetString("mech-verb-enter"),
                 Act = () =>
                 {
-                    var mechEntryEvent = new MechEntryEvent();
-                    var doAfterEventArgs = new DoAfterEventArgs(args.User, component.EntryDelay, target: uid)
+                    var doAfterEventArgs = new DoAfterArgs(args.User, component.EntryDelay, new MechEntryEvent(), uid, target: uid)
                     {
                         BreakOnUserMove = true,
-                        BreakOnStun = true,
                     };
 
-                    _doAfter.DoAfter(doAfterEventArgs, mechEntryEvent);
+                    _doAfter.TryStartDoAfter(doAfterEventArgs);
                 }
             };
             var openUiVerb = new AlternativeVerb //can't hijack someone else's mech
@@ -189,28 +184,26 @@ public sealed class MechSystem : SharedMechSystem
                 Priority = 1, // Promote to top to make ejecting the ALT-click action
                 Act = () =>
                 {
-                    if (args.User == component.PilotSlot.ContainedEntity)
+                    if (args.User == uid || args.User == component.PilotSlot.ContainedEntity)
                     {
                         TryEject(uid, component);
                         return;
                     }
 
-                    var mechExitEvent = new MechExitEvent();
-                    var doAfterEventArgs = new DoAfterEventArgs(args.User, component.ExitDelay, target: uid)
+                    var doAfterEventArgs = new DoAfterArgs(args.User, component.ExitDelay, new MechExitEvent(), uid, target: uid)
                     {
                         BreakOnUserMove = true,
                         BreakOnTargetMove = true,
-                        BreakOnStun = true
                     };
 
-                    _doAfter.DoAfter(doAfterEventArgs, mechExitEvent);
+                    _doAfter.TryStartDoAfter(doAfterEventArgs);
                 }
             };
             args.Verbs.Add(ejectVerb);
         }
     }
 
-    private void OnMechEntry(EntityUid uid, MechComponent component, DoAfterEvent<MechEntryEvent> args)
+    private void OnMechEntry(EntityUid uid, MechComponent component, MechEntryEvent args)
     {
         if (args.Cancelled || args.Handled)
             return;
@@ -221,7 +214,7 @@ public sealed class MechSystem : SharedMechSystem
         args.Handled = true;
     }
 
-    private void OnMechExit(EntityUid uid, MechComponent component, DoAfterEvent<MechExitEvent> args)
+    private void OnMechExit(EntityUid uid, MechComponent component, MechExitEvent args)
     {
         if (args.Cancelled || args.Handled)
             return;
@@ -445,27 +438,4 @@ public sealed class MechSystem : SharedMechSystem
         args.Handled = true;
     }
     #endregion
-
-    /// <summary>
-    ///     Event raised when the battery is successfully removed from the mech,
-    ///     on both success and failure
-    /// </summary>
-    private sealed class RemoveBatteryEvent : EntityEventArgs
-    {
-    }
-
-    /// <summary>
-    ///     Event raised when a person enters a mech, on both success and failure
-    /// </summary>
-    private sealed class MechEntryEvent : EntityEventArgs
-    {
-    }
-
-    /// <summary>
-    ///     Event raised when a person removes someone from a mech,
-    ///     on both success and failure
-    /// </summary>
-    private sealed class MechExitEvent : EntityEventArgs
-    {
-    }
 }
