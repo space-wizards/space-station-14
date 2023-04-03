@@ -1,12 +1,6 @@
 Entries:
 - author: Theomund
   changes:
-  - {message: Added missing locale string for the carpotoxin physical reagent description.,
-    type: Fix}
-  id: 2812
-  time: '2022-12-31T21:51:44.0000000+00:00'
-- author: Theomund
-  changes:
   - {message: Added missing interaction outline component to cardboard boxes., type: Fix}
   id: 2813
   time: '2023-01-01T00:42:36.0000000+00:00'
@@ -2905,3 +2899,8 @@ Entries:
   - {message: Fixed ghosts being unable to hear radio cross-map, type: Fix}
   id: 3311
   time: '2023-04-02T23:56:07.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Dwarf real;, type: Add}
+  id: 3312
+  time: '2023-04-03T00:06:24.0000000+00:00'
