@@ -1,14 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Fixed an issue where deconstructed machines showed an empty frame.,
-    type: Fix}
-  - {message: Fixed an issue where you'd have to crowbar an empty machine frame in
-      order to deconstruct it., type: Fix}
-  id: 2818
-  time: '2023-01-01T06:06:32.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: 'Something about the mystical energy of the end of the round seems to
       be causing artifacts to go absolutely crazy. Best keep them far away (or perhaps
       really close?)', type: Add}
@@ -2903,3 +2895,9 @@ Entries:
     type: Tweak}
   id: 3317
   time: '2023-04-03T05:46:29.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: uhhh to be determined because I'm not sure how much of that changelog
+      should be in here..., type: Add}
+  id: 3318
+  time: '2023-04-03T05:59:51.0000000+00:00'
