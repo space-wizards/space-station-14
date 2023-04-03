@@ -22,6 +22,17 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatBeretRND
+  name: scientific beret
+  description: A beret for real scientists.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beret_rnd.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beret_rnd.rsi
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatBeretEngineering
   name: engineering beret
   description: A beret with the engineering insignia emblazoned on it. For engineers that are more inclined towards style than safety.
