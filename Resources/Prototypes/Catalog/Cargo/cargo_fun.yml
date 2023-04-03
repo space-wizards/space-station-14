@@ -31,7 +31,7 @@
 - type: cargoProduct
   id: FunInstrumentsWoodwind
   icon:
-    sprite: Objects\Fun\Instruments\harmonica.rsi
+    sprite: Objects/Fun/Instruments/harmonica.rsi
     state: icon
   product: CrateFunInstrumentsWoodwind
   cost: 2500
