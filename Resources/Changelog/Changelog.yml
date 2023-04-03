@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed being unable to mop up blood stains., type: Fix}
-  - {message: Various stains no longer evaporate., type: Tweak}
-  id: 2817
-  time: '2023-01-01T06:03:26.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fixed an issue where deconstructed machines showed an empty frame.,
@@ -2903,3 +2897,9 @@ Entries:
       and minor benefits from alcohol.', type: Tweak}
   id: 3316
   time: '2023-04-03T05:31:28.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Temporarily removed interior IFF drawing due to seams in rendering.,
+    type: Tweak}
+  id: 3317
+  time: '2023-04-03T05:46:29.0000000+00:00'
