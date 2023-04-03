@@ -538,3 +538,18 @@
     sprite: Clothing/Head/Hats/beret_cmo.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret_cmo.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadClothingHeadHatWatermelon
+  name: watermelon helmet
+  description: A carelessly cut half of a watermelon, gutted from the inside, to be worn as a helmet. It can soften the blow to the head.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/melon.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/melon.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
