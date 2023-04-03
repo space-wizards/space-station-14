@@ -412,6 +412,54 @@ namespace Content.Shared.Containers.ItemSlots
                 return;
             }
 
+            // Add the insert-item verbs
+            if (args.Using != null && _actionBlockerSystem.CanDrop(args.User))
+            {
+                var canInsertAny = false;
+                foreach (var slot in itemSlots.Slots.Values)
+                {
+                    if (!CanInsert(uid, args.Using.Value, slot))
+                        continue;
+
+                    var verbSubject = slot.Name != string.Empty
+                        ? Loc.GetString(slot.Name)
+                        : Name(args.Using.Value) ?? string.Empty;
+
+                    AlternativeVerb verb = new();
+                    verb.IconEntity = args.Using;
+                    verb.Act = () => Insert(uid, slot, args.Using.Value, args.User, excludeUserAudio: true);
+
+                    if (slot.InsertVerbText != null)
+                    {
+                        verb.Text = Loc.GetString(slot.InsertVerbText);
+                        verb.Icon = new SpriteSpecifier.Texture(
+                            new ResourcePath("/Textures/Interface/VerbIcons/insert.svg.192dpi.png"));
+                    }
+                    else if (slot.EjectOnInteract)
+                    {
+                        // Inserting/ejecting is a primary interaction for this entity. Instead of using the insert
+                        // category, we will use a single "Place <item>" verb.
+                        verb.Text = Loc.GetString("place-item-verb-text", ("subject", verbSubject));
+                        verb.Icon = new SpriteSpecifier.Texture(
+                            new ResourcePath("/Textures/Interface/VerbIcons/drop.svg.192dpi.png"));
+                    }
+                    else
+                    {
+                        verb.Category = VerbCategory.Insert;
+                        verb.Text = verbSubject;
+                    }
+
+                    verb.Priority = slot.Priority;
+                    args.Verbs.Add(verb);
+                    canInsertAny = true;
+                }
+
+                // If can insert then insert. Don't run eject verbs.
+                if (canInsertAny)
+                    return;
+            }
+
+            // Add the eject-item verbs
             foreach (var slot in itemSlots.Slots.Values)
             {
                 if (!slot.EjectOnAltInteract && slot.EjectOnInteract)
@@ -441,49 +489,6 @@ namespace Content.Shared.Containers.ItemSlots
                 else
                 {
                     verb.Text = Loc.GetString(slot.EjectVerbText);
-                }
-
-                verb.Priority = slot.Priority;
-                args.Verbs.Add(verb);
-            }
-
-            // Next, add the insert-item verbs
-            if (args.Using == null || !_actionBlockerSystem.CanDrop(args.User))
-                return;
-
-            foreach (var slot in itemSlots.Slots.Values)
-            {
-                if (!CanInsert(uid, args.Using.Value, slot))
-                    continue;
-
-                var verbSubject = slot.Name != string.Empty
-                    ? Loc.GetString(slot.Name)
-                    : Name(args.Using.Value) ?? string.Empty;
-
-                AlternativeVerb verb = new();
-                verb.IconEntity = args.Using;
-                verb.Act = () => Insert(uid, slot, args.Using.Value, args.User, excludeUserAudio: true);
-
-                if (slot.InsertVerbText != null)
-                {
-                    verb.Text = Loc.GetString(slot.InsertVerbText);
-                    verb.Icon =
-                        new SpriteSpecifier.Texture(
-                            new ResourcePath("/Textures/Interface/VerbIcons/insert.svg.192dpi.png"));
-                }
-                else if(slot.EjectOnInteract)
-                {
-                    // Inserting/ejecting is a primary interaction for this entity. Instead of using the insert
-                    // category, we will use a single "Place <item>" verb.
-                    verb.Text = Loc.GetString("place-item-verb-text", ("subject", verbSubject));
-                    verb.Icon =
-                        new SpriteSpecifier.Texture(
-                            new ResourcePath("/Textures/Interface/VerbIcons/drop.svg.192dpi.png"));
-                }
-                else
-                {
-                    verb.Category = VerbCategory.Insert;
-                    verb.Text = verbSubject;
                 }
 
                 verb.Priority = slot.Priority;
