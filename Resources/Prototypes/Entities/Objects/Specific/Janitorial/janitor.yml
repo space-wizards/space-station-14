@@ -165,11 +165,14 @@
             tags:
               - Mop
           insertOnInteract: false # or it conflicts with bucket logic
+          priority: 3 # Higher than trash bag slot
         trashbag_slot:
           name: Bag
           whitelist:
             tags:
               - TrashBag
+          ejectOnAltInteract: true
+          priority: 3 # Higher than drinking priority
     - type: Fixtures
       fixtures:
       - shape:
