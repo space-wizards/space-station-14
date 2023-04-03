@@ -4,12 +4,9 @@ using Content.Server.Power.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.APC;
-using Content.Shared.DoAfter;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Popups;
-using Content.Shared.Power;
-using Content.Shared.Tools;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -21,10 +18,9 @@ namespace Content.Server.Power.EntitySystems
     internal sealed class ApcSystem : EntitySystem
     {
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-        [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly UserInterfaceSystem _ui = default!;
+        [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly SharedToolSystem _toolSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
 
@@ -81,7 +77,7 @@ namespace Content.Server.Power.EntitySystems
             }
             else
             {
-                _popupSystem.PopupCursor(Loc.GetString("apc-component-insufficient-access"),
+                _popup.PopupCursor(Loc.GetString("apc-component-insufficient-access"),
                     args.Session, PopupType.Medium);
             }
         }
@@ -143,8 +139,7 @@ namespace Content.Server.Power.EntitySystems
 
             var netBattery = Comp<PowerNetworkBatteryComponent>(uid);
             float power = netBattery is not null ? netBattery.CurrentSupply : 0f;
-            var bui = _userInterfaceSystem.GetUiOrNull(uid, ApcUiKey.Key, ui);
-            if (bui != null)
+            if (_ui.TryGetUi(uid, ApcUiKey.Key, out var bui))
             {
                 var state = new ApcBoundInterfaceState(
                     apc.MainBreakerEnabled,
@@ -152,7 +147,7 @@ namespace Content.Server.Power.EntitySystems
                     apc.LastExternalState,
                     battery.CurrentCharge / battery.MaxCharge
                 );
-                _userInterfaceSystem.SetUiState(bui, state);
+                _ui.SetUiState(bui, state);
             }
         }
 
