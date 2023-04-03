@@ -369,7 +369,6 @@
           Quantity: 4
         - ReagentId: Vitamin
           Quantity: 4
-# Egg =/= Meat -Swept 2020
 
 - type: entity
   name: rice and pork
