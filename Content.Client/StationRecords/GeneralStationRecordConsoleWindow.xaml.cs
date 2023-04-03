@@ -68,6 +68,7 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 
         StationRecordsFiltersReset.OnPressed += _ =>
         {
+            StationRecordsFiltersValue.Text = "";
             FilterListingOfRecords();
         };
     }
