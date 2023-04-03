@@ -26,7 +26,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Atmos.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class GasTileOverlaySystem : SharedGasTileOverlaySystem
+    public sealed class GasTileOverlaySystem : SharedGasTileOverlaySystem
     {
         [Robust.Shared.IoC.Dependency] private readonly IGameTiming _gameTiming = default!;
         [Robust.Shared.IoC.Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -65,6 +65,14 @@ namespace Content.Server.Atmos.EntitySystems
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<GasTileOverlayComponent, ComponentGetState>(OnGetState);
+            SubscribeLocalEvent<GasTileOverlayComponent, ComponentStartup>(OnStartup);
+        }
+
+        private void OnStartup(EntityUid uid, GasTileOverlayComponent component, ComponentStartup args)
+        {
+            // This **shouldn't** be required, but just in case we ever get entity prototypes that have gas overlays, we
+            // need to ensure that we send an initial full state to players.
+            Dirty(component);
         }
 
         public override void Shutdown()

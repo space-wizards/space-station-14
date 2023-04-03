@@ -219,6 +219,7 @@
       - MailingUnitElectronics
       - Bucket
       - MopItem
+      - AdvMopItem
       - SprayBottle
       - FireExtinguisher
       - KitchenKnife
@@ -232,7 +233,7 @@
       - VoiceTrigger
       - PowerCellSmall
       - PowerCellMedium
-      - PowerCellHigh  
+      - PowerCellHigh
       - SynthesizerInstrument
       - RPED
       - NodeScanner
@@ -326,6 +327,7 @@
       - TraversalDistorterMachineCircuitboard
       - BoozeDispenserMachineCircuitboard
       - SodaDispenserMachineCircuitboard
+      - TelecomServerCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:

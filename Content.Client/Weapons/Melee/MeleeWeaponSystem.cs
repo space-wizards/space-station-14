@@ -62,9 +62,8 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return;
 
         var entity = entityNull.Value;
-        var weapon = GetWeapon(entity);
 
-        if (weapon == null)
+        if (!TryGetWeapon(entity, out var weaponUid, out var weapon))
             return;
 
         if (!CombatMode.IsInCombatMode(entity) || !Blocker.CanAttack(entity))
@@ -72,7 +71,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             weapon.Attacking = false;
             if (weapon.WindUpStart != null)
             {
-                EntityManager.RaisePredictiveEvent(new StopHeavyAttackEvent(weapon.Owner));
+                EntityManager.RaisePredictiveEvent(new StopHeavyAttackEvent(weaponUid));
             }
 
             return;
@@ -94,7 +93,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             }
 
             // If it's an unarmed attack then do a disarm
-            if (weapon.Owner == entity)
+            if (weaponUid == entity)
             {
                 EntityUid? target = null;
 
@@ -103,11 +102,11 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
                 if (MapManager.TryFindGridAt(mousePos, out var grid))
                 {
-                    coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, EntityManager);
+                    coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, _transform, EntityManager);
                 }
                 else
                 {
-                    coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, EntityManager);
+                    coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, _transform, EntityManager);
                 }
 
                 if (_stateManager.CurrentState is GameplayStateBase screen)
@@ -124,7 +123,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             // Start a windup
             if (weapon.WindUpStart == null)
             {
-                EntityManager.RaisePredictiveEvent(new StartHeavyAttackEvent(weapon.Owner));
+                EntityManager.RaisePredictiveEvent(new StartHeavyAttackEvent(weaponUid));
                 weapon.WindUpStart = currentTime;
             }
 
@@ -138,14 +137,14 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
                 if (MapManager.TryFindGridAt(mousePos, out var grid))
                 {
-                    coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, EntityManager);
+                    coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, _transform, EntityManager);
                 }
                 else
                 {
-                    coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, EntityManager);
+                    coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, _transform, EntityManager);
                 }
 
-                EntityManager.RaisePredictiveEvent(new HeavyAttackEvent(weapon.Owner, coordinates));
+                EntityManager.RaisePredictiveEvent(new HeavyAttackEvent(weaponUid, coordinates));
             }
 
             return;
@@ -153,7 +152,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         if (weapon.WindUpStart != null)
         {
-            EntityManager.RaisePredictiveEvent(new StopHeavyAttackEvent(weapon.Owner));
+            EntityManager.RaisePredictiveEvent(new StopHeavyAttackEvent(weaponUid));
         }
 
         // Light attack
@@ -179,11 +178,11 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
             if (MapManager.TryFindGridAt(mousePos, out var grid))
             {
-                coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, EntityManager);
+                coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, _transform, EntityManager);
             }
             else
             {
-                coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, EntityManager);
+                coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, _transform, EntityManager);
             }
 
             EntityUid? target = null;
@@ -194,13 +193,13 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 target = screen.GetClickedEntity(mousePos);
             }
 
-            RaisePredictiveEvent(new LightAttackEvent(target, weapon.Owner, coordinates));
+            RaisePredictiveEvent(new LightAttackEvent(target, weaponUid, coordinates));
             return;
         }
 
         if (weapon.Attacking)
         {
-            RaisePredictiveEvent(new StopAttackEvent(weapon.Owner));
+            RaisePredictiveEvent(new StopAttackEvent(weaponUid));
         }
     }
 

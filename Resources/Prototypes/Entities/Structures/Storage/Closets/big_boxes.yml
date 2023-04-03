@@ -26,7 +26,7 @@
     - type: EntityStorage
       isCollidableWhenOpen: false
       openOnMove: false
-      airtight: true #true for now until it doesn't make a vacuum
+      airtight: false
       capacity: 4 #4 Entities seems like a nice comfy fit for a cardboard box.
     - type: ContainerContainer
       containers:
@@ -50,6 +50,11 @@
       tags:
         - DoorBumpOpener
     - type: InteractionOutline
+    - type: Construction
+      graph: BaseBigBox
+      node: basebigbox
+      containers:
+        - entity_storage
 
 - type: entity
   id: StealthBox
@@ -102,7 +107,7 @@
     - type: EntityStorage
       isCollidableWhenOpen: false
       openOnMove: false
-      airtight: true #whoever's inside should probably breath
+      airtight: false
 
 #Exclamation effect for box opening
 - type: entity

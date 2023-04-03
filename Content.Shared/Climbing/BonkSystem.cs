@@ -27,33 +27,32 @@ public sealed class BonkSystem : EntitySystem
 
     public bool TryBonk(EntityUid user, EntityUid bonkableUid, BonkableComponent? bonkableComponent = null)
     {
-        if (Resolve(bonkableUid, ref bonkableComponent))
+        if (!Resolve(bonkableUid, ref bonkableComponent, false))
+            return false;
+
+        if (!_cfg.GetCVar(CCVars.GameTableBonk))
         {
-            if (!_cfg.GetCVar(CCVars.GameTableBonk))
-            {
-                // Not set to always bonk, try clumsy roll.
-                if (!_interactionSystem.TryRollClumsy(user, bonkableComponent.BonkClumsyChance))
-                    return false;
-            }
-
-            // BONK!
-            var userName = Identity.Entity(user, EntityManager);
-            var bonkableName = Identity.Entity(bonkableUid, EntityManager);
-
-            _popupSystem.PopupEntity(Loc.GetString("bonkable-success-message-others", ("user", userName), ("bonkable", bonkableName)), user, Filter.PvsExcept(user), true);
-
-            _popupSystem.PopupEntity(Loc.GetString("bonkable-success-message-user", ("user", userName), ("bonkable", bonkableName)), user, user);
-
-            _audioSystem.PlayPvs(bonkableComponent.BonkSound, bonkableComponent.Owner);
-            _stunSystem.TryParalyze(user, TimeSpan.FromSeconds(bonkableComponent.BonkTime), true);
-
-            if (bonkableComponent.BonkDamage is { } bonkDmg)
-                _damageableSystem.TryChangeDamage(user, bonkDmg, true, origin: user);
-
-            return true;
+            // Not set to always bonk, try clumsy roll.
+            if (!_interactionSystem.TryRollClumsy(user, bonkableComponent.BonkClumsyChance))
+                return false;
         }
 
-        return false;
+        // BONK!
+        var userName = Identity.Entity(user, EntityManager);
+        var bonkableName = Identity.Entity(bonkableUid, EntityManager);
+
+        _popupSystem.PopupEntity(Loc.GetString("bonkable-success-message-others", ("user", userName), ("bonkable", bonkableName)), user, Filter.PvsExcept(user), true);
+
+        _popupSystem.PopupEntity(Loc.GetString("bonkable-success-message-user", ("user", userName), ("bonkable", bonkableName)), user, user);
+
+        _audioSystem.PlayPvs(bonkableComponent.BonkSound, bonkableUid);
+        _stunSystem.TryParalyze(user, TimeSpan.FromSeconds(bonkableComponent.BonkTime), true);
+
+        if (bonkableComponent.BonkDamage is { } bonkDmg)
+            _damageableSystem.TryChangeDamage(user, bonkDmg, true, origin: user);
+
+        return true;
+
     }
 
     private void OnDragDrop(EntityUid uid, BonkableComponent bonkableComponent, ref DragDropTargetEvent args)

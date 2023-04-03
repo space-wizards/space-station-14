@@ -68,6 +68,15 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/virology.rsi
+    
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelGenetics
+  name: genetics satchel
+  description: A sterile satchel with geneticist colours.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/genetics.rsi
 
 - type: entity
   parent: ClothingBackpackSatchel

@@ -1,6 +1,5 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.DoAfter;
 using Content.Server.Fluids.Components;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.Components;
@@ -16,7 +15,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Threading;
+using Content.Shared.DoAfter;
+using Content.Shared.Spillable;
 
 namespace Content.Server.Fluids.EntitySystems;
 
@@ -29,7 +29,7 @@ public sealed class SpillableSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger= default!;
-    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
 
     public override void Initialize()
     {
@@ -38,8 +38,7 @@ public sealed class SpillableSystem : EntitySystem
         SubscribeLocalEvent<SpillableComponent, GetVerbsEvent<Verb>>(AddSpillVerb);
         SubscribeLocalEvent<SpillableComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<SpillableComponent, SolutionSpikeOverflowEvent>(OnSpikeOverflow);
-        SubscribeLocalEvent<SpillableComponent, SpillFinishedEvent>(OnSpillFinished);
-        SubscribeLocalEvent<SpillableComponent, SpillCancelledEvent>(OnSpillCancelled);
+        SubscribeLocalEvent<SpillableComponent, SpillDoAfterEvent>(OnDoAfter);
     }
 
     private void OnSpikeOverflow(EntityUid uid, SpillableComponent component, SolutionSpikeOverflowEvent args)
@@ -129,35 +128,17 @@ public sealed class SpillableSystem : EntitySystem
         Verb verb = new();
         verb.Text = Loc.GetString("spill-target-verb-get-data-text");
         // TODO VERB ICONS spill icon? pouring out a glass/beaker?
-        if (component.SpillDelay == null)
+
+        verb.Act = () =>
         {
-            verb.Act = () =>
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(args.User, component.SpillDelay ?? 0, new SpillDoAfterEvent(), uid, target: uid)
             {
-                var puddleSolution = _solutionContainerSystem.SplitSolution(args.Target,
-                    solution, solution.Volume);
-                SpillAt(puddleSolution, Transform(args.Target).Coordinates, "PuddleSmear");
-            };
-        }
-        else
-        {
-            verb.Act = () =>
-            {
-                if (component.CancelToken == null)
-                {
-                    component.CancelToken = new CancellationTokenSource();
-                    _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, component.SpillDelay.Value, component.CancelToken.Token, component.Owner)
-                    {
-                        BreakOnTargetMove = true,
-                        BreakOnUserMove = true,
-                        BreakOnDamage = true,
-                        BreakOnStun = true,
-                        NeedHand = true,
-                        TargetFinishedEvent = new SpillFinishedEvent(args.User, component.Owner, solution),
-                        TargetCancelledEvent = new SpillCancelledEvent(component.Owner)
-                    });
-                }
-            };
-        }
+                BreakOnTargetMove = true,
+                BreakOnUserMove = true,
+                BreakOnDamage = true,
+                NeedHand = true,
+            });
+        };
         verb.Impact = LogImpact.Medium; // dangerous reagent reaction are logged separately.
         verb.DoContactInteraction = true;
         args.Verbs.Add(verb);
@@ -263,46 +244,19 @@ public sealed class SpillableSystem : EntitySystem
         return puddleComponent;
     }
 
-    private void OnSpillFinished(EntityUid uid, SpillableComponent component, SpillFinishedEvent ev)
+    private void OnDoAfter(EntityUid uid, SpillableComponent component, DoAfterEvent args)
     {
-        component.CancelToken = null;
-
-        //solution gone by other means before doafter completes
-        if (ev.Solution == null || ev.Solution.Volume == 0)
+        if (args.Handled || args.Cancelled || args.Args.Target == null)
             return;
 
-        var puddleSolution = _solutionContainerSystem.SplitSolution(uid,
-            ev.Solution, ev.Solution.Volume);
+        //solution gone by other means before doafter completes
+        if (!_solutionContainerSystem.TryGetDrainableSolution(uid, out var solution) || solution.Volume == 0)
+            return;
 
-        SpillAt(puddleSolution, Transform(component.Owner).Coordinates, "PuddleSmear");
-    }
+        var puddleSolution = _solutionContainerSystem.SplitSolution(uid, solution, solution.Volume);
 
-    private void OnSpillCancelled(EntityUid uid, SpillableComponent component, SpillCancelledEvent ev)
-    {
-        component.CancelToken = null;
-    }
+        SpillAt(puddleSolution, Transform(uid).Coordinates, "PuddleSmear");
 
-    internal sealed class SpillFinishedEvent : EntityEventArgs
-    {
-        public SpillFinishedEvent(EntityUid user, EntityUid spillable, Solution solution)
-        {
-            User = user;
-            Spillable = spillable;
-            Solution = solution;
-        }
-
-        public EntityUid User { get; }
-        public EntityUid Spillable { get; }
-        public Solution Solution { get; }
-    }
-
-    private sealed class SpillCancelledEvent : EntityEventArgs
-    {
-        public EntityUid Spillable;
-
-        public SpillCancelledEvent(EntityUid spillable)
-        {
-            Spillable = spillable;
-        }
+        args.Handled = true;
     }
 }

@@ -141,6 +141,28 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitVirology
+  name: virology jumpsuit
+  description: It's made of a special fiber that gives special protection against biohazards. It has a virologist rank stripe on it.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/virology.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/virology.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitGenetics
+  name: genetics jumpsuit
+  description: It's made of a special fiber that gives special protection against biohazards. It has a geneticist rank stripe on it.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/genetics.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/genetics.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitClown
   name: clown suit
   description: HONK!
@@ -400,6 +422,17 @@
     sprite: Clothing/Uniforms/Jumpsuit/scientist.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/scientist.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitScientistFormal
+  name: scientist's formal jumpsuit
+  description: A uniform for sophisticated scientists, best worn with its matching tie.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/scientist_formal.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/scientist_formal.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -812,6 +845,17 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitAtmosCasual
+  name: atmospheric technician's casual jumpsuit
+  description: Might as well relax with a job as easy as yours.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/atmos_casual.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/atmos_casual.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitPsychologist
   name: psychologist suit
   description: I don't lose things. I place things in locations which later elude me.
@@ -963,9 +1007,22 @@
         Piercing: 0.8
 
 - type: entity
+  parent: ClothingUniformJumpsuitClown
+  id: ClothingUniformJumpsuitCluwne
+  name: cluwne suit
+  suffix: Unremoveable
+  description: Cursed cluwne suit.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/cluwne.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/cluwne.rsi
+  - type: Unremoveable
+  
+- type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitDameDane
-  name: dame dane outfit
+  name: yakuza outfit
   description: Baka mitai...
   components:
   - type: Sprite

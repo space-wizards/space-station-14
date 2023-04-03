@@ -49,13 +49,13 @@ public sealed class PyroclasticAnomalySystem : EntitySystem
         {
             foreach (var ind in _atmosphere.GetAdjacentTiles(grid.Value, indices))
             {
-                var mix = _atmosphere.GetTileMixture(grid, map, indices, true);
+                var mix = _atmosphere.GetTileMixture(grid, map, ind, true);
                 if (mix is not { })
                     continue;
 
                 mix.AdjustMoles(component.SupercriticalGas, component.SupercriticalMoleAmount);
                 mix.Temperature += component.HotspotExposeTemperature;
-                _atmosphere.HotspotExpose(grid.Value, indices, component.HotspotExposeTemperature, mix.Volume, true);
+                _atmosphere.HotspotExpose(grid.Value, indices, component.HotspotExposeTemperature, mix.Volume, uid, true);
             }
         }
         IgniteNearby(xform.Coordinates, 1, component.MaximumIgnitionRadius * 2);
@@ -65,10 +65,9 @@ public sealed class PyroclasticAnomalySystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var (pyro, anom, xform) in EntityQuery<PyroclasticAnomalyComponent, AnomalyComponent, TransformComponent>())
+        var query = EntityQueryEnumerator<PyroclasticAnomalyComponent, AnomalyComponent, TransformComponent>();
+        while (query.MoveNext(out var ent, out var pyro, out var anom, out var xform))
         {
-            var ent = pyro.Owner;
-
             var grid = xform.GridUid;
             var map = xform.MapUid;
             var indices = _xform.GetGridOrMapTilePosition(ent, xform);
@@ -80,7 +79,7 @@ public sealed class PyroclasticAnomalySystem : EntitySystem
 
             if (grid != null && anom.Severity > pyro.AnomalyHotspotThreshold)
             {
-                _atmosphere.HotspotExpose(grid.Value, indices, pyro.HotspotExposeTemperature, pyro.HotspotExposeVolume, true);
+                _atmosphere.HotspotExpose(grid.Value, indices, pyro.HotspotExposeTemperature, pyro.HotspotExposeVolume, ent, true);
             }
         }
     }

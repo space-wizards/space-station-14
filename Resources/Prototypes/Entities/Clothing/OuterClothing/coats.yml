@@ -91,28 +91,57 @@
     sprite: Clothing/OuterClothing/Coats/labcoat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/labcoat.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.75
 
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatLabChem
-  name: lab coat (chem)
+  name: chemist lab coat
   description: A suit that protects against minor chemical spills. Has an orange stripe on the shoulder.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Coats/labcoat_chem.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/labcoat_chem.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.75
 
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatLabViro
-  name: lab coat (viro)
+  name: virologist lab coat
   description: A suit that protects against bacteria and viruses. Has an green stripe on the shoulder.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Coats/labcoat_viro.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/labcoat_viro.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.75
+
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatLabGene
+  name: geneticist lab coat
+  description: A suit that protects against minor chemical spills. Has an blue stripe on the shoulder.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/labcoat_gene.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/labcoat_gene.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.75
+
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -124,6 +153,10 @@
     sprite: Clothing/OuterClothing/Coats/labcoat_cmo.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/labcoat_cmo.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.75
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -157,7 +190,7 @@
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterDameDane
-  name: dame dane coat
+  name: yakuza coat
   description: Friday...
   components:
   - type: Sprite
@@ -175,4 +208,15 @@
     sprite: Clothing/OuterClothing/Coats/clownpriest.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/clownpriest.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatParamedicWB
+  name: paramedic windbreaker
+  description: A paramedic's trusty windbreaker, for all the space wind.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/windbreaker_paramedic.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/windbreaker_paramedic.rsi
     

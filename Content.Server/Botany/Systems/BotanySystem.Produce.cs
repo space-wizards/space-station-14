@@ -1,5 +1,4 @@
 using Content.Server.Botany.Components;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using Robust.Server.GameObjects;
 
@@ -18,17 +17,17 @@ public sealed partial class BotanySystem
             sprite.LayerSetState(0, seed.PlantIconState);
         }
 
-        Solution.ReagentQuantity[] reagents = new Solution.ReagentQuantity[seed.Chemicals.Count];
-        int i = 0;
+        var solutionContainer = _solutionContainerSystem.EnsureSolution(uid, produce.SolutionName);
+
+        solutionContainer.RemoveAllSolution();
         foreach (var (chem, quantity) in seed.Chemicals)
         {
             var amount = FixedPoint2.New(quantity.Min);
             if (quantity.PotencyDivisor > 0 && seed.Potency > 0)
                 amount += FixedPoint2.New(seed.Potency / quantity.PotencyDivisor);
             amount = FixedPoint2.New((int) MathHelper.Clamp(amount.Float(), quantity.Min, quantity.Max));
-            reagents[i++] = new(chem, amount);
+            solutionContainer.MaxVolume += amount;
+            solutionContainer.AddReagent(chem, amount);
         }
-
-        _solutionContainerSystem.EnsureSolution(uid, produce.SolutionName, reagents);
     }
 }

@@ -1,25 +1,30 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Tools.Components;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
-using Robust.Server.GameObjects;
+using Content.Shared.Tools.Systems;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Tools.Systems;
 
 public sealed class WeldableSystem : EntitySystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly ToolSystem _toolSystem = default!;
+    [Dependency] private readonly SharedToolSystem _toolSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<WeldableComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<WeldableComponent, WeldFinishedEvent>(OnWeldFinished);
-        SubscribeLocalEvent<WeldableComponent, WeldCancelledEvent>(OnWeldCanceled);
+        SubscribeLocalEvent<LayerChangeOnWeldComponent, WeldableChangedEvent>(OnWeldChanged);
         SubscribeLocalEvent<WeldableComponent, ExaminedEvent>(OnExamine);
     }
 
@@ -43,9 +48,7 @@ public sealed class WeldableSystem : EntitySystem
             return false;
 
         // Basic checks
-        if (!component.Weldable || component.BeingWelded)
-            return false;
-        if (!_toolSystem.HasQuality(tool, component.WeldingQuality))
+        if (!component.Weldable)
             return false;
 
         // Other component systems
@@ -65,9 +68,8 @@ public sealed class WeldableSystem : EntitySystem
         if (!CanWeld(uid, tool, user, component))
             return false;
 
-        component.BeingWelded = _toolSystem.UseTool(tool, user, uid, component.FuelConsumption,
-            component.WeldingTime.Seconds, component.WeldingQuality,
-            new WeldFinishedEvent(user, tool), new WeldCancelledEvent(), uid);
+        if (!_toolSystem.UseTool(tool, user, uid, component.WeldingTime.Seconds, component.WeldingQuality, new WeldFinishedEvent(), fuel: component.FuelConsumption))
+            return false;
 
         // Log attempt
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):user} is {(component.IsWelded ? "un" : "")}welding {ToPrettyString(uid):target} at {Transform(uid).Coordinates:targetlocation}");
@@ -77,10 +79,11 @@ public sealed class WeldableSystem : EntitySystem
 
     private void OnWeldFinished(EntityUid uid, WeldableComponent component, WeldFinishedEvent args)
     {
-        component.BeingWelded = false;
+        if (args.Cancelled || args.Used == null)
+            return;
 
         // Check if target is still valid
-        if (!CanWeld(uid, args.Tool, args.User, component))
+        if (!CanWeld(uid, args.Used.Value, args.User, component))
             return;
 
         component.IsWelded = !component.IsWelded;
@@ -92,9 +95,24 @@ public sealed class WeldableSystem : EntitySystem
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):user} {(!component.IsWelded ? "un" : "")}welded {ToPrettyString(uid):target}");
     }
 
-    private void OnWeldCanceled(EntityUid uid, WeldableComponent component, WeldCancelledEvent args)
+    private void OnWeldChanged(EntityUid uid, LayerChangeOnWeldComponent component, WeldableChangedEvent args)
     {
-        component.BeingWelded = false;
+        if (!TryComp<FixturesComponent>(uid, out var fixtures))
+            return;
+
+        foreach (var fixture in fixtures.Fixtures.Values)
+        {
+            switch (args.IsWelded)
+            {
+                case true when fixture.CollisionLayer == (int) component.UnWeldedLayer:
+                    _physics.SetCollisionLayer(uid, fixture, (int) component.WeldedLayer);
+                    break;
+
+                case false when fixture.CollisionLayer == (int) component.WeldedLayer:
+                    _physics.SetCollisionLayer(uid, fixture, (int) component.UnWeldedLayer);
+                    break;
+            }
+        }
     }
 
     private void UpdateAppearance(EntityUid uid, WeldableComponent? component = null)
@@ -124,30 +142,6 @@ public sealed class WeldableSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
         component.WeldingTime = time;
-    }
-
-    /// <summary>
-    ///     Raised after welding do_after has finished. It doesn't guarantee success,
-    ///     use <see cref="WeldableChangedEvent"/> to get updated status.
-    /// </summary>
-    private sealed class WeldFinishedEvent : EntityEventArgs
-    {
-        public readonly EntityUid User;
-        public readonly EntityUid Tool;
-
-        public WeldFinishedEvent(EntityUid user, EntityUid tool)
-        {
-            User = user;
-            Tool = tool;
-        }
-    }
-
-    /// <summary>
-    ///     Raised when entity welding has failed.
-    /// </summary>
-    private sealed class WeldCancelledEvent : EntityEventArgs
-    {
-
     }
 }
 

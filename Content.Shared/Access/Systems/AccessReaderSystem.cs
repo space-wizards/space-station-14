@@ -8,6 +8,8 @@ using Content.Shared.Access.Components;
 using Robust.Shared.Prototypes;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.MachineLinking.Events;
+using Content.Shared.StationRecords;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Access.Systems
 {
@@ -23,6 +25,25 @@ namespace Content.Shared.Access.Systems
             SubscribeLocalEvent<AccessReaderComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<AccessReaderComponent, GotEmaggedEvent>(OnEmagged);
             SubscribeLocalEvent<AccessReaderComponent, LinkAttemptEvent>(OnLinkAttempt);
+
+            SubscribeLocalEvent<AccessReaderComponent, ComponentGetState>(OnGetState);
+            SubscribeLocalEvent<AccessReaderComponent, ComponentHandleState>(OnHandleState);
+        }
+
+        private void OnGetState(EntityUid uid, AccessReaderComponent component, ref ComponentGetState args)
+        {
+            args.State = new AccessReaderComponentState(component.Enabled, component.DenyTags, component.AccessLists,
+                component.AccessKeys);
+        }
+
+        private void OnHandleState(EntityUid uid, AccessReaderComponent component, ref ComponentHandleState args)
+        {
+            if (args.Current is not AccessReaderComponentState state)
+                return;
+            component.Enabled = state.Enabled;
+            component.AccessKeys = new (state.AccessKeys);
+            component.AccessLists = new (state.AccessLists);
+            component.DenyTags = new (state.DenyTags);
         }
 
         private void OnLinkAttempt(EntityUid uid, AccessReaderComponent component, LinkAttemptEvent args)
@@ -47,8 +68,9 @@ namespace Content.Shared.Access.Systems
 
         private void OnEmagged(EntityUid uid, AccessReaderComponent reader, ref GotEmaggedEvent args)
         {
-            // no fancy conditions
             args.Handled = true;
+            reader.Enabled = false;
+            Dirty(reader);
         }
 
         /// <summary>
@@ -62,8 +84,7 @@ namespace Content.Shared.Access.Systems
         {
             if (!Resolve(target, ref reader, false))
                 return true;
-            var tags = FindAccessTags(source);
-            return IsAllowed(tags, reader);
+            return IsAllowed(source, reader);
         }
 
         /// <summary>
@@ -74,8 +95,19 @@ namespace Content.Shared.Access.Systems
         /// <param name="reader">A reader from a different entity</param>
         public bool IsAllowed(EntityUid entity, AccessReaderComponent reader)
         {
-            var tags = FindAccessTags(entity);
-            return IsAllowed(tags, reader);
+            var allEnts = FindPotentialAccessItems(entity);
+
+            // Access reader is totally disabled, so access is always allowed.
+            if (!reader.Enabled)
+                return true;
+
+            if (AreAccessTagsAllowed(FindAccessTags(entity, allEnts), reader))
+                return true;
+
+            if (AreStationRecordKeysAllowed(FindStationRecordKeys(entity, allEnts), reader))
+                return true;
+
+            return false;
         }
 
         /// <summary>
@@ -83,14 +115,8 @@ namespace Content.Shared.Access.Systems
         /// </summary>
         /// <param name="accessTags">A list of access tags</param>
         /// <param name="reader">An access reader to check against</param>
-        public bool IsAllowed(ICollection<string> accessTags, AccessReaderComponent reader)
+        public bool AreAccessTagsAllowed(ICollection<string> accessTags, AccessReaderComponent reader)
         {
-            if (HasComp<EmaggedComponent>(reader.Owner))
-            {
-                // Access reader is totally disabled, so access is always allowed.
-                return true;
-            }
-
             if (reader.DenyTags.Overlaps(accessTags))
             {
                 // Sec owned by cargo.
@@ -105,17 +131,18 @@ namespace Content.Shared.Access.Systems
         }
 
         /// <summary>
-        /// Finds the access tags on the given entity
+        /// Compares the given stationrecordkeys with the accessreader to see if it is allowed.
         /// </summary>
-        /// <param name="uid">The entity that is being searched.</param>
-        public ICollection<string> FindAccessTags(EntityUid uid)
+        public bool AreStationRecordKeysAllowed(ICollection<StationRecordKey> keys, AccessReaderComponent reader)
         {
-            HashSet<string>? tags = null;
-            var owned = false;
+            return keys.Any() && reader.AccessKeys.Any(keys.Contains);
+        }
 
-            // check entity itself
-            FindAccessTagsItem(uid, ref tags, ref owned);
-
+        /// <summary>
+        /// Finds all the items that could potentially give access to a given entity
+        /// </summary>
+        public HashSet<EntityUid> FindPotentialAccessItems(EntityUid uid)
+        {
             FindAccessItemsInventory(uid, out var items);
 
             var ev = new GetAdditionalAccessEvent
@@ -123,12 +150,48 @@ namespace Content.Shared.Access.Systems
                 Entities = items
             };
             RaiseLocalEvent(uid, ref ev);
-            foreach (var ent in ev.Entities)
+            items.Add(uid);
+            return items;
+        }
+
+        /// <summary>
+        /// Finds the access tags on the given entity
+        /// </summary>
+        /// <param name="uid">The entity that is being searched.</param>
+        /// <param name="items">All of the items to search for access. If none are passed in, <see cref="FindPotentialAccessItems"/> will be used.</param>
+        public ICollection<string> FindAccessTags(EntityUid uid, HashSet<EntityUid>? items = null)
+        {
+            HashSet<string>? tags = null;
+            var owned = false;
+
+            items ??= FindPotentialAccessItems(uid);
+
+            foreach (var ent in items)
             {
                 FindAccessTagsItem(ent, ref tags, ref owned);
             }
 
             return (ICollection<string>?) tags ?? Array.Empty<string>();
+        }
+
+        /// <summary>
+        /// Finds the access tags on the given entity
+        /// </summary>
+        /// <param name="uid">The entity that is being searched.</param>
+        /// <param name="items">All of the items to search for access. If none are passed in, <see cref="FindPotentialAccessItems"/> will be used.</param>
+        public ICollection<StationRecordKey> FindStationRecordKeys(EntityUid uid, HashSet<EntityUid>? items = null)
+        {
+            HashSet<StationRecordKey> keys = new();
+
+            items ??= FindPotentialAccessItems(uid);
+
+            foreach (var ent in items)
+            {
+                if (FindStationRecordKeyItem(ent, out var key))
+                    keys.Add(key.Value);
+            }
+
+            return keys;
         }
 
         /// <summary>
@@ -187,13 +250,13 @@ namespace Content.Shared.Access.Systems
         /// </summary>
         private bool FindAccessTagsItem(EntityUid uid, [NotNullWhen(true)] out HashSet<string>? tags)
         {
-            if (EntityManager.TryGetComponent(uid, out AccessComponent? access))
+            if (TryComp(uid, out AccessComponent? access))
             {
                 tags = access.Tags;
                 return true;
             }
 
-            if (EntityManager.TryGetComponent(uid, out PDAComponent? pda) &&
+            if (TryComp(uid, out PDAComponent? pda) &&
                 pda.ContainedID?.Owner is {Valid: true} id)
             {
                 tags = EntityManager.GetComponent<AccessComponent>(id).Tags;
@@ -201,6 +264,32 @@ namespace Content.Shared.Access.Systems
             }
 
             tags = null;
+            return false;
+        }
+
+        /// <summary>
+        ///     Try to find <see cref="StationRecordKeyStorageComponent"/> on this item
+        ///     or inside this item (if it's pda)
+        /// </summary>
+        private bool FindStationRecordKeyItem(EntityUid uid, [NotNullWhen(true)] out StationRecordKey? key)
+        {
+            if (TryComp(uid, out StationRecordKeyStorageComponent? storage) && storage.Key != null)
+            {
+                key = storage.Key;
+                return true;
+            }
+
+            if (TryComp<PDAComponent>(uid, out var pda) &&
+                pda.ContainedID?.Owner is {Valid: true} id)
+            {
+                if (TryComp<StationRecordKeyStorageComponent>(id, out var pdastorage) && pdastorage.Key != null)
+                {
+                    key = pdastorage.Key;
+                    return true;
+                }
+            }
+
+            key = null;
             return false;
         }
     }
