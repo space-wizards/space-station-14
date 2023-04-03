@@ -1,10 +1,4 @@
 Entries:
-- author: Theomund
-  changes:
-  - {message: Added logic for sorting crew manifest entries by job titles and names.,
-    type: Fix}
-  id: 2815
-  time: '2023-01-01T05:49:30.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Added several new beneficial artifact effects., type: Add}
@@ -2903,3 +2897,9 @@ Entries:
       and Ctrl+Delete., type: Tweak}
   id: 3314
   time: '2023-04-03T02:58:53.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fix a DoAfter bug that was blocking crafting & some other construction
+      interactions., type: Fix}
+  id: 3315
+  time: '2023-04-03T04:53:25.0000000+00:00'
