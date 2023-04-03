@@ -487,12 +487,12 @@
   name: space liberty duff
   parent: FoodBowlBase
   id: FoodJellyDuff
+  description: Jello gelatin, from Alfred Hubbard's cookbook.
+  components:
   - type: FlavorProfile
     flavors:
       - jelly
       - mushrooms
-  description: Jello gelatin, from Alfred Hubbard's cookbook.
-  components:
   - type: Sprite
     layers:
     - state: bowl
