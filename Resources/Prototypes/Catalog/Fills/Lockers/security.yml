@@ -21,6 +21,7 @@
       - id: RubberStampWarden
       - id: DoorRemoteArmory
       - id: ClothingOuterHardsuitWarden
+      - id: ClothingOuterHardsuitBrigmed
       - id: HoloprojectorSecurity
 
 - type: entity
