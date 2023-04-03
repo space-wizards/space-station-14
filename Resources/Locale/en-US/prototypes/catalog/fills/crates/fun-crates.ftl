@@ -13,7 +13,7 @@ ent-CrateFunInstrumentsString = String instrument ensemble crate
 ent-CrateFunInstrumentsWoodwind = Woodwind instrument ensemble crate
     .desc = If atmos is good at their job, use air to play music with these woodwind instruments! Real wood not guaranteed with every item.
 
-ent-CrateFunInstrumentsKeyedPercussion = Keyed and Percussion instrument ensemble crate
+ent-CrateFunInstrumentsKeyedPercussion = Keyed/Percussion instrument ensemble crate
     .desc = Hit some keys with some sticks or your hands, with this Keyed and Percussion instrument ensemble crate.
 
 ent-CrateFunInstrumentsSpecial = Special instrument collector's crate

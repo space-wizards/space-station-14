@@ -92,7 +92,7 @@
         amount: 2
       - id: AccordionInstrument
         amount: 2
-      - id: Kalimba
+      - id: KalimbaInstrument
         amount: 2
       - id: WoodblockInstrument
       - id: GlockenspielInstrument
