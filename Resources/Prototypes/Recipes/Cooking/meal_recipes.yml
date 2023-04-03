@@ -586,7 +586,7 @@
     FoodMeatXenoCutlet: 2
 
 - type: microwaveMealRecipe
-  id: RecipeWingFangChuSoup
+  id: RecipeWingFangChuSoupSpider
   name: wing fang chu recipe
   result: FoodSoupWingFangChu
   time: 10
@@ -662,7 +662,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeMisoColaSoup
-  name: salty sweet milocola soup recipe
+  name: salty sweet misocola soup recipe
   result: DisgustingSweptSoup
   time: 15
   reagents:
