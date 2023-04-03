@@ -586,6 +586,17 @@
     FoodMeatXenoCutlet: 2
 
 - type: microwaveMealRecipe
+  id: RecipeWingFangChuSoup
+  name: wing fang chu recipe
+  result: FoodSoupWingFangChu
+  time: 10
+  reagents:
+    Soysauce: 5
+  solids:
+    FoodBowlBig: 1
+    FoodMeatSpider: 2
+
+- type: microwaveMealRecipe
   id: RecipeVegetableSoup
   name: vegetable soup recipe
   result: FoodSoupVegetable
@@ -610,6 +621,7 @@
     FoodBowlBig: 1
     FoodBanana: 1
     ShardGlass: 1
+    #idk probably replace shard with someting bananium when #14663 merged
 
 - type: microwaveMealRecipe
   id: RecipeMonkeysDelightSoup
