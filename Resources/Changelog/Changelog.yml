@@ -1,9 +1,4 @@
 Entries:
-- author: Vordenburg
-  changes:
-  - {message: All gas canisters now dump their contents when destroyed., type: Fix}
-  id: 2821
-  time: '2023-01-01T06:21:26.0000000+00:00'
 - author: Theomund
   changes:
   - {message: The warning popups when opening dangerous firelocks are now specific
@@ -2901,3 +2896,8 @@ Entries:
   - {message: Added scientific beret, type: Add}
   id: 3320
   time: '2023-04-03T06:23:29.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Added watermelon helmet., type: Add}
+  id: 3321
+  time: '2023-04-03T06:25:14.0000000+00:00'
