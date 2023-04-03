@@ -58,7 +58,10 @@ namespace Content.Server.Speech.EntitySystems
                     // Intelligently replace capitalization
                     var replacement = r;
 
-                    if (!match.Value.Any(char.IsLower))
+                    // second case here is weird--its specifically for single-word capitalization for I or A
+                    // dwarf expands I -> Ah, without that it would transform I -> AH
+                    // so that second case will only fully-uppercase if the replacement length is also 1
+                    if (!match.Value.Any(char.IsLower) && (match.Length > 1 || replacement.Length == 1))
                     {
                         replacement = replacement.ToUpperInvariant();
                     }
