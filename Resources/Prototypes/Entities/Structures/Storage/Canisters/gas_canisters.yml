@@ -108,6 +108,9 @@
           - 0 # Plasma
           - 0 # Tritium
           - 0 # Water vapor
+          - 0 # Miasma
+          - 0 # N2O
+          - 0 # Frezon
         temperature: 293.15
     - type: Destructible
       thresholds:
@@ -463,6 +466,7 @@
       - 0 # Tritium
       - 0 #  Water vapor
       - 0 # Miasma
+      - 0 # N2O
       - 1871.71051 # Frezon
       temperature: 293.15
   - type: Destructible

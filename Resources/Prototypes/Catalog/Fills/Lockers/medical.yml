@@ -15,9 +15,12 @@
         amount: 2
       - id: Ointment
         amount: 2
+      - id: Bloodpack
+        amount: 2
 
 - type: entity
   id: LockerWallMedicalFilled
+  name: medicine wall locker
   suffix: Filled
   parent: LockerWallMedical
   components:
@@ -32,6 +35,8 @@
       - id: Brutepack
         amount: 2
       - id: Ointment
+        amount: 2
+      - id: Bloodpack
         amount: 2
 
 
@@ -72,6 +77,7 @@
 
 - type: entity
   id: LockerWallMedicalDoctorFilled
+  name: medical doctor's wall locker
   suffix: Filled
   parent: ["LockerWallMedical", "LockerMedicalFilled"]
 
@@ -83,7 +89,10 @@
   - type: StorageFill
     contents:
       - id: BoxSyringe
+        amount: 1
       - id: BoxBeaker
+        amount: 1
       - id: BoxPillCanister
+        amount: 1
       - id: BoxBottle
-      - id: BoxBottle
+        amount: 2

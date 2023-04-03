@@ -46,7 +46,7 @@
   parent: DrinkBaseCup
   id: DrinkBaseMug
   abstract: true
-  name: base mug
+  name: mug
   description: A mug.
   components:
   - type: Sprite
@@ -55,6 +55,7 @@
       - state: icon-0
       - map: ["enum.SolutionContainerLayers.Fill"]
         state: icon-3
+        visible: false
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 3
@@ -72,7 +73,7 @@
 - type: entity
   parent: DrinkBaseMug
   id: DrinkMugBlack
-  name: mug black
+  name: black mug
   description: A sleek black mug.
   components:
   - type: Sprite
@@ -81,7 +82,7 @@
 - type: entity
   parent: DrinkBaseMug
   id: DrinkMugBlue
-  name: mug blue
+  name: blue mug
   description: A blue and black mug.
   components:
   - type: Sprite
@@ -90,7 +91,7 @@
 - type: entity
   parent: DrinkBaseMug
   id: DrinkMugGreen
-  name: mug green
+  name: green mug
   description: A pale green and pink mug.
   components:
   - type: Sprite
@@ -109,7 +110,7 @@
 - type: entity
   parent: DrinkBaseMug
   id: DrinkMugHeart
-  name: mug heart
+  name: heart mug
   description: A white mug, it prominently features a red heart.
   components:
   - type: Sprite
@@ -118,7 +119,7 @@
 - type: entity
   parent: DrinkBaseMug
   id: DrinkMugMetal
-  name: mug metal
+  name: metal mug
   description: A metal mug. You're not sure which metal.
   components:
   - type: Sprite
@@ -127,7 +128,7 @@
 - type: entity
   parent: DrinkBaseMug
   id: DrinkMugMoebius
-  name: mug moebius
+  name: moebius mug
   description: A mug with a Moebius Laboratories logo on it. Not even your morning coffee is safe from corporate advertising.
   components:
   - type: Sprite
@@ -145,7 +146,7 @@
 - type: entity
   parent: DrinkBaseMug
   id: DrinkMugRainbow
-  name: mug rainbow
+  name: rainbow mug
   description: A rainbow mug. The colors are almost as blinding as a welder.
   components:
   - type: Sprite
@@ -154,7 +155,7 @@
 - type: entity
   parent: DrinkBaseMug
   id: DrinkMugRed
-  name: mug red
+  name: red mug
   description: A red and black mug.
   components:
   - type: Sprite
@@ -254,6 +255,13 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/water_cup.rsi
-    state: icon-1
+    layers:
+      - state: icon-0
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: icon-1
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    fillBaseName: icon-
   - type: TrashOnEmpty
     solution: drink

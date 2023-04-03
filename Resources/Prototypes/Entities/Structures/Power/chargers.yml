@@ -81,7 +81,7 @@
 - type: entity
   name: wall recharger
   id: WallWeaponCapacitorRecharger
-  parent: PowerCellRecharger
+  parent: WeaponCapacitorRecharger
   components:
   - type: Sprite
     sprite: Structures/Power/wall_recharger.rsi
