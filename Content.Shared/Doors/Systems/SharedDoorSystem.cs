@@ -326,7 +326,7 @@ public abstract class SharedDoorSystem : EntitySystem
 
         // since both closing/closed and welded are door states, we need to prevent 'closing'
         // a welded door or else there will be weird state bugs
-        if (door.State == DoorState.Welded)
+        if (door.State is DoorState.Welded or DoorState.Closed)
             return false;
 
         var ev = new BeforeDoorClosedEvent(door.PerformCollisionCheck);
