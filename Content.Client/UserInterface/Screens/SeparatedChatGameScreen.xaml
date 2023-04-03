@@ -16,6 +16,7 @@
     <controls:RecordedSplitContainer Name="ScreenContainer" HorizontalExpand="True" VerticalExpand="True" SplitWidth="0" StretchDirection="TopLeft">
         <LayoutContainer Name="ViewportContainer" HorizontalExpand="True" VerticalExpand="True">
             <controls:MainViewport Name="MainViewport"/>
+            <BoxContainer Name="VoteMenu" Access="Public" Orientation="Vertical"/>
             <widgets:GhostGui Name="Ghost" Access="Protected" />
             <hotbar:HotbarGui Name="Hotbar" Access="Protected" />
             <actions:ActionsBar Name="Actions" Access="Protected" />

@@ -40,6 +40,13 @@ namespace Content.Shared.Entry
 
             InitTileDefinitions();
             IoCManager.Resolve<MarkingManager>().Initialize();
+
+#if DEBUG
+            var configMan = IoCManager.Resolve<IConfigurationManager>();
+            configMan.OverrideDefault(CVars.NetFakeLagMin, 0.075f);
+            configMan.OverrideDefault(CVars.NetFakeLoss, 0.005f);
+            configMan.OverrideDefault(CVars.NetFakeDuplicates, 0.005f);
+#endif
         }
 
         private void InitTileDefinitions()
