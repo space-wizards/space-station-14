@@ -38,14 +38,14 @@ public sealed class MobsterAccentSystem : EntitySystem
         SubscribeLocalEvent<MobsterAccentComponent, AccentGetEvent>(OnAccentGet);
     }
 
-    public string Accentuate(EntityUid uid, string message, MobsterAccentComponent component)
+    public string Accentuate(string message, MobsterAccentComponent component)
     {
         // Order:
         // Do text manipulations first
         // Then prefix/suffix funnyies
 
         // direct word replacements
-        var msg = _replacement.ApplyReplacements(uid, message, "mobster");
+        var msg = _replacement.ApplyReplacements(message, "mobster");
 
         // thinking -> thinkin'
         // king -> king
@@ -88,6 +88,6 @@ public sealed class MobsterAccentSystem : EntitySystem
 
     private void OnAccentGet(EntityUid uid, MobsterAccentComponent component, AccentGetEvent args)
     {
-        args.Message = Accentuate(uid, args.Message, component);
+        args.Message = Accentuate(args.Message, component);
     }
 }

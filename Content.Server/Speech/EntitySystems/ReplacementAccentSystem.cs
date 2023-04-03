@@ -24,14 +24,14 @@ namespace Content.Server.Speech.EntitySystems
 
         private void OnAccent(EntityUid uid, ReplacementAccentComponent component, AccentGetEvent args)
         {
-            args.Message = ApplyReplacements(uid, args.Message, component.Accent);
+            args.Message = ApplyReplacements(args.Message, component.Accent);
         }
 
         /// <summary>
         ///     Attempts to apply a given replacement accent prototype to a message.
         /// </summary>
         [PublicAPI]
-        public string ApplyReplacements(EntityUid uid, string message, string accent)
+        public string ApplyReplacements(string message, string accent)
         {
             if (!_proto.TryIndex<ReplacementAccentPrototype>(accent, out var prototype))
                 return message;
