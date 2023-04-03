@@ -28,6 +28,7 @@
   components:
   - type: Pinpointer
     component: NukeDisk
+    targetName: nuclear authentication disk
 
 - type: entity
   name: universal pinpointer
