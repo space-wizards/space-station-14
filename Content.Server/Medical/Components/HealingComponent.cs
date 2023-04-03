@@ -24,6 +24,13 @@ namespace Content.Server.Medical.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public float BloodlossModifier = 0.0f;
 
+        /// <summary>
+        ///     Restore missing blood.
+        /// </summary>
+        [DataField("ModifyBloodLevel")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float ModifyBloodLevel = 0.0f;
+
         /// <remarks>
         ///     The supported damage types are specified using a <see cref="DamageContainerPrototype"/>s. For a
         ///     HealingComponent this filters what damage container type this component should work on. If null,

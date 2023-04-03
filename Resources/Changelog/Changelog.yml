@@ -1,72 +1,4 @@
 Entries:
-- author: Theomund
-  changes:
-  - {message: Added logic for sorting crew manifest entries by job titles and names.,
-    type: Fix}
-  id: 2815
-  time: '2023-01-01T05:49:30.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added several new beneficial artifact effects., type: Add}
-  - {message: Fixed some broken artifact effects., type: Fix}
-  id: 2816
-  time: '2023-01-01T05:59:39.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed being unable to mop up blood stains., type: Fix}
-  - {message: Various stains no longer evaporate., type: Tweak}
-  id: 2817
-  time: '2023-01-01T06:03:26.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed an issue where deconstructed machines showed an empty frame.,
-    type: Fix}
-  - {message: Fixed an issue where you'd have to crowbar an empty machine frame in
-      order to deconstruct it., type: Fix}
-  id: 2818
-  time: '2023-01-01T06:06:32.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Something about the mystical energy of the end of the round seems to
-      be causing artifacts to go absolutely crazy. Best keep them far away (or perhaps
-      really close?)', type: Add}
-  id: 2819
-  time: '2023-01-01T06:16:09.0000000+00:00'
-- author: Kupo
-  changes:
-  - {message: 'Radio channel ":h" will now use the headset''s department radio', type: Add}
-  id: 2820
-  time: '2023-01-01T06:20:04.0000000+00:00'
-- author: Vordenburg
-  changes:
-  - {message: All gas canisters now dump their contents when destroyed., type: Fix}
-  id: 2821
-  time: '2023-01-01T06:21:26.0000000+00:00'
-- author: Theomund
-  changes:
-  - {message: The warning popups when opening dangerous firelocks are now specific
-      to the user prying them open and are much more noticeable., type: Tweak}
-  id: 2822
-  time: '2023-01-01T19:42:22.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: Station mugs now have uniform capacity with vending machine coffee mugs
-      (10 -> 20), type: Tweak}
-  id: 2823
-  time: '2023-01-01T23:50:36.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: Added a delay for internals alerts to match the action button delay.,
-    type: Add}
-  id: 2824
-  time: '2023-01-02T00:03:19.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Grenade penguins no longer attack syndicate agents., type: Fix}
-  - {message: 'Grenade penguins are now only 5 TC and explode on death. You can still
-      trigger them manually, if you''d like.', type: Tweak}
-  id: 2825
-  time: '2023-01-02T01:18:48.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Hamster cages no longer clip through doors, type: Fix}
@@ -2903,3 +2835,76 @@ Entries:
       and Ctrl+Delete., type: Tweak}
   id: 3314
   time: '2023-04-03T02:58:53.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fix a DoAfter bug that was blocking crafting & some other construction
+      interactions., type: Fix}
+  id: 3315
+  time: '2023-04-03T04:53:25.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Dwarves now have minor changes, including a lower mass, new accent,
+      and minor benefits from alcohol.', type: Tweak}
+  id: 3316
+  time: '2023-04-03T05:31:28.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Temporarily removed interior IFF drawing due to seams in rendering.,
+    type: Tweak}
+  id: 3317
+  time: '2023-04-03T05:46:29.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: The cautery now functions! It can be used to close bleeding wounds.
+      (Use it as a melee), type: Add}
+  - {message: Added the blood pack! This item will very lightly reduce bleeding and
+      restore 10 blood to the patient. It has been added to most first aid kits and
+      medical spawns., type: Add}
+  - {message: Passive bleeding now properly exists! You can bleed at a maximum of
+      20u every 5 seconds., type: Add}
+  - {message: Critical bleed hit chance has been reduced. you shouldn't be dying from
+      this as often anymore. It's the original reason why we thought bleeding was
+      overpowered., type: Fix}
+  - {message: Iron has been tweaked to restore double the blood per unit. 50u iron
+      pills will no longer be needed ideally., type: Tweak}
+  id: 3318
+  time: '2023-04-03T05:59:51.0000000+00:00'
+- author: Naive817
+  changes:
+  - {message: Holobarrier projectors are now available to HoS and warden. It can make
+      soild but fragile holographic barriers to keep the crew from interfering with
+      the execution of the clown., type: Add}
+  id: 3319
+  time: '2023-04-03T06:20:15.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: Added scientific beret, type: Add}
+  id: 3320
+  time: '2023-04-03T06:23:29.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Added watermelon helmet., type: Add}
+  id: 3321
+  time: '2023-04-03T06:25:14.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Nanotrasen has supplied engineering departments with high capacity fuel
+      tanks., type: Add}
+  id: 3322
+  time: '2023-04-03T06:26:58.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: 'Changed access to fire axe cabinet, now not only an atmospheric technician
+      can get a fire axe.', type: Tweak}
+  id: 3323
+  time: '2023-04-03T06:27:45.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Added robust nukie drink to vending machine cola., type: Add}
+  id: 3324
+  time: '2023-04-03T06:42:37.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Added new blood pack sprite!, type: Add}
+  id: 3325
+  time: '2023-04-03T07:50:33.0000000+00:00'
