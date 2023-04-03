@@ -50,8 +50,6 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
             StationRecordsFilterType.AddItem(GetTypeFilterLocals(i));
         }
 
-        StationRecordsFilterType.SelectId(_currentFilterType);
-
         StationRecordsFilterType.OnItemSelected += eventArgs =>
         {
             if (_currentFilterType != eventArgs.Id)
