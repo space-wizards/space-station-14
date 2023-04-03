@@ -56,18 +56,16 @@
     activePower: 2500
     lightRadiusMin: 0.75
     lightRadiusMax: 2.5
+    spritemap:
+      broken: "broken"
+      unpowered: "off"
+      off: "off"
+      on: "on"
   - type: UserInterface
     interfaces:
       - key: enum.GravityGeneratorUiKey.Key
         type: GravityGeneratorBoundUserInterface
   - type: Appearance
-    visuals:
-    - type: GravityGeneratorVisualizer
-      spritemap:
-        broken: "broken"
-        unpowered: "off"
-        off: "off"
-        on: "on"
   - type: PointLight
     radius: 2.5
     energy: 0.5

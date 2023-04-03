@@ -94,12 +94,12 @@
   - type: Armor
     modifiers:
       coefficients:
-        Caustic: 0.9
+        Caustic: 0.75
 
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatLabChem
-  name: lab coat (chem)
+  name: chemist lab coat
   description: A suit that protects against minor chemical spills. Has an orange stripe on the shoulder.
   components:
   - type: Sprite
@@ -114,7 +114,7 @@
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatLabViro
-  name: lab coat (viro)
+  name: virologist lab coat
   description: A suit that protects against bacteria and viruses. Has an green stripe on the shoulder.
   components:
   - type: Sprite
@@ -124,7 +124,23 @@
   - type: Armor
     modifiers:
       coefficients:
-        Caustic: 0.9
+        Caustic: 0.75
+
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatLabGene
+  name: geneticist lab coat
+  description: A suit that protects against minor chemical spills. Has an blue stripe on the shoulder.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/labcoat_gene.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/labcoat_gene.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.75
 
 
 - type: entity
