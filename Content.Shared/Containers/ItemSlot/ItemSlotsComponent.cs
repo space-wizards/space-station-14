@@ -138,15 +138,6 @@ namespace Content.Shared.Containers.ItemSlots
         public bool EjectOnInteract = false;
 
         /// <summary>
-        ///     Whether the item slots system will attempt to eject this item to the user's hands when alt interacted with.
-        /// </summary>
-        /// <remarks>
-        ///     This is an override so that alt-interact will eject even if ejectOnInteract is set.
-        /// </remarks>
-        [DataField("ejectOnAltInteract")]
-        public bool EjectOnAltInteract = false;
-
-        /// <summary>
         ///     If true, and if this slot is attached to an item, then it will attempt to eject slot when to the slot is
         ///     used in the user's hands.
         /// </summary>
