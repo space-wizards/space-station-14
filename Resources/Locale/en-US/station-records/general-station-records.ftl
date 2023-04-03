@@ -10,7 +10,11 @@ general-station-record-console-record-gender = Gender: {$gender}
 general-station-record-console-record-fingerprint = Fingerprint: {$fingerprint}
 general-station-record-console-record-dna = DNA: {$dna}
 
-general-station-record-filter-prints = Finger prints:
-general-station-record-console-set-fingerprint-code = Enter the fingerprints code
+general-station-record-name-filter = Name of person
+general-station-record-for-name-placeholder = Set a name
+general-station-record-prints-filter = Fingerprints
+general-station-record-for-prints-placeholder = Set the code of fingerprints
+general-station-record-dna-filter = DNA
+general-station-record-for-dna-placeholder = Set the code of DNA
 general-station-record-console-search-records = Search records
 general-station-record-console-reset-filters = Reset filter

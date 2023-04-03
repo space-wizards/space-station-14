@@ -203,7 +203,7 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
                 type = "name";
                 break;
             case GeneralStationRecordFilterType.Prints:
-                type = "FingerPrints";
+                type = "prints";
                 break;
             case GeneralStationRecordFilterType.DNA:
                 type = "dna";
@@ -212,11 +212,11 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 
         if (isForButton)
         {
-            return new String($"general-station-record-{type}-filter");
+            return Loc.GetString($"general-station-record-{type}-filter");
         }
         else
         {
-            return new String($"general-station-record-for-{type}-placeholder");
+            return Loc.GetString($"general-station-record-for-{type}-placeholder");
         }
     }
 }
