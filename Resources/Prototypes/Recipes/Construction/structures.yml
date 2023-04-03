@@ -856,3 +856,21 @@
     state: closed
   conditions:
     - !type:TileNotBlocked
+
+- type: construction
+  name: bananium altar
+  id: BananiumAltar
+  graph: BananiumAltarGraph
+  startNode: start
+  targetNode: bananiumAltar
+  category: construction-category-structures
+  description: An altar to worship the honkmother with.
+  icon:
+    sprite: Structures/Furniture/Altars/Cults/bananium.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
