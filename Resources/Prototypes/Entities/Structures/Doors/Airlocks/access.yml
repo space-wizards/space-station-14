@@ -709,6 +709,14 @@
 
 - type: entity
   parent: AirlockMaint
+  id: AirlockMaintDetectiveLocked
+  suffix: Detective, Locked
+  components:
+  - type: AccessReader
+    access: [["Detective"]]
+
+- type: entity
+  parent: AirlockMaint
   id: AirlockMaintHOPLocked
   suffix: HeadOfPersonnel, Locked
   components:
