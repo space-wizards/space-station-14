@@ -46,7 +46,7 @@ public sealed class GeneralStationRecordConsoleState : BoundUserInterfaceState
     }
 
     public bool IsEmpty() => SelectedKey == null
-        && Record == null && RecordListing == null && Filter == null;
+        && Record == null && RecordListing == null;
 }
 
 [Serializable, NetSerializable]

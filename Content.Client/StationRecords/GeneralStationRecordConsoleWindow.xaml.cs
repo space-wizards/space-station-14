@@ -19,11 +19,8 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 
     private int _currentFilterType = 0;
 
-    private GeneralStationRecordFilterType[] _filterTypes = {
-        GeneralStationRecordFilterType.Name,
-        GeneralStationRecordFilterType.Prints,
-        GeneralStationRecordFilterType.DNA,
-    };
+    private GeneralStationRecordFilterType[] _filterTypes
+        = Enum.GetValues<GeneralStationRecordFilterType>();
 
     public GeneralStationRecordConsoleWindow()
     {
@@ -126,9 +123,9 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 
         _isPopulating = true;
 
-        foreach ((StationRecordKey key, string personalName) in listing)
+        foreach (var (key, name) in listing)
         {
-            var item = RecordListing.AddItem(personalName);
+            var item = RecordListing.AddItem(name);
             item.Metadata = key;
             if (selected != null && key.ID == selected.Value.ID)
             {
@@ -195,27 +192,15 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 
     private string GetTypeFilterLocals(int id, bool isForButton = true)
     {
-        string type = "";
-        switch (_filterTypes[id])
-        {
-            case GeneralStationRecordFilterType.Name:
-                type = "name";
-                break;
-            case GeneralStationRecordFilterType.Prints:
-                type = "prints";
-                break;
-            case GeneralStationRecordFilterType.DNA:
-                type = "dna";
-                break;
-        }
+        string filterType = _filterTypes[id].ToString().ToLower();
 
         if (isForButton)
         {
-            return Loc.GetString($"general-station-record-{type}-filter");
+            return Loc.GetString($"general-station-record-{filterType}-filter");
         }
         else
         {
-            return Loc.GetString($"general-station-record-for-{type}-placeholder");
+            return Loc.GetString($"general-station-record-for-{filterType}-placeholder");
         }
     }
 }

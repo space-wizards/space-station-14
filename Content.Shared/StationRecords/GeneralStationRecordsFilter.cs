@@ -3,14 +3,16 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.StationRecords;
 
 [Serializable, NetSerializable]
-public sealed class GeneralStationRecordsFilter {
-    public GeneralStationRecordFilterType type { get; set; } =
-        GeneralStationRecordFilterType.Name;
+public sealed class GeneralStationRecordsFilter
+{
+    public GeneralStationRecordFilterType type { get; set; }
+        = GeneralStationRecordFilterType.Name;
     public string value { get; set; } = "";
     public GeneralStationRecordsFilter(GeneralStationRecordFilterType filterType,
-        string newValue = "") {
-            type = filterType;
-            value = newValue;
+        string newValue = "")
+    {
+        type = filterType;
+        value = newValue;
     }
 }
 
@@ -21,7 +23,7 @@ public sealed class GeneralStationRecordsFilterMsg : BoundUserInterfaceMessage
     public GeneralStationRecordFilterType type { get; }
 
     public GeneralStationRecordsFilterMsg(GeneralStationRecordFilterType filterType,
-        string  filterValue)
+        string filterValue)
     {
         type = filterType;
         value = filterValue;
