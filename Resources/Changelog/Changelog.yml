@@ -1,44 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Grenade penguins no longer attack syndicate agents., type: Fix}
-  - {message: 'Grenade penguins are now only 5 TC and explode on death. You can still
-      trigger them manually, if you''d like.', type: Tweak}
-  id: 2825
-  time: '2023-01-02T01:18:48.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Hamster cages no longer clip through doors, type: Fix}
-  id: 2826
-  time: '2023-01-02T03:52:30.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Air alarms should be less annoying around small quantities of water
-      vapor., type: Tweak}
-  id: 2827
-  time: '2023-01-02T05:05:37.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Portals have been added, which teleport you randomly (if unlinked)
-      or between portals (if linked). Expect to see them used more.', type: Add}
-  - {message: 'The research director has received a new device, the ''hand teleporter''.
-      It can create portals at will, and is a traitor steal objective.', type: Add}
-  id: 2828
-  time: '2023-01-03T01:58:25.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug that would sometimes cause players to appear as if they
-      were dead/horizontal., type: Fix}
-  id: 2829
-  time: '2023-01-03T06:43:35.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Hand teleporter now requires a doafter, and can''t be used when inside
-      anything.', type: Tweak}
-  - {message: Portal random teleport now teleports you less farther away at maximum.,
-    type: Tweak}
-  id: 2830
-  time: '2023-01-03T07:53:16.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Several new, !!fun!! artifact effects have been added.', type: Add}
@@ -2862,8 +2822,18 @@ Entries:
   time: '2023-04-03T05:46:29.0000000+00:00'
 - author: Whisper
   changes:
-  - {message: uhhh to be determined because I'm not sure how much of that changelog
-      should be in here..., type: Add}
+  - {message: The cautery now functions! It can be used to close bleeding wounds.
+      (Use it as a melee), type: Add}
+  - {message: Added the blood pack! This item will very lightly reduce bleeding and
+      restore 10 blood to the patient. It has been added to most first aid kits and
+      medical spawns., type: Add}
+  - {message: Passive bleeding now properly exists! You can bleed at a maximum of
+      20u every 5 seconds., type: Add}
+  - {message: Critical bleed hit chance has been reduced. you shouldn't be dying from
+      this as often anymore. It's the original reason why we thought bleeding was
+      overpowered., type: Fix}
+  - {message: Iron has been tweaked to restore double the blood per unit. 50u iron
+      pills will no longer be needed ideally., type: Tweak}
   id: 3318
   time: '2023-04-03T05:59:51.0000000+00:00'
 - author: Naive817
@@ -2900,3 +2870,43 @@ Entries:
   - {message: Added robust nukie drink to vending machine cola., type: Add}
   id: 3324
   time: '2023-04-03T06:42:37.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Added new blood pack sprite!, type: Add}
+  id: 3325
+  time: '2023-04-03T07:50:33.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix shuttle airlocks., type: Fix}
+  id: 3326
+  time: '2023-04-03T18:28:27.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Getting drunk should no longer cause you to bleed, type: Fix}
+  id: 3327
+  time: '2023-04-03T22:48:58.0000000+00:00'
+- author: freeman2651
+  changes:
+  - {message: Five hours minimum overall playtime needed for Security Cadet to become
+      available., type: Tweak}
+  - {message: One hour minimum security playtime needed for Security Officer to become
+      available., type: Tweak}
+  - {message: Two hours minimum security playtime needed for Detective to become available.,
+    type: Tweak}
+  id: 3328
+  time: '2023-04-04T00:10:17.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Rat king (mobster) & dwarf accents are now more robust with transforming
+      capitalization., type: Tweak}
+  id: 3329
+  time: '2023-04-04T02:50:37.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: You can once again build several structures simultaneously., type: Fix}
+  - {message: Fixed being unable to repair reinforced windows., type: Fix}
+  - {message: Fixed APC-screw driver interaction, type: Fix}
+  - {message: Revenant soul-leeching will now be interrupted if they receive damage,
+    type: Tweak}
+  id: 3330
+  time: '2023-04-04T06:28:56.0000000+00:00'
