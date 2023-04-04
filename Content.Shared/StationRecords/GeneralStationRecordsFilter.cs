@@ -8,8 +8,7 @@ public sealed class GeneralStationRecordsFilter
     public GeneralStationRecordFilterType type { get; set; }
         = GeneralStationRecordFilterType.Name;
     public string value { get; set; } = "";
-    public GeneralStationRecordsFilter(GeneralStationRecordFilterType filterType,
-        string newValue = "")
+    public GeneralStationRecordsFilter(GeneralStationRecordFilterType filterType, string newValue = "")
     {
         type = filterType;
         value = newValue;

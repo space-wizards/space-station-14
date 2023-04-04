@@ -26,6 +26,11 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
     {
         RobustXamlLoader.Load(this);
 
+        foreach (var item in _filterTypes)
+        {
+            StationRecordsFilterType.AddItem(GetTypeFilterLocals((int)item));
+        }
+
         RecordListing.OnItemSelected += args =>
         {
             if (_isPopulating || RecordListing[args.ItemIndex].Metadata is not StationRecordKey cast)
@@ -41,11 +46,6 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
             if (!_isPopulating)
                 OnKeySelected?.Invoke(null);
         };
-
-        for (int i = 0; i < _filterTypes.Length; i++)
-        {
-            StationRecordsFilterType.AddItem(GetTypeFilterLocals(i));
-        }
 
         StationRecordsFilterType.OnItemSelected += eventArgs =>
         {
@@ -77,10 +77,11 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
     {
         if (state.Filter != null)
         {
-            if (state.Filter.type != _filterTypes[_currentFilterType])
+            int filterTypeId = (int)state.Filter.type;
+
+            if (filterTypeId != _currentFilterType)
             {
-                int findedIndex = Array.IndexOf(_filterTypes, state.Filter.type);
-                _currentFilterType = findedIndex > 0 ? findedIndex : 0;
+                _currentFilterType = filterTypeId;
             }
 
             if (state.Filter.value != StationRecordsFiltersValue.Text)
