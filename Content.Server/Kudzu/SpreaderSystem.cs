@@ -64,6 +64,9 @@ public sealed class SpreaderNodeGroup : BaseNodeGroup
 
         foreach (var neighborNode in node.ReachableNodes)
         {
+            if (_entManager.Deleted(neighborNode.Owner))
+                continue;
+
             _entManager.EnsureComponent<EdgeSpreaderComponent>(neighborNode.Owner);
         }
     }

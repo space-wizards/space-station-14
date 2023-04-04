@@ -52,10 +52,16 @@ namespace Content.Client.Fluids
                 }
             }
 
+            var alpha = 0.7f;
+
             if (args.AppearanceData.TryGetValue(PuddleVisuals.SolutionColor, out var colorObj))
             {
                 var color = (Color) colorObj;
-                args.Sprite.Color = color;
+                args.Sprite.Color = color.WithAlpha(alpha);
+            }
+            else
+            {
+                args.Sprite.Color = args.Sprite.Color.WithAlpha(alpha);
             }
         }
     }

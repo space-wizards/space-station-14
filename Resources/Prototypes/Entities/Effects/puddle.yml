@@ -15,13 +15,13 @@
       anchored: true
     - type: Sprite
       sprite: Fluids/weh.rsi
-      state: blood0
+      state: splat0
       netsync: false
       drawdepth: FloorObjects
       color: "#FFFFFF80"
     - type: IconSmooth
       key: puddles
-      base: blood
+      base: splat
       mode: CardinalFlags
     - type: Appearance
     - type: NodeContainer

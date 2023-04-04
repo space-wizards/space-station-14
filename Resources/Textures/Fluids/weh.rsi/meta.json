@@ -8,6 +8,12 @@
     "copyright": "Aleksh something something",
     "states": [
         {
+            "name": "splata"
+        },
+        {
+            "name": "splatb"
+        },
+        {
             "name": "splat0"
         },
         {
