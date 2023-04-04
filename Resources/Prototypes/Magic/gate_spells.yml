@@ -4,10 +4,7 @@
   description: action-description-spell-gate
   speech: action-speech-spell-gate
   useDelay: 60
-  range: 16
   itemIconStyle: BigAction
-  checkCanAccess: false
-  repeat: true
   icon:
     sprite: Effects/portal.rsi
     state: portal-green
