@@ -30,11 +30,18 @@ namespace Content.Server.Construction
 
         private void InitializeInteractions()
         {
-            SubscribeLocalEvent<ConstructionComponent, ConstructionInteractDoAfterEvent>(EnqueueEvent);
+            SubscribeLocalEvent<ConstructionComponent, ConstructionInteractDoAfterEvent>(OnDoAfterComplete);
 
             // Event handling. Add your subscriptions here! Just make sure they're all handled by EnqueueEvent.
             SubscribeLocalEvent<ConstructionComponent, InteractUsingEvent>(EnqueueEvent, new []{typeof(AnchorableSystem)});
             SubscribeLocalEvent<ConstructionComponent, OnTemperatureChangeEvent>(EnqueueEvent);
+        }
+
+        private void OnDoAfterComplete(EntityUid uid, ConstructionComponent component, ConstructionInteractDoAfterEvent args)
+        {
+            component.DoAfter = null;
+            if (!args.Cancelled)
+                EnqueueEvent(uid, component, args);
         }
 
         /// <summary>
@@ -223,11 +230,8 @@ namespace Content.Server.Construction
             // The DoAfter events can only perform special logic when we're not validating events.
             if (ev is ConstructionInteractDoAfterEvent interactDoAfter)
             {
-                if (!validation)
-                    construction.DoAfter = null;
-
-                if (interactDoAfter.Cancelled)
-                    return HandleResult.False;
+                // cancelled events should not reach this point.
+                DebugTools.Assert(!interactDoAfter.Cancelled);
 
                 ev = new InteractUsingEvent(
                     interactDoAfter.User,
@@ -255,12 +259,6 @@ namespace Content.Server.Construction
                     // EntityInsert steps only work with InteractUsing!
                     if (ev is not InteractUsingEvent interactUsing)
                         break;
-
-                    if (construction.DoAfter != null && !validation)
-                    {
-                        _doAfterSystem.Cancel(construction.DoAfter);
-                        return HandleResult.False;
-                    }
 
                     // TODO: Sanity checks.
 
@@ -342,12 +340,6 @@ namespace Content.Server.Construction
                 {
                     if (ev is not InteractUsingEvent interactUsing)
                         break;
-
-                    if (construction.DoAfter != null && !validation)
-                    {
-                        _doAfterSystem.Cancel(construction.DoAfter);
-                        return HandleResult.False;
-                    }
 
                     // TODO: Sanity checks.
 
