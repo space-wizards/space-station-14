@@ -199,6 +199,7 @@ namespace Content.Shared.Chemistry.Reagent
         }
     }
 
+    [Serializable, NetSerializable]
     public struct ReagentEffectsGuideEntry
     {
         public FixedPoint2 MetabolismRate;
