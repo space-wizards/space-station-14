@@ -11,6 +11,7 @@ using Content.Client.Ghost;
 using Content.Client.Lobby.UI;
 using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Chat.Widgets;
+using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
@@ -183,6 +184,23 @@ public sealed class ChatUIController : UIController
 
         _input.SetInputCommand(ContentKeyFunctions.CycleChatChannelBackward,
             InputCmdHandler.FromDelegate(_ => CycleChatChannel(false)));
+
+        var gameplayStateLoad = UIManager.GetUIController<GameplayStateLoadController>();
+        gameplayStateLoad.OnScreenLoad += OnScreenLoad;
+        gameplayStateLoad.OnScreenUnload += OnScreenUnload;
+    }
+
+    public void OnScreenLoad()
+    {
+        SetMainChat(true);
+
+        var viewportContainer = UIManager.ActiveScreen!.FindControl<LayoutContainer>("ViewportContainer");
+        SetSpeechBubbleRoot(viewportContainer);
+    }
+
+    public void OnScreenUnload()
+    {
+        SetMainChat(false);
     }
 
     public void SetMainChat(bool setting)
@@ -478,6 +496,7 @@ public sealed class ChatUIController : UIController
         if (_admin.HasFlag(AdminFlags.Admin))
         {
             FilterableChannels |= ChatChannel.Admin;
+            FilterableChannels |= ChatChannel.AdminAlert;
             FilterableChannels |= ChatChannel.AdminChat;
             CanSendChannels |= ChatSelectChannel.Admin;
         }

@@ -1,0 +1,121 @@
+- type: dungeonConfig
+  id: Experiment
+  generator: !type:PrefabDunGen
+    roomWhitelist:
+      - SalvageExperiment
+    presets:
+      - Cross
+      - SpaceMan
+      - FourSquare
+  postGeneration:
+    - !type:MiddleConnectionPostGen
+      overlapCount: 3
+      count: 3
+      entities:
+        - CableApcExtension
+        - AirlockGlass
+      edgeEntities:
+        - Grille
+        - Window
+
+    - !type:MiddleConnectionPostGen
+      count: 1
+      entities:
+        - CableApcExtension
+        - AirlockGlass
+
+    - !type:EntrancePostGen
+      count: 2
+      entities:
+        - AirlockGlass
+
+    - !type:InternalWindowPostGen
+      entities:
+        - Grille
+        - Window
+
+    - !type:ExternalWindowPostGen
+      entities:
+        - Grille
+        - Window
+
+    - !type:WallMountPostGen
+      spawns:
+        # Posters
+        - id: RandomPosterLegit
+          orGroup: content
+        - id: ExtinguisherCabinetFilled
+          prob: 0.2
+          orGroup: content
+        - id: RandomPainting
+          prob: 0.05
+          orGroup: content
+        - id: Intercom
+          prob: 0.1
+          orGroup: content
+
+    - !type:BoundaryWallPostGen
+      tile: FloorSteel
+      wall: WallSolid
+      cornerWall: WallReinforced
+
+- type: dungeonConfig
+  id: LavaBrig
+  generator: !type:PrefabDunGen
+    roomWhitelist:
+      - LavaBrig
+    presets:
+      - Cross
+      - SpaceMan
+      - FourSquare
+  postGeneration:
+    - !type:MiddleConnectionPostGen
+      overlapCount: 3
+      count: 3
+      entities:
+        - CableApcExtension
+        - AirlockSecurityGlassLocked
+      edgeEntities:
+        - Grille
+        - Window
+
+    - !type:MiddleConnectionPostGen
+      count: 1
+      entities:
+        - CableApcExtension
+        - AirlockSecurityGlassLocked
+
+    - !type:EntrancePostGen
+      count: 2
+      entities:
+        - AirlockSecurityGlassLocked
+
+    - !type:InternalWindowPostGen
+      entities:
+        - Grille
+        - Window
+
+    - !type:ExternalWindowPostGen
+      entities:
+        - Grille
+        - ReinforcedWindow
+
+    - !type:WallMountPostGen
+      spawns:
+        # Posters
+        - id: RandomPosterLegit
+          orGroup: content
+        - id: ExtinguisherCabinetFilled
+          prob: 0.2
+          orGroup: content
+        - id: RandomPainting
+          prob: 0.05
+          orGroup: content
+        - id: Intercom
+          prob: 0.1
+          orGroup: content
+
+    - !type:BoundaryWallPostGen
+      tile: FloorSteel
+      wall: WallReinforced
+      cornerWall: WallReinforced

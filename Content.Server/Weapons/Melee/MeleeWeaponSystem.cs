@@ -11,6 +11,7 @@ using Content.Server.Contests;
 using Content.Server.Examine;
 using Content.Server.Hands.Components;
 using Content.Server.Movement.Systems;
+using Content.Shared.Administration.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage;
 using Content.Shared.Database;
@@ -236,7 +237,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return;
         }
 
-        var hitBloodstreams = new List<BloodstreamComponent>();
+        var hitBloodstreams = new List<(EntityUid Entity, BloodstreamComponent Component)>();
         var bloodQuery = GetEntityQuery<BloodstreamComponent>();
 
         foreach (var entity in args.HitEntities)
@@ -245,7 +246,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 continue;
 
             if (bloodQuery.TryGetComponent(entity, out var bloodstream))
-                hitBloodstreams.Add(bloodstream);
+                hitBloodstreams.Add((entity, bloodstream));
         }
 
         if (!hitBloodstreams.Any())
@@ -256,10 +257,10 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         var solutionToInject = removedSolution.SplitSolution(removedVol * comp.TransferEfficiency);
         var volPerBloodstream = solutionToInject.Volume * (1 / hitBloodstreams.Count);
 
-        foreach (var bloodstream in hitBloodstreams)
+        foreach (var (ent, bloodstream) in hitBloodstreams)
         {
             var individualInjection = solutionToInject.SplitSolution(volPerBloodstream);
-            _bloodstream.TryAddToChemicals((bloodstream).Owner, individualInjection, bloodstream);
+            _bloodstream.TryAddToChemicals(ent, individualInjection, bloodstream);
         }
     }
 }

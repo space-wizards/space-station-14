@@ -1,58 +1,67 @@
 # Desert
-# TODO: Water in grasslands
-# TODO: Water in desert / grass?
+# TODO: Water in desert
 - type: biome
   id: LowDesert
+  desc: Desert
   layers:
     - !type:BiomeEntityLayer
-      threshold: 0.99
-      frequency: 1
-      seedOffset: 1
+      threshold: 0.95
+      noise:
+        seed: 0
+        frequency: 2
+        noiseType: OpenSimplex2
       allowedTiles:
         - FloorLowDesert
       entities:
         - FloraRockSolid01
         - FloraRockSolid02
         - FloraRockSolid03
+    # Large rock areas
     - !type:BiomeEntityLayer
-      threshold: 0.9
-      frequency: 0.2
+      threshold: -0.20
+      noise:
+        seed: 0
+        frequency: 0.04
+        noiseType: Cellular
+        fractalType: FBm
+        octaves: 5
+        lacunarity: 2
+        gain: 1
+        cellularDistanceFunction: Euclidean
+        cellularReturnType: Distance2
       allowedTiles:
         - FloorLowDesert
       entities:
         - AsteroidRock
+    # Fill layer
     - !type:BiomeTileLayer
-      threshold: 0
+      threshold: -1
       variants:
         - 0
       tile: FloorLowDesert
     - !type:BiomeTileLayer
       threshold: 0.6
       tile: FloorLowDesert
-      frequency: 0.1
+      noise:
+        seed: 0
+        noiseType: Cellular
+        frequency: 0.1
 
 # Grass
 - type: biome
   id: Grasslands
+  desc: Grasslands
   layers:
+    # Sparse vegetation
     - !type:BiomeDecalLayer
       allowedTiles:
         - FloorPlanetGrass
-      seedOffset: 3
-      threshold: 0.98
-      divisions: 1
-      frequency: 1
-      decals:
-        - FlowersBROne
-        - FlowersBRTwo
-        - FlowersBRThree
-    - !type:BiomeDecalLayer
-      allowedTiles:
-        - FloorPlanetGrass
-      seedOffset: 2
-      threshold: 0.95
       divisions: 2
-      frequency: 1
+      threshold: -0.50
+      noise:
+        seed: 0
+        noiseType: Cellular
+        frequency: 1
       decals:
         - BushDOne
         - BushDTwo
@@ -60,25 +69,46 @@
     - !type:BiomeDecalLayer
       allowedTiles:
         - FloorPlanetGrass
-      seedOffset: 1
-      threshold: 0.8
+      noise:
+        seed: 0
+        noiseType: OpenSimplex2
+        frequency: 1
       divisions: 1
-      frequency: 0.05
+      threshold: 0.8
       decals:
-        - BushCOne
-        - BushCTwo
-        - BushCThree
+        - FlowersBROne
+        - FlowersBRTwo
+        - FlowersBRThree
+    # Dense vegetation
     - !type:BiomeDecalLayer
       allowedTiles:
       - FloorPlanetGrass
       divisions: 1
+      threshold: -0.35
+      noise:
+        seed: 0
+        noiseType: Cellular
+        frequency: 0.2
+        fractalType: FBm
+        octaves: 5
+        lacunarity: 2
+        gain: 1
+        cellularDistanceFunction: Euclidean
+        cellularReturnType: Distance2
       decals:
         - BushAOne
         - BushATwo
         - BushAThree
+        - BushCOne
+        - BushCTwo
+        - BushCThree
     - !type:BiomeEntityLayer
-      threshold: 0.9
-      frequency: 1
+      threshold: 0.5
+      noise:
+        seed: 0
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 2
       allowedTiles:
         - FloorPlanetGrass
       entities:
@@ -94,22 +124,86 @@
         - FloraTreeLarge04
         - FloraTreeLarge05
         - FloraTreeLarge06
-    # Fill remainder with sand.
+    # Rock formations
+    - !type:BiomeEntityLayer
+      allowedTiles:
+        - FloorPlanetGrass
+        - FloorPlanetDirt
+      threshold: -0.15
+      noise:
+        seed: 0
+        noiseType: Cellular
+        frequency: 0.05
+        lacunarity: 2
+        fractalType: FBm
+        octaves: 5
+        gain: 1
+        cellularDistanceFunction: Euclidean
+        cellularReturnType: Distance2
+      entities:
+        - WallRock
+    # Water
+    - !type:BiomeEntityLayer
+      allowedTiles:
+        - FloorPlanetGrass
+        - FloorPlanetDirt
+      threshold: 0.95
+      noise:
+        seed: 3
+        noiseType: OpenSimplex2
+        frequency: 0.003
+        lacunarity: 1.50
+        fractalType: Ridged
+        octaves: 1
+      entities:
+        - FloorWaterEntity
+    # Fill remainder with dirt.
     - !type:BiomeTileLayer
-      threshold: 0
+      threshold: -1.0
       tile: FloorPlanetDirt
     - !type:BiomeTileLayer
-      threshold: 0.5
+      threshold: -0.90
       tile: FloorPlanetGrass
+      noise:
+        seed: 0
+        frequency: 0.02
+        fractalType: None
+    # Water sand
+    - !type:BiomeTileLayer
+      tile: FloorPlanetDirt
+      threshold: 0.95
+      noise:
+        seed: 3
+        noiseType: OpenSimplex2
+        frequency: 0.003
+        lacunarity: 1.50
+        fractalType: Ridged
+        octaves: 1
+    # Rock formation sand
+    - !type:BiomeTileLayer
+      tile: FloorPlanetDirt
+      threshold: -0.15
+      noise:
+        seed: 0
+        noiseType: Cellular
+        frequency: 0.05
+        lacunarity: 2
+        fractalType: FBm
+        octaves: 5
+        gain: 1
+        cellularDistanceFunction: Euclidean
+        cellularReturnType: Distance2
 
 # Lava
 - type: biome
   id: Lava
+  desc: Lava
   layers:
     - !type:BiomeEntityLayer
       threshold: 0.9
-      frequency: 1
-      seedOffset: 3
+      noise:
+        frequency: 1
+        seed: 2
       allowedTiles:
         - FloorBasalt
       entities:
@@ -121,10 +215,11 @@
     - !type:BiomeDecalLayer
       allowedTiles:
         - FloorBasalt
-      seedOffset: 2
       threshold: 0.9
       divisions: 1
-      frequency: 1
+      noise:
+        seed: 1
+        frequency: 1
       decals:
         - Basalt1
         - Basalt2
@@ -136,9 +231,11 @@
         - Basalt8
         - Basalt9
     - !type:BiomeEntityLayer
-      threshold: 0.99
-      frequency: 1
-      seedOffset: 1
+      threshold: 0.95
+      noise:
+        seed: 0
+        noiseType: OpenSimplex2
+        frequency: 1
       allowedTiles:
         - FloorBasalt
       entities:
@@ -146,29 +243,39 @@
         - FloraRockSolid02
         - FloraRockSolid03
     - !type:BiomeEntityLayer
-      threshold: 0.7
-      frequency: 0.2
+      threshold: 0.2
+      noise:
+        seed: 0
+        frequency: 0.02
+        fractalType: FBm
+        octaves: 5
+        lacunarity: 2
+        gain: 0.4
       allowedTiles:
         - FloorBasalt
       entities:
         - FloorLavaEntity
+    # Fill basalt
     - !type:BiomeTileLayer
-      threshold: 0
+      threshold: -1
       variants:
         - 0
       tile: FloorBasalt
 
 # Snow
 - type: biome
-  id: Snow
+  id: Snow # Similar to Grasslands... but snow
   layers:
+    # Sparse vegetation
     - !type:BiomeDecalLayer
       allowedTiles:
         - FloorSnow
-      seedOffset: 4
-      threshold: 0.95
-      divisions: 1
-      frequency: 1
+      divisions: 2
+      threshold: -0.50
+      noise:
+        seed: 0
+        noiseType: Cellular
+        frequency: 1
       decals:
         - grasssnowa1
         - grasssnowa2
@@ -179,14 +286,22 @@
         - grasssnowc1
         - grasssnowc2
         - grasssnowc3
-    # The main grass texture, this one blends in very well
+    # Dense, bland grass
     - !type:BiomeDecalLayer
       allowedTiles:
         - FloorSnow
       divisions: 1
-      seedOffset: 3
-      threshold: 0.8
-      frequency: 0.05
+      threshold: -0.35
+      noise:
+        seed: 0
+        noiseType: Cellular
+        frequency: 0.2
+        fractalType: FBm
+        octaves: 5
+        lacunarity: 2
+        gain: 1
+        cellularDistanceFunction: Euclidean
+        cellularReturnType: Distance2
       decals:
         - grasssnow
         - grasssnow01
@@ -202,24 +317,33 @@
         - grasssnow11
         - grasssnow12
         - grasssnow13
+    # Little bit of coloured grass
     - !type:BiomeDecalLayer
       allowedTiles:
         - FloorSnow
-      seedOffset: 2
-      threshold: 0.99
       divisions: 1
-      frequency: 1
+      threshold: -0.0
+      noise:
+        seed: 0
+        noiseType: Cellular
+        frequency: 1
+        fractalType: None
+        cellularDistanceFunction: Euclidean
+        cellularReturnType: Distance2
       decals:
         - bushsnowa1
         - bushsnowa2
         - bushsnowa3
-        - bushsnowb1
+        - bushsnowb3
         - bushsnowb2
         - bushsnowb3
     - !type:BiomeEntityLayer
-      seedOffset: 1
-      threshold: 0.95
-      frequency: 1
+      threshold: 0.5
+      noise:
+        seed: 0
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        frequency: 2
       allowedTiles:
         - FloorSnow
       entities:
@@ -230,11 +354,12 @@
         - FloraTreeSnow05
         - FloraTreeSnow06
     - !type:BiomeTileLayer
-      threshold: 0
-      variants:
-        - 0
+      threshold: -1.0
       tile: FloorSnow
     - !type:BiomeTileLayer
-      threshold: 0.6
+      threshold: -0.50
       tile: FloorSnow
-      frequency: 0.1
+      noise:
+        seed: 0
+        frequency: 0.02
+        fractalType: None
