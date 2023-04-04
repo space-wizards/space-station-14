@@ -89,7 +89,7 @@ public sealed class SpreaderSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-    private static readonly TimeSpan SpreadCooldown = TimeSpan.FromSeconds(1);
+    private static readonly TimeSpan SpreadCooldown = TimeSpan.FromSeconds(0.5);
 
     private static readonly List<string> SpreaderGroups = new()
     {
@@ -201,7 +201,7 @@ public sealed class SpreaderSystem : EntitySystem
                         Name = node.Name,
                     };
                     RaiseLocalEvent(ref spreadEv);
-                    updates = spreadEv.Updates;
+                    updates = (int) (spreadEv.UpdatesPerSecond * TimeSpan.FromSeconds(1) / SpreadCooldown);
                 }
 
                 if (updates <= 0)
@@ -252,7 +252,7 @@ public sealed class SpreaderSystem : EntitySystem
 
         for (var i = 0; i < 4; i++)
         {
-            var direction = (Direction) (1 << i);
+            var direction = (Direction) (i * 2);
             var neighborPos = SharedMapSystem.GetDirection(tile, direction);
             var neighborCoords = grid.GridTileToLocal(neighborPos);
 
@@ -344,7 +344,7 @@ public sealed class SpreaderSystem : EntitySystem
 public record struct SpreadGroupUpdateRate()
 {
     public string Name;
-    public int Updates = 8;
+    public int UpdatesPerSecond = 10;
 }
 
 [RegisterComponent]

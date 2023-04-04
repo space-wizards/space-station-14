@@ -23,6 +23,7 @@
       key: puddles
       base: blood
       mode: CardinalFlags
+    - type: Appearance
     - type: NodeContainer
       nodes:
         puddle:

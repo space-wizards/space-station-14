@@ -1,14 +1,13 @@
-using Content.Server.Fluids.EntitySystems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Fluids.Components
+namespace Content.Shared.Fluids.Components
 {
     /// <summary>
     /// Puddle on a floor
     /// </summary>
-    [RegisterComponent]
-    [Access(typeof(PuddleSystem))]
+    [RegisterComponent, NetworkedComponent]
     public sealed class PuddleComponent : Component
     {
         /// <summary>

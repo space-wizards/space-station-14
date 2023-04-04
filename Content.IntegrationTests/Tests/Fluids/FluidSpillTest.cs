@@ -7,6 +7,7 @@ using Content.Server.Fluids.EntitySystems;
 using Content.Server.Kudzu;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
+using Content.Shared.Fluids.Components;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;

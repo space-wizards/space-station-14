@@ -6,6 +6,7 @@ using Content.Server.Kudzu;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
+using Content.Shared.Fluids.Components;
 using Content.Shared.StepTrigger.Components;
 using Content.Shared.StepTrigger.Systems;
 using Robust.Shared.Audio;
@@ -87,6 +88,7 @@ public sealed partial class PuddleSystem : EntitySystem
         // If there's still some remaining we just split our overflow evenly to splash it around.
         if (args.NeighborFreeTiles.Count > 0)
         {
+            args.Handled = true;
             _random.Shuffle(args.NeighborFreeTiles);
             var spillAmount = overflow.Volume / args.NeighborFreeTiles.Count;
 
@@ -101,6 +103,7 @@ public sealed partial class PuddleSystem : EntitySystem
 
         if (args.Neighbors.Count > 0)
         {
+            args.Handled = true;
             var puddleQuery = GetEntityQuery<PuddleComponent>();
             _random.Shuffle(args.Neighbors);
 
@@ -177,13 +180,19 @@ public sealed partial class PuddleSystem : EntitySystem
 
     private void UpdateAppearance(EntityUid uid, PuddleComponent? puddleComponent = null, AppearanceComponent? appearance = null)
     {
-        if (!Resolve(uid, ref puddleComponent, ref appearance, false)
-            || EmptyHolder(uid, puddleComponent))
+        if (!Resolve(uid, ref puddleComponent, ref appearance, false))
         {
             return;
         }
 
-        // TODO:
+        var volume = FixedPoint2.Zero;
+
+        if (_solutionContainerSystem.TryGetSolution(uid, puddleComponent.SolutionName, out var solution))
+        {
+            volume = solution.Volume / puddleComponent.OverflowVolume;
+        }
+
+
     }
 
     private void UpdateSlip(EntityUid entityUid, PuddleComponent puddleComponent)
@@ -215,16 +224,6 @@ public sealed partial class PuddleSystem : EntitySystem
     {
         if (!args.Anchored)
             QueueDel(uid);
-    }
-
-    public bool EmptyHolder(EntityUid uid, PuddleComponent? puddleComponent = null)
-    {
-        if (!Resolve(uid, ref puddleComponent))
-            return true;
-
-        return !_solutionContainerSystem.TryGetSolution(uid, puddleComponent.SolutionName,
-                   out var solution)
-               || solution.Contents.Count == 0;
     }
 
     public FixedPoint2 CurrentVolume(EntityUid uid, PuddleComponent? puddleComponent = null)
@@ -402,6 +401,7 @@ public sealed partial class PuddleSystem : EntitySystem
         // TODO: Does SnapGrid or something else already do this?
         var anchored = mapGrid.GetAnchoredEntitiesEnumerator(tileRef.GridIndices);
         var puddleQuery = GetEntityQuery<PuddleComponent>();
+        // TODO: Delete sparkles on the tile.
 
         while (anchored.MoveNext(out var ent))
         {

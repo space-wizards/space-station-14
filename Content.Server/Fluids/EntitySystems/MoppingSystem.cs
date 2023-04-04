@@ -8,6 +8,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
+using Content.Shared.Fluids.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using JetBrains.Annotations;
