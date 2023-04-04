@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Several new, !!fun!! artifact effects have been added.', type: Add}
-  id: 2831
-  time: '2023-01-03T23:13:11.0000000+00:00'
 - author: vanx
   changes:
   - {message: Doubled the paper symbol limit, type: Tweak}
@@ -2910,3 +2905,8 @@ Entries:
     type: Tweak}
   id: 3330
   time: '2023-04-04T06:28:56.0000000+00:00'
+- author: adamsong
+  changes:
+  - {message: Added tcoms server to dev map, type: Add}
+  id: 3331
+  time: '2023-04-04T13:26:00.0000000+00:00'
