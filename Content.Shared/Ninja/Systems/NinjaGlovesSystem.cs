@@ -55,13 +55,13 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         SubscribeLocalEvent<NinjaStunComponent, InteractionAttemptEvent>(OnStun);
 
         SubscribeLocalEvent<NinjaDrainComponent, InteractionAttemptEvent>(OnDrain);
-        SubscribeLocalEvent<NinjaDrainComponent, DoAfterEvent<DrainData>>(OnDrainDoAfter);
+        SubscribeLocalEvent<NinjaDrainComponent, DrainDoAfterEvent>(OnDrainDoAfter);
 
         SubscribeLocalEvent<NinjaDownloadComponent, InteractionAttemptEvent>(OnDownload);
-        SubscribeLocalEvent<NinjaDownloadComponent, DoAfterEvent<DownloadData>>(OnDownloadDoAfter);
+        SubscribeLocalEvent<NinjaDownloadComponent, DownloadDoAfterEvent>(OnDownloadDoAfter);
 
         SubscribeLocalEvent<NinjaTerrorComponent, InteractionAttemptEvent>(OnTerror);
-        SubscribeLocalEvent<NinjaTerrorComponent, DoAfterEvent<TerrorData>>(OnTerrorDoAfter);
+        SubscribeLocalEvent<NinjaTerrorComponent, TerrorDoAfterEvent>(OnTerrorDoAfter);
     }
 
     /// <summary>
@@ -158,12 +158,6 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         return false;
     }
 
-    private void EndBusy(EntityUid uid)
-    {
-        if (TryComp<NinjaGlovesComponent>(uid, out var gloves))
-            gloves.Busy = false;
-    }
-
     private void OnDoorjack(EntityUid uid, NinjaDoorjackComponent comp, InteractionAttemptEvent args)
     {
         if (!GloveCheck(uid, args, out var gloves, out var user, out var target))
@@ -209,13 +203,12 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
     // can't predict PNBC existing so only done on server.
     protected virtual void OnDrain(EntityUid uid, NinjaDrainComponent comp, InteractionAttemptEvent args) { }
 
-    private void OnDrainDoAfter(EntityUid uid, NinjaDrainComponent comp, DoAfterEvent<DrainData> args)
+    private void OnDrainDoAfter(EntityUid uid, NinjaDrainComponent comp, DrainDoAfterEvent args)
     {
-        EndBusy(uid);
-        if (args.Cancelled || args.Handled || args.Args.Target == null)
+        if (args.Cancelled || args.Handled || args.Target == null)
             return;
 
-        _ninja.TryDrainPower(args.Args.User, comp, args.Args.Target.Value);
+        _ninja.TryDrainPower(args.User, comp, args.Target.Value);
     }
 
     private void OnDownload(EntityUid uid, NinjaDownloadComponent comp, InteractionAttemptEvent args)
@@ -224,7 +217,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
             return;
 
         // can only hack the server, not a random console
-        if (gloves.Busy || !TryComp<TechnologyDatabaseComponent>(target, out var database) || HasComp<ResearchClientComponent>(target))
+        if (!TryComp<TechnologyDatabaseComponent>(target, out var database) || HasComp<ResearchClientComponent>(target))
             return;
 
         // fail fast if theres no tech right now
@@ -234,29 +227,25 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
             return;
         }
 
-        var doafterArgs = new DoAfterEventArgs(user, comp.DownloadTime, target: target, used: uid)
+        var doAfterArgs = new DoAfterArgs(user, comp.DownloadTime, new DownloadDoAfterEvent(), target: target, used: uid, eventTarget: uid)
         {
-            RaiseOnUser = false,
-            RaiseOnTarget = false,
             BreakOnDamage = true,
-            BreakOnStun = true,
             BreakOnUserMove = true,
-            MovementThreshold = 0.5f
+            MovementThreshold = 0.5f,
+            CancelDuplicate = false
         };
 
-        _doAfter.DoAfter(doafterArgs, new DownloadData());
-        gloves.Busy = true;
+        _doAfter.TryStartDoAfter(doAfterArgs);
         args.Cancel();
     }
 
-    private void OnDownloadDoAfter(EntityUid uid, NinjaDownloadComponent comp, DoAfterEvent<DownloadData> args)
+    private void OnDownloadDoAfter(EntityUid uid, NinjaDownloadComponent comp, DownloadDoAfterEvent args)
     {
-        EndBusy(uid);
         if (args.Cancelled || args.Handled)
             return;
 
-        var user = args.Args.User;
-        var target = args.Args.Target;
+        var user = args.User;
+        var target = args.Target;
 
         if (!TryComp<NinjaComponent>(user, out var ninja)
             || !TryComp<TechnologyDatabaseComponent>(target, out var database))
@@ -276,7 +265,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
             || !TryComp<NinjaComponent>(user, out var ninja))
             return;
 
-        if (gloves.Busy || !IsCommsConsole(target))
+        if (!IsCommsConsole(target))
             return;
 
         // can only do it once
@@ -286,19 +275,16 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
             return;
         }
 
-        var doafterArgs = new DoAfterEventArgs(user, comp.TerrorTime, target: target, used: uid)
+        var doAfterArgs = new DoAfterArgs(user, comp.TerrorTime, new TerrorDoAfterEvent(), target: target, used: uid, eventTarget: uid)
         {
-            RaiseOnUser = false,
-            RaiseOnTarget = false,
             BreakOnDamage = true,
-            BreakOnStun = true,
             BreakOnUserMove = true,
-            MovementThreshold = 0.5f
+            MovementThreshold = 0.5f,
+            CancelDuplicate = false
         };
 
-        _doAfter.DoAfter(doafterArgs, new TerrorData());
-        gloves.Busy = true;
-        // don't show the console popup
+        _doAfter.TryStartDoAfter(doAfterArgs);
+        // FIXME: doesnt work, don't show the console popup
         args.Cancel();
     }
 
@@ -308,14 +294,12 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         return false;
     }
 
-    private void OnTerrorDoAfter(EntityUid uid, NinjaTerrorComponent comp, DoAfterEvent<TerrorData> args)
+    private void OnTerrorDoAfter(EntityUid uid, NinjaTerrorComponent comp, TerrorDoAfterEvent args)
     {
-        EndBusy(uid);
-        var target = args.Args.Target;
-        if (args.Cancelled || args.Handled || target == null || !IsCommsConsole(target.Value))
+        if (args.Cancelled || args.Handled)
             return;
 
-        var user = args.Args.User;
+        var user = args.User;
         if (!TryComp<NinjaComponent>(user, out var ninja) || ninja.CalledInThreat)
             return;
 

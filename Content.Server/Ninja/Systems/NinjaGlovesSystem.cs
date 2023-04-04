@@ -18,21 +18,15 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
 
         // nicer for spam-clicking to not open apc ui, and when draining starts, so cancel the ui action
         args.Cancel();
-        if (gloves.Busy)
-            return;
 
-        var doafterArgs = new DoAfterEventArgs(user, comp.DrainTime, target: target, used: uid)
+        var doAfterArgs = new DoAfterArgs(user, comp.DrainTime, new DrainDoAfterEvent(), target: target, used: uid, eventTarget: uid)
         {
-            RaiseOnUser = false,
-            RaiseOnTarget = false,
-            BreakOnDamage = true,
-            BreakOnStun = true,
             BreakOnUserMove = true,
-            MovementThreshold = 0.5f
+            MovementThreshold = 0.5f,
+            CancelDuplicate = false
         };
 
-        _doAfter.DoAfter(doafterArgs, new DrainData());
-        gloves.Busy = true;
+        _doAfter.TryStartDoAfter(doAfterArgs);
     }
 
     protected override bool IsCommsConsole(EntityUid uid)

@@ -1,5 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.DoAfter;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Tag;
 using Content.Shared.Toggleable;
@@ -25,12 +26,6 @@ public sealed class NinjaGlovesComponent : Component
     /// </summary>
     [ViewVariables]
     public EntityUid? User;
-
-    /// <summary>
-    /// Whether the gloves are doing a doafter or not, set to false whenever it finishes or is cancelled.
-    /// Used to prevent doing multiple drains/hacks at once.
-    /// </summary>
-    public bool Busy;
 
     /// <summary>
     /// The action for toggling ninja gloves abilities
@@ -149,16 +144,19 @@ public sealed class NinjaTerrorComponent : Component
 }
 
 /// <summary>
-/// DoAfter event data for drain ability.
+/// DoAfter event for drain ability.
 /// </summary>
-public sealed record DrainData;
+[Serializable, NetSerializable]
+public sealed class DrainDoAfterEvent : SimpleDoAfterEvent { }
 
 /// <summary>
-/// DoAfter event data for research download ability.
+/// DoAfter event for research download ability.
 /// </summary>
-public sealed record DownloadData;
+[Serializable, NetSerializable]
+public sealed class DownloadDoAfterEvent : SimpleDoAfterEvent { }
 
 /// <summary>
-/// DoAfter event data for comms console terror ability.
+/// DoAfter event for comms console terror ability.
 /// </summary>
-public sealed record TerrorData;
+[Serializable, NetSerializable]
+public sealed class TerrorDoAfterEvent : SimpleDoAfterEvent { }
