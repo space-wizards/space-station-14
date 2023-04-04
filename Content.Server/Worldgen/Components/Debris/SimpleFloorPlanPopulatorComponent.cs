@@ -16,6 +16,9 @@ public sealed class SimpleFloorPlanPopulatorComponent : Component
 {
     private Dictionary<string, EntitySpawnCollectionCache>? _caches;
 
+    /// <summary>
+    ///     The prototype facing floor plan populator entries.
+    /// </summary>
     [DataField("entries", required: true,
         customTypeSerializer: typeof(PrototypeIdDictionarySerializer<List<EntitySpawnEntry>, ContentTileDefinition>))]
     private Dictionary<string, List<EntitySpawnEntry>> _entries = default!;

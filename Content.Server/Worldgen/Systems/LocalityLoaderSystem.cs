@@ -52,5 +52,8 @@ public sealed class LocalityLoaderSystem : BaseWorldSystem
     }
 }
 
+/// <summary>
+///     A directed fired on a loadable entity when a local loader enters it's vicinity.
+/// </summary>
 public record struct LocalStructureLoadedEvent;
 

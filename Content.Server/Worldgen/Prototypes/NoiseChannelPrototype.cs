@@ -14,13 +14,13 @@ public class NoiseChannelConfig
     ///     The noise type used by the noise generator.
     /// </summary>
     [DataField("noiseType")]
-    public FastNoise.NoiseType NoiseType { get; } = FastNoise.NoiseType.Cellular;
+    public FastNoiseLite.NoiseType NoiseType { get; } = FastNoiseLite.NoiseType.Cellular;
 
     /// <summary>
     ///     The fractal type used by the noise generator.
     /// </summary>
     [DataField("fractalType")]
-    public FastNoise.FractalType FractalType { get; } = FastNoise.FractalType.Billow;
+    public FastNoiseLite.FractalType FractalType { get; } = FastNoiseLite.FractalType.FBm;
 
     /// <summary>
     ///     Multiplied by pi in code when used.
@@ -101,12 +101,15 @@ public sealed class NoiseChannelPrototype : NoiseChannelConfig, IPrototype, IInh
 public struct NoiseGenerator
 {
     private readonly NoiseChannelConfig _config;
-    private readonly FastNoise _noise;
+    private readonly FastNoiseLite _noise;
 
+    /// <summary>
+    ///     Produces a new noise generator from the given channel config and rng seed.
+    /// </summary>
     public NoiseGenerator(NoiseChannelConfig config, int seed)
     {
         _config = config;
-        _noise = new FastNoise();
+        _noise = new FastNoiseLite();
         _noise.SetSeed(seed);
         _noise.SetNoiseType(_config.NoiseType);
         _noise.SetFractalType(_config.FractalType);

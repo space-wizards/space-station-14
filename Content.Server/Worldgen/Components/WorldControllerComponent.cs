@@ -11,6 +11,9 @@ namespace Content.Server.Worldgen.Components;
 [Access(typeof(WorldControllerSystem))]
 public sealed class WorldControllerComponent : Component
 {
+    /// <summary>
+    ///     The prototype to use for chunks on this world map.
+    /// </summary>
     [DataField("chunkProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string ChunkProto = "WorldChunk";
 
