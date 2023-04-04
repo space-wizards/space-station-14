@@ -79,11 +79,6 @@
           Forward: { state: grinder-o1bld }
           Reverse: { state: grinder-o1bld }
           Off: { state: grinder-o0bld }
-    # todo: smoke crack + generic
-    #visuals:
-    #- type: RecyclerVisualizer
-    #  state_on: grinder-o1
-    #  state_off: grinder-o0
   - type: CollideMaterialReclaimer
   - type: MaterialReclaimer
     enabled: false
