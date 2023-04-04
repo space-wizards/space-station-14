@@ -321,7 +321,7 @@ public sealed class ArrivalsSystem : EntitySystem
     {
         var mapId = _mapManager.CreateMap();
 
-        if (!_loader.TryLoad(mapId, _cfgManager.GetCVar(CCVars.ArrivalsMap).ToString(), out var uids))
+        if (!_loader.TryLoad(mapId, _cfgManager.GetCVar(CCVars.ArrivalsMap), out var uids))
         {
             return;
         }
@@ -330,6 +330,7 @@ public sealed class ArrivalsSystem : EntitySystem
         {
             EnsureComp<ArrivalsSourceComponent>(id);
             EnsureComp<ProtectedGridComponent>(id);
+            EnsureComp<PreventPilotComponent>(id);
         }
 
         // Handle roundstart stations.

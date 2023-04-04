@@ -45,15 +45,43 @@
        - id: ClothingUniformJumpskirtChemistry
          amount: 1
 
-# - type: entity
-#   id: WardrobeGeneticsFilled
-#   suffix: Filled
-#   parent: WardrobeGenetics
+ - type: entity
+   id: WardrobeGeneticsFilled
+   suffix: Filled
+   parent: WardrobeGenetics
+   description: "The sleek blue threads contained within make you much less likely to be thrown out of the genetics lab."
+   components:
+   - type: StorageFill
+     contents:
+       - id: ClothingUniformJumpsuitGenetics
+         amount: 1
+       - id: ClothingBackpackGenetics
+         amount: 1
+       - id: ClothingShoesColorWhite
+         amount: 1
+       - id: ClothingOuterCoatLabGene
+         amount: 1
+       - id: ClothingUniformJumpskirtGenetics
+         amount: 1
 
-# - type: entity
-#   id: WardrobeVirologyFilled
-#   suffix: Filled
-#   parent: WardrobeVirology
+ - type: entity
+   id: WardrobeVirologyFilled
+   suffix: Filled
+   parent: WardrobeVirology
+   description: "The sleek green threads contained within make you much less likely to be thrown out of the virology lab."
+   components:
+   - type: StorageFill
+     contents:
+       - id: ClothingUniformJumpsuitVirology
+         amount: 1
+       - id: ClothingBackpackVirology
+         amount: 1
+       - id: ClothingShoesColorWhite
+         amount: 1
+       - id: ClothingOuterCoatLabViro
+         amount: 1
+       - id: ClothingUniformJumpskirtVirology
+         amount: 1
 
  - type: entity
    id: WardrobeScienceFilled
@@ -201,10 +229,22 @@
        - id: ClothingUniformJumpsuitSalvageSpecialist
          amount: 2
 
-# - type: entity
-#   id: WardrobeAtmosphericsFilled
-#   suffix: Filled
-#   parent: WardrobeAtmospherics
+ - type: entity
+   id: WardrobeAtmosphericsFilled
+   suffix: Filled
+   parent: WardrobeAtmospherics
+   description: "This locker contains a uniform for atmospheric technicians."
+   components:
+   - type: StorageFill
+     contents:
+       - id: ClothingUniformJumpsuitAtmos
+         amount: 1
+       - id: ClothingBackpackEngineering
+         amount: 1
+       - id: ClothingShoesColorWhite
+         amount: 1
+       - id: ClothingUniformJumpskirtAtmos
+         amount: 1
 
  - type: entity
    id: WardrobeEngineeringFilled
