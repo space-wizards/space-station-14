@@ -20,15 +20,13 @@ namespace Content.Server.Fluids.EntitySystems;
 [UsedImplicitly]
 public sealed class MoppingSystem : SharedMoppingSystem
 {
-    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly SpillableSystem _spillableSystem = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
-    [Dependency] private readonly PopupSystem _popups = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
-
-    const string PuddlePrototypeId = "PuddleSmear"; // The puddle prototype to use when releasing liquid to the floor, making a new puddle
+    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly PopupSystem _popups = default!;
+    [Dependency] private readonly PuddleSystem _spillableSystem = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     public override void Initialize()
     {
@@ -96,7 +94,7 @@ public sealed class MoppingSystem : SharedMoppingSystem
 
         var releaseAmount = FixedPoint2.Min(absorbent.ResidueAmount, absorberSoln.Volume);
         var releasedSolution = _solutionSystem.SplitSolution(absorbent.Owner, absorberSoln, releaseAmount);
-        _spillableSystem.SpillAt(mapGrid.GetTileRef(clickLocation), releasedSolution, PuddlePrototypeId);
+        _spillableSystem.TrySpillAt(mapGrid.GetTileRef(clickLocation), releasedSolution, out _);
         _popups.PopupEntity(Loc.GetString("mopping-system-release-to-floor"), user, user);
         return true;
     }
@@ -206,12 +204,6 @@ public sealed class MoppingSystem : SharedMoppingSystem
 
         // Get lower limit for mopping
         FixedPoint2 lowerLimit = FixedPoint2.Zero;
-        if (TryComp(target, out EvaporationComponent? evaporation)
-            && evaporation.EvaporationToggle
-            && evaporation.LowerLimit == 0)
-        {
-            lowerLimit = absorber.LowerLimit;
-        }
 
         // Can our absorber even absorb any liquid?
         if (puddleSolution.Volume <= lowerLimit)
