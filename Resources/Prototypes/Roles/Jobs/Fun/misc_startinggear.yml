@@ -47,8 +47,6 @@
     ears: ClothingHeadsetGrey
     pocket1: VehicleSkeletonMotorcycle
     pocket2: VehicleKeySkeletonMotorcycle
-  inhand:
-    left: JetpackBlackFilled
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
@@ -73,6 +71,8 @@
     pocket2: HandheldGPSBasic
     belt: EnergyKatana
     suitstorage: YellowOxygenTankFilled
+  inhand:
+    left: JetpackBlackFilled
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
