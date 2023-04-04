@@ -28,6 +28,8 @@
     solution: food
   # soup weapon!
   - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
     damage:
       types:
         Blunt: 0
