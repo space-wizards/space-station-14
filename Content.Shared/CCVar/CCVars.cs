@@ -1563,7 +1563,7 @@ namespace Content.Shared.CCVar
         ///     Whether or not world generation is enabled.
         /// </summary>
         public static readonly CVarDef<bool> WorldgenEnabled =
-            CVarDef.Create("worldgen.enabled", true, CVar.SERVERONLY); //TODO: SET TO FALSE BEFORE MERGING.
+            CVarDef.Create("worldgen.enabled", false, CVar.SERVERONLY);
 
         /// <summary>
         ///     The worldgen config to use.
