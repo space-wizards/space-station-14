@@ -1,4 +1,5 @@
 ﻿using Content.Server.Worldgen.Prototypes;
+using Content.Server.Worldgen.Systems.Debris;
 using Content.Server.Worldgen.Tools;
 using Content.Shared.Storage;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -10,6 +11,7 @@ namespace Content.Server.Worldgen.Components.Debris;
 ///     Takes priority over SimpleDebrisSelectorComponent and should likely be used in combination.
 /// </summary>
 [RegisterComponent]
+[Access(typeof(NoiseDrivenDebrisSelectorSystem))]
 public sealed class NoiseDrivenDebrisSelectorComponent : Component
 {
     private EntitySpawnCollectionCache? _cache;
