@@ -1,14 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: 'Hand teleporter now requires a doafter, and can''t be used when inside
-      anything.', type: Tweak}
-  - {message: Portal random teleport now teleports you less farther away at maximum.,
-    type: Tweak}
-  id: 2830
-  time: '2023-01-03T07:53:16.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: 'Several new, !!fun!! artifact effects have been added.', type: Add}
   id: 2831
   time: '2023-01-03T23:13:11.0000000+00:00'
@@ -2909,3 +2901,12 @@ Entries:
       capitalization., type: Tweak}
   id: 3329
   time: '2023-04-04T02:50:37.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: You can once again build several structures simultaneously., type: Fix}
+  - {message: Fixed being unable to repair reinforced windows., type: Fix}
+  - {message: Fixed APC-screw driver interaction, type: Fix}
+  - {message: Revenant soul-leeching will now be interrupted if they receive damage,
+    type: Tweak}
+  id: 3330
+  time: '2023-04-04T06:28:56.0000000+00:00'
