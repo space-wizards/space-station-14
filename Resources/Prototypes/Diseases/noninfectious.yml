@@ -31,7 +31,7 @@
       type: Add
     - !type:DiseaseSnough
       probability: 0.025
-      emote: Yawns
+      emote: Yawn
     - !type:DiseaseHealthChange
       probability: 0.02
       damage:
@@ -58,7 +58,7 @@
       probability: 0.01
     - !type:DiseaseSnough
       probability: 0.10
-      emote: Coughs
+      emote: Cough
     - !type:DiseasePopUp
       probability: 0.03
 

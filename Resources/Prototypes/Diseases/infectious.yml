@@ -11,7 +11,7 @@
       probability: 0.025
     - !type:DiseaseSnough
       probability: 0.025
-      emote: Sneezes
+      emote: Sneeze
   cures:
     - !type:DiseaseBedrestCure
       maxLength: 20
@@ -32,7 +32,7 @@
       visualType: Medium
     - !type:DiseaseSnough
       probability: 0.025
-      emote: Coughs
+      emote: Cough
     - !type:DiseaseHealthChange
       probability: 0.015
       damage:
@@ -57,7 +57,7 @@
       probability: 0.025
     - !type:DiseaseSnough
       probability: 0.025
-      emote: Sneezes
+      emote: Sneeze
     - !type:DiseaseHealthChange
       probability: 0.015
       damage:
@@ -78,7 +78,7 @@
       probability: 0.025
     - !type:DiseaseSnough
       probability: 0.025
-      emote: Coughs
+      emote: Cough
     - !type:DiseaseHealthChange
       probability: 0.05
       damage:
@@ -99,7 +99,7 @@
       amount: 0.5
     - !type:DiseaseSnough
       probability: 0.02
-      emote: RobotBeeps
+      emote: RobotBeep
   cures:
     - !type:DiseaseJustWaitCure
       maxLength: 900
@@ -206,7 +206,7 @@
       type: Add
     - !type:DiseaseSnough
       probability: 0.025
-      emote: Yawns
+      emote: Yawn
 
 - type: disease
   id: BleedersBite
@@ -243,7 +243,7 @@
       probability: 0.025
     - !type:DiseaseSnough
       probability: 0.025
-      emote: Coughs
+      emote: Cough
     - !type:DiseaseHealthChange
       probability: 0.05
       damage:
@@ -269,7 +269,7 @@
       amount: 1
     - !type:DiseaseSnough
       probability: 0.01
-      emote: CatMeows
+      emote: CatMeow
     - !type:DiseaseSnough
       probability: 0.01
       emote: CatHisses
@@ -290,7 +290,7 @@
       component: ScrambledAccent
     - !type:DiseaseSnough
       probability: 0.01
-      emote: Sneezes
+      emote: Sneeze
     - !type:DiseasePopUp
       probability: 0.02
       message: disease-think

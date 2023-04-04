@@ -7,7 +7,7 @@
       - DiseaseCarrier
   components:
     - type: UncontrollableSnough
-      emote: Sneezes
+      emote: Sneeze
       timeBetweenIncidents: 0.3, 300
 
 - type: trait
