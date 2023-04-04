@@ -25,6 +25,7 @@ using Content.Shared.Spillable;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
 
 namespace Content.Server.Fluids.EntitySystems;
 
@@ -36,7 +37,8 @@ public sealed class SpillableSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger= default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly ReactiveSystem _reactive = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -46,7 +48,7 @@ public sealed class SpillableSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<SpillableComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<SpillableComponent, LandEvent>(SpillOnLand);
-        SubscribeLocalEvent<SpillableComponent, MeleeHitEvent>(SpillOnMeleeHit);
+        SubscribeLocalEvent<SpillableComponent, MeleeHitEvent>(SplashOnMeleeHit);
         SubscribeLocalEvent<SpillableComponent, GetVerbsEvent<Verb>>(AddSpillVerb);
         SubscribeLocalEvent<SpillableComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<SpillableComponent, SolutionSpikeOverflowEvent>(OnSpikeOverflow);
@@ -124,16 +126,14 @@ public sealed class SpillableSystem : EntitySystem
         if (args.User != null)
         {
             _adminLogger.Add(LogType.Landed,
-                $"{ToPrettyString(uid):entity} spilled a solution {SolutionContainerSystem.ToPrettyString(solution):solution} on landing");
+                $"{ToPrettyString(args.User.Value):user} threw {ToPrettyString(uid):entity} which spilled a solution {SolutionContainerSystem.ToPrettyString(solution):solution} on landing");
         }
 
-        // Get reactive entities nearby--if there are some, it'll spill a bit on them instead, depending on how close they are.
-
         var drainedSolution = _solutionContainerSystem.Drain(uid, solution, solution.Volume);
-        SpillAt(drainedSolution, EntityManager.GetComponent<TransformComponent>(uid).Coordinates, "PuddleSmear");
+        SplashSpillAt(uid, drainedSolution, Transform(uid).Coordinates, "PuddleSmear");
     }
 
-    private void SpillOnMeleeHit(EntityUid uid, SpillableComponent component, MeleeHitEvent args)
+    private void SplashOnMeleeHit(EntityUid uid, SpillableComponent component, MeleeHitEvent args)
     {
         // When attacking someone reactive with a spillable entity,
         // splash a little on them (touch react)
@@ -167,6 +167,8 @@ public sealed class SpillableSystem : EntitySystem
             }
 
             var splitSolution = _solutionContainerSystem.SplitSolution(uid, solution, totalSplit / hitCount);
+
+            _adminLogger.Add(LogType.MeleeHit, $"{ToPrettyString(args.User)} splashed {SolutionContainerSystem.ToPrettyString(splitSolution):solution} from {ToPrettyString(uid):entity} onto {ToPrettyString(hit):target}");
             _reactive.DoEntityReaction(hit, splitSolution, ReactionMethod.Touch);
 
             _popup.PopupEntity(
@@ -215,6 +217,40 @@ public sealed class SpillableSystem : EntitySystem
     }
 
     /// <summary>
+    ///     First splashes reagent on reactive entities near the spilling entity, then spills the rest regularly to a
+    ///     puddle.
+    /// </summary>
+    public PuddleComponent? SplashSpillAt(EntityUid uid, Solution solution, EntityCoordinates coordinates, string prototype,
+        bool overflow = true, bool sound = true, bool combine = true, EntityUid? user=null)
+    {
+        if (solution.Volume == 0)
+            return null;
+
+        // Get reactive entities nearby--if there are some, it'll spill a bit on them instead.
+        foreach (var ent in _entityLookup.GetComponentsInRange<ReactiveComponent>(coordinates, 1.0f))
+        {
+            // sorry! no overload for returning uid, so .owner must be used
+            var owner = ent.Owner;
+
+            // between 5 and 30%
+            var splitAmount = solution.Volume * _random.NextFloat(0.05f, 0.30f);
+            var splitSolution = solution.SplitSolution(splitAmount);
+
+            if (user != null)
+            {
+                _adminLogger.Add(LogType.Landed,
+                    $"{ToPrettyString(user.Value):user} threw {ToPrettyString(uid):entity} which splashed a solution {SolutionContainerSystem.ToPrettyString(solution):solution} onto {ToPrettyString(owner):target}");
+            }
+
+            _reactive.DoEntityReaction(owner, splitSolution, ReactionMethod.Touch);
+            _popup.PopupEntity(Loc.GetString("spill-land-spilled-on-other", ("spillable", uid), ("target", owner)), owner, PopupType.SmallCaution);
+        }
+
+        return SpillAt(solution, coordinates, prototype, overflow, sound,
+            combine: combine);
+    }
+
+    /// <summary>
     ///     Spills solution at the specified grid coordinates.
     /// </summary>
     /// <param name="solution">Initial solution for the prototype.</param>
@@ -227,8 +263,8 @@ public sealed class SpillableSystem : EntitySystem
     public PuddleComponent? SpillAt(Solution solution, EntityCoordinates coordinates, string prototype,
         bool overflow = true, bool sound = true, bool combine = true)
     {
-        if (solution.Volume == 0) return null;
-
+        if (solution.Volume == 0)
+            return null;
 
         if (!_mapManager.TryGetGrid(coordinates.GetGridUid(EntityManager), out var mapGrid))
             return null; // Let's not spill to space.
