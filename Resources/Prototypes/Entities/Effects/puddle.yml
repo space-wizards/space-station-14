@@ -79,13 +79,19 @@
       anchored: true
     - type: Sprite
       sprite: Fluids/weh.rsi
-      state: splat0
+      state: blood0
       netsync: false
+      drawdepth: FloorObjects
       color: "#FFFFFF80"
     - type: IconSmooth
       key: puddles
-      base: splat
+      base: blood
       mode: CardinalFlags
+    - type: NodeContainer
+      nodes:
+        puddle:
+          !type:SpreaderNode
+          nodeGroupID: Spreader
 
 - type: entity
   name: puddle

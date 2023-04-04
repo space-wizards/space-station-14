@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Fluids.Components;
 using Content.Server.Fluids.EntitySystems;
+using Content.Server.Kudzu;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using NUnit.Framework;
@@ -16,7 +17,7 @@ using Robust.Shared.Timing;
 namespace Content.IntegrationTests.Tests.Fluids;
 
 [TestFixture]
-[TestOf(typeof(FluidSpreaderSystem))]
+[TestOf(typeof(SpreaderSystem))]
 public sealed class FluidSpill
 {
     private static PuddleComponent? GetPuddle(IEntityManager entityManager, MapGridComponent mapGrid, Vector2i pos)

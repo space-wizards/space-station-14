@@ -1,5 +1,6 @@
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.Components;
+using Content.Server.Kudzu;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
@@ -18,7 +19,7 @@ namespace Content.Server.Fluids.EntitySystems
     public sealed class PuddleSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly FluidSpreaderSystem _fluidSpreaderSystem = default!;
+        [Dependency] private readonly SpreaderSystem _spreaderSystem = default!;
         [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
@@ -184,7 +185,7 @@ namespace Content.Server.Fluids.EntitySystems
 
             if (checkForOverflow && IsOverflowing(puddleUid, puddleComponent))
             {
-                _fluidSpreaderSystem.AddOverflowingPuddle(puddleComponent.Owner, puddleComponent);
+                // _spreaderSystem.AddOverflowingPuddle(puddleComponent.Owner, puddleComponent);
             }
 
             if (!sound)
@@ -271,7 +272,7 @@ namespace Content.Server.Fluids.EntitySystems
             MetaDataComponent? metadata = null;
             Resolve(srcUid, ref metadata);
 
-            var prototype = metadata?.EntityPrototype?.ID ?? "PuddleSmear"; // TODO Spawn a entity based on another entity
+            var prototype = metadata?.EntityPrototype?.ID ?? "Puddle";
 
             uid = EntityManager.SpawnEntity(prototype, pos);
             component = EntityManager.EnsureComponent<PuddleComponent>(uid);
