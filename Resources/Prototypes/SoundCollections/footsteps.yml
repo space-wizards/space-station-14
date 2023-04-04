@@ -103,6 +103,14 @@
   - /Audio/Effects/Footsteps/grass4.ogg
 
 - type: soundCollection
+  id: FootstepWater
+  files:
+    - /Audio/Effects/Footsteps/water1.ogg
+    - /Audio/Effects/Footsteps/water2.ogg
+    - /Audio/Effects/Footsteps/water3.ogg
+    - /Audio/Effects/Footsteps/water4.ogg
+
+- type: soundCollection
   id: BarestepHard
   files:
   - /Audio/Effects/Footsteps/hardbarefoot1.ogg

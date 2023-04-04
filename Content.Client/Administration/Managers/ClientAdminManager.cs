@@ -1,13 +1,16 @@
 using Content.Shared.Administration;
+using Content.Shared.Administration.Managers;
 using Robust.Client.Console;
+using Robust.Client.Player;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Administration.Managers
 {
-    public sealed class ClientAdminManager : IClientAdminManager, IClientConGroupImplementation, IPostInjectInit
+    public sealed class ClientAdminManager : IClientAdminManager, IClientConGroupImplementation, IPostInjectInit, ISharedAdminManager
     {
+        [Dependency] private readonly IPlayerManager _player = default!;
         [Dependency] private readonly IClientNetManager _netMgr = default!;
         [Dependency] private readonly IClientConGroupController _conGroup = default!;
         [Dependency] private readonly IResourceManager _res = default!;
@@ -110,6 +113,13 @@ namespace Content.Client.Administration.Managers
         void IPostInjectInit.PostInject()
         {
             _conGroup.Implementation = this;
+        }
+
+        public AdminData? GetAdminData(EntityUid uid, bool includeDeAdmin = false)
+        {
+            return uid == _player.LocalPlayer?.ControlledEntity
+                ? _adminData
+                : null;
         }
     }
 }

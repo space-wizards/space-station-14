@@ -65,6 +65,7 @@
           ShardGlass:
             min: 1
             max: 1
+        transferForensics: true
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: DamageOnLand
@@ -251,6 +252,9 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 4
     fillBaseName: syringe
+  - type: Tag
+    tags:
+    - Syringe
 
 - type: entity
   parent: BaseSyringe
@@ -258,6 +262,7 @@
   components:
   - type: Tag
     tags:
+    - Syringe
     - Trash
 
 - type: entity

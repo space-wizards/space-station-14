@@ -28,3 +28,7 @@
 - type: metabolizerType
   id: Plant
   name: plant
+
+- type: metabolizerType
+  id: Dwarf
+  name: dwarf

@@ -44,14 +44,14 @@ namespace Content.Server.Nutrition.EntitySystems
             //Prevents food usage with a wrong utensil
             if ((food.Utensil & component.Types) == 0)
             {
-                _popupSystem.PopupEntity(Loc.GetString("food-system-wrong-utensil", ("food", food.Owner), ("utensil", component.Owner)), user, user);
+                _popupSystem.PopupEntity(Loc.GetString("food-system-wrong-utensil", ("food", target), ("utensil", component.Owner)), user, user);
                 return false;
             }
 
             if (!_interactionSystem.InRangeUnobstructed(user, target, popup: true))
                 return false;
 
-            return _foodSystem.TryFeed(user, user, food);
+            return _foodSystem.TryFeed(user, user, target, food);
         }
 
         /// <summary>
