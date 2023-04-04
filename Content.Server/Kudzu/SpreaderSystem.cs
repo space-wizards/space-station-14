@@ -9,6 +9,7 @@ using Content.Shared.Atmos;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Kudzu;
 
@@ -147,8 +148,6 @@ public sealed class SpreaderSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly NodeGroupSystem _groups = default!;
-
     // TODO: add spreaders into node groups.
     // Rate-limit spreading per node-group.
     // Copy some fluid stuff across.
@@ -157,15 +156,6 @@ public sealed class SpreaderSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<AirtightChanged>(OnAirtightChanged);
-        SubscribeLocalEvent<SpreaderComponent, ComponentStartup>(OnSpreaderStartup);
-    }
-
-    private void OnSpreaderStartup(EntityUid uid, SpreaderComponent component, ComponentStartup args)
-    {
-        if (!TryComp<NodeContainerComponent>(uid, out var nodeContainer))
-            return;
-
-
     }
 
     private void OnAirtightChanged(ref AirtightChanged ev)
@@ -173,6 +163,9 @@ public sealed class SpreaderSystem : EntitySystem
         UpdateNearbySpreaders(ev.Entity, ev.Airtight);
     }
 
+    /// <summary>
+    /// Adds adjacent neighbors as edge spreaders.
+    /// </summary>
     public void UpdateNearbySpreaders(EntityUid blocker, AirtightComponent comp)
     {
         if (!EntityManager.TryGetComponent<TransformComponent>(blocker, out var transform))
@@ -195,62 +188,65 @@ public sealed class SpreaderSystem : EntitySystem
             {
                 if (spreaderQuery.TryGetComponent(ent, out var s) && s.Enabled)
                 {
-                    // _edgeGrowths.Add(ent.Value);
+                    EnsureComp<EdgeSpreaderComponent>(ent.Value);
                 }
             }
         }
     }
 
+    // TODO: Add IsEdge here and check it.
+    private bool IsEdge(Node node)
+    {
+        return true;
+    }
+
     public override void Update(float frameTime)
     {
         var query = EntityQueryEnumerator<EdgeSpreaderComponent>();
+        var nodeQuery = GetEntityQuery<NodeContainerComponent>();
         // TODO: Per-group spread rates and stuffsies
         // Events and stuff
+        var groupUpdates = new Dictionary<SpreaderNodeGroup, int>();
+        var spreaders = new List<(EntityUid Uid, EdgeSpreaderComponent Comp)>(Count<EdgeSpreaderComponent>());
 
         while (query.MoveNext(out var uid, out var comp))
         {
-
+            spreaders.Add((uid, comp));
         }
-    }
 
-    private bool TryGrow(EntityUid ent, TransformComponent? transform = null, SpreaderComponent? spreader = null)
-    {
-        if (!Resolve(ent, ref transform, ref spreader, false))
-            return false;
+        _robustRandom.Shuffle(spreaders);
 
-        if (spreader.Enabled == false) return false;
-
-        if (!_mapManager.TryGetGrid(transform.GridUid, out var grid)) return false;
-
-        var didGrow = false;
-
-        for (var i = 0; i < 4; i++)
+        foreach (var (uid, comp) in spreaders)
         {
-            var direction = (DirectionFlag) (1 << i);
-            var coords = transform.Coordinates.Offset(direction.AsDir().ToVec());
-            if (grid.GetTileRef(coords).Tile.IsEmpty || _robustRandom.Prob(1 - spreader.Chance)) continue;
-            var ents = grid.GetLocal(coords);
+            // Cleanup
+            if (!nodeQuery.TryGetComponent(uid, out var nodeComponent) ||
+                !nodeComponent.TryGetNode<SpreaderNode>("puddle", out var node) ||
+                !IsEdge(node))
+            {
+                RemCompDeferred<EdgeSpreaderComponent>(uid);
+                continue;
+            }
 
-            if (ents.Any(x => IsTileBlockedFrom(x, direction))) continue;
+            if (node.NodeGroup == null)
+            {
+                continue;
+            }
 
-            // Ok, spawn a plant
-            didGrow = true;
-            EntityManager.SpawnEntity(spreader.GrowthResult, transform.Coordinates.Offset(direction.AsDir().ToVec()));
+            var group = (SpreaderNodeGroup) node.NodeGroup;
+            var updates = groupUpdates.GetOrNew(group);
+            // TODO: Move
+            var allowedUpdates = 3;
+            // TODO: Maybe raise event for update rate.
+
+            if (updates > allowedUpdates)
+            {
+                continue;
+            }
+
+            updates++;
+            groupUpdates[group] = updates;
+
+            // Spread
         }
-
-        return didGrow;
-    }
-
-    private bool IsTileBlockedFrom(EntityUid ent, DirectionFlag dir)
-    {
-        if (EntityManager.TryGetComponent<SpreaderComponent>(ent, out _))
-            return true;
-
-        if (!EntityManager.TryGetComponent<AirtightComponent>(ent, out var airtight))
-            return false;
-
-        var oppositeDir = dir.AsDir().GetOpposite().ToAtmosDirection();
-
-        return airtight.AirBlocked && airtight.AirBlockedDirection.IsFlagSet(oppositeDir);
     }
 }
