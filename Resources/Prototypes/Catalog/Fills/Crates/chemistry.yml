@@ -1,0 +1,56 @@
+- type: entity
+  id: CrateChemistryP
+  parent: CrateChemistrySecure
+  components:
+    - type: StorageFill
+      contents:
+        - id: ChemicalContainerAluminium
+          amount: 1
+        - id: ChemicalContainerCarbon
+          amount: 1
+        - id: ChemicalContainerChlorine
+          amount: 1
+        - id: ChemicalContainerFluorine
+          amount: 1
+        - id: ChemicalContainerIodine
+          amount: 1
+        - id: ChemicalContainerPhosphorus
+          amount: 1
+        - id: ChemicalContainerSulfur
+          amount: 1
+        - id: ChemicalContainerSilicon
+          amount: 1
+
+- type: entity
+  id: CrateChemistryS
+  parent: CrateChemistrySecure
+  components:
+    - type: StorageFill
+      contents:
+        - id: ChemicalContainerHydrogen
+          amount: 1
+        - id: ChemicalContainerLithium
+          amount: 1
+        - id: ChemicalContainerSodium
+          amount: 1
+        - id: ChemicalContainerPotassium
+          amount: 1
+        - id: ChemicalContainerRadium
+          amount: 1
+
+- type: entity
+  id: CrateChemistryD
+  parent: CrateChemistrySecure
+  components:
+    - type: StorageFill
+      contents:
+        - id: ChemicalContainerIron
+          amount: 1
+        - id: ChemicalContainerCopper
+          amount: 1
+        - id: ChemicalContainerGold
+          amount: 1
+        - id: ChemicalContainerMercury
+          amount: 1
+        - id: ChemicalContainerSilver
+          amount: 1
