@@ -90,6 +90,7 @@ public sealed class BloodstreamSystem : EntitySystem
 
             bloodstream.AccumulatedFrametime -= bloodstream.UpdateInterval;
 
+            // this checks if the mob is dead before running the bleed code. It should be moved to check for clotting and blood regen.
             if (TryComp<MobStateComponent>(uid, out var state) && _mobStateSystem.IsDead(uid, state))
                 continue;
 
@@ -119,7 +120,8 @@ public sealed class BloodstreamSystem : EntitySystem
                 // Apply dizziness as a symptom of bloodloss.
                 // So, threshold is 0.9, you have 0.85 percent blood, it adds (5 * 1.05) or 5.25 seconds of drunkenness.
                 // So, it'd max at 1.9 by default with 0% blood.
-                _drunkSystem.TryApplyDrunkenness(uid, bloodstream.UpdateInterval * (1 + (bloodstream.BloodlossThreshold - bloodPercentage)), false);
+                // Gonna try setting the drunk effect to only apply the refresh time, so you'll only be drunk while low blood??
+                _drunkSystem.TryApplyDrunkenness(uid, bloodstream.UpdateInterval, false);
             }
             else
             {
