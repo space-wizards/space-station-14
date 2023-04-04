@@ -1,11 +1,11 @@
 - type: gameMap
-  id: CorvaxAvrit
-  mapName: 'Avrit Station'
+  id: CorvaxAvrite
+  mapName: 'Avrite Station'
   mapPath: /Maps/corvax_avrit.yml
   minPlayers: 40
   stations:
     Avrit:
-      mapNameTemplate: '{0} Avrit {1}'
+      mapNameTemplate: '{0} Avrite {1}'
       emergencyShuttlePath: /Maps/Shuttles/emergency_avrit.yml
       nameGenerator:
         !type:NanotrasenNameGenerator
