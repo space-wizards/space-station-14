@@ -45,5 +45,3 @@
     damage:
       types:
         Blunt: 4
-  - type: Physics
-    canCollide: false
