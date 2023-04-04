@@ -4,21 +4,21 @@
   components:
     - type: StorageFill
       contents:
-        - id: ChemicalContainerAluminium
+        - id: JugAluminium
           amount: 1
-        - id: ChemicalContainerCarbon
+        - id: JugCarbon
           amount: 1
-        - id: ChemicalContainerChlorine
+        - id: JugChlorine
           amount: 1
-        - id: ChemicalContainerFluorine
+        - id: JugFluorine
           amount: 1
-        - id: ChemicalContainerIodine
+        - id: JugIodine
           amount: 1
-        - id: ChemicalContainerPhosphorus
+        - id: JugPhosphorus
           amount: 1
-        - id: ChemicalContainerSulfur
+        - id: JugSulfur
           amount: 1
-        - id: ChemicalContainerSilicon
+        - id: JugSilicon
           amount: 1
 
 - type: entity
@@ -27,15 +27,15 @@
   components:
     - type: StorageFill
       contents:
-        - id: ChemicalContainerHydrogen
+        - id: JugHydrogen
           amount: 1
-        - id: ChemicalContainerLithium
+        - id: JugLithium
           amount: 1
-        - id: ChemicalContainerSodium
+        - id: JugSodium
           amount: 1
-        - id: ChemicalContainerPotassium
+        - id: JugPotassium
           amount: 1
-        - id: ChemicalContainerRadium
+        - id: JugRadium
           amount: 1
 
 - type: entity
@@ -44,13 +44,13 @@
   components:
     - type: StorageFill
       contents:
-        - id: ChemicalContainerIron
+        - id: JugIron
           amount: 1
-        - id: ChemicalContainerCopper
+        - id: JugCopper
           amount: 1
-        - id: ChemicalContainerGold
+        - id: JugGold
           amount: 1
-        - id: ChemicalContainerMercury
+        - id: JugMercury
           amount: 1
-        - id: ChemicalContainerSilver
+        - id: JugSilver
           amount: 1

@@ -1,17 +1,56 @@
 - type: entity
-  name: chemical container
-  parent: LargeBeaker
-  id: ChemicalContainer
+  name: jug
+  parent: BaseItem
+  id: Jug
+  description: Used to contain a very large amount of chemicals or solutions. Chugging is extremely ill-advised.
   components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 200
+          canMix: true
     - type: Sprite
-      sprite: Objects/Specific/Chemistry/beaker_jug.rsi
+      sprite: Objects/Specific/Chemistry/jug.rsi
+      netsync: false
+      layers:
+        - state: jug
+        - state: jug1
+          map: [ "enum.SolutionContainerLayers.Fill" ]
+          visible: false
     - type: Item
       size: 10
-      sprite: Objects/Specific/Chemistry/beaker_jug.rsi
+      sprite: Objects/Specific/Chemistry/jug.rsi
+    - type: RefillableSolution
+      solution: beaker
+    - type: DrainableSolution
+      solution: beaker
+    - type: ExaminableSolution
+      solution: beaker
+    - type: DrawableSolution
+      solution: beaker
+    - type: InjectableSolution
+      solution: beaker
+    - type: SolutionTransfer
+      canChangeTransferAmount: true
+    - type: UserInterface
+      interfaces:
+        - key: enum.TransferAmountUiKey.Key
+          type: TransferAmountBoundUserInterface
+    - type: Drink
+      isOpen: true
+      solution: beaker
+    - type: Spillable
+      solution: beaker
+    - type: Appearance
+    - type: SolutionContainerVisuals
+      maxFillLevels: 6
+      fillBaseName: jug
+    - type: StaticPrice
+      price: 80
 
 - type: entity
-  parent: ChemicalContainer
-  id: ChemicalContainerCarbon
+  parent: Jug
+  id: JugCarbon
   noSpawn: true
   components:
     - type: Label
@@ -21,11 +60,11 @@
         beaker:
           reagents:
             - ReagentId: Carbon
-              Quantity: 100
+              Quantity: 200
 
 - type: entity
-  parent: ChemicalContainer
-  id: ChemicalContainerIodine
+  parent: Jug
+  id: JugIodine
   noSpawn: true
   components:
     - type: Label
@@ -35,11 +74,11 @@
         beaker:
           reagents:
             - ReagentId: Iodine
-              Quantity: 100
+              Quantity: 200
 
 - type: entity
-  parent: ChemicalContainer
-  id: ChemicalContainerFluorine
+  parent: Jug
+  id: JugFluorine
   noSpawn: true
   components:
     - type: Label
@@ -49,11 +88,11 @@
         beaker:
           reagents:
             - ReagentId: Fluorine
-              Quantity: 100
+              Quantity: 200
 
 - type: entity
-  parent: ChemicalContainer
-  id: ChemicalContainerChlorine
+  parent: Jug
+  id: JugChlorine
   noSpawn: true
   components:
     - type: Label
@@ -63,11 +102,11 @@
         beaker:
           reagents:
             - ReagentId: Chlorine
-              Quantity: 100
+              Quantity: 200
 
 - type: entity
-  parent: ChemicalContainer
-  id: ChemicalContainerAluminium
+  parent: Jug
+  id: JugAluminium
   noSpawn: true
   components:
     - type: Label
@@ -77,11 +116,11 @@
         beaker:
           reagents:
             - ReagentId: Aluminium
-              Quantity: 100
+              Quantity: 200
 
 - type: entity
-  parent: ChemicalContainer
-  id: ChemicalContainerPhosphorus
+  parent: Jug
+  id: JugPhosphorus
   noSpawn: true
   components:
     - type: Label
@@ -91,11 +130,11 @@
         beaker:
           reagents:
             - ReagentId: Phosphorus
-              Quantity: 100
+              Quantity: 200
 
 - type: entity
-  parent: ChemicalContainer
-  id: ChemicalContainerSulfur
+  parent: Jug
+  id: JugSulfur
   noSpawn: true
   components:
     - type: Label
@@ -105,11 +144,11 @@
         beaker:
           reagents:
             - ReagentId: Sulfur
-              Quantity: 100
+              Quantity: 200
 
 - type: entity
-  parent: ChemicalContainer
-  id: ChemicalContainerSilicon
+  parent: Jug
+  id: JugSilicon
   noSpawn: true
   components:
     - type: Label
@@ -119,11 +158,11 @@
         beaker:
           reagents:
             - ReagentId: Silicon
-              Quantity: 100
+              Quantity: 200
 
 - type: entity
-  parent: ChemicalContainer
-  id: ChemicalContainerHydrogen
+  parent: Jug
+  id: JugHydrogen
   noSpawn: true
   components:
     - type: Label
@@ -133,11 +172,11 @@
         beaker:
           reagents:
             - ReagentId: Hydrogen
-              Quantity: 100
+              Quantity: 200
 
 - type: entity
-  parent: ChemicalContainer
-  id: ChemicalContainerLithium
+  parent: Jug
+  id: JugLithium
   noSpawn: true
   components:
     - type: Label
@@ -147,11 +186,11 @@
         beaker:
           reagents:
             - ReagentId: Lithium
-              Quantity: 100
+              Quantity: 200
 
 - type: entity
-  parent: ChemicalContainer
-  id: ChemicalContainerSodium
+  parent: Jug
+  id: JugSodium
   noSpawn: true
   components:
     - type: Label
@@ -161,11 +200,11 @@
         beaker:
           reagents:
             - ReagentId: Sodium
-              Quantity: 100
+              Quantity: 200
 
 - type: entity
-  parent: ChemicalContainer
-  id: ChemicalContainerPotassium
+  parent: Jug
+  id: JugPotassium
   noSpawn: true
   components:
     - type: Label
@@ -175,11 +214,11 @@
         beaker:
           reagents:
             - ReagentId: Potassium
-              Quantity: 100
+              Quantity: 200
 
 - type: entity
-  parent: ChemicalContainer
-  id: ChemicalContainerRadium
+  parent: Jug
+  id: JugRadium
   noSpawn: true
   components:
     - type: Label
@@ -189,11 +228,11 @@
         beaker:
           reagents:
             - ReagentId: Radium
-              Quantity: 100
+              Quantity: 200
 
 - type: entity
-  parent: ChemicalContainer
-  id: ChemicalContainerIron
+  parent: Jug
+  id: JugIron
   noSpawn: true
   components:
     - type: Label
@@ -203,11 +242,11 @@
         beaker:
           reagents:
             - ReagentId: Iron
-              Quantity: 100
+              Quantity: 200
 
 - type: entity
-  parent: ChemicalContainer
-  id: ChemicalContainerCopper
+  parent: Jug
+  id: JugCopper
   noSpawn: true
   components:
     - type: Label
@@ -217,11 +256,11 @@
         beaker:
           reagents:
             - ReagentId: Copper
-              Quantity: 100
+              Quantity: 200
 
 - type: entity
-  parent: ChemicalContainer
-  id: ChemicalContainerGold
+  parent: Jug
+  id: JugGold
   noSpawn: true
   components:
     - type: Label
@@ -231,11 +270,11 @@
         beaker:
           reagents:
             - ReagentId: Gold
-              Quantity: 100
+              Quantity: 200
 
 - type: entity
-  parent: ChemicalContainer
-  id: ChemicalContainerMercury
+  parent: Jug
+  id: JugMercury
   noSpawn: true
   components:
     - type: Label
@@ -245,11 +284,11 @@
         beaker:
           reagents:
             - ReagentId: Mercury
-              Quantity: 100
+              Quantity: 200
 
 - type: entity
-  parent: ChemicalContainer
-  id: ChemicalContainerSilver
+  parent: Jug
+  id: JugSilver
   noSpawn: true
   components:
     - type: Label
@@ -259,4 +298,4 @@
         beaker:
           reagents:
             - ReagentId: Silver
-              Quantity: 100
+              Quantity: 200
