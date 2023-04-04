@@ -133,7 +133,12 @@ public sealed class FluidSpreaderSystem : EntitySystem
         }
 
         var puddleCurrentVolume = _puddleSystem.CurrentVolume(srcUid, srcPuddle);
-        foreach (var entity in dstPos.GetEntitiesInTile())
+
+        // TODO use lookup system or move this method to the turf system.
+        // this uses 4+ system or IoC resolves
+        var ents = dstPos.GetEntitiesInTile();
+
+        foreach (var entity in ents)
         {
             if (puddleQuery.TryGetComponent(entity, out var existingPuddle))
             {
