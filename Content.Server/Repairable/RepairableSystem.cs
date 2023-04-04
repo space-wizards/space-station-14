@@ -1,14 +1,16 @@
 using Content.Server.Administration.Logs;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Repairable;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 
 namespace Content.Server.Repairable
 {
-    public sealed class RepairableSystem : EntitySystem
+    public sealed class RepairableSystem : SharedRepairableSystem
     {
         [Dependency] private readonly SharedToolSystem _toolSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
@@ -22,6 +24,9 @@ namespace Content.Server.Repairable
 
         private void OnRepairFinished(EntityUid uid, RepairableComponent component, RepairFinishedEvent args)
         {
+            if (args.Cancelled)
+                return;
+
             if (!EntityManager.TryGetComponent(uid, out DamageableComponent? damageable) || damageable.TotalDamage == 0)
                 return;
 
@@ -38,15 +43,17 @@ namespace Content.Server.Repairable
                 _adminLogger.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(uid):target} back to full health");
             }
 
-
             uid.PopupMessage(args.User,
                 Loc.GetString("comp-repairable-repair",
                     ("target", uid),
-                    ("tool", args.Used)));
+                    ("tool", args.Used!)));
         }
 
         public async void Repair(EntityUid uid, RepairableComponent component, InteractUsingEvent args)
         {
+            if (args.Handled)
+                return;
+
             // Only try repair the target if it is damaged
             if (!EntityManager.TryGetComponent(uid, out DamageableComponent? damageable) || damageable.TotalDamage == 0)
                 return;
@@ -57,25 +64,8 @@ namespace Content.Server.Repairable
             if (args.User == args.Target)
                 delay *= component.SelfRepairPenalty;
 
-            var toolEvData = new ToolEventData(new RepairFinishedEvent(args.User, args.Used), component.FuelCost, targetEntity:uid);
-
             // Can the tool actually repair this, does it have enough fuel?
-            if (!_toolSystem.UseTool(args.Used, args.User, uid, delay, component.QualityNeeded, toolEvData, component.FuelCost))
-                return;
-
-            args.Handled = true;
-        }
-    }
-
-    public sealed class RepairFinishedEvent : EntityEventArgs
-    {
-        public EntityUid User;
-        public EntityUid Used;
-
-        public RepairFinishedEvent(EntityUid user, EntityUid used)
-        {
-            User = user;
-            Used = used;
+            args.Handled = _toolSystem.UseTool(args.Used, args.User, uid, delay, component.QualityNeeded, new RepairFinishedEvent(), component.FuelCost);
         }
     }
 }
