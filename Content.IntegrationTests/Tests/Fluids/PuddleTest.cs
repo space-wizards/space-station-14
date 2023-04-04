@@ -35,7 +35,7 @@ namespace Content.IntegrationTests.Tests.Fluids
                 var gridUid = tile.GridUid;
                 var (x, y) = tile.GridIndices;
                 var coordinates = new EntityCoordinates(gridUid, x, y);
-                var puddle = spillSystem.TrySpillAt(solution, coordinates, out _);
+                var puddle = spillSystem.TrySpillAt(coordinates, solution, out _);
 
                 Assert.True(puddle);
             });
@@ -74,7 +74,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             {
                 var coordinates = grid.ToCoordinates();
                 var solution = new Solution("Water", FixedPoint2.New(20));
-                var puddle = spillSystem.TrySpillAt(solution, coordinates, out _);
+                var puddle = spillSystem.TrySpillAt(coordinates, solution, out _);
                 Assert.Null(puddle);
             });
 

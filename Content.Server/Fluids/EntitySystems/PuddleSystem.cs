@@ -45,8 +45,6 @@ public sealed partial class PuddleSystem : EntitySystem
      * TODO:
      * Mop should transfer all of its water onto a puddle.
      *
-     * TODO: Edge spreader overflow stuff
-     * Get neighboring should be on spreader system
      */
 
     public override void Initialize()
@@ -73,7 +71,6 @@ public sealed partial class PuddleSystem : EntitySystem
         if (overflow.Volume == FixedPoint2.Zero)
         {
             RemCompDeferred<EdgeSpreaderComponent>(uid);
-            args.Handled = true;
             return;
         }
 
@@ -81,50 +78,69 @@ public sealed partial class PuddleSystem : EntitySystem
 
         if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
         {
-            args.Handled = true;
+            RemCompDeferred<EdgeSpreaderComponent>(uid);
             return;
         }
 
-        var pos = grid.LocalToTile(xform.Coordinates);
-        var puddleQuery = GetEntityQuery<PuddleComponent>();
-        Span<int> directions = stackalloc int[4]
+        // First we try to overflow to empty neighboring tiles
+        // If there are none we overflow to any neighboring tiles up to overflow limit
+        // If there's still some remaining we just split our overflow evenly to splash it around.
+        if (args.NeighborFreeTiles.Count > 0)
         {
-            0,
-            1,
-            2,
-            3,
-        };
+            _random.Shuffle(args.NeighborFreeTiles);
+            var spillAmount = overflow.Volume / args.NeighborFreeTiles.Count;
 
-        _random.Shuffle(directions);
-
-        // First we will try to get non
-
-        foreach (var i in directions)
-        {
-            var dir = (Direction) (2 * i);
-            var neighbor = pos + dir.ToIntVec();
-
-            if (!grid.TryGetTileRef(neighbor, out var tileRef) || tileRef.Tile.IsEmpty)
-                continue;
-
-            // TODO: Raycasts on spreadneighbor
-            var anchored = grid.GetAnchoredEntitiesEnumerator(neighbor);
-            var isValid = true;
-
-            while (anchored.MoveNext(out var neighborEnt))
+            foreach (var tile in args.NeighborFreeTiles)
             {
-                if (puddleQuery.HasComponent(neighborEnt.Value))
-                {
-                    isValid = false;
-                    break;
-                }
+                var split = overflow.SplitSolution(spillAmount);
+                TrySpillAt(grid.GridTileToLocal(tile), split, out _, false);
             }
 
-            if (!isValid)
-                continue;
-
-            TrySpillAt(tileRef, overflow, out _, false);
             return;
+        }
+
+        if (args.Neighbors.Count > 0)
+        {
+            var puddleQuery = GetEntityQuery<PuddleComponent>();
+            _random.Shuffle(args.Neighbors);
+
+            // Overflow to neighbors with remaining space.
+            foreach (var neighbor in args.Neighbors)
+            {
+                if (!puddleQuery.TryGetComponent(neighbor, out var puddle) ||
+                    !_solutionContainerSystem.TryGetSolution(neighbor, puddle.SolutionName, out var neighborSolution))
+                {
+                    continue;
+                }
+
+                var remaining = puddle.OverflowVolume - neighborSolution.Volume;
+
+                if (remaining < FixedPoint2.Zero)
+                    continue;
+
+                var split = overflow.SplitSolution(remaining);
+                neighborSolution.AddSolution(split, _prototypeManager);
+
+                if (overflow.Volume == FixedPoint2.Zero)
+                    break;
+            }
+
+            if (overflow.Volume == FixedPoint2.Zero)
+                return;
+
+            var spillPerNeighbor = overflow.Volume / args.Neighbors.Count;
+
+            foreach (var neighbor in args.Neighbors)
+            {
+                if (!puddleQuery.TryGetComponent(neighbor, out var puddle) ||
+                    !_solutionContainerSystem.TryGetSolution(neighbor, puddle.SolutionName, out var neighborSolution))
+                {
+                    continue;
+                }
+
+                var split = overflow.SplitSolution(spillPerNeighbor);
+                neighborSolution.AddSolution(split, _prototypeManager);
+            }
         }
     }
 
@@ -296,7 +312,7 @@ public sealed partial class PuddleSystem : EntitySystem
         }
 
         // TODO: This is going to fail with struct solutions.
-        var remaining = puddle.OverflowVolume * OverflowModifier;
+        var remaining = puddle.OverflowVolume;
         var split = solution.SplitSolution(CurrentVolume(uid, puddle) - remaining);
         return split;
     }
@@ -306,7 +322,7 @@ public sealed partial class PuddleSystem : EntitySystem
     /// <summary>
     ///     Spills solution at the specified grid coordinates.
     /// </summary>
-    public bool TrySpillAt(Solution solution, EntityCoordinates coordinates, out EntityUid puddleUid, bool sound = true)
+    public bool TrySpillAt(EntityCoordinates coordinates, Solution solution, out EntityUid puddleUid, bool sound = true)
     {
         if (solution.Volume == 0)
         {
@@ -334,7 +350,7 @@ public sealed partial class PuddleSystem : EntitySystem
             return false;
         }
 
-        return TrySpillAt(solution, transformComponent.Coordinates, out puddleUid, sound: sound);
+        return TrySpillAt(transformComponent.Coordinates, solution, out puddleUid, sound: sound);
     }
 
     public bool TrySpillAt(TileRef tileRef, Solution solution, out EntityUid puddleUid, bool sound = true, bool tileReact = true)
@@ -394,8 +410,7 @@ public sealed partial class PuddleSystem : EntitySystem
 
             if (TryAddSolution(ent.Value, solution, sound, puddleComponent: puddle))
             {
-                var spreader = EnsureComp<EdgeSpreaderComponent>(ent.Value);
-                spreader.Name = SpreaderName;
+                EnsureComp<EdgeSpreaderComponent>(ent.Value);
             }
 
             puddleUid = ent.Value;
@@ -407,8 +422,7 @@ public sealed partial class PuddleSystem : EntitySystem
         EnsureComp<PuddleComponent>(puddleUid);
         if (TryAddSolution(puddleUid, solution, sound))
         {
-            var spreader = EnsureComp<EdgeSpreaderComponent>(puddleUid);
-            spreader.Name = SpreaderName;
+            EnsureComp<EdgeSpreaderComponent>(puddleUid);
         }
         return true;
     }

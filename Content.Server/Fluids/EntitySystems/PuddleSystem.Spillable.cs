@@ -26,7 +26,7 @@ public sealed partial class PuddleSystem
     {
         if (!args.Handled)
         {
-            TrySpillAt(args.Overflow, Transform(uid).Coordinates, out _);
+            TrySpillAt(Transform(uid).Coordinates, args.Overflow, out _);
         }
 
         args.Handled = true;
@@ -72,7 +72,7 @@ public sealed partial class PuddleSystem
         }
 
         var drainedSolution = _solutionContainerSystem.Drain(uid, solution, solution.Volume);
-        TrySpillAt(drainedSolution, EntityManager.GetComponent<TransformComponent>(uid).Coordinates, out _);
+        TrySpillAt(EntityManager.GetComponent<TransformComponent>(uid).Coordinates, drainedSolution, out _);
     }
 
     private void AddSpillVerb(EntityUid uid, SpillableComponent component, GetVerbsEvent<Verb> args)
@@ -101,7 +101,7 @@ public sealed partial class PuddleSystem
             {
                 var puddleSolution = _solutionContainerSystem.SplitSolution(args.Target,
                     solution, solution.Volume);
-                TrySpillAt(puddleSolution, Transform(args.Target).Coordinates, out _);
+                TrySpillAt(Transform(args.Target).Coordinates, puddleSolution, out _);
             };
         }
         else
@@ -133,7 +133,7 @@ public sealed partial class PuddleSystem
             return;
 
         var puddleSolution = _solutionContainerSystem.SplitSolution(uid, solution, solution.Volume);
-        TrySpillAt(puddleSolution, Transform(uid).Coordinates, out _);
+        TrySpillAt(Transform(uid).Coordinates, puddleSolution, out _);
         args.Handled = true;
     }
 }
