@@ -13,7 +13,7 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SolutionAreaEffectComponent, ReactionAttemptEvent>(OnReactionAttempt);
+            SubscribeLocalEvent<SmokeComponent, ReactionAttemptEvent>(OnReactionAttempt);
         }
 
         public override void Update(float frameTime)
@@ -24,9 +24,9 @@ namespace Content.Server.Chemistry.EntitySystems
             }
         }
 
-        private void OnReactionAttempt(EntityUid uid, SolutionAreaEffectComponent component, ReactionAttemptEvent args)
+        private void OnReactionAttempt(EntityUid uid, SmokeComponent component, ReactionAttemptEvent args)
         {
-            if (args.Solution.Name != SolutionAreaEffectComponent.SolutionName)
+            if (args.Solution.Name != SmokeComponent.SolutionName)
                 return;
 
             // Prevent smoke/foam fork bombs (smoke creating more smoke).

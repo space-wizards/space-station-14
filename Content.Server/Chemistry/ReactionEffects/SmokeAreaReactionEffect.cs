@@ -7,7 +7,7 @@ namespace Content.Server.Chemistry.ReactionEffects
     [DataDefinition]
     public sealed class SmokeAreaReactionEffect : AreaReactionEffect
     {
-        protected override SolutionAreaEffectComponent? GetAreaEffectComponent(EntityUid entity)
+        protected override SmokeComponent? GetAreaEffectComponent(EntityUid entity)
         {
             return IoCManager.Resolve<IEntityManager>().GetComponentOrNull<SmokeSolutionAreaEffectComponent>(entity);
         }

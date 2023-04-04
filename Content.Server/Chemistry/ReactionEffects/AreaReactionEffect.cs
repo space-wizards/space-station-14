@@ -116,6 +116,6 @@ namespace Content.Server.Chemistry.ReactionEffects
             SoundSystem.Play(_sound.GetSound(), Filter.Pvs(args.SolutionEntity), args.SolutionEntity, AudioHelpers.WithVariation(0.125f));
         }
 
-        protected abstract SolutionAreaEffectComponent? GetAreaEffectComponent(EntityUid entity);
+        protected abstract SmokeComponent? GetAreaEffectComponent(EntityUid entity);
     }
 }
