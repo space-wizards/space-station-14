@@ -20,7 +20,7 @@ public sealed partial class EnsnareableSystem : SharedEnsnareableSystem
         InitializeEnsnaring();
 
         SubscribeLocalEvent<EnsnareableComponent, ComponentInit>(OnEnsnareableInit);
-        SubscribeLocalEvent<EnsnareableComponent, DoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<EnsnareableComponent, EnsnareableDoAfterEvent>(OnDoAfter);
     }
 
     private void OnEnsnareableInit(EntityUid uid, EnsnareableComponent component, ComponentInit args)

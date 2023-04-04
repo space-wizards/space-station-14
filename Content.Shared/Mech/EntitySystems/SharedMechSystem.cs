@@ -5,6 +5,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Destructible;
+using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
@@ -19,6 +20,7 @@ using Content.Shared.Weapons.Melee;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Mech.EntitySystems;
@@ -60,6 +62,7 @@ public abstract class SharedMechSystem : EntitySystem
     }
 
     #region State Handling
+
     private void OnGetState(EntityUid uid, SharedMechComponent component, ref ComponentGetState args)
     {
         args.State = new MechComponentState
@@ -101,6 +104,7 @@ public abstract class SharedMechSystem : EntitySystem
 
         component.Mech = state.Mech;
     }
+
     #endregion
 
     private void OnToggleEquipmentAction(EntityUid uid, SharedMechComponent component, MechToggleEquipmentEvent args)
@@ -175,9 +179,12 @@ public abstract class SharedMechSystem : EntitySystem
         rider.Mech = mech;
         Dirty(rider);
 
-        _actions.AddAction(pilot, new InstantAction(_prototype.Index<InstantActionPrototype>(component.MechCycleAction)), mech);
-        _actions.AddAction(pilot, new InstantAction(_prototype.Index<InstantActionPrototype>(component.MechUiAction)), mech);
-        _actions.AddAction(pilot, new InstantAction(_prototype.Index<InstantActionPrototype>(component.MechEjectAction)), mech);
+        _actions.AddAction(pilot,
+            new InstantAction(_prototype.Index<InstantActionPrototype>(component.MechCycleAction)), mech);
+        _actions.AddAction(pilot, new InstantAction(_prototype.Index<InstantActionPrototype>(component.MechUiAction)),
+            mech);
+        _actions.AddAction(pilot,
+            new InstantAction(_prototype.Index<InstantActionPrototype>(component.MechEjectAction)), mech);
     }
 
     private void RemoveUser(EntityUid mech, EntityUid pilot)
@@ -252,7 +259,8 @@ public abstract class SharedMechSystem : EntitySystem
     /// <param name="toInsert"></param>
     /// <param name="component"></param>
     /// <param name="equipmentComponent"></param>
-    public void InsertEquipment(EntityUid uid, EntityUid toInsert, SharedMechComponent? component = null, MechEquipmentComponent? equipmentComponent = null)
+    public void InsertEquipment(EntityUid uid, EntityUid toInsert, SharedMechComponent? component = null,
+        MechEquipmentComponent? equipmentComponent = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -281,7 +289,8 @@ public abstract class SharedMechSystem : EntitySystem
     /// <param name="component"></param>
     /// <param name="equipmentComponent"></param>
     /// <param name="forced">Whether or not the removal can be cancelled</param>
-    public void RemoveEquipment(EntityUid uid, EntityUid toRemove, SharedMechComponent? component = null, MechEquipmentComponent? equipmentComponent = null, bool forced = false)
+    public void RemoveEquipment(EntityUid uid, EntityUid toRemove, SharedMechComponent? component = null,
+        MechEquipmentComponent? equipmentComponent = null, bool forced = false)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -296,6 +305,7 @@ public abstract class SharedMechSystem : EntitySystem
             if (attemptev.Cancelled)
                 return;
         }
+
         var ev = new MechEquipmentRemovedEvent(uid);
         RaiseLocalEvent(toRemove, ref ev);
 
@@ -388,7 +398,6 @@ public abstract class SharedMechSystem : EntitySystem
     /// </remarks>
     public virtual void UpdateUserInterface(EntityUid uid, SharedMechComponent? component = null)
     {
-
     }
 
     /// <summary>
@@ -461,7 +470,8 @@ public abstract class SharedMechSystem : EntitySystem
             args.Cancel();
     }
 
-    private void UpdateAppearance(EntityUid uid, SharedMechComponent ? component = null, AppearanceComponent? appearance = null)
+    private void UpdateAppearance(EntityUid uid, SharedMechComponent? component = null,
+        AppearanceComponent? appearance = null)
     {
         if (!Resolve(uid, ref component, ref appearance, false))
             return;
@@ -469,4 +479,30 @@ public abstract class SharedMechSystem : EntitySystem
         _appearance.SetData(uid, MechVisuals.Open, IsEmpty(component), appearance);
         _appearance.SetData(uid, MechVisuals.Broken, component.Broken, appearance);
     }
+}
+
+/// <summary>
+///     Event raised when the battery is successfully removed from the mech,
+///     on both success and failure
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class RemoveBatteryEvent : SimpleDoAfterEvent
+{
+}
+
+/// <summary>
+///     Event raised when a person removes someone from a mech,
+///     on both success and failure
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class MechExitEvent : SimpleDoAfterEvent
+{
+}
+
+/// <summary>
+///     Event raised when a person enters a mech, on both success and failure
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class MechEntryEvent : SimpleDoAfterEvent
+{
 }

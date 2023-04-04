@@ -4,8 +4,8 @@
   description: job-description-cadet
   playTimeTracker: JobSecurityCadet
   requirements:
-    - !type:OverallPlaytimeRequirement # Corvax-RoleTime
-      time: 36000
+    - !type:OverallPlaytimeRequirement
+      time: 36000 # Corvax-RoleTime
     - !type:DepartmentTimeRequirement
       department: Security
       time: 72000 # Corvax-RoleTime
