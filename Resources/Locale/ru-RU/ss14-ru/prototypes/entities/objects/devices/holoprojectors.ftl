@@ -4,3 +4,6 @@ ent-Holoprojector = проектор голографических знаков
 ent-HolofanProjector = атмос голопроектор
     .desc = Останавливает суицидально настроеных пассажиров от убийства остальных во время разгерметизации.
     .suffix = { "" }
+ent-HoloprojectorSecurity = holobarrier projector
+    .desc = Creates a solid but fragile holographic barrier.
+    .suffix = { "" }
