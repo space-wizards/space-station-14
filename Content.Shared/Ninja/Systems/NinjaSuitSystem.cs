@@ -1,3 +1,4 @@
+using Content.Shared.Actions;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Stealth;
@@ -22,6 +23,7 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<NinjaSuitComponent, GotEquippedEvent>(OnEquipped);
+        SubscribeLocalEvent<NinjaSuitComponent, GetItemActionsEvent>(OnGetItemActions);
         SubscribeLocalEvent<NinjaSuitComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<NinjaSuitComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<NinjaSuitComponent, GotUnequippedEvent>(OnUnequipped);
@@ -36,6 +38,17 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
             return;
 
         NinjaEquippedSuit(uid, comp, user, ninja);
+    }
+
+    private void OnGetItemActions(EntityUid uid, NinjaSuitComponent comp, GetItemActionsEvent args)
+    {
+        args.Actions.Add(comp.TogglePhaseCloakAction);
+        args.Actions.Add(comp.RecallKatanaAction);
+        // TODO: ninja stars instead of soap, when embedding is a thing
+        // The cooldown should also be reduced from 10 to 1 or so
+        args.Actions.Add(comp.CreateSoapAction);
+        args.Actions.Add(comp.KatanaDashAction);
+        args.Actions.Add(comp.EmpAction);
     }
 
     private void OnGetState(EntityUid uid, NinjaSuitComponent comp, ref ComponentGetState args)

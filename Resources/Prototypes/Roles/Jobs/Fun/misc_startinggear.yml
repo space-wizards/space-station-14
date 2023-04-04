@@ -72,7 +72,7 @@
     belt: EnergyKatana
     suitstorage: YellowOxygenTankFilled
   inhand:
-    left: JetpackBlackFilled
+    left hand: JetpackBlackFilled
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

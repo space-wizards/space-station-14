@@ -1,4 +1,3 @@
-using Content.Server.Actions;
 using Content.Server.Emp;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
@@ -15,7 +14,6 @@ namespace Content.Server.Ninja.Systems;
 
 public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
 {
-    [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly EmpSystem _emp = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly new NinjaSystem _ninja = default!;
@@ -41,18 +39,6 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         base.NinjaEquippedSuit(uid, comp, user, ninja);
 
         _ninja.SetSuitPowerAlert(user);
-
-        if (!TryComp<ActionsComponent>(user, out var actions))
-            return;
-
-        // TODO: do actions like with gloves are now (before merge)
-        _actions.AddAction(user, comp.TogglePhaseCloakAction, uid, actions);
-        _actions.AddAction(user, comp.RecallKatanaAction, uid, actions);
-        // TODO: ninja stars instead of soap, when embedding is a thing
-        // The cooldown should also be reduced from 10 to 1 or so
-        _actions.AddAction(user, comp.CreateSoapAction, uid, actions);
-        _actions.AddAction(user, comp.KatanaDashAction, uid, actions);
-        _actions.AddAction(user, comp.EmpAction, uid, actions);
     }
 
     // TODO: if/when battery is in shared, put this there too
@@ -78,9 +64,6 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
     protected override void UserUnequippedSuit(EntityUid uid, NinjaSuitComponent comp, EntityUid user)
     {
         base.UserUnequippedSuit(uid, comp, user);
-
-        // remove suit ability actions
-        _actions.RemoveProvidedActions(user, uid);
 
         // remove power indicator
         _ninja.SetSuitPowerAlert(user);
