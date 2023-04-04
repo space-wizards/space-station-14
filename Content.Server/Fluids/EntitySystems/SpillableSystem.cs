@@ -218,7 +218,7 @@ public sealed class SpillableSystem : EntitySystem
 
     /// <summary>
     ///     First splashes reagent on reactive entities near the spilling entity, then spills the rest regularly to a
-    ///     puddle.
+    ///     puddle. This is intended for 'destructive' spills, like when entities are destroyed or thrown.
     /// </summary>
     public PuddleComponent? SplashSpillAt(EntityUid uid, Solution solution, EntityCoordinates coordinates, string prototype,
         bool overflow = true, bool sound = true, bool combine = true, EntityUid? user=null)
@@ -246,8 +246,7 @@ public sealed class SpillableSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("spill-land-spilled-on-other", ("spillable", uid), ("target", owner)), owner, PopupType.SmallCaution);
         }
 
-        return SpillAt(solution, coordinates, prototype, overflow, sound,
-            combine: combine);
+        return SpillAt(solution, coordinates, prototype, overflow, sound, combine: combine);
     }
 
     /// <summary>
@@ -263,8 +262,7 @@ public sealed class SpillableSystem : EntitySystem
     public PuddleComponent? SpillAt(Solution solution, EntityCoordinates coordinates, string prototype,
         bool overflow = true, bool sound = true, bool combine = true)
     {
-        if (solution.Volume == 0)
-            return null;
+        if (solution.Volume == 0) return null;
 
         if (!_mapManager.TryGetGrid(coordinates.GetGridUid(EntityManager), out var mapGrid))
             return null; // Let's not spill to space.
