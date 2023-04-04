@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug that would sometimes cause players to appear as if they
-      were dead/horizontal., type: Fix}
-  id: 2829
-  time: '2023-01-03T06:43:35.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Hand teleporter now requires a doafter, and can''t be used when inside
@@ -2909,3 +2903,9 @@ Entries:
     type: Tweak}
   id: 3328
   time: '2023-04-04T00:10:17.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Rat king (mobster) & dwarf accents are now more robust with transforming
+      capitalization., type: Tweak}
+  id: 3329
+  time: '2023-04-04T02:50:37.0000000+00:00'
