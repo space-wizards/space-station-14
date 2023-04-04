@@ -54,6 +54,6 @@
 - type: soundCollection
   id: Snores
   files:
-  - /Audio/Effects/Diseases/snore1.ogg
-  - /Audio/Effects/Diseases/snore2.ogg
-  - /Audio/Effects/Diseases/snore3.ogg
+  - /Audio/Voice/Human/snore1.ogg
+  - /Audio/Voice/Human/snore2.ogg
+  - /Audio/Voice/Human/snore3.ogg
