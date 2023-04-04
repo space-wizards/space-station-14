@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
@@ -7,16 +6,15 @@ using Content.Server.Kudzu;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
-using Content.Shared.Fluids;
 using Content.Shared.StepTrigger.Components;
 using Content.Shared.StepTrigger.Systems;
-using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Solution = Content.Shared.Chemistry.Components.Solution;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Fluids.EntitySystems;
 
@@ -25,9 +23,9 @@ public sealed partial class PuddleSystem : EntitySystem
     [Dependency] private readonly IAdminLogManager _adminLogger= default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SpreaderSystem _spreaderSystem = default!;
     [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
@@ -37,6 +35,7 @@ public sealed partial class PuddleSystem : EntitySystem
     // loses & then gains reagents in a single tick.
     private HashSet<EntityUid> _deletionQueue = new();
 
+    public const string SpreaderName = "puddle";
 
     /*
      * TODO: Need some sort of way to do blood slash / vomit solution spill on its own
@@ -45,6 +44,9 @@ public sealed partial class PuddleSystem : EntitySystem
      * Need to re-implement evaporating solutions with water
      * TODO:
      * Mop should transfer all of its water onto a puddle.
+     *
+     * TODO: Edge spreader overflow stuff
+     * Get neighboring should be on spreader system
      */
 
     public override void Initialize()
@@ -63,11 +65,15 @@ public sealed partial class PuddleSystem : EntitySystem
 
     private void OnPuddleSpread(EntityUid uid, PuddleComponent component, ref SpreadNeighborsEvent args)
     {
+        if (!IsOverflowing(uid, component))
+            return;
+
         var overflow = GetOverflowSolution(uid, component);
 
         if (overflow.Volume == FixedPoint2.Zero)
         {
-            args.Cancelled = true;
+            RemCompDeferred<EdgeSpreaderComponent>(uid);
+            args.Handled = true;
             return;
         }
 
@@ -75,14 +81,25 @@ public sealed partial class PuddleSystem : EntitySystem
 
         if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
         {
-            args.Cancelled = true;
+            args.Handled = true;
             return;
         }
 
         var pos = grid.LocalToTile(xform.Coordinates);
         var puddleQuery = GetEntityQuery<PuddleComponent>();
+        Span<int> directions = stackalloc int[4]
+        {
+            0,
+            1,
+            2,
+            3,
+        };
 
-        for (var i = 0; i < 4; i++)
+        _random.Shuffle(directions);
+
+        // First we will try to get non
+
+        foreach (var i in directions)
         {
             var dir = (Direction) (2 * i);
             var neighbor = pos + dir.ToIntVec();
@@ -106,7 +123,7 @@ public sealed partial class PuddleSystem : EntitySystem
             if (!isValid)
                 continue;
 
-            TrySpillAt(tileRef, overflow, out _);
+            TrySpillAt(tileRef, overflow, out _, false);
             return;
         }
     }
@@ -279,7 +296,8 @@ public sealed partial class PuddleSystem : EntitySystem
         }
 
         // TODO: This is going to fail with struct solutions.
-        var split = solution.SplitSolution(CurrentVolume(uid, puddle) - puddle.OverflowVolume);
+        var remaining = puddle.OverflowVolume * OverflowModifier;
+        var split = solution.SplitSolution(CurrentVolume(uid, puddle) - remaining);
         return split;
     }
 
@@ -374,14 +392,24 @@ public sealed partial class PuddleSystem : EntitySystem
             if (!puddleQuery.TryGetComponent(ent, out var puddle))
                 continue;
 
-            TryAddSolution(ent.Value, solution, sound, puddleComponent: puddle);
+            if (TryAddSolution(ent.Value, solution, sound, puddleComponent: puddle))
+            {
+                var spreader = EnsureComp<EdgeSpreaderComponent>(ent.Value);
+                spreader.Name = SpreaderName;
+            }
+
             puddleUid = ent.Value;
             return true;
         }
 
         var coords = mapGrid.GridTileToLocal(tileRef.GridIndices);
         puddleUid = EntityManager.SpawnEntity("Puddle", coords);
-        TryAddSolution(puddleUid, solution, sound);
+        EnsureComp<PuddleComponent>(puddleUid);
+        if (TryAddSolution(puddleUid, solution, sound))
+        {
+            var spreader = EnsureComp<EdgeSpreaderComponent>(puddleUid);
+            spreader.Name = SpreaderName;
+        }
         return true;
     }
 

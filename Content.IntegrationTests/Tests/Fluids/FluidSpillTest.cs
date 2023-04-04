@@ -49,7 +49,6 @@ public sealed class FluidSpill
         var server = pairTracker.Pair.Server;
         var mapManager = server.ResolveDependency<IMapManager>();
         var entityManager = server.ResolveDependency<IEntityManager>();
-        var spillSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<SpillableSystem>();
         var gameTiming = server.ResolveDependency<IGameTiming>();
         var puddleSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<PuddleSystem>();
         MapId mapId;
@@ -75,8 +74,7 @@ public sealed class FluidSpill
             var grid = mapManager.GetGrid(gridId);
             var solution = new Solution("Water", FixedPoint2.New(100));
             var tileRef = grid.GetTileRef(_origin);
-            var puddle = spillSystem.SpillAt(tileRef, solution, "PuddleSmear");
-            Assert.That(puddle, Is.Not.Null);
+            Assert.That(puddleSystem.TrySpillAt(tileRef, solution, out _), Is.True);
             Assert.That(GetPuddle(entityManager, grid, _origin), Is.Not.Null);
         });
 
@@ -110,7 +108,6 @@ public sealed class FluidSpill
         var server = pairTracker.Pair.Server;
         var mapManager = server.ResolveDependency<IMapManager>();
         var entityManager = server.ResolveDependency<IEntityManager>();
-        var spillSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<SpillableSystem>();
         var puddleSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<PuddleSystem>();
         var gameTiming = server.ResolveDependency<IGameTiming>();
         MapId mapId;
@@ -147,8 +144,7 @@ public sealed class FluidSpill
             var grid = mapManager.GetGrid(gridId);
             var solution = new Solution("Water", FixedPoint2.New(100));
             var tileRef = grid.GetTileRef(puddleOrigin);
-            var puddle = spillSystem.SpillAt(tileRef, solution, "PuddleSmear");
-            Assert.That(puddle, Is.Not.Null);
+            Assert.That(puddleSystem.TrySpillAt(tileRef, solution, out _), Is.True);
             Assert.That(GetPuddle(entityManager, grid, puddleOrigin), Is.Not.Null);
         });
 

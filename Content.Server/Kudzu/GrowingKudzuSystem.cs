@@ -51,6 +51,7 @@ public sealed class GrowingKudzuSystem : EntitySystem
             kudzu.NextTick = curTime + TimeSpan.FromSeconds(0.5);
             kudzu.GrowthLevel += 1;
 
+            /*
             if (kudzu.GrowthLevel == 3 &&
                 HasComp<SpreaderComponent>(uid))
             {
@@ -59,6 +60,7 @@ public sealed class GrowingKudzuSystem : EntitySystem
             }
 
             _appearance.SetData(uid, KudzuVisuals.GrowthLevel, kudzu.GrowthLevel, appearance);
+            */
         }
     }
 }

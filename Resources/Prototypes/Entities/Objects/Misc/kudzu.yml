@@ -69,9 +69,6 @@
             types:
               Heat: 10
     - type: AtmosExposed
-    - type: Spreader
-      growthResult: Kudzu
-      chance: 1
     - type: GrowingKudzu
       growthTickSkipChance: 0.6666
     - type: SlowContacts
@@ -81,10 +78,6 @@
 - type: entity
   id: WeakKudzu
   parent: Kudzu
-  components:
-    - type: Spreader
-      growthResult: WeakKudzu
-      chance: 0.3
 
 - type: entity
   id: FleshKudzu
@@ -128,9 +121,6 @@
         behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
-    - type: Spreader
-      growthResult: FleshKudzu
-      chance: 0.2
     - type: DamageContacts
       damage:
         types:
