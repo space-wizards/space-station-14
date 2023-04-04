@@ -16,6 +16,9 @@ public sealed class NoiseDrivenDebrisSelectorComponent : Component
 {
     private EntitySpawnCollectionCache? _cache;
 
+    /// <summary>
+    ///     The prototype-facing debris table entries.
+    /// </summary>
     [DataField("debrisTable", required: true)]
     private List<EntitySpawnEntry> _entries = default!;
 
