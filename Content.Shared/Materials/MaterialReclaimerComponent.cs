@@ -1,9 +1,11 @@
 ﻿using Content.Shared.Chemistry.Components;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Whitelist;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Materials;
@@ -19,11 +21,25 @@ public sealed class MaterialReclaimerComponent : Component
     public bool Powered;
 
     /// <summary>
+    /// An "enable" toggle for things like interfacing with machine linking
+    /// </summary>
+    [DataField("enabled"), ViewVariables(VVAccess.ReadWrite)]
+    public bool Enabled = true;
+
+    /// <summary>
     /// How efficiently the materials are reclaimed.
     /// In practice, a multiplier per material when calculating the output of the reclaimer.
     /// </summary>
     [DataField("efficiency"), ViewVariables(VVAccess.ReadWrite)]
     public float Efficiency = 1f;
+
+    /// <summary>
+    /// Whether or not the process
+    /// speed scales with the amount of materials being processed
+    /// or if it's just <see cref="MinimumProcessDuration"/>
+    /// </summary>
+    [DataField("scaleProcessSpeed")]
+    public bool ScaleProcessSpeed = true;
 
     /// <summary>
     /// How quickly it takes to consume X amount of materials per second.
@@ -37,7 +53,7 @@ public sealed class MaterialReclaimerComponent : Component
     /// For example, with a rate of 50, an entity with 100 total material takes 2 seconds to process.
     /// </summary>
     [DataField("materialProcessRate"), ViewVariables(VVAccess.ReadWrite)]
-    public float MaterialProcessRate;
+    public float MaterialProcessRate = 100f;
 
     /// <summary>
     /// Machine part whose rating modifies <see cref="MaterialProcessRate"/>
@@ -87,6 +103,41 @@ public sealed class MaterialReclaimerComponent : Component
     /// </summary>
     [DataField("blacklist")]
     public EntityWhitelist? Blacklist;
+
+    /// <summary>
+    /// The sound played when something is being processed.
+    /// </summary>
+    [DataField("sound")]
+    public SoundSpecifier? Sound;
+
+    /// <summary>
+    /// whether or not we cut off the sound early when the reclaiming ends.
+    /// </summary>
+    [DataField("cutOffSound")]
+    public bool CutOffSound = true;
+
+    /// <summary>
+    /// When the next sound will be allowed to be played. Used to prevent spam.
+    /// </summary>
+    [DataField("nextSound", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan NextSound;
+
+    /// <summary>
+    /// Minimum time inbetween each <see cref="Sound"/>
+    /// </summary>
+    [DataField("soundCooldown")]
+    public TimeSpan SoundCooldown = TimeSpan.FromSeconds(0.8f);
+
+    public IPlayingAudioStream? Stream;
+
+    /// <summary>
+    /// A counter of how many items have been processed
+    /// </summary>
+    /// <remarks>
+    /// I saw this on the recycler and i'm porting it because it's cute af
+    /// </remarks>
+    [DataField("itemsProcessed")]
+    public int ItemsProcessed;
 }
 
 [Serializable, NetSerializable]
@@ -94,17 +145,29 @@ public sealed class MaterialReclaimerComponentState : ComponentState
 {
     public bool Powered;
 
+    public bool Enabled;
+
     public float MaterialProcessRate;
 
-    public MaterialReclaimerComponentState(bool powered, float materialProcessRate)
+    public int ItemsProcessed;
+
+    public MaterialReclaimerComponentState(bool powered, bool enabled, float materialProcessRate, int itemsProcessed)
     {
         Powered = powered;
+        Enabled = enabled;
         MaterialProcessRate = materialProcessRate;
+        ItemsProcessed = itemsProcessed;
     }
 }
 
-/// <summary>
-/// Event raised when an entity is being reclaimed by a <see cref="MaterialReclaimerComponent"/>
-/// </summary>
-[ByRefEvent]
-public readonly record struct GetMaterialReclaimedEvent;
+[NetSerializable, Serializable]
+public enum RecyclerVisuals
+{
+    Bloody
+}
+
+public enum RecyclerVisualLayers : byte
+{
+    Main,
+    Bloody
+}

@@ -3,25 +3,36 @@ using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Fluids.EntitySystems;
+using Content.Server.GameTicking;
 using Content.Server.Nutrition.Components;
+using Content.Server.Players;
+using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
 using Content.Server.Wires;
+using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Materials;
+using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Materials;
 
 public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
 {
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SharedBodySystem _body = default!; //bobby
     [Dependency] private readonly SpillableSystem _spillable = default!;
     [Dependency] private readonly StackSystem _stack = default!;
-
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -31,11 +42,11 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         SubscribeLocalEvent<MaterialReclaimerComponent, RefreshPartsEvent>(OnRefreshParts);
         SubscribeLocalEvent<MaterialReclaimerComponent, UpgradeExamineEvent>(OnUpgradeExamine);
         SubscribeLocalEvent<MaterialReclaimerComponent, PowerChangedEvent>(OnPowerChanged);
-        SubscribeLocalEvent<ActiveMaterialReclaimerComponent, PowerChangedEvent>(OnActivePowerChanged);
         SubscribeLocalEvent<MaterialReclaimerComponent, InteractUsingEvent>(OnInteractUsing,
             before: new []{typeof(WiresSystem), typeof(SolutionTransferSystem)});
+        SubscribeLocalEvent<MaterialReclaimerComponent, SuicideEvent>(OnSuicide);
+        SubscribeLocalEvent<ActiveMaterialReclaimerComponent, PowerChangedEvent>(OnActivePowerChanged);
     }
-
     private void OnStartup(EntityUid uid, MaterialReclaimerComponent component, ComponentStartup args)
     {
         component.OutputSolution = _solutionContainer.EnsureSolution(uid, component.SolutionContainerId);
@@ -55,6 +66,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
 
     private void OnPowerChanged(EntityUid uid, MaterialReclaimerComponent component, ref PowerChangedEvent args)
     {
+        AmbientSound.SetAmbience(uid, args.Powered);
         component.Powered = args.Powered;
         Dirty(component);
     }
@@ -83,6 +95,31 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         args.Handled = TryStartProcessItem(uid, args.Used, component, args.User);
     }
 
+    private void OnSuicide(EntityUid uid, MaterialReclaimerComponent component, SuicideEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.SetHandled(SuicideKind.Bloodloss);
+        var victim = args.Victim;
+        if (TryComp(victim, out ActorComponent? actor) &&
+            actor.PlayerSession.ContentData()?.Mind is { } mind)
+        {
+            _ticker.OnGhostAttempt(mind, false);
+            if (mind.OwnedEntity is { Valid: true } entity)
+            {
+                _popup.PopupEntity(Loc.GetString("recycler-component-suicide-message"), entity);
+            }
+        }
+
+        _popup.PopupEntity(Loc.GetString("recycler-component-suicide-message-others", ("victim", Identity.Entity(victim, EntityManager))),
+            victim,
+            Filter.PvsExcept(victim, entityManager: EntityManager), true);
+
+        _body.GibBody(victim, true);
+        _appearance.SetData(uid, RecyclerVisuals.Bloody, true);
+    }
+
     private void OnActivePowerChanged(EntityUid uid, ActiveMaterialReclaimerComponent component, ref PowerChangedEvent args)
     {
         if (!args.Powered)
@@ -100,42 +137,92 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         if (active.ReclaimingContainer.ContainedEntities.FirstOrNull() is not { } item)
             return false;
 
-        QueueDel(item);
-
-        if (!TryComp<PhysicalCompositionComponent>(item, out var compositionComponent))
-            return false;
+        active.ReclaimingContainer.Remove(item);
+        Dirty(component);
 
         // scales the output if the process was interrupted.
-        var completion = 1f - Math.Clamp((float) Math.Round((active.EndTime - Timing.CurTime) / active.Duration), 0f, 1f);
+        var completion = 1f - Math.Clamp((float) Math.Round((active.EndTime - Timing.CurTime) / active.Duration),
+            0f, 1f);
+        Reclaim(uid, item, completion, component);
+
+        return true;
+    }
+
+    public override void Reclaim(EntityUid uid,
+        EntityUid item,
+        float completion = 1f,
+        MaterialReclaimerComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
         var xform = Transform(uid);
 
-        if (TryComp<MaterialStorageComponent>(uid, out var materialStorage))
-        {
-            foreach (var (material, amount) in compositionComponent.MaterialComposition)
-            {
-                var outputAmount = (int) (amount * completion * component.Efficiency);
-                _materialStorage.TryChangeMaterialAmount(uid, material, outputAmount, materialStorage);
+        SpawnMaterialsFromComposition(uid, item, completion * component.Efficiency, xform: xform);
+        SpawnChemicalsFromComposition(uid, item, completion, component, xform);
 
-                foreach (var (storedMaterial, storedAmount) in materialStorage.Storage)
-                {
-                    var stacks = _materialStorage.SpawnMultipleFromMaterial(storedAmount, material, xform.Coordinates,
-                        out var materialOverflow);
-                    var amountConsumed = storedAmount - materialOverflow;
-                    _materialStorage.TryChangeMaterialAmount(uid, storedMaterial, -amountConsumed, materialStorage);
-                    foreach (var stack in stacks)
-                    {
-                        if (Exists(stack)) // make sure we don't merge it out of existence
-                            _stack.TryMergeToContacts(stack);
-                    }
-                }
-            }
+        if (CanGib(uid, item, component))
+        {
+            _body.GibBody(item, true);
+            _appearance.SetData(uid, RecyclerVisuals.Bloody, true);
         }
 
-        var overflow = new Solution
+        QueueDel(item);
+    }
+
+    private void SpawnMaterialsFromComposition(EntityUid reclaimer,
+        EntityUid item,
+        float efficiency,
+        MaterialStorageComponent? storage = null,
+        TransformComponent? xform = null,
+        PhysicalCompositionComponent? composition = null)
+    {
+        if (!Resolve(reclaimer, ref storage, ref xform, false))
+            return;
+
+        if (!Resolve(item, ref composition, false))
+            return;
+
+        foreach (var (material, amount) in composition.MaterialComposition)
         {
-            MaxVolume = compositionComponent.ChemicalComposition.Values.Sum()
-        };
-        var totalChemicals = compositionComponent.ChemicalComposition;
+            var outputAmount = (int) (amount * efficiency);
+            _materialStorage.TryChangeMaterialAmount(reclaimer, material, outputAmount, storage);
+        }
+
+        foreach (var (storedMaterial, storedAmount) in storage.Storage)
+        {
+            var stacks = _materialStorage.SpawnMultipleFromMaterial(storedAmount, storedMaterial,
+                xform.Coordinates,
+                out var materialOverflow);
+            var amountConsumed = storedAmount - materialOverflow;
+            _materialStorage.TryChangeMaterialAmount(reclaimer, storedMaterial, -amountConsumed, storage);
+            foreach (var stack in stacks)
+            {
+                _stack.TryMergeToContacts(stack);
+            }
+        }
+    }
+
+    private void SpawnChemicalsFromComposition(EntityUid reclaimer,
+        EntityUid item,
+        float efficiency,
+        MaterialReclaimerComponent? reclaimerComponent = null,
+        TransformComponent? xform = null,
+        PhysicalCompositionComponent? composition = null)
+    {
+        if (!Resolve(reclaimer, ref reclaimerComponent, ref xform))
+            return;
+
+        var overflow = new Solution();
+        var totalChemicals = new Dictionary<string, FixedPoint2>();
+
+        if (Resolve(item, ref composition, false))
+        {
+            foreach (var (key, value) in composition.ChemicalComposition)
+            {
+                totalChemicals[key] = totalChemicals.GetValueOrDefault(key) + value;
+            }
+        }
 
         // if the item we inserted has reagents, add it in.
         if (TryComp<SolutionContainerManagerComponent>(item, out var solutionContainer))
@@ -152,8 +239,9 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
 
         foreach (var (reagent, amount) in totalChemicals)
         {
-            var outputAmount = amount * completion * component.Efficiency;
-            _solutionContainer.TryAddReagent(uid, component.OutputSolution, reagent, outputAmount, out var accepted);
+            var outputAmount = amount * efficiency * reclaimerComponent.Efficiency;
+            _solutionContainer.TryAddReagent(reclaimer, reclaimerComponent.OutputSolution, reagent, outputAmount,
+                out var accepted);
             var overflowAmount = outputAmount - accepted;
             if (overflowAmount > 0)
             {
@@ -163,8 +251,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
 
         if (overflow.Volume > 0)
         {
-            _spillable.SpillAt(uid, overflow, component.PuddleId, transformComponent: xform);
+            _spillable.SpillAt(reclaimer, overflow, reclaimerComponent.PuddleId, transformComponent: xform);
         }
-        return true;
     }
 }

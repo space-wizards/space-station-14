@@ -94,7 +94,9 @@
     state: cuff-broken
   - type: Item
     size: 2
-  - type: Recyclable
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 25
 
 - type: entity
   name: broken cables
@@ -108,4 +110,6 @@
     color: red
   - type: Item
     size: 2
-  - type: Recyclable
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 25

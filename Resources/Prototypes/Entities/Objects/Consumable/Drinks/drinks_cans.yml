@@ -45,7 +45,6 @@
   - type: Spillable
     solution: drink
   - type: ItemCooldown
-  - type: Recyclable
   - type: SpaceGarbage
   - type: TrashOnEmpty
     solution: drink
@@ -364,7 +363,7 @@
     sprite: Objects/Consumable/Drinks/shamblersjuice.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/shamblersjuice.rsi
-    
+
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkPwrGameCan

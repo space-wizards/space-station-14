@@ -43,15 +43,9 @@
     color: "#da824d"
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
-    offset: "0, 0.4" # shine from the top, not bottom of the computer
+    offset: "0, 0.4"
     castShadows: false
   - type: PowerSwitch
-  - type: AmbientSound
-    enabled: false
-    range: 5
-    volume: -5
-    sound:
-      path: /Audio/Ambience/Objects/crushing.ogg
   - type: Destructible
     thresholds:
     - trigger:
@@ -71,8 +65,10 @@
     whitelist:
       components:
       - PhysicalComposition
+      - SpaceGarbage
       tags:
       - Trash
+      - Recyclable
     blacklist:
       components:
       - Material
@@ -80,6 +76,12 @@
       - IdCard
       tags:
       - HighRiskItem
+    sound:
+      path: /Audio/Ambience/Objects/crushing.ogg
+      params:
+        volume: 5
+        maxdistance: 5
+        loop: true
   - type: MaterialStorage
     insertOnInteract: false
   - type: ContainerContainer
