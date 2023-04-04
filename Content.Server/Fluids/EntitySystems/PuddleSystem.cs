@@ -6,6 +6,7 @@ using Content.Server.Kudzu;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
+using Content.Shared.Fluids;
 using Content.Shared.Fluids.Components;
 using Content.Shared.StepTrigger.Components;
 using Content.Shared.StepTrigger.Systems;
@@ -64,9 +65,6 @@ public sealed partial class PuddleSystem : EntitySystem
 
     private void OnPuddleSpread(EntityUid uid, PuddleComponent component, ref SpreadNeighborsEvent args)
     {
-        if (!IsOverflowing(uid, component))
-            return;
-
         var overflow = GetOverflowSolution(uid, component);
 
         if (overflow.Volume == FixedPoint2.Zero)
@@ -116,16 +114,17 @@ public sealed partial class PuddleSystem : EntitySystem
                     continue;
                 }
 
-                var remaining = puddle.OverflowVolume - neighborSolution.Volume;
+                var remaining = neighborSolution.Volume - puddle.OverflowVolume;
 
-                if (remaining < FixedPoint2.Zero)
+                if (remaining <= FixedPoint2.Zero)
                     continue;
 
                 var split = overflow.SplitSolution(remaining);
-                neighborSolution.AddSolution(split, _prototypeManager);
 
-                if (overflow.Volume == FixedPoint2.Zero)
-                    break;
+                if (!_solutionContainerSystem.TryAddSolution(neighbor, neighborSolution, split))
+                    continue;
+
+                EnsureComp<EdgeSpreaderComponent>(neighbor);
             }
 
             if (overflow.Volume == FixedPoint2.Zero)
@@ -142,7 +141,11 @@ public sealed partial class PuddleSystem : EntitySystem
                 }
 
                 var split = overflow.SplitSolution(spillPerNeighbor);
-                neighborSolution.AddSolution(split, _prototypeManager);
+
+                if (!_solutionContainerSystem.TryAddSolution(neighbor, neighborSolution, split))
+                    continue;
+
+                EnsureComp<EdgeSpreaderComponent>(neighbor);
             }
         }
     }
@@ -186,13 +189,16 @@ public sealed partial class PuddleSystem : EntitySystem
         }
 
         var volume = FixedPoint2.Zero;
+        Color color = Color.White;
 
         if (_solutionContainerSystem.TryGetSolution(uid, puddleComponent.SolutionName, out var solution))
         {
             volume = solution.Volume / puddleComponent.OverflowVolume;
+            color = solution.GetColor(_prototypeManager);
         }
 
-
+        _appearance.SetData(uid, PuddleVisuals.CurrentVolume, volume.Float(), appearance);
+        _appearance.SetData(uid, PuddleVisuals.SolutionColor, color, appearance);
     }
 
     private void UpdateSlip(EntityUid entityUid, PuddleComponent puddleComponent)
@@ -312,7 +318,7 @@ public sealed partial class PuddleSystem : EntitySystem
 
         // TODO: This is going to fail with struct solutions.
         var remaining = puddle.OverflowVolume;
-        var split = solution.SplitSolution(CurrentVolume(uid, puddle) - remaining);
+        var split = _solutionContainerSystem.SplitSolution(uid, solution, CurrentVolume(uid, puddle) - remaining);
         return split;
     }
 

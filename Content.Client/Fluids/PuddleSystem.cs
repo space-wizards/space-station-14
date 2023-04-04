@@ -1,13 +1,10 @@
 using Content.Client.IconSmoothing;
 using Content.Shared.Fluids;
 using Content.Shared.Fluids.Components;
-using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.Random;
 
 namespace Content.Client.Fluids
 {
-    [UsedImplicitly]
     public sealed class PuddleSystem : EntitySystem
     {
         [Dependency] private readonly IconSmoothSystem _smooth = default!;
@@ -31,20 +28,34 @@ namespace Content.Client.Fluids
                 volume = (float) volumeObj;
             }
 
-            TryComp<IconSmoothComponent>(uid, out var smooth);
+            // Update smoothing and sprite based on volume.
+            if (TryComp<IconSmoothComponent>(uid, out var smooth))
+            {
+                if (volume < 0.3f)
+                {
+                    args.Sprite.LayerSetState(0, $"{smooth.StateBase}a");
+                    _smooth.SetEnabled(uid, false, smooth);
+                }
+                else if (volume < 0.6f)
+                {
+                    args.Sprite.LayerSetState(0, $"{smooth.StateBase}b");
+                    _smooth.SetEnabled(uid, false, smooth);
+                }
+                else
+                {
+                    if (!smooth.Enabled)
+                    {
+                        args.Sprite.LayerSetState(0, $"{smooth.StateBase}0");
+                        _smooth.SetEnabled(uid, true, smooth);
+                        _smooth.DirtyNeighbours(uid);
+                    }
+                }
+            }
 
-            // TODO: Update sprite / smoothing based on volume
-            if (volume < 0.2f)
+            if (args.AppearanceData.TryGetValue(PuddleVisuals.SolutionColor, out var colorObj))
             {
-                _smooth.SetEnabled(uid, false, smooth);
-            }
-            else if (volume < 0.5f)
-            {
-                _smooth.SetEnabled(uid, false, smooth);
-            }
-            else
-            {
-                _smooth.SetEnabled(uid, true, smooth);
+                var color = (Color) colorObj;
+                args.Sprite.Color = color;
             }
         }
     }
