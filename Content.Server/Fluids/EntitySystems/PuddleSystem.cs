@@ -81,28 +81,14 @@ public sealed partial class PuddleSystem : EntitySystem
             return;
         }
 
-        // First we try to overflow to empty neighboring tiles
-        // If there are none we overflow to any neighboring tiles up to overflow limit
-        // If there's still some remaining we just split our overflow evenly to splash it around.
-        if (args.NeighborFreeTiles.Count > 0)
-        {
-            args.Handled = true;
-            _random.Shuffle(args.NeighborFreeTiles);
-            var spillAmount = overflow.Volume / args.NeighborFreeTiles.Count;
+        var puddleQuery = GetEntityQuery<PuddleComponent>();
 
-            foreach (var tile in args.NeighborFreeTiles)
-            {
-                var split = overflow.SplitSolution(spillAmount);
-                TrySpillAt(grid.GridTileToLocal(tile), split, out _, false);
-            }
-
-            return;
-        }
-
+        // First we overflow to neighbors with overflow capacity
+        // Then we go to free tiles
+        // Then we go to anything else.
         if (args.Neighbors.Count > 0)
         {
             args.Handled = true;
-            var puddleQuery = GetEntityQuery<PuddleComponent>();
             _random.Shuffle(args.Neighbors);
 
             // Overflow to neighbors with remaining space.
@@ -128,8 +114,30 @@ public sealed partial class PuddleSystem : EntitySystem
             }
 
             if (overflow.Volume == FixedPoint2.Zero)
+            {
+                RemCompDeferred<EdgeSpreaderComponent>(uid);
                 return;
+            }
+        }
 
+        if (args.NeighborFreeTiles.Count > 0)
+        {
+            args.Handled = true;
+            _random.Shuffle(args.NeighborFreeTiles);
+            var spillAmount = overflow.Volume / args.NeighborFreeTiles.Count;
+
+            foreach (var tile in args.NeighborFreeTiles)
+            {
+                var split = overflow.SplitSolution(spillAmount);
+                TrySpillAt(grid.GridTileToLocal(tile), split, out _, false);
+            }
+
+            RemCompDeferred<EdgeSpreaderComponent>(uid);
+            return;
+        }
+
+        if (overflow.Volume > FixedPoint2.Zero && args.Neighbors.Count > 0)
+        {
             var spillPerNeighbor = overflow.Volume / args.Neighbors.Count;
 
             foreach (var neighbor in args.Neighbors)

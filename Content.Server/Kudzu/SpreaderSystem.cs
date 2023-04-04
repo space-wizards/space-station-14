@@ -204,7 +204,7 @@ public sealed class SpreaderSystem : EntitySystem
                         Name = node.Name,
                     };
                     RaiseLocalEvent(ref spreadEv);
-                    updates = (int) (spreadEv.UpdatesPerSecond * TimeSpan.FromSeconds(1) / SpreadCooldown);
+                    updates = (int) (spreadEv.UpdatesPerSecond * SpreadCooldown / TimeSpan.FromSeconds(1));
                 }
 
                 if (updates <= 0)
@@ -347,7 +347,7 @@ public sealed class SpreaderSystem : EntitySystem
 public record struct SpreadGroupUpdateRate()
 {
     public string Name;
-    public int UpdatesPerSecond = 10;
+    public int UpdatesPerSecond = 16;
 }
 
 [RegisterComponent]
