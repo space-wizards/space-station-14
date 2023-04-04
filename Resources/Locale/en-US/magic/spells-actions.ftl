@@ -18,6 +18,10 @@ action-name-spell-knock = Knock
 action-description-spell-knock = This spell opens nearby doors.
 action-speech-spell-knock = AULIE OXIN FIERA
 
+action-name-spell-gate = Gate
+action-description-spell-gate = This spell opens two connected portals.
+action-speech-spell-gate = PAL'KOR!
+
 action-name-spell-smite = Smite
 action-description-spell-smite = Instantly gibs a target.
 action-speech-spell-smite = EI NATH!
