@@ -5,4 +5,8 @@
     FoodSnackNutribrick: 5
     FoodSnackMREBrownie: 5
     FoodCondimentPacketKetchup: 5
-
+  emaggedInventory:
+    KitchenKnife: 2
+    SpaceMedipen: 3
+    ClothingMaskBreath: 3
+    EmergencyOxygenTankFilled: 3
