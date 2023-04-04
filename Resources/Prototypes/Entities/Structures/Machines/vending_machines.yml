@@ -849,6 +849,36 @@
     radius: 1.5
     energy: 1.6
     color: "#c73434"
+    
+- type: entity
+  parent: VendingMachineSnack
+  id: VendingMachineSustenance
+  name: Sustenance Vendor
+  description: A vending machine which vends food, as required by section 47-C of the NT's Prisoner Ethical Treatment Agreement.
+  components:
+  - type: VendingMachine
+    pack: SustenanceInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/sustenance.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#737785"
 
 - type: entity
   parent: VendingMachineSnack
