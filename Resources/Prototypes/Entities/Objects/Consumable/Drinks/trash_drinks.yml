@@ -17,6 +17,10 @@
     maxTransferAmount: 5
   - type: Drink
     isOpen: true
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 0
   - type: Spillable
     solution: drink
   - type: FitsInDispenser

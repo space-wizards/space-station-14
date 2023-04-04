@@ -15,8 +15,16 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Reaction;
 using Content.Shared.DoAfter;
+using Content.Shared.Examine;
+using Content.Shared.IdentityManagement;
+using Content.Shared.Popups;
 using Content.Shared.Spillable;
+using Content.Shared.Weapons.Melee;
+using Content.Shared.Weapons.Melee.Events;
+using Robust.Shared.Player;
 
 namespace Content.Server.Fluids.EntitySystems;
 
@@ -30,15 +38,27 @@ public sealed class SpillableSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger= default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly ReactiveSystem _reactive = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<SpillableComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<SpillableComponent, LandEvent>(SpillOnLand);
+        SubscribeLocalEvent<SpillableComponent, MeleeHitEvent>(SpillOnMeleeHit);
         SubscribeLocalEvent<SpillableComponent, GetVerbsEvent<Verb>>(AddSpillVerb);
         SubscribeLocalEvent<SpillableComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<SpillableComponent, SolutionSpikeOverflowEvent>(OnSpikeOverflow);
         SubscribeLocalEvent<SpillableComponent, SpillDoAfterEvent>(OnDoAfter);
+    }
+
+    private void OnExamined(EntityUid uid, SpillableComponent component, ExaminedEvent args)
+    {
+        args.PushMarkup(Loc.GetString("spill-examine-is-spillable"));
+
+        if (HasComp<MeleeWeaponComponent>(uid))
+            args.PushMarkup(Loc.GetString("spill-examine-spillable-weapon"));
     }
 
     private void OnSpikeOverflow(EntityUid uid, SpillableComponent component, SolutionSpikeOverflowEvent args)
@@ -107,8 +127,58 @@ public sealed class SpillableSystem : EntitySystem
                 $"{ToPrettyString(uid):entity} spilled a solution {SolutionContainerSystem.ToPrettyString(solution):solution} on landing");
         }
 
+        // Get reactive entities nearby--if there are some, it'll spill a bit on them instead, depending on how close they are.
+
         var drainedSolution = _solutionContainerSystem.Drain(uid, solution, solution.Volume);
         SpillAt(drainedSolution, EntityManager.GetComponent<TransformComponent>(uid).Coordinates, "PuddleSmear");
+    }
+
+    private void SpillOnMeleeHit(EntityUid uid, SpillableComponent component, MeleeHitEvent args)
+    {
+        // When attacking someone reactive with a spillable entity,
+        // splash a little on them (touch react)
+        // If this also has solution transfer, then assume the transfer amount is how much we want to spill.
+        // Otherwise let's say they want to spill a quarter of its max volume.
+
+        if (!_solutionContainerSystem.TryGetDrainableSolution(uid, out var solution))
+            return;
+
+        if (TryComp<DrinkComponent>(uid, out var drink) && !drink.Opened)
+            return;
+
+        var hitCount = args.HitEntities.Count;
+
+        var totalSplit = FixedPoint2.Min(solution.MaxVolume * 0.25, solution.Volume);
+        if (TryComp<SolutionTransferComponent>(uid, out var transfer))
+        {
+            totalSplit = FixedPoint2.Min(transfer.TransferAmount, solution.Volume);
+        }
+
+        // a little lame, but reagent quantity is not very balanced and we don't want people
+        // spilling like 100u of reagent on someone at once!
+        totalSplit = FixedPoint2.Min(totalSplit, component.MaxMeleeSpillAmount);
+
+        foreach (var hit in args.HitEntities)
+        {
+            if (!HasComp<ReactiveComponent>(hit))
+            {
+                hitCount -= 1; // so we don't undershoot solution calculation for actual reactive entities
+                continue;
+            }
+
+            var splitSolution = _solutionContainerSystem.SplitSolution(uid, solution, totalSplit / hitCount);
+            _reactive.DoEntityReaction(hit, splitSolution, ReactionMethod.Touch);
+
+            _popup.PopupEntity(
+                Loc.GetString("spill-melee-hit-attacker", ("amount", totalSplit / hitCount), ("spillable", uid),
+                    ("target", Identity.Entity(hit, EntityManager))),
+                hit, args.User);
+
+            _popup.PopupEntity(
+                Loc.GetString("spill-melee-hit-others", ("attacker", args.User), ("spillable", uid),
+                    ("target", Identity.Entity(hit, EntityManager))),
+                hit, Filter.PvsExcept(args.User), true, PopupType.SmallCaution);
+        }
     }
 
     private void AddSpillVerb(EntityUid uid, SpillableComponent component, GetVerbsEvent<Verb> args)

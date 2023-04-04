@@ -85,7 +85,7 @@ namespace Content.Server.Fluids.EntitySystems
 
             // Take 15% of the puddle solution
             var splitSol = _solutionContainerSystem.SplitSolution(uid, solution, solution.Volume * 0.15f);
-            _reactive.ReactionEntity(args.Slipped, ReactionMethod.Touch, splitSol);
+            _reactive.DoEntityReaction(args.Slipped, splitSol, ReactionMethod.Touch);
         }
 
         private void OnSolutionUpdate(EntityUid uid, PuddleComponent component, SolutionChangedEvent args)

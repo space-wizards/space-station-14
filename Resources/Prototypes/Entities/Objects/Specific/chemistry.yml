@@ -16,6 +16,10 @@
         visible: false
   - type: Item
     sprite: Objects/Specific/Chemistry/beaker.rsi
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 0
   - type: SolutionContainerManager
     solutions:
       beaker:
