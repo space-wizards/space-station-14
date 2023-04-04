@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: BaseSpellbook
   name: spellbook
   parent: BaseItem
@@ -108,3 +108,20 @@
       ExplosionRune: -1
       IgniteRune: -1
       StunRune: -1
+
+- type: entity
+  id: GateSpellbook
+  name: gate spellbook
+  parent: BaseSpellbook
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Magic/teleportation.rsi
+    layers:
+      - state: icon
+  - type: Item
+    size: 15
+    sprite: Objects/Magic/teleportation.rsi
+  - type: Spellbook
+    instantSpells:
+      Gate: -1

@@ -1,18 +1,12 @@
-using Content.Shared.Materials;
+using Content.Shared.Actions;
 using Robust.Shared.Audio;
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared.Teleportation.Components;
+namespace Content.Server.Magic.Events;
 
-/// <summary>
-///     Creates portals. If two are created, both are linked together--otherwise the first teleports randomly.
-///     Using it with both portals active deactivates both.
-/// </summary>
-[RegisterComponent, NetworkedComponent]
-public sealed class CluwneTeleporterComponent : Component
+public sealed class GateSpellEvent : InstantActionEvent
 {
     [ViewVariables, DataField("firstPortal")]
     public EntityUid? FirstPortal = null;
@@ -23,16 +17,10 @@ public sealed class CluwneTeleporterComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public float SpawnAmount = 1;
 
-    [DataField("requiredMaterial", customTypeSerializer: typeof(PrototypeIdSerializer<MaterialPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public string RequiredMaterial = "Plasma";
-
-    [DataField("materialPerAnomaly"), ViewVariables(VVAccess.ReadWrite)]
-    public int MaterialPerAnomaly = 1500; // a bit less than a stack of plasma
-
-    [DataField("firstPortalPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField("firstPortalPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string FirstPortalPrototype = "PortalGreeny";
 
-    [DataField("secondPortalPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField("secondPortalPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string SecondPortalPrototype = "PortalYellow";
 
     [DataField("newPortalSound")]

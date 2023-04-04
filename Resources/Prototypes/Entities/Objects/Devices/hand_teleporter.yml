@@ -9,18 +9,3 @@
     layers:
     - state: icon
   - type: HandTeleporter
-
-- type: entity
-  id: TeleportSpellBook
-  parent: BaseItem
-  name: summon gate
-  description: "A dusty tome with the title Pel Ror, loosly translated as summon gateway."
-  components:
-  - type: Sprite
-    netsync: false
-    sprite: Objects/Magic/teleportation.rsi
-    state: icon
-  - type: Item
-    size: 15
-    sprite: Objects/Magic/teleportation.rsi
-  - type: CluwneTeleporter
