@@ -229,7 +229,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void OnToolFinished(EntityUid uid, ApcComponent component, ApcToolFinishedEvent args)
         {
-            if (!args.Cancelled)
+            if (args.Cancelled)
                 return;
 
             component.IsApcOpen = !component.IsApcOpen;
