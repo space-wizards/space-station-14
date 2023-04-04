@@ -57,6 +57,7 @@ public static class PoolManager
         (CCVars.ArrivalsShuttles.Name,        "false"),
         (CCVars.EmergencyShuttleEnabled.Name, "false"),
         (CCVars.ProcgenPreload.Name,          "false"),
+        (CCVars.WorldgenEnabled.Name,         "false"),
         // @formatter:on
     };
 
