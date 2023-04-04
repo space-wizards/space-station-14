@@ -55,6 +55,8 @@
       - key: enum.ShuttleConsoleUiKey.Key
         type: ShuttleConsoleBoundUserInterface
   - type: RadarConsole
+  - type: WorldLoader
+    radius: 256
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -102,6 +104,8 @@
       - Syndicate
   - type: RadarConsole
     maxRange: 1536
+  - type: WorldLoader
+    radius: 1536
   - type: PointLight
     radius: 1.5
     energy: 1.6
