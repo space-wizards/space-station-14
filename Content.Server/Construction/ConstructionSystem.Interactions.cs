@@ -7,6 +7,7 @@ using Content.Shared.Construction;
 using Content.Shared.Construction.Steps;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
+using Content.Shared.Radio.EntitySystems;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -33,7 +34,7 @@ namespace Content.Server.Construction
             SubscribeLocalEvent<ConstructionComponent, ConstructionInteractDoAfterEvent>(OnDoAfterComplete);
 
             // Event handling. Add your subscriptions here! Just make sure they're all handled by EnqueueEvent.
-            SubscribeLocalEvent<ConstructionComponent, InteractUsingEvent>(EnqueueEvent, new []{typeof(AnchorableSystem)});
+            SubscribeLocalEvent<ConstructionComponent, InteractUsingEvent>(EnqueueEvent, new []{typeof(AnchorableSystem), typeof(EncryptionKeySystem)});
             SubscribeLocalEvent<ConstructionComponent, OnTemperatureChangeEvent>(EnqueueEvent);
         }
 
