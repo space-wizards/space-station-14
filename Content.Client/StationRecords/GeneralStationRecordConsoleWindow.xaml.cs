@@ -56,6 +56,11 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
             }
         };
 
+        StationRecordsFiltersValue.OnTextEntered += args =>
+        {
+            FilterListingOfRecords(args.Text);
+        };
+
         StationRecordsFilters.OnPressed += _ =>
         {
             FilterListingOfRecords(StationRecordsFiltersValue.Text);
@@ -70,13 +75,16 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 
     public void UpdateState(GeneralStationRecordConsoleState state)
     {
-        if (state.Filter != null) {
-            if (state.Filter.type != _filterTypes[_currentFilterType]) {
+        if (state.Filter != null)
+        {
+            if (state.Filter.type != _filterTypes[_currentFilterType])
+            {
                 int findedIndex = Array.IndexOf(_filterTypes, state.Filter.type);
                 _currentFilterType = findedIndex > 0 ? findedIndex : 0;
             }
 
-            if (state.Filter.value != StationRecordsFiltersValue.Text) {
+            if (state.Filter.value != StationRecordsFiltersValue.Text)
+            {
                 StationRecordsFiltersValue.Text = state.Filter.value;
             }
         }
