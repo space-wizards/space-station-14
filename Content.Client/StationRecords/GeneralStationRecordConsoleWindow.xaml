@@ -2,14 +2,12 @@
                Title="{Loc 'general-station-record-console-window-title'}"
                MinSize="750 500">
     <BoxContainer Orientation="Vertical">
-        <BoxContainer Orientation="Vertical" Margin="5 10 5 5"
-                HorizontalExpand="true">
+        <BoxContainer Orientation="Vertical" Margin="5 10 5 5" HorizontalExpand="true">
             <BoxContainer Margin="0 0 0 5" HorizontalExpand="true">
                 <OptionButton Name="StationRecordsFilterType" MinWidth="200" Margin="0 0 10 0"/>
                 <LineEdit Name="StationRecordsFiltersValue" StyleClasses="actionSearchBox" HorizontalExpand="True"/>
             </BoxContainer>
-            <BoxContainer Margin="0 0 0 5" HorizontalAlignment="Right" HorizontalExpand="true"
-                VerticalAlignment="Center">
+            <BoxContainer Margin="0 0 0 5" HorizontalAlignment="Right" HorizontalExpand="true" VerticalAlignment="Center">
                 <Button Name="StationRecordsFilters" Text="{Loc 'general-station-record-console-search-records'}"/>
                 <Button Name="StationRecordsFiltersReset" Text="{Loc 'general-station-record-console-reset-filters'}"/>
             </BoxContainer>
