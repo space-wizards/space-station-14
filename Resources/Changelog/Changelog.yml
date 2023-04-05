@@ -1,9 +1,4 @@
 Entries:
-- author: vanx
-  changes:
-  - {message: Doubled the paper symbol limit, type: Tweak}
-  id: 2832
-  time: '2023-01-04T06:44:17.0000000+00:00'
 - author: Bhijn and Myr
   changes:
   - {message: 'The radar shown in mass scanners and shuttle consoles now resizes gracefully,
@@ -2910,3 +2905,12 @@ Entries:
   - {message: Added tcoms server to dev map, type: Add}
   id: 3331
   time: '2023-04-04T13:26:00.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed being unable to toggle hardsuit helmets on incapacitated players,
+    type: Fix}
+  - {message: Fixed being unable to open some wiring panels with a screw driver, type: Fix}
+  - {message: Fixed various construction interactions getting stuck in an incomplete
+      state., type: Fix}
+  id: 3332
+  time: '2023-04-05T00:19:28.0000000+00:00'
