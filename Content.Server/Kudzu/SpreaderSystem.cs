@@ -49,13 +49,11 @@ public sealed class EdgeSpreaderComponent : Component
 public sealed class SpreaderNodeGroup : BaseNodeGroup
 {
     private IEntityManager _entManager = default!;
-    private SpreaderSystem _system = default!;
 
     public override void Initialize(Node sourceNode, IEntityManager entMan)
     {
         base.Initialize(sourceNode, entMan);
         _entManager = entMan;
-        _system = _entManager.System<SpreaderSystem>();
     }
 
     public override void RemoveNode(Node node)
@@ -96,7 +94,8 @@ public sealed class SpreaderSystem : EntitySystem
 
     private static readonly List<string> SpreaderGroups = new()
     {
-        "puddle"
+        "puddle",
+        "smoke",
     };
 
     public override void Initialize()
@@ -212,22 +211,17 @@ public sealed class SpreaderSystem : EntitySystem
                     continue;
                 }
 
-                if (!Spread(uid, node, node.NodeGroup))
-                {
-                    continue;
-                }
-
-                updates--;
+                Spread(uid, node, node.NodeGroup, ref updates);
                 groupUpdates[node.NodeGroup] = updates;
             }
         }
     }
 
-    private bool Spread(EntityUid uid, SpreaderNode node, INodeGroup group)
+    private void Spread(EntityUid uid, SpreaderNode node, INodeGroup group, ref int updates)
     {
         GetNeighbors(uid, node.Name, out var freeTiles, out var occupiedTiles, out var neighbors);
 
-        TryComp<MapGridComponent>(uid, out var grid);
+        TryComp<MapGridComponent>(Transform(uid).GridUid, out var grid);
 
         var ev = new SpreadNeighborsEvent()
         {
@@ -235,9 +229,11 @@ public sealed class SpreaderSystem : EntitySystem
             NeighborFreeTiles = freeTiles,
             NeighborOccupiedTiles = occupiedTiles,
             Neighbors = neighbors,
+            Updates = updates,
         };
+
         RaiseLocalEvent(uid, ref ev);
-        return !ev.Handled;
+        updates = ev.Updates;
     }
 
     public void GetNeighbors(EntityUid uid, string groupName, out ValueList<Vector2i> freeTiles, out ValueList<Vector2i> occupiedTiles, out ValueList<EntityUid> neighbors)
@@ -254,31 +250,33 @@ public sealed class SpreaderSystem : EntitySystem
 
         var tile = grid.TileIndicesFor(transform.Coordinates);
         var nodeQuery = GetEntityQuery<NodeContainerComponent>();
-        var sourceMap = grid.GridTileToLocal(tile).ToMap(EntityManager, _transform);
+        var airtightQuery = GetEntityQuery<AirtightComponent>();
 
         for (var i = 0; i < 4; i++)
         {
             var direction = (Direction) (i * 2);
             var neighborPos = SharedMapSystem.GetDirection(tile, direction);
-            var neighborCoords = grid.GridTileToLocal(neighborPos);
-
-            // Check if we can spread to that tile.
-            var dstMap = neighborCoords.ToMap(EntityManager, _transform);
-            var dst = dstMap.Position;
-            var src = sourceMap.Position;
-            var dir = src - dst;
-            var ray = new CollisionRay(dst, dir.Normalized, (int) (CollisionGroup.Impassable | CollisionGroup.HighImpassable));
-            var mapId = dstMap.MapId;
-            var results = _physics.IntersectRay(mapId, ray, dir.Length, returnOnFirstHit: true);
-
-            if (results.Any())
-            {
-                continue;
-            }
 
             var directionEnumerator =
                 grid.GetAnchoredEntitiesEnumerator(neighborPos);
             var occupied = false;
+
+            while (directionEnumerator.MoveNext(out var ent))
+            {
+                // TODO: Airtight blocked direction for thindows.
+                if (airtightQuery.TryGetComponent(ent, out var airtight) && airtight.AirBlocked)
+                {
+                    occupied = true;
+                    break;
+                }
+            }
+
+            if (occupied)
+                continue;
+
+            var oldCount = occupiedTiles.Count;
+            directionEnumerator =
+                grid.GetAnchoredEntitiesEnumerator(neighborPos);
 
             while (directionEnumerator.MoveNext(out var ent))
             {
@@ -290,14 +288,11 @@ public sealed class SpreaderSystem : EntitySystem
 
                 neighbors.Add(ent.Value);
                 occupiedTiles.Add(neighborPos);
-                occupied = true;
                 break;
             }
 
-            if (occupied)
-                continue;
-
-            freeTiles.Add(neighborPos);
+            if (oldCount == occupiedTiles.Count)
+                freeTiles.Add(neighborPos);
         }
     }
 
@@ -373,8 +368,9 @@ public record struct SpreadNeighborsEvent
     public ValueList<EntityUid> Neighbors;
 
     /// <summary>
-    /// Set to true if an update is counted for the node group.
-    /// If you wish to stop edge spreading from this entity then remove its component.
+    /// How many updates allowed are remaining.
+    /// Subscribers can handle as they wish.
     /// </summary>
-    public bool Handled;
+    public int Updates;
 }
+

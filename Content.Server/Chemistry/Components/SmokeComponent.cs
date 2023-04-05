@@ -11,6 +11,9 @@ public sealed class SmokeComponent : Component
     [DataField("nextReact", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan NextReact = TimeSpan.Zero;
 
+    [DataField("spreadAmount")]
+    public int SpreadAmount = 0;
+
     /// <summary>
     ///     Have we reacted with our tile yet?
     /// </summary>

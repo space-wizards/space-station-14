@@ -88,7 +88,6 @@ public sealed partial class PuddleSystem : EntitySystem
         // Then we go to anything else.
         if (args.Neighbors.Count > 0)
         {
-            args.Handled = true;
             _random.Shuffle(args.Neighbors);
 
             // Overflow to neighbors with remaining space.
@@ -110,7 +109,11 @@ public sealed partial class PuddleSystem : EntitySystem
                 if (!_solutionContainerSystem.TryAddSolution(neighbor, neighborSolution, split))
                     continue;
 
+                args.Updates--;
                 EnsureComp<EdgeSpreaderComponent>(neighbor);
+
+                if (args.Updates == 0)
+                    break;
             }
 
             if (overflow.Volume == FixedPoint2.Zero)
@@ -120,9 +123,8 @@ public sealed partial class PuddleSystem : EntitySystem
             }
         }
 
-        if (args.NeighborFreeTiles.Count > 0)
+        if (args.NeighborFreeTiles.Count > 0 && args.Updates > 0)
         {
-            args.Handled = true;
             _random.Shuffle(args.NeighborFreeTiles);
             var spillAmount = overflow.Volume / args.NeighborFreeTiles.Count;
 
@@ -130,13 +132,17 @@ public sealed partial class PuddleSystem : EntitySystem
             {
                 var split = overflow.SplitSolution(spillAmount);
                 TrySpillAt(grid.GridTileToLocal(tile), split, out _, false);
+                args.Updates--;
+
+                if (args.Updates == 0)
+                    break;
             }
 
             RemCompDeferred<EdgeSpreaderComponent>(uid);
             return;
         }
 
-        if (overflow.Volume > FixedPoint2.Zero && args.Neighbors.Count > 0)
+        if (overflow.Volume > FixedPoint2.Zero && args.Neighbors.Count > 0 && args.Updates > 0)
         {
             var spillPerNeighbor = overflow.Volume / args.Neighbors.Count;
 
@@ -154,6 +160,10 @@ public sealed partial class PuddleSystem : EntitySystem
                     continue;
 
                 EnsureComp<EdgeSpreaderComponent>(neighbor);
+                args.Updates--;
+
+                if (args.Updates == 0)
+                    break;
             }
         }
     }

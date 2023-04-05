@@ -1,3 +1,8 @@
+# TODO: Fix
+- type: entity
+  id: PuddleVomit
+  parent: Puddle
+
 - type: entity
   name: puddle
   id: Puddle

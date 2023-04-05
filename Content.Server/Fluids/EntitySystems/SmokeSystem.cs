@@ -49,6 +49,15 @@ public sealed class SmokeSystem : EntitySystem
         SubscribeLocalEvent<SmokeComponent, ReactionAttemptEvent>(OnReactionAttempt);
         SubscribeLocalEvent<SmokeComponent, SpreadNeighborsEvent>(OnSmokeSpread);
         SubscribeLocalEvent<SmokeDissipateSpawnComponent, TimedDespawnEvent>(OnSmokeDissipate);
+        SubscribeLocalEvent<SpreadGroupUpdateRate>(OnSpreadUpdateRate);
+    }
+
+    private void OnSpreadUpdateRate(ref SpreadGroupUpdateRate ev)
+    {
+        if (ev.Name != "smoke")
+            return;
+
+        ev.UpdatesPerSecond = 8;
     }
 
     private void OnSmokeDissipate(EntityUid uid, SmokeDissipateSpawnComponent component, ref TimedDespawnEvent args)
@@ -63,17 +72,14 @@ public sealed class SmokeSystem : EntitySystem
 
     private void OnSmokeSpread(EntityUid uid, SmokeComponent component, ref SpreadNeighborsEvent args)
     {
-        if (args.Grid == null || !_solutionSystem.TryGetSolution(uid, SmokeComponent.SolutionName, out var solution))
+        if (component.SpreadAmount == 0 || args.Grid == null || !_solutionSystem.TryGetSolution(uid, SmokeComponent.SolutionName, out var solution))
         {
             RemCompDeferred<EdgeSpreaderComponent>(uid);
             return;
         }
 
-        var overflow = _solutionSystem.SplitSolution(uid, solution, solution.Volume - component.OverflowThreshold);
-
-        if (overflow.Volume <= FixedPoint2.Zero || args.NeighborFreeTiles.Count == 0)
+        if (args.NeighborFreeTiles.Count == 0)
         {
-            RemCompDeferred<EdgeSpreaderComponent>(uid);
             return;
         }
 
@@ -85,20 +91,65 @@ public sealed class SmokeSystem : EntitySystem
             return;
         }
 
-        args.Handled = true;
         TryComp<TimedDespawnComponent>(uid, out var timer);
+        var overflow = _solutionSystem.SplitSolution(uid, solution, (solution.Volume - component.OverflowThreshold) / FixedPoint2.New(0.5));
+        var smokePerSpread = component.SpreadAmount / args.NeighborFreeTiles.Count;
+        component.SpreadAmount -= smokePerSpread;
 
         foreach (var tile in args.NeighborFreeTiles)
         {
             var split = overflow.SplitSolution(solution.Volume / args.NeighborFreeTiles.Count);
-            // TODO: Spread based on prototype
-            // Dissipation visuals for foam
-            // TODO: Dissipation spawn for foam.
             var coords = args.Grid.GridTileToLocal(tile);
             var ent = Spawn(prototype.ID, coords.SnapToGrid());
             var neighborSmoke = EnsureComp<SmokeComponent>(ent);
+            neighborSmoke.SpreadAmount = Math.Max(0, smokePerSpread - 1);
+            args.Updates--;
 
             Start(ent, neighborSmoke, split, timer?.Lifetime ?? 10f);
+
+            if (_appearance.TryGetData(uid, SmokeVisuals.Color, out var color))
+            {
+                _appearance.SetData(ent, SmokeVisuals.Color, color);
+            }
+
+            // Only 1 spread then ig?
+            if (smokePerSpread == 0)
+            {
+                component.SpreadAmount--;
+
+                if (component.SpreadAmount == 0)
+                {
+                    RemCompDeferred<EdgeSpreaderComponent>(uid);
+                    break;
+                }
+            }
+
+            if (args.Updates == 0)
+                break;
+        }
+
+        // Give our spread to neighbor tiles.
+        if (args.NeighborFreeTiles.Count == 0 && args.Neighbors.Count > 0 && component.SpreadAmount > 0)
+        {
+            var smokeQuery = GetEntityQuery<SmokeComponent>();
+
+            foreach (var neighbor in args.Neighbors)
+            {
+                if (!smokeQuery.TryGetComponent(neighbor, out var smoke))
+                    continue;
+
+                smoke.SpreadAmount++;
+                args.Updates--;
+
+                if (component.SpreadAmount == 0)
+                {
+                    RemCompDeferred<EdgeSpreaderComponent>(uid);
+                    break;
+                }
+
+                if (args.Updates == 0)
+                    break;
+            }
         }
     }
 
@@ -182,6 +233,9 @@ public sealed class SmokeSystem : EntitySystem
 
         foreach (var entity in ents)
         {
+            if (entity == uid)
+                continue;
+
             ReactWithEntity(entity, solutionFraction);
         }
 
@@ -193,7 +247,8 @@ public sealed class SmokeSystem : EntitySystem
         if (TryComp(uid, out AppearanceComponent? appearance) &&
             _solutionSystem.TryGetSolution(uid, SmokeComponent.SolutionName, out var solution))
         {
-            _appearance.SetData(uid, SmokeVisuals.Color, solution.GetColor(_prototype), appearance);
+            var color = solution.GetColor(_prototype);
+            _appearance.SetData(uid, SmokeVisuals.Color, color, appearance);
         }
     }
 

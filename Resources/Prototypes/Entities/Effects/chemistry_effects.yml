@@ -9,15 +9,22 @@
     state: chemsmoke
   - type: Appearance
   - type: SmokeVisuals
-  - type: Occluder
   - type: Transform
     anchored: true
   - type: Smoke
+  - type: NodeContainer
+    nodes:
+      smoke:
+        !type:SpreaderNode
+        nodeGroupID: Spreader
   - type: SolutionContainerManager
     solutions:
       solutionArea:
         maxVol: 600
         canReact: false
+  - type: Tag
+    tags:
+      - HideContextMenu
 
 - type: entity
   id: Foam
@@ -34,7 +41,9 @@
       - state: foam
         map: ["enum.FoamVisualLayers.Base"]
   - type: AnimationPlayer
+    netsync: false
   - type: Appearance
+  - type: SmokeVisuals
   - type: FoamVisuals
     animationTime: 0.6
     animationState: foam-dissolve
@@ -52,6 +61,11 @@
       layer:
       - SlipLayer
   - type: Smoke
+  - type: NodeContainer
+    nodes:
+      smoke:
+        !type:SpreaderNode
+        nodeGroupID: Spreader
   - type: SolutionContainerManager
     solutions:
       solutionArea:
@@ -72,6 +86,7 @@
     - state: mfoam
       map: ["enum.FoamVisualLayers.Base"]
   - type: Appearance
+  - type: SmokeVisuals
   - type: FoamVisuals
     animationTime: 0.6
     animationState: mfoam-dissolve
@@ -91,6 +106,7 @@
       - state: mfoam
         map: ["enum.FoamVisualLayers.Base"]
   - type: Appearance
+  - type: SmokeVisuals
   - type: FoamVisuals
     animationTime: 0.6
     animationState: mfoam-dissolve

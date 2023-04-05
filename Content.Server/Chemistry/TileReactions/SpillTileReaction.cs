@@ -27,7 +27,7 @@ namespace Content.Server.Chemistry.TileReactions
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
             if (entityManager.EntitySysManager.GetEntitySystem<PuddleSystem>()
-                .TrySpillAt(tile, new Solution(reagent.ID, reactVolume), out var puddleUid, false))
+                .TrySpillAt(tile, new Solution(reagent.ID, reactVolume), out var puddleUid, false, false))
             {
                 var slippery = entityManager.EnsureComponent<SlipperyComponent>(puddleUid);
                 slippery.LaunchForwardsMultiplier = _launchForwardsMultiplier;

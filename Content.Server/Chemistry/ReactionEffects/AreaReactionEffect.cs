@@ -29,9 +29,9 @@ namespace Content.Server.Chemistry.ReactionEffects
         [DataField("duration")] private float _duration = 10;
 
         /// <summary>
-        /// Threshold at which the smoke should spread to another tile.
+        /// How many units of reaction for 1 smoke entity.
         /// </summary>
-        [DataField("multiplier")] public FixedPoint2 OverflowThreshold = FixedPoint2.New(10);
+        [DataField("overflowThreshold")] public FixedPoint2 OverflowThreshold = FixedPoint2.New(2.5);
 
         /// <summary>
         /// The entity prototype that will be spawned as the effect.
@@ -52,6 +52,7 @@ namespace Content.Server.Chemistry.ReactionEffects
             if (args.Source == null)
                 return;
 
+            var spreadAmount = (int) Math.Max(0, Math.Ceiling((args.Quantity / OverflowThreshold).Float()));
             var splitSolution = args.EntityManager.System<SolutionContainerSystem>().SplitSolution(args.SolutionEntity, args.Source, args.Source.Volume);
             var transform = args.EntityManager.GetComponent<TransformComponent>(args.SolutionEntity);
             var mapManager = IoCManager.Resolve<IMapManager>();
@@ -75,6 +76,7 @@ namespace Content.Server.Chemistry.ReactionEffects
 
             var smoke = args.EntityManager.System<SmokeSystem>();
             smokeComponent.OverflowThreshold = OverflowThreshold;
+            smokeComponent.SpreadAmount = spreadAmount;
             smoke.Start(ent, smokeComponent, splitSolution, _duration);
 
             SoundSystem.Play(_sound.GetSound(), Filter.Pvs(args.SolutionEntity), args.SolutionEntity, AudioHelpers.WithVariation(0.125f));

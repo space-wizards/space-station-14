@@ -7,11 +7,4 @@ namespace Content.Shared.Smoking
     {
         Color
     }
-
-    [Serializable, NetSerializable]
-    public enum FoamVisuals : byte
-    {
-        State,
-        Color,
-    }
 }
