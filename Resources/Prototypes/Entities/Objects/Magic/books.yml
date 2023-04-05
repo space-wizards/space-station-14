@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: BaseSpellbook
   name: spellbook
   parent: BaseItem
@@ -27,28 +27,36 @@
   name: force wall spellbook
   parent: BaseSpellbook
   components:
-    - type: Sprite
-      netsync: false
-      sprite: Objects/Magic/spellbooks.rsi
-      layers:
-        - state: bookforcewall
-    - type: Spellbook
-      instantSpells:
-        ForceWall: -1
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Magic/spellbooks.rsi
+    layers:
+      - state: forcewall
+  - type: Item
+    size: 15
+    sprite: Objects/Magic/spellbooks.rsi
+    heldPrefix: forcewall
+  - type: Spellbook
+    instantSpells:
+      ForceWall: -1
 
 - type: entity
   id: BlinkBook
   name: blink spellbook
   parent: BaseSpellbook
   components:
-    - type: Sprite
-      netsync: false
-      sprite: Objects/Magic/spellbooks.rsi
-      layers:
-        - state: spellbook
-    - type: Spellbook
-      worldSpells:
-        Blink: -1
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Magic/spellbooks.rsi
+    layers:
+      - state: spellbook
+  - type: Item
+    size: 15
+    sprite: Objects/Magic/spellbooks.rsi
+    heldPrefix: spellbook
+  - type: Spellbook
+    worldSpells:
+      Blink: -1
 
 - type: entity
   id: SmiteBook
@@ -59,7 +67,11 @@
     netsync: false
     sprite: Objects/Magic/spellbooks.rsi
     layers:
-    - state: spellbook
+      - state: spellbook
+  - type: Item
+    size: 15
+    sprite: Objects/Magic/spellbooks.rsi
+    heldPrefix: spellbook
   - type: Spellbook
     entitySpells:
       Smite: -1
@@ -69,14 +81,18 @@
   name: knock spellbook
   parent: BaseSpellbook
   components:
-    - type: Sprite
-      netsync: false
-      sprite: Objects/Magic/spellbooks.rsi
-      layers:
-        - state: bookknock
-    - type: Spellbook
-      instantSpells:
-        Knock: -1
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Magic/spellbooks.rsi
+    layers:
+      - state: knock
+  - type: Item
+    size: 15
+    sprite: Objects/Magic/spellbooks.rsi
+    heldPrefix: knock
+  - type: Spellbook
+    instantSpells:
+      Knock: -1
 
 - type: entity
   id: FireballSpellbook
@@ -87,7 +103,11 @@
     netsync: false
     sprite: Objects/Magic/spellbooks.rsi
     layers:
-    - state: bookfireball
+      - state: fireball
+  - type: Item
+    size: 15
+    sprite: Objects/Magic/spellbooks.rsi
+    heldPrefix: fireball
   - type: Spellbook
     worldSpells:
       Fireball: -1
@@ -108,3 +128,21 @@
       ExplosionRune: -1
       IgniteRune: -1
       StunRune: -1
+
+- type: entity
+  id: GateSpellbook
+  name: gate spellbook
+  parent: BaseSpellbook
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Magic/spellbooks.rsi
+    layers:
+      - state: gate
+  - type: Item
+    size: 15
+    sprite: Objects/Magic/spellbooks.rsi
+    heldPrefix: gate
+  - type: Spellbook
+    instantSpells:
+      Gate: -1

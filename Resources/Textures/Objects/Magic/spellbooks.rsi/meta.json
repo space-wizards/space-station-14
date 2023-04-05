@@ -1,14 +1,14 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/Citadel-Station-13/Citadel-Station-13/commit/f3e328af032f0ba0234b866c24ccb0003e1a4993",
+  "copyright": "https://github.com/Citadel-Station-13/Citadel-Station-13/commit/f3e328af032f0ba0234b866c24ccb0003e1a4993, gate and (knock,gate,spellbook,forcewall,fireball)-inhand made by brainfood1183 (github) for ss14",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "bookfireball",
+      "name": "fireball",
       "delays": [
         [
           0.1,
@@ -19,7 +19,7 @@
       ]
     },
     {
-      "name": "bookforcewall",
+      "name": "forcewall",
       "delays": [
         [
           0.1,
@@ -28,7 +28,7 @@
       ]
     },
     {
-      "name": "bookknock",
+      "name": "knock",
       "delays": [
         [
           0.1,
@@ -42,6 +42,57 @@
     },
     {
       "name": "spellbook"
+    },
+    {
+      "name": "gate",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "gate-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "gate-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "knock-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "knock-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "fireball-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "fireball-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "forcewall-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "forcewall-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "spellbook-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "spellbook-inhand-right",
+      "directions": 4
     }
   ]
 }

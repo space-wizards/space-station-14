@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "https://github.com/discordia-space/CEV-Eris/raw/237d8f7894617007d75c71d5d9feb4354c78debd/icons/obj/stationobjs.dmi",
+    "copyright": "https://github.com/discordia-space/CEV-Eris/raw/237d8f7894617007d75c71d5d9feb4354c78debd/icons/obj/stationobjs.dmi, portal-green, portal-yellow recolor by brainfood1183 (github)for ss14",
     "states": [
         {
             "name": "portal-blue",
@@ -28,6 +28,44 @@
         },
         {
             "name": "portal-red",
+            "delays": [[
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1
+            ]]
+        },
+        {
+            "name": "portal-yellow",
+            "delays": [[
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1
+            ]]
+        },
+        {
+            "name": "portal-green",
             "delays": [[
                 0.1,
                 0.1,

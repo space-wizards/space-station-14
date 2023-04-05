@@ -1,6 +1,8 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Coordinates.Helpers;
+using Content.Server.Chat.Systems;
 using Content.Server.Doors.Systems;
 using Content.Server.Magic.Events;
 using Content.Server.Weapons.Ranged.Systems;
@@ -16,13 +18,19 @@ using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Spawners.Components;
 using Content.Shared.Storage;
+using Content.Server.StationEvents.Components;
+using Content.Shared.Teleportation.Components;
+using Content.Shared.Teleportation.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Content.Shared.Database;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Timing;
+using System.Linq;
 
 namespace Content.Server.Magic;
 
@@ -46,6 +54,10 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly LinkedEntitySystem _link = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
 
     public override void Initialize()
     {
@@ -62,6 +74,7 @@ public sealed class MagicSystem : EntitySystem
         SubscribeLocalEvent<WorldSpawnSpellEvent>(OnWorldSpawn);
         SubscribeLocalEvent<ProjectileSpellEvent>(OnProjectileSpell);
         SubscribeLocalEvent<ChangeComponentsSpellEvent>(OnChangeComponentsSpell);
+        SubscribeLocalEvent<GateSpellEvent>(OnGateSpell);
     }
 
     private void OnDoAfter(EntityUid uid, SpellbookComponent component, DoAfterEvent args)
@@ -372,5 +385,45 @@ public sealed class MagicSystem : EntitySystem
         }
     }
 
+    private void OnGateSpell(GateSpellEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        var spawnLocations = EntityManager.EntityQuery<VentCritterSpawnLocationComponent>().ToList();
+        var spawnAmount = (args.SpawnAmount);
+        _random.Shuffle(spawnLocations); ;
+
+        if (Deleted(args.Performer))
+            return;
+
+        if (args.Handled = true)
+        {
+
+            foreach (var location in spawnLocations)
+            {
+
+                if (spawnAmount-- == 0)
+                    break;
+
+                var xform = Transform(args.Performer);
+                if (xform.ParentUid != xform.GridUid)
+                    return;
+                {
+                    var timeout = EnsureComp<PortalTimeoutComponent> (args.Performer);
+                    timeout.EnteredPortal = null;
+                    var coords = Transform(location.Owner);
+                    args.FirstPortal = Spawn(args.FirstPortalPrototype, coords.Coordinates);
+                    args.SecondPortal = Spawn(args.SecondPortalPrototype, Transform(args.Performer).Coordinates);
+                    _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(args.Performer):player} opened {ToPrettyString(args.SecondPortal.Value)} at {Transform(args.SecondPortal.Value).Coordinates} linked to {ToPrettyString(args.FirstPortal!.Value)} using {ToPrettyString(args.Performer)}");
+                    _link.TryLink(args.FirstPortal!.Value, args.SecondPortal.Value, true);
+                    _audio.PlayPvs(args.NewPortalSound, args.Performer);
+                    args.Handled = true;
+                }
+
+            }
+
+        }
+    }
     #endregion
 }
