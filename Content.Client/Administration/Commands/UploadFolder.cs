@@ -1,61 +1,60 @@
 using System.IO;
-using System.Resources;
-using System.Threading.Tasks;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
-using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
+using Robust.Shared.ContentPack;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
-using Robust.Client.Utility;
-using Robust.Shared.ContentPack;
 
 namespace Content.Client.Administration.Commands;
 
 public sealed class UploadFolder : IConsoleCommand
 {
     public string Command => "uploadfolder";
-    public string Description => "Uploads a folder recursively to the server contentDB.";
-    public string Help => $"{Command} [folder in userdata/UploadFolder] ";
+    public string Description => Loc.GetString("uploadfolder-command-description");
+    public string Help => Loc.GetString("uploadfolder-command-help");
 
     private static readonly ResourcePath BaseUploadFolderPath = new("/UploadFolder");
 
+    [Dependency] private IResourceManager _resourceManager = default!;
+    [Dependency] private IConfigurationManager _configManager = default!;
+
     public async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var cfgMan = IoCManager.Resolve<IConfigurationManager>();
-        var resourceMan = IoCManager.Resolve<IResourceManager>();
         var fileCount = 0;
 
 
-        if (!cfgMan.GetCVar(CCVars.ResourceUploadingEnabled))
+        if (!_configManager.GetCVar(CCVars.ResourceUploadingEnabled))
         {
-            shell.WriteError("Network Resource Uploading is currently disabled by the server.");
+            shell.WriteError( Loc.GetString("uploadfolder-command-resource-upload-disabled"));
             return;
         }
 
         if (args.Length != 1)
         {
-            shell.WriteError($"Wrong number of arguments! \n usage: {Command} [folder in userdata/UploadFolder] ");
+            shell.WriteError( Loc.GetString("uploadfolder-command-wrong-args"));
+            shell.WriteLine( Loc.GetString("uploadfolder-command-help"));
             return;
         }
         var folderPath = new ResourcePath(BaseUploadFolderPath + $"/{args[0]}");
 
-        if (!resourceMan.UserData.Exists(folderPath.ToRootedPath()))
+        if (!_resourceManager.UserData.Exists(folderPath.ToRootedPath()))
         {
-            shell.WriteError($"Folder not found in /UploadFolder");
+            shell.WriteError( Loc.GetString("uploadfolder-command-folder-not-found",("folder", folderPath)));
             return; // bomb out if the folder doesnt exist in /UploadFolder
         }
 
         //Grab all files in specified folder and upload them
-        foreach (var filename in resourceMan.UserData.Find($"{folderPath.ToRelativePath()}/").files )
+        foreach (var filepath in _resourceManager.UserData.Find($"{folderPath.ToRelativePath()}/").files )
         {
-            await using var filestream = resourceMan.UserData.Open(filename,FileMode.Open);
+
+            await using var filestream = _resourceManager.UserData.Open(filepath,FileMode.Open);
             {
-                var sizeLimit = cfgMan.GetCVar(CCVars.ResourceUploadingLimitMb);
+                var sizeLimit = _configManager.GetCVar(CCVars.ResourceUploadingLimitMb);
                 if (sizeLimit > 0f && filestream.Length * SharedNetworkResourceManager.BytesToMegabytes > sizeLimit)
                 {
-                    shell.WriteError($"File {filename} above the current size limit! It must be smaller than {sizeLimit} MB. skipping.");
+                    shell.WriteError( Loc.GetString("uploadfolder-command-file-too-big", ("filename",filepath), ("sizeLimit",sizeLimit)));
                     return;
                 }
 
@@ -64,13 +63,14 @@ public sealed class UploadFolder : IConsoleCommand
                 var netManager = IoCManager.Resolve<INetManager>();
                 var msg = netManager.CreateNetMessage<NetworkResourceUploadMessage>();
 
-                msg.RelativePath = new ResourcePath($"{filename.ToString().Remove(0,14)}"); //removes /UploadFolder/ from path
+                msg.RelativePath = new ResourcePath($"{filepath.ToString().Remove(0,14)}"); //removes /UploadFolder/ from path
                 msg.Data = data;
 
                 netManager.ClientSendMessage(msg);
                 fileCount++;
             }
         }
-        shell.WriteLine($"Uploaded {fileCount} files");
+
+        shell.WriteLine( Loc.GetString("uploadfolder-command-success",("fileCount",fileCount)));
     }
 }
