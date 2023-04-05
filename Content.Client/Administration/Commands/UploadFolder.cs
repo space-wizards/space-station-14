@@ -39,13 +39,6 @@ public sealed class UploadFolder : IConsoleCommand
             shell.WriteError($"Wrong number of arguments! \n usage: {Command} [folder in userdata/UploadFolder] ");
             return;
         }
-
-        if (args[0].Contains(".."))
-        {
-            shell.WriteError($"Illegal characters found in folder path. Remove '..' from your folder path! ");
-            return; // silent bomb out if the user is trying to escape the UploadFolder dir
-        }
-
         var folderPath = new ResourcePath(BaseUploadFolderPath + $"/{args[0]}");
 
         if (!resourceMan.UserData.Exists(folderPath.ToRootedPath()))
