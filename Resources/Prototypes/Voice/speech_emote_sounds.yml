@@ -46,6 +46,17 @@
   params:
     variation: 0.125
 
+- type: emoteSounds
+  id: UnisexDwarf
+  sounds:
+    Scream:
+      collection: MaleScreams
+    Laugh:
+      collection: MaleLaugh
+  params:
+    variation: 0.125
+    pitchscale: 0.75
+
 # body emotes
 - type: emoteSounds
   id: GeneralBodyEmotes

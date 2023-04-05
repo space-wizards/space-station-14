@@ -101,7 +101,9 @@ public sealed class BloodstreamSystem : EntitySystem
             // as well as stop their bleeding to a certain extent.
             if (bloodstream.BleedAmount > 0)
             {
-                TryModifyBloodLevel(uid, (-bloodstream.BleedAmount) / 20, bloodstream);
+                // Blood is removed from the bloodstream at a 1-1 rate with the bleed amount
+                TryModifyBloodLevel(uid, (-bloodstream.BleedAmount), bloodstream);
+                // Bleed rate is reduced by the bleed reduction amount in the bloodstream component.
                 TryModifyBleedAmount(uid, -bloodstream.BleedReductionAmount, bloodstream);
             }
 
@@ -160,19 +162,26 @@ public sealed class BloodstreamSystem : EntitySystem
         if (bloodloss.Empty)
             return;
 
+        // Does the calculation of how much bleed rate should be added/removed, then applies it
         var oldBleedAmount = component.BleedAmount;
         var total = bloodloss.Total;
         var totalFloat = total.Float();
         TryModifyBleedAmount(uid, totalFloat, component);
 
-        var prob = Math.Clamp(totalFloat / 50, 0, 1);
-        var healPopupProb = Math.Clamp(Math.Abs(totalFloat) / 25, 0, 1);
+        /// <summary>
+        ///     Critical hit. Causes target to lose blood, using the bleed rate modifier of the weapon, currently divided by 5
+        ///     The crit chance is currently the bleed rate modifier divided by 25.
+        ///     Higher damage weapons have a higher chance to crit!
+        /// </summary>
+        var prob = Math.Clamp(totalFloat / 25, 0, 1);
         if (totalFloat > 0 && _robustRandom.Prob(prob))
         {
             TryModifyBloodLevel(uid, (-total) / 5, component);
             _audio.PlayPvs(component.InstantBloodSound, uid);
         }
-        else if (totalFloat < 0 && oldBleedAmount > 0 && _robustRandom.Prob(healPopupProb))
+
+        // Heat damage will cauterize, causing the bleed rate to be reduced.
+        else if (totalFloat < 0 && oldBleedAmount > 0)
         {
             // Magically, this damage has healed some bleeding, likely
             // because it's burn damage that cauterized their wounds.
@@ -183,20 +192,25 @@ public sealed class BloodstreamSystem : EntitySystem
                 uid, PopupType.Medium);
         }
     }
-
+    /// <summary>
+    ///     Shows text on health examine, based on bleed rate and blood level.
+    /// </summary>
     private void OnHealthBeingExamined(EntityUid uid, BloodstreamComponent component, HealthBeingExaminedEvent args)
     {
-        if (component.BleedAmount > 10)
+        // Shows profusely bleeding at half the max bleed rate.
+        if (component.BleedAmount > component.MaxBleedAmount / 2)
         {
             args.Message.PushNewline();
             args.Message.AddMarkup(Loc.GetString("bloodstream-component-profusely-bleeding", ("target", Identity.Entity(uid, EntityManager))));
         }
+        // Shows bleeding message when bleeding, but less than profusely.
         else if (component.BleedAmount > 0)
         {
             args.Message.PushNewline();
             args.Message.AddMarkup(Loc.GetString("bloodstream-component-bleeding", ("target", Identity.Entity(uid, EntityManager))));
         }
 
+        // If the mob's blood level is below the damage threshhold, the pale message is added.
         if (GetBloodLevelPercentage(uid, component) < component.BloodlossThreshold)
         {
             args.Message.PushNewline();
