@@ -37,6 +37,8 @@
     drawdepth: WallTops
     sprite: Structures/Wallmounts/posters.rsi
     state: poster_broken
+  - type: TimedDespawn
+    lifetime: 20
   - type: Destructible
     thresholds:
     - trigger:
