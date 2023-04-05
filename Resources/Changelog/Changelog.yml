@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Your eye rotation will now already be adjusted upon ghosting., type: Fix}
-  id: 2837
-  time: '2023-01-06T09:39:28.0000000+00:00'
 - author: Bhijn and Myr
   changes:
   - {message: The radar shown in mass scanners and shuttle consoles now properly scales
@@ -2914,3 +2909,8 @@ Entries:
   - {message: Fixed shutters not closing over desk bells., type: Fix}
   id: 3336
   time: '2023-04-05T22:36:20.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Bonks hit once and have a delay, type: Tweak}
+  id: 3337
+  time: '2023-04-05T22:44:27.0000000+00:00'
