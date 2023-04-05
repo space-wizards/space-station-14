@@ -68,7 +68,7 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
         foreach (var pair in consoleRecords)
         {
             if (console != null && console.Filter != null
-                && IsSkippedRecord(console.Filter, pair.Item2))
+                && console.Filter.IsSkippedRecord(pair.Item2))
             {
                 continue;
             }
@@ -103,50 +103,5 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
         _userInterface
             .GetUiOrNull(uid, GeneralStationRecordConsoleKey.Key)
             ?.SetState(newState);
-    }
-
-    private bool IsSkippedRecord(GeneralStationRecordsFilter filter,
-        GeneralStationRecord someRecord)
-    {
-        bool isSkipRecord = false;
-        bool isFilter = filter.value.Length > 0;
-        string filterLowerCaseValue = "";
-
-        if (isFilter) {
-            filterLowerCaseValue = filter.value.ToLower();
-        }
-        
-        switch (filter.type)
-        {
-            case GeneralStationRecordFilterType.Name:
-                if (someRecord.Name != null)
-                {
-                    string loweName = someRecord.Name.ToLower();
-                    isSkipRecord = isFilter && !loweName.Contains(filterLowerCaseValue);
-                }
-                break;
-            case GeneralStationRecordFilterType.Prints:
-                if (someRecord.Fingerprint != null)
-                {
-                    isSkipRecord = isFilter
-                        && IsFilterWithCodeValue(someRecord.Fingerprint, filterLowerCaseValue);
-                }
-                break;
-            case GeneralStationRecordFilterType.DNA:
-                if (someRecord.DNA != null)
-                {
-                    isSkipRecord = isFilter
-                        && IsFilterWithCodeValue(someRecord.DNA,filterLowerCaseValue);
-                }
-                break;
-        }
-
-        return isSkipRecord;
-    }
-
-    private bool IsFilterWithCodeValue(string value, string filter)
-    {
-        string lowerValue = value.ToLower();
-        return !lowerValue.StartsWith(filter);
     }
 }

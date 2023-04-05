@@ -13,6 +13,51 @@ public sealed class GeneralStationRecordsFilter
         type = filterType;
         value = newValue;
     }
+
+    public bool IsSkippedRecord(GeneralStationRecord someRecord)
+    {
+        bool isSkipRecord = false;
+        bool isFilter = value.Length > 0;
+        string filterLowerCaseValue = "";
+
+        if (isFilter)
+        {
+            filterLowerCaseValue = value.ToLower();
+        }
+
+        switch (type)
+        {
+            case GeneralStationRecordFilterType.Name:
+                if (someRecord.Name != null)
+                {
+                    string loweName = someRecord.Name.ToLower();
+                    isSkipRecord = isFilter && !loweName.Contains(filterLowerCaseValue);
+                }
+                break;
+            case GeneralStationRecordFilterType.Prints:
+                if (someRecord.Fingerprint != null)
+                {
+                    isSkipRecord = isFilter
+                        && IsFilterWithCodeValue(someRecord.Fingerprint, filterLowerCaseValue);
+                }
+                break;
+            case GeneralStationRecordFilterType.DNA:
+                if (someRecord.DNA != null)
+                {
+                    isSkipRecord = isFilter
+                        && IsFilterWithCodeValue(someRecord.DNA, filterLowerCaseValue);
+                }
+                break;
+        }
+
+        return isSkipRecord;
+    }
+
+    private static bool IsFilterWithCodeValue(string value, string filter)
+    {
+        string lowerValue = value.ToLower();
+        return !lowerValue.StartsWith(filter);
+    }
 }
 
 [Serializable, NetSerializable]
