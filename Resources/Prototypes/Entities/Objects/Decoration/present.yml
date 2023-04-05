@@ -89,6 +89,8 @@
         orGroup: GiftPool
       - id: PlushieDiona
         orGroup: GiftPool
+      - id: ClothingNeckCloakMoth
+        orGroup: GiftPool
       - id: ToyMouse
         orGroup: GiftPool
       - id: ToyAi
