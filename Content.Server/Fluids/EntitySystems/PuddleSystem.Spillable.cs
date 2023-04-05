@@ -6,6 +6,7 @@ using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Spillable;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 
@@ -108,13 +109,12 @@ public sealed partial class PuddleSystem
         {
             verb.Act = () =>
             {
-                _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, component.SpillDelay.Value, target:uid)
+                _doAfterSystem.TryStartDoAfter(new DoAfterArgs(args.User, component.SpillDelay ?? 0, new SpillDoAfterEvent(), uid, target: uid)
                 {
                     BreakOnTargetMove = true,
                     BreakOnUserMove = true,
                     BreakOnDamage = true,
-                    BreakOnStun = true,
-                    NeedHand = true
+                    NeedHand = true,
                 });
             };
         }

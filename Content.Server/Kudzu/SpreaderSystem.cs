@@ -266,6 +266,27 @@ public sealed class SpreaderSystem : EntitySystem
                 // TODO: Airtight blocked direction for thindows.
                 if (airtightQuery.TryGetComponent(ent, out var airtight) && airtight.AirBlocked)
                 {
+                    // Check if air direction matters.
+                    var blocked = false;
+
+                    foreach (var value in Enum.GetValues<AtmosDirection>())
+                    {
+                        if ((value & airtight.AirBlockedDirection) == 0x0)
+                            continue;
+
+                        var airDirection = value.ToDirection();
+                        var oppositeDirection = value.ToDirection();
+
+                        if (direction != airDirection && direction != oppositeDirection)
+                            continue;
+
+                        blocked = true;
+                        break;
+                    }
+
+                    if (!blocked)
+                        continue;
+
                     occupied = true;
                     break;
                 }
