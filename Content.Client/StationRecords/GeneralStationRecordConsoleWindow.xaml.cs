@@ -90,7 +90,6 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
         }
 
         StationRecordsFilterType.SelectId((int)_currentFilterType);
-        StationRecordsFiltersValue.PlaceHolder = GetTypeFilterLocals(_currentFilterType, false);
 
         if (state.RecordListing == null)
         {
@@ -198,16 +197,8 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
         }
     }
 
-    private string GetTypeFilterLocals(GeneralStationRecordFilterType type, bool isForButton = true)
+    private string GetTypeFilterLocals(GeneralStationRecordFilterType type)
     {
-        string stringOfType = type.ToString().ToLower();
-        if (isForButton)
-        {
-            return Loc.GetString($"general-station-record-{stringOfType}-filter");
-        }
-        else
-        {
-            return Loc.GetString($"general-station-record-for-{type}-placeholder");
-        }
+        return Loc.GetString($"general-station-record-{type.ToString().ToLower()}-filter");
     }
 }
