@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Rockets can now pass through portals, type: Fix}
-  id: 2840
-  time: '2023-01-06T23:13:22.0000000+00:00'
 - author: Chief-Engineer
   changes:
   - {message: Wording for blue and red alert levels, type: Tweak}
@@ -2913,3 +2908,9 @@ Entries:
   - {message: Chemmaster scrolls instead of expands., type: Tweak}
   id: 3339
   time: '2023-04-05T22:55:14.0000000+00:00'
+- author: ZoldorfTheWizard
+  changes:
+  - {message: added uploadfolder command for game admins to speed up adminbus event
+      setup time., type: Add}
+  id: 3340
+  time: '2023-04-05T23:37:05.0000000+00:00'
