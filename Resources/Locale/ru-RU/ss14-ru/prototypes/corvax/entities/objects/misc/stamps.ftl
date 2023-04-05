@@ -1,6 +1,6 @@
 ent-RubberStampIAA = печать юридического бюро
     .desc = { ent-RubberStampMime.desc }
     .suffix = { "" }
-ent-RubberStampPsychologist = psychologist's rubber stamp
+ent-RubberStampPsychologist = печать психолога
     .desc = { ent-RubberStampMime.desc }
     .suffix = { "" }

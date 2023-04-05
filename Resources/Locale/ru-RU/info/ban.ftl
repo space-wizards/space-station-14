@@ -17,20 +17,20 @@ cmd-banlist-desc = Список активных банов пользовате
 cmd-banlist-help = Использование: banlist <name or user ID>
 cmd-banlist-empty = Нет активных банов у пользователя { $user }
 cmd-banlistF-hint = <name/user ID>
-cmd-ban_exemption_update-desc = Set an exemption to a type of ban on a player.
+cmd-ban_exemption_update-desc = Установить исключение на типы банов игрока.
 cmd-ban_exemption_update-help =
-    Usage: ban_exemption_update <player> <flag> [<flag> [...]]
-    Specify multiple flags to give a player multiple ban exemption flags.
-    To remove all exemptions, run this command and give "None" as only flag.
-cmd-ban_exemption_update-nargs = Expected at least 2 arguments
-cmd-ban_exemption_update-locate = Unable to locate player '{ $player }'.
-cmd-ban_exemption_update-invalid-flag = Invalid flag '{ $flag }'.
-cmd-ban_exemption_update-success = Updated ban exemption flags for '{ $player }' ({ $uid }).
+    Использование: ban_exemption_update <player> <flag> [<flag> [...]]
+    Укажите несколько флагов, чтобы дать игроку исключение из нескольких типов банов.
+    Чтобы удалить все исключения, выполните эту команду и укажите единственным флагом "None".
+cmd-ban_exemption_update-nargs = Ожидалось хотя бы 2 аргумента
+cmd-ban_exemption_update-locate = Не удалось найти игрока '{ $player }'.
+cmd-ban_exemption_update-invalid-flag = Недопустимый флаг '{ $flag }'.
+cmd-ban_exemption_update-success = Обновлены флаги исключений банов для '{ $player }' ({ $uid }).
 cmd-ban_exemption_update-arg-player = <player>
 cmd-ban_exemption_update-arg-flag = <flag>
-cmd-ban_exemption_get-desc = Show ban exemptions for a certain player.
-cmd-ban_exemption_get-help = Usage: ban_exemption_get <player>
-cmd-ban_exemption_get-nargs = Expected exactly 1 argument
-cmd-ban_exemption_get-none = User is not exempt from any bans.
-cmd-ban_exemption_get-show = User is exempt from the following ban flags: { $flags }.
+cmd-ban_exemption_get-desc = Показать исключения банов для определённого игрока.
+cmd-ban_exemption_get-help = Использование: ban_exemption_get <player>
+cmd-ban_exemption_get-nargs = Ожидался ровно 1 аргумент
+cmd-ban_exemption_get-none = Пользователь не имеет исключений от банов.
+cmd-ban_exemption_get-show = Пользователь исключён из банов со следующими флагами: { $flags }.
 cmd-ban_exemption_get-arg-player = <player>

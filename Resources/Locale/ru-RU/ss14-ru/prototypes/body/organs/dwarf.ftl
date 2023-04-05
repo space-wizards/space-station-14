@@ -1,9 +1,9 @@
-ent-OrganDwarfHeart = dwarf heart
+ent-OrganDwarfHeart = сердце дварфа
     .desc = { ent-OrganHumanHeart.desc }
     .suffix = { "" }
-ent-OrganDwarfLiver = dwarf liver
+ent-OrganDwarfLiver = печень дварфа
     .desc = { ent-OrganHumanLiver.desc }
     .suffix = { "" }
-ent-OrganDwarfStomach = dwarf stomach
+ent-OrganDwarfStomach = желудок дварфа
     .desc = { ent-OrganHumanStomach.desc }
     .suffix = { "" }
