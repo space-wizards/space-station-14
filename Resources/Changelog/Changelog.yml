@@ -1,10 +1,4 @@
 Entries:
-- author: Bhijn and Myr
-  changes:
-  - {message: The radar shown in mass scanners and shuttle consoles now properly scales
-      with your UI scaling setting!, type: Fix}
-  id: 2838
-  time: '2023-01-06T23:08:27.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: fix some deconstruction bugs with wallmount equipment, type: Fix}
@@ -2914,3 +2908,8 @@ Entries:
   - {message: Bonks hit once and have a delay, type: Tweak}
   id: 3337
   time: '2023-04-05T22:44:27.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix audio exception spam in large explosions., type: Fix}
+  id: 3338
+  time: '2023-04-05T22:47:02.0000000+00:00'
