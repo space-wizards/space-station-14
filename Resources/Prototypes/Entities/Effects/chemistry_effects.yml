@@ -3,6 +3,7 @@
   name: smoke
   noSpawn: true
   components:
+  - type: Occluder
   - type: Sprite
     drawdepth: Effects
     sprite: Effects/chemsmoke.rsi
