@@ -17,18 +17,17 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 
     private bool _isPopulating;
 
-    private int _currentFilterType = 0;
-
-    private GeneralStationRecordFilterType[] _filterTypes
-        = Enum.GetValues<GeneralStationRecordFilterType>();
+    private GeneralStationRecordFilterType _currentFilterType;
 
     public GeneralStationRecordConsoleWindow()
     {
         RobustXamlLoader.Load(this);
 
-        foreach (var item in _filterTypes)
+        _currentFilterType = GeneralStationRecordFilterType.Name;
+
+        foreach (var item in Enum.GetValues<GeneralStationRecordFilterType>())
         {
-            StationRecordsFilterType.AddItem(GetTypeFilterLocals((int)item));
+            StationRecordsFilterType.AddItem(GetTypeFilterLocals(item), (int)item);
         }
 
         RecordListing.OnItemSelected += args =>
@@ -49,9 +48,11 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 
         StationRecordsFilterType.OnItemSelected += eventArgs =>
         {
-            if (_currentFilterType != eventArgs.Id)
+            var type = (GeneralStationRecordFilterType)eventArgs.Id;
+
+            if (_currentFilterType != type)
             {
-                _currentFilterType = eventArgs.Id;
+                _currentFilterType = type;
                 FilterListingOfRecords();
             }
         };
@@ -77,11 +78,9 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
     {
         if (state.Filter != null)
         {
-            int filterTypeId = (int)state.Filter.type;
-
-            if (filterTypeId != _currentFilterType)
+            if (state.Filter.type != _currentFilterType)
             {
-                _currentFilterType = filterTypeId;
+                _currentFilterType = state.Filter.type;
             }
 
             if (state.Filter.value != StationRecordsFiltersValue.Text)
@@ -90,7 +89,7 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
             }
         }
 
-        StationRecordsFilterType.SelectId(_currentFilterType);
+        StationRecordsFilterType.SelectId((int)_currentFilterType);
         StationRecordsFiltersValue.PlaceHolder = GetTypeFilterLocals(_currentFilterType, false);
 
         if (state.RecordListing == null)
@@ -195,21 +194,20 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
     {
         if (!_isPopulating)
         {
-            OnFiltersChanged?.Invoke(_filterTypes[_currentFilterType], text);
+            OnFiltersChanged?.Invoke(_currentFilterType, text);
         }
     }
 
-    private string GetTypeFilterLocals(int id, bool isForButton = true)
+    private string GetTypeFilterLocals(GeneralStationRecordFilterType type, bool isForButton = true)
     {
-        string filterType = _filterTypes[id].ToString().ToLower();
-
+        string stringOfType = type.ToString().ToLower();
         if (isForButton)
         {
-            return Loc.GetString($"general-station-record-{filterType}-filter");
+            return Loc.GetString($"general-station-record-{stringOfType}-filter");
         }
         else
         {
-            return Loc.GetString($"general-station-record-for-{filterType}-placeholder");
+            return Loc.GetString($"general-station-record-for-{type}-placeholder");
         }
     }
 }
