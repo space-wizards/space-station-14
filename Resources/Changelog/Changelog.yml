@@ -1,27 +1,4 @@
 Entries:
-- author: vanx
-  changes:
-  - {message: Doubled the paper symbol limit, type: Tweak}
-  id: 2832
-  time: '2023-01-04T06:44:17.0000000+00:00'
-- author: Bhijn and Myr
-  changes:
-  - {message: 'The radar shown in mass scanners and shuttle consoles now resizes gracefully,
-      scaling as expected with whatever breathing room it has! (Originally merged
-      on December 30, 2022)', type: Add}
-  - {message: 'The mass scanner and shuttle consoles now have minimum and default
-      sizes to keep things relatively sane-looking (Originally merged on December
-      30, 2022)', type: Tweak}
-  - {message: The mass scanner UI now actually has a default size defined. This was
-      left out of the original PR by mistake, type: Fix}
-  id: 2833
-  time: '2023-01-04T23:34:09.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Trees will now fade out slightly instead of completely occluding you
-      if you are under them., type: Add}
-  id: 2834
-  time: '2023-01-05T05:45:23.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Pulling items through portals should no longer behave weirdly., type: Fix}
@@ -2910,3 +2887,27 @@ Entries:
   - {message: Added tcoms server to dev map, type: Add}
   id: 3331
   time: '2023-04-04T13:26:00.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed being unable to toggle hardsuit helmets on incapacitated players,
+    type: Fix}
+  - {message: Fixed being unable to open some wiring panels with a screw driver, type: Fix}
+  - {message: Fixed various construction interactions getting stuck in an incomplete
+      state., type: Fix}
+  id: 3332
+  time: '2023-04-05T00:19:28.0000000+00:00'
+- author: Stealthbomber16
+  changes:
+  - {message: Rat servants are now much more susceptible to things like being killed.,
+    type: Tweak}
+  id: 3333
+  time: '2023-04-05T04:01:47.0000000+00:00'
+- author: EnDecc
+  changes:
+  - {message: 'Added String, Woodwind, Keyed and Percussion, and Specialty Music crates
+      to Cargo''s Manifest', type: Add}
+  - {message: 'Renamed ''Big Band'' crate to Variety Instrument collection, tweaked
+      ID of Brass crate to easily identify with other Instrument Crate IDs, and its
+      contents.', type: Tweak}
+  id: 3334
+  time: '2023-04-05T05:05:25.0000000+00:00'
