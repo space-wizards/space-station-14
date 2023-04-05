@@ -5,6 +5,7 @@ using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Chemistry.ReactionEffects;
+using Content.Server.Coordinates.Helpers;
 using Content.Server.Kudzu;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
@@ -14,8 +15,10 @@ using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Smoking;
 using Content.Shared.Spawners.Components;
+using Content.Shared.Spawners.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -45,17 +48,57 @@ public sealed class SmokeSystem : EntitySystem
         SubscribeLocalEvent<SmokeComponent, MapInitEvent>(OnSmokeMapInit);
         SubscribeLocalEvent<SmokeComponent, ReactionAttemptEvent>(OnReactionAttempt);
         SubscribeLocalEvent<SmokeComponent, SpreadNeighborsEvent>(OnSmokeSpread);
+        SubscribeLocalEvent<SmokeDissipateSpawnComponent, TimedDespawnEvent>(OnSmokeDissipate);
+    }
+
+    private void OnSmokeDissipate(EntityUid uid, SmokeDissipateSpawnComponent component, ref TimedDespawnEvent args)
+    {
+        if (!TryComp<TransformComponent>(uid, out var xform))
+        {
+            return;
+        }
+
+        Spawn(component.Prototype, xform.Coordinates);
     }
 
     private void OnSmokeSpread(EntityUid uid, SmokeComponent component, ref SpreadNeighborsEvent args)
     {
-        if (args.NeighborFreeTiles.Count == 0)
+        if (args.Grid == null || !_solutionSystem.TryGetSolution(uid, SmokeComponent.SolutionName, out var solution))
+        {
+            RemCompDeferred<EdgeSpreaderComponent>(uid);
             return;
+        }
+
+        var overflow = _solutionSystem.SplitSolution(uid, solution, solution.Volume - component.OverflowThreshold);
+
+        if (overflow.Volume <= FixedPoint2.Zero || args.NeighborFreeTiles.Count == 0)
+        {
+            RemCompDeferred<EdgeSpreaderComponent>(uid);
+            return;
+        }
+
+        var prototype = MetaData(uid).EntityPrototype;
+
+        if (prototype == null)
+        {
+            RemCompDeferred<EdgeSpreaderComponent>(uid);
+            return;
+        }
 
         args.Handled = true;
+        TryComp<TimedDespawnComponent>(uid, out var timer);
+
         foreach (var tile in args.NeighborFreeTiles)
         {
-            // TODO: Spread
+            var split = overflow.SplitSolution(solution.Volume / args.NeighborFreeTiles.Count);
+            // TODO: Spread based on prototype
+            // Dissipation visuals for foam
+            // TODO: Dissipation spawn for foam.
+            var coords = args.Grid.GridTileToLocal(tile);
+            var ent = Spawn(prototype.ID, coords.SnapToGrid());
+            var neighborSmoke = EnsureComp<SmokeComponent>(ent);
+
+            Start(ent, neighborSmoke, split, timer?.Lifetime ?? 10f);
         }
     }
 

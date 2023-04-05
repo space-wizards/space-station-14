@@ -227,8 +227,11 @@ public sealed class SpreaderSystem : EntitySystem
     {
         GetNeighbors(uid, node.Name, out var freeTiles, out var occupiedTiles, out var neighbors);
 
+        TryComp<MapGridComponent>(uid, out var grid);
+
         var ev = new SpreadNeighborsEvent()
         {
+            Grid = grid,
             NeighborFreeTiles = freeTiles,
             NeighborOccupiedTiles = occupiedTiles,
             Neighbors = neighbors,
@@ -364,6 +367,7 @@ public sealed class SpreaderGridComponent : Component
 [ByRefEvent]
 public record struct SpreadNeighborsEvent
 {
+    public MapGridComponent? Grid;
     public ValueList<Vector2i> NeighborFreeTiles;
     public ValueList<Vector2i> NeighborOccupiedTiles;
     public ValueList<EntityUid> Neighbors;

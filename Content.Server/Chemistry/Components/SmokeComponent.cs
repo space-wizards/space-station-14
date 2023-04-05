@@ -1,3 +1,4 @@
+using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Chemistry.Components;
@@ -15,4 +16,10 @@ public sealed class SmokeComponent : Component
     /// </summary>
     [DataField("reactedTile")]
     public bool ReactedTile = false;
+
+    /// <summary>
+    /// Solution threshold to overflow to a neighbouring tile.
+    /// </summary>
+    [DataField("overflow")]
+    public FixedPoint2 OverflowThreshold = FixedPoint2.New(20);
 }

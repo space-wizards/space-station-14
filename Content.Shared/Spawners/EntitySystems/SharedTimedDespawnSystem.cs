@@ -17,18 +17,32 @@ public abstract class SharedTimedDespawnSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        if (!_timing.IsFirstTimePredicted) return;
+        if (!_timing.IsFirstTimePredicted)
+            return;
 
-        foreach (var comp in EntityQuery<TimedDespawnComponent>())
+        var query = EntityQueryEnumerator<TimedDespawnComponent>();
+
+        while (query.MoveNext(out var uid, out var comp))
         {
-            if (!CanDelete(comp.Owner)) continue;
+            if (!CanDelete(uid))
+                continue;
 
             comp.Lifetime -= frameTime;
 
             if (comp.Lifetime <= 0)
-                EntityManager.QueueDeleteEntity(comp.Owner);
+            {
+                var ev = new TimedDespawnEvent();
+                RaiseLocalEvent(uid, ref ev);
+                QueueDel(uid);
+            }
         }
     }
 
     protected abstract bool CanDelete(EntityUid uid);
 }
+
+/// <summary>
+/// Raised directed on an entity when its timed despawn is over.
+/// </summary>
+[ByRefEvent]
+public readonly record struct TimedDespawnEvent;

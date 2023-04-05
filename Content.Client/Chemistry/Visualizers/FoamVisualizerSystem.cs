@@ -1,4 +1,4 @@
-﻿using Content.Shared.Foam;
+﻿using Content.Shared.Smoking;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 

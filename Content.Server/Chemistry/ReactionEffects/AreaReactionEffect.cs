@@ -12,7 +12,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Chemistry.ReactionEffects
@@ -30,7 +29,12 @@ namespace Content.Server.Chemistry.ReactionEffects
         [DataField("duration")] private float _duration = 10;
 
         /// <summary>
-        /// The entity prototype that will be spawned as the effect. It needs a component derived from SolutionAreaEffectComponent.
+        /// Threshold at which the smoke should spread to another tile.
+        /// </summary>
+        [DataField("multiplier")] public FixedPoint2 OverflowThreshold = FixedPoint2.New(10);
+
+        /// <summary>
+        /// The entity prototype that will be spawned as the effect.
         /// </summary>
         [DataField("prototypeId", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         private string _prototypeId = default!;
@@ -49,10 +53,6 @@ namespace Content.Server.Chemistry.ReactionEffects
                 return;
 
             var splitSolution = args.EntityManager.System<SolutionContainerSystem>().SplitSolution(args.SolutionEntity, args.Source, args.Source.Volume);
-
-            if (splitSolution.Volume <= FixedPoint2.Zero)
-                return;
-
             var transform = args.EntityManager.GetComponent<TransformComponent>(args.SolutionEntity);
             var mapManager = IoCManager.Resolve<IMapManager>();
 
@@ -64,7 +64,6 @@ namespace Content.Server.Chemistry.ReactionEffects
             }
 
             var coords = grid.MapToGrid(transform.MapPosition);
-
             var ent = args.EntityManager.SpawnEntity(_prototypeId, coords.SnapToGrid());
 
             if (!args.EntityManager.TryGetComponent<SmokeComponent>(ent, out var smokeComponent))
@@ -75,6 +74,7 @@ namespace Content.Server.Chemistry.ReactionEffects
             }
 
             var smoke = args.EntityManager.System<SmokeSystem>();
+            smokeComponent.OverflowThreshold = OverflowThreshold;
             smoke.Start(ent, smokeComponent, splitSolution, _duration);
 
             SoundSystem.Play(_sound.GetSound(), Filter.Pvs(args.SolutionEntity), args.SolutionEntity, AudioHelpers.WithVariation(0.125f));
