@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'QM, RD, and CMO players are now eligible to be traitors.', type: Add}
-  id: 2836
-  time: '2023-01-05T23:33:25.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Your eye rotation will now already be adjusted upon ghosting., type: Fix}
@@ -2912,3 +2907,10 @@ Entries:
       are now far easier to move., type: Tweak}
   id: 3335
   time: '2023-04-05T22:34:52.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'The desk bell is no longer anchorable, like god intended. It''s a bell.',
+    type: Tweak}
+  - {message: Fixed shutters not closing over desk bells., type: Fix}
+  id: 3336
+  time: '2023-04-05T22:36:20.0000000+00:00'
