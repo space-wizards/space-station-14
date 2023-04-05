@@ -124,7 +124,7 @@ public sealed class SmokeSystem : EntitySystem
                 }
             }
 
-            if (args.Updates == 0)
+            if (args.Updates <= 0)
                 break;
         }
 
@@ -147,7 +147,7 @@ public sealed class SmokeSystem : EntitySystem
                     break;
                 }
 
-                if (args.Updates == 0)
+                if (args.Updates <= 0)
                     break;
             }
         }

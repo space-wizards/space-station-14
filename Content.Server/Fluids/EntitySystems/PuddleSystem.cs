@@ -112,7 +112,7 @@ public sealed partial class PuddleSystem : EntitySystem
                 args.Updates--;
                 EnsureComp<EdgeSpreaderComponent>(neighbor);
 
-                if (args.Updates == 0)
+                if (args.Updates <= 0)
                     break;
             }
 
@@ -134,7 +134,7 @@ public sealed partial class PuddleSystem : EntitySystem
                 TrySpillAt(grid.GridTileToLocal(tile), split, out _, false);
                 args.Updates--;
 
-                if (args.Updates == 0)
+                if (args.Updates <= 0)
                     break;
             }
 
@@ -162,7 +162,7 @@ public sealed partial class PuddleSystem : EntitySystem
                 EnsureComp<EdgeSpreaderComponent>(neighbor);
                 args.Updates--;
 
-                if (args.Updates == 0)
+                if (args.Updates <= 0)
                     break;
             }
         }

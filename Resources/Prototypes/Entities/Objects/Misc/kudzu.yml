@@ -69,11 +69,18 @@
             types:
               Heat: 10
     - type: AtmosExposed
+    - type: Kudzu
     - type: GrowingKudzu
       growthTickSkipChance: 0.6666
     - type: SlowContacts
       walkSpeedModifier: 0.2
       sprintSpeedModifier: 0.2
+    - type: NodeContainer
+      nodes:
+        kudzu:
+          !type:SpreaderNode
+          nodeGroupID: Spreader
+
 
 - type: entity
   id: WeakKudzu

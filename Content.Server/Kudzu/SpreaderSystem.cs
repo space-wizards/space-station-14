@@ -94,6 +94,7 @@ public sealed class SpreaderSystem : EntitySystem
 
     private static readonly List<string> SpreaderGroups = new()
     {
+        "kudzu",
         "puddle",
         "smoke",
     };
