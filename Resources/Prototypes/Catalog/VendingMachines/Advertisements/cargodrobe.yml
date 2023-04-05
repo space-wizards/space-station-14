@@ -1,0 +1,5 @@
+- type: advertisementsPack
+  id: CargoDrobeAds
+  advertisements:
+    - advertisement-cargodrobe-1
+    - advertisement-cargodrobe-2

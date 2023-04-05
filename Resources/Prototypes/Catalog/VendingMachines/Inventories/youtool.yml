@@ -1,0 +1,14 @@
+- type: vendingMachineInventory
+  id: YouToolInventory
+  startingInventory:
+    CableApcStack: 5
+    Crowbar: 5
+    Welder: 3
+    Wirecutter: 5
+    Wrench: 5
+    Screwdriver: 5
+    trayScanner: 5
+    GasAnalyzer: 5
+    FlashlightLantern: 5
+    ClothingHandsGlovesColorYellowBudget: 5
+    AirlockPainter: 3

@@ -1,0 +1,642 @@
+# TODO: Removes the icon components from all these when that gets fixed.
+
+# Packets
+
+# Since this one is closed, the only way to insert liquid is with a syringe.
+- type: entity
+  parent: BaseItem
+  id: BaseFoodCondimentPacket
+  name: condiment packet
+  abstract: true
+  description: A small plastic pack with condiments to put on your food.
+  components:
+  - type: Drink
+    solution: food
+    refillable: false
+    openSounds:
+      collection: packetOpenSounds
+  - type: DrawableSolution
+    solution: food
+  - type: InjectableSolution
+    solution: food
+  - type: DrainableSolution
+    solution: food
+    # Note NOT refillable. 
+    # It be a shame if it turned out ALL drinks were ALWAYS refillable.... ffs.
+    # Well its fixed now, but I want to share my pain.
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+  - type: SolutionTransfer
+    maxTransferAmount: 10
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: packet-empty
+  - type: Icon
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: packet-empty
+  - type: TrashOnEmpty
+    solution: food
+
+- type: entity
+  parent: BaseFoodCondimentPacket
+  id: FoodCondimentPacket
+  components:
+  - type: Tag
+    tags:
+    - Trash
+
+- type: entity
+  parent: BaseFoodCondimentPacket
+  id: FoodCondimentPacketAstrotame
+  name: Astrotame
+  description: The sweetness of a thousand sugars but none of the calories.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Astrotame
+          Quantity: 10
+  - type: Sprite
+    layers:
+      - state: packet-trans-2
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: true
+      - state: packet-astrotame
+  - type: Icon
+    state: packet-astrotame
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-trans-
+
+- type: entity
+  parent: BaseFoodCondimentPacket
+  id: FoodCondimentPacketBbq
+  name: BBQ sauce
+  description: Hand wipes not included.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: BbqSauce
+          Quantity: 10
+  - type: Sprite
+    layers:
+      - state: packet-trans-2
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: true
+      - state: packet-layer
+  - type: Icon
+    state: packet-bbq
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-trans-
+
+- type: entity
+  parent: BaseFoodCondimentPacket
+  id: FoodCondimentPacketCornoil
+  name: corn oil
+  description: Corn oil. A delicious oil used in cooking. Made from corn.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Cornoil
+          Quantity: 10
+  - type: Sprite
+    layers:
+      - state: packet-trans-2
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: true
+      - state: packet-layer
+  - type: Icon
+    state: packet-cornoil
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-trans-
+
+- type: entity
+  parent: BaseFoodCondimentPacket
+  id: FoodCondimentPacketFrostoil
+  name: coldsauce
+  description: Coldsauce. Leaves the tongue numb in its passage.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Frostoil
+          Quantity: 10
+  - type: Sprite
+    layers:
+      - state: packet-trans-2
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: true
+      - state: packet-layer
+  - type: Icon
+    state: packet-frostoil
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-trans-
+
+- type: entity
+  parent: BaseFoodCondimentPacket
+  id: FoodCondimentPacketHorseradish
+  name: horseradish sauce
+  description: A packet of smelly horseradish sauce.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: HorseradishSauce
+          Quantity: 10
+  - type: Sprite
+    layers:
+      - state: packet-solid-2
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: true
+      - state: packet-layer
+  - type: Icon
+    state: packet-greygoo
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-solid-
+
+- type: entity
+  parent: BaseFoodCondimentPacket
+  id: FoodCondimentPacketHotsauce
+  name: hotsauce
+  description: You can almost TASTE the stomach ulcers now!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Hotsauce
+          Quantity: 10
+  - type: Sprite
+    layers:
+      - state: packet-trans-2
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: true
+      - state: packet-layer
+  - type: Icon
+    state: packet-hotsauce
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-trans-
+
+- type: entity
+  parent: BaseFoodCondimentPacket
+  id: FoodCondimentPacketKetchup
+  name: ketchup
+  description: You feel more American already.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Ketchup
+          Quantity: 10
+  - type: Sprite
+    layers:
+      - state: packet-solid-2
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: true
+      - state: packet-layer
+  - type: Icon
+    state: packet-ketchup
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-solid-
+
+- type: entity
+  parent: BaseFoodCondimentPacket
+  id: FoodCondimentPacketPepper
+  name: black pepper
+  description: Often used to flavor food or make people sneeze.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Blackpepper
+          Quantity: 10
+  - type: Sprite
+    layers:
+      - state: packet-solid-2
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: true
+      - state: packet-layer
+  - type: Icon
+    state: packet-pepper
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-solid-
+
+- type: entity
+  parent: BaseFoodCondimentPacket
+  id: FoodCondimentPacketSalt
+  name: salt
+  description: Salt. From space oceans, presumably.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: TableSalt
+          Quantity: 10
+  - type: Sprite
+    layers:
+      - state: packet-solid-2
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: true
+      - state: packet-layer
+      - state: packet-label
+        color: black
+  - type: Icon
+    state: packet-salt
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-solid-
+
+- type: entity
+  parent: BaseFoodCondimentPacket
+  id: FoodCondimentPacketSoy
+  name: soy sauce
+  description: A salty soy-based flavoring.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Soysauce
+          Quantity: 10
+  - type: Sprite
+    layers:
+      - state: packet-solid-2
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: true
+      - state: packet-layer
+  - type: Icon
+    state: packet-soysauce
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-solid-
+
+- type: entity
+  parent: BaseFoodCondimentPacket
+  id: FoodCondimentPacketSugar
+  name: sugar
+  description: Tasty spacey sugar!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Sugar
+          Quantity: 10
+  - type: Sprite
+    layers:
+      - state: packet-solid-2
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: true
+      - state: packet-layer
+  - type: Icon
+    state: packet-sugar
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-solid-
+
+# Bottles
+
+- type: entity
+  parent: BaseItem
+  id: BaseFoodCondimentBottle
+  abstract: true
+  name: condiment bottle
+  description: A thin glass bottle used to store condiments.
+  components:
+  - type: Drink
+    solution: food
+    openSounds:
+      collection: pop
+  - type: RefillableSolution
+    solution: food
+  - type: DrainableSolution
+    solution: food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+    minTransferAmount: 5
+    maxTransferAmount: 30
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: bottle-empty
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: bottle-alpha-
+  - type: TrashOnEmpty
+    solution: food
+
+- type: entity
+  parent: BaseFoodCondimentBottle
+  id: FoodCondimentBottle
+  components:
+  - type: Tag
+    tags:
+    - Trash
+
+- type: entity
+  parent: BaseFoodCondimentBottle
+  id: FoodCondimentBottleColdsauce
+  name: coldsauce bottle
+  description: Leaves the tongue numb in its passage.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Frostoil
+          Quantity: 30
+  - type: Sprite
+    layers:
+    - state: bottle-empty
+    - state: label-c
+    - state: bottle-alpha-6
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: true
+  - type: Icon
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: bottle-coldsauce
+
+- type: entity
+  parent: BaseFoodCondimentBottle
+  id: FoodCondimentBottleEnzyme
+  name: universal enzyme
+  description: Used in cooking various dishes.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Enzyme
+          Quantity: 30
+  - type: Sprite
+    layers:
+    - state: bottle-empty
+    - state: label-e
+    - state: bottle-alpha-6
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: true
+  - type: Icon
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: bottle-enzyme
+
+- type: entity
+  parent: BaseFoodCondimentBottle
+  id: FoodCondimentBottleHotsauce
+  name: hotsauce
+  description: You can almost TASTE the stomach ulcers now!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Hotsauce
+          Quantity: 30
+  - type: Sprite
+    layers:
+    - state: bottle-empty
+    - state: label-h
+    - state: bottle-alpha-6
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: true
+  - type: Icon
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: bottle-hotsauce
+
+- type: entity
+  parent: BaseFoodCondimentBottle
+  id: FoodCondimentBottleKetchup
+  name: ketchup
+  description: You feel more American already.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Ketchup
+          Quantity: 30
+  - type: Sprite
+    layers:
+    - state: bottle-empty
+    - state: label-k
+    - state: bottle-alpha-6
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: true
+  - type: Icon
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: bottle-ketchup
+
+- type: entity
+  parent: BaseFoodCondimentBottle
+  id: FoodCondimentBottleBBQ
+  name: BBQ sauce
+  description: Hand wipes not included.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: BbqSauce
+          Quantity: 30
+  - type: Sprite
+    layers:
+    - state: bottle-empty
+    - state: label-b
+    - state: bottle-alpha-6
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: true
+  # So there's no error.
+  - type: Icon
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: bottle-ketchup
+
+# Small Bottles
+
+- type: entity
+  parent: BaseItem
+  id: BaseFoodCondimentBottleSmall
+  abstract: true
+  name: condiment bottle
+  description: A smaller glass bottle used to store condiments.
+  components:
+  - type: Drink
+    solution: food
+    openSounds:
+      collection: pop
+  - type: RefillableSolution
+    solution: food
+  - type: DrainableSolution
+    solution: food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+  - type: SolutionTransfer
+    maxTransferAmount: 15
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: bottle-s-empty
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    fillBaseName: bottle-s-alpha-
+  - type: TrashOnEmpty
+    solution: food
+
+- type: entity
+  parent: BaseFoodCondimentBottleSmall
+  id: FoodCondimentBottleSmall
+  components:
+  - type: Tag
+    tags:
+    - Trash
+
+- type: entity
+  parent: BaseFoodCondimentBottleSmall
+  id: FoodCondimentBottleSmallColdsauce
+  name: coldsauce bottle
+  description: Leaves the tongue numb in its passage.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Frostoil
+          Quantity: 15
+  - type: Sprite
+    layers:
+    - state: bottle-s-empty
+    - state: label-s-c
+    - state: bottle-s-alpha-3
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: true
+  - type: Icon
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: bottle-s-coldsauce
+
+- type: entity
+  parent: BaseFoodCondimentBottleSmall
+  id: FoodCondimentBottleSmallHotsauce
+  name: hotsauce
+  description: You can almost TASTE the stomach ulcers now!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Hotsauce
+          Quantity: 15
+  - type: Sprite
+    layers:
+    - state: bottle-s-empty
+    - state: label-s-h
+    - state: bottle-s-alpha-3
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: true
+  - type: Icon
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: bottle-s-hotsauce
+
+- type: entity
+  parent: BaseFoodCondimentBottleSmall
+  id: FoodCondimentBottleSmallKetchup
+  name: ketchup
+  description: You feel more American already.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Ketchup
+          Quantity: 15
+  - type: Sprite
+    layers:
+    - state: bottle-s-empty
+    - state: label-s-k
+    - state: bottle-s-alpha-3
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: true
+  - type: Icon
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: bottle-s-ketchup
+
+- type: entity
+  parent: BaseFoodCondimentBottleSmall
+  id: FoodCondimentBottleSmallVinegar
+  name: vinegar
+  description: Used in cooking to enhance flavor.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Vinegar
+          Quantity: 15
+  - type: Sprite
+    layers:
+    - state: bottle-s-empty
+    - state: label-s-v
+    - state: bottle-s-alpha-3
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: true
+  - type: Icon
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: bottle-s-vinegar
+
+# Trash
+
+# Maybe in some dumb universe you could put liquid back in this and seal it
+# with a lighter or something.
+- type: entity
+  noSpawn: true
+  parent: BaseItem
+  id: FoodCondimentPacketTrash
+  name: empty condiment packet
+  description: A ripped condiment packet. Useless.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/condiments.rsi
+    netsync: false
+    state: packet-trash

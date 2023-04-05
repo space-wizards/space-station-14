@@ -1,0 +1,44 @@
+- type: entity
+  id: RandomInstruments
+  name: random instruments spawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Fun/Instruments/h_synthesizer.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+      - AcousticGuitarInstrument
+      - ViolinInstrument
+      - TrumpetInstrument
+      - ElectricGuitarInstrument
+      - AccordionInstrument
+      - HarmonicaInstrument
+      - TromboneInstrument
+      - FrenchHornInstrument
+      - EuphoniumInstrument
+      - SaxophoneInstrument
+      - BanjoInstrument
+      - GlockenspielInstrument
+      - XylophoneInstrument
+      - BikeHornInstrument
+      - RecorderInstrument
+      - FluteInstrument
+      - ClarinetInstrument
+      - CelloInstrument
+      - KalimbaInstrument
+      - MicrophoneInstrument
+      - BassGuitarInstrument
+      - OcarinaInstrument
+      - PanFluteInstrument
+    chance: 0.95
+    rarePrototypes:
+      - SynthesizerInstrument
+      - GunpetInstrument
+      - BagpipeInstrument
+      - RockGuitarInstrument
+      - MusicBoxInstrument
+      - ViolaInstrument
+    rareChance: 0.05

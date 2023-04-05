@@ -1,0 +1,103 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: SheetMetalBase
+  description: A sheet of metal, used often on the station in various applications.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Materials/Sheets/metal.rsi
+  - type: Item
+    sprite: Objects/Materials/Sheets/metal.rsi
+  - type: StaticPrice
+    price: 0
+  - type: ItemStatus
+  - type: Tag
+    tags:
+    - Sheet
+    - Metal
+    - DroneUsable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: SheetMetalBase
+  id: SheetSteel
+  name: steel
+  suffix: Full
+  components:
+  - type: Material
+    materials:
+      Steel: 100
+  - type: Stack
+    stackType: Steel
+  - type: Sprite
+    state: steel_3
+  - type: Item
+    heldPrefix: steel
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - steel
+      - steel_2
+      - steel_3
+  - type: FloorTile
+    outputs:
+    - Plating
+
+- type: entity
+  parent: SheetSteel
+  id: SheetSteel1
+  name: steel
+  suffix: Single
+  components:
+  - type: Sprite
+    state: steel
+  - type: Stack
+    stackType: Steel
+    count: 1
+
+- type: entity
+  parent: SheetMetalBase
+  id: SheetPlasteel
+  name: plasteel
+  suffix: Full
+  components:
+  - type: Material
+    materials:
+      Plasteel: 100
+  - type: Stack
+    stackType: Plasteel
+  - type: Sprite
+    state: plasteel_3
+  - type: Item
+    heldPrefix: plasteel
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - plasteel
+      - plasteel_2
+      - plasteel_3
+
+- type: entity
+  parent: SheetPlasteel
+  id: SheetPlasteel1
+  name: plasteel
+  suffix: Single
+  components:
+  - type: Sprite
+    state: plasteel
+  - type: Stack
+    stackType: Plasteel
+    count: 1

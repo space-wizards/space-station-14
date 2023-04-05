@@ -1,0 +1,172 @@
+- type: latheRecipe
+  id: Wirecutter
+  result: Wirecutter
+  completetime: 2
+  materials:
+    Steel: 200
+    Plastic: 50
+
+- type: latheRecipe
+  id: Screwdriver
+  result: Screwdriver
+  completetime: 2
+  materials:
+    Steel: 200
+    Plastic: 50
+
+- type: latheRecipe
+  id: Welder
+  result: Welder
+  completetime: 2
+  materials:
+    Steel: 400
+
+- type: latheRecipe
+  id: Wrench
+  result: Wrench
+  completetime: 2
+  materials:
+    Steel: 200
+
+- type: latheRecipe
+  id: CableStack
+  result: CableApcStack1
+  completetime: 2
+  materials:
+    Steel: 100
+
+- type: latheRecipe
+  id: CableMVStack
+  result: CableMVStack1
+  completetime: 2
+  materials:
+    Steel: 150
+
+- type: latheRecipe
+  id: CableHVStack
+  result: CableHVStack1
+  completetime: 2
+  materials:
+    Steel: 200
+
+- type: latheRecipe
+  id: Crowbar
+  result: Crowbar
+  completetime: 2
+  materials:
+    Steel: 200
+
+- type: latheRecipe
+  id: Pickaxe
+  result: Pickaxe
+  completetime: 2
+  materials:
+    Steel: 200
+    Wood: 100
+
+- type: latheRecipe
+  id: Shovel
+  result: Shovel
+  completetime: 2
+  materials:
+    Steel: 200
+    Wood: 100
+
+- type: latheRecipe
+  id: Multitool
+  result: Multitool
+  completetime: 2
+  materials:
+    Steel: 200
+    Plastic: 200
+
+- type: latheRecipe
+  id: PowerDrill
+  result: PowerDrill
+  completetime: 2
+  materials:
+    Steel: 600
+    Plastic: 200
+
+- type: latheRecipe
+  id: RCD
+  result: RCDEmpty
+  completetime: 4
+  materials:
+    Steel: 1000
+    Plastic: 300
+
+- type: latheRecipe
+  id: RCDAmmo
+  result: RCDAmmo
+  completetime: 2.4
+  materials:
+    Steel: 500
+    Plastic: 250
+
+- type: latheRecipe
+  id: HandheldGPSBasic
+  result: HandheldGPSBasic
+  completetime: 2
+  materials:
+    Steel: 800
+    Glass: 300
+
+- type: latheRecipe
+  id: TRayScanner
+  result: trayScanner
+  completetime: 2
+  materials:
+    Steel: 800
+    Glass: 300
+
+- type: latheRecipe
+  id: GasAnalyzer
+  result: GasAnalyzer
+  completetime: 2
+  materials:
+    Steel: 800
+    Glass: 300
+
+- type: latheRecipe
+  id: AirlockPainter
+  result: AirlockPainter
+  completetime: 2
+  materials:
+    Steel: 300
+    Plastic: 100
+
+- type: latheRecipe
+  id: UtilityBelt
+  result: ClothingBeltUtility
+  completetime: 2
+  materials:
+    Cloth: 100
+    Steel: 50
+
+- type: latheRecipe
+  id: HolofanProjector
+  result: HolofanProjector
+  completetime: 8
+  materials: # Inherited materials and time from PowerCellMedium recipe
+    Steel: 600
+    Glass: 350
+    Plastic: 150
+    Gold: 10
+
+- type: latheRecipe
+  id: RPED
+  result: RPED
+  completetime: 10
+  materials:
+    Steel: 650
+    Plastic: 150
+    Gold: 50
+
+- type: latheRecipe
+  id: MiningDrill
+  result: MiningDrill
+  completetime: 3
+  materials:
+    Steel: 500
+    Plastic: 100

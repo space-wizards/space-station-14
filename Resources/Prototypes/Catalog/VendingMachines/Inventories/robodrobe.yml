@@ -1,0 +1,10 @@
+- type: vendingMachineInventory
+  id: RoboDrobeInventory
+  startingInventory:
+    ClothingOuterCoatLab: 2
+    ClothingShoesColorBlack: 2
+    ClothingHandsGlovesFingerless: 2
+    ClothingHeadHatCorpsoft: 2
+    HatBandSkull: 2
+    ClothingHeadsetRobotics: 2
+    ClothingOuterWinterRobo: 2

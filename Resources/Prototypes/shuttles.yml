@@ -1,0 +1,4 @@
+# Cargo
+- type: cargoShuttle
+  id: CargoShuttle
+  path: /Maps/Shuttles/cargo.yml

@@ -1,0 +1,379 @@
+- type: entity
+  name: wirecutter
+  parent: BaseItem
+  id: Wirecutter
+  description: This kills the wire.
+  components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/wirecutter_drop.ogg
+  - type: Tag
+    tags:
+    - PlantSampleTaker
+    - Wirecutter
+  - type: Sprite
+    sprite: Objects/Tools/wirecutters.rsi
+    netsync: false
+    layers:
+    - state: cutters
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+    - state: cutters-cutty-thingy
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
+  - type: Tool
+    qualities:
+      - Cutting
+    useSound:
+      path: /Audio/Items/wirecutter.ogg
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          cutters: Rainbow
+  - type: Item
+    sprite: Objects/Tools/wirecutters.rsi
+  - type: LatticeCutting
+  - type: StaticPrice
+    price: 40
+
+- type: entity
+  name: screwdriver
+  parent: BaseItem
+  id: Screwdriver
+  description: Industrial grade torque in a small screwdriving package.
+  components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/screwdriver_drop.ogg
+  - type: Tag
+    tags:
+    - Screwdriver
+  - type: Sprite
+    sprite: Objects/Tools/screwdriver.rsi
+    netsync: false
+    layers:
+      - state: screwdriver
+        map: [ "enum.DamageStateVisualLayers.Base" ]
+      - state: screwdriver-screwybits
+  - type: Item
+    sprite: Objects/Tools/screwdriver.rsi
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Piercing: 7
+  - type: Tool
+    qualities:
+      - Screwing
+    useSound:
+      collection: Screwdriver
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          screwdriver: Rainbow
+  - type: StaticPrice
+    price: 40
+
+- type: entity
+  name: wrench
+  parent: BaseItem
+  id: Wrench
+  description: 'A common tool for assembly and disassembly. Remember: righty tighty, lefty loosey.'
+  components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/wrench_drop.ogg
+  - type: Tag
+    tags:
+    - Wrench
+  - type: Sprite
+    sprite: Objects/Tools/wrench.rsi
+    state: icon
+    netsync: false
+  - type: Item
+    sprite: Objects/Tools/wrench.rsi
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 6.5
+  - type: Tool
+    qualities:
+      - Anchoring
+    useSound:
+      path: /Audio/Items/ratchet.ogg
+  - type: StaticPrice
+    price: 40
+
+- type: entity
+  name: crowbar
+  parent: BaseItem
+  id: Crowbar
+  description: A multipurpose tool to pry open doors and fight interdimensional invaders.
+  components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/crowbar_drop.ogg
+  - type: Tag
+    tags:
+    - Crowbar
+  - type: Sprite
+    sprite: Objects/Tools/crowbar.rsi
+    state: icon
+    netsync: false
+  - type: Item
+    sprite: Objects/Tools/crowbar.rsi
+    size: 10
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
+  - type: Tool
+    qualities:
+      - Prying
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+  - type: TilePrying
+  - type: StaticPrice
+    price: 40
+
+- type: entity
+  name: emergency crowbar
+  parent: Crowbar
+  id: CrowbarRed
+  components:
+  - type: Tag
+    tags:
+    - Crowbar
+    - CrowbarRed
+  - type: Sprite
+    sprite: Objects/Tools/crowbar.rsi
+    state: red-icon
+  - type: Item
+    sprite: Objects/Tools/crowbar.rsi
+    size: 10
+    heldPrefix: red
+
+- type: entity
+  name: multitool
+  parent: BaseItem
+  id: Multitool
+  description: An advanced tool to copy, store, and send electrical pulses and signals through wires and machines
+  components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/multitool_drop.ogg
+  - type: Sprite
+    sprite: Objects/Tools/multitool.rsi
+    layers:
+    - state: icon
+    - state: green-unlit
+      shader: unshaded
+  - type: Item
+    size: 5
+  - type: Clothing
+    sprite: Objects/Tools/multitool.rsi
+    quickEquip: false
+    slots:
+    - Belt
+  - type: Tool
+    qualities:
+      - Pulsing
+  - type: SignalLinker
+  - type: NetworkConfigurator
+  - type: ActivatableUI
+    key: enum.NetworkConfiguratorUiKey.List
+    inHandsOnly: true
+  - type: UserInterface
+    interfaces:
+    - key: enum.SignalLinkerUiKey.Key
+      type: SignalPortSelectorBoundUserInterface
+    - key: enum.NetworkConfiguratorUiKey.List
+      type: NetworkConfiguratorBoundUserInterface
+    - key: enum.NetworkConfiguratorUiKey.Configure
+      type: NetworkConfiguratorBoundUserInterface
+  - type: Tag
+    tags:
+      - DroneUsable
+  - type: StaticPrice
+    price: 60
+
+- type: entity
+  name: power drill
+  parent: BaseItem
+  id: PowerDrill
+  description: A simple powered hand drill.
+  components:
+  - type: Tag
+    tags:
+    - Powerdrill
+  - type: Sprite
+    sprite: Objects/Tools/drill.rsi
+    state: drill_screw
+  - type: Item
+    sprite: Objects/Tools/drill.rsi
+    size: 10
+  - type: Tool
+    qualities:
+      - Screwing
+    speed: 1.5
+    useSound: /Audio/Items/drill_use.ogg
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+      - behavior: Screwing
+        sprite:
+          sprite: Objects/Tools/drill.rsi
+          state: drill_screw
+        useSound:
+          path: /Audio/Items/drill_use.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+      - behavior: Anchoring
+        sprite:
+          sprite: Objects/Tools/drill.rsi
+          state: drill_bolt
+        useSound:
+          path: /Audio/Items/drill_use.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+  - type: StaticPrice
+    price: 100
+
+- type: entity
+  name: RCD
+  parent: BaseItem
+  id: RCD
+  description: An advanced construction device which can place/remove walls, floors, and airlocks quickly.
+  components:
+  - type: RCD
+  - type: UseDelay
+    delay: 1.0
+  - type: Sprite
+    sprite: Objects/Tools/rcd.rsi
+    state: icon
+  - type: Item
+    size: 20
+  - type: Clothing
+    sprite: Objects/Tools/rcd.rsi
+    quickEquip: false
+    slots:
+    - Belt
+  - type: StaticPrice
+    price: 100
+
+- type: entity
+  id: RCDEmpty
+  parent: RCD
+  suffix: Empty
+  components:
+  - type: RCD
+    ammo: 0
+
+- type: entity
+  name: RCD Ammo
+  parent: BaseItem
+  id: RCDAmmo
+  description: Ammo cartridge for an RCD.
+  components:
+  - type: RCDAmmo
+  - type: Sprite
+    sprite: Objects/Tools/rcd.rsi
+    state: ammo
+  - type: Item
+    sprite: Objects/Tools/rcd.rsi
+    heldPrefix: ammo
+  - type: StaticPrice
+    price: 60
+
+- type: entity
+  name: shovel
+  parent: BaseItem
+  id: Shovel
+  description: A large tool for digging and moving dirt.
+  components:
+  - type: Tag
+    tags:
+    - Shovel
+  - type: Sprite
+    sprite: Objects/Tools/shovel.rsi
+    state: icon
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
+  - type: Item
+    sprite: Objects/Tools/shovel.rsi
+
+- type: entity
+  name: omnitool
+  parent: BaseItem
+  id: Omnitool
+  description: A drone's best friend.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/omnitool.rsi
+    state: omnitool-screwing
+  - type: Item
+    sprite: Objects/Tools/omnitool.rsi
+    size: 20
+  - type: TilePrying
+  - type: SignalLinker
+    requiredQuality: Pulsing
+  - type: UserInterface
+    interfaces:
+      - key: enum.SignalLinkerUiKey.Key
+        type: SignalPortSelectorBoundUserInterface
+  - type: Tool
+    qualities:
+      - Screwing
+    speed: 1.2 # Kept for future adjustments. Currently 1.2x for balance
+    useSound: /Audio/Items/drill_use.ogg
+  - type: LatticeCutting
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+      - behavior: Screwing
+        sprite:
+          sprite: Objects/Tools/omnitool.rsi
+          state: omnitool-screwing
+        useSound:
+          path: /Audio/Items/drill_use.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+      - behavior: Prying
+        sprite:
+          sprite: Objects/Tools/omnitool.rsi
+          state: omnitool-prying
+        useSound:
+          path: /Audio/Items/jaws_pry.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+      - behavior: Anchoring
+        sprite:
+          sprite: Objects/Tools/omnitool.rsi
+          state: omnitool-wrenching
+        useSound:
+          path: /Audio/Items/ratchet.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+      - behavior: Cutting
+        sprite:
+          sprite: Objects/Tools/omnitool.rsi
+          state: omnitool-snipping
+        useSound:
+          path: /Audio/Items/jaws_cut.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+      - behavior: Pulsing
+        sprite:
+          sprite: Objects/Tools/omnitool.rsi
+          state: omnitool-pulsing
+        changeSound:
+          path: /Audio/Items/change_drill.ogg

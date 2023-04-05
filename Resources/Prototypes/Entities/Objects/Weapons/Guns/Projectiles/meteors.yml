@@ -1,0 +1,41 @@
+- type: entity
+  id: MeteorLarge
+  name: meteor
+  noSpawn: true
+  components:
+  - type: Sprite
+    noRot: false
+    netsync: false
+    sprite: Objects/Weapons/Guns/Projectiles/meteor.rsi
+    scale: 4,4
+    layers:
+    - state: large
+      shader: unshaded
+  - type: ExplodeOnTrigger
+  - type: DeleteOnTrigger
+  - type: TriggerOnCollide
+    fixtureID: projectile
+  - type: Projectile
+    damage: {}
+    deleteOnCollide: false
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 600.0
+    intensitySlope: 30
+    maxIntensity: 45
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.8
+      density: 100
+      hard: true
+      id: projectile
+      # Didn't use MapGridComponent for now as the bounds are stuffed.
+      layer:
+      - LargeMobLayer
+      mask:
+      - Impassable
+      - BulletImpassable

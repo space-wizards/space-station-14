@@ -1,0 +1,134 @@
+- type: entity
+  id: CrateFunPlushie
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: PlushieBee
+      - id: PlushieNar
+      - id: PlushieCarp
+      - id: PlushieNuke
+      - id: PlushieSlime
+      - id: PlushieSnake
+      - id: PlushieLizard
+      - id: PlushieSpaceLizard
+      - id: PlushieVox
+      - id: PlushieRouny
+      - id: PlushieRatvar
+      - id: PlushieSharkBlue
+      - id: PlushieAtmosian
+      - id: PlushieDiona
+
+- type: entity
+  id: CrateFunInstruments
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: SynthesizerInstrument
+      - id: AcousticGuitarInstrument
+      - id: ViolinInstrument
+      - id: TrumpetInstrument
+      - id: ElectricGuitarInstrument
+      - id: AccordionInstrument
+      - id: HarmonicaInstrument
+      - id: RecorderInstrument
+      - id: TromboneInstrument
+      - id: SaxophoneInstrument
+      - id: GlockenspielInstrument
+      - id: BanjoInstrument
+      - id: BikeHornInstrument
+
+- type: entity
+  id: CrateFunBrass
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: TrumpetInstrument
+        amount: 3
+      - id: TromboneInstrument
+        amount: 3
+      - id: FrenchHornInstrument
+        amount: 2
+      - id: EuphoniumInstrument
+      - id: TubaInstrument
+
+- type: entity
+  id: CrateFunArtSupplies
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: CrayonBox
+      - id: CrayonWhite
+
+- type: entity
+  id: CrateFunBoardGames
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: ChessBoard
+      - id: BackgammonBoard
+      - id: ParchisBoard
+      - id: CheckerBoard
+      - id: d6Dice
+        amount: 4
+
+- type: entity
+  id: CrateFunATV
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: VehicleATV
+      - id: VehicleKeyATV
+
+- type: entity
+  id: CrateFunSadTromboneImplants
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: SadTromboneImplanter
+        amount: 3
+
+- type: entity
+  id: CrateFunLightImplants
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: LightImplanter
+        amount: 3
+
+- type: entity
+  id: CrateFunParty
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: GlowstickBase
+        amount: 2
+      - id: GlowstickBlue
+        amount: 2
+      - id: GlowstickPurple
+        amount: 2
+      - id: GlowstickRed
+        amount: 2
+      - id: GlowstickYellow
+        amount: 2
+      - id: FoodCakeBirthday
+      - id: DrinkLean
+        amount: 4
+      - id: KnifePlastic
+
+- type: entity
+  id: CrateFunSyndicateSegway
+  parent: CrateLivestock
+  components:
+    - type: StorageFill
+      contents:
+        - id: VehicleSyndicateSegway
+        - id: VehicleKeySyndicateSegway

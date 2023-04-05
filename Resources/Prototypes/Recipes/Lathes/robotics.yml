@@ -1,0 +1,23 @@
+- type: latheRecipe
+  id: ProximitySensor
+  result: ProximitySensor
+  completetime: 2
+  materials:
+    Steel: 200
+    Glass: 300
+
+- type: latheRecipe
+  id: LeftArmBorg
+  result: LeftArmBorg
+  completetime: 2
+  materials:
+    Steel: 70
+    Glass: 25
+
+- type: latheRecipe
+  id: RightArmBorg
+  result: RightArmBorg
+  completetime: 2
+  materials:
+    Steel: 70
+    Glass: 25

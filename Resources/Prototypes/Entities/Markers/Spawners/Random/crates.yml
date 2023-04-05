@@ -1,0 +1,61 @@
+- type: entity
+  name: Empty Crate Spawner
+  id: CrateEmptySpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Structures/Storage/Crates/generic.rsi
+          state: icon
+    - type: RandomSpawner
+      prototypes:
+        - CrateGenericSteel
+        - CratePlastic
+        - CrateFreezer
+        - CrateHydroponics
+        - CrateMedical
+        - CrateRadiation
+        - CrateInternals
+        - CrateElectrical
+        - CrateEngineering
+        - CrateScience
+        - CrateSurgery
+      chance: 0.7
+
+- type: entity
+  name: Filled Crate Spawner
+  id: CrateFilledSpawner
+  suffix: Low Value
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Structures/Storage/Crates/o2.rsi
+          state: icon
+    - type: RandomSpawner
+      prototypes:
+        - CrateServiceReplacementLights
+        - CrateServiceBureaucracy
+        - CrateChemistrySupplies
+        - CrateMaterialGlass
+        - CrateMaterialSteel
+        - CrateMaterialPlastic
+        - CrateMaterialWood
+        - CrateMaterialPlasteel
+        - CrateFunArtSupplies
+        - CrateEngineeringCableLV
+        - CrateEngineeringCableMV
+        - CrateEngineeringCableHV
+        - CrateEngineeringCableBulk
+        - CrateEmergencyFire
+        - CrateEmergencyInternals
+        - CrateEmergencyInflatablewall
+        - CrateHydroponicsTools
+        - CrateHydroponicsSeeds
+      chance: 0.7
+      rarePrototypes:
+        - CrateMaterialPlasma
+        - CrateHydroponicsSeedsExotic
+      rareChance: 0.1

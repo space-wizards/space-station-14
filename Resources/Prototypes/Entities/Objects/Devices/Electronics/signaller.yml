@@ -1,0 +1,18 @@
+#Remote Signaller Device
+
+- type: entity
+  parent: BaseItem
+  id: RemoteSignaller
+  name: remote signaller
+  description: A handheld device used for remotely sending signals to objects.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/signaller.rsi
+    state: signaller
+  - type: Signaller
+  - type: UseDelay
+  - type: StaticPrice
+    price: 40
+  - type: SignalTransmitter
+    outputs:
+      Pressed: []

@@ -1,0 +1,25 @@
+﻿- type: reaction
+  id: Carpetium
+  reactants:
+    SpaceDrugs:
+      amount: 1
+    Fiber:
+      amount: 2
+  products:
+    Carpetium: 3
+
+- type: reaction
+  id: BuzzochloricBees
+  reactants:
+    Saxoite: # do you like jazz (not sorry)
+      amount: 1
+    Fiber: # bees are fuzzy
+      amount: 1
+    GroundBee: # you need bee for the bees
+      amount: 1
+    Chlorine: # the chloric part of buzzochloric
+      amount: 1
+    UnstableMutagen: # to bring the buzz to life
+      amount: 1
+  products:
+    BuzzochloricBees: 3

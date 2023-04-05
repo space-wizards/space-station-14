@@ -1,0 +1,10 @@
+- type: construction
+  name: torch
+  id: LightTorch
+  graph: LightTorch
+  startNode: start
+  targetNode: torch
+  category: construction-category-tools
+  description: A torch fashioned from some wood.
+  icon: { sprite: Objects/Misc/torch.rsi, state: icon }
+  objectType: Item

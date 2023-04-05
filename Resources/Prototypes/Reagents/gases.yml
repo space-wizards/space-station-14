@@ -1,0 +1,348 @@
+﻿- type: reagent
+  id: Oxygen
+  name: reagent-name-oxygen
+  desc: reagent-desc-oxygen
+  physicalDesc: reagent-physical-desc-gaseous
+  flavor: bitter
+  color: "#808080"
+  boilingPoint: -183.0
+  meltingPoint: -218.4
+  metabolisms:
+    Gas:
+      effects:
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
+          type: Human
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
+          type: Animal
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
+          type: Rat
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
+          type: Plant
+      # Convert Oxygen into CO2.
+      - !type:ModifyLungGas
+        conditions:
+        - !type:OrganType
+          type: Vox
+          shouldHave: false
+        ratios:
+          CarbonDioxide: 1.0
+          Oxygen: -1.0
+
+- type: reagent
+  id: Plasma
+  name: reagent-name-plasma
+  desc: reagent-desc-plasma
+  physicalDesc: reagent-physical-desc-gaseous
+  flavor: bitter
+  color: "#7e009e"
+  boilingPoint: -127.3 # Random values picked between the actual values for CO2 and O2
+  meltingPoint: -186.4
+  tileReactions:
+  - !type:FlammableTileReaction
+    temperatureMultiplier: 1.5
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 3
+      - !type:AdjustReagent
+        reagent: Inaprovaline
+        amount: -2.0
+    Gas:
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          types:
+            Poison:
+              1
+      # Cant be added until I add metabolism effects on reagent removal
+      #- !type:AdjustAlert
+      #  alertType: Toxins
+  reactiveEffects:
+    Flammable:
+      methods: [ Touch ]
+      effects:
+      - !type:FlammableReaction
+
+- type: reagent
+  id: Tritium
+  name: reagent-name-tritium
+  desc: reagent-desc-tritium
+  physicalDesc: reagent-physical-desc-ionizing
+  flavor: bitter
+  color: "#66ff33"
+  tileReactions:
+  - !type:FlammableTileReaction
+    temperatureMultiplier: 2.0
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Radiation: 3
+    Gas:
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          types:
+            Radiation:
+              1
+      # Cant be added until I add metabolism effects on reagent removal
+      #- !type:AdjustAlert
+      #  alertType: Toxins
+
+- type: reagent
+  id: CarbonDioxide
+  name: reagent-name-carbon-dioxide
+  desc: reagent-desc-carbon-dioxide
+  physicalDesc: reagent-physical-desc-odorless
+  flavor: bitter
+  color: "#66ff33"
+  metabolisms:
+    Gas:
+      effects:
+      - !type:HealthChange
+        conditions:
+        # Don't want people to get toxin damage from the gas they just
+        # exhaled, right?
+        - !type:ReagentThreshold
+          min: 0.5
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          types:
+            Poison:
+              0.2
+      # Cant be added until I add metabolism effects on reagent removal
+      #- !type:AdjustAlert
+      #  alertType: CarbonDioxide
+
+- type: reagent
+  id: Nitrogen
+  name: reagent-name-nitrogen
+  desc: reagent-desc-nitrogen
+  physicalDesc: reagent-physical-desc-gaseous
+  flavor: bitter
+  color: "#808080"
+  boilingPoint: -195.8
+  meltingPoint: -210.0
+  metabolisms:
+    Gas:
+      effects:
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
+          type: Vox
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
+          type: Slime
+      # Converts Nitrogen into CO2
+      - !type:ModifyLungGas
+        conditions:
+        - !type:OrganType
+          type: Vox
+        ratios:
+          CarbonDioxide: 1.0
+          Nitrogen: -1.0
+      - !type:ModifyLungGas
+        conditions:
+        - !type:OrganType
+          type: Slime
+        ratios:
+          NitrousOxide: 1.0
+          Nitrogen: -1.0
+
+- type: reagent
+  id: Miasma
+  name: reagent-name-miasma
+  desc: reagent-desc-miasma
+  physicalDesc: reagent-physical-desc-gaseous
+  flavor: bitter
+  color: "#56941E"
+  boilingPoint: -195.8
+  meltingPoint: -210.0
+  metabolisms:
+    Gas:
+      effects:
+      - !type:ChemMiasmaPoolSource
+        conditions:
+        - !type:OrganType
+          type: Rat
+          shouldHave: false
+        - !type:ReagentThreshold
+          reagent: Miasma
+          min: 1
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Rat
+          shouldHave: false
+        - !type:ReagentThreshold
+          reagent: Miasma
+          min: 1
+        ignoreResistances: true
+        damage:
+          types:
+            Poison: 0.25
+      - !type:ChemVomit
+        probability: 0.12
+        conditions:
+        - !type:OrganType
+          type: Rat
+          shouldHave: false
+        - !type:ReagentThreshold
+          reagent: Miasma
+          min: 0.8
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages: [ "miasma-smell" ]
+        probability: 0.1
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Miasma
+          min: 0.25
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Rat
+        - !type:ReagentThreshold
+          reagent: Miasma
+          min: 1
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          types:
+            Blunt: -4
+            Slash: -3
+            Piercing: -3
+
+- type: reagent
+  id: NitrousOxide
+  name: reagent-name-nitrous-oxide
+  desc: reagent-desc-nitrous-oxide
+  physicalDesc: reagent-physical-desc-gaseous
+  flavor: bitter
+  color: "#808080"
+  boilingPoint: -88
+  meltingPoint: -90
+  metabolisms:
+    Gas:
+      effects:
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentThreshold
+          reagent: NitrousOxide
+          min: 0.5
+        - !type:OrganType
+          type: Slime
+          shouldHave: false
+        type: Local
+        visualType: Medium
+        messages: [ "effect-sleepy" ]
+        probability: 0.1
+      - !type:MovespeedModifier
+        conditions:
+        - !type:ReagentThreshold
+          reagent: NitrousOxide
+          min: 1
+        - !type:OrganType
+          type: Slime
+          shouldHave: false
+        walkSpeedModifier: 0.65
+        sprintSpeedModifier: 0.65
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          reagent: NitrousOxide
+          min: 1.8
+        - !type:OrganType
+          type: Slime
+          shouldHave: false
+        key: ForcedSleep
+        component: ForcedSleeping
+        time: 3
+        type: Add
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          reagent: NitrousOxide
+          min: 3.5
+        - !type:OrganType
+          type: Slime
+          shouldHave: false
+        ignoreResistances: true
+        damage:
+          types:
+            Poison: 0.25
+
+- type: reagent
+  id: Frezon
+  name: reagent-name-frezon
+  desc: reagent-desc-frezon
+  physicalDesc: reagent-physical-desc-gaseous
+  flavor: bitter
+  color: "#3a758c"
+  boilingPoint: -195.8
+  meltingPoint: -210.0
+  metabolisms:
+    Gas:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Frezon
+          min: 0.5
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          types:
+            Cellular: 0.01
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Frezon
+          min: 1
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 5
+        refresh: false
+      - !type:Drunk
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Frezon
+          min: 1
+      - !type:PopupMessage
+        type: Local
+        messages: [ "frezon-lungs-cold" ]
+        probability: 0.1
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Frezon
+          min: 0.5
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages: [ "frezon-euphoric" ]
+        probability: 0.1
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Frezon
+          min: 1

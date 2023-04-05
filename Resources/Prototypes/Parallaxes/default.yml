@@ -1,0 +1,76 @@
+- type: parallax
+  id: Blank
+
+- type: parallax
+  id: Default
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/layer1.png"
+      slowness: 0.998046875
+      scale: "1, 1"
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars.toml"
+      slowness: 0.996625
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars_dim"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars_dim.toml"
+      slowness: 0.989375
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars_faster"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars-2.toml"
+      slowness: 0.987265625
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars_dim_faster"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars_dim-2.toml"
+      slowness: 0.984352
+  layersLQ:
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: ""
+        configPath: "/Prototypes/Parallaxes/parallax_config.toml"
+        slowness: 0.875
+  layersLQUseHQ: false
+
+# Because hyperspace and the menu need their own.
+- type: parallax
+  id: FastSpace
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/layer1.png"
+      slowness: 0.5
+      scale: "3, 3"
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars.toml"
+      slowness: 0.25
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizards_star_slower"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars-2.toml"
+      slowness: 0.15
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars_dim"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars_dim.toml"
+      slowness: 0.375
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars_dim_faster"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars_dim-2.toml"
+      slowness: 0.125
+  layersLQ:
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: ""
+        configPath: "/Prototypes/Parallaxes/parallax_config.toml"
+        slowness: 0.5
+  layersLQUseHQ: false
+

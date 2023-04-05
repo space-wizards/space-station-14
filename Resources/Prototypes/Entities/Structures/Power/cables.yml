@@ -1,0 +1,193 @@
+﻿- type: entity
+  abstract: true
+  id: CableBase
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Cable
+    cuttingDelay: 1
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: Sprite
+    netsync: false
+    drawdepth: ThinWire
+    visible: false
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: SubFloorHide
+  - type: CollideOnAnchor
+  - type: AmbientSound
+    enabled: false  # Leaving as false because 90% of them are set to this.
+  - type: Appearance
+  - type: Electrified
+    onHandInteract: false
+    onInteractUsing: false # wire-cutting handled separately.
+    onBump: false
+    requirePower: true
+    highVoltageNode: power
+    mediumVoltageNode: power
+    lowVoltageNode: power
+  - type: CableVis
+    node: power
+   
+
+- type: entity
+  parent: CableBase
+  id: CableHV
+  name: HV power cable
+  description: An orange high voltage power cable.
+  components:
+  - type: Sprite
+    sprite: Structures/Power/Cables/hv_cable.rsi
+    state: hvcable_0
+    drawdepth: ThickWire
+  - type: Icon
+    sprite: Structures/Power/Cables/hv_cable.rsi
+    state: hvcable_4
+  - type: NodeContainer
+    nodes:
+      power:
+        !type:CableNode
+        nodeGroupID: HVPower
+  - type: Cable
+    cableDroppedOnCutPrototype: CableHVStack1
+    cableType: HighVoltage
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          CableHVStack1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: CableVisualizer
+    statePrefix: hvcable_
+  - type: AmbientSound
+    volume: -15
+    range: 2
+    sound:
+      path: /Audio/Ambience/Objects/emf_buzz.ogg
+
+- type: entity
+  parent: CableBase
+  id: CableMV
+  name: MV power cable
+  description: A medium voltage power cable.
+  components:
+  - type: Sprite
+    color: Yellow
+    sprite: Structures/Power/Cables/mv_cable.rsi
+    state: mvcable_0
+  - type: Icon
+    color: Yellow
+    sprite: Structures/Power/Cables/mv_cable.rsi
+    state: mvcable_4
+  - type: NodeContainer
+    nodes:
+      power:
+        !type:CableNode
+        nodeGroupID: MVPower
+  - type: Cable
+    cableDroppedOnCutPrototype: CableMVStack1
+    cableType: MediumVoltage
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          CableMVStack1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: CableVisualizer
+    statePrefix: mvcable_
+  - type: AmbientSound
+    volume: -16
+    range: 2
+    sound:
+      path: /Audio/Ambience/Objects/emf_buzz.ogg
+
+- type: entity
+  parent: CableBase
+  id: CableApcExtension
+  name: LV power cable
+  description: A cable used to connect machines to an APC. #APCs aren't area defined anymore so need this cable to connect things to the APC. This description should be dynamic in future.
+  components:
+  - type: Sprite
+    color: Green
+    sprite: Structures/Power/Cables/lv_cable.rsi
+    state: lvcable_0
+  - type: Icon
+    color: Green
+    sprite: Structures/Power/Cables/lv_cable.rsi
+    state: lvcable_4
+  - type: NodeContainer
+    nodes:
+      power:
+        !type:CableNode
+        nodeGroupID: Apc
+  - type: PowerProvider
+    voltage: Apc
+  - type: ExtensionCableProvider
+  - type: Cable
+    cableDroppedOnCutPrototype: CableApcStack1
+    cableType: Apc
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          CableApcStack1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: CableVisualizer
+    statePrefix: lvcable_
+  - type: AmbientSound
+    volume: -17
+    range: 2
+    sound:
+      path: /Audio/Ambience/Objects/emf_buzz.ogg

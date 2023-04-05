@@ -1,0 +1,31 @@
+- type: entity
+  parent: BaseItem
+  id: DiseaseSwab
+  name: sterile swab
+  description: Used for taking and transfering samples. Sterile until open. Single use only.
+  components:
+  - type: Item
+    size: 1
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Specific/Medical/mouth_swab.rsi
+    state: icon
+  - type: Tag
+    tags:
+    - Recyclable
+  - type: DiseaseSwab
+  - type: BotanySwab
+
+- type: entity
+  parent: BaseItem
+  id: Vaccine
+  name: Vaccine
+  description: Prevents people who DON'T already have a disease from catching it.
+  components:
+  - type: Item
+    size: 3
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    netsync: false
+    state: salpen
+  - type: DiseaseVaccine

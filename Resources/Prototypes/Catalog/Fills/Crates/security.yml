@@ -1,0 +1,91 @@
+- type: entity
+  id: CrateSecurityArmor
+  parent: CrateSecgear
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterArmorBulletproof
+        amount: 3
+
+- type: entity
+  id: CrateSecurityHelmet
+  parent: CrateSecgear
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHelmetHelmet
+        amount: 3
+
+- type: entity
+  id: CrateSecurityNonlethal
+  parent: CrateSecgear
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponDisabler
+        amount: 3
+      - id: Stunbaton
+        amount: 3
+      - id: BoxFlashbang
+        amount: 1
+      - id: Flash
+        amount: 3
+#      - Pepperspray
+#      - GrenadeTeargas
+
+- type: entity
+  id: CrateSecurityRiot
+  parent: CrateSecgear
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterArmorRiot
+        amount: 2
+      - id: ClothingHeadHelmetRiot
+        amount: 2
+      - id: WeaponShotgunEnforcer
+        amount: 2
+      - id: BoxBeanbag
+        amount: 2
+#      - ShieldRiot
+#      - SecGasmask
+
+- type: entity
+  id: CrateSecuritySupplies
+  parent: CrateSecgear
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxHandcuff
+        amount: 1
+      - id: BoxSechud
+        amount: 1
+#      - SecBelt
+#      - SecGasmask
+#      - SpacelawBook
+
+- type: entity
+  id: CrateRestraints
+  parent: CrateSecgear
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxHandcuff
+        amount: 2
+      - id: BoxZiptie
+        amount: 2
+
+- type: entity
+  id: CrateSecurityBiosuit
+  parent: CrateSecgear
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterBioSecurity
+        amount: 2
+      - id: ClothingHeadHatHoodBioSecurity
+        amount: 2
+      - id: ClothingMaskSterile
+        amount: 2
+
+# Cosmetic Crates

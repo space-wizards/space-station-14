@@ -1,0 +1,318 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: Crayon
+  name: crayon
+  description: "A colourful crayon. Looks tasty. Mmmm..."
+  components:
+  - type: Tag
+    tags:
+    - Write
+    - Crayon
+    - Trash
+  - type: Recyclable
+  - type: SpaceGarbage
+  - type: UserInterface
+    interfaces:
+    - key: enum.CrayonUiKey.Key
+      type: CrayonBoundUserInterface
+  - type: Crayon
+    capacity: 5
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: MindbreakerToxin
+          Quantity: 2
+  - type: StaticPrice
+    price: 5
+
+- type: entity
+  parent: Crayon
+  id: CrayonWhite
+  name: white crayon
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/crayons.rsi
+    state: white
+  - type: Item
+    sprite: Objects/Fun/crayons.rsi
+    size: 1
+    heldPrefix: white
+  - type: Crayon
+    color: white
+    capacity: 5
+  - type: Tag
+    tags:
+    - Write
+    - Crayon
+    - CrayonWhite
+    - Recyclable
+    - Trash
+
+- type: entity
+  parent: Crayon
+  id: CrayonMime
+  name: mime crayon
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/crayons.rsi
+    state: mime
+  - type: Item
+    sprite: Objects/Fun/crayons.rsi
+    size: 1
+    heldPrefix: mime
+  - type: Crayon
+    color: white
+    capacity: 5
+  - type: Tag
+    tags:
+    - Write
+    - Crayon
+    - CrayonWhite
+    - Recyclable
+    - Trash
+
+- type: entity
+  parent: Crayon
+  id: CrayonRainbow
+  name: rainbow crayon
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/crayons.rsi
+    state: rainbow
+  - type: Item
+    sprite: Objects/Fun/crayons.rsi
+    size: 1
+    heldPrefix: rainbow
+  - type: Crayon
+    color: Red
+    selectableColor: true
+    capacity: 30
+  - type: Tag
+    tags:
+    - Write
+    - Crayon
+    - Recyclable
+    - Trash
+
+- type: entity
+  parent: Crayon
+  id: CrayonBlack
+  name: black crayon
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/crayons.rsi
+    state: black
+  - type: Item
+    sprite: Objects/Fun/crayons.rsi
+    size: 1
+    heldPrefix: black
+  - type: Crayon
+    color: black
+    capacity: 5
+  - type: Tag
+    tags:
+    - Write
+    - Crayon
+    - CrayonBlack
+    - Recyclable
+    - Trash
+
+- type: entity
+  parent: Crayon
+  id: CrayonRed
+  name: red crayon
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/crayons.rsi
+    state: red
+  - type: Item
+    sprite: Objects/Fun/crayons.rsi
+    size: 1
+    heldPrefix: red
+  - type: Crayon
+    color: red
+    capacity: 5
+  - type: Tag
+    tags:
+    - Write
+    - Crayon
+    - CrayonRed
+    - Recyclable
+    - Trash
+
+- type: entity
+  parent: Crayon
+  id: CrayonOrange
+  name: orange crayon
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/crayons.rsi
+    state: orange
+  - type: Item
+    sprite: Objects/Fun/crayons.rsi
+    size: 1
+    heldPrefix: orange
+  - type: Crayon
+    color: orange
+    capacity: 5
+  - type: Tag
+    tags:
+    - Write
+    - Crayon
+    - CrayonOrange
+    - Recyclable
+    - Trash
+
+- type: entity
+  parent: Crayon
+  id: CrayonYellow
+  name: yellow crayon
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/crayons.rsi
+    state: yellow
+  - type: Item
+    sprite: Objects/Fun/crayons.rsi
+    size: 1
+    heldPrefix: yellow
+  - type: Crayon
+    color: yellow
+    capacity: 5
+  - type: Tag
+    tags:
+    - Write
+    - Crayon
+    - CrayonYellow
+    - Recyclable
+    - Trash
+
+- type: entity
+  parent: Crayon
+  id: CrayonGreen
+  name: green crayon
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/crayons.rsi
+    state: green
+  - type: Item
+    sprite: Objects/Fun/crayons.rsi
+    size: 1
+    heldPrefix: green
+  - type: Crayon
+    color: green
+    capacity: 5
+  - type: Tag
+    tags:
+    - Write
+    - Crayon
+    - CrayonGreen
+    - Recyclable
+    - Trash
+
+- type: entity
+  parent: Crayon
+  id: CrayonBlue
+  name: blue crayon
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/crayons.rsi
+    state: blue
+  - type: Item
+    sprite: Objects/Fun/crayons.rsi
+    size: 1
+    heldPrefix: blue
+  - type: Crayon
+    color: lightblue
+    capacity: 5
+  - type: Tag
+    tags:
+    - Write
+    - Crayon
+    - CrayonBlue
+    - Recyclable
+    - Trash
+
+- type: entity
+  parent: Crayon
+  id: CrayonPurple
+  name: purple crayon
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/crayons.rsi
+    state: purple
+  - type: Item
+    sprite: Objects/Fun/crayons.rsi
+    size: 1
+    heldPrefix: purple
+  - type: Crayon
+    color: purple
+    capacity: 5
+  - type: Tag
+    tags:
+    - Write
+    - Crayon
+    - CrayonPurple
+    - Recyclable
+    - Trash
+
+- type: entity
+  parent: BoxCardboard
+  id: CrayonBox
+  name: crayon box
+  description: "It's a box of crayons."
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/crayons.rsi
+    netsync: false
+    state: box
+  - type: Storage
+    capacity: 7
+  - type: Item
+    sprite: Objects/Fun/crayons.rsi
+    size: 7
+    heldPrefix: box
+  - type: StorageFill
+    contents:
+    - id: CrayonRed
+    - id: CrayonOrange
+    - id: CrayonYellow
+    - id: CrayonGreen
+    - id: CrayonBlue
+    - id: CrayonPurple
+    - id: CrayonBlack
+  - type: ItemMapper
+    mapLayers:
+      black_box:
+        whitelist:
+          tags:
+          - CrayonBlack
+      blue_box:
+        whitelist:
+          tags:
+          - CrayonBlue
+      green_box:
+        whitelist:
+          tags:
+          - CrayonGreen
+      orange_box:
+        whitelist:
+          tags:
+          - CrayonOrange
+      purple_box:
+        whitelist:
+          tags:
+          - CrayonPurple
+      red_box:
+        whitelist:
+          tags:
+          - CrayonRed
+      yellow_box:
+        whitelist:
+          tags:
+          - CrayonYellow
+  - type: Appearance

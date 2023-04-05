@@ -1,0 +1,79 @@
+- type: cargoProduct
+  id: EngineeringCableLv
+  icon:
+    sprite: Objects/Tools/cable-coils.rsi
+    state: coillv-30
+  product: CrateEngineeringCableLV
+  cost: 600
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: EngineeringCableMv
+  icon:
+    sprite: Objects/Tools/cable-coils.rsi
+    state: coilmv-30
+  product: CrateEngineeringCableMV
+  cost: 600
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: EngineeringCableHv
+  icon:
+    sprite: Objects/Tools/cable-coils.rsi
+    state: coilhv-30
+  product: CrateEngineeringCableHV
+  cost: 600
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: EngineeringCableBulk
+  icon:
+    sprite: Objects/Tools/cable-coils.rsi
+    state: coilall-30
+  product: CrateEngineeringCableBulk
+  cost: 1200
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: EngineeringElectricalSupplies
+  icon:
+    sprite: Objects/Tools/Toolboxes/toolbox_yellow.rsi
+    state: icon
+  product: CrateEngineeringElectricalSupplies
+  cost: 4500
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: EngineeringJetpack
+  icon:
+    sprite: Objects/Tanks/Jetpacks/blue.rsi
+    state: icon
+  product: CrateEngineeringJetpack
+  cost: 1000
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: EngineeringMiniJetpack
+  icon:
+    sprite: Objects/Tanks/Jetpacks/mini.rsi
+    state: icon
+  product: CrateEngineeringMiniJetpack
+  cost: 750
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  id: AirlockKit
+  icon:
+    sprite: Objects/Tools/Toolboxes/toolbox_yellow.rsi
+    state: icon
+  product: CrateAirlockKit
+  cost: 1100
+  category: Engineering
+  group: market

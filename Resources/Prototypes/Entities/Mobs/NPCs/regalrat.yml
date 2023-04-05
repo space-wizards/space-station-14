@@ -1,0 +1,300 @@
+- type: entity
+  name: Rat King
+  id: MobRatKing
+  parent: SimpleMobBase
+  description: He's da rat. He make da roolz.
+  components:
+  - type: CombatMode
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3.00
+    baseSprintSpeed : 5.00
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask: SimpleHostileCompound
+  - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+  - type: Faction
+    factions:
+    - SimpleHostile
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/regalrat.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: regalrat
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.3
+      density: 230
+      mask:
+      - SmallMobMask
+      layer:
+      - SmallMobLayer
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      150: Critical
+      200: Dead
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 12
+        Piercing: 8
+  - type: Body
+    prototype: Rat
+    requiredLegs: 1 # TODO: More than 1 leg
+  - type: Hunger # probably should be prototyped
+    thresholds:
+      Overfed: 200
+      Okay: 150
+      Peckish: 100
+      Starving: 50
+      Dead: 0
+    baseDecayRate: 0.01666666666
+  - type: Thirst
+    thresholds:
+      OverHydrated: 600
+      Okay: 450
+      Thirsty: 300
+      Parched: 150
+      Dead: 0
+    baseDecayRate: 0.1
+  - type: Appearance
+  - type: DamageStateVisuals
+    rotate: true
+    states:
+      Alive:
+        Base: regalrat
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: Rat King
+    description: You are the Rat King, scavenge food in order to produce rat minions to do your bidding.
+    rules: You are an antagonist, scavenge, attack, and grow your hoard!
+  - type: Tag
+    tags:
+      - CannotSuicide
+      - DoorBumpOpener
+      - FootstepSound
+  - type: NoSlip
+  - type: RatKing
+    actionRaiseArmy:
+      useDelay: 4
+      icon: Interface/Actions/ratKingArmy.png
+      name: rat-king-raise-army-name
+      description: rat-king-raise-army-description
+      itemIconStyle: NoItem
+      event: !type:RatKingRaiseArmyActionEvent
+    hungerPerArmyUse: 25
+    actionDomain:
+      useDelay: 10
+      icon: Interface/Actions/ratKingDomain.png
+      name: rat-king-domain-name
+      description: rat-king-domain-description
+      itemIconStyle: NoItem
+      event: !type:RatKingDomainActionEvent
+    hungerPerDomainUse: 50
+  - type: MobsterAccent
+  - type: Butcherable
+    spawned:
+    - id: ClothingHeadHatFancyCrown #how did that get there?
+      amount: 1
+  - type: DiseaseCarrier
+    carrierDiseases:
+    - VentCough
+    - AMIV
+    - SpaceCold
+    - SpaceFlu
+    - BirdFlew
+    - VanAusdallsRobovirus
+    - BleedersBite
+    - Plague
+    - TongueTwister
+  - type: MobPrice
+    price: 2500 # rat wealth
+  - type: RandomMetadata
+    nameSegments:
+    - RegalRatNameKingdom
+    - RegalRatNameTitle
+
+- type: entity
+  id: MobRatKingBuff
+  parent: MobRatKing
+  suffix: Buff
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/buffrat.rsi
+    scale: 1.2, 1.2
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: regalrat
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      300: Critical
+      350: Dead
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh2.ogg
+    angle: 0
+    attackRate: 0.75
+    animation: WeaponArcFist
+    damage:
+      types:
+        Blunt: 66 #oof ouch owie my bones
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      density: 400
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      200: 0.7
+      250: 0.5
+
+- type: entity
+  name: Rat Servant
+  id: MobRatServant
+  parent: SimpleMobBase
+  description: He's da mini rat. He don't make da roolz.
+  components:
+  - type: CombatMode
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3.5
+    baseSprintSpeed : 3.5
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask: SimpleHostileCompound
+  - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+  - type: Faction
+    factions:
+    - SimpleHostile
+  - type: Sprite
+    drawdepth: SmallMobs
+    sprite: Mobs/Animals/mouse.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: mouse-3
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.2
+      density: 30 #Bulky by mouse standards...
+      mask:
+      - SmallMobMask
+      layer:
+      - SmallMobLayer
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      40: Critical
+      60: Dead
+  - type: Stamina
+    excess: 60
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 5
+        Piercing: 3
+  - type: Body
+    prototype: Rat
+    requiredLegs: 1 # TODO: More than 1 leg
+  - type: Hunger # probably should be prototyped
+    thresholds:
+      Overfed: 200
+      Okay: 150
+      Peckish: 100
+      Starving: 50
+      Dead: 0
+    baseDecayRate: 0.01666666666
+  - type: Thirst
+    thresholds:
+      OverHydrated: 600
+      Okay: 450
+      Thirsty: 300
+      Parched: 150
+      Dead: 0
+    baseDecayRate: 0.1
+  - type: Appearance
+  - type: DamageStateVisuals
+    rotate: true
+    states:
+      Alive:
+        Base: mouse-3
+      Critical:
+        Base: dead-3
+      Dead:
+        Base: splat-3
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatRat
+      amount: 1
+  - type: DiseaseCarrier
+    carrierDiseases:
+    - VentCough
+    - AMIV
+    - SpaceCold
+    - SpaceFlu
+    - BirdFlew
+    - VanAusdallsRobovirus
+    - BleedersBite
+    - Plague
+    - TongueTwister
+  - type: Vocal
+    sounds:
+      Male: Mouse
+      Female: Mouse
+      Unsexed: Mouse
+    wilhelmProbability: 0.001
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: Rat Servant
+    description: You are a Rat Servant. You must follow your king's orders.
+    rules: You are an antagonist, scavenge, attack, and serve your king!
+  - type: Tag
+    tags:
+      - CannotSuicide
+      - DoorBumpOpener
+      - FootstepSound
+  - type: NoSlip
+  - type: MobPrice
+    price: 500 # rat wealth
+  - type: MobsterAccent
+    isBoss: false

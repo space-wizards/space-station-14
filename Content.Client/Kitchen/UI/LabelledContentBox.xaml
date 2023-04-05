@@ -1,0 +1,7 @@
+<BoxContainer Orientation="Vertical" xmlns="https://spacestation14.io">
+    <SplitContainer Orientation="Horizontal" Margin="5">
+        <Label Name="Label" Align="Center"/>
+        <Button Name="EjectButton" Access="Public" TextAlign="Center"/>
+    </SplitContainer>
+    <ItemList Name="BoxContents" Access="Public" VerticalExpand="True" HorizontalExpand="True" SelectMode="Button" SizeFlagsStretchRatio="2" MinSize="100 128"/>
+</BoxContainer>

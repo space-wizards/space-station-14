@@ -1,0 +1,105 @@
+- type: entity
+  parent: BaseItem
+  id: BaseKnife
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - Knife
+  - type: Sharp
+  - type: Utensil
+    types:
+      - Knife
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 12
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: Sprite
+    netsync: false
+  - type: Item
+  - type: Tool
+    qualities:
+      - Slicing
+    useSound:
+      path: /Audio/Items/Culinary/chop.ogg
+
+- type: entity
+  name: kitchen knife
+  parent: BaseKnife
+  id: KitchenKnife
+  description: A general purpose Chef's Knife made by Asters Merchant Guild. Guaranteed to stay sharp for years to come..
+  components:
+  - type: Tag
+    tags:
+    - Knife
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/kitchen_knife.rsi
+    size: 2
+    state: icon
+  - type: Item
+    size: 10
+    sprite: Objects/Weapons/Melee/kitchen_knife.rsi
+
+- type: entity
+  name: butcher's cleaver
+  parent: BaseKnife
+  id: ButchCleaver
+  description: A huge blade used for chopping and chopping up meat. This includes clowns and clown-by-products.
+  components:
+  - type: Tag
+    tags:
+    - Knife
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/cleaver.rsi
+    size: 4
+    state: butch
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 10
+  - type: Item
+    size: 10
+    sprite: Objects/Weapons/Melee/cleaver.rsi
+
+- type: entity
+  name: combat knife
+  parent: BaseKnife
+  id: CombatKnife
+  description: A deadly knife intended for melee confrontations.
+  components:
+  - type: Tag
+    tags:
+    - CombatKnife
+    - Knife
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/combat_knife.rsi
+    size: 2
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 10
+  - type: Item
+    size: 10
+    sprite: Objects/Weapons/Melee/combat_knife.rsi
+  - type: DisarmMalus
+    malus: 0.225
+
+- type: entity
+  name: survival knife
+  parent: CombatKnife
+  id: SurvivalKnife
+  description: Weapon of first and last resort for combatting space carp.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/survival_knife.rsi
+    size: 2
+    state: icon
+  - type: Item
+    size: 10
+    sprite: Objects/Weapons/Melee/survival_knife.rsi

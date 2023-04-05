@@ -1,0 +1,23 @@
+- type: entity
+  id: BiomassReclaimer
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: biomass reclaimer
+  description: Reclaims biomass from corpses. Gruesome.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/Medical/biomass_reclaimer.rsi
+    state: icon
+    netsync: false
+  - type: BiomassReclaimer
+  - type: Climbable
+    delay: 7
+  - type: AmbientSound
+    enabled: false
+    volume: -5
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/reclaimer_ambience.ogg
+  - type: Machine
+    board: BiomassReclaimerMachineCircuitboard

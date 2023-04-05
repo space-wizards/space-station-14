@@ -1,0 +1,84 @@
+- type: entity
+  id: PlasmaWindow
+  name: plasma window
+  parent: Window
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Structures/Windows/plasma_window.rsi
+  - type: Icon
+    sprite: Structures/Windows/plasma_window.rsi
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: RGlass
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassPlasma:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    base: pwindow
+  - type: Construction
+    graph: Window
+    node: plasmaWindow
+  - type: Appearance
+  - type: DamageVisuals
+    thresholds: [4, 8, 12]
+    damageDivisor: 12
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks.rsi
+  - type: StaticPrice
+    price: 60
+  - type: RadiationBlocker
+    resistance: 2
+
+- type: entity
+  id: PlasmaWindowDirectional
+  parent: WindowDirectional
+  name: directional plasma window
+  description: Don't smudge up the glass down there.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Window
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Windows/directional.rsi
+    state: plasma_window
+  - type: Icon
+    sprite: Structures/Windows/directional.rsi
+    state: plasma_window
+  - type: Construction
+    graph: WindowDirectional
+    node: plasmaWindowDirectional
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassPlasma:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: StaticPrice
+    price: 30

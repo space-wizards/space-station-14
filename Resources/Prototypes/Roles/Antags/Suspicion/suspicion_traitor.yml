@@ -1,0 +1,6 @@
+- type: antag
+  id: SuspicionTraitor
+  name: roles-antag-suspicion-suspect-name
+  antagonist: true
+  setPreference: true
+  objective: roles-antag-suspicion-suspect-objective

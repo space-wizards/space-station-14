@@ -1,0 +1,39 @@
+﻿# To be implemented: see #9072
+
+- type: entity
+  name: staff of healing
+  parent: WeaponStaffBase
+  id: WeaponStaffHealing
+  description: You don't foresee having to use this in your quest for carnage too often.
+  components:
+  - type: Sprite
+    layers:
+    - state: healing
+  - type: Item
+    heldPrefix: healing
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/Magic/staff_healing.ogg
+  - type: BasicEntityAmmoProvider
+    proto: ProjectileHealingBolt
+    capacity: 10
+    count: 10
+
+- type: entity
+  name: staff of entrance
+  parent: WeaponStaffBase
+  id: WeaponStaffPolymorphDoor
+  description: For when you need a get-away route.
+  components:
+  - type: Sprite
+    layers:
+    - state: door
+  - type: Item
+    heldPrefix: door
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/Magic/staff_door.ogg
+  - type: BasicEntityAmmoProvider
+    proto: ProjectilePolyboltDoor
+    capacity: 10
+    count: 10

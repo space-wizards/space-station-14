@@ -1,0 +1,22 @@
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckBronzeheart
+  name: bronzeheart medal
+  description: Given to crewmates for exemplary bravery in the face of danger. 
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Medals/bronzeheart.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Medals/bronzeheart.rsi
+    
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckGoldmedal
+  name: gold medal of crewmanship
+  description: Given to crewmates who display excellent crewmanship.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Medals/gold.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Medals/gold.rsi  

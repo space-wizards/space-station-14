@@ -1,0 +1,40 @@
+﻿- type: entity
+  id: FirelockFrame
+  parent: BaseStructureDynamic
+  name: Firelock Frame
+  description: That is a firelock frame.
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/firelock.rsi
+    state: frame1
+  - type: Construction
+    graph: Firelock
+    node: frame1
+  - type: InteractionOutline
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.45,-0.45,0.45,0.45"
+      density: 55
+      mask:
+      - Impassable
+      - HighImpassable
+      layer:
+      - HighImpassable
+      - MidImpassable
+  - type: Transform
+    noRot: true

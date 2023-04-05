@@ -1,0 +1,110 @@
+- type: entity
+  parent: BaseItem
+  id: SpaceCash
+  name: spacebucks
+  description: You gotta have money.
+  components:
+  - type: Material
+    materials:
+      Credit: 1
+  - type: StaticPrice
+    price: 0
+  - type: Stack
+    stackType: Credit
+    count: 1
+  - type: Sprite
+    sprite: Objects/Economy/cash.rsi
+    netsync: false
+    state: cash
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+    - density: 30
+      shape:
+        !type:PhysShapeAabb
+        bounds: "-0.35,-0.2,0.25,0.1"
+      mask:
+      - ItemMask
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      # TODO: This won't work because stackvisualizer works based off of an even count and not denominations.
+      # Ideally we'd just be able to specify at what count does the new layer take place e.g.
+      # - 10: cash_10
+      # - 100: cash_100
+      stackLayers:
+      - cash
+      - cash_10
+      - cash_100
+      - cash_500
+      - cash_1000
+      - cash_1000000
+
+- type: material
+  id: Credit
+  name: spacebuck
+  stackEntity: SpaceCash
+  icon: { sprite: /Textures/Objects/Economy/cash.rsi, state: cash }
+  price: 1
+
+- type: stack
+  id: Credit
+  name: spacebuck
+  icon: { sprite: /Textures/Objects/Economy/cash.rsi, state: cash }
+  spawn: SpaceCash
+
+- type: entity
+  parent: SpaceCash
+  id: SpaceCash10
+  suffix: 10
+  components:
+  - type: Icon
+    sprite: Objects/Economy/cash.rsi
+    state: cash_10
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: SpaceCash
+  id: SpaceCash100
+  suffix: 100
+  components:
+  - type: Icon
+    sprite: Objects/Economy/cash.rsi
+    state: cash_100
+  - type: Stack
+    count: 100
+
+- type: entity
+  parent: SpaceCash
+  id: SpaceCash500
+  suffix: 500
+  components:
+  - type: Icon
+    sprite: Objects/Economy/cash.rsi
+    state: cash_500
+  - type: Stack
+    count: 500
+
+- type: entity
+  parent: SpaceCash
+  id: SpaceCash1000
+  suffix: 1000
+  components:
+  - type: Icon
+    sprite: Objects/Economy/cash.rsi
+    state: cash_1000
+  - type: Stack
+    count: 1000
+
+- type: entity
+  parent: SpaceCash
+  id: SpaceCash1000000
+  suffix: 1000000
+  components:
+  - type: Icon
+    sprite: Objects/Economy/cash.rsi
+    state: cash_1000000
+  - type: Stack
+    count: 1000000

@@ -1,0 +1,143 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/blob/e71d6c4fba5a51f99b81c295dcaec4fc2f58fb19/icons/mob/screen1.dmi",
+    "size": {
+        "x": 8,
+        "y": 8
+    },
+    "states": [
+        {
+            "name": "Detective"
+        },
+        {
+            "name": "QuarterMaster"
+        },
+        {
+            "name": "Botanist"
+        },
+        {
+            "name": "Boxer"
+        },
+        {
+            "name": "AtmosphericTechnician"
+        },
+        {
+            "name": "Nanotrasen"
+        },
+        {
+            "name": "Prisoner"
+        },
+        {
+            "name": "Janitor"
+        },
+        {
+            "name": "Chemist"
+        },
+        {
+            "name": "StationEngineer"
+        },
+        {
+            "name": "SecurityOfficer"
+        },
+        {
+            "name": "NoId"
+        },
+        {
+            "name": "ChiefMedicalOfficer"
+        },
+        {
+            "name": "Roboticist"
+        },
+        {
+            "name": "Chaplain"
+        },
+        {
+            "name": "Lawyer"
+        },
+        {
+            "name": "Unknown"
+        },
+        {
+            "name": "Librarian"
+        },
+        {
+            "name": "CargoTechnician"
+        },
+        {
+            "name": "Scientist"
+        },
+        {
+            "name": "ResearchAssistant"
+        },
+        {
+            "name": "Geneticist"
+        },
+        {
+            "name": "Clown"
+        },
+        {
+            "name": "Captain"
+        },
+        {
+            "name": "HeadOfPersonnel"
+        },
+        {
+            "name": "Virologist"
+        },
+        {
+            "name": "ShaftMiner"
+        },
+        {
+            "name": "Passenger"
+        },
+        {
+            "name": "ChiefEngineer"
+        },
+        {
+            "name": "Bartender"
+        },
+        {
+            "name": "HeadOfSecurity"
+        },
+        {
+            "name": "MedicalDoctor"
+        },
+        {
+            "name": "Chef"
+        },
+        {
+            "name": "Warden"
+        },
+        {
+            "name": "ResearchDirector"
+        },
+        {
+            "name": "Mime"
+        },
+        {
+            "name": "Musician"
+        },
+        {
+            "name": "Reporter"
+        },
+        {
+            "name": "Psychologist"
+        },
+        {
+            "name": "MedicalIntern"
+        },
+        {
+            "name": "TechnicalAssistant"
+        },
+        {
+            "name": "ServiceWorker"
+        },
+        {
+            "name": "SecurityCadet"
+        },
+        {
+            "name": "Zookeeper"
+        }
+    ]
+}

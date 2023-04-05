@@ -1,0 +1,11 @@
+- type: entity
+  abstract: true
+  parent: Clothing
+  id: ClothingHandsBase
+  components:
+  - type: Sprite
+    state: icon
+  - type: Clothing
+    slots: [gloves]
+  - type: DiseaseProtection
+    protection: 0.05

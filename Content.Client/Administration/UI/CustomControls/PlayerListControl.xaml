@@ -1,0 +1,18 @@
+﻿<BoxContainer xmlns="https://spacestation14.io"
+              xmlns:controls="using:Content.Client.UserInterface.Controls"
+              Orientation="Vertical">
+    <Control MinSize="0 5" />
+    <LineEdit Name="FilterLineEdit"
+              MinSize="100 0"
+              HorizontalExpand="True"
+              PlaceHolder="{Loc Filter}"/>
+    <PanelContainer Name="BackgroundPanel"
+                    VerticalExpand="True"
+                    HorizontalExpand="True">
+        <controls:ListContainer Name="PlayerListContainer"
+                  Access="Public"
+                  Toggle="True"
+                  Group="True"
+                  MinSize="100 0"/>
+    </PanelContainer>
+</BoxContainer>

@@ -1,0 +1,40 @@
+﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+            xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+            xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+            SetSize="600 600"
+            MinSize="600 600">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'cargo-console-menu-account-name-label'}"
+                   StyleClasses="LabelKeyText" />
+            <Label Name="AccountNameLabel"
+                   Text="{Loc 'cargo-console-menu-account-name-none-text'}" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'cargo-console-menu-shuttle-name-label'}"
+                   StyleClasses="LabelKeyText" />
+            <Label Name="ShuttleNameLabel"
+                   Text="{Loc 'cargo-console-menu-shuttle-name-none-text'}" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'cargo-console-menu-shuttle-status-label'}"
+                   StyleClasses="LabelKeyText" />
+            <Label Name="ShuttleStatusLabel"
+                   Text="{Loc 'cargo-console-menu-shuttle-status-away-text'}" />
+        </BoxContainer>
+        <Label Text="{Loc 'cargo-console-menu-orders-label'}" />
+        <PanelContainer VerticalExpand="True"
+                        SizeFlagsStretchRatio="6">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#000000" />
+            </PanelContainer.PanelOverride>
+            <ScrollContainer VerticalExpand="True">
+                <BoxContainer Name="Orders"
+                              Orientation="Vertical"
+                              StyleClasses="transparentItemList"
+                              VerticalExpand="True"/>
+            </ScrollContainer>
+        </PanelContainer>
+        <TextureButton VerticalExpand="True" />
+    </BoxContainer>
+</controls:FancyWindow>

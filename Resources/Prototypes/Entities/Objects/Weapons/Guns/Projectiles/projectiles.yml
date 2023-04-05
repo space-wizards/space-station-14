@@ -1,0 +1,509 @@
+- type: entity
+  id: MuzzleFlashEffect
+  noSpawn: true
+  components:
+  - type: TimedDespawn
+    lifetime: 0.4
+  - type: Sprite
+    netsync: false
+    drawdepth: Effects
+    layers:
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: muzzle_bullet
+  - type: EffectVisuals
+  - type: Tag
+    tags:
+      - HideContextMenu
+  - type: AnimationPlayer
+
+# One bullet to bring them all into the darkness and bind them
+- type: entity
+  id: BaseBullet
+  name: BaseBullet
+  description: If you can see this you're probably dead!
+  abstract: true
+  components:
+  - type: FlyBySound
+  - type: Clickable
+  - type: Sprite
+    netsync: false
+    noRot: false
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: bullet
+      shader: unshaded
+  - type: Physics
+    bodyType: Dynamic
+    linearDamping: 0
+    angularDamping: 0
+  - type: Fixtures
+    fixtures:
+    - id: projectile
+      shape:
+        !type:PhysShapeAabb
+        bounds: "-0.1,-0.1,0.1,0.1"
+      hard: false
+      mask:
+      - Impassable
+      - BulletImpassable
+    - &flybyfixture
+      id: fly-by
+      shape: !type:PhysShapeCircle
+        radius: 1.5
+      layer:
+      - Impassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
+      hard: False
+  - type: Projectile
+    impactEffect: BulletImpactEffect
+    damage:
+      types:
+        Piercing: 14
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
+  - type: TimedDespawn
+    lifetime: 10
+
+- type: entity
+  id: BaseBulletTrigger # Trigger-on-collide bullets
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: TriggerOnCollide
+    fixtureID: projectile
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 7 # more damage than a punch.
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.15,-0.45,0.15,0.15"
+      hard: false
+      id: projectile
+      mask:
+      - Impassable
+      - BulletImpassable
+    - *flybyfixture
+
+- type: entity
+  id: BaseBulletHighVelocity
+  name: base bullet high-velocity
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 17
+
+- type: entity
+  id: BaseBulletPractice
+  name: base bullet practice
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 2
+
+- type: entity
+  id: BaseBulletRubber
+  name: base bullet rubber
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 3
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/snap.ogg
+  - type: StaminaDamageOnCollide
+    damage: 15
+
+# Energy projectiles
+- type: entity
+  name: taser bolt
+  id: BulletTaser
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: FlyBySound
+    sound:
+      collection: EnergyMiss
+      params:
+        volume: 5
+  - type: Sprite
+    noRot: true
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    color: "#ffff33"
+    layers:
+    - state: spark
+      shader: unshaded
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.2,-0.2,0.2,0.2"
+      hard: false
+      id: projectile
+      mask:
+      - Impassable
+      - BulletImpassable
+  - type: Ammo
+  - type: Projectile
+    damage:
+      types:
+        Heat: 5
+    soundHit:
+      path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
+    soundForce: true
+  - type: StunOnCollide
+    stunAmount: 5
+    knockdownAmount: 5
+
+- type: entity
+  name : disabler bolt
+  id: BulletDisabler
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: FlyBySound
+    sound:
+      collection: EnergyMiss
+      params:
+        volume: 5
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    layers:
+    - state: omnilaser
+      shader: unshaded
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.15,-0.3,0.15,0.3"
+      hard: false
+      id: projectile
+      mask:
+      - Impassable
+      - BulletImpassable
+    - *flybyfixture
+  - type: Ammo
+  - type: StaminaDamageOnCollide
+    damage: 30
+  - type: Projectile
+    impactEffect: BulletImpactEffectDisabler
+    damage:
+      types:
+        Heat: 5
+    soundHit:
+      path: "/Audio/Weapons/tap.ogg"
+    soundForce: true
+
+- type: entity
+  name : disabler bolt practice
+  id: BulletDisablerPractice
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: FlyBySound
+    sound:
+      collection: EnergyMiss
+      params:
+        volume: 5
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    layers:
+    - state: omnilaser
+      shader: unshaded
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.15,-0.3,0.15,0.3"
+      hard: false
+      id: projectile
+      mask:
+      - Impassable
+      - BulletImpassable
+    - *flybyfixture
+  - type: Ammo
+  - type: StaminaDamageOnCollide
+    damage: 5
+  - type: Projectile
+    impactEffect: BulletImpactEffectDisabler
+    damage:
+      types:
+        Heat: 1
+    soundHit:
+      path: "/Audio/Weapons/tap.ogg"
+    soundForce: true
+
+- type: entity
+  name: emitter bolt
+  id: EmitterBolt
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Sprite
+    color: "#ffff33"
+    sprite: Structures/Power/Generation/Singularity/emitter.rsi
+    layers:
+      - state: projectile
+        shader: unshaded
+  - type: Ammo
+    muzzleFlash: null
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.2,-0.2,0.2,0.2"
+      hard: false
+      id: projectile
+      mask:
+      - Impassable
+      - Opaque
+    - *flybyfixture
+  - type: Projectile
+#   soundHit:  Waiting on serv3
+    damage:
+      types:
+        Heat: 14
+  - type: Tag
+    tags:
+    - EmitterBolt
+  - type: TimedDespawn
+    lifetime: 3
+
+- type: entity
+  id: BulletKinetic
+  name: kinetic bolt
+  parent: BaseBulletHighVelocity
+  noSpawn: true
+  description: Not too bad, but you still don't want to get hit by it.
+  components:
+  - type: Sprite
+    netsync: false
+    noRot: false
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: chronobolt
+      shader: unshaded
+  - type: Projectile
+    impactEffect: BulletImpactEffectKinetic
+    damage:
+      types:
+        Blunt: 10
+  # Short lifespan
+  - type: TimedDespawn
+    lifetime: 0.4
+
+- type: entity
+  parent: BaseBullet
+  id: AnomalousParticleDelta
+  name: delta particles
+  noSpawn: true
+  components:
+  - type: AnomalousParticle
+    particleType: Delta
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+      - state: magicm
+        shader: unshaded
+  - type: Ammo
+    muzzleFlash: null
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.2,-0.2,0.2,0.2"
+      hard: false
+      id: projectile
+      mask:
+      - Impassable
+      - Opaque
+    - *flybyfixture
+  - type: Projectile
+    damage:
+      types:
+        Heat: 3
+  - type: TimedDespawn
+    lifetime: 3
+
+- type: entity
+  parent: AnomalousParticleDelta
+  id: AnomalousParticleEpsilon
+  name: epsilon particles
+  noSpawn: true
+  components:
+  - type: AnomalousParticle
+    particleType: Epsilon
+
+- type: entity
+  parent: AnomalousParticleDelta
+  id: AnomalousParticleZeta
+  name: zeta particles
+  noSpawn: true
+  components:
+  - type: AnomalousParticle
+    particleType: Zeta
+
+# Launcher projectiles (grenade / rocket)
+- type: entity
+  id: BulletRocket
+  name: rocket
+  parent: BaseBulletTrigger
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: frag
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 40
+    intensitySlope: 6
+    totalIntensity: 200
+    maxTileBreak: 1
+  - type: PointLight
+    radius: 3.5
+    color: orange
+    energy: 0.5
+
+- type: entity
+  id: BulletWeakRocket
+  name: weak rocket
+  parent: BaseBulletTrigger
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: frag
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 2 # max 30 per tile
+    intensitySlope: 1
+    totalIntensity: 4 # 60 total damage to distribute over tiles
+    maxTileBreak: 1
+  - type: PointLight
+    radius: 3.5
+    color: orange
+    energy: 0.5
+
+- type: entity
+  id: BulletGrenadeBaton
+  name: baton grenade
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: grenade
+  - type: Projectile
+    deleteOnCollide: false
+    damage:
+      types:
+        Blunt: 1
+    soundHit:
+      path: /Audio/Effects/gen_hit.ogg
+  - type: StaminaDamageOnCollide
+    damage: 80
+
+- type: entity
+  id: BulletGrenadeBlast
+  name: blast grenade
+  parent: BaseBulletTrigger
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: grenade
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 150 # a ~2 tile radius
+    intensitySlope: 5
+    maxIntensity: 10
+
+- type: entity
+  id: BulletGrenadeFlash
+  name: flash grenade
+  parent: BaseBulletTrigger
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: grenade
+  - type: FlashOnTrigger
+    range: 7
+
+# This is supposed to spawn shrapnel and stuff so uhh... TODO?
+- type: entity
+  id: BulletGrenadeFrag
+  name: frag grenade
+  parent: BaseBulletTrigger
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: grenade
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 175 # about a ~6 tile radius
+    intensitySlope: 1
+    maxIntensity: 10
+
+- type: entity
+  id: BulletCap
+  name: cap bullet
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    layers:
+      - state: capbullet
+  - type: Projectile
+    deleteOnCollide: true
+    damage:
+      types:
+        Piercing: 0
+
+- type: entity
+  id: BulletAcid
+  name: acid spit
+  parent: BaseBullet
+  noSpawn: true
+  components:
+    - type: Projectile
+      damage:
+        types:
+          Caustic: 5
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Projectiles/xeno_toxic.rsi
+      layers:
+        - state: xeno_toxic
+    - type: Ammo
+      muzzleFlash: null

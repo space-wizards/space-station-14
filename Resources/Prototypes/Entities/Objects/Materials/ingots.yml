@@ -1,0 +1,96 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: IngotBase
+  description: A heavy metal ingot stamped with the Nanotrasen logo.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Materials/ingots.rsi
+  - type: Item
+    sprite: Objects/Materials/ingots.rsi
+  - type: StaticPrice
+    price: 0
+  - type: ItemStatus
+  - type: Tag
+    tags:
+    - Ingot
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: IngotBase
+  id: IngotGold
+  name: gold bar
+  suffix: Full
+  components:
+  - type: Material
+    materials:
+      Gold: 100
+  - type: Stack
+    stackType: Gold
+  - type: Sprite
+    state: gold_3
+  - type: Item
+    heldPrefix: gold
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - gold
+      - gold_2
+      - gold_3
+
+- type: entity
+  parent: IngotGold
+  id: IngotGold1
+  name: gold bar
+  suffix: Single
+  components:
+  - type: Sprite
+    state: gold
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: IngotBase
+  id: IngotSilver
+  name: silver bar
+  suffix: Full
+  components:
+  - type: Material
+    materials:
+      Silver: 100
+  - type: Stack
+    stackType: Silver
+  - type: Sprite
+    state: silver_3
+  - type: Item
+    heldPrefix: silver
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - silver
+      - silver_2
+      - silver_3
+
+- type: entity
+  parent: IngotSilver
+  id: IngotSilver1
+  name: silver bar
+  suffix: Single
+  components:
+  - type: Sprite
+    state: silver
+  - type: Stack
+    count: 1

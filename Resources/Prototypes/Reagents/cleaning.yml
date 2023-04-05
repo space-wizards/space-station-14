@@ -1,0 +1,48 @@
+- type: reagent
+  id: Bleach
+  name: reagent-name-bleach
+  desc: reagent-desc-bleach
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: bitter
+  color: "#a1000b"
+  boilingPoint: 111.0
+  meltingPoint: -5.0
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 3
+      - !type:PopupMessage
+        type: Local
+        visualType: MediumCaution
+        messages: [ "generic-reagent-effect-burning-insides" ]
+        probability: 0.33
+
+- type: reagent
+  id: SpaceCleaner
+  name: reagent-name-space-cleaner
+  desc: reagent-desc-space-cleaner
+  physicalDesc: reagent-physical-desc-lemony-fresh
+  flavor: bitter
+  color: "#c8ff69"
+  boilingPoint: 147.0 # Made this up, loosely based on bleach
+  meltingPoint: -11.0
+  tileReactions:
+    - !type:CleanTileReaction {}
+
+- type: reagent
+  id: SpaceLube
+  name: reagent-name-space-lube
+  desc: reagent-desc-space-lube
+  physicalDesc: reagent-physical-desc-shiny
+  flavor: funny
+  color: "#77b58e"
+  boilingPoint: 290.0 # Glycerin
+  meltingPoint: 18.2
+  tileReactions:
+    - !type:SpillTileReaction
+      paralyzeTime: 3
+      launchForwardsMultiplier: 4
+      requiredSlipSpeed: 1

@@ -1,0 +1,28 @@
+- type: stack
+  id: Glass
+  name: glass
+  icon: { sprite: /Textures/Objects/Materials/Sheets/glass.rsi, state: glass }
+  spawn: SheetGlass1
+  maxCount: 30
+
+- type: stack
+  id: ReinforcedGlass
+  name: reinforced glass
+  icon: { sprite: /Textures/Objects/Materials/Sheets/glass.rsi, state: rglass }
+  spawn: SheetRGlass1
+  maxCount: 30
+
+- type: stack
+  id: PlasmaGlass
+  name: plasma glass
+  icon: { sprite: /Textures/Objects/Materials/Sheets/glass.rsi, state: pglass }
+  spawn: SheetPGlass1
+  maxCount: 30
+
+- type: stack
+  id: ReinforcedPlasmaGlass
+  name: reinforced plasma glass
+  icon: { sprite: /Textures/Objects/Materials/Sheets/glass.rsi, state: rpglass }
+  spawn: SheetRPGlass1
+  maxCount: 30
+

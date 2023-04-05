@@ -1,0 +1,262 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: MaterialBase
+  description: A raw material.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Materials/materials.rsi
+  - type: Item
+    sprite: Objects/Materials/materials.rsi
+  - type: ItemStatus
+  - type: Tag
+    tags:
+      - RawMaterial
+      - DroneUsable
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialCardboard
+  name: cardboard
+  suffix: Full
+  components:
+  - type: Material
+    materials:
+      Cardboard: 100
+  - type: Stack
+    stackType: Cardboard
+  - type: Sprite
+    state: cardboard_3
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - cardboard
+      - cardboard_2
+      - cardboard_3
+
+- type: entity
+  parent: MaterialCardboard
+  id: MaterialCardboard1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: cardboard
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialCloth
+  name: cloth
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: Cloth
+  - type: Material
+    materials:
+      Cloth: 100
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 3
+  - type: Sprite
+    state: cloth_3
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - cloth
+      - cloth_2
+      - cloth_3
+
+- type: entity
+  parent: MaterialCloth
+  id: MaterialCloth1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: cloth
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialDurathread
+  name: durathread
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: Durathread
+  - type: Material
+    materials:
+      Durathread: 100
+  - type: Sprite
+    state: durathread_3
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - durathread
+      - durathread_2
+      - durathread_3
+  - type: Construction
+    graph: Durathread
+    node: MaterialDurathread
+
+- type: entity
+  parent: MaterialDurathread
+  id: MaterialDurathread1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: durathread
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialWoodPlank
+  name: wood
+  suffix: Full
+  components:
+  - type: Material
+    materials:
+      Wood: 100
+  - type: Stack
+    stackType: WoodPlank
+  - type: Sprite
+    state: wood
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - wood
+      - wood_2
+      - wood_3
+  - type: Item
+    heldPrefix: wood
+
+- type: entity
+  parent: MaterialWoodPlank
+  id: MaterialWoodPlank1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialBiomass
+  name: biomass
+  suffix: Full
+  components:
+  - type: Material
+    materials:
+      Biomass: 1
+  - type: Stack
+    stackType: Biomass
+    count: 100
+  - type: Sprite
+    sprite: /Textures/Objects/Misc/monkeycube.rsi
+    state: cube
+    color: "#8A9A5B"
+
+- type: entity
+  parent: MaterialBiomass
+  id: MaterialBiomass1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1
+
+# Following not used currently
+- type: entity
+  parent: MaterialBase
+  id: MaterialHideBear
+  name: bear hide
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Materials/materials.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: bearpelt
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: bearpelt_glow
+      shader: unshaded
+  - type: Item
+    sprite: Clothing/Head/Misc/hides.rsi
+    heldPrefix: bear
+  - type: Clothing
+    netsync: false
+    sprite: Clothing/Head/Misc/hides.rsi
+    equippedPrefix: bear
+    slots:
+      - HEAD
+  - type: PointLight
+    radius: 1.2
+    energy: 1.5
+    color: "#4faffb"
+    slots:
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialDiamond
+  name: refined diamond
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: Diamond
+  - type: Sprite
+    state: diamond
+  - type: Item
+    heldPrefix: diamond
+
+- type: entity
+  parent: MaterialDiamond
+  id: MaterialDiamond1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialCotton
+  name: cotton
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: Cotton
+  - type: Sprite
+    state: cotton_3
+  - type: Appearance
+    visuals:
+      - type: StackVisualizer
+        stackLayers:
+          - cotton
+          - cotton_2
+          - cotton_3
+
+- type: entity
+  parent: MaterialCotton
+  id: MaterialCotton1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: cotton
+  - type: Stack
+    count: 1

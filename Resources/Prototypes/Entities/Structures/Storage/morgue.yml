@@ -1,0 +1,144 @@
+- type: entity
+  id: Morgue
+  name: morgue
+  description: Used to store bodies until someone fetches them. Includes a high-tech alert system for false-positives!
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Storage/morgue.rsi
+    layers:
+    - state: morgue_closed
+      map: ["enum.MorgueVisualLayers.Base"]
+    - state: morgue_tray
+      offset: 0, -1
+      visible: false
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: morgue_nomob_light
+      visible: false
+      map: ["enum.MorgueVisualLayers.Light"]
+      shader: unshaded
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.5,-0.5,0.5,0.5"
+      density: 190
+      mask:
+      - MachineMask
+      layer:
+      - WallLayer
+  - type: EntityStorage
+    isCollidableWhenOpen: true
+    showContents: false
+    capacity: 1
+    enteringOffset: 0, -1
+    closeSound:
+      path: /Audio/Items/deconstruct.ogg
+    openSound:
+      path: /Audio/Items/deconstruct.ogg
+  - type: EntityStorageLayingDownOverride
+  - type: Morgue
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        # basic open.close layer:
+        enum.MorgueVisualLayers.Base:
+          True: { state: morgue_open}
+          False: { state: morgue_closed}
+        # show/hide morgue tray:
+        enum.StorageVisualLayers.Door:
+          True: { visible: true}
+          False: { visible: false}
+      enum.MorgueVisuals.Contents:
+        # toggle contents light indicator:
+        enum.MorgueVisualLayers.Light:
+          Empty: {visible: false}
+          HasContents: {visible: true, state: morgue_nomob_light}
+          HasMob: {visible: true, state: morgue_nosoul_light}
+          HasSoul: {visible: true, state: morgue_soul_light}
+  - type: Transform
+    anchored: true
+  - type: AntiRottingContainer
+  - type: StaticPrice
+    price: 200
+
+- type: entity
+  id: Crematorium
+  name: crematorium
+  description: A human incinerator. Works well on barbecue nights.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Storage/morgue.rsi
+    layers:
+    - state: crema_closed
+      map: ["enum.CrematoriumVisualLayers.Base"]
+    - state: crema_tray
+      offset: 0, -1
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: crema_contents_light
+      visible: false
+      map: ["enum.CrematoriumVisualLayers.LightContent"]
+      shader: unshaded
+    - state: crema_active_light
+      visible: false
+      map: ["enum.CrematoriumVisualLayers.LightBurning"]
+      shader: unshaded
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.5,-0.5,0.5,0.5"
+      density: 190
+      mask:
+      - MachineMask
+      layer:
+      - MachineLayer
+  - type: EntityStorage
+    isCollidableWhenOpen: true
+    showContents: false
+    capacity: 1
+    enteringOffset: 0, -1
+    closeSound:
+      path: /Audio/Items/deconstruct.ogg
+    openSound:
+      path: /Audio/Items/deconstruct.ogg
+  - type: EntityStorageLayingDownOverride
+  - type: Crematorium
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: crema_closed
+      state_alt: crema_open
+      state_open: crema_tray
+  - type: GenericVisualizer
+    visuals:
+      enum.CrematoriumVisuals.Burning:
+        enum.CrematoriumVisualLayers.LightBurning:
+          True: { visible: true }
+          False: { visible: false }
+      enum.StorageVisuals.HasContents:
+        enum.CrematoriumVisualLayers.LightContent:
+          True: { visible: true }
+          False: { visible: false }
+  - type: Transform
+    anchored: true

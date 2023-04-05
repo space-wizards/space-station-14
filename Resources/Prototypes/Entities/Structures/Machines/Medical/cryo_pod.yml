@@ -1,0 +1,104 @@
+﻿- type: entity
+  parent: [BaseStructure, ConstructibleMachine] # Not a BaseMachinePowered since we don't want the anchorable component
+  id: CryoPod
+  name: cryo pod
+  description: A special machine intended to create a safe environment for the use of chemicals that react in cold environments.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Machines/cryogenics.rsi
+    drawdepth: Mobs
+    noRot: true
+    offset: 0, 0.5
+    layers:
+      - sprite: Structures/Piping/Atmospherics/pipe.rsi
+        state: pipeHalf
+        offset: 0, -0.5
+        map: [ "enum.PipeVisualLayers.Pipe" ]
+      - state: pod-open
+        map: [ "enum.CryoPodVisualLayers.Base" ]
+      - state: cover-on
+        map: [ "enum.CryoPodVisualLayers.Cover" ]
+        visible: false
+      - state: pod-panel
+        map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+        visible: false
+  - type: InteractionOutline
+  - type: Transform
+    noRot: true
+  - type: Fixtures
+    fixtures:
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.90"
+        density: 200
+        mask:
+          - MachineMask
+        layer:
+          - MachineLayer
+  - type: ContainerContainer
+    containers:
+      scanner-body:
+        !type:ContainerSlot
+        showEnts: true
+      beakerSlot: !type:ContainerSlot {}
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: AtmosDevice
+  - type: Appearance
+  - type: Machine
+    board: CryoPodMachineCircuitboard
+  - type: WiresVisuals
+  - type: Wires
+    BoardName: "Cryo pod"
+    LayoutId: CryoPod
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+        - !type:EmptyAllContainersBehaviour
+        - !type:ChangeConstructionNodeBehavior
+          node: machineFrame
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+  - type: ApcPowerReceiver
+    powerLoad: 3000
+  - type: ExtensionCableReceiver
+  - type: NodeContainer
+    nodes:
+      port:
+        !type:PortablePipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
+  - type: ItemSlots
+    slots:
+      beakerSlot:
+        whitelist:
+          components:
+            - FitsInDispenser
+  - type: UserInterface
+    interfaces:
+      - key: enum.HealthAnalyzerUiKey.Key
+        type: HealthAnalyzerBoundUserInterface
+      - key: enum.WiresUiKey.Key
+        type: WiresBoundUserInterface
+  - type: ActivatableUI
+    key: enum.HealthAnalyzerUiKey.Key
+    requireHands: false
+  - type: ActivatableUIRequiresPower
+  - type: PointLight
+    color: "#3a807f"
+    radius: 2
+    energy: 10
+    enabled: false
+  - type: EmptyOnMachineDeconstruct
+    containers:
+      - scanner-body
+  - type: CryoPod
+  - type: ContainerTemperatureDamageThresholds
+    coldDamageThreshold: 10

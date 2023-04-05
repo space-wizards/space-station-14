@@ -1,0 +1,8 @@
+- type: entity
+  id: PathfindPoint
+  parent: MarkerBase
+  name: pathfind point
+  components:
+  - type: NPCPathfindPoint
+  - type: Sprite
+    state: pink

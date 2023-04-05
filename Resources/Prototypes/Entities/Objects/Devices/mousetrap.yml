@@ -1,0 +1,59 @@
+- type: entity
+  name: mousetrap
+  parent: BaseItem
+  id: Mousetrap
+  description: Useful for catching rodents sneaking into your kitchen.
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/mousetrap.rsi
+      netsync: false
+      drawdepth: SmallMobs # if mice can hide under tables, so can mousetraps
+      layers:
+        - state: mousetrap
+    - type: StepTrigger
+      intersectRatio: 0.2
+      requiredTriggeredSpeed: 0
+    - type: Mousetrap
+    - type: TriggerOnStepTrigger
+    - type: ShoesRequiredStepTrigger
+    - type: DamageUserOnTrigger
+      damage:
+        types:
+          Blunt: 2 # base damage, scales based on mass
+    - type: EmitSoundOnUse
+      sound: "/Audio/Items/Handcuffs/cuff_end.ogg"
+    - type: EmitSoundOnTrigger
+      sound: "/Audio/Items/snap.ogg"
+    - type: Item
+      sprite: Objects/Devices/mousetrap.rsi
+    - type: Appearance
+      visuals:
+        - type: GenericEnumVisualizer
+          key: enum.MousetrapVisuals.Visual
+          layer: 0
+          states:
+            enum.MousetrapVisuals.Armed: mousetraparmed
+            enum.MousetrapVisuals.Unarmed: mousetrap
+    - type: Physics
+      bodyType: Dynamic
+    - type: CollisionWake
+      enabled: false
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.2,-0.2,0.2,0.2"
+          id: "slips"
+          hard: false
+          layer:
+            - LowImpassable
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.2,-0.2,0.2,0.2"
+          density: 30
+          mask:
+            - ItemMask
+    - type: Rotatable
+    - type: Tag
+      tags:
+        - DroneUsable

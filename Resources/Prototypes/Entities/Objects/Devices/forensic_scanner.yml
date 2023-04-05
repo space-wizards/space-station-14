@@ -1,0 +1,26 @@
+- type: entity
+  name: forensic scanner
+  parent: BaseItem
+  id: ForensicScanner
+  description: A handheld device that can scan objects for fingerprints and fibers.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Devices/forensic_scanner.rsi
+    state: forensicnew
+  - type: Item
+    size: 5
+  - type: Clothing
+    sprite: Objects/Devices/forensic_scanner.rsi
+    quickEquip: false
+    slots:
+    - Belt
+  - type: ActivatableUI
+    key: enum.ForensicScannerUiKey.Key
+    inHandsOnly: true
+    closeOnHandDeselect: false
+  - type: UserInterface
+    interfaces:
+    - key: enum.ForensicScannerUiKey.Key
+      type: ForensicScannerBoundUserInterface
+  - type: ForensicScanner

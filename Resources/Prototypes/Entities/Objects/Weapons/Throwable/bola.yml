@@ -1,0 +1,44 @@
+- type: entity
+  name: bola
+  parent: BaseItem
+  id: Bola
+  description: Linked together with some spare cuffs and metal.
+  components:
+  - type: Item
+    size: 20
+  - type: Sprite
+    sprite: Objects/Weapons/Throwable/bola.rsi
+    state: icon
+  - type: EmitSoundOnThrow
+    sound: /Audio/Weapons/bolathrow.ogg
+  - type: EmitSoundOnLand
+    sound: /Audio/Effects/snap.ogg
+  - type: StaminaDamageOnCollide
+    damage: 80
+  - type: Construction
+    graph: Bola
+    node: bola
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 5
+  - type: Ensnaring
+    freeTime: 2.0
+    breakoutTime: 3.5 #all bola should generally be fast to remove
+    walkSpeed: 0.7 #makeshift bola shouldn't slow too much
+    sprintSpeed: 0.7
+    canThrowTrigger: true
+    canMoveBreakout: true
+

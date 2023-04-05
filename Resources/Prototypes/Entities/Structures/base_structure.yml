@@ -1,0 +1,60 @@
+- type: entity
+  id: BaseStructure
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Clickable
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.45,-0.45,0.45,0.45"
+      density: 60
+      mask:
+      - MachineMask
+      layer:
+      - MidImpassable
+      - LowImpassable
+  - type: Pullable
+  - type: Tag
+    tags:
+      - Structure
+
+- type: entity
+  # This means that it's not anchored on spawn.
+  id: BaseStructureDynamic
+  parent: BaseStructure
+  abstract: true
+  components:
+# These might/might not be a good idea
+#  - type: MovedByPressure
+#  - type: DamageOnHighSpeedImpact
+#  - type: TileFrictionModifier
+#    modifier: 0.5
+  - type: Transform
+    anchored: false
+  - type: Clickable
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.45,-0.45,0.45,0.45"
+      density: 60
+      mask:
+      - MachineMask
+      layer:
+      - MidImpassable
+      - LowImpassable
+  - type: Anchorable
+  - type: StaticPrice
+    price: 50
+
+- type: Tag
+  id: Structure

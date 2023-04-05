@@ -1,0 +1,145 @@
+- type: entity
+  abstract: true
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  id: SurveillanceCameraRouterBase
+  name: camera router
+  description: A surveillance camera router. It routes. Perhaps.
+  components:
+    - type: DeviceNetwork
+      deviceNetId: Wired
+      receiveFrequencyId: SurveillanceCamera
+      transmitFrequencyId: SurveillanceCamera
+    - type: WiredNetworkConnection
+    - type: DeviceNetworkRequiresPower
+    - type: UserInterface
+      interfaces:
+        - key: enum.SurveillanceCameraSetupUiKey.Router
+          type: SurveillanceCameraSetupBoundUi
+    - type: Machine
+      board: SurveillanceCameraRouterCircuitboard
+    - type: Sprite
+      sprite: Structures/Machines/server.rsi
+      snapCardinals: true
+      layers:
+        - state: server
+
+- type: entity
+  parent: SurveillanceCameraRouterBase
+  id: SurveillanceCameraRouterConstructed
+  suffix: Constructed
+  components:
+    - type: SurveillanceCameraRouter
+      setupAvailableNetworks:
+        - SurveillanceCameraEngineering
+        - SurveillanceCameraSecurity
+        - SurveillanceCameraService
+        - SurveillanceCameraSupply
+        - SurveillanceCameraScience
+        - SurveillanceCameraGeneral
+        - SurveillanceCameraMedical
+        - SurveillanceCameraCommand
+
+- type: entity
+  parent: SurveillanceCameraRouterBase
+  id: SurveillanceCameraRouterEngineering
+  suffix: Engineering
+  components:
+    - type: SurveillanceCameraRouter
+      subnetFrequency: SurveillanceCameraEngineering
+
+- type: entity
+  parent: SurveillanceCameraRouterBase
+  id: SurveillanceCameraRouterSecurity
+  suffix: Security
+  components:
+    - type: SurveillanceCameraRouter
+      subnetFrequency: SurveillanceCameraSecurity
+
+- type: entity
+  parent: SurveillanceCameraRouterBase
+  id: SurveillanceCameraRouterScience
+  suffix: Science
+  components:
+    - type: SurveillanceCameraRouter
+      subnetFrequency: SurveillanceCameraScience
+
+- type: entity
+  parent: SurveillanceCameraRouterBase
+  id: SurveillanceCameraRouterSupply
+  suffix: Supply
+  components:
+    - type: SurveillanceCameraRouter
+      subnetFrequency: SurveillanceCameraSupply
+
+- type: entity
+  parent: SurveillanceCameraRouterBase
+  id: SurveillanceCameraRouterCommand
+  suffix: Command
+  components:
+    - type: SurveillanceCameraRouter
+      subnetFrequency: SurveillanceCameraCommand
+
+- type: entity
+  parent: SurveillanceCameraRouterBase
+  id: SurveillanceCameraRouterService
+  suffix: Service
+  components:
+    - type: SurveillanceCameraRouter
+      subnetFrequency: SurveillanceCameraService
+
+- type: entity
+  parent: SurveillanceCameraRouterBase
+  id: SurveillanceCameraRouterMedical
+  suffix: Medical
+  components:
+    - type: SurveillanceCameraRouter
+      subnetFrequency: SurveillanceCameraMedical
+
+- type: entity
+  parent: SurveillanceCameraRouterBase
+  id: SurveillanceCameraRouterGeneral
+  suffix: General
+  components:
+    - type: SurveillanceCameraRouter
+      subnetFrequency: SurveillanceCameraGeneral
+
+- type: entity
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  id: SurveillanceCameraWirelessRouterBase
+  name: wireless camera router
+  description: A wireless surveillance camera router. It routes. Perhaps.
+  components:
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      receiveFrequencyId: SurveillanceCamera
+      transmitFrequencyId: SurveillanceCamera
+    - type: WirelessNetworkConnection
+      range: 200
+    - type: DeviceNetworkRequiresPower
+    - type: UserInterface
+      interfaces:
+        - key: enum.SurveillanceCameraSetupUiKey.Router
+          type: SurveillanceCameraSetupBoundUi
+    - type: Machine
+      board: SurveillanceCameraWirelessRouterCircuitboard
+    - type: Sprite
+      sprite: Structures/Machines/server.rsi
+      layers:
+        - state: server
+
+- type: entity
+  parent: SurveillanceCameraWirelessRouterBase
+  id: SurveillanceCameraWirelessRouterConstructed
+  suffix: Constructed
+  components:
+    - type: SurveillanceCameraRouter
+      setupAvailableNetworks:
+        - SurveillanceCameraEntertainment
+
+- type: entity
+  parent: SurveillanceCameraWirelessRouterBase
+  id: SurveillanceCameraWirelessRouterEntertainment
+  suffix: Entertainment
+  components:
+    - type: SurveillanceCameraRouter
+      subnetFrequency: SurveillanceCameraEntertainment

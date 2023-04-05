@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from TerraGov-Marine-Corps at commit https://github.com/tgstation/TerraGov-Marine-Corps/blob/ded67dce88183b6dbca13d324370801d0fd976a0/icons/obj/vehicles.dmi, modified by EmoGarbage404",
+  "states": [
+    {
+      "name": "vehicle",
+      "directions": 4
+    },
+    {
+      "name": "keys"
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+﻿- type: entity
+  id: SmallboxItem
+  parent: BaseStorageItem
+  abstract: true
+  components:
+  - type: Storage
+    capacity: 10
+  - type: Item
+    size: 10
+
+- type: entity
+  name: match stick
+  parent: BaseItem
+  id: Matchstick
+  description: A simple match stick, used for lighting fine smokables.
+  components:
+  - type: Tag
+    tags:
+    - Matchstick
+    - Trash
+  - type: Recyclable
+  - type: SpaceGarbage
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Tools/matches.rsi
+    layers:
+      - state: match_unlit
+  - type: Item
+    sprite: Objects/Tools/matches.rsi
+    heldPrefix: unlit
+    size: 1
+  - type: Matchstick
+    duration: 10
+    igniteSound:
+      path: /Audio/Items/match_strike.ogg
+  - type: PointLight
+    enabled: false
+    radius: 1.1
+    color: darkorange
+  - type: Appearance
+    visuals:
+      - type: BurnStateVisualizer
+        unlitIcon: match_unlit
+        litIcon: match_lit
+        burntIcon: match_burnt
+
+- type: entity
+  parent: Matchstick
+  id: MatchstickSpent
+  suffix: spent
+  components:
+  - type: Sprite
+    layers:
+      - state: match_burnt
+  - type: Matchstick
+    state: Burnt
+
+- type: entity
+  name: match box
+  parent: SmallboxItem
+  id: Matchbox
+  description: A small box of Almost But Not Quite Plasma Premium Matches.
+  components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/matchbox_drop.ogg
+  - type: Matchbox
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Tools/matches.rsi
+    layers:
+      - state: matchbox
+  - type: Item
+    sprite: Objects/Tools/matches.rsi
+    heldPrefix: matchbox
+    size: 10
+  - type: StorageFill
+    contents:
+      - id: Matchstick
+        amount: 6
+  - type: ItemCounter
+    count:
+      tags: [Matchstick]
+  - type: Appearance
+    visuals:
+      - type: BagOpenCloseVisualizer
+        openIcon: matchbox-open
+      - type: StackVisualizer
+        composite: true
+        stackLayers:
+          - matchbox1
+          - matchbox2
+          - matchbox3
+  - type: Tag
+    tags:
+    - Trash
+  - type: Recyclable
+  - type: SpaceGarbage

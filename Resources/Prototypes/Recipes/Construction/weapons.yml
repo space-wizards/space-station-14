@@ -1,0 +1,43 @@
+- type: construction
+  name: crude spear
+  id: Spear
+  graph: Spear
+  startNode: start
+  targetNode: spear
+  category: construction-category-weapons
+  description: A crude spear for when you need to put holes in somebody.
+  icon: { sprite: Objects/Weapons/Melee/spear.rsi, state: spear }
+  objectType: Item
+
+- type: construction
+  name: makeshift bola
+  id: Bola
+  graph: Bola
+  startNode: start
+  targetNode: bola
+  category: construction-category-weapons
+  description: A simple weapon for tripping someone at a distance.
+  icon: { sprite: Objects/Weapons/Throwable/bola.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  name: wooden buckler
+  id: WoodenBuckler
+  graph: WoodenBuckler
+  startNode: start
+  targetNode: woodenBuckler
+  category: construction-category-weapons
+  description: A nicely carved wooden shield!
+  icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: buckler-icon }
+  objectType: Item
+
+- type: construction
+  name: makeshift shield
+  id: MakeshiftShield
+  graph: MakeshiftShield
+  startNode: start
+  targetNode: makeshiftShield
+  category: construction-category-weapons
+  description: Crude and falling apart. Why would you make this?
+  icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: makeshift-icon }
+  objectType: Item

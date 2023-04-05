@@ -1,0 +1,201 @@
+﻿- type: entity
+  name: base shield
+  parent: BaseItem
+  id: BaseShield
+  description: A shield!
+  abstract: true
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/shields.rsi
+      state: riot-icon
+      netsync: false
+    - type: Item
+      sprite: Objects/Weapons/Melee/shields.rsi
+      size: 100
+      heldPrefix: riot
+    - type: Blocking
+      passiveBlockModifier: PassiveRiotShieldBlock
+      activeBlockModifier: ActiveRiotShieldBlock
+      blockingToggleAction:
+        name: action-name-blocking
+        description: action-description-blocking
+        icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: teleriot-icon }
+        iconOn: Objects/Weapons/Melee/shields.rsi/teleriot-on.png
+        event: !type:ToggleActionEvent
+    - type: Damageable
+      damageContainer: Shield
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 40 #This is probably enough damage before it breaks
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound: /Audio/Effects/metalbreak.ogg
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetSteel:
+                  min: 5
+                  max: 5
+                SheetGlass:
+                  min: 5
+                  max: 5
+    - type: StaticPrice
+      price: 50
+
+#Security Shields
+
+- type: entity
+  name: riot shield
+  parent: BaseShield
+  id: RiotShield
+  description: A large tower shield. Good for controlling crowds.
+  components:
+    - type: StaticPrice
+      price: 100
+
+- type: entity
+  name: riot laser shield
+  parent: BaseShield
+  id: RiotLaserShield
+  description: A riot shield built for withstanding lasers, but not much else.
+  components:
+    - type: Sprite
+      state: riot_laser-icon
+    - type: Item
+      heldPrefix: riot_laser
+    - type: Blocking
+      passiveBlockModifier: PassiveRiotLaserShieldBlock
+      activeBlockModifier: ActiveRiotLaserShieldBlock
+
+- type: entity
+  name: riot bullet shield
+  parent: BaseShield
+  id: RiotBulletShield
+  description: A ballistic riot shield built for withstanding bullets, but not much else.
+  components:
+    - type: Sprite
+      state: riot_bullet-icon
+    - type: Item
+      heldPrefix: riot_bullet
+    - type: Blocking
+      passiveBlockModifier: PassiveRiotBulletShieldBlock
+      activeBlockModifier: ActiveRiotBulletShieldBlock
+
+#Craftable shields
+
+- type: entity
+  name: wooden buckler
+  parent: BaseShield
+  id: WoodenBuckler
+  description: A small round wooden makeshift shield.
+  components:
+    - type: Sprite
+      state: buckler-icon
+    - type: Item
+      heldPrefix: buckler
+    - type: Blocking
+      passiveBlockModifier: PassiveBucklerBlock
+      activeBlockModifier: ActiveBucklerBlock
+    - type: Construction
+      graph: WoodenBuckler
+      node: woodenBuckler
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 30 #Weaker shield
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound: /Audio/Effects/metalbreak.ogg
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                MaterialWoodPlank:
+                  min: 5
+                  max: 5
+    - type: StaticPrice
+      price: 150
+
+- type: entity
+  name: makeshift shield
+  parent: BaseShield
+  id: MakeshiftShield
+  description: A rundown looking shield, not good for much.
+  components:
+    - type: Sprite
+      state: makeshift-icon
+    - type: Item
+      heldPrefix: metal
+    - type: Blocking
+      passiveBlockModifier: PassiveMakeshiftBlock
+      activeBlockModifier: ActiveMakeshiftBlock
+    - type: Construction
+      graph: MakeshiftShield
+      node: makeshiftShield
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 20 #Very weak shield
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound: /Audio/Effects/metalbreak.ogg
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetSteel:
+                  min: 1
+                  max: 2
+
+#Magic/Cult Shields (give these to wizard for now)
+
+- type: entity
+  name: Clockwork Shield
+  parent: BaseShield
+  id: ClockworkShield
+  description: Ratvar oyrffrf lbh jvgu uvf cebgrpgvba.
+  components:
+    - type: Sprite
+      state: ratvarian-icon
+    - type: Item
+      heldPrefix: ratvarian
+    - type: Blocking
+      passiveBlockModifier: PassiveClockworkShieldBlock
+      activeBlockModifier: ActiveClockworkShieldBlock
+      #Have it break into brass when clock cult is in
+
+- type: entity
+  name: Mirror Shield
+  parent: BaseShield
+  id: MirrorShield
+  description: Eerily glows red... you hear the geometer whispering
+  components:
+    - type: Sprite
+      state: mirror-icon
+    - type: Item
+      heldPrefix: mirror
+    - type: Blocking
+      passiveBlockModifier: PassiveMirrorShieldBlock
+      activeBlockModifier: ActiveMirrorShieldBlock
+      blockSound: !type:SoundPathSpecifier
+        path: /Audio/Effects/glass_step.ogg
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 40
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound: /Audio/Effects/glass_break1.ogg
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetGlass:
+                  min: 5
+                  max: 5

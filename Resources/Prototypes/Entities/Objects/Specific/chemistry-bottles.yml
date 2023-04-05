@@ -1,0 +1,215 @@
+- type: entity
+  name: bottle
+  parent: BaseItem
+  id: BaseChemistryEmptyBottle
+  abstract: true
+  description: A small bottle.
+  components:
+  - type: Tag
+    tags:
+    - Bottle
+    - Trash
+  - type: Recyclable
+  - type: SpaceGarbage
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/bottle.rsi
+    netsync: false
+    state: bottle-1
+  - type: Drink
+    isOpen: true
+  - type: SolutionContainerManager
+    solutions:
+      drink: # This solution name and target volume is hard-coded in ChemMasterComponent
+        maxVol: 30
+        canMix: true
+  - type: RefillableSolution
+    solution: drink
+  - type: DrainableSolution
+    solution: drink
+  - type: ExaminableSolution
+    solution: drink
+  - type: DrawableSolution
+    solution: drink
+  - type: SolutionTransfer
+    maxTransferAmount: 30
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
+  - type: Item
+    size: 3
+    sprite: Objects/Specific/Chemistry/beaker.rsi
+  - type: Spillable
+    solution: drink
+  - type: TrashOnEmpty
+    solution: drink
+  - type: StaticPrice
+    price: 0
+
+- type: entity
+  name: bottle
+  parent: BaseChemistryEmptyBottle
+  id: ChemistryEmptyBottle01
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/bottle.rsi
+    layers:
+      - state: bottle-1
+      - state: bottle-1-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: bottle-1-
+
+- type: entity
+  name: bottle
+  parent: BaseChemistryEmptyBottle
+  id: ChemistryEmptyBottle02
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/bottle.rsi
+    layers:
+      - state: bottle-2
+      - state: bottle-2-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: bottle-2-
+
+- type: entity
+  name: bottle
+  parent: BaseChemistryEmptyBottle
+  id: ChemistryEmptyBottle03
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/bottle.rsi
+    layers:
+      - state: bottle-3
+      - state: bottle-3-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: bottle-3-
+
+- type: entity
+  name: bottle
+  parent: BaseChemistryEmptyBottle
+  id: ChemistryEmptyBottle04
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/bottle.rsi
+    layers:
+      - state: bottle-4
+      - state: bottle-4-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: bottle-4-
+
+- type: entity
+  id: EpinephrineChemistryBottle
+  name: epinephrine bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink: # This solution name and target volume is hard-coded in ChemMasterComponent
+        maxVol: 30
+        reagents:
+        - ReagentId: Epinephrine
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
+  id: RobustHarvestChemistryBottle
+  name: robust harvest bottle
+  description: This will increase the potency of your plants.
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: RobustHarvest
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
+  id: UnstableMutagenChemistryBottle
+  name: unstable mutagen bottle
+  description: This will cause rapid mutations in your plants.
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: UnstableMutagen
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
+  id: NocturineChemistryBottle
+  name: nocturine bottle
+  description: This will make someone fall down almost immediately. Hard to overdose on.
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nocturine
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
+  id: EphedrineChemistryBottle
+  name: ephedrine bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Ephedrine
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
+  id: OmnizineChemistryBottle
+  name: omnizine bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Omnizine
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle

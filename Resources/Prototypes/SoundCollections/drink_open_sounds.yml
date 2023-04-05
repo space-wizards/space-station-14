@@ -1,0 +1,21 @@
+- type: soundCollection
+  id: canOpenSounds
+  files:
+  - /Audio/Items/can_open1.ogg
+  - /Audio/Items/can_open2.ogg
+  - /Audio/Items/can_open3.ogg
+
+- type: soundCollection
+  id: bottleOpenSounds
+  files:
+  - /Audio/Items/bottle_open1.ogg
+
+- type: soundCollection
+  id: packetOpenSounds
+  files:
+  - /Audio/Effects/packetrip.ogg
+
+- type: soundCollection
+  id: pop
+  files:
+  - /Audio/Items/pop.ogg

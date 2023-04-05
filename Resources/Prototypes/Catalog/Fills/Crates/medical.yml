@@ -1,0 +1,152 @@
+- type: entity
+  id: CrateMedicalDefib
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+#    contents:
+#      - id: Defibrillator
+#        amount: 1
+
+- type: entity
+  id: CrateMedicalSupplies
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: MedkitFilled
+        amount: 2
+      - id: Gauze
+        amount: 2
+      - id: Bloodpack
+        amount: 2
+      - id: BoxLatexGloves
+        amount: 1
+      - id: BoxSterileMask
+        amount: 1
+      - id: BoxMouthSwab
+        amount: 1
+
+- type: entity
+  id: CrateChemistrySupplies
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSyringe
+        amount: 1
+      - id: BoxBeaker
+        amount: 1
+      - id: BoxPillCanister
+        amount: 1
+      - id: Dropper
+        amount: 2
+      - id: BoxBottle
+        amount: 2
+
+- type: entity
+  id: CrateMedicalSurgery
+  parent: CrateSurgery
+  components:
+  - type: StorageFill
+    contents:
+      - id: Scalpel
+        amount: 1
+      - id: Retractor
+        amount: 1
+      - id: Cautery
+        amount: 1
+      - id: Drill
+        amount: 1
+      - id: Saw
+        amount: 1
+      - id: Hemostat
+        amount: 1
+      - id: ClothingMaskSterile
+        amount: 1
+
+- type: entity
+  id: CrateMedicalScrubs
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: UniformScrubsColorGreen
+        amount: 1
+      - id: UniformScrubsColorPurple
+        amount: 1
+      - id: UniformScrubsColorBlue
+        amount: 1
+      - id: HatBandBlue
+        amount: 1
+      - id: HatBandRed
+        amount: 1
+      - id: HatBandGreen
+        amount: 1
+      - id: ClothingMaskSterile
+        amount: 3
+
+- type: entity
+  id: CrateEmergencyBurnKit
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: MedkitBurnFilled
+        amount: 4
+
+- type: entity
+  id: CrateEmergencyToxinKit
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: MedkitToxinFilled
+        amount: 4
+
+- type: entity
+  id: CrateEmergencyO2Kit
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: MedkitOxygenFilled
+        amount: 4
+
+- type: entity
+  id: CrateEmergencyBruteKit
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: MedkitBruteFilled
+        amount: 4
+
+- type: entity
+  id: CrateEmergencyAdvancedKit
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: MedkitAdvancedFilled
+        amount: 4
+
+- type: entity
+  id: CrateEmergencyRadiationKit
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: MedkitRadiationFilled
+        amount: 4
+- type: entity
+  id: CrateVirologyBiosuit
+  parent: CrateMedicalSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterBioVirology
+        amount: 2
+      - id: ClothingHeadHatHoodBioVirology
+        amount: 2
+      - id: ClothingMaskSterile
+        amount: 2

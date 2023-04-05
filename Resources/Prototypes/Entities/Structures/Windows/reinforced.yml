@@ -1,0 +1,110 @@
+- type: entity
+  id: ReinforcedWindow
+  name: reinforced window
+  parent: Window
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Structures/Windows/reinforced_window.rsi
+  - type: Icon
+    sprite: Structures/Windows/reinforced_window.rsi
+  - type: Repairable
+    fuelCost: 10
+    doAfterDelay: 2
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: RGlass
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300 #excess damage (nuke?). Avoid computational cost of spawning entities.
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassReinforced:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    base: rwindow
+  - type: Construction
+    graph: Window
+    node: reinforcedWindow
+  - type: Appearance
+  - type: DamageVisuals
+    thresholds: [4, 8, 12]
+    damageDivisor: 10
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks.rsi
+
+- type: entity
+  parent: ReinforcedWindow
+  id: TintedWindow
+  name: tinted window
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Structures/Windows/tinted_window.rsi
+  - type: Icon
+    sprite: Structures/Windows/tinted_window.rsi
+  - type: IconSmooth
+    base: twindow
+  - type: Construction
+    graph: Window
+    node: tintedWindow
+  - type: Occluder
+  - type: StaticPrice
+    price: 44
+
+- type: entity
+  id: WindowReinforcedDirectional
+  parent: WindowDirectional
+  name: directional reinforced window
+  description: Don't smudge up the glass down there.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Window
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Windows/directional.rsi
+    state: reinforced_window
+  - type: Icon
+    sprite: Structures/Windows/directional.rsi
+    state: reinforced_window
+  - type: Construction
+    graph: WindowDirectional
+    node: windowReinforcedDirectional
+  - type: Damageable
+    damageModifierSet: RGlass
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassReinforced:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: StaticPrice
+    price: 22

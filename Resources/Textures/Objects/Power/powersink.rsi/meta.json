@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-NC-SA-3.0",
+  "copyright": "Taken from goonstation at commit https://github.com/goonstation/goonstation/commit/17c4392b75abd87a0f740e116c44dd4c7dfff6f7",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "powersink"
+    }
+  ]
+}

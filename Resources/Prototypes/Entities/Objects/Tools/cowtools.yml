@@ -1,0 +1,177 @@
+﻿- type: entity
+  name: haycutters
+  parent: BaseItem
+  id: Haycutters
+  description: This kills the wire. Moo!
+  components:
+  - type: Tag
+    tags:
+    - PlantSampleTaker
+  - type: Sprite
+    sprite: Objects/Tools/Cowtools/haycutters.rsi
+    state: haycutters
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
+  - type: Tool
+    qualities:
+    - Cutting
+    useSound:
+      path: /Audio/Items/wirecutter.ogg
+    speed: 0.05
+  - type: Item
+    sprite: Objects/Tools/Cowtools/haycutters.rsi
+
+- type: entity
+  name: moodriver
+  parent: BaseItem
+  id: Moodriver
+  description: Turn to use. Moo!
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Cowtools/moodriver.rsi
+    state: moodriver
+  - type: Item
+    sprite: Objects/Tools/Cowtools/moodriver.rsi
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 10
+  - type: Tool
+    qualities:
+    - Screwing
+    useSound:
+      collection: Screwdriver
+    speed: 0.05
+
+- type: entity
+  name: wronch
+  parent: BaseItem
+  id: Wronch
+  description: Wronch thing. Moo!
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Cowtools/wronch.rsi
+    state: wronch
+  - type: Item
+    sprite: Objects/Tools/Cowtools/wronch.rsi
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
+  - type: Tool
+    qualities:
+    - Anchoring
+    useSound:
+      path: /Audio/Items/ratchet.ogg
+    speed: 0.05
+
+- type: entity
+  name: cowbar
+  parent: BaseItem
+  id: Cowbar
+  description: Cow your problems away. Moo!
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Cowtools/cowbar.rsi
+    state: cowbar
+  - type: Item
+    sprite: Objects/Tools/Cowtools/cowbar.rsi
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
+  - type: Tool
+    qualities:
+    - Prying
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+    speed: 0.05
+  - type: TilePrying
+
+- type: entity
+  name: mooltitool
+  parent: BaseItem
+  id: Mooltitool
+  description: An crude tool to copy, store, and send electrical pulses and signals through wires and machines. Moo!
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Cowtools/mooltitool.rsi
+    state: mooltitool
+  - type: Item
+    sprite: Objects/Tools/Cowtools/mooltitool.rsi
+  - type: Tool
+    qualities:
+    - Pulsing
+  - type: SignalLinker
+
+- type: entity
+  name: cowelding tool
+  parent: Welder
+  id: Cowelder
+  description: "Melts anything as long as it's fueled, don't forget your eye protection! Moo!"
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Cowtools/cowelder.rsi
+  - type: Item
+    size: 10
+    sprite: Objects/Tools/Cowtools/cowelder.rsi
+  - type: Tool
+    speed: 0.05
+  - type: Welder
+    litMeleeDamageBonus:
+      types: # When lit, negate standard melee damage and replace with heat
+        Heat: 0.5
+        Blunt: -10
+
+- type: entity
+  name: milkalyzer
+  parent: BaseItem
+  id: Milkalyzer
+  description: A hand-held environmental scanner which reports current gas levels. Moo!
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Cowtools/milkalyzer.rsi
+    layers:
+    - state: milkalyzer
+  - type: GasAnalyzer
+  - type: UserInterface
+    interfaces:
+    - key: enum.GasAnalyzerUiKey.Key
+      type: GasAnalyzerBoundUserInterface
+  - type: Appearance
+
+- type: entity
+  name: cow toolbox
+  parent: ToolboxBase
+  id: CowToolbox
+  description: A weirdly shaped box, stocked with... tools?
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Cowtools/cow_toolbox.rsi
+    state: cow_toolbox
+  - type: Item
+    sprite: Objects/Tools/Cowtools/cow_toolbox.rsi
+
+- type: entity
+  id: CowToolboxFilled
+  name: cow toolbox
+  suffix: Filled
+  parent: CowToolbox
+  components:
+  - type: StorageFill
+    contents:
+    - id: Haycutters
+    - id: Moodriver
+    - id: Wronch
+    - id: Cowbar
+    - id: Mooltitool
+    - id: Cowelder
+    - id: Milkalyzer
+
+# I hate these fucking cowtools I hope the burn in hell -Swept

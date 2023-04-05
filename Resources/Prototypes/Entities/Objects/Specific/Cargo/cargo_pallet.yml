@@ -1,0 +1,16 @@
+- type: entity
+  id: CargoPallet
+  name: cargo pallet
+  description: Designates valid items to sell to CentCom when a shuttle is recalled.
+  parent: BaseStructure
+  components:
+  - type: CargoPallet
+  - type: Sprite
+    drawdepth: FloorTiles
+    netsync: false
+    layers:
+    - sprite: Structures/catwalk.rsi
+      state: catwalk_preview
+  - type: CollideOnAnchor
+  - type: Physics
+    canCollide: false

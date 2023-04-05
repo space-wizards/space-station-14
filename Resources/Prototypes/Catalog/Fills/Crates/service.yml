@@ -1,0 +1,143 @@
+- type: entity
+  id: CrateServiceJanitorialSupplies
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: MopItem
+        amount: 1
+      - id: MopBucket
+        amount: 1
+      - id: Bucket
+        amount: 3
+      - id: WetFloorSign
+        amount: 2
+      - id: Soap
+        amount: 1
+      - id: SprayBottleSpaceCleaner
+        amount: 2
+      - id: TrashBag
+        amount: 2
+
+- type: entity
+  id: CrateServiceReplacementLights
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxLighttube
+        amount: 1
+      - id: BoxLightbulb
+        amount: 1
+
+- type: entity
+  id: CrateMousetrapBoxes
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxMousetrap
+          amount: 1
+
+- type: entity
+  id: CrateServiceSmokeables
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: CigCartonGreen
+        prob: 0.50
+        orGroup: CigCarton1
+      - id: CigCartonRed
+        orGroup: CigCarton1
+      - id: CigCartonBlue
+        prob: 0.50
+        orGroup: CigCarton2
+      - id: CigCartonBlack
+        orGroup: CigCarton2
+      - id: CigarGoldCase
+        prob: 0.05
+        orGroup: Cigars
+      - id: CigarCase
+        orGroup: Cigars
+      - id: Matchbox
+        amount: 2
+
+- type: entity
+  id: CrateServiceTheatre
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingUniformJumpskirtPerformer
+    - id: ClothingShoesBootsPerformer
+    - id: ClothingOuterSuitMonkey
+    - id: ClothingHeadHatAnimalMonkey
+    - id: ClothingNeckCloakMoth
+    - id: ClothingMaskClown
+    - id: ClothingMaskMime
+    - id: ClothingShoesClown
+    - id: ClothingUniformJumpskirtJanimaid
+    - id: RevolverCapGun
+
+- type: entity
+  id: CrateServiceCustomSmokable
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+    - id: PackPaperRolling
+    - id: CigaretteFilter
+      amount: 8
+    - id: GroundTobacco
+      amount: 4
+    - id: SmokingPipe
+    - id: Matchbox
+
+- type: entity
+  id: CrateServiceBureaucracy
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+    - id: Paper
+      amount: 15
+    - id: Pen
+      amount: 2
+    - id: HandLabeler
+    - id: BoxFolderBlue
+    - id: BoxFolderRed
+    - id: BoxFolderYellow
+
+- type: entity
+  id: CrateServicePersonnel
+  parent: CrateCommandSecure
+  components:
+  - type: StorageFill
+    contents:
+    - id: BoxPDA
+      amount: 1
+    - id: BoxID
+      amount: 1
+
+- type: entity
+  id: CrateServiceBooks
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: BookRandom
+          amount: 10
+
+- type: entity
+  id: CrateJanitorBiosuit
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterBioJanitor
+        amount: 2
+      - id: ClothingHeadHatHoodBioJanitor
+        amount: 2
+      - id: ClothingMaskSterile
+        amount: 2

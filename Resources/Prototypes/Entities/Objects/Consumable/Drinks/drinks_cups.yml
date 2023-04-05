@@ -1,0 +1,267 @@
+# Empty drink containers; different from bottles in that these are intended to be spawned empty
+- type: entity
+  parent: BaseItem
+  id: DrinkBaseCup
+  name: base cup
+  abstract: true
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 20
+        canMix: true
+  - type: FitsInDispenser
+    solution: drink
+  - type: DrawableSolution
+    solution: drink
+  - type: RefillableSolution
+    solution: drink
+  - type: DrainableSolution
+    solution: drink
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+    maxTransferAmount: 10
+  - type: UserInterface
+    interfaces:
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
+  - type: Drink
+    isOpen: true
+  - type: Sprite
+    state: icon
+  - type: Spillable
+    solution: drink
+  - type: ItemCooldown
+
+- type: entity
+  parent: DrinkBaseCup
+  id: DrinkGoldenCup
+  name: golden cup
+  description: A golden cup.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/golden_cup.rsi
+
+- type: entity
+  parent: DrinkBaseCup
+  id: DrinkBaseMug
+  abstract: true
+  name: mug
+  description: A mug.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/mug.rsi
+    layers:
+      - state: icon-0
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: icon-3
+        visible: false
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    fillBaseName: icon-
+
+- type: entity
+  parent: DrinkBaseMug
+  id: DrinkMug
+  name: mug
+  description: A plain white mug.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/mug.rsi
+
+- type: entity
+  parent: DrinkBaseMug
+  id: DrinkMugBlack
+  name: black mug
+  description: A sleek black mug.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/mug_black.rsi
+
+- type: entity
+  parent: DrinkBaseMug
+  id: DrinkMugBlue
+  name: blue mug
+  description: A blue and black mug.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/mug_blue.rsi
+
+- type: entity
+  parent: DrinkBaseMug
+  id: DrinkMugGreen
+  name: green mug
+  description: A pale green and pink mug.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/mug_green.rsi
+
+- type: entity
+  parent: DrinkBaseCup #this one doesn't have the proper layers in the rsi
+  id: DrinkMugDog
+  name: funny dog mug
+  description: It looks like a cartoon beagle.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/mug_dog.rsi
+    state: icon-3
+
+- type: entity
+  parent: DrinkBaseMug
+  id: DrinkMugHeart
+  name: heart mug
+  description: A white mug, it prominently features a red heart.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/mug_heart.rsi
+
+- type: entity
+  parent: DrinkBaseMug
+  id: DrinkMugMetal
+  name: metal mug
+  description: A metal mug. You're not sure which metal.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/mug_metal.rsi
+
+- type: entity
+  parent: DrinkBaseMug
+  id: DrinkMugMoebius
+  name: moebius mug
+  description: A mug with a Moebius Laboratories logo on it. Not even your morning coffee is safe from corporate advertising.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/mug_moebius.rsi
+
+- type: entity
+  parent: DrinkBaseMug
+  id: DrinkMugOne
+  name: "#1 mug"
+  description: "A white mug, it prominently features a #1."
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/mug_one.rsi
+
+- type: entity
+  parent: DrinkBaseMug
+  id: DrinkMugRainbow
+  name: rainbow mug
+  description: A rainbow mug. The colors are almost as blinding as a welder.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/mug_rainbow.rsi
+
+- type: entity
+  parent: DrinkBaseMug
+  id: DrinkMugRed
+  name: red mug
+  description: A red and black mug.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/mug_red.rsi
+
+- type: entity
+  parent: DrinkBaseCup
+  id: DrinkHotCoco
+  name: Hot chocolate
+  description: A heated drink consisting melted chocolate and heated milk.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/hot_coco.rsi
+
+- type: entity
+  parent: DrinkBaseCup
+  id: DrinkHotCoffee
+  name: Coffee
+  description: Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Coffee
+          Quantity: 20
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/hot_coffee.rsi
+    layers:
+      - state: icon-0
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: icon-4
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: icon-
+  - type: TrashOnEmpty
+    solution: drink
+
+- type: entity
+  parent: DrinkBaseCup
+  id: DrinkTeacup
+  name: Teacup
+  description: A plain white porcelain teacup.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Tea
+          Quantity: 20
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/teacup.rsi
+    layers:
+      - state: icon-0
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: icon-4
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: icon-
+  - type: TrashOnEmpty
+    solution: drink
+
+- type: entity
+  parent: DrinkBaseCup
+  id: DrinkLean
+  name: Grape Juice
+  description: Damn, no fun allowed.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Water
+          Quantity: 20
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/lean.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Consumable/Drinks/lean.rsi
+  - type: TrashOnEmpty
+    solution: drink
+
+- type: entity
+  parent: DrinkBaseCup
+  id: DrinkWaterCup
+  name: water cup
+  description: A paper water cup.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Water
+          Quantity: 20
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/water_cup.rsi
+    layers:
+      - state: icon-0
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: icon-1
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    fillBaseName: icon-
+  - type: TrashOnEmpty
+    solution: drink

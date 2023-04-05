@@ -1,0 +1,181 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: SheetOtherBase
+  description: A sheet of material, used often on the station in various applications.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Materials/Sheets/other.rsi
+  - type: Item
+    sprite: Objects/Materials/Sheets/other.rsi
+  - type: ItemStatus
+  - type: Tag
+    tags:
+    - Sheet
+    - DroneUsable
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: SheetOtherBase
+  id: SheetPaper
+  name: paper
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: Paper
+  - type: Sprite
+    state: paper_3
+  - type: Item
+    heldPrefix: paper
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - paper
+      - paper_2
+      - paper_3
+
+- type: entity
+  parent: SheetPaper
+  id: SheetPaper1
+  name: paper
+  suffix: Single
+  components:
+  - type: Sprite
+    state: paper
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: SheetOtherBase
+  id: SheetPlasma
+  name: plasma
+  suffix: Full
+  components:
+  - type: Material
+    materials:
+      Plasma: 100
+  - type: Stack
+    stackType: Plasma
+  - type: Sprite
+    state: plasma_3
+  - type: Item
+    heldPrefix: plasma
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - plasma
+      - plasma_2
+      - plasma_3
+  - type: Extractable
+    grindableSolutionName: plasma
+  - type: SolutionContainerManager
+    solutions:
+      plasma:
+        reagents:
+        - ReagentId: Plasma
+          Quantity: 10
+  - type: Tag
+    tags:
+    - Sheet
+
+- type: entity
+  parent: SheetPlasma
+  id: SheetPlasma1
+  name: plasma
+  suffix: Single
+  components:
+  - type: Sprite
+    state: plasma
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: SheetOtherBase
+  id: SheetPlastic
+  name: plastic
+  suffix: Full
+  components:
+  - type: Tag
+    tags:
+    - Plastic
+    - Sheet
+    - DroneUsable
+  - type: Material
+    materials:
+      Plastic: 100
+  - type: Stack
+    stackType: Plastic
+  - type: Sprite
+    state: plastic_3
+  - type: Item
+    heldPrefix: plastic
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - plastic
+      - plastic_2
+      - plastic_3
+
+- type: entity
+  parent: SheetPlastic
+  id: SheetPlastic1
+  name: plastic
+  suffix: Single
+  components:
+  - type: Sprite
+    state: plastic
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: SheetOtherBase
+  id: SheetUranium
+  name: uranium
+  suffix: Full
+  components:
+  - type: Material
+    materials:
+      Uranium: 100
+  - type: Stack
+    stackType: Uranium
+  - type: Sprite
+    state: uranium_3
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - uranium
+      - uranium_2
+      - uranium_3
+  - type: Item
+    heldPrefix: uranium
+  - type: Extractable
+    grindableSolutionName: uranium
+  - type: SolutionContainerManager
+    solutions:
+      uranium:
+        reagents:
+        - ReagentId: Uranium
+          Quantity: 10
+
+- type: entity
+  parent: SheetUranium
+  id: SheetUranium1
+  name: uranium
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1

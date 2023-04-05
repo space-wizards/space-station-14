@@ -1,0 +1,63 @@
+# Just copypasta of some human basic body parts for interaction,
+# only differences for now is that limbs work in pairs,
+# they are unextractable and can't be spawned (no surgery on Animals!?).
+
+- type: entity
+  id: PartAnimal
+  parent: BaseItem
+  name: "animal body part"
+  abstract: true
+  components:
+  - type: Damageable
+    damageContainer: Biological
+  - type: BodyPart
+  - type: ContainerContainer
+    containers:
+      bodypart: !type:Container
+        ents: []
+  - type: StaticPrice
+    price: 50
+  - type: Tag
+    tags:
+      - Trash
+
+# For primates mainly
+- type: entity
+  id: HandsAnimal
+  name: "animal hands"
+  parent: PartAnimal
+  noSpawn: true
+  components:
+  - type: BodyPart
+    partType: Hand
+    symmetry: Left
+
+- type: entity
+  id: LegsAnimal
+  name: "animal legs"
+  parent: PartAnimal
+  noSpawn: true
+  components:
+  - type: BodyPart
+    partType: Leg
+  - type: MovementSpeedModifier
+
+- type: entity
+  id: FeetAnimal
+  name: "animal feet"
+  parent: PartAnimal
+  noSpawn: true
+  components:
+  - type: BodyPart
+    partType: Foot
+
+- type: entity
+  id: TorsoAnimal
+  name: "animal torso"
+  parent: PartAnimal
+  noSpawn: true
+  components:
+  - type: BodyPart
+    partType: Torso
+  - type: Damageable
+    damageContainer: Biological

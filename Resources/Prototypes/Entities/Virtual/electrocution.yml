@@ -1,0 +1,45 @@
+﻿# Special entity used to attach to power networks as load when somebody gets electrocuted.
+- type: entity
+  id: VirtualElectrocutionLoadHVPower
+  name: ELECTROCUTION ENTITY YOU SHOULD NOT SEE THIS
+  noSpawn: true
+  components:
+  - type: NodeContainer
+    nodes:
+      electrocution: !type:ElectrocutionNode
+        nodeGroupID: HVPower
+        needAnchored: false
+  - type: PowerConsumer
+    voltage: High
+    drawRate: 50000
+  - type: Electrocution
+
+- type: entity
+  id: VirtualElectrocutionLoadMVPower
+  name: ELECTROCUTION ENTITY YOU SHOULD NOT SEE THIS
+  noSpawn: true
+  components:
+  - type: NodeContainer
+    nodes:
+      electrocution: !type:ElectrocutionNode
+        nodeGroupID: MVPower
+        needAnchored: false
+  - type: PowerConsumer
+    voltage: Medium
+    drawRate: 50000
+  - type: Electrocution
+
+- type: entity
+  id: VirtualElectrocutionLoadApc
+  name: ELECTROCUTION ENTITY YOU SHOULD NOT SEE THIS
+  noSpawn: true
+  components:
+  - type: NodeContainer
+    nodes:
+      electrocution: !type:ElectrocutionNode
+        nodeGroupID: Apc
+        needAnchored: false
+  - type: PowerConsumer
+    voltage: Apc
+    drawRate: 50000
+  - type: Electrocution
