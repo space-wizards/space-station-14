@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from someone on Discord",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "caracal",
+      "directions": 4
+    },
+    {
+      "name": "caracal_dead"
+    },
+    {
+      "name": "caracal_flop",
+      "directions": 4,
+      "delays": [
+        [
+          0.2,
+          0.13
+        ],
+        [
+          0.2,
+          0.13
+        ],
+        [
+          0.2,
+          0.13
+        ],
+        [
+          0.2,
+          0.13
+        ]
+      ]
+    },
+    {
+      "name": "stanislav",
+      "directions": 4
+    },
+    {
+      "name": "stanislav_dead"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+- type: entity
+  id: BulletFoam
+  description: I hope you're wearing eye protection.
+  name: foam dart
+  parent: BaseItem
+  components:
+    - type: Tag
+      tags:
+        - BulletFoam
+    - type: Ammo
+    - type: Sprite
+      sprite: Objects/Fun/toys.rsi
+      layers:
+        - state: foamdart
+    - type: Recyclable

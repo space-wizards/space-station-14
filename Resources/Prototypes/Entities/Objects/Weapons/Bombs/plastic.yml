@@ -1,0 +1,59 @@
+﻿- type: entity
+  name: composition C-4
+  description: Used to put holes in specific areas without too much extra hole. A saboteur's favorite.
+  parent: BaseItem
+  id: C4
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Bombs/c4.rsi
+      state: icon
+    - type: Item
+      sprite: Objects/Weapons/Bombs/c4.rsi
+      size: 10
+    - type: OnUseTimerTrigger
+      delay: 10
+      delayOptions: [10, 30, 60, 120, 300]
+      initialBeepDelay: 0
+      beepSound: /Audio/Machines/Nuke/general_beep.ogg
+      startOnStick: true
+      canToggleStartOnStick: true
+    - type: TriggerOnSignal
+    - type: SignalReceiver
+      inputs:
+        Trigger: []
+    - type: Sticky
+      stickDelay: 5
+      unstickDelay: 5
+      stickPopupStart: comp-sticky-start-stick-bomb
+      stickPopupSuccess: comp-sticky-success-stick-bomb
+      unstickPopupStart: comp-sticky-start-unstick-bomb
+      unstickPopupSuccess: comp-sticky-success-unstick-bomb
+      blacklist: # can't stick it to other items
+        components:
+          - Item
+    - type: Explosive # Powerful explosion in a very small radius. Doesn't break underplating.
+      explosionType: DemolitionCharge
+      totalIntensity: 60
+      intensitySlope: 5
+      maxIntensity: 30
+      canCreateVacuum: false
+    - type: ExplodeOnTrigger
+    - type: Damageable
+      damageContainer: Inorganic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 50
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+            - !type:ExplodeBehavior
+    - type: StickyVisualizer
+    - type: Appearance
+      visuals:
+        - type: GenericEnumVisualizer
+          key: enum.Trigger.TriggerVisuals.VisualState
+          states:
+            enum.Trigger.TriggerVisualState.Primed: primed
+            enum.Trigger.TriggerVisualState.Unprimed: complete

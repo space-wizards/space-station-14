@@ -1,0 +1,86 @@
+- type: entity
+  id: ConveyorBelt
+  name: conveyor belt
+  description: A conveyor belt, commonly used to transport large numbers of items elsewhere quite quickly.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Rotatable
+    rotateWhileAnchored: true
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    netsync: false
+    sprite: Structures/conveyor.rsi
+    state: conveyor_started_cw
+    drawdepth: FloorObjects
+  - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+    - id: conveyor
+      shape: !type:PolygonShape
+        vertices:
+        - -0.55,-0.55
+        - 0.55,-0.55
+        - 0.55,0.55
+        - -0.55,0.55
+      layer:
+      - Impassable
+      - MidImpassable
+      - LowImpassable
+      hard: False
+  - type: Conveyor
+  - type: SignalReceiver
+    inputs:
+      Reverse: []
+      Forward: []
+      Off: []
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ConveyorVisuals.State:
+        enum.ConveyorState.Off:
+          Off: { state: conveyor_stopped_cw }
+          Forward: { state: conveyor_started_cw }
+          Reverse: { state: conveyor_started_cw_r }
+  - type: Construction
+    graph: ConveyorGraph
+    node: entity
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      # if ConveyorBeltAssembly becomes craftable, maybe spawn some of the ingredients?
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  id: ConveyorBeltAssembly
+  parent: BaseItem
+  name: conveyor belt
+  suffix: assembly
+  description: A conveyor belt assembly. Used to construct a conveyor belt.
+  components:
+  - type: Tag
+    tags:
+    - ConveyorAssembly
+  - type: Sprite
+    netsync: false
+    sprite: Structures/conveyor.rsi
+    state: conveyor_loose
+  - type: Construction
+    graph: ConveyorGraph
+    node: item
+  - type: StaticPrice
+    price: 40
+

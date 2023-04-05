@@ -1,0 +1,80 @@
+- type: gameRule
+  id: DeathMatch
+  config:
+    !type:GenericGameRuleConfiguration
+    id: DeathMatch
+
+- type: gameRule
+  id: InactivityTimeRestart
+  config:
+    !type:InactivityGameRuleConfiguration
+    inactivityMaxTime: 600
+    roundEndDelay: 10
+
+- type: gameRule
+  id: MaxTimeRestart
+  config:
+    !type:MaxTimeRestartRuleConfiguration
+    roundMaxTime: 300
+    roundEndDelay: 10
+
+- type: gameRule
+  id: Nukeops
+  config:
+    !type:NukeopsRuleConfiguration
+    id: Nukeops
+
+- type: gameRule
+  id: Pirates
+  config:
+    !type:GenericGameRuleConfiguration
+    id: Pirates
+
+- type: gameRule
+  id: Suspicion
+  config:
+    !type:GenericGameRuleConfiguration
+    id: Suspicion
+
+- type: gameRule
+  id: Traitor
+  config:
+    !type:GenericGameRuleConfiguration
+    id: Traitor
+
+- type: gameRule
+  id: TraitorDeathMatch
+  config:
+    !type:GenericGameRuleConfiguration
+    id: TraitorDeathMatch
+
+- type: gameRule
+  id: Sandbox
+  config:
+    !type:GenericGameRuleConfiguration
+    id: Sandbox
+
+- type: gameRule
+  id: Secret
+  config:
+    !type:GenericGameRuleConfiguration
+    id: Secret
+
+- type: gameRule
+  id: Zombie
+  config:
+    !type:GenericGameRuleConfiguration
+    id: Zombie
+
+# event schedulers
+- type: gameRule
+  id: BasicStationEventScheduler
+  config:
+    !type:GenericGameRuleConfiguration
+    id: BasicStationEventScheduler
+
+- type: gameRule
+  id: RampingStationEventScheduler
+  config:
+    !type:GenericGameRuleConfiguration
+    id: RampingStationEventScheduler

@@ -1,0 +1,11 @@
+- type: entity
+  id: SpawnPointNukies
+  parent: MarkerBase
+  name: nukies
+  components:
+  - type: SpawnPoint
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Objects/Fun/toys.rsi
+      state: synb

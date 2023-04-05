@@ -1,0 +1,13 @@
+- type: entity
+  id: CrateSyndicateSurplusBundle
+  parent: CrateGenericSteel
+  components:
+    - type: SurplusBundle
+      totalPrice: 50
+
+- type: entity
+  id: CrateSyndicateSuperSurplusBundle
+  parent: CrateGenericSteel
+  components:
+    - type: SurplusBundle
+      totalPrice: 125

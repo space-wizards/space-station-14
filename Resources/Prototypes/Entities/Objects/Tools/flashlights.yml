@@ -1,0 +1,128 @@
+- type: entity
+  name: flashlight
+  parent: BaseItem
+  id: FlashlightLantern
+  description: It lights the way to freedom.
+  components:
+  - type: Tag
+    tags:
+    - Flashlight
+    - DroneUsable
+  - type: HandheldLight
+    addPrefix: false
+    blinkingBehaviourId: blinking
+    radiatingBehaviourId: radiating
+  - type: LightBehaviour
+    behaviours:
+      - !type:FadeBehaviour
+        id: radiating
+        interpolate: Linear
+        maxDuration: 2.0
+        startValue: 3.0
+        endValue: 2.0
+        isLooped: true
+        property: Radius
+        enabled: false
+        reverseWhenFinished: true
+      - !type:PulseBehaviour
+        id: blinking
+        interpolate: Nearest
+        maxDuration: 1.0
+        minValue: 0.1
+        maxValue: 2.0
+        isLooped: true
+        property: Radius
+        enabled: false
+    toggleAction:
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      event: !type:ToggleActionEvent
+  - type: ToggleableLightVisuals
+    spriteLayer: light
+    inhandVisuals:
+      left:
+      - state: inhand-left-light
+        shader: unshaded
+      right:
+      - state: inhand-right-light
+        shader: unshaded
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+  - type: Sprite
+    sprite: Objects/Tools/flashlight.rsi
+    netsync: false
+    layers:
+      - state: flashlight
+      - state: flashlight-overlay
+        shader: unshaded
+        visible: false
+        map: [ "light" ]
+  - type: Item
+    sprite: Objects/Tools/flashlight.rsi
+  - type: PointLight
+    netsync: false
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    radius: 6
+  - type: Appearance
+  - type: StaticPrice
+    price: 40
+
+- type: entity
+  name: seclite
+  parent: FlashlightLantern
+  id: FlashlightSeclite
+  description: A robust flashlight used by security.
+  components:
+  - type: Tag
+    tags:
+      - SecBeltEquip
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+  - type: HandheldLight
+    addPrefix: false
+  - type: ToggleableLightVisuals
+    inhandVisuals:
+      left:
+      - state: inhand-left-light
+        shader: unshaded
+      right:
+      - state: inhand-right-light
+        shader: unshaded
+  - type: Sprite
+    sprite: Objects/Tools/seclite.rsi
+    layers:
+      - state: seclite
+      - state: seclite-overlay
+        shader: unshaded
+        visible: false
+        map: [ "light" ]
+  - type: Item
+    sprite: Objects/Tools/seclite.rsi
+  - type: PointLight
+    enabled: false
+    radius: 8
+
+- type: entity
+  parent: FlashlightLantern
+  id: EmptyFlashlightLantern
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default

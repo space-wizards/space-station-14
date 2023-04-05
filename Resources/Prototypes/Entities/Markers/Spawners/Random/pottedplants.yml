@@ -1,0 +1,57 @@
+- type: entity
+  parent: MarkerBase
+  id: PottedPlantRandom
+  name: random potted plant spawner
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Furniture/potted_plants.rsi
+        state: random
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+      - PottedPlant0
+      - PottedPlant1
+      - PottedPlant2
+      - PottedPlant3
+      - PottedPlant4
+      - PottedPlant5
+      - PottedPlant6
+      - PottedPlant7
+      - PottedPlant8
+      - PottedPlant10
+      - PottedPlant11
+      - PottedPlant12
+      - PottedPlant13
+      - PottedPlant14
+      - PottedPlant15
+      - PottedPlant16
+      - PottedPlant17
+      - PottedPlant18
+      - PottedPlant19
+      - PottedPlant20
+      - PottedPlant21
+      - PottedPlant22
+      - PottedPlant23
+      - PottedPlant24
+    chance: 1
+
+- type: entity
+  parent: MarkerBase
+  id: PottedPlantRandomPlastic
+  name: random plastic potted plant spawner
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Furniture/potted_plants.rsi
+        state: plant-26
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+      - PottedPlant26
+      - PottedPlant27
+      - PottedPlant28
+      - PottedPlant29
+    chance: 1

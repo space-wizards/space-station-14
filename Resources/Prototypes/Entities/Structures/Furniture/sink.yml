@@ -1,0 +1,83 @@
+- type: entity
+  name: sink
+  id: SinkEmpty
+  suffix: Empty
+  description: The faucets have been tightened to the maximum possible torque but are still known to drip.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Structures/Furniture/sink.rsi
+    state: sink_stem
+    netsync: false
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+  - type: DrainableSolution
+    solution: tank
+  - type: ReagentTank
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 40
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              path: /Audio/Effects/metalbreak.ogg
+
+- type: entity
+  name: sink
+  id: Sink
+  parent: SinkEmpty
+  suffix: Water
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: Water
+          Quantity: 500
+
+- type: entity
+  name: wide sink
+  id: SinkWide
+  parent: Sink
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/sink.rsi
+    state: sink_wide
+    netsync: false
+    
+#Stemless Sink
+
+- type: entity
+  name: sink
+  id: SinkStemless
+  parent: SinkEmpty
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/sink.rsi
+    state: sink
+    netsync: false    
+
+- type: entity
+  name: sink
+  id: SinkStemlessWater
+  parent: SinkStemless
+  suffix: Water
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: Water
+          Quantity: 500

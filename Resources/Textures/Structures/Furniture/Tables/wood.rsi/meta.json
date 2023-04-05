@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/a138859aec54b20dac65eb76e94e9db1b2202f55 and modified by Swept",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "full"
+    },
+    {
+      "name": "state_0",
+      "directions": 4
+    },
+    {
+      "name": "state_1",
+      "directions": 4
+    },
+    {
+      "name": "state_2",
+      "directions": 4
+    },
+    {
+      "name": "state_3",
+      "directions": 4
+    },
+    {
+      "name": "state_4",
+      "directions": 4
+    },
+    {
+      "name": "state_5",
+      "directions": 4
+    },
+    {
+      "name": "state_6",
+      "directions": 4
+    },
+    {
+      "name": "state_7",
+      "directions": 4
+    }
+  ]
+}

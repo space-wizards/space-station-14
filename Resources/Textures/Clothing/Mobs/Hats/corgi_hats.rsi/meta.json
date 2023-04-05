@@ -1,0 +1,219 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/53d1f1477d22a11a99c6c6924977cd431075761b",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "beret",
+      "directions": 4
+    },
+    {
+      "name": "blackscarf",
+      "directions": 4
+    },
+    {
+      "name": "bunny",
+      "directions": 4
+    },
+    {
+      "name": "captain",
+      "directions": 4
+    },
+    {
+      "name": "cardborg_h",
+      "directions": 4
+    },
+    {
+      "name": "cargosoft",
+      "directions": 4
+    },
+    {
+      "name": "chef",
+      "directions": 4
+    },
+    {
+      "name": "christmasscarf",
+      "directions": 4
+    },
+    {
+      "name": "clown",
+      "directions": 4
+    },
+    {
+      "name": "detective",
+      "directions": 4
+    },
+    {
+      "name": "festive",
+      "directions": 4
+    },
+    {
+      "name": "hardhat0_cakehat",
+      "directions": 4
+    },
+    {
+      "name": "hardhat0_reindeer",
+      "directions": 4
+    },
+    {
+      "name": "hardhat0_white",
+      "directions": 4
+    },
+    {
+      "name": "hardhat0_yellow",
+      "directions": 4
+    },
+    {
+      "name": "hardhat1_cakehat",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "hardhat1_white",
+      "directions": 4
+    },
+    {
+      "name": "hardhat1_yellow",
+      "directions": 4
+    },
+    {
+      "name": "helmet",
+      "directions": 4
+    },
+    {
+      "name": "hopcap",
+      "directions": 4
+    },
+    {
+      "name": "kitty",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "nursehat",
+      "directions": 4
+    },
+    {
+      "name": "paper",
+      "directions": 4
+    },
+    {
+      "name": "paper_words",
+      "directions": 4
+    },
+    {
+      "name": "pirate",
+      "directions": 4
+    },
+    {
+      "name": "policehelm",
+      "directions": 4
+    },
+    {
+      "name": "redwizard",
+      "directions": 4
+    },
+    {
+      "name": "santahat",
+      "directions": 4
+    },
+    {
+      "name": "scarf",
+      "directions": 4
+    },
+    {
+      "name": "sheet",
+      "directions": 4
+    },
+    {
+      "name": "sheriff",
+      "directions": 4
+    },
+    {
+      "name": "sombrero",
+      "directions": 4
+    },
+    {
+      "name": "sun",
+      "directions": 4
+    },
+    {
+      "name": "tophat",
+      "directions": 4
+    },
+    {
+      "name": "ushankadown",
+      "directions": 4
+    },
+    {
+      "name": "ushankaup",
+      "directions": 4
+    },
+    {
+      "name": "wizard",
+      "directions": 4
+    },
+    {
+      "name": "wizard-fake",
+      "directions": 4
+    },
+    {
+      "name": "zebrascarf",
+      "directions": 4
+    }
+  ]
+}

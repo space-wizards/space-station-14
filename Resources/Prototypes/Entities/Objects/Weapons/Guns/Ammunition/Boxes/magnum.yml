@@ -1,0 +1,85 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseMagazineBoxMagnum
+  components:
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - CartridgeMagnum
+    proto: CartridgeMagnum
+    capacity: 60
+  - type: Item
+    size: 5
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/magnum.rsi
+    netsync: false
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
+  - type: Appearance
+
+# Boxes
+- type: entity
+  parent: BaseMagazineBoxMagnum
+  id: MagazineBoxMagnum
+  name: ammunition box (.45 magnum)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnum
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  parent: BaseMagazineBoxMagnum
+  id: MagazineBoxMagnumHighVelocity
+  name: ammunition box (.45 magnum high-velocity)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumHighVelocity
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: hv
+
+- type: entity
+  parent: BaseMagazineBoxMagnum
+  id: MagazineBoxMagnumPractice
+  name: ammunition box (.45 magnum practice)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumPractice
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: practice
+
+- type: entity
+  parent: BaseMagazineBoxMagnum
+  id: MagazineBoxMagnumRubber
+  name: ammunition box (.45 magnum rubber)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumRubber
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: rubber

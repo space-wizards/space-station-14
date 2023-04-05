@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "copyright": "Made with love by Shaeone",
+  "license": "CC-BY-SA-3.0",
+  "states": [
+    {
+      "name": "base",
+      "directions": 1
+    },
+    {
+      "name": "thrust",
+      "directions": 1
+    },
+    {
+      "name": "thrust_burn",
+      "directions": 1,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "thrust_burn_unshaded",
+      "directions": 1,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+- type: entity
+  save: false
+  parent: BaseMobSkeletonPerson
+  id: MobSkeletonPerson
+  components:
+    - type: InteractionPopup
+      successChance: 1
+      interactSuccessString: hugging-success-generic
+      interactSuccessSound: /Audio/Effects/thudswoosh.ogg
+      messagePerceivedByOthers: hugging-success-generic-others
+    - type: Mind
+      showExamineInfo: true
+    - type: Input
+      context: "human"
+    - type: MobMover
+    - type: InputMover
+    - type: Alerts
+    - type: Actions
+    - type: Eye
+    - type: CameraRecoil
+    - type: Examiner
+    - type: CanHostGuardian
+    - type: Faction
+      factions:
+        - NanoTrasen
+
+- type: entity
+  name: Skeleton Pirate
+  parent: MobSkeletonPerson
+  id: MobSkeletonPirate
+  components:
+  - type: GhostTakeoverAvailable
+    name: Skeleton Pirate
+    description: Cause chaos and loot the station for treasure.
+  - type: Loadout
+    prototypes: [PirateGear]
+  - type: RandomHumanoidAppearance
+
+
+- type: entity
+  name: Skeleton Biker
+  parent: MobSkeletonPerson
+  id: MobSkeletonBiker
+  components:
+  - type: GhostTakeoverAvailable
+    name: Skeleton Biker
+    description: Ride around on your sweet ride.
+  - type: Loadout
+    prototypes: [SkeletonBiker]
+  - type: RandomHumanoidAppearance

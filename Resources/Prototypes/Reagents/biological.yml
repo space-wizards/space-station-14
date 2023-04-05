@@ -1,0 +1,61 @@
+﻿- type: reagent
+  id: Blood
+  name: reagent-name-blood
+  group: Biological
+  desc: reagent-desc-blood
+  flavor: metallic
+  color: "#800000"
+  physicalDesc: reagent-physical-desc-ferrous
+  metabolisms:
+    Drink:
+      # Quenching!
+      effects:
+      - !type:SatiateThirst
+        factor: 1.5
+  plantMetabolism:
+  - !type:PlantAdjustWater
+    amount: 0.5
+
+- type: reagent
+  id: Slime
+  name: reagent-name-slime
+  group: Biological
+  desc: reagent-desc-slime
+  flavor: slimy
+  color: "#2cf274"
+  physicalDesc: reagent-physical-desc-viscous
+  metabolisms:
+    Food:
+      # Delicious!
+      effects:
+      - !type:SatiateHunger
+        factor: 1.5
+
+- type: reagent
+  id: Ichor
+  name: reagent-name-ichor
+  group: Biological
+  desc: reagent-desc-ichor
+  physicalDesc: reagent-physical-desc-roaring
+  flavor: metallic
+  color: "#f4692e"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 1.5
+    # Dragon doesn't require airloss healing, so omnizine is still best for humans.
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Burn: -5
+            Brute: -5
+            Toxin: -2
+          types:
+            Bloodloss: -5
+  # Just in case you REALLY want to water your plants
+  plantMetabolism:
+  - !type:PlantAdjustWater
+    amount: 0.5

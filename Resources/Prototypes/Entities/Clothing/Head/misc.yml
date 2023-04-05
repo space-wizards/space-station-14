@@ -1,0 +1,170 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBunny
+  name: bunny ears
+  description: Cute bunny ears.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/bunny.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/bunny.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCake
+  name: cake hat
+  description: You put the cake on your head. Brilliant.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/cake.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/cake.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatChickenhead
+  name: chicken head
+  description: "It's a chicken head. Bok bok bok!"
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/chickenhead.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/chickenhead.rsi
+  - type: IngestionBlocker
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatFlowerCrown
+  name: flower crown
+  description: A coronet of fresh and fragrant flowers.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/flower-crown.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/flower-crown.rsi
+  - type: Construction
+    graph: flowercrown
+    node: flowercrown
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHairflower
+  name: hairflower
+  description: A red rose for beautiful ladies.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/hairflower.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/hairflower.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatPumpkin
+  name: pumpkin hat
+  description: A jack o' lantern! Believed to ward off evil spirits.
+  components:
+    - type: Sprite
+      sprite: Clothing/Head/Misc/pumpkin.rsi
+    - type: Clothing
+      sprite: Clothing/Head/Misc/pumpkin.rsi
+    - type: IngestionBlocker
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatPwig
+  name: pwig
+  description: To be honest, those look ridiculous.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/pwig.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/pwig.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatRichard
+  name: richard
+  description: 'Do you like hurting people?'
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/richard.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/richard.rsi
+  - type: IngestionBlocker
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatSkub
+  name: skub hat
+  description: 'Best paired with the Skub Suit.'
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/skubhead.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/skubhead.rsi
+  - type: IngestionBlocker
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatShrineMaidenWig
+  name: shrine maiden's wig
+  description: The tag reads "All proceeds go to the Hakurei Shrine."
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/shrine-maidens-wig.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/shrine-maidens-wig.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCone
+  name: warning cone
+  description: This cone is trying to warn you of something!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/cone.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/cone.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatFancyCrown
+  name: fancy crown
+  description: It smells like dead rat. Lets you speak like one!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/fancycrown.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/fancycrown.rsi
+  - type: MobPrice
+    price: 3000
+  - type: AddAccentClothing
+    accent: MobsterAccent
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCatEars
+  name: cat ears
+  description: "NYAH!"
+  components:
+  - type: Tag
+    tags: # ignore "WhitelistChameleon" tag
+      - DroneUsable
+  - type: Sprite
+    sprite: Clothing/Head/Hats/catears.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/catears.rsi
+  - type: AddAccentClothing
+    accent: OwOAccent
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatSquid
+  name: squiddy
+  description: "Scare your friends with this eldritch mask."
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/squiddy.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/squiddy.rsi
+  - type: IngestionBlocker

@@ -1,0 +1,71 @@
+﻿- type: entity
+  id: KitchenMicrowave
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: microwave
+  description: It's magic.
+  components:
+  - type: Microwave
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.VisualState:
+        enum.MicrowaveVisualizerLayers.Base:
+          Idle: { state: "mw" }
+          Broken: { state: "mwb" }
+          Cooking: { state: "mw" }
+        enum.MicrowaveVisualizerLayers.BaseUnlit:
+          Idle: { state: "mw_unlit" }
+          Broken: { state: "mw_unlit" }
+          Cooking: { state: "mw_running_unlit" }
+      enum.PowerDeviceVisuals.Powered:
+        enum.MicrowaveVisualizerLayers.BaseUnlit:
+          True: { visible: true }
+          False: { visible: false }
+  - type: ActivatableUI
+    key: enum.MicrowaveUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.MicrowaveUiKey.Key
+      type: MicrowaveBoundUserInterface
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.3,-0.16,0.3,0.16"
+      density: 190
+      mask:
+      - TabletopMachineMask
+      layer:
+      - TabletopMachineLayer
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Machines/microwave.rsi
+    drawdepth: SmallObjects
+    snapCardinals: true
+    layers:
+    - state: mw0
+      map: ["enum.MicrowaveVisualizerLayers.Base"]
+    - state: mw_unlit
+      shader: unshaded
+      map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+  - type: ApcPowerReceiver
+    powerLoad: 400
+  - type: UpgradePowerDraw
+    powerDrawMultiplier: 0.75
+    scaling: Exponential
+  - type: Machine
+    board: MicrowaveMachineCircuitboard
+  - type: ContainerContainer
+    containers:
+      microwave_entity_container: !type:Container
+      machine_board: !type:Container
+      machine_parts: !type:Container

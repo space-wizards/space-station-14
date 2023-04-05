@@ -1,0 +1,90 @@
+- type: entity
+  parent: BaseItem
+  id: MonkeyCube
+  name: monkey cube
+  description: Just add water!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      cube:
+        maxVol: 11 # needs room for water
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+  - type: Food
+    solution: cube
+  - type: RefillableSolution
+    solution: cube
+  - type: Sprite
+    sprite: Objects/Misc/monkeycube.rsi
+    state: cube
+  - type: Reactive
+    reactions:
+    - reagents: [Water]
+      methods: [Touch, Ingestion, Injection]
+      effects:
+      - !type:AddToSolutionReaction
+        solution: cube
+  - type: Rehydratable
+    target: MobMonkey
+  - type: CollisionWake
+    enabled: false
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.3,-0.3,0.3,0.3"
+      density: 5
+      mask:
+      - ItemMask
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.3,-0.3,0.3,0.3"
+      id: "rehydrate"
+      hard: false
+      layer:
+      - LowImpassable
+
+- type: entity
+  parent: PlushieCarp
+  id: DehydratedSpaceCarp
+  name: dehydrated space carp
+  description: Looks like a plush toy carp, but just add water and it becomes a real-life space carp!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      plushie:
+        maxVol: 11 # needs room for water
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+  - type: RefillableSolution
+    solution: plushie
+  - type: Reactive
+    reactions:
+    - reagents: [Water]
+      methods: [Touch, Ingestion, Injection]
+      effects:
+      - !type:AddToSolutionReaction
+        solution: plushie
+  - type: Rehydratable
+    target: MobCarp
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.3,-0.3,0.3,0.3"
+      density: 15
+      mask:
+      - ItemMask
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.3,-0.3,0.3,0.3"
+      id: "rehydrate"
+      hard: false
+      layer:
+      - LowImpassable

@@ -1,0 +1,148 @@
+- type: barSign
+  id: Harmbaton
+  name: barsign-prototype-name-harmbaton
+  icon: "theharmbaton"
+  description: barsign-prototype-description-harmbaton
+
+- type: barSign
+  id: TheSingulo
+  name: barsign-prototype-name-singulo
+  icon: "thesingulo"
+  description: barsign-prototype-description-singulo
+
+- type: barSign
+  id: TheDrunkCarp
+  name: barsign-prototype-name-drunk-carp
+  icon: "thedrunkcarp"
+  description: barsign-prototype-description-drunk-carp
+
+- type: barSign
+  id: OfficerBeersky
+  name: barsign-prototype-name-officer-beersky
+  icon: "officerbeersky"
+  description: barsign-prototype-description-officer-beersky
+
+- type: barSign
+  id: TheOuterSpess
+  name: barsign-prototype-name-outer-spess
+  icon: "theouterspess"
+  description: barsign-prototype-description-outer-spess
+
+- type: barSign
+  id: TheCoderbus
+  name: barsign-prototype-name-coderbus
+  icon: "thecoderbus"
+  description: barsign-prototype-description-coderbus
+
+- type: barSign
+  id: RobustaCafe
+  name: barsign-prototype-name-robusta-cafe
+  icon: "robustacafe"
+  description: barsign-prototype-description-robusta-cafe
+
+- type: barSign
+  id: EmergencyRumParty
+  name: barsign-prototype-name-emergency-rum-party
+  icon: "emergencyrumparty"
+  description: barsign-prototype-description-emergency-rum-party
+
+- type: barSign
+  id: ComboCafe
+  name: barsign-prototype-name-combo-cafe
+  icon: "combocafe"
+  description: barsign-prototype-description-combo-cafe
+
+- type: barSign
+  id: TheAleNath
+  name: barsign-prototype-name-ale-nath
+  icon: "thealenath"
+  description: barsign-prototype-description-ale-nath
+
+- type: barSign
+  id: TheNet
+  name: barsign-prototype-name-the-net
+  icon: "thenet"
+  description: barsign-prototype-description-the-net
+
+- type: barSign
+  id: MaidCafe
+  name: barsign-prototype-name-maid-cafe
+  icon: "maidcafe"
+  description: barsign-prototype-description-maid-cafe
+
+- type: barSign
+  id: MalteseFalcon
+  name: barsign-prototype-name-maltese-falcon
+  icon: "maltesefalcon"
+  description: barsign-prototype-description-maltese-falcon
+
+- type: barSign
+  id: TheSun
+  name: barsign-prototype-name-the-sun
+  icon: "thesun"
+  description: barsign-prototype-description-the-sun
+
+- type: barSign
+  id: TheBirdCage
+  name: barsign-prototype-name-the-birdcage
+  icon: "birdcage"
+  description: barsign-prototype-description-the-birdcage
+
+- type: barSign
+  id: Zocalo
+  name: barsign-prototype-name-zocalo
+  icon: "zocalo"
+  description: barsign-prototype-description-zocalo
+
+- type: barSign
+  id: LV426
+  name: barsign-prototype-name-lv426
+  icon: "lv426"
+  description: barsign-prototype-description-lv426
+
+- type: barSign
+  id: WiggleRoom
+  name: barsign-prototype-name-wiggle-room
+  icon: "thewiggleroom"
+  description: barsign-prototype-description-wiggle-room
+
+- type: barSign
+  id: TheLightbulb
+  name: barsign-prototype-name-the-lightbulb
+  icon: "the_lightbulb"
+  description: barsign-prototype-description-the-lightbulb
+
+- type: barSign
+  id: Goose
+  name: barsign-prototype-name-goose
+  icon: "goose"
+  description: barsign-prototype-description-goose
+
+- type: barSign
+  id: EngineChange
+  name: barsign-prototype-name-enginechange
+  icon: "enginechange"
+  description: barsign-prototype-description-enginechange
+
+- type: barSign
+  id: Emprah
+  name: barsign-prototype-name-emprah
+  icon: "emprah"
+  description: barsign-prototype-description-emprah
+
+# Hidden signs list below this point
+- type: barSign
+  id: EmpBarSign
+  name: ""
+  icon: "empbarsign"
+  description: barsign-prototype-description-empbarsign
+  renameArea: false
+  hidden: true
+
+- type: barSign
+  id: SignOff
+  name: ""
+  icon: "empty"
+  description: barsign-prototype-description-sign-off
+  renameArea: false
+  hidden: true

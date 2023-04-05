@@ -1,0 +1,6 @@
+- type: soundCollection
+  id: valveSqueak
+  files:
+  - /Audio/Effects/squeak1.ogg
+  - /Audio/Effects/squeak2.ogg
+  - /Audio/Effects/squeak3.ogg

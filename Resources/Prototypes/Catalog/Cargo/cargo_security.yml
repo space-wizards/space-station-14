@@ -1,0 +1,69 @@
+- type: cargoProduct
+  id: SecurityArmor
+  icon:
+    sprite: Clothing/OuterClothing/Vests/oldarmor.rsi
+    state: icon
+  product: CrateSecurityArmor
+  cost: 700
+  category: Security
+  group: market
+
+- type: cargoProduct
+  id: SecurityHelmet
+  icon:
+    sprite: Clothing/Head/Helmets/security.rsi
+    state: icon
+  product: CrateSecurityHelmet
+  cost: 550
+  category: Security
+  group: market
+
+- type: cargoProduct
+  id: SecurityNonLethal
+  icon:
+    sprite: Objects/Weapons/Guns/Battery/disabler.rsi
+    state: base
+  product: CrateSecurityNonlethal
+  cost: 2100
+  category: Security
+  group: market
+
+- type: cargoProduct
+  id: SecurityRiot
+  icon:
+    sprite: Clothing/OuterClothing/Armor/riot.rsi
+    state: icon
+  product: CrateSecurityRiot
+  cost: 2900
+  category: Security
+  group: market
+
+- type: cargoProduct
+  id: SecuritySupplies
+  icon:
+    sprite: Objects/Storage/boxes.rsi
+    state: box_security
+  product: CrateSecuritySupplies
+  cost: 500
+  category: Security
+  group: market
+
+- type: cargoProduct
+  id: SecurityRestraints
+  icon:
+    sprite: Objects/Misc/handcuffs.rsi
+    state: handcuff
+  product: CrateRestraints
+  cost: 1000
+  category: Security
+  group: market
+
+- type: cargoProduct
+  id: SecurityBiosuit
+  icon:
+    sprite: Clothing/Head/Hoods/Bio/security.rsi
+    state: icon
+  product: CrateSecurityBiosuit
+  cost: 800
+  category: Security
+  group: market

@@ -1,0 +1,160 @@
+﻿- type: reagent
+  id: Carpetium
+  name: reagent-name-carpetium
+  group: Special
+  desc: reagent-desc-carpetium
+  physicalDesc: reagent-physical-desc-fibrous
+  flavor: carpet
+  color: "#800000"
+  tileReactions:
+  - !type:CreateEntityTileReaction
+    entity: Carpet
+    maxOnTileWhitelist:
+      tags: [ Carpet ]
+  metabolisms:
+    Poison:
+      effects:
+      - !type:PopupMessage
+        type: Local
+        messages: [ "carpetium-effect-blood-fibrous", "carpetium-effect-jumpsuit-insides" ]
+        probability: 0.1
+      # Hail the madman logic, if it has CARP, means it helps against CARPs
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: CarpoToxin
+          min: 1
+        reagent: CarpoToxin
+        amount: -3
+
+- type: reagent
+  id: Fiber
+  name: reagent-name-fiber
+  desc: reagent-desc-fiber
+  physicalDesc: reagent-physical-desc-fibrous
+  flavor: fiber
+  color: "#808080"
+
+- type: reagent
+  id: BuzzochloricBees
+  name: reagent-name-buzzochloric-bees
+  group: Toxins
+  desc: reagent-desc-buzzochloric-bees
+  physicalDesc: reagent-physical-desc-buzzy
+  flavor: bee
+  color: "#FFD35D"
+  tileReactions:
+  - !type:CreateEntityTileReaction
+    entity: MobBee
+    usage: 2
+    maxOnTile: 2
+    randomOffsetMax: 0.3
+    maxOnTileWhitelist:
+      tags: [ Bee ]
+  - !type:CleanTileReaction # Bees are extremely obsessive about cleanliness within what they consider their hive.
+    cleanAmountMultiplier: 0 # Consume absolutely zero bees. Buzz buzz.
+  metabolisms:
+    Poison:
+      effects:
+      - !type:PopupMessage
+        type: Local
+        visualType: MediumCaution
+        messages:
+        - "buzzochloricbees-effect-oh-god-bees"
+        - "buzzochloricbees-effect-its-the-bees"
+        - "buzzochloricbees-effect-why-am-i-covered-in-bees"
+        - "buzzochloricbees-effect-one-with-the-bees"
+        - "buzzochloricbees-effect-squeaky-clean"
+        probability: 0.1
+        conditions:
+        - !type:ReagentThreshold
+          max: 0
+          reagent: Histamine
+        - !type:HasTag
+          invert: true
+          tag: Bee
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+          - "buzzochloricbees-effect-histamine-bee-allergy"
+          - "buzzochloricbees-effect-histamine-swells"
+          - "buzzochloricbees-effect-histamine-numb-to-the-bees"
+          - "buzzochloricbees-effect-histamine-cannot-be-one-with-the-bees"
+          - "buzzochloricbees-effect-squeaky-clean"
+        probability: 0.05
+        conditions:
+        - !type:ReagentThreshold
+          min: 0.01
+          reagent: Histamine
+        - !type:HasTag
+          invert: true
+          tag: Bee
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+          - "buzzochloricbees-effect-licoxide-electrifying"
+          - "buzzochloricbees-effect-licoxide-shocked-by-bee-facts"
+          - "buzzochloricbees-effect-licoxide-buzzed"
+          - "buzzochloricbees-effect-licoxide-buzzes"
+        probability: 0.05
+        conditions:
+        - !type:HasTag
+          invert: true
+          tag: Bee
+        - !type:ReagentThreshold
+          min: 0.01
+          reagent: Licoxide
+      - !type:PopupMessage
+        type: Local
+        messages:
+          - "buzzochloricbees-effect-fiber-hairy"
+          - "buzzochloricbees-effect-fiber-soft"
+        probability: 0.05
+        conditions:
+        - !type:HasTag
+          invert: true
+          tag: Bee
+        - !type:ReagentThreshold
+          min: 0.01
+          reagent: Fiber
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 2
+            Piercing: 2
+        conditions:
+        - !type:HasTag
+          invert: true
+          tag: Bee
+
+- type: reagent
+  id: GroundBee
+  name: reagent-name-ground-bee
+  desc: reagent-desc-ground-bee
+  physicalDesc: reagent-physical-desc-bee-guts
+  flavor: bee
+  color: "#86530E"
+
+- type: reagent
+  id: Saxoite
+  name: reagent-name-saxoite
+  desc: reagent-desc-saxoite
+  physicalDesc: reagent-physical-desc-ground-brass
+  flavor: sax
+  color: "#B8A603"
+
+- type: reagent
+  id: Licoxide
+  name: reagent-name-licoxide
+  group: Toxins
+  desc: reagent-desc-licoxide
+  physicalDesc: reagent-physical-desc-electric
+  flavor: shocking
+  color: "#FDD023"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:Electrocute
+        probability: 0.5

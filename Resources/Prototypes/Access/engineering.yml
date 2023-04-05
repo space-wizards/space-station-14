@@ -1,0 +1,18 @@
+- type: accessLevel
+  id: ChiefEngineer
+  name: id-card-access-level-chief-engineer
+
+- type: accessLevel
+  id: Engineering
+  name: id-card-access-level-engineering
+
+- type: accessLevel
+  id: Atmospherics
+  name: id-card-access-level-atmospherics
+
+- type: accessGroup
+  id: Engineering
+  tags:
+  - ChiefEngineer
+  - Engineering
+  - Atmospherics

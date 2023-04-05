@@ -1,0 +1,28 @@
+﻿- type: vendingMachineInventory
+  id: PietyVendInventory
+  startingInventory:
+    ClothingUniformJumpsuitChaplain: 2
+    ClothingUniformJumpskirtChaplain: 2
+    ClothingUniformJumpsuitMonasticRobeDark: 1
+    ClothingUniformJumpsuitMonasticRobeLight: 1
+    ClothingOuterHoodieChaplain: 1
+    ClothingOuterHoodieBlack: 1
+    ClothingHeadHatHoodChaplainHood: 1
+    ClothingHeadHatHoodNunHood: 1
+    ClothingOuterNunRobe: 1
+    ClothingHeadHatFez: 1
+    ClothingHeadHatPlaguedoctor: 1
+    ClothingHeadHatWitch: 1
+    ClothingHeadHatWitch1: 1
+    ClothingOuterPlagueSuit: 1
+    ClothingMaskPlague: 1
+    ClothingHeadsetService: 2
+  emaggedInventory:
+    ClothingOuterArmorCult: 1
+    ClothingHeadHelmetCult: 1
+    ClothingOuterRobesCult: 3
+    ClothingHeadHatHoodCulthood: 3
+    ClothingShoesCult: 4
+    BedsheetCult: 4
+    BibleNecronomicon: 1
+

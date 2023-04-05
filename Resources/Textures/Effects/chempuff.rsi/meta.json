@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/tgstation/tgstation at 87e833a2252741f795df5a05a08fe5f08e4dad2b",
+    "states": [
+        {
+            "name": "chempuff",
+            "delays": [
+                [
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05,
+                    0.05
+                ]
+            ]
+        }
+    ]
+}

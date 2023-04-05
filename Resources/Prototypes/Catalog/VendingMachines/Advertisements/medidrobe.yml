@@ -1,0 +1,4 @@
+- type: advertisementsPack
+  id: MediDrobeAds
+  advertisements:
+    - advertisement-medidrobe-1

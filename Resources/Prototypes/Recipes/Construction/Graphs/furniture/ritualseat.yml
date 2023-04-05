@@ -1,0 +1,49 @@
+- type: constructionGraph
+  id: RitualSeat
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DeleteEntity {}
+      edges:
+        - to: chairRitual
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: WoodPlank
+              amount: 2
+              doAfter: 1
+
+    - node: chairRitual
+      entity: ChairRitual
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+                prototype: MaterialWoodPlank1
+                amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 1
+
+        - to: chairCursed
+          steps:
+          - tag: Head
+            icon:
+              sprite: Mobs/Species/Human/parts.rsi
+              state: "head_m"
+            name: human head
+            doAfter: 1
+
+    - node: chairCursed
+      entity: ChairCursed
+      edges:
+        - to: chairRitual
+          completed:
+            - !type:SpawnPrototype
+              prototype: HeadHuman
+              amount: 1
+          steps:
+            - tool: Prying
+              doAfter: 1

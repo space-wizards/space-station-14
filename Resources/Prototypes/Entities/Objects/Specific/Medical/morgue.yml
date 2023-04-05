@@ -1,0 +1,125 @@
+- type: entity
+  id: BodyBag_Container
+  parent: BaseFoldable
+  name: body bag
+  description: A plastic bag designed for the storage and transportation of cadavers.
+  components:
+  - type: Item
+    size: 6
+  - type: Sprite
+    netsync: false
+    drawdepth: SmallObjects # I guess body bags need appear above a coroner's table?
+    sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
+    layers:
+    - state: bag
+      map: ["unfoldedLayer"]
+    - state: bag_folded
+      map: ["foldedLayer"]
+      visible: false
+    - state: open_overlay
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: label_overlay
+      map: ["enum.BodyBagVisualLayers.Label"]
+  - type: Icon
+    sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
+    state: bag
+  - type: Tag
+    tags:
+    - BodyBag
+  - type: Clickable
+  - type: InteractionOutline
+  - type: MovedByPressure
+  - type: Physics
+    bodyType: Dynamic
+  - type: Transform
+    noRot: true
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.25,-0.4,0.25,0.1"
+      density: 20
+      mask:
+      - Impassable
+  - type: EntityStorage
+    capacity: 1
+    isCollidableWhenOpen: true
+    closeSound:
+      path: /Audio/Misc/zip.ogg
+    openSound:
+      path: /Audio/Misc/zip.ogg
+  - type: EntityStorageLayingDownOverride
+  - type: PaperLabel
+    labelSlot:
+      insertVerbText: Attach Label
+      ejectVerbText: Remove Label
+      whitelist:
+        components:
+        - Paper
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state_open: open_overlay
+  - type: GenericVisualizer
+    visuals:
+      enum.PaperLabelVisuals.HasLabel:
+        enum.BodyBagVisualLayers.Label:
+          True: {visible: true}
+          False: {visible: false}
+      enum.FoldedVisuals.State:
+        foldedLayer:
+          True: {visible: true}
+          False: {visible: false}
+        unfoldedLayer:
+          True: {visible: false}
+          False: {visible: true}
+  - type: Pullable
+  - type: AntiRottingContainer
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+      paper_label: !type:ContainerSlot
+  - type: StaticPrice
+    price: 50
+
+- type: entity
+  id: BodyBag_Folded
+  name: body bag
+  description: A plastic bag designed for the storage and transportation of cadavers.
+  parent: BodyBag_Container
+  suffix: folded
+  components:
+  - type: Foldable
+    folded: true
+#  - type: BodyBagItem #TODO: we need some kind of generic placable, like thus:
+# - type: Placeable
+#   prototype: someId
+#   snap: Center
+
+- type: entity
+  parent: BaseItem
+  id: Ash
+  name: ash
+  description: This used to be something, but now it's not.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Materials/materials.rsi
+    state: ash
+  - type: Tag
+    tags:
+    - Trash
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Ash
+          Quantity: 10
+  - type: SolutionSpiker
+    sourceSolution: food
+    ignoreEmpty: true
+  - type: DeleteOnTrigger
+  - type: Extractable
+    grindableSolutionName: food

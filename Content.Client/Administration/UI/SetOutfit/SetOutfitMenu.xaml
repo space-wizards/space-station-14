@@ -1,0 +1,15 @@
+<DefaultWindow
+    xmlns="https://spacestation14.io">
+    <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.45">
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True"
+                                    SizeFlagsStretchRatio="0.1">
+                <LineEdit Name="SearchBar" PlaceHolder="Search" HorizontalExpand="True"
+                                   SizeFlagsStretchRatio="0.6" />
+            </BoxContainer>
+            <ItemList Name="OutfitList" SelectMode="Single" VerticalExpand="True"
+                               SizeFlagsStretchRatio="0.9" />
+            <Button Name="ConfirmButton" HorizontalExpand="True" />
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

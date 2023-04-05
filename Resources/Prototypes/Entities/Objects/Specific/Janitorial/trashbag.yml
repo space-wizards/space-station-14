@@ -1,0 +1,62 @@
+- type: entity
+  name: trash bag
+  id: TrashBag
+  parent: BaseStorageItem
+  components:
+  - type: Sprite
+    netSync: false
+    sprite: Objects/Specific/Janitorial/trashbag.rsi
+    layers:
+      - state: icon-0
+        map: ["enum.StorageFillLayers.Fill"]
+  - type: Storage
+    capacity: 125
+    quickInsert: true
+    areaInsert: true
+    storageOpenSound:
+      collection: trashBagRustle
+    storageInsertSound:
+      collection: trashBagRustle
+    whitelist:
+      tags:
+        - Cartridge
+        - Trash
+  - type: Tag
+    tags:
+    - TrashBag
+    - DroneUsable
+  - type: Appearance
+  - type: StorageFillVisualizer
+    maxFillLevels: 4
+    fillBaseName: icon
+  - type: Dumpable
+  - type: Clothing
+    slots: [belt]
+    sprite: Objects/Specific/Janitorial/trashbag.rsi
+  - type: Item
+    size: 125
+
+- type: entity
+  name: trash bag
+  id: TrashBagBlue
+  parent: TrashBag
+  components:
+  - type: Sprite
+    layers:
+      - state: blue-icon-0
+        map: ["enum.StorageFillLayers.Fill"]
+  - type: Item
+    heldPrefix: blue
+  - type: StorageFillVisualizer
+    fillBaseName: blue-icon
+
+- type: entity
+  name: spell of all-consuming cleanliness
+  id: BagOfSummoningGarbage
+  parent: TrashBagBlue
+  components:
+  - type: Storage
+    capacity: 125000
+    quickInsert: true
+    areaInsert: true
+    areaInsertRadius: 1000

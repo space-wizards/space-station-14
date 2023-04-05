@@ -1,0 +1,48 @@
+- type: entity
+  name: Civilian
+  parent: BaseMobHuman
+  id: MobCivilian
+  description: A miserable pile of secrets.
+  components:
+  - type: InputMover
+  - type: MobMover
+  - type: Loadout
+    prototypes: [PassengerGear]
+  - type: Faction
+    factions:
+    - NanoTrasen
+
+- type: entity
+  name: Spirate
+  parent: BaseMobHuman
+  id: MobSpirate
+  description: Yarr!
+  components:
+  - type: Faction
+    factions:
+      - Syndicate
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask: RangedCombatCompound
+
+- type: entity
+  parent: BaseMobHuman
+  suffix: Dead
+  save: false # mobs are currently not saveable.
+  id: SalvageHumanCorpse
+  name: unidentified human
+  description: We barely knew ye.
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 200
+
+- type: entity
+  parent: MobHuman
+  id: MobCluwne
+  name: person
+  description: A polymorphed unfortunate.
+  components:
+  - type: Cluwne

@@ -1,0 +1,55 @@
+# There are limitations to this ATM. The pathfinder is too slow to check accessibility well
+# and reachable only takes in an entity so sometimes the follow idle spot is outside of the follow range
+
+# Follows the specified target.
+- type: htnCompound
+  id: FollowCompound
+  branches:
+    # Head to follow target
+    - tasks:
+        - id: FollowPrimitive
+    # Keep idling near follow target
+    - tasks:
+        - id: WaitFollowPrimitive
+    # Pick a new idle spot near the follow target
+    - tasks:
+        - id: PickAccessibleNearFollowPrimitive
+        - id: IdleNearFollowPrimitive
+        - id: RandomIdleTimePrimitive
+        - id: WaitFollowPrimitive
+
+
+- type: htnPrimitive
+  id: WaitFollowPrimitive
+  operator: !type:WaitOperator
+    key: IdleTime
+  preconditions:
+    - !type:KeyExistsPrecondition
+      key: IdleTime
+    - !type:CoordinatesInRangePrecondition
+      targetKey: FollowTarget
+      rangeKey: FollowRange
+
+- type: htnPrimitive
+  id: PickAccessibleNearFollowPrimitive
+  operator: !type:PickAccessibleOperator
+    # originKey: FollowTarget
+    rangeKey: FollowCloseRange
+    targetKey: FollowIdleTarget
+
+- type: htnPrimitive
+  id: IdleNearFollowPrimitive
+  operator: !type:MoveToOperator
+    targetKey: FollowIdleTarget
+
+- type: htnPrimitive
+  id: FollowPrimitive
+  operator: !type:MoveToOperator
+    pathfindInPlanning: true
+    targetKey: FollowTarget
+    rangeKey: FollowCloseRange
+    removeKeyOnFinish: false
+  preconditions:
+    - !type:CoordinatesNotInRangePrecondition
+      targetKey: FollowTarget
+      rangeKey: FollowRange

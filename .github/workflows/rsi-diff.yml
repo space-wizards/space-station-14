@@ -1,0 +1,66 @@
+name: Diff RSIs
+
+on:
+  pull_request_target:
+    paths:
+      - '**.rsi/**.png'
+
+jobs:
+  diff:
+    name: Diff
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Get changed files
+        id: files
+        uses: Ana06/get-changed-files@v1.2
+        with:
+          format: 'space-delimited'
+
+      - name: Diff changed RSIs
+        id: diff
+        uses: space-wizards/RSIDiffBot@v1.1
+        with:
+          modified: ${{ steps.files.outputs.modified }}
+          removed: ${{ steps.files.outputs.removed }}
+          added: ${{ steps.files.outputs.added }}
+          basename: ${{ github.event.pull_request.base.repo.full_name }}
+          basesha: ${{ github.event.pull_request.base.sha }}
+          headname: ${{ github.event.pull_request.head.repo.full_name }}
+          headsha: ${{ github.event.pull_request.head.sha }}
+
+      - name: Potentially find comment
+        uses: peter-evans/find-comment@v1
+        id: fc
+        with:
+          issue-number: ${{ github.event.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: RSI Diff Bot
+
+      - name: Create comment if it doesn't exist
+        if: steps.fc.outputs.comment-id == ''
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: ${{ github.event.number }}
+          body: |
+            ${{ steps.diff.outputs.summary-details }}
+
+      - name: Update comment if it exists
+        if: steps.fc.outputs.comment-id != ''
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          edit-mode: replace
+          body: |
+            ${{ steps.diff.outputs.summary-details }}
+
+      - name: Update comment to read that it has been edited
+        if: steps.fc.outputs.comment-id != ''
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          edit-mode: append
+          body: |
+            Edit: diff updated after ${{ github.event.pull_request.head.sha }}

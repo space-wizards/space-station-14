@@ -1,0 +1,21 @@
+﻿- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatChameleon
+  name: beret
+  description: A beret, an artists favorite headwear.
+  suffix: Chameleon
+  components:
+    - type: Tag
+      tags: [] # ignore "WhitelistChameleon" tag
+    - type: Sprite
+      sprite: Clothing/Head/Hats/beret.rsi
+      netsync: false
+    - type: Clothing
+      sprite: Clothing/Head/Hats/beret.rsi
+    - type: ChameleonClothing
+      slot: [HEAD]
+      default: ClothingHeadHatBeret
+    - type: UserInterface
+      interfaces:
+        - key: enum.ChameleonUiKey.Key
+          type: ChameleonBoundUserInterface

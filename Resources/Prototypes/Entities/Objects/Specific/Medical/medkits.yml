@@ -1,0 +1,96 @@
+- type: entity
+  name: first aid kit
+  description: It's an emergency medical kit for those serious boo-boos.
+  parent: BaseStorageItem
+  id: Medkit
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    netsync: false
+    state: firstaid
+  - type: Storage
+    capacity: 30
+  - type: Item
+    size: 30
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    heldPrefix: firstaid
+  - type: Tag
+    tags:
+    - Medkit
+
+- type: entity
+  name: burn treatment kit
+  description: "A specialized medical kit for when the toxins lab spontaneously burns down."
+  parent: Medkit
+  id: MedkitBurn
+  components:
+  - type: Sprite
+    state: burnkit
+  - type: Item
+    heldPrefix: burnkit
+
+- type: entity
+  name: toxin treatment kit
+  description: "Used to treat toxic blood content."
+  parent: Medkit
+  id: MedkitToxin
+  components:
+  - type: Sprite
+    state: toxinkit
+  - type: Item
+    heldPrefix: toxinkit
+
+- type: entity
+  name: oxygen deprivation treatment kit
+  description: "A box full of oxygen goodies."
+  parent: Medkit
+  id: MedkitO2
+  components:
+  - type: Sprite
+    state: o2kit
+  - type: Item
+    heldPrefix: o2kit
+
+- type: entity
+  name: brute trauma treatment kit
+  description: "A first aid kit for when you get toolboxed."
+  parent: Medkit
+  id: MedkitBrute
+  components:
+  - type: Sprite
+    state: brutekit
+  - type: Item
+    heldPrefix: brutekit
+
+- type: entity
+  name: advanced first aid kit
+  description: "An advanced kit to help deal with advanced wounds."
+  parent: Medkit
+  id: MedkitAdvanced
+  components:
+  - type: Sprite
+    state: advkit
+  - type: Item
+    heldPrefix: advkit
+
+- type: entity
+  name: radiation treatment kit
+  description: "If you took your Rad-X you wouldn't need this."
+  parent: Medkit
+  id: MedkitRadiation
+  components:
+  - type: Sprite
+    state: radkit
+  - type: Item
+    heldPrefix: radkit
+
+- type: entity
+  name: combat medical kit
+  description: "For the big weapons among us."
+  parent: Medkit
+  id: MedkitCombat
+  components:
+  - type: Sprite
+    state: blackkit
+  - type: Item
+    heldPrefix: blackkit

@@ -1,0 +1,44 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-NC-SA-4.0",
+    "copyright": "Created by github user moonheart08.",
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "icon-front"
+        },
+        {
+            "name": "fill1"
+        },
+        {
+            "name": "fill2"
+        },
+        {
+            "name": "fill3"
+        },
+        {
+            "name": "fill4"
+        },
+        {
+            "name": "fill5"
+        },
+        {
+            "name": "fill6"
+        },
+        {
+            "name": "fill7"
+        },
+        {
+            "name": "fill8"
+        },
+        {
+            "name": "fill9"
+        }
+    ]
+}

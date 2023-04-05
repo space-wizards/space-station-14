@@ -1,0 +1,54 @@
+- type: entity
+  parent: BaseItem
+  id: Bucket
+  name: bucket
+  description: It's a boring old bucket.
+  components:
+  - type: Drink
+    isOpen: true
+    solution: bucket
+  - type: Clickable
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Tools/bucket.rsi
+    layers:
+    - state: icon
+    - map: ["enum.SolutionContainerLayers.Fill"]
+      state: fill-1
+      visible: false
+  - type: Item
+    size: 100
+  - type: Clothing
+    sprite: Objects/Tools/bucket.rsi
+    slots:
+    - HEAD
+  - type: SolutionContainerManager
+    solutions:
+      bucket:
+        maxVol: 250
+  - type: SolutionTransfer
+    transferAmount: 50
+    maxTransferAmount: 100
+    minTransferAmount: 10
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
+  - type: Spillable
+    solution: bucket
+  - type: DrawableSolution
+    solution: bucket
+  - type: RefillableSolution
+    solution: bucket
+  - type: DrainableSolution
+    solution: bucket
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    fillBaseName: fill-
+  - type: ExaminableSolution
+    solution: bucket
+  - type: Tag
+    tags:
+      - Bucket

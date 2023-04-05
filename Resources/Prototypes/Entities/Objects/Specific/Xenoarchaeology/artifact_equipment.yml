@@ -1,0 +1,77 @@
+﻿- type: entity
+  id: CrateArtifactContainer
+  parent: BaseStructureDynamic
+  components:
+    - type: Transform
+      noRot: true
+    - type: AccessReader
+      access: [["Research"], ["Salvage"]]
+    - type: Lock
+    - type: Sprite
+      drawdepth: Objects
+      netsync: false
+      sprite: Structures/Storage/Crates/artifact.rsi
+      layers:
+        - state: artifact_container
+        - state: artifact_container_door
+          map: ["enum.StorageVisualLayers.Door"]
+        - state: welded
+          visible: false
+          map: ["enum.WeldableLayers.BaseWelded"]
+        - state: locked
+          map: ["enum.StorageVisualLayers.Lock"]
+          shader: unshaded
+    - type: InteractionOutline
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeCircle
+            radius: 0.45
+          density: 75
+          mask:
+          - MachineMask
+          layer:
+          - MachineLayer
+    - type: Icon
+      sprite: Structures/Storage/Crates/artifact.rsi
+      state: artifact_container_icon
+    - type: EntityStorage
+      capacity: 1
+      whitelist:
+        components:
+        - Artifact
+    - type: Weldable
+    - type: SuppressArtifactContainer
+    - type: PlaceableSurface
+      isPlaceable: false
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 50
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+    - type: PaperLabel
+      labelSlot:
+        insertVerbText: Attach Label
+        ejectVerbText: Remove Label
+        whitelist:
+          components:
+            - Paper
+    - type: Appearance
+      visuals:
+        - type: StorageVisualizer
+          state_open: artifact_container_open
+          state_closed: artifact_container_door
+    - type: ItemSlots
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+        paper_label: !type:ContainerSlot
+    - type: StaticPrice
+      price: 250

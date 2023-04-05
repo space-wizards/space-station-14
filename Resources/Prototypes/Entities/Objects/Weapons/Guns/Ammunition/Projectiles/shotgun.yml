@@ -1,0 +1,126 @@
+﻿- type: entity
+  id: PelletShotgunSlug
+  name: pellet (.50 slug)
+  noSpawn: true
+  parent: BaseBullet
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: slug
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 8  # Should have the same or less damage than a regular pellet
+
+- type: entity
+  id: PelletShotgunBeanbag
+  name: beanbag (.50)
+  noSpawn: true
+  parent: BaseBullet
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: buckshot
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 10
+  - type: StaminaDamageOnCollide
+    damage: 55
+
+- type: entity
+  id: PelletShotgun
+  name: pellet (.50)
+  noSpawn: true
+  parent: BaseBullet
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: buckshot
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 12
+
+- type: entity
+  id: PelletShotgunIncendiary
+  name: pellet (.50 incendiary)
+  noSpawn: true
+  parent: BaseBullet
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: buckshot-flare
+  - type: Projectile
+    damage:
+      groups:
+        Burn: 7
+  - type: PointLight
+    enabled: true
+    color: "#ff4300"
+    radius: 2.0
+    energy: 7.0
+  - type: IgniteOnCollide
+    fireStacks: 1
+
+- type: entity
+  id: PelletShotgunPractice
+  name: pellet (.50 practice)
+  noSpawn: true
+  parent: BaseBulletPractice
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: buckshot
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 1
+
+- type: entity
+  id: PelletShotgunTranquilizer
+  name: pellet (.50 tranquilizer)
+  noSpawn: true
+  parent: BaseBulletPractice
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: buckshot
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 1
+  - type: SolutionContainerManager
+    solutions:
+      ammo:
+        maxVol: 15
+  - type: RefillableSolution
+    solution: ammo
+  - type: DrainableSolution
+    solution: ammo
+  - type: SolutionInjectOnCollide
+    transferAmount: 15
+    blockSlots: NONE #tranquillizer darts shouldn't be blocked by a mask
+  - type: InjectableSolution
+    solution: ammo
+
+- type: entity
+  id: PelletShotgunFlare
+  name: pellet (.50 flare)
+  noSpawn: true
+  parent: BaseBullet
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: buckshot-flare
+  - type: Projectile
+    damage:
+      groups:
+        Burn: 14
+  - type: PointLight
+    enabled: true
+    color: "#FF8080"
+    radius: 15.0
+    energy: 9.0
+  - type: IgniteOnCollide
+    fireStacks: 4

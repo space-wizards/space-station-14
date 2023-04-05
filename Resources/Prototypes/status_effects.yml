@@ -1,0 +1,55 @@
+﻿# Status effect prototypes.
+# Holds no actual logic, just some basic data about the effect.
+
+- type: statusEffect
+  id: Stun
+  alert: Stun
+
+- type: statusEffect
+  id: KnockedDown
+  alert: Stun
+
+- type: statusEffect
+  id: SlowedDown
+
+- type: statusEffect
+  id: Jitter
+  alwaysAllowed: true
+
+- type: statusEffect
+  id: Stutter
+
+- type: statusEffect
+  id: AllCaps
+
+- type: statusEffect
+  id: SeeingRainbows
+
+- type: statusEffect
+  id: Electrocution
+
+- type: statusEffect
+  id: Drunk
+
+- type: statusEffect
+  id: SlurredSpeech
+
+- type: statusEffect
+  id: PressureImmunity
+
+- type: statusEffect
+  id: Muted
+  alert: Muted
+
+- type: statusEffect
+  id: Corporeal
+  alert: Corporeal
+
+- type: statusEffect
+  id: ForcedSleep #I.e., they will not wake on damage or similar
+
+- type: statusEffect
+  id: TemporaryBlindness
+
+- type: statusEffect
+  id: Pacified #cannot attack

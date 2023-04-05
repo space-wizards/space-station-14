@@ -1,0 +1,16 @@
+- type: entity
+  name: beaker box
+  parent: BoxCardboard
+  id: BoxBeaker
+  description: A box full of beakers.
+  components:
+  - type: StorageFill
+    contents:
+      - id: Beaker
+        amount: 2
+      - id: LargeBeaker
+        amount: 2
+  - type: Sprite
+    layers:
+      - state: box
+      - state: beaker

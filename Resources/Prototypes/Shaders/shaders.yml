@@ -1,0 +1,78 @@
+- type: shader
+  id: CircleMask
+  kind: source
+  path: "/Textures/Shaders/circle_mask.swsl"
+
+- type: shader
+  id: GradientCircleMask
+  kind: source
+  path: "/Textures/Shaders/gradient_circle_mask.swsl"
+
+- type: shader
+  id: ColoredScreenBorder
+  kind: source
+  path: "/Textures/Shaders/colored_screen_border.swsl"
+
+- type: shader
+  id: FlashedEffect
+  kind: source
+  path: "/Textures/Shaders/flashed_effect.swsl"
+
+- type: shader
+  id: Singularity
+  kind: source
+  path: "/Textures/Shaders/singularity.swsl"
+
+- type: shader
+  id: Radiation
+  kind: source
+  path: "/Textures/Shaders/radiation.swsl"
+  params:
+    positionInput: 0,0
+    life: 0
+
+- type: shader
+  id: Rainbow
+  kind: source
+  path: "/Textures/Shaders/rainbow.swsl"
+
+- type: shader
+  id: CameraStatic
+  kind: source
+  path: "/Textures/Shaders/camera_static.swsl"
+
+- type: shader
+  id: Drunk
+  kind: source
+  path: "/Textures/Shaders/drunk.swsl"
+
+- type: shader
+  id: Texture
+  kind: source
+  path: "/Textures/Shaders/texture.swsl"
+  params:
+    positionInput: 0, 0
+    pixelSize: 32, 32
+    alphaCutoff: 0
+    removeTransparency: false
+
+- type: shader
+  id: BlurryVisionX
+  kind: source
+  path: "/Textures/Shaders/blurryx.swsl"
+
+- type: shader
+  id: BlurryVisionY
+  kind: source
+  path: "/Textures/Shaders/blurryy.swsl"
+
+- type: shader
+  id: Dim
+  kind: source
+  path: "/Textures/Shaders/dim.swsl"
+
+# cloaking distortion effect
+- type: shader
+  id: Stealth
+  kind: source
+  path: "/Textures/Shaders/stealth.swsl"

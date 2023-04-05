@@ -1,0 +1,71 @@
+﻿- type: entity
+  id: HospitalCurtains
+  parent: BaseStructure
+  name: curtains
+  description: Contains less than 1% mercury.
+  components:
+  - type: Occluder
+  - type: Sprite
+    netsync: false
+    snapCardinals: true
+    sprite: Structures/Decoration/curtains.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.49,-0.49,0.49,0.49"
+      density: 100
+      mask:
+      - FullTileMask
+      layer:
+      - Opaque
+  - type: Door
+    canCrush: false
+    performCollisionCheck: false
+    bumpOpen: false
+    clickOpen: true
+    closeTimeOne: 0.5
+    closeTimeTwo: 0.1
+    openTimeOne: 0.5
+    openTimeTwo: 0.1
+    openSound:
+      path: /Audio/Effects/curtain_openclose.ogg
+    closeSound:
+      path: /Audio/Effects/curtain_openclose.ogg
+  - type: Appearance
+    visuals:
+      - type: AirlockVisualizer
+        simpleVisuals: true
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialCloth1:
+            min: 1
+            max: 3
+  placement:
+    mode: SnapgridCenter
+
+- type: entity
+  id: HospitalCurtainsOpen
+  parent: HospitalCurtains
+  suffix: Open
+  components:
+  - type: Door
+    state: Open
+  - type: Occluder
+    enabled: false
+  - type: Physics
+    canCollide: false

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleName</key>
+    <string>SS14</string>
+    <key>CFBundleDisplayName</key>
+    <string>Space Station 14</string>
+    <key>CFBundleExecutable</key>
+    <string>SS14</string>
+    <!--
+    Just a note about this icon.
+    MacOS seems REALLY iffy about this and even when the file is correct,
+    it can take forever before it decides to actually update it and display it.
+    TL;DR Apple is stupid.
+    -->
+    <key>CFBundleIconFile</key>
+    <string>ss14</string>
+</dict>
+</plist>

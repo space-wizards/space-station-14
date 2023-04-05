@@ -1,0 +1,10 @@
+- type: vendingMachineInventory
+  id: ChangInventory
+  startingInventory:
+    FoodCondimentPacketSoy: 5
+    FoodSnackCookieFortune: 5
+    DrinkRamen: 3
+    DrinkHellRamen: 3
+    FoodSnackChowMein: 3
+    FoodSnackDanDanNoodles: 3
+# rice?

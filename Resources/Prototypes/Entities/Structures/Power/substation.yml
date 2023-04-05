@@ -1,0 +1,222 @@
+# Base substation
+- type: entity
+  abstract: true
+  id: BaseSubstation
+  parent: [ BaseMachine, ConstructibleMachine ]
+  name: substation
+  description: Reduces the voltage of electricity put into it.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite # TODO: add sprite for maintenance panel open
+    sprite: Structures/Power/substation.rsi
+    snapCardinals: true
+    layers:
+    - state: substation
+    - state: screen
+      shader: unshaded
+    - state: full
+      shader: unshaded
+  - type: UpgradeBattery
+    maxChargeMultiplier: 2
+    baseMaxCharge: 2500000
+  - type: Battery
+    startingCharge: 0
+  - type: ExaminableBattery
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#3db83b"
+    castShadows: false
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      input:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+      output:
+        !type:CableDeviceNode
+        nodeGroupID: MVPower
+  - type: BatteryCharger
+    voltage: High
+  - type: BatteryDischarger
+    voltage: Medium
+  - type: PowerNetworkBattery
+    maxSupply: 150000
+    maxChargeRate: 5000
+    supplyRampTolerance: 5000
+    supplyRampRate: 1000
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: StrongMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:ExplodeBehavior
+      - !type:SpawnEntitiesBehavior # in future should also emit a cloud of hot gas
+        spawn:
+          MachineFrameDestroyed:
+            min: 1
+            max: 1
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 100
+    intensitySlope: 2
+    totalIntensity: 200
+  - type: Wires
+    BoardName: "Substation"
+    LayoutId: Substation
+  - type: Machine
+    board: SubstationMachineCircuitboard
+  - type: StationInfiniteBatteryTarget
+
+# Compact Wall Substation Base
+- type: entity
+  id: BaseSubstationWall
+  noSpawn: true
+  name: wallmount substation
+  description: A substation designed for compact shuttles and spaces.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    volume: -15
+    range: 2
+    sound:
+      path: /Audio/Ambience/Objects/hdd_buzz.ogg
+  - type: PointLight
+    netsync: false
+    radius: 1.5
+    energy: 1.6
+    color: "#3db83b"
+    castShadows: false
+  - type: Clickable
+  - type: AccessReader
+    access: [["Engineering"]]
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Fixtures
+  - type: Transform
+    anchored: true
+  - type: Sprite # TODO: add sprite for maintenance panel open
+    drawdepth: WallMountedItems
+    netsync: false
+    sprite: Structures/Power/substation.rsi
+    layers:
+    - state: substation_wall
+    - state: screen
+      shader: unshaded
+  - type: Battery
+    maxCharge: 2000000
+    startingCharge: 0
+  - type: ExaminableBattery
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      input:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+      output:
+        !type:CableDeviceNode
+        nodeGroupID: MVPower
+  - type: BatteryCharger
+    voltage: High
+  - type: BatteryDischarger
+    voltage: Medium
+  - type: PowerNetworkBattery
+    maxSupply: 150000
+    maxChargeRate: 5000
+    supplyRampTolerance: 5000
+    supplyRampRate: 1000
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:ExplodeBehavior
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+  - type: Construction
+    graph: WallmountSubstation
+    node: substation
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 50
+    intensitySlope: 2
+    totalIntensity: 100
+  - type: StationInfiniteBatteryTarget
+  - type: WallMount
+
+# Substations in use
+
+- type: entity
+  parent: BaseSubstation
+  id: SubstationBasic
+  suffix: Basic, 2.5MJ
+  components:
+  - type: Battery
+    maxCharge: 2500000
+    startingCharge: 2500000
+
+- type: entity
+  parent: SubstationBasic
+  id: SubstationBasicEmpty
+  suffix: Empty
+  components:
+  - type: Battery
+    startingCharge: 0
+
+- type: entity
+  parent: BaseSubstationWall
+  id: SubstationWallBasic
+  suffix: Basic, 2MJ
+  components:
+  - type: Battery
+    maxCharge: 2000000
+    startingCharge: 2000000
+
+# Construction Frame
+- type: entity
+  id: BaseSubstationWallFrame
+  noSpawn: true
+  name: wallmount substation frame
+  description: A substation frame for construction
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Fixtures
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    drawdepth: WallMountedItems
+    netsync: false
+    sprite: Structures/Power/substation.rsi
+    layers:
+    - state: substation_wall
+  - type: Construction
+    graph: WallmountSubstation
+    node: frame
+  - type: WallMount

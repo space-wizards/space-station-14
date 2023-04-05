@@ -1,0 +1,60 @@
+- type: entity
+  name: deployable barrier
+  id: DeployableBarrier
+  description: A deployable barrier. Swipe your ID card to lock/unlock it.
+  parent: BaseStructure
+  components:
+  - type: Transform
+    noRot: true
+  - type: Sprite
+    sprite: Objects/Specific/Security/barrier.rsi
+    netsync: false
+    state: idle
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Dynamic
+    canCollide: false
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.45
+      density: 235
+      mask:
+      - MachineMask
+      layer:
+      - WallLayer
+  - type: AccessReader
+    access: [["Security"]]
+  - type: Lock
+    locked: false
+    lockOnClick: true # toggle lock just by clicking on barrier
+  - type: DeployableBarrier
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel:
+            min: 5
+            max: 5
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: PointLight
+    enabled: false
+    radius: 3
+    color: red
+  - type: Appearance
+    visuals:
+    - type: DeployableBarrierVisualizer
+  - type: StaticPrice
+    price: 200

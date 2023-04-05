@@ -1,0 +1,115 @@
+﻿- type: entity
+  id: GravityGenerator
+  parent: BaseMachinePowered
+  name: gravity generator
+  description: It's what keeps you to the floor.
+  placement:
+    mode: AlignTileAny
+  components:
+  - type: AmbientSound
+    enabled: false
+    volume: -6
+    range: 7
+    sound:
+      path: /Audio/Ambience/Objects/gravity_gen_hum.ogg
+
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Machines/gravity_generator.rsi
+    layers:
+      - state: on
+        map: ["enum.GravityGeneratorVisualLayers.Base"]
+      - sprite: Structures/Machines/gravity_generator_core.rsi
+        state: activated
+        shader: unshaded
+        map: ["enum.GravityGeneratorVisualLayers.Core"]
+  - type: Transform
+    anchored: true
+  - type: ApcPowerReceiver
+    powerLoad: 2500
+  - type: ExtensionCableReceiver
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-1.5,-1.5,1.5,1.5"
+      density: 50
+      mask:
+      - LargeMobMask
+      layer:
+      - WallLayer
+  - type: Repairable
+    fuelCost: 10
+    doAfterDelay: 5
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+  - type: GravityGenerator
+    idlePower: 50
+    activePower: 2500
+    lightRadiusMin: 0.75
+    lightRadiusMax: 2.5
+    spritemap:
+      broken: "broken"
+      unpowered: "off"
+      off: "off"
+      on: "on"
+  - type: UserInterface
+    interfaces:
+      - key: enum.GravityGeneratorUiKey.Key
+        type: GravityGeneratorBoundUserInterface
+  - type: Appearance
+  - type: PointLight
+    radius: 2.5
+    energy: 0.5
+    # Gravity generator is a large machine, not casting shadows is fine within the radius set above.
+    castShadows: false
+    color: "#a8ffd9"
+  - type: StaticPrice
+    price: 5000
+
+- type: entity
+  id: GravityGeneratorMini
+  parent: GravityGenerator
+  name: mini gravity generator
+  description: It's what keeps you to the floor, now in fun size.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Machines/gravity_generator_mini.rsi
+    snapCardinals: true
+    layers:
+      - state: on
+        map: ["enum.GravityGeneratorVisualLayers.Base"]
+      - sprite: Structures/Machines/gravity_generator_core.rsi
+        state: activated
+        shader: unshaded
+        map: ["enum.GravityGeneratorVisualLayers.Core"]
+        scale: "0.4,0.4"
+        offset: "0,0.2"
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.4,-0.4,0.4,0.4"
+      density: 3125
+      mask:
+      - LargeMobMask
+      layer:
+      - WallLayer
+  - type: ApcPowerReceiver
+    powerLoad: 500
+  - type: GravityGenerator
+    idlePower: 15
+    activePower: 500
+    lightRadiusMin: 0.75
+    lightRadiusMax: 2.5
+  - type: StaticPrice
+    price: 2000

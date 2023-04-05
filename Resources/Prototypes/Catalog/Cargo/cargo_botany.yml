@@ -1,0 +1,39 @@
+- type: cargoProduct
+  id: HydroponicsSeedsExotic
+  icon:
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    state: seed
+  product: CrateHydroponicsSeedsExotic
+  cost: 1000
+  category: Hydroponics
+  group: market
+
+- type: cargoProduct
+  id: HydroponicsSeedsMedicinal
+  icon:
+    sprite: Objects/Specific/Hydroponics/galaxythistle.rsi
+    state: seed
+  product: CrateHydroponicsSeedsMedicinal
+  cost: 500
+  category: Hydroponics
+  group: market
+
+- type: cargoProduct
+  id: HydroponicsTools
+  icon:
+    sprite: Objects/Tools/Hydroponics/hoe.rsi
+    state: icon
+  product: CrateHydroponicsTools
+  cost: 500
+  category: Hydroponics
+  group: market
+
+- type: cargoProduct
+  id: HydroponicsSeeds
+  icon:
+    sprite: Objects/Specific/Hydroponics/apple.rsi
+    state: seed
+  product: CrateHydroponicsSeeds
+  cost: 500
+  category: Hydroponics
+  group: market

@@ -1,0 +1,16 @@
+- type: constructionGraph
+  id: flowercrown
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: flowercrown
+          steps:
+            - tag: Flower
+              name: flower
+              icon:
+                sprite: Objects/Specific/Hydroponics/poppy.rsi
+                state: produce
+              doAfter: 10
+    - node: flowercrown
+      entity: ClothingHeadHatFlowerCrown

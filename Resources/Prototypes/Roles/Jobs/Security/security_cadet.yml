@@ -1,0 +1,30 @@
+﻿- type: job
+  id: SecurityCadet
+  name: job-name-cadet
+  description: job-description-cadet
+  playTimeTracker: JobSecurityCadet
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 28800
+      inverted: true # stop playing intern if you're good at security!
+  startingGear: SecurityCadetGear
+  icon: "SecurityCadet"
+  supervisors: job-supervisors-security
+  canBeAntag: false
+  access:
+  - Security
+  - Brig
+  - Maintenance
+
+- type: startingGear
+  id: SecurityCadetGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorRed
+    back: ClothingBackpackSecurityFilled
+    shoes: ClothingShoesBootsJack
+    id: SecurityCadetPDA
+    ears: ClothingHeadsetSecurity
+  innerclothingskirt: ClothingUniformJumpskirtColorRed
+  satchel: ClothingBackpackSatchelSecurityFilled
+  duffelbag: ClothingBackpackDuffelSecurityFilled

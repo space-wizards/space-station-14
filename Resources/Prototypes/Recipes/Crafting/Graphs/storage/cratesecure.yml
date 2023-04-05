@@ -1,0 +1,31 @@
+- type: constructionGraph
+  id: CrateSecure
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: cratesecure
+          steps:
+            - material: Steel
+              amount: 5
+              doAfter: 5
+
+
+    - node: cratesecure
+      entity: CrateSecure
+      edges:
+        - to: start
+          steps:
+            - tool: Screwing
+              doAfter: 5
+          conditions:
+            - !type:StorageWelded
+              welded: false
+            - !type:Locked
+              locked: false
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 5
+            - !type:EmptyAllContainers
+            - !type:DeleteEntity

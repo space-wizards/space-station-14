@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "tgstation at https://github.com/tgstation/tgstation/commit/8b7f8ba6a3327c7381967c550f185dffafd11a57",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "gun"
+    },
+    {
+      "name": "empty",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+	{
+	  "name": "inhand-right",
+	  "directions": 4
+	},
+	{
+	  "name": "inhand-left",
+	  "directions": 4
+	}
+  ]
+}

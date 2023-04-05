@@ -1,0 +1,114 @@
+- type: entity
+  name: stun baton
+  parent: BaseItem
+  id: Stunbaton
+  description: A stun baton for incapacitating people with. Actively harming with this is considered bad tone.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/stunbaton.rsi
+    netsync: false
+    layers:
+    - state: stunbaton_off
+      map: [ "enum.ToggleVisuals.Layer" ]
+  - type: Stunbaton
+    energyPerUse: 100
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 7
+    bluntStaminaDamageFactor: 2.0
+    angle: 60
+    animation: WeaponArcSlash
+  - type: StaminaDamageOnHit
+    damage: 55
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 1000
+  - type: ItemCooldown
+  - type: Item
+    heldPrefix: off
+    size: 20
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/stunbaton.rsi
+    quickEquip: false
+    slots:
+    - Belt
+  - type: DisarmMalus
+    malus: 0.225
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+     enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: {state: stunbaton_on}
+          False: {state: stunbaton_off}
+  - type: StaticPrice
+    price: 100
+
+- type: entity
+  name: flash
+  parent: BaseItem
+  id: Flash
+  description: An ultrabright flashbulb with a trigger, which causes the victim to be dazed and lose their eyesight for a moment. Useless when burnt out.
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/flash.rsi
+      state: flash
+    - type: Flash
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 0 # why is this classed as a melee weapon? Is it needed for some interaction?
+      angle: 10
+    - type: Item
+      size: 5
+      sprite: Objects/Weapons/Melee/flash.rsi
+    - type: ItemCooldown
+    - type: StaticPrice
+      price: 40
+
+- type: entity
+  name: portable flasher
+  parent: BaseStructure
+  id: PortableFlasher
+  description: An ultrabright flashbulb with a proximity trigger, useful for making an area security-only.
+  components:
+    - type: EmitSoundOnTrigger
+      sound:
+        path: /Audio/Weapons/flash.ogg
+    - type: FlashOnTrigger
+      repeating: true
+      range: 3
+    - type: TriggerOnProximity
+      enabled: true
+      cooldown: 5
+      shape:
+        !type:PhysShapeCircle
+          radius: 2
+    - type: Anchorable
+    - type: Sprite
+      netsync: false
+      sprite: Objects/Weapons/pflash.rsi
+      layers:
+        - state: "off"
+          map: ["enum.ProximityTriggerVisualLayers.Base"]
+    - type: InteractionOutline
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.3,0.15,0.3"
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+        density: 380
+    - type: Appearance
+    - type: AnimationPlayer
+    - type: PointLight
+      energy: 2.0
+      radius: 0
+      softness: 0
+      enabled: true
+

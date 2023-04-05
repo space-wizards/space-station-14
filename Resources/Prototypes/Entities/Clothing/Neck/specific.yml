@@ -1,0 +1,21 @@
+﻿- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckChameleon
+  name: striped red scarf
+  description: A stylish striped red scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks.
+  suffix: Chameleon
+  components:
+    - type: Tag
+      tags: [] # ignore "WhitelistChameleon" tag
+    - type: Sprite
+      sprite: Clothing/Neck/Scarfs/red.rsi
+      netsync: false
+    - type: Clothing
+      sprite: Clothing/Neck/Scarfs/red.rsi
+    - type: ChameleonClothing
+      slot: [neck]
+      default: ClothingNeckScarfStripedRed
+    - type: UserInterface
+      interfaces:
+        - key: enum.ChameleonUiKey.Key
+          type: ChameleonBoundUserInterface

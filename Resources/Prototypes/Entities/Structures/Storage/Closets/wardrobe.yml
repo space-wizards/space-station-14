@@ -1,0 +1,240 @@
+# Base
+- type: entity
+  id: WardrobeBase
+  parent: ClosetBase
+  abstract: true
+  description: It's a storage unit for standard-issue Nanotrasen attire.
+
+# Colored
+
+# Blue wardrobe
+- type: entity
+  id: WardrobeBlue
+  parent: WardrobeBase
+  name: blue wardrobe
+  description: "A wardrobe packed with stylish blue clothing."
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: generic
+      state_open: generic_open
+      state_closed: blue_door
+
+# Pink wardrobe
+- type: entity
+  id: WardrobePink
+  parent: WardrobeBase
+  name: pink wardrobe
+  description: "A wardrobe packed with fabulous pink clothing."
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: generic
+      state_open: generic_open
+      state_closed: pink_door
+
+# Black wardrobe
+- type: entity
+  id: WardrobeBlack
+  parent: WardrobeBase
+  name: black wardrobe
+  description: "A wardrobe packed with stylish black clothing."
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: generic
+      state_open: generic_open
+      state_closed: black_door
+
+# Green wardrobe
+- type: entity
+  id: WardrobeGreen
+  parent: WardrobeBase
+  name: green wardrobe
+  description: "A wardrobe packed with stylish green clothing."
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: generic
+      state_open: generic_open
+      state_closed: green_door
+
+# Prison wardrobe
+- type: entity
+  id: WardrobePrison
+  parent: WardrobeBase
+  name: prison wardrobe
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: generic
+      state_open: generic_open
+      state_closed: orange_door
+
+# Yellow wardrobe
+- type: entity
+  id: WardrobeYellow
+  parent: WardrobeBase
+  name: yellow wardrobe
+  description: "A wardrobe packed with stylish yellow clothing."
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: generic
+      state_open: generic_open
+      state_closed: yellow_door
+
+# White wardrobe
+- type: entity
+  id: WardrobeWhite
+  parent: WardrobeBase
+  name: white wardrobe
+  description: "A wardrobe packed with stylish white clothing."
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: generic
+      state_open: generic_open
+      state_closed: white_door
+
+# Grey wardrobe
+- type: entity
+  id: WardrobeGrey
+  parent: WardrobeBase
+  name: grey wardrobe
+  description: "A wardrobe packed with a tide of grey clothing."
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: generic
+      state_open: generic_open
+      state_closed: grey_door
+
+# Mixed wardrobe
+- type: entity
+  id: WardrobeMixed
+  parent: WardrobeBase
+  name: mixed wardrobe
+  description: "A wardrobe packed with a mix of colorful clothing."
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: generic
+      state_open: generic_open
+      state_closed: mixed_door
+
+# Jobs
+
+- type: entity
+  id: WardrobeSecurity
+  parent: WardrobeBase
+  name: security wardrobe
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: generic
+      state_open: generic_open
+      state_closed: red_door
+
+- type: entity
+  id: WardrobeAtmospherics
+  parent: WardrobeBase
+  name: atmospherics wardrobe
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: generic
+      state_open: generic_open
+      state_closed: atmos_wardrobe_door
+
+- type: entity
+  id: ClosetJanitor
+  parent: WardrobeMixed
+  name: custodial closet
+  description: It's a storage unit for janitorial clothes and gear.
+
+- type: entity
+  id: WardrobeFormal
+  parent: WardrobeBlack
+  name: formal closet
+  description: It's a storage unit for formal clothing.
+
+- type: entity
+  id: ClosetChef
+  parent: WardrobeBlack
+  name: chef's closet
+  description: It's a storage unit for foodservice garments and mouse traps.
+
+- type: entity
+  id: WardrobeChapel
+  parent: WardrobeBlack
+  name: chaplain's wardrobe
+  description: It's a storage unit for Nanotrasen-approved religious attire.
+
+- type: entity
+  id: ClosetLegal
+  parent: WardrobeBlue
+  name: legal closet
+  description: It's a storage unit for courtroom apparel and items.
+
+- type: entity
+  id: WardrobeCargo
+  parent: WardrobePrison
+  name: cargo wardrobe
+
+- type: entity
+  id: WardrobeSalvage
+  parent: WardrobeMixed
+  name: salvage wardrobe
+  description: Notably not salvaged.
+
+- type: entity
+  id: WardrobeEngineering
+  parent: WardrobeYellow
+  name: engineering wardrobe
+
+- type: entity
+  id: WardrobeMedicalDoctor
+  parent: WardrobeWhite
+  name: medical doctor's wardrobe
+
+- type: entity
+  id: WardrobeRobotics
+  parent: WardrobeBlack
+  name: robotics wardrobe
+
+- type: entity
+  id: WardrobeChemistry
+  parent: WardrobeWhite
+  name: chemistry wardrobe
+
+- type: entity
+  id: WardrobeGenetics
+  parent: WardrobeWhite
+  name: genetics wardrobe
+
+- type: entity
+  id: WardrobeVirology
+  parent: WardrobeWhite
+  name: virology wardrobe
+
+- type: entity
+  id: WardrobeScience
+  parent: WardrobeWhite
+  name: science wardrobe
+
+- type: entity
+  id: WardrobeBotanist
+  parent: WardrobeGreen
+  name: botanist wardrobe

@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/11402f6ae62facc2e8bcfa1f8ef5353b26663278",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "bar",
+      "directions": 4
+    },
+    {
+      "name": "bar-knocked",
+      "directions": 4
+    },
+    {
+      "name": "chair",
+      "directions": 4
+    },
+    {
+      "name": "chair-knocked",
+      "directions": 4
+    },
+    {
+      "name": "chair-greyscale",
+      "directions": 4
+    },
+    {
+      "name": "chair-greyscale-knocked",
+      "directions": 4
+    },
+    {
+      "name": "comfy",
+      "directions": 4
+    },
+    {
+      "name": "comfy-overlay",
+      "directions": 4
+    },
+    {
+      "name": "office-dark",
+      "directions": 4
+    },
+    {
+      "name": "office-white",
+      "directions": 4
+    },
+    {
+      "name": "shuttle",
+      "directions": 4
+    },
+    {
+      "name": "shuttle-overlay",
+      "directions": 4
+    },
+    {
+      "name": "stool",
+      "directions": 4
+    },
+    {
+      "name": "stool-knocked",
+      "directions": 4
+    },
+    {
+      "name": "wooden",
+      "directions": 4
+    },
+    {
+      "name": "wooden-wings",
+      "directions": 4
+    },
+    {
+      "name": "wooden-wings-knocked",
+      "directions": 4
+    },
+    {
+      "name": "ritual",
+      "directions": 4
+    },
+    {
+      "name": "cursed",
+      "directions": 4
+    }
+  ]
+}

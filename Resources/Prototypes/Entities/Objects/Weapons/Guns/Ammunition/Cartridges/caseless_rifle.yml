@@ -1,0 +1,55 @@
+- type: entity
+  id: BaseCartridgeCaselessRifle
+  name: cartridge (.25 rifle)
+  parent: BaseCartridge
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+      - Cartridge
+      - CartridgeCaselessRifle
+  - type: CartridgeAmmo
+    deleteOnSpawn: true
+  - type: Sprite
+    netsync: false
+    noRot: false
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Appearance
+  - type: SpentAmmoVisuals
+  - type: StaticPrice
+    price: 10
+
+- type: entity
+  id: CartridgeCaselessRifle
+  name: cartridge (.25 caseless)
+  parent: BaseCartridgeCaselessRifle
+  components:
+  - type: CartridgeAmmo
+    proto: BulletCaselessRifle
+
+- type: entity
+  id: CartridgeCaselessRifleHighVelocity
+  name: cartridge (.25 caseless high-velocity)
+  parent: BaseCartridgeCaselessRifle
+  components:
+  - type: CartridgeAmmo
+    proto: BulletCaselessRifleHighVelocity
+
+- type: entity
+  id: CartridgeCaselessRiflePractice
+  name: cartridge (.25 caseless practice)
+  parent: BaseCartridgeCaselessRifle
+  components:
+  - type: CartridgeAmmo
+    proto: BulletCaselessRiflePractice
+
+- type: entity
+  id: CartridgeCaselessRifleRubber
+  name: cartridge (.25 caseless rubber)
+  parent: BaseCartridgeCaselessRifle
+  components:
+  - type: CartridgeAmmo
+    proto: BulletCaselessRifleRubber

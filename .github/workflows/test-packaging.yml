@@ -1,0 +1,70 @@
+﻿name: Test Packaging
+
+on:
+  push:
+    branches: [ master, staging, trying ]
+    paths:
+      - '**.cs'
+      - '**.csproj'
+      - '**.sln'
+      - '**.git**'
+      - '**.yml'
+      # no docs on which one of these is supposed to work, so
+      # why not just do both
+      - 'RobustToolbox'
+      - 'RobustToolbox/**'
+  merge_group:
+  pull_request:
+    types: [ opened, reopened, synchronize, ready_for_review ]
+    branches: [ master ]
+    paths:
+      - '**.cs'
+      - '**.csproj'
+      - '**.sln'
+      - '**.git**'
+      - '**.yml'
+      - 'RobustToolbox'
+      - 'RobustToolbox/**'
+
+jobs:
+  build:
+    name: Test Packaging
+    if: github.actor != 'PJBot' && github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Master
+        uses: actions/checkout@v2
+
+      - name: Setup Submodule
+        run: |
+          git submodule update --init --recursive
+
+      - name: Pull engine updates
+        uses: space-wizards/submodule-dependency@v0.1.5
+
+      - name: Update Engine Submodules
+        run: |
+          cd RobustToolbox/
+          git submodule update --init --recursive
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Install dependencies
+        run: dotnet restore
+
+      - name: Package client
+        run: |
+          Tools/package_server_build.py -p win-x64 linux-x64 osx-x64 linux-arm64
+          Tools/package_client_build.py
+
+      - name: Update Build Info
+        run: Tools/gen_build_info.py
+
+      - name: Shuffle files around
+        run: |
+          mkdir "release/${{ github.sha }}"
+          mv release/*.zip "release/${{ github.sha }}"

@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "license": "CC-BY-NC-SA-3.0",
+  "copyright": "taken from /tg/ station at commit https://github.com/tgstation/tgstation/commit/02756c2bc2cf3000080d030955e994242bab39b5",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "magic",
+      "directions": 4
+    },
+    {
+      "name": "tech",
+      "directions": 4
+    },
+    {
+      "name": "miner",
+      "directions": 4
+    },
+    {
+      "name": "magic_flare",
+      "directions": 4
+    },
+    {
+      "name": "magic_base",
+      "directions": 4
+    },
+    {
+      "name": "miner_flare",
+      "directions": 4
+    },
+    {
+      "name": "miner_base",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "tech_flare",
+      "directions": 4
+    },
+    {
+      "name": "tech_base",
+      "directions": 4
+    }
+  ]
+}

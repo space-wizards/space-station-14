@@ -1,0 +1,126 @@
+# Rockets
+
+- type: entity
+  id: CartridgeRocket
+  name: PG-7VL grenade
+  parent: BaseItem
+  description: A 1.5 warhead designed for the RPG-7 launcher. Has tubular shape.
+  components:
+  - type: Tag
+    tags:
+      - CartridgeRocket
+  - type: Item
+    size: 5
+  - type: CartridgeAmmo
+    proto: BulletRocket
+    deleteOnSpawn: true
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+    state: rpg
+  - type: StaticPrice
+    price: 20
+
+- type: entity
+  id: CartridgeRocketSlow
+  name: PG-7VL grenade "Snail-Rocket"
+  parent: BaseItem
+  description: A 1.5 warhead designed for the RPG-7 launcher. It's unusually slow.
+  components:
+    - type: Tag
+      tags:
+        - CartridgeRocket
+    - type: Item
+      size: 5
+    - type: CartridgeAmmo
+      proto: BulletWeakRocket
+      deleteOnSpawn: true
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+      state: frag
+    - type: StaticPrice
+      price: 20
+
+# Grenades
+
+- type: entity
+  id: BaseGrenade
+  name: base grenade
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - Grenade
+  - type: Item
+    size: 5
+  - type: Sprite
+    netsync: false
+
+- type: entity
+  id: GrenadeBaton
+  name: baton grenade
+  parent: BaseGrenade
+  components:
+  - type: CartridgeAmmo
+    proto: BulletGrenadeBaton
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+    layers:
+    - state: baton
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Appearance
+  - type: SpentAmmoVisuals
+    state: baton
+    suffix: false
+
+- type: entity
+  id: GrenadeBlast
+  name: blast grenade
+  parent: BaseGrenade
+  components:
+  - type: CartridgeAmmo
+    proto: BulletGrenadeBlast
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+    layers:
+    - state: blast
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Appearance
+  - type: SpentAmmoVisuals
+    state: blast
+    suffix: false
+
+- type: entity
+  id: GrenadeFlash
+  name: flash grenade
+  parent: BaseGrenade
+  components:
+  - type: CartridgeAmmo
+    proto: BulletGrenadeFlash
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+    layers:
+    - state: flash
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Appearance
+  - type: SpentAmmoVisuals
+    state: flash
+    suffix: false
+
+- type: entity
+  id: GrenadeFrag
+  name: frag grenade
+  parent: BaseGrenade
+  components:
+  - type: CartridgeAmmo
+    proto: BulletGrenadeFrag
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+    layers:
+    - state: frag
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Appearance
+  - type: SpentAmmoVisuals
+    state: frag
+    suffix: false

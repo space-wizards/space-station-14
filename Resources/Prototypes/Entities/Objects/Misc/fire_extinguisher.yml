@@ -1,0 +1,70 @@
+- type: entity
+  name: fire extinguisher
+  parent: BaseItem
+  id: FireExtinguisher
+  description: It extinguishes fires.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Misc/fire_extinguisher.rsi
+    layers:
+        - state: fire_extinguisher_closed
+          map: [ "enabled" ]
+  - type: Item
+    sprite: Objects/Misc/fire_extinguisher.rsi
+    size: 10
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 100
+        reagents:
+        - ReagentId: Water
+          Quantity: 100
+  - type: RefillableSolution
+    solution: spray
+  - type: DrainableSolution
+    solution: spray
+  - type: ItemCooldown
+  - type: Spray
+    spraySound:
+      path: /Audio/Effects/extinguish.ogg
+    sprayedPrototype: ExtinguisherSpray
+    vaporAmount: 3
+    vaporSpread: 90
+    sprayVelocity: 2.0
+    sprayTimeAlive: 1.5
+    transferAmount: 5
+    impulse: 50.0
+  - type: FireExtinguisher
+    hasSafety: true
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
+    soundHit:
+      path: /Audio/Weapons/smash.ogg
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.FireExtinguisherVisuals.Safety:
+        enabled:
+          True: { state: fire_extinguisher_closed }
+          False: { state: fire_extinguisher_open }
+
+- type: entity
+  name: extinguisher spray
+  id: ExtinguisherSpray
+  parent: Vapor
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Effects/extinguisherSpray.rsi
+    layers:
+      - state: extinguish
+        map: [ "enum.VaporVisualLayers.Base" ]
+  - type: Physics
+    bodyType: Dynamic
+  - type: Appearance
+  - type: VaporVisuals
+    animationTime: 0.8
+    animationState: extinguish

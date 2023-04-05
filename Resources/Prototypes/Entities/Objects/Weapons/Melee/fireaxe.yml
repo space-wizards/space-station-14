@@ -1,0 +1,56 @@
+- type: entity
+  name: fireaxe
+  parent: BaseItem
+  id: FireAxe
+  description: Truly, the weapon of a madman. Who would think to fight fire with an axe?
+  components:
+  - type: Tag
+    tags:
+    - FireAxe
+  - type: Sharp
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/fireaxe.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 0.75
+    damage:
+      types:
+        # axes are kinda like sharp hammers, you know?
+        Blunt: 5
+        Slash: 13
+        Structural: 7
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 2.5
+        Slash: 10.5
+        Structural: 60
+  - type: Item
+    size: 150
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/fireaxe.rsi
+    quickEquip: false
+    slots:
+    - back
+  - type: Tool
+    qualities:
+      - Prying
+  - type: TilePrying
+
+- type: entity
+  id: FireAxeFlaming
+  name: fire axe
+  parent: FireAxe
+  description: Why fight fire with an axe when you can fight with fire and axe?
+  components:
+  - type: IgniteOnMeleeHit
+    fireStacks: 1
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/fireaxeflaming.rsi
+    state: icon
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/fireaxeflaming.rsi
+    quickEquip: false
+    slots:
+    - back

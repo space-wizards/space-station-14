@@ -1,0 +1,24 @@
+# Devices which are not portable but don't link up to anything
+- type: entity
+  id: AtmosDeviceFanTiny
+  name: tiny fan
+  description: A tiny fan, releasing a thin gust of air.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/tinyfan.rsi
+    state: icon
+    netsync: false
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+  - type: Airtight
+    noAirWhenFullyAirBlocked: false
+  - type: Clickable

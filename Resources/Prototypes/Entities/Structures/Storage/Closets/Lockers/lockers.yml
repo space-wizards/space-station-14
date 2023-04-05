@@ -1,0 +1,381 @@
+- type: entity
+  id: LockerBooze
+  parent: LockerBase
+  name: booze storage
+  description: This is where the bartender keeps the booze.
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: cabinet
+      state_open: cabinet_open
+      state_closed: cabinet_door
+
+  - type: AccessReader
+    access: [["Bar"]]
+  - type: EntityStorage
+    closeSound:
+      path: /Audio/Effects/woodenclosetclose.ogg
+    openSound:
+      path: /Audio/Effects/woodenclosetopen.ogg
+
+# Cargo
+- type: entity
+  id: LockerQuarterMaster
+  parent: LockerBase
+  name: quartermaster's locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: qm
+      state_open: qm_open
+      state_closed: qm_door
+  - type: AccessReader
+    access: [["Quartermaster"]]
+
+- type: entity
+  id: LockerSalvageSpecialist
+  parent: LockerBase
+  name: salvage specialist's equipment
+  description: Nevermind the pickaxe.
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: mining
+      state_open: mining_open
+      state_closed: mining_door
+  - type: AccessReader
+    access: [["Salvage"]]
+
+# Command
+- type: entity
+  id: LockerCaptain
+  parent: LockerBaseSecure
+  name: captain's locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: cap
+      state_open: cap_open
+      state_closed: cap_door
+  - type: AccessReader
+    access: [["Captain"]]
+
+- type: entity
+  id: LockerHeadOfPersonnel
+  parent: LockerBaseSecure
+  name: head of personnel's locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: hop
+      state_open: hop_open
+      state_closed: hop_door
+  - type: AccessReader
+    access: [["HeadOfPersonnel"]]
+
+# CE
+- type: entity
+  id: LockerChiefEngineer
+  parent: LockerBaseSecure
+  name: chief engineer's locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: ce
+      state_open: ce_open
+      state_closed: ce_door
+  - type: AccessReader
+    access: [ [ "ChiefEngineer" ] ]
+
+# Electrical supplies
+- type: entity
+  id: LockerElectricalSupplies
+  parent: LockerBase
+  name: electrical supplies locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: eng
+      state_open: eng_open
+      state_closed: eng_elec_door
+  - type: AccessReader
+    access: [ [ "Engineering" ] ]
+
+# Welding supplies
+- type: entity
+  id: LockerWeldingSupplies
+  parent: LockerBase
+  name: welding supplies locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: eng
+      state_open: eng_open
+      state_closed: eng_weld_door
+  - type: AccessReader
+    access: [ [ "Engineering" ] ]
+
+# Atmos tech
+- type: entity
+  id: LockerAtmospherics
+  parent: LockerBase
+  name: atmospheric technician's locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: atmos
+      state_open: atmos_open
+      state_closed: atmos_door
+  - type: AccessReader
+    access: [ [ "Atmospherics" ] ]
+
+# Engineer
+- type: entity
+  id: LockerEngineer
+  parent: LockerBase
+  name: engineer's locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: eng_secure
+      state_open: eng_secure_open
+      state_closed: eng_secure_door
+  - type: AccessReader
+    access: [ [ "Engineering" ] ]
+
+# Freezer
+- type: entity
+  id: LockerFreezer
+  parent: LockerBase
+  name: freezer
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: freezer
+      state_open: freezer_open
+      state_closed: freezer_door
+  - type: AccessReader
+    access: [ [ "Kitchen" ] ]
+  - type: ExplosionResistance
+    resistance: 0.90
+  - type: AntiRottingContainer
+
+# Botanist
+- type: entity
+  id: LockerBotanist
+  parent: LockerBase
+  name: botanist's locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: hydro
+      state_open: hydro_open
+      state_closed: hydro_door
+  - type: AccessReader
+    access: [ [ "Hydroponics" ] ]
+
+# Medicine
+- type: entity
+  id: LockerMedicine
+  parent: LockerBase
+  name: medicine locker
+  description: Filled to the brim with medical junk.
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: med
+      state_open: med_open
+      state_closed: med_door
+  - type: AccessReader
+    access: [ [ "Medical" ] ]
+
+# Medical doctor
+- type: entity
+  id: LockerMedical
+  parent: LockerBase
+  name: medical doctor's locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: med_secure
+      state_open: med_secure_open
+      state_closed: med_secure_door
+  - type: AccessReader
+    access: [ [ "Medical" ] ]
+
+# Chemical
+- type: entity
+  id: LockerChemistry
+  parent: LockerBase
+  name: chemical locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: med
+      state_open: med_open
+      state_closed: chemical_door
+  - type: AccessReader
+    access: [ [ "Chemistry" ] ]
+
+# CMO
+- type: entity
+  id: LockerChiefMedicalOfficer
+  parent: LockerBaseSecure
+  name: chief medical officer's locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: cmo
+      state_open: cmo_open
+      state_closed: cmo_door
+  - type: AccessReader
+    access: [ [ "ChiefMedicalOfficer" ] ]
+
+# Science
+- type: entity
+  id: LockerResearchDirector
+  parent: LockerBase
+  name: research director's locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: rd
+      state_open: rd_open
+      state_closed: rd_door
+  - type: AccessReader
+    access: [ [ "ResearchDirector" ] ]
+
+- type: entity
+  id: LockerScientist
+  parent: LockerBase
+  name: scientist's locker
+  components:
+    - type: Appearance
+      visuals:
+        - type: StorageVisualizer
+          state: science
+          state_open: science_open
+          state_closed: science_door
+    - type: AccessReader
+      access: [ [ "Research" ] ]
+
+# HoS
+- type: entity
+  id: LockerHeadOfSecurity
+  parent: LockerBaseSecure
+  name: head of security's locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: hos
+      state_open: hos_open
+      state_closed: hos_door
+  - type: AccessReader
+    access: [["HeadOfSecurity"]]
+
+# Warden
+- type: entity
+  id: LockerWarden
+  parent: LockerBaseSecure
+  name: warden's locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: warden
+      state_open: warden_open
+      state_closed: warden_door
+  - type: AccessReader
+    access: [["Armory"]]
+
+# Security Officer
+- type: entity
+  id: LockerSecurity
+  parent: LockerBaseSecure
+  name: security officer's locker
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: sec
+      state_open: sec_open
+      state_closed: sec_door
+  - type: AccessReader
+    access: [["Security"]]
+
+# Detective
+- type: entity
+  id: LockerDetective
+  parent: LockerBooze
+  name: detective's cabinet
+  description: Usually cold and empty... like your heart.
+  components:
+  - type: AccessReader
+    access: [["Security"]] # TODO access [["Detective"]]
+
+- type: entity
+  id: LockerEvidence
+  parent: LockerSecurity
+  name: evidence locker
+  description: To store bags of bullet casings and detainee belongings.
+  components:
+  - type: AccessReader
+    access: [["Security"]]
+
+# Syndicate
+- type: entity
+  id: LockerSyndicatePersonal
+  name: armory closet
+  parent: LockerBaseSecure
+  description: It's a personal storage unit for operative gear.
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: syndicate
+      state_open: syndicate_open
+      state_closed: syndicate_door
+
+# Bluespace
+- type: entity
+  id: LockerBluespaceStation
+  name: bluespace locker
+  suffix: once to station
+  parent: LockerSyndicatePersonal
+  description: Advanced locker technology.
+  components:
+    - type: BluespaceLocker
+      minBluespaceLinks: 1
+      behaviorProperties:
+        delay: 1
+        actOnOpen: false
+        bluespaceEffectOnInit: true
+        bluespaceEffectOnTeleportSource: true
+        bluespaceEffectOnTeleportTarget: true
+        destroyAfterUses: 1
+        destroyAfterUsesMinItemsToCountUse: 1
+        destroyType: Delete
+      autoLinksUseProperties: true
+      autoLinkProperties:
+        actOnOpen: false
+        actOnClose: false
+        destroyAfterUses: 2
+        destroyType: DeleteComponent

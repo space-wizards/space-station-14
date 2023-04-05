@@ -1,0 +1,18 @@
+- type: entity
+  abstract: true
+  parent: Clothing
+  id: ClothingNeckBase
+  components:
+  - type: Item
+    size: 10
+  - type: Clothing
+    quickEquip: true
+    slots:
+    - neck
+  - type: Sprite
+    state: icon
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialCloth1
+      amount: 2

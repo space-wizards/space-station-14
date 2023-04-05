@@ -1,0 +1,73 @@
+﻿<DefaultWindow xmlns="https://spacestation14.io"
+            xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+            Title="{Loc 'microwave-menu-title'}"
+            SetSize="512 256"
+            MinSize="512 256">
+    <BoxContainer Orientation="Horizontal">
+        <ItemList Name="IngredientsList"
+                  Access="Public"
+                  VerticalExpand="True"
+                  HorizontalExpand="True"
+                  SelectMode="Button"
+                  SizeFlagsStretchRatio="2"
+                  MinSize="100 128">
+            <!-- Ingredients are added here by code -->
+        </ItemList>
+        <BoxContainer Orientation="Vertical"
+                      MinWidth="176"
+                      VerticalExpand="True"
+                      HorizontalExpand="True">
+            <BoxContainer Orientation="Vertical"
+                          Align="Center"
+                          SizeFlagsStretchRatio="3">
+                <Button Name="StartButton"
+                        Access="Public"
+                        Text="{Loc 'microwave-menu-start-button'}"
+                        TextAlign="Center" />
+                <Button Name="EjectButton"
+                        Access="Public"
+                        Text="{Loc 'microwave-menu-eject-all-text'}"
+                        ToolTip="{Loc 'microwave-menu-eject-all-tooltip'}"
+                        TextAlign="Center" />
+            </BoxContainer>
+            <Control MinSize="0 15" />
+            <PanelContainer VerticalExpand="True"
+                            HorizontalExpand="True">
+                <PanelContainer VerticalExpand="True"
+                                ModulateSelfOverride="#FF0000"
+                                MinSize="100 128">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#00000080" />
+                    </PanelContainer.PanelOverride>
+                    <BoxContainer Orientation="Vertical">
+                        <PanelContainer>
+                            <PanelContainer.PanelOverride>
+                                <gfx:StyleBoxFlat BackgroundColor="#80808032" />
+                            </PanelContainer.PanelOverride>
+                            <Label Name="CookTimeInfoLabel"
+                                   Access="Public"
+                                   Align="Center"
+                                   Modulate="#FFFFFF"
+                                   VAlign="Center" />
+                        </PanelContainer>
+                        <ScrollContainer VerticalExpand="True">
+                            <BoxContainer Name="CookTimeButtonVbox"
+                                          Access="Public"
+                                          Orientation="Vertical"
+                                          VerticalExpand="True"
+                                          Align="Center">
+                                <!-- Cook time buttons are added here by code -->
+                            </BoxContainer>
+                        </ScrollContainer>
+                    </BoxContainer>
+                </PanelContainer>
+            </PanelContainer>
+        </BoxContainer>
+    </BoxContainer>
+    <PanelContainer Name="DisableCookingPanelOverlay"
+                    MouseFilter="Stop">
+        <PanelContainer.PanelOverride>
+            <gfx:StyleBoxFlat BackgroundColor="#00000099" />
+        </PanelContainer.PanelOverride>
+    </PanelContainer>
+</DefaultWindow>

@@ -1,0 +1,476 @@
+﻿- type: reagent
+  id: Toxin
+  name: reagent-name-toxin
+  group: Toxins
+  desc: reagent-desc-toxin
+  flavor: bitter
+  color: "#cf3600"
+  physicalDesc: reagent-physical-desc-opaque
+  plantMetabolism:
+  - !type:PlantAdjustToxins
+    amount: 10
+  - !type:PlantAdjustHealth
+    amount: -5
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 2
+
+- type: reagent
+  id: CarpoToxin
+  name: reagent-name-carpotoxin
+  group: Toxins
+  desc: reagent-desc-carpotoxin
+  flavor: bitter
+  color: "#e2a38c"
+  physicalDesc: reagent-physical-desc-exotic-smelling
+  plantMetabolism:
+  - !type:PlantAdjustToxins
+    amount: 10
+  - !type:PlantAdjustHealth
+    amount: -5
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 4
+      - !type:PopupMessage
+        type: Local
+        visualType: MediumCaution
+        messages: [ "generic-reagent-effect-burning-insides" ]
+        probability: 0.33
+
+
+- type: reagent
+  id: ChloralHydrate
+  name: reagent-name-chloral-hydrate
+  group: Toxins
+  desc: reagent-desc-chloral-hydrate
+  flavor: bitter
+  color: "#000067"
+  physicalDesc: reagent-physical-desc-nondescript
+  metabolisms:
+    Poison:
+      effects:
+      - !type:MovespeedModifier
+        walkSpeedModifier: 0.65
+        sprintSpeedModifier: 0.65
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          reagent: ChloralHydrate
+          min: 15
+        key: ForcedSleep
+        component: ForcedSleeping
+        refresh: false
+        type: Add
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          reagent: ChloralHydrate
+          min: 20
+        damage:
+          types:
+            Poison: 1.5
+
+- type: reagent
+  id: Mold
+  name: reagent-name-mold
+  group: Toxins
+  desc: reagent-desc-mold
+  flavor: bitter
+  color: "#8a9a5b"
+  physicalDesc: reagent-physical-desc-fuzzy
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
+      - !type:ChemCauseRandomDisease
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Mold
+          min: 1
+        diseases:
+          - VentCough
+          - SpaceCold
+          - SpaceFlu
+          - BirdFlew
+          - Plague
+          - TongueTwister
+          - MemeticAmirmir
+
+- type: reagent
+  id: PolytrinicAcid
+  name: reagent-name-polytrinic-acid
+  group: Toxins
+  desc: reagent-desc-polytrinic-acid
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: acidic
+  color: "#a1000b"
+  boilingPoint: 78.2 # This isn't a real chemical...
+  meltingPoint: -19.4
+  plantMetabolism:
+  - !type:PlantAdjustToxins
+    amount: 20
+  - !type:PlantAdjustWeeds
+    amount: -4
+  - !type:PlantAdjustHealth
+    amount: -8
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Caustic: 0.5
+      - !type:Emote
+        emote: Scream
+        probability: 0.3
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Caustic: 2
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "generic-reagent-effect-burning-insides" ]
+        probability: 0.33
+
+- type: reagent
+  id: FluorosulfuricAcid
+  name: reagent-name-fluorosulfuric-acid
+  group: Toxins
+  desc: reagent-desc-fluorosulfuric-acid
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: acidic
+  color: "#5050ff"
+  boilingPoint: 165
+  meltingPoint: -87
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Caustic: 0.3
+      - !type:Emote
+        emote: Scream
+        probability: 0.2
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Caustic: 2
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "generic-reagent-effect-burning-insides" ]
+        probability: 0.33
+
+- type: reagent
+  id: SulfuricAcid
+  name: reagent-name-sulfuric-acid
+  group: Toxins
+  desc: reagent-desc-sulfuric-acid
+  physicalDesc: reagent-physical-desc-oily
+  flavor: acidic
+  color: "#BF8C00"
+  boilingPoint: 337.0
+  meltingPoint: 10.31
+  plantMetabolism:
+  - !type:PlantAdjustToxins
+    amount: 10
+  - !type:PlantAdjustWeeds
+    amount: -2
+  - !type:PlantAdjustHealth
+    amount: -5
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Caustic: 0.1
+      - !type:Emote
+        emote: Scream
+        probability: 0.1
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Caustic: 2
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "generic-reagent-effect-burning-insides" ]
+        probability: 0.33
+
+- type: reagent
+  id: UnstableMutagen
+  name: reagent-name-unstable-mutagen
+  group: Toxins
+  desc: reagent-desc-unstable-mutagen
+  physicalDesc: reagent-physical-desc-glowing
+  flavor: bitter
+  color: "#00ff5f"
+  boilingPoint: 340282300000000000000000000000000000000 # Ethidium bromide, which doesn't boil.
+  meltingPoint: 261.0
+  plantMetabolism:
+  - !type:PlantAdjustMutationLevel
+    amount: 1
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Radiation: 3
+
+- type: reagent
+  id: HeartbreakerToxin
+  name: reagent-name-heartbreaker-toxin
+  group: Toxins
+  desc: reagent-desc-heartbreaker-toxin
+  physicalDesc: reagent-physical-desc-strong-smelling
+  color: "#5f959c"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Asphyxiation: 2
+  plantMetabolism:
+  - !type:PlantAdjustToxins
+    amount: 10
+
+- type: reagent
+  id: Lexorin
+  name: reagent-name-lexorin
+  group: Toxins
+  desc: reagent-desc-lexorin
+  physicalDesc: reagent-physical-desc-pungent
+  color: "#6b0007"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Airloss: 7
+
+- type: reagent
+  id: MindbreakerToxin
+  name: reagent-name-mindbreaker-toxin
+  group: Toxins
+  desc: reagent-desc-mindbreaker-toxin
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: bitter
+  color: "#77b58e"
+  plantMetabolism:
+  - !type:PlantAdjustToxins
+    amount: 10
+  # TODO hallucinations
+
+- type: reagent
+  id: Histamine
+  name: reagent-name-histamine
+  group: Toxins
+  desc: reagent-desc-histamine
+  physicalDesc: reagent-physical-desc-abrasive
+  color: "#FA6464"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        probability: 0.1
+        damage:
+          groups:
+            Brute: 2
+      # todo: cough, sneeze
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 45
+        damage:
+          groups:
+            Brute: 2
+            Toxin: 2
+            Airloss: 2
+      - !type:PopupMessage
+        type: Local
+        messages: [ "histamine-effect-light-itchiness" ]
+        probability: 0.1
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentThreshold
+          min: 45
+        type: Local
+        visualType: Medium
+        messages: [ "histamine-effect-heavy-itchiness" ]
+        probability: 0.2
+
+- type: reagent
+  id: Theobromine
+  name: reagent-name-theobromine
+  group: Toxins
+  desc: reagent-desc-theobromine
+  physicalDesc: reagent-physical-desc-grainy
+  color: "#f5f5f5"
+  meltingPoint: 351
+  boilingPoint: 554 # I'm not a chemist, but it boils at 295, lower than melting point, idk how it works so I gave it higher value
+  metabolisms:
+    Poison:
+      metabolismRate: 0.05
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Animal # Applying damage to the mobs with lower metabolism capabilities
+        damage:
+          types:
+            Poison: 0.4
+      - !type:ChemVomit
+        probability: 0.04 #Scaled for time, not metabolismrate.
+        conditions:
+          - !type:ReagentThreshold
+            min: 3
+          - !type:OrganType
+            type: Animal
+
+- type: reagent
+  id: Amatoxin
+  name: reagent-name-amatoxin
+  group: Toxins
+  desc: reagent-desc-amatoxin
+  physicalDesc: reagent-physical-desc-nondescript
+  color: "#D6CE7B"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 6
+
+- type: reagent
+  id: VentCrud
+  name: reagent-name-vent-crud
+  desc: reagent-desc-vent-crud
+  physicalDesc: reagent-physical-desc-sticky
+  flavor: bitter
+  color: "#000000"
+  metabolisms:
+    Poison:
+      effects:
+        - !type:HealthChange
+          damage:
+            types:
+              Poison: 2
+        - !type:ChemCauseDisease ##Since this mostly just comes from the event you won't ingest that much
+          causeChance: 0.6
+          disease: VentCough
+
+- type: reagent
+  id: Corpium
+  name: reagent-name-corpium
+  desc: reagent-desc-corpium
+  physicalDesc: reagent-physical-desc-necrotic
+  flavor: bitter
+  color: "#7668a1"
+  metabolisms:
+    Poison:
+      effects:
+        - !type:HealthChange
+          damage:
+            types:
+              Cellular: 1
+        - !type:ChemCauseDisease
+          causeChance: 1
+          disease: ActiveZombieVirus
+
+- type: reagent
+  id: UncookedAnimalProteins
+  name: reagent-name-uncooked-animal-proteins
+  desc: reagent-desc-uncooked-animal-proteins
+  physicalDesc: reagent-physical-desc-clumpy
+  flavor: bitter
+  color: "#FFFFE5"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Human
+        damage:
+          types:
+            Poison: 2
+      - !type:AdjustReagent
+        conditions:
+        - !type:OrganType
+          type: Animal
+        reagent: Protein
+        amount: 0.5
+
+- type: reagent
+  id: Allicin
+  name: reagent-name-allicin
+  desc: reagent-desc-allicin
+  physicalDesc: reagent-physical-desc-pungent
+  flavor: bitter
+  color: "#F2E9D2"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.05
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Animal
+        damage:
+          types:
+            Poison: 0.06
+
+- type: reagent
+  id: Pax
+  name: reagent-name-pax
+  desc: reagent-desc-pax
+  physicalDesc: reagent-physical-desc-soothing
+  color: "#AAAAAA"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:GenericStatusEffect
+        key: Pacified
+        component: Pacified
+        refresh: false
+        type: Add

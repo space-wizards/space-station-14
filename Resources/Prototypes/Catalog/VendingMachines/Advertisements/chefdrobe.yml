@@ -1,0 +1,4 @@
+- type: advertisementsPack
+  id: ChefDrobeAds
+  advertisements:
+    - advertisement-chefdrobe-1

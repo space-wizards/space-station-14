@@ -1,0 +1,18 @@
+- type: entity
+  id: ForensicPad
+  name: forensic pad
+  parent: BaseItem
+  description: A forensic pad for collecting fingerprints or fibers.
+  components:
+  - type: Item
+    size: 3
+  - type: ForensicPad
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    netsync: false
+    layers:
+    - state: paper
+      color: yellow
+  - type: Tag
+    tags:
+    - Document

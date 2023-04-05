@@ -1,0 +1,68 @@
+- type: Tag
+  id: Cigar
+
+- type: entity
+  id: Cigar
+  parent: BaseCigar
+  name: cigar
+  description: "A brown roll of tobacco and... well, you're not quite sure."
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Smokeables/Cigars/cigar.rsi
+    netsync: false
+    state: unlit-icon
+  - type: Tag
+    tags:
+      - Cigar
+      - Trash
+  - type: Clothing
+    sprite: Objects/Consumable/Smokeables/Cigars/cigar.rsi
+    slots: [ mask ]
+    equippedPrefix: unlit
+  - type: Item
+    size: 1
+
+- type: entity
+  id: CigarSpent
+  parent: Cigar
+  suffix: spent
+  components:
+  - type: Sprite
+    state: burnt-icon
+  - type: Smokable
+    state: Burnt
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 20
+
+- type: entity
+  id: CigarGold
+  parent: Cigar
+  name: premium Havanian cigar
+  description: A cigar fit for only the best of the best.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Smokeables/Cigars/cigar-gold.rsi
+    netsync: false
+    state: unlit-icon
+  - type: Clothing
+    sprite: Objects/Consumable/Smokeables/Cigars/cigar-gold.rsi
+    slots: [ mask ]
+    equippedPrefix: unlit
+  - type: Item
+    size: 1
+
+- type: entity
+  id: CigarGoldSpent
+  parent: CigarGold
+  suffix: spent
+  components:
+  - type: Sprite
+    state: burnt-icon
+  - type: Smokable
+    state: Burnt
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 20
