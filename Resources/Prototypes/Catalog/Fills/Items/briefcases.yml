@@ -1,0 +1,10 @@
+- type: entity
+  id: BriefcaseBrownFilled
+  name: brown briefcase
+  parent: BriefcaseBrown
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: Paper
+        amount: 3

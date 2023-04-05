@@ -1,0 +1,116 @@
+- type: entity
+  id: FireAlarm
+  name: fire alarm
+  description: A fire alarm. Spicy!
+  components:
+  - type: WallMount
+  - type: ApcPowerReceiver
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
+  - type: ExtensionCableReceiver
+  - type: DeviceNetwork
+    deviceNetId: AtmosDevices
+    receiveFrequencyId: AtmosMonitor
+    transmitFrequencyId: AtmosMonitor
+    prefix: device-address-prefix-fire-alarm
+    sendBroadcastAttemptEvent: true
+    examinableAddress: true
+  - type: DeviceList
+  - type: WiredNetworkConnection
+  - type: DeviceNetworkRequiresPower
+  - type: AtmosDevice
+  - type: AtmosAlarmable
+    syncWith:
+      - FireAlarm
+      - AirSensor
+      - GasVent
+      - GasScrubber
+    monitorAlertTypes:
+      - Temperature
+  - type: AtmosAlarmableVisuals
+    layerMap: "fireAlarmState"
+    alarmStates:
+      Normal: fire_off
+      Warning: fire_off # shouldn't be alarming at a warning
+      Danger: fire_on
+      Emagged: fire_emagged
+    hideOnDepowered: [ "fireAlarmState" ]
+  - type: Tag
+    tags:
+      - FireAlarm
+  - type: Clickable
+  - type: InteractionOutline
+  - type: FireAlarm
+  - type: AccessReader
+    access: [ [ "Atmospherics" ] ]
+  - type: Appearance
+  - type: WiresVisuals
+  - type: AlertLevelDisplay
+    alertVisuals:
+      green: fire_0
+      blue: fire_1
+      red: fire_2
+      violet: fire_1
+      yellow: fire_1
+      delta: fire_3
+  - type: UserInterface
+    interfaces:
+    - key: enum.WiresUiKey.Key
+      type: WiresBoundUserInterface
+  - type: Wires
+    BoardName: "Fire Alarm"
+    LayoutId: FireAlarm
+  - type: Sprite
+    sprite: Structures/Wallmounts/air_monitors.rsi
+    layers:
+    - state: fire0
+      map: ["fireAlarmBase"]
+    - state: fire_off
+      map: ["fireAlarmState"]
+    - state: fire_b2
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Transform
+    anchored: true
+  - type: Construction
+    graph: FireAlarm
+    node: fire_alarm
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 80
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              path: /Audio/Effects/metalbreak.ogg
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
+
+- type: entity
+  id: FireAlarmAssembly
+  name: fire alarm assembly
+  description: A fire alarm assembly. Very mild.
+  components:
+  - type: WallMount
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Structures/Wallmounts/air_monitors.rsi
+    state: fire_b1
+  - type: Construction
+    graph: FireAlarm
+    node: assembly
+  - type: Transform
+    anchored: true
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount

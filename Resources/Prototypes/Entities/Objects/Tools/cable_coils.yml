@@ -1,0 +1,137 @@
+# If you're looking at the rsi for this file, you'll probably be confused why
+# I didn't just use an alpha for most of this stuff. Well icons don't have the
+# ability to have applied colors yet in GUIs. And also inhands... -Swept
+
+- type: entity
+  id: CableStack
+  noSpawn: true
+  parent: BaseItem
+  name: cable stack
+  suffix: Full
+  components:
+  - type: Tag
+    tags:
+    - CableCoil
+    - DroneUsable
+  - type: Stack
+    stackType: Cable
+  - type: Sprite
+    sprite: Objects/Tools/cable-coils.rsi
+    netsync: false
+  - type: Item
+    sprite: Objects/Tools/cable-coils.rsi
+  - type: CablePlacer
+  - type: Clickable
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 5
+
+- type: entity
+  id: CableHVStack
+  parent: CableStack
+  name: HV cable coil
+  suffix: Full
+  description: HV cables for connecting engines to heavy duty machinery, SMESes, and substations.
+  components:
+  - type: Stack
+    stackType: CableHV
+  - type: Sprite
+    state: coilhv-30
+  - type: Item
+    size: 10
+    heldPrefix: coilhv
+  - type: CablePlacer
+    cablePrototypeID: CableHV
+    blockingWireType: HighVoltage
+  - type: Appearance
+    visuals:
+      - type: StackVisualizer
+        stackLayers:
+          - coilhv-10
+          - coilhv-20
+          - coilhv-30
+
+- type: entity
+  parent: CableHVStack
+  id: CableHVStack1
+  suffix: 1
+  components:
+  - type: Sprite
+    state: coilhv-10
+  - type: Item
+    size: 3
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: CableStack
+  id: CableMVStack
+  name: MV cable coil
+  suffix: Full
+  description: MV cables for connecting substations to APCs, and also powering a select few things like emitters.
+  components:
+  - type: Stack
+    stackType: CableMV
+  - type: Sprite
+    state: coilmv-30
+  - type: Item
+    size: 10
+    heldPrefix: coilmv
+  - type: CablePlacer
+    cablePrototypeID: CableMV
+    blockingWireType: MediumVoltage
+  - type: Appearance
+    visuals:
+      - type: StackVisualizer
+        stackLayers:
+          - coilmv-10
+          - coilmv-20
+          - coilmv-30
+
+- type: entity
+  parent: CableMVStack
+  id: CableMVStack1
+  suffix: 1
+  components:
+  - type: Sprite
+    state: coilmv-10
+  - type: Item
+    size: 3
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: CableStack
+  id: CableApcStack
+  name: LV cable coil
+  description: Low-Voltage stack of wires for connecting APCs to machines and other purposes.
+  suffix: Full
+  components:
+  - type: Sprite
+    state: coillv-30
+  - type: Item
+    size: 10
+    heldPrefix: coillv
+  - type: CablePlacer
+    cablePrototypeID: CableApcExtension
+    blockingWireType: Apc
+  - type: Appearance
+    visuals:
+      - type: StackVisualizer
+        stackLayers:
+          - coillv-10
+          - coillv-20
+          - coillv-30
+
+- type: entity
+  parent: CableApcStack
+  id: CableApcStack1
+  suffix: 1
+  components:
+  - type: Sprite
+    state: coillv-10
+  - type: Item
+    size: 3
+  - type: Stack
+    count: 1

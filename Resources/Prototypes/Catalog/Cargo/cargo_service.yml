@@ -1,0 +1,99 @@
+- type: cargoProduct
+  id: ServiceJanitorial
+  icon:
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    state: cleaner
+  product: CrateServiceJanitorialSupplies
+  cost: 500
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: ServiceLightsReplacement
+  icon:
+    sprite: Objects/Power/light_bulb.rsi
+    state: normal
+  product: CrateServiceReplacementLights
+  cost: 600
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: MousetrapBoxes
+  icon:
+    sprite: Objects/Devices/mousetrap.rsi
+    state: mousetrap
+  product: CrateMousetrapBoxes
+  cost: 500
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: ServiceTheatre
+  icon:
+    sprite: Clothing/Mask/mime.rsi
+    state: icon
+  product: CrateServiceTheatre
+  cost: 1800
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: ServiceSmokeables
+  icon:
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
+    state: closed
+  product: CrateServiceSmokeables
+  cost: 1500
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: ServiceCustomSmokable
+  icon:
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
+    state: closed
+  product: CrateServiceCustomSmokable
+  cost: 1000
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: ServiceBureaucracy
+  icon:
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: pen
+  product: CrateServiceBureaucracy
+  cost: 1000
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: ServicePersonnel
+  icon:
+    sprite: Objects/Misc/id_cards.rsi
+    state: default
+  product: CrateServicePersonnel
+  cost: 1000
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: ServiceBooks
+  icon:
+    sprite: Objects/Misc/books.rsi
+    state: book0
+  product: CrateServiceBooks
+  cost: 1000
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: ServiceJanitorBiosuit
+  icon:
+    sprite: Clothing/Head/Hoods/Bio/janitor.rsi
+    state: icon
+  product: CrateJanitorBiosuit
+  cost: 800
+  category: Service
+  group: market

@@ -1,0 +1,36 @@
+- type: entity
+  name: Trash Spawner
+  id: RandomSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Consumable/Food/snacks.rsi
+          state: pistachio-trash
+    - type: RandomSpawner
+      rarePrototypes:
+        - PuddleVomit
+        - FoodPlateSmallTrash
+        - FoodBowlBigTrash
+      rareChance: 0.03
+      prototypes:
+#        - TrashCandy
+        - FoodPacketBoritosTrash
+        - FoodPacketCheesieTrash
+        - FoodPacketChipsTrash
+        - FoodPacketChocolateTrash
+        - FoodPacketChowMeinTrash
+        - FoodPacketDanDanTrash
+        - FoodPacketEnergyTrash
+        - FoodPacketPistachioTrash
+#        - TrashPlasticBag
+        - FoodPacketPopcornTrash
+        - FoodPacketRaisinsTrash
+        - FoodPacketSemkiTrash
+        - FoodPacketSusTrash
+        - FoodPacketSyndiTrash
+      chance: 0.5
+      offset: 0.2
+  placement:
+    mode: AlignTileAny

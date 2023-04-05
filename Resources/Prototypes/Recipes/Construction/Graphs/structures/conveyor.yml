@@ -1,0 +1,34 @@
+﻿- type: constructionGraph
+  id: ConveyorGraph
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: entity
+          steps:
+            - tag: ConveyorAssembly
+              icon:
+                sprite: Structures/conveyor.rsi
+                state: conveyor_loose
+              name: conveyor belt assembly
+              doAfter: 2
+    - node: item
+      entity: ConveyorBeltAssembly
+      actions:
+        - !type:SetAnchor
+          value: false
+    - node: entity
+      entity: ConveyorBelt
+      actions:
+        - !type:SetAnchor
+          value: true
+        - !type:SnapToGrid
+          offset: Center
+      edges:
+        - to: item
+          steps:
+            - tool: Prying
+              doAfter: 3
+          completed:
+            - !type:SetAnchor
+              value: false

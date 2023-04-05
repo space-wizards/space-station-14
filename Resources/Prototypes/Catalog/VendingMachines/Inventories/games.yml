@@ -1,0 +1,11 @@
+- type: vendingMachineInventory
+  id: GoodCleanFunInventory
+  startingInventory:
+    DiceBag: 4
+    Paper: 8
+    d6Dice: 8
+    ChessBoard: 1
+    BackgammonBoard: 1
+    ParchisBoard: 1
+    CheckerBoard: 1
+    BooksBag: 3

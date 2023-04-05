@@ -1,0 +1,198 @@
+- type: entity
+  name: lantern
+  parent: BaseItem
+  id: BaseLamp
+  abstract: true
+  components:
+  - type: HandheldLight
+    addPrefix: true
+    blinkingBehaviourId: blinking
+    radiatingBehaviourId: radiating
+  - type: LightBehaviour
+    behaviours:
+      - !type:FadeBehaviour
+        id: radiating
+        interpolate: Linear
+        maxDuration: 2.0
+        startValue: 3.0
+        endValue: 2.0
+        isLooped: true
+        property: Radius
+        enabled: false
+        reverseWhenFinished: true
+      - !type:PulseBehaviour
+        id: blinking
+        interpolate: Nearest
+        maxDuration: 1.0
+        minValue: 0.1
+        maxValue: 2.0
+        isLooped: true
+        property: Radius
+        enabled: false
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellSmall
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: Sprite
+    sprite: Objects/Misc/Lights/lights.rsi
+    netsync: false
+  - type: Item
+    sprite: Objects/Misc/Lights/lights.rsi
+    size: 20
+    heldPrefix: off
+  - type: PointLight
+    netsync: false
+    enabled: false
+    radius: 3
+    energy: 2
+  - type: ToggleableLightVisuals
+  - type: Appearance
+  - type: Physics
+    canCollide: false
+
+- type: entity
+  name: lamp
+  id: Lamp
+  parent: BaseLamp
+  description: A light emitting device.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/Lights/lamp.rsi
+    layers:
+      - state: lamp
+      - state: lamp-on
+        shader: unshaded
+        visible: false
+        map: [ "light" ]
+  - type: Item
+    sprite: Objects/Misc/Lights/lamp.rsi
+
+- type: entity
+  name: banana lamp
+  id: LampBanana
+  parent: BaseLamp
+  description: A light emitting device, shaped like a banana.
+  components:
+  - type: Sprite
+    layers:
+      - state: bananalamp
+      - state: bananalamp_on
+        shader: unshaded
+        visible: false
+        map: [ "light" ]
+
+- type: entity
+  name: desk lamp
+  id: LampGold
+  parent: BaseLamp
+  description: A light emitting device that would look great on a desk.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/Lights/lampgreen.rsi
+    layers:
+      - state: lampgreen
+      - state: lampgreen-on
+        shader: unshaded
+        visible: false
+        map: [ "light" ]
+  - type: Item
+    sprite: Objects/Misc/Lights/lampgreen.rsi
+
+- type: entity
+  name: floodlight
+  id: Floodlight
+  parent: BaseLamp
+  description: A pole with powerful mounted lights on it.
+  components:
+  - type: Item
+    size: 50
+  - type: Sprite
+    layers:
+      - state: floodlight
+      - state: floodlight_on
+        shader: unshaded
+        visible: false
+        map: [ "light" ]
+  - type: Physics
+    canCollide: true
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.2, -0.5, 0.2, 0.5"
+      density: 50
+      mask:
+      - MachineMask
+      layer:
+      - MachineLayer
+  - type: PointLight
+    enabled: false
+    radius: 8
+    energy: 5
+  - type: Anchorable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/glass_break1.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FloodlightBroken:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  name: broken floodlight
+  id: FloodlightBroken
+  parent: BaseItem
+  description: A pole with powerful mounted lights on it. It's broken.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/Lights/lights.rsi
+    state: floodlight_broken
+  - type: Anchorable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.2, -0.5, 0.2, 0.5"
+      density: 50
+      mask:
+      - MachineMask
+      layer:
+      - MachineLayer

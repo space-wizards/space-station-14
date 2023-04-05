@@ -1,0 +1,124 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHardhatBase
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    layers:
+    - state: icon
+    - state: light-icon
+      shader: unshaded
+      visible: false
+      map: [ "light" ]
+  - type: Clothing
+    equippedPrefix: off
+  - type: PointLight
+    netsync: false
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    radius: 3
+  - type: Appearance
+  - type: HandheldLight
+    addPrefix: false
+    blinkingBehaviourId: blinking
+    radiatingBehaviourId: radiating
+  - type: LightBehaviour
+    behaviours:
+      - !type:FadeBehaviour
+        id: radiating
+        interpolate: Linear
+        maxDuration: 2.0
+        startValue: 3.0
+        endValue: 2.0
+        isLooped: true
+        property: Radius
+        enabled: false
+        reverseWhenFinished: true
+      - !type:PulseBehaviour
+        id: blinking
+        interpolate: Nearest
+        maxDuration: 1.0
+        minValue: 0.1
+        maxValue: 2.0
+        isLooped: true
+        property: Radius
+        enabled: false
+  - type: ToggleableLightVisuals
+    spriteLayer: light
+    inhandVisuals:
+      left:
+      - state: on-inhand-left
+      right:
+      - state: on-inhand-right
+    clothingVisuals:
+      head:
+      - state: on-equipped-HELMET
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+  - type: Item
+    heldPrefix: off
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+
+- type: entity
+  parent: ClothingHeadHatHardhatBase
+  id: ClothingHeadHatHardhatBlue
+  name: blue hard hat
+  description: A hard hat, painted in blue, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardhats/blue.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardhats/blue.rsi
+
+- type: entity
+  parent: ClothingHeadHatHardhatBase
+  id: ClothingHeadHatHardhatOrange
+  name: orange hard hat
+  description: A hard hat, painted in orange, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardhats/orange.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardhats/orange.rsi
+
+- type: entity
+  parent: ClothingHeadHatHardhatBase
+  id: ClothingHeadHatHardhatRed
+  name: red hard hat
+  description: A hard hat, painted in red, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardhats/red.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardhats/red.rsi
+
+- type: entity
+  parent: ClothingHeadHatHardhatBase
+  id: ClothingHeadHatHardhatWhite
+  name: white hard hat
+  description: A hard hat, painted in white, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardhats/white.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardhats/white.rsi
+
+- type: entity
+  parent: ClothingHeadHatHardhatBase
+  id: ClothingHeadHatHardhatYellow
+  name: yellow hard hat
+  description: A hard hat, painted in yellow, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardhats/yellow.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardhats/yellow.rsi

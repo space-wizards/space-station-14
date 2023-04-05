@@ -1,0 +1,16 @@
+﻿name: "Labels: Review"
+
+on:
+  pull_request_target:
+    types: [review_requested]
+
+jobs:
+  add_label:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions-ecosystem/action-add-labels@v1
+      with:
+        labels: "Status: Needs Review"
+    - uses: actions-ecosystem/action-remove-labels@v1
+      with:
+        labels: "Status: Awaiting Changes"

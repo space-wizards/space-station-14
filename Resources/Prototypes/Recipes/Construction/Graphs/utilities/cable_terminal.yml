@@ -1,0 +1,24 @@
+﻿- type: constructionGraph
+  id: CableTerminal
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: cable_terminal
+          steps:
+            - material: Cable
+              amount: 10
+              doAfter: 2
+
+    - node: cable_terminal
+      entity: CableTerminal
+      edges:
+        - to: start
+          completed:
+            - !type:GivePrototype
+              prototype: CableApcStack1
+              amount: 10
+            - !type:DeleteEntity
+          steps:
+            - tool: Cutting
+              doAfter: 3

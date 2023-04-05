@@ -1,0 +1,185 @@
+{
+   "$schema":"http://json-schema.org/draft-07/schema",
+   "default":{
+      
+   },
+   "description":"JSON Schema for SS14 RSI validation.",
+   "examples":[
+      {
+         "version":1,
+         "license":"CC-BY-SA-3.0",
+         "copyright":"Taken from CODEBASE at COMMIT LINK",
+         "size":{
+            "x":32,
+            "y":32
+         },
+         "states":[
+            {
+               "name":"basic"
+            },
+            {
+               "name":"basic-directions",
+               "directions":4
+            },
+            {
+               "name":"basic-delays",
+               "delays":[
+                  [
+                     0.1,
+                     0.1
+                  ]
+               ]
+            },
+            {
+               "name":"basic-delays-directions",
+               "directions":4,
+               "delays":[
+                  [
+                     0.1,
+                     0.1
+                  ],
+                  [
+                     0.1,
+                     0.1
+                  ],
+                  [
+                     0.1,
+                     0.1
+                  ],
+                  [
+                     0.1,
+                     0.1
+                  ]
+               ]
+            }
+         ]
+      }
+   ],
+   "required":[
+      "version",
+      "license",
+      "copyright",
+      "size",
+      "states"
+   ],
+   "title":"RSI Schema",
+   "type":"object",
+   "properties":{
+      "version":{
+         "$id":"#/properties/version",
+         "default":"",
+         "description":"RSI version integer.",
+         "title":"The version schema",
+         "type":"integer"
+      },
+      "license":{
+         "$id":"#/properties/license",
+         "default":"",
+         "description":"The license for the associated icon states. Restricted to SS14-compatible asset licenses.",
+         "enum":[
+            "CC-BY-SA-3.0",
+            "CC-BY-SA-4.0",
+            "CC-BY-NC-3.0",
+            "CC-BY-NC-4.0",
+            "CC-BY-NC-SA-3.0",
+            "CC-BY-NC-SA-4.0",
+            "CC0-1.0"
+         ],
+         "examples":[
+            "CC-BY-SA-3.0"
+         ],
+         "title":"License",
+         "type":"string"
+      },
+      "copyright":{
+         "$id":"#/properties/copyright",
+         "type":"string",
+         "title":"Copyright Info",
+         "description":"The copyright holder. This is typically a link to the commit of the codebase that the icon is pulled from.",
+         "default":"",
+         "examples":[
+            "Taken from CODEBASE at COMMIT LINK"
+         ]
+      },
+      "size":{
+         "$id":"#/properties/size",
+         "default":{
+            
+         },
+         "description":"The dimensions of the sprites inside the RSI.  This is not the size of the PNG files that store the sprite sheet.",
+         "examples":[
+            {
+               "x":32,
+               "y":32
+            }
+         ],
+         "title":"Sprite Dimensions",
+         "required":[
+            "x",
+            "y"
+         ],
+         "type":"object",
+         "properties":{
+            "x":{
+               "$id":"#/properties/size/properties/x",
+               "type":"integer",
+               "default":32,
+               "examples":[
+                  32
+               ]
+            },
+            "y":{
+               "$id":"#/properties/size/properties/y",
+               "type":"integer",
+               "default":32,
+               "examples":[
+                  32
+               ]
+            }
+         },
+         "additionalProperties":true
+      },
+      "states":{
+         "$id":"#/properties/states",
+         "type":"array",
+         "title":"Icon States",
+         "description":"Metadata for icon states. Includes name, directions, delays, etc.",
+         "default":[
+            
+         ],
+         "examples":[
+            [
+               {
+                  "name":"basic"
+               },
+               {
+                  "name":"basic-directions",
+                  "directions":4
+               }
+            ]
+         ],
+         "additionalItems":true,
+         "items":{
+            "$id":"#/properties/states/items",
+            "type":"object",
+            "required":[
+               "name"
+            ],
+            "properties":{
+               "name":{
+                  "type":"string"
+               },
+               "directions":{
+                  "type":"integer",
+                  "enum":[
+                     1,
+                     4,
+                     8
+                  ]
+               }
+            }
+         }
+      }
+   },
+   "additionalProperties":true
+}

@@ -1,0 +1,40 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                           xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                           Title="{Loc 'emergency-shuttle-console-window-title'}"
+                           MinSize="400 400">
+<BoxContainer Orientation="Vertical"
+              Margin="5">
+    <Label Name="Countdown"
+           HorizontalAlignment="Center"
+           Text="00:00"/>
+    <BoxContainer Name="EngineStatusContainer"
+                  HorizontalAlignment="Center">
+        <Label HorizontalAlignment="Center"
+               Text="{Loc 'emergency-shuttle-ui-engines'}"/>
+        <Label Name="EngineStatus"
+               HorizontalAlignment="Center"
+               FontColorOverride="#FFA500"
+               Text="{Loc 'emergency-shuttle-ui-idle'}"/>
+    </BoxContainer>
+    <BoxContainer Name="LaunchContainer">
+        <Label Text="{Loc 'emergency-shuttle-ui-early-authorize'}"/>
+        <Button Name="RepealAllButton" Text="{Loc 'emergency-shuttle-ui-repeal-all'}"/>
+    </BoxContainer>
+    <!-- Spacer -->
+    <BoxContainer Name="AuthorizeContainer">
+        <Button Name="AuthorizeButton"
+                Text="{Loc 'emergency-shuttle-ui-authorize'}"/>
+        <Button Name="RepealButton" Text="{Loc 'emergency-shuttle-ui-repeal'}"/>
+    </BoxContainer>
+    <BoxContainer Name="AuthorizationsTextContainer">
+        <Label Text="{Loc 'emergency-shuttle-ui-authorizations'}"/>
+        <Label Name="AuthorizationCount"
+               Text=""
+               HorizontalAlignment="Right"
+               Align="Right"
+               HorizontalExpand="True"/>
+    </BoxContainer>
+    <!-- Spacer -->
+    <BoxContainer Name="AuthorizationsContainer" Orientation="Vertical"/>
+</BoxContainer>
+</controls:FancyWindow>

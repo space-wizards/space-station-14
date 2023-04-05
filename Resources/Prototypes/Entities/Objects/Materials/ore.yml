@@ -1,0 +1,168 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: OreBase
+  description: A piece of unrefined ore.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Materials/ore.rsi
+  - type: Item
+    sprite: Objects/Materials/ore.rsi
+  - type: ItemStatus
+  - type: Tag
+    tags:
+    - Ore
+  - type: Fixtures
+    fixtures:
+      - shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 20
+        mask:
+          - ItemMask
+        restitution: 0.3
+        friction: 0.2
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: OreBase
+  id: GoldOre
+  name: gold ore
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: GoldOre
+  - type: Sprite
+    state: gold
+  - type: Material
+    materials:
+      Gold: 500
+
+- type: entity
+  parent: GoldOre
+  id: GoldOre1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: OreBase
+  id: SteelOre
+  name: steel ore
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: SteelOre
+  - type: Sprite
+    state: iron
+  - type: Material
+    materials:
+      Steel: 500
+
+- type: entity
+  id: SteelOre1
+  parent: SteelOre
+  suffix: Single
+  components:
+    - type: Stack
+      count: 1
+
+- type: entity
+  parent: OreBase
+  id: PlasmaOre
+  name: plasma ore
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: PlasmaOre
+  - type: Sprite
+    state: plasma
+  - type: Material
+    materials:
+      Plasma: 500
+
+- type: entity
+  parent: PlasmaOre
+  id: PlasmaOre1
+  suffix: Single
+  components:
+    - type: Stack
+      count: 1
+
+- type: entity
+  parent: OreBase
+  id: SilverOre
+  name: silver ore
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: SilverOre
+  - type: Sprite
+    state: silver
+  - type: Material
+    materials:
+      Silver: 500
+
+- type: entity
+  parent: SilverOre
+  id: SilverOre1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: OreBase
+  id: SpaceQuartz
+  name: space quartz
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: SpaceQuartz
+  - type: Sprite
+    state: spacequartz
+  - type: Material
+    materials:
+      Glass: 500
+
+- type: entity
+  parent: SpaceQuartz
+  id: SpaceQuartz1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: OreBase
+  id: UraniumOre
+  name: uranium ore
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: UraniumOre
+  - type: Sprite
+    state: uranium
+  - type: Material
+    materials:
+      Uranium: 500
+
+- type: entity
+  parent: UraniumOre
+  id: UraniumOre1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1

@@ -1,0 +1,20 @@
+<Document>
+# A.P.E.
+
+The Anomalous Particle Emitter is a machine used to interface with anomalies. It is the primary way of manipulating the stats of an anomaly.
+
+<Box>
+<GuideEntityEmbed Entity="MachineAPE"/>
+</Box>
+
+The A.P.E. can shoot three different kinds of anomalous particles: Delta, Epsilon, and Zeta. Each particle types has certain effects:
+
+- [color=#a4885c]Danger:[/color] Increases the severity of an anomaly.
+- [color=#a4885c]Unstable:[/color] Increases the instability of an anomaly.
+- [color=#a4885c]Containment:[/color] Increases the stability at the cost of health.
+
+Which particle type corresponds to each effect is unique and can be learned by scanning the anomaly.
+
+The A.P.E. can also be locked by anyone with science access, which prevents it from being deconstructed, turned on or off, or having the particle type switched.
+
+</Document>

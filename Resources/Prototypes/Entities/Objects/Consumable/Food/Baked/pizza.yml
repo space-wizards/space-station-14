@@ -1,0 +1,499 @@
+# Base
+
+- type: entity
+  parent: FoodInjectableBase
+  id: FoodPizzaBase
+  abstract: true
+  components:
+  - type: FlavorProfile
+    flavors:
+      - oily
+      - bread
+  - type: Food
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/pizza.rsi
+    netsync: false
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 40
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 30
+        - ReagentId: Vitamin
+          Quantity: 5
+  - type: SliceableFood
+    count: 6
+  - type: Item
+    size: 8
+  - type: Tag
+    tags:
+    - Pizza
+
+- type: entity
+  parent: FoodInjectableBase # Not sliceable
+  id: FoodPizzaSliceBase
+  abstract: true
+  components:
+  - type: FlavorProfile
+    flavors:
+      - oily
+      - bread
+  - type: Food
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/pizza.rsi
+    netsync: false
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        # Note: Keep FoodPizzaMoldySlice & FoodPizzaSliceBase roughly in sync
+        maxVol: 6
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 0.8
+  - type: Item
+    size: 1
+  - type: Tag
+    tags:
+    - Pizza
+
+# Pizza
+
+- type: entity
+  name: margherita pizza
+  parent: FoodPizzaBase
+  id: FoodPizzaMargherita
+  description: The flavor of Italy.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - oily
+      - bread
+  - type: Sprite
+    layers:
+    - state: margherita
+  - type: SliceableFood
+    slice: FoodPizzaMargheritaSlice
+
+- type: entity
+  name: slice of margherita pizza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaMargheritaSlice
+  description: A slice of Italy.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - oily
+      - bread
+  - type: Sprite
+    layers:
+    - state: margherita-slice
+
+- type: entity
+  name: meat pizza
+  parent: FoodPizzaBase
+  id: FoodPizzaMeat
+  description: Greasy pizza with delicious meat.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - cheesy
+      - oily
+      - bread
+  - type: Sprite
+    layers:
+    - state: meat
+  - type: SliceableFood
+    slice: FoodPizzaMeatSlice
+
+- type: entity
+  name: slice of meat pizza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaMeatSlice
+  description: A nutritious slice of meatpizza.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - cheesy
+      - oily
+      - bread
+  - type: Sprite
+    layers:
+    - state: meat-slice
+# Tastes like crust, tomato, cheese, meat.
+
+- type: entity
+  name: mushroom pizza
+  parent: FoodPizzaBase
+  id: FoodPizzaMushroom
+  description: Very special pizza.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - mushroom
+      - oily
+      - bread
+  - type: Sprite
+    layers:
+    - state: mushroom
+  - type: SliceableFood
+    slice: FoodPizzaMushroomSlice
+
+- type: entity
+  name: slice of mushroom pizza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaMushroomSlice
+  description: Maybe it is the last slice of pizza in your life.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - mushroom
+      - oily
+      - bread
+  - type: Sprite
+    layers:
+    - state: mushroom-slice
+# Tastes like crust, tomato, cheese, mushroom.
+
+- type: entity
+  name: vegetable pizza
+  parent: FoodPizzaBase
+  id: FoodPizzaVegetable
+  description: The station's vegetarians will thank you for making this.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - eggplant
+      - corn
+      - tomato
+      - oily
+      - cheesy
+      - bread
+  - type: Sprite
+    layers:
+    - state: vegetable
+  - type: SliceableFood
+    slice: FoodPizzaVegetableSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 40
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 25
+        - ReagentId: JuiceCarrot
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 5
+
+- type: entity
+  name: slice of vegetable pizza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaVegetableSlice
+  description: A slice of this is enough to satisfy even the pickiest station personnel.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - eggplant
+      - corn
+      - tomato
+      - carrot
+      - oily
+      - cheesy
+      - bread
+  - type: Sprite
+    layers:
+    - state: vegetable-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 40
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: JuiceCarrot
+          Quantity: 1
+        - ReagentId: Vitamin
+          Quantity: 1
+
+# Tastes like crust, tomato, cheese, carrot.
+
+- type: entity
+  name: donk-pocket pizza
+  parent: FoodPizzaBase
+  id: FoodPizzaDonkpocket
+  description: Who thought this would be a good idea?
+  components:
+  - type: FlavorProfile
+    flavors:
+      - donk
+  - type: Sprite
+    layers:
+    - state: donkpocket
+  - type: SliceableFood
+    slice: FoodPizzaDonkpocketSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 27
+        - ReagentId: Vitamin
+          Quantity: 6
+        - ReagentId: Omnizine
+          Quantity: 9
+
+
+- type: entity
+  name: slice of donk-pocket pizza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaDonkpocketSlice
+  description: Smells like donk-pocket.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - donk
+  - type: Sprite
+    layers:
+    - state: donkpocket-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4.5
+        - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: Omnizine
+          Quantity: 1.5
+# Tastes like crust, tomato, cheese, meat, laziness.
+
+- type: entity
+  name: dank pizza
+  parent: FoodPizzaBase
+  id: FoodPizzaDank
+  description: The hippie's pizza of choice.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - oily
+      - bread
+      - cheesy
+      - leafy
+  - type: Sprite
+    layers:
+    - state: dank
+  - type: SliceableFood
+    slice: FoodPizzaDankSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 25
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: DoctorsDelight
+          Quantity: 6
+
+- type: entity
+  name: slice of dank pizza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaDankSlice
+  description: So good, man...
+  components:
+  - type: FlavorProfile
+    flavors:
+      - oily
+      - bread
+      - cheesy
+      - leafy
+  - type: Sprite
+    layers:
+    - state: dank-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4.2
+        - ReagentId: Vitamin
+          Quantity: 0.8
+        - ReagentId: DoctorsDelight
+          Quantity: 1
+# Tastes like crust, tomato, cheese, meat, satisfaction.
+
+- type: entity
+  name: sassysage pizza
+  parent: FoodPizzaBase
+  id: FoodPizzaSassysage
+  description: You can really smell the sassiness.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - cheesy
+      - oily
+      - bread
+  - type: Sprite
+    layers:
+    - state: sassysage
+  - type: SliceableFood
+    slice: FoodPizzaSassysageSlice
+
+- type: entity
+  name: slice of sassysage pizza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaSassysageSlice
+  description: Deliciously sassy.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - cheesy
+      - oily
+      - bread
+  - type: Sprite
+    layers:
+    - state: sassysage-slice
+# Tastes like crust, tomato, cheese, sausage, sass.
+
+- type: entity
+  name: Hawaiian pizza
+  parent: FoodPizzaBase
+  id: FoodPizzaPineapple
+  description: Makes people burst into tears. Tears of joy or sadness depends on the persons fondness for pineapple.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - pineapple
+      - cheesy
+      - oily
+      - bread
+  - type: Sprite
+    layers:
+    - state: pineapple
+  - type: SliceableFood
+    slice: FoodPizzaPineappleSlice
+
+- type: entity
+  name: slice of pineapple pizza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaPineappleSlice
+  description: A slice of joy/sin.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - pineapple
+      - cheesy
+      - oily
+      - bread
+  - type: Sprite
+    layers:
+    - state: pineapple-slice
+# Tastes like crust, tomato, cheese, pineapple, ham.
+
+#TODO: This is a meme pizza from /tg/. It has specially coded mechanics.
+- type: entity
+  name: Arnold's pizza
+  parent: FoodPizzaBase
+  id: FoodPizzaArnold
+  description: Hello, you've reached Arnold's pizza shop. I'm not here now, I'm out killing pepperoni.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - cheesy
+      - oily
+      - bread
+      - gunpowder
+  - type: Sprite
+    layers:
+    - state: arnold
+  - type: SliceableFood
+    slice: FoodPizzaArnoldSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 85
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 30
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Iron
+          Quantity: 10
+        - ReagentId: Omnizine
+          Quantity: 30
+
+- type: entity
+  name: slice of Arnold's pizza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaArnoldSlice
+  description: I come over, maybe I give you a pizza, maybe I break off your arm.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - cheesy
+      - oily
+      - bread
+      - gunpowder
+  - type: Sprite
+    layers:
+    - state: arnold-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 0.8
+        - ReagentId: Iron
+          Quantity: 1.6
+        - ReagentId: Omnizine
+          Quantity: 5
+# Tastes like crust, tomato, cheese, pepperoni, 9 millimeter bullets.
+
+#TODO: Make this do poison damage and make cut pizza slices eventually rot into this.
+- type: entity
+  name: slice of moldy pizza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaMoldySlice
+  description: Once a perfectly good slice of pizza pie, but now it lies here, rancid and bursting with spores.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bitter
+      - terrible
+      - mushroom
+  - type: Sprite
+    layers:
+    - state: moldy-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        # Note: Keep FoodPizzaMoldySlice & FoodPizzaSliceBase roughly in sync
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Mold
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 1
+# Tastes like stale crust, rancid cheese, mushroom.

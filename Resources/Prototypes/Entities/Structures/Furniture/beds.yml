@@ -1,0 +1,113 @@
+- type: entity
+  name: bed
+  id: Bed
+  parent: BaseStructure
+  description: This is used to lie in, sleep in or strap on. Resting here provides extremely slow healing.
+  components:
+  - type: HealOnBuckle
+    damage:
+      groups:
+        Brute: -0.2 ## 0.1 per
+        Burn: -0.2
+      types:
+        Poison: -0.1
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.45,-0.45,0.45,0.05"
+      density: 190
+      mask:
+      - TableMask
+  - type: Sprite
+    sprite: Structures/Furniture/furniture.rsi
+    state: bed
+    netsync: false
+    noRot: true
+  - type: Strap
+    position: Down
+    rotation: -90
+  # Construction has to be before PlaceableSurface or you'll place things onto the entity instead of deconstructing it.
+  - type: Construction
+    graph: bed
+    node: bed
+  # So that you can put bedsheets on beds again. Would be cool to have a tag
+  # for this so that only bedsheets can be placed.
+  - type: PlaceableSurface
+    placeCentered: true
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: Anchorable
+  - type: Pullable
+
+
+- type: entity
+  parent: Bed
+  id: MedicalBed
+  name: medical bed
+  description: A hospital bed for patients to recover in. Resting here provides fairly slow healing.
+  components:
+  - type: Sprite
+    state: bed-MED
+  - type: HealOnBuckle
+    damage:
+      groups:
+        Brute: -0.4 ## 0.2 per
+        Burn: -0.4
+      types:
+        Poison: -0.2
+  - type: Construction
+    graph: bed
+    node: medicalbed
+
+- type: entity
+  parent: Bed
+  id: DogBed
+  name: dog bed
+  description: A comfy-looking dog bed. You can even strap your pet in, in case the gravity turns off.
+  components:
+  - type: Sprite
+    state: dogbed
+  - type: Strap
+    position: Stand
+    rotation: 0
+  - type: Construction
+    graph: bed
+    node: dogbed
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/woodhit.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 1
+            max: 5

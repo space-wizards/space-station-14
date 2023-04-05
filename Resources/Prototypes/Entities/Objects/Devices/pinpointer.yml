@@ -1,0 +1,30 @@
+- type: entity
+  name: pinpointer
+  description: A handheld tracking device that locks onto certain signals.
+  parent: BaseItem
+  id: PinpointerBase
+  abstract: true
+  components:
+  - type: Transform
+    noRot: True
+  - type: Sprite
+    netsync: false
+    noRot: True
+    sprite: Objects/Devices/pinpointer.rsi
+    layers:
+    - state: pinpointer
+      map: ["enum.PinpointerLayers.Base"]
+    - state: pinonnull
+      map: ["enum.PinpointerLayers.Screen"]
+  - type: Item
+    sprite: Objects/Devices/pinpointer.rsi
+  - type: Pinpointer
+  - type: Appearance
+
+- type: entity
+  name: pinpointer
+  id: PinpointerNuclear
+  parent: PinpointerBase
+  components:
+  - type: Pinpointer
+    component: NukeDisk

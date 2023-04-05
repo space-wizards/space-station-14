@@ -1,0 +1,37 @@
+- type: entity
+  parent: BoxCardboard
+  name: monkey cube box
+  id: MonkeyCubeBox
+  description: Drymate brand monkey cubes. Just add water!
+  components:
+  - type: Storage
+    whitelist:
+      tags:
+      - MonkeyCube
+    capacity: 30
+  - type: StorageFill
+    contents:
+      - id: MonkeyCubeWrapped
+        amount: 6
+  - type: Sprite
+    sprite: Objects/Misc/monkeycube.rsi
+    state: box
+
+- type: entity
+  parent: BaseItem
+  name: monkey cube
+  suffix: Wrapped
+  id: MonkeyCubeWrapped
+  description: Unwrap this to get a monkey cube.
+  components:
+  - type: SpawnItemsOnUse
+    items:
+      - id: MonkeyCube
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+  - type: Sprite
+    sprite: Objects/Misc/monkeycube.rsi
+    state: wrapper
+  - type: Tag
+    tags:
+    - MonkeyCube

@@ -1,0 +1,41 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/729d858807905263adab8b5a331c1d8a04982dd3",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "flowersy1"
+        },
+        {
+            "name": "flowersy2"
+        },
+        {
+            "name": "flowersy3"
+        },
+        {
+            "name": "flowersy4"
+        },
+        {
+            "name": "flowersbr1"
+        },
+        {
+            "name": "flowersbr2"
+        },
+        {
+            "name": "flowersbr3"
+        },
+        {
+            "name": "flowerspv1"
+        },
+        {
+            "name": "flowerspv2"
+        },
+        {
+            "name": "flowerspv3"
+        }
+    ]
+}

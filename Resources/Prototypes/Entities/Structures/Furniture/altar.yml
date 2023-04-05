@@ -1,0 +1,399 @@
+- type: entity
+  id: AltarBase
+  parent: BaseStructure
+  name: altar
+  description: Altar of the Gods.
+  abstract: true
+  components:
+  - type: Anchorable
+  - type: Transform
+    noRot: true
+  - type: Prayable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: PlaceableSurface
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.45,-0.45,0.45,0.45"
+      density: 55
+      mask: #mouse can pass under, but I think this is can understandable by logic
+      - TableMask
+      layer:
+      - TableLayer
+  - type: Sprite
+    netsync: false
+    snapCardinals: true
+  - type: Climbable
+  - type: Clickable
+
+- type: entity
+  id: AltarNanotrasen
+  parent: AltarBase
+  name: nanotrasen altar
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: nanotrasen
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: nanotrasen
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 5
+          MaterialCloth1:
+            min: 1
+            max: 3
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  id: AltarChaos
+  parent: AltarNanotrasen
+  name: chaos altar
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: chaos
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: chaos
+
+- type: entity
+  id: AltarDruid
+  parent: AltarNanotrasen
+  name: druid altar
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: druid
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: druid
+
+- type: entity
+  id: AltarToolbox
+  parent: AltarNanotrasen
+  name: toolbox altar
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: toolbox
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: toolbox
+
+- type: entity
+  id: AltarSpaceChristian
+  parent: AltarNanotrasen
+  name: space-Christian altar
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    layers:
+    - state: space-christian
+    - state: space-christian_lightning
+      shader: unshaded
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: space-christian
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: "#fbceb1"
+
+- type: entity
+  id: AltarSatana
+  parent: AltarNanotrasen
+  name: satanic altar
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    layers:
+    - state: satana
+    - state: satana_lightning
+      shader: unshaded
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: satana
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: "#ff6347"
+
+- type: entity
+  id: AltarTechnology
+  parent: AltarNanotrasen
+  name: technology altar
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    layers:
+    - state: technology
+    - state: technology_lightning
+      shader: unshaded
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: technology
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: "#e0ffff"
+
+- type: entity
+  id: AltarConvertFestival
+  parent: AltarBase
+  name: festival altar
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    state: festival
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    state: festival
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/woodhit.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 1
+            max: 5
+          MaterialCloth1:
+            min: 1
+            max: 3
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - Wooden
+
+- type: entity
+  id: AltarConvertMaint
+  parent: AltarConvertFestival
+  name: maint altar
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    layers:
+    - state: maint
+    - state: lightning
+      shader: unshaded
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    state: maint
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: "#fbceb1"
+
+- type: entity
+  id: AltarConvertBlue
+  parent: AltarConvertFestival
+  name: blue altar
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    layers:
+    - state: blue
+    - state: lightning
+      shader: unshaded
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    state: blue
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: "#fbceb1"
+
+- type: entity
+  id: AltarConvertBurden
+  parent: AltarConvertFestival
+  name: burden altar
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    layers:
+    - state: convertaltar
+    - state: lightning
+      shader: unshaded
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    state: convertaltar
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: "#fbceb1"
+
+- type: entity
+  id: AltarConvert
+  parent: AltarConvertFestival
+  name: convert altar
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    layers:
+    - state: convertaltar
+    - state: lightning
+      shader: unshaded
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    state: convertaltar
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: "#fbceb1"
+
+- type: entity
+  id: AltarConvertOrange
+  parent: AltarConvertFestival
+  name: orange altar
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    layers:
+    - state: orange
+    - state: lightning
+      shader: unshaded
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    state: orange
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: "#fbceb1"
+
+- type: entity
+  id: AltarConvertRed
+  parent: AltarConvertFestival
+  name: red altar
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    layers:
+    - state: red
+    - state: lightning
+      shader: unshaded
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    state: red
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: "#fbceb1"
+
+- type: entity
+  id: AltarConvertWhite
+  parent: AltarConvertFestival
+  name: white altar
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    layers:
+    - state: white
+    - state: lightning
+      shader: unshaded
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    state: white
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: "#fbceb1"
+
+- type: entity
+  id: AltarConvertYellow
+  parent: AltarConvertFestival
+  name: yellow altar
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    layers:
+    - state: yellow
+    - state: lightning
+      shader: unshaded
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    state: yellow
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: "#fbceb1"
+
+- type: entity
+  id: AltarHeaven
+  parent: AltarBase
+  name: heaven altar
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Cults/heaven.rsi
+    layers:
+    - state: full
+    - state: blood
+      shader: unshaded
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Cults/heaven.rsi
+    state: full
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 5
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: "#f08080"
+
+- type: entity
+  id: AltarFangs
+  parent: AltarHeaven
+  name: fanged altar
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Cults/fangs.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Cults/fangs.rsi

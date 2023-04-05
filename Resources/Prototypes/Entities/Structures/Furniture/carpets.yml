@@ -1,0 +1,146 @@
+# TODO move all of this to tiles once tile smoothing is supported
+- type: entity
+  id: CarpetBase
+  parent: BaseStructure
+  description: "Fancy walking surface."
+  abstract: true
+  components:
+  - type: Sprite
+    drawdepth: FloorTiles
+    netsync: false
+  - type: Icon
+    state: full
+  - type: IconSmooth
+    key: full
+    base: carpet_
+  - type: Tag
+    tags: [ Carpet ]
+  - type: Physics
+    canCollide: false
+  - type: Fixtures
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 10
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+
+- type: entity
+  id: Carpet
+  parent: CarpetBase
+  name: "red carpet"
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Carpets/red_carpet.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Carpets/red_carpet.rsi
+
+- type: entity
+  id: CarpetBlack
+  parent: CarpetBase
+  name: "black carpet"
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Structures/Furniture/Carpets/black_carpet.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Carpets/black_carpet.rsi
+
+- type: entity
+  id: CarpetPink
+  parent: CarpetBase
+  name: "pink carpet"
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Structures/Furniture/Carpets/pink_carpet.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Carpets/pink_carpet.rsi
+
+- type: entity
+  id: CarpetBlue
+  parent: CarpetBase
+  name: "blue carpet"
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Structures/Furniture/Carpets/blue_carpet.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Carpets/blue_carpet.rsi
+
+- type: entity
+  id: CarpetGreen
+  parent: CarpetBase
+  name: "green carpet"
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Structures/Furniture/Carpets/green_carpet.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Carpets/green_carpet.rsi
+
+- type: entity
+  id: CarpetOrange
+  parent: CarpetBase
+  name: "orange carpet"
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Structures/Furniture/Carpets/orange_carpet.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Carpets/orange_carpet.rsi
+
+- type: entity
+  id: CarpetSBlue
+  parent: CarpetBase
+  name: "skyblue carpet"
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Structures/Furniture/Carpets/skyblue_carpet.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Carpets/skyblue_carpet.rsi
+
+- type: entity
+  id: CarpetPurple
+  parent: CarpetBase
+  name: "purple carpet"
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Structures/Furniture/Carpets/purple_carpet.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Carpets/purple_carpet.rsi
+
+# TODO nuke this once tiles support rotating sprites
+- type: entity
+  id: CarpetChapel
+  parent: BaseStructure
+  name: "chapel's carpet"
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Carpets/chapel_carpet.rsi
+    state: chapel
+    drawdepth: FloorTiles
+  - type: Icon
+    sprite: Structures/Furniture/Carpets/chapel_carpet.rsi
+    state: chapel
+  - type: Tag
+    tags: [ Carpet ]
+  - type: Physics
+    canCollide: false
+  - type: Fixtures
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 10
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]

@@ -1,0 +1,218 @@
+- type: reaction
+  id: Curdling
+  impact: Low
+  quantized: true
+  reactants:
+    Milk:
+      amount: 40
+    Enzyme:
+      amount: 5
+      catalyst: true
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodCheese
+
+- type: reaction
+  id: CreateDough
+  impact: Low
+  quantized: true
+  reactants:
+    Flour:
+      amount: 15
+    Water:
+      amount: 10
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodDough
+
+- type: reaction
+  id: CreateCakeBatter
+  impact: Low
+  quantized: true
+  reactants:
+    Flour:
+      amount: 15
+    Egg:
+      amount: 12
+    Sugar:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodCakeBatter
+
+- type: reaction
+  id: CreateButter
+  impact: Low
+  quantized: true
+  reactants:
+    Milk:
+      amount: 30
+    TableSalt:
+      amount: 5
+      catalyst: true
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodButter
+
+- type: reaction
+  id: CreatePieDough
+  impact: Low
+  quantized: true
+  reactants:
+    Flour:
+      amount: 15
+    Egg:
+      amount: 12
+    TableSalt:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodDoughPie
+
+# TG has a cake recipe that uses soy milk instead of eggs.
+# but afaik it spawns the exact same cake batter entity.
+# Maybe change this if you want to do allergies or something
+- type: reaction
+  id: CreateVeganCakeBatter
+  impact: Low
+  quantized: true
+  reactants:
+    Flour:
+      amount: 15
+    MilkSoy:
+      amount: 15
+    Sugar:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodCakeBatter
+
+- type: reaction
+  id: CreateTofu
+  impact: Low
+  quantized: true
+  reactants:
+    MilkSoy:
+      amount: 30
+    Enzyme:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodTofu
+
+# Condiments
+
+- type: reaction
+  id: CookingKetchup
+  reactants:
+    JuiceTomato:
+      amount: 10
+    Sugar:
+      amount: 5
+  products:
+    Ketchup: 15
+
+- type: reaction
+  id: CookingMayoVinegar
+  reactants:
+    Vinegar:
+      amount: 5
+    Oil:
+      amount: 5
+    Egg:
+      amount: 6
+  products:
+    Mayo: 15
+
+- type: reaction
+  id: CookingMayoLemon
+  reactants:
+    JuiceLemon:
+      amount: 5
+    Oil:
+      amount: 5
+    Egg:
+      amount: 6
+  products:
+    Mayo: 15
+
+- type: reaction
+  id: CookingKetchunaise
+  reactants:
+    Ketchup:
+      amount: 5
+    Mayo:
+      amount: 5
+  products:
+    Ketchunaise: 10
+
+- type: reaction
+  id: CookingBbqSauce
+  reactants:
+    Ketchup:
+      amount: 5
+    Vinegar:
+      amount: 5
+    Sugar:
+      amount: 5
+  products:
+    BbqSauce: 15
+
+- type: reaction
+  id: CookingHotsauce
+  reactants:
+    JuiceTomato:
+      amount: 5
+    TableSalt:
+      amount: 5
+    CapsaicinOil:
+      amount: 5
+  products:
+    Hotsauce: 15
+
+- type: reaction
+  id: CookingVinegar
+  reactants:
+    Ethanol:
+      amount: 5
+    Oxygen:
+      amount: 5
+  products:
+    Vinegar: 10
+
+- type: reaction
+  id: CookingSoysauce
+  reactants:
+    MilkSoy:
+      amount: 10
+    SulfuricAcid:
+      amount: 5
+  products:
+    Soysauce: 15
+
+- type: reaction
+  id: CookingVinaigrette
+  reactants:
+    Vinegar:
+      amount: 5
+    OilOlive:
+      amount: 5
+    Blackpepper:
+      amount: 5
+  products:
+    Vinaigrette: 15
+
+- type: reaction
+  id: CreateMeatball
+  impact: Low
+  quantized: true
+  reactants:
+    UncookedAnimalProteins:
+      amount: 5
+    Flour:
+      amount: 5
+    Egg:
+      amount: 6
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodMeatMeatball

@@ -1,0 +1,24 @@
+- type: entity
+  parent: BaseItem
+  id: HandLabeler
+  name: hand labeler
+  description: A hand labeler, used to label items and objects.
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/hand_labeler.rsi
+      state: hand_labeler
+      netsync: false
+    - type: Item
+      sprite: Objects/Tools/hand_labeler.rsi
+    - type: UseDelay
+      delay: 2.0
+    - type: UserInterface
+      interfaces:
+        - key: enum.HandLabelerUiKey.Key
+          type: HandLabelerBoundUserInterface
+    - type: HandLabeler
+      whitelist:
+        components:
+          - Item
+        tags:
+          - Structure

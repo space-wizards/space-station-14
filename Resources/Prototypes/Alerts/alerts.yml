@@ -1,0 +1,333 @@
+﻿- type: alertOrder
+  # Defines ordering in alert tab, higher up = higher in tab.
+  # List below can contain alert type or category, if both are present the id will take precedence.
+  # If item is not in list it will go at the bottom (ties broken by alert type enum value)
+  id: BaseAlertOrder
+  order:
+    - category: Health
+    - category: Stamina
+    - category: Internals
+    - alertType: Fire
+    - alertType: Handcuffed
+    - alertType: Ensnared
+    - category: Buckled
+    - alertType: Pulling
+    - category: Piloting
+    - alertType: Corporeal
+    - alertType: Stun
+    - category: Breathing # Vox gang not calling this oxygen
+    - category: Pressure
+    - category: Temperature
+    - category: Hunger
+    - category: Thirst
+    - alertType: Magboots
+
+- type: alert
+  id: LowOxygen
+  category: Breathing
+  icons:
+  - sprite: /Textures/Interface/Alerts/breathing.rsi
+    state: not_enough_oxy
+  name: alerts-low-oxygen-name
+  description: alerts-low-oxygen-desc
+
+- type: alert
+  id: Toxins
+  category: Toxins
+  icons:
+  - sprite: /Textures/Interface/Alerts/breathing.rsi
+    state: too_much_tox
+  name: alerts-high-toxin-name
+  description: alerts-high-toxin-desc
+
+- type: alert
+  id: LowPressure
+  category: Pressure
+  icons:
+  - sprite: /Textures/Interface/Alerts/pressure.rsi
+    state: lowpressure1
+  - sprite: /Textures/Interface/Alerts/pressure.rsi
+    state: lowpressure2
+  maxSeverity: 2
+  name: alerts-low-pressure-name
+  description: alerts-low-pressure-desc
+
+- type: alert
+  id: HighPressure
+  category: Pressure
+  icons:
+  - sprite: /Textures/Interface/Alerts/pressure.rsi
+    state: highpressure1
+  - sprite: /Textures/Interface/Alerts/pressure.rsi
+    state: highpressure2
+  maxSeverity: 2
+  name: alerts-high-pressure-name
+  description: alerts-high-pressure-desc
+
+- type: alert
+  id: Fire
+  icons: [ /Textures/Interface/Alerts/Fire/fire.png ]
+  onClick: !type:ResistFire  { }
+  name: alerts-on-fire-name
+  description: alerts-on-fire-desc
+
+
+- type: alert
+  id: Cold
+  category: Temperature
+  icons:
+  - sprite: /Textures/Interface/Alerts/temperature.rsi
+    state: cold1
+  - sprite: /Textures/Interface/Alerts/temperature.rsi
+    state: cold2
+  - sprite: /Textures/Interface/Alerts/temperature.rsi
+    state: cold3
+  maxSeverity: 3
+  name: alerts-too-cold-name
+  description: alerts-too-cold-desc
+
+- type: alert
+  id: Hot
+  category: Temperature
+  icons:
+  - sprite: /Textures/Interface/Alerts/temperature.rsi
+    state: hot1
+  - sprite: /Textures/Interface/Alerts/temperature.rsi
+    state: hot2
+  - sprite: /Textures/Interface/Alerts/temperature.rsi
+    state: hot3
+  maxSeverity: 3
+  name: alerts-too-hot-name
+  description: alerts-too-hot-desc
+
+- type: alert
+  id: Weightless
+  icons: [ /Textures/Interface/Alerts/Weightless/weightless.png ]
+  name: alerts-weightless-name
+  description: alerts-weightless-desc
+
+- type: alert
+  id: Stun
+  icons:
+  - sprite: /Textures/Objects/Weapons/Melee/stunbaton.rsi #Should probably draw a proper icon
+    state: stunbaton_off
+  name: alerts-stunned-name
+  description: alerts-stunned-desc
+
+- type: alert
+  id: Handcuffed
+  onClick: !type:RemoveCuffs  { }
+  icons: [ /Textures/Interface/Alerts/Handcuffed/Handcuffed.png ]
+  name: alerts-handcuffed-name
+  description: alerts-handcuffed-desc
+
+- type: alert
+  id: Ensnared
+  onClick: !type:RemoveEnsnare  { }
+  icons:
+  - sprite: /Textures/Interface/Alerts/ensnared.rsi
+    state: ensnared
+  name: alerts-ensnared-name
+  description: alerts-ensnared-desc
+
+- type: alert
+  id: Buckled
+  category: Buckled
+  onClick: !type:Unbuckle  { }
+  icons: [ /Textures/Interface/Alerts/Buckle/buckled.png ]
+  name: alerts-buckled-name
+  description: alerts-buckled-desc
+
+- type: alert
+  id: HumanCrit
+  category: Health
+  icons:
+  - sprite: /Textures/Interface/Alerts/human_critical.rsi
+    state: critical
+  name: alerts-crit-name
+  description: alerts-crit-desc
+
+- type: alert
+  id: HumanDead
+  category: Health
+  icons:
+  - sprite: /Textures/Interface/Alerts/human_dead.rsi
+    state: dead
+  name: alerts-dead-name
+  description: alerts-dead-desc
+
+- type: alert
+  id: HumanHealth
+  category: Health
+  icons:
+  - sprite: /Textures/Interface/Alerts/human_alive.rsi
+    state: health0
+  - sprite: /Textures/Interface/Alerts/human_alive.rsi
+    state: health1
+  - sprite: /Textures/Interface/Alerts/human_alive.rsi
+    state: health2
+  - sprite: /Textures/Interface/Alerts/human_alive.rsi
+    state: health3
+  - sprite: /Textures/Interface/Alerts/human_alive.rsi
+    state: health4
+  name: alerts-health-name
+  description: alerts-health-desc
+  minSeverity: 0
+  maxSeverity: 4
+
+- type: alert
+  id: Internals
+  category: Internals
+  onClick: !type:ToggleInternals {}
+  icons:
+  - sprite: /Textures/Interface/Alerts/internals.rsi
+    state: internal0
+  - sprite: /Textures/Interface/Alerts/internals.rsi
+    state: internal1
+  - sprite: /Textures/Interface/Alerts/internals.rsi
+    state: internal2
+  name: alerts-internals-name
+  description: alerts-internals-desc
+  minSeverity: 0
+  maxSeverity: 2
+
+- type: alert
+  id: PilotingShuttle
+  category: Piloting
+  onClick: !type:StopPiloting { }
+  icons: [ /Textures/Interface/Alerts/piloting.png ]
+  name: alerts-piloting-name
+  description: alerts-piloting-desc
+
+- type: alert
+  id: Peckish
+  category: Hunger
+  icons: [ /Textures/Interface/Alerts/Hunger/Peckish.png ]
+  name: alerts-hunger-name
+  description: alerts-hunger-desc
+
+- type: alert
+  id: Stamina
+  category: Stamina
+  icons:
+  - sprite: /Textures/Interface/Alerts/stamina.rsi
+    state: stamina0
+  - sprite: /Textures/Interface/Alerts/stamina.rsi
+    state: stamina1
+  - sprite: /Textures/Interface/Alerts/stamina.rsi
+    state: stamina2
+  - sprite: /Textures/Interface/Alerts/stamina.rsi
+    state: stamina3
+  - sprite: /Textures/Interface/Alerts/stamina.rsi
+    state: stamina4
+  - sprite: /Textures/Interface/Alerts/stamina.rsi
+    state: stamina5
+  - sprite: /Textures/Interface/Alerts/stamina.rsi
+    state: stamina6
+  name: alerts-stamina-name
+  description: alerts-stamina-desc
+  minSeverity: 0
+  maxSeverity: 6
+
+- type: alert
+  id: Starving
+  category: Hunger
+  icons: [ /Textures/Interface/Alerts/Hunger/Starving.png ]
+  name: alerts-starving-name
+  description: alerts-starving-desc
+
+- type: alert
+  id: Thirsty
+  category: Thirst
+  icons: [ /Textures/Interface/Alerts/Thirst/Thirsty.png ]
+  name: alerts-thirsty-name
+  description: alerts-thirsty-desc
+
+- type: alert
+  id: Parched
+  category: Thirst
+  icons: [ /Textures/Interface/Alerts/Thirst/Parched.png ]
+  name: alerts-parched-name
+  description: alerts-parched-desc
+
+- type: alert
+  id: Muted
+  icons: [ /Textures/Interface/Alerts/Abilities/silenced.png ]
+  name: alerts-muted-name
+  description: alerts-muted-desc
+
+- type: alert
+  id: VowOfSilence
+  icons: [ /Textures/Interface/Alerts/Abilities/silenced.png ]
+  name: alerts-vow-silence-name
+  onClick: !type:BreakVow  { }
+  description: alerts-vow-silence-desc
+
+- type: alert
+  id: VowBroken
+  icons: [ /Textures/Interface/Actions/scream.png ]
+  name: alerts-vow-broken-name
+  onClick: !type:RetakeVow  { }
+  description: alerts-vow-broken-desc
+
+- type: alert
+  id: Pulled
+  icons: [ /Textures/Interface/Alerts/Pull/pulled.png ]
+  onClick: !type:StopBeingPulled  { }
+  name: alerts-pulled-name
+  description: alerts-pulled-desc
+
+- type: alert
+  id: Pulling
+  icons: [ /Textures/Interface/Alerts/Pull/pulling.png ]
+  onClick: !type:StopPulling  { }
+  name: alerts-pulling-name
+  description: alerts-pulling-desc
+
+- type: alert
+  id: Debug1
+  icons:
+  - sprite: /Textures/Interface/Alerts/human_alive.rsi
+    state: health0
+  name: Debug1
+  description: Debug
+
+- type: alert
+  id: Debug2
+  icons:
+  - sprite: /Textures/Interface/Alerts/human_alive.rsi
+    state: health1
+  name: Debug2
+  description: Debug
+
+- type: alert
+  id: Debug3
+  icons:
+  - sprite: /Textures/Interface/Alerts/human_alive.rsi
+    state: health2
+  name: Debug3
+  description: Debug
+
+- type: alert
+  id: Debug4
+  icons:
+  - sprite: /Textures/Interface/Alerts/human_alive.rsi
+    state: health3
+  name: Debug4
+  description: Debug
+
+- type: alert
+  id: Debug5
+  icons:
+  - sprite: /Textures/Interface/Alerts/human_alive.rsi
+    state: health4
+  name: Debug5
+  description: Debug
+
+- type: alert
+  id: Debug6
+  icons:
+  - sprite: /Textures/Interface/Alerts/human_critical.rsi
+    state: critical
+  name: Debug6
+  description: Debug

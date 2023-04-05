@@ -1,0 +1,76 @@
+﻿# APC
+- type: entity
+  id: APCElectronics
+  parent: BaseElectronics
+  name: APC electronics
+  description: Circuit used in APC construction.
+  components:
+    - type: ApcElectronics
+    - type: Sprite
+      sprite: Objects/Misc/module.rsi
+      state: charger_APC
+      netsync: false
+
+# Wallmount Substation
+- type: entity
+  id: WallmountSubstationElectronics
+  parent: BaseElectronics
+  name: wallmount substation electronics
+  description: Circuit used to construct a wallmount substation.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/module.rsi
+      state: charger_APC
+      netsync: false
+    - type: Tag
+      tags:
+        - DroneUsable
+        - WallmountSubstationElectronics
+
+# Wallmount Generator
+- type: entity
+  id: WallmountGeneratorElectronics
+  parent: BaseElectronics
+  name: wallmount generator electronics
+  description: Circuit used to construct a wallmount generator.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/module.rsi
+      state: charger_APC
+      netsync: false
+    - type: Tag
+      tags:
+        - DroneUsable
+        - WallmountGeneratorElectronics
+
+# APU
+- type: entity
+  id: WallmountGeneratorAPUElectronics
+  parent: BaseElectronics
+  name: wallmount APU electronics
+  description: Circuit used to construct a wallmount APU.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/module.rsi
+      state: charger_APC
+      netsync: false
+    - type: Tag
+      tags:
+        - DroneUsable
+        - WallmountGeneratorAPUElectronics
+
+# Solar Tracker Electronics
+- type: entity
+  parent: BaseElectronics
+  id: SolarTrackerElectronics
+  name: solar tracker electronics
+  description: Advanced circuit board used to detect differences in pressure, temperature and gas concentrations between the two sides of the door.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/module.rsi
+      state: generic
+      netsync: false
+    - type: Tag
+      tags:
+        - DroneUsable
+        - SolarTrackerElectronics

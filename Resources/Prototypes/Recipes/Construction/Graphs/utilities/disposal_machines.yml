@@ -1,0 +1,203 @@
+﻿- type: constructionGraph
+  id: DisposalMachine
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: frame
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 1
+    - node: frame
+      entity: DisposalMachineFrame
+      actions:
+        - !type:SpriteChange
+          specifier:
+            sprite: /Textures/Structures/Piping/high_pressure_machine_frame.rsi
+            state: frame
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:DeleteEntity
+          steps:
+            - tool: Screwing
+              doAfter: 1
+        - to: frame_cable
+          steps:
+            - material: Cable
+              amount: 2
+              doAfter: 1
+    - node: frame_cable
+      entity: DisposalMachineFrame
+      actions:
+        - !type:SpriteStateChange
+          state: "frame_cables"
+      edges:
+        - to: frame
+          completed:
+            - !type:SpawnPrototype
+              prototype: CableApcStack1
+              amount: 2
+          steps:
+            - tool: Cutting
+              doAfter: 1
+        - to: frame_electronics
+          steps:
+            - material: Plastic # No machine parts = sad julian
+              amount: 2
+              doAfter: 1
+    - node: frame_electronics
+      entity: DisposalMachineFrame
+      actions:
+        - !type:SpriteStateChange
+          state: "frame_electronics"
+      edges:
+        - to: frame_cable
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlastic
+              amount: 2
+          steps:
+            - tool: Cutting
+              doAfter: 1
+        - to: frame_unit
+          steps:
+            - tool: Screwing
+              doAfter: 0.25
+        - to: frame_mailing
+          steps:
+            - tag: MailingUnitElectronics
+              name: Mailing Unit Electronics
+              icon:
+                sprite: "Objects/Misc/module.rsi"
+                state: "net_wired"
+            - tool: Screwing
+              doAfter: 0.25
+    - node: frame_unit
+      entity: DisposalMachineFrame
+      actions:
+        - !type:SpriteStateChange
+          state: "frame_unit"
+      edges:
+        - to: frame_inlet
+          steps:
+            - tool: Screwing
+              doAfter: 0.25
+        - to: disposal_unit
+          conditions:
+            - !type:EntityAnchored
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 1
+    - node: disposal_unit
+      entity: DisposalUnit
+      edges:
+        - to: frame_unit
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:EmptyAllContainers
+          conditions:
+            - !type:EntityAnchored
+          steps:
+            - tool: Prying
+              doAfter: 1
+    - node: frame_mailing
+      entity: DisposalMachineFrame
+      actions:
+        - !type:SpriteStateChange
+          state: "frame_unit"
+      edges:
+        - to: frame_electronics
+          steps:
+            - tool: Prying
+              doAfter: 0.25
+        - to: mailing_unit
+          conditions:
+            - !type:EntityAnchored
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 1
+    - node: mailing_unit
+      entity: MailingUnit
+      edges:
+        - to: frame_mailing
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:EmptyAllContainers
+          conditions:
+            - !type:EntityAnchored
+          steps:
+            - tool: Prying
+              doAfter: 1
+    - node: frame_inlet
+      entity: DisposalMachineFrame
+      actions:
+        - !type:SpriteStateChange
+          state: "frame_inlet"
+      edges:
+        - to: frame_outlet
+          steps:
+            - tool: Screwing
+              doAfter: 0.25
+    #   - to: disposal_inlet
+    #     conditions:
+    #       - !type:EntityAnchored {}
+    #     steps:
+    #       - material: Steel
+    #         amount: 1
+    #         doAfter: 1
+    #- node: disposal_inlet
+    #  entity: DisposalInlet
+    #  edges:
+    #    - to: frame_inlet
+    #      completed:
+    #        - !type:SpawnPrototype
+    #          prototype: SheetSteel1
+    #          amount: 1
+    #        - !type:EmptyAllContainers
+    #      conditions:
+    #        - !type:EntityAnchored {}
+    #      steps:
+    #        - tool: Prying
+    #          doAfter: 1
+    - node: frame_outlet
+      entity: DisposalMachineFrame
+      actions:
+        - !type:SpriteStateChange
+          state: "frame_outlet"
+      edges:
+        - to: frame_electronics
+          steps:
+            - tool: Screwing
+              doAfter: 0.25
+    #   - to: disposal_outlet
+    #     conditions:
+    #       - !type:EntityAnchored {}
+    #     steps:
+    #       - material: Steel
+    #         amount: 1
+    #         doAfter: 1
+    #- node: disposal_outlet
+    #  entity: DisposalOutlet
+    #  edges:
+    #    - to: frame_outlet
+    #      completed:
+    #        - !type:SpawnPrototype
+    #          prototype: SheetSteel1
+    #          amount: 1
+    #        - !type:EmptyAllContainers
+    #      conditions:
+    #        - !type:EntityAnchored {}
+    #      steps:
+    #        - tool: Prying
+    #          doAfter: 1

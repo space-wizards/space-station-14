@@ -1,0 +1,14 @@
+- type: entity
+  parent: BaseItem
+  id: ProximitySensor
+  name: proximity sensor
+  description: Senses things in close proximity.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/proximity_sensor.rsi
+    state: icon
+  - type: Tag
+    tags:
+      - ProximitySensor
+  - type: StaticPrice
+    price: 40

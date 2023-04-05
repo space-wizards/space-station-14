@@ -1,0 +1,100 @@
+- type: entity
+  name: space tick
+  id: MobTick
+  parent: SimpleSpaceMobBase
+  description: It's a space tick, watch out for its nasty bite. CentCom reports that 90 percent of cargo leg amputations are due to space tick bites.
+  components:
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask: SimpleHostileCompound
+  - type: Faction
+    factions:
+    - SimpleHostile
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: alive
+      sprite: Mobs/Aliens/Xenos/spacetick.rsi
+      scale: 0.8, 0.8
+  - type: Physics
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 4
+    baseSprintSpeed : 6
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.20
+      density: 20
+      mask:
+      - SmallMobMask
+      layer:
+      - SmallMobLayer
+  - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      15: Dead
+  - type: Stamina
+    excess: 15
+  - type: MovementAlwaysTouching
+  - type: Appearance
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive
+      Dead:
+        Base: dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatXeno
+      amount: 1
+  - type: Bloodstream
+    bloodMaxVolume: 50
+  - type: CombatMode
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-disarm
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+        path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      groups:
+        Brute: 2
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 5
+  - type: MeleeChemicalInjector
+    solution: melee
+  - type: GhostTakeoverAvailable
+    prob: 0.33
+    makeSentient: true
+    name: space tick
+    description: |
+      Wreak havoc on the station!
+  - type: ReplacementAccent
+    accent: genericAggressive
+
+- type: entity
+  id: MobTickSalvage
+  parent: MobTick
+  suffix: "Salvage Ruleset"
+  components:
+  - type: GhostTakeoverAvailable
+    name: space tick on salvage wreck
+    description: |
+      Defend the loot inside the salvage wreck!
+  - type: SalvageMobRestrictions
+

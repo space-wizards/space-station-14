@@ -1,0 +1,22 @@
+- type: entity
+  id: BoozeDispenser
+  name: booze dispenser
+  description: A booze dispenser with a single slot for a container to be filled.
+  parent: ReagentDispenserBase
+  components:
+  - type: Rotatable
+  - type: Sprite
+    sprite: Structures/smalldispensers.rsi
+    drawdepth: SmallObjects
+    state: booze
+    netsync: false
+  - type: ReagentDispenser
+    pack: BoozeDispenserInventory
+    emagPack: BoozeDispenserEmagInventory
+  - type: Transform
+    noRot: false
+  - type: Machine
+    board: BoozeDispenserMachineCircuitboard
+  - type: Wires
+    BoardName: "BoozeDispenser"
+    LayoutId: BoozeDispenser

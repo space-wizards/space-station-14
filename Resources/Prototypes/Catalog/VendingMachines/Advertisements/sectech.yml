@@ -1,0 +1,7 @@
+﻿- type: advertisementsPack
+  id: SecTechAds
+  advertisements:
+    - advertisement-sectech-1
+    - advertisement-sectech-2
+    - advertisement-sectech-3
+    - advertisement-sectech-4

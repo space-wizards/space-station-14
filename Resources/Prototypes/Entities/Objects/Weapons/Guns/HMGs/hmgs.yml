@@ -1,0 +1,52 @@
+- type: entity
+  name: BaseWeaponHeavyMachineGun
+  parent: BaseItem
+  id: BaseWeaponHeavyMachineGun
+  description: Spray and pray
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+  - type: Item
+  - type: Gun
+    fireRate: 20
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
+  - type: StaticPrice
+    price: 500
+  # No chamber because HMG may want its own
+
+- type: entity
+  name: minigun
+  id: WeaponMinigun
+  parent: BaseWeaponHeavyMachineGun
+  description: Vzzzzzt! Rahrahrahrah! Vrrrrr! Uses .10 rifle ammo.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/HMGs/minigun.rsi
+    layers:
+    - state: icon
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Item
+    sprite: Objects/Weapons/Guns/HMGs/minigun.rsi
+  - type: Gun
+    fireRate: 15
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/minigun.ogg
+  - type: BallisticAmmoProvider
+    proto: CartridgeMinigun
+    capacity: 1000
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: true
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []

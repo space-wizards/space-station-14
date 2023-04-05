@@ -1,0 +1,54 @@
+- type: entity
+  id: BaseCartridgeLightRifle
+  name: cartridge (.30 rifle)
+  parent: BaseCartridge
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - Cartridge
+    - CartridgeLightRifle
+  - type: CartridgeAmmo
+    proto: BulletLightRifle
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Appearance
+  - type: SpentAmmoVisuals
+  - type: StaticPrice
+    price: 10
+
+- type: entity
+  id: CartridgeLightRifle
+  name: cartridge (.30 rifle)
+  parent: BaseCartridgeLightRifle
+  components:
+  - type: CartridgeAmmo
+    proto: BulletLightRifle
+
+- type: entity
+  id: CartridgeLightRifleHighVelocity
+  name: cartridge (.30 rifle high-velocity)
+  parent: BaseCartridgeLightRifle
+  components:
+  - type: CartridgeAmmo
+    proto: BulletLightRifleHighVelocity
+
+- type: entity
+  id: CartridgeLightRiflePractice
+  name: cartridge (.30 rifle practice)
+  parent: BaseCartridgeLightRifle
+  components:
+  - type: CartridgeAmmo
+    proto: BulletLightRiflePractice
+
+- type: entity
+  id: CartridgeLightRifleRubber
+  name: cartridge (.30 rifle rubber)
+  parent: BaseCartridgeLightRifle
+  components:
+  - type: CartridgeAmmo
+    proto: BulletLightRifleRubber

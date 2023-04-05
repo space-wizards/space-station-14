@@ -1,0 +1,48 @@
+- type: constructionGraph
+  id: Glass
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: SheetRGlass
+          completed:
+            - !type:SetStackCount
+              amount: 1
+          steps:
+            - material: Glass
+              amount: 1
+            - material: MetalRod
+              amount: 1
+        - to: SheetPGlass
+          completed:
+            - !type:SetStackCount
+              amount: 1
+          steps:
+            - material: Glass
+              amount: 1
+            - material: Plasma
+              amount: 1
+        - to: SheetRPGlass
+          completed:
+            - !type:SetStackCount
+              amount: 1
+          steps:
+            - material: Glass
+              amount: 1
+            - material: Plasma
+              amount: 1
+            - material: MetalRod
+              amount: 1
+
+    - node: SheetGlass
+      entity: SheetGlass
+
+    - node: SheetRGlass
+      entity: SheetRGlass
+
+    - node: SheetPGlass
+      entity: SheetPGlass
+
+    - node: SheetRPGlass
+      entity: SheetRPGlass
+

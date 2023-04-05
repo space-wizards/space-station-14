@@ -1,0 +1,63 @@
+- type: material
+  id: Biomass
+  stackEntity: MaterialBiomass1
+  name: materials-biomass
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
+  color: "#8A9A5B"
+  price: 0.1
+
+- type: material
+  id: Cardboard
+  stackEntity: MaterialCardboard1
+  name: materials-cardboard
+  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: cardboard }
+  color: "#70736c"
+  price: 0.05
+
+- type: material
+  id: Cloth
+  stackEntity: MaterialCloth1
+  name: materials-cloth
+  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: cloth }
+  color: "#e7e7de"
+  price: 0.05
+
+- type: material
+  id: Durathread
+  stackEntity: MaterialDurathread1
+  name: materials-durathread
+  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: durathread }
+  color: "#8291a1"
+  price: 0.15 # 1-1 mix of plastic and cloth.
+
+- type: material
+  id: Plasma
+  stackEntity: SheetPlasma1
+  name: materials-plasma
+  icon: { sprite: Objects/Materials/Sheets/other.rsi, state: plasma }
+  color: "#7e009e"
+  price: 0.2
+
+- type: material
+  id: Plastic
+  stackEntity: SheetPlastic1
+  name: materials-plastic
+  icon: { sprite: Objects/Materials/Sheets/other.rsi, state: plastic }
+  color: "#d9d9d9"
+  price: 0.1
+
+- type: material
+  id: Wood
+  stackEntity: MaterialWoodPlank1
+  name: materials-wood
+  icon: { sprite: Objects/Materials/materials.rsi, state: wood }
+  color: "#966F33"
+  price: 0.05
+
+- type: material
+  id: Uranium
+  stackEntity: SheetUranium1
+  name: materials-uranium
+  icon: { sprite: Objects/Materials/Sheets/other.rsi, state: uranium }
+  color: "#32a852"
+  price: 0.2

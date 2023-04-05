@@ -1,0 +1,117 @@
+- type: entity
+  parent: BaseStructureDynamic
+  id: CrateGeneric
+  noSpawn: true
+  name: crate
+  description: A large container for items.
+  components:
+  - type: Transform
+    noRot: true
+  - type: Icon
+    sprite: Structures/Storage/Crates/generic.rsi
+    state: icon
+  - type: Sprite
+    netsync: false
+    noRot: true
+    sprite: Structures/Storage/Crates/generic.rsi
+    layers:
+    - state: base
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+  - type: InteractionOutline
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.4,-0.4,0.4,0.29"
+      density: 190
+      mask:
+      - SmallMobMask #this is so they can go under plastic flaps
+      layer:
+      - MachineLayer
+  - type: EntityStorage
+    capacity: 500
+  - type: PlaceableSurface
+    isPlaceable: false # defaults to closed.
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state_open: open
+      state_closed: closed
+  - type: PaperLabel
+    labelSlot:
+      insertVerbText: Attach Label
+      ejectVerbText: Remove Label
+      whitelist:
+        components:
+        - Paper
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+      paper_label: !type:ContainerSlot
+  - type: ItemSlots
+  - type: Construction
+    graph: CrateGenericSteel
+    node: crategenericsteel
+    containers:
+      - entity_storage
+
+- type: entity
+  parent: CrateGeneric
+  id: CrateBaseWeldable
+  components:
+  - type: Weldable
+  - type: ResistLocker
+
+- type: entity
+  parent: CrateGeneric
+  id: CrateBaseSecure
+  components:
+  - type: Lock
+  - type: AccessReader
+  - type: Icon
+    sprite: Structures/Storage/Crates/secure.rsi
+    state: icon
+  - type: Sprite
+    sprite: Structures/Storage/Crates/secure.rsi
+    layers:
+    - state: base
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: locked
+      map: ["enum.StorageVisualLayers.Lock"]
+      shader: unshaded
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: StrongMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Construction
+    graph: CrateSecure
+    node: cratesecure
+    containers:
+    - entity_storage

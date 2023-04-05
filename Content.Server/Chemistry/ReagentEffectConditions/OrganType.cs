@@ -1,0 +1,34 @@
+﻿using Content.Server.Body.Components;
+using Content.Shared.Body.Prototypes;
+using Content.Shared.Chemistry.Reagent;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+
+namespace Content.Server.Chemistry.ReagentEffectConditions
+{
+    /// <summary>
+    ///     Requires that the metabolizing organ is or is not tagged with a certain MetabolizerType
+    /// </summary>
+    public sealed class OrganType : ReagentEffectCondition
+    {
+        [DataField("type", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<MetabolizerTypePrototype>))]
+        public string Type = default!;
+
+        /// <summary>
+        ///     Does this condition pass when the organ has the type, or when it doesn't have the type?
+        /// </summary>
+        [DataField("shouldHave")]
+        public bool ShouldHave = true;
+
+        public override bool Condition(ReagentEffectArgs args)
+        {
+            if (args.OrganEntity == null)
+                return false;
+
+            if (args.EntityManager.TryGetComponent<MetabolizerComponent>(args.OrganEntity.Value, out var metabolizer)
+                && metabolizer.MetabolizerTypes != null
+                && metabolizer.MetabolizerTypes.Contains(Type))
+                return ShouldHave;
+            return !ShouldHave;
+        }
+    }
+}

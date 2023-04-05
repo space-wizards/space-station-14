@@ -1,0 +1,14 @@
+- type: gameMap
+  id: Infiltrator
+  mapName: 'Syndicate Infiltrator'
+  mapPath: /Maps/infiltrator.yml
+  minPlayers: 0
+  stations:
+    Station: #TODO: Mapper, add a BecomesStation component to the primary grid of the map.
+      mapNameTemplate: '{0} Infiltrator {1}'
+      nameGenerator:
+        !type:NanotrasenNameGenerator
+        prefixCreator: '14'
+      overflowJobs: []
+      availableJobs:
+        Captain: [ 1, 1 ]

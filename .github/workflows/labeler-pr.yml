@@ -1,0 +1,13 @@
+﻿name: "Labels: PR"
+
+on:
+- pull_request_target
+
+jobs:
+  labeler:
+    if: github.actor != 'PJBot'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/labeler@v3
+      with:
+        repo-token: "${{ secrets.GITHUB_TOKEN }}"

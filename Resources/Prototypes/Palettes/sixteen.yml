@@ -1,0 +1,32 @@
+﻿- type: palette
+  id: Rainbow
+  name: Rainbow
+  colors:
+    blue: "#1861d5"
+    red: "#951710"
+    pink: "#d5188d"
+    brown: "#a05212"
+    green: "#0e7f1b"
+    cyan: "#18a2d5"
+    yellow: "#d58c18"
+
+- type: palette
+  id: Sixteen
+  name: Sixteen
+  colors:
+    black: "#1D1D21"
+    red: "#B02E26"
+    green: "#5E7C16"
+    brown: "#835432"
+    blue: "#3C44AA"
+    purple: "#8932B8"
+    cyan: "#169C9C"
+    "light gray": "#9D9D97"
+    gray: "#474F52"
+    pink: "#F38BAA"
+    lime: "#80C71F"
+    yellow: "#FED83D"
+    "light blue": "#3AB3DA"
+    magenta: "#C74EBD"
+    orange: "#F9801D"
+    white: "#F9FFFE"

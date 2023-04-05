@@ -1,0 +1,43 @@
+﻿ # Immovable rod
+
+- type: entity
+  id: ImmovableRod
+  name: immovable rod
+  description: You can sense that it's hungry. That's usually a bad sign.
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: MovementIgnoreGravity
+  - type: Sprite
+    sprite: Objects/Fun/immovable_rod.rsi
+    state: icon
+    noRot: false
+  - type: ImmovableRod
+  - type: TimedDespawn
+    lifetime: 30.0
+  - type: Physics
+    bodyType: Dynamic
+    linearDamping: 0
+  - type: PointLight
+    radius: 3
+    color: red
+    energy: 2.0
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.5
+      density: 1
+      hard: false
+      layer:
+      - Impassable
+      - Opaque
+
+- type: entity
+  id: ImmovableRodSlow
+  suffix: Slow
+  parent: ImmovableRod
+  components:
+  - type: ImmovableRod
+    minSpeed: 1
+    maxSpeed: 5

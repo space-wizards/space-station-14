@@ -1,0 +1,120 @@
+- type: entity
+  id: CrateEngineeringGear
+  parent: CrateEngineering
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingBeltUtility
+        amount: 2
+      - id: ClothingEyesGlassesMeson
+        amount: 2
+      - id: ClothingHeadHatHardhatYellow
+        amount: 2
+      - id: ClothingHeadHatWeldingMaskFlame # Replace with regular welding mask when we have it.
+        amount: 2
+      - id: ClothingOuterVestHazard
+        amount: 3
+      - id: ClothingHandsGlovesColorYellow
+        amount: 2
+
+- type: entity
+  id: CrateEngineeringToolbox
+  parent: CrateEngineering
+  components:
+  - type: StorageFill
+    contents:
+      - id: ToolboxMechanicalFilled
+        amount: 2
+      - id: ToolboxElectricalFilled
+        amount: 2
+
+#- type: entity
+#  id: CrateEngineeringPowercell
+#  parent: CrateElectrical
+#  components:
+#  - type: StorageFill
+#    contents:
+#      - id: PowerCellMicroreactor
+#        amount: 3
+
+- type: entity
+  id: CrateEngineeringCableLV
+  parent: CrateElectrical
+  components:
+  - type: StorageFill
+    contents:
+      - id: CableApcStack
+        amount: 3
+
+- type: entity
+  id: CrateEngineeringCableMV
+  parent: CrateElectrical
+  components:
+  - type: StorageFill
+    contents:
+      - id: CableMVStack
+        amount: 3
+
+- type: entity
+  id: CrateEngineeringCableHV
+  parent: CrateElectrical
+  components:
+  - type: StorageFill
+    contents:
+      - id: CableHVStack
+        amount: 3
+
+- type: entity
+  id: CrateEngineeringCableBulk
+  parent: CrateElectrical
+  components:
+  - type: StorageFill
+    contents:
+      - id: CableHVStack
+        amount: 2
+      - id: CableMVStack
+        amount: 2
+      - id: CableApcStack
+        amount: 2
+
+- type: entity
+  id: CrateEngineeringElectricalSupplies
+  parent: CrateElectrical
+  components:
+  - type: StorageFill
+    contents:
+      - id: ToolboxElectricalFilled
+        amount: 2
+      - id: ClothingHandsGlovesColorYellow
+        amount: 2
+
+- type: entity
+  id: CrateEngineeringJetpack
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: JetpackBlue
+        amount: 2
+        
+- type: entity
+  id: CrateEngineeringMiniJetpack
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: JetpackMini
+        amount: 2
+
+- type: entity
+  id: CrateAirlockKit
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: SheetSteel
+        amount: 1
+      - id: CableApcStack
+        amount: 1
+      - id: DoorElectronics
+        amount: 6

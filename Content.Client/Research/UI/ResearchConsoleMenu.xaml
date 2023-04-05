@@ -1,0 +1,87 @@
+﻿<DefaultWindow xmlns="https://spacestation14.io"
+            Title="{Loc 'research-console-menu-title'}"
+            MinSize="800 400"
+            SetSize="800 400">
+    <BoxContainer Orientation="Vertical"
+                  HorizontalExpand="True"
+                  VerticalExpand="True">
+        <BoxContainer Orientation="Horizontal"
+                      HorizontalExpand="True"
+                      VerticalExpand="True"
+                      SizeFlagsStretchRatio="2"
+                      SeparationOverride="10">
+            <BoxContainer Orientation="Vertical"
+                          HorizontalExpand="True"
+                          VerticalExpand="True">
+                <Label Text="{Loc 'research-console-menu-unlocked-technologies-label'}" />
+                <ItemList Name="UnlockedTechnologies"
+                          SelectMode="Button"
+                          HorizontalExpand="True"
+                          VerticalExpand="True">
+                    <!-- Unlocked technologies are added here by code -->
+                </ItemList>
+            </BoxContainer>
+            <BoxContainer Orientation="Vertical"
+                          HorizontalExpand="True"
+                          VerticalExpand="True">
+                <Label Text="{Loc 'research-console-menu-unlockable-technologies-label'}" />
+                <ItemList Name="UnlockableTechnologies"
+                          SelectMode="Button"
+                          HorizontalExpand="True"
+                          VerticalExpand="True">
+                    <!-- Unlockable technologies are added here by code -->
+                </ItemList>
+            </BoxContainer>
+            <BoxContainer Orientation="Vertical"
+                          HorizontalExpand="True"
+                          VerticalExpand="True">
+                <Label Text="{Loc 'research-console-menu-future-technologies-label'}" />
+                <ItemList Name="FutureTechnologies"
+                          SelectMode="Button"
+                          HorizontalExpand="True"
+                          VerticalExpand="True">
+                    <!-- Future technologies are added here by code -->
+                </ItemList>
+            </BoxContainer>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal"
+                      HorizontalExpand="True"
+                      VerticalExpand="True"
+                      SizeFlagsStretchRatio="1">
+            <TextureRect Name="TechnologyIcon"
+                         HorizontalExpand="True"
+                         VerticalExpand="True"
+                         SizeFlagsStretchRatio="1"
+                         Stretch="KeepAspectCentered" />
+            <BoxContainer Orientation="Vertical"
+                          HorizontalExpand="True"
+                          VerticalExpand="True"
+                          SizeFlagsStretchRatio="3">
+                <Label Name="TechnologyName" />
+                <Label Name="TechnologyDescription" />
+                <Label Name="TechnologyRequirements" />
+            </BoxContainer>
+            <BoxContainer Orientation="Vertical"
+                          HorizontalExpand="True"
+                          VerticalExpand="True"
+                          SizeFlagsStretchRatio="1">
+                <Label Name="PointLabel" />
+                <Label Name="PointsPerSecondLabel" />
+                <BoxContainer Orientation="Vertical"
+                              Align="End"
+                              HorizontalExpand="True"
+                              VerticalExpand="True">
+                    <Button Name="ServerSelectionButton"
+                            Access="Public"
+                            Text="{Loc 'research-console-menu-server-selection-button'}" />
+                    <Button Name="ServerSyncButton"
+                            Access="Public"
+                            Text="{Loc 'research-console-menu-server-sync-button'}" />
+                    <Button Name="UnlockButton"
+                            Access="Public"
+                            Disabled="True" />
+                </BoxContainer>
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

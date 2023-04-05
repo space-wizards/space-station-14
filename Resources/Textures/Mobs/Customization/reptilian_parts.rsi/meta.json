@@ -1,0 +1,136 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "https://github.com/Skyrat-SS13/Skyrat-tg/tree/40e3cdbb15b8bc0d5ef2fb46133adf805bda5297",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "tail_smooth_front",
+      "directions": 4
+    },
+    {
+      "name": "tail_spikes_front",
+      "directions": 4
+    },
+    {
+      "name": "tail_dtiger_front",
+      "directions": 4
+    },
+    {
+      "name": "tail_ltiger_front",
+      "directions": 4
+    },
+    {
+      "name": "tail_smooth_behind",
+      "directions": 4
+    },
+    {
+      "name": "tail_spikes_behind",
+      "directions": 4
+    },
+    {
+      "name": "tail_dtiger_behind",
+      "directions": 4
+    },
+    {
+      "name": "tail_ltiger_behind",
+      "directions": 4
+    },
+    {
+      "name": "tail_smooth",
+      "directions": 4
+    },
+    {
+      "name": "tail_spikes",
+      "directions": 4
+    },
+    {
+      "name": "tail_dtiger",
+      "directions": 4
+    },
+    {
+      "name": "tail_ltiger",
+      "directions": 4
+    },
+    {
+      "name": "snout_round",
+      "directions": 4
+    },
+    {
+      "name": "snout_roundlight",
+      "directions": 4
+    },
+    {
+      "name": "snout_sharp",
+      "directions": 4
+    },
+    {
+      "name": "snout_sharplight",
+      "directions": 4
+    },
+    {
+      "name": "horns_simple",
+      "directions": 4
+    },
+    {
+      "name": "horns_short",
+      "directions": 4
+    },
+    {
+      "name": "horns_curled",
+      "directions": 4
+    },
+    {
+      "name": "horns_ram",
+      "directions": 4
+    },
+    {
+      "name": "horns_angler",
+      "directions": 4
+    },
+    {
+      "name": "frills_simple",
+      "directions": 4
+    },
+    {
+      "name": "frills_short",
+      "directions": 4
+    },
+    {
+      "name": "frills_aquatic",
+      "directions": 4
+    },
+    {
+      "name": "frills_divinity",
+      "directions": 4
+    },
+     {
+      "name": "horns_double",
+      "directions": 4
+    },
+	{
+      "name": "frills_axolotl",
+      "directions": 4
+    },
+	{
+      "name": "frills_hood_primary",
+      "directions": 4
+    },
+	{
+      "name": "frills_hood_secondary",
+      "directions": 4
+    },
+    {
+      "name": "frills_big",
+      "directions": 4
+    },
+    {
+      "name": "body_tiger",
+      "directions": 4
+	
+    }
+  ]
+}

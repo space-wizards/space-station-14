@@ -1,0 +1,121 @@
+- type: entity
+  name: syringe box
+  parent: BoxCardboard
+  id: BoxSyringe
+  description: A box full of syringes.
+  components:
+  - type: StorageFill
+    contents:
+      - id: Syringe
+        amount: 6
+  - type: Sprite
+    layers:
+      - state: box
+      - state: syringe
+
+- type: entity
+  name: pill canister box
+  parent: BoxCardboard
+  id: BoxPillCanister
+  description: A box full of pill canisters.
+  components:
+  - type: StorageFill
+    contents:
+      - id: PillCanister
+        amount: 6
+  - type: Sprite
+    layers:
+      - state: box
+      - state: pillbox
+
+- type: entity
+  name: bottle box
+  parent: BoxCardboard
+  id: BoxBottle
+  description: A box full of bottles.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ChemistryEmptyBottle01
+        amount: 6
+  - type: Sprite
+    layers:
+      - state: box
+      - state: bottle
+
+- type: entity
+  name: sterile mask box
+  parent: BoxCardboard
+  id: BoxSterileMask
+  description: This box contains sterile medical masks.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingMaskSterile
+        amount: 6
+  - type: Sprite
+    layers:
+      - state: box
+      - state: sterile
+
+- type: entity
+  name: latex gloves box
+  parent: BoxCardboard
+  id: BoxLatexGloves
+  description: Contains sterile latex gloves.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHandsGlovesLatex
+        amount: 4
+  - type: Sprite
+    layers:
+      - state: box
+      - state: latex
+      
+- type: entity
+  name: nitrile gloves box
+  parent: BoxCardboard
+  id: BoxNitrileGloves
+  description: Contains sterile nitrile gloves. Better than latex.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHandsGlovesNitrile
+        amount: 4
+  - type: Sprite
+    layers:
+      - state: box
+      - state: nitrile
+
+- type: entity
+  name: sterile swab box
+  parent: BoxCardboard
+  id: BoxMouthSwab
+  components:
+  - type: StorageFill
+    contents:
+      - id: DiseaseSwab
+        amount: 30
+  - type: Sprite
+    layers:
+      - state: box
+      - state: swab
+
+- type: entity
+  name: body bag box
+  parent: BoxCardboard
+  id: BoxBodyBag
+  description: Contains body bags.
+  components:
+  - type: StorageFill
+    contents:
+      - id: BodyBag_Folded
+        amount: 5
+  - type: Sprite
+    layers:
+      - state: box
+      - state: bodybags
+    whitelist:
+      tags:
+        - BodyBag

@@ -1,0 +1,69 @@
+- type: constructionGraph
+  id: Railing
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: railing
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: MetalRod
+              amount: 1
+              doAfter: 2
+        - to: railingCorner
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: MetalRod
+              amount: 2
+              doAfter: 2.5
+        - to: railingCornerSmall
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: MetalRod
+              amount: 1
+              doAfter: 2
+
+    - node: railing
+      entity: Railing
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: PartRodMetal1
+              amount: 1
+            - !type:DeleteEntity
+          steps:
+            - tool: Screwing
+              doAfter: 0.25
+
+    - node: railingCorner
+      entity: RailingCorner
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: PartRodMetal1
+              amount: 2
+            - !type:DeleteEntity
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+
+    - node: railingCornerSmall
+      entity: RailingCornerSmall
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: PartRodMetal1
+              amount: 1
+            - !type:DeleteEntity
+          steps:
+            - tool: Screwing
+              doAfter: 0.25

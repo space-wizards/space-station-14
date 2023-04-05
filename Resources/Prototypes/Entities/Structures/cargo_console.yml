@@ -1,0 +1,55 @@
+﻿- type: entity
+  id: CargoTelepad
+  parent: BaseStructureDynamic
+  name: cargo telepad
+  components:
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: Fixtures
+    fixtures:
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.00"
+        density: 190
+        mask:
+          - MachineMask
+  - type: Sprite
+    netsync: false
+    sprite: Structures/cargo_telepad.rsi
+    drawdepth: FloorObjects
+    layers:
+      - state: offline
+        map: [ "enum.CargoTelepadLayers.Base" ]
+      - state: idle
+        map: [ "enum.CargoTelepadLayers.Beam" ]
+        shader: unshaded
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: SignalReceiver
+    inputs:
+      OrderReceiver: []
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 75
+        behaviors:
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              SheetSteel1:
+                min: 1
+                max: 1
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+  - type: ApcPowerReceiver
+    powerLoad: 1000 # TODO if we keep this make it spike power draw when teleporting
+  - type: ExtensionCableReceiver
+  - type: CargoTelepad
+  - type: Appearance
+  - type: CollideOnAnchor

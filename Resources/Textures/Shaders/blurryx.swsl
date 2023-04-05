@@ -1,0 +1,16 @@
+uniform sampler2D SCREEN_TEXTURE;
+uniform highp float BLUR_AMOUNT;
+
+void fragment() {
+    highp vec3 col = texture(SCREEN_TEXTURE, UV).xyz * BLUR_AMOUNT;
+    highp vec4 color = zTexture(UV);
+    col += texture(SCREEN_TEXTURE, UV + vec2(SCREEN_PIXEL_SIZE.x, 0.0)).xyz * 0.15;
+    col += texture(SCREEN_TEXTURE, UV + vec2(-SCREEN_PIXEL_SIZE.x, 0.0)).xyz * 0.15;
+    col += texture(SCREEN_TEXTURE, UV + vec2(2.0 * SCREEN_PIXEL_SIZE.x, 0.0)).xyz * 0.12;
+    col += texture(SCREEN_TEXTURE, UV + vec2(2.0 * -SCREEN_PIXEL_SIZE.x, 0.0)).xyz * 0.12;
+    col += texture(SCREEN_TEXTURE, UV + vec2(3.0 * SCREEN_PIXEL_SIZE.x, 0.0)).xyz * 0.09;
+    col += texture(SCREEN_TEXTURE, UV + vec2(3.0 * -SCREEN_PIXEL_SIZE.x, 0.0)).xyz * 0.09;
+    col += texture(SCREEN_TEXTURE, UV + vec2(4.0 * SCREEN_PIXEL_SIZE.x, 0.0)).xyz * 0.05;
+    col += texture(SCREEN_TEXTURE, UV + vec2(4.0 * -SCREEN_PIXEL_SIZE.x, 0.0)).xyz * 0.05;
+    COLOR = vec4(vec3(col), color.a);
+}

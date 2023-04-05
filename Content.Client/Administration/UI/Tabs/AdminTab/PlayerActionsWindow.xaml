@@ -1,0 +1,18 @@
+﻿<DefaultWindow
+    xmlns="https://spacestation14.io"
+    xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    Title="{Loc admin-player-actions-window-title}" MinSize="425 272">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc Reason}" MinWidth="100" />
+            <Control MinWidth="50" />
+            <LineEdit Name="ReasonLine" MinWidth="100" HorizontalExpand="True" />
+        </BoxContainer>
+        <cc:PlayerListControl Name="PlayerList" VerticalExpand="True" />
+        <BoxContainer Orientation="Horizontal">
+            <Button Name="SubmitKickButton" Text="{Loc admin-player-actions-kick}" Disabled="True"/>
+            <Button Name="SubmitAHelpButton" Text="{Loc admin-player-actions-ahelp}" Disabled="True"/>
+            <Button Name="SubmitRespawnButton" Text="{Loc admin-player-actions-respawn}" Disabled="True"/>
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

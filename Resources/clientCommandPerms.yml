@@ -1,0 +1,73 @@
+# Available to everybody
+- Commands:
+    - disconnect
+    - help
+    - list
+    - quit
+    - hardquit
+    - svbind
+    - bind
+    - exec # macro moment
+    - cls
+    - vram
+    - monitor
+    - setmonitor
+    - keyinfo
+    - setclipboard
+    - getclipboard
+    - net_graph
+    - net_watchent
+    - net_draw_interp
+    - devwindow
+    - fill
+    - dumpentities
+    - ">"
+    - gcf
+    - gc
+    - gc_mode
+    - resetent
+    - resetallents
+    - cvar
+    - fuckrules
+    - midipanic
+
+- Flags: DEBUG
+  Commands:
+    - atvrange
+    - atvmode
+    - atvcbm
+    - debugai
+    - notify
+    - pathfinder
+    - entitymenug
+    - hidemechanisms
+    - showmechanisms
+    - menuvis
+    - togglehealthoverlay
+    - toggledecals
+    - nodevis
+    - nodevisfilter
+    - showmeleespread
+    - showgunspread
+    - showambient
+    - showemergencyshuttle
+    - zoom
+    - showsubfloor
+    - showsubfloorforever
+    - showmarkers
+    - nodevis
+    - nodevisfilter
+    - detachent
+    - localdelete
+    - fullstatereset
+
+- Flags: MAPPING
+  Commands:
+    - mapping
+    - toggleautosave
+    - toggledecals
+
+- Flags: QUERY
+  Commands:
+    - uploadfile
+    - loadprototype

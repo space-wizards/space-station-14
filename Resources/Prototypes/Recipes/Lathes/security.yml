@@ -1,0 +1,229 @@
+- type: latheRecipe
+  id: Handcuffs
+  result: Handcuffs
+  completetime: 2
+  materials:
+    Steel: 300
+
+- type: latheRecipe
+  id: Zipties
+  result: Zipties
+  completetime: 2
+  materials:
+    Plastic: 200
+
+- type: latheRecipe
+  id: Stunbaton
+  result: Stunbaton
+  completetime: 2
+  materials:
+    Steel: 300
+    Plastic: 300
+
+- type: latheRecipe
+  id: ForensicPad
+  result: ForensicPad
+  completetime: 4
+  materials:
+    Plastic: 100
+
+- type: latheRecipe
+  id: ClothingEyesGlassesSecurity
+  result: ClothingEyesGlassesSecurity
+  completetime: 2
+  materials:
+    Steel: 300
+    Glass: 200
+
+- type: latheRecipe
+  id: RiotShield
+  result: RiotShield
+  completetime: 4
+  materials:
+    Steel: 400
+    Glass: 400
+
+- type: latheRecipe
+  id: Flash
+  result: Flash
+  completetime: 2
+  materials:
+    Glass: 100
+    Plastic: 200
+    Steel: 100
+
+- type: latheRecipe
+  id: ShellShotgunBeanbag
+  result: ShellShotgunBeanbag
+  completetime: 2
+  materials:
+    Plastic: 15
+    Steel: 10
+
+- type: latheRecipe
+  id: CartridgePistolRubber
+  result: CartridgePistolRubber
+  completetime: 2
+  materials:
+    Plastic: 5
+    Steel: 5
+
+- type: latheRecipe
+  id: CartridgeMagnumRubber
+  result: CartridgeMagnumRubber
+  completetime: 2
+  materials:
+    Plastic: 5
+    Steel: 5
+
+- type: latheRecipe
+  id: CartridgeRifle
+  result: CartridgeRifle
+  completetime: 2
+  materials:
+    Steel: 15
+
+- type: latheRecipe
+  id: CartridgeLightRifleRubber
+  result: CartridgeLightRifleRubber
+  completetime: 2
+  materials:
+    Plastic: 10
+    Steel: 5
+
+- type: latheRecipe
+  id: CartridgeRifleRubber
+  result: CartridgeRifleRubber
+  completetime: 2
+  materials:
+    Plastic: 10
+    Steel: 5
+
+- type: latheRecipe
+  id: CartridgePistol
+  result: CartridgePistol
+  completetime: 2
+  materials:
+    Steel: 10
+
+- type: latheRecipe
+  id: ShellShotgun
+  result: ShellShotgun
+  completetime: 2
+  materials:
+    Steel: 20
+
+- type: latheRecipe
+  id: CartridgeMagnum
+  result: CartridgeMagnum
+  completetime: 2
+  materials:
+    Steel: 20
+
+- type: latheRecipe
+  id: CartridgeLightRifle
+  result: CartridgeLightRifle
+  completetime: 2
+  materials:
+    Steel: 30
+
+- type: latheRecipe
+  id: ShellShotgunFlare
+  result: ShellShotgunFlare
+  completetime: 2
+  materials:
+    Plastic: 20
+    Steel: 5
+
+- type: latheRecipe
+  id: ShellTranquilizer
+  result: ShellTranquilizer
+  completetime: 4
+  materials:
+    Plastic: 15
+    Steel: 10
+    Glass: 5
+
+- type: latheRecipe
+  id: TargetHuman
+  result: TargetHuman
+  completetime: 5
+  applyMaterialDiscount: false # ingredients dropped when destroyed
+  materials:
+    Steel: 500
+
+- type: latheRecipe
+  id: TargetClown
+  result: TargetClown
+  completetime: 5
+  applyMaterialDiscount: false # ingredients dropped when destroyed
+  materials:
+    Steel: 500
+
+- type: latheRecipe
+  id: TargetSyndicate
+  result: TargetSyndicate
+  completetime: 5
+  applyMaterialDiscount: false # ingredients dropped when destroyed
+  materials:
+    Steel: 500
+
+- type: latheRecipe
+  id: MagazineBoxPistol
+  result: MagazineBoxPistol
+  completetime: 5
+  materials:
+    Steel: 650
+
+- type: latheRecipe
+  id: MagazineBoxPistolRubber
+  result: MagazineBoxPistolRubber
+  completetime: 5
+  materials:
+    Steel: 350
+    Plastic: 300
+
+- type: latheRecipe
+  id: MagazineBoxMagnum
+  result: MagazineBoxMagnum
+  completetime: 5
+  materials:
+    Steel: 1250
+
+- type: latheRecipe
+  id: MagazineBoxMagnumRubber
+  result: MagazineBoxMagnumRubber
+  completetime: 5
+  materials:
+    Steel: 350
+    Plastic: 300
+
+- type: latheRecipe
+  id: MagazineBoxRifle
+  result: MagazineBoxRifle
+  completetime: 5
+  materials: 
+    Steel: 950
+
+- type: latheRecipe
+  id: MagazineBoxRifleRubber
+  result: MagazineBoxRifleRubber
+  completetime: 5
+  materials:
+    Steel: 350
+    Plastic: 600
+
+- type: latheRecipe
+  id: MagazineBoxLightRifle
+  result: MagazineBoxLightRifle
+  completetime: 5
+  materials:
+    Steel: 1800
+
+- type: latheRecipe
+  id: MagazineBoxLightRifleRubber
+  result: MagazineBoxLightRifleRubber
+  completetime: 5
+  materials:
+    Steel: 350
+    Plastic: 600

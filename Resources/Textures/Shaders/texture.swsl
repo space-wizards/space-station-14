@@ -1,0 +1,23 @@
+
+//Draws the given texture at the given screen coords. Useful in specific scenarios (i.e. this was made for drawing singularity sprites over the lensing effect but below FOV)
+//Currently does not work with AtlasTextures, going to need some work.
+
+uniform sampler2D tex;
+uniform highp vec2 positionInput;
+uniform highp vec2 pixelSize;
+uniform highp float alphaCutoff;
+uniform bool removeTransparency;
+
+void fragment() {
+	highp float pixelLength = pixelSize.x*2.0;
+	highp float halvedLength = pixelLength/2.0;
+	if(FRAGCOORD.x > positionInput.x - halvedLength && FRAGCOORD.x < positionInput.x + halvedLength && FRAGCOORD.y > positionInput.y - halvedLength && FRAGCOORD.y < positionInput.y + halvedLength){
+		highp vec2 finalCoords = (FRAGCOORD.xy-positionInput+(pixelLength/2.0))/pixelLength;
+		highp vec4 color = texture2D(tex, finalCoords);
+		if(color.a > alphaCutoff){
+			if(removeTransparency)
+				color.a = 1.0;
+			COLOR = color;
+		}
+	}
+}

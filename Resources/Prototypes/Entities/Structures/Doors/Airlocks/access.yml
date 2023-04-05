@@ -1,0 +1,773 @@
+# Airlocks
+- type: entity
+  parent: Airlock
+  id: AirlockServiceLocked
+  suffix: Service, Locked
+  components:
+  - type: AccessReader
+    access: [["Service"]]
+
+- type: entity
+  parent: Airlock
+  id: AirlockTheatreLocked
+  suffix: Theatre, Locked
+  components:
+  - type: AccessReader
+    access: [["Theatre"]]
+
+- type: entity
+  parent: Airlock
+  id: AirlockChapelLocked
+  suffix: Chapel, Locked
+  components:
+  - type: AccessReader
+    access: [["Chapel"]]
+
+- type: entity
+  parent: Airlock
+  id: AirlockJanitorLocked
+  suffix: Janitor, Locked
+  components:
+  - type: AccessReader
+    access: [["Janitor"]]
+
+- type: entity
+  parent: Airlock
+  id: AirlockKitchenLocked
+  suffix: Kitchen, Locked
+  components:
+  - type: AccessReader
+    access: [["Kitchen"]]
+
+- type: entity
+  parent: Airlock
+  id: AirlockBarLocked
+  suffix: Bar, Locked
+  components:
+  - type: AccessReader
+    access: [["Bar"]]
+
+- type: entity
+  parent: Airlock
+  id: AirlockHydroponicsLocked
+  suffix: Hydroponics, Locked
+  components:
+  - type: AccessReader
+    access: [["Hydroponics"]]
+
+- type: entity
+  parent: Airlock
+  id: AirlockServiceCaptainLocked
+  suffix: Captain, Locked
+  components:
+  - type: AccessReader
+    access: [["Captain"]]
+
+- type: entity
+  parent: AirlockExternal
+  id: AirlockExternalLocked
+  suffix: External, Locked
+  components:
+  - type: AccessReader
+    access: [["External"]]
+
+- type: entity
+  parent: AirlockExternal
+  id: AirlockExternalCargoLocked
+  suffix: External, Cargo, Locked
+  components:
+  - type: AccessReader
+    access: [["Cargo"]]
+
+- type: entity
+  parent: AirlockExternal
+  id: AirlockExternalEngineeringLocked
+  suffix: External, Engineering, Locked
+  components:
+  - type: AccessReader
+    access: [["Engineering"]]
+
+- type: entity
+  parent: AirlockExternal
+  id: AirlockExternalAtmosphericsLocked
+  suffix: External, Atmospherics, Locked
+  components:
+  - type: AccessReader
+    access: [["Atmospherics"]]
+
+- type: entity
+  parent: AirlockFreezer
+  id: AirlockFreezerLocked
+  suffix: Service, Locked
+  components:
+  - type: AccessReader
+    access: [["Kitchen"]]
+
+- type: entity
+  parent: AirlockFreezer
+  id: AirlockFreezerKitchenHydroLocked
+  suffix: Kitchen/Hydroponics, Locked
+  components:
+  - type: AccessReader
+    access: [["Kitchen"], ["Hydroponics"]]
+
+- type: entity
+  parent: AirlockEngineering
+  id: AirlockEngineeringLocked
+  suffix: Engineering, Locked
+  components:
+  - type: AccessReader
+    access: [["Engineering"]]
+
+- type: entity
+  parent: AirlockAtmospherics
+  id: AirlockAtmosphericsLocked
+  suffix: Atmospherics, Locked
+  components:
+  - type: AccessReader
+    access: [["Atmospherics"]]
+
+- type: entity
+  parent: AirlockCargo
+  id: AirlockCargoLocked
+  suffix: Cargo, Locked
+  components:
+  - type: AccessReader
+    access: [["Cargo"]]
+
+- type: entity
+  parent: AirlockCargo
+  id: AirlockSalvageLocked
+  suffix: Salvage, Locked
+  components:
+  - type: AccessReader
+    access: [["Salvage"]]
+
+- type: entity
+  parent: AirlockCargo
+  id: AirlockQuartermasterLocked
+  suffix: Quartermaster, Locked
+  components:
+  - type: AccessReader
+    access: [["Quartermaster"]]
+
+- type: entity
+  parent: AirlockMedical
+  id: AirlockMedicalLocked
+  suffix: Medical, Locked
+  components:
+  - type: AccessReader
+    access: [["Medical"]]
+
+- type: entity
+  parent: AirlockVirology
+  id: AirlockVirologyLocked
+  suffix: Virology, Locked
+  components:
+  - type: AccessReader
+    access: [["Medical"]]
+
+- type: entity
+  parent: AirlockChemistry
+  id: AirlockChemistryLocked
+  suffix: Chemistry, Locked
+  components:
+  - type: AccessReader
+    access: [["Chemistry"]]
+
+- type: entity
+  parent: AirlockScience
+  id: AirlockScienceLocked
+  suffix: Science, Locked
+  components:
+  - type: AccessReader
+    access: [["Research"]]
+
+- type: entity
+  parent: AirlockScience
+  id: AirlockMedicalScienceLocked
+  suffix: Medical/Science, Locked
+  components:
+  - type: AccessReader
+    access: [["Research"], ["Medical"]]
+
+- type: entity
+  parent: AirlockCommand
+  id: AirlockCommandLocked
+  suffix: Command, Locked
+  components:
+  - type: AccessReader
+    access: [["Command"]]
+  - type: Wires
+    LayoutId: AirlockCommand
+
+- type: entity
+  parent: AirlockCommand
+  id: AirlockCaptainLocked
+  suffix: Captain, Locked
+  components:
+  - type: AccessReader
+    access: [["Captain"]]
+
+- type: entity
+  parent: AirlockCommand
+  id: AirlockChiefMedicalOfficerLocked
+  suffix: ChiefMedicalOfficer, Locked
+  components:
+  - type: AccessReader
+    access: [["ChiefMedicalOfficer"]]
+
+- type: entity
+  parent: AirlockCommand
+  id: AirlockChiefEngineerLocked
+  suffix: ChiefEngineer, Locked
+  components:
+  - type: AccessReader
+    access: [["ChiefEngineer"]]
+
+- type: entity
+  parent: AirlockCommand
+  id: AirlockHeadOfSecurityLocked
+  suffix: HeadOfSecurity, Locked
+  components:
+  - type: AccessReader
+    access: [["HeadOfSecurity"]]
+
+- type: entity
+  parent: AirlockCommand
+  id: AirlockResearchDirectorLocked
+  suffix: ResearchDirector, Locked
+  components:
+  - type: AccessReader
+    access: [["ResearchDirector"]]
+
+- type: entity
+  parent: AirlockCommand
+  id: AirlockHeadOfPersonnelLocked
+  suffix: HeadOfPersonnel, Locked
+  components:
+  - type: AccessReader
+    access: [["HeadOfPersonnel"]]
+
+- type: entity
+  parent: AirlockSecurity
+  id: AirlockSecurityLocked
+  suffix: Security, Locked
+  components:
+  - type: AccessReader
+    access: [["Security"]]
+  - type: Wires
+    LayoutId: AirlockSecurity
+
+- type: entity
+  parent: AirlockSecurity
+  id: AirlockBrigLocked
+  suffix: Brig, Locked
+  components:
+  - type: AccessReader
+    access: [["Brig"]]
+  - type: Wires
+    LayoutId: AirlockSecurity
+
+- type: entity
+  parent: AirlockSecurity
+  id: AirlockArmoryLocked
+  suffix: Armory, Locked
+  components:
+  - type: AccessReader
+    access: [["Armory"]]
+  - type: Wires
+    LayoutId: AirlockArmory
+
+- type: entity
+  parent: AirlockSecurity
+  id: AirlockVaultLocked
+  suffix: Vault, Locked
+  components:
+  - type: AccessReader
+    access: [["Security", "Command"]]
+
+- type: entity
+  parent: AirlockCommand
+  id: AirlockEVALocked
+  suffix: EVA, Locked
+  components:
+  - type: AccessReader
+    access: [["External"]]
+
+# Glass Airlocks
+- type: entity
+  parent: AirlockGlass
+  id: AirlockServiceGlassLocked
+  suffix: Service, Locked
+  components:
+  - type: AccessReader
+    access: [["Service"]]
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockBarGlassLocked
+  suffix: Bar, Locked
+  components:
+  - type: AccessReader
+    access: [["Bar"]]
+
+- type: entity
+  parent: AirlockExternalGlass
+  id: AirlockExternalGlassLocked
+  suffix: External, Glass, Locked
+  components:
+  - type: AccessReader
+    access: [["External"]]
+
+- type: entity
+  parent: AirlockExternalGlass
+  id: AirlockExternalGlassCargoLocked
+  suffix: External, Glass, Cargo, Locked
+  components:
+  - type: AccessReader
+    access: [["Cargo"]]
+
+- type: entity
+  parent: AirlockExternalGlass
+  id: AirlockExternalGlassEngineeringLocked
+  suffix: External, Glass, Engineering, Locked
+  components:
+  - type: AccessReader
+    access: [["Engineering"]]
+
+- type: entity
+  parent: AirlockExternalGlass
+  id: AirlockExternalGlassAtmosphericsLocked
+  suffix: External, Glass, Atmospherics, Locked
+  components:
+  - type: AccessReader
+    access: [["Atmospherics"]]
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockKitchenGlassLocked
+  suffix: Kitchen, Locked
+  components:
+  - type: AccessReader
+    access: [["Kitchen"]]
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockHydroGlassLocked
+  suffix: Hydroponics, Locked
+  components:
+  - type: AccessReader
+    access: [["Hydroponics"]]
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockChapelGlassLocked
+  suffix: Chapel, Locked
+  components:
+  - type: AccessReader
+    access: [["Chapel"]]
+
+- type: entity
+  parent: AirlockEngineeringGlass
+  id: AirlockEngineeringGlassLocked
+  suffix: Engineering, Locked
+  components:
+  - type: AccessReader
+    access: [["Engineering"]]
+
+- type: entity
+  parent: AirlockAtmosphericsGlass
+  id: AirlockAtmosphericsGlassLocked
+  suffix: Atmospherics, Locked
+  components:
+  - type: AccessReader
+    access: [["Atmospherics"]]
+
+- type: entity
+  parent: AirlockCargoGlass
+  id: AirlockCargoGlassLocked
+  suffix: Cargo, Locked
+  components:
+  - type: AccessReader
+    access: [["Cargo"]]
+
+- type: entity
+  parent: AirlockCargoGlass
+  id: AirlockSalvageGlassLocked
+  suffix: Salvage, Locked
+  components:
+  - type: AccessReader
+    access: [["Salvage"]]
+
+- type: entity
+  parent: AirlockCargoGlass
+  id: AirlockQuartermasterGlassLocked
+  suffix: Quartermaster, Locked
+  components:
+  - type: AccessReader
+    access: [["Quartermaster"]]
+
+- type: entity
+  parent: AirlockMedicalGlass
+  id: AirlockMedicalGlassLocked
+  suffix: Medical, Locked
+  components:
+  - type: AccessReader
+    access: [["Medical"]]
+
+- type: entity
+  parent: AirlockVirologyGlass
+  id: AirlockVirologyGlassLocked
+  suffix: Virology, Locked
+  components:
+  - type: AccessReader
+    access: [["Medical"]]
+
+- type: entity
+  parent: AirlockScienceGlass
+  id: AirlockScienceGlassLocked
+  suffix: Science, Locked
+  components:
+  - type: AccessReader
+    access: [["Research"]]
+
+- type: entity
+  parent: AirlockScienceGlass
+  id: AirlockMedicalScienceGlassLocked
+  suffix: Medical/Science, Locked
+  components:
+  - type: AccessReader
+    access: [["Research"], ["Medical"]]
+
+- type: entity
+  parent: AirlockCommandGlass
+  id: AirlockCommandGlassLocked
+  suffix: Command, Locked
+  components:
+  - type: AccessReader
+    access: [["Command"]]
+
+- type: entity
+  parent: AirlockCommandGlass
+  id: AirlockCaptainGlassLocked
+  suffix: Captain, Locked
+  components:
+  - type: AccessReader
+    access: [["Captain"]]
+
+- type: entity
+  parent: AirlockCommandGlass
+  id: AirlockChiefMedicalOfficerGlassLocked
+  suffix: ChiefMedicalOfficer, Locked
+  components:
+  - type: AccessReader
+    access: [["ChiefMedicalOfficer"]]
+
+- type: entity
+  parent: AirlockCommandGlass
+  id: AirlockChiefEngineerGlassLocked
+  suffix: ChiefEngineer, Locked
+  components:
+  - type: AccessReader
+    access: [["ChiefEngineer"]]
+
+- type: entity
+  parent: AirlockCommandGlass
+  id: AirlockHeadOfSecurityGlassLocked
+  suffix: HeadOfSecurity, Locked
+  components:
+  - type: AccessReader
+    access: [["HeadOfSecurity"]]
+
+- type: entity
+  parent: AirlockCommandGlass
+  id: AirlockResearchDirectorGlassLocked
+  suffix: ResearchDirector, Locked
+  components:
+  - type: AccessReader
+    access: [["ResearchDirector"]]
+
+- type: entity
+  parent: AirlockCommandGlass
+  id: AirlockHeadOfPersonnelGlassLocked
+  suffix: HeadOfPersonnel, Locked
+  components:
+  - type: AccessReader
+    access: [["HeadOfPersonnel"]]
+
+- type: entity
+  parent: AirlockSecurityGlass
+  id: AirlockSecurityGlassLocked
+  suffix: Security, Locked
+  components:
+  - type: AccessReader
+    access: [["Security"]]
+
+- type: entity
+  parent: AirlockSecurityGlass
+  id: AirlockBrigGlassLocked
+  suffix: Brig, Locked
+  components:
+  - type: AccessReader
+    access: [["Brig"]]
+
+- type: entity
+  parent: AirlockSecurityGlass
+  id: AirlockArmoryGlassLocked
+  suffix: Armory, Locked
+  components:
+  - type: AccessReader
+    access: [["Armory"]]
+
+- type: entity
+  parent: AirlockCommandGlassLocked
+  id: AirlockEVAGlassLocked
+  suffix: EVA, Locked
+  components:
+  - type: AccessReader
+    access: [["External"]]
+
+# Maintenance Hatches
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintLocked
+  suffix: Locked
+  components:
+  - type: AccessReader
+    access: [["Maintenance"]]
+
+- type: entity
+  parent: AirlockMaintGlass
+  id: AirlockMaintGlassLocked
+  suffix: Locked
+  components:
+  - type: AccessReader
+    access: [["Maintenance"]]
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintSalvageLocked
+  suffix: Salvage, Locked
+  components:
+  - type: AccessReader
+    access: [["Salvage"]]
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintCargoLocked
+  suffix: Cargo, Locked
+  components:
+  - type: AccessReader
+    access: [["Cargo"]]
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintCommandLocked
+  suffix: Command, Locked
+  components:
+  - type: AccessReader
+    access: [["Command"]]
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintCommonLocked
+  suffix: Common, Locked
+  components:
+  - type: AccessReader
+    access: [["Maintenance"]]
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintEngiLocked
+  suffix: Engineering, Locked
+  components:
+  - type: AccessReader
+    access: [["Engineering"]]
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintAtmoLocked
+  suffix: Atmospherics, Locked
+  components:
+  - type: AccessReader
+    access: [["Atmospherics"]]
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintBarLocked
+  suffix: Bar, Locked
+  components:
+  - type: AccessReader
+    access: [["Bar"]]
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintChapelLocked
+  suffix: Chapel, Locked
+  components:
+  - type: AccessReader
+    access: [["Chapel"]]
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintHydroLocked
+  suffix: Hydroponics, Locked
+  components:
+  - type: AccessReader
+    access: [["Hydroponics"]]
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintJanitorLocked
+  suffix: Janitor, Locked
+  components:
+  - type: AccessReader
+    access: [["Janitor"]]
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintTheatreLocked
+  suffix: Theatre, Locked
+  components:
+  - type: AccessReader
+    access: [["Theatre"]]
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintKitchenLocked
+  suffix: Kitchen, Locked
+  components:
+  - type: AccessReader
+    access: [["Kitchen"]]
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintIntLocked
+  suffix: Interior, Locked
+  components:
+  - type: AccessReader
+    access: [["Maintenance"]]
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintMedLocked
+  suffix: Medical, Locked
+  components:
+  - type: AccessReader
+    access: [["Medical"]]
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintChemLocked
+  suffix: Chemistry, Locked
+  components:
+  - type: AccessReader
+    access: [["Chemistry"]]
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintRnDLocked
+  suffix: Science, Locked
+  components:
+  - type: AccessReader
+    access: [["Research"]]
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintRnDMedLocked
+  suffix: Medical/Science, Locked
+  components:
+  - type: AccessReader
+    access: [["Research"], ["Medical"]]
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintSecLocked
+  suffix: Security, Locked
+  components:
+  - type: AccessReader
+    access: [["Security"]]
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintHOPLocked
+  suffix: HeadOfPersonnel, Locked
+  components:
+  - type: AccessReader
+    access: [["HeadOfPersonnel"]]
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintCaptainLocked
+  suffix: Captain, Locked
+  components:
+  - type: AccessReader
+    access: [["Captain"]]
+
+# Shuttle airlocks
+- type: entity
+  parent: AirlockShuttle
+  id: AirlockExternalShuttleLocked
+  suffix: External, Docking, Locked
+  components:
+  - type: AccessReader
+    access: [["External"]]
+
+- type: entity
+  parent: AirlockGlassShuttle
+  id: AirlockExternalGlassShuttleLocked
+  suffix: External, Glass, Docking, Locked
+  components:
+  - type: AccessReader
+    access: [["External"]]
+
+- type: entity
+  parent: AirlockGlassShuttle
+  id: AirlockExternalGlassShuttleEmergencyLocked
+  suffix: External, Emergency, Glass, Docking, Locked
+  components:
+    - type: PriorityDock
+      tag: DockEmergency
+    - type: AccessReader
+      access: [["External"]]
+
+- type: entity
+  parent: AirlockGlassShuttle
+  id: AirlockExternalGlassShuttleArrivals
+  suffix: External, Arrivals, Glass, Docking
+  components:
+    - type: PriorityDock
+      tag: DockArrivals
+
+- type: entity
+  parent: AirlockGlassShuttle
+  id: AirlockExternalGlassShuttleEscape
+  suffix: External, Escape 3x4, Glass, Docking
+  components:
+    - type: GridFill
+
+#HighSecDoors
+- type: entity
+  parent: HighSecDoor
+  id: HighSecCommandLocked
+  suffix: Command, Locked
+  components:
+  - type: AccessReader
+    access: [["Command"]]
+
+- type: entity
+  parent: HighSecDoor
+  id: HighSecCaptainLocked
+  suffix: Captain, Locked
+  components:
+  - type: AccessReader
+    access: [["Captain"]]
+
+- type: entity
+  parent: HighSecDoor
+  id: HighSecArmoryLocked
+  suffix: Armory, Locked
+  components:
+  - type: AccessReader
+    access: [["Armory"]]

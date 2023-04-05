@@ -1,0 +1,16 @@
+- type: vendingMachineInventory
+  id: LawDrobeInventory
+  startingInventory:
+    ClothingUniformJumpsuitLawyerBlue: 1
+    ClothingUniformJumpskirtLawyerBlue: 1
+    ClothingUniformJumpsuitLawyerPurple: 1
+    ClothingUniformJumpskirtLawyerPurple: 1
+    ClothingUniformJumpsuitLawyerRed: 1
+    ClothingUniformJumpskirtLawyerRed: 1
+    ClothingUniformJumpsuitLawyerBlack: 1
+    ClothingUniformJumpskirtLawyerBlack: 1
+    ClothingUniformJumpsuitLawyerGood: 1
+    ClothingUniformJumpskirtLawyerGood: 1
+    ClothingShoesBootsLaceup: 2
+    ClothingHeadsetService: 2
+    ClothingNeckLawyerbadge: 2

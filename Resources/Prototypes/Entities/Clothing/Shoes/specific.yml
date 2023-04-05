@@ -1,0 +1,156 @@
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesChef
+  name: chef shoes
+  description: Sturdy shoes that minimize injury from falling objects or knives.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/chef.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/chef.rsi
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesClown
+  name: clown shoes
+  description: "The prankster's standard-issue clowning shoes. Damn they're huge!"
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/clown.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/clown.rsi
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepClown
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesBling
+  name: bling clown shoes
+  description: Made of refined bananium and shined with the pulp of a fresh banana peel. These make a flashy statement.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/bling.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/bling.rsi
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepClown
+  - type: PointLight
+    netsync: false
+    enabled: true
+    radius: 3
+    energy: 2
+    color: "#FFD800"
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesCult
+  name: cult shoes
+  description: A pair of boots worn by the followers of Nar'Sie.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/cult.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/cult.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesGaloshes
+  name: galoshes
+  description: Rubber boots.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/galoshes.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/galoshes.rsi
+  - type: NoSlip
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesSpaceNinja
+  name: space ninja shoes
+  description: A pair of nano-enhanced boots with built-in magnetic suction cups.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/spaceninja.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/spaceninja.rsi
+  - type: NoSlip
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesSwat
+  name: swat shoes
+  description: When you want to turn up the heat.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/swat.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/swat.rsi
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesWizard
+  name: wizard shoes
+  description: A pair of magic shoes.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/wizard.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/wizard.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesChameleon
+  name: black shoes
+  suffix: Chameleon
+  description: Stylish black shoes.
+  components:
+    - type: Tag
+      tags: [] # ignore "WhitelistChameleon" tag
+    - type: Sprite
+      sprite: Clothing/Shoes/Color/black.rsi
+      netsync: false
+    - type: Clothing
+      sprite: Clothing/Shoes/Color/black.rsi
+    - type: ChameleonClothing
+      slot: [FEET]
+      default: ClothingShoesColorBlack
+    - type: UserInterface
+      interfaces:
+        - key: enum.ChameleonUiKey.Key
+          type: ChameleonBoundUserInterface
+
+- type: entity
+  parent: ClothingShoesChameleon
+  id: ClothingShoesChameleonNoSlips
+  name: black shoes #actual name and description in uplink_catalog.yml
+  suffix: No-slip, Chameleon
+  description: Stylish black shoes.
+  components:
+  - type: NoSlip
+
+- type: entity
+  parent: ClothingShoesClown
+  id: ClothingShoesJester
+  name: jester shoes
+  description: A court jester's shoes, updated with modern squeaking technology.
+  components:
+    - type: Sprite
+      sprite: Clothing/Shoes/Specific/jester.rsi
+    - type: Clothing
+      sprite: Clothing/Shoes/Specific/jester.rsi
+
+- type: entity
+  parent: ClothingShoesClown
+  id: ClothingShoesCluwne
+  name: cluwne shoes
+  suffix: Unremoveable
+  description: "Cursed pair of cluwne shoes."
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/cluwne.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/cluwne.rsi
+  - type: Unremoveable

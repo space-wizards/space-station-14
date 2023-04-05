@@ -1,0 +1,31 @@
+- type: entity
+  id: BaseCartridgeHeavyRifle
+  name: cartridge (.20 rifle)
+  parent: BaseCartridge
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+      - Cartridge
+      - CartridgeHeavyRifle
+  - type: CartridgeAmmo
+    proto: BulletHeavyRifle
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Appearance
+  - type: SpentAmmoVisuals
+  - type: StaticPrice
+    price: 10
+
+- type: entity
+  id: CartridgeMinigun
+  name: cartridge (.10 rifle)
+  parent: BaseCartridgeHeavyRifle
+  components:
+  - type: CartridgeAmmo
+    proto: BulletMinigun
+    deleteOnSpawn: true

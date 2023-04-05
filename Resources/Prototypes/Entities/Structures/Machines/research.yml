@@ -1,0 +1,86 @@
+﻿- type: entity
+  id: ResearchAndDevelopmentServer
+  parent: BaseMachinePowered
+  name: R&D server
+  description: Contains the collective knowledge of the station's scientists. Destroying it would send them back to the stone age. You don't want that do you?
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/server.rsi
+    state: server
+  - type: ResearchServer
+  - type: TechnologyDatabase
+  - type: ApcPowerReceiver
+    powerLoad: 200
+    priority: Low
+  - type: ExtensionCableReceiver
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
+  - type: DiseaseServer
+  - type: AmbientSound
+    volume: -9
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/server_fans.ogg
+
+- type: entity
+  id: BaseResearchAndDevelopmentPointSource
+  parent: BaseMachinePowered
+  name: "base R&D point source"
+  # We should make this abstract once there are actual point sources.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/rndpointsource.rsi
+    netsync: false
+    layers:
+    - state: rndpointsource-off
+    - state: rndpointsource
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+  - type: ResearchClient
+  - type: ResearchPointSource
+    pointspersecond: 25
+    active: true
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#3db83b"
+  - type: ActivatableUI
+    key: enum.ResearchClientUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+    - key: enum.ResearchClientUiKey.Key
+      type: ResearchClientBoundUserInterface
+  - type: Appearance
+    visuals:
+    - type: PowerDeviceVisualizer
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1

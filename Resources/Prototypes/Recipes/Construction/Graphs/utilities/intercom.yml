@@ -1,0 +1,72 @@
+- type: constructionGraph
+  id: Intercom
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: assembly
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 2.0
+
+  - node: assembly
+    entity: IntercomAssesmbly
+    edges:
+    - to: wired
+      steps:
+      - material: Cable
+        amount: 2
+        doAfter: 1
+    - to: start
+      completed:
+      - !type:GivePrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Welding
+        doAfter: 2
+
+  - node: wired
+    entity: IntercomAssesmbly
+    edges:
+    - to: electronics
+      steps:
+      - tag: IntercomElectronics
+        store: board
+        name: "intercom electronics"
+        icon:
+          sprite: "Objects/Misc/module.rsi"
+          state: "id_mod"
+        doAfter: 1
+    - to: assembly
+      completed:
+      - !type:GivePrototype
+        prototype: CableApcStack1
+        amount: 2
+      steps:
+      - tool: Cutting
+        doAfter: 1
+
+  - node: electronics
+    edges:
+    - to: intercom
+      steps:
+      - tool: Screwing
+        doAfter: 2
+
+  - node: intercom
+    entity: Intercom #TODO: make this work with encryption keys
+    edges:
+    - to: wired
+      conditions:
+      - !type:AllWiresCut {}
+      - !type:WirePanel {}
+      - !type:ContainerNotEmpty
+        container: board
+      completed:
+      - !type:EmptyAllContainers {}
+      steps:
+      - tool: Prying
+        doAfter: 1

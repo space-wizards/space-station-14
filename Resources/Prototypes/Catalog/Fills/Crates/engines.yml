@@ -1,0 +1,135 @@
+# AME
+
+- type: entity
+  id: CrateEngineeringAMEShielding
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: AMEPart
+        amount: 9
+
+- type: entity
+  id: CrateEngineeringAMEJar
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: AMEJar
+        amount: 3
+
+- type: entity
+  id: CrateEngineeringAMEControl
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: AMEControllerUnanchored
+        amount: 1
+
+# Singularity
+
+- type: entity
+  id: CrateEngineeringSingularityEmitter
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: Emitter
+        amount: 1
+
+- type: entity
+  id: CrateEngineeringSingularityCollector
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: RadiationCollector
+        amount: 1
+
+- type: entity
+  id: CrateEngineeringSingularityContainment
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: ContainmentFieldGenerator
+        amount: 1
+
+- type: entity
+  id: CrateEngineeringSingularityGenerator
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: SingularityGenerator
+        amount: 1
+
+# Particle Accelerator
+
+- type: entity
+  id: CrateEngineeringParticleAccelerator
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: MachineParticleAcceleratorEndCapCircuitboard
+        amount: 1
+      - id: MachineParticleAcceleratorEmitterLeftCircuitboard
+        amount: 1
+      - id: MachineParticleAcceleratorEmitterCenterCircuitboard
+        amount: 1
+      - id: MachineParticleAcceleratorEmitterRightCircuitboard
+        amount: 1
+      - id: MachineParticleAcceleratorFuelChamberCircuitboard
+        amount: 1
+      - id: MachineParticleAcceleratorPowerBoxCircuitboard
+        amount: 1
+      - id: ParticleAcceleratorComputerCircuitboard
+        amount: 1
+
+# Non-functional for some reason
+
+#- type: entity
+#  id: CrateEngineeringSingularity
+#  name: singularity crate
+#  description: "Prank the station!"
+#  parent: CrateEngineeringSecure
+#  components:
+#  - type: StorageFill
+#    contents:
+#      - id: Singularity
+#        amount: 1
+
+- type: entity
+  id: CrateEngineeringGenerator
+  parent: CrateEngineering
+  components:
+  - type: StorageFill
+    contents:
+      - id: DebugGenerator
+        amount: 1
+
+- type: entity
+  id: CrateEngineeringSolar
+  parent: CrateEngineering
+  components:
+  - type: StorageFill
+    contents:
+      - id: SolarAssemblyPart
+        amount: 6
+
+- type: entity
+  id: CrateEngineeringShuttle
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: WallmountSubstationElectronics
+        amount: 1
+      - id: WallmountGeneratorAPUElectronics
+        amount: 1
+      - id: HandheldGPSBasic
+        amount: 1
+      - id: InflatableDoorStack1
+        amount: 1
