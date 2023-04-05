@@ -1,9 +1,4 @@
 Entries:
-- author: Chief-Engineer
-  changes:
-  - {message: Wording for blue and red alert levels, type: Tweak}
-  id: 2841
-  time: '2023-01-06T23:17:18.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Prying tiles now removes the decals on them., type: Fix}
@@ -2914,3 +2909,9 @@ Entries:
       setup time., type: Add}
   id: 3340
   time: '2023-04-05T23:37:05.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: We have removed the skin color dye bottles from the possession of some
+      crewmates after a certain reality-bending event occurred some time ago., type: Fix}
+  id: 3341
+  time: '2023-04-05T23:41:11.0000000+00:00'
