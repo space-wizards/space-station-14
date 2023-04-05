@@ -1,0 +1,39 @@
+- type: entity
+  parent: Airlock
+  id: AirlockExternal
+  suffix: External
+  description: It opens, it closes, it might crush you, and there might be only space behind it. Has to be manually activated.
+  components:
+  - type: Door
+    bumpOpen: false
+    crushDamage:
+      types:
+        Blunt: 15
+    openSound:
+      path: /Audio/Machines/airlock_ext_open.ogg
+    closeSound:
+      path: /Audio/Machines/airlock_ext_close.ogg
+    denySound:
+      path: /Audio/Machines/airlock_deny.ogg
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/external.rsi
+  - type: Appearance
+    visuals:
+    - type: AirlockVisualizer
+  - type: WiresVisuals
+  - type: PaintableAirlock
+    group: External
+
+- type: entity
+  parent: AirlockExternal
+  id: AirlockExternalGlass
+  suffix: Glass, External
+  components:
+  - type: Door
+    occludes: false
+  - type: Occluder
+    enabled: false
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/external.rsi
+  - type: PaintableAirlock
+    group: ExternalGlass

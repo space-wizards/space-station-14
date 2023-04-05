@@ -1,0 +1,11 @@
+﻿<windows:StrippingWindow
+    xmlns="https://spacestation14.io"
+    xmlns:windows="clr-namespace:Content.Client.UserInterface.Systems.Inventory.Windows"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Systems.Inventory.Controls"
+    Name="StrippingDisplay"
+    HorizontalExpand="True"
+    Title="Stripping"
+    VerticalExpand="True"
+>
+    <controls:InventoryDisplay Name="InventoryButtons" Access="Public"/>
+</windows:StrippingWindow>

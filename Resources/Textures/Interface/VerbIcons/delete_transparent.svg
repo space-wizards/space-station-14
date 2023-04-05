@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 32 32"
+   version="1.1"
+   id="svg6"
+   sodipodi:docname="delete_white.svg"
+   width="32"
+   height="32"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   inkscape:export-filename="C:\Users\ElectroSR\Documents\GitHub\space-station-14\Resources\Textures\Interface\VerbIcons\delete_transparent.svg.192dpi.png"
+   inkscape:export-xdpi="192"
+   inkscape:export-ydpi="192"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <metadata
+     id="metadata12">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs10">
+    <color-profile
+       name="Agfa-:-Swop-Standard"
+       xlink:href="../../../../../../../../../WINDOWS/system32/spool/drivers/color/RSWOP.icm"
+       id="color-profile1466" />
+  </defs>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1271"
+     inkscape:window-height="1272"
+     id="namedview8"
+     showgrid="true"
+     inkscape:pagecheckerboard="true"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:zoom="16"
+     inkscape:cx="11.21875"
+     inkscape:cy="13.0625"
+     inkscape:window-x="341"
+     inkscape:window-y="107"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg6">
+    <inkscape:grid
+       type="xygrid"
+       id="grid837"
+       empspacing="4" />
+    <sodipodi:guide
+       position="24.91123,3.1839064"
+       orientation="-0.99756278,0.069774599"
+       id="guide848" />
+    <sodipodi:guide
+       position="6.8635256,3.1839064"
+       orientation="-0.99830447,-0.058208125"
+       id="guide850" />
+  </sodipodi:namedview>
+  <g
+     id="g846"
+     transform="translate(0.99999985,0.4620656)"
+     style="fill:#ffffff;fill-opacity:1">
+    <path
+       id="path2"
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.225696"
+       d="M 11.875975,2.7218408 11.26413,4.2466048 H 3.8056135 L 3.3542233,7.7523717 H 26.645777 L 26.194387,4.2466048 H 18.73587 l -0.611845,-1.524764 z" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.225696"
+       d="M 20.609312,9 V 25.675027 H 18.976634 V 9 H 15.704055 V 25.675027 H 14.071152 V 9 H 10.573781 V 25.675027 H 8.9413298 V 9 H 4.7350507 L 5.8742488,28.537934 H 23.898367 L 25.264949,9 Z"
+       id="path841"
+       sodipodi:nodetypes="ccccccccccccccccc" />
+  </g>
+</svg>

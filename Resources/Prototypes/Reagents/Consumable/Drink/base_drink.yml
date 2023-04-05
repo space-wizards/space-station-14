@@ -1,0 +1,63 @@
+﻿- type: reagent
+  id: BaseDrink
+  group: Drinks
+  abstract: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 3
+  reactiveEffects:
+    Extinguish:
+      methods: [ Touch ]
+      effects:
+      - !type:ExtinguishReaction
+  plantMetabolism:
+  - !type:PlantAdjustWater
+    amount: 1
+  tileReactions:
+  - !type:ExtinguishTileReaction { }
+  - !type:SpillIfPuddlePresentTileReaction { }
+
+- type: reagent
+  id: BaseSoda
+  parent: BaseDrink
+  abstract: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+  plantMetabolism:
+  - !type:PlantAdjustNutrition
+    amount: 0.1
+  - !type:PlantAdjustWater
+    amount: 0.1
+  - !type:PlantAdjustHealth
+    amount: -0.1
+
+- type: reagent
+  id: BaseAlcohol
+  group: Drinks
+  abstract: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.05
+  reactiveEffects:
+    Flammable:
+      methods: [ Touch ]
+      effects:
+      - !type:FlammableReaction
+  tileReactions:
+  - !type:FlammableTileReaction
+    temperatureMultiplier: 1.35
+  plantMetabolism:
+  - !type:PlantAdjustNutrition
+    amount: 0.25
+  - !type:PlantAdjustWater
+    amount: 0.7

@@ -1,0 +1,25 @@
+- type: entity
+  name: ore bag
+  id: OreBag
+  parent: BaseStorageItem
+  description: A robust bag for salvage specialists and miners alike to carry large amounts of ore.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Specific/Mining/ore_bag.rsi
+    state: icon
+  - type: Clothing
+    sprite: Objects/Specific/Mining/ore_bag.rsi
+    quickEquip: false
+    slots:
+    - belt
+  - type: Item
+    size: 176
+  - type: Storage
+    capacity: 175
+    quickInsert: true
+    areaInsert: true
+    whitelist:
+      tags:
+        - Ore
+  - type: Dumpable

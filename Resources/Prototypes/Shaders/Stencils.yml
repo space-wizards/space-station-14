@@ -1,0 +1,25 @@
+- type: shader
+  id: StencilClear
+  kind: source
+  path: "/Textures/Shaders/stencil_clear.swsl"
+  stencil:
+    ref: 0
+    op: Replace
+    func: Always
+
+- type: shader
+  id: StencilMask
+  kind: source
+  path: "/Textures/Shaders/stencil_mask.swsl"
+  stencil:
+    ref: 1
+    op: Replace
+    func: Always
+
+- type: shader
+  id: StencilDraw
+  kind: canvas
+  stencil:
+    ref: 1
+    op: Keep
+    func: NotEqual

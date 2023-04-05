@@ -1,0 +1,98 @@
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesColorBlack
+  name: black shoes
+  description: Stylish black shoes.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Color/black.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Color/black.rsi
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesColorBlue
+  name: blue shoes
+  description: Stylish blue shoes.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Color/blue.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Color/blue.rsi
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesColorBrown
+  name: brown shoes
+  description: A pair of brown shoes.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Color/brown.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Color/brown.rsi
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesColorGreen
+  name: green shoes
+  description: Stylish green shoes.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Color/green.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Color/green.rsi
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesColorOrange
+  name: orange shoes
+  description: Stylish orange shoes.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Color/orange.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Color/orange.rsi
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesColorPurple
+  name: purple shoes
+  description: Stylish purple shoes.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Color/purple.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Color/purple.rsi
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesColorRed
+  name: red shoes
+  description: Stylish red shoes.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Color/red.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Color/red.rsi
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesColorWhite
+  name: white shoes
+  description: Don't take them off at your office Christmas party.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Color/white.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Color/white.rsi
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesColorYellow
+  name: yellow shoes
+  description: Stylish yellow shoes.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Color/yellow.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Color/yellow.rsi

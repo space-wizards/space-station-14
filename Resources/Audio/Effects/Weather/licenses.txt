@@ -1,0 +1,23 @@
+- files:
+    - rain.ogg
+    - snowstorm.ogg
+    - snowstorm_weak.ogg
+    - wind_2_1.ogg
+    - wind_2_2.ogg
+    - wind_3_1.ogg
+    - wind_4_1.ogg
+    - wind_4_2.ogg
+    - wind_5_1.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from https://github.com/Citadel-Station-13/Citadel-Station-13-RP/tree/28e11dee540e61b6c42fa293c1e1da087c1c2b0a and looped"
+  source: "https://github.com/Citadel-Station-13/Citadel-Station-13-RP/tree/28e11dee540e61b6c42fa293c1e1da087c1c2b0a"
+
+- files: ["rain2.wav"]
+  license: "Royalty free"
+  copyright: "Varazuvi - Natural Environments"
+  source: "Taken from Soniss.com - GDC"
+
+- files: ["rain_heavy.ogg"]
+  license: "Royalty free"
+  copyright: "RATH - Rain Hard Loop 08"
+  source: "Taken from Soniss.com - GDC"

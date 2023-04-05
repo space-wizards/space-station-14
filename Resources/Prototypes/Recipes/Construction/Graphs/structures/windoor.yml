@@ -1,0 +1,221 @@
+﻿- type: constructionGraph
+  id: Windoor
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: assembly
+      completed:
+      - !type:SetAnchor
+        value: false
+      steps:
+      - material: Steel
+        amount: 4
+        doAfter: 2
+    - to: assemblySecure
+      completed:
+      - !type:SetAnchor
+        value: false
+      steps:
+      - material: Plasteel
+        amount: 4
+        doAfter: 2
+
+  - node: assembly
+    entity: WindoorAssembly
+    actions:
+    - !type:SnapToGrid {}
+    - !type:SetAnchor {}
+    edges:
+    - to: glass
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - material: Glass
+        amount: 5
+        doAfter: 1
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 4
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Welding
+        doAfter: 2
+
+  - node: glass
+    entity: WindoorAssembly
+    edges:
+    - to: wired
+      conditions:
+      - !type:EntityAnchored { }
+      steps:
+      - material: Cable
+        amount: 5
+        doAfter: 1
+    - to: assembly
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetGlass1
+        amount: 5
+      - !type:DeleteEntity { }
+      steps:
+      - tool: Screwing
+        doAfter: 2
+
+  - node: wired
+    entity: WindoorAssembly
+    edges:
+    - to: electronics
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - tag: DoorElectronics
+        store: board
+        name: "door electronics circuit board"
+        icon:
+          sprite: "Objects/Misc/module.rsi"
+          state: "door_electronics"
+        doAfter: 1
+    - to: glass
+      completed:
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 5
+      steps:
+      - tool: Cutting
+        doAfter: 1
+
+  - node: electronics
+    entity: WindoorAssembly
+    edges:
+    - to: windoor
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - tool: Screwing
+        doAfter: 2
+
+  - node: windoor
+    entity: Windoor
+    edges:
+    - to: wired
+      conditions:
+      - !type:EntityAnchored {}
+      - !type:AirlockBolted
+        value: false
+      - !type:WirePanel {}
+      - !type:AllWiresCut
+      completed:
+      - !type:EmptyAllContainers {}
+      steps:
+      - tool: Anchoring
+        doAfter: 1
+
+  - node: assemblySecure
+    entity: WindoorAssemblySecure
+    actions:
+    - !type:SnapToGrid { }
+    - !type:SetAnchor { }
+    edges:
+    - to: glassSecure
+      conditions:
+      - !type:EntityAnchored { }
+      steps:
+      - material: ReinforcedGlass
+        amount: 5
+        doAfter: 1
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetPlasteel1
+        amount: 4
+      - !type:DeleteEntity { }
+      steps:
+      - tool: Welding
+        doAfter: 10
+
+  - node: glassSecure
+    entity: WindoorAssemblySecure
+    edges:
+    - to: wiredSecure
+      conditions:
+      - !type:EntityAnchored { }
+      steps:
+      - material: Cable
+        amount: 5
+        doAfter: 1
+    - to: assemblySecure
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetRGlass1
+        amount: 5
+      - !type:DeleteEntity { }
+      steps:
+      - tool: Screwing
+        doAfter: 4
+
+
+  - node: wiredSecure
+    entity: WindoorAssemblySecure
+    edges:
+    - to: electronicsSecure
+      conditions:
+      - !type:EntityAnchored { }
+      steps:
+      - tag: DoorElectronics
+        store: board
+        name: "door electronics circuit board"
+        icon:
+          sprite: "Objects/Misc/module.rsi"
+          state: "door_electronics"
+        doAfter: 1
+    - to: glassSecure
+      completed:
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 5
+      steps:
+      - tool: Cutting
+        doAfter: 3
+
+  - node: electronicsSecure
+    entity: WindoorAssemblySecure
+    edges:
+    - to: windoorSecure
+      conditions:
+      - !type:EntityAnchored { }
+      steps:
+      - tool: Screwing
+        doAfter: 4
+
+  - node: windoorSecure
+    entity: WindoorSecure
+    edges:
+    - to: wired
+      conditions:
+      - !type:EntityAnchored {}
+      - !type:AirlockBolted
+        value: false
+      - !type:WirePanel {}
+      - !type:ContainerNotEmpty # TODO ShadowCommander: Remove when map gets updated
+        container: board
+      - !type:AllWiresCut
+      completed:
+      - !type:EmptyAllContainers {}
+      steps:
+      - tool: Anchoring
+        doAfter: 4

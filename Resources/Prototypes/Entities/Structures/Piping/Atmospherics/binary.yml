@@ -1,0 +1,374 @@
+﻿- type: entity
+  parent: GasPipeBase
+  abstract: true
+  id: GasBinaryBase
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: AtmosDevice
+  - type: SubFloorHide
+    blockInteractions: false
+    blockAmbience: false
+  - type: NodeContainer
+    nodes:
+      inlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: North
+      outlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
+
+- type: entity
+  parent: GasBinaryBase
+  id: GasPressurePump
+  name: gas pump
+  description: A pump that moves gas by pressure.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Piping/Atmospherics/pump.rsi
+    layers:
+    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+      state: pipeStraight
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+    - state: pumpPressure
+      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PumpVisuals.Enabled:
+        enabled:
+          True: { state: pumpPressureOn }
+          False: { state: pumpPressure }
+  - type: PipeColorVisuals
+  - type: GasPressurePump
+    enabled: false
+  - type: UserInterface
+    interfaces:
+      - key: enum.GasPressurePumpUiKey.Key
+        type: GasPressurePumpBoundUserInterface
+  - type: Construction
+    graph: GasBinary
+    node: pressurepump
+  - type: AmbientSound
+    enabled: false
+    volume: -9
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/gas_pump.ogg
+
+- type: entity
+  parent: GasBinaryBase
+  id: GasVolumePump
+  name: volumetric gas pump
+  description: A pump that moves gas by volume.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Structures/Piping/Atmospherics/pump.rsi
+      layers:
+        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeStraight
+          map: [ "enum.PipeVisualLayers.Pipe" ]
+        - state: pumpVolume
+          map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.PumpVisuals.Enabled:
+          enabled:
+            True: { state: pumpVolumeOn }
+            False: { state: pumpVolume }
+    - type: PipeColorVisuals
+    - type: GasVolumePump
+      enabled: false
+    - type: UserInterface
+      interfaces:
+        - key: enum.GasVolumePumpUiKey.Key
+          type: GasVolumePumpBoundUserInterface
+    - type: Construction
+      graph: GasBinary
+      node: volumepump
+    - type: AmbientSound
+      enabled: false
+      volume: -9
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/gas_pump.ogg
+
+- type: entity
+  parent: GasBinaryBase
+  id: GasPassiveGate
+  name: passive gate
+  description: A one-way air valve that does not require power.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Structures/Piping/Atmospherics/pump.rsi
+      layers:
+        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeStraight
+          map: [ "enum.PipeVisualLayers.Pipe" ]
+        - state: pumpPassiveGate
+          map: [ "enum.SubfloorLayers.FirstLayer" ]
+    - type: Appearance
+    - type: PipeColorVisuals
+    - type: GasPassiveGate
+    - type: Construction
+      graph: GasBinary
+      node: passivegate
+    - type: AmbientSound
+      enabled: true
+      volume: -9
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/gas_hiss.ogg
+
+- type: entity
+  parent: GasBinaryBase
+  id: GasValve
+  name: manual valve
+  description: A pipe with a valve that can be used to disable the flow of gas through it.
+  placement:
+    mode: SnapgridCenter
+  components:
+    # TODO ATMOS: Give unique sprite.
+    - type: Sprite
+      netsync: false
+      sprite: Structures/Piping/Atmospherics/pump.rsi
+      layers:
+        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeStraight
+          map: [ "enum.PipeVisualLayers.Pipe" ]
+        - state: pumpManualValve
+          map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.FilterVisuals.Enabled:
+          enabled:
+            True: { state: pumpManualValveOn }
+            False: { state: pumpManualValve }
+    - type: PipeColorVisuals
+    - type: GasValve
+    - type: NodeContainer
+      nodes:
+        inlet:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: North
+          volume: 100
+        outlet:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: South
+          volume: 100
+    - type: Construction
+      graph: GasBinary
+      node: valve
+    - type: AmbientSound
+      enabled: false
+      volume: -9
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/gas_hiss.ogg
+
+- type: entity
+  parent: GasBinaryBase
+  id: SignalControlledValve
+  name: signal valve
+  description: A pipe with a valve that can be controlled with signals.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Piping/Atmospherics/pump.rsi
+    layers:
+    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+      state: pipeStraight
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+    - state: pumpSignalValve
+      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.FilterVisuals.Enabled:
+        enabled:
+          True: { state: pumpSignalValveOn }
+          False: { state: pumpSignalValve }
+  - type: PipeColorVisuals
+  - type: GasValve
+  - type: SignalControlledValve
+  - type: SignalReceiver
+    inputs:
+      Open: []
+      Close: []
+      Toggle: []
+  - type: NodeContainer
+    nodes:
+      inlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: North
+        volume: 100
+      outlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
+        volume: 100
+  - type: Construction
+    graph: GasBinary
+    node: signalvalve
+  - type: AmbientSound
+    enabled: false
+    volume: -9
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/gas_hiss.ogg
+
+- type: entity
+  parent: GasBinaryBase
+  id: GasPort
+  name: connector port
+  description: For connecting portable devices related to atmospherics control.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Structures/Piping/Atmospherics/gascanisterport.rsi
+      layers:
+        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeHalf
+          map: [ "enum.PipeVisualLayers.Pipe" ]
+        - state: gasCanisterPort
+          map: [ "enum.SubfloorLayers.FirstLayer" ]
+    - type: Appearance
+    - type: PipeColorVisuals
+    - type: GasPort
+    - type: NodeContainer
+      nodes:
+        connected:
+          !type:PortPipeNode
+          nodeGroupID: Pipe
+          pipeDirection: South
+    - type: Construction
+      graph: GasBinary
+      node: port
+
+- type: entity
+  parent: GasVentPump
+  id: GasDualPortVentPump
+  name: dual-port air vent
+  description: Has a valve and a pump attached to it. There are two ports, one is an input for releasing air, the other is an output when siphoning.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      drawdepth: FloorObjects
+      netsync: false
+      sprite: Structures/Piping/Atmospherics/vent.rsi
+      layers:
+        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeStraight
+          map: [ "enum.PipeVisualLayers.Pipe" ]
+        - state: vent_off
+          map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
+    - type: GenericVisualizer
+      visuals:
+        enum.VentPumpVisuals.State:
+          enabled:
+            Off: { state: vent_off }
+            In: { state: vent_in }
+            Out: { state: vent_out }
+            Welded: { state: vent_welded }
+    - type: PipeColorVisuals
+    - type: GasVentPump
+      inlet: inlet
+      outlet: outlet
+      canLink: true
+    - type: SignalReceiver
+      inputs:
+        Pressurize: []
+        Depressurize: []
+    - type: Construction
+      graph: GasBinary
+      node: dualportventpump
+    - type: NodeContainer
+      nodes:
+        inlet:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: North
+        outlet:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: South
+
+- type: entity
+  parent: [ BaseMachine, ConstructibleMachine ]
+  id: GasRecycler
+  name: gas recycler
+  description: Recycles carbon dioxide and nitrous oxide. Heater and compressor not included.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/gasrecycler.rsi
+    netsync: false
+    layers:
+    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+      state: pipeStraight
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+    - state: running
+    - state: unlit
+      shader: unshaded
+  - type: GenericVisualizer
+    visuals:
+      enum.PumpVisuals.Enabled:
+        enabled:
+          True: { state: running }
+          False: { state: unlit }
+  - type: Appearance
+  - type: PipeColorVisuals
+  - type: Rotatable
+  - type: GasRecycler
+  - type: NodeContainer
+    nodes:
+      inlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: North
+      outlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
+  - type: AtmosDevice
+  - type: AtmosPipeColor
+  - type: AmbientSound
+    enabled: false
+    volume: -9
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/gas_pump.ogg
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Machine
+    board: GasRecyclerMachineCircuitboard

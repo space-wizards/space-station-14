@@ -1,0 +1,542 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "From https://github.com/tgstation/tgstation/blob/master/icons/effects/crayondecal.dmi at c6803492ab2a5e523aae7b9b1a9e847ba155f1cf",
+    "states": [
+        {
+            "name": "0"
+
+        },
+        {
+            "name": "1"
+
+        },
+        {
+            "name": "2"
+
+        },
+        {
+            "name": "3"
+
+        },
+        {
+            "name": "4"
+
+        },
+        {
+            "name": "5"
+
+        },
+        {
+            "name": "6"
+
+        },
+        {
+            "name": "7"
+
+        },
+        {
+            "name": "8"
+
+        },
+        {
+            "name": "9"
+
+        },
+        {
+            "name": "Blasto"
+
+        },
+        {
+            "name": "Clandestine"
+
+        },
+        {
+            "name": "Cyber"
+
+        },
+        {
+            "name": "Diablo"
+
+        },
+        {
+            "name": "Donk"
+
+        },
+        {
+            "name": "Gene"
+
+        },
+        {
+            "name": "Gib"
+
+        },
+        {
+            "name": "Max"
+
+        },
+        {
+            "name": "Newton"
+
+        },
+        {
+            "name": "North"
+
+        },
+        {
+            "name": "Omni"
+
+        },
+        {
+            "name": "Osiron"
+
+        },
+        {
+            "name": "Prima"
+
+        },
+        {
+            "name": "Psyke"
+
+        },
+        {
+            "name": "Sirius"
+
+        },
+        {
+            "name": "Sleeping Carp"
+
+        },
+        {
+            "name": "Tunnel"
+
+        },
+        {
+            "name": "Waffle"
+
+        },
+        {
+            "name": "Zero-G"
+
+        },
+        {
+            "name": "a"
+        },
+        {
+            "name": "ampersand"
+
+        },
+        {
+            "name": "amyjon"
+
+        },
+        {
+            "name": "antilizard"
+
+        },
+        {
+            "name": "arrow"
+
+        },
+        {
+            "name": "b"
+
+        },
+        {
+            "name": "beepsky"
+
+        },
+        {
+            "name": "biohazard"
+
+        },
+        {
+            "name": "blueprint"
+
+        },
+        {
+            "name": "body"
+
+        },
+        {
+            "name": "bottle"
+
+        },
+        {
+            "name": "brush"
+
+        },
+        {
+            "name": "c"
+
+        },
+        {
+            "name": "carp"
+
+        },
+        {
+            "name": "cat"
+
+        },
+        {
+            "name": "chevron"
+
+        },
+        {
+            "name": "clawprint"
+
+        },
+        {
+            "name": "clown"
+
+        },
+        {
+            "name": "comma"
+
+        },
+        {
+            "name": "corgi"
+
+        },
+        {
+            "name": "credit"
+
+        },
+        {
+            "name": "cyka"
+
+        },
+        {
+            "name": "d"
+
+        },
+        {
+            "name": "danger"
+
+        },
+        {
+            "name": "disk"
+
+        },
+        {
+            "name": "dot"
+
+        },
+        {
+            "name": "dwarf"
+
+        },
+        {
+            "name": "e"
+
+        },
+        {
+            "name": "electricdanger"
+
+        },
+        {
+            "name": "end"
+
+        },
+        {
+            "name": "engie"
+
+        },
+        {
+            "name": "equals"
+
+        },
+        {
+            "name": "evac"
+
+        },
+        {
+            "name": "exclamationmark"
+
+        },
+        {
+            "name": "f"
+
+        },
+        {
+            "name": "face"
+
+        },
+        {
+            "name": "fireaxe"
+
+        },
+        {
+            "name": "firedanger"
+
+        },
+        {
+            "name": "food"
+
+        },
+        {
+            "name": "footprint"
+
+        },
+        {
+            "name": "g"
+
+        },
+        {
+            "name": "ghost"
+
+        },
+        {
+            "name": "guy"
+
+        },
+        {
+            "name": "h"
+
+        },
+        {
+            "name": "heart"
+
+        },
+        {
+            "name": "i"
+
+        },
+        {
+            "name": "j"
+
+        },
+        {
+            "name": "k"
+
+        },
+        {
+            "name": "l"
+
+        },
+        {
+            "name": "largebrush"
+
+        },
+        {
+            "name": "like"
+
+        },
+        {
+            "name": "line"
+
+        },
+        {
+            "name": "m"
+
+        },
+        {
+            "name": "matt"
+
+        },
+        {
+            "name": "med"
+
+        },
+        {
+            "name": "minus"
+
+        },
+        {
+            "name": "n"
+
+        },
+        {
+            "name": "nay"
+
+        },
+        {
+            "name": "o"
+
+        },
+        {
+            "name": "p"
+
+        },
+        {
+            "name": "pawprint"
+
+        },
+        {
+            "name": "peace"
+
+        },
+        {
+            "name": "percent"
+
+        },
+        {
+            "name": "plus"
+
+        },
+        {
+            "name": "pound"
+
+        },
+        {
+            "name": "prolizard"
+
+        },
+        {
+            "name": "q"
+
+        },
+        {
+            "name": "questionmark"
+
+        },
+        {
+            "name": "r"
+
+        },
+        {
+            "name": "radiation"
+
+        },
+        {
+            "name": "revolution"
+
+        },
+        {
+            "name": "rune1"
+
+        },
+        {
+            "name": "rune2"
+
+        },
+        {
+            "name": "rune3"
+
+        },
+        {
+            "name": "rune4"
+
+        },
+        {
+            "name": "rune5"
+
+        },
+        {
+            "name": "rune6"
+
+        },
+        {
+            "name": "s"
+
+        },
+        {
+            "name": "safe"
+
+        },
+        {
+            "name": "scroll"
+
+        },
+        {
+            "name": "shop"
+
+        },
+        {
+            "name": "shortline"
+
+        },
+        {
+            "name": "shotgun"
+
+        },
+        {
+            "name": "skull"
+
+        },
+        {
+            "name": "slash"
+
+        },
+        {
+            "name": "smallbrush"
+
+        },
+        {
+            "name": "snake"
+
+        },
+        {
+            "name": "space"
+
+        },
+        {
+            "name": "splatter"
+
+        },
+        {
+            "name": "star"
+
+        },
+        {
+            "name": "stickman"
+
+        },
+        {
+            "name": "t"
+
+        },
+        {
+            "name": "taser"
+
+        },
+        {
+            "name": "thinline"
+
+        },
+        {
+            "name": "toilet"
+
+        },
+        {
+            "name": "toolbox"
+
+        },
+        {
+            "name": "trade"
+
+        },
+        {
+            "name": "u"
+
+        },
+        {
+            "name": "uboa"
+
+        },
+        {
+            "name": "v"
+
+        },
+        {
+            "name": "w"
+
+        },
+        {
+            "name": "x"
+
+        },
+        {
+            "name": "y"
+
+        },
+        {
+            "name": "z"
+
+        }
+    ]
+}

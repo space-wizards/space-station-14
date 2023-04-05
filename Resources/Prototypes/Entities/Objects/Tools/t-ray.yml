@@ -1,0 +1,26 @@
+- type: entity
+  name: t-ray scanner
+  parent: BaseItem
+  id: trayScanner
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/t-ray.rsi
+    netsync: false
+    layers:
+    - state: tray-off
+  - type: TrayScanner
+  - type: Item
+    sprite: Objects/Tools/t-ray.rsi
+  - type: Appearance
+    visuals:
+    - type: GenericEnumVisualizer
+      key: enum.TrayScannerVisual.Visual
+      layer: 0
+      states:
+        enum.TrayScannerVisual.On: tray-on
+        enum.TrayScannerVisual.Off: tray-off
+  - type: Tag
+    tags:
+      - DroneUsable
+  - type: StaticPrice
+    price: 60

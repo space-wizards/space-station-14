@@ -1,0 +1,267 @@
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesBoxingRed
+  name: red boxing gloves
+  description: Red gloves for competitive boxing.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Boxing/boxingred.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Boxing/boxingred.rsi
+  - type: StaminaDamageOnHit
+    damage: 8 #Stam damage values seem a bit higher than regular damage because of the decay, etc
+    # This needs to be moved to boxinggloves
+    #knockdownSound: /Audio/Weapons/boxingbell.ogg
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 0.4
+    soundHit:
+      collection: BoxingHit
+    animation: WeaponArcFist
+  - type: Fiber
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-red
+  - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsGlovesBoxingRed
+  id: ClothingHandsGlovesBoxingBlue
+  name: blue boxing gloves
+  description: Blue gloves for competitive boxing.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Boxing/boxingblue.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Boxing/boxingblue.rsi
+  - type: Fiber
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-blue
+  - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsGlovesBoxingRed
+  id: ClothingHandsGlovesBoxingGreen
+  name: green boxing gloves
+  description: Green gloves for competitive boxing.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Boxing/boxinggreen.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Boxing/boxinggreen.rsi
+  - type: Fiber
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-green
+  - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsGlovesBoxingRed
+  id: ClothingHandsGlovesBoxingYellow
+  name: yellow boxing gloves
+  description: Yellow gloves for competitive boxing.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Boxing/boxingyellow.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Boxing/boxingyellow.rsi
+  - type: Fiber
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-yellow
+  - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesCaptain
+  name: captain gloves
+  description: Regal blue gloves, with a nice gold trim. Swanky.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/captain.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/captain.rsi
+  - type: GloveHeatResistance
+    heatResistance: 1400
+  - type: Insulated
+  - type: Fiber
+    fiberMaterial: fibers-durathread
+    fiberColor: fibers-regal-blue
+  - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesIhscombat
+  name: IHS combat gloves
+  description: These tactical gloves are somewhat fire and impact resistant.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/ihscombat.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/ihscombat.rsi
+  - type: Fiber
+    fiberMaterial: fibers-durathread
+  - type: FingerprintMask
+
+#### Medical
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesLatex
+  name: latex gloves
+  description: Thin sterile latex gloves. Basic PPE for any doctor.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/latex.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/latex.rsi
+  - type: DiseaseProtection
+    protection: 0.1
+  - type: Fiber
+    fiberMaterial: fibers-latex
+  - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesNitrile
+  name: nitrile gloves
+  description: High-quality nitrile gloves. Expensive medical PPE.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Color/blue.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Color/blue.rsi
+  - type: DiseaseProtection
+    protection: 0.15
+  - type: Fiber
+    fiberMaterial: fibers-nitrile
+  - type: FingerprintMask
+####
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesLeather
+  name: botanist's leather gloves
+  description: These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin. They're also quite warm.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/leather.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/leather.rsi
+  - type: GloveHeatResistance
+    heatResistance: 1400
+  - type: Fiber
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-brown
+  - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesPowerglove
+  name: power gloves
+  description: Now I'm playin' with power! Wait, they are turned off. # Use Now I'm playin' with power! BAM! for when they're turned on
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/powerglove.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/powerglove.rsi
+  - type: Fiber
+    fiberMaterial: fibers-nanomachines
+  - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesRobohands
+  name: robohands gloves
+  description: Beep boop borp!
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/robohands.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/robohands.rsi
+  - type: Fiber
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-black
+  - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesSpaceNinja
+  name: space ninja gloves
+  description: These black nano-enhanced gloves insulate from electricity and provide fire resistance.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/spaceninja.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/spaceninja.rsi
+  - type: GloveHeatResistance
+    heatResistance: 1400
+  - type: Insulated
+  - type: Fiber
+    fiberMaterial: fibers-nanomachines
+  - type: FingerprintMask
+  - type: Thieving
+    stripTimeReduction: 1
+    stealthy: true
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesCombat
+  name: combat gloves
+  description: These tactical gloves are fireproof and shock resistant.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Color/black.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Color/black.rsi
+  - type: GloveHeatResistance
+    heatResistance: 1400
+  - type: Insulated
+  - type: Fiber
+    fiberMaterial: fibers-insulative
+    fiberColor: fibers-black
+  - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesFingerless
+  name: fingerless gloves
+  description: Plain black gloves without fingertips for the hard working.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/fingerless.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/fingerless.rsi
+  - type: Fiber
+    fiberMaterial: fibers-synthetic
+    fiberColor: fibers-black
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ThievingGloves
+  suffix: Thieving
+  name: black gloves #Intentionally named after regular gloves, they're meant to be sneaky.
+  description: Regular black gloves that do not keep you from frying.
+  components:
+    - type: Tag
+      tags: [] # ignore "WhitelistChameleon" tag
+    - type: Sprite
+      sprite: Clothing/Hands/Gloves/Color/black.rsi
+    - type: Clothing
+      sprite: Clothing/Hands/Gloves/Color/black.rsi
+    - type: Thieving
+      stripTimeReduction: 1.5
+      stealthy: true
+    - type: Fiber
+      fiberMaterial: fibers-synthetic
+      fiberColor: fibers-black
+    - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsGlovesColorWhite
+  id: ClothingHandsGlovesCluwne
+  name: cluwne hands
+  suffix: Unremoveable
+  description:  A cursed pair of cluwne hands.
+  components:
+  - type: Unremoveable

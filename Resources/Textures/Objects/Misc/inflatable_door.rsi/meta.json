@@ -1,0 +1,60 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/commit/eb0d3b2552537b2be044c6bf42e5c65268ee0e56#diff-5275f19fb0944c478cdc6b46be5312df20b6c6e82d0d21114a452c3689fb6fb3 | item_door by ShadowCommander slightly modified by Fishfish458",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "closed",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "closing",
+            "directions": 1,
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "open",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "opening",
+            "directions": 1,
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "item_door"
+        }
+    ]
+}

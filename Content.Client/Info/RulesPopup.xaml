@@ -1,0 +1,24 @@
+﻿<Control xmlns="https://spacestation14.io"
+         xmlns:parallax="clr-namespace:Content.Client.Parallax"
+         xmlns:info="clr-namespace:Content.Client.Info"
+         VerticalExpand="True" HorizontalExpand="True"
+         MouseFilter="Stop">
+    <parallax:ParallaxControl />
+    <Control VerticalExpand="True"
+             MaxWidth="650">
+        <PanelContainer StyleClasses="windowPanel" />
+        <ScrollContainer HScrollEnabled="False">
+            <BoxContainer Orientation="Vertical" SeparationOverride="10">
+                <info:RulesControl />
+                <Label Name="WaitLabel" />
+                <BoxContainer Orientation="Horizontal">
+                    <Button Name="AcceptButton"
+                            Text="{Loc 'ui-rules-accept'}"
+                            Disabled="True" />
+                    <Button Name="QuitButton"
+                            Text="{Loc 'ui-escape-quit'}" />
+                </BoxContainer>
+            </BoxContainer>
+        </ScrollContainer>
+    </Control>
+</Control>

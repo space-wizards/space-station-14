@@ -1,0 +1,135 @@
+- type: entity
+  name: mini hoe
+  parent: BaseItem
+  id: HydroponicsToolMiniHoe
+  description: It's used for removing weeds or scratching your back.
+  components:
+  - type: Tag
+    tags:
+    - Hoe
+    - BotanyHoe
+  - type: Sprite
+    sprite: Objects/Tools/Hydroponics/hoe.rsi
+    state: icon
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 10
+  - type: Item
+    sprite: Objects/Tools/Hydroponics/hoe.rsi
+
+- type: entity
+  name: plant clippers
+  parent: BaseItem
+  id: HydroponicsToolClippers
+  description: A tool used to take samples from plants.
+  components:
+  - type: Tag
+    tags:
+    - PlantSampleTaker
+  - type: Sprite
+    sprite: Objects/Tools/Hydroponics/clippers.rsi
+    state: icon
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 7
+  - type: Item
+    sprite: Objects/Tools/Hydroponics/clippers.rsi
+
+- type: entity
+  name: scythe
+  parent: BaseItem
+  id: HydroponicsToolScythe
+  description: A sharp and curved blade on a long fibremetal handle, this tool makes it easy to reap what you sow.
+  components:
+  - type: Sharp
+  - type: Sprite
+    sprite: Objects/Tools/Hydroponics/scythe.rsi
+    state: icon
+    netsync: false
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 10
+  - type: Item
+    size: 20
+  - type: Clothing
+    sprite: Objects/Tools/Hydroponics/scythe.rsi
+    slots:
+    - back
+  - type: StaticPrice
+    price: 40
+
+- type: entity
+  name: hatchet
+  parent: BaseItem
+  id: HydroponicsToolHatchet
+  description: A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood.
+  components:
+  - type: Tag
+    tags:
+    - BotanyHatchet
+  - type: Sharp
+  - type: Sprite
+    sprite: Objects/Tools/Hydroponics/hatchet.rsi
+    state: icon
+    netsync: false
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 10
+        Piercing: 5
+  - type: Item
+    sprite: Objects/Tools/Hydroponics/hatchet.rsi
+
+- type: entity
+  name: spade
+  parent: BaseItem
+  id: HydroponicsToolSpade
+  description: A small tool for digging and moving dirt.
+  components:
+  - type: Tag
+    tags:
+    - Shovel
+    - BotanyShovel
+  - type: Sprite
+    sprite: Objects/Tools/Hydroponics/spade.rsi
+    state: icon
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
+        Piercing: 5 # I guess you can stab it into them?
+  - type: Item
+    sprite: Objects/Tools/Hydroponics/spade.rsi
+
+- type: entity
+  name: plant bag
+  id: PlantBag
+  parent: BaseStorageItem
+  description: A bag for botanists to easily move their huge harvests.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Specific/Hydroponics/Equipment/plant_bag.rsi
+    state: icon
+  - type: Item
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - belt
+  - type: Storage
+    capacity: 200
+    quickInsert: true
+    areaInsert: true
+    whitelist:
+      components:
+        - Produce
+        - Seed
+  - type: Dumpable

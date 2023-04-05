@@ -1,0 +1,65 @@
+- type: entity
+  description: "If you want to get cancer, might as well do it in style."
+  id: BaseSmokable
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Smokable
+  - type: Sprite
+    netsync: false
+  - type: Appearance
+    visuals:
+      - type: BurnStateVisualizer
+  - type: Tag
+    tags:
+    - Trash
+  - type: Recyclable
+  - type: SpaceGarbage
+  - type: StaticPrice
+    price: 5
+
+# Base for all cigars and cigarettes.
+- type: entity
+  parent: BaseSmokable
+  id: BaseCigar
+  abstract: true
+  components:
+  - type: Smokable
+    exposeTemperature: 1173.15
+  - type: Cigar
+  - type: Tag
+    tags:
+    - Trash
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 20
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+
+- type: entity
+  parent: BaseSmokable
+  id: BaseSmokingPipe
+  abstract: true
+  components:
+  - type: Smokable
+    exposeTemperature: 1173.15
+  - type: ContainerContainer
+    containers:
+      bowl_slot: !type:ContainerSlot
+  - type: ItemSlots
+  - type: SmokingPipe
+    bowl_slot: 
+      name: Bowl
+      whitelist:
+        tags:
+          - Smokable
+      insertSound: 
+        path: /Audio/Weapons/Guns/Empty/empty.ogg
+      ejectSound: 
+        path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 20

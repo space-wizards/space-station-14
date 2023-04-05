@@ -1,0 +1,147 @@
+- type: entity
+  id: Kudzu
+  name: kudzu
+  description: A rapidly growing, dangerous plant. WHY ARE YOU STOPPING TO LOOK AT IT?!
+  placement:
+    mode: SnapgridCenter
+    snap:
+      - Wall
+  components:
+    - type: MeleeSound
+      soundGroups:
+        Brute:
+          path:
+            "/Audio/Weapons/slash.ogg"
+    - type: Sprite
+      sprite: Objects/Misc/kudzu.rsi
+      state: kudzu_11
+      drawdepth: Overdoors
+      netsync: false
+    - type: Appearance
+    - type: KudzuVisuals
+    - type: Clickable
+    - type: Transform
+      anchored: true
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+      - hard: false
+        density: 7
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+        - MidImpassable
+    - type: Damageable
+      damageModifierSet: Wood
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 10
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - type: Temperature
+      heatDamage:
+        types:
+          Heat: 5
+      coldDamage: {}
+      ColdDamageThreshold: 0
+    - type: Flammable
+      fireSpread: true #If you walk into incredibly dense, flaming vines, you can expect to burn.
+      cold:
+        types: {}
+      damage:
+        types:
+          Heat: 1
+    - type: Reactive
+      groups:
+        Flammable: [Touch]
+        Extinguish: [Touch]
+      reactions:
+      - reagents: [WeedKiller, PlantBGone]
+        methods: [Touch]
+        effects:
+        - !type:HealthChange
+          scaled: true
+          damage:
+            types:
+              Heat: 10
+    - type: AtmosExposed
+    - type: Spreader
+      growthResult: Kudzu
+      chance: 1
+    - type: GrowingKudzu
+      growthTickSkipChance: 0.6666
+    - type: SlowContacts
+      walkSpeedModifier: 0.2
+      sprintSpeedModifier: 0.2
+
+- type: entity
+  id: WeakKudzu
+  parent: Kudzu
+  components:
+    - type: Spreader
+      growthResult: WeakKudzu
+      chance: 0.3
+
+- type: entity
+  id: FleshKudzu
+  name: tendons
+  description: A rapidly growing cluster of meaty tendons. WHY ARE YOU STOPPING TO LOOK AT IT?!
+  placement:
+    mode: SnapgridCenter
+    snap:
+      - Wall
+  components:
+    - type: MeleeSound
+      soundGroups:
+        Brute:
+          path:
+            "/Audio/Weapons/slash.ogg"
+    - type: Sprite
+      sprite: Objects/Misc/fleshkudzu.rsi
+      state: base
+      drawdepth: Overdoors
+      netsync: false
+    - type: Appearance
+    - type: Clickable
+    - type: Transform
+      anchored: true
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+      - hard: false
+        density: 7
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+        - MidImpassable
+    - type: Damageable
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 10
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - type: Spreader
+      growthResult: FleshKudzu
+      chance: 0.2
+    - type: DamageContacts
+      damage:
+        types:
+          Slash: 1.5
+          Piercing: 1.5
+      ignoreWhitelist:
+        tags:
+        - Flesh
+    - type: SlowContacts
+      walkSpeedModifier: 0.3
+      sprintSpeedModifier: 0.3
+      ignoreWhitelist:
+        tags:
+        - Flesh

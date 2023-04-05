@@ -1,0 +1,94 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "alpha-slice-filling"
+    },
+    {
+      "name": "alpha-tart"
+    },
+    {
+      "name": "amanita"
+    },
+    {
+      "name": "apple"
+    },
+    {
+      "name": "baklava"
+    },
+    {
+      "name": "baklava-slice"
+    },
+    {
+      "name": "berryclafoutis"
+    },
+    {
+      "name": "cherry"
+    },
+    {
+      "name": "cocolava"
+    },
+    {
+      "name": "frosty"
+    },
+    {
+      "name": "gapple"
+    },
+    {
+      "name": "grape"
+    },
+    {
+      "name": "happy"
+    },
+    {
+      "name": "meat"
+    },
+    {
+      "name": "mime"
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "plain"
+    },
+    {
+      "name": "plain-slice"
+    },
+    {
+      "name": "plate"
+    },
+    {
+      "name": "plate-slice-shading"
+    },
+    {
+      "name": "plate-small"
+    },
+    {
+      "name": "plate-tart"
+    },
+    {
+      "name": "plump"
+    },
+    {
+      "name": "tin"
+    },
+    {
+      "name": "whippedcream"
+    },
+    {
+      "name": "xeno"
+    }
+  ]
+}

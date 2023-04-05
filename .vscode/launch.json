@@ -1,0 +1,46 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Client",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/Content.Client/Content.Client.dll",
+            "args": [],
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "Server",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/Content.Server/Content.Server.dll",
+            "args": [],
+            "console": "integratedTerminal",
+            "stopAtEntry": false
+        },
+        {
+            "name": "YAML Linter",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-yaml-linter",
+            "program": "${workspaceFolder}/bin/Content.YAMLLinter/Content.YAMLLinter.dll",
+            "cwd": "${workspaceFolder}/Content.YAMLLinter",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Server/Client",
+            "configurations": [
+                "Server",
+                "Client"
+            ],
+            "preLaunchTask": "build"
+        }
+    ]
+}

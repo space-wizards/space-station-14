@@ -1,0 +1,394 @@
+- type: reagent
+  id: Coffee
+  name: reagent-name-coffee
+  parent: BaseDrink
+  desc: reagent-desc-coffee
+  physicalDesc: reagent-physical-desc-aromatic
+  flavor: coffee
+  color: "#664300"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Theobromine
+        amount: 0.05
+
+- type: reagent
+  id: Cream
+  name: reagent-name-cream
+  group: Drinks
+  desc: reagent-desc-cream
+  physicalDesc: reagent-physical-desc-creamy
+  flavor: creamy
+  color: "#DFD7AF"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 1
+
+- type: reagent
+  id: CafeLatte
+  name: reagent-name-cafe-latte
+  parent: BaseDrink
+  desc: reagent-desc-cafe-latte
+  physicalDesc: reagent-physical-desc-creamy
+  flavor: creamy
+  color: "#664300"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/cafe_latte.rsi
+    state: icon
+
+- type: reagent
+  id: GreenTea
+  name: reagent-name-green-tea
+  parent: BaseDrink
+  desc: reagent-desc-green-tea
+  physicalDesc: reagent-physical-desc-aromatic
+  flavor: tea
+  color: "#C33F00"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/glass_green.rsi
+    state: icon
+
+- type: reagent
+  id: Grenadine
+  name: reagent-name-grenadine
+  parent: BaseDrink
+  desc: reagent-desc-grenadine
+  physicalDesc: reagent-physical-desc-dark-red
+  flavor: bitter
+  color: "#EA1D26"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/grenadineglass.rsi
+    state: icon
+
+- type: reagent
+  id: IcedCoffee
+  name: reagent-name-iced-coffee
+  parent: BaseDrink
+  desc: reagent-desc-iced-coffee
+  physicalDesc: reagent-physical-desc-aromatic
+  flavor: coffee
+  color: "#102838"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/icedcoffeeglass.rsi
+    state: icon
+
+- type: reagent
+  id: IcedGreenTea
+  name: reagent-name-iced-green-tea
+  parent: BaseDrink
+  desc: reagent-desc-iced-green-tea
+  physicalDesc: reagent-physical-desc-aromatic
+  flavor: icedtea
+  color: "#CE4200"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/glass_green.rsi
+    state: icon
+
+- type: reagent
+  id: IcedTea
+  name: reagent-name-iced-tea
+  parent: BaseDrink
+  desc: reagent-desc-iced-tea
+  physicalDesc: reagent-physical-desc-aromatic
+  flavor: icedtea
+  color: "#104038"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/icedteaglass.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Theobromine
+        amount: 0.05
+
+- type: reagent
+  id: Lemonade
+  name: reagent-name-lemonade
+  group: Drinks
+  desc: reagent-desc-lemonade
+  physicalDesc: reagent-physical-desc-tart
+  flavor: sweet
+  color: "#FFFF00"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/lemonadeglass.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+
+- type: reagent
+  id: Milk
+  name: reagent-name-milk
+  group: Drinks
+  desc: reagent-desc-milk
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: milk
+  color: "#DFDFDF"
+  plantMetabolism:
+    - !type:PlantAdjustNutrition
+      amount: 0.1
+    - !type:PlantAdjustWater
+      amount: 0.9
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 4
+
+- type: reagent
+  id: MilkGoat
+  parent: Milk
+  name: reagent-name-milk-goat
+  desc: reagent-desc-milk-goat
+
+- type: reagent
+  id: MilkOat
+  name: reagent-name-milk-oat
+  group: Drinks
+  desc: reagent-desc-milk-oat
+  physicalDesc: reagent-physical-desc-refreshing
+  flavor: oats
+  color: "#DEDACD"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 4
+
+- type: reagent
+  id: MilkSoy
+  parent: MilkOat
+  name: reagent-name-milk-soy
+  desc: reagent-desc-milk-soy
+  physicalDesc: reagent-physical-desc-refreshing
+  flavor: soy
+  color: "#D2C29D"
+
+- type: reagent
+  id: MilkSpoiled
+  name: reagent-name-milk-spoiled
+  group: Drinks
+  desc: reagent-desc-milk-spoiled
+  physicalDesc: reagent-physical-desc-putrid
+  flavor: terrible
+  color: "#faffba"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: -2
+
+- type: reagent
+  id: Nothing
+  name: reagent-name-nothing
+  desc: reagent-desc-nothing
+  group: Drinks
+  physicalDesc: reagent-physical-desc-nothing
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/nothing.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+        # TODO heal mimes
+
+- type: reagent
+  id: NuclearCola
+  name: reagent-name-nuclear-cola
+  group: Drinks
+  desc: reagent-desc-nuclear-cola
+  physicalDesc: reagent-physical-desc-fizzy
+  flavor: atomiccola
+  color: "#100800"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/nuclear_colaglass.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 6
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
+
+- type: reagent
+  id: SodaWater
+  name: reagent-name-soda-water
+  parent: BaseDrink
+  desc: reagent-desc-soda-water
+  physicalDesc: reagent-physical-desc-fizzy
+  flavor: fizzy
+  color: "#619494"
+
+- type: reagent
+  id: SoyLatte
+  name: reagent-name-soy-latte
+  parent: BaseDrink
+  desc: reagent-desc-soy-latte
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: soy
+  color: "#664300"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/soy_latte.rsi
+    state: icon
+
+- type: reagent
+  id: Tea
+  name: reagent-name-tea
+  parent: BaseDrink
+  desc: reagent-desc-tea
+  physicalDesc: reagent-physical-desc-aromatic
+  flavor: tea
+  color: "#8a5a3a"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Theobromine
+        amount: 0.05
+
+- type: reagent
+  id: TonicWater
+  name: reagent-name-tonic-water
+  parent: BaseDrink
+  desc: reagent-desc-tonic-water
+  physicalDesc: reagent-physical-desc-fizzy
+  flavor: water
+  color: "#0064C8"
+
+- type: reagent
+  id: Water
+  name: reagent-name-water
+  parent: BaseDrink
+  desc: reagent-desc-water
+  physicalDesc: reagent-physical-desc-translucent
+  flavor: water
+  color: "#75b1f0"
+  boilingPoint: 100.0
+  meltingPoint: 0.0
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 4
+
+- type: reagent
+  id: Ice
+  name: reagent-name-ice
+  desc: reagent-desc-ice
+  physicalDesc: reagent-physical-desc-frosty
+  flavor: cold
+  color: "#bed8e6"
+  meltingPoint: 0.0
+  boilingPoint: 100.0
+  plantMetabolism:
+  - !type:PlantAdjustWater
+    amount: 1
+
+- type: reagent
+  id: DryRamen
+  name: reagent-name-dry-ramen
+  parent: BaseDrink
+  desc: reagent-desc-dry-ramen
+  physicalDesc: reagent-physical-desc-wormy
+  flavor: cheapnoodles
+  color: "#664300"
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+        factor: 1
+
+- type: reagent
+  id: HotRamen
+  name: reagent-name-hot-ramen
+  parent: BaseDrink
+  desc: reagent-desc-hot-ramen
+  physicalDesc: reagent-physical-desc-wormy
+  flavor: cheapnoodles
+  color: "#664300"
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+        factor: 4
+
+- type: reagent
+  id: Pilk
+  name: reagent-name-pilk
+  parent: BaseDrink
+  desc: reagent-desc-pilk
+  physicalDesc: reagent-physical-desc-creamy
+  flavor: pilk
+  color: "#e7c69f"
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 1
+
+- type: reagent
+  id: Posca
+  name: reagent-name-posca
+  parent: BaseDrink
+  desc: reagent-desc-posca
+  physicalDesc: reagent-physical-desc-sour
+  flavor: bitter
+  color: "#B3B599"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/glass_light_yellow.rsi
+    state: icon
+
+- type: reagent
+  id: KiraSpecial
+  name: reagent-name-kira-special
+  parent: BaseDrink
+  desc: reagent-desc-kira-special
+  physicalDesc: strong-smelling
+  flavor: sweet
+  color: "#CCCC99"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/kiraspecial.rsi
+    state: icon
+
+- type: reagent
+  id: Rewriter
+  name: reagent-name-rewriter
+  parent: BaseDrink
+  desc: reagent-desc-rewriter
+  physicalDesc: strong-smelling
+  flavor: sweet
+  color: "#485000"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/rewriter.rsi
+    state: icon
+
+- type: reagent
+  id: Kvass
+  name: reagent-name-kvass
+  parent: BaseDrink
+  desc: reagent-desc-kvass
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: bread
+  color: "#381600"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/kvass.rsi
+    state: icon

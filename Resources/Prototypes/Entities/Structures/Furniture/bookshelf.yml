@@ -1,0 +1,57 @@
+- type: entity
+  id: Bookshelf
+  parent: BaseStructure
+  name: "bookshelf"
+  description: Mostly filled with erotica.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/bookshelf.rsi
+    snapCardinals: true
+    netsync: false
+    layers:
+      - state: base
+      - state: book-0
+        map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          book-0: ""
+      - enum.DamageStateVisualLayers.Base:
+          book-1: ""
+      - enum.DamageStateVisualLayers.Base:
+          book-2: ""
+      - enum.DamageStateVisualLayers.Base:
+          book-3: ""
+      - enum.DamageStateVisualLayers.Base:
+          book-4: ""
+      - enum.DamageStateVisualLayers.Base:
+          book-5: ""
+  - type: Damageable
+    damageModifierSet: Wood
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/woodhit.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Tag
+    tags:
+    - Wooden
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: Physics
+    bodyType: Static
+  - type: Anchorable
+  - type: Pullable

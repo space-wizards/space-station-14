@@ -1,0 +1,47 @@
+- type: entity
+  name: toilet
+  id: ToiletEmpty
+  suffix: Empty
+  parent: SeatBase
+  description: The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean.
+  components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Weapons/slash.ogg"
+  - type: Anchorable
+  - type: Sprite
+    sprite: Structures/Furniture/toilet.rsi
+    state: closed_toilet_seat_up
+    netsync: false
+  - type: Toilet
+  - type: SecretStash
+    secretPartName: secret-stash-part-toilet
+  - type: ContainerContainer
+    containers:
+      stash: !type:ContainerSlot {}
+  - type: SolutionContainerManager
+    solutions:
+      toilet:
+        maxVol: 250
+  - type: Transform
+    anchored: true
+  - type: Construction
+    graph: Toilet
+    node: toilet
+  - type: Appearance
+
+- type: entity
+  id: ToiletDirtyWater
+  parent: ToiletEmpty
+  suffix: Dirty Water
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      toilet:
+        reagents:
+        - ReagentId: Water
+          Quantity: 180
+        - ReagentId: Toxin
+          Quantity: 20

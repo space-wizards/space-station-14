@@ -1,0 +1,18 @@
+# Really you should write your own
+- type: htnCompound
+  id: SimpleHostileCompound
+  branches:
+    - tasks:
+        - id: MeleeCombatCompound
+    - tasks:
+        - id: IdleCompound
+
+- type: htnCompound
+  id: DragonCarpCompound
+  branches:
+    - tasks:
+        - id: MeleeCombatCompound
+    - tasks:
+        - id: FollowCompound
+    - tasks:
+        - id: IdleCompound

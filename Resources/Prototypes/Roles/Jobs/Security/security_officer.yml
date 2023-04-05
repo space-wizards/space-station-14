@@ -1,0 +1,35 @@
+- type: job
+  id: SecurityOfficer
+  name: job-name-security
+  description: job-description-security
+  playTimeTracker: JobSecurityOfficer
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 1800
+  startingGear: SecurityOfficerGear
+  icon: "SecurityOfficer"
+  supervisors: job-supervisors-hos
+  canBeAntag: false
+  access:
+  - Security
+  - Brig
+  - Maintenance
+  - Service
+  - External
+
+- type: startingGear
+  id: SecurityOfficerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSec
+    back: ClothingBackpackSecurityFilled
+    shoes: ClothingShoesBootsJack
+    eyes: ClothingEyesGlassesSecurity
+    head: ClothingHeadHelmetHelmetOld
+    outerClothing: ClothingOuterVestKevlar
+    id: SecurityPDA
+    ears: ClothingHeadsetSecurity
+    belt: ClothingBeltSecurityFilled
+  innerclothingskirt: ClothingUniformJumpskirtSec
+  satchel: ClothingBackpackSatchelSecurityFilled
+  duffelbag: ClothingBackpackDuffelSecurityFilled

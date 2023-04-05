@@ -1,0 +1,19 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: Clothing
+  components:
+  - type: Sprite
+    netsync: false
+  - type: Tag
+    tags:
+      - WhitelistChameleon
+  - type: StaticPrice
+    price: 15
+
+- type: entity
+  abstract: true
+  id: GeigerCounterClothing
+  components:
+    - type: Geiger
+      attachedToSuit: true

@@ -1,0 +1,15 @@
+﻿<Control xmlns="https://spacestation14.io"
+         xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
+    <PanelContainer>
+        <PanelContainer.PanelOverride>
+            <gfx:StyleBoxFlat BackgroundColor="#25252A"/>
+        </PanelContainer.PanelOverride>
+        <BoxContainer Orientation="Vertical">
+            <ScrollContainer VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">
+                <BoxContainer Orientation="Vertical" Name="Notes" Access="Public" VerticalExpand="True"/>
+            </ScrollContainer>
+            <Label Name="NewNoteLabel" Text="{Loc admin-notes-new-note}" />
+            <HistoryLineEdit Name="NewNote"/>
+        </BoxContainer>
+    </PanelContainer>
+</Control>

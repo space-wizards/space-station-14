@@ -1,0 +1,164 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation and baystation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24 and https://github.com/Baystation12/Baystation12/commit/a6067826de7fd8f698793f6d84e6c2f1f9b1f188",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "bottle-ketchup"
+    },
+    {
+      "name": "bottle-hotsauce"
+    },
+    {
+      "name": "bottle-empty"
+    },
+    {
+      "name": "bottle-enzyme"
+    },
+    {
+      "name": "bottle-coldsauce"
+    },
+    {
+      "name": "bottle-alpha-1"
+    },
+    {
+      "name": "bottle-alpha-2"
+    },
+    {
+      "name": "bottle-alpha-3"
+    },
+    {
+      "name": "bottle-alpha-4"
+    },
+    {
+      "name": "bottle-alpha-5"
+    },
+    {
+      "name": "bottle-alpha-6"
+    },
+    {
+      "name": "bottle-s-ketchup"
+    },
+    {
+      "name": "bottle-s-hotsauce"
+    },
+    {
+      "name": "bottle-s-empty"
+    },
+    {
+      "name": "bottle-s-coldsauce"
+    },
+    {
+      "name": "bottle-s-vinegar"
+    },
+    {
+      "name": "bottle-s-alpha-1"
+    },
+    {
+      "name": "bottle-s-alpha-2"
+    },
+    {
+      "name": "bottle-s-alpha-3"
+    },
+    {
+      "name": "label-b"
+    },
+    {
+      "name": "label-c"
+    },
+    {
+      "name": "label-e"
+    },
+    {
+      "name": "label-h"
+    },
+    {
+      "name": "label-k"
+    },
+    {
+      "name": "label-s-c"
+    },
+    {
+      "name": "label-s-h"
+    },
+    {
+      "name": "label-s-k"
+    },
+    {
+      "name": "label-s-v"
+    },
+    {
+      "name": "packet-astrotame"
+    },
+    {
+      "name": "packet-bbq"
+    },
+    {
+      "name": "packet-cornoil"
+    },
+    {
+      "name": "packet-empty"
+    },
+    {
+      "name": "packet-trash"
+    },
+    {
+      "name": "packet-frostoil"
+    },
+    {
+      "name": "packet-greygoo"
+    },
+    {
+      "name": "packet-hotsauce"
+    },
+    {
+      "name": "packet-ketchup"
+    },
+    {
+      "name": "packet-mixed"
+    },
+    {
+      "name": "packet-pepper"
+    },
+    {
+      "name": "packet-salt"
+    },
+    {
+      "name": "shaker-empty"
+    },
+    {
+      "name": "shaker-pepper"
+    },
+    {
+      "name": "shaker-salt"
+    },
+    {
+      "name": "packet-soysauce"
+    },
+    {
+      "name": "packet-sugar"
+    },
+    {
+      "name": "packet-layer"
+    },
+    {
+      "name": "packet-label"
+    },
+    {
+      "name": "packet-trans-1"
+    },
+    {
+      "name": "packet-trans-2"
+    },
+    {
+      "name": "packet-solid-1"
+    },
+    {
+      "name": "packet-solid-2"
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+- type: entity
+  name: BaseWeaponSniper
+  parent: BaseItem
+  id: BaseWeaponSniper
+  description: A rooty tooty point and shooty.
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Item
+    size: 50
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
+    quickEquip: false
+    slots:
+    - Back
+  - type: AmmoCounter
+  - type: Gun
+    fireRate: 1
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
+  - type: BallisticAmmoProvider
+    autoCycle: false
+    capacity: 10
+    proto: CartridgeLightRifle
+    whitelist:
+      tags:
+      - CartridgeLightRifle
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+  - type: StaticPrice
+    price: 500
+
+- type: entity
+  name: Kardashev-Mosin
+  parent: BaseWeaponSniper
+  id: WeaponSniperMosin
+  description: A weapon for hunting, or endless trench warfare. Uses .30 rifle ammo.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
+
+- type: entity
+  name: Hristov
+  parent: BaseWeaponSniper
+  id: WeaponSniperHristov
+  description: A portable anti-armour rifle. Fires armor piercing 14.5mm shells. Uses .60 anti-material ammo.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - CartridgeAntiMaterial
+    capacity: 5
+    proto: CartridgeAntiMaterial
+
+- type: entity
+  name: musket
+  parent: BaseWeaponSniper
+  id: Musket
+  description: This should've been in a museum long before you were born. Uses .60 anti-material ammo.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Snipers/musket.rsi
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Snipers/musket.rsi
+  - type: Gun
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - CartridgeAntiMaterial
+    capacity: 1
+    proto: CartridgeAntiMaterial
+
+- type: entity
+  name: flintlock pistol
+  parent: BaseWeaponSniper
+  id: WeaponPistolFlintlock
+  description: A pirate's companion. Yarrr! Uses .60 anti-material ammo.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeAntiMaterial
+    capacity: 1
+    proto: CartridgeAntiMaterial

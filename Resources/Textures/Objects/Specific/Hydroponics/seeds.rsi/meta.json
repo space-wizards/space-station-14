@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/vgstation-coders/vgstation13 at 1dbcf389b0ec6b2c51b002df5fef8dd1519f8068",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "mycelium-empty"
+    },
+    {
+      "name": "produce"
+    },
+    {
+      "name": "seed"
+    },
+    {
+      "name": "seed-alien1"
+    },
+    {
+      "name": "seed-alien2"
+    },
+    {
+      "name": "seed-alien3"
+    },
+    {
+      "name": "seed-alien4"
+    },
+    {
+      "name": "seed-synthbrain"
+    }
+  ]
+}

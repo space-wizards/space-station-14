@@ -1,0 +1,337 @@
+- type: entity
+  parent: CrateBaseWeldable
+  id: CrateGenericSteel
+  name: crate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/generic.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/generic.rsi
+
+- type: entity
+  parent: CrateBaseWeldable
+  id: CratePlastic
+  name: plastic crate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/plastic.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/plastic.rsi
+  - type: Construction
+    graph: CratePlastic
+    node: crateplastic
+    containers:
+    - entity_storage
+  - type: StaticPrice
+    price: 150
+
+- type: entity
+  parent: CrateBaseWeldable
+  id: CrateFreezer
+  name: freezer
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/freezer.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/freezer.rsi
+  - type: AntiRottingContainer
+
+- type: entity
+  id: CrateHydroponics
+  name: hydroponics crate
+  parent: CrateBaseWeldable
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/hydroponics.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/hydroponics.rsi
+
+- type: entity
+  parent: CrateBaseWeldable
+  id: CrateMedical
+  name: medical crate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/medical.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/medical.rsi
+
+- type: entity
+  parent: CrateBaseWeldable
+  id: CrateRadiation
+  name: radiation gear crate
+  description: Is not actually lead lined. Do not store your plutonium in this.
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/radiation.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/radiation.rsi
+
+- type: entity
+  parent: CrateBaseWeldable
+  id: CrateInternals
+  name: oxygen crate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/o2.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/o2.rsi
+
+- type: entity
+  parent: CrateBaseWeldable
+  id: CrateElectrical
+  name: electrical crate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/electrical.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/electrical.rsi
+
+- type: entity
+  parent: CrateBaseWeldable
+  id: CrateEngineering
+  name: engineering crate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/engineering.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/engineering.rsi
+
+- type: entity
+  parent: CrateBaseWeldable
+  id: CrateScience
+  name: science crate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/science.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/science.rsi
+
+- type: entity
+  parent: CrateBaseWeldable
+  id: CrateSurgery
+  name: surgery crate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/surgery.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/surgery.rsi
+
+# Secure Crates
+
+- type: entity
+  parent: CrateBaseSecure
+  id: CrateSecgear
+  name: secgear crate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/sec_gear.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/sec_gear.rsi
+  - type: AccessReader
+    access: [["Security"]]
+
+- type: entity
+  parent: CrateBaseSecure
+  id: CrateEngineeringSecure
+  name: secure engineering crate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/engicrate_secure.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/engicrate_secure.rsi
+  - type: AccessReader
+    access: [["Engineering"]]
+
+- type: entity
+  parent: CrateBaseSecure
+  id: CrateMedicalSecure
+  name: secure medical crate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/medicalcrate_secure.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/medicalcrate_secure.rsi
+  - type: AccessReader
+    access: [["Medical"]]
+
+- type: entity
+  parent: CrateBaseSecure
+  id: CratePrivateSecure
+  name: private crate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/privatecrate_secure.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/privatecrate_secure.rsi
+
+- type: entity
+  parent: CrateBaseSecure
+  id: CrateScienceSecure
+  name: secure science crate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/scicrate_secure.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/scicrate_secure.rsi
+  - type: AccessReader
+    access: [["Research"]]
+
+- type: entity
+  parent: CrateBaseSecure
+  id: CratePlasma
+  name: plasma crate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/plasma.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/plasma.rsi
+  - type: AccessReader
+    access: [["Engineering"]]
+
+- type: entity
+  parent: CrateBaseSecure
+  id: CrateSecure
+  name: secure crate
+  components:
+    - type: Icon
+      sprite: Structures/Storage/Crates/secure.rsi
+    - type: Sprite
+      sprite: Structures/Storage/Crates/secure.rsi
+
+- type: entity
+  parent: CrateBaseSecure
+  id: CrateHydroSecure
+  name: secure hydroponics crate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/hydro_secure.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/hydro_secure.rsi
+  - type: AccessReader
+    access: [["Hydroponics"]]
+
+- type: entity
+  parent: CrateBaseSecure
+  id: CrateWeaponSecure
+  name: secure weapon crate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/weapon.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/weapon.rsi
+  - type: AccessReader
+    access: [["Armory"]]
+
+- type: entity
+  parent: CrateBaseSecure
+  id: CrateCommandSecure
+  name: command crate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/secure.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/secure.rsi
+  - type: AccessReader
+    access: [["Command"]]
+
+- type: entity
+  parent: CrateGeneric
+  id: CrateLivestock
+  name: livestock crate
+  components:
+  - type: EntityStorage
+    air:
+      volume: 800
+  - type: Sprite
+    sprite: Structures/Storage/Crates/livestock.rsi
+    layers:
+    - state: base
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: Icon
+    sprite: Structures/Storage/Crates/livestock.rsi
+    state: base
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/woodhit.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 1
+            max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.4,-0.4,0.4,0.29"
+      density: 135
+      mask:
+      - LargeMobMask
+      layer:
+      - LargeMobLayer
+  - type: Construction
+    graph: CrateLivestock
+    node: cratelivestock
+    containers:
+    - entity_storage
+  - type: StaticPrice
+    price: 125
+
+- type: entity
+  parent: CrateGeneric
+  id: CrateRodentCage
+  name: hamster cage
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/Crates/cage.rsi
+    layers:
+    - state: base
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: Icon
+    sprite: Structures/Storage/Crates/cage.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/woodhit.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlastic:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Physics
+    bodyType: Dynamic
+  - type: EntityStorage
+    capacity: 500
+    airtight: false
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.4,-0.4,0.4,0.29"
+      density: 80
+      mask:
+      - LargeMobMask
+      layer:
+      - LargeMobLayer
+  - type: StaticPrice
+    price: 60
+

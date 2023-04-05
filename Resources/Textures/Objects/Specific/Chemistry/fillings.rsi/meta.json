@@ -1,0 +1,96 @@
+{
+	"version": 1,
+	"license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/commit/740ff31a81313086cf16761f3677cf1e2ab46c93",
+	"size": {
+		"x": 32,
+		"y": 32
+	},
+	"states": [
+		{
+			"name": "backpack1"
+		},
+		{
+			"name": "backpack2"
+		},
+		{
+			"name": "backpackmob1"
+		},
+		{
+			"name": "backpackmob2",
+			"directions": 4
+		},
+		{
+			"name": "glass1"
+		},
+		{
+			"name": "glass2"
+		},
+		{
+			"name": "glass3"
+		},
+		{
+			"name": "glass4"
+		},
+		{
+			"name": "glass5"
+		},
+		{
+			"name": "glass6"
+		},
+		{
+			"name": "largebottle1"
+		},
+		{
+			"name": "largebottle2"
+		},
+		{
+			"name": "largebottle3"
+		},
+		{
+			"name": "largebottle4"
+		},
+		{
+			"name": "largebottle5"
+		},
+		{
+			"name": "largebottle6"
+		},
+		{
+			"name": "smallbottle1"
+		},
+		{
+			"name": "smallbottle2"
+		},
+		{
+			"name": "smallbottle3"
+		},
+		{
+			"name": "smallbottle4"
+		},
+		{
+			"name": "smallbottle5"
+		},
+		{
+			"name": "smallbottle6"
+		},
+		{
+			"name": "vial1"
+		},
+		{
+			"name": "vial2"
+		},
+		{
+			"name": "vial3"
+		},
+		{
+			"name": "vial4"
+		},
+		{
+			"name": "vial5"
+		},
+		{
+			"name": "vial6"
+		}
+	]
+}

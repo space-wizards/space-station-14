@@ -1,0 +1,38 @@
+- type: construction
+  name: cleanbot
+  id: cleanbot
+  graph: CleanBot
+  startNode: start
+  targetNode: bot
+  category: construction-category-utilities
+  objectType: Item
+  description: This bot wanders around the station, mopping up any puddles it sees.
+  icon:
+    sprite: Mobs/Silicon/Bots/cleanbot.rsi
+    state: cleanbot
+
+- type: construction
+  name: honkbot
+  id: honkbot
+  graph: HonkBot
+  startNode: start
+  targetNode: bot
+  category: construction-category-utilities
+  objectType: Item
+  description: This bot honks and slips people.
+  icon:
+    sprite: Mobs/Silicon/Bots/honkbot.rsi
+    state: honkbot
+
+- type: construction
+  name: medibot
+  id: medibot
+  graph: MediBot
+  startNode: start
+  targetNode: bot
+  category: construction-category-utilities
+  objectType: Item
+  description: This bot can help supply basic healing.
+  icon:
+    sprite: Mobs/Silicon/Bots/medibot.rsi
+    state: medibot

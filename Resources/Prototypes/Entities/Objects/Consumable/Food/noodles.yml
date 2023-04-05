@@ -1,0 +1,177 @@
+# Base
+
+- type: entity
+  parent: FoodInjectableBase
+  id: FoodNoodlesBase
+  abstract: true
+  description: Now that's a nice pasta!
+  components:
+  - type: Food
+    trash: FoodPlate
+  - type: Sprite
+    sprite: Objects/Consumable/Food/noodles.rsi
+    netsync: false
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
+
+# Noodles
+
+- type: entity
+  name: boiled spaghetti
+  parent: FoodNoodlesBase
+  id: FoodNoodlesBoiled
+  description: A plain dish of noodles, this needs more ingredients.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - pasta
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: boiled
+# Tastes like pasta.
+
+- type: entity
+  name: spaghetti
+  parent: FoodNoodlesBase
+  id: FoodNoodles
+  description: Spaghetti and crushed tomatoes. Just like your abusive father used to make!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - pasta
+      - tomato
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: tomato
+# Tastes like pasta, tomato.
+
+- type: entity
+  name: copypasta
+  parent: FoodNoodlesBase
+  id: FoodNoodlesCopy
+  description: You probably shouldn't try this, you always hear people talking about how bad it is...
+  components:
+  - type: FlavorProfile
+    flavors:
+      - copypasta
+  - type: Sprite
+    state: copypasta
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 25
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 12
+        - ReagentId: Vitamin
+          Quantity: 8
+# Tastes like pasta, bad humor.
+
+- type: entity
+  name: spaghetti and meatballs
+  parent: FoodNoodlesBase
+  id: FoodNoodlesMeatball
+  description: Now that's a nice-a meatball!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - pasta
+      - meaty
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: meatball
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 4
+# Tastes like pasta, meat.
+
+- type: entity
+  name: spesslaw
+  parent: FoodNoodlesBase
+  id: FoodNoodlesSpesslaw
+  description: A lawyer's favourite.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - pasta
+      - meaty
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: spesslaw
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 6
+# Tastes like pasta, meat.
+
+- type: entity
+  name: chow mein
+  parent: FoodNoodlesBase
+  id: FoodNoodlesChowmein
+  description: A nice mix of noodles and fried vegetables.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - pasta
+      - oily
+      - eggplant
+      - carrot
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: chowmein
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 7
+        - ReagentId: Vitamin
+          Quantity: 6
+# Tastes like pasta, tomato.
+
+- type: entity
+  name: butter noodles
+  parent: FoodNoodlesBase
+  id: FoodNoodlesButter
+  description: Noodles covered in savory butter. Simple and slippery, but delicious.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - pasta
+      - butter
+  - type: Sprite
+    layers:
+    - state: plate
+    - state: butter
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxvol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 1
+# Tastes like pasta, butter.

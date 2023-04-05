@@ -1,0 +1,117 @@
+- type: entity
+  id: ClothingBeltUtilityFilled
+  parent: ClothingBeltUtility
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: Crowbar
+      - id: Wrench
+      - id: Screwdriver
+      - id: Wirecutter
+      - id: Welder
+      - id: Multitool
+
+- type: entity
+  id: ClothingBeltChiefEngineerFilled
+  parent: ClothingBeltChiefEngineer
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: PowerDrill
+      - id: JawsOfLife
+      - id: WelderExperimental
+      - id: Multitool
+      - id: CableApcStack
+
+- type: entity
+  id: ClothingBeltSecurityFilled
+  parent: ClothingBeltSecurity
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: GrenadeFlashBang
+      - id: GrenadeFlashBang
+      - id: Stunbaton
+      - id: Handcuffs
+      - id: Handcuffs
+
+- type: entity
+  id: ClothingBeltJanitorFilled
+  parent: ClothingBeltJanitor
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: Soap #Make a soap group and pick between when i'm not lazy
+      - id: SprayBottleSpaceCleaner
+      #- name: GrenadeChem
+      #- name: GrenadeChem
+      - id: FlashlightLantern
+
+- type: entity
+  id: ClothingBeltMedicalFilled
+  parent: ClothingBeltMedical
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: Brutepack
+        amount: 2
+      - id: Ointment
+        amount: 2
+      - id: Bloodpack
+        amount: 2
+      - id: Gauze
+        amount: 1
+      - id: EmergencyMedipen #You never know what people are going to latejoin into
+
+- type: entity
+  id: ClothingBeltPlantFilled
+  parent: ClothingBeltPlant
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: HydroponicsToolMiniHoe
+    - id: HydroponicsToolSpade
+    - id: RobustHarvestChemistryBottle
+
+- type: entity
+  id: ClothingBeltSheathFilled
+  parent: ClothingBeltSheath
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: CaptainSabre
+
+- type: entity
+  id: ClothingBeltMilitaryWebbingMedFilled
+  parent: ClothingBeltMilitaryWebbingMed
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: SyndiHypo
+      - id: EpinephrineChemistryBottle
+        amount: 2
+      - id: EphedrineChemistryBottle
+        amount: 2
+      - id: OmnizineChemistryBottle
+        amount: 1
+      - id: MedkitCombatFilled
+
+- type: entity
+  parent: ClothingBeltWand
+  id: ClothingBeltWandFilled
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponWandPolymorphCarp
+    - id: WeaponWandFireball
+    - id: WeaponWandDeath
+    - id: WeaponWandPolymorphDoor

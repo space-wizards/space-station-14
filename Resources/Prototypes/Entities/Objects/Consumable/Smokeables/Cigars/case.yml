@@ -1,0 +1,49 @@
+- type: entity
+  id: CigarCase
+  parent: BaseStorageItem
+  name: cigar case
+  description: A case for holding your cigars when you are not smoking them.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Consumable/Smokeables/Cigars/case.rsi
+    layers:
+    - state: closed
+  - type: Storage
+    capacity: 8
+  - type: Item
+    sprite: Objects/Consumable/Smokeables/Cigars/case.rsi
+    size: 8
+  - type: StorageFill
+    contents:
+    - id: Cigar
+      amount: 8
+  - type: ItemCounter
+    count:
+      tags: [Cigar]
+  - type: Appearance
+    visuals:
+    - type: BagOpenCloseVisualizer
+      openIcon: open
+    - type: StackVisualizer
+      composite: true
+      stackLayers:
+      - cigar1
+      - cigar2
+      - cigar3
+      - cigar4
+      - cigar5
+      - cigar6
+      - cigar7
+      - cigar8
+
+- type: entity
+  id: CigarGoldCase
+  parent: CigarCase
+  name: premium cigar case
+  description: "A case of premium Havanian cigars. You'll only see heads with these."
+  components:
+  - type: StorageFill
+    contents:
+    - id: CigarGold
+      amount: 8

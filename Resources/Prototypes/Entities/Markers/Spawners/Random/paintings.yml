@@ -1,0 +1,35 @@
+- type: entity
+  parent: MarkerBase
+  id: RandomPainting
+  name: random painting spawner
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Wallmounts/paintings.rsi
+        state: painting8
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+      - PaintingPersistenceOfMemory
+      - PaintingTheSonOfMan
+      - PaintingTheKiss
+      - PaintingTheScream
+      - PaintingTheGreatWave
+      - PaintingCafeTerraceAtNight
+      - PaintingNightHawks
+      - PaintingSkeletonCigarette
+      - PaintingPrayerHands
+      - PaintingOldGuitarist
+      - PaintingOlympia
+      - PaintingSaturn
+      - PaintingSleepingGypsy
+      - PaintingRedBlueYellow
+      - PaintingHelloWorld
+    chance: 1
+    rarePrototypes:
+      - PaintingSkeletonBoof
+      - PaintingEmpty
+      - PaintingMoony
+      - PaintingAmogusTriptych
+    rareChance: 0.01

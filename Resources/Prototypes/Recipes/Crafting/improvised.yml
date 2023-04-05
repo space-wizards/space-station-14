@@ -1,0 +1,88 @@
+﻿- type: construction
+  name: baseball bat
+  id: bat
+  graph: WoodenBat
+  startNode: start
+  targetNode: bat
+  category: construction-category-weapons
+  description: A robust baseball bat.
+  icon:
+    sprite: Objects/Weapons/Melee/baseball_bat.rsi
+    state: icon
+  objectType: Item
+
+- type: construction
+  name: makeshift handcuffs
+  id: makeshifthandcuffs
+  graph: makeshifthandcuffs
+  startNode: start
+  targetNode: cuffscable
+  category: construction-category-tools
+  description: "Homemade handcuffs crafted from spare cables."
+  icon: { sprite: Objects/Misc/cablecuffs.rsi, state: cuff }
+  objectType: Item
+
+- type: construction
+  name: muzzle
+  id: muzzle
+  graph: Muzzle
+  startNode: start
+  targetNode: muzzle
+  category: construction-category-tools
+  objectType: Item
+  description: "A muzzle to shut your victim up."
+  icon:
+    sprite: Clothing/Mask/muzzle.rsi
+    state: icon
+
+- type: construction
+  name: improvised pneumatic cannon
+  id: pneumaticcannon
+  graph: PneumaticCannon
+  startNode: start
+  targetNode: cannon
+  category: construction-category-weapons
+  objectType: Item
+  description: This son of a gun can fire anything that fits in it using just a little gas.
+  icon:
+    sprite: Objects/Weapons/Guns/Cannons/pneumatic_cannon.rsi
+    state: icon
+
+- type: construction
+  name: gauze
+  id: gauze
+  graph: Gauze
+  startNode: start
+  targetNode: gauze
+  category: construction-category-tools
+  objectType: Item
+  description: When you've really got nothing left.
+  icon:
+    sprite: Objects/Specific/Medical/medical.rsi
+    state: gauze
+
+- type: construction
+  name: blindfold
+  id: blindfold
+  graph: Blindfold
+  startNode: start
+  targetNode: blindfold
+  category: construction-category-tools
+  objectType: Item
+  description: Better hope everyone turns a blind eye to you crafting this sussy item...
+  icon:
+    sprite: Clothing/Eyes/Misc/blindfold.rsi
+    state: icon
+
+- type: construction
+  name: flower crown
+  id: flowercrown
+  graph: flowercrown
+  startNode: start
+  targetNode: flowercrown
+  category: construction-category-misc
+  description: "A coronet of fresh and fragrant flowers."
+  icon:
+    sprite: Clothing/Head/Misc/flower-crown.rsi
+    state: icon
+  objectType: Item

@@ -1,0 +1,87 @@
+- type: entity
+  id: chem_master
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: ChemMaster 4000
+  description: An industrial grade chemical manipulator with pill and bottle production included.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/mixer.rsi
+    netsync: false
+    snapCardinals: true
+    layers:
+    - state: mixer_empty
+    - state: mixer_screens
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+  - type: Icon
+    sprite: Structures/Machines/mixer.rsi
+    state: mixer_loaded
+  - type: ChemMaster
+    pillDosageLimit: 50
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.25,-0.4,0.25,0.4"
+      density: 190
+      mask:
+      - MachineMask
+      layer:
+      - MachineLayer
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: ActivatableUI
+    key: enum.ChemMasterUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+    - key: enum.ChemMasterUiKey.Key
+      type: ChemMasterBoundUserInterface
+  - type: ApcPowerReceiver
+    powerLoad: 250
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  # Machine / Construction stuff
+  - type: Wires
+    BoardName: "chem_master"
+    LayoutId: chem_master
+  - type: Machine
+    board: ChemMasterMachineCircuitboard
+  - type: ContainerContainer
+    containers:
+      beakerSlot: !type:ContainerSlot
+      outputSlot: !type:ContainerSlot
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: ItemSlots
+    slots:
+      beakerSlot:
+        whitelist:
+          components:
+          - FitsInDispenser
+      outputSlot:
+        whitelistFailPopup: chem-master-component-cannot-put-entity-message
+        whitelist:
+          tags:
+          - Bottle
+          - PillCanister
+  - type: SolutionContainerManager
+    solutions:
+      buffer: {}

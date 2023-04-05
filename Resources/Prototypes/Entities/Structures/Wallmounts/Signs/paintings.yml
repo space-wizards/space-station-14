@@ -1,0 +1,181 @@
+- type: entity
+  parent: BaseSign
+  id: PaintingBase
+  abstract: true
+  components:
+  - type: WallMount
+    arc: 360
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Structures/Wallmounts/paintings.rsi
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingEmpty
+  name: Empty Frame
+  description: An empty frame, waiting to be filled with art.
+  components:
+  - type: Sprite
+    state: painting0
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingMoony
+  name: Abstract No.1
+  description: An imposing abstract painting. It feels like it's pressuring you to do good.
+  components:
+  - type: Sprite
+    state: painting1
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingPersistenceOfMemory
+  name: The Persistence of Memory
+  description: This painting depicts a barren landscape. It's filled with various surreal objects.
+  components:
+  - type: Sprite
+    state: painting2
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingTheSonOfMan
+  name: The Son of Man
+  description: This painting depicts a formal-looking man. His face is obscured by an apple.
+  components:
+  - type: Sprite
+    state: painting3
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingTheKiss
+  name: The Kiss
+  description: This painting depicts a couple in tender embrace. It's covered in glittery gold ornamentation.
+  components:
+  - type: Sprite
+    state: painting4
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingTheScream
+  name: The Scream
+  description: This painting depicts a distressed man standing on a bridge.
+  components:
+  - type: Sprite
+    state: painting5
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingTheGreatWave
+  name: The Great Wave off Kanagawa
+  description: This painting depicts a majestic wave. It's throwing around several small fishing boats.
+  components:
+  - type: Sprite
+    state: painting6
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingCafeTerraceAtNight
+  name: Cafe Terrace at Night
+  description: This painting depicts lively night scene at a cafe.
+  components:
+  - type: Sprite
+    state: painting7
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingNightHawks
+  name: Nighthawks
+  description: This painting depicts a lonely-looking diner. The patrons are sitting glumly at the counter.
+  components:
+  - type: Sprite
+    state: painting8
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingSkeletonCigarette
+  name: Skull of a Skeleton with Burning Cigarette
+  description: This painting depicts an impressionist portrait of a skeleton. A lit cigarette is wedged between its teeth.
+  components:
+  - type: Sprite
+    state: painting9
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingSkeletonBoof
+  name: Skull of MLG Skeleton with Fat Boof
+  description: Painting goes hard. Feel free to screenshot.
+  components:
+  - type: Sprite
+    state: painting10
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingPrayerHands
+  name: Study of the Hands of an Apostle
+  description: This painting depicts a pair of hands clasped in prayer.
+  components:
+  - type: Sprite
+    state: painting11
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingOldGuitarist
+  name: The Old Guitarist
+  description: This painting depicts an old, thin man clutching a guitar. His face looks shallow and sickly.
+  components:
+  - type: Sprite
+    state: painting12
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingOlympia
+  name: Olympia
+  description: This painting depicts a nude woman lying on a bed. A servant is tending to her.
+  components:
+  - type: Sprite
+    state: painting13
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingSaturn
+  name: Saturn Devouring His Son
+  description: This painting depicts giant devouring a human corpse. He has a frightening look in his eyes.
+  components:
+  - type: Sprite
+    state: painting14
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingSleepingGypsy
+  name: The Sleeping Gypsy
+  description: This painting depicts a gypsy sleeping among their belongings in the desert. A lion stands behind them.
+  components:
+  - type: Sprite
+    state: painting15
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingRedBlueYellow
+  name: Composition with Red Blue and Yellow
+  description: This painting is made up of several boxes. They are filled with flat shades of color.
+  components:
+  - type: Sprite
+    state: painting16
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingAmogusTriptych
+  name: Amogus Triptych (Untitled.)
+  description: This painting is made up of 3 individual sections. Each depicts a religious figure.
+  components:
+  - type: Sprite
+    state: painting17
+
+- type: entity
+  parent: PaintingBase
+  id: PaintingHelloWorld
+  name: Hello World
+  description: This painting is made up of lots of multicolored squares arranged in a peculiar pattern. Perhaps it means something?
+  components:
+  - type: Sprite
+    state: painting18

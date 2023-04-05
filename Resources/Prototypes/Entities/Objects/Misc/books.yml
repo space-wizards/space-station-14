@@ -1,0 +1,140 @@
+- type: entity
+  name: book
+  parent: BaseItem
+  id: BookBase
+  description: 'A hardcover book.'
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    netsync: false
+    layers:
+    - state: book0
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: Paper
+    contentSize: 3000
+  - type: ActivatableUI
+    key: enum.PaperUiKey.Key
+    closeOnHandDeselect: false
+  - type: UserInterface
+    interfaces:
+    - key: enum.PaperUiKey.Key
+      type: PaperBoundUserInterface
+  - type: Tag
+    tags:
+      - Book
+  - type: PaperVisuals
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_book.svg.96dpi.png"
+    backgroundPatchMargin: 23.0, 16.0, 14.0, 15.0
+    contentMargin: 20.0, 20.0, 20.0, 20.0
+
+- type: entity
+  parent: BookBase
+  id: BookRandom
+  suffix: random
+  components:
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          book0: ""
+      - enum.DamageStateVisualLayers.Base:
+          book1: ""
+      - enum.DamageStateVisualLayers.Base:
+          book2: ""
+      - enum.DamageStateVisualLayers.Base:
+          book3: ""
+      - enum.DamageStateVisualLayers.Base:
+          book4: ""
+      - enum.DamageStateVisualLayers.Base:
+          book5: ""
+      - enum.DamageStateVisualLayers.Base:
+          book6: ""
+      - enum.DamageStateVisualLayers.Base:
+          book7: ""
+      - enum.DamageStateVisualLayers.Base:
+          book8: ""
+
+- type: entity
+  parent: BookBase
+  id: BookEscalation
+  name: Robert's Rules of Escalation
+  description: The book is stained with blood. It seems to have been used more as a weapon than reading material.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/books.rsi
+      layers:
+        - state: book2
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 6
+    - type: Paper
+      content: book-text-escalation
+
+- type: entity
+  parent: BookBase
+  id: BookEscalationSecurity
+  name: "Robert's Rules of Escalation: Security Edition"
+  description: The book is stained with blood. It seems to have been used more as a weapon than reading material.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/books.rsi
+      layers:
+        - state: book2
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 6
+    - type: Paper
+      content: book-text-escalation-security
+
+- type: entity
+  parent: BookBase
+  id: BookAtmosDistro
+  name: "Newton's Guide to Atmos: The Distro"
+  description: There are endless illegible notes scribbled in the margins. Most of the text is covered in handwritten question marks.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/books.rsi
+      layers:
+        - state: book5
+    - type: Paper
+      content: book-text-atmos-distro
+
+- type: entity
+  parent: BookBase
+  id: BookAtmosWaste
+  name: "Newton's Guide to Atmos: Waste"
+  description: There are endless illegible notes scribbled in the margins. Most of the text is covered in handwritten question marks.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/books.rsi
+      layers:
+        - state: book5
+    - type: Paper
+      content: book-text-atmos-waste
+
+- type: entity
+  parent: BookBase
+  id: BookAtmosAirAlarms
+  name: "Newton's Guide to Atmos: Air Alarms"
+  description: There are endless illegible notes scribbled in the margins. Most of the text is covered in handwritten question marks.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/books.rsi
+      layers:
+        - state: book5
+    - type: Paper
+      content: book-text-atmos-alarms
+
+- type: entity
+  parent: BookBase
+  id: BookAtmosVentsMore
+  name: "Newton's Guide to Atmos: Vents and More"
+  description: There are endless illegible notes scribbled in the margins. Most of the text is covered in handwritten question marks.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/books.rsi
+      layers:
+        - state: book5
+    - type: Paper
+      content: book-text-atmos-vents

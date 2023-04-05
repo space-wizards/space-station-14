@@ -1,0 +1,143 @@
+- type: entity
+  abstract: true
+  id: DisposalUnitBase
+  parent: BaseMachinePowered
+  description: A pneumatic waste disposal unit.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Disposal
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Piping/disposal.rsi
+    snapCardinals: true
+    layers:
+    - state: condisposal
+      map: [ "enum.DisposalUnitVisualLayers.Unanchored" ]
+    - state: disposal
+      map: [ "enum.DisposalUnitVisualLayers.Base" ]
+    - state: disposal-charging
+      map: [ "enum.DisposalUnitVisualLayers.BaseCharging" ]
+    - state: disposal-flush
+      map: [ "enum.DisposalUnitVisualLayers.BaseFlush" ]
+    - state: dispover-charge
+      map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
+    - state: dispover-ready
+      map: [ "enum.DisposalUnitVisualLayers.OverlayReady" ]
+    - state: dispover-full
+      map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
+    - state: dispover-handle
+      map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.25,-0.4,0.25,0.4"
+      density: 75
+      mask:
+      - MachineMask
+      layer:
+      - MachineLayer
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+  - type: Appearance
+  - type: UserInterface
+    interfaces:
+    - key: enum.DisposalUnitUiKey.Key
+      type: DisposalUnitBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      DisposalUnit: !type:Container
+  - type: StaticPrice
+    price: 100
+  - type: PowerSwitch
+
+- type: entity
+  id: DisposalUnit
+  parent: DisposalUnitBase
+  name: disposal unit
+  components:
+  - type: Construction
+    graph: DisposalMachine
+    node: disposal_unit
+  - type: DisposalUnit
+    flushSound:
+      path: /Audio/Machines/disposalflush.ogg
+    flushTime: 2
+  - type: UserInterface
+    interfaces:
+    - key: enum.DisposalUnitUiKey.Key
+      type: DisposalUnitBoundUserInterface
+
+- type: entity
+  id: MailingUnit
+  parent: DisposalUnitBase
+  name: mailing unit
+  description: A pneumatic mail delivery unit.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Piping/disposal.rsi
+    layers:
+      - state: conmailing
+        map: [ "enum.DisposalUnitVisualLayers.Unanchored" ]
+      - state: mailing
+        map: [ "enum.DisposalUnitVisualLayers.Base" ]
+      - state: mailing-charging
+        map: [ "enum.DisposalUnitVisualLayers.BaseCharging" ]
+      - state: mailing-flush
+        map: [ "enum.DisposalUnitVisualLayers.BaseFlush" ]
+      - state: dispover-charge
+        map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
+      - state: dispover-ready
+        map: [ "enum.DisposalUnitVisualLayers.OverlayReady" ]
+      - state: dispover-full
+        map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
+      - state: mailover-handle
+        map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]
+  - type: Construction
+    graph: DisposalMachine
+    node: mailing_unit
+  - type: DisposalUnit
+    autoEngageEnabled: false
+    mobsCanEnter: false
+    flushSound:
+      path: /Audio/Machines/disposalflush.ogg
+    flushTime: 2
+  - type: MailingUnit
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: MailingUnit
+    transmitFrequencyId: MailingUnit
+  - type: WiredNetworkConnection
+  - type: Configuration
+  - type: Appearance
+  - type: UserInterface
+    interfaces:
+    - key: enum.MailingUnitUiKey.Key
+      type: DisposalUnitBoundUserInterface
+    - key: enum.ConfigurationUiKey.Key
+      type: ConfigurationBoundUserInterface

@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from baystation at https://github.com/Baystation12/Baystation12/commit/f200ae08d71ecbc91412ee650a334981892f5177",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "normal-unshaded"
+    },
+    {
+      "name": "broken"
+    },
+    {
+      "name": "deny-unshaded",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "hellfire",
+      "delays": [
+        [
+          0.25,
+          0.25,
+          0.25
+        ]
+      ]
+    },
+    {
+      "name": "off"
+    },
+    {
+      "name": "panel"
+    },
+    {
+      "name": "screen",
+      "delays": [
+        [
+          0.6,
+          0.6,
+          0.6,
+          0.6
+        ]
+      ]
+    },
+    {
+      "name": "eject-unshaded",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.6,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.8
+        ]
+      ]
+    }
+  ]
+}

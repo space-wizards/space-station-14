@@ -1,0 +1,46 @@
+- type: entity
+  name: Mimic
+  id: MobMimic
+  parent: SimpleMobBase
+  description: Surprise. # When this gets a proper write this should use the object's actual description >:)
+  components:
+  - type: Tag
+    tags:
+    - FootstepSound
+  - type: InputMover
+  - type: MobMover
+  - type: Faction
+    factions:
+    - SimpleHostile
+  - type: Hands
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Structures/Machines/VendingMachines/cola.rsi
+    state: normal
+  - type: Icon
+    sprite: Structures/Machines/VendingMachines/cola.rsi
+    state: normal
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.35,-0.35,0.35,0.35"
+      density: 1000
+      mask:
+      - MobMask
+      layer:
+      - MachineLayer
+  - type: HumanoidAppearance
+  - type: AnimationPlayer
+  - type: MeleeWeapon
+    hidden: true
+    angle: 0
+    animation: WeaponArcFist
+    damage:
+      types:
+        Blunt: 20
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 1
+    baseSprintSpeed : 1

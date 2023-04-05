@@ -1,0 +1,84 @@
+# Base SMES
+- type: entity
+  abstract: true
+  id: BaseSMES
+  parent: [ BaseMachine, ConstructibleMachine ]
+  name: SMES
+  description: A high-capacity superconducting magnetic energy storage (SMES) unit.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: AmbientSound
+      volume: -7
+      range: 3
+      sound:
+        path: /Audio/Ambience/Objects/periodic_beep.ogg
+    - type: Sprite
+      netsync: false
+      sprite: Structures/Power/smes.rsi
+      snapCardinals: true
+      layers:
+        - state: smes
+    - type: Smes
+    - type: UpgradeBattery
+      maxChargeMultiplier: 2
+      baseMaxCharge: 8000000
+    - type: Appearance
+      visuals:
+        - type: SmesVisualizer
+    - type: Battery
+      startingCharge: 0
+    - type: ExaminableBattery
+    - type: NodeContainer
+      examinable: true
+      nodes:
+        input:
+          !type:CableDeviceNode
+          nodeGroupID: HVPower
+        output:
+          !type:CableTerminalPortNode
+          nodeGroupID: HVPower
+    - type: BatteryCharger
+      voltage: High
+      node: output
+    - type: BatteryDischarger
+      voltage: High
+      node: input
+    - type: PowerNetworkBattery
+      maxSupply: 150000
+      maxChargeRate: 5000
+      supplyRampTolerance: 5000
+      supplyRampRate: 1000
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#c9c042"
+      castShadows: false
+    - type: Wires
+      BoardName: "SMES"
+      LayoutId: SMES
+    - type: Machine
+      board: SMESMachineCircuitboard
+    - type: StationInfiniteBatteryTarget
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: StrongMetallic
+
+# SMES' in use
+
+- type: entity
+  parent: BaseSMES
+  id: SMESBasic
+  suffix: Basic, 8MW
+  components:
+  - type: Battery
+    maxCharge: 8000000
+    startingCharge: 8000000
+
+- type: entity
+  parent: SMESBasic
+  id: SMESBasicEmpty
+  suffix: Empty
+  components:
+  - type: Battery
+    startingCharge: 0

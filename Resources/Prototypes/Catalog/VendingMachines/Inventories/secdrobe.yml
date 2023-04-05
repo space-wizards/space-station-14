@@ -1,0 +1,19 @@
+- type: vendingMachineInventory
+  id: SecDrobeInventory
+  startingInventory:
+    ClothingBackpackSecurity: 3
+    ClothingBackpackSatchelSecurity: 3
+    ClothingBackpackDuffelSecurity: 3
+    ClothingUniformJumpsuitSec: 3
+    ClothingShoesBootsJack: 3
+    ClothingHeadHatBeret: 3
+    ClothingHeadHatSecsoft: 3
+    HatBandRed: 3
+    ClothingHandsGlovesColorBlack: 3
+    ClothingUniformJumpskirtSec: 3
+    ClothingUniformJumpsuitSecGrey: 3
+    ClothingUniformJumpsuitSecBlue: 3
+    ClothingHeadsetSecurity: 3
+    ClothingOuterWinterSec: 2
+    ClothingEyesBlindfold: 1
+    ClothingShoesBootsCombat: 1

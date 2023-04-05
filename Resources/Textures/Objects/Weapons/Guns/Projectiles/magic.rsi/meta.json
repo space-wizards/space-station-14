@@ -1,0 +1,98 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Tgstation at https://github.com/tgstation/tgstation/commit/906fb0682bab6a0975b45036001c54f021f58ae7",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "magicm",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "spell",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "ice"
+    },
+    {
+      "name": "declone"
+    },
+    {
+      "name": "bluespace",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "chronobolt"
+    },
+    {
+      "name": "arcane_barrage"
+    },
+    {
+      "name": "fireball",
+      "delays": [
+        [
+          0.095,
+          0.095,
+          0.095,
+          0.095,
+          0.095
+        ]
+      ]
+    },
+    {
+      "name": "spellcard"
+    },
+    {
+      "name": "blastwave",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "infernoshot",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "cryoshot"
+    }
+  ]
+}

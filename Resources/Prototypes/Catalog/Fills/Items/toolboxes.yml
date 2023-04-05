@@ -1,0 +1,87 @@
+- type: entity
+  id: ToolboxEmergencyFilled
+  name: emergency toolbox
+  parent: ToolboxEmergency
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: CrowbarRed
+        amount: 1
+      - id: ClothingMaskBreath
+        amount: 2
+      - id: FoodSnackChocolate
+      - id: FlashlightLantern
+        amount: 1
+      - id: FlashlightLantern
+        prob: 0.5
+      - id: HarmonicaInstrument
+        prob: 0.15
+        orGroup: HarmonicaOrChocolate
+      - id: FoodSnackChocolate
+        orGroup: HarmonicaOrChocolate
+
+- type: entity
+  id: ToolboxElectricalFilled
+  name: electrical toolbox
+  suffix: Filled
+  parent: ToolboxElectrical
+  components:
+  - type: StorageFill
+    contents:
+      - id: Screwdriver
+      - id: Crowbar
+      - id: Wirecutter
+      - id: CableApcStack
+      - id: CableMVStack
+      - id: trayScanner
+        prob: 0.9
+      - id: ClothingHandsGlovesColorYellow
+        prob: 0.05
+        orGroup: GlovesOrWires
+      - id: CableHVStack
+        orGroup: GlovesOrWires
+
+- type: entity
+  id: ToolboxMechanicalFilled
+  name: mechanical toolbox
+  suffix: Filled
+  parent: ToolboxMechanical
+  components:
+  - type: StorageFill
+    contents:
+      - id: Crowbar
+      - id: Wrench
+      - id: Welder
+      - id: Wirecutter
+      - id: Screwdriver
+        prob: 0.5
+      - id: FlashlightLantern
+        prob: 0.7
+      - id: ClothingHeadHatHardhatBlue
+        prob: 0.5
+
+- type: entity
+  id: ToolboxSyndicateFilled
+  name: suspicious toolbox
+  suffix: Filled
+  parent: ToolboxSyndicate
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingBeltUtilityFilled
+      - id: ClothingHandsGlovesCombat
+      - id: ClothingMaskGasSyndicate
+
+- type: entity
+  id: ToolboxGoldFilled
+  name: golden toolbox
+  parent: ToolboxGolden
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: IngotGold
+        amount: 1
+      - id: DrinkGoldenCup
+        prob: 0.05

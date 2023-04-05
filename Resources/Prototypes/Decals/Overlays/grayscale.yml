@@ -1,0 +1,244 @@
+﻿- type: decal
+  id: FullTileOverlayGreyscale
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: fulltile_overlay
+
+- type: decal
+  id: HalfTileOverlayGreyscale
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: halftile_overlay
+
+- type: decal
+  id: HalfTileOverlayGreyscale90
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: halftile_overlay_90
+
+- type: decal
+  id: HalfTileOverlayGreyscale180
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: halftile_overlay_180
+
+- type: decal
+  id: HalfTileOverlayGreyscale270
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: halftile_overlay_270
+
+- type: decal
+  id: QuarterTileOverlayGreyscale
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: quartertile_overlay
+
+- type: decal
+  id: QuarterTileOverlayGreyscale90
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: quartertile_overlay_90
+
+- type: decal
+  id: QuarterTileOverlayGreyscale180
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: quartertile_overlay_180
+
+- type: decal
+  id: QuarterTileOverlayGreyscale270
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: quartertile_overlay_270
+
+- type: decal
+  id: ThreeQuarterTileOverlayGreyscale
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: threequartertile_overlay
+
+- type: decal
+  id: ThreeQuarterTileOverlayGreyscale90
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: threequartertile_overlay_90
+
+- type: decal
+  id: ThreeQuarterTileOverlayGreyscale180
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: threequartertile_overlay_180
+
+- type: decal
+  id: ThreeQuarterTileOverlayGreyscale270
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: threequartertile_overlay_270
+
+- type: decal
+  id: CheckerNESW
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: checkerNESW
+
+- type: decal
+  id: CheckerNWSE
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: checkerNWSE
+
+- type: decal
+  id: DiagonalOverlay
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: diagonal
+
+- type: decal
+  id: DiagonalCheckerAOverlay
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: diagonal_checker_a
+
+- type: decal
+  id: DiagonalCheckerBOverlay
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: diagonal_checker_b
+
+- type: decal
+  id: HerringboneOverlay
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: herringbone
+
+- type: decal
+  id: MiniTileOverlay
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: minitile
+
+- type: decal
+  id: MiniTileCheckerAOverlay
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: minitile_checker_a
+
+- type: decal
+  id: MiniTileCheckerBOverlay
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: minitile_checker_b
+
+- type: decal
+  id: MiniTileDiagonalOverlay
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: minitile_diagonal
+
+- type: decal
+  id: MiniTileDiagonalCheckerAOverlay
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: minitile_diagonal_a
+
+- type: decal
+  id: MiniTileDiagonalCheckerBOverlay
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: minitile_diagonal_b
+
+- type: decal
+  id: MonoOverlay
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: mono
+
+- type: decal
+  id: OffsetOverlay
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: offset
+
+- type: decal
+  id: OffsetCheckerAOverlay
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: offset_checker_a
+
+- type: decal
+  id: OffsetCheckerBOverlay
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: offset_checker_b
+
+- type: decal
+  id: PavementOverlay
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: pavement
+
+- type: decal
+  id: PavementCheckerAOverlay
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: pavement_checker_a
+
+- type: decal
+  id: PavementCheckerBOverlay
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: pavement_checker_b
+
+- type: decal
+  id: PavementVerticalOverlay
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: pavement_vertical
+
+- type: decal
+  id: PavementVerticalCheckerAOverlay
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: pavement_vertical_checker_a
+
+- type: decal
+  id: PavementVerticalCheckerBOverlay
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: pavement_vertical_checker_b

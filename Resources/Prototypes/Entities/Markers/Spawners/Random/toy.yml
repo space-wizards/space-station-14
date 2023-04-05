@@ -1,0 +1,70 @@
+- type: entity
+  name: Toy Spawner
+  id: ToySpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Fun/toys.rsi
+          state: plushie_h
+    - type: RandomSpawner
+      rarePrototypes:
+        - FoamBlade
+      rareChance: 0.03
+      prototypes:
+        - PlushieBee
+        - PlushieAtmosian
+        - PlushieNuke
+        - PlushieLizard
+        - PlushieNar
+        - PlushieCarp
+        - PlushieSlime
+        - PlushieSnake
+        - PlushieVox
+        - PlushieRatvar
+        - PlushieSpaceLizard
+        - PlushieRouny
+        - PlushieLamp
+        - PlushieSharkBlue
+        - PlushieSharkPink
+        - PlushieSharkGrey
+        - ToyAmongPequeno
+        - ToyMouse
+        - PlushieDiona
+      chance: 0.5
+      offset: 0.2
+
+- type: entity
+  name: Figure Spawner
+  id: FigureSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Fun/toys.rsi
+          state: ripleytoy
+    - type: RandomSpawner
+      prototypes:
+        - ToyAi
+        - ToyNuke
+        - ToyAssistant
+        - ToyGriffin
+        - ToyHonk
+        - ToyIan
+        - ToyMarauder
+        - ToyMauler
+        - ToyGygax
+        - ToyOdysseus
+        - ToyOwlman
+        - ToyDeathRipley
+        - ToyPhazon
+        - ToyFireRipley
+        - ToyReticence
+        - ToyRipley
+        - ToySeraph
+        - ToyDurand
+        - ToySkeleton
+      chance: 0.5
+      offset: 0.2

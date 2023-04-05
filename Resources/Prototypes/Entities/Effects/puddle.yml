@@ -1,0 +1,204 @@
+# TODO: Add the other mess types
+- type: entity
+  id: PuddleBase
+  abstract: true
+  components:
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepWater
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    drawdepth: FloorObjects
+  - type: SolutionContainerManager
+    solutions:
+      puddle: { maxVol: 1000 }
+  - type: Puddle
+    spillSound:
+      path: /Audio/Effects/Fluids/splat.ogg
+    recolor: true
+  - type: Clickable
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - id: slipFixture
+      shape:
+        !type:PhysShapeAabb
+        bounds: "-0.4,-0.4,0.4,0.4"
+      mask:
+      - ItemMask
+      layer:
+      - SlipLayer
+      hard: false
+  - type: Appearance
+  - type: PuddleVisualizer
+    wetFloorEffectThreshold: 0 # non-evaporating puddles don't become sparkles.
+
+- type: entity
+  id: EvaporatingPuddle
+  parent: PuddleBase
+  abstract: true
+  components:
+  - type: Evaporation
+  - type: PuddleVisualizer
+    wetFloorEffectThreshold: 5
+
+- type: entity
+  name: gibblets
+  id: PuddleGibblet
+  parent: PuddleBase
+  description: Gross.
+  components:
+  - type: Sprite
+    sprite: Fluids/gibblet.rsi # Placeholder
+    state: gibblet-0
+    netsync: false
+  - type: SolutionContainerManager
+    solutions:
+      puddle:
+        maxVol: 1000
+        reagents:
+        - ReagentId: Water
+          Quantity: 10
+  - type: Slippery
+    launchForwardsMultiplier: 2.0
+  - type: StepTrigger
+
+- type: entity
+  name: puddle
+  id: PuddleSmear
+  parent: EvaporatingPuddle
+  description: A puddle of liquid.
+  components:
+  - type: Sprite
+    sprite: Fluids/smear.rsi # Placeholder
+    state: smear-0
+    netsync: false
+  - type: Puddle
+    slipThreshold: 3
+  - type: Appearance
+  - type: PuddleVisualizer
+  - type: Slippery
+    launchForwardsMultiplier: 2.0
+  - type: StepTrigger
+
+- type: entity
+  name: puddle
+  id: PuddleSplatter
+  parent: EvaporatingPuddle
+  description: A puddle of liquid.
+  components:
+  - type: Sprite
+    sprite: Fluids/splatter.rsi # Placeholder
+    state: splatter-0
+    netsync: false
+  - type: Puddle
+    slipThreshold: 3
+  - type: Appearance
+  - type: PuddleVisualizer
+  - type: Slippery
+    launchForwardsMultiplier: 2.0
+  - type: StepTrigger
+
+- type: entity
+  id: PuddleBlood
+  name: blood
+  description: This can't be a good sign.
+  parent: PuddleBase
+  components:
+  - type: Sprite
+    sprite: Fluids/splatter.rsi # Placeholder
+    state: splatter-0
+    netsync: false
+  - type: Puddle
+    overflowVolume: 50
+    opacityModifier: 8
+
+- type: entity
+  name: vomit
+  id: PuddleVomit # No parent because we don't want the VisualizerSystem to behave in the standard way
+  description: Gross.
+  components:
+  - type: Transform
+    anchored: true
+  - type: Clickable
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - id: slipFixture
+      shape:
+        !type:PhysShapeAabb
+        bounds: "-0.4,-0.4,0.4,0.4"
+      mask:
+      - ItemMask
+      layer:
+      - SlipLayer
+      hard: false
+  - type: Sprite
+    sprite: Fluids/vomit.rsi
+    state: vomit-0
+    netsync: false
+  - type: Puddle
+    slipThreshold: 5
+    recolor: false
+  - type: SolutionContainerManager
+    solutions:
+      puddle:
+        maxVol: 1000
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Water
+          Quantity: 5
+  - type: Slippery
+    launchForwardsMultiplier: 2.0
+  - type: StepTrigger
+  - type: Appearance
+  - type: PuddleVisualizer
+    customPuddleSprite: true
+
+- type: entity
+  name: toxins vomit
+  id: PuddleVomitToxin
+  parent: PuddleVomit
+  description: You probably don't want to get too close to this.
+  components:
+  - type: Sprite
+    sprite: Fluids/vomit_toxin.rsi
+    state: vomit_toxin-0
+    netsync: false
+  - type: Puddle
+  - type: SolutionContainerManager
+    solutions:
+      puddle:
+        maxVol: 1000
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 5
+        - ReagentId: Water
+          Quantity: 5
+  - type: Appearance
+  - type: PuddleVisualizer
+    customPuddleSprite: true
+  - type: Slippery
+    launchForwardsMultiplier: 2.0
+  - type: StepTrigger
+
+- type: entity
+  name: writing
+  id: PuddleWriting
+  parent: PuddleBase
+  description: A bit of liquid.
+  components:
+  - type: Sprite
+    sprite: Fluids/writing.rsi # Placeholder
+    state: writing-0
+    netsync: false
+  - type: Puddle
+  - type: Evaporation
+    evaporateTime: 10
+  - type: Appearance
+  - type: PuddleVisualizer
+  - type: Slippery
+    launchForwardsMultiplier: 2.0
+  - type: StepTrigger

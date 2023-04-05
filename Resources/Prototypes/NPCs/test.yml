@@ -1,0 +1,21 @@
+# Selects a random pathfind point and tries to move there.
+- type: htnCompound
+  id: MoveToPathfindPointCompound
+  branches:
+    - tasks:
+        - id: PickPathfindPointPrimitive
+        - id: MoveToAccessiblePrimitive
+
+
+- type: htnPrimitive
+  id: PickPathfindPointPrimitive
+  operator: !type:PickPathfindPointOperator
+
+- type: entity
+  id: MobPathfindDummy
+  name: Pathfind dummy
+  suffix: NPC
+  parent: MobXenoRouny
+  components:
+  - type: HTN
+    rootTask: MoveToPathfindPointCompound

@@ -1,0 +1,147 @@
+- type: entity
+  name: BaseWeaponLauncher
+  parent: BaseItem
+  id: BaseWeaponLauncher
+  description: A rooty tooty point and shooty.
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
+    quickEquip: false
+    slots:
+    - Back
+  - type: Item
+    size: 60
+  - type: StaticPrice
+    price: 500
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+
+- type: entity
+  name: china lake
+  parent: BaseWeaponLauncher
+  id: WeaponLauncherChinaLake
+  description: PLOOP
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
+    layers:
+      - state: icon
+        map: ["enum.GunVisualLayers.Base"]
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
+  - type: Gun
+    fireRate: 1
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - Grenade
+    autoCycle: false
+    capacity: 3
+    proto: GrenadeFrag
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+
+- type: entity
+  name: RPG-7
+  parent: BaseWeaponLauncher
+  id: WeaponLauncherRocket
+  description: A modified ancient rocket-propelled grenade launcher.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
+  - type: Gun
+    fireRate: 0.5
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeRocket
+    proto: CartridgeRocket
+    capacity: 1
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  name: multiple rocket launcher
+  parent: BaseWeaponLauncher
+  id: WeaponLauncherMultipleRocket
+  description: A modified ancient rocket-propelled grenade launcher.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
+  - type: Gun
+    fireRate: 6
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeRocket
+    proto: CartridgeRocketSlow
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
+
+# Admeme
+- type: entity
+  name: meteor launcher
+  parent: WeaponLauncherMultipleRocket
+  id: WeaponLauncherAdmemeMeteorLarge
+  suffix: Admeme
+  description: It fires large meteors
+  components:
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeRocket
+    proto: MeteorLarge
+
+- type: entity
+  name: immovable rod launcher
+  parent: WeaponLauncherAdmemeMeteorLarge
+  id: WeaponLauncherAdmemeImmovableRodSlow
+  suffix: Admeme
+  description: It fires slow immovable rods.
+  components:
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeRocket
+    proto: ImmovableRodSlow

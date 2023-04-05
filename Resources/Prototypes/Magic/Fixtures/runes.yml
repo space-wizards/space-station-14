@@ -1,0 +1,141 @@
+﻿- type: entity
+  id: BaseRune
+  name: "rune"
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Clickable
+    - type: Sprite
+      sprite: Structures/Magic/Cult/rune.rsi
+      netsync: false
+      layers:
+        - state: cult2
+          color: '#FF00FF'
+
+- type: entity
+  parent: BaseRune
+  id: CollideRune
+  name: "collision rune"
+  abstract: true
+  components:
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.4,-0.4,0.4,0.4"
+          hard: false
+          id: rune
+          mask:
+            - ItemMask
+          layer:
+            - SlipLayer
+    - type: Physics
+
+- type: entity
+  parent: CollideRune
+  id: ActivateRune
+  name: "activation rune"
+  abstract: true
+  components:
+    - type: TriggerOnActivate
+
+- type: entity
+  parent: CollideRune
+  id: CollideTimerRune
+  name: "collision timed rune"
+  abstract: true
+  components:
+    - type: TriggerOnTimedCollide
+      threshold: 5
+
+- type: entity
+  parent: CollideRune
+  id: ExplosionRune
+  name: "explosion rune"
+  components:
+    - type: TriggerOnCollide
+      fixtureID: rune
+    - type: ExplodeOnTrigger
+    - type: Explosive
+      explosionType: Cryo
+      totalIntensity: 20.0
+      intensitySlope: 5
+      maxIntensity: 4
+    - type: Sprite
+      sprite: Structures/Magic/Cult/trap.rsi
+      layers:
+        - state: trap
+          color: '#FF770055'
+
+- type: entity
+  parent: CollideRune
+  id: StunRune
+  name: "stun rune"
+  components:
+    - type: TriggerOnCollide
+      fixtureID: rune
+    - type: DeleteOnTrigger
+    - type: StunOnCollide
+      stunAmount: 5
+      knockdownAmount: 3
+    - type: Sprite
+      sprite: Structures/Magic/Cult/trap.rsi
+      layers:
+        - state: trap
+          color: '#FFFF0055'
+
+- type: entity
+  parent: CollideRune
+  id: IgniteRune
+  name: "ignite rune"
+  components:
+    - type: TriggerOnCollide
+      fixtureID: rune
+    - type: DeleteOnTrigger
+    - type: IgniteOnCollide
+      fireStacks: 10
+    - type: Sprite
+      sprite: Structures/Magic/Cult/trap.rsi
+      layers:
+        - state: trap
+          color: '#FF000055'
+
+- type: entity
+  parent: CollideTimerRune
+  id: ExplosionTimedRune
+  name: "explosion timed rune"
+  components:
+    - type: ExplodeOnTrigger
+    - type: Explosive
+      explosionType: Cryo
+      totalIntensity: 20.0
+      intensitySlope: 5
+      maxIntensity: 4
+
+- type: entity
+  parent: ActivateRune
+  id: ExplosionActivateRune
+  name: "explosion activated rune"
+  components:
+    - type: ExplodeOnTrigger
+    - type: Explosive
+      explosionType: Cryo
+      totalIntensity: 20.0
+      intensitySlope: 5
+      maxIntensity: 4
+
+- type: entity
+  parent: ActivateRune
+  id: FlashRune
+  name: "flash rune"
+  components:
+    - type: FlashOnTrigger
+    - type: DeleteOnTrigger
+
+- type: entity
+  parent: CollideTimerRune
+  id: FlashRuneTimer
+  name: "flash timed rune"
+  components:
+    - type: FlashOnTrigger

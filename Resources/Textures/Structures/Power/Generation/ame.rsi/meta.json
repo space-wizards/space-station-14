@@ -1,0 +1,188 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from vgstation at https://github.com/vgstation-coders/vgstation13/commit/b440af09b52ba6bc5248e7934d148e991c928b07",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "shield_0"
+    },
+    {
+      "name": "shield_1"
+    },
+    {
+      "name": "shield_10"
+    },
+    {
+      "name": "shield_11"
+    },
+    {
+      "name": "shield_12"
+    },
+    {
+      "name": "shield_13"
+    },
+    {
+      "name": "shield_14"
+    },
+    {
+      "name": "shield_15"
+    },
+    {
+      "name": "shield_2"
+    },
+    {
+      "name": "shield_3"
+    },
+    {
+      "name": "shield_4"
+    },
+    {
+      "name": "shield_5"
+    },
+    {
+      "name": "shield_6"
+    },
+    {
+      "name": "shield_7"
+    },
+    {
+      "name": "shield_8"
+    },
+    {
+      "name": "core"
+    },
+    {
+      "name": "shield_9"
+    },
+    {
+      "name": "core_weak",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "core_strong",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "control"
+    },
+    {
+      "name": "control_critical",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "control_fuck",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "control_on",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    }
+  ]
+}

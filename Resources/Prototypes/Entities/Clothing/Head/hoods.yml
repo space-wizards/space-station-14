@@ -1,0 +1,156 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHoodBioGeneral
+  name: bio hood
+  suffix: Generic
+  description: A hood that protects the head and face from biological contaminants.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Bio/general.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Bio/general.rsi
+  - type: DiseaseProtection
+    protection: 0.15
+  - type: Tag
+    tags:
+    - HidesHair
+
+- type: entity
+  parent: ClothingHeadHatHoodBioGeneral
+  id: ClothingHeadHatHoodBioCmo
+  name: bio hood
+  suffix: CMO
+  description: An advanced hood for chief medical officer that protects the head and face from biological contaminants.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Bio/cmo.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Bio/cmo.rsi
+  - type: DiseaseProtection
+    protection: 0.25
+
+- type: entity
+  parent: ClothingHeadHatHoodBioGeneral
+  id: ClothingHeadHatHoodBioJanitor
+  name: bio hood
+  suffix: Janitor
+  description: A hood that protects the head and face from biological contaminants.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Bio/janitor.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Bio/janitor.rsi
+
+
+- type: entity
+  parent: ClothingHeadHatHoodBioGeneral
+  id: ClothingHeadHatHoodBioScientist
+  name: bio hood
+  suffix: Science
+  description: A hood that protects the head and face from biological contaminants.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Bio/scientist.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Bio/scientist.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodBioGeneral
+  id: ClothingHeadHatHoodBioSecurity
+  name: bio hood
+  suffix: Security
+  description: A hood that protects the head and face from biological contaminants.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Bio/security.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Bio/security.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodBioGeneral
+  id: ClothingHeadHatHoodBioVirology
+  name: bio hood
+  suffix: Virology
+  description: A hood that protects the head and face from biological contaminants.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Bio/virology.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Bio/virology.rsi
+  - type: DiseaseProtection
+    protection: 0.25
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHoodChaplainHood
+  name: chaplain hood
+  description: Maximum piety in this star system.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/chaplain.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/chaplain.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHoodCulthood
+  name: cult hood
+  description: There's no cult without cult hoods.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/cult.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/cult.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHoodNunHood
+  name: nun hood
+  description: Maximum piety in this star system.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/nun.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/nun.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHoodRad
+  name: radiation hood
+  description: A hood of the hazmat suit, designed for protection from high radioactivity.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/rad.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/rad.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 0.95
+        Radiation: 0.65
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHoodGoliathCloak
+  name: goliath cloak hood
+  description: A hood of a goliath cloak, it is made from the hide of resilient fauna from a distant planet.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/goliathcloak.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/goliathcloak.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHoodMoth
+  name: moth mask
+  description: A mask in the form of a moths head is usually made of lightweight materials. It mimics the shape of a moths head with large eyes and long antennae. Such masks are often used in cosplay, or when shooting movies and videos.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/moth.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/moth.rsi
+  - type: IdentityBlocker
+  - type: Tag
+    tags:
+    - HidesHair

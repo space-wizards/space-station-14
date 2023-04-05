@@ -1,0 +1,27 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from /tg/station at https://github.com/tgstation/tgstation/commit/6bfe3b2e4fcbcdac9159dc4f0327a82ddf05ba7bi",
+    "states": [
+        {
+            "name": "base",
+            "directions": 4
+        },
+        {
+            "name": "broadcasting",
+            "directions": 4
+        },
+        {
+            "name": "build",
+            "directions": 4
+        },
+        {
+            "name": "unshaded",
+            "directions": 4
+        }
+    ]
+}

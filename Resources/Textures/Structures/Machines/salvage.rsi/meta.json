@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Edit by 20kdc using small parts of autolathe from https://github.com/tgstation/tgstation/blob/acb091f9744e9ab7d5a27fb32dd0c03bd019f58c/icons/obj/stationobjs.dmi (may be an earlier version) and tcboss from https://github.com/tgstation/tgstation/blob/e32357e6b0ec0f0a1821d2773f0d1e1d6ce7d494/icons/obj/computer.dmi (may be an earlier version)",
+  "size": {
+    "x": 32,
+    "y": 64
+  },
+  "states": [
+    {
+      "name": "salvage-magnet",
+      "directions": 4
+    },
+    {
+      "name": "salvage-magnet-o0",
+      "directions": 4,
+      "commentary": "o0 - 04 represent the amount of time remaining during holding/detaching and cooldown."
+    },
+    {
+      "name": "salvage-magnet-o1",
+      "directions": 4
+    },
+    {
+      "name": "salvage-magnet-o2",
+      "directions": 4
+    },
+    {
+      "name": "salvage-magnet-o3",
+      "directions": 4
+    },
+    {
+      "name": "salvage-magnet-o4",
+      "directions": 4
+    },
+    {
+      "name": "salvage-magnet-unready",
+      "directions": 4,
+      "commentary": "Cooldown state"
+    },
+    {
+      "name": "salvage-magnet-ready",
+      "directions": 4,
+      "commentary": "Holding state"
+    },
+    {
+      "name": "salvage-magnet-ready-blinking",
+      "directions": 4,
+      "delays": [
+        [ 0.2, 0.2],
+        [ 0.2, 0.2],
+        [ 0.2, 0.2],
+        [ 0.2, 0.2]
+      ],
+      "commentary": "Attaching state"
+    },
+    {
+      "name": "salvage-magnet-unready-blinking",
+      "directions": 4,
+      "delays": [
+        [ 0.2, 0.2],
+        [ 0.2, 0.2],
+        [ 0.2, 0.2],
+        [ 0.2, 0.2]
+      ],
+      "commentary": "Detaching state"
+    }
+  ]
+}
+

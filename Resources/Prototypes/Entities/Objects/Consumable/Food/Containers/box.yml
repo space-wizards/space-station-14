@@ -1,0 +1,601 @@
+# Donut
+
+# There is a newer, better version of the donutbox from tgstation included in the
+# donut.rsi. The reason it isn't implemented is it requires a StackVisualizer offsetting
+# the layer sprite by a couple pixels everytime a new donut is added. It also requires
+# an alpha color which -Y- said he would implement.
+
+- type: entity
+  parent: BoxCardboard
+  id: FoodBoxDonut
+  name: donut box
+  description: Mmm, Donuts.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Consumable/Food/Baked/donut.rsi
+    state: box
+  - type: Storage
+    capacity: 6
+    whitelist:
+      tags:
+      - Donut
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donut.rsi
+    size: 6
+    heldPrefix: box
+  - type: StorageFill
+    contents:
+    - id: FoodDonutPink
+      amount: 3
+    - id: FoodDonutPlain
+      amount: 3
+  - type: ItemCounter
+    count:
+      tags: [Donut]
+  - type: Appearance
+    visuals:
+    - type: BagOpenCloseVisualizer
+      openIcon: box-open
+    - type: StackVisualizer
+      composite: true
+      stackLayers:
+      - box1
+      - pink-box2
+      - box3
+      - pink-box4
+      - box5
+      - pink-box6
+
+# Egg
+
+- type: entity
+  parent: BoxCardboard
+  id: FoodContainerEgg
+  name: egg carton
+  description: Don't drop 'em!
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Consumable/Food/egg.rsi
+    state: box-closed
+  - type: Storage
+    capacity: 12
+    whitelist:
+      tags:
+      - Egg
+  - type: Item
+    sprite: Objects/Consumable/Food/egg.rsi
+    size: 12
+  - type: StorageFill
+    contents:
+    - id: FoodEgg
+      amount: 12
+  - type: ItemCounter
+    count:
+      tags: [Egg]
+  - type: Appearance
+    visuals:
+    - type: BagOpenCloseVisualizer
+      openIcon: box-open
+    - type: StackVisualizer
+      composite: true
+      stackLayers:
+      - box1
+      - box2
+      - box3
+      - box4
+      - box5
+      - box6
+      - box7
+      - box8
+      - box9
+      - box10
+      - box11
+      - box12
+  # Someday...
+  # - type: DamageOnLand
+  # - type: DamageOtherOnHit
+  # - type: Damageable
+  # - type: Destructible
+  #   thresholds:
+  #   - trigger:
+  #       !type:DamageTrigger
+  #       damage: 10
+  #     behaviors:
+  #     - !type:PlaySoundBehavior
+  #       collection: desecration
+  #     - !type:SpawnEntitiesBehavior
+  #       spawn:
+  #         EggBoxBroken:
+  #           min: 1
+  #           max: 1
+  #         PuddleEgg:
+  #           min: 1
+  #           max: 12
+  #     - !type:DoActsBehavior
+  #       acts: [ "Destruction" ]
+
+- type: entity
+  parent: FoodContainerEgg
+  id: EggBoxBroken
+  suffix: Broken
+  components:
+  - type: StorageFill
+    contents:
+    - id: Eggshells
+      amount: 12
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+
+# Pizza
+
+# This - is pretty hacky. It works, but you can't have stuff like messy pizza box
+# layers after a pizza has been in. Also pizza box stacking, but this is impossible
+# Since you could open pizza boxes in the stack.
+
+- type: entity
+  parent: BoxCardboard
+  id: FoodBoxPizza
+  name: pizza box
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/pizza.rsi
+    drawdepth: SmallObjects
+    layers:
+    - state: box
+    - state: box-open
+      map: ["enum.StorageVisualLayers.Door"]
+    netsync: false
+  # TODO make these entitystorage again + placeablesurface after entity storage ECS gets merged.
+  - type: Storage
+    capacity: 8
+    whitelist:
+      tags:
+      - Pizza
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/pizza.rsi
+    heldPrefix: box
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state_open: box-open
+      state_closed: box
+  - type: StaticPrice
+    price: 0
+
+- type: entity
+  name: pizza box
+  parent: FoodBoxPizza
+  id: FoodBoxPizzaFilled
+  suffix: Filled
+  components:
+  - type: Sprite
+    layers:
+    - state: box
+    - state: box-open
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: StorageFill
+    contents:
+    - id: FoodPizzaArnold
+      prob: 0.15
+      orGroup: Pizza
+    - id: FoodPizzaDank
+      prob: 0.10
+      orGroup: Pizza
+    - id: FoodPizzaSassysage
+      prob: 0.15
+      orGroup: Pizza
+    - id: FoodPizzaMargherita
+      prob: 0.15
+      orGroup: Pizza
+    - id: FoodPizzaMeat
+      prob: 0.15
+      orGroup: Pizza
+    - id: FoodPizzaMushroom
+      prob: 0.15
+      orGroup: Pizza
+    - id: FoodPizzaPineapple
+      prob: 0.15
+      orGroup: Pizza
+    - id: FoodPizzaVegetable
+      prob: 0.15
+      orGroup: Pizza
+    - id: FoodPizzaDonkpocket
+      prob: 0.10
+      orGroup: Pizza
+
+# Nugget
+
+- type: entity
+  parent: BoxCardboard
+  id: FoodBoxNugget
+  name: chicken nuggets
+  description: You suddenly have an urge to trade on the intergalactic stock market.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Consumable/Food/Baked/nuggets.rsi
+    state: box
+  - type: Storage
+    capacity: 6
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/nuggets.rsi
+    size: 6
+    heldPrefix: box
+  - type: StorageFill
+    contents:
+    - id: FoodBakedNugget
+      amount: 6
+  - type: ItemCounter
+    count:
+      tags: [Nugget]
+  - type: Appearance
+    visuals:
+    - type: BagOpenCloseVisualizer
+      openIcon: box-open
+    - type: StackVisualizer
+      composite: true
+      stackLayers:
+      - box1
+      - box2
+      - box3
+      - box4
+      - box5
+      - box6
+
+# Donkpocket
+
+- type: entity
+  parent: BoxCardboard
+  id: FoodBoxDonkpocket
+  name: box of donk-pockets
+  description: 'Instructions: Heat in microwave. Product will cool if not eaten within seven minutes.'
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+    state: box
+  - type: Storage
+    whitelist:
+      tags:
+      - DonkPocket
+    capacity: 6
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+    size: 6
+  - type: StorageFill
+    contents:
+    - id: FoodDonkpocket
+      amount: 6
+
+- type: entity
+  parent: FoodBoxDonkpocket
+  id: FoodBoxDonkpocketSpicy
+  name: box of spicy-flavoured donk-pockets
+  components:
+  - type: Sprite
+    state: spicy-box
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+  - type: StorageFill
+    contents:
+    - id: FoodDonkpocketSpicy
+      amount: 6
+
+- type: entity
+  parent: FoodBoxDonkpocket
+  id: FoodBoxDonkpocketTeriyaki
+  name: box of teriyaki-flavoured donk-pockets
+  components:
+  - type: Sprite
+    state: teriyaki-box
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+  - type: StorageFill
+    contents:
+    - id: FoodDonkpocketTeriyaki
+      amount: 6
+
+- type: entity
+  parent: FoodBoxDonkpocket
+  id: FoodBoxDonkpocketPizza
+  name: box of pizza-flavoured donk-pockets
+  components:
+  - type: Sprite
+    state: pizza-box
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+  - type: StorageFill
+    contents:
+    - id: FoodDonkpocketPizza
+      amount: 6
+
+- type: entity
+  parent: FoodBoxDonkpocket
+  id: FoodBoxDonkpocketGondola
+  name: box of gondola-flavoured donk-pockets
+  components:
+  - type: Sprite
+    state: gondola-box
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+  - type: StorageFill
+    contents:
+    - id: FoodDonkpocketGondola
+      amount: 6
+
+- type: entity
+  parent: FoodBoxDonkpocket
+  id: FoodBoxDonkpocketBerry
+  name: box of berry-flavoured donk-pockets
+  components:
+  - type: Sprite
+    state: berry-box
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+  - type: StorageFill
+    contents:
+    - id: FoodDonkpocketBerry
+      amount: 6
+
+- type: entity
+  parent: FoodBoxDonkpocket
+  id: FoodBoxDonkpocketHonk
+  name: box of banana-flavoured donk-pockets
+  components:
+  - type: Sprite
+    state: banana-box
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+  - type: StorageFill
+    contents:
+    - id: FoodDonkpocketHonk
+      amount: 6
+
+- type: entity
+  parent: FoodBoxDonkpocket
+  id: FoodBoxDonkpocketDink
+  name: box of dink-pockets
+  description: Net Zero carbohydrates! No need for heating!
+  components:
+  - type: Sprite
+    state: dink-box
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+  - type: StorageFill
+    contents:
+    - id: FoodDonkpocketDink
+      amount: 6
+
+- type: entity
+  id: HappyHonk
+  parent: BoxCardboard
+  name: happy honk meal
+  suffix: Toy Safe
+  description: The toy is more edible than the food.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Storage/happyhonk/clown.rsi
+    state: box
+  - type: Item
+    sprite: Objects/Storage/happyhonk/clown.rsi
+    heldPrefix: box
+  - type: Appearance
+    visuals:
+    - type: BagOpenCloseVisualizer
+      openIcon: box-open
+  - type: Storage
+    capacity: 30
+  - type: Tag
+    tags:
+    - Trash
+  - type: StorageFill
+    contents:
+      - id: ToyMouse
+        orGroup: GiftPool
+      - id: ToyAi
+        orGroup: GiftPool
+      - id: ToyNuke
+        orGroup: GiftPool
+      - id: ToyAssistant
+        orGroup: GiftPool
+      - id: ToyGriffin
+        orGroup: GiftPool
+      - id: ToyHonk
+        orGroup: GiftPool
+      - id: ToyIan
+        orGroup: GiftPool
+      - id: ToyMarauder
+        orGroup: GiftPool
+      - id: ToyMauler
+        orGroup: GiftPool
+      - id: ToyGygax
+        orGroup: GiftPool
+      - id: ToyOdysseus
+        orGroup: GiftPool
+      - id: ToyOwlman
+        orGroup: GiftPool
+      - id: ToyDeathRipley
+        orGroup: GiftPool
+      - id: ToyPhazon
+        orGroup: GiftPool
+      - id: ToyFireRipley
+        orGroup: GiftPool
+      - id: ToyReticence
+        orGroup: GiftPool
+      - id: ToyRipley
+        orGroup: GiftPool
+      - id: ToySeraph
+        orGroup: GiftPool
+      - id: ToyDurand
+        orGroup: GiftPool
+      - id: ToySkeleton
+        orGroup: GiftPool
+      - id: FoamBlade
+        orGroup: GiftPool
+      - id: ClothingHeadHatBunny
+        orGroup: GiftPool
+      - id: PersonalAI
+        orGroup: GiftPool
+      - id: CrayonBox
+        orGroup: GiftPool
+      - id: ToySword
+        orGroup: GiftPool
+      - id: RevolverCapGun
+        orGroup: GiftPool
+      - id: ToyRubberDuck
+        orGroup: GiftPool
+      - id: BikeHorn
+        prob: 0.5
+        orGroup: GiftPool
+      - id: GoldenBikeHorn
+        prob: 0.1
+        orGroup: GiftPool
+
+- type: entity
+  id: HappyHonkMime
+  parent: HappyHonk
+  description: A limited mime edition of the happy honk meal.
+  suffix: Toy Safe
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Storage/happyhonk/mime.rsi
+    state: box
+  - type: Item
+    sprite: Objects/Storage/happyhonk/mime.rsi
+    heldPrefix: box
+
+- type: entity
+  id: HappyHonkNukie
+  parent: HappyHonk
+  name: robust nukie meal
+  description: A sus meal with a potentially explosive surprise.
+  suffix: Toy Unsafe
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Storage/happyhonk/nukie.rsi
+    state: box
+  - type: Item
+    sprite: Objects/Storage/happyhonk/nukie.rsi
+    heldPrefix: box
+  - type: StorageFill
+    contents:
+      - id: C4
+        prob: 0.02
+        orGroup: GiftPool
+      - id: ToyMarauder
+        orGroup: GiftPool
+      - id: ToyMauler
+        orGroup: GiftPool
+      - id: ToyNuke
+        orGroup: GiftPool
+      - id: ToySword
+        orGroup: GiftPool
+      - id: BalloonSyn
+        prob: 0.6
+        orGroup: GiftPool
+      - id: PlushieNuke
+        orGroup: GiftPool
+
+- type: entity
+  id: HappyHonkCluwne
+  parent: HappyHonk
+  name: woeful cluwne meal
+  description: Nothing good can come of this.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Storage/happyhonk/cluwne.rsi
+    state: box
+  - type: Item
+    sprite: Objects/Storage/happyhonk/cluwne.rsi
+    heldPrefix: box
+  - type: StorageFill
+    contents:
+      - id: CluwneHorn
+
+- type: entity
+  id: FoodMealHappyHonkClown
+  parent: HappyHonk
+  suffix: random food spawner meal
+  noSpawn: true
+  components:
+  - type: StorageFill
+    contents:
+      - id: FoodBurgerCrazy
+        orGroup: Burgers
+      - id: FoodBurgerCheese
+        orGroup: Burgers
+      - id: DrinkColaCan
+        orGroup: DrinkPool
+      - id: DrinkLemonLimeCan
+        orGroup: DrinkPool
+      - id: DrinkIcedTeaCan
+        orGroup: DrinkPool
+      - id: ToyMouse
+        orGroup: GiftPool
+      - id: ToyAi
+        orGroup: GiftPool
+      - id: ToyNuke
+        orGroup: GiftPool
+      - id: ToyAssistant
+        orGroup: GiftPool
+      - id: ToyGriffin
+        orGroup: GiftPool
+      - id: ToyHonk
+        orGroup: GiftPool
+      - id: ToyIan
+        orGroup: GiftPool
+      - id: ToyMarauder
+        orGroup: GiftPool
+      - id: ToyMauler
+        orGroup: GiftPool
+      - id: ToyGygax
+        orGroup: GiftPool
+      - id: ToyOdysseus
+        orGroup: GiftPool
+      - id: ToyOwlman
+        orGroup: GiftPool
+      - id: ToyDeathRipley
+        orGroup: GiftPool
+      - id: ToyPhazon
+        orGroup: GiftPool
+      - id: ToyFireRipley
+        orGroup: GiftPool
+      - id: ToyReticence
+        orGroup: GiftPool
+      - id: ToyRipley
+        orGroup: GiftPool
+      - id: ToySeraph
+        orGroup: GiftPool
+      - id: ToyDurand
+        orGroup: GiftPool
+      - id: ToySkeleton
+        orGroup: GiftPool
+      - id: FoamBlade
+        orGroup: GiftPool
+      - id: ClothingHeadHatBunny
+        orGroup: GiftPool
+      - id: PersonalAI
+        orGroup: GiftPool
+      - id: CrayonBox
+        orGroup: GiftPool
+      - id: ToySword
+        orGroup: GiftPool
+      - id: RevolverCapGun
+        orGroup: GiftPool
+      - id: ToyRubberDuck
+        orGroup: GiftPool
+      - id: BikeHorn
+        prob: 0.5
+        orGroup: GiftPool
+      - id: GoldenBikeHorn
+        prob: 0.1
+        orGroup: GiftPool

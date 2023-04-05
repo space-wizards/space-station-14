@@ -1,0 +1,77 @@
+- type: wireLayout
+  id: Airlock
+  wires:
+  - !type:PowerWireAction
+  - !type:PowerWireAction
+    pulseTimeout: 15
+  - !type:DoorBoltWireAction
+  - !type:DoorBoltLightWireAction
+  - !type:DoorTimingWireAction
+  - !type:DoorSafetyWireAction
+
+- type: wireLayout
+  parent: Airlock
+  id: AirlockSecurity
+
+- type: wireLayout
+  parent: Airlock
+  id: AirlockCommand
+
+- type: wireLayout
+  parent: Airlock
+  id: AirlockArmory
+
+- type: wireLayout
+  id: HighSec
+  wires:
+  - !type:PowerWireAction
+    pulseTimeout: 10
+  - !type:DoorBoltWireAction
+  - !type:DoorBoltLightWireAction
+  - !type:DoorTimingWireAction
+  - !type:DoorSafetyWireAction
+  dummyWires: 5
+
+- type: wireLayout
+  id: Vending
+  wires:
+  - !type:PowerWireAction
+  - !type:AccessWireAction
+  - !type:VendingMachineContrabandWireAction
+  - !type:VendingMachineEjectItemWireAction
+
+- type: wireLayout
+  id: AirAlarm
+  wires:
+  - !type:PowerWireAction
+  - !type:AccessWireAction
+  - !type:AirAlarmPanicWire
+  - !type:AtmosMonitorDeviceNetWire
+
+- type: wireLayout
+  id: FireAlarm
+  wires:
+  - !type:PowerWireAction
+  - !type:AtmosMonitorDeviceNetWire
+    alarmOnPulse: true
+
+- type: wireLayout
+  id: Arcade
+  wires:
+  - !type:PowerWireAction
+  - !type:ArcadeOverflowWireAction
+  - !type:ArcadePlayerInvincibleWireAction
+  - !type:ArcadeEnemyInvincibleWireAction
+
+- type: wireLayout
+  id: SurveillanceCamera
+  dummyWires: 4
+  wires:
+  - !type:PowerWireAction
+
+- type: wireLayout
+  id: CryoPod
+  dummyWires: 2
+  wires:
+  - !type:PowerWireAction
+  - !type:CryoPodEjectLockWireAction

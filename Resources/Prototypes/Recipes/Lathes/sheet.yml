@@ -1,0 +1,99 @@
+- type: latheRecipe
+  id: SheetSteel
+  result: SheetSteel1
+  applyMaterialDiscount: false
+  completetime: 2
+  materials:
+    Steel: 100
+    
+- type: latheRecipe
+  id: SheetSteel30
+  result: SheetSteel
+  completetime: 2
+  materials:
+    Steel: 3000
+
+- type: latheRecipe
+  id: SheetGlass1
+  result: SheetGlass1
+  applyMaterialDiscount: false
+  completetime: 2
+  materials:
+    Glass: 100
+    
+- type: latheRecipe
+  id: SheetGlass30
+  result: SheetGlass
+  completetime: 2
+  materials:
+    Glass: 3000
+
+- type: latheRecipe
+  id: SheetRGlass
+  result: SheetRGlass1
+  applyMaterialDiscount: false
+  completetime: 2
+  materials:
+    Glass: 100
+    Steel: 50
+    
+- type: latheRecipe
+  id: SheetRGlass30
+  result: SheetRGlass
+  completetime: 2
+  materials:
+    Glass: 3000
+    Steel: 1500
+
+- type: latheRecipe
+  id: SheetPGlass30
+  result: SheetPGlass
+  completetime: 2
+  materials:
+    Glass: 3000
+    Plasma: 3000
+    
+- type: latheRecipe
+  id: SheetRPGlass30
+  result: SheetRPGlass
+  completetime: 2
+  materials:
+    Glass: 3000
+    Plasma: 3000
+    Steel: 1500
+    
+- type: latheRecipe
+  id: SheetPlasma30
+  result: SheetPlasma
+  completetime: 2
+  materials:
+    Plasma: 3000
+
+- type: latheRecipe
+  id: SheetUranium1
+  result: SheetUranium1
+  completetime: 2
+  materials:
+    Uranium: 500
+    
+- type: latheRecipe
+  id: IngotGold1
+  result: IngotGold1
+  completetime: 2
+  materials:
+    Gold: 500
+
+- type: latheRecipe
+  id: IngotSilver1
+  result: IngotSilver1
+  completetime: 2
+  materials:
+    Silver: 500
+
+- type: latheRecipe
+  id: SheetPlastic
+  result: SheetPlastic1
+  applyMaterialDiscount: false
+  completetime: 2
+  materials:
+    Plastic: 100

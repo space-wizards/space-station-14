@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "license": "CC-BY-NC-SA-3.0",
+    "copyright": "Taken from Baystation12 and modified by Taral at https://github.com/Baystation12/Baystation12/pull/29841/commits/57265cd89e6b66b9a67915172f60bbbeacbeced0",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        }
+    ]
+}

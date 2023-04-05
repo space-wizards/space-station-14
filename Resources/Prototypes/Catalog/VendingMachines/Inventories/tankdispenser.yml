@@ -1,0 +1,11 @@
+- type: vendingMachineInventory
+  id: TankDispenserEVAInventory
+  startingInventory:
+    OxygenTankFilled: 5
+    NitrogenTankFilled: 5
+
+- type: vendingMachineInventory
+  id: TankDispenserEngineeringInventory
+  startingInventory:
+    PlasmaTankFilled: 5
+    OxygenTankFilled: 5

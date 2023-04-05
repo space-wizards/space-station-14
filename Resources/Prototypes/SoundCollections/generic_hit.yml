@@ -1,0 +1,13 @@
+- type: soundCollection
+  id: GenericHit
+  files:
+    - /Audio/Weapons/genhit1.ogg
+    - /Audio/Weapons/genhit2.ogg
+    - /Audio/Weapons/genhit3.ogg
+
+- type: soundCollection
+  id: BoxingHit
+  files:
+    - /Audio/Weapons/boxingpunch1.ogg
+    - /Audio/Weapons/boxingpunch2.ogg
+    - /Audio/Weapons/boxingpunch3.ogg

@@ -1,0 +1,226 @@
+﻿- type: entity
+  id: BaseShutter
+  parent: BaseStructure
+  name: shutter
+  abstract: true
+  description: One shudders to think about what might be behind this shutter.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Doors/Shutters/shutters.rsi
+    drawdepth: Overdoors
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
+      density: 100
+      mask:
+      - FullTileMask
+      layer:
+      - AirlockLayer
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+  - type: Door
+    bumpOpen: false
+    clickOpen: false
+    closeTimeOne: 0.2
+    closeTimeTwo: 1.2
+    openTimeOne: 1.2
+    openTimeTwo: 0.2
+    crushDamage:
+      types:
+        Blunt: 5 # getting shutters closed on you probably doesn't hurt that much
+    openSound:
+      path: /Audio/Machines/blastdoor.ogg
+    closeSound:
+      path: /Audio/Machines/blastdoor.ogg
+  - type: Weldable
+    fuel: 3
+    time: 3
+  - type: Appearance
+    visuals:
+      - type: AirlockVisualizer
+        simpleVisuals: true
+        animationTime: 1.4
+  - type: UserInterface
+    interfaces:
+    - key: enum.WiresUiKey.Key
+      type: WiresBoundUserInterface
+  - type: Airtight
+    fixVacuum: true
+  - type: RadiationBlocker
+    resistance: 2
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite
+  - type: DoorSignalControl
+  - type: SignalReceiver
+    inputs:
+      Open: []
+      Close: []
+      Toggle: []
+  - type: InteractionPopup
+    interactSuccessString: comp-window-knock
+    messagePerceivedByOthers: comp-window-knock
+    interactSuccessSound:
+      path: /Audio/Effects/glass_knock.ogg
+
+- type: entity
+  id: ShuttersNormal
+  parent: BaseShutter
+  components:
+  - type: Occluder
+  - type: Construction
+    graph: Shutters
+    node: Shutters
+    containers:
+    - board
+
+- type: entity
+  id: ShuttersNormalOpen
+  parent: ShuttersNormal
+  suffix: Open
+  components:
+  - type: Door
+    state: Open
+  - type: Physics
+    canCollide: false
+  - type: Occluder
+    enabled: false
+  - type: Airtight
+    airBlocked: false
+  - type: RadiationBlocker
+    enabled: false
+
+- type: entity
+  id: ShuttersRadiation
+  parent: BaseShutter
+  name: radiation shutters
+  description: Why did they make these shutters radioactive?
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Doors/Shutters/shutters_radiation.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Occluder
+  - type: Construction
+    graph: Shutters
+    node: ShuttersRadiation
+    containers:
+    - board
+
+- type: entity
+  id: ShuttersRadiationOpen
+  parent: ShuttersRadiation
+  suffix: Open
+  components:
+  - type: Door
+    state: Open
+  - type: Occluder
+    enabled: false
+  - type: Physics
+    canCollide: false
+  - type: Airtight
+    airBlocked: false
+  - type: RadiationBlocker
+    enabled: false
+
+- type: entity
+  id: ShuttersWindow
+  parent: BaseShutter
+  name: window shutters
+  description: The Best (TM) place to see your friends explode!
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Doors/Shutters/shutters_window.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Construction
+    graph: Shutters
+    node: ShuttersWindow
+    containers:
+    - board
+
+- type: entity
+  id: ShuttersWindowOpen
+  parent: ShuttersWindow
+  suffix: Open
+  components:
+  - type: Door
+    state: Open
+  - type: Physics
+    canCollide: false
+  - type: Airtight
+    airBlocked: false
+  - type: RadiationBlocker
+    enabled: false
+
+# Frame for construction
+- type: entity
+  id: ShuttersFrame
+  parent: BaseStructureDynamic
+  name: shutter frame
+  description: A frame for constructing a shutter.
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Shutters/shutters.rsi
+    state: frame
+    netsync: false
+  - type: Construction
+    graph: Shutters
+    node: frame1
+    containers:
+    - board
+  - type: InteractionOutline
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.45,-0.45,0.45,0.45"
+      density: 55
+      mask:
+      - Impassable
+      - HighImpassable
+      layer:
+      - HighImpassable
+  - type: Transform
+    noRot: true

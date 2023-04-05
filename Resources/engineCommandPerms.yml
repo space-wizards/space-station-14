@@ -1,0 +1,126 @@
+- Flags: VAREDIT
+  Commands:
+  - addcomp
+  - addcompc
+  - rmcomp
+  - rmcompc
+  - vv
+  - vvread
+  - vvwrite
+  - vvinvoke
+  - scale
+  - spin
+
+- Flags: DEBUG
+  Commands:
+  - delete
+  - inrangeunoccluded
+  - lsgrid
+  - lsmap
+  - listplayers
+  - loc
+  - mem
+  - netaudit
+  - querymappaused
+  - physics
+  - showislands
+  - showtime
+  - showspritebb
+  - cldbglyr
+  - togglefov
+  - togglehardfov
+  - togglelight
+  - togglelightbuf
+  - toggleshadows
+  - testbed
+  - lightbb
+  - vv
+  - szr_stats
+  - addview
+  - removeview
+  - hwid
+  - showpos
+  - showray
+  - showchunkbb
+  - showgridnodes
+  - entfo
+  - sggcell
+  - ldrsc
+  - rldrsc
+  - rldshader
+  - rldloc
+  - guidump
+  - uitest
+  - chunkinfo
+  - showanchored
+  - dmetamem
+  - launchauth
+  - lsmonitor
+  - monitorinfo
+  - watch
+  - sendgarbage
+  - setinputcontext
+  - showvelocities
+  - tilelookup
+  - net_entityreport
+  - scene
+
+
+- Flags: MAPPING
+  Commands:
+  - addmap
+  - loadgrid
+  - loadmap
+  - pausemap
+  - querymappaused
+  - rmgrid
+  - rmmap
+  - mapinit
+  - savegrid
+  - savemap
+  - setambientlight
+  - tpgrid
+  - gridtc
+  - togglespritenetsync
+
+- Flags: ADMIN
+  Commands:
+  - delete
+  - kick
+  - listplayers
+  - tp
+  - tpto
+  - respawn
+
+- Flags: SERVER
+  Commands:
+  - delete
+  - pausemap
+  - unpausemap
+  - restart
+  - shutdown
+
+- Flags: SPAWN
+  Commands:
+  - spawn
+  - cspawn
+
+- Flags: HOST
+  Commands:
+  - gc_mode
+  - gc
+  - loglevel
+  - saveconfig
+  - testlog
+  - sudo
+  - scsi
+  - csi
+  - lsasm
+  - cvar
+  - gcf
+  - getcomponentregistration
+  - fuck
+
+- Flags: QUERY
+  Commands:
+  - forall

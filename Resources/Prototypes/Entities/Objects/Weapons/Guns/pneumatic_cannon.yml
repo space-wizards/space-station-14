@@ -1,0 +1,134 @@
+- type: entity
+  name: improvised pneumatic cannon
+  parent: BaseStorageItem
+  id: WeaponImprovisedPneumaticCannon
+  description: Improvised using nothing but a pipe, some zipties, and a pneumatic cannon. Doesn't accept tanks without enough gas.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Cannons/pneumatic_cannon.rsi
+    netsync: false
+    layers:
+    - state: icon
+    - state: tank
+      map: [ "tank" ]
+      visible: false
+  - type: Item
+    size: 50
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - Back
+  - type: Gun
+    fireRate: 2
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Effects/thunk.ogg
+    soundEmpty:
+      path: /Audio/Items/hiss.ogg
+  - type: ContainerAmmoProvider
+    container: storagebase
+  - type: PneumaticCannon
+  - type: Storage
+    capacity: 30
+  - type: Appearance
+  - type: ItemMapper
+    containerWhitelist: [gas_tank]
+    mapLayers:
+      tank:
+        whitelist:
+          components:
+          - GasTank
+  - type: Construction
+    graph: PneumaticCannon
+    node: cannon
+  - type: ItemSlots
+    slots:
+      gas_tank:
+        name: pneumatic-cannon-component-itemslot-name
+        whitelist:
+          components:
+          - GasTank
+        insertSound:
+          path: /Audio/Weapons/click.ogg
+          params:
+            volume: -3
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+      gas_tank: !type:ContainerSlot
+
+- type: entity
+  name: pie cannon
+  parent: BaseStorageItem
+  id: LauncherCreamPie
+  description: Load cream pie for optimal results.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Cannons/pie_cannon.rsi
+    layers:
+    - state: piecannon
+  - type: Storage
+    whitelist:
+      components:
+      - CreamPie
+    capacity: 40
+  - type: Gun
+    fireRate: 1
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Effects/thunk.ogg
+    soundEmpty:
+      path: /Audio/Items/hiss.ogg
+  - type: ContainerAmmoProvider
+    container: storagebase
+  - type: Item
+    size: 50
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Cannons/pie_cannon.rsi
+    quickEquip: false
+    slots:
+    - Back
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+
+# shoots bullets instead of throwing them, no other changes
+- type: entity
+  parent: WeaponImprovisedPneumaticCannon
+  id: WeaponImprovisedPneumaticCannonGun
+  suffix: Gun
+  components:
+  - type: PneumaticCannon
+    throwItems: false
+
+# doesn't need gas, extra capacity
+- type: entity
+  parent: WeaponImprovisedPneumaticCannonGun
+  id: WeaponImprovisedPneumaticCannonAdmeme
+  suffix: Admeme
+  components:
+  - type: Item
+    size: 9999
+  - type: Storage
+    capacity: 9999
+  - type: PneumaticCannon
+    gasUsage: 0
+    throwItems: false
+  - type: Gun
+    fireRate: 10
+    selectedMode: FullAuto
+    availableModes:
+    - SemiAuto
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Effects/thunk.ogg
+    soundEmpty:
+      path: /Audio/Items/hiss.ogg

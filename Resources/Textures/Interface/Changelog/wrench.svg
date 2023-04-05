@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="16"
+   height="16"
+   viewBox="0 0 0.32253968 0.22805837"
+   version="1.1"
+   id="svg2701"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   sodipodi:docname="wrench.svg"
+   inkscape:export-filename="C:\Users\Pieter-Jan Briers\Projects\space-station-14\Resources\Textures\Interface\Changelog\wrench.svg.192dpi.png"
+   inkscape:export-xdpi="192.00002"
+   inkscape:export-ydpi="192.00002">
+  <defs
+     id="defs2695">
+    <inkscape:path-effect
+       effect="fillet_chamfer"
+       id="path-effect3293"
+       is_visible="false"
+       lpeversion="1"
+       satellites_param="F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1"
+       unit="px"
+       method="auto"
+       mode="F"
+       radius="0"
+       chamfer_steps="1"
+       flexible="false"
+       use_knot_distance="true"
+       apply_no_radius="true"
+       apply_with_radius="true"
+       only_selected="false"
+       hide_knots="false" />
+    <inkscape:path-effect
+       effect="mirror_symmetry"
+       start_point="112.25918,24.05928"
+       end_point="112.25918,175.62773"
+       center_point="112.25918,99.843507"
+       id="path-effect3285"
+       is_visible="true"
+       lpeversion="1"
+       mode="free"
+       discard_orig_path="false"
+       fuse_paths="true"
+       oposite_fuse="true"
+       split_items="false" />
+    <inkscape:path-effect
+       effect="mirror_symmetry"
+       start_point="85.543127,56.35961"
+       end_point="81.847932,190.21749"
+       center_point="83.69553,123.28855"
+       id="path-effect3270"
+       is_visible="true"
+       lpeversion="1"
+       mode="free"
+       discard_orig_path="false"
+       fuse_paths="true"
+       oposite_fuse="true"
+       split_items="false" />
+    <inkscape:path-effect
+       effect="mirror_symmetry"
+       start_point="134.15333,63.888624"
+       end_point="134.15333,240.30901"
+       center_point="134.15333,152.09882"
+       id="path-effect3266"
+       is_visible="true"
+       lpeversion="1"
+       mode="free"
+       discard_orig_path="false"
+       fuse_paths="true"
+       oposite_fuse="true"
+       split_items="false" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="32"
+     inkscape:cx="8.660981"
+     inkscape:cy="6.1740838"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     units="px"
+     inkscape:pagecheckerboard="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:object-paths="false"
+     inkscape:object-nodes="true"
+     inkscape:snap-grids="false"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1051"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1">
+    <sodipodi:guide
+       position="-0.048108514,0.14774252"
+       orientation="1,0"
+       id="guide3875" />
+    <inkscape:grid
+       type="xygrid"
+       id="grid6951"
+       empspacing="4"
+       enabled="true"
+       visible="true" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata2698">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:#fffffe;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 112.25918,217.69257 15.87475,-15.87475 V 109.63455 L 144.3869,93.381579 V 73.614223 L 128.13393,57.361248 v 29.288144 l -9.28263,9.282623 h -6.59212 -6.59212 L 96.38443,86.649392 V 57.361248 L 80.13146,73.614223 v 19.767356 l 16.25297,16.252971 v 92.18327 z"
+       id="path3268"
+       sodipodi:nodetypes="cccccccccc"
+       transform="matrix(0.00160166,0.00160166,-0.00160166,0.00160166,0.18902718,-0.27333023)"
+       inkscape:path-effect="#path-effect3285"
+       inkscape:original-d="m 112.25918,217.69257 15.87475,-15.87475 v -92.18327 l 16.25297,-16.252971 0,-19.767356 -16.25297,-16.252975 v 29.288144 l -9.28263,9.282623 -6.59212,0 z" />
+  </g>
+</svg>

@@ -1,0 +1,21 @@
+﻿- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterChameleon
+  name: vest
+  description: A thick vest with a rubbery, water-resistant shell.
+  suffix: Chameleon
+  components:
+    - type: Tag
+      tags: [] # ignore "WhitelistChameleon" tag
+    - type: Sprite
+      sprite: Clothing/OuterClothing/Vests/vest.rsi
+      netsync: false
+    - type: Clothing
+      sprite: Clothing/OuterClothing/Vests/vest.rsi
+    - type: ChameleonClothing
+      slot: [outerClothing]
+      default: ClothingOuterVest
+    - type: UserInterface
+      interfaces:
+        - key: enum.ChameleonUiKey.Key
+          type: ChameleonBoundUserInterface

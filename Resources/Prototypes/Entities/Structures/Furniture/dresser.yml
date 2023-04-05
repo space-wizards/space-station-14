@@ -1,0 +1,28 @@
+- type: entity
+  id: Dresser
+  parent: BaseStructure
+  name: dresser
+  description: It's filled with underwear and shorts, finding an unused one is a gamble.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/furniture.rsi
+    state: dresser
+  - type: Damageable
+    damageModifierSet: Wood
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 3
+            max: 3
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - Wooden

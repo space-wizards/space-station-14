@@ -1,0 +1,109 @@
+# -- Ranged --
+# Tries to shoot a target in LOS in range.
+- type: htnCompound
+  id: TurretCompound
+  branches:
+    - tasks:
+        - id: PickRangedTargetPrimitive
+        - id: RangedAttackTargetPrimitive
+    - tasks:
+        - id: IdleSpinCompound
+
+# Tries to shoot a target at range.
+- type: htnCompound
+  id: RangedCombatCompound
+  branches:
+    - tasks:
+        - id: PickRangedTargetPrimitive
+        - id: RangedAttackTargetCompound
+
+# Tries to ranged attack our target.
+- type: htnCompound
+  id: RangedAttackTargetCompound
+  preconditions:
+    - !type:KeyExistsPrecondition
+      key: CombatTarget
+  branches:
+    # Keep hitting them if they're in LOS
+    - tasks:
+        - id: RangedAttackTargetPrimitive
+
+    # Move to range and hit them
+    - tasks:
+        - id: MoveToCombatTargetPrimitive
+        - id: RangedAttackTargetPrimitive
+
+
+- type: htnPrimitive
+  id: PickRangedTargetPrimitive
+  operator: !type:PickRangedTargetOperator
+
+# Attacks the specified target if they're in LOS.
+- type: htnPrimitive
+  id: RangedAttackTargetPrimitive
+  operator: !type:RangedOperator
+    targetKey: CombatTarget
+  preconditions:
+    - !type:KeyExistsPrecondition
+      key: CombatTarget
+    - !type:TargetInRangePrecondition
+      targetKey: CombatTarget
+      # TODO: Non-scuffed
+      rangeKey: RangedRange
+    - !type:TargetInLOSPrecondition
+      targetKey: CombatTarget
+      rangeKey: RangedRange
+
+
+# -- Melee --
+# Selects a target in melee and tries to attack it.
+- type: htnCompound
+  id: MeleeCombatCompound
+  branches:
+    # Unarmed combat
+    - tasks:
+        - id: PickMeleeTargetPrimitive
+        - id: MeleeAttackTargetCompound
+
+# Tries to melee attack our target.
+- type: htnCompound
+  id: MeleeAttackTargetCompound
+  preconditions:
+    - !type:KeyExistsPrecondition
+      key: CombatTarget
+  branches:
+    # Keep hitting them if they're in range
+    - tasks:
+        - id: MeleeAttackTargetPrimitive
+
+    # Move to melee range and hit them
+    - tasks:
+        - id: MoveToCombatTargetPrimitive
+        - id: MeleeAttackTargetPrimitive
+
+
+- type: htnPrimitive
+  id: PickMeleeTargetPrimitive
+  operator: !type:PickMeleeTargetOperator
+
+# Attacks the specified target if they're in range.
+- type: htnPrimitive
+  id: MeleeAttackTargetPrimitive
+  operator: !type:MeleeOperator
+    targetKey: CombatTarget
+  preconditions:
+    - !type:KeyExistsPrecondition
+      key: CombatTarget
+    - !type:TargetInRangePrecondition
+      targetKey: CombatTarget
+      rangeKey: MeleeRange
+
+# Moves the owner into range of the combat target.
+- type: htnPrimitive
+  id: MoveToCombatTargetPrimitive
+  operator: !type:MoveToOperator
+    pathfindInPlanning: true
+    removeKeyOnFinish: false
+    targetKey: CombatTargetCoordinates
+    pathfindKey: CombatTargetPathfind
+    rangeKey: MeleeRange

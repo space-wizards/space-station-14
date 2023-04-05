@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- Work around https://github.com/dotnet/project-system/issues/4314 -->
+    <TargetFramework>$(TargetFramework)</TargetFramework>
+    <LangVersion>11</LangVersion>
+    <IsPackable>false</IsPackable>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>..\bin\Content.Server.Database\</OutputPath>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <Nullable>enable</Nullable>
+    <NoWarn>RA0003</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.4">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="7.0.4" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.3" />
+
+    <!-- Necessary at design time -->
+    <PackageReference Include="SQLitePCLRaw.provider.e_sqlite3" Version="2.1.4" Condition="'$(UseSystemSqlite)' != 'True' and '$(Configuration)' != 'Release'" />
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.4" Condition="'$(UseSystemSqlite)' != 'True' and '$(Configuration)' != 'Release'" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Content.Shared.Database\Content.Shared.Database.csproj" />
+  </ItemGroup>
+
+  <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
+</Project>
