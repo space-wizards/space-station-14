@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Pulling items through portals should no longer behave weirdly., type: Fix}
-  id: 2835
-  time: '2023-01-05T11:36:25.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'QM, RD, and CMO players are now eligible to be traitors.', type: Add}
@@ -2911,3 +2906,9 @@ Entries:
       contents.', type: Tweak}
   id: 3334
   time: '2023-04-05T05:05:25.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: Nanotrasen has installed wheels on Security's Deployable Barriers. They
+      are now far easier to move., type: Tweak}
+  id: 3335
+  time: '2023-04-05T22:34:52.0000000+00:00'
