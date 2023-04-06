@@ -78,6 +78,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     public override void Update(float frameTime)
     {
         UpdateElectrocutions(frameTime);
+        UpdateState();
     }
 
     private void UpdateElectrocutions(float frameTime)
