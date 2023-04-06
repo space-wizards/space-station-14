@@ -282,7 +282,6 @@ namespace Content.Server.Nutrition.EntitySystems
                 // TODO maybe set this based on some CanEatWithoutHands event or component?
                 NeedHand = forceDrink,
                 CancelDuplicate = false,
-
             };
 
             _doAfterSystem.TryStartDoAfter(doAfterEventArgs);
