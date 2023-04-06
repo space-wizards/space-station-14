@@ -107,26 +107,20 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
     private void OnElectrifiedStartCollide(EntityUid uid, ElectrifiedComponent electrified, ref StartCollideEvent args)
     {
-        if (!electrified.OnBump)
-            return;
-
-        TryDoElectrifiedAct(uid, args.OtherFixture.Body.Owner, 1, electrified);
+        if (electrified.OnBump)
+            TryDoElectrifiedAct(uid, args.OtherFixture.Body.Owner, 1, electrified);
     }
 
     private void OnElectrifiedAttacked(EntityUid uid, ElectrifiedComponent electrified, AttackedEvent args)
     {
-        if (!electrified.OnAttacked)
-            return;
-
-        TryDoElectrifiedAct(uid, args.User, 1, electrified);
+        if (electrified.OnAttacked)
+            TryDoElectrifiedAct(uid, args.User, 1, electrified);
     }
 
     private void OnElectrifiedHandInteract(EntityUid uid, ElectrifiedComponent electrified, InteractHandEvent args)
     {
         if (!electrified.OnHandInteract)
-            return;
-
-        TryDoElectrifiedAct(uid, args.User, 1, electrified);
+            TryDoElectrifiedAct(uid, args.User, 1, electrified);
     }
 
     private void OnElectrifiedInteractUsing(EntityUid uid, ElectrifiedComponent electrified, InteractUsingEvent args)
@@ -155,8 +149,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
         if (electrified.NoWindowInTile)
         {
-            foreach (var entity in transform.Coordinates.GetEntitiesInTile(
-                LookupFlags.Approximate | LookupFlags.Static, _entityLookup))
+            foreach (var entity in transform.Coordinates.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.Static, _entityLookup))
             {
                 if (_tag.HasTag(entity, "Window"))
                     return false;
@@ -164,7 +157,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         }
 
         siemens *= electrified.SiemensCoefficient;
-        if (!DoCommonElectrocutionAttempt(targetUid, uid, ref siemens) || siemens <= 0)
+        if (siemens <= 0 || !DoCommonElectrocutionAttempt(targetUid, uid, ref siemens))
             return false; // If electrocution would fail, do nothing.
 
         var targets = new List<(EntityUid entity, int depth)>();
@@ -187,8 +180,10 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
                     entity,
                     uid,
                     (int) (electrified.ShockDamage * MathF.Pow(RecursiveDamageMultiplier, depth)),
-                    TimeSpan.FromSeconds(electrified.ShockTime * MathF.Pow(RecursiveTimeMultiplier, depth)), true,
-                    electrified.SiemensCoefficient);
+                    TimeSpan.FromSeconds(electrified.ShockTime * MathF.Pow(RecursiveTimeMultiplier, depth)), 
+                    true,
+                    electrified.SiemensCoefficient
+                );
             }
 
             return lastRet;
@@ -207,8 +202,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         var (damageMult, timeMult) = node.NodeGroupID switch
         {
             NodeGroupID.HVPower => (electrified.HighVoltageDamageMultiplier, electrified.HighVoltageTimeMultiplier),
-            NodeGroupID.MVPower => (electrified.MediumVoltageDamageMultiplier,
-                electrified.MediumVoltageTimeMultiplier),
+            NodeGroupID.MVPower => (electrified.MediumVoltageDamageMultiplier, electrified.MediumVoltageTimeMultiplier),
             _ => (1f, 1f)
         };
 
@@ -226,19 +220,18 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
                                          timeMult), true,
                     electrified.SiemensCoefficient);
             }
-
             return lastRet;
         }
 
 
         Node? TryNode(string? id)
         {
-            if (id != null && nodeContainer.TryGetNode<Node>(id, out var tryNode)
-                           && tryNode.NodeGroup is IBasePowerNet { NetworkNode: { LastCombinedSupply: > 0 } })
+            if (id != null &&
+                nodeContainer.TryGetNode<Node>(id, out var tryNode) &&
+                tryNode.NodeGroup is IBasePowerNet { NetworkNode: { LastCombinedSupply: > 0 } })
             {
                 return tryNode;
             }
-
             return null;
         }
     }
@@ -256,10 +249,11 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         EntityUid uid, EntityUid? sourceUid, int shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f,
         StatusEffectsComponent? statusEffects = null, bool ignoreInsulation = false)
     {
-        if (!DoCommonElectrocutionAttempt(uid, sourceUid, ref siemensCoefficient, ignoreInsulation)
-            || !DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects))
+        if (!DoCommonElectrocutionAttempt(uid, sourceUid, ref siemensCoefficient, ignoreInsulation) ||
+            !DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects))
+        {
             return false;
-
+        }
         RaiseLocalEvent(uid, new ElectrocutedEvent(uid, sourceUid, siemensCoefficient), true);
         return true;
     }
@@ -288,13 +282,9 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         if (!Resolve(sourceUid, ref sourceTransform)) // This shouldn't really happen, but just in case...
             return true;
 
-        var electrocutionEntity = EntityManager.SpawnEntity(
-            $"VirtualElectrocutionLoad{node.NodeGroupID}", sourceTransform.Coordinates);
-
-        var electrocutionNode = EntityManager.GetComponent<NodeContainerComponent>(electrocutionEntity)
-            .GetNode<ElectrocutionNode>("electrocution");
-
-        var electrocutionComponent = EntityManager.GetComponent<ElectrocutionComponent>(electrocutionEntity);
+        var electrocutionEntity = Spawn($"VirtualElectrocutionLoad{node.NodeGroupID}", sourceTransform.Coordinates);
+        var electrocutionNode = Comp<NodeContainerComponent>(electrocutionEntity).GetNode<ElectrocutionNode>("electrocution");
+        var electrocutionComponent = Comp<ElectrocutionComponent>(electrocutionEntity);
 
         electrocutionNode.CableEntity = sourceUid;
         electrocutionNode.NodeName = node.Name;
@@ -342,10 +332,11 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
         if (!Resolve(uid, ref statusEffects, false) ||
             !_statusEffects.CanApplyEffect(uid, StatusEffectKey, statusEffects))
+        {
             return false;
-
-        if (!_statusEffects.TryAddStatusEffect<ElectrocutedComponent>(uid, StatusEffectKey, time, refresh,
-            statusEffects))
+        }
+        
+        if (!_statusEffects.TryAddStatusEffect<ElectrocutedComponent>(uid, StatusEffectKey, time, refresh, statusEffects))
             return false;
 
         var shouldStun = siemensCoefficient > 0.5f;
@@ -363,13 +354,12 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             if (actual != null)
             {
                 _adminLogger.Add(LogType.Electrocution,
-                    $"{ToPrettyString(statusEffects.Owner):entity} received {actual.Total:damage} powered electrocution damage{(sourceUid != null ? " from " + ToPrettyString(sourceUid.Value) : ""):source}");
+                    $"{ToPrettyString(uid):entity} received {actual.Total:damage} powered electrocution damage{(sourceUid != null ? " from " + ToPrettyString(sourceUid.Value) : ""):source}");
             }
         }
 
         _stuttering.DoStutter(uid, time * StutteringTimeMultiplier, refresh, statusEffects);
-        _jittering.DoJitter(uid, time * JitterTimeMultiplier, refresh, JitterAmplitude, JitterFrequency, true,
-            statusEffects);
+        _jittering.DoJitter(uid, time * JitterTimeMultiplier, refresh, JitterAmplitude, JitterFrequency, true, statusEffects);
 
         _popup.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-popup-player"), uid, uid);
 
@@ -379,7 +369,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         if (sourceUid != null)
         {
             _popup.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-by-source-popup-others",
-                    ("mob", uid), ("source", (sourceUid.Value))), uid, filter, true);
+                ("mob", uid), ("source", (sourceUid.Value))), uid, filter, true);
             PlayElectrocutionSound(uid, sourceUid.Value);
         }
         else
@@ -407,16 +397,16 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         all.Add((entity, depth));
         visited.Add(entity);
 
-        if (EntityManager.TryGetComponent(entity, out SharedPullableComponent? pullable)
-            && pullable.Puller is { Valid: true } pullerId
-            && !visited.Contains(pullerId))
+        if (TryComp<SharedPullableComponent>(entity, out var pullable) &&
+            pullable.Puller is { Valid: true } pullerId &&
+            !visited.Contains(pullerId))
         {
             GetChainedElectrocutionTargetsRecurse(pullerId, depth + 1, visited, all);
         }
 
-        if (EntityManager.TryGetComponent(entity, out SharedPullerComponent? puller)
-            && puller.Pulling is { Valid: true } pullingId
-            && !visited.Contains(pullingId))
+        if (TryComp<SharedPullerComponent>(entity, out var puller) &&
+            puller.Pulling is { Valid: true } pullingId &&
+            !visited.Contains(pullingId))
         {
             GetChainedElectrocutionTargetsRecurse(pullingId, depth + 1, visited, all);
         }
@@ -425,7 +415,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     private void OnRandomInsulationMapInit(EntityUid uid, RandomInsulationComponent randomInsulation,
         MapInitEvent args)
     {
-        if (!EntityManager.TryGetComponent(uid, out InsulatedComponent? insulated))
+        if (!TryComp<InsulatedComponent>(uid, out var insulated))
             return;
 
         if (randomInsulation.List.Length == 0)
