@@ -90,6 +90,10 @@ namespace Content.Server.RCD.Systems
             {
                 BreakOnDamage = true,
                 NeedHand = true,
+                BreakOnHandChange = true,
+                BreakOnUserMove = true,
+                BreakOnTargetMove = true,
+                AttemptFrequency = AttemptFrequency.EveryTick,
                 ExtraCheck = () => IsRCDStillValid(rcd, args, mapGrid, tile, startingMode) //All of the sanity checks are here
             };
 
