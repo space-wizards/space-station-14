@@ -76,4 +76,12 @@ public sealed class ElectrifiedComponent : Component
 
     [DataField("shockVolume")]
     public float ShockVolume = 20;
+
+    [DataField("spawnActiveEffect")]
+    public bool SpawnActiveEffect = false;
+
+    [DataField("ActiveEffectCooldown")]
+    public float ActiveEffectCooldown = 5f;
+    
+    public TimeSpan NextActiveEffectTime = TimeSpan.Zero;
 }

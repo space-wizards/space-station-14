@@ -35,6 +35,7 @@
       highVoltageNode: high
       mediumVoltageNode: medium
       lowVoltageNode: low
+      spawnActiveEffect: true
     - type: NodeContainer
       nodes:
         high:

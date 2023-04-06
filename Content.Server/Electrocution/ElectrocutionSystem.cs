@@ -26,6 +26,7 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Electrocution;
 
@@ -44,6 +45,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     private const string StatusEffectKey = "Electrocution";
     private const string DamageType = "Shock";
@@ -118,8 +120,12 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         while (query.MoveNext(out var uid, out var electrified, out var transform))
         {
             electrified.Active = IsActive(uid, electrified, transform);
-            if (electrified.Active)
+            if (electrified.SpawnActiveEffect && electrified.Active) {
+                if (_timing.CurTime < electrified.NextActiveEffectTime)
+                    continue;
+                electrified.NextActiveEffectTime = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(0.8f, 1.2f) * electrified.ActiveEffectCooldown);
                 Spawn(ElectricityEffectPrototype, transform.Coordinates);
+            }
         }
     }
 
