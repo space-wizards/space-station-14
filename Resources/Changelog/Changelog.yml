@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Bumped bullet speed from 20m/s to 25m/s, type: Tweak}
-  id: 2848
-  time: '2023-01-10T12:31:26.0000000+00:00'
 - author: Whisper
   changes:
   - {message: 'Cleaned up random names, players should no longer get names that accidentally
@@ -2919,3 +2914,8 @@ Entries:
     type: Add}
   id: 3347
   time: '2023-04-06T21:20:49.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Fixed base showcase robot in F5 (just remove it), type: Fix}
+  id: 3348
+  time: '2023-04-06T22:47:53.0000000+00:00'
