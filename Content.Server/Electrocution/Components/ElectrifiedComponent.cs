@@ -9,22 +9,22 @@ namespace Content.Server.Electrocution;
 public sealed class ElectrifiedComponent : Component
 {
     [DataField("enabled")]
-    public bool Enabled { get; set; } = true;
+    public bool Enabled = true;
 
     [DataField("onBump")]
-    public bool OnBump { get; set; } = true;
+    public bool OnBump = true;
 
     [DataField("onAttacked")]
-    public bool OnAttacked { get; set; } = true;
+    public bool OnAttacked = true;
 
     [DataField("noWindowInTile")]
-    public bool NoWindowInTile { get; set; } = false;
+    public bool NoWindowInTile = false;
 
     [DataField("onHandInteract")]
-    public bool OnHandInteract { get; set; } = true;
+    public bool OnHandInteract = true;
 
     [DataField("onInteractUsing")]
-    public bool OnInteractUsing { get; set; } = true;
+    public bool OnInteractUsing = true;
 
     [DataField("requirePower")]
     public bool RequirePower { get; } = true;
