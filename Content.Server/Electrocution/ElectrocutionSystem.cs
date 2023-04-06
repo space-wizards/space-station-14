@@ -132,9 +132,12 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
                     return false;
             }
         }
-        if (electrified.UsesApcPower && !this.IsPowered(uid, EntityManager))
-            return false;
-        if (electrified.RequirePower && PoweredNode(uid, electrified) == null)
+        if (electrified.UsesApcPower)
+        {
+            if (!this.IsPowered(uid, EntityManager))
+                return false;
+        }
+        else if (electrified.RequirePower && PoweredNode(uid, electrified) == null)
             return false;
 
         return true;
