@@ -1,3 +1,3 @@
-ent-MobDwarf = { ent-ent-BaseMobDwarf }
-    .desc = { ent-ent-BaseMobDwarf.desc }
+ent-MobDwarf = { ent-BaseMobDwarf }
+    .desc = { ent-BaseMobDwarf.desc }
     .suffix = { "" }
