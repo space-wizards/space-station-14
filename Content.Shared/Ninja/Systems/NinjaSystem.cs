@@ -13,8 +13,6 @@ public abstract class SharedNinjaSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<NinjaComponent, ComponentGetState>(OnNinjaGetState);
-        SubscribeLocalEvent<NinjaComponent, ComponentHandleState>(OnNinjaHandleState);
         SubscribeLocalEvent<NinjaComponent, AttackedEvent>(OnNinjaAttacked);
     }
 
@@ -91,23 +89,6 @@ public abstract class SharedNinjaSystem : EntitySystem
     public virtual bool TryUseCharge(EntityUid user, float charge)
     {
         return false;
-    }
-
-    private void OnNinjaGetState(EntityUid uid, NinjaComponent comp, ref ComponentGetState args)
-    {
-        args.State = new NinjaComponentState(comp.DoorsJacked, comp.DownloadedNodes, comp.SpiderChargeTarget, comp.SpiderChargeDetonated, comp.CalledInThreat);
-    }
-
-    private void OnNinjaHandleState(EntityUid uid, NinjaComponent comp, ref ComponentHandleState args)
-    {
-        if (args.Current is not NinjaComponentState state)
-            return;
-
-        comp.DoorsJacked = state.DoorsJacked;
-        comp.DownloadedNodes = new (state.DownloadedNodes);
-        comp.SpiderChargeTarget = state.SpiderChargeTarget;
-        comp.SpiderChargeDetonated = state.SpiderChargeDetonated;
-        comp.CalledInThreat = state.CalledInThreat;
     }
 
     private void OnNinjaAttacked(EntityUid uid, NinjaComponent comp, AttackedEvent args)

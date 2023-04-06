@@ -14,10 +14,10 @@ namespace Content.Shared.Ninja.Components;
 /// As an implementation detail, dashing with katana is a suit action which isn't ideal.
 /// </summary>
 [Access(typeof(SharedNinjaSuitSystem))]
-[RegisterComponent, NetworkedComponent]
-public sealed class NinjaSuitComponent : Component
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class NinjaSuitComponent : Component
 {
-    [ViewVariables]
+    [ViewVariables, AutoNetworkedField]
     public bool Cloaked = false;
 
     /// <summary>
@@ -144,14 +144,3 @@ public sealed class CreateSoapEvent : InstantActionEvent { }
 public sealed class RecallKatanaEvent : InstantActionEvent { }
 
 public sealed class NinjaEmpEvent : InstantActionEvent { }
-
-[Serializable, NetSerializable]
-public sealed class NinjaSuitComponentState : ComponentState
-{
-    public bool Cloaked;
-
-    public NinjaSuitComponentState(bool cloaked)
-    {
-        Cloaked = cloaked;
-    }
-}

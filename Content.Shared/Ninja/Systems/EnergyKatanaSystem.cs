@@ -7,7 +7,6 @@ using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Ninja.Systems;
@@ -33,8 +32,6 @@ public sealed class EnergyKatanaSystem : EntitySystem
         SubscribeLocalEvent<EnergyKatanaComponent, GotEquippedEvent>(OnEquipped);
         SubscribeLocalEvent<EnergyKatanaComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<NinjaSuitComponent, KatanaDashEvent>(OnDash);
-        SubscribeLocalEvent<EnergyKatanaComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<EnergyKatanaComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<EnergyKatanaComponent, EntityUnpausedEvent>(OnUnpaused);
     }
 
@@ -52,24 +49,6 @@ public sealed class EnergyKatanaSystem : EntitySystem
         // bind it
         comp.Ninja = user;
         _ninja.BindKatana(ninja, uid);
-    }
-
-    private void OnGetState(EntityUid uid, EnergyKatanaComponent component, ref ComponentGetState args)
-    {
-        args.State = new EnergyKatanaComponentState(component.MaxCharges, component.Charges,
-            component.RechargeDuration, component.NextChargeTime, component.AutoRecharge);
-    }
-
-    private void OnHandleState(EntityUid uid, EnergyKatanaComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not EnergyKatanaComponentState state)
-            return;
-
-        component.MaxCharges = state.MaxCharges;
-        component.Charges = state.Charges;
-        component.RechargeDuration = state.RechargeTime;
-        component.NextChargeTime = state.NextChargeTime;
-        component.AutoRecharge = state.AutoRecharge;
     }
 
     private void OnUnpaused(EntityUid uid, EnergyKatanaComponent component, ref EntityUnpausedEvent args)

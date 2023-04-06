@@ -15,8 +15,8 @@ namespace Content.Shared.Ninja.Components;
 /// </summary>
 // basically emag but without immune tag, TODO: make the charge thing its own component and have emag use it too
 [Access(typeof(EnergyKatanaSystem))]
-[RegisterComponent, NetworkedComponent]
-public sealed class EnergyKatanaComponent : Component
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class EnergyKatanaComponent : Component
 {
     public EntityUid? Ninja = null;
 
@@ -35,51 +35,32 @@ public sealed class EnergyKatanaComponent : Component
     /// <summary>
     /// The maximum number of dash charges the katana can have
     /// </summary>
-    [DataField("maxCharges"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("maxCharges"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public int MaxCharges = 3;
 
     /// <summary>
     /// The current number of dash charges on the katana
     /// </summary>
-    [DataField("charges"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("charges"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public int Charges = 3;
 
     /// <summary>
     /// Whether or not the katana automatically recharges over time.
     /// </summary>
-    [DataField("autoRecharge"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("autoRecharge"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public bool AutoRecharge = true;
 
     /// <summary>
     /// The time it takes to regain a single dash charge
     /// </summary>
-    [DataField("rechargeDuration"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("rechargeDuration"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public TimeSpan RechargeDuration = TimeSpan.FromSeconds(20);
 
     /// <summary>
     /// The time when the next dash charge will be added
     /// </summary>
-    [DataField("nextChargeTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("nextChargeTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public TimeSpan NextChargeTime = TimeSpan.MaxValue;
 }
 
 public sealed class KatanaDashEvent : WorldTargetActionEvent { }
-
-[Serializable, NetSerializable]
-public sealed class EnergyKatanaComponentState : ComponentState
-{
-    public int MaxCharges;
-    public int Charges;
-    public bool AutoRecharge;
-    public TimeSpan RechargeTime;
-    public TimeSpan NextChargeTime;
-
-    public EnergyKatanaComponentState(int maxCharges, int charges, TimeSpan rechargeTime, TimeSpan nextChargeTime, bool autoRecharge)
-    {
-        MaxCharges = maxCharges;
-        Charges = charges;
-        RechargeTime = rechargeTime;
-        NextChargeTime = nextChargeTime;
-        AutoRecharge = autoRecharge;
-    }
-}

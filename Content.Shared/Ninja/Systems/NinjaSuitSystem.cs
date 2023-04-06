@@ -4,7 +4,6 @@ using Content.Shared.Ninja.Components;
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Timing;
-using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -24,8 +23,6 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
 
         SubscribeLocalEvent<NinjaSuitComponent, GotEquippedEvent>(OnEquipped);
         SubscribeLocalEvent<NinjaSuitComponent, GetItemActionsEvent>(OnGetItemActions);
-        SubscribeLocalEvent<NinjaSuitComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<NinjaSuitComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<NinjaSuitComponent, GotUnequippedEvent>(OnUnequipped);
 
         SubscribeNetworkEvent<SetCloakedMessage>(OnSetCloakedMessage);
@@ -49,19 +46,6 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
         args.Actions.Add(comp.CreateSoapAction);
         args.Actions.Add(comp.KatanaDashAction);
         args.Actions.Add(comp.EmpAction);
-    }
-
-    private void OnGetState(EntityUid uid, NinjaSuitComponent comp, ref ComponentGetState args)
-    {
-        args.State = new NinjaSuitComponentState(comp.Cloaked);
-    }
-
-    private void OnHandleState(EntityUid uid, NinjaSuitComponent comp, ref ComponentHandleState args)
-    {
-        if (args.Current is not NinjaSuitComponentState state)
-            return;
-
-        comp.Cloaked = state.Cloaked;
     }
 
     private void OnUnequipped(EntityUid uid, NinjaSuitComponent comp, GotUnequippedEvent args)

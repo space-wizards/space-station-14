@@ -1,7 +1,6 @@
 using Content.Shared.Ninja.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-//using Robust.Shared.Maths.Direction;
 
 namespace Content.Shared.Ninja.Components;
 
@@ -10,9 +9,9 @@ namespace Content.Shared.Ninja.Components;
 /// Contains ids of all ninja equipment.
 /// </summary>
 // TODO: Contains objective related stuff, might want to move it out somehow
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedNinjaSystem))]
-[RegisterComponent, NetworkedComponent]
-public sealed class NinjaComponent : Component
+public sealed partial class NinjaComponent : Component
 {
     /// <summary>
     /// Grid entity of the station the ninja was spawned around. Set if spawned naturally by the event.
@@ -40,54 +39,31 @@ public sealed class NinjaComponent : Component
     /// <summary>
     /// Number of doors that have been doorjacked, used for objective
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoNetworkedField]
     public int DoorsJacked = 0;
 
     /// <summary>
     /// Research nodes that have been downloaded, used for objective
     /// </summary>
-    [ViewVariables]
+    // TODO: client doesn't need to know what nodes are downloaded, just how many
+    [ViewVariables, AutoNetworkedField]
     public HashSet<string> DownloadedNodes = new();
 
     /// <summary>
     /// Warp point that the spider charge has to target
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoNetworkedField]
     public EntityUid? SpiderChargeTarget = null;
 
     /// <summary>
     /// Whether the spider charge has been detonated on the target, used for objective
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoNetworkedField]
     public bool SpiderChargeDetonated;
 
     /// <summary>
     /// Whether the comms console has been hacked, used for objective
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoNetworkedField]
     public bool CalledInThreat;
-}
-
-[Serializable, NetSerializable]
-public sealed class NinjaComponentState : ComponentState
-{
-    public int DoorsJacked;
-
-    // TODO: client doesn't need to know what nodes are downloaded, just how many
-    public HashSet<string> DownloadedNodes;
-
-    public EntityUid? SpiderChargeTarget;
-
-    public bool SpiderChargeDetonated;
-
-    public bool CalledInThreat;
-
-    public NinjaComponentState(int doorsJacked, HashSet<string> downloadedNodes, EntityUid? spiderChargeTarget, bool spiderChargeDetonated, bool calledInThreat)
-    {
-        DoorsJacked = doorsJacked;
-        DownloadedNodes = downloadedNodes;
-        SpiderChargeTarget = spiderChargeTarget;
-        SpiderChargeDetonated = spiderChargeDetonated;
-        CalledInThreat = calledInThreat;
-    }
 }

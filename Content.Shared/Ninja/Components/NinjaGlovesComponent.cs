@@ -40,17 +40,6 @@ public sealed class NinjaGlovesComponent : Component
     };
 }
 
-[Serializable, NetSerializable]
-public sealed class NinjaGlovesComponentState : ComponentState
-{
-    public bool Enabled;
-
-    public NinjaGlovesComponentState(bool enabled)
-    {
-        Enabled = enabled;
-    }
-}
-
 /// <summary>
 /// Component for emagging doors on click, when gloves are enabled.
 /// Only works on entities with DoorComponent.
