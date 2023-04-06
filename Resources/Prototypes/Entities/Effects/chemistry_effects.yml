@@ -24,6 +24,8 @@
       solutionArea:
         maxVol: 600
         canReact: false
+  - type: TimedDespawn
+    lifetime: 10
   - type: Tag
     tags:
       - HideContextMenu

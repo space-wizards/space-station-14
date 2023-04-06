@@ -72,14 +72,12 @@ public sealed class SmokeSystem : EntitySystem
 
     private void OnSmokeSpread(EntityUid uid, SmokeComponent component, ref SpreadNeighborsEvent args)
     {
-        if (component.SpreadAmount == 0 || args.Grid == null || !_solutionSystem.TryGetSolution(uid, SmokeComponent.SolutionName, out var solution))
+        if (component.SpreadAmount == 0 ||
+            args.Grid == null ||
+            !_solutionSystem.TryGetSolution(uid, SmokeComponent.SolutionName, out var solution) ||
+            args.NeighborFreeTiles.Count == 0)
         {
             RemCompDeferred<EdgeSpreaderComponent>(uid);
-            return;
-        }
-
-        if (args.NeighborFreeTiles.Count == 0)
-        {
             return;
         }
 
@@ -92,20 +90,20 @@ public sealed class SmokeSystem : EntitySystem
         }
 
         TryComp<TimedDespawnComponent>(uid, out var timer);
-        var overflow = _solutionSystem.SplitSolution(uid, solution, (solution.Volume - component.OverflowThreshold) / FixedPoint2.New(0.5));
+
         var smokePerSpread = component.SpreadAmount / args.NeighborFreeTiles.Count;
         component.SpreadAmount -= smokePerSpread;
 
         foreach (var tile in args.NeighborFreeTiles)
         {
-            var split = overflow.SplitSolution(solution.Volume / args.NeighborFreeTiles.Count);
             var coords = args.Grid.GridTileToLocal(tile);
             var ent = Spawn(prototype.ID, coords.SnapToGrid());
             var neighborSmoke = EnsureComp<SmokeComponent>(ent);
             neighborSmoke.SpreadAmount = Math.Max(0, smokePerSpread - 1);
             args.Updates--;
 
-            Start(ent, neighborSmoke, split, timer?.Lifetime ?? 10f);
+            // Listen this is the old behaviour iunno
+            Start(ent, neighborSmoke, solution.Clone(), timer?.Lifetime ?? 10f);
 
             if (_appearance.TryGetData(uid, SmokeVisuals.Color, out var color))
             {
@@ -236,7 +234,7 @@ public sealed class SmokeSystem : EntitySystem
             if (entity == uid)
                 continue;
 
-            ReactWithEntity(entity, solutionFraction);
+            ReactWithEntity(entity, solution, solutionFraction);
         }
 
         UpdateVisuals(uid, component);
@@ -252,11 +250,8 @@ public sealed class SmokeSystem : EntitySystem
         }
     }
 
-    private void ReactWithEntity(EntityUid entity, double solutionFraction)
+    private void ReactWithEntity(EntityUid entity, Solution solution, double solutionFraction)
     {
-        if (!_solutionSystem.TryGetSolution(entity, SmokeComponent.SolutionName, out var solution))
-            return;
-
         if (!TryComp<BloodstreamComponent>(entity, out var bloodstream))
             return;
 
