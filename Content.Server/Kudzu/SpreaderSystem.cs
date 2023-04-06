@@ -68,18 +68,6 @@ public sealed class SpreaderNodeGroup : BaseNodeGroup
             _entManager.EnsureComponent<EdgeSpreaderComponent>(neighborNode.Owner);
         }
     }
-
-    public override void LoadNodes(List<Node> groupNodes)
-    {
-        base.LoadNodes(groupNodes);
-
-        foreach (var node in groupNodes)
-        {
-            // Cleanup isn't super important as worst case we just iterate and realise the
-            // neighbors are no longer valid edges.
-            _entManager.EnsureComponent<EdgeSpreaderComponent>(node.Owner);
-        }
-    }
 }
 
 public sealed class SpreaderSystem : EntitySystem
@@ -87,10 +75,8 @@ public sealed class SpreaderSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-    private static readonly TimeSpan SpreadCooldown = TimeSpan.FromSeconds(0.5);
+    private static readonly TimeSpan SpreadCooldown = TimeSpan.FromSeconds(1);
 
     private static readonly List<string> SpreaderGroups = new()
     {
@@ -181,12 +167,14 @@ public sealed class SpreaderSystem : EntitySystem
             foreach (var sGroup in SpreaderGroups)
             {
                 // Cleanup
-                if (!nodeQuery.TryGetComponent(uid, out var nodeComponent) ||
-                    !nodeComponent.TryGetNode<SpreaderNode>(sGroup, out var node))
+                if (!nodeQuery.TryGetComponent(uid, out var nodeComponent))
                 {
                     RemCompDeferred<EdgeSpreaderComponent>(uid);
                     continue;
                 }
+
+                if (!nodeComponent.TryGetNode<SpreaderNode>(sGroup, out var node))
+                    continue;
 
                 // Not allowed this tick?
                 if (node.NodeGroup == null ||

@@ -13,13 +13,18 @@ public sealed class KudzuSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<KudzuComponent, ComponentStartup>(SetupKudzu);
-        SubscribeLocalEvent<GrowingKudzuComponent, EntityUnpausedEvent>(OnKudzuUnpaused);
         SubscribeLocalEvent<KudzuComponent, SpreadNeighborsEvent>(OnKudzuSpread);
+        SubscribeLocalEvent<GrowingKudzuComponent, EntityUnpausedEvent>(OnKudzuUnpaused);
         SubscribeLocalEvent<SpreadGroupUpdateRate>(OnKudzuUpdateRate);
     }
 
     private void OnKudzuSpread(EntityUid uid, KudzuComponent component, ref SpreadNeighborsEvent args)
     {
+        if (TryComp<GrowingKudzuComponent>(uid, out var growing) && growing.GrowthLevel < 3)
+        {
+            return;
+        }
+
         if (args.NeighborFreeTiles.Count == 0 || args.Grid == null)
         {
             RemCompDeferred<EdgeSpreaderComponent>(uid);
@@ -34,9 +39,13 @@ public sealed class KudzuSystem : EntitySystem
             return;
         }
 
+        if (!_robustRandom.Prob(component.SpreadChance))
+            return;
+
         foreach (var neighbor in args.NeighborFreeTiles)
         {
-            Spawn(prototype, args.Grid.GridTileToLocal(neighbor));
+            var neighborUid = Spawn(prototype, args.Grid.GridTileToLocal(neighbor));
+            EnsureComp<EdgeSpreaderComponent>(neighborUid);
             args.Updates--;
 
             if (args.Updates <= 0)
@@ -60,7 +69,6 @@ public sealed class KudzuSystem : EntitySystem
     private void SetupKudzu(EntityUid uid, KudzuComponent component, ComponentStartup args)
     {
         EnsureComp<GrowingKudzuComponent>(uid);
-        EnsureComp<EdgeSpreaderComponent>(uid);
 
         if (!EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearance))
         {
@@ -78,14 +86,18 @@ public sealed class KudzuSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var kudzu, out var appearance))
         {
-            if (kudzu.NextTick < curTime ||
-                !_robustRandom.Prob(kudzu.GrowthTickSkipChange))
+            if (kudzu.NextTick > curTime)
             {
                 continue;
             }
 
-            // Tickrate dependent but means we don't need to bother book-keeping nexttick.
             kudzu.NextTick = curTime + TimeSpan.FromSeconds(0.5);
+
+            if (!_robustRandom.Prob(kudzu.GrowthTickChance))
+            {
+                continue;
+            }
+
             kudzu.GrowthLevel += 1;
 
             if (kudzu.GrowthLevel >= 3)

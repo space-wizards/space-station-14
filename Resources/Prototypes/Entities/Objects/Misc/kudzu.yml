@@ -71,7 +71,7 @@
     - type: AtmosExposed
     - type: Kudzu
     - type: GrowingKudzu
-      growthTickSkipChance: 0.6666
+      growthTickChance: 0.3
     - type: SlowContacts
       walkSpeedModifier: 0.2
       sprintSpeedModifier: 0.2
@@ -85,6 +85,10 @@
 - type: entity
   id: WeakKudzu
   parent: Kudzu
+  suffix: Weak
+  components:
+    - type: Kudzu
+      spreadChance: 0.3
 
 - type: entity
   id: FleshKudzu
