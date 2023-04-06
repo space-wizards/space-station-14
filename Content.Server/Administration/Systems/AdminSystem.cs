@@ -83,6 +83,15 @@ namespace Content.Server.Administration.Systems
             }
         }
 
+        public PlayerInfo? GetCachedPlayerInfo(NetUserId? netUserId)
+        {
+            if (netUserId == null)
+                return null;
+
+            _playerList.TryGetValue(netUserId.Value, out var value);
+            return value ?? null;
+        }
+
         private void OnIdentityChanged(IdentityChangedEvent ev)
         {
             if (!TryComp<ActorComponent>(ev.CharacterEntity, out var actor))

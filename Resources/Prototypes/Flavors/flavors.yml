@@ -660,6 +660,11 @@
   description: flavor-complex-watermelon
 
 - type: flavor
+  id: grape
+  flavorType: Complex
+  description: flavor-complex-grape
+
+- type: flavor
   id: garlic
   flavorType: Complex
   description: flavor-complex-garlic

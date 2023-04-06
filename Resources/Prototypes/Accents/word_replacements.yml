@@ -1,0 +1,63 @@
+﻿# Accents that work off of word replacements.
+
+# this is kind of dumb but localization demands it.
+# i guess you could just specify the prefix ('mobster') and count and let the system fill it
+- type: accent
+  id: mobster
+  wordReplacements:
+    accent-mobster-words-1: accent-mobster-words-replace-1
+    accent-mobster-words-2: accent-mobster-words-replace-2
+    accent-mobster-words-3: accent-mobster-words-replace-3
+    accent-mobster-words-4: accent-mobster-words-replace-4
+    accent-mobster-words-5: accent-mobster-words-replace-5
+    accent-mobster-words-6: accent-mobster-words-replace-6
+    accent-mobster-words-7: accent-mobster-words-replace-7
+    accent-mobster-words-8: accent-mobster-words-replace-8
+    accent-mobster-words-9: accent-mobster-words-replace-9
+    accent-mobster-words-10: accent-mobster-words-replace-10
+    accent-mobster-words-11: accent-mobster-words-replace-11
+    accent-mobster-words-12: accent-mobster-words-replace-12
+    accent-mobster-words-13: accent-mobster-words-replace-13
+    accent-mobster-words-14: accent-mobster-words-replace-14
+    accent-mobster-words-15: accent-mobster-words-replace-15
+    accent-mobster-words-16: accent-mobster-words-replace-16
+    accent-mobster-words-17: accent-mobster-words-replace-17
+
+- type: accent
+  id: dwarf
+  wordReplacements:
+    accent-dwarf-words-1: accent-dwarf-words-replace-1
+    accent-dwarf-words-2: accent-dwarf-words-replace-2
+    accent-dwarf-words-3: accent-dwarf-words-replace-3
+    accent-dwarf-words-4: accent-dwarf-words-replace-4
+    accent-dwarf-words-5: accent-dwarf-words-replace-5
+    accent-dwarf-words-6: accent-dwarf-words-replace-6
+    accent-dwarf-words-7: accent-dwarf-words-replace-7
+    accent-dwarf-words-8: accent-dwarf-words-replace-8
+    accent-dwarf-words-9: accent-dwarf-words-replace-9
+    accent-dwarf-words-10: accent-dwarf-words-replace-10
+    accent-dwarf-words-11: accent-dwarf-words-replace-11
+    accent-dwarf-words-12: accent-dwarf-words-replace-12
+    accent-dwarf-words-13: accent-dwarf-words-replace-13
+    accent-dwarf-words-14: accent-dwarf-words-replace-14
+    accent-dwarf-words-15: accent-dwarf-words-replace-15
+    accent-dwarf-words-16: accent-dwarf-words-replace-16
+    accent-dwarf-words-17: accent-dwarf-words-replace-17
+    accent-dwarf-words-18: accent-dwarf-words-replace-18
+    accent-dwarf-words-19: accent-dwarf-words-replace-19
+    accent-dwarf-words-20: accent-dwarf-words-replace-20
+    accent-dwarf-words-21: accent-dwarf-words-replace-21
+    accent-dwarf-words-22: accent-dwarf-words-replace-22
+    accent-dwarf-words-23: accent-dwarf-words-replace-23
+    accent-dwarf-words-24: accent-dwarf-words-replace-24
+    accent-dwarf-words-25: accent-dwarf-words-replace-25
+    accent-dwarf-words-26: accent-dwarf-words-replace-26
+    accent-dwarf-words-27: accent-dwarf-words-replace-27
+    accent-dwarf-words-28: accent-dwarf-words-replace-28
+    accent-dwarf-words-29: accent-dwarf-words-replace-29
+    accent-dwarf-words-30: accent-dwarf-words-replace-30
+    accent-dwarf-words-31: accent-dwarf-words-replace-31
+    accent-dwarf-words-32: accent-dwarf-words-replace-32
+    accent-dwarf-words-33: accent-dwarf-words-replace-33
+    accent-dwarf-words-34: accent-dwarf-words-replace-34
+    accent-dwarf-words-35: accent-dwarf-words-replace-35

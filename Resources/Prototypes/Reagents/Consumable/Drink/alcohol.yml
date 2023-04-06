@@ -122,15 +122,41 @@
         conditions:
         - !type:ReagentThreshold
           min: 5
+        - !type:OrganType
+          type: Dwarf
+          shouldHave: false
+        damage:
+          types:
+            Poison: 1
+      # dwarves take less toxin damage and heal a marginal amount of brute
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
+        - !type:OrganType
+          type: Dwarf
+        damage:
+          types:
+            Poison: 0.2
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
+        - !type:OrganType
+          type: Dwarf
         damage:
           groups:
-            Caustic: 1
+            Brute: -1
       - !type:ChemVomit
         probability: 0.04
         conditions:
         - !type:ReagentThreshold
           reagent: Ethanol
           min: 3
+        # dwarves immune to vomiting from alcohol
+        - !type:OrganType
+          type: Dwarf
+          shouldHave: false
     Alcohol:
       effects:
       - !type:Drunk

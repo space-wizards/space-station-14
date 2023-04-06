@@ -33,13 +33,13 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-        bounds: "-0.4,-0.3,0.4,0.3"
+        bounds: "-0.3,-0.3,0.3,0.3"
       density: 5
       mask:
       - ItemMask
     - shape:
         !type:PhysShapeAabb
-        bounds: "-0.4,-0.3,0.4,0.3"
+        bounds: "-0.3,-0.3,0.3,0.3"
       id: "rehydrate"
       hard: false
       layer:
@@ -74,16 +74,16 @@
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
-    fixtures: # TODO: Make a second fixture.
+    fixtures:
     - shape:
         !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
+        bounds: "-0.3,-0.3,0.3,0.3"
       density: 15
       mask:
       - ItemMask
     - shape:
         !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
+        bounds: "-0.3,-0.3,0.3,0.3"
       id: "rehydrate"
       hard: false
       layer:
