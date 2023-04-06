@@ -11,7 +11,6 @@
     mode: SnapgridCenter
   components:
     - type: Clickable
-    # - type: Puddle
     - type: FootstepModifier
       footstepSoundCollection:
         collection: FootstepWater
@@ -19,11 +18,17 @@
       noRot: true
       anchored: true
     - type: Sprite
-      sprite: Fluids/weh.rsi
-      state: splat0
+      layers:
+        - sprite: Fluids/weh.rsi
+          state: splat0
+        - sprite: Fluids/wet_floor_sparkles.rsi
+          state: sparkles
+          visible: false
       netsync: false
       drawdepth: FloorObjects
       color: "#FFFFFF80"
+    - type: Physics
+      bodyType: Static
     - type: Fixtures
       fixtures:
         - id: slipFixture
@@ -42,6 +47,7 @@
     - type: Puddle
     - type: Appearance
     - type: EdgeSpreader
+    - type: StepTrigger
     - type: NodeContainer
       nodes:
         puddle:

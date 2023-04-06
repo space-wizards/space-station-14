@@ -5,7 +5,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Fluids;
 
-public sealed class MoppingSystem : SharedMoppingSystem
+public sealed class AbsorbentSystem : SharedAbsorbentSystem
 {
     public override void Initialize()
     {

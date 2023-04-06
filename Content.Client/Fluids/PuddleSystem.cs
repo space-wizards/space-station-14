@@ -2,6 +2,8 @@ using Content.Client.IconSmoothing;
 using Content.Shared.Fluids;
 using Content.Shared.Fluids.Components;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Fluids
 {
@@ -20,6 +22,16 @@ namespace Content.Client.Fluids
         {
             if (args.Sprite == null)
                 return;
+
+            if (args.AppearanceData.TryGetValue(PuddleVisuals.Evaporation, out var sparkles) && (bool) sparkles)
+            {
+                args.Sprite.LayerSetState(1, "sparkles", new ResourcePath("Fluids/wet_floor_sparkles.rsi"));
+                args.Sprite.LayerSetVisible(1, true);
+            }
+            else
+            {
+                args.Sprite.LayerSetVisible(1, false);
+            }
 
             float volume = 1f;
 
@@ -58,11 +70,11 @@ namespace Content.Client.Fluids
             if (args.AppearanceData.TryGetValue(PuddleVisuals.SolutionColor, out var colorObj))
             {
                 var color = (Color) colorObj;
-                args.Sprite.Color = color.WithAlpha(alpha) * baseColor;
+                args.Sprite.LayerSetColor(0, color.WithAlpha(alpha) * baseColor);
             }
-            else
+            else if (args.Sprite.TryGetLayer(0, out var layer))
             {
-                args.Sprite.Color = args.Sprite.Color.WithAlpha(alpha) * baseColor;
+                layer.Color = layer.Color.WithAlpha(alpha) * baseColor;
             }
         }
     }

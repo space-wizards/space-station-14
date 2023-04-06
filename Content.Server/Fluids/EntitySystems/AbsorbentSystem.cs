@@ -18,7 +18,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Fluids.EntitySystems;
 
 [UsedImplicitly]
-public sealed class MoppingSystem : SharedMoppingSystem
+public sealed class AbsorbentSystem : SharedAbsorbentSystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly AudioSystem _audio = default!;

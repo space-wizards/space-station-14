@@ -17,12 +17,14 @@ using Robust.Shared.Player;
 using Solution = Content.Shared.Chemistry.Components.Solution;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Fluids.EntitySystems;
 
 public sealed partial class PuddleSystem : EntitySystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger= default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -36,8 +38,6 @@ public sealed partial class PuddleSystem : EntitySystem
     // Using local deletion queue instead of the standard queue so that we can easily "undelete" if a puddle
     // loses & then gains reagents in a single tick.
     private HashSet<EntityUid> _deletionQueue = new();
-
-    public const string SpreaderName = "puddle";
 
     /*
      * TODO: Need some sort of way to do blood slash / vomit solution spill on its own
@@ -59,6 +59,8 @@ public sealed partial class PuddleSystem : EntitySystem
         SubscribeLocalEvent<PuddleComponent, SolutionChangedEvent>(OnSolutionUpdate);
         SubscribeLocalEvent<PuddleComponent, ComponentInit>(OnPuddleInit);
         SubscribeLocalEvent<PuddleComponent, SpreadNeighborsEvent>(OnPuddleSpread);
+
+        SubscribeLocalEvent<EvaporationComponent, MapInitEvent>(OnEvaporationMapInit);
 
         InitializeSpillable();
     }
@@ -148,8 +150,11 @@ public sealed partial class PuddleSystem : EntitySystem
 
             foreach (var neighbor in args.Neighbors)
             {
+                // Overflow to neighbours but not if they're already at the cap
+                // This is to avoid diluting solutions too much.
                 if (!puddleQuery.TryGetComponent(neighbor, out var puddle) ||
-                    !_solutionContainerSystem.TryGetSolution(neighbor, puddle.SolutionName, out var neighborSolution))
+                    !_solutionContainerSystem.TryGetSolution(neighbor, puddle.SolutionName, out var neighborSolution) ||
+                    neighborSolution.Volume >= puddle.OverflowVolume)
                 {
                     continue;
                 }
@@ -176,6 +181,8 @@ public sealed partial class PuddleSystem : EntitySystem
             Del(ent);
         }
         _deletionQueue.Clear();
+
+        TickEvaporation();
     }
 
     private void OnPuddleInit(EntityUid uid, PuddleComponent component, ComponentInit args)
@@ -196,6 +203,7 @@ public sealed partial class PuddleSystem : EntitySystem
 
         _deletionQueue.Remove(uid);
         UpdateSlip(uid, component);
+        UpdateEvaporation(uid, args.Solution);
         UpdateAppearance(uid, component);
     }
 

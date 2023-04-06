@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Fluids;
 
-public abstract class SharedMoppingSystem : EntitySystem
+public abstract class SharedAbsorbentSystem : EntitySystem
 {
     public override void Initialize()
     {
