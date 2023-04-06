@@ -120,7 +120,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
     private void OnElectrifiedHandInteract(EntityUid uid, ElectrifiedComponent electrified, InteractHandEvent args)
     {
-        if (!electrified.OnHandInteract)
+        if (electrified.OnHandInteract)
             TryDoElectrifiedAct(uid, args.User, 1, electrified);
     }
 
