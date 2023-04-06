@@ -34,15 +34,15 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
-    [Dependency] private readonly SharedJitteringSystem _jitteringSystem = default!;
-    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
-    [Dependency] private readonly SharedStutteringSystem _stutteringSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = default!;
+    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private readonly SharedJitteringSystem _jittering = default!;
+    [Dependency] private readonly SharedStunSystem _stun = default!;
+    [Dependency] private readonly SharedStutteringSystem _stuttering = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly NodeGroupSystem _nodeGroup = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
     private const string StatusEffectKey = "Electrocution";
     private const string DamageType = "Shock";
@@ -102,7 +102,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
                     _prototypeManager.Index<DamageTypePrototype>(DamageType),
                     (int) finished.AccumulatedDamage);
 
-                var actual = _damageableSystem.TryChangeDamage(finished.Electrocuting, damage, origin: finished.Source);
+                var actual = _damageable.TryChangeDamage(finished.Electrocuting, damage, origin: finished.Source);
                 if (actual != null)
                 {
                     _adminLogger.Add(LogType.Electrocution,
@@ -167,7 +167,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             foreach (var entity in transform.Coordinates.GetEntitiesInTile(
                 LookupFlags.Approximate | LookupFlags.Static, _entityLookup))
             {
-                if (_tagSystem.HasTag(entity, "Window"))
+                if (_tag.HasTag(entity, "Window"))
                     return false;
             }
         }
@@ -308,7 +308,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         electrocutionNode.CableEntity = sourceUid;
         electrocutionNode.NodeName = node.Name;
 
-        _nodeGroupSystem.QueueReflood(electrocutionNode);
+        _nodeGroup.QueueReflood(electrocutionNode);
 
         electrocutionComponent.TimeLeft = 1f;
         electrocutionComponent.Electrocuting = uid;
@@ -350,23 +350,23 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         }
 
         if (!Resolve(uid, ref statusEffects, false) ||
-            !_statusEffectsSystem.CanApplyEffect(uid, StatusEffectKey, statusEffects))
+            !_statusEffects.CanApplyEffect(uid, StatusEffectKey, statusEffects))
             return false;
 
-        if (!_statusEffectsSystem.TryAddStatusEffect<ElectrocutedComponent>(uid, StatusEffectKey, time, refresh,
+        if (!_statusEffects.TryAddStatusEffect<ElectrocutedComponent>(uid, StatusEffectKey, time, refresh,
             statusEffects))
             return false;
 
         var shouldStun = siemensCoefficient > 0.5f;
 
         if (shouldStun)
-            _stunSystem.TryParalyze(uid, time * ParalyzeTimeMultiplier, refresh, statusEffects);
+            _stun.TryParalyze(uid, time * ParalyzeTimeMultiplier, refresh, statusEffects);
 
         // TODO: Sparks here.
 
         if (shockDamage is { } dmg)
         {
-            var actual = _damageableSystem.TryChangeDamage(uid,
+            var actual = _damageable.TryChangeDamage(uid,
                 new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>(DamageType), dmg), origin: sourceUid);
 
             if (actual != null)
@@ -376,24 +376,24 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             }
         }
 
-        _stutteringSystem.DoStutter(uid, time * StutteringTimeMultiplier, refresh, statusEffects);
-        _jitteringSystem.DoJitter(uid, time * JitterTimeMultiplier, refresh, JitterAmplitude, JitterFrequency, true,
+        _stuttering.DoStutter(uid, time * StutteringTimeMultiplier, refresh, statusEffects);
+        _jittering.DoJitter(uid, time * JitterTimeMultiplier, refresh, JitterAmplitude, JitterFrequency, true,
             statusEffects);
 
-        _popupSystem.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-popup-player"), uid, uid);
+        _popup.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-popup-player"), uid, uid);
 
         var filter = Filter.PvsExcept(uid, entityManager: EntityManager);
 
         // TODO: Allow being able to pass EntityUid to Loc...
         if (sourceUid != null)
         {
-            _popupSystem.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-by-source-popup-others",
+            _popup.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-by-source-popup-others",
                     ("mob", uid), ("source", (sourceUid.Value))), uid, filter, true);
             PlayElectrocutionSound(uid, sourceUid.Value);
         }
         else
         {
-            _popupSystem.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-popup-others",
+            _popup.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-popup-others",
                 ("mob", uid)), uid, filter, true);
         }
 
