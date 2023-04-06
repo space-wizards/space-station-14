@@ -1,16 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Mugs now properly display the solutions inside of them., type: Fix}
-  id: 2844
-  time: '2023-01-08T03:09:33.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'The verb menu no longer opens when right clicking on entities in the
-      entity menu. Instead, it now automatically opens using a dropdown, like how
-      grouped entities work.', type: Tweak}
-  id: 2845
-  time: '2023-01-08T03:24:52.0000000+00:00'
 - author: Theomund
   changes:
   - {message: Resolved server and client bugs that affected the way crew manifest
@@ -2914,3 +2902,14 @@ Entries:
   - {message: Removed Dwarf description, type: Remove}
   id: 3343
   time: '2023-04-06T00:53:41.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Food do afters no longer cancel on multiple uses., type: Tweak}
+  - {message: Drink do afters no longer cancel on multiple uses., type: Tweak}
+  id: 3344
+  time: '2023-04-06T02:47:20.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: 'Added personal access for detective, and detective airlocks.', type: Add}
+  id: 3345
+  time: '2023-04-06T02:48:04.0000000+00:00'
