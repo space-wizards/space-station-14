@@ -26,7 +26,6 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Electrocution;
 public sealed class ElectrocutionSystem : SharedElectrocutionSystem
@@ -78,39 +77,30 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     public override void Update(float frameTime)
     {
         // Update "in progress" electrocutions
-
-        RemQueue<ElectrocutionComponent> finishedElectrocutionsQueue = new();
-        foreach (var (electrocution, consumer) in EntityManager
-            .EntityQuery<ElectrocutionComponent, PowerConsumerComponent>())
+        var query = AllEntityQuery<ElectrocutionComponent, PowerConsumerComponent>();
+        while (query.MoveNext(out var uid, out var electrocution, out var consumer))
         {
             var ftAdjusted = Math.Min(frameTime, electrocution.TimeLeft);
 
             electrocution.TimeLeft -= ftAdjusted;
             electrocution.AccumulatedDamage += consumer.ReceivedPower * ElectrifiedDamagePerWatt * ftAdjusted;
 
-            if (MathHelper.CloseTo(electrocution.TimeLeft, 0))
-                finishedElectrocutionsQueue.Add(electrocution);
-        }
+            if (!MathHelper.CloseTo(electrocution.TimeLeft, 0))
+                continue;
 
-        foreach (var finished in finishedElectrocutionsQueue)
-        {
-            var uid = finished.Owner;
-            if (EntityManager.EntityExists(finished.Electrocuting))
+            if (EntityManager.EntityExists(electrocution.Electrocuting))
             {
                 // TODO: damage should be scaled by shock damage multiplier
                 // TODO: better paralyze/jitter timing
-                var damage = new DamageSpecifier(
-                    _prototypeManager.Index<DamageTypePrototype>(DamageType),
-                    (int) finished.AccumulatedDamage);
+                var damage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>(DamageType), (int) electrocution.AccumulatedDamage);
 
-                var actual = _damageable.TryChangeDamage(finished.Electrocuting, damage, origin: finished.Source);
+                var actual = _damageable.TryChangeDamage(electrocution.Electrocuting, damage, origin: electrocution.Source);
                 if (actual != null)
                 {
                     _adminLogger.Add(LogType.Electrocution,
-                        $"{ToPrettyString(finished.Electrocuting):entity} received {actual.Total:damage} powered electrocution damage from {ToPrettyString(finished.Source):source}");
+                        $"{ToPrettyString(electrocution.Electrocuting):entity} received {actual.Total:damage} powered electrocution damage from {ToPrettyString(electrocution.Source):source}");
                 }
             }
-
             EntityManager.DeleteEntity(uid);
         }
     }
