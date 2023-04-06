@@ -74,10 +74,10 @@ namespace Content.Client.Atmos.UI
 
         public void SetNodePercentages(float nodeOne)
         {
-            nodeOne *= 100.0f;
+            nodeOne = (float) Math.Round(nodeOne * 100.0f, 2);
             MixerNodeOneInput.Text = nodeOne.ToString(CultureInfo.InvariantCulture);
 
-            float nodeTwo = 100.0f - nodeOne;
+            float nodeTwo = (float) Math.Round(100.0f - nodeOne, 2);
             MixerNodeTwoInput.Text = nodeTwo.ToString(CultureInfo.InvariantCulture);
         }
 
