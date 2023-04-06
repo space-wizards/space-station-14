@@ -2,17 +2,15 @@ using System.Linq;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.Disposal.Unit.EntitySystems;
 using Content.Shared.Construction.Components;
-using Content.Shared.Disposal.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.Physics;
 
 namespace Content.Server.Disposal.Tube.Components
 {
-    public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent
+    public sealed class DisposalTubeComponent : Component
     {
-        public virtual string ContainerId => "DisposalTube";
+        [DataField("containerId")] public string ContainerId { get; set; } = "DisposalTube";
 
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -28,14 +26,6 @@ namespace Content.Server.Disposal.Tube.Components
         [ViewVariables]
         public Container Contents { get; private set; } = default!;
 
-        /// <summary>
-        ///     The directions that this tube can connect to others from
-        /// </summary>
-        /// <returns>a new array of the directions</returns>
-        protected abstract Direction[] ConnectableDirections();
-
-        public abstract Direction NextDirection(DisposalHolderComponent holder);
-
         // TODO: Make disposal pipes extend the grid
         // ???
         public void Connect()
@@ -48,14 +38,14 @@ namespace Content.Server.Disposal.Tube.Components
             _connected = true;
         }
 
-        public bool CanConnect(Direction direction, IDisposalTubeComponent with)
+        public bool CanConnect(IDisposalTubeComponent tube, Direction direction, IDisposalTubeComponent with)
         {
             if (!_connected)
             {
                 return false;
             }
 
-            if (!ConnectableDirections().Contains(direction))
+            if (!tube.ConnectableDirections().Contains(direction))
             {
                 return false;
             }
@@ -83,9 +73,9 @@ namespace Content.Server.Disposal.Tube.Components
             }
         }
 
-        public void PopupDirections(EntityUid entity)
+        public void PopupDirections(IDisposalTubeComponent tube, EntityUid entity)
         {
-            var directions = string.Join(", ", ConnectableDirections());
+            var directions = string.Join(", ", tube.ConnectableDirections());
 
             Owner.PopupMessage(entity, Loc.GetString("disposal-tube-component-popup-directions-text", ("directions", directions)));
         }

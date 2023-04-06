@@ -8,12 +8,11 @@ namespace Content.Server.Disposal.Tube.Components
     [RegisterComponent]
     [ComponentReference(typeof(IDisposalTubeComponent))]
     [ComponentReference(typeof(DisposalTubeComponent))]
-    public sealed class DisposalEntryComponent : DisposalTubeComponent
+    public sealed class DisposalEntryComponent : Component, IDisposalTubeComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
         private const string HolderPrototypeId = "DisposalHolder";
-        public override string ContainerId => "DisposalEntry";
 
         public bool TryInsert(DisposalUnitComponent from, IEnumerable<string>? tags = default)
         {
@@ -34,7 +33,7 @@ namespace Content.Server.Disposal.Tube.Components
             return EntitySystem.Get<DisposableSystem>().EnterTube((holderComponent).Owner, Owner, holderComponent, null, this);
         }
 
-        protected override Direction[] ConnectableDirections()
+        public Direction[] ConnectableDirections()
         {
             return new[] {_entMan.GetComponent<TransformComponent>(Owner).LocalRotation.GetDir()};
         }
@@ -42,7 +41,7 @@ namespace Content.Server.Disposal.Tube.Components
         /// <summary>
         ///     Ejects contents when they come from the same direction the entry is facing.
         /// </summary>
-        public override Direction NextDirection(DisposalHolderComponent holder)
+        public Direction NextDirection(DisposalHolderComponent holder)
         {
             if (holder.PreviousDirectionFrom != Direction.Invalid)
             {

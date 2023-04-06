@@ -8,10 +8,8 @@ namespace Content.Server.Disposal.Tube.Components
     [RegisterComponent]
     [ComponentReference(typeof(IDisposalTubeComponent))]
     [ComponentReference(typeof(DisposalTubeComponent))]
-    public class DisposalJunctionComponent : DisposalTubeComponent
+    public class DisposalJunctionComponent : Component, IDisposalTubeComponent
     {
-        public override string ContainerId => "DisposalJunction";
-
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -21,14 +19,14 @@ namespace Content.Server.Disposal.Tube.Components
         [DataField("degrees")]
         private List<Angle> _degrees = new();
 
-        protected override Direction[] ConnectableDirections()
+        public Direction[] ConnectableDirections()
         {
             var direction = _entMan.GetComponent<TransformComponent>(Owner).LocalRotation;
 
             return _degrees.Select(degree => new Angle(degree.Theta + direction.Theta).GetDir()).ToArray();
         }
 
-        public override Direction NextDirection(DisposalHolderComponent holder)
+        public virtual Direction NextDirection(DisposalHolderComponent holder)
         {
             var next = _entMan.GetComponent<TransformComponent>(Owner).LocalRotation.GetDir();
             var directions = ConnectableDirections().Skip(1).ToArray();

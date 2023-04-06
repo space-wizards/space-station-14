@@ -5,14 +5,16 @@ namespace Content.Server.Disposal.Tube.Components
     [RegisterComponent]
     [ComponentReference(typeof(IDisposalTubeComponent))]
     [ComponentReference(typeof(DisposalTubeComponent))]
-    public sealed class DisposalBendComponent : DisposalTubeComponent
+    public sealed class DisposalBendComponent : Component, IDisposalTubeComponent
     {
-        public override string ContainerId => "DisposalBend";
-
         [DataField("sideDegrees")]
         private int _sideDegrees = -90;
 
-        protected override Direction[] ConnectableDirections()
+        /// <summary>
+        ///     The directions that this tube can connect to others from
+        /// </summary>
+        /// <returns>a new array of the directions</returns>
+        public Direction[] ConnectableDirections()
         {
             var direction = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalRotation;
             var side = new Angle(MathHelper.DegreesToRadians(direction.Degrees + _sideDegrees));
@@ -20,7 +22,7 @@ namespace Content.Server.Disposal.Tube.Components
             return new[] {direction.GetDir(), side.GetDir()};
         }
 
-        public override Direction NextDirection(DisposalHolderComponent holder)
+        public Direction NextDirection(DisposalHolderComponent holder)
         {
             var directions = ConnectableDirections();
             var previousDF = holder.PreviousDirectionFrom;

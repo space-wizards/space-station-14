@@ -7,10 +7,8 @@ namespace Content.Server.Disposal.Tube.Components
     [ComponentReference(typeof(IDisposalTubeComponent))]
     [Virtual]
     [ComponentReference(typeof(DisposalTubeComponent))]
-    public class DisposalTransitComponent : DisposalTubeComponent
+    public class DisposalTransitComponent : Component, IDisposalTubeComponent
     {
-        public override string ContainerId => "DisposalTransit";
-
         protected override Direction[] ConnectableDirections()
         {
             var rotation = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalRotation;

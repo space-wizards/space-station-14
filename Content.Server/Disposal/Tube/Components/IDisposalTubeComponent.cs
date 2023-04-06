@@ -1,14 +1,15 @@
 using Content.Server.Disposal.Unit.Components;
-using Robust.Shared.Containers;
 
 namespace Content.Server.Disposal.Tube.Components
 {
     public interface IDisposalTubeComponent : IComponent
     {
-        Container Contents { get; }
+        /// <summary>
+        ///     The directions that this tube can connect to others from
+        /// </summary>
+        /// <returns>a new array of the directions</returns>
+        Direction[] ConnectableDirections();
 
         Direction NextDirection(DisposalHolderComponent holder);
-        bool CanConnect(Direction direction, IDisposalTubeComponent with);
-        void PopupDirections(EntityUid entity);
     }
 }
