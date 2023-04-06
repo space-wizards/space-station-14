@@ -67,6 +67,71 @@
     graph: DoorGraph
     node: metalDoor
 
+# - type: entity
+#   id: HiddenDoor
+#   parent: BaseStructure
+#   name: hidden door
+#   description: A hidden door, where will it lead?
+#   components:
+#   - type: InteractionOutline
+#   - type: Sprite
+#     netsync: false
+#     sprite: Structures/Doors/MineralDoors/hidden_door.rsi
+#     layers:
+#     - state: closed
+#       map: ["enum.DoorVisualLayers.Base"]
+#   - type: Physics
+#   - type: Fixtures
+#     fixtures:
+#     - shape:
+#         !type:PhysShapeAabb
+#         bounds: "-0.49,-0.49,0.49,0.49"
+#       density: 100
+#       mask:
+#       - FullTileMask
+#       layer:
+#       - AirlockLayer
+#   - type: Door
+#     bumpOpen: false
+#     clickOpen: true
+#     canCrush: false
+#     closeTimeOne: 0.2
+#     closeTimeTwo: 0.6
+#     openTimeOne: 0.6
+#     openTimeTwo: 0.2
+#     openSound:
+#       path: /Audio/Effects/stonedoor_openclose.ogg
+#     closeSound:
+#       path: /Audio/Effects/stonedoor_openclose.ogg
+#   - type: Appearance
+#     visuals:
+#       - type: AirlockVisualizer
+#         simpleVisuals: true
+#         animationTime: 1.2
+#   - type: Airtight
+#     fixVacuum: true
+#   - type: Damageable
+#     damageContainer: Inorganic
+#     damageModifierSet: Metallic
+#   - type: Destructible
+#     thresholds:
+#     - trigger:
+#         !type:DamageTrigger
+#         damage: 200
+#       behaviors:
+#       - !type:DoActsBehavior
+#         acts: ["Destruction"]
+#   - type: IconSmooth
+#     key: walls
+#     mode: NoSprite
+#   - type: Occluder
+#   - type: Tag
+#     tags:
+#     - HiddenDoor
+#   - type: Construction
+#     graph: DoorGraph
+#     node: HiddenDoor
+
 - type: entity
   id: WoodDoor
   name: wooden door
