@@ -6,7 +6,6 @@ namespace Content.Server.Electrocution;
 ///     Component for things that shock users on touch.
 /// </summary>
 [RegisterComponent]
-[Access(typeof(ElectrocutionSystem))]
 public sealed class ElectrifiedComponent : Component
 {
     [ViewVariables]
