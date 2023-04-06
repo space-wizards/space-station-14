@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed some unintended examine text on emitters., type: Fix}
-  id: 2847
-  time: '2023-01-10T11:48:06.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Bumped bullet speed from 20m/s to 25m/s, type: Tweak}
@@ -2913,3 +2908,14 @@ Entries:
       and ignoring ammo requirements., type: Fix}
   id: 3346
   time: '2023-04-06T05:26:15.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Melee attacking people with spillable containers will now splash some
+      of the solution onto them., type: Add}
+  - {message: Slipping on puddles now has a chance for some of its solution to interact
+      with you., type: Add}
+  - {message: 'Destructively spilling (throwing, breaking) spillable objects will
+      now splash some of its solution onto nearby reactive entities (like players)',
+    type: Add}
+  id: 3347
+  time: '2023-04-06T21:20:49.0000000+00:00'
