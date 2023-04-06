@@ -146,6 +146,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 // Mice and the like can eat without hands.
                 // TODO maybe set this based on some CanEatWithoutHands event or component?
                 NeedHand = forceFeed,
+                CancelDuplicate = false,
             };
 
             _doAfterSystem.TryStartDoAfter(doAfterEventArgs);
