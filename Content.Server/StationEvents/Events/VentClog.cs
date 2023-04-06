@@ -62,7 +62,7 @@ public sealed class VentClog : StationEventSystem
 
             var foamEnt = Spawn("Foam", transform.Coordinates);
             var smoke = EnsureComp<SmokeComponent>(foamEnt);
-            smoke.SpreadAmount = 40;
+            smoke.SpreadAmount = 10;
             EntityManager.System<SmokeSystem>().Start(foamEnt, smoke, solution, 20f);
             EntityManager.System<AudioSystem>().PlayPvs(sound, transform.Coordinates);
         }
