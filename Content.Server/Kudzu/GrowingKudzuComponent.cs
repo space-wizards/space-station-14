@@ -9,7 +9,7 @@ public sealed class GrowingKudzuComponent : Component
     public int GrowthLevel = 1;
 
     [DataField("growthTickChance")]
-    public float GrowthTickChance = 0.0f;
+    public float GrowthTickChance = 1f;
 
     [DataField("nextTick", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan NextTick = TimeSpan.Zero;

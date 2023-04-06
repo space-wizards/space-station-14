@@ -75,6 +75,7 @@
     - type: SlowContacts
       walkSpeedModifier: 0.2
       sprintSpeedModifier: 0.2
+    - type: EdgeSpreader
     - type: NodeContainer
       nodes:
         kudzu:
@@ -140,6 +141,13 @@
       ignoreWhitelist:
         tags:
         - Flesh
+    - type: Kudzu
+    - type: EdgeSpreader
+    - type: NodeContainer
+      nodes:
+        kudzu:
+          !type:SpreaderNode
+          nodeGroupID: Spreader
     - type: SlowContacts
       walkSpeedModifier: 0.3
       sprintSpeedModifier: 0.3

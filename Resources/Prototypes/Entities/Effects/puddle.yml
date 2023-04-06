@@ -29,6 +29,7 @@
       base: splat
       mode: CardinalFlags
     - type: Appearance
+    - type: EdgeSpreader
     - type: NodeContainer
       nodes:
         puddle:
