@@ -9,6 +9,7 @@ using Content.Server.Maps;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Preferences.Managers;
 using Content.Server.ServerUpdates;
+using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Damage;
@@ -34,8 +35,8 @@ namespace Content.Server.GameTicking
 {
     public sealed partial class GameTicker : SharedGameTicker
     {
+        [Dependency] private readonly ArrivalsSystem _arrivals = default!;
         [Dependency] private readonly MapLoaderSystem _map = default!;
-        [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         [ViewVariables] private bool _initialized;

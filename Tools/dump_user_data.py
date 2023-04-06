@@ -103,7 +103,7 @@ FROM (
 
     json_data = cur.fetchall()[0][0]
 
-    with open(os.path.join(outdir, "admin.json"), "w") as f:
+    with open(os.path.join(outdir, "admin.json"), "w", encoding="utf-8") as f:
         f.write(json_data)
 
 
@@ -129,7 +129,7 @@ FROM (
 
     json_data = cur.fetchall()[0][0]
 
-    with open(os.path.join(outdir, "admin_log.json"), "w") as f:
+    with open(os.path.join(outdir, "admin_log.json"), "w", encoding="utf-8") as f:
         f.write(json_data)
 
 
@@ -151,7 +151,7 @@ FROM (
 
     json_data = cur.fetchall()[0][0]
 
-    with open(os.path.join(outdir, "admin_notes.json"), "w") as f:
+    with open(os.path.join(outdir, "admin_notes.json"), "w", encoding="utf-8") as f:
         f.write(json_data)
 
 
@@ -177,7 +177,7 @@ FROM (
 
     json_data = cur.fetchall()[0][0]
 
-    with open(os.path.join(outdir, "connection_log.json"), "w") as f:
+    with open(os.path.join(outdir, "connection_log.json"), "w", encoding="utf-8") as f:
         f.write(json_data)
 
 
@@ -199,7 +199,7 @@ FROM (
 
     json_data = cur.fetchall()[0][0]
 
-    with open(os.path.join(outdir, "play_time.json"), "w") as f:
+    with open(os.path.join(outdir, "play_time.json"), "w", encoding="utf-8") as f:
         f.write(json_data)
 
 
@@ -225,7 +225,7 @@ FROM (
 
     json_data = cur.fetchall()[0][0]
 
-    with open(os.path.join(outdir, "player.json"), "w") as f:
+    with open(os.path.join(outdir, "player.json"), "w", encoding="utf-8") as f:
         f.write(json_data)
 
 
@@ -270,7 +270,7 @@ FROM (
 
     json_data = cur.fetchall()[0][0]
 
-    with open(os.path.join(outdir, "preference.json"), "w") as f:
+    with open(os.path.join(outdir, "preference.json"), "w", encoding="utf-8") as f:
         f.write(json_data)
 
 
@@ -296,7 +296,7 @@ FROM (
 
     json_data = cur.fetchall()[0][0]
 
-    with open(os.path.join(outdir, "server_ban.json"), "w") as f:
+    with open(os.path.join(outdir, "server_ban.json"), "w", encoding="utf-8") as f:
         f.write(json_data)
 
 
@@ -322,7 +322,7 @@ FROM (
 
     json_data = cur.fetchall()[0][0]
 
-    with open(os.path.join(outdir, "server_role_ban.json"), "w") as f:
+    with open(os.path.join(outdir, "server_role_ban.json"), "w", encoding="utf-8") as f:
         f.write(json_data)
 
 
@@ -344,7 +344,7 @@ FROM (
 
     json_data = cur.fetchall()[0][0]
 
-    with open(os.path.join(outdir, "uploaded_resource_log.json"), "w") as f:
+    with open(os.path.join(outdir, "uploaded_resource_log.json"), "w", encoding="utf-8") as f:
         f.write(json_data)
 
 
@@ -366,7 +366,7 @@ FROM (
 
     json_data = cur.fetchall()[0][0]
 
-    with open(os.path.join(outdir, "whitelist.json"), "w") as f:
+    with open(os.path.join(outdir, "whitelist.json"), "w", encoding="utf-8") as f:
         f.write(json_data)
 
 
