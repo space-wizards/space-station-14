@@ -1,7 +1,6 @@
 using Content.Server.Electrocution;
 using Content.Server.Power.Components;
 using Content.Server.Wires;
-using Content.Shared.Electrocution;
 using Content.Shared.Power;
 using Content.Shared.Wires;
 
