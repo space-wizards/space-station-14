@@ -1,10 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: 'Cleaned up random names, players should no longer get names that accidentally
-      break naming rules.', type: Fix}
-  id: 2849
-  time: '2023-01-10T12:45:07.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Fixed AHelp relay to discord not working., type: Fix}
@@ -2919,3 +2913,9 @@ Entries:
   - {message: Fixed base showcase robot in F5 (just remove it), type: Fix}
   id: 3348
   time: '2023-04-06T22:47:53.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: The mop and trash bag can now be inserted and removed from the janitorial
+      trolley by alt-clicking., type: Tweak}
+  id: 3349
+  time: '2023-04-06T22:49:27.0000000+00:00'
