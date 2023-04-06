@@ -1,10 +1,4 @@
 Entries:
-- author: Theomund
-  changes:
-  - {message: Resolved server and client bugs that affected the way crew manifest
-      entries were being sorted., type: Fix}
-  id: 2846
-  time: '2023-01-09T03:34:43.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fixed some unintended examine text on emitters., type: Fix}
@@ -2913,3 +2907,9 @@ Entries:
   - {message: 'Added personal access for detective, and detective airlocks.', type: Add}
   id: 3345
   time: '2023-04-06T02:48:04.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed RCD deconstruction being able to deconstruct almost any entity
+      and ignoring ammo requirements., type: Fix}
+  id: 3346
+  time: '2023-04-06T05:26:15.0000000+00:00'
