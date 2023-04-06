@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: All machines that can hold materials no longer destroy them on deconstruction.,
-    type: Add}
-  id: 2843
-  time: '2023-01-07T18:09:05.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Mugs now properly display the solutions inside of them., type: Fix}
@@ -2915,3 +2909,8 @@ Entries:
   - {message: Ghost role station pets can no longer suicide., type: Tweak}
   id: 3342
   time: '2023-04-06T00:48:02.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Removed Dwarf description, type: Remove}
+  id: 3343
+  time: '2023-04-06T00:53:41.0000000+00:00'
