@@ -6,6 +6,7 @@ namespace Content.Server.Electrocution;
 ///     Component for things that shock users on touch.
 /// </summary>
 [RegisterComponent]
+[Access(typeof(ElectrocutionSystem))]
 public sealed class ElectrifiedComponent : Component
 {
     [DataField("enabled")]
@@ -27,50 +28,50 @@ public sealed class ElectrifiedComponent : Component
     public bool OnInteractUsing = true;
 
     [DataField("requirePower")]
-    public bool RequirePower { get; } = true;
+    public bool RequirePower = true;
 
     [DataField("usesApcPower")]
-    public bool UsesApcPower { get; } = false;
+    public bool UsesApcPower = false;
 
     [DataField("highVoltageNode")]
-    public string? HighVoltageNode { get; }
+    public string? HighVoltageNode;
 
     [DataField("mediumVoltageNode")]
-    public string? MediumVoltageNode { get; }
+    public string? MediumVoltageNode;
 
     [DataField("lowVoltageNode")]
-    public string? LowVoltageNode { get; }
+    public string? LowVoltageNode;
 
     [DataField("highVoltageDamageMultiplier")]
-    public float HighVoltageDamageMultiplier { get; } = 3f;
+    public float HighVoltageDamageMultiplier = 3f;
 
     [DataField("highVoltageTimeMultiplier")]
-    public float HighVoltageTimeMultiplier { get; } = 1.5f;
+    public float HighVoltageTimeMultiplier = 1.5f;
 
     [DataField("mediumVoltageDamageMultiplier")]
-    public float MediumVoltageDamageMultiplier { get; } = 2f;
+    public float MediumVoltageDamageMultiplier = 2f;
 
     [DataField("mediumVoltageTimeMultiplier")]
-    public float MediumVoltageTimeMultiplier { get; } = 1.25f;
+    public float MediumVoltageTimeMultiplier = 1.25f;
 
     [DataField("shockDamage")]
-    public int ShockDamage { get; } = 20;
+    public int ShockDamage = 20;
 
     /// <summary>
     ///     Shock time, in seconds.
     /// </summary>
     [DataField("shockTime")]
-    public float ShockTime { get; } = 8f;
+    public float ShockTime = 8f;
 
     [DataField("siemensCoefficient")]
-    public float SiemensCoefficient { get; } = 1f;
+    public float SiemensCoefficient = 1f;
 
     [DataField("shockNoises")]
-    public SoundSpecifier ShockNoises { get; } = new SoundCollectionSpecifier("sparks");
+    public SoundSpecifier ShockNoises = new SoundCollectionSpecifier("sparks");
 
     [DataField("playSoundOnShock")]
-    public bool PlaySoundOnShock { get; } = true;
+    public bool PlaySoundOnShock = true;
 
     [DataField("shockVolume")]
-    public float ShockVolume { get; } = 20;
+    public float ShockVolume = 20;
 }
