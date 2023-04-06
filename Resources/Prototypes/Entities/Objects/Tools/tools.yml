@@ -273,7 +273,7 @@
   suffix: Empty
   components:
   - type: RCD
-    ammo: 0
+    charges: 0
 
 - type: entity
   name: RCD Ammo
