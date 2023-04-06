@@ -28,6 +28,7 @@
       key: puddles
       base: splat
       mode: CardinalFlags
+    - type: Puddle
     - type: Appearance
     - type: EdgeSpreader
     - type: NodeContainer

@@ -258,7 +258,7 @@ public sealed class SpreaderSystem : EntitySystem
                     // Check if air direction matters.
                     var blocked = false;
 
-                    foreach (var value in Enum.GetValues<AtmosDirection>())
+                    foreach (var value in new[] { AtmosDirection.North, AtmosDirection.East})
                     {
                         if ((value & airtight.AirBlockedDirection) == 0x0)
                             continue;

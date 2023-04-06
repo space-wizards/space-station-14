@@ -31,7 +31,7 @@ public sealed class FoamVisualizerSystem : VisualizerSystem<FoamVisualsComponent
 
         while (query.MoveNext(out var uid, out var comp, out var despawn))
         {
-            if (despawn.Lifetime > 10f)
+            if (despawn.Lifetime > 1f)
                 continue;
 
             // Despawn animation.
