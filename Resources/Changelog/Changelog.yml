@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Prying tiles now removes the decals on them., type: Fix}
-  id: 2842
-  time: '2023-01-07T10:24:50.0000000+00:00'
 - author: Rane
   changes:
   - {message: All machines that can hold materials no longer destroy them on deconstruction.,
@@ -2915,3 +2910,8 @@ Entries:
       crewmates after a certain reality-bending event occurred some time ago., type: Fix}
   id: 3341
   time: '2023-04-05T23:41:11.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Ghost role station pets can no longer suicide., type: Tweak}
+  id: 3342
+  time: '2023-04-06T00:48:02.0000000+00:00'
