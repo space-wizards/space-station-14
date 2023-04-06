@@ -121,3 +121,5 @@
     - Write
   - type: DisarmMalus
     malus: 0
+  - type: TraitorExamine
+    message: There is a laser emitter contained inside.

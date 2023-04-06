@@ -243,3 +243,6 @@
     delay: 0.5
   - type: StaticPrice # A new shitcurity meta
     price: 75
+  # if you need this to identify a hypopen you're a bit slow...
+  - type: TraitorExamine
+    message: There is a small needle inside.

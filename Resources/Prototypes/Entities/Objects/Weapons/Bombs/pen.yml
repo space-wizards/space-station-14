@@ -16,3 +16,5 @@
     canCreateVacuum: false
   - type: ActivateOnPaperOpened
   - type: ExplodeOnTrigger
+  - type: TraitorExamine
+    message: There is an explosive contained inside.
