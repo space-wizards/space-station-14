@@ -354,9 +354,9 @@
   description: A box full of beanbag shots, designed for riot shotguns.
   components:
     - type: StorageFill
-    contents:
-      - id: ShellShotgunBeanbag
-        amount: 12
+      contents:
+        - id: ShellShotgunBeanbag
+          amount: 12
     - type: Sprite
       layers:
         - state: boxwide
@@ -369,9 +369,9 @@
   description: A box full of lethal pellet shots, designed for riot shotguns.
   components:
     - type: StorageFill
-    contents:
-      - id: ShellShotgun
-        amount: 12
+      contents:
+        - id: ShellShotgun
+          amount: 12
     - type: Sprite
       layers:
         - state: boxwide
@@ -384,9 +384,9 @@
   description: A box full of shotgun slugs, designed for riot shotguns.
   components:
     - type: StorageFill
-    contents:
-      - id: ShellShotgunSlug
-        amount: 12
+      contents:
+        - id: ShellShotgunSlug
+          amount: 12
     - type: Sprite
       layers:
         - state: boxwide
@@ -399,9 +399,9 @@
   description: A box full of shotgun flare cartridges, designed for riot shotguns.
   components:
     - type: StorageFill
-    contents:
-      - id: ShellShotgunFlare
-        amount: 12
+      contents:
+        - id: ShellShotgunFlare
+          amount: 12
     - type: Sprite
       layers:
         - state: boxwide
@@ -414,9 +414,9 @@
   description: A box full of shotgun incendiary cartridges, designed for riot shotguns.
   components:
     - type: StorageFill
-    contents:
-      - id: ShellShotgunIncendiary
-        amount: 12
+      contents:
+        - id: ShellShotgunIncendiary
+          amount: 12
     - type: Sprite
       layers:
         - state: boxwide
@@ -429,9 +429,9 @@
   description: A box full of shotgun practice cartridges, designed for riot shotguns.
   components:
     - type: StorageFill
-    contents:
-      - id: ShellShotgunPractice
-        amount: 12
+      contents:
+        - id: ShellShotgunPractice
+          amount: 12
     - type: Sprite
       layers:
         - state: boxwide
@@ -444,9 +444,9 @@
   description: A box full of tranquilizer cartridges, designed for riot shotguns.
   components:
     - type: StorageFill
-    contents:
-      - id: ShellTranquilizer
-        amount: 12
+      contents:
+        - id: ShellTranquilizer
+          amount: 12
     - type: Sprite
       layers:
         - state: boxwide
