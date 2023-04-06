@@ -265,7 +265,7 @@ namespace Content.Server.Disease
         {
             if (TryComp<DiseaseCarrierComponent>(uid, out var carrier))
             {
-                SneezeCough(uid, _random.Pick(carrier.Diseases), String.Empty);
+                SneezeCough(uid, _random.Pick(carrier.Diseases), string.Empty);
             }
         }
 
