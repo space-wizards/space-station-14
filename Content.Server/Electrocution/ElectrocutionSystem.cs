@@ -43,6 +43,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private readonly NodeGroupSystem _nodeGroup = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     private const string StatusEffectKey = "Electrocution";
     private const string DamageType = "Shock";
@@ -449,7 +450,6 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         {
             return;
         }
-
-        SoundSystem.Play(electrified.ShockNoises.GetSound(), Filter.Pvs(targetUid), targetUid, AudioParams.Default.WithVolume(electrified.ShockVolume));
+        _audio.PlayPvs(electrified.ShockNoises, targetUid, AudioParams.Default.WithVolume(electrified.ShockVolume));
     }
 }
