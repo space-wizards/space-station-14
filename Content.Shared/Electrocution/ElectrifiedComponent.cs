@@ -1,11 +1,12 @@
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Electrocution;
+namespace Content.Shared.Electrocution;
 
 /// <summary>
 ///     Component for things that shock users on touch.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed class ElectrifiedComponent : Component
 {
     [ViewVariables]
