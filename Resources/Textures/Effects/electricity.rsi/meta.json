@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/3094b8aa344cd5e206d63d0be9fa9fa1063c8f05",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "electricity",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          1.5,
+          0.1,
+          0.1,
+          1.5,
+          0.1,
+          0.1,
+          1.5,
+          0.1,
+          0.1,
+          1.5
+        ]
+      ]
+    }
+  ]
+}

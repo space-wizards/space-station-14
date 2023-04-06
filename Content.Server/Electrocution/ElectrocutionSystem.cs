@@ -47,6 +47,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
     private const string StatusEffectKey = "Electrocution";
     private const string DamageType = "Shock";
+    private const string ElectricityEffectPrototype = "EffectElectricity";
 
     // Yes, this is absurdly small for a reason.
     private const float ElectrifiedDamagePerWatt = 0.0015f;
@@ -117,6 +118,8 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         while (query.MoveNext(out var uid, out var electrified, out var transform))
         {
             electrified.Active = IsActive(uid, electrified, transform);
+            if (electrified.Active)
+                Spawn(ElectricityEffectPrototype, transform.Coordinates);
         }
     }
 

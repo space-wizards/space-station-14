@@ -1,0 +1,20 @@
+- type: entity
+  id: EffectElectricity
+  noSpawn: true
+  components:
+  - type: TimedDespawn
+    lifetime: 6.8
+  - type: Sprite
+    netsync: false
+    drawdepth: Effects
+    noRot: true
+    layers:
+      - shader: unshaded
+        map: ["enum.EffectLayers.Unshaded"]
+        sprite: Effects/electricity.rsi
+        state: electricity
+  - type: EffectVisuals
+  - type: Tag
+    tags:
+      - HideContextMenu
+  - type: AnimationPlayer
