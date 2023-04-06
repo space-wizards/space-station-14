@@ -28,6 +28,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Electrocution;
+
 public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 {
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
@@ -80,10 +81,10 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         var query = AllEntityQuery<ElectrocutionComponent, PowerConsumerComponent>();
         while (query.MoveNext(out var uid, out var electrocution, out var consumer))
         {
-            var ftAdjusted = Math.Min(frameTime, electrocution.TimeLeft);
+            var timePassed = Math.Min(frameTime, electrocution.TimeLeft);
 
-            electrocution.TimeLeft -= ftAdjusted;
-            electrocution.AccumulatedDamage += consumer.ReceivedPower * ElectrifiedDamagePerWatt * ftAdjusted;
+            electrocution.TimeLeft -= timePassed;
+            electrocution.AccumulatedDamage += consumer.ReceivedPower * ElectrifiedDamagePerWatt * timePassed;
 
             if (!MathHelper.CloseTo(electrocution.TimeLeft, 0))
                 continue;
@@ -128,7 +129,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         if (!electrified.OnInteractUsing)
             return;
 
-        var siemens = TryComp(args.Used, out InsulatedComponent? insulation)
+        var siemens = TryComp<InsulatedComponent>(args.Used, out var insulation)
             ? insulation.SiemensCoefficient
             : 1;
 
