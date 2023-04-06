@@ -77,7 +77,11 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
     public override void Update(float frameTime)
     {
-        // Update "in progress" electrocutions
+        UpdateElectrocutions(frameTime);
+    }
+
+    private void UpdateElectrocutions(float frameTime)
+    {
         var query = AllEntityQuery<ElectrocutionComponent, PowerConsumerComponent>();
         while (query.MoveNext(out var uid, out var electrocution, out var consumer))
         {
@@ -103,6 +107,34 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
                 }
             }
             EntityManager.DeleteEntity(uid);
+        }
+    }
+
+    private void UpdateState()
+    {
+        var query = AllEntityQuery<ElectrifiedComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var electrified, out var transform))
+        {
+            if (!electrified.Enabled)
+                goto deactivated;
+            if (electrified.NoWindowInTile)
+            {
+                foreach (var entity in transform.Coordinates.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.Static, _entityLookup))
+                {
+                    if (_tag.HasTag(entity, "Window"))
+                        goto deactivated;
+                }
+            }
+            if (electrified.UsesApcPower && !this.IsPowered(uid, EntityManager))
+                goto deactivated;
+            if (electrified.RequirePower && PoweredNode(uid, electrified) == null)
+                goto deactivated;
+
+            electrified.Active = true;
+            continue;
+
+        deactivated:
+            electrified.Active = false;
         }
     }
 
@@ -145,17 +177,8 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         if (!Resolve(uid, ref electrified, ref transform, false))
             return false;
 
-        if (!electrified.Enabled)
+        if (!electrified.Active)
             return false;
-
-        if (electrified.NoWindowInTile)
-        {
-            foreach (var entity in transform.Coordinates.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.Static, _entityLookup))
-            {
-                if (_tag.HasTag(entity, "Window"))
-                    return false;
-            }
-        }
 
         siemens *= electrified.SiemensCoefficient;
         if (siemens <= 0 || !DoCommonElectrocutionAttempt(targetUid, uid, ref siemens))
@@ -165,14 +188,6 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         GetChainedElectrocutionTargets(targetUid, targets);
         if (!electrified.RequirePower || electrified.UsesApcPower)
         {
-            // Does it use APC power for its electrification check? Check if it's powered, and then
-            // attempt an electrocution if all the checks succeed.
-
-            if (electrified.UsesApcPower && !this.IsPowered(uid, EntityManager))
-            {
-                return false;
-            }
-
             var lastRet = true;
             for (var i = targets.Count - 1; i >= 0; i--)
             {
@@ -186,17 +201,10 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
                     electrified.SiemensCoefficient
                 );
             }
-
             return lastRet;
         }
 
-        if (!Resolve(uid, ref nodeContainer, false))
-            return false;
-
-        var node = TryNode(electrified.HighVoltageNode) ??
-                   TryNode(electrified.MediumVoltageNode) ??
-                   TryNode(electrified.LowVoltageNode);
-
+        var node = PoweredNode(uid, electrified, nodeContainer);
         if (node == null)
             return false;
 
@@ -223,7 +231,14 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             }
             return lastRet;
         }
+    }
 
+    private Node? PoweredNode(EntityUid uid, ElectrifiedComponent electrified, NodeContainerComponent? nodeContainer = null)
+    {
+        if (!Resolve(uid, ref nodeContainer, false))
+            return null;
+
+        return TryNode(electrified.HighVoltageNode) ?? TryNode(electrified.MediumVoltageNode) ?? TryNode(electrified.LowVoltageNode);
 
         Node? TryNode(string? id)
         {
