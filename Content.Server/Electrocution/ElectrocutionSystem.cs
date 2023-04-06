@@ -112,30 +112,31 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
     private void UpdateState()
     {
-        var query = AllEntityQuery<ElectrifiedComponent, TransformComponent>();
+        var query = EntityQueryEnumerator<ElectrifiedComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var electrified, out var transform))
         {
-            if (!electrified.Enabled)
-                goto deactivated;
-            if (electrified.NoWindowInTile)
-            {
-                foreach (var entity in transform.Coordinates.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.Static, _entityLookup))
-                {
-                    if (_tag.HasTag(entity, "Window"))
-                        goto deactivated;
-                }
-            }
-            if (electrified.UsesApcPower && !this.IsPowered(uid, EntityManager))
-                goto deactivated;
-            if (electrified.RequirePower && PoweredNode(uid, electrified) == null)
-                goto deactivated;
-
-            electrified.Active = true;
-            continue;
-
-        deactivated:
-            electrified.Active = false;
+            electrified.Active = IsActive(uid, electrified, transform);
         }
+    }
+
+    private bool IsActive(EntityUid uid, ElectrifiedComponent electrified, TransformComponent transform)
+    {
+        if (!electrified.Enabled)
+            return false;
+        if (electrified.NoWindowInTile)
+        {
+            foreach (var entity in transform.Coordinates.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.Static, _entityLookup))
+            {
+                if (_tag.HasTag(entity, "Window"))
+                    return false;
+            }
+        }
+        if (electrified.UsesApcPower && !this.IsPowered(uid, EntityManager))
+            return false;
+        if (electrified.RequirePower && PoweredNode(uid, electrified) == null)
+            return false;
+
+        return true;
     }
 
     private void OnElectrifiedStartCollide(EntityUid uid, ElectrifiedComponent electrified, ref StartCollideEvent args)
