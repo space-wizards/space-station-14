@@ -65,14 +65,6 @@
     excess: 200
   - type: Bloodstream
     bloodReagent: FluorosulfuricAcid
-    bloodlossDamage:
-      types:
-        Bloodloss:
-          1
-    bloodlossHealDamage:
-      types:
-        Bloodloss:
-          -0.25
   - type: MeleeWeapon
     hidden: true
     angle: 0

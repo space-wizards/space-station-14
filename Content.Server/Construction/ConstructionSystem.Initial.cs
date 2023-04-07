@@ -2,8 +2,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Construction.Components;
-using Content.Server.DoAfter;
-using Content.Server.Hands.Components;
 using Content.Server.Storage.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Construction;
@@ -12,11 +10,11 @@ using Content.Shared.Construction.Steps;
 using Content.Shared.Coordinates;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
+using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
 
@@ -227,13 +225,15 @@ namespace Content.Server.Construction
                 return null;
             }
 
-            var doAfterArgs = new DoAfterEventArgs(user, doAfterTime)
+            var doAfterArgs = new DoAfterArgs(user, doAfterTime, new AwaitedDoAfterEvent(), null)
             {
                 BreakOnDamage = true,
-                BreakOnStun = true,
                 BreakOnTargetMove = false,
                 BreakOnUserMove = true,
                 NeedHand = false,
+                // allow simultaneously starting several construction jobs using the same stack of materials.
+                CancelDuplicate = false,
+                BlockDuplicate = false,
             };
 
             if (await _doAfterSystem.WaitDoAfter(doAfterArgs) == DoAfterStatus.Cancelled)
@@ -482,13 +482,13 @@ namespace Content.Server.Construction
 
             // We do this to be able to move the construction to its proper position in case it's anchored...
             // Oh wow transform anchoring is amazing wow I love it!!!!
-            var wasAnchored = EntityManager.GetComponent<TransformComponent>(structure).Anchored;
-            EntityManager.GetComponent<TransformComponent>(structure).Anchored = false;
-
-            EntityManager.GetComponent<TransformComponent>(structure).Coordinates = ev.Location;
-            EntityManager.GetComponent<TransformComponent>(structure).LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
-
-            EntityManager.GetComponent<TransformComponent>(structure).Anchored = wasAnchored;
+            // ikr
+            var xform = Transform(structure);
+            var wasAnchored = xform.Anchored;
+            xform.Anchored = false;
+            xform.Coordinates = ev.Location;
+            xform.LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
+            xform.Anchored = wasAnchored;
 
             RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
             _adminLogger.Add(LogType.Construction, LogImpact.Low, $"{ToPrettyString(user):player} has turned a {ev.PrototypeName} construction ghost into {ToPrettyString(structure)} at {Transform(structure).Coordinates}");

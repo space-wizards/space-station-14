@@ -1,7 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Client.Animations;
 using Content.Client.Examine;
 using Content.Client.Strip;
-using Content.Client.Verbs;
+using Content.Client.Verbs.UI;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -9,13 +10,11 @@ using Content.Shared.Item;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Client.UserInterface;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
-using System.Diagnostics.CodeAnalysis;
-using Content.Client.Verbs.UI;
-using Robust.Client.UserInterface;
 
 namespace Content.Client.Hands.Systems
 {
@@ -44,8 +43,8 @@ namespace Content.Client.Hands.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SharedHandsComponent, EntRemovedFromContainerMessage>(HandleItemRemoved);
-            SubscribeLocalEvent<SharedHandsComponent, EntInsertedIntoContainerMessage>(HandleItemAdded);
+            SubscribeLocalEvent<HandsComponent, EntRemovedFromContainerMessage>(HandleItemRemoved);
+            SubscribeLocalEvent<HandsComponent, EntInsertedIntoContainerMessage>(HandleItemAdded);
 
             SubscribeLocalEvent<HandsComponent, PlayerAttachedEvent>(HandlePlayerAttached);
             SubscribeLocalEvent<HandsComponent, PlayerDetachedEvent>(HandlePlayerDetached);
@@ -142,7 +141,7 @@ namespace Content.Client.Hands.Systems
             OnPlayerHandsAdded?.Invoke(hands);
         }
 
-        public override void DoDrop(EntityUid uid, Hand hand, bool doDropInteraction = true, SharedHandsComponent? hands = null)
+        public override void DoDrop(EntityUid uid, Hand hand, bool doDropInteraction = true, HandsComponent? hands = null)
         {
             base.DoDrop(uid, hand, doDropInteraction, hands);
 
@@ -252,7 +251,7 @@ namespace Content.Client.Hands.Systems
 
         #region visuals
 
-        private void HandleItemAdded(EntityUid uid, SharedHandsComponent handComp, ContainerModifiedMessage args)
+        private void HandleItemAdded(EntityUid uid, HandsComponent handComp, ContainerModifiedMessage args)
         {
             if (!handComp.Hands.TryGetValue(args.Container.ID, out var hand))
                 return;
@@ -268,7 +267,7 @@ namespace Content.Client.Hands.Systems
                 OnPlayerHandBlocked?.Invoke(hand.Name);
         }
 
-        private void HandleItemRemoved(EntityUid uid, SharedHandsComponent handComp, ContainerModifiedMessage args)
+        private void HandleItemRemoved(EntityUid uid, HandsComponent handComp, ContainerModifiedMessage args)
         {
             if (!handComp.Hands.TryGetValue(args.Container.ID, out var hand))
                 return;
@@ -393,12 +392,12 @@ namespace Content.Client.Hands.Systems
         }
         #endregion
 
-        private void AddHand(EntityUid uid, Hand newHand, SharedHandsComponent? handsComp = null)
+        private void AddHand(EntityUid uid, Hand newHand, HandsComponent? handsComp = null)
         {
             AddHand(uid, newHand.Name, newHand.Location, handsComp);
         }
 
-        public override void AddHand(EntityUid uid, string handName, HandLocation handLocation, SharedHandsComponent? handsComp = null)
+        public override void AddHand(EntityUid uid, string handName, HandLocation handLocation, HandsComponent? handsComp = null)
         {
             base.AddHand(uid, handName, handLocation, handsComp);
 
@@ -411,7 +410,7 @@ namespace Content.Client.Hands.Systems
             if (handsComp.ActiveHand == null)
                 SetActiveHand(uid, handsComp.Hands[handName], handsComp);
         }
-        public override void RemoveHand(EntityUid uid, string handName, SharedHandsComponent? handsComp = null)
+        public override void RemoveHand(EntityUid uid, string handName, HandsComponent? handsComp = null)
         {
             if (uid == _playerManager.LocalPlayer?.ControlledEntity && handsComp != null &&
                 handsComp.Hands.ContainsKey(handName) && uid ==
@@ -423,7 +422,7 @@ namespace Content.Client.Hands.Systems
             base.RemoveHand(uid, handName, handsComp);
         }
 
-        private void OnHandActivated(SharedHandsComponent? handsComponent)
+        private void OnHandActivated(HandsComponent? handsComponent)
         {
             if (handsComponent == null)
                 return;
