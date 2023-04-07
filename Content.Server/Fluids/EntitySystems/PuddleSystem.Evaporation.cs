@@ -9,7 +9,11 @@ namespace Content.Server.Fluids.EntitySystems;
 public sealed partial class PuddleSystem
 {
     private static readonly TimeSpan EvaporationCooldown = TimeSpan.FromSeconds(1);
-    private static readonly FixedPoint2 EvaporationAmount = FixedPoint2.New(1);
+
+    /// <summary>
+    /// Assuming puddle is 20 units then ~1 minute for it to evaporate.
+    /// </summary>
+    private static readonly FixedPoint2 EvaporationAmount = FixedPoint2.New(0.3);
 
     public const string EvaporationReagent = "Water";
 

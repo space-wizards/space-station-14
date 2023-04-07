@@ -136,7 +136,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
 
         if (nonWater.Volume == FixedPoint2.Zero && absorberSoln.AvailableVolume == FixedPoint2.Zero)
         {
-            // TODO: Popup for no space.
+            _popups.PopupEntity(Loc.GetString("mopping-system-puddle-space", ("used", used)), user, user);
             return false;
         }
 
@@ -170,7 +170,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         // Check if the puddle has any non-evaporative reagents
         if (_puddleSystem.CanFullyEvaporate(puddleSolution))
         {
-            _popups.PopupEntity(Loc.GetString("mopping-system-puddle-evaporate"), user);
+            _popups.PopupEntity(Loc.GetString("mopping-system-puddle-evaporate", ("target", target)), user, user);
             return true;
         }
 
@@ -180,7 +180,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         // No material
         if (available == FixedPoint2.Zero)
         {
-            // TODO: Popup
+            _popups.PopupEntity(Loc.GetString("mopping-system-no-water", ("used", used)), user, user);
             return true;
         }
 
