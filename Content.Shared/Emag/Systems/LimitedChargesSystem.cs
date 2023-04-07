@@ -86,7 +86,7 @@ public sealed class LimitedChargesSystem : EntitySystem
     /// </summary>
     public void UseCharge(EntityUid uid, LimitedChargesComponent comp)
     {
-        var startCooldown = comp.Charges == comp.MaxCharges;
+        var startRecharge = comp.Charges == comp.MaxCharges;
         AddCharges(comp, -1);
 
         // start the recharge time after first use at full charge
