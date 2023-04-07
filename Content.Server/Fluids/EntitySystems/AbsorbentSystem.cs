@@ -69,6 +69,13 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
             component.Progress[reagentProto.SubstanceColor] = existing;
         }
 
+        var remainder = solution.AvailableVolume;
+
+        if (remainder > FixedPoint2.Zero)
+        {
+            component.Progress[Color.DarkGray] = remainder.Float();
+        }
+
         if (component.Progress.Equals(oldProgress))
             return;
 
@@ -118,7 +125,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         {
             var msg = Loc.GetString("mopping-system-target-container-empty", ("target", target));
             _popups.PopupEntity(msg, user, user);
-            return true;
+            return false;
         }
 
         // Remove the non-water reagents.
@@ -129,7 +136,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         if (nonWater.Volume == FixedPoint2.Zero && absorberSoln.AvailableVolume == FixedPoint2.Zero)
         {
             // TODO: Popup for no space.
-            return true;
+            return false;
         }
 
         var transferAmount = component.PickupAmount < absorberSoln.AvailableVolume ?
@@ -186,7 +193,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
 
         _solutionSystem.UpdateChemicals(used, absorberSoln);
         _solutionSystem.UpdateChemicals(target, puddleSolution);
-        _audio.PlayPvs(absorber.TransferSound, target);
+        _audio.PlayPvs(absorber.PickupSound, target);
         return true;
     }
 }

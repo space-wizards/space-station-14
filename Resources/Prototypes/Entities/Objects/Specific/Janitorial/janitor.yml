@@ -24,7 +24,9 @@
   - type: SolutionContainerManager
     solutions:
       absorbed:
-        maxVol: 50
+        maxVol: 100
+  - type: UseDelay
+    delay: 1.5
   - type: Tag
     tags:
       - DroneUsable #No bucket because it holds chems, they can drag the cart or use a drain
@@ -47,9 +49,9 @@
       size: 15
       sprite: Objects/Specific/Janitorial/advmop.rsi
     - type: Absorbent
-      maxEntities: 3
-      pickupAmount: 25
-      speed: 12.5
+      pickupAmount: 150
+    - type: UseDelay
+      delay: 1.0
     - type: SolutionContainerManager
       solutions:
         absorbed:

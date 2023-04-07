@@ -19,7 +19,7 @@ public sealed class AbsorbentComponent : Component
     /// How much solution we can transfer in one interaction.
     /// </summary>
     [DataField("pickupAmount")]
-    public FixedPoint2 PickupAmount = FixedPoint2.New(50);
+    public FixedPoint2 PickupAmount = FixedPoint2.New(100);
 
     [DataField("pickupSound")]
     public SoundSpecifier PickupSound = new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg");
