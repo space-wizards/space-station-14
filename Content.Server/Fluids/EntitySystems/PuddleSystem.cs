@@ -36,6 +36,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly ReactiveSystem _reactive = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
     [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
@@ -62,6 +63,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         SubscribeLocalEvent<PuddleComponent, SolutionChangedEvent>(OnSolutionUpdate);
         SubscribeLocalEvent<PuddleComponent, ComponentInit>(OnPuddleInit);
         SubscribeLocalEvent<PuddleComponent, SpreadNeighborsEvent>(OnPuddleSpread);
+        SubscribeLocalEvent<PuddleComponent, SlipEvent>(OnPuddleSlip);
 
         SubscribeLocalEvent<EvaporationComponent, MapInitEvent>(OnEvaporationMapInit);
 
@@ -175,6 +177,29 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                     break;
             }
         }
+    }
+
+    private void OnPuddleSlip(EntityUid uid, PuddleComponent component, ref SlipEvent args)
+    {
+        // Reactive entities have a chance to get a touch reaction from slipping on a puddle
+        // (i.e. it is implied they fell face first onto it or something)
+        if (!HasComp<ReactiveComponent>(args.Slipped))
+            return;
+
+        // Eventually probably have some system of 'body coverage' to tweak the probability but for now just 0.5
+        // (implying that spacemen have a 50% chance to either land on their ass or their face)
+        if (!_random.Prob(0.5f))
+            return;
+
+        if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var solution))
+            return;
+
+        _popups.PopupEntity(Loc.GetString("puddle-component-slipped-touch-reaction", ("puddle", uid)),
+            args.Slipped, args.Slipped, PopupType.SmallCaution);
+
+        // Take 15% of the puddle solution
+        var splitSol = _solutionContainerSystem.SplitSolution(uid, solution, solution.Volume * 0.15f);
+        _reactive.DoEntityReaction(args.Slipped, splitSol, ReactionMethod.Touch);
     }
 
     public override void Update(float frameTime)

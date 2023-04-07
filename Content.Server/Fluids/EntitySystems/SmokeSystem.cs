@@ -237,10 +237,10 @@ public sealed class SmokeSystem : EntitySystem
             ReactWithEntity(entity, solution, solutionFraction);
         }
 
-        UpdateVisuals(uid, component);
+        UpdateVisuals(uid);
     }
 
-    private void UpdateVisuals(EntityUid uid, SmokeComponent component)
+    private void UpdateVisuals(EntityUid uid)
     {
         if (TryComp(uid, out AppearanceComponent? appearance) &&
             _solutionSystem.TryGetSolution(uid, SmokeComponent.SolutionName, out var solution))
@@ -301,6 +301,6 @@ public sealed class SmokeSystem : EntitySystem
 
         _solutionSystem.TryAddSolution(uid, solutionArea, addSolution);
 
-        UpdateVisuals(uid, component);
+        UpdateVisuals(uid);
     }
 }
