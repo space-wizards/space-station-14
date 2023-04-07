@@ -4,6 +4,7 @@ id-card-access-level-head-of-personnel = Head of Personnel
 
 id-card-access-level-head-of-security = Head of Security
 id-card-access-level-security = Security
+id-card-access-level-detective = Detective
 id-card-access-level-armory = Armory
 id-card-access-level-brig = Brig
 
