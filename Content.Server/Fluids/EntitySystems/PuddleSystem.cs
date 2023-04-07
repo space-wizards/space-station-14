@@ -197,7 +197,7 @@ public sealed partial class PuddleSystem : EntitySystem
         }
 
         _deletionQueue.Remove(uid);
-        UpdateSlip(uid, args.Solution);
+        UpdateSlip(uid, component, args.Solution);
         UpdateEvaporation(uid, args.Solution);
         UpdateAppearance(uid, component);
     }
@@ -222,9 +222,12 @@ public sealed partial class PuddleSystem : EntitySystem
         _appearance.SetData(uid, PuddleVisuals.SolutionColor, color, appearance);
     }
 
-    private void UpdateSlip(EntityUid entityUid, Solution solution)
+    private void UpdateSlip(EntityUid entityUid, PuddleComponent component, Solution solution)
     {
         var isSlippery = false;
+        // The base sprite is currently at 0.3 so we require at least 2nd tier to be slippery or else it's too hard to see.
+        var amountRequired = FixedPoint2.New(component.OverflowVolume.Float() * 0.3f);
+        var slipperyAmount = FixedPoint2.Zero;
 
         foreach (var reagent in solution.Contents)
         {
@@ -232,8 +235,13 @@ public sealed partial class PuddleSystem : EntitySystem
 
             if (reagentProto.Slippery)
             {
-                isSlippery = true;
-                break;
+                slipperyAmount += reagent.Quantity;
+
+                if (slipperyAmount > amountRequired)
+                {
+                    isSlippery = true;
+                    break;
+                }
             }
         }
 
@@ -253,6 +261,27 @@ public sealed partial class PuddleSystem : EntitySystem
         if (TryComp<StepTriggerComponent>(uid, out var slippery) && slippery.Active)
         {
             args.PushMarkup(Loc.GetString("puddle-component-examine-is-slipper-text"));
+        }
+
+        if (HasComp<EvaporationComponent>(uid))
+        {
+            if (_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var solution) &&
+                CanFullyEvaporate(solution))
+            {
+                args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating"));
+            }
+            else if (solution?.ContainsReagent(EvaporationReagent) == true)
+            {
+                args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-partial"));
+            }
+            else
+            {
+                args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-no"));
+            }
+        }
+        else
+        {
+            args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-no"));
         }
     }
 

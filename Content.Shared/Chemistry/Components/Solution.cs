@@ -435,8 +435,8 @@ namespace Content.Shared.Chemistry.Components
         public Solution SplitSolutionWithout(FixedPoint2 toTake, string without)
         {
             TryGetReagent(without, out var existing);
+            RemoveReagent(without, toTake);
             var sol = SplitSolution(toTake);
-            sol.RemoveReagent(without, toTake);
             AddReagent(without, existing);
             return sol;
         }
