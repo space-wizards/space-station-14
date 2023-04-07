@@ -24,8 +24,11 @@ public sealed class DoorSystem : SharedDoorSystem
 
     protected override void OnComponentInit(EntityUid uid, DoorComponent comp, ComponentInit args)
     {
-        comp.OpenSpriteStates = new(new (DoorVisualLayers, string)[1]{(DoorVisualLayers.Base, comp.OpenSpriteState)});
-        comp.ClosedSpriteStates = new(new (DoorVisualLayers, string)[1]{(DoorVisualLayers.Base, comp.ClosedSpriteState)});
+        comp.OpenSpriteStates = new(2);
+        comp.ClosedSpriteStates = new(2);
+
+        comp.OpenSpriteStates.Add((DoorVisualLayers.Base, comp.OpenSpriteState));
+        comp.ClosedSpriteStates.Add((DoorVisualLayers.Base, comp.ClosedSpriteState));
 
         comp.OpeningAnimation = new Animation()
         {

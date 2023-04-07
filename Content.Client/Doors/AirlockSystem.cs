@@ -9,7 +9,6 @@ namespace Content.Client.Doors;
 public sealed class AirlockSystem : SharedAirlockSystem
 {
     [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
-    [Dependency] private readonly AnimationPlayerSystem _animationSystem = default!;
 
     public override void Initialize()
     {
@@ -24,7 +23,8 @@ public sealed class AirlockSystem : SharedAirlockSystem
         if(!TryComp<DoorComponent>(uid, out var door))
             return;
         
-        door.OpenSpriteStates.Add((DoorVisualLayers.BaseUnlit, comp.OpenSpriteState));
+        if (comp.OpenUnlitVisible) // Otherwise there are flashes of the fallback sprite between clicking on the door and the door closing animation starting.
+            door.OpenSpriteStates.Add((DoorVisualLayers.BaseUnlit, comp.OpenSpriteState));
         door.ClosedSpriteStates.Add((DoorVisualLayers.BaseUnlit, comp.ClosedSpriteState));
 
         ((Animation)door.OpeningAnimation).AnimationTracks.Add(new AnimationTrackSpriteFlick() {
