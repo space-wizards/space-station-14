@@ -37,6 +37,17 @@ public static class AdminFaxEuiMsg
     }
 
     [Serializable, NetSerializable]
+    public sealed class Follow : EuiMessageBase
+    {
+        public EntityUid TargetFax { get; }
+
+        public Follow(EntityUid targetFax)
+        {
+            TargetFax = targetFax;
+        }
+    }
+
+    [Serializable, NetSerializable]
     public sealed class Send : EuiMessageBase
     {
         public EntityUid TargetFax { get; }

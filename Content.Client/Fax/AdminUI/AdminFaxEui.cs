@@ -14,6 +14,7 @@ public sealed class AdminFaxEui : BaseEui
     {
         _window = new AdminFaxWindow();
         _window.OnClose += () => SendMessage(new AdminFaxEuiMsg.Close());
+        _window.OnFollowFax += uid => SendMessage(new AdminFaxEuiMsg.Follow(uid));
         _window.OnMessageSend += args => SendMessage(new AdminFaxEuiMsg.Send(args.uid, args.name, args.content));
     }
 

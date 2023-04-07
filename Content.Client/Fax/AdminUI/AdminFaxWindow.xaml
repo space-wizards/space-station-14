@@ -7,18 +7,18 @@
             <Control MinWidth="4" />
             <OptionButton Name="FaxSelector" HorizontalExpand="True" />
             <Control MinWidth="4" />
-            <Button Name="RefreshButton"
+            <Button Name="FollowButton"
                     Text="Follow" />
         </BoxContainer>
         <Control MinHeight="5" />
         <BoxContainer Orientation="Vertical" HorizontalExpand="True">
-            <Label Text="Name:" />
-            <LineEdit Name="NameEdit"></LineEdit>
+            <Label Text="From:" />
+            <LineEdit Name="FromEdit"></LineEdit>
         </BoxContainer>
         <Control MinHeight="5" />
         <BoxContainer Orientation="Vertical" HorizontalExpand="True">
-            <Label Text="Content:" />
-            <TextEdit Name="ContentEdit" MinSize="200 200"></TextEdit>
+            <Label Text="Message:" />
+            <TextEdit Name="MessageEdit" MinSize="200 200"></TextEdit>
         </BoxContainer>
         <Control MinHeight="10" />
         <Button Name="SendButton" Text="Send"></Button>

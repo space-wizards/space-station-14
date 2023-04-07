@@ -1,7 +1,9 @@
 ﻿using Content.Server.DeviceNetwork.Components;
 using Content.Server.EUI;
+using Content.Server.Ghost.Components;
 using Content.Shared.Eui;
 using Content.Shared.Fax;
+using Content.Shared.Follower;
 
 namespace Content.Server.Fax.AdminUI;
 
@@ -9,11 +11,13 @@ public sealed class AdminFaxEui : BaseEui
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
     private readonly FaxSystem _faxSystem;
+    private readonly FollowerSystem _followerSystem;
 
     public AdminFaxEui()
     {
         IoCManager.InjectDependencies(this);
         _faxSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<FaxSystem>();
+        _followerSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<FollowerSystem>();
     }
 
     public override void Opened()
@@ -39,6 +43,15 @@ public sealed class AdminFaxEui : BaseEui
             case AdminFaxEuiMsg.Close:
             {
                 Close();
+                break;
+            }
+            case AdminFaxEuiMsg.Follow followData:
+            {
+                if (Player.AttachedEntity == null ||
+                    !_entityManager.HasComponent<GhostComponent>(Player.AttachedEntity.Value))
+                    return;
+
+                _followerSystem.StartFollowingEntity(Player.AttachedEntity.Value, followData.TargetFax);
                 break;
             }
             case AdminFaxEuiMsg.Send sendData:
