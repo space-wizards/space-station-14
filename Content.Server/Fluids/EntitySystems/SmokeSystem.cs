@@ -227,6 +227,16 @@ public sealed class SmokeSystem : EntitySystem
                 reagent.ReactionTile(tile, reagentQuantity.Quantity);
                 component.ReactedTile = true;
             }
+
+            // Touch every entity on tile.
+            foreach (var entity in ents)
+            {
+                if (entity == uid)
+                    continue;
+
+                _reactive.ReactionEntity(entity, ReactionMethod.Touch, reagent,
+                    reagentQuantity.Quantity * solutionFraction, solution);
+            }
         }
 
         foreach (var entity in ents)
