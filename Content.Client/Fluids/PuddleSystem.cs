@@ -3,67 +3,66 @@ using Content.Shared.Fluids;
 using Content.Shared.Fluids.Components;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.Fluids
+namespace Content.Client.Fluids;
+
+public sealed class PuddleSystem : SharedPuddleSystem
 {
-    public sealed class PuddleSystem : SharedPuddleSystem
+    [Dependency] private readonly IconSmoothSystem _smooth = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly IconSmoothSystem _smooth = default!;
+        base.Initialize();
 
-        public override void Initialize()
+        SubscribeLocalEvent<PuddleComponent, AppearanceChangeEvent>(OnPuddleAppearance);
+    }
+
+    private void OnPuddleAppearance(EntityUid uid, PuddleComponent component, ref AppearanceChangeEvent args)
+    {
+        if (args.Sprite == null)
+            return;
+
+        float volume = 1f;
+
+        if (args.AppearanceData.TryGetValue(PuddleVisuals.CurrentVolume, out var volumeObj))
         {
-            base.Initialize();
-
-            SubscribeLocalEvent<PuddleComponent, AppearanceChangeEvent>(OnPuddleAppearance);
+            volume = (float) volumeObj;
         }
 
-        private void OnPuddleAppearance(EntityUid uid, PuddleComponent component, ref AppearanceChangeEvent args)
+        // Update smoothing and sprite based on volume.
+        if (TryComp<IconSmoothComponent>(uid, out var smooth))
         {
-            if (args.Sprite == null)
-                return;
-
-            float volume = 1f;
-
-            if (args.AppearanceData.TryGetValue(PuddleVisuals.CurrentVolume, out var volumeObj))
+            if (volume < LowThreshold)
             {
-                volume = (float) volumeObj;
+                args.Sprite.LayerSetState(0, $"{smooth.StateBase}a");
+                _smooth.SetEnabled(uid, false, smooth);
             }
-
-            // Update smoothing and sprite based on volume.
-            if (TryComp<IconSmoothComponent>(uid, out var smooth))
+            else if (volume < 0.6f)
             {
-                if (volume < LowThreshold)
+                args.Sprite.LayerSetState(0, $"{smooth.StateBase}b");
+                _smooth.SetEnabled(uid, false, smooth);
+            }
+            else
+            {
+                if (!smooth.Enabled)
                 {
-                    args.Sprite.LayerSetState(0, $"{smooth.StateBase}a");
-                    _smooth.SetEnabled(uid, false, smooth);
-                }
-                else if (volume < 0.6f)
-                {
-                    args.Sprite.LayerSetState(0, $"{smooth.StateBase}b");
-                    _smooth.SetEnabled(uid, false, smooth);
-                }
-                else
-                {
-                    if (!smooth.Enabled)
-                    {
-                        args.Sprite.LayerSetState(0, $"{smooth.StateBase}0");
-                        _smooth.SetEnabled(uid, true, smooth);
-                        _smooth.DirtyNeighbours(uid);
-                    }
+                    args.Sprite.LayerSetState(0, $"{smooth.StateBase}0");
+                    _smooth.SetEnabled(uid, true, smooth);
+                    _smooth.DirtyNeighbours(uid);
                 }
             }
+        }
 
-            var baseColor = Color.White;
-            const float alpha = 0.8f;
+        var baseColor = Color.White;
+        const float alpha = 1.0f;
 
-            if (args.AppearanceData.TryGetValue(PuddleVisuals.SolutionColor, out var colorObj))
-            {
-                var color = (Color) colorObj;
-                args.Sprite.LayerSetColor(0, color.WithAlpha(alpha) * baseColor);
-            }
-            else if (args.Sprite.TryGetLayer(0, out var layer))
-            {
-                layer.Color = layer.Color.WithAlpha(alpha) * baseColor;
-            }
+        if (args.AppearanceData.TryGetValue(PuddleVisuals.SolutionColor, out var colorObj))
+        {
+            var color = (Color) colorObj;
+            args.Sprite.LayerSetColor(0, color.WithAlpha(alpha) * baseColor);
+        }
+        else if (args.Sprite.TryGetLayer(0, out var layer))
+        {
+            layer.Color = layer.Color.WithAlpha(alpha) * baseColor;
         }
     }
 }
