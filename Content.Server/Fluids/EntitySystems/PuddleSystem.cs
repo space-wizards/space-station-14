@@ -574,4 +574,26 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     }
 
     #endregion
+
+    public bool TryGetPuddle(TileRef tile, out EntityUid puddleUid)
+    {
+        puddleUid = EntityUid.Invalid;
+
+        if (!TryComp<MapGridComponent>(tile.GridUid, out var grid))
+            return false;
+
+        var anc = grid.GetAnchoredEntitiesEnumerator(tile.GridIndices);
+        var puddleQuery = GetEntityQuery<PuddleComponent>();
+
+        while (anc.MoveNext(out var ent))
+        {
+            if (!puddleQuery.HasComponent(ent.Value))
+                continue;
+
+            puddleUid = ent.Value;
+            return true;
+        }
+
+        return false;
+    }
 }
