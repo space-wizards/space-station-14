@@ -44,6 +44,6 @@
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
     state: icon
   product: CrateArmoryPistols
-  cost: 1300
+  cost: 2500
   category: Armory
   group: market
