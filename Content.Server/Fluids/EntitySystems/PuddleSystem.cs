@@ -6,13 +6,13 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reaction;
 using Content.Server.Kudzu;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
 using Content.Shared.Popups;
 using Content.Shared.Slippery;
 using Content.Shared.Fluids.Components;
-using Content.Shared.Popups;
 using Content.Shared.StepTrigger.Components;
 using Content.Shared.StepTrigger.Systems;
 using Robust.Server.GameObjects;
@@ -36,6 +36,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly ReactiveSystem _reactive = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
@@ -416,6 +417,45 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     }
 
     #region Spill
+
+    /// <summary>
+    ///     First splashes reagent on reactive entities near the spilling entity, then spills the rest regularly to a
+    ///     puddle. This is intended for 'destructive' spills, like when entities are destroyed or thrown.
+    /// </summary>
+    public bool TrySplashSpillAt(EntityUid uid,
+        EntityCoordinates coordinates,
+        Solution solution,
+        out EntityUid puddleUid,
+        bool sound = true,
+        EntityUid? user = null)
+    {
+        puddleUid = EntityUid.Invalid;
+
+        if (solution.Volume == 0)
+            return false;
+
+        // Get reactive entities nearby--if there are some, it'll spill a bit on them instead.
+        foreach (var ent in _lookup.GetComponentsInRange<ReactiveComponent>(coordinates, 1.0f))
+        {
+            // sorry! no overload for returning uid, so .owner must be used
+            var owner = ent.Owner;
+
+            // between 5 and 30%
+            var splitAmount = solution.Volume * _random.NextFloat(0.05f, 0.30f);
+            var splitSolution = solution.SplitSolution(splitAmount);
+
+            if (user != null)
+            {
+                _adminLogger.Add(LogType.Landed,
+                    $"{ToPrettyString(user.Value):user} threw {ToPrettyString(uid):entity} which splashed a solution {SolutionContainerSystem.ToPrettyString(solution):solution} onto {ToPrettyString(owner):target}");
+            }
+
+            _reactive.DoEntityReaction(owner, splitSolution, ReactionMethod.Touch);
+            _popups.PopupEntity(Loc.GetString("spill-land-spilled-on-other", ("spillable", uid), ("target", owner)), owner, PopupType.SmallCaution);
+        }
+
+        return TrySpillAt(coordinates, solution, out puddleUid, sound);
+    }
 
     /// <summary>
     ///     Spills solution at the specified grid coordinates.

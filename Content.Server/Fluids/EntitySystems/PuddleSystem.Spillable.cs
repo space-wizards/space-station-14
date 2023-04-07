@@ -73,7 +73,7 @@ public sealed partial class PuddleSystem
         }
 
         var drainedSolution = _solutionContainerSystem.Drain(uid, solution, solution.Volume);
-        TrySpillAt(EntityManager.GetComponent<TransformComponent>(uid).Coordinates, drainedSolution, out _);
+        TrySplashSpillAt(uid, Transform(uid).Coordinates, drainedSolution, out _);
     }
 
     private void AddSpillVerb(EntityUid uid, SpillableComponent component, GetVerbsEvent<Verb> args)
