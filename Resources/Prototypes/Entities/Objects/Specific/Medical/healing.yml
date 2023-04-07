@@ -59,13 +59,39 @@
     damage:
       groups:
         Brute: -15 # 5 for each type in the group
-    bloodlossModifier: -3 # a little bit of bloodloss healing.
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
     healingEndSound:
       path: "/Audio/Items/Medical/brutepack_end.ogg"
   - type: Stack
     stackType: Brutepack
+    count: 10
+  - type: StackPrice
+    price: 10
+
+- type: entity
+  name: blood pack
+  description: Contains a groundbreaking universal blood replacement created by Nanotrasen's advanced medical science.
+  parent: BaseHealingItem
+  id: Bloodpack
+  components:
+  - type: Tag
+    tags:
+    - Bloodpack
+  - type: Sprite
+    state: bloodpack
+  - type: Healing
+    damageContainer: Biological
+    damage:
+      types:
+        bloodloss: -0.5 #for whatever godforsaken reason I cannot touch blood level without healing one of these, so fuck it, bleed rate healing
+    ModifyBloodLevel: 10
+    healingBeginSound:
+      path: "/Audio/Items/Medical/brutepack_begin.ogg"
+    healingEndSound:
+      path: "/Audio/Items/Medical/brutepack_end.ogg"
+  - type: Stack
+    stackType: Bloodpack
     count: 10
   - type: StackPrice
     price: 10

@@ -80,6 +80,28 @@
     sprite: Clothing/Uniforms/Jumpskirt/chemistry.rsi
 
 - type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtVirology
+  name: virology jumpskirt
+  description: It's made of a special fiber that gives special protection against biohazards. It has a virologist rank stripe on it.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/virology.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/virology.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtGenetics
+  name: genetics jumpskirt
+  description: It's made of a special fiber that gives special protection against biohazards. It has a geneticist rank stripe on it.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/genetics.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/genetics.rsi
+
+- type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtCMO
   name: chief medical officer's jumpskirt

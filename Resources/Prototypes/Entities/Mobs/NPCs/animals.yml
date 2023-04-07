@@ -1647,14 +1647,6 @@
       gender: epicene
   - type: Bloodstream
     bloodReagent: DemonsBlood
-    bloodlossDamage:
-      types:
-        Bloodloss:
-          1
-    bloodlossHealDamage:
-      types:
-        Bloodloss:
-          -0.25
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Infernal

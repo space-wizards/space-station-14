@@ -48,3 +48,12 @@
   materials:
     Steel: 100
     Glass: 1000
+
+- type: latheRecipe
+  id: AdvMopItem
+  result: AdvMopItem
+  completetime: 2
+  materials:
+    Plastic: 100
+    Steel: 100
+    Glass: 100

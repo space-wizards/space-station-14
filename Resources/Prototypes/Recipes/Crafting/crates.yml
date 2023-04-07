@@ -30,3 +30,25 @@
   description: A plastic crate for storing things.
   icon: { sprite: Structures/Storage/Crates/plastic.rsi, state: icon }
   objectType: Structure
+
+- type: construction
+  name: cardboard box
+  id: BaseBigBox
+  graph: BaseBigBox
+  startNode: start
+  targetNode: basebigbox
+  category: construction-category-storage
+  description: A big box for storing things or hiding in.
+  icon: { sprite: Structures/Storage/closet.rsi, state: cardboard }
+  objectType: Structure
+
+- type: construction
+  name: cardboard box
+  id: BoxCardboard
+  graph: BoxCardboard
+  startNode: start
+  targetNode: boxcardboard
+  category: construction-category-storage
+  description: A small box for storing things.
+  icon: { sprite: Objects/Storage/boxes.rsi, state: box }
+  objectType: Item

@@ -53,6 +53,12 @@
       path: /Audio/Items/eating_1.ogg
   - type: Spillable
     solution: food
+  - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+    damage:
+      types:
+        Blunt: 0
   - type: TrashOnEmpty
     solution: food
 
