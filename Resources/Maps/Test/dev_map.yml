@@ -1055,8 +1055,6 @@ entities:
   - pos: -2.172831,4.5306726
     parent: 179
     type: Transform
-  - nextAttack: 384.7724706
-    type: MeleeWeapon
 - uid: 148
   type: Ointment
   components:
@@ -1687,8 +1685,6 @@ entities:
   - pos: -3.4579864,-1.9811735
     parent: 179
     type: Transform
-  - nextAttack: 582.1216812
-    type: MeleeWeapon
 - uid: 186
   type: PowerCellMedium
   components:
@@ -2617,16 +2613,12 @@ entities:
   - pos: -0.11783123,4.753312
     parent: 179
     type: Transform
-  - nextAttack: 244.2972008
-    type: MeleeWeapon
 - uid: 328
   type: MopItem
   components:
   - pos: 7.6382103,16.08618
     parent: 179
     type: Transform
-  - nextAttack: 3088.5283222
-    type: MeleeWeapon
   - solutions:
       absorbed:
         temperature: 293.15
@@ -2728,8 +2720,6 @@ entities:
   - pos: 0.6895334,4.7183027
     parent: 179
     type: Transform
-  - nextAttack: 247.8805212
-    type: MeleeWeapon
 - uid: 344
   type: ClothingHeadHatWelding
   components:
@@ -2838,8 +2828,6 @@ entities:
   - pos: -1.6207478,4.3951616
     parent: 179
     type: Transform
-  - nextAttack: 232.4472496
-    type: MeleeWeapon
 - uid: 360
   type: PowerCellMedium
   components:
@@ -2973,8 +2961,6 @@ entities:
   - pos: -3.277628,-2.15838
     parent: 179
     type: Transform
-  - nextAttack: 578.7883598
-    type: MeleeWeapon
 - uid: 382
   type: SheetSteel
   components:
@@ -3357,8 +3343,6 @@ entities:
   - pos: -1.235331,4.739151
     parent: 179
     type: Transform
-  - nextAttack: 385.5557994
-    type: MeleeWeapon
 - uid: 432
   type: ChemicalPayload
   components:
@@ -3377,8 +3361,6 @@ entities:
   - pos: -3.1734612,-2.6066077
     parent: 179
     type: Transform
-  - nextAttack: 577.9550312
-    type: MeleeWeapon
 - uid: 435
   type: ModularGrenade
   components:
@@ -5099,8 +5081,6 @@ entities:
   - pos: 1.1246341,7.500063
     parent: 179
     type: Transform
-  - nextAttack: 669.0197422
-    type: MeleeWeapon
 - uid: 673
   type: Poweredlight
   components:
@@ -7191,13 +7171,11 @@ entities:
     parent: 179
     type: Transform
 - uid: 956
-  type: EmergencyOxygenTank
+  type: EmergencyOxygenTankFilled
   components:
   - pos: -10.505015,6.711994
     parent: 179
     type: Transform
-  - nextAttack: 396.1132382
-    type: MeleeWeapon
 - uid: 957
   type: AlwaysPoweredLightLED
   components:
