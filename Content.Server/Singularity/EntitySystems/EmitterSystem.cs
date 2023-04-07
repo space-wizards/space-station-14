@@ -9,6 +9,7 @@ using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Lock;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Singularity.Components;
@@ -297,7 +298,7 @@ namespace Content.Server.Singularity.EntitySystems
             _projectile.SetShooter(proj, uid);
 
             var targetPos = new EntityCoordinates(uid, (0, -1));
-            _gun.Shoot(guncomp, ent, xform.Coordinates, targetPos);
+            _gun.Shoot(uid, guncomp, ent, xform.Coordinates, targetPos);
         }
 
         private void UpdateAppearance(EmitterComponent component)

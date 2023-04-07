@@ -16,11 +16,12 @@ namespace Content.Server.Paper
 {
     public sealed class PaperSystem : EntitySystem
     {
-        [Dependency] private readonly TagSystem _tagSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
         public override void Initialize()
         {
@@ -31,6 +32,18 @@ namespace Content.Server.Paper
             SubscribeLocalEvent<PaperComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<PaperComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<PaperComponent, PaperInputTextMessage>(OnInputTextMessage);
+
+            SubscribeLocalEvent<ActivateOnPaperOpenedComponent, PaperWriteEvent>(OnPaperWrite);
+
+            SubscribeLocalEvent<PaperComponent, MapInitEvent>(OnMapInit);
+        }
+
+        private void OnMapInit(EntityUid uid, PaperComponent paperComp, MapInitEvent args)
+        {
+            if (!string.IsNullOrEmpty(paperComp.Content))
+            {
+                paperComp.Content = Loc.GetString(paperComp.Content);
+            }
         }
 
         private void OnInit(EntityUid uid, PaperComponent paperComp, ComponentInit args)
@@ -81,6 +94,8 @@ namespace Content.Server.Paper
         {
             if (_tagSystem.HasTag(args.Used, "Write"))
             {
+                var writeEvent = new PaperWriteEvent(uid, args.User);
+                RaiseLocalEvent(args.Used, ref writeEvent);
                 if (!TryComp<ActorComponent>(args.User, out var actor))
                     return;
 
@@ -122,6 +137,11 @@ namespace Content.Server.Paper
                     $"{ToPrettyString(args.Session.AttachedEntity.Value):player} has written on {ToPrettyString(uid):entity} the following text: {args.Text}");
 
             UpdateUserInterface(uid, paperComp);
+        }
+
+        private void OnPaperWrite(EntityUid uid, ActivateOnPaperOpenedComponent comp, ref PaperWriteEvent args)
+        {
+            _interaction.UseInHandInteraction(args.User, uid);
         }
 
         /// <summary>
@@ -170,4 +190,10 @@ namespace Content.Server.Paper
             _uiSystem.GetUiOrNull(uid, PaperUiKey.Key)?.SetState(new PaperBoundUserInterfaceState(paperComp.Content, paperComp.StampedBy, paperComp.Mode));
         }
     }
+
+    /// <summary>
+    /// Event fired when using a pen on paper, opening the UI.
+    /// </summary>
+    [ByRefEvent]
+    public record struct PaperWriteEvent(EntityUid User, EntityUid Paper);
 }

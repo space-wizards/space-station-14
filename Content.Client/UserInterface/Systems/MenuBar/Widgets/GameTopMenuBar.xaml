@@ -9,7 +9,7 @@
            Name = "MenuButtons"
            VerticalExpand="False"
            Orientation="Horizontal"
-           HorizontalAlignment="Left"
+           HorizontalAlignment="Stretch"
            VerticalAlignment="Top"
            SeparationOverride="5"
 >
@@ -22,6 +22,16 @@
         MinSize="70 64"
         HorizontalExpand="True"
         AppendStyleClass="{x:Static style:StyleBase.ButtonOpenRight}"
+        />
+    <ui:MenuButton
+        Name="GuidebookButton"
+        Access="Internal"
+        Icon="{xe:Tex '/Textures/Interface/VerbIcons/information.svg.192dpi.png'}"
+        ToolTip="{Loc 'game-hud-open-guide-menu-button-tooltip'}"
+        BoundKey = "{x:Static is:ContentKeyFunctions.OpenGuidebook}"
+        MinSize="42 64"
+        HorizontalExpand="True"
+        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
     <ui:MenuButton
         Name="CharacterButton"

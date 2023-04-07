@@ -21,7 +21,9 @@
     - type: Construction
       graph: ParticleAcceleratorFuelChamber
       node: completed
-
+    - type: GuideHelp
+      guides: [ Singularity, Power ]
+      
 # Unfinished
 
 - type: entity
@@ -40,3 +42,5 @@
       graph: ParticleAcceleratorFuelChamber
       node: start
       defaultTarget: completed
+    - type: GuideHelp
+      guides: [ Singularity, Power ]

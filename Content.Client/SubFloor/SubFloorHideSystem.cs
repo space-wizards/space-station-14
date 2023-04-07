@@ -40,16 +40,12 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
         scannerRevealed &= !ShowAll; // no transparency for show-subfloor mode.
 
         var revealed = !covered || ShowAll || scannerRevealed;
-        var transparency = scannerRevealed ? component.ScannerTransparency : 1f;
 
         // set visibility & color of each layer
         foreach (var layer in args.Sprite.AllLayers)
         {
             // pipe connection visuals are updated AFTER this, and may re-hide some layers
             layer.Visible = revealed;
-
-            if (layer.Visible)
-                layer.Color = layer.Color.WithAlpha(transparency);
         }
 
         // Is there some layer that is always visible?

@@ -16,7 +16,7 @@
 
 - type: technology
   name: technologies-cleaning-technology
-  id: MopBucket
+  id: CleaningTechnology
   description: technologies-cleaning-technology-description
   icon:
     sprite: Objects/Specific/Janitorial/janitorial.rsi
@@ -29,6 +29,19 @@
   - MopItem
   - SprayBottle
   - BodyBag
+- type: technology
+  name: technologies-advanced-cleaning-technology
+  id: AdvancedCleaningTechnology
+  description: technologies-advanced-cleaning-technology-description
+  icon:
+    sprite: Objects/Specific/Janitorial/advmop.rsi
+    state: advmop
+  requiredPoints: 5000
+  requiredTechnologies:
+    - BasicResearch
+    - CleaningTechnology
+  unlockedRecipes:
+    - AdvMopItem
 
 # Food/Bev Service Technology Tree
 
@@ -376,6 +389,7 @@
   - SignalTrigger
   - VoiceTrigger
   - TimerTrigger
+  - TelecomServerCircuitboard
 
 - type: technology
   name: technologies-electrical-engineering
@@ -576,10 +590,27 @@
   requiredPoints: 15000
   requiredTechnologies:
   - ScientificTechnology
-  - CompactPowerTechnology
   unlockedRecipes:
   - AdvancedCapacitorStockPart
   - AdvancedMatterBinStockPart
   - HighPowerMicroLaserStockPart
   - NanoManipulatorStockPart
   - AdvancedScanningModuleStockPart
+
+- type: technology
+  name: technologies-super-parts-technology
+  id: SuperPartsTechnology
+  description: technologies-super-parts-technology-description
+  icon:
+    sprite: Objects/Misc/stock_parts.rsi
+    state: super_capacitor
+  requiredPoints: 20000
+  requiredTechnologies:
+  - AdvancedPartsTechnology
+  - CompactPowerTechnology
+  unlockedRecipes:
+  - SuperCapacitorStockPart
+  - SuperMatterBinStockPart
+  - UltraHighPowerMicroLaserStockPart
+  - PicoManipulatorStockPart
+  - PhasicScanningModuleStockPart

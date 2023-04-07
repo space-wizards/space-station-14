@@ -19,7 +19,8 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         /// </summary>
         /// <param name="owner">Entity on which behavior is executed</param>
         /// <param name="system">system calling the behavior</param>
-        public void Execute(EntityUid owner, DestructibleSystem system)
+        /// <param name="cause"></param>
+        public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
         {
             var solutionContainerSystem = EntitySystem.Get<SolutionContainerSystem>();
             var spillableSystem = EntitySystem.Get<SpillableSystem>();
@@ -30,12 +31,12 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 solutionContainerSystem.TryGetSolution(owner, spillableComponent.SolutionName,
                     out var compSolution))
             {
-                spillableSystem.SpillAt(compSolution, coordinates, "PuddleSmear", false);
+                spillableSystem.SplashSpillAt(owner, compSolution, coordinates, "PuddleSmear", false, user: cause);
             }
             else if (Solution != null &&
                      solutionContainerSystem.TryGetSolution(owner, Solution, out var behaviorSolution))
             {
-                spillableSystem.SpillAt(behaviorSolution, coordinates, "PuddleSmear");
+                spillableSystem.SplashSpillAt(owner, behaviorSolution, coordinates, "PuddleSmear", user: cause);
             }
         }
     }

@@ -32,7 +32,7 @@ public sealed partial class NPCSteeringSystem
      */
 
 
-    private SteeringObstacleStatus TryHandleFlags(NPCSteeringComponent component, PathPoly poly, EntityQuery<PhysicsComponent> bodyQuery)
+    private SteeringObstacleStatus TryHandleFlags(EntityUid uid, NPCSteeringComponent component, PathPoly poly, EntityQuery<PhysicsComponent> bodyQuery)
     {
         DebugTools.Assert(!poly.Data.IsFreeSpace);
         // TODO: Store PathFlags on the steering comp
@@ -41,9 +41,9 @@ public sealed partial class NPCSteeringSystem
         var layer = 0;
         var mask = 0;
 
-        if (TryComp<FixturesComponent>(component.Owner, out var manager))
+        if (TryComp<FixturesComponent>(uid, out var manager))
         {
-            (layer, mask) = _physics.GetHardCollision(component.Owner, manager);
+            (layer, mask) = _physics.GetHardCollision(uid, manager);
         }
         else
         {
@@ -76,7 +76,7 @@ public sealed partial class NPCSteeringSystem
                     {
                         if (door.State != DoorState.Opening)
                         {
-                            _interaction.InteractionActivate(component.Owner, ent);
+                            _interaction.InteractionActivate(uid, ent);
                             return SteeringObstacleStatus.Continuing;
                         }
                     }
@@ -99,8 +99,9 @@ public sealed partial class NPCSteeringSystem
                     if (doorQuery.TryGetComponent(ent, out var door) && door.State != DoorState.Open)
                     {
                         // TODO: Use the verb.
-                        if (door.State != DoorState.Opening && !door.BeingPried)
-                            _doors.TryPryDoor(ent, component.Owner, component.Owner, door, true);
+
+                        if (door.State != DoorState.Opening)
+                            _doors.TryPryDoor(ent, uid, uid, door, true);
 
                         return SteeringObstacleStatus.Continuing;
                     }
@@ -112,9 +113,7 @@ public sealed partial class NPCSteeringSystem
             // Try smashing obstacles.
             else if ((component.Flags & PathFlags.Smashing) != 0x0)
             {
-                var meleeWeapon = _melee.GetWeapon(component.Owner);
-
-                if (meleeWeapon != null && meleeWeapon.NextAttack <= _timing.CurTime && TryComp<CombatModeComponent>(component.Owner, out var combatMode))
+                if (_melee.TryGetWeapon(uid, out var meleeUid, out var meleeWeapon) && meleeWeapon.NextAttack <= _timing.CurTime && TryComp<CombatModeComponent>(uid, out var combatMode))
                 {
                     combatMode.IsInCombatMode = true;
                     var destructibleQuery = GetEntityQuery<DestructibleComponent>();
@@ -127,7 +126,7 @@ public sealed partial class NPCSteeringSystem
                         // TODO: Validate we can damage it
                         if (destructibleQuery.HasComponent(ent))
                         {
-                            _melee.AttemptLightAttack(component.Owner, meleeWeapon, ent);
+                            _melee.AttemptLightAttack(uid, uid, meleeWeapon, ent);
                             break;
                         }
                     }

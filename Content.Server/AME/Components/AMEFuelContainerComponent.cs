@@ -1,37 +1,18 @@
-namespace Content.Server.AME.Components
+namespace Content.Server.AME.Components;
+
+// TODO: network and put in shared
+[RegisterComponent]
+public sealed class AMEFuelContainerComponent : Component
 {
-    [RegisterComponent]
-    public sealed class AMEFuelContainerComponent : Component
-    {
-        private int _fuelAmount;
-        private int _maxFuelAmount;
+    /// <summary>
+    /// The amount of fuel in the jar.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("fuelAmount")]
+    public int FuelAmount = 1000;
 
-        /// <summary>
-        ///     The amount of fuel in the jar.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public int FuelAmount
-        {
-            get => _fuelAmount;
-            set => _fuelAmount = value;
-        }
-
-        /// <summary>
-        ///     The maximum fuel capacity of the jar.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public int MaxFuelAmount
-        {
-            get => _maxFuelAmount;
-            set => _maxFuelAmount = value;
-        }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-            _maxFuelAmount = 1000;
-            _fuelAmount = 1000;
-        }
-
-    }
+    /// <summary>
+    /// The maximum fuel capacity of the jar.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("fuelCapacity")]
+    public int FuelCapacity = 1000;
 }
