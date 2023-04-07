@@ -294,7 +294,7 @@
   id: UplinkHeadsetEncryptionKey
   name: uplink-encryption-key-name
   description: uplink-encryption-key-desc
-  icon: { sprite: /Textures/Objects/Devices/encryption_keys.rsi, state: syn_cypherkey }
+  icon: { sprite: /Textures/Objects/Devices/encryption_keys.rsi, state: synd_label }
   productEntity: BoxEncryptionKeySyndie # Two for the price of one
   cost:
     Telecrystal: 2
