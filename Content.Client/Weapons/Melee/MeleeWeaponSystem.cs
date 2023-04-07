@@ -1,5 +1,5 @@
-using Content.Client.CombatMode;
 using Content.Client.Gameplay;
+using Content.Shared.CombatMode;
 using Content.Shared.Hands.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.StatusEffect;
