@@ -4,6 +4,22 @@
   parent: Puddle
 
 - type: entity
+  id: PuddleEgg
+  parent: Puddle
+
+- type: entity
+  id: PuddleTomato
+  parent: Puddle
+
+- type: entity
+  id: PuddleWatermelon
+  parent: Puddle
+
+- type: entity
+  id: PuddleFlour
+  parent: Puddle
+
+- type: entity
   id: PuddleSparkle
   name: Sparkle
   placement:
