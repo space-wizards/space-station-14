@@ -8,8 +8,10 @@ using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
 using Content.Shared.Fluids.Components;
+using Content.Shared.Popups;
 using Content.Shared.StepTrigger.Components;
 using Content.Shared.StepTrigger.Systems;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -28,8 +30,10 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedPopupSystem _popups = default!;
     [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
@@ -58,6 +62,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         SubscribeLocalEvent<EvaporationComponent, MapInitEvent>(OnEvaporationMapInit);
 
         InitializeSpillable();
+        InitializeTransfers();
     }
 
     private void OnPuddleSpread(EntityUid uid, PuddleComponent component, ref SpreadNeighborsEvent args)
