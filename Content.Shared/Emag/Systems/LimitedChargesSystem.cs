@@ -84,8 +84,13 @@ public sealed class LimitedChargesSystem : EntitySystem
     /// <summary>
     /// Uses a single charge. Must check IsEmpty beforehand to prevent using with 0 charge.
     /// </summary>
-    public void UseCharge(LimitedChargesComponent comp)
+    public void UseCharge(EntityUid uid, LimitedChargesComponent comp)
     {
+        var startCooldown = comp.Charges == comp.MaxCharges;
         AddCharges(comp, -1);
+
+        // start the recharge time after first use at full charge
+        if (startRecharge && TryComp<AutoRechargeComponent>(uid, out var recharge))
+            recharge.NextChargeTime = _timing.CurTime + recharge.RechargeDuration;
     }
 }

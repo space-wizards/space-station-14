@@ -72,7 +72,7 @@ public sealed class EmagSystem : EntitySystem
         _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(user):player} emagged {ToPrettyString(target):target}");
 
         if (charges != null)
-            _limitedCharges.UseCharge(charges);
+            _limitedCharges.UseCharge(uid, charges);
         return true;
     }
 
