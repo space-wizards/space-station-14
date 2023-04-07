@@ -47,12 +47,14 @@ public sealed class SharedHandsComponent : Component
 
     /// <summary>
     ///     Whether or not to add in-hand sprites for held items. Some entities (e.g., drones) don't want these.
+    ///     Used by the client.
     /// </summary>
     [DataField("showInHands")]
     public bool ShowInHands = true;
 
     /// <summary>
     ///     Data about the current sprite layers that the hand is contributing to the owner entity. Used for sprite in-hands.
+    ///     Used by the client.
     /// </summary>
     public readonly Dictionary<HandLocation, HashSet<string>> RevealedLayers = new();
 }
