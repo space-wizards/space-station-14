@@ -6,11 +6,6 @@ namespace Content.Client.ParticleAccelerator;
 
 public sealed class ParticleAcceleratorPartVisualizerSystem : VisualizerSystem<ParticleAcceleratorPartVisualsComponent>
 {
-    public override void Initialize()
-    {
-        base.Initialize();
-    }
-
     protected override void OnAppearanceChange(EntityUid uid, ParticleAcceleratorPartVisualsComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
@@ -24,7 +19,7 @@ public sealed class ParticleAcceleratorPartVisualizerSystem : VisualizerSystem<P
         if (state != ParticleAcceleratorVisualState.Unpowered)
         {
             args.Sprite.LayerSetVisible(ParticleAcceleratorVisualLayers.Unlit, true);
-            args.Sprite.LayerSetState(ParticleAcceleratorVisualLayers.Unlit, comp.StateBase + ParticleAcceleratorPartVisualsComponent.StatesSuffixes[state]);
+            args.Sprite.LayerSetState(ParticleAcceleratorVisualLayers.Unlit, comp.StateBase + comp.StatesSuffixes[state]);
         }
         else
         {
