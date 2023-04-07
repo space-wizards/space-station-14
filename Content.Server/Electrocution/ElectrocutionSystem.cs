@@ -116,19 +116,19 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
     private void UpdateState()
     {
-        var query = EntityQueryEnumerator<ElectrifiedComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var electrified, out var transform))
+        var query = EntityQueryEnumerator<SyncElectrifiedComponent, ElectrifiedComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var syncElectrified, out var electrified, out var transform))
         {
-            var wasActive = electrified.Active;
-            electrified.Active = IsActive(uid, electrified, transform);
-            if (wasActive != electrified.Active)
+            var wasPowered = syncElectrified.Powered;
+            syncElectrified.Powered = IsPowered(uid, electrified, transform);
+            if (wasPowered != syncElectrified.Powered)
             {
-                UpdateAppearance(uid, electrified);
+                UpdateAppearance(uid, syncElectrified);
             }
         }
     }
 
-    private bool IsActive(EntityUid uid, ElectrifiedComponent electrified, TransformComponent transform)
+    private bool IsPowered(EntityUid uid, ElectrifiedComponent electrified, TransformComponent transform)
     {
         if (!electrified.Enabled)
             return false;
@@ -151,9 +151,9 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         return true;
     }
 
-    private void UpdateAppearance(EntityUid uid, ElectrifiedComponent component)
+    private void UpdateAppearance(EntityUid uid, SyncElectrifiedComponent component)
     {
-        _appearance.SetData(uid, ElectrifiedVisuals.IsActive, component.Active);
+        _appearance.SetData(uid, ElectrifiedVisuals.IsPowered, component.Powered);
     }
 
     private void OnElectrifiedStartCollide(EntityUid uid, ElectrifiedComponent electrified, ref StartCollideEvent args)
@@ -195,7 +195,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         if (!Resolve(uid, ref electrified, ref transform, false))
             return false;
 
-        if (!electrified.Active)
+        if (!IsPowered(uid, electrified, transform))
             return false;
 
         siemens *= electrified.SiemensCoefficient;

@@ -8,9 +8,6 @@ namespace Content.Server.Electrocution;
 [RegisterComponent]
 public sealed class ElectrifiedComponent : Component
 {
-    [ViewVariables]
-    public bool Active = false;
-
     [DataField("enabled")]
     public bool Enabled = true;
 

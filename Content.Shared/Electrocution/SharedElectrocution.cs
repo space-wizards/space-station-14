@@ -5,11 +5,11 @@ namespace Content.Shared.Electrocution;
 [Serializable, NetSerializable]
 public enum ElectrifiedLayers : byte
 {
-    Electrified
+    Powered
 }
 
 [Serializable, NetSerializable]
 public enum ElectrifiedVisuals : byte
 {
-    IsActive
+    IsPowered
 }
