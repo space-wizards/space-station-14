@@ -46,10 +46,10 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     private const string StatusEffectKey = "Electrocution";
     private const string DamageType = "Shock";
-    private const string ElectricityEffectPrototype = "EffectElectricity";
 
     // Yes, this is absurdly small for a reason.
     private const float ElectrifiedDamagePerWatt = 0.0015f;
@@ -119,12 +119,11 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         var query = EntityQueryEnumerator<ElectrifiedComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var electrified, out var transform))
         {
+            var wasActive = electrified.Active;
             electrified.Active = IsActive(uid, electrified, transform);
-            if (electrified.SpawnActiveEffect && electrified.Active) {
-                if (_timing.CurTime < electrified.NextActiveEffectTime)
-                    continue;
-                electrified.NextActiveEffectTime = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(0.8f, 1.2f) * electrified.ActiveEffectCooldown);
-                Spawn(ElectricityEffectPrototype, transform.Coordinates);
+            if (wasActive != electrified.Active)
+            {
+                UpdateAppearance(uid, electrified);
             }
         }
     }
@@ -150,6 +149,11 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             return false;
 
         return true;
+    }
+
+    private void UpdateAppearance(EntityUid uid, ElectrifiedComponent component)
+    {
+        _appearance.SetData(uid, ElectrifiedVisuals.IsActive, component.Active);
     }
 
     private void OnElectrifiedStartCollide(EntityUid uid, ElectrifiedComponent electrified, ref StartCollideEvent args)
