@@ -1,0 +1,14 @@
+﻿<DefaultWindow xmlns="https://spacestation14.io"
+               Title="Admin Fax Manager"
+               MinWidth="400">
+    <BoxContainer Orientation="Vertical" VerticalExpand="True">
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <Label Text="Fax:" />
+            <Control MinWidth="4" />
+            <OptionButton Name="FaxSelector" HorizontalExpand="True" />
+            <Control MinWidth="4" />
+            <Button Name="RefreshButton"
+                    Text="Follow" />
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

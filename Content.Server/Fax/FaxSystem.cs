@@ -426,7 +426,7 @@ public sealed class FaxSystem : EntitySystem
     ///     Accepts a new message and adds it to the queue to print
     ///     If has parameter "notifyAdmins" also output a special message to admin chat.
     /// </summary>
-    public void Receive(EntityUid uid, FaxPrintout printout, string? fromAddress, FaxMachineComponent? component = null)
+    public void Receive(EntityUid uid, FaxPrintout printout, string? fromAddress = null, FaxMachineComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
