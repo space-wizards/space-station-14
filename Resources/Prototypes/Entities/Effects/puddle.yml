@@ -41,7 +41,7 @@
       anchored: true
     - type: Sprite
       layers:
-        - sprite: Fluids/weh.rsi
+        - sprite: Fluids/puddle.rsi
           state: splat0
       netsync: false
       drawdepth: FloorObjects
