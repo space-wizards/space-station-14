@@ -11,4 +11,4 @@ ent-CrateArmoryLaser = lasers crate
     .desc = Contains three lethal, high-energy laser guns. Requires Armory access to open.
 
 ent-CrateArmoryPistols = pistols crate
-    .desc = Contains three standard NT pistols with four mags. Requires Armory access to open.
+    .desc = Contains two standard NT pistols with four mags. Requires Armory access to open.

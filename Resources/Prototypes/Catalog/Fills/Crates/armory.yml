@@ -45,6 +45,6 @@
   - type: StorageFill
     contents:
     - id: WeaponPistolMk58
-      amount: 3
+      amount: 2
     - id: MagazinePistol
-      amount: 6
+      amount: 4
