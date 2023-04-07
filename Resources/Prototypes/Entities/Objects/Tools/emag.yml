@@ -6,6 +6,7 @@
   components:
   - type: Emag
   - type: LimitedCharges
+  - type: AutoRecharge
   - type: Sprite
     netsync: false
     sprite: Objects/Tools/emag.rsi

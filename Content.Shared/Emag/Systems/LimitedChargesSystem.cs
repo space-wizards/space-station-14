@@ -12,7 +12,7 @@ public sealed class LimitedChargesSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<LimitedChargesComponent, EntityUnpausedEvent>(OnUnpaused);
+        SubscribeLocalEvent<AutoRechargeComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<LimitedChargesComponent, ExaminedEvent>(OnExamine);
     }
 
@@ -20,24 +20,21 @@ public sealed class LimitedChargesSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var comp in EntityQuery<LimitedChargesComponent>())
+        foreach (var (charges, recharge) in EntityQuery<LimitedChargesComponent, AutoRechargeComponent>())
         {
-            if (!comp.AutoRecharge)
+            if (charges.Charges == charges.MaxCharges || _timing.CurTime < recharge.NextChargeTime)
                 continue;
 
-            if (comp.Charges == comp.MaxCharges)
-                continue;
-
-            if (_timing.CurTime < comp.NextChargeTime)
-                continue;
-
-            ChangeCharge(comp, 1, true);
+            AddCharges(charges, 1);
+            recharge.NextChargeTime = _timing.CurTime + recharge.RechargeDuration;
+            Dirty(recharge);
         }
     }
 
-    private void OnUnpaused(EntityUid uid, LimitedChargesComponent comp, ref EntityUnpausedEvent args)
+    private void OnUnpaused(EntityUid uid, AutoRechargeComponent comp, ref EntityUnpausedEvent args)
     {
         comp.NextChargeTime += args.PausedTime;
+        Dirty(comp);
     }
 
     private void OnExamine(EntityUid uid, LimitedChargesComponent comp, ExaminedEvent args)
@@ -52,24 +49,23 @@ public sealed class LimitedChargesSystem : EntitySystem
             return;
         }
 
-        var timeRemaining = Math.Round((comp.NextChargeTime - _timing.CurTime).TotalSeconds);
-        args.PushMarkup(Loc.GetString("emag-recharging", ("seconds", timeRemaining)));
+        // only show the recharging info if it's not full
+        if (TryComp<AutoRechargeComponent>(uid, out var recharge))
+        {
+            var timeRemaining = Math.Round((recharge.NextChargeTime - _timing.CurTime).TotalSeconds);
+            args.PushMarkup(Loc.GetString("emag-recharging", ("seconds", timeRemaining)));
+        }
     }
 
     /// <summary>
-    /// Tries to change the charge by an amount. Resets the recharge timer if resetTimer is true or it gets filled.
+    /// Tries to add a number of charges. If it over or underflows it will be clamped, wasting the extra charges.
     /// </summary>
-    public bool ChangeCharge(LimitedChargesComponent comp, int change, bool resetTimer)
+    public void AddCharges(LimitedChargesComponent comp, int change)
     {
-        if (comp.Charges + change < 0 || comp.Charges + change > comp.MaxCharges)
-            return false;
-
-        if (resetTimer || comp.Charges == comp.MaxCharges)
-            comp.NextChargeTime = _timing.CurTime + comp.RechargeDuration;
-
-        comp.Charges += change;
-        Dirty(comp);
-        return true;
+        var old = comp.Charges;
+        comp.Charges = Math.Clamp(comp.Charges + change, 0, comp.MaxCharges);
+        if (comp.Charges != old)
+            Dirty(comp);
     }
 
     /// <summary>
@@ -77,8 +73,8 @@ public sealed class LimitedChargesSystem : EntitySystem
     /// </summary>
     public bool IsEmpty(EntityUid uid, out LimitedChargesComponent? comp)
     {
-        // can't be empty if there are no limited charges
         comp = null;
+        // can't be empty if there are no limited charges
         if (!Resolve(uid, ref comp, false))
             return false;
 
@@ -86,10 +82,10 @@ public sealed class LimitedChargesSystem : EntitySystem
     }
 
     /// <summary>
-    /// Uses a single charge. Must check IsEmpty beforehand to prevent going into negative.
+    /// Uses a single charge. Must check IsEmpty beforehand to prevent using with 0 charge.
     /// </summary>
     public void UseCharge(LimitedChargesComponent comp)
     {
-        ChangeCharge(comp, -1, false);
+        AddCharges(comp, -1);
     }
 }
