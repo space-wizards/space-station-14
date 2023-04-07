@@ -1,11 +1,6 @@
 Entries:
 - author: DrSmugleaf
   changes:
-  - {message: Added showing the player name to admins on the context menu., type: Add}
-  id: 2852
-  time: '2023-01-10T21:39:48.0000000+00:00'
-- author: DrSmugleaf
-  changes:
   - {message: Fixed admins blowing out your eardrums when playing a global sound.,
     type: Fix}
   id: 2853
@@ -2920,3 +2915,8 @@ Entries:
   - {message: Fix even more instances of NPC unintentionally dancing., type: Fix}
   id: 3351
   time: '2023-04-07T10:54:20.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: ID Console shows the detective access correctly, type: Fix}
+  id: 3352
+  time: '2023-04-07T20:09:30.0000000+00:00'
