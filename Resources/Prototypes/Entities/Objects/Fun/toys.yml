@@ -866,3 +866,21 @@
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/cutlass.rsi
+
+- type: entity
+  parent: BaseItem
+  id: ClownRecorder
+  name: clown recorder
+  description: When you just can't get those laughs coming the natural way!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/clownrecorder.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      collection: ClownRecorder
+  - type: EmitSoundOnActivate
+    sound:
+      collection: ClownRecorder
+  - type: UseDelay
+    delay: 30.0

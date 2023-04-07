@@ -122,9 +122,12 @@
         conditions:
         - !type:ReagentThreshold
           min: 5
+        - !type:OrganType
+          type: Dwarf
+          shouldHave: false
         damage:
           types:
-            Caustic: 1
+            Poison: 1
       # dwarves take less toxin damage and heal a marginal amount of brute
       - !type:HealthChange
         conditions:
@@ -134,7 +137,7 @@
           type: Dwarf
         damage:
           types:
-            Caustic: 0.5
+            Poison: 0.2
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold

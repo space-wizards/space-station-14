@@ -233,6 +233,9 @@ namespace Content.Server.Construction
                 BreakOnTargetMove = false,
                 BreakOnUserMove = true,
                 NeedHand = false,
+                // allow simultaneously starting several construction jobs using the same stack of materials.
+                CancelDuplicate = false,
+                BlockDuplicate = false,
             };
 
             if (await _doAfterSystem.WaitDoAfter(doAfterArgs) == DoAfterStatus.Cancelled)
@@ -481,13 +484,13 @@ namespace Content.Server.Construction
 
             // We do this to be able to move the construction to its proper position in case it's anchored...
             // Oh wow transform anchoring is amazing wow I love it!!!!
-            var wasAnchored = EntityManager.GetComponent<TransformComponent>(structure).Anchored;
-            EntityManager.GetComponent<TransformComponent>(structure).Anchored = false;
-
-            EntityManager.GetComponent<TransformComponent>(structure).Coordinates = ev.Location;
-            EntityManager.GetComponent<TransformComponent>(structure).LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
-
-            EntityManager.GetComponent<TransformComponent>(structure).Anchored = wasAnchored;
+            // ikr
+            var xform = Transform(structure);
+            var wasAnchored = xform.Anchored;
+            xform.Anchored = false;
+            xform.Coordinates = ev.Location;
+            xform.LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
+            xform.Anchored = wasAnchored;
 
             RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
             _adminLogger.Add(LogType.Construction, LogImpact.Low, $"{ToPrettyString(user):player} has turned a {ev.PrototypeName} construction ghost into {ToPrettyString(structure)} at {Transform(structure).Coordinates}");

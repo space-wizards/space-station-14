@@ -162,6 +162,7 @@
     Asphyxiation: 0.0
     Bloodloss: 0.0 # no double dipping
     Cellular: 0.0
+    Caustic: 0.0
 
 # Represents what a riot shield should block passively
 # Each shield will probably have their own passive and active modifier sets
