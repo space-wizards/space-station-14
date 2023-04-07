@@ -10,12 +10,14 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Timing;
 using System.Linq;
+using Content.Shared.DoAfter;
 using Content.Shared.Tag;
 using Content.Shared.Tools.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Doors.Systems;
 
@@ -314,7 +316,7 @@ public abstract class SharedDoorSystem : EntitySystem
 
         // since both closing/closed and welded are door states, we need to prevent 'closing'
         // a welded door or else there will be weird state bugs
-        if (door.State == DoorState.Welded)
+        if (door.State is DoorState.Welded or DoorState.Closed)
             return false;
 
         var ev = new BeforeDoorClosedEvent(door.PerformCollisionCheck);
@@ -626,4 +628,9 @@ public abstract class SharedDoorSystem : EntitySystem
     #endregion
 
     protected abstract void PlaySound(EntityUid uid, SoundSpecifier soundSpecifier, AudioParams audioParams, EntityUid? predictingPlayer, bool predicted);
+
+    [Serializable, NetSerializable]
+    protected sealed class DoorPryDoAfterEvent : SimpleDoAfterEvent
+    {
+    }
 }

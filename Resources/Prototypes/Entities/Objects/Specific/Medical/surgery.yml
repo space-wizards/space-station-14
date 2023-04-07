@@ -24,6 +24,12 @@
   - type: Item
     sprite: Objects/Specific/Medical/Surgery/cautery.rsi
   - type: ItemCooldown
+  - type: MeleeWeapon
+    damage:
+       types:
+        Heat: 5
+    soundHit:
+      path: /Audio/Effects/lightburn.ogg
 
 # Drill
 
@@ -94,6 +100,10 @@
     state: advanced
   - type: Item
     heldPrefix: advanced
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 12
 
 - type: entity
   name: laser scalpel
@@ -218,7 +228,7 @@
     attackRate: 1.5
     damage:
       groups:
-        Brute: 10
+        Brute: 15
     soundHit:
       path: /Audio/Items/drill_hit.ogg
   - type: Tool
