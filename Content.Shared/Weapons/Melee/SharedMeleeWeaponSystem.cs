@@ -262,7 +262,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         }
 
         // Use inhands entity if we got one.
-        if (EntityManager.TryGetComponent(entity, out SharedHandsComponent? hands) &&
+        if (EntityManager.TryGetComponent(entity, out HandsComponent? hands) &&
             hands.ActiveHandEntity is { } held)
         {
             if (EntityManager.TryGetComponent(held, out melee))

@@ -387,7 +387,7 @@ public abstract class SharedMechSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return false;
 
-        return IsEmpty(component) && _actionBlocker.CanMove(toInsert) && HasComp<SharedHandsComponent>(toInsert);
+        return IsEmpty(component) && _actionBlocker.CanMove(toInsert) && HasComp<HandsComponent>(toInsert);
     }
 
     /// <summary>

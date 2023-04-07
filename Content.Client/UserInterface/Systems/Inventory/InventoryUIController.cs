@@ -1,11 +1,11 @@
 using Content.Client.Gameplay;
-using Content.Client.Hands;
 using Content.Client.Hands.Systems;
 using Content.Client.Inventory;
 using Content.Client.Storage;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Inventory.Controls;
 using Content.Client.UserInterface.Systems.Inventory.Windows;
+using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
