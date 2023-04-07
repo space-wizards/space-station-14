@@ -10,12 +10,6 @@ namespace Content.Shared.Fluids.Components
     [RegisterComponent, NetworkedComponent]
     public sealed class PuddleComponent : Component
     {
-        /// <summary>
-        /// Puddles with volume above this threshold can slip players.
-        /// </summary>
-        [DataField("slipThreshold")]
-        public FixedPoint2 SlipThreshold = FixedPoint2.New(-1);
-
         [DataField("spillSound")]
         public SoundSpecifier SpillSound = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg");
 

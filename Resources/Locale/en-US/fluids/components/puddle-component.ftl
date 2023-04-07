@@ -1,1 +1,1 @@
-puddle-component-examine-is-slipper-text = It looks slippery.
+puddle-component-examine-is-slipper-text = It looks [color=fuchsia]slippery[/color].

@@ -22,8 +22,14 @@ public sealed class AbsorbentComponent : Component
     public FixedPoint2 PickupAmount = FixedPoint2.New(60);
 
     [DataField("pickupSound")]
-    public SoundSpecifier PickupSound = new SoundPathSpecifier("/Audio/Effects/Fluids/watersplash.ogg");
+    public SoundSpecifier PickupSound = new SoundPathSpecifier("/Audio/Effects/Fluids/watersplash.ogg")
+    {
+        Params = AudioParams.Default.WithVariation(0.05f),
+    };
 
-    [DataField("transferSound")]
-    public SoundSpecifier TransferSound = new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg");
+    [DataField("transferSound")] public SoundSpecifier TransferSound =
+        new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg")
+        {
+            Params = AudioParams.Default.WithVariation(0.05f).WithVolume(-3f),
+        };
 }

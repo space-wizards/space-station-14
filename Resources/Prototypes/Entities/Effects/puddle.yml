@@ -9,8 +9,9 @@
   placement:
     mode: SnapgridCenter
   components:
+    # Animation is like 3 something seconds so we just need to despawn it before then.
     - type: TimedDespawn
-      lifetime: 60
+      lifetime: 1
     - type: EvaporationSparkle
     - type: Transform
       noRot: true
@@ -34,6 +35,7 @@
     - type: FootstepModifier
       footstepSoundCollection:
         collection: FootstepWater
+    - type: Slippery
     - type: Transform
       noRot: true
       anchored: true

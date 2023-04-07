@@ -74,6 +74,12 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("metamorphicSprite")]
         public SpriteSpecifier? MetamorphicSprite { get; } = null;
 
+        /// <summary>
+        /// If this reagent is part of a puddle is it slippery.
+        /// </summary>
+        [DataField("slippery")]
+        public bool Slippery = true;
+
         [DataField("metabolisms", serverOnly: true, customTypeSerializer: typeof(PrototypeIdDictionarySerializer<ReagentEffectsEntry, MetabolismGroupPrototype>))]
         public Dictionary<string, ReagentEffectsEntry>? Metabolisms = null;
 

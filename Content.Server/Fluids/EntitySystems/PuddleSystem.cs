@@ -197,7 +197,7 @@ public sealed partial class PuddleSystem : EntitySystem
         }
 
         _deletionQueue.Remove(uid);
-        UpdateSlip(uid, component);
+        UpdateSlip(uid, args.Solution);
         UpdateEvaporation(uid, args.Solution);
         UpdateAppearance(uid, component);
     }
@@ -222,20 +222,29 @@ public sealed partial class PuddleSystem : EntitySystem
         _appearance.SetData(uid, PuddleVisuals.SolutionColor, color, appearance);
     }
 
-    private void UpdateSlip(EntityUid entityUid, PuddleComponent puddleComponent)
+    private void UpdateSlip(EntityUid entityUid, Solution solution)
     {
-        var vol = CurrentVolume(entityUid, puddleComponent);
+        var isSlippery = false;
 
-        if ((puddleComponent.SlipThreshold == FixedPoint2.New(-1) ||
-             vol < puddleComponent.SlipThreshold) &&
-            TryComp(entityUid, out StepTriggerComponent? stepTrigger))
+        foreach (var reagent in solution.Contents)
         {
-            _stepTrigger.SetActive(entityUid, false, stepTrigger);
+            var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.ReagentId);
+
+            if (reagentProto.Slippery)
+            {
+                isSlippery = true;
+                break;
+            }
         }
-        else if (vol >= puddleComponent.SlipThreshold)
+
+        if (isSlippery)
         {
             var comp = EnsureComp<StepTriggerComponent>(entityUid);
             _stepTrigger.SetActive(entityUid, true, comp);
+        }
+        else if (TryComp<StepTriggerComponent>(entityUid, out var comp))
+        {
+            _stepTrigger.SetActive(entityUid, false, comp);
         }
     }
 
@@ -243,7 +252,7 @@ public sealed partial class PuddleSystem : EntitySystem
     {
         if (TryComp<StepTriggerComponent>(uid, out var slippery) && slippery.Active)
         {
-            args.PushText(Loc.GetString("puddle-component-examine-is-slipper-text"));
+            args.PushMarkup(Loc.GetString("puddle-component-examine-is-slipper-text"));
         }
     }
 
