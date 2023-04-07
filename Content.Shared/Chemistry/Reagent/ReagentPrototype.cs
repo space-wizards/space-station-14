@@ -78,7 +78,7 @@ namespace Content.Shared.Chemistry.Reagent
         /// If this reagent is part of a puddle is it slippery.
         /// </summary>
         [DataField("slippery")]
-        public bool Slippery = true;
+        public bool Slippery = false;
 
         [DataField("metabolisms", serverOnly: true, customTypeSerializer: typeof(PrototypeIdDictionarySerializer<ReagentEffectsEntry, MetabolismGroupPrototype>))]
         public Dictionary<string, ReagentEffectsEntry>? Metabolisms = null;
