@@ -81,7 +81,7 @@ public sealed class ElectrifiedComponent : Component
     public bool SpawnActiveEffect = false;
 
     [DataField("ActiveEffectCooldown")]
-    public float ActiveEffectCooldown = 5f;
+    public float ActiveEffectCooldown = 1f;
     
     public TimeSpan NextActiveEffectTime = TimeSpan.Zero;
 }

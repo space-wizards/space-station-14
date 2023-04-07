@@ -3,7 +3,7 @@
   noSpawn: true
   components:
   - type: TimedDespawn
-    lifetime: 6.8
+    lifetime: 0.599
   - type: Sprite
     netsync: false
     drawdepth: Effects
@@ -12,7 +12,7 @@
       - shader: unshaded
         map: ["enum.EffectLayers.Unshaded"]
         sprite: Effects/electricity.rsi
-        state: electricity
+        state: electrified
   - type: EffectVisuals
   - type: Tag
     tags:
