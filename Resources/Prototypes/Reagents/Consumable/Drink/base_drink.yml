@@ -2,6 +2,7 @@
   id: BaseDrink
   group: Drinks
   abstract: true
+  slippery: true
   metabolisms:
     Drink:
       effects:
@@ -23,6 +24,8 @@
   id: BaseSoda
   parent: BaseDrink
   abstract: true
+  # Soda sticky
+  slippery: false
   metabolisms:
     Drink:
       effects:
