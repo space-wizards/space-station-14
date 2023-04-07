@@ -130,6 +130,8 @@
   description: Stylish black shoes.
   components:
   - type: NoSlip
+  - type: TraitorExamine
+    message: These are no-slip shoes.
 
 - type: entity
   parent: ClothingShoesClown
