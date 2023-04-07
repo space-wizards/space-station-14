@@ -37,7 +37,7 @@ public abstract class SharedHotPotatoSystem : EntitySystem
         comp.CanTransfer = true;
         foreach (var hitEntity in args.HitEntities)
         {
-            if (!TryComp<SharedHandsComponent>(hitEntity, out var hands))
+            if (!TryComp<HandsComponent>(hitEntity, out var hands))
                 continue;
 
             if (_hands.TryForcePickupAnyHand(hitEntity, uid, handsComp: hands) && _net.IsServer)
