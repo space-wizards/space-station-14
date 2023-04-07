@@ -63,20 +63,19 @@ namespace Content.Server.Shuttles.Systems
                 args.Cancel();
         }
 
-        private DockingComponent? GetDockable(PhysicsComponent body, TransformComponent dockingXform)
+        private DockingComponent? GetDockable(EntityUid uid, TransformComponent dockingXform)
         {
             // Did you know Saltern is the most dockable station?
 
             // Assume the docking port itself (and its body) is valid
 
-            if (!_mapManager.TryGetGrid(dockingXform.GridUid, out var grid) ||
-                !HasComp<ShuttleComponent>(grid.Owner))
+            if (!HasComp<ShuttleComponent>(dockingXform.GridUid))
             {
                 return null;
             }
 
-            var transform = _physics.GetPhysicsTransform(body.Owner, dockingXform);
-            var dockingFixture = _fixtureSystem.GetFixtureOrNull(body.Owner, DockingFixture);
+            var transform = _physics.GetPhysicsTransform(uid, dockingXform);
+            var dockingFixture = _fixtureSystem.GetFixtureOrNull(uid, DockingFixture);
 
             if (dockingFixture == null)
                 return null;
@@ -88,7 +87,8 @@ namespace Content.Server.Shuttles.Systems
                 aabb = aabb?.Union(dockingFixture.Shape.ComputeAABB(transform, i)) ?? dockingFixture.Shape.ComputeAABB(transform, i);
             }
 
-            if (aabb == null) return null;
+            if (aabb == null)
+                return null;
 
             var enlargedAABB = aabb.Value.Enlarged(DockingRadius * 1.5f);
 
@@ -121,7 +121,8 @@ namespace Content.Server.Shuttles.Systems
                     {
                         var otherAABB = otherDockingFixture.Shape.ComputeAABB(otherTransform, i);
 
-                        if (!aabb.Value.Intersects(otherAABB)) continue;
+                        if (!aabb.Value.Intersects(otherAABB))
+                            continue;
 
                         // TODO: Need CollisionManager's GJK for accurate bounds
                         // Realistically I want 2 fixtures anyway but I'll deal with that later.
@@ -136,12 +137,15 @@ namespace Content.Server.Shuttles.Systems
         private void OnShutdown(EntityUid uid, DockingComponent component, ComponentShutdown args)
         {
             if (component.DockedWith == null ||
-                EntityManager.GetComponent<MetaDataComponent>(uid).EntityLifeStage > EntityLifeStage.MapInitialized) return;
+                EntityManager.GetComponent<MetaDataComponent>(uid).EntityLifeStage > EntityLifeStage.MapInitialized)
+            {
+                return;
+            }
 
-            Cleanup(component);
+            Cleanup(uid, component);
         }
 
-        private void Cleanup(DockingComponent dockA)
+        private void Cleanup(EntityUid dockAUid, DockingComponent dockA)
         {
             _pathfinding.RemovePortal(dockA.PathfindHandle);
 
@@ -154,7 +158,7 @@ namespace Content.Server.Shuttles.Systems
                 !TryComp(dockBUid, out DockingComponent? dockB))
             {
                 DebugTools.Assert(false);
-                _sawmill.Error($"Tried to cleanup {dockA.Owner} but not docked?");
+                _sawmill.Error($"Tried to cleanup {dockAUid} but not docked?");
 
                 dockA.DockedWith = null;
                 if (dockA.DockJoint != null)
@@ -175,10 +179,8 @@ namespace Content.Server.Shuttles.Systems
             dockA.DockJointId = null;
 
             // If these grids are ever null then need to look at fixing ordering for unanchored events elsewhere.
-            var gridAUid = EntityManager.GetComponent<TransformComponent>(dockA.Owner).GridUid;
-            var gridBUid = EntityManager.GetComponent<TransformComponent>(dockB.Owner).GridUid;
-            DebugTools.Assert(gridAUid != null);
-            DebugTools.Assert(gridBUid != null);
+            var gridAUid = EntityManager.GetComponent<TransformComponent>(dockAUid).GridUid;
+            var gridBUid = EntityManager.GetComponent<TransformComponent>(dockBUid.Value).GridUid;
 
             var msg = new UndockEvent
             {
@@ -188,8 +190,8 @@ namespace Content.Server.Shuttles.Systems
                 GridBUid = gridBUid!.Value,
             };
 
-            RaiseLocalEvent(dockA.Owner, msg);
-            RaiseLocalEvent(dockB.Owner, msg);
+            RaiseLocalEvent(dockAUid, msg);
+            RaiseLocalEvent(dockBUid.Value, msg);
             RaiseLocalEvent(msg);
         }
 
@@ -204,7 +206,8 @@ namespace Content.Server.Shuttles.Systems
             if (component.DockedWith != null)
             {
                 // They're still initialising so we'll just wait for both to be ready.
-                if (MetaData(component.DockedWith.Value).EntityLifeStage < EntityLifeStage.Initialized) return;
+                if (MetaData(component.DockedWith.Value).EntityLifeStage < EntityLifeStage.Initialized)
+                    return;
 
                 var otherDock = EntityManager.GetComponent<DockingComponent>(component.DockedWith.Value);
                 DebugTools.Assert(otherDock.DockedWith != null);
@@ -230,24 +233,26 @@ namespace Content.Server.Shuttles.Systems
 
         private void OnDockingReAnchor(EntityUid uid, DockingComponent component, ref ReAnchorEvent args)
         {
-            if (!component.Docked) return;
+            if (!component.Docked)
+                return;
 
             var other = Comp<DockingComponent>(component.DockedWith!.Value);
 
-            Undock(component);
+            Undock(uid, component);
             Dock(uid, component, component.DockedWith.Value, other);
             _console.RefreshShuttleConsoles();
         }
 
         private void DisableDocking(EntityUid uid, DockingComponent component)
         {
-            if (!component.Enabled) return;
+            if (!component.Enabled)
+                return;
 
             component.Enabled = false;
 
             if (component.DockedWith != null)
             {
-                Undock(component);
+                Undock(uid, component);
             }
 
             if (!TryComp(uid, out PhysicsComponent? physicsComponent))
@@ -301,8 +306,8 @@ namespace Content.Server.Shuttles.Systems
             var gridB = dockBXform.GridUid!.Value;
 
             // May not be possible if map or the likes.
-            if (TryComp<PhysicsComponent>(gridA, out var gridPhysicsA) &&
-                TryComp<PhysicsComponent>(gridB, out var gridPhysicsB))
+            if (HasComp<PhysicsComponent>(gridA) &&
+                HasComp<PhysicsComponent>(gridB))
             {
                 SharedJointSystem.LinearStiffness(
                     2f,
@@ -335,7 +340,7 @@ namespace Content.Server.Shuttles.Systems
 
                 joint.LocalAnchorA = anchorA;
                 joint.LocalAnchorB = anchorB;
-                joint.ReferenceAngle = (float) (gridBXform.WorldRotation - gridAXform.WorldRotation);
+                joint.ReferenceAngle = (float) (_transform.GetWorldRotation(gridBXform) - _transform.GetWorldRotation(gridAXform));
                 joint.CollideConnected = true;
                 joint.Stiffness = stiffness;
                 joint.Damping = damping;
@@ -393,11 +398,9 @@ namespace Content.Server.Shuttles.Systems
             RaiseLocalEvent(msg);
         }
 
-        private bool CanDock(DockingComponent dockA, DockingComponent dockB)
+        private bool CanDock(EntityUid dockAUid, EntityUid dockBUid, DockingComponent dockA, DockingComponent dockB)
         {
-            if (!TryComp(dockA.Owner, out PhysicsComponent? bodyA) ||
-                !TryComp(dockB.Owner, out PhysicsComponent? bodyB) ||
-                !dockA.Enabled ||
+            if (!dockA.Enabled ||
                 !dockB.Enabled ||
                 dockA.DockedWith != null ||
                 dockB.DockedWith != null)
@@ -405,16 +408,16 @@ namespace Content.Server.Shuttles.Systems
                 return false;
             }
 
-            var fixtureA = _fixtureSystem.GetFixtureOrNull(bodyA.Owner, DockingFixture);
-            var fixtureB = _fixtureSystem.GetFixtureOrNull(bodyB.Owner, DockingFixture);
+            var fixtureA = _fixtureSystem.GetFixtureOrNull(dockAUid, DockingFixture);
+            var fixtureB = _fixtureSystem.GetFixtureOrNull(dockBUid, DockingFixture);
 
             if (fixtureA == null || fixtureB == null)
             {
                 return false;
             }
 
-            var transformA = _physics.GetPhysicsTransform(dockA.Owner);
-            var transformB = _physics.GetPhysicsTransform(dockB.Owner);
+            var transformA = _physics.GetPhysicsTransform(dockAUid);
+            var transformB = _physics.GetPhysicsTransform(dockBUid);
             var intersect = false;
 
             for (var i = 0; i < fixtureA.Shape.ChildCount; i++)
@@ -424,14 +427,16 @@ namespace Content.Server.Shuttles.Systems
                 for (var j = 0; j < fixtureB.Shape.ChildCount; j++)
                 {
                     var otherAABB = fixtureB.Shape.ComputeAABB(transformB, j);
-                    if (!aabb.Intersects(otherAABB)) continue;
+                    if (!aabb.Intersects(otherAABB))
+                        continue;
 
                     // TODO: Need collisionmanager's GJK for accurate checks don't @ me son
                     intersect = true;
                     break;
                 }
 
-                if (intersect) break;
+                if (intersect)
+                    break;
             }
 
             return intersect;
@@ -442,19 +447,20 @@ namespace Content.Server.Shuttles.Systems
         /// </summary>
         private void TryDock(EntityUid dockAUid, DockingComponent dockA, EntityUid dockBUid, DockingComponent dockB)
         {
-            if (!CanDock(dockA, dockB)) return;
+            if (!CanDock(dockAUid, dockBUid, dockA, dockB))
+                return;
 
             Dock(dockAUid, dockA, dockBUid, dockB);
         }
 
-        public void Undock(DockingComponent dock)
+        public void Undock(EntityUid dockUid, DockingComponent dock)
         {
             if (dock.DockedWith == null)
                 return;
 
-            if (TryComp<AirlockComponent>(dock.Owner, out var airlockA))
+            if (TryComp<AirlockComponent>(dockUid, out var airlockA))
             {
-                _airlocks.SetBoltsWithAudio(dock.Owner, airlockA, false);
+                _airlocks.SetBoltsWithAudio(dockUid, airlockA, false);
             }
 
             if (TryComp<AirlockComponent>(dock.DockedWith, out var airlockB))
@@ -462,9 +468,9 @@ namespace Content.Server.Shuttles.Systems
                 _airlocks.SetBoltsWithAudio(dock.DockedWith.Value, airlockB, false);
             }
 
-            if (TryComp(dock.Owner, out DoorComponent? doorA))
+            if (TryComp(dockUid, out DoorComponent? doorA))
             {
-                if (_doorSystem.TryClose(doorA.Owner, doorA))
+                if (_doorSystem.TryClose(dockUid, doorA))
                 {
                     doorA.ChangeAirtight = true;
                 }
@@ -472,15 +478,15 @@ namespace Content.Server.Shuttles.Systems
 
             if (TryComp(dock.DockedWith, out DoorComponent? doorB))
             {
-                if (_doorSystem.TryClose(doorB.Owner, doorB))
+                if (_doorSystem.TryClose(dock.DockedWith.Value, doorB))
                 {
                     doorB.ChangeAirtight = true;
                 }
             }
 
-            if (LifeStage(dock.Owner) < EntityLifeStage.Terminating)
+            if (LifeStage(dockUid) < EntityLifeStage.Terminating)
             {
-                var recentlyDocked = EnsureComp<RecentlyDockedComponent>(dock.Owner);
+                var recentlyDocked = EnsureComp<RecentlyDockedComponent>(dockUid);
                 recentlyDocked.LastDocked = dock.DockedWith.Value;
             }
 
@@ -490,7 +496,7 @@ namespace Content.Server.Shuttles.Systems
                 recentlyDocked.LastDocked = dock.DockedWith.Value;
             }
 
-            Cleanup(dock);
+            Cleanup(dockUid, dock);
         }
     }
 }

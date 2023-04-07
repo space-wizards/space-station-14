@@ -31,6 +31,7 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Weapons.Melee;
 using Content.Server.Chat;
 using Content.Server.Chat.Systems;
+using Content.Shared.Nutrition.Components;
 
 namespace Content.Server.Zombies
 {

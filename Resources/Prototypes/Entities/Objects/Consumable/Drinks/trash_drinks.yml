@@ -17,6 +17,12 @@
     maxTransferAmount: 5
   - type: Drink
     isOpen: true
+  - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+    damage:
+      types:
+        Blunt: 0
   - type: Spillable
     solution: drink
   - type: FitsInDispenser
@@ -56,6 +62,7 @@
           BrokenBottle:
             min: 1
             max: 1
+        transferForensics: true
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Tag
