@@ -26,7 +26,7 @@
   - type: SolutionContainerManager
     solutions:
       absorbed:
-        maxVol: 100
+        maxVol: 60
   - type: UseDelay
     delay: 1.5
   - type: Tag
@@ -53,7 +53,7 @@
       size: 15
       sprite: Objects/Specific/Janitorial/advmop.rsi
     - type: Absorbent
-      pickupAmount: 150
+      pickupAmount: 100
     - type: UseDelay
       delay: 1.0
     - type: SolutionContainerManager

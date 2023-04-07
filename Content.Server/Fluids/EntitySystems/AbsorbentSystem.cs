@@ -12,6 +12,7 @@ using Content.Shared.Fluids.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Content.Shared.Timing;
+using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -23,12 +24,13 @@ namespace Content.Server.Fluids.EntitySystems;
 
 public sealed class AbsorbentSystem : SharedAbsorbentSystem
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly PopupSystem _popups = default!;
     [Dependency] private readonly PuddleSystem _puddleSystem = default!;
+    [Dependency] private readonly SharedMeleeWeaponSystem _melee = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
@@ -106,7 +108,6 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
                 return;
         }
 
-        _useDelay.BeginDelay(uid);
         args.Handled = true;
     }
 
@@ -151,6 +152,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         _solutionSystem.UpdateChemicals(used, absorberSoln);
         _solutionSystem.UpdateChemicals(target, drainableSolution);
         _audio.PlayPvs(component.TransferSound, target);
+        _useDelay.BeginDelay(used);
         return true;
     }
 
@@ -194,6 +196,15 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         _solutionSystem.UpdateChemicals(used, absorberSoln);
         _solutionSystem.UpdateChemicals(target, puddleSolution);
         _audio.PlayPvs(absorber.PickupSound, target);
+        _useDelay.BeginDelay(used);
+
+        var userXform = Transform(user);
+        var targetPos = _transform.GetWorldPosition(target);
+        var localPos = _transform.GetInvWorldMatrix(userXform).Transform(targetPos);
+        localPos = userXform.LocalRotation.RotateVec(localPos);
+
+        _melee.DoLunge(user, Angle.Zero, localPos, null, false);
+
         return true;
     }
 }

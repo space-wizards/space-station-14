@@ -81,7 +81,7 @@ public sealed partial class PuddleSystem
         if (!args.CanAccess || !args.CanInteract)
             return;
 
-        if (!_solutionContainerSystem.TryGetDrainableSolution(args.Target, out var solution))
+        if (!_solutionContainerSystem.TryGetSolution(args.Target, component.SolutionName, out var solution))
             return;
 
         if (TryComp<DrinkComponent>(args.Target, out var drink) && (!drink.Opened))
