@@ -1,23 +1,23 @@
 using Content.Server.Disease.Components;
-using Content.Shared.Disease;
-using Content.Shared.Interaction;
-using Content.Shared.Inventory;
-using Content.Shared.Examine;
-using Content.Server.Popups;
-using Content.Server.Hands.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Paper;
+using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Robust.Shared.Random;
-using Robust.Shared.Player;
-using Robust.Shared.Audio;
-using Robust.Shared.Utility;
-using Content.Shared.Tools.Components;
 using Content.Server.Station.Systems;
+using Content.Shared.Disease;
 using Content.Shared.DoAfter;
+using Content.Shared.Examine;
+using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Interaction;
+using Content.Shared.Inventory;
 using Content.Shared.Swab;
+using Content.Shared.Tools.Components;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
+using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Disease
 {

@@ -10,18 +10,18 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
+using Content.Shared.Tag;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
-using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
-using Robust.Shared.Physics.Systems;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -88,6 +88,16 @@ public abstract partial class SharedGunSystem : EntitySystem
         SubscribeLocalEvent<GunComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<GunComponent, CycleModeEvent>(OnCycleMode);
         SubscribeLocalEvent<GunComponent, ComponentInit>(OnGunInit);
+
+#if DEBUG
+        SubscribeLocalEvent<GunComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(EntityUid uid, GunComponent component, MapInitEvent args)
+    {
+        if (component.NextFire > TimeSpan.Zero)
+            Logger.Warning($"Initializing a map that contains an entity that is on cooldown. Entity: {ToPrettyString(uid)}");
+#endif
     }
 
     private void OnGunInit(EntityUid uid, GunComponent component, ComponentInit args)
@@ -181,7 +191,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (!_combatMode.IsInCombatMode(entity))
             return false;
 
-        if (EntityManager.TryGetComponent(entity, out SharedHandsComponent? hands) &&
+        if (EntityManager.TryGetComponent(entity, out HandsComponent? hands) &&
             hands.ActiveHandEntity is { } held &&
             TryComp(held, out GunComponent? gun))
         {
