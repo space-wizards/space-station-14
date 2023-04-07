@@ -51,7 +51,12 @@
     powerLoad: 2000
   - type: ExtensionCableReceiver
   - type: Appearance
-  - type: PowerDeviceVisualizer
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: {visible: true}
+          False: {visible: false}
   - type: PortableScrubberVisuals
     idleState: icon
     runningState: icon-running
