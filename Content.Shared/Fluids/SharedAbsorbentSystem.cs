@@ -1,3 +1,4 @@
+using System.Linq;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -17,7 +18,7 @@ public abstract class SharedAbsorbentSystem : EntitySystem
         if (args.Current is not AbsorbentComponentState state)
             return;
 
-        if (component.Progress.Equals(state.Progress))
+        if (component.Progress.OrderBy(x => x.Key.ToArgb()).SequenceEqual(state.Progress))
             return;
 
         component.Progress.Clear();
