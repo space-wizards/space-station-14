@@ -13,6 +13,6 @@
   - type: ItemCooldown
   - type: EmitSoundOnUse
     sound:
-      path: /Audio/Items/Toys/weh.ogg
+      collection: Skub
   - type: UseDelay
     delay: 2.0

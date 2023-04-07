@@ -1,8 +1,13 @@
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.Components;
+using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
+using Content.Shared.Popups;
+using Content.Shared.Slippery;
 using Content.Shared.StepTrigger.Components;
 using Content.Shared.StepTrigger.Systems;
 using JetBrains.Annotations;
@@ -11,6 +16,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Solution = Content.Shared.Chemistry.Components.Solution;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Fluids.EntitySystems
 {
@@ -21,7 +27,10 @@ namespace Content.Server.Fluids.EntitySystems
         [Dependency] private readonly FluidSpreaderSystem _fluidSpreaderSystem = default!;
         [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly ReactiveSystem _reactive = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         public static float PuddleVolume = 1000;
 
@@ -38,6 +47,7 @@ namespace Content.Server.Fluids.EntitySystems
             SubscribeLocalEvent<PuddleComponent, ExaminedEvent>(HandlePuddleExamined);
             SubscribeLocalEvent<PuddleComponent, SolutionChangedEvent>(OnSolutionUpdate);
             SubscribeLocalEvent<PuddleComponent, ComponentInit>(OnPuddleInit);
+            SubscribeLocalEvent<PuddleComponent, SlipEvent>(OnPuddleSlip);
         }
 
         public override void Update(float frameTime)
@@ -53,6 +63,29 @@ namespace Content.Server.Fluids.EntitySystems
         private void OnPuddleInit(EntityUid uid, PuddleComponent component, ComponentInit args)
         {
             _solutionContainerSystem.EnsureSolution(uid, component.SolutionName, FixedPoint2.New(PuddleVolume), out _);
+        }
+
+        private void OnPuddleSlip(EntityUid uid, PuddleComponent component, ref SlipEvent args)
+        {
+            // Reactive entities have a chance to get a touch reaction from slipping on a puddle
+            // (i.e. it is implied they fell face first onto it or something)
+            if (!HasComp<ReactiveComponent>(args.Slipped))
+                return;
+
+            // Eventually probably have some system of 'body coverage' to tweak the probability but for now just 0.5
+            // (implying that spacemen have a 50% chance to either land on their ass or their face)
+            if (!_random.Prob(0.5f))
+                return;
+
+            if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var solution))
+                return;
+
+            _popup.PopupEntity(Loc.GetString("puddle-component-slipped-touch-reaction", ("puddle", uid)),
+                args.Slipped, args.Slipped, PopupType.SmallCaution);
+
+            // Take 15% of the puddle solution
+            var splitSol = _solutionContainerSystem.SplitSolution(uid, solution, solution.Volume * 0.15f);
+            _reactive.DoEntityReaction(args.Slipped, splitSol, ReactionMethod.Touch);
         }
 
         private void OnSolutionUpdate(EntityUid uid, PuddleComponent component, SolutionChangedEvent args)

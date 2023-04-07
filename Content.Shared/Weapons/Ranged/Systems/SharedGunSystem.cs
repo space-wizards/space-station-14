@@ -88,6 +88,16 @@ public abstract partial class SharedGunSystem : EntitySystem
         SubscribeLocalEvent<GunComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<GunComponent, CycleModeEvent>(OnCycleMode);
         SubscribeLocalEvent<GunComponent, ComponentInit>(OnGunInit);
+
+#if DEBUG
+        SubscribeLocalEvent<GunComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(EntityUid uid, GunComponent component, MapInitEvent args)
+    {
+        if (component.NextFire > TimeSpan.Zero)
+            Logger.Warning($"Initializing a map that contains an entity that is on cooldown. Entity: {ToPrettyString(uid)}");
+#endif
     }
 
     private void OnGunInit(EntityUid uid, GunComponent component, ComponentInit args)

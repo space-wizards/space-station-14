@@ -44,6 +44,12 @@
           False: {state: "icon"}
   - type: Spillable
     solution: drink
+  - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+    damage:
+      types:
+        Blunt: 0
   - type: ItemCooldown
   - type: SpaceGarbage
   - type: TrashOnEmpty
@@ -289,6 +295,31 @@
     sprite: Objects/Consumable/Drinks/dr_gibb.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/dr_gibb.rsi
+
+- type: entity
+  parent: DrinkCanBaseFull
+  id: DrinkNukieCan
+  name: robust nukie drink
+  description: An encouraging drink... very encouraging. It is filled with green liquid, after use it is recommended to consult a doctor.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Stimulants
+          Quantity: 10
+        - ReagentId: NuclearCola
+          Quantity: 15
+        - ReagentId: Ice
+          Quantity: 5
+  - type: Tag
+    tags:
+    - Recyclable
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/robustnukie.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/robustnukie.rsi
 
 - type: entity
   parent: DrinkCanBaseFull

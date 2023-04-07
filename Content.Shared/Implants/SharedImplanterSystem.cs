@@ -1,10 +1,12 @@
 ﻿using System.Linq;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Implants.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Implants;
 
@@ -21,7 +23,6 @@ public abstract class SharedImplanterSystem : EntitySystem
 
         SubscribeLocalEvent<ImplanterComponent, ComponentInit>(OnImplanterInit);
         SubscribeLocalEvent<ImplanterComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
-
     }
 
     private void OnImplanterInit(EntityUid uid, ImplanterComponent component, ComponentInit args)
@@ -95,7 +96,8 @@ public abstract class SharedImplanterSystem : EntitySystem
                 {
                     var implantName = Identity.Entity(implant, EntityManager);
                     var targetName = Identity.Entity(target, EntityManager);
-                    var failedPermanentMessage = Loc.GetString("implanter-draw-failed-permanent", ("implant", implantName), ("target", targetName));
+                    var failedPermanentMessage = Loc.GetString("implanter-draw-failed-permanent",
+                        ("implant", implantName), ("target", targetName));
                     _popup.PopupEntity(failedPermanentMessage, target, user);
                     permanentFound = implantComp.Permanent;
                     continue;
@@ -147,10 +149,21 @@ public abstract class SharedImplanterSystem : EntitySystem
         else if (component.CurrentMode == ImplanterToggleMode.Inject && component.ImplantOnly)
         {
             _appearance.SetData(component.Owner, ImplanterVisuals.Full, implantFound, appearance);
-            _appearance.SetData(component.Owner, ImplanterImplantOnlyVisuals.ImplantOnly, component.ImplantOnly, appearance);
+            _appearance.SetData(component.Owner, ImplanterImplantOnlyVisuals.ImplantOnly, component.ImplantOnly,
+                appearance);
         }
 
         else
             _appearance.SetData(component.Owner, ImplanterVisuals.Full, implantFound, appearance);
     }
+}
+
+[Serializable, NetSerializable]
+public sealed class ImplantEvent : SimpleDoAfterEvent
+{
+}
+
+[Serializable, NetSerializable]
+public sealed class DrawEvent : SimpleDoAfterEvent
+{
 }

@@ -30,6 +30,9 @@
     spawned:
     - id: FoodMeatCorgi
       amount: 2
+  - type: Tag
+    tags:
+    - CannotSuicide
 
 - type: entity
   name: Old Ian
@@ -56,6 +59,9 @@
     attributes:
       proper: true
       gender: male
+  - type: Tag
+    tags:
+    - CannotSuicide
 
 
 - type: entity
@@ -83,6 +89,9 @@
     attributes:
       proper: true
       gender: female
+  - type: Tag
+    tags:
+    - CannotSuicide
 
 - type: entity
   name: Runtime
@@ -93,6 +102,9 @@
   - type: Grammar
     attributes:
       gender: female
+  - type: Tag
+    tags:
+    - CannotSuicide
 
 - type: entity
   name: Exception
@@ -103,6 +115,9 @@
   - type: Grammar
     attributes:
       gender: male
+  - type: Tag
+    tags:
+    - CannotSuicide
 
 - type: entity
   name: Floppa
@@ -123,6 +138,9 @@
   - type: Grammar
     attributes:
       gender: male
+  - type: Tag
+    tags:
+    - CannotSuicide
 
 - type: entity
   name: Bandito
@@ -133,6 +151,9 @@
   - type: Grammar
     attributes:
       gender: male
+  - type: Tag
+    tags:
+    - CannotSuicide
 
 - type: entity
   name: bingus
@@ -187,6 +208,9 @@
   - type: Grammar
     attributes:
       gender: epicene
+  - type: Tag
+    tags:
+    - CannotSuicide
 
 - type: entity
   name: mcgriff
@@ -244,6 +268,9 @@
     attributes:
       proper: true
       gender: male
+  - type: Tag
+    tags:
+    - CannotSuicide
 
 - type: entity
   name: Paperwork
@@ -278,6 +305,9 @@
     attributes:
       proper: true
       gender: male
+  - type: Tag
+    tags:
+    - CannotSuicide
 
 - type: entity
   name: Walter
@@ -335,6 +365,9 @@
     attributes:
       proper: true
       gender: male
+  - type: Tag
+    tags:
+    - CannotSuicide
 
 - type: entity
   name: Morty
@@ -348,6 +381,9 @@
     attributes:
       proper: true
       gender: male
+  - type: Tag
+    tags:
+    - CannotSuicide
 
 - type: entity
   name: Morticia
@@ -361,6 +397,9 @@
     attributes:
       proper: true
       gender: female
+  - type: Tag
+    tags:
+    - CannotSuicide
 
 - type: entity
   name: Alexander
@@ -371,7 +410,10 @@
   - type: Grammar
     attributes:
       gender: male
-      
+  - type: Tag
+    tags:
+    - CannotSuicide
+
 - type: entity
   name: Renault
   parent: MobFox
@@ -390,6 +432,9 @@
     attributes:
       proper: true
       gender: female
+  - type: Tag
+    tags:
+    - CannotSuicide
 
 - type: entity
   name: Hamlet
@@ -413,4 +458,7 @@
     attributes:
       proper: true
       gender: male
+  - type: Tag
+    tags:
+    - CannotSuicide
 
