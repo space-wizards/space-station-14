@@ -152,7 +152,8 @@ public abstract partial class SharedGunSystem
     {
         // Reset shotting for cycling
         if (Resolve(uid, ref gunComp, false) &&
-            gunComp is { FireRate: > 0f })
+            gunComp is { FireRate: > 0f } &&
+            !Paused(uid))
         {
             gunComp.NextFire = Timing.CurTime + TimeSpan.FromSeconds(1 / gunComp.FireRate);
         }

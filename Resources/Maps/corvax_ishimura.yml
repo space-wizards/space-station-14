@@ -38400,30 +38400,6 @@ entities:
   - pos: -31.5,-6.5
     parent: 0
     type: Transform
-- uid: 4005
-  type: CrateFunInstruments
-  components:
-  - pos: -31.5,-7.5
-    parent: 0
-    type: Transform
-  - air:
-      volume: 200
-      immutable: False
-      temperature: 293.14957
-      moles:
-      - 3.3044906
-      - 12.431179
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    type: EntityStorage
 - uid: 4006
   type: ClothingShoesChef
   components:

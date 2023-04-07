@@ -16,6 +16,7 @@
   - Brig
   - Maintenance
   - Service
+  - Detective
 
 - type: startingGear
   id: DetectiveGear

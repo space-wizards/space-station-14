@@ -160,3 +160,6 @@ ent-ToySword = игрушечный меч
 ent-ToyAmongPequeno = маленький амонг
     .desc = сас!
     .suffix = { "" }
+ent-ClownRecorder = clown recorder
+    .desc = When you just can't get those laughs coming the natural way!
+    .suffix = { "" }
