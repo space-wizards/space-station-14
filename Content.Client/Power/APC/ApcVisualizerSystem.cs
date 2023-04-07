@@ -4,97 +4,158 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Power.APC;
 
-public sealed class ApcVisualizerSystem : VisualizerSystem<ApcVisualizerComponent>
+public sealed class ApcVisualizerSystem : VisualizerSystem<ApcVisualsComponent>
 {
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ApcVisualizerComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<ApcVisualsComponent, ComponentInit>(OnComponentInit);
     }
 
-    private void OnInit(EntityUid uid, ApcVisualizerComponent comp, ComponentInit args)
+    private void OnComponentInit(EntityUid uid, ApcVisualsComponent comp, ComponentInit args)
     {
         if(!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
-        sprite.LayerMapSet(Layers.Panel, sprite.AddLayerState("apc0"));
+        var spriteBase = comp.SpriteStateBase;
 
-        sprite.LayerMapSet(Layers.ChargeState, sprite.AddLayerState("apco3-0"));
-        sprite.LayerSetShader(Layers.ChargeState, "unshaded");
+        // Init APC frame sprite:
+        sprite.LayerMapSet(ApcVisualLayers.Panel, sprite.AddLayerState($"{spriteBase}{(sbyte)ApcPanelState.Closed}"));
 
-        sprite.LayerMapSet(Layers.Lock, sprite.AddLayerState("apcox-0"));
-        sprite.LayerSetShader(Layers.Lock, "unshaded");
+        // Init APC lock indicator overlays:
+        for(var i = 0; i < comp.LockIndicators; ++i)
+        {
+            var layer = ((byte)ApcVisualLayers.LockIndicatorOverlayStart + i);
+            sprite.LayerMapSet(layer, sprite.AddLayerState($"{spriteBase}{comp.LockPrefix}{i}-{(sbyte)ApcLockState.Locked}"));
+            if(!string.IsNullOrWhiteSpace(comp.LockShader))
+                sprite.LayerSetShader(layer, comp.LockShader);
+        }
 
-        sprite.LayerMapSet(Layers.Equipment, sprite.AddLayerState("apco0-3"));
-        sprite.LayerSetShader(Layers.Equipment, "unshaded");
+        // Init APC channel status overlays:
+        for(var i = 0; i < comp.ChannelIndicators; ++i)
+        {
+            var layer = ((byte)ApcVisualLayers.ChannelIndicatorOverlayStart + i);
+            sprite.LayerMapSet(layer, sprite.AddLayerState($"{spriteBase}{comp.ChannelPrefix}{i}-{(sbyte)ApcChannelState.AutoOn}"));
+            if(!string.IsNullOrWhiteSpace(comp.ChannelShader))
+                sprite.LayerSetShader(layer, comp.ChannelShader);
+        }
 
-        sprite.LayerMapSet(Layers.Lighting, sprite.AddLayerState("apco1-3"));
-        sprite.LayerSetShader(Layers.Lighting, "unshaded");
-
-        sprite.LayerMapSet(Layers.Environment, sprite.AddLayerState("apco2-3"));
-        sprite.LayerSetShader(Layers.Environment, "unshaded");
+        sprite.LayerMapSet(ApcVisualLayers.ChargeState, sprite.AddLayerState($"{spriteBase}{comp.ScreenPrefix}-{(sbyte)ApcChargeState.Lack}"));
+        if(!string.IsNullOrWhiteSpace(comp.ScreenShader))
+            sprite.LayerSetShader(ApcVisualLayers.ChargeState, comp.ScreenShader);
     }
 
-    protected override void OnAppearanceChange(EntityUid uid, ApcVisualizerComponent comp, ref AppearanceChangeEvent args)
+    protected override void OnAppearanceChange(EntityUid uid, ApcVisualsComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
         
-        if (AppearanceSystem.TryGetData<ApcPanelState>(uid, ApcVisuals.PanelState, out var panelState, args.Component))
+        // Handle APC frame state:
+        if (!AppearanceSystem.TryGetData<ApcPanelState>(uid, ApcVisuals.PanelState, out var panelState, args.Component))
+            panelState = ApcPanelState.Closed;       
+        args.Sprite.LayerSetState(ApcVisualLayers.Panel, $"{comp.SpriteStateBase}{(sbyte)panelState}");
+
+        // Handle APC screen overlay:
+        if(!AppearanceSystem.TryGetData<ApcChargeState>(uid, ApcVisuals.ChargeState, out var chargeState, args.Component))
+            chargeState = ApcChargeState.Lack;
+
+        if (chargeState >= 0)
         {
-            switch (panelState)
+            args.Sprite.LayerSetState(ApcVisualLayers.ChargeState, $"{comp.SpriteStateBase}{comp.ScreenPrefix}-{(sbyte)chargeState}");
+
+            if (AppearanceSystem.TryGetData<byte>(uid, ApcVisuals.LockState, out var lockStates, args.Component))
             {
-                case ApcPanelState.Closed:
-                    args.Sprite.LayerSetState(Layers.Panel, "apc0");
-                    break;
-                case ApcPanelState.Open:
-                    args.Sprite.LayerSetState(Layers.Panel, "apcframe");
-                    break;
-            }
-        }
-        if (AppearanceSystem.TryGetData<ApcChargeState>(uid, ApcVisuals.ChargeState, out var chargeState, args.Component))
-        {
-            switch (chargeState)
-            {
-                case ApcChargeState.Lack:
-                    args.Sprite.LayerSetState(Layers.ChargeState, "apco3-0");
-                    break;
-                case ApcChargeState.Charging:
-                    args.Sprite.LayerSetState(Layers.ChargeState, "apco3-1");
-                    break;
-                case ApcChargeState.Full:
-                    args.Sprite.LayerSetState(Layers.ChargeState, "apco3-2");
-                    break;
-                case ApcChargeState.Emag:
-                    args.Sprite.LayerSetState(Layers.ChargeState, "emag-unlit");
-                    break;
+                var spriteBase = $"{comp.SpriteStateBase}{comp.LockPrefix}";
+                for(var i = 0; i < comp.LockIndicators; ++i)
+                {
+                    var layer = ((byte)ApcVisualLayers.LockIndicatorOverlayStart + i);
+                    sbyte lockState = (sbyte)((lockStates >> (i << (sbyte)ApcLockState.LogWidth)) & (sbyte)ApcLockState.All);
+                    args.Sprite.LayerSetState(layer, $"{spriteBase}{i}-{lockState}");
+                    args.Sprite.LayerSetVisible(layer, true);
+                }
             }
 
-            if (TryComp(uid, out SharedPointLightComponent? light))
+            if (AppearanceSystem.TryGetData<byte>(uid, ApcVisuals.ChannelState, out var channelStates, args.Component))
             {
-                light.Color = chargeState switch
+                var spriteBase = $"{comp.SpriteStateBase}{comp.ChannelPrefix}";
+                for(var i = 0; i < comp.ChannelIndicators; ++i)
                 {
-                    ApcChargeState.Lack => ApcVisualizerComponent.LackColor,
-                    ApcChargeState.Charging => ApcVisualizerComponent.ChargingColor,
-                    ApcChargeState.Full => ApcVisualizerComponent.FullColor,
-                    ApcChargeState.Emag => ApcVisualizerComponent.EmagColor,
-                    _ => ApcVisualizerComponent.LackColor
-                };
+                    var layer = ((byte)ApcVisualLayers.ChannelIndicatorOverlayStart + i);
+                    sbyte channelState = (sbyte)((channelStates >> (i << (sbyte)ApcChannelState.LogWidth)) & (sbyte)ApcChannelState.All);
+                    args.Sprite.LayerSetState(layer, $"{spriteBase}{i}-{channelState}");
+                    args.Sprite.LayerSetVisible(layer, true);
+                }
             }
         }
         else
         {
-            args.Sprite.LayerSetState(Layers.ChargeState, "apco3-0");
+            args.Sprite.LayerSetState(ApcVisualLayers.ChargeState, comp.EmaggedScreenState);
+            for(var i = 0; i < comp.LockIndicators; ++i)
+            {
+                var layer = ((byte)ApcVisualLayers.LockIndicatorOverlayStart + i);
+                args.Sprite.LayerSetVisible(layer, false);
+            }
+            for(var i = 0; i < comp.ChannelIndicators; ++i)
+            {
+                var layer = ((byte)ApcVisualLayers.ChannelIndicatorOverlayStart + i);
+                args.Sprite.LayerSetVisible(layer, false);
+            }
+        }
+
+        // Try to sync the color of the light produced by the APC with the color of the APCs screen:
+        if (TryComp<SharedPointLightComponent>(uid, out var light))
+        {
+            light.Color = chargeState switch
+            {
+                ApcChargeState.Lack => comp.LackColor,
+                ApcChargeState.Charging => comp.ChargingColor,
+                ApcChargeState.Full => comp.FullColor,
+                ApcChargeState.Emag => comp.EmagColor,
+                _ => comp.EmagColor
+            };
         }
     }
 }
 
-enum Layers : byte
+enum ApcVisualLayers : byte
 {
-    ChargeState,
-    Lock,
-    Equipment,
-    Lighting,
-    Environment,
-    Panel,
+    /// <summary>
+    /// The sprite layer used for the APC frame.
+    /// </summary>
+    Panel = 0,
+
+    /// <summary>
+    /// The sprite layer used for the interface lock indicator light overlay.
+    /// </summary>
+    InterfaceLock = 1,
+    /// <summary>
+    /// The sprite layer used for the panel lock indicator light overlay.
+    /// </summary>
+    PanelLock = 2,
+    /// <summary>
+    /// The first of the lock indicator light layers.
+    /// </summary>
+    LockIndicatorOverlayStart = InterfaceLock,
+
+    /// <summary>
+    /// The sprite layer used for the equipment channel indicator light overlay.
+    /// </summary>
+    Equipment = 3,
+    /// <summary>
+    /// The sprite layer used for the lighting channel indicator light overlay.
+    /// </summary>
+    Lighting = 4,
+    /// <summary>
+    /// The sprite layer used for the environment channel indicator light overlay.
+    /// </summary>
+    Environment = 5,
+    /// <summary>
+    /// The first of the channel status indicator light layers.
+    /// </summary>
+    ChannelIndicatorOverlayStart = Equipment,
+
+    /// <summary>
+    /// The sprite layer used for the APC screen overlay.
+    /// </summary>
+    ChargeState = 6,
 }

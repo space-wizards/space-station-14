@@ -8,38 +8,28 @@
   },
   "states": [
     {
-      "name": "broken"
-    },
-    {
-      "name": "apcframe"
-    },
-    {
-      "name": "sparks-unlit",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
-    },
-    {
       "name": "apc0"
     },
     {
-      "name": "emag-unlit",
-      "delays": [
-        [
-          0.5,
-          0.5
-        ]
-      ]
+      "name": "apc1"
+    },
+    {
+      "name": "broken"
     },
     {
       "name": "panel"
+    },
+    {
+      "name": "apcox0-0"
+    },
+    {
+      "name": "apcox0-1"
+    },
+    {
+      "name": "apcox1-0"
+    },
+    {
+      "name": "apcox1-1"
     },
     {
       "name": "apco0-0"
@@ -121,10 +111,26 @@
       ]
     },
     {
-      "name": "apcox-0"
+      "name": "emag-unlit",
+      "delays": [
+        [
+          0.5,
+          0.5
+        ]
+      ]
     },
     {
-      "name": "apcox-1"
+      "name": "sparks-unlit",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
     }
   ]
 }

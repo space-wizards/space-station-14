@@ -30,7 +30,7 @@
     sprite: Structures/Power/apc.rsi
     state: apc0
   - type: Appearance
-  - type: ApcVisualizer
+  - type: ApcVisuals
   - type: Battery
     maxCharge: 50000
     startingCharge: 0
@@ -111,7 +111,7 @@
     drawdepth: WallMountedItems
     netsync: false
     sprite: Structures/Power/apc.rsi
-    state: apcframe
+    state: apc1
   - type: Construction
     graph: APC
     node: apcFrame
