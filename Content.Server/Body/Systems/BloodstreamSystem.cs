@@ -120,6 +120,9 @@ public sealed class BloodstreamSystem : EntitySystem
                 // Apply dizziness as a symptom of bloodloss.
                 // The effect is applied in a way that it will never be cleared without being healthy, and progressively gets worse
                 // Multiplying by 2 is arbitrary but works for this case
+
+                /* this value should be added and storeds in the component, so we can easily seperate it from normal bleed
+                    and then remove only the bleed portion of a drunk effect. */
                 _drunkSystem.TryApplyDrunkenness(uid, bloodstream.UpdateInterval*2, false);
             }
             else

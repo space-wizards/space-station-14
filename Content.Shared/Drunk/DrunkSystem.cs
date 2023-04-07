@@ -38,7 +38,7 @@ public abstract class SharedDrunkSystem : EntitySystem
         _statusEffectsSystem.TryRemoveStatusEffect(uid, DrunkKey);
     }
 
-    // remember to test this when you come back to the project
+    // remember to add this to bloodstream and test this when you come back to the project
     public void TryRemoveDrunkenessTime(EntityUid uid, double timeRemoved)
     {
         _statusEffectsSystem.TryRemoveTime(uid, DrunkKey, TimeSpan.FromSeconds(timeRemoved));
