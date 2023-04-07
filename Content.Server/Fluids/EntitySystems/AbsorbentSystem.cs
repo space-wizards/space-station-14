@@ -116,17 +116,17 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
     }
 
     /// <summary>
-    ///     Attempt to fill an absorber from some drainable solution.
+    ///     Attempt to fill an absorber from some refillable solution.
     /// </summary>
     private bool TryTransferAbsorber(EntityUid user, EntityUid used, EntityUid target, AbsorbentComponent component, Solution absorberSoln)
     {
-        if (!TryComp(target, out DrainableSolutionComponent? drainable))
+        if (!TryComp(target, out RefillableSolutionComponent? refillable))
             return false;
 
-        if (!_solutionSystem.TryGetDrainableSolution(target, out var drainableSolution, drainable))
+        if (!_solutionSystem.TryGetRefillableSolution(target, out var refillableSolution, refillable: refillable))
             return false;
 
-        if (drainableSolution.Volume <= 0)
+        if (refillableSolution.Volume <= 0)
         {
             var msg = Loc.GetString("mopping-system-target-container-empty", ("target", target));
             _popups.PopupEntity(msg, user, user);
@@ -148,13 +148,19 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
             component.PickupAmount :
             absorberSoln.AvailableVolume;
 
-        var water = drainableSolution.RemoveReagent(PuddleSystem.EvaporationReagent, transferAmount);
+        var water = refillableSolution.RemoveReagent(PuddleSystem.EvaporationReagent, transferAmount);
+
+        if (water == FixedPoint2.Zero && nonWater.Volume == FixedPoint2.Zero)
+        {
+            _popups.PopupEntity(Loc.GetString("mopping-system-target-container-empty-water", ("target", target)), user, user);
+            return false;
+        }
 
         absorberSoln.AddReagent(PuddleSystem.EvaporationReagent, water);
-        drainableSolution.AddSolution(nonWater, _prototype);
+        refillableSolution.AddSolution(nonWater, _prototype);
 
         _solutionSystem.UpdateChemicals(used, absorberSoln);
-        _solutionSystem.UpdateChemicals(target, drainableSolution);
+        _solutionSystem.UpdateChemicals(target, refillableSolution);
         _audio.PlayPvs(component.TransferSound, target);
         _useDelay.BeginDelay(used);
         return true;
