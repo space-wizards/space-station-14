@@ -1,5 +1,6 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.DragDrop;
+using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
 using Content.Shared.Fluids.Components;
 
@@ -14,8 +15,16 @@ public sealed partial class PuddleSystem
 
     private void OnRefillableDragged(EntityUid uid, RefillableSolutionComponent component, ref DragDropDraggedEvent args)
     {
-        TryComp<DrainableSolutionComponent>(args.Target, out var drainable);
         _solutionContainerSystem.TryGetSolution(uid, component.Solution, out var solution);
+
+        if (solution?.Volume == FixedPoint2.Zero)
+        {
+            _popups.PopupEntity(Loc.GetString("mopping-system-empty", ("used", uid)), uid, args.User);
+            return;
+        }
+
+        TryComp<DrainableSolutionComponent>(args.Target, out var drainable);
+
         _solutionContainerSystem.TryGetDrainableSolution(args.Target, out var drainableSolution, drainable);
 
         // Dump reagents into drain
@@ -33,7 +42,7 @@ public sealed partial class PuddleSystem
             }
             else
             {
-                _popups.PopupEntity(Loc.GetString("mopping-system-full"), args.Target, args.User);
+                _popups.PopupEntity(Loc.GetString("mopping-system-full", ("used", args.Target)), args.Target, args.User);
             }
 
             return;
@@ -53,7 +62,7 @@ public sealed partial class PuddleSystem
             }
             else
             {
-                _popups.PopupEntity(Loc.GetString("mopping-system-full"), uid, args.User);
+                _popups.PopupEntity(Loc.GetString("mopping-system-full", ("used", uid)), uid, args.User);
             }
         }
     }

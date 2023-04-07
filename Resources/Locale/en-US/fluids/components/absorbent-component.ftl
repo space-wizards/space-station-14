@@ -5,3 +5,4 @@ mopping-system-puddle-evaporate = { THE($target) } is evaporating
 mopping-system-no-water = { THE($used) } has no water!
 
 mopping-system-full = { THE($used) } is full!
+mopping-system-empty = { THE($used) } is empty!
