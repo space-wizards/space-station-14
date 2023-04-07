@@ -1,7 +1,6 @@
 using Content.Server.Fluids.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
-using Content.Shared.Fluids;
 using Content.Shared.Fluids.Components;
 
 namespace Content.Server.Fluids.EntitySystems;
@@ -24,24 +23,14 @@ public sealed partial class PuddleSystem
 
     private void UpdateEvaporation(EntityUid uid, Solution solution)
     {
-        if (TryComp<EvaporationComponent>(uid, out var evaporation))
+        if (HasComp<EvaporationComponent>(uid))
         {
-            // If we won't evaporate stop sparkling.
-            if (CanFullyEvaporate(solution))
-            {
-                SetEvaporationSparkle(uid, true);
-            }
-            else
-            {
-                SetEvaporationSparkle(uid, false);
-            }
-
             return;
         }
 
         if (solution.ContainsReagent(EvaporationReagent))
         {
-            evaporation = AddComp<EvaporationComponent>(uid);
+            var evaporation = AddComp<EvaporationComponent>(uid);
             evaporation.NextTick = _timing.CurTime + EvaporationCooldown;
             return;
         }
@@ -52,6 +41,7 @@ public sealed partial class PuddleSystem
     private void TickEvaporation()
     {
         var query = EntityQueryEnumerator<EvaporationComponent, PuddleComponent>();
+        var xformQuery = GetEntityQuery<TransformComponent>();
         var curTime = _timing.CurTime;
         var reagentTick = EvaporationAmount * EvaporationCooldown.TotalSeconds;
 
@@ -70,19 +60,9 @@ public sealed partial class PuddleSystem
             // Despawn if we're done
             if (puddleSolution.Volume == FixedPoint2.Zero)
             {
-                // TODO: Standalone sparkle entity?
+                // Spawn a *sparkle*
+                Spawn("PuddleSparkle", xformQuery.GetComponent(uid).Coordinates);
                 QueueDel(uid);
-                continue;
-            }
-
-            // If we only contain the evaporation reagent then *sparkle*
-            if (CanFullyEvaporate(puddleSolution))
-            {
-                SetEvaporationSparkle(uid, true);
-            }
-            else
-            {
-                SetEvaporationSparkle(uid, false);
             }
         }
     }
@@ -90,10 +70,5 @@ public sealed partial class PuddleSystem
     public bool CanFullyEvaporate(Solution solution)
     {
         return solution.Contents.Count == 1 && solution.ContainsReagent(EvaporationReagent);
-    }
-
-    private void SetEvaporationSparkle(EntityUid uid, bool enabled)
-    {
-        _appearance.SetData(uid, PuddleVisuals.Evaporation, enabled);
     }
 }

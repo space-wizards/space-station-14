@@ -428,10 +428,17 @@ public sealed partial class PuddleSystem : EntitySystem
         // TODO: Does SnapGrid or something else already do this?
         var anchored = mapGrid.GetAnchoredEntitiesEnumerator(tileRef.GridIndices);
         var puddleQuery = GetEntityQuery<PuddleComponent>();
-        // TODO: Delete sparkles on the tile.
+        var sparklesQuery = GetEntityQuery<EvaporationSparkleComponent>();
 
         while (anchored.MoveNext(out var ent))
         {
+            // If there's existing sparkles then delete it
+            if (sparklesQuery.TryGetComponent(ent, out var sparkles))
+            {
+                QueueDel(ent.Value);
+                continue;
+            }
+
             if (!puddleQuery.TryGetComponent(ent, out var puddle))
                 continue;
 

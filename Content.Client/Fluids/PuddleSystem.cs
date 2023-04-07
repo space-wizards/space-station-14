@@ -23,16 +23,6 @@ namespace Content.Client.Fluids
             if (args.Sprite == null)
                 return;
 
-            if (args.AppearanceData.TryGetValue(PuddleVisuals.Evaporation, out var sparkles) && (bool) sparkles)
-            {
-                args.Sprite.LayerSetState(1, "sparkles", new ResourcePath("Fluids/wet_floor_sparkles.rsi"));
-                args.Sprite.LayerSetVisible(1, true);
-            }
-            else
-            {
-                args.Sprite.LayerSetVisible(1, false);
-            }
-
             float volume = 1f;
 
             if (args.AppearanceData.TryGetValue(PuddleVisuals.CurrentVolume, out var volumeObj))

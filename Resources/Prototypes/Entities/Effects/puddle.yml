@@ -1,7 +1,27 @@
-# TODO: Fix
+# TODO: Fix - The idea is that blood and vomit is potentially not tile-bound versions of puddles(?)
 - type: entity
   id: PuddleVomit
   parent: Puddle
+
+- type: entity
+  id: PuddleSparkle
+  name: Sparkle
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: TimedDespawn
+      lifetime: 60
+    - type: EvaporationSparkle
+    - type: Transform
+      noRot: true
+      anchored: true
+    - type: Sprite
+      layers:
+        - sprite: Fluids/wet_floor_sparkles.rsi
+          state: sparkles
+      netsync: false
+      drawdepth: FloorObjects
+      color: "#FFFFFF80"
 
 - type: entity
   name: puddle
@@ -21,9 +41,6 @@
       layers:
         - sprite: Fluids/weh.rsi
           state: splat0
-        - sprite: Fluids/wet_floor_sparkles.rsi
-          state: sparkles
-          visible: false
       netsync: false
       drawdepth: FloorObjects
       color: "#FFFFFF80"
