@@ -10,7 +10,7 @@ namespace Content.Shared.Weapons.Ranged.Components;
 ///     no special behavior like cycling, magazine
 /// </summary>
 [RegisterComponent, AutoGenerateComponentState]
-public sealed class BasicEntityAmmoProviderComponent : AmmoProviderComponent
+public sealed partial class BasicEntityAmmoProviderComponent : AmmoProviderComponent
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("proto", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]

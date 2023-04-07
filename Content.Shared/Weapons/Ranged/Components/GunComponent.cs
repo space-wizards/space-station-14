@@ -8,7 +8,7 @@ namespace Content.Shared.Weapons.Ranged.Components;
 
 [RegisterComponent, NetworkedComponent, Virtual]
 [AutoGenerateComponentState]
-public class GunComponent : Component
+public partial class GunComponent : Component
 {
     #region Sound
 

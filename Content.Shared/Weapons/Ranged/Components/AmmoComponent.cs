@@ -21,7 +21,7 @@ public class AmmoComponent : Component, IShootable
 /// Spawns another prototype to be shot instead of itself.
 /// </summary>
 [RegisterComponent, NetworkedComponent, ComponentReference(typeof(AmmoComponent)), AutoGenerateComponentState]
-public sealed class CartridgeAmmoComponent : AmmoComponent
+public sealed partial class CartridgeAmmoComponent : AmmoComponent
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("proto", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Prototype = default!;

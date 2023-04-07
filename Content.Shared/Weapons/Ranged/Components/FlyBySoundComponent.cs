@@ -7,7 +7,7 @@ namespace Content.Shared.Weapons.Ranged.Components;
 /// Plays a sound when its non-hard fixture collides with a player.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed class FlyBySoundComponent : Component
+public sealed partial class FlyBySoundComponent : Component
 {
     /// <summary>
     /// Probability that the sound plays
