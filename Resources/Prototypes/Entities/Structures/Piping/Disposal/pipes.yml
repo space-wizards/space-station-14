@@ -124,6 +124,8 @@
     layers:
     - map: [ "pipe" ]
       state: conpipe-tagger
+  - type: DisposalTube
+    containerId: DisposalTagger
   - type: DisposalTagger
   - type: ContainerContainer
     containers:

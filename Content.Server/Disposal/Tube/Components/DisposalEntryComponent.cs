@@ -6,9 +6,8 @@ using Content.Server.Disposal.Unit.EntitySystems;
 namespace Content.Server.Disposal.Tube.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IDisposalTubeComponent))]
-    [ComponentReference(typeof(DisposalTubeComponent))]
-    public sealed class DisposalEntryComponent : Component, IDisposalTubeComponent
+    [Access(typeof(DisposalTubeSystem), typeof(DisposalUnitSystem))]
+    public sealed class DisposalEntryComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -30,25 +29,7 @@ namespace Content.Server.Disposal.Tube.Components
             if (tags != default)
                 holderComponent.Tags.UnionWith(tags);
 
-            return EntitySystem.Get<DisposableSystem>().EnterTube((holderComponent).Owner, Owner, holderComponent, null, this);
-        }
-
-        public Direction[] ConnectableDirections()
-        {
-            return new[] {_entMan.GetComponent<TransformComponent>(Owner).LocalRotation.GetDir()};
-        }
-
-        /// <summary>
-        ///     Ejects contents when they come from the same direction the entry is facing.
-        /// </summary>
-        public Direction NextDirection(DisposalHolderComponent holder)
-        {
-            if (holder.PreviousDirectionFrom != Direction.Invalid)
-            {
-                return Direction.Invalid;
-            }
-
-            return ConnectableDirections()[0];
+            return EntitySystem.Get<DisposableSystem>().EnterTube((holderComponent).Owner, Owner, holderComponent);
         }
     }
 }

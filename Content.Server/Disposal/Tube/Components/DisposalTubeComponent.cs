@@ -8,6 +8,8 @@ using Robust.Shared.Containers;
 
 namespace Content.Server.Disposal.Tube.Components
 {
+    [RegisterComponent]
+    [Access(typeof(DisposalTubeSystem), typeof(DisposableSystem))]
     public sealed class DisposalTubeComponent : Component
     {
         [DataField("containerId")] public string ContainerId { get; set; } = "DisposalTube";
@@ -17,7 +19,7 @@ namespace Content.Server.Disposal.Tube.Components
         public static readonly TimeSpan ClangDelay = TimeSpan.FromSeconds(0.5);
         public TimeSpan LastClang;
 
-        private bool _connected;
+        public bool Connected;
         [DataField("clangSound")] public SoundSpecifier ClangSound = new SoundPathSpecifier("/Audio/Effects/clang.ogg");
 
         /// <summary>
@@ -30,37 +32,22 @@ namespace Content.Server.Disposal.Tube.Components
         // ???
         public void Connect()
         {
-            if (_connected)
+            if (Connected)
             {
                 return;
             }
 
-            _connected = true;
-        }
-
-        public bool CanConnect(IDisposalTubeComponent tube, Direction direction, IDisposalTubeComponent with)
-        {
-            if (!_connected)
-            {
-                return false;
-            }
-
-            if (!tube.ConnectableDirections().Contains(direction))
-            {
-                return false;
-            }
-
-            return true;
+            Connected = true;
         }
 
         public void Disconnect()
         {
-            if (!_connected)
+            if (!Connected)
             {
                 return;
             }
 
-            _connected = false;
+            Connected = false;
 
             foreach (var entity in Contents.ContainedEntities.ToArray())
             {
@@ -71,13 +58,6 @@ namespace Content.Server.Disposal.Tube.Components
 
                 EntitySystem.Get<DisposableSystem>().ExitDisposals((holder).Owner);
             }
-        }
-
-        public void PopupDirections(IDisposalTubeComponent tube, EntityUid entity)
-        {
-            var directions = string.Join(", ", tube.ConnectableDirections());
-
-            Owner.PopupMessage(entity, Loc.GetString("disposal-tube-component-popup-directions-text", ("directions", directions)));
         }
 
         protected override void Initialize()
