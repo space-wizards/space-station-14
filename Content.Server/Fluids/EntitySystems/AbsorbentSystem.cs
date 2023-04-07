@@ -62,13 +62,18 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         var oldProgress = component.Progress.ShallowClone();
         component.Progress.Clear();
 
-        foreach (var reagent in solution.Contents)
+        if (solution.TryGetReagent(PuddleSystem.EvaporationReagent, out var water))
         {
-            var reagentProto = _prototype.Index<ReagentPrototype>(reagent.ReagentId);
+            component.Progress[_prototype.Index<ReagentPrototype>(PuddleSystem.EvaporationReagent).SubstanceColor] = water.Float();
+        }
 
-            var existing = component.Progress.GetOrNew(reagentProto.SubstanceColor);
-            existing += reagent.Quantity.Float();
-            component.Progress[reagentProto.SubstanceColor] = existing;
+        // Don't worry about splitting water out from the overall color
+        var otherColor = solution.GetColor(_prototype);
+        var other = (solution.Volume - water).Float();
+
+        if (other > 0f)
+        {
+            component.Progress[otherColor] = other;
         }
 
         var remainder = solution.AvailableVolume;
