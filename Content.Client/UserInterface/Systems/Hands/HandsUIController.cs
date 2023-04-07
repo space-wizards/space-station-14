@@ -26,7 +26,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
     private readonly List<HandsContainer> _handsContainers = new();
     private readonly Dictionary<string, int> _handContainerIndices = new();
     private readonly Dictionary<string, HandButton> _handLookup = new();
-    private SharedHandsComponent? _playerHandsComponent;
+    private HandsComponent? _playerHandsComponent;
     private HandButton? _activeHand = null;
     private int _backupSuffix = 0; //this is used when autogenerating container names if they don't have names
 
@@ -107,7 +107,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         }
     }
 
-    private void LoadPlayerHands(SharedHandsComponent handsComp)
+    private void LoadPlayerHands(HandsComponent handsComp)
     {
         DebugTools.Assert(_playerHandsComponent == null);
         if (HandsGui != null)

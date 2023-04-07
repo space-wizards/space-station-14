@@ -407,7 +407,7 @@ public sealed class WiresSystem : SharedWiresSystem
         }
         var player = (EntityUid) args.Session.AttachedEntity;
 
-        if (!EntityManager.TryGetComponent(player, out SharedHandsComponent? handsComponent))
+        if (!EntityManager.TryGetComponent(player, out HandsComponent? handsComponent))
         {
             _popupSystem.PopupEntity(Loc.GetString("wires-component-ui-on-receive-message-no-hands"), uid, player);
             return;

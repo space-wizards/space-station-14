@@ -229,7 +229,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         }
 
         // They need to either have hands...
-        if (!HasComp<SharedHandsComponent>(ev.Target!.Value))
+        if (!HasComp<HandsComponent>(ev.Target!.Value))
         {
             // or just be able to be shoved over.
             if (TryComp<StatusEffectsComponent>(ev.Target!.Value, out var status) && status.AllowedEffects.Contains("KnockedDown"))

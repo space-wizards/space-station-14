@@ -110,7 +110,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         var target = ev.Target!.Value;
 
-        if (!TryComp<SharedHandsComponent>(ev.Target.Value, out var targetHandsComponent))
+        if (!TryComp<HandsComponent>(ev.Target.Value, out var targetHandsComponent))
         {
             if (!TryComp<StatusEffectsComponent>(ev.Target!.Value, out var status) || !status.AllowedEffects.Contains("KnockedDown"))
                 return false;

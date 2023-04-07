@@ -262,7 +262,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
         if (!control.MouseIsHovering ||
             _playerInventory == null ||
-            !_entities.TryGetComponent<SharedHandsComponent>(player, out var hands) ||
+            !_entities.TryGetComponent<HandsComponent>(player, out var hands) ||
             hands.ActiveHandEntity is not { } held ||
             !_entities.TryGetComponent(held, out SpriteComponent? sprite) ||
             !_inventorySystem.TryGetSlotContainer(player.Value, control.SlotName, out var container, out var slotDef, _playerInventory))

@@ -223,7 +223,7 @@ namespace Content.Server.Zombies
                 _sharedHands.DoDrop(target, hand);
                 _sharedHands.RemoveHand(target, hand.Name);
             }
-            RemComp<SharedHandsComponent>(target);
+            RemComp<HandsComponent>(target);
 
             //zombie gamemode stuff
             RaiseLocalEvent(new EntityZombifiedEvent(target));

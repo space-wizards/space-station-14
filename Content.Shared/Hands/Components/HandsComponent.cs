@@ -7,7 +7,7 @@ namespace Content.Shared.Hands.Components;
 
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedHandsSystem))]
-public sealed class SharedHandsComponent : Component
+public sealed class HandsComponent : Component
 {
     /// <summary>
     ///     The currently active hand.
@@ -95,7 +95,7 @@ public sealed class HandsComponentState : ComponentState
     public readonly List<string> HandNames;
     public readonly string? ActiveHand;
 
-    public HandsComponentState(SharedHandsComponent handComp)
+    public HandsComponentState(HandsComponent handComp)
     {
         Hands = new(handComp.Hands.Values);
         HandNames = handComp.SortedHands;

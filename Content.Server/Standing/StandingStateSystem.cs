@@ -21,7 +21,7 @@ public sealed class StandingStateSystem : EntitySystem
         var fellEvent = new FellDownEvent(uid);
         RaiseLocalEvent(uid, fellEvent, false);
 
-        if (!TryComp(uid, out SharedHandsComponent? handsComp))
+        if (!TryComp(uid, out HandsComponent? handsComp))
             return;
 
         var worldRotation = EntityManager.GetComponent<TransformComponent>(uid).WorldRotation.ToVec();

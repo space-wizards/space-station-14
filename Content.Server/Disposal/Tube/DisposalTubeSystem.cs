@@ -209,7 +209,7 @@ namespace Content.Server.Disposal.Tube
 
         private void OnOpenRouterUIAttempt(EntityUid uid, DisposalRouterComponent router, ActivatableUIOpenAttemptEvent args)
         {
-            if (!TryComp<SharedHandsComponent>(args.User, out var hands))
+            if (!TryComp<HandsComponent>(args.User, out var hands))
             {
                 uid.PopupMessage(args.User, Loc.GetString("disposal-router-window-tag-input-activate-no-hands"));
                 return;
@@ -226,7 +226,7 @@ namespace Content.Server.Disposal.Tube
 
         private void OnOpenTaggerUIAttempt(EntityUid uid, DisposalTaggerComponent tagger, ActivatableUIOpenAttemptEvent args)
         {
-            if (!TryComp<SharedHandsComponent>(args.User, out var hands))
+            if (!TryComp<HandsComponent>(args.User, out var hands))
             {
                 uid.PopupMessage(args.User, Loc.GetString("disposal-tagger-window-activate-no-hands"));
                 return;

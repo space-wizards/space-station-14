@@ -653,7 +653,7 @@ namespace Content.Server.Botany.Systems
 
             if (component.Harvest && !component.Dead)
             {
-                if (TryComp<SharedHandsComponent>(user, out var hands))
+                if (TryComp<HandsComponent>(user, out var hands))
                 {
                     if (!_botanySystem.CanHarvest(component.Seed, hands.ActiveHandEntity))
                         return false;

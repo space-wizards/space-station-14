@@ -25,7 +25,7 @@ namespace Content.Server.Construction.Completions
             var containerSys = entityManager.EntitySysManager.GetEntitySystem<ContainerSystem>();
             var handSys = entityManager.EntitySysManager.GetEntitySystem<HandsSystem>();
 
-            SharedHandsComponent? hands = null;
+            HandsComponent? hands = null;
             var pickup = Pickup && entityManager.TryGetComponent(userUid, out hands);
 
             foreach (var container in containerManager.GetAllContainers())

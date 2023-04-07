@@ -190,7 +190,7 @@ public sealed class StationSpawningSystem : EntitySystem
             }
         }
 
-        if (!TryComp(entity, out SharedHandsComponent? handsComponent))
+        if (!TryComp(entity, out HandsComponent? handsComponent))
             return;
 
         var inhand = startingGear.Inhand;

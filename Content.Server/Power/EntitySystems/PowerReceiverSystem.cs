@@ -112,7 +112,7 @@ namespace Content.Server.Power.EntitySystems
             if(!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (!HasComp<SharedHandsComponent>(args.User))
+            if (!HasComp<HandsComponent>(args.User))
                 return;
 
             if (!TryComp<ApcPowerReceiverComponent>(uid, out var receiver))

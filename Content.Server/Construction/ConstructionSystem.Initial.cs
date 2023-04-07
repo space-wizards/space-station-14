@@ -312,7 +312,7 @@ namespace Content.Server.Construction
             if (args.SenderSession.AttachedEntity is not {Valid: true} user || !_actionBlocker.CanInteract(user, null))
                 return;
 
-            if (!HasComp<SharedHandsComponent>(user))
+            if (!HasComp<HandsComponent>(user))
                 return;
 
             foreach (var condition in constructionPrototype.Conditions)
@@ -418,7 +418,7 @@ namespace Content.Server.Construction
             }
 
             if (!_actionBlocker.CanInteract(user, null)
-                || !EntityManager.TryGetComponent(user, out SharedHandsComponent? hands) || hands.ActiveHandEntity == null)
+                || !EntityManager.TryGetComponent(user, out HandsComponent? hands) || hands.ActiveHandEntity == null)
             {
                 Cleanup();
                 return;

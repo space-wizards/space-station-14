@@ -32,7 +32,7 @@ namespace Content.Client.Hands.Systems
         public event Action<string, HandLocation>? OnPlayerAddHand;
         public event Action<string>? OnPlayerRemoveHand;
         public event Action<string?>? OnPlayerSetActiveHand;
-        public event Action<SharedHandsComponent>? OnPlayerHandsAdded;
+        public event Action<HandsComponent>? OnPlayerHandsAdded;
         public event Action? OnPlayerHandsRemoved;
         public event Action<string, EntityUid>? OnPlayerItemAdded;
         public event Action<string, EntityUid>? OnPlayerItemRemoved;
@@ -43,15 +43,15 @@ namespace Content.Client.Hands.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SharedHandsComponent, EntRemovedFromContainerMessage>(HandleItemRemoved);
-            SubscribeLocalEvent<SharedHandsComponent, EntInsertedIntoContainerMessage>(HandleItemAdded);
+            SubscribeLocalEvent<HandsComponent, EntRemovedFromContainerMessage>(HandleItemRemoved);
+            SubscribeLocalEvent<HandsComponent, EntInsertedIntoContainerMessage>(HandleItemAdded);
 
-            SubscribeLocalEvent<SharedHandsComponent, PlayerAttachedEvent>(HandlePlayerAttached);
-            SubscribeLocalEvent<SharedHandsComponent, PlayerDetachedEvent>(HandlePlayerDetached);
-            SubscribeLocalEvent<SharedHandsComponent, ComponentAdd>(HandleCompAdd);
-            SubscribeLocalEvent<SharedHandsComponent, ComponentRemove>(HandleCompRemove);
-            SubscribeLocalEvent<SharedHandsComponent, ComponentHandleState>(HandleComponentState);
-            SubscribeLocalEvent<SharedHandsComponent, VisualsChangedEvent>(OnVisualsChanged);
+            SubscribeLocalEvent<HandsComponent, PlayerAttachedEvent>(HandlePlayerAttached);
+            SubscribeLocalEvent<HandsComponent, PlayerDetachedEvent>(HandlePlayerDetached);
+            SubscribeLocalEvent<HandsComponent, ComponentAdd>(HandleCompAdd);
+            SubscribeLocalEvent<HandsComponent, ComponentRemove>(HandleCompRemove);
+            SubscribeLocalEvent<HandsComponent, ComponentHandleState>(HandleComponentState);
+            SubscribeLocalEvent<HandsComponent, VisualsChangedEvent>(OnVisualsChanged);
 
             SubscribeNetworkEvent<PickupAnimationEvent>(HandlePickupAnimation);
 
@@ -59,7 +59,7 @@ namespace Content.Client.Hands.Systems
         }
 
         #region StateHandling
-        private void HandleComponentState(EntityUid uid, SharedHandsComponent component, ref ComponentHandleState args)
+        private void HandleComponentState(EntityUid uid, HandsComponent component, ref ComponentHandleState args)
         {
             if (args.Current is not HandsComponentState state)
                 return;
@@ -141,7 +141,7 @@ namespace Content.Client.Hands.Systems
             OnPlayerHandsAdded?.Invoke(hands);
         }
 
-        public override void DoDrop(EntityUid uid, Hand hand, bool doDropInteraction = true, SharedHandsComponent? hands = null)
+        public override void DoDrop(EntityUid uid, Hand hand, bool doDropInteraction = true, HandsComponent? hands = null)
         {
             base.DoDrop(uid, hand, doDropInteraction, hands);
 
@@ -157,7 +157,7 @@ namespace Content.Client.Hands.Systems
         /// <summary>
         ///     Get the hands component of the local player
         /// </summary>
-        public bool TryGetPlayerHands([NotNullWhen(true)] out SharedHandsComponent? hands)
+        public bool TryGetPlayerHands([NotNullWhen(true)] out HandsComponent? hands)
         {
             var player = _playerManager.LocalPlayer?.ControlledEntity;
             hands = null;
@@ -167,7 +167,7 @@ namespace Content.Client.Hands.Systems
         /// <summary>
         ///     Called when a user clicked on their hands GUI
         /// </summary>
-        public void UIHandClick(SharedHandsComponent hands, string handName)
+        public void UIHandClick(HandsComponent hands, string handName)
         {
             if (!hands.Hands.TryGetValue(handName, out var pressedHand))
                 return;
@@ -251,7 +251,7 @@ namespace Content.Client.Hands.Systems
 
         #region visuals
 
-        private void HandleItemAdded(EntityUid uid, SharedHandsComponent handComp, ContainerModifiedMessage args)
+        private void HandleItemAdded(EntityUid uid, HandsComponent handComp, ContainerModifiedMessage args)
         {
             if (!handComp.Hands.TryGetValue(args.Container.ID, out var hand))
                 return;
@@ -267,7 +267,7 @@ namespace Content.Client.Hands.Systems
                 OnPlayerHandBlocked?.Invoke(hand.Name);
         }
 
-        private void HandleItemRemoved(EntityUid uid, SharedHandsComponent handComp, ContainerModifiedMessage args)
+        private void HandleItemRemoved(EntityUid uid, HandsComponent handComp, ContainerModifiedMessage args)
         {
             if (!handComp.Hands.TryGetValue(args.Container.ID, out var hand))
                 return;
@@ -286,7 +286,7 @@ namespace Content.Client.Hands.Systems
         /// <summary>
         ///     Update the players sprite with new in-hand visuals.
         /// </summary>
-        private void UpdateHandVisuals(EntityUid uid, EntityUid held, Hand hand, SharedHandsComponent? handComp = null, SpriteComponent? sprite = null)
+        private void UpdateHandVisuals(EntityUid uid, EntityUid held, Hand hand, HandsComponent? handComp = null, SpriteComponent? sprite = null)
         {
             if (!Resolve(uid, ref handComp, ref sprite, false))
                 return;
@@ -357,7 +357,7 @@ namespace Content.Client.Hands.Systems
             RaiseLocalEvent(held, new HeldVisualsUpdatedEvent(uid, revealedLayers), true);
         }
 
-        private void OnVisualsChanged(EntityUid uid, SharedHandsComponent component, VisualsChangedEvent args)
+        private void OnVisualsChanged(EntityUid uid, HandsComponent component, VisualsChangedEvent args)
         {
             // update hands visuals if this item is in a hand (rather then inventory or other container).
             if (component.Hands.TryGetValue(args.ContainerId, out var hand))
@@ -369,35 +369,35 @@ namespace Content.Client.Hands.Systems
 
         #region Gui
 
-        private void HandlePlayerAttached(EntityUid uid, SharedHandsComponent component, PlayerAttachedEvent args)
+        private void HandlePlayerAttached(EntityUid uid, HandsComponent component, PlayerAttachedEvent args)
         {
             OnPlayerHandsAdded?.Invoke(component);
         }
 
-        private void HandlePlayerDetached(EntityUid uid, SharedHandsComponent component, PlayerDetachedEvent args)
+        private void HandlePlayerDetached(EntityUid uid, HandsComponent component, PlayerDetachedEvent args)
         {
             OnPlayerHandsRemoved?.Invoke();
         }
 
-        private void HandleCompAdd(EntityUid uid, SharedHandsComponent component, ComponentAdd args)
+        private void HandleCompAdd(EntityUid uid, HandsComponent component, ComponentAdd args)
         {
             if (_playerManager.LocalPlayer?.ControlledEntity == uid)
                 OnPlayerHandsAdded?.Invoke(component);
         }
 
-        private void HandleCompRemove(EntityUid uid, SharedHandsComponent component, ComponentRemove args)
+        private void HandleCompRemove(EntityUid uid, HandsComponent component, ComponentRemove args)
         {
             if (_playerManager.LocalPlayer?.ControlledEntity == uid)
                 OnPlayerHandsRemoved?.Invoke();
         }
         #endregion
 
-        private void AddHand(EntityUid uid, Hand newHand, SharedHandsComponent? handsComp = null)
+        private void AddHand(EntityUid uid, Hand newHand, HandsComponent? handsComp = null)
         {
             AddHand(uid, newHand.Name, newHand.Location, handsComp);
         }
 
-        public override void AddHand(EntityUid uid, string handName, HandLocation handLocation, SharedHandsComponent? handsComp = null)
+        public override void AddHand(EntityUid uid, string handName, HandLocation handLocation, HandsComponent? handsComp = null)
         {
             base.AddHand(uid, handName, handLocation, handsComp);
 
@@ -410,7 +410,7 @@ namespace Content.Client.Hands.Systems
             if (handsComp.ActiveHand == null)
                 SetActiveHand(uid, handsComp.Hands[handName], handsComp);
         }
-        public override void RemoveHand(EntityUid uid, string handName, SharedHandsComponent? handsComp = null)
+        public override void RemoveHand(EntityUid uid, string handName, HandsComponent? handsComp = null)
         {
             if (uid == _playerManager.LocalPlayer?.ControlledEntity && handsComp != null &&
                 handsComp.Hands.ContainsKey(handName) && uid ==
@@ -422,7 +422,7 @@ namespace Content.Client.Hands.Systems
             base.RemoveHand(uid, handName, handsComp);
         }
 
-        private void OnHandActivated(SharedHandsComponent? handsComponent)
+        private void OnHandActivated(HandsComponent? handsComponent)
         {
             if (handsComponent == null)
                 return;

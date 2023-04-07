@@ -117,7 +117,7 @@ namespace Content.Server.Administration.Commands
                 }
             }
 
-            if (entityManager.TryGetComponent(target, out SharedHandsComponent? handsComponent))
+            if (entityManager.TryGetComponent(target, out HandsComponent? handsComponent))
             {
                 var handsSystem = entityManager.System<HandsSystem>();
                 var coords = entityManager.GetComponent<TransformComponent>(target).Coordinates;

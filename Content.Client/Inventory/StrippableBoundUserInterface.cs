@@ -94,7 +94,7 @@ namespace Content.Client.Inventory
                 }
             }
 
-            if (_entMan.TryGetComponent(Owner.Owner, out SharedHandsComponent? handsComp))
+            if (_entMan.TryGetComponent(Owner.Owner, out HandsComponent? handsComp))
             {
                 // good ol hands shit code. there is a GuiHands comparer that does the same thing... but these are hands
                 // and not gui hands... which are different...

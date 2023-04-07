@@ -66,7 +66,7 @@ namespace Content.Server.Strip
         private void OnStripButtonPressed(EntityUid target, StrippableComponent component, StrippingSlotButtonPressed args)
         {
             if (args.Session.AttachedEntity is not {Valid: true} user ||
-                !TryComp<SharedHandsComponent>(user, out var userHands))
+                !TryComp<HandsComponent>(user, out var userHands))
                 return;
 
             if (args.IsHand)
@@ -86,7 +86,7 @@ namespace Content.Server.Strip
                 TakeItemFromInventory(user, target, held!.Value, args.Slot, component);
         }
 
-        private void StripHand(EntityUid target, EntityUid user, string handId, StrippableComponent component, SharedHandsComponent userHands)
+        private void StripHand(EntityUid target, EntityUid user, string handId, StrippableComponent component, HandsComponent userHands)
         {
             if (!_handsSystem.TryGetHand(target, handId, out var hand))
                 return;
@@ -178,7 +178,7 @@ namespace Content.Server.Strip
             string slot,
             StrippableComponent component)
         {
-            var userHands = Comp<SharedHandsComponent>(user);
+            var userHands = Comp<HandsComponent>(user);
 
             bool Check()
             {
@@ -258,8 +258,8 @@ namespace Content.Server.Strip
             string handName,
             StrippableComponent component)
         {
-            var hands = Comp<SharedHandsComponent>(target);
-            var userHands = Comp<SharedHandsComponent>(user);
+            var hands = Comp<HandsComponent>(target);
+            var userHands = Comp<HandsComponent>(user);
 
             bool Check()
             {
@@ -390,8 +390,8 @@ namespace Content.Server.Strip
         /// </summary>
         private async void TakeItemFromHands(EntityUid user, EntityUid target, EntityUid item, string handName, StrippableComponent component)
         {
-            var hands = Comp<SharedHandsComponent>(target);
-            var userHands = Comp<SharedHandsComponent>(user);
+            var hands = Comp<HandsComponent>(target);
+            var userHands = Comp<HandsComponent>(user);
 
             bool Check()
             {

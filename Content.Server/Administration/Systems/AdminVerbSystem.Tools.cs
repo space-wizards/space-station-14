@@ -861,7 +861,7 @@ public sealed partial class AdminVerbSystem
                 }
             }
         }
-        else if (TryComp<SharedHandsComponent>(target, out var hands))
+        else if (TryComp<HandsComponent>(target, out var hands))
         {
             foreach (var held in _handsSystem.EnumerateHeld(target, hands))
             {

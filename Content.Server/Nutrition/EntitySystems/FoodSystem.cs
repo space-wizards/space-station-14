@@ -323,7 +323,7 @@ namespace Content.Server.Nutrition.EntitySystems
         }
 
         private bool TryGetRequiredUtensils(EntityUid user, FoodComponent component,
-            out List<EntityUid> utensils, SharedHandsComponent? hands = null)
+            out List<EntityUid> utensils, HandsComponent? hands = null)
         {
             utensils = new List<EntityUid>();
 

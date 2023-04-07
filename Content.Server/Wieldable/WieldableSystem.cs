@@ -81,7 +81,7 @@ namespace Content.Server.Wieldable
         public bool CanWield(EntityUid uid, WieldableComponent component, EntityUid user, bool quiet=false)
         {
             // Do they have enough hands free?
-            if (!EntityManager.TryGetComponent<SharedHandsComponent>(user, out var hands))
+            if (!EntityManager.TryGetComponent<HandsComponent>(user, out var hands))
             {
                 if(!quiet)
                     _popupSystem.PopupEntity(Loc.GetString("wieldable-component-no-hands"), user, user);

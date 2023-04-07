@@ -62,7 +62,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             await server.WaitAssertion(() =>
             {
                 user = sEntities.SpawnEntity(null, coords);
-                user.EnsureComponent<SharedHandsComponent>();
+                user.EnsureComponent<HandsComponent>();
                 handSys.AddHand(user, "hand", HandLocation.Left);
                 target = sEntities.SpawnEntity(null, coords);
                 item = sEntities.SpawnEntity(null, coords);
@@ -123,7 +123,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             await server.WaitAssertion(() =>
             {
                 user = sEntities.SpawnEntity(null, coords);
-                user.EnsureComponent<SharedHandsComponent>();
+                user.EnsureComponent<HandsComponent>();
                 handSys.AddHand(user, "hand", HandLocation.Left);
                 target = sEntities.SpawnEntity(null, new MapCoordinates((1.9f, 0), mapId));
                 item = sEntities.SpawnEntity(null, coords);
@@ -184,7 +184,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             await server.WaitAssertion(() =>
             {
                 user = sEntities.SpawnEntity(null, coords);
-                user.EnsureComponent<SharedHandsComponent>();
+                user.EnsureComponent<HandsComponent>();
                 handSys.AddHand(user, "hand", HandLocation.Left);
                 target = sEntities.SpawnEntity(null, new MapCoordinates((InteractionSystem.InteractionRange - 0.1f, 0), mapId));
                 item = sEntities.SpawnEntity(null, coords);
@@ -245,7 +245,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             await server.WaitAssertion(() =>
             {
                 user = sEntities.SpawnEntity(null, coords);
-                user.EnsureComponent<SharedHandsComponent>();
+                user.EnsureComponent<HandsComponent>();
                 handSys.AddHand(user, "hand", HandLocation.Left);
                 target = sEntities.SpawnEntity(null, new MapCoordinates((SharedInteractionSystem.InteractionRange + 0.01f, 0), mapId));
                 item = sEntities.SpawnEntity(null, coords);
@@ -308,7 +308,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             await server.WaitAssertion(() =>
             {
                 user = sEntities.SpawnEntity(null, coords);
-                user.EnsureComponent<SharedHandsComponent>();
+                user.EnsureComponent<HandsComponent>();
                 handSys.AddHand(user, "hand", HandLocation.Left);
                 target = sEntities.SpawnEntity(null, coords);
                 item = sEntities.SpawnEntity(null, coords);

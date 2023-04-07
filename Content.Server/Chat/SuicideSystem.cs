@@ -96,7 +96,7 @@ namespace Content.Server.Chat
             var itemQuery = GetEntityQuery<ItemComponent>();
 
             // Suicide by held item
-            if (EntityManager.TryGetComponent(victim, out SharedHandsComponent? handsComponent)
+            if (EntityManager.TryGetComponent(victim, out HandsComponent? handsComponent)
                 && handsComponent.ActiveHandEntity is { } item)
             {
                 RaiseLocalEvent(item, suicideEvent, false);

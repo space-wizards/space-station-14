@@ -355,7 +355,7 @@ namespace Content.Server.Storage.EntitySystems
                 return;
 
             // Does the player have hands?
-            if (!TryComp(player, out SharedHandsComponent? hands) || hands.Count == 0)
+            if (!TryComp(player, out HandsComponent? hands) || hands.Count == 0)
                 return;
 
             // If the user's active hand is empty, try pick up the item.
@@ -556,7 +556,7 @@ namespace Content.Server.Storage.EntitySystems
         /// <returns>true if inserted, false otherwise</returns>
         public bool PlayerInsertHeldEntity(EntityUid uid, EntityUid player, ServerStorageComponent? storageComp = null)
         {
-            if (!Resolve(uid, ref storageComp) || !TryComp(player, out SharedHandsComponent? hands) || hands.ActiveHandEntity == null)
+            if (!Resolve(uid, ref storageComp) || !TryComp(player, out HandsComponent? hands) || hands.ActiveHandEntity == null)
                 return false;
 
             var toInsert = hands.ActiveHandEntity;

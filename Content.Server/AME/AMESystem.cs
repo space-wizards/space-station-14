@@ -60,7 +60,7 @@ namespace Content.Server.AME
 
         private void OnInteractUsing(EntityUid uid, AMEControllerComponent component, InteractUsingEvent args)
         {
-            if (!TryComp(args.User, out SharedHandsComponent? hands))
+            if (!TryComp(args.User, out HandsComponent? hands))
             {
                 _popupSystem.PopupEntity(Loc.GetString("ame-controller-component-interact-using-no-hands-text"), uid, args.User);
                 return;
@@ -89,7 +89,7 @@ namespace Content.Server.AME
 
         private void OnPartInteractUsing(EntityUid uid, AMEPartComponent component, InteractUsingEvent args)
         {
-            if (!HasComp<SharedHandsComponent>(args.User))
+            if (!HasComp<HandsComponent>(args.User))
             {
                 _popupSystem.PopupEntity(Loc.GetString("ame-part-component-interact-using-no-hands"), uid, args.User);
                 return;

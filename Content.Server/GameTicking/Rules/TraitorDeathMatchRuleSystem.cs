@@ -156,7 +156,7 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
             }
             else if (!_mobStateSystem.IsDead(entity,mobState))
             {
-                if (HasComp<SharedHandsComponent>(entity))
+                if (HasComp<HandsComponent>(entity))
                 {
                     ev.Result = false;
                     return;

@@ -254,7 +254,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (args.Handled || !args.CanReach)
                 return;
 
-            if (!HasComp<SharedHandsComponent>(args.User))
+            if (!HasComp<HandsComponent>(args.User))
             {
                 return;
             }
@@ -357,7 +357,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         {
             var currentTime = GameTiming.CurTime;
 
-            if (!TryComp(args.Entity, out SharedHandsComponent? hands) ||
+            if (!TryComp(args.Entity, out HandsComponent? hands) ||
                 hands.Count == 0 ||
                 currentTime < component.LastExitAttempt + ExitAttemptDelay)
             {
@@ -468,7 +468,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (!Resolve(unitId, ref unit))
                 return false;
 
-            if (userId.HasValue && !HasComp<SharedHandsComponent>(userId) && toInsertId != userId) // Mobs like mouse can Jump inside even with no hands
+            if (userId.HasValue && !HasComp<HandsComponent>(userId) && toInsertId != userId) // Mobs like mouse can Jump inside even with no hands
             {
                 _popupSystem.PopupEntity(Loc.GetString("disposal-unit-no-hands"), userId.Value, userId.Value, PopupType.SmallCaution);
                 return false;

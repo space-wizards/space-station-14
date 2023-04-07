@@ -144,7 +144,7 @@ namespace Content.Server.Sandbox
                     }
                 }
             }
-            else if (TryComp<SharedHandsComponent>(attached, out var hands))
+            else if (TryComp<HandsComponent>(attached, out var hands))
             {
                 var card = CreateFreshId();
                 if (!_inventory.TryEquip(attached, card, "id", true, true))

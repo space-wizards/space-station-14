@@ -218,7 +218,7 @@ namespace Content.IntegrationTests.Tests.Buckle
 
             EntityUid human = default;
             BuckleComponent buckle = null;
-            SharedHandsComponent hands = null;
+            HandsComponent hands = null;
             BodyComponent body = null;
 
             await server.WaitIdleAsync();
