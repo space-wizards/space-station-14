@@ -8,18 +8,21 @@ using Content.Server.PDA;
 using Content.Server.Roles;
 using Content.Server.Station.Components;
 using Content.Server.Mind.Commands;
-using Content.Server.Shuttles.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
+using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
+using Content.Shared.Random;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 
@@ -33,6 +36,7 @@ namespace Content.Server.Station.Systems;
 public sealed class StationSpawningSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly HandsSystem _handsSystem = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
@@ -42,10 +46,13 @@ public sealed class StationSpawningSystem : EntitySystem
     [Dependency] private readonly SharedAccessSystem _accessSystem = default!;
     [Dependency] private readonly IdentitySystem _identity = default!;
 
+    private bool _randomizeCharacters;
+
     /// <inheritdoc/>
     public override void Initialize()
     {
         SubscribeLocalEvent<StationInitializedEvent>(OnStationInitialized);
+        _configurationManager.OnValueChanged(CCVars.ICRandomCharacters, e => _randomizeCharacters = e, true);
     }
 
     private void OnStationInitialized(StationInitializedEvent ev)
@@ -106,12 +113,31 @@ public sealed class StationSpawningSystem : EntitySystem
             return jobEntity;
         }
 
-        if (!_prototypeManager.TryIndex(profile?.Species ?? HumanoidAppearanceSystem.DefaultSpecies, out SpeciesPrototype? species))
+        string speciesId;
+        if (_randomizeCharacters)
         {
-            species = _prototypeManager.Index<SpeciesPrototype>(HumanoidAppearanceSystem.DefaultSpecies);
+            var weightId = _configurationManager.GetCVar(CCVars.ICRandomSpeciesWeights);
+            var weights = _prototypeManager.Index<WeightedRandomPrototype>(weightId);
+            speciesId = weights.Pick(_random);
+        }
+        else if (profile != null)
+        {
+            speciesId = profile.Species;
+        }
+        else
+        {
+            speciesId = SharedHumanoidAppearanceSystem.DefaultSpecies;
         }
 
-        var entity = EntityManager.SpawnEntity(species.Prototype, coordinates);
+        if (!_prototypeManager.TryIndex<SpeciesPrototype>(speciesId, out var species))
+            throw new ArgumentException($"Invalid species prototype was used: {speciesId}");
+
+        var entity = Spawn(species.Prototype, coordinates);
+
+        if (_randomizeCharacters)
+        {
+            profile = HumanoidCharacterProfile.RandomWithSpecies(speciesId);
+        }
 
         if (job?.StartingGear != null)
         {
@@ -124,10 +150,10 @@ public sealed class StationSpawningSystem : EntitySystem
         if (profile != null)
         {
             _humanoidSystem.LoadProfile(entity, profile);
-            EntityManager.GetComponent<MetaDataComponent>(entity).EntityName = profile.Name;
+            MetaData(entity).EntityName = profile.Name;
             if (profile.FlavorText != "" && _configurationManager.GetCVar(CCVars.FlavorText))
             {
-                EntityManager.AddComponent<DetailExaminableComponent>(entity).Content = profile.FlavorText;
+                AddComp<DetailExaminableComponent>(entity).Content = profile.FlavorText;
             }
         }
 
