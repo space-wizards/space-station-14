@@ -1,15 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed admins blowing out your eardrums when playing a global sound.,
-    type: Fix}
-  id: 2853
-  time: '2023-01-10T21:45:09.0000000+00:00'
-- author: Scribbles0
-  changes:
-  - {message: Narcolepsy can now be treated., type: Add}
-  id: 2854
-  time: '2023-01-11T08:14:16.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Phasing artifacts are now scannable again., type: Fix}
@@ -2920,3 +2909,13 @@ Entries:
   - {message: ID Console shows the detective access correctly, type: Fix}
   id: 3352
   time: '2023-04-07T20:09:30.0000000+00:00'
+- author: JerryImMouse
+  changes:
+  - {message: Fixed janimaid's jumpskirt sprite, type: Fix}
+  id: 3353
+  time: '2023-04-07T20:10:35.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Broken bottles and glass shards are sharp, type: Tweak}
+  id: 3354
+  time: '2023-04-07T20:10:54.0000000+00:00'
