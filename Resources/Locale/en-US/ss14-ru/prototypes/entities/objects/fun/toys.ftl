@@ -160,3 +160,6 @@ ent-ToySword = toy sword
 ent-ToyAmongPequeno = among pequeno
     .desc = sus!
     .suffix = { "" }
+ent-ClownRecorder = clown recorder
+    .desc = When you just can't get those laughs coming the natural way!
+    .suffix = { "" }
