@@ -6,7 +6,7 @@ namespace Content.Shared.Weapons.Ranged.Components;
 /// <summary>
 /// Plays a sound when its non-hard fixture collides with a player.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed class FlyBySoundComponent : Component
 {
     /// <summary>
@@ -16,10 +16,13 @@ public sealed class FlyBySoundComponent : Component
     public float Prob = 0.10f;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("sound")]
+    [AutoNetworkedField]
     public SoundSpecifier Sound = new SoundCollectionSpecifier("BulletMiss")
     {
         Params = AudioParams.Default,
     };
 
-    [DataField("range")] public float Range = 1.5f;
+    [DataField("range")]
+    [AutoNetworkedField]
+    public float Range = 1.5f;
 }
