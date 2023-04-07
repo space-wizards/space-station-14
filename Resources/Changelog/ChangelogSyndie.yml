@@ -1,13 +1,6 @@
 Entries:
 - author: lapatison
   changes:
-  - message: "\u041C\u0435\u043B\u043A\u0438\u0439 \u043F\u0435\u0440\u0435\u0432\u043E\
-      \u0434."
-    type: Add
-  id: 64
-  time: '2022-02-27T08:22:01.0000000+00:00'
-- author: lapatison
-  changes:
   - message: "\u041A\u043E\u0440\u043E\u0442\u043A\u0438\u0439 \u043F\u0435\u0440\u0435\
       \u0432\u043E\u0434."
     type: Add
@@ -4246,3 +4239,10 @@ Entries:
     type: Add
   id: 563
   time: '2023-04-07T10:25:39.0000000+00:00'
+- author: lapatison
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u044B \u043F\u0435\u0440\
+      \u0435\u0432\u043E\u0434\u044B"
+    type: Add
+  id: 564
+  time: '2023-04-07T21:38:05.0000000+00:00'
