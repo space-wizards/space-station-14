@@ -2,8 +2,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Construction.Components;
-using Content.Server.DoAfter;
-using Content.Server.Hands.Components;
 using Content.Server.Storage.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Construction;
@@ -12,11 +10,11 @@ using Content.Shared.Construction.Steps;
 using Content.Shared.Coordinates;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
+using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
 
@@ -314,7 +312,7 @@ namespace Content.Server.Construction
             if (args.SenderSession.AttachedEntity is not {Valid: true} user || !_actionBlocker.CanInteract(user, null))
                 return;
 
-            if (!HasComp<HandsComponent>(user))
+            if (!HasComp<SharedHandsComponent>(user))
                 return;
 
             foreach (var condition in constructionPrototype.Conditions)
@@ -420,7 +418,7 @@ namespace Content.Server.Construction
             }
 
             if (!_actionBlocker.CanInteract(user, null)
-                || !EntityManager.TryGetComponent(user, out HandsComponent? hands) || hands.ActiveHandEntity == null)
+                || !EntityManager.TryGetComponent(user, out SharedHandsComponent? hands) || hands.ActiveHandEntity == null)
             {
                 Cleanup();
                 return;

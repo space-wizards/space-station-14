@@ -2,11 +2,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using Content.Server.Administration.Logs;
-using Content.Server.Hands.Components;
 using Content.Server.Power.Components;
-using Content.Shared.DoAfter;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.GameTicking;
+using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tools;
@@ -407,7 +407,7 @@ public sealed class WiresSystem : SharedWiresSystem
         }
         var player = (EntityUid) args.Session.AttachedEntity;
 
-        if (!EntityManager.TryGetComponent(player, out HandsComponent? handsComponent))
+        if (!EntityManager.TryGetComponent(player, out SharedHandsComponent? handsComponent))
         {
             _popupSystem.PopupEntity(Loc.GetString("wires-component-ui-on-receive-message-no-hands"), uid, player);
             return;

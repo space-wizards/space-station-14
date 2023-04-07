@@ -1,14 +1,14 @@
-using Content.Server.Power.Components;
-using Content.Server.Hands.Components;
 using Content.Server.Administration.Logs;
+using Content.Server.Administration.Managers;
+using Content.Server.Power.Components;
+using Content.Shared.Administration;
+using Content.Shared.Database;
 using Content.Shared.Examine;
+using Content.Shared.Hands.Components;
 using Content.Shared.Power;
 using Content.Shared.Verbs;
-using Content.Shared.Database;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Content.Server.Administration.Managers;
-using Content.Shared.Administration;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Power.EntitySystems
@@ -112,7 +112,7 @@ namespace Content.Server.Power.EntitySystems
             if(!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (!HasComp<HandsComponent>(args.User))
+            if (!HasComp<SharedHandsComponent>(args.User))
                 return;
 
             if (!TryComp<ApcPowerReceiverComponent>(uid, out var receiver))

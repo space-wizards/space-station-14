@@ -1,9 +1,9 @@
 #nullable enable
 using System.Threading.Tasks;
 using Content.Server.Cuffs;
-using Content.Server.Hands.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Hands.Components;
 using NUnit.Framework;
 using Robust.Server.Console;
 using Robust.Shared.GameObjects;
@@ -47,7 +47,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
             EntityUid cuffs;
             EntityUid secondCuffs;
             CuffableComponent cuffed;
-            HandsComponent hands;
+            SharedHandsComponent hands;
 
             await server.WaitAssertion(() =>
             {
@@ -70,7 +70,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
                 // Test for components existing
                 Assert.True(entityManager.TryGetComponent(human, out cuffed!),
                     $"Human has no {nameof(CuffableComponent)}");
-                Assert.True(entityManager.TryGetComponent(human, out hands!), $"Human has no {nameof(HandsComponent)}");
+                Assert.True(entityManager.TryGetComponent(human, out hands!), $"Human has no {nameof(SharedHandsComponent)}");
                 Assert.True(entityManager.TryGetComponent(human, out BodyComponent? _), $"Human has no {nameof(BodyComponent)}");
                 Assert.True(entityManager.TryGetComponent(cuffs, out HandcuffComponent? _), $"Handcuff has no {nameof(HandcuffComponent)}");
                 Assert.True(entityManager.TryGetComponent(secondCuffs, out HandcuffComponent? _), $"Second handcuffs has no {nameof(HandcuffComponent)}");

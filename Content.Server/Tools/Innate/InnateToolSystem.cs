@@ -1,10 +1,9 @@
-
-using Content.Shared.Interaction.Components;
-using Content.Server.Hands.Components;
+using Content.Shared.Destructible;
+using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Storage;
 using Content.Shared.Tag;
-using Content.Shared.Destructible;
 using Robust.Shared.Random;
 
 namespace Content.Server.Tools.Innate
@@ -33,7 +32,7 @@ namespace Content.Server.Tools.Innate
 
             var spawnCoord = Transform(uid).Coordinates;
 
-            if (TryComp<HandsComponent>(uid, out var hands) && hands.Count >= component.Tools.Count)
+            if (TryComp<SharedHandsComponent>(uid, out var hands) && hands.Count >= component.Tools.Count)
             {
                 var items = EntitySpawnCollection.GetSpawns(component.Tools, _robustRandom);
                 foreach (var entry in items)
@@ -76,7 +75,7 @@ namespace Content.Server.Tools.Innate
                     Del(tool);
                 }
 
-                if (TryComp<HandsComponent>(uid, out var hands))
+                if (TryComp<SharedHandsComponent>(uid, out var hands))
                 {
                     foreach (var hand in hands.Hands)
                     {

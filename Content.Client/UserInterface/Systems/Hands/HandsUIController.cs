@@ -1,5 +1,4 @@
 using Content.Client.Gameplay;
-using Content.Client.Hands;
 using Content.Client.Hands.Systems;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Hands.Controls;
@@ -8,6 +7,7 @@ using Content.Shared.Cooldown;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
+using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Input;
@@ -19,13 +19,14 @@ namespace Content.Client.UserInterface.Systems.Hands;
 public sealed class HandsUIController : UIController, IOnStateEntered<GameplayState>, IOnSystemChanged<HandsSystem>
 {
     [Dependency] private readonly IEntityManager _entities = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
 
     [UISystemDependency] private readonly HandsSystem _handsSystem = default!;
 
     private readonly List<HandsContainer> _handsContainers = new();
     private readonly Dictionary<string, int> _handContainerIndices = new();
     private readonly Dictionary<string, HandButton> _handLookup = new();
-    private HandsComponent? _playerHandsComponent;
+    private SharedHandsComponent? _playerHandsComponent;
     private HandButton? _activeHand = null;
     private int _backupSuffix = 0; //this is used when autogenerating container names if they don't have names
 
@@ -106,7 +107,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         }
     }
 
-    private void LoadPlayerHands(HandsComponent handsComp)
+    private void LoadPlayerHands(SharedHandsComponent handsComp)
     {
         DebugTools.Assert(_playerHandsComponent == null);
         if (HandsGui != null)
@@ -246,7 +247,8 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
 
         if (HandsGui != null &&
             _playerHandsComponent != null &&
-            _playerHandsComponent.Hands.TryGetValue(handName, out var hand))
+            _player.LocalPlayer?.ControlledEntity is { } playerEntity &&
+            _handsSystem.TryGetHand(playerEntity, handName, out var hand, _playerHandsComponent))
         {
             HandsGui.UpdatePanelEntity(hand.HeldEntity);
         }

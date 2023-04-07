@@ -1,16 +1,15 @@
 using System.Linq;
 using Content.Server.GameTicking;
-using Content.Server.Hands.Components;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Sandbox;
 using Robust.Server.Console;
-using Robust.Server.GameObjects;
 using Robust.Server.Placement;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
@@ -145,7 +144,7 @@ namespace Content.Server.Sandbox
                     }
                 }
             }
-            else if (TryComp<HandsComponent>(attached, out var hands))
+            else if (TryComp<SharedHandsComponent>(attached, out var hands))
             {
                 var card = CreateFreshId();
                 if (!_inventory.TryEquip(attached, card, "id", true, true))

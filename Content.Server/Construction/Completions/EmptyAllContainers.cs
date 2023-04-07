@@ -1,6 +1,6 @@
-using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
 using Content.Shared.Construction;
+using Content.Shared.Hands.Components;
 using JetBrains.Annotations;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
@@ -25,7 +25,7 @@ namespace Content.Server.Construction.Completions
             var containerSys = entityManager.EntitySysManager.GetEntitySystem<ContainerSystem>();
             var handSys = entityManager.EntitySysManager.GetEntitySystem<HandsSystem>();
 
-            HandsComponent? hands = null;
+            SharedHandsComponent? hands = null;
             var pickup = Pickup && entityManager.TryGetComponent(userUid, out hands);
 
             foreach (var container in containerManager.GetAllContainers())

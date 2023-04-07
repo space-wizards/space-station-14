@@ -207,4 +207,15 @@ public abstract partial class SharedHandsSystem : EntitySystem
 
         return false;
     }
+
+    public bool TryGetHand(EntityUid handsUid, string handId, [NotNullWhen(true)] out Hand? hand,
+        SharedHandsComponent? hands = null)
+    {
+        hand = null;
+
+        if (!Resolve(handsUid, ref hands))
+            return false;
+
+        return hands.Hands.TryGetValue(handId, out hand);
+    }
 }

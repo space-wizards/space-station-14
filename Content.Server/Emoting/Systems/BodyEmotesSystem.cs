@@ -1,7 +1,7 @@
 using Content.Server.Chat.Systems;
 using Content.Server.Emoting.Components;
-using Content.Server.Hands.Components;
 using Content.Shared.Chat.Prototypes;
+using Content.Shared.Hands.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Emoting.Systems;
@@ -40,7 +40,7 @@ public sealed class BodyEmotesSystem : EntitySystem
     private bool TryEmoteHands(EntityUid uid, EmotePrototype emote, BodyEmotesComponent component)
     {
         // check that user actually has hands to do emote sound
-        if (!TryComp(uid, out HandsComponent? hands) || hands.Count <= 0)
+        if (!TryComp(uid, out SharedHandsComponent? hands) || hands.Count <= 0)
             return false;
 
         return _chat.TryPlayEmoteSound(uid, component.Sounds, emote);

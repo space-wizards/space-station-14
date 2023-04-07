@@ -1,11 +1,11 @@
 using Content.Client.Gameplay;
-using Content.Client.Hands;
 using Content.Client.Hands.Systems;
 using Content.Client.Inventory;
 using Content.Client.Storage;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Inventory.Controls;
 using Content.Client.UserInterface.Systems.Inventory.Windows;
+using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
@@ -262,7 +262,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
         if (!control.MouseIsHovering ||
             _playerInventory == null ||
-            !_entities.TryGetComponent<HandsComponent>(player, out var hands) ||
+            !_entities.TryGetComponent<SharedHandsComponent>(player, out var hands) ||
             hands.ActiveHandEntity is not { } held ||
             !_entities.TryGetComponent(held, out SpriteComponent? sprite) ||
             !_inventorySystem.TryGetSlotContainer(player.Value, control.SlotName, out var container, out var slotDef, _playerInventory))

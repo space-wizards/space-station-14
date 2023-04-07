@@ -4,7 +4,6 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Unit.Components;
-using Content.Server.Hands.Components;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -27,9 +26,9 @@ using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Disposal.Unit.EntitySystems
@@ -255,7 +254,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (args.Handled || !args.CanReach)
                 return;
 
-            if (!HasComp<HandsComponent>(args.User))
+            if (!HasComp<SharedHandsComponent>(args.User))
             {
                 return;
             }
@@ -358,7 +357,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         {
             var currentTime = GameTiming.CurTime;
 
-            if (!TryComp(args.Entity, out HandsComponent? hands) ||
+            if (!TryComp(args.Entity, out SharedHandsComponent? hands) ||
                 hands.Count == 0 ||
                 currentTime < component.LastExitAttempt + ExitAttemptDelay)
             {

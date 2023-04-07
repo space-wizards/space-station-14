@@ -1,17 +1,17 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.AME.Components;
-using Content.Server.Power.Components;
-using Content.Server.Hands.Components;
 using Content.Server.Popups;
+using Content.Server.Power.Components;
 using Content.Server.Tools;
 using Content.Shared.Database;
+using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using JetBrains.Annotations;
+using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Audio;
-using JetBrains.Annotations;
 
 namespace Content.Server.AME
 {
@@ -60,7 +60,7 @@ namespace Content.Server.AME
 
         private void OnInteractUsing(EntityUid uid, AMEControllerComponent component, InteractUsingEvent args)
         {
-            if (!TryComp(args.User, out HandsComponent? hands))
+            if (!TryComp(args.User, out SharedHandsComponent? hands))
             {
                 _popupSystem.PopupEntity(Loc.GetString("ame-controller-component-interact-using-no-hands-text"), uid, args.User);
                 return;
@@ -89,7 +89,7 @@ namespace Content.Server.AME
 
         private void OnPartInteractUsing(EntityUid uid, AMEPartComponent component, InteractUsingEvent args)
         {
-            if (!HasComp<HandsComponent>(args.User))
+            if (!HasComp<SharedHandsComponent>(args.User))
             {
                 _popupSystem.PopupEntity(Loc.GetString("ame-part-component-interact-using-no-hands"), uid, args.User);
                 return;

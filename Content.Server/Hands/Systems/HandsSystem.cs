@@ -1,4 +1,3 @@
-using Content.Server.Hands.Components;
 using Content.Server.Popups;
 using Content.Server.Pulling;
 using Content.Server.Stack;
@@ -50,17 +49,17 @@ namespace Content.Server.Hands.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<HandsComponent, DisarmedEvent>(OnDisarmed, before: new[] { typeof(StunSystem) });
+            SubscribeLocalEvent<SharedHandsComponent, DisarmedEvent>(OnDisarmed, before: new[] { typeof(StunSystem) });
 
-            SubscribeLocalEvent<HandsComponent, PullStartedMessage>(HandlePullStarted);
-            SubscribeLocalEvent<HandsComponent, PullStoppedMessage>(HandlePullStopped);
+            SubscribeLocalEvent<SharedHandsComponent, PullStartedMessage>(HandlePullStarted);
+            SubscribeLocalEvent<SharedHandsComponent, PullStoppedMessage>(HandlePullStopped);
 
-            SubscribeLocalEvent<HandsComponent, EntRemovedFromContainerMessage>(HandleEntityRemoved);
+            SubscribeLocalEvent<SharedHandsComponent, EntRemovedFromContainerMessage>(HandleEntityRemoved);
 
-            SubscribeLocalEvent<HandsComponent, BodyPartAddedEvent>(HandleBodyPartAdded);
-            SubscribeLocalEvent<HandsComponent, BodyPartRemovedEvent>(HandleBodyPartRemoved);
+            SubscribeLocalEvent<SharedHandsComponent, BodyPartAddedEvent>(HandleBodyPartAdded);
+            SubscribeLocalEvent<SharedHandsComponent, BodyPartRemovedEvent>(HandleBodyPartRemoved);
 
-            SubscribeLocalEvent<HandsComponent, ComponentGetState>(GetComponentState);
+            SubscribeLocalEvent<SharedHandsComponent, ComponentGetState>(GetComponentState);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
@@ -76,12 +75,12 @@ namespace Content.Server.Hands.Systems
             CommandBinds.Unregister<HandsSystem>();
         }
 
-        private void GetComponentState(EntityUid uid, HandsComponent hands, ref ComponentGetState args)
+        private void GetComponentState(EntityUid uid, SharedHandsComponent hands, ref ComponentGetState args)
         {
             args.State = new HandsComponentState(hands);
         }
 
-        private void OnDisarmed(EntityUid uid, HandsComponent component, DisarmedEvent args)
+        private void OnDisarmed(EntityUid uid, SharedHandsComponent component, DisarmedEvent args)
         {
             if (args.Handled)
                 return;
@@ -116,7 +115,7 @@ namespace Content.Server.Hands.Systems
                 _virtualSystem.Delete(@virtual, uid);
         }
 
-        private void HandleBodyPartAdded(EntityUid uid, HandsComponent component, ref BodyPartAddedEvent args)
+        private void HandleBodyPartAdded(EntityUid uid, SharedHandsComponent component, ref BodyPartAddedEvent args)
         {
             if (args.Part.PartType != BodyPartType.Hand)
                 return;
@@ -134,7 +133,7 @@ namespace Content.Server.Hands.Systems
             AddHand(uid, args.Slot, location);
         }
 
-        private void HandleBodyPartRemoved(EntityUid uid, HandsComponent component, ref BodyPartRemovedEvent args)
+        private void HandleBodyPartRemoved(EntityUid uid, SharedHandsComponent component, ref BodyPartRemovedEvent args)
         {
             if (args.Part.PartType != BodyPartType.Hand)
                 return;
@@ -143,7 +142,7 @@ namespace Content.Server.Hands.Systems
         }
 
         #region pulling
-        private void HandlePullStarted(EntityUid uid, HandsComponent component, PullStartedMessage args)
+        private void HandlePullStarted(EntityUid uid, SharedHandsComponent component, PullStartedMessage args)
         {
             if (args.Puller.Owner != uid)
                 return;
@@ -157,7 +156,7 @@ namespace Content.Server.Hands.Systems
             }
         }
 
-        private void HandlePullStopped(EntityUid uid, HandsComponent component, PullStoppedMessage args)
+        private void HandlePullStopped(EntityUid uid, SharedHandsComponent component, PullStoppedMessage args)
         {
             if (args.Puller.Owner != uid)
                 return;

@@ -1,6 +1,7 @@
-using Content.Server.Hands.Components;
+using Content.Server.Actions.Events;
 using Content.Server.Hands.Systems;
 using Content.Server.Wieldable.Components;
+using Content.Shared.DoAfter;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -8,12 +9,9 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
-using Robust.Shared.Player;
-using Content.Server.Actions.Events;
-using Content.Shared.DoAfter;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Wieldable;
-
+using Robust.Shared.Player;
 
 namespace Content.Server.Wieldable
 {
@@ -83,7 +81,7 @@ namespace Content.Server.Wieldable
         public bool CanWield(EntityUid uid, WieldableComponent component, EntityUid user, bool quiet=false)
         {
             // Do they have enough hands free?
-            if (!EntityManager.TryGetComponent<HandsComponent>(user, out var hands))
+            if (!EntityManager.TryGetComponent<SharedHandsComponent>(user, out var hands))
             {
                 if(!quiet)
                     _popupSystem.PopupEntity(Loc.GetString("wieldable-component-no-hands"), user, user);

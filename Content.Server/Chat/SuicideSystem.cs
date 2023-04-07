@@ -1,9 +1,9 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Hands.Components;
 using Content.Server.Popups;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
+using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Mobs.Components;
@@ -96,7 +96,7 @@ namespace Content.Server.Chat
             var itemQuery = GetEntityQuery<ItemComponent>();
 
             // Suicide by held item
-            if (EntityManager.TryGetComponent(victim, out HandsComponent? handsComponent)
+            if (EntityManager.TryGetComponent(victim, out SharedHandsComponent? handsComponent)
                 && handsComponent.ActiveHandEntity is { } item)
             {
                 RaiseLocalEvent(item, suicideEvent, false);

@@ -2,11 +2,11 @@ using System.Linq;
 using System.Text;
 using Content.Server.Construction.Completions;
 using Content.Server.Disposal.Tube.Components;
-using Content.Server.Hands.Components;
 using Content.Server.Popups;
 using Content.Server.UserInterface;
 using Content.Shared.Destructible;
 using Content.Shared.Disposal.Components;
+using Content.Shared.Hands.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Robust.Shared.Audio;
@@ -209,7 +209,7 @@ namespace Content.Server.Disposal.Tube
 
         private void OnOpenRouterUIAttempt(EntityUid uid, DisposalRouterComponent router, ActivatableUIOpenAttemptEvent args)
         {
-            if (!TryComp<HandsComponent>(args.User, out var hands))
+            if (!TryComp<SharedHandsComponent>(args.User, out var hands))
             {
                 uid.PopupMessage(args.User, Loc.GetString("disposal-router-window-tag-input-activate-no-hands"));
                 return;
@@ -226,7 +226,7 @@ namespace Content.Server.Disposal.Tube
 
         private void OnOpenTaggerUIAttempt(EntityUid uid, DisposalTaggerComponent tagger, ActivatableUIOpenAttemptEvent args)
         {
-            if (!TryComp<HandsComponent>(args.User, out var hands))
+            if (!TryComp<SharedHandsComponent>(args.User, out var hands))
             {
                 uid.PopupMessage(args.User, Loc.GetString("disposal-tagger-window-activate-no-hands"));
                 return;
