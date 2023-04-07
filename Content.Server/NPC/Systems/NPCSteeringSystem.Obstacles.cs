@@ -115,7 +115,7 @@ public sealed partial class NPCSteeringSystem
             {
                 if (_melee.TryGetWeapon(uid, out var meleeUid, out var meleeWeapon) && meleeWeapon.NextAttack <= _timing.CurTime && TryComp<CombatModeComponent>(uid, out var combatMode))
                 {
-                    combatMode.IsInCombatMode = true;
+                    _combat.SetInCombatMode(uid, true, combatMode);
                     var destructibleQuery = GetEntityQuery<DestructibleComponent>();
 
                     // TODO: This is a hack around grilles and windows.
@@ -131,7 +131,7 @@ public sealed partial class NPCSteeringSystem
                         }
                     }
 
-                    combatMode.IsInCombatMode = false;
+                    _combat.SetInCombatMode(uid, false, combatMode);
 
                     if (obstacleEnts.Count == 0)
                         return SteeringObstacleStatus.Completed;

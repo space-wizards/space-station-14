@@ -69,7 +69,7 @@ public sealed partial class NPCCombatSystem
     {
         if (TryComp<CombatModeComponent>(uid, out var combatMode))
         {
-            combatMode.IsInCombatMode = false;
+            _combat.SetInCombatMode(uid, false, combatMode);
         }
 
         _steering.Unregister(component.Owner);
@@ -79,7 +79,7 @@ public sealed partial class NPCCombatSystem
     {
         if (TryComp<CombatModeComponent>(uid, out var combatMode))
         {
-            combatMode.IsInCombatMode = true;
+            _combat.SetInCombatMode(uid, true, combatMode);
         }
 
         // TODO: Cleanup later, just looking for parity for now.
