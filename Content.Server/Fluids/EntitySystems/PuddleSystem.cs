@@ -254,13 +254,18 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             // Make blood stand out more
             // Kinda EH
             // Could potentially do alpha per-solution but future problem.
-            color = solution.GetColorWithout("Blood", _prototypeManager);
+            var standoutReagents = new string[] { "Blood", "Slime" };
+
+            color = solution.GetColorWithout(_prototypeManager, standoutReagents);
             color = color.WithAlpha(0.7f);
 
-            if (solution.TryGetReagent("Blood", out var quantity))
+            foreach (var standout in standoutReagents)
             {
+                if (!solution.TryGetReagent(standout, out var quantity))
+                    continue;
+
                 var interpolateValue = quantity.Float() / solution.Volume.Float();
-                color = Color.InterpolateBetween(color, _prototypeManager.Index<ReagentPrototype>("Blood").SubstanceColor, interpolateValue);
+                color = Color.InterpolateBetween(color, _prototypeManager.Index<ReagentPrototype>(standout).SubstanceColor, interpolateValue);
             }
         }
 

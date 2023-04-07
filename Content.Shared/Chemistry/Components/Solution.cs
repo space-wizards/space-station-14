@@ -608,7 +608,7 @@ namespace Content.Shared.Chemistry.Components
             ValidateSolution();
         }
 
-        public Color GetColorWithout(string? without, IPrototypeManager? protoMan)
+        public Color GetColorWithout(IPrototypeManager? protoMan, params string[] without)
         {
             if (Volume == FixedPoint2.Zero)
             {
@@ -623,7 +623,7 @@ namespace Content.Shared.Chemistry.Components
 
             foreach (var reagent in Contents)
             {
-                if (reagent.ReagentId == without)
+                if (without.Contains(reagent.ReagentId))
                     continue;
 
                 runningTotalQuantity += reagent.Quantity;
@@ -648,7 +648,7 @@ namespace Content.Shared.Chemistry.Components
 
         public Color GetColor(IPrototypeManager? protoMan)
         {
-            return GetColorWithout(null, protoMan);
+            return GetColorWithout(protoMan);
         }
 
         [Obsolete("Use ReactiveSystem.DoEntityReaction")]
