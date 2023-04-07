@@ -12,6 +12,8 @@
     damage:
       types:
         Blunt: 10
+  - type: Spillable
+    solution: absorbed
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
@@ -45,6 +47,8 @@
       damage:
         types:
           Blunt: 10
+    - type: Spillable
+      solution: absorbed
     - type: Item
       size: 15
       sprite: Objects/Specific/Janitorial/advmop.rsi
