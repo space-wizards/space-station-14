@@ -250,7 +250,18 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         if (_solutionContainerSystem.TryGetSolution(uid, puddleComponent.SolutionName, out var solution))
         {
             volume = solution.Volume / puddleComponent.OverflowVolume;
-            color = solution.GetColor(_prototypeManager);
+
+            // Make blood stand out more
+            // Kinda EH
+            // Could potentially do alpha per-solution but future problem.
+            color = solution.GetColorWithout("Blood", _prototypeManager);
+            color = color.WithAlpha(0.7f);
+
+            if (solution.TryGetReagent("Blood", out var quantity))
+            {
+                var interpolateValue = quantity.Float() / solution.Volume.Float();
+                color = Color.InterpolateBetween(color, _prototypeManager.Index<ReagentPrototype>("Blood").SubstanceColor, interpolateValue);
+            }
         }
 
         _appearance.SetData(uid, PuddleVisuals.CurrentVolume, volume.Float(), appearance);

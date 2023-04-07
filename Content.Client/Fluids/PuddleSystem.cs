@@ -53,16 +53,15 @@ public sealed class PuddleSystem : SharedPuddleSystem
         }
 
         var baseColor = Color.White;
-        const float alpha = 0.6f;
 
         if (args.AppearanceData.TryGetValue(PuddleVisuals.SolutionColor, out var colorObj))
         {
             var color = (Color) colorObj;
-            args.Sprite.Color = color.WithAlpha(alpha) * baseColor;
+            args.Sprite.Color = color * baseColor;
         }
-        else if (args.Sprite.TryGetLayer(0, out var layer))
+        else
         {
-            args.Sprite.Color = args.Sprite.Color.WithAlpha(alpha) * baseColor;
+            args.Sprite.Color *= baseColor;
         }
     }
 }
