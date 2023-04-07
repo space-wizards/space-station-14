@@ -21,7 +21,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Fluids.EntitySystems;
 
-public sealed partial class PuddleSystem : EntitySystem
+public sealed partial class PuddleSystem : SharedPuddleSystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger= default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -226,7 +226,7 @@ public sealed partial class PuddleSystem : EntitySystem
     {
         var isSlippery = false;
         // The base sprite is currently at 0.3 so we require at least 2nd tier to be slippery or else it's too hard to see.
-        var amountRequired = FixedPoint2.New(component.OverflowVolume.Float() * 0.3f);
+        var amountRequired = FixedPoint2.New(component.OverflowVolume.Float() * LowThreshold);
         var slipperyAmount = FixedPoint2.Zero;
 
         foreach (var reagent in solution.Contents)

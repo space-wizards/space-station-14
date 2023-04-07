@@ -5,7 +5,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Fluids
 {
-    public sealed class PuddleSystem : EntitySystem
+    public sealed class PuddleSystem : SharedPuddleSystem
     {
         [Dependency] private readonly IconSmoothSystem _smooth = default!;
 
@@ -31,7 +31,7 @@ namespace Content.Client.Fluids
             // Update smoothing and sprite based on volume.
             if (TryComp<IconSmoothComponent>(uid, out var smooth))
             {
-                if (volume < 0.3f)
+                if (volume < LowThreshold)
                 {
                     args.Sprite.LayerSetState(0, $"{smooth.StateBase}a");
                     _smooth.SetEnabled(uid, false, smooth);

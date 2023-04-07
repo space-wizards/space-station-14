@@ -252,7 +252,6 @@ public sealed class SpreaderSystem : EntitySystem
 
             while (directionEnumerator.MoveNext(out var ent))
             {
-                // TODO: Airtight blocked direction for thindows.
                 if (airtightQuery.TryGetComponent(ent, out var airtight) && airtight.AirBlocked)
                 {
                     // Check if air direction matters.
