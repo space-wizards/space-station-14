@@ -67,8 +67,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
             component.Progress[_prototype.Index<ReagentPrototype>(PuddleSystem.EvaporationReagent).SubstanceColor] = water.Float();
         }
 
-        // Don't worry about splitting water out from the overall color
-        var otherColor = solution.GetColor(_prototype);
+        var otherColor = solution.GetColorWithout(PuddleSystem.EvaporationReagent, _prototype);
         var other = (solution.Volume - water).Float();
 
         if (other > 0f)

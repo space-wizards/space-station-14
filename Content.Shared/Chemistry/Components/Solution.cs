@@ -608,7 +608,7 @@ namespace Content.Shared.Chemistry.Components
             ValidateSolution();
         }
 
-        public Color GetColor(IPrototypeManager? protoMan)
+        public Color GetColorWithout(string? without, IPrototypeManager? protoMan)
         {
             if (Volume == FixedPoint2.Zero)
             {
@@ -623,6 +623,9 @@ namespace Content.Shared.Chemistry.Components
 
             foreach (var reagent in Contents)
             {
+                if (reagent.ReagentId == without)
+                    continue;
+
                 runningTotalQuantity += reagent.Quantity;
 
                 if (!protoMan.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
@@ -641,6 +644,11 @@ namespace Content.Shared.Chemistry.Components
                 mixColor = Color.InterpolateBetween(mixColor, proto.SubstanceColor, interpolateValue);
             }
             return mixColor;
+        }
+
+        public Color GetColor(IPrototypeManager? protoMan)
+        {
+            return GetColorWithout(null, protoMan);
         }
 
         [Obsolete("Use ReactiveSystem.DoEntityReaction")]
