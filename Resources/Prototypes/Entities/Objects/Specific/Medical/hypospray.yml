@@ -243,3 +243,16 @@
     delay: 0.5
   - type: StaticPrice # A new shitcurity meta
     price: 75
+
+- type: entity
+  parent: FoodSnackChocolate
+  id: HypopenWrapped
+  suffix: Hypopen
+  description: Tastes like cardboard. Has "hypo" written on the back.
+  components:
+  - type: SpawnItemsOnUse
+    items:
+      - id: FoodPacketChocolateTrash
+      - id: Hypopen
+    sound:
+      path: /Audio/Effects/unwrap.ogg

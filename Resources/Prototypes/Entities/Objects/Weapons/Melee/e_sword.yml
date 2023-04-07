@@ -121,3 +121,16 @@
     - Write
   - type: DisarmMalus
     malus: 0
+
+- type: entity
+  parent: FoodSnackChocolate
+  id: EnergyDaggerWrapped
+  suffix: E-Dagger
+  description: Tastes like cardboard. Has "e-dagger" written on the back.
+  components:
+  - type: SpawnItemsOnUse
+    items:
+      - id: FoodPacketChocolateTrash
+      - id: EnergyDagger
+    sound:
+      path: /Audio/Effects/unwrap.ogg

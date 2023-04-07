@@ -16,3 +16,16 @@
     canCreateVacuum: false
   - type: ActivateOnPaperOpened
   - type: ExplodeOnTrigger
+
+- type: entity
+  parent: FoodSnackChocolate
+  id: PenExplodingWrapped
+  suffix: Exploding
+  description: Tastes like cardboard. Has "explosive" written on the back.
+  components:
+  - type: SpawnItemsOnUse
+    items:
+      - id: FoodPacketChocolateTrash
+      - id: PenExploding
+    sound:
+      path: /Audio/Effects/unwrap.ogg
