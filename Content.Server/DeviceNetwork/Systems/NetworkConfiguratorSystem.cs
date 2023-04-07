@@ -1,20 +1,17 @@
 using System.Linq;
 using Content.Server.DeviceNetwork.Components;
-using Content.Server.UserInterface;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Movement;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Server.DeviceNetwork.Systems;
 
@@ -56,14 +53,16 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 
         foreach (var component in EntityManager.EntityQuery<NetworkConfiguratorComponent>())
         {
+            var uid = component.Owner;
+
             if (component.ActiveDeviceList != null && EntityManager.EntityExists(component.ActiveDeviceList.Value) &&
-                _interactionSystem.InRangeUnobstructed(component.Owner, component.ActiveDeviceList.Value))
+                _interactionSystem.InRangeUnobstructed(uid, component.ActiveDeviceList.Value))
             {
-                return;
+                continue;
             }
 
             //The network configurator is a handheld device. There can only ever be an ui session open for the player holding the device.
-            _uiSystem.GetUiOrNull(component.Owner, NetworkConfiguratorUiKey.Configure)?.CloseAll();
+            _uiSystem.GetUiOrNull(uid, NetworkConfiguratorUiKey.Configure)?.CloseAll();
         }
     }
 
@@ -138,7 +137,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 
     private void OnComponentRemoved(EntityUid uid, DeviceListComponent component, ComponentRemove args)
     {
-        _uiSystem.GetUiOrNull(component.Owner, NetworkConfiguratorUiKey.Configure)?.CloseAll();
+        _uiSystem.GetUiOrNull(uid, NetworkConfiguratorUiKey.Configure)?.CloseAll();
     }
 
     #region Interactions
@@ -177,7 +176,9 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         UtilityVerb verb = new()
         {
             Text = Loc.GetString(isDeviceList ? "network-configurator-configure" : "network-configurator-save-device"),
-            IconTexture = isDeviceList ? "/Textures/Interface/VerbIcons/settings.svg.192dpi.png" : "/Textures/Interface/VerbIcons/in.svg.192dpi.png",
+            Icon = isDeviceList ?
+                new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")) :
+                new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/in.svg.192dpi.png")),
             Act = () => OnUsed(uid, component, args.Target, args.User),
             Impact = LogImpact.Low
         };
@@ -199,7 +200,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         AlternativeVerb verb = new()
         {
             Text = Loc.GetString("network-configurator-save-device"),
-            IconTexture = "/Textures/Interface/VerbIcons/in.svg.192dpi.png",
+            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/in.svg.192dpi.png")),
             Act = () => TryAddNetworkDevice(args.Target, args.Using.Value, args.User),
             Impact = LogImpact.Low
         };

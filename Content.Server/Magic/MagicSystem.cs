@@ -1,17 +1,17 @@
-using System.Threading;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Coordinates.Helpers;
-using Content.Server.DoAfter;
 using Content.Server.Doors.Systems;
 using Content.Server.Magic.Events;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Body.Components;
+using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Magic;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Spawners.Components;
@@ -41,7 +41,7 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly GunSystem _gunSystem = default!;
     [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
@@ -53,8 +53,7 @@ public sealed class MagicSystem : EntitySystem
 
         SubscribeLocalEvent<SpellbookComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<SpellbookComponent, UseInHandEvent>(OnUse);
-        SubscribeLocalEvent<SpellbookComponent, LearnDoAfterComplete>(OnLearnComplete);
-        SubscribeLocalEvent<SpellbookComponent, LearnDoAfterCancel>(OnLearnCancel);
+        SubscribeLocalEvent<SpellbookComponent, SpellbookDoAfterEvent>(OnDoAfter);
 
         SubscribeLocalEvent<InstantSpawnSpellEvent>(OnInstantSpawn);
         SubscribeLocalEvent<TeleportSpellEvent>(OnTeleportSpell);
@@ -63,6 +62,15 @@ public sealed class MagicSystem : EntitySystem
         SubscribeLocalEvent<WorldSpawnSpellEvent>(OnWorldSpawn);
         SubscribeLocalEvent<ProjectileSpellEvent>(OnProjectileSpell);
         SubscribeLocalEvent<ChangeComponentsSpellEvent>(OnChangeComponentsSpell);
+    }
+
+    private void OnDoAfter(EntityUid uid, SpellbookComponent component, DoAfterEvent args)
+    {
+        if (args.Handled || args.Cancelled)
+            return;
+
+        _actionsSystem.AddActions(args.Args.User, component.Spells, uid);
+        args.Handled = true;
     }
 
     private void OnInit(EntityUid uid, SpellbookComponent component, ComponentInit args)
@@ -102,33 +110,15 @@ public sealed class MagicSystem : EntitySystem
 
     private void AttemptLearn(EntityUid uid, SpellbookComponent component, UseInHandEvent args)
     {
-        if (component.CancelToken != null) return;
-
-        component.CancelToken = new CancellationTokenSource();
-
-        var doAfterEventArgs = new DoAfterEventArgs(args.User, component.LearnTime, component.CancelToken.Token, uid)
+        var doAfterEventArgs = new DoAfterArgs(args.User, component.LearnTime, new SpellbookDoAfterEvent(), uid, target: uid)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
             BreakOnDamage = true,
-            BreakOnStun = true,
-            NeedHand = true, //What, are you going to read with your eyes only??
-            TargetFinishedEvent = new LearnDoAfterComplete(args.User),
-            TargetCancelledEvent = new LearnDoAfterCancel(),
+            NeedHand = true //What, are you going to read with your eyes only??
         };
 
-        _doAfter.DoAfter(doAfterEventArgs);
-    }
-
-    private void OnLearnComplete(EntityUid uid, SpellbookComponent component, LearnDoAfterComplete ev)
-    {
-        component.CancelToken = null;
-        _actionsSystem.AddActions(ev.User, component.Spells, uid);
-    }
-
-    private void OnLearnCancel(EntityUid uid, SpellbookComponent component, LearnDoAfterCancel args)
-    {
-        component.CancelToken = null;
+        _doAfter.TryStartDoAfter(doAfterEventArgs);
     }
 
     #region Spells
@@ -381,22 +371,6 @@ public sealed class MagicSystem : EntitySystem
             }
         }
     }
-
-    #endregion
-
-    #region DoAfterClasses
-
-    private sealed class LearnDoAfterComplete : EntityEventArgs
-    {
-        public readonly EntityUid User;
-
-        public LearnDoAfterComplete(EntityUid uid)
-        {
-            User = uid;
-        }
-    }
-
-    private sealed class LearnDoAfterCancel : EntityEventArgs { }
 
     #endregion
 }

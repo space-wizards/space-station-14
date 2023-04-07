@@ -84,6 +84,23 @@ namespace Content.Server.Database
 
         Task AddServerBanAsync(ServerBanDef serverBan);
         Task AddServerUnbanAsync(ServerUnbanDef serverBan);
+
+        /// <summary>
+        /// Update ban exemption information for a player.
+        /// </summary>
+        /// <remarks>
+        /// Database rows are automatically created and removed when appropriate.
+        /// </remarks>
+        /// <param name="userId">The user to update</param>
+        /// <param name="flags">The new ban exemption flags.</param>
+        Task UpdateBanExemption(NetUserId userId, ServerBanExemptFlags flags);
+
+        /// <summary>
+        /// Get current ban exemption flags for a user
+        /// </summary>
+        /// <returns><see cref="ServerBanExemptFlags.None"/> if the user is not exempt from any bans.</returns>
+        Task<ServerBanExemptFlags> GetBanExemption(NetUserId userId);
+
         #endregion
 
         #region Role Bans
@@ -351,6 +368,18 @@ namespace Content.Server.Database
         {
             DbWriteOpsMetric.Inc();
             return _db.AddServerUnbanAsync(serverUnban);
+        }
+
+        public Task UpdateBanExemption(NetUserId userId, ServerBanExemptFlags flags)
+        {
+            DbWriteOpsMetric.Inc();
+            return _db.UpdateBanExemption(userId, flags);
+        }
+
+        public Task<ServerBanExemptFlags> GetBanExemption(NetUserId userId)
+        {
+            DbReadOpsMetric.Inc();
+            return _db.GetBanExemption(userId);
         }
 
         #region Role Ban
@@ -742,10 +771,10 @@ namespace Content.Server.Database
                 return true;
             }
 
-            public IDisposable BeginScope<TState>(TState state)
+            public IDisposable? BeginScope<TState>(TState state) where TState : notnull
             {
                 // TODO: this
-                return null!;
+                return null;
             }
         }
     }

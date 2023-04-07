@@ -102,6 +102,15 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
         _appearance.SetData(uid, SolutionContainerVisuals.FillFraction, solution.FillFraction, appearanceComponent);
         _appearance.SetData(uid, SolutionContainerVisuals.Color, solution.GetColor(_prototypeManager), appearanceComponent);
+
+        if (solution.GetPrimaryReagentId() is { } reagent)
+        {
+            _appearance.SetData(uid, SolutionContainerVisuals.BaseOverride, reagent, appearanceComponent);
+        }
+        else
+        {
+            _appearance.SetData(uid, SolutionContainerVisuals.BaseOverride, string.Empty, appearanceComponent);
+        }
     }
 
     /// <summary>
@@ -308,11 +317,11 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         return true;
     }
 
-    public bool TryGetSolution(EntityUid uid, string name,
+    public bool TryGetSolution([NotNullWhen(true)] EntityUid? uid, string name,
         [NotNullWhen(true)] out Solution? solution,
         SolutionContainerManagerComponent? solutionsMgr = null)
     {
-        if (!Resolve(uid, ref solutionsMgr, false))
+        if (uid == null || !Resolve(uid.Value, ref solutionsMgr, false))
         {
             solution = null;
             return false;

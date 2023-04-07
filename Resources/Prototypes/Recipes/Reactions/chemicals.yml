@@ -388,3 +388,18 @@
       amount: 1
   products:
     Diphenylmethylamine: 2
+    
+- type: reaction
+  id: SodiumCarbonate
+  impact: Medium
+  reactants:
+    Ammonia: 
+      amount: 1
+    TableSalt:
+      amount: 1
+    Carbon:
+      amount: 1
+    Oxygen: 
+      amount: 1
+  products:
+    SodiumCarbonate: 4

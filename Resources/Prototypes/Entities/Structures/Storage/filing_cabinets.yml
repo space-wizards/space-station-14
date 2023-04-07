@@ -109,28 +109,19 @@
       - id: Pen
         prob: 0.5
       - id: PaperOffice
-      - id: PaperOffice
-        prob: 0.5
-      - id: PaperOffice
-        prob: 0.4
-        orGroup: Folder
+        amount: 1
+        maxAmount: 3
       - id: BoxFolderBlue
-        prob: 0.10
         orGroup: Folder
       - id: BoxFolderRed
-        prob: 0.10
         orGroup: Folder
       - id: BoxFolderYellow
-        prob: 0.10
         orGroup: Folder
       - id: BoxFolderWhite
-        prob: 0.10
         orGroup: Folder
       - id: BoxFolderGrey
-        prob: 0.10
         orGroup: Folder
       - id: BoxFolderBlack
-        prob: 0.10
         orGroup: Folder
 
 - type: entity

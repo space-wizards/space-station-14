@@ -32,7 +32,7 @@ public sealed partial class PathfindingSystem
     ///     If true, UpdateGrid() will not process grids.
     /// </summary>
     /// <remarks>
-    ///     Useful if something like a large explosion is in the process of shredding the grid, as it avoids uneccesary
+    ///     Useful if something like a large explosion is in the process of shredding the grid, as it avoids unneccesary
     ///     updating.
     /// </remarks>
     public bool PauseUpdating = false;
@@ -232,11 +232,6 @@ public sealed partial class PathfindingSystem
 
             comp.DirtyChunks.Clear();
         }
-
-#if DEBUG
-        if (updateCount > 0)
-            _sawmill.Debug($"Updated {updateCount} nav chunks in {_stopwatch.Elapsed.TotalMilliseconds:0.000}ms");
-#endif
     }
 
     private bool IsBodyRelevant(PhysicsComponent body)
