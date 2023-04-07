@@ -1354,7 +1354,6 @@
     successChance: 0.5
     interactSuccessString: petting-success-tarantula
     interactFailureString: petting-failure-generic
-  - type: NoSlip
   - type: Spider
   - type: IgnoreSpiderWeb
 
