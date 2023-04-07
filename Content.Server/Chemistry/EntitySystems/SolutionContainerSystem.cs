@@ -128,6 +128,17 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         return splitSol;
     }
 
+    /// <summary>
+    /// Splits a solution without the specified reagent.
+    /// </summary>
+    public Solution SplitSolutionWithout(EntityUid targetUid, Solution solutionHolder, FixedPoint2 quantity,
+        string reagent)
+    {
+        var splitSol = solutionHolder.SplitSolutionWithout(quantity, reagent);
+        UpdateChemicals(targetUid, solutionHolder);
+        return splitSol;
+    }
+
     public void UpdateChemicals(EntityUid uid, Solution solutionHolder, bool needsReactionsProcessing = false, ReactionMixerComponent? mixerComponent = null)
     {
         DebugTools.Assert(solutionHolder.Name != null && TryGetSolution(uid, solutionHolder.Name, out var tmp) && tmp == solutionHolder);

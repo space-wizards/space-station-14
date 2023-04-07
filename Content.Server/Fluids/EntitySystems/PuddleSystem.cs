@@ -42,11 +42,6 @@ public sealed partial class PuddleSystem : EntitySystem
     /*
      * TODO: Need some sort of way to do blood slash / vomit solution spill on its own
      * This would then evaporate into the puddle tile below
-     * TODO:
-     * Need to re-implement evaporating solutions with water
-     * TODO:
-     * Mop should transfer all of its water onto a puddle.
-     *
      */
 
     public override void Initialize()

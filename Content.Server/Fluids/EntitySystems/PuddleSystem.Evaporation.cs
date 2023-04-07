@@ -11,7 +11,7 @@ public sealed partial class PuddleSystem
     private static readonly TimeSpan EvaporationCooldown = TimeSpan.FromSeconds(1);
     private static readonly FixedPoint2 EvaporationAmount = FixedPoint2.New(2);
 
-    private const string EvaporationReagent = "Water";
+    public const string EvaporationReagent = "Water";
 
     private void OnEvaporationMapInit(EntityUid uid, EvaporationComponent component, MapInitEvent args)
     {
@@ -23,7 +23,7 @@ public sealed partial class PuddleSystem
         if (TryComp<EvaporationComponent>(uid, out var evaporation))
         {
             // If we won't evaporate stop sparkling.
-            if (CanSparkle(solution))
+            if (CanFullyEvaporate(solution))
             {
                 SetEvaporationSparkle(uid, true);
             }
@@ -49,6 +49,7 @@ public sealed partial class PuddleSystem
     {
         var query = EntityQueryEnumerator<EvaporationComponent, PuddleComponent>();
         var curTime = _timing.CurTime;
+        var reagentTick = EvaporationAmount * EvaporationCooldown.TotalSeconds;
 
         while (query.MoveNext(out var uid, out var evaporation, out var puddle))
         {
@@ -60,7 +61,7 @@ public sealed partial class PuddleSystem
             if (!_solutionContainerSystem.TryGetSolution(uid, puddle.SolutionName, out var puddleSolution))
                 continue;
 
-            puddleSolution.RemoveReagent(EvaporationReagent, EvaporationAmount);
+            puddleSolution.RemoveReagent(EvaporationReagent, reagentTick);
 
             // Despawn if we're done
             if (puddleSolution.Volume == FixedPoint2.Zero)
@@ -71,7 +72,7 @@ public sealed partial class PuddleSystem
             }
 
             // If we only contain the evaporation reagent then *sparkle*
-            if (CanSparkle(puddleSolution))
+            if (CanFullyEvaporate(puddleSolution))
             {
                 SetEvaporationSparkle(uid, true);
             }
@@ -82,7 +83,7 @@ public sealed partial class PuddleSystem
         }
     }
 
-    private bool CanSparkle(Solution solution)
+    public bool CanFullyEvaporate(Solution solution)
     {
         return solution.Contents.Count == 1 && solution.ContainsReagent(EvaporationReagent);
     }

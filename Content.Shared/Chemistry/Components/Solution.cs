@@ -432,6 +432,15 @@ namespace Content.Shared.Chemistry.Components
             _heatCapacity = 0;
         }
 
+        public Solution SplitSolutionWithout(FixedPoint2 toTake, string without)
+        {
+            TryGetReagent(without, out var existing);
+            var sol = SplitSolution(toTake);
+            sol.RemoveReagent(without, toTake);
+            AddReagent(without, existing);
+            return sol;
+        }
+
         public Solution SplitSolution(FixedPoint2 toTake)
         {
             if (toTake <= FixedPoint2.Zero)

@@ -20,20 +20,26 @@ public abstract class SharedAbsorbentSystem : EntitySystem
         if (component.Progress.Equals(state.Progress))
             return;
 
-        component.Progress = state.Progress;
+        component.Progress.Clear();
+        foreach (var item in state.Progress)
+        {
+            component.Progress.Add(item.Key, item.Value);
+        }
     }
 
     private void OnAbsorbentGetState(EntityUid uid, AbsorbentComponent component, ref ComponentGetState args)
     {
-        args.State = new AbsorbentComponentState()
-        {
-            Progress = component.Progress,
-        };
+        args.State = new AbsorbentComponentState(component.Progress);
     }
 
     [Serializable, NetSerializable]
     protected sealed class AbsorbentComponentState : ComponentState
     {
-        public float Progress;
+        public Dictionary<Color, float> Progress;
+
+        public AbsorbentComponentState(Dictionary<Color, float> progress)
+        {
+            Progress = progress;
+        }
     }
 }
