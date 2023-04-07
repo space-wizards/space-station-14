@@ -1,11 +1,6 @@
 Entries:
 - author: DrSmugleaf
   changes:
-  - {message: Fixed AHelp relay to discord not working., type: Fix}
-  id: 2850
-  time: '2023-01-10T16:33:39.0000000+00:00'
-- author: DrSmugleaf
-  changes:
   - {message: Fixed togglehealthoverlay command not working, type: Fix}
   id: 2851
   time: '2023-01-10T21:36:48.0000000+00:00'
@@ -2919,3 +2914,9 @@ Entries:
       trolley by alt-clicking., type: Tweak}
   id: 3349
   time: '2023-04-06T22:49:27.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Added the clown recorder to clown's starting gear in attempt to increase
+      their funniness, type: Add}
+  id: 3350
+  time: '2023-04-07T02:06:52.0000000+00:00'
