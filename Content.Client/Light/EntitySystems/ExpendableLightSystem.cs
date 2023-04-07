@@ -1,6 +1,7 @@
 using Content.Client.Light.Components;
 using Content.Shared.Light.Component;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 
 namespace Content.Client.Light.EntitySystems;
 
@@ -53,22 +54,35 @@ public sealed class ExpendableLightSystem : VisualizerSystem<ExpendableLightComp
                     uid,
                     SharedExpendableLightComponent.LoopedSoundParams
                 );
-                if (!string.IsNullOrWhiteSpace(comp.IconStateLit))
-                    args.Sprite.LayerSetState(ExpendableLightVisualLayers.Overlay, comp.IconStateLit);
-                args.Sprite.LayerSetShader(ExpendableLightVisualLayers.Overlay, comp.SpriteShaderLit ?? "invalidshaderstatebecausethisprocdoesnotacceptnullvaluesandthisistheonlywaytoresetitbacktothedefaultshaderstate");
-                args.Sprite.LayerSetVisible(ExpendableLightVisualLayers.Glow, true);
-                if (comp.GlowColorLit.HasValue)
+                if (args.Sprite.LayerMapTryGet(ExpendableLightVisualLayers.Overlay, out var layerIdx, true))
                 {
-                    args.Sprite.LayerSetColor(ExpendableLightVisualLayers.Overlay, comp.GlowColorLit.Value);
-                    args.Sprite.LayerSetColor(ExpendableLightVisualLayers.Glow, comp.GlowColorLit.Value);
+                    if (!string.IsNullOrWhiteSpace(comp.IconStateLit))
+                        args.Sprite.LayerSetState(layerIdx, comp.IconStateLit);
+                    if (!string.IsNullOrWhiteSpace(comp.SpriteShaderLit))
+                        args.Sprite.LayerSetShader(layerIdx, comp.SpriteShaderLit);
+                    else
+                        args.Sprite.LayerSetShader(layerIdx, null, null);
+                    if (comp.GlowColorLit.HasValue)
+                        args.Sprite.LayerSetColor(layerIdx, comp.GlowColorLit.Value);
+                    args.Sprite.LayerSetVisible(layerIdx, true);
                 }
+
+                if (comp.GlowColorLit.HasValue)
+                    args.Sprite.LayerSetColor(ExpendableLightVisualLayers.Glow, comp.GlowColorLit.Value);
+                args.Sprite.LayerSetVisible(ExpendableLightVisualLayers.Glow, true);
 
                 break;
             case ExpendableLightState.Dead:
                 comp.PlayingStream?.Stop();
-                if (!string.IsNullOrWhiteSpace(comp.IconStateSpent))
-                    args.Sprite.LayerSetState(ExpendableLightVisualLayers.Overlay, comp.IconStateSpent);
-                args.Sprite.LayerSetShader(ExpendableLightVisualLayers.Overlay, comp.SpriteShaderSpent ?? "ireallywishthatIdidn'thavetodothisbutI'mnotannoyedenoughtothinkaboutmakinganengineprjusttofixthis");
+                if (args.Sprite.LayerMapTryGet(ExpendableLightVisualLayers.Overlay, out layerIdx, true))
+                {
+                    if (!string.IsNullOrWhiteSpace(comp.IconStateSpent))
+                        args.Sprite.LayerSetState(layerIdx, comp.IconStateSpent);
+                    if (!string.IsNullOrWhiteSpace(comp.SpriteShaderSpent))
+                        args.Sprite.LayerSetShader(layerIdx, comp.SpriteShaderSpent);
+                    else
+                        args.Sprite.LayerSetShader(layerIdx, null, null);
+                }
 
                 args.Sprite.LayerSetVisible(ExpendableLightVisualLayers.Glow, false);
                 break;
