@@ -24,6 +24,27 @@ comp-pda-ui-menu-title = PDA
 
 comp-pda-ui-station = Station: [color=white]{$Station}[/color]
 
+comp-pda-ui-station-alert-level = Alert Level: [color={ $AlertLevel }]{ $AlertLevel }[/color]
+
+comp-pda-ui-station-acceses-levels = Access: [color=white]{ $AccessLevels }[/color]
+
+comp-pda-ui-station-alert-level = Threat code: [color={ $ColorLevel }]{ $AlertLevel }[/color]
+
+comp-pda-ui-station-alert-level-instructions = Code Instructions: [color=white]{ $AlertLevelInstructions }[/color]
+
+comp-pda-ui-station-time =
+    Shift duration: [color=white]{ $hours } { $hours ->
+    [one] hour
+    [few] hours
+    *[other] hours
+                } and { $minutes } { $minutes ->
+    [one] minute
+    [few] minutes
+    *[other] minutes
+                }[/color]
+
+comp-pda-ui-station-time-unknown = Shift duration: Unknown
+
 comp-pda-ui-eject-id-button = Eject ID
 
 comp-pda-ui-eject-pen-button = Eject Pen
