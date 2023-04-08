@@ -50,15 +50,19 @@ public static class AdminFaxEuiMsg
     [Serializable, NetSerializable]
     public sealed class Send : EuiMessageBase
     {
-        public EntityUid TargetFax { get; }
-        public string Name { get; }
+        public EntityUid Target { get; }
+        public string Title { get; }
+        public string From { get; }
         public string Content { get; }
+        public string StampState { get; }
 
-        public Send(EntityUid targetFax, string name, string content)
+        public Send(EntityUid target, string title, string from, string content, string stamp)
         {
-            TargetFax = targetFax;
-            Name = name;
+            Target = target;
+            Title = title;
+            From = from;
             Content = content;
+            StampState = stamp;
         }
     }
 }

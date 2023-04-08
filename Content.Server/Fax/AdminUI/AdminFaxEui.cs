@@ -56,8 +56,8 @@ public sealed class AdminFaxEui : BaseEui
             }
             case AdminFaxEuiMsg.Send sendData:
             {
-                var printout = new FaxPrintout(sendData.Content, sendData.Name);
-                _faxSystem.Receive(sendData.TargetFax, printout);
+                var printout = new FaxPrintout(sendData.Content, sendData.Title, null, sendData.StampState, new() { sendData.From });
+                _faxSystem.Receive(sendData.Target, printout);
                 break;
             }
         }

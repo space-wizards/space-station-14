@@ -15,7 +15,7 @@ public sealed class AdminFaxEui : BaseEui
         _window = new AdminFaxWindow();
         _window.OnClose += () => SendMessage(new AdminFaxEuiMsg.Close());
         _window.OnFollowFax += uid => SendMessage(new AdminFaxEuiMsg.Follow(uid));
-        _window.OnMessageSend += args => SendMessage(new AdminFaxEuiMsg.Send(args.uid, args.name, args.content));
+        _window.OnMessageSend += args => SendMessage(new AdminFaxEuiMsg.Send(args.uid, args.title, args.from, args.message, args.stamp));
     }
 
     public override void Opened()
@@ -32,6 +32,6 @@ public sealed class AdminFaxEui : BaseEui
     {
         if (state is not AdminFaxEuiState cast)
             return;
-        _window.Populate(cast.Entries);
+        _window.PopulateFaxes(cast.Entries);
     }
 }
