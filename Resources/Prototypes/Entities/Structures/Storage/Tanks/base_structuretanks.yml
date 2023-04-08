@@ -26,6 +26,12 @@
   - type: Destructible
     thresholds:
     - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
         !type:DamageTypeTrigger
         damageType: Heat
         damage: 5

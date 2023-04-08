@@ -26,6 +26,12 @@
     thresholds:
       - trigger:
           !type:DamageTrigger
+          damage: 80
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
           damage: 40
         behaviors:
           - !type:DoActsBehavior
@@ -56,7 +62,7 @@
     sprite: Structures/Furniture/sink.rsi
     state: sink_wide
     netsync: false
-    
+
 #Stemless Sink
 
 - type: entity
@@ -67,7 +73,7 @@
   - type: Sprite
     sprite: Structures/Furniture/sink.rsi
     state: sink
-    netsync: false    
+    netsync: false
 
 - type: entity
   name: sink

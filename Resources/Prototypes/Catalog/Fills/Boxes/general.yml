@@ -220,7 +220,7 @@
   - type: Sprite
     layers:
       - state: box
-      - state: writing
+      - state: inflatable
   - type: Tag
     tags:
       - DroneUsable
@@ -252,7 +252,7 @@
   - type: Sprite
     layers:
       - state: box
-      - state: writing
+      - state: flare
 
 - type: entity
   name: trashbag box
@@ -272,7 +272,7 @@
   - type: Sprite
     layers:
       - state: box
-      - state: writing
+      - state: trashbag
   - type: Tag
     tags:
       - DroneUsable

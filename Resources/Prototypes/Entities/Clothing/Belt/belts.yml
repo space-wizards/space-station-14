@@ -237,6 +237,7 @@
         - Bottle
         - Spray
         - Brutepack
+        - Bloodpack
         - Gauze
         - Ointment
         - CigPack
@@ -484,7 +485,7 @@
   parent: ClothingBeltStorageBase
   id: ClothingBeltMilitaryWebbingMed
   name: medical chest rig
-  description: A set of tactical webbing worn by Gorlax Marauder medic operatives.
+  description: A set of tactical webbing worn by Gorlex Marauder medic operatives.
   components:
   - type: Sprite
     sprite: Clothing/Belt/militarywebbingmed.rsi

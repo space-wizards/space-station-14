@@ -16,6 +16,12 @@
         visible: false
   - type: Item
     sprite: Objects/Specific/Chemistry/beaker.rsi
+  - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+    damage:
+      types:
+        Blunt: 0
   - type: SolutionContainerManager
     solutions:
       beaker:
@@ -65,6 +71,7 @@
           ShardGlass:
             min: 1
             max: 1
+        transferForensics: true
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: DamageOnLand

@@ -116,10 +116,11 @@ namespace Content.Client.Ghost
             _actions.RemoveAction(uid, component.ToggleLightingAction);
             _actions.RemoveAction(uid, component.ToggleFoVAction);
             _actions.RemoveAction(uid, component.ToggleGhostsAction);
-            _lightManager.Enabled = true;
 
             if (uid != _playerManager.LocalPlayer?.ControlledEntity)
                 return;
+
+            _lightManager.Enabled = true;
 
             if (component.IsAttached)
             {
