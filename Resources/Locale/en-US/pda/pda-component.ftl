@@ -28,7 +28,7 @@ comp-pda-ui-station-alert-level = Alert Level: [color={ $ColorLevel }]{ $AlertLe
 
 comp-pda-ui-station-acceses-levels = Access: [color=white]{ $AccessLevels }[/color]
 
-comp-pda-ui-station-alert-level-instructions = Code Instructions: [color=white]{ $AlertLevelInstructions }[/color]
+comp-pda-ui-station-alert-level-instructions = Instructions: [color=white]{ $AlertLevelInstructions }[/color]
 
 comp-pda-ui-station-time =
     Shift duration: [color=white]{ $hours } { $hours ->
