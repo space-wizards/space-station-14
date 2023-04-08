@@ -40,8 +40,6 @@ namespace Content.Server.PDA
             SubscribeLocalEvent<PDAComponent, StoreAddedEvent>(OnUplinkInit);
             SubscribeLocalEvent<PDAComponent, StoreRemovedEvent>(OnUplinkRemoved);
             SubscribeLocalEvent<PDAComponent, GridModifiedEvent>(OnGridChanged);
-
-            SubscribeLocalEvent<AlertLevelChangedEvent>(OnAlertLevelChanged);
         }
 
         protected override void OnComponentInit(EntityUid uid, PDAComponent pda, ComponentInit args)
@@ -54,7 +52,7 @@ namespace Content.Server.PDA
             _pda = pda;
 
             UpdateStationName(pda);
-            UpdateStationAlertLevel(pda);
+            UpdatePdaStationAlertLevel(pda);
 
             if (_uiSystem.TryGetUi(uid, PDAUiKey.Key, out var ui, uiComponent))
                 ui.OnReceiveMessage += (msg) => OnUIMessage(pda, msg);
@@ -100,31 +98,6 @@ namespace Content.Server.PDA
             UpdatePDAUserInterface(pda);
         }
 
-        private void OnAlertLevelChanged(AlertLevelChangedEvent ev)
-        {
-            if (_pda == null)
-            {
-                return;
-            }
-
-            if (!TryComp<AlertLevelComponent>(ev.Station, out var alert)
-                || alert.AlertLevels == null)
-            {
-                return;
-            }
-
-            var stationUid = GetStationUid(_pda);
-            if (stationUid == null && stationUid != ev.Station)
-            {
-                return;
-            }
-
-            if (alert.CurrentLevel != _pda.StationAlertLevel)
-            {
-                UpdateStationAlertLevel(_pda, alert.CurrentLevel);
-            }
-        }
-
         private void UpdatePDAUserInterface(PDAComponent pda)
         {
             var ownerInfo = new PDAIdInfoText
@@ -139,6 +112,8 @@ namespace Content.Server.PDA
 
             var address = GetDeviceNetAddress(pda.Owner);
             var hasInstrument = HasComp<InstrumentComponent>(pda.Owner);
+
+            UpdatePdaStationAlertLevel(pda);
 
             var state = new PDAUpdateState(pda.FlashlightOn,
                 pda.PenSlot.HasItem, ownerInfo, pda.StationName, false, hasInstrument, address, pda.StationAlertLevel);
@@ -209,18 +184,12 @@ namespace Content.Server.PDA
             pda.StationName = station is null ? null : Name(station.Value);
         }
 
-        private void UpdateStationAlertLevel(PDAComponent pda, string? newAlertLewel = null)
+        private void UpdatePdaStationAlertLevel(PDAComponent pda)
         {
-            if (newAlertLewel != null)
-            {
-                pda.StationAlertLevel = newAlertLewel;
-                return;
-            }
-
             var stationUid = GetStationUid(pda);
 
-            if (stationUid != null
-                && TryComp(stationUid, out AlertLevelComponent? alertComp) && alertComp.AlertLevels != null)
+            if (stationUid != null && TryComp(stationUid, out AlertLevelComponent? alertComp)
+                && alertComp.AlertLevels != null && pda.StationAlertLevel != alertComp.CurrentLevel)
             {
                 pda.StationAlertLevel = alertComp.CurrentLevel;
             }
