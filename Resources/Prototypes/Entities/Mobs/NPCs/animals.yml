@@ -73,10 +73,6 @@
   description: Nice to have, but you can't build a civilization on a foundation of honey alone.
   components:
   - type: CombatMode
-    disarmAction:
-      enabled: false
-      autoPopulate: false
-      name: action-name-disarm
   - type: MovementSpeedModifier
     baseWalkSpeed : 7
     baseSprintSpeed : 7
@@ -134,10 +130,6 @@
   description: How nice a bee. Oh no, it looks angry and wants my pizza.
   components:
   - type: CombatMode
-    disarmAction:
-      enabled: false
-      autoPopulate: false
-      name: action-name-disarm
   - type: MeleeWeapon
     hidden: true
     angle: 0
@@ -652,7 +644,6 @@
   description: A large marsupial herbivore. It has powerful hind legs and... boxing gloves?
   components:
   - type: CombatMode
-    disarm: null
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -690,7 +681,6 @@
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   components:
   - type: CombatMode
-    disarm: null
   - type: NameIdentifier
     group: Monkey
   - type: SentienceTarget
@@ -858,10 +848,6 @@
       enabled: false
       autoPopulate: false
       name: action-name-combat
-    disarmAction:
-      enabled: false
-      autoPopulate: false
-      name: action-name-disarm
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: DiseaseCarrier #The other class lab animal and disease vector
@@ -1329,10 +1315,6 @@
     - id: FoodMeatSpider
       amount: 2
   - type: CombatMode
-    disarmAction:
-      enabled: false
-      autoPopulate: false
-      name: action-name-disarm
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -2028,10 +2010,6 @@
       types:
         Blunt: 0.1
   - type: CombatMode
-    disarmAction:
-      enabled: false
-      autoPopulate: false
-      name: action-name-disarm
   - type: MeleeWeapon
     hidden: true
     soundHit:
