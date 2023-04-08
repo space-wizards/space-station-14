@@ -242,8 +242,11 @@ public sealed class MindSystem : EntitySystem
     {
         if (mind == null)
             return;
-        
+
         var currentEntity = mind.Session?.AttachedEntity;
+        if (currentEntity != mind.VisitingEntity)
+            return; // TODO Fix this. UnVisit gets run twice when returning to body.
+
         mind.Session?.AttachToEntity(mind.OwnedEntity);
         RemoveVisitingEntity(mind);
 
