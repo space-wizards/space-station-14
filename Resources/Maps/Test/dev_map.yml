@@ -7222,4 +7222,118 @@ entities:
   - pos: -3.5,10.5
     parent: 179
     type: Transform
+- uid: 964
+  type: TableGlass
+  components:
+  - pos: 9.5,12.5
+    parent: 179
+    type: Transform
+- uid: 965
+  type: TableGlass
+  components:
+  - pos: 11.5,12.5
+    parent: 179
+    type: Transform
+- uid: 966
+  type: TableGlass
+  components:
+  - pos: 13.5,12.5
+    parent: 179
+    type: Transform
+- uid: 967
+  type: FaxMachineCaptain
+  components:
+  - pos: 9.5,12.5
+    parent: 179
+    type: Transform
+- uid: 968
+  type: FaxMachineCentcom
+  components:
+  - pos: 11.5,12.5
+    parent: 179
+    type: Transform
+- uid: 969
+  type: FaxMachineSyndie
+  components:
+  - pos: 13.5,12.5
+    parent: 179
+    type: Transform
+- uid: 970
+  type: CableApcExtension
+  components:
+  - pos: 9.5,12.5
+    parent: 179
+    type: Transform
+- uid: 971
+  type: CableApcExtension
+  components:
+  - pos: 10.5,12.5
+    parent: 179
+    type: Transform
+- uid: 972
+  type: CableApcExtension
+  components:
+  - pos: 11.5,12.5
+    parent: 179
+    type: Transform
+- uid: 973
+  type: CableApcExtension
+  components:
+  - pos: 12.5,12.5
+    parent: 179
+    type: Transform
+- uid: 974
+  type: CableApcExtension
+  components:
+  - pos: 13.5,12.5
+    parent: 179
+    type: Transform
+- uid: 975
+  type: TableGlass
+  components:
+  - pos: 10.5,12.5
+    parent: 179
+    type: Transform
+- uid: 976
+  type: TableGlass
+  components:
+  - pos: 12.5,12.5
+    parent: 179
+    type: Transform
+- uid: 977
+  type: PaperBin10
+  components:
+  - pos: 10.5,12.5
+    parent: 179
+    type: Transform
+- uid: 978
+  type: Pen
+  components:
+  - pos: 10.893699,12.7794075
+    parent: 179
+    type: Transform
+- uid: 979
+  type: Pen
+  components:
+  - pos: 10.862433,12.602201
+    parent: 179
+    type: Transform
+- uid: 980
+  type: RubberStampCentcom
+  components:
+  - pos: 12.186007,12.716865
+    parent: 179
+    type: Transform
+- uid: 981
+  type: RubberStampSyndicate
+  components:
+  - pos: 12.436131,12.550082
+    parent: 179
+    type: Transform
+- uid: 982
+  type: RubberStampCaptain
+  components:
+  - pos: 12.800895,12.664745
+    parent: 179
+    type: Transform
 ...
