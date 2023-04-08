@@ -93,23 +93,29 @@ namespace Content.Client.PDA
             if (state.PDAOwnerInfo.IdOwner != null || state.PDAOwnerInfo.JobTitle != null)
             {
                 IdInfoLabel.SetMarkup(Loc.GetString("comp-pda-ui",
-                    ("Owner",state.PDAOwnerInfo.IdOwner ?? Loc.GetString("comp-pda-ui-unknown")),
-                    ("JobTitle",state.PDAOwnerInfo.JobTitle ?? Loc.GetString("comp-pda-ui-unassigned"))));
+                    ("Owner", state.PDAOwnerInfo.IdOwner ?? Loc.GetString("comp-pda-ui-unknown")),
+                    ("JobTitle", state.PDAOwnerInfo.JobTitle ?? Loc.GetString("comp-pda-ui-unassigned"))));
             }
             else
             {
                 IdInfoLabel.SetMarkup(Loc.GetString("comp-pda-ui-blank"));
             }
 
-            StationNameLabel.SetMarkup(Loc.GetString("comp-pda-ui-station", ("Station",state.StationName ?? Loc.GetString("comp-pda-ui-unknown"))));
-            AddressLabel.Text = state.Address?.ToUpper() ?? " - ";
+            StationNameContainer.Visible = false;
+            StationAlertLevelLabel.Visible = false;
 
-            if (state.StationAlertLevel != null) {
-                StationAlertLevelLabel.SetMarkup($"Current alert level: {state.StationAlertLevel}");
-            }
-            else
+            if (state.StationName != null)
             {
-                StationAlertLevelLabel.SetMarkup("none!");
+                StationNameContainer.Visible = true;
+                StationNameLabel.SetMarkup(Loc.GetString("comp-pda-ui-station",
+                    ("Station", state.StationName ?? Loc.GetString("comp-pda-ui-unknown"))));
+                AddressLabel.Text = state.Address?.ToUpper() ?? " - ";
+
+                if (state.StationAlertLevel != null)
+                {
+                    StationAlertLevelLabel.Visible = true;
+                    StationAlertLevelLabel.SetMarkup(GetLocalStingForLevelAlert(state.StationAlertLevel));
+                }
             }
 
             EjectIdButton.IsActive = state.PDAOwnerInfo.IdOwner != null || state.PDAOwnerInfo.JobTitle != null;
@@ -255,6 +261,37 @@ namespace Content.Client.PDA
             {
                 view.Visible = false;
             }
+        }
+
+        private string GetLocalStingForLevelAlert(string alertlevel)
+        {
+            string color;
+
+            switch (alertlevel)
+            {
+                case "epsilon":
+                    color = "darkviolet";
+                    break;
+                case "gamma":
+                    color = "darkviolet";
+                    break;
+                case "delta":
+                    color = "darkred";
+                    break;
+                case "blue":
+                    color = "dodgerblue";
+                    break;
+                default:
+                    color = alertlevel;
+                    break;
+            }
+
+            if (Loc.TryGetString($"alert-level-{alertlevel}", out var locName))
+            {
+                alertlevel = locName;
+            }
+
+            return Loc.GetString("comp-pda-ui-station-alert-level", ("ColorLevel", color), ("AlertLevel", alertlevel));
         }
     }
 }

@@ -27,7 +27,7 @@
                       HorizontalExpand="True"
                       MinSize="50 50"
                       Margin="8">
-            <PanelContainer Margin="0 0 0 5">
+            <PanelContainer Margin="0 0 0 5" Name="StationNameContainer">
                 <BoxContainer Orientation="Vertical">
                     <RichTextLabel Name="StationNameLabel"
                                    Access="Public"
