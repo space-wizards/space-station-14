@@ -119,23 +119,14 @@ namespace Content.Client.PDA
             if (state.StationAlertLevel != null)
             {
                 var alertlevel = state.StationAlertLevel;
-                var color = state.StationAlertLevel;
-                if (alertlevel == "epsilon")
+                var color = alertlevel switch
                 {
-                    color = "darkviolet";
-                }
-                if (alertlevel == "gamma")
-                {
-                    color = "palevioletred";
-                }
-                if (alertlevel == "delta")
-                {
-                    color = "darkred";
-                }
-                if (alertlevel == "blue")
-                {
-                    color = "dodgerblue";
-                }
+                    "epsilon" => "darkviolet",
+                    "gamma" => "palevioletred",
+                    "delta" => "darkred",
+                    "blue" => "dodgerblue",
+                    _ => state.StationAlertLevel
+                };
                 StationAlertLevelInstructions.SetMarkup(
                     Loc.GetString("comp-pda-ui-station-alert-level-instructions",
                         ("AlertLevelInstructions", Loc.GetString($"alert-level-{alertlevel}-instructions"))));
@@ -155,8 +146,8 @@ namespace Content.Client.PDA
                     ("AlertLevelInstructions", Loc.GetString("comp-pda-ui-unknown"))));
             }
 
-            string accessLevels = "";
-            for (int i = 0; i < state.AccessLevels.Count; i++)
+            var accessLevels = "";
+            for (var i = 0; i < state.AccessLevels.Count; i++)
             {
                 var access = state.AccessLevels[i];
                 accessLevels += Loc.GetString($"{access}-short");
