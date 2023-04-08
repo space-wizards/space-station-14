@@ -12,7 +12,7 @@
         <Control MinHeight="5" />
         <LineEdit Name="TitleEdit" HorizontalExpand="True" PlaceHolder="{Loc admin-fax-title-placeholder}"></LineEdit>
         <Control MinHeight="5" />
-        <LineEdit Name="FromEdit" HorizontalExpand="True" PlaceHolder="{Loc admin-fax-title-placeholder}"></LineEdit>
+        <LineEdit Name="FromEdit" HorizontalExpand="True" PlaceHolder="{Loc admin-fax-from-placeholder}"></LineEdit>
         <Control MinHeight="5" />
         <TextEdit Name="MessageEdit" HorizontalExpand="True" MinHeight="200"></TextEdit>
         <Control MinHeight="5" />
