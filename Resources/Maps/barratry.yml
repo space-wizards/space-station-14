@@ -56738,22 +56738,6 @@ entities:
   - baseSprintSpeed: 4.5
     baseWalkSpeed: 2.5
     type: MovementSpeedModifier
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        radius: 0.35
-        position: 0,0
-      mask:
-      - Impassable
-      - LowImpassable
-      layer:
-      - BulletImpassable
-      - Opaque
-      density: 100
-      hard: True
-      restitution: 0
-      friction: 0.4
-      id: null
-    type: Fixtures
   - rules: >-
       You don't remember any of your previous life unless an administrator tells you otherwise.
 
@@ -56767,12 +56751,10 @@ entities:
   - type: InputMover
   - type: MobMover
   - type: MovementAlwaysTouching
-  - type: MovementIgnoreGravity
   - type: MovementSpeedModifier
-    baseSprintSpeed: 4.5
+    baseSprintSpeed: 2.5
     baseWalkSpeed: 2.5
-  - baseResistTime: 0.5
-    type: CanEscapeInventory
+  - type: CanEscapeInventory
 - uid: 6646
   type: TableWood
   components:
