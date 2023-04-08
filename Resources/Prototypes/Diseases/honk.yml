@@ -10,9 +10,7 @@
       amount: 1
     - !type:DiseaseHonk
       probability: 0.05
-      honkMessage: disease-honk
-      honkSound:
-        collection: Honks
+      emote: Honk
     - !type:DiseaseAddComponent
       comp: Cluwne
       probability: 0.0005
