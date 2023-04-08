@@ -11,6 +11,7 @@ using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Medical.Cryogenics;
 
@@ -26,12 +27,16 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<SharedCryoPodComponent, CanDropTargetEvent>(OnCryoPodCanDropOn);
         InitializeInsideCryoPod();
     }
 
-    protected void OnCryoPodCanDropOn(EntityUid uid, SharedCryoPodComponent component, ref CanDropTargetEvent args)
+    private void OnCryoPodCanDropOn(EntityUid uid, SharedCryoPodComponent component, ref CanDropTargetEvent args)
     {
-        args.CanDrop = args.CanDrop && HasComp<BodyComponent>(args.Dragged);
+        if (args.Handled)
+            return;
+
+        args.CanDrop = HasComp<BodyComponent>(args.Dragged);
         args.Handled = true;
     }
 
@@ -146,19 +151,19 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
 
     protected void OnCryoPodPryFinished(EntityUid uid, SharedCryoPodComponent cryoPodComponent, CryoPodPryFinished args)
     {
-        cryoPodComponent.IsPrying = false;
+        if (args.Cancelled)
+            return;
+
         EjectBody(uid, cryoPodComponent);
     }
 
-    protected void OnCryoPodPryInterrupted(EntityUid uid, SharedCryoPodComponent cryoPodComponent, CryoPodPryInterrupted args)
+    [Serializable, NetSerializable]
+    public sealed class CryoPodPryFinished : SimpleDoAfterEvent
     {
-        cryoPodComponent.IsPrying = false;
     }
 
-    #region Event records
-
-    protected record CryoPodPryFinished;
-    protected record CryoPodPryInterrupted;
-
-    #endregion
+    [Serializable, NetSerializable]
+    public sealed class CryoPodDragFinished : SimpleDoAfterEvent
+    {
+    }
 }

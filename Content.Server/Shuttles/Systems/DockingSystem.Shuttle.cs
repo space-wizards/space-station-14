@@ -75,7 +75,7 @@ public sealed partial class DockingSystem
        if (!ValidSpawn(grid, shuttleDockedAABB.Value))
            return false;
 
-       gridRotation = targetGridRotation + gridDockAngle - shuttleDockAngle;
+       gridRotation = (targetGridRotation + gridDockAngle - shuttleDockAngle).Reduced();
        return true;
    }
 
@@ -162,7 +162,7 @@ public sealed partial class DockingSystem
                    var spawnPosition = new EntityCoordinates(targetGrid, matty.Transform(Vector2.Zero));
                    spawnPosition = new EntityCoordinates(targetGridXform.MapUid!.Value, spawnPosition.ToMapPos(EntityManager, _transform));
 
-                   var dockedBounds = new Box2Rotated(shuttleAABB.Translated(spawnPosition.Position), targetGridAngle, spawnPosition.Position);
+                   var dockedBounds = new Box2Rotated(shuttleAABB.Translated(spawnPosition.Position), targetAngle, spawnPosition.Position);
 
                    // Check if there's no intersecting grids (AKA oh god it's docking at cargo).
                    if (_mapManager.FindGridsIntersecting(targetGridXform.MapID,
@@ -179,8 +179,6 @@ public sealed partial class DockingSystem
                    {
                        (dockUid, gridDockUid, shuttleDock, gridDock),
                    };
-
-                   // TODO: Check shuttle orientation as the tiebreaker.
 
                    foreach (var (otherUid, other) in shuttleDocks)
                    {
