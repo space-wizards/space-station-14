@@ -43,9 +43,15 @@ public sealed partial class ShuttleSystem
 
     // I'm too lazy to make CVars.
 
-    private readonly SoundSpecifier _startupSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_begin.ogg");
+    private readonly SoundSpecifier _startupSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_begin.ogg")
+    {
+        Params = AudioParams.Default.WithVolume(-5f),
+    };
     // private SoundSpecifier _travelSound = new SoundPathSpecifier();
-    private readonly SoundSpecifier _arrivalSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_end.ogg");
+    private readonly SoundSpecifier _arrivalSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_end.ogg")
+    {
+        Params = AudioParams.Default.WithVolume(-5f),
+    };
 
     private readonly TimeSpan _hyperspaceKnockdownTime = TimeSpan.FromSeconds(5);
 
@@ -355,12 +361,14 @@ public sealed partial class ShuttleSystem
 
     private void SetDocks(EntityUid uid, bool enabled)
     {
-        foreach (var (dock, xform) in EntityQuery<DockingComponent, TransformComponent>(true))
+        var query = AllEntityQuery<DockingComponent, TransformComponent>();
+
+        while (query.MoveNext(out var dockUid, out var dock, out var xform))
         {
             if (xform.ParentUid != uid || dock.Enabled == enabled)
                 continue;
 
-            _dockSystem.Undock(dock);
+            _dockSystem.Undock(dockUid, dock);
             dock.Enabled = enabled;
         }
     }

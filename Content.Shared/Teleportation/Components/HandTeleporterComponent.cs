@@ -1,6 +1,8 @@
-﻿using Robust.Shared.Audio;
+﻿using Content.Shared.DoAfter;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Teleportation.Components;
@@ -18,17 +20,17 @@ public sealed class HandTeleporterComponent : Component
     [ViewVariables, DataField("secondPortal")]
     public EntityUid? SecondPortal = null;
 
-    [DataField("firstPortalPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField("firstPortalPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string FirstPortalPrototype = "PortalRed";
 
-    [DataField("secondPortalPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField("secondPortalPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string SecondPortalPrototype = "PortalBlue";
 
-    [DataField("newPortalSound")]
-    public SoundSpecifier NewPortalSound = new SoundPathSpecifier("/Audio/Machines/high_tech_confirm.ogg")
-    {
-        Params = AudioParams.Default.WithVolume(-2f)
-    };
+    [DataField("newPortalSound")] public SoundSpecifier NewPortalSound =
+        new SoundPathSpecifier("/Audio/Machines/high_tech_confirm.ogg")
+        {
+            Params = AudioParams.Default.WithVolume(-2f)
+        };
 
     [DataField("clearPortalsSound")]
     public SoundSpecifier ClearPortalsSound = new SoundPathSpecifier("/Audio/Machines/button.ogg");
@@ -36,7 +38,10 @@ public sealed class HandTeleporterComponent : Component
     /// <summary>
     ///     Delay for creating the portals in seconds.
     /// </summary>
-    [DataField("portalCreationDelay")]
-    public float PortalCreationDelay = 2.5f;
+    [DataField("portalCreationDelay")] public float PortalCreationDelay = 2.5f;
+}
 
+[Serializable, NetSerializable]
+public sealed class TeleporterDoAfterEvent : SimpleDoAfterEvent
+{
 }
