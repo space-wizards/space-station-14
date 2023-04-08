@@ -72,11 +72,13 @@ namespace Content.Client.Hands.Systems
                 List<Hand> addedHands = new();
                 foreach (var hand in state.Hands)
                 {
-                    if (component.Hands.TryAdd(hand.Name, hand))
-                    {
-                        hand.Container = _containerSystem.EnsureContainer<ContainerSlot>(uid, hand.Name, manager);
-                        addedHands.Add(hand);
-                    }
+                    if (component.Hands.ContainsKey(hand.Name))
+                        continue;
+
+                    var container = _containerSystem.EnsureContainer<ContainerSlot>(uid, hand.Name, manager);
+                    var newHand = new Hand(hand.Name, hand.Location, container);
+                    component.Hands.Add(hand.Name, newHand);
+                    addedHands.Add(newHand);
                 }
 
                 foreach (var name in component.Hands.Keys)
