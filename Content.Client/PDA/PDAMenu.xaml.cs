@@ -104,6 +104,14 @@ namespace Content.Client.PDA
             StationNameLabel.SetMarkup(Loc.GetString("comp-pda-ui-station", ("Station",state.StationName ?? Loc.GetString("comp-pda-ui-unknown"))));
             AddressLabel.Text = state.Address?.ToUpper() ?? " - ";
 
+            if (state.StationAlertLevel != null) {
+                StationAlertLevelLabel.SetMarkup($"Current alert level: {state.StationAlertLevel}");
+            }
+            else
+            {
+                StationAlertLevelLabel.SetMarkup("none!");
+            }
+
             EjectIdButton.IsActive = state.PDAOwnerInfo.IdOwner != null || state.PDAOwnerInfo.JobTitle != null;
             EjectPenButton.IsActive = state.HasPen;
             ActivateUplinkButton.Visible = state.HasUplink;

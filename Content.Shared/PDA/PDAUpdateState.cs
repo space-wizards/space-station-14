@@ -11,11 +11,15 @@ namespace Content.Shared.PDA
         public bool HasPen;
         public PDAIdInfoText PDAOwnerInfo;
         public string? StationName;
+        public string? StationAlertLevel;
         public bool HasUplink;
         public bool CanPlayMusic;
         public string? Address;
 
-        public PDAUpdateState(bool flashlightEnabled, bool hasPen, PDAIdInfoText pdaOwnerInfo, string? stationName, bool hasUplink = false, bool canPlayMusic = false, string? address = null)
+
+        public PDAUpdateState(bool flashlightEnabled, bool hasPen, PDAIdInfoText pdaOwnerInfo,
+            string? stationName, bool hasUplink = false, bool canPlayMusic = false, string? address = null,
+                string? stationAlertLevel = null)
         {
             FlashlightEnabled = flashlightEnabled;
             HasPen = hasPen;
@@ -23,6 +27,7 @@ namespace Content.Shared.PDA
             HasUplink = hasUplink;
             CanPlayMusic = canPlayMusic;
             StationName = stationName;
+            StationAlertLevel = stationAlertLevel;
             Address = address;
         }
     }

@@ -15,6 +15,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Content.Server.Mind.Components;
 using Content.Server.Traitor;
+using Content.Server.AlertLevel;
 
 namespace Content.Server.PDA
 {
@@ -28,6 +29,8 @@ namespace Content.Server.PDA
         [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
         [Dependency] private readonly StoreSystem _storeSystem = default!;
 
+        private PDAComponent? _pda;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -37,6 +40,8 @@ namespace Content.Server.PDA
             SubscribeLocalEvent<PDAComponent, StoreAddedEvent>(OnUplinkInit);
             SubscribeLocalEvent<PDAComponent, StoreRemovedEvent>(OnUplinkRemoved);
             SubscribeLocalEvent<PDAComponent, GridModifiedEvent>(OnGridChanged);
+
+            SubscribeLocalEvent<AlertLevelChangedEvent>(OnAlertLevelChanged);
         }
 
         protected override void OnComponentInit(EntityUid uid, PDAComponent pda, ComponentInit args)
@@ -46,7 +51,10 @@ namespace Content.Server.PDA
             if (!TryComp(uid, out ServerUserInterfaceComponent? uiComponent))
                 return;
 
+            _pda = pda;
+
             UpdateStationName(pda);
+            UpdateStationAlertLevel(pda);
 
             if (_uiSystem.TryGetUi(uid, PDAUiKey.Key, out var ui, uiComponent))
                 ui.OnReceiveMessage += (msg) => OnUIMessage(pda, msg);
@@ -92,6 +100,31 @@ namespace Content.Server.PDA
             UpdatePDAUserInterface(pda);
         }
 
+        private void OnAlertLevelChanged(AlertLevelChangedEvent ev)
+        {
+            if (_pda == null)
+            {
+                return;
+            }
+
+            if (!TryComp<AlertLevelComponent>(ev.Station, out var alert)
+                || alert.AlertLevels == null)
+            {
+                return;
+            }
+
+            var stationUid = GetStationUid(_pda);
+            if (stationUid == null && stationUid != ev.Station)
+            {
+                return;
+            }
+
+            if (alert.CurrentLevel != _pda.StationAlertLevel)
+            {
+                UpdateStationAlertLevel(_pda, alert.CurrentLevel);
+            }
+        }
+
         private void UpdatePDAUserInterface(PDAComponent pda)
         {
             var ownerInfo = new PDAIdInfoText
@@ -106,7 +139,9 @@ namespace Content.Server.PDA
 
             var address = GetDeviceNetAddress(pda.Owner);
             var hasInstrument = HasComp<InstrumentComponent>(pda.Owner);
-            var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, pda.StationName, false, hasInstrument, address);
+
+            var state = new PDAUpdateState(pda.FlashlightOn,
+                pda.PenSlot.HasItem, ownerInfo, pda.StationName, false, hasInstrument, address, pda.StationAlertLevel);
 
             _cartridgeLoaderSystem?.UpdateUiState(pda.Owner, state);
 
@@ -160,18 +195,35 @@ namespace Content.Server.PDA
                         break;
                     }
                 case PDAShowMusicMessage _:
-                {
-                    if (TryComp(pdaEnt, out InstrumentComponent? instrument))
-                        _instrumentSystem.ToggleInstrumentUi(pdaEnt, msg.Session, instrument);
-                    break;
-                }
+                    {
+                        if (TryComp(pdaEnt, out InstrumentComponent? instrument))
+                            _instrumentSystem.ToggleInstrumentUi(pdaEnt, msg.Session, instrument);
+                        break;
+                    }
             }
         }
 
         private void UpdateStationName(PDAComponent pda)
         {
-            var station = _stationSystem.GetOwningStation(pda.Owner);
+            var station = GetStationUid(pda);
             pda.StationName = station is null ? null : Name(station.Value);
+        }
+
+        private void UpdateStationAlertLevel(PDAComponent pda, string? newAlertLewel = null)
+        {
+            if (newAlertLewel != null)
+            {
+                pda.StationAlertLevel = newAlertLewel;
+                return;
+            }
+
+            var stationUid = GetStationUid(pda);
+
+            if (stationUid != null
+                && TryComp(stationUid, out AlertLevelComponent? alertComp) && alertComp.AlertLevels != null)
+            {
+                pda.StationAlertLevel = alertComp.CurrentLevel;
+            }
         }
 
         private void AfterUIOpen(EntityUid uid, PDAComponent pda, AfterActivatableUIOpenEvent args)
@@ -210,6 +262,10 @@ namespace Content.Server.PDA
             }
 
             return address;
+        }
+
+        private EntityUid? GetStationUid(PDAComponent pda) {
+            return _stationSystem.GetOwningStation(pda.Owner);
         }
     }
 }

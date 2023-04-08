@@ -27,17 +27,20 @@
                       HorizontalExpand="True"
                       MinSize="50 50"
                       Margin="8">
+            <PanelContainer Margin="0 0 0 5">
+                <BoxContainer Orientation="Vertical">
+                    <RichTextLabel Name="StationNameLabel"
+                                   Access="Public"
+                                   HorizontalExpand="True" />
+                    <RichTextLabel Name="StationAlertLevelLabel"
+                                    Access="Public"
+                                    HorizontalExpand="True" />
+                </BoxContainer>
+            </PanelContainer>
             <RichTextLabel Name="PdaOwnerLabel" Access="Public" />
             <RichTextLabel Name="IdInfoLabel"
                            Access="Public"
                            HorizontalExpand="True" />
-            <PanelContainer>
-                <BoxContainer Orientation="Horizontal">
-                    <RichTextLabel Name="StationNameLabel"
-                                   Access="Public"
-                                   HorizontalExpand="True" />
-                </BoxContainer>
-            </PanelContainer>
         </BoxContainer>
         <ScrollContainer HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="True">
             <BoxContainer Orientation="Vertical"
