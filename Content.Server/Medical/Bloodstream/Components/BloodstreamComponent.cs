@@ -1,4 +1,3 @@
-using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Medical.Bloodstream.Systems;
 using Content.Shared.Chemistry.Components;
