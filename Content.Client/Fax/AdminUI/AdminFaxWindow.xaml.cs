@@ -8,8 +8,6 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Fax.AdminUI;
 
-// TODO: Add fax history viewing
-
 [GenerateTypedNameReferences]
 public sealed partial class AdminFaxWindow : DefaultWindow
 {
