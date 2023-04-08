@@ -15,8 +15,5 @@ namespace Content.Server.Tools.Components
 
         [DataField("delay")]
         public float Delay = 1f;
-
-        [DataField("cancelToken")]
-        public CancellationTokenSource? CancelToken;
     }
 }
