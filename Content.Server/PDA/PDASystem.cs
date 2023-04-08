@@ -28,9 +28,6 @@ namespace Content.Server.PDA
         [Dependency] private readonly StationSystem _stationSystem = default!;
         [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
         [Dependency] private readonly StoreSystem _storeSystem = default!;
-
-        private PDAComponent? _pda;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -48,8 +45,6 @@ namespace Content.Server.PDA
 
             if (!TryComp(uid, out ServerUserInterfaceComponent? uiComponent))
                 return;
-
-            _pda = pda;
 
             UpdateStationName(pda);
             UpdatePdaStationAlertLevel(pda);
