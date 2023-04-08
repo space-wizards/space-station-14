@@ -1,4 +1,9 @@
-﻿admin-fax-title = Admin Fax Manager
+﻿# Command
+cmd-faxui-desc = Open admin window for sending faxes
+cmd-faxui-help = Usage: faxui
+
+# Window
+admin-fax-title = Admin Fax Manager
 admin-fax-fax = Fax:
 admin-fax-follow = Follow
 admin-fax-title-placeholder = Paper name...
