@@ -8,8 +8,6 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Fax.AdminUI;
 
-// TODO: Disable button if some fields invalid
-// TODO: Add localization
 // TODO: Add fax history viewing
 
 [GenerateTypedNameReferences]
@@ -32,7 +30,8 @@ public sealed partial class AdminFaxWindow : DefaultWindow
         FollowButton.OnPressed += FollowFax;
         SendButton.OnPressed += SendMessage;
 
-        MessageEdit.Placeholder = new Rope.Leaf("Your message here..."); // TextEdit work only with Nodes
+        var loc = IoCManager.Resolve<ILocalizationManager>();
+        MessageEdit.Placeholder = new Rope.Leaf(loc.GetString("admin-fax-message-placeholder")); // TextEdit work only with Nodes
     }
 
     public void PopulateFaxes(List<AdminFaxEntry> faxes)
