@@ -7,7 +7,6 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Paper;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Server.Tools;
 using Content.Server.UserInterface;
 using Content.Shared.Administration.Logs;
@@ -18,6 +17,7 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Fax;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 
@@ -477,6 +477,6 @@ public sealed class FaxSystem : EntitySystem
     private void NotifyAdmins(string faxName)
     {
         _chat.SendAdminAnnouncement(Loc.GetString("fax-machine-chat-notify", ("fax", faxName)));
-        _audioSystem.PlayGlobal("/Audio/Machines/high_tech_confirm.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false);
+        _audioSystem.PlayGlobal("/Audio/Machines/high_tech_confirm.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false, AudioParams.Default.WithVolume(-8f));
     }
 }
