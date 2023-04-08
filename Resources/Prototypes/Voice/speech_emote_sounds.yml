@@ -94,6 +94,8 @@
       collection: MaleScreams
     Laugh:
       collection: MaleLaugh
+    Honk:
+      collection: BikeHorn
   params:
     variation: 0.125
     pitchscale: 0.75
