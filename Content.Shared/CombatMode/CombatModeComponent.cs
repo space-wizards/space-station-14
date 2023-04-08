@@ -1,17 +1,20 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Targeting;
-using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.CombatMode
 {
-    [NetworkedComponent()]
-    public abstract class SharedCombatModeComponent : Component
+    /// <summary>
+    ///     Stores whether an entity is in "combat mode"
+    ///     This is used to differentiate between regular item interactions or
+    ///     using *everything* as a weapon.
+    /// </summary>
+    [RegisterComponent, NetworkedComponent]
+    [Access(typeof(SharedCombatModeSystem))]
+    public sealed class CombatModeComponent : Component
     {
         #region Disarm
 
@@ -40,7 +43,7 @@ namespace Content.Shared.CombatMode
         public InstantAction? CombatToggleAction;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public virtual bool IsInCombatMode
+        public bool IsInCombatMode
         {
             get => _isInCombatMode;
             set
@@ -55,7 +58,7 @@ namespace Content.Shared.CombatMode
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public virtual TargetingZone ActiveZone
+        public TargetingZone ActiveZone
         {
             get => _activeZone;
             set
