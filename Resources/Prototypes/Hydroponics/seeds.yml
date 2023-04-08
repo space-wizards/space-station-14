@@ -918,3 +918,34 @@
       Min: 1
       Max: 5
       PotencyDivisor: 20
+      
+- type: seed
+  id: spinach
+  name: seeds-spinach-name
+  noun: seeds-noun-seeds
+  displayName: seeds-spinach-display-name
+  plantRsi: Objects/Specific/Hydroponics/spinach.rsi
+  productPrototypes:
+    - FoodSpinach
+  lifespan: 25
+  maturation: 6
+  production: 1
+  yield: 4
+  potency: 10
+  growthStages: 3
+  idealLight: 9
+  waterConsumption: 6
+  idealHeat: 288
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Vitamin:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Iron:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20

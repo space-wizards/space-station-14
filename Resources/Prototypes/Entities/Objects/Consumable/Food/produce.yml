@@ -1169,3 +1169,28 @@
       reagents:
       - ReagentId: JuiceGrape
         Quantity: 10
+
+- type: entity
+  name: spinach
+  parent: FoodProduceBase
+  id: FoodSpinach
+  description: A favorite of sailors and those in need of iron. Allows you to fight to the finish.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - spinach
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Iron
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/spinach.rsi
+  - type: Produce
+    seedId: spinach

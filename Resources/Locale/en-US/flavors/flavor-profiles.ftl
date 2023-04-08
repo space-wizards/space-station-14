@@ -98,6 +98,7 @@ flavor-complex-orange = like oranges
 flavor-complex-watermelon = like watermelon
 flavor-complex-garlic = like garlic
 flavor-complex-grape = like grapes
+flavor-complex-spinach = like spinach
 
 ## Complex foodstuffs (cooked foods, joke flavors, etc)
 

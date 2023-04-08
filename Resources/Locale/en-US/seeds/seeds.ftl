@@ -75,3 +75,5 @@ seeds-watermelon-name = watermelon
 seeds-watermelon-display-name = watermelon plant
 seeds-grape-name = grape
 seeds-grape-display-name = grape plant
+seeds-spinach-name = spinach
+seeds-spinach-display-name = spinach

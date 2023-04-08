@@ -105,6 +105,8 @@
         amount: 1
       - id: SoybeanSeeds
         amount: 1
+      - id: SpinachSeeds
+        amount: 1
       - id: GrapeSeeds
         amount: 1
       - id: WatermelonSeeds
