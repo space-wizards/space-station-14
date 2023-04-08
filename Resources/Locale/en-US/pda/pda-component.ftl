@@ -28,8 +28,6 @@ comp-pda-ui-station-alert-level = Alert Level: [color={ $AlertLevel }]{ $AlertLe
 
 comp-pda-ui-station-acceses-levels = Access: [color=white]{ $AccessLevels }[/color]
 
-comp-pda-ui-station-alert-level = Threat code: [color={ $ColorLevel }]{ $AlertLevel }[/color]
-
 comp-pda-ui-station-alert-level-instructions = Code Instructions: [color=white]{ $AlertLevelInstructions }[/color]
 
 comp-pda-ui-station-time =
