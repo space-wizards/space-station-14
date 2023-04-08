@@ -23,6 +23,7 @@
       - FoodBurgerBacon
       - FoodBurgerEmpowered
       - FoodBurgerCrab
+      - FoodBurgerHuman
       - FoodBurgerSoy
       - FoodBurgerMcrib
       - FoodBurgerMcguffin
@@ -51,7 +52,9 @@
     rarePrototypes:
       - FoodBurgerAppendix
       - FoodBurgerRobot
+      - FoodBurgerBaseball
       - FoodBurgerBear
+      - FoodBurgerCat
       - FoodBurgerClown
       - FoodBurgerMime
       - FoodBurgerBrain

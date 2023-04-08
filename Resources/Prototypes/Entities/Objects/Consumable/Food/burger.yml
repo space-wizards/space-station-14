@@ -55,6 +55,10 @@
   id: FoodBurgerJelly
   description: Culinary delight..?
   components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - jelly
   - type: Sprite
     layers:
     - state: custburg-bottom
@@ -70,76 +74,71 @@
   id: FoodBurgerAppendix
   description: Tastes like appendicitis.
   components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - grass
   - type: Sprite
     state: appendix
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 6
 # Tastes like bun, grass.
 
 - type: entity
-  name: fillet -o- carp burger
+  name: bacon burger
   parent: FoodBurgerBase
-  id: FoodBurgerCarp
-  description: Almost like a carp is yelling somewhere...
+  id: FoodBurgerBacon
+  description: The perfect combination of all things American.
   components:
   - type: FlavorProfile
     flavors:
       - bun
-      - fishy
+      - bacon
   - type: Sprite
-    state: fish
-# Tastes like bun, fish.
+    state: bacon
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 19
+        - ReagentId: Vitamin
+          Quantity: 5
+# Tastes like bun, bacon.
 
 - type: entity
-  name: tofu burger
+  name: baseball burger
   parent: FoodBurgerBase
-  id: FoodBurgerTofu
-  description: What... is that meat?
+  id: FoodBurgerBaseball
+  description: It's still warm. The steam coming off of it smells kinda sweaty.
   components:
   - type: FlavorProfile
     flavors:
       - bun
-      - tofu
+      - homerun
   - type: Sprite
-    state: tofu
+    state: baseball
   - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 8
-        - ReagentId: Protein
           Quantity: 3
-# Tastes like bun, tofu.
-
-- type: entity
-  name: roburger
-  parent: FoodBurgerBase
-  id: FoodBurgerRobot
-  description: The lettuce is the only organic component. Beep.
-  components:
-  - type: FlavorProfile
-    flavors:
-      - bun
-      - leafy
-      - metallic
-  - type: Sprite
-    state: ro
-# Tastes like bun, lettuce, sludge.
-
-- type: entity
-  name: xenoburger
-  parent: FoodBurgerBase
-  id: FoodBurgerXeno
-  description: Smells caustic. Tastes like heresy.
-  components:
-  - type: FlavorProfile
-    flavors:
-      - bun
-      - meaty
-      - acidic
-  - type: Sprite
-    state: x
-# Tastes like bun, acid.
+        - ReagentId: Protein
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 2
 
 - type: entity
   name: bearger
@@ -147,6 +146,10 @@
   id: FoodBurgerBear
   description: Best served rawr.
   components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - meaty
   - type: Sprite
     state: bearger
   - type: SolutionContainerManager
@@ -156,107 +159,10 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 3
-        - ReagentId: Vitamin
-          Quantity: 5
         - ReagentId: Protein
           Quantity: 6
-
-- type: entity
-  name: clown burger
-  parent: FoodBurgerBase
-  id: FoodBurgerClown
-  description: This tastes funny...
-  components:
-  - type: FlavorProfile
-    flavors:
-      - funny
-  - type: Sprite
-    state: clown
-
-- type: entity
-  name: mime burger
-  parent: FoodBurgerBase
-  id: FoodBurgerMime
-  description: Its taste defies language.
-  components:
-  - type: FlavorProfile
-    flavors:
-      - nothing
-  - type: Sprite
-    state: mime
-# Tastes like  .
-
-- type: entity
-  name: brain burger
-  parent: FoodBurgerBase
-  id: FoodBurgerBrain
-  description: A strange looking burger. It looks almost sentient.
-  components:
-  - type: Sprite
-    state: brain
-# Tastes like bun, brains.
-
-- type: entity
-  name: ghost burger
-  parent: FoodBurgerBase
-  id: FoodBurgerGhost
-  description: Too spooky!
-  components:
-  - type: FlavorProfile
-    flavors:
-      - bun
-      - spooky
-  - type: Sprite
-    state: ghost
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 25
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 7
         - ReagentId: Vitamin
-          Quantity: 12
-# Tastes like bun, ectoplasm.
-
-- type: entity
-  name: curger #curger...
-  parent: FoodBurgerBase
-  id: FoodBurgerCorgi
-  description: The Head of Personnel's favorite!
-  components:
-  - type: FlavorProfile
-    flavors:
-      - bun
-      - validhunting
-  - type: Sprite
-    state: ian
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 25
-        reagents:
-        - ReagentId: Bicaridine #keeping it somewhat consistent with the meat itself
-          Quantity: 7
-        - ReagentId: Vitamin
-          Quantity: 12
-
-# Note: I would put a bunch of colored burgers here as listed in the tg .dm but
-# I'd rather wait for a custom burger component.
-
-- type: entity
-  name: spell burger
-  parent: FoodBurgerBase
-  id: FoodBurgerSpell
-  description: This is absolutely Ei Nath.
-  components:
-  - type: FlavorProfile
-    flavors:
-      - bun
-      - magical
-  - type: Sprite
-    state: spell
-# Tastes like bun, silver.
+          Quantity: 5
 
 - type: entity
   name: big bite burger
@@ -283,32 +189,275 @@
 # Tastes like bun, silver, magic.
 
 - type: entity
-  name: super bite burger
+  name: brain burger
   parent: FoodBurgerBase
-  id: FoodBurgerSuper
-  description: This is a mountain of a burger. FOOD!
+  id: FoodBurgerBrain
+  description: A strange looking burger. It looks almost sentient.
   components:
   - type: FlavorProfile
-    flavors: # What bun?
+    flavors:
+      - bun
       - meaty
-      - oily
-      - cheesy
+  - type: Sprite
+    state: brain
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 53
+        maxVol: 20
         reagents:
         - ReagentId: Nutriment
-          Quantity: 44
+          Quantity: 6
+        - ReagentId: Protein
+          Quantity: 6
         - ReagentId: Vitamin
-          Quantity: 24
-        - ReagentId: TableSalt
           Quantity: 5
-        - ReagentId: Blackpepper
-          Quantity: 5
+# Tastes like bun, brains.
+
+- type: entity
+  name: cat burger
+  parent: FoodBurgerBase
+  id: FoodBurgerCat
+  description: Finally those cats and catpeople are worth something!
+  components:
   - type: Sprite
-    state: superbite
-# Tastes like bun, diabetes.
+    state: cat
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - meaty
+      - cat
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Protein
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 2
+
+- type: entity
+  name: cheese burger
+  parent: FoodBurgerBase
+  id: FoodBurgerCheese
+  description: This noble burger stands proudly clad in golden cheese.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - meaty
+      - cheesy
+  - type: Sprite
+    state: cheese
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 7
+        - ReagentId: Protein
+          Quantity: 1
+# TODO: Make this work.
+  # - type: Sprite
+  #   state: plate
+  # - type: RandomSpriteState
+  #   spriteLayer: 1
+  #   spriteStates:
+  #     - cheese
+  #     - cheesealt
+# Tastes like bun, beef patty, cheese.
+
+- type: entity
+  name: chicken sandwich # Burger for you euro-cucks
+  parent: FoodBurgerBase
+  id: FoodBurgerChicken
+  description: A delicious chicken sandwich, it is said the proceeds from this treat helps criminalize disarming people on the space frontier.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - chicken
+  - type: Sprite
+    state: chicken
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Protein
+          Quantity: 7
+        - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: Mayo
+          Quantity: 3
+# Tastes like bun, chicken.
+
+- type: entity
+  name: clown burger
+  parent: FoodBurgerBase
+  id: FoodBurgerClown
+  description: This tastes funny...
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - funny
+  - type: Sprite
+    state: clown
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Protein
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 6
+
+- type: entity
+  name: corgi burger #curger...
+  parent: FoodBurgerBase
+  id: FoodBurgerCorgi
+  description: The Head of Personnel's favorite!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - validhunting
+  - type: Sprite
+    state: ian
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Bicaridine #keeping it somewhat consistent with the meat itself
+          Quantity: 7
+        - ReagentId: Vitamin
+          Quantity: 12
+
+- type: entity
+  name: crab burger
+  parent: FoodBurgerBase
+  id: FoodBurgerCrab
+  description: A delicious patty of the crabby kind, slapped in between a bun.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - crabby
+  - type: Sprite
+    state: crab
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Protein
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 4
+
+- type: entity
+  name: crazy hamburger # Burger for you euro-cucks
+  parent: FoodBurgerBase
+  id: FoodBurgerCrazy
+  description: This looks like the sort of food that a demented clown in a trenchcoat would make.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - meaty
+      - cheesy
+      - flare
+  - type: Sprite
+    state: crazy
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Protein
+          Quantity: 6
+        - ReagentId: CapsaicinOil
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 6
+
+- type: entity
+  name: duck sandwich # Burger for you sick bastards
+  parent: FoodBurgerBase
+  id: FoodBurgerDuck
+  description: A duck sandwich, only the criminally insane would dare to eat the meat of such an adorable creature.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - duck
+  - type: Sprite
+    state: chicken
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Protein
+          Quantity: 7
+        - ReagentId: Vitamin
+          Quantity: 1
+# Tastes like bun, duck.
+
+- type: entity
+  name: empowered burger
+  parent: FoodBurgerBase
+  id: FoodBurgerEmpowered
+  description: It's shockingly good, if you live off of electricity that is.
+  components:
+  - type: Sprite
+    state: empowered
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - shocking
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Licoxide
+          Quantity: 5
+# Tastes like bun, pure electricity.
+
+- type: entity
+  name: fillet-o-carp burger
+  parent: FoodBurgerBase
+  id: FoodBurgerCarp
+  description: Almost like a carp is yelling somewhere...
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - fishy
+  - type: Sprite
+    state: fish
+# Tastes like bun, fish.
 
 - type: entity
   name: five alarm burger
@@ -339,83 +488,166 @@
 # Tastes like bun, HEAT.
 
 - type: entity
-  name: rat burger
+  name: ghost burger
   parent: FoodBurgerBase
-  id: FoodBurgerRat
-  description: Pretty much what you'd expect...
-  components:
-  - type: Sprite
-    state: rat
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
-        - ReagentId: Vitamin
-          Quantity: 1
-# Tastes like bun, HEAT.
-
-- type: entity
-  name: home run baseball burger
-  parent: FoodBurgerBase
-  id: FoodBurgerBaseball
-  description: It's still warm. The steam coming off of it smells kinda sweaty.
-  components:
-  - type: Sprite
-    state: baseball
-# Tastes like bun, victory.
-
-- type: entity
-  name: bacon burger
-  parent: FoodBurgerBase
-  id: FoodBurgerBacon
-  description: The perfect combination of all things American.
+  id: FoodBurgerGhost
+  description: Too spooky!
   components:
   - type: FlavorProfile
     flavors:
-      - meaty
-      - bacon
+      - bun
+      - spooky
   - type: Sprite
-    state: bacon
+    state: ghost
+  - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 19
+          Quantity: 7
         - ReagentId: Vitamin
-          Quantity: 5
-# Tastes like bun, bacon.
+          Quantity: 12
+# Tastes like bun, ectoplasm.
 
 - type: entity
-  name: empowered burger
+  name: human burger
   parent: FoodBurgerBase
-  id: FoodBurgerEmpowered
-  description: It's shockingly good, if you live off of electricity that is.
+  id: FoodBurgerHuman
+  description: You cant tell who this is made of...
   components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - people
   - type: Sprite
-    state: empowered
+    state: human
   - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 8
-        - ReagentId: Licoxide
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 6
+        - ReagentId: Vitamin
           Quantity: 5
-# Tastes like bun, pure electricity.
 
 - type: entity
-  name: empowered burger
+  name: McGuffin
   parent: FoodBurgerBase
-  id: FoodBurgerCrab
-  description: A delicious patty of the crabby kind, slapped in between a bun.
+  id: FoodBurgerMcguffin
+  description: A cheap and greasy imitation of an eggs Benedict.
   components:
+  - type: FlavorProfile
+    flavors:
+      - muffin
+      - egg
   - type: Sprite
-    state: crab
+    state: mcguffin
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 7
+        - ReagentId: Vitamin
+          Quantity: 1
+
+- type: entity
+  name: McRib
+  parent: FoodBurgerBase
+  id: FoodBurgerMcrib
+  description: An elusive rib shaped burger with limited availablity across the galaxy. Not as good as you remember it.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - bacon
+  - type: Sprite
+    state: mcrib
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 7
+        - ReagentId: Vitamin
+          Quantity: 4
+        - ReagentId: BbqSauce
+          Quantity: 1
+# Tastes like bun, pork patty.
+
+- type: entity
+  name: mime burger
+  parent: FoodBurgerBase
+  id: FoodBurgerMime
+  description: Its taste defies language.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - nothing
+  - type: Sprite
+    state: mime
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Protein
+          Quantity: 9
+        - ReagentId: Vitamin
+          Quantity: 4
+        - ReagentId: Nothing
+          Quantity: 1
+# Tastes like  .
+
+- type: entity
+  name: plain burger
+  parent: FoodBurgerBase
+  id: FoodBurgerPlain
+  description: A boring, dry burger.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - meaty
+  - type: Sprite
+    state: plain
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 3
+
+- type: entity
+  name: rat burger
+  parent: FoodBurgerBase
+  id: FoodBurgerRat
+  description: Pretty much what you'd expect...
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - meaty
+  - type: Sprite
+    state: rat
   - type: SolutionContainerManager
     solutions:
       food:
@@ -424,10 +656,34 @@
         - ReagentId: Nutriment
           Quantity: 3
         - ReagentId: Protein
-          Quantity: 5
+          Quantity: 6
         - ReagentId: Vitamin
-          Quantity: 4
-# Tastes like bun, crab meat.
+          Quantity: 2
+# Tastes like bun, HEAT.
+
+- type: entity
+  name: roburger
+  parent: FoodBurgerBase
+  id: FoodBurgerRobot
+  description: The lettuce is the only organic component. Beep.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - leafy
+      - metallic
+  - type: Sprite
+    state: ro
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: SulfuricAcid
+          Quantity: 5
+# Tastes like bun, lettuce, sludge.
 
 - type: entity
   name: soylent burger
@@ -455,107 +711,70 @@
 # Tastes like bun, redditors.
 
 - type: entity
-  name: mcrib
+  name: spell burger
   parent: FoodBurgerBase
-  id: FoodBurgerMcrib
-  description: An elusive rib shaped burger with limited availablity across the galaxy. Not as good as you remember it.
+  id: FoodBurgerSpell
+  description: This is absolutely Ei Nath.
   components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - magical
   - type: Sprite
-    state: mcrib
+    state: spell
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 20
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Protein
-          Quantity: 7
-        - ReagentId: Vitamin
           Quantity: 4
-        - ReagentId: Allicin
-          Quantity: 2
-# Tastes like bun, pork patty.
+        - ReagentId: Protein
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 10
+# Tastes like bun, silver.
 
 - type: entity
-  name: mcguffin
+  name: super bite burger
   parent: FoodBurgerBase
-  id: FoodBurgerMcguffin
-  description: A cheap and greasy imitation of an eggs Benedict.
+  id: FoodBurgerSuper
+  description: This is a mountain of a burger. FOOD!
   components:
   - type: FlavorProfile
-    flavors:
-      - muffin
-      - egg
-  - type: Sprite
-    state: mcguffin
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 15
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Protein
-          Quantity: 7
-        - ReagentId: Vitamin
-          Quantity: 1
-# Tastes like muffin, bacon.
-
-- type: entity
-  name: chicken sandwich # Burger for you euro-cucks
-  parent: FoodBurgerBase
-  id: FoodBurgerChicken
-  description: A delicious chicken sandwich, it is said the proceeds from this treat helps criminalize disarming people on the space frontier.
-  components:
-  - type: Sprite
-    state: chicken
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 15
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
-        - ReagentId: Protein
-          Quantity: 7
-        - ReagentId: Vitamin
-          Quantity: 1
-# Tastes like bun, chicken.
-
-- type: entity
-  name: duck sandwich # Burger for you sick bastards
-  parent: FoodBurgerBase
-  id: FoodBurgerDuck
-  description: A duck sandwich, only the criminally insane would dare to eat the meat of such an adorable creature.
-  components:
-  - type: Sprite
-    state: chicken
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 15
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
-        - ReagentId: Protein
-          Quantity: 7
-        - ReagentId: Vitamin
-          Quantity: 1
-# Tastes like bun, duck.
-
-- type: entity
-  name: cheese burger
-  parent: FoodBurgerBase
-  id: FoodBurgerCheese
-  description: This noble burger stands proudly clad in golden cheese.
-  components:
-  - type: FlavorProfile
-    flavors:
+    flavors: # What bun?
       - meaty
+      - oily
       - cheesy
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 55
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 44
+        - ReagentId: Vitamin
+          Quantity: 24
+        - ReagentId: TableSalt
+          Quantity: 5
+        - ReagentId: Blackpepper
+          Quantity: 5
   - type: Sprite
-    state: cheese
+    state: superbite
+# Tastes like bun, diabetes.
+
+- type: entity
+  name: tofu burger
+  parent: FoodBurgerBase
+  id: FoodBurgerTofu
+  description: What... is that meat?
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - tofu
+  - type: Sprite
+    state: tofu
   - type: SolutionContainerManager
     solutions:
       food:
@@ -563,26 +782,37 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 3
-        - ReagentId: Vitamin
-          Quantity: 7
         - ReagentId: Protein
-          Quantity: 1
-# TODO: Make this work.
-  # - type: Sprite
-  #   state: plate
-  # - type: RandomSpriteState
-  #   spriteLayer: 1
-  #   spriteStates:
-  #     - cheese
-  #     - cheesealt
-# Tastes like bun, beef patty, cheese.
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 3
+# Tastes like bun, tofu.
 
 - type: entity
-  name: crazy hamburger # Burger for you euro-cucks
+  name: xenoburger
   parent: FoodBurgerBase
-  id: FoodBurgerCrazy
-  description: This looks like the sort of food that a demented clown in a trenchcoat would make.
+  id: FoodBurgerXeno
+  description: Smells caustic. Tastes like heresy.
   components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - meaty
+      - acidic
   - type: Sprite
-    state: crazy
-# Tastes like bun, a smoking flare, chili.
+    state: x
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Protein
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 5
+# Tastes like bun, acid.
+
+# Note: I would put a bunch of colored burgers here as listed in the tg .dm but
+# I'd rather wait for a custom burger component.

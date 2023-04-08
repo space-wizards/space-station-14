@@ -1734,6 +1734,8 @@
     spawned:
     - id: FoodMeat
       amount: 3
+    - id: ClothingHeadHatCatEars
+      amount: 1
   - type: ReplacementAccent
     accent: cat
   - type: InteractionPopup
