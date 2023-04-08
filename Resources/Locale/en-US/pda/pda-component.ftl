@@ -24,7 +24,7 @@ comp-pda-ui-menu-title = PDA
 
 comp-pda-ui-station = Station: [color=white]{$Station}[/color]
 
-comp-pda-ui-station-alert-level = Alert Level: [color={ $AlertLevel }]{ $AlertLevel }[/color]
+comp-pda-ui-station-alert-level = Alert Level: [color={ $ColorLevel }]{ $AlertLevel }[/color]
 
 comp-pda-ui-station-acceses-levels = Access: [color=white]{ $AccessLevels }[/color]
 
