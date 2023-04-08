@@ -1,11 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Phasing artifacts are now scannable again., type: Fix}
-  - {message: 'Artifacts can now be anchored onto the scanner, so wandering artifacts
-      are no longer essentially impossible to scan.', type: Fix}
-  id: 2855
-  time: '2023-01-11T08:16:16.0000000+00:00'
 - author: Theomund
   changes:
   - {message: Screaming now emits a popup message that others can see., type: Add}
@@ -2919,3 +2912,8 @@ Entries:
   - {message: Broken bottles and glass shards are sharp, type: Tweak}
   id: 3354
   time: '2023-04-07T20:10:54.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed computer deconstruction not working., type: Fix}
+  id: 3355
+  time: '2023-04-08T00:54:28.0000000+00:00'
