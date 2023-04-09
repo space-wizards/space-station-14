@@ -1,14 +1,12 @@
-﻿using Content.Shared.Body.Components;
-using Content.Shared.DragDrop;
-using Robust.Shared.Containers;
+﻿using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Medical.Cryogenics;
 
-[NetworkedComponent]
-public abstract class SharedCryoPodComponent: Component
+[RegisterComponent, NetworkedComponent]
+public sealed class CryoPodComponent : Component
 {
     /// <summary>
     /// Specifies the name of the atmospherics port to draw gas from.
