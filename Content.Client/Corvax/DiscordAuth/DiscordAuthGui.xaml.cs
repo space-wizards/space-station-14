@@ -23,6 +23,7 @@ public sealed partial class DiscordAuthGui : Control
             _consoleHost.ExecuteCommand("quit");
         };
 
+        UrlEdit.Text = _discordAuthManager.AuthUrl;
         OpenUrlButton.OnPressed += (_) =>
         {
             if (_discordAuthManager.AuthUrl != string.Empty)
