@@ -31,12 +31,12 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 solutionContainerSystem.TryGetSolution(owner, spillableComponent.SolutionName,
                     out var compSolution))
             {
-                spillableSystem.SpillAt(compSolution, coordinates, "PuddleSmear", false);
+                spillableSystem.SplashSpillAt(owner, compSolution, coordinates, "PuddleSmear", false, user: cause);
             }
             else if (Solution != null &&
                      solutionContainerSystem.TryGetSolution(owner, Solution, out var behaviorSolution))
             {
-                spillableSystem.SpillAt(behaviorSolution, coordinates, "PuddleSmear");
+                spillableSystem.SplashSpillAt(owner, behaviorSolution, coordinates, "PuddleSmear", user: cause);
             }
         }
     }

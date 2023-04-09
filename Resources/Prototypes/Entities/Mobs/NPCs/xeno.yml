@@ -9,7 +9,6 @@
   - type: DiseaseProtection
     protection: 1
   - type: CombatMode
-    disarm: null
   - type: InputMover
   - type: MobMover
   - type: HTN

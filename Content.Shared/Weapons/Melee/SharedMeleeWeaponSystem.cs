@@ -70,6 +70,16 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         SubscribeAllEvent<HeavyAttackEvent>(OnHeavyAttack);
         SubscribeAllEvent<DisarmAttackEvent>(OnDisarmAttack);
         SubscribeAllEvent<StopAttackEvent>(OnStopAttack);
+
+#if DEBUG
+        SubscribeLocalEvent<MeleeWeaponComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(EntityUid uid, MeleeWeaponComponent component, MapInitEvent args)
+    {
+        if (component.NextAttack > TimeSpan.Zero)
+            Logger.Warning($"Initializing a map that contains an entity that is on cooldown. Entity: {ToPrettyString(uid)}");
+#endif
     }
 
     private void OnMeleeSelected(EntityUid uid, MeleeWeaponComponent component, HandSelectedEvent args)
@@ -78,6 +88,9 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             return;
 
         if (!component.ResetOnHandSelected)
+            return;
+
+        if (Paused(uid))
             return;
 
         // If someone swaps to this weapon then reset its cd.
@@ -249,7 +262,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         }
 
         // Use inhands entity if we got one.
-        if (EntityManager.TryGetComponent(entity, out SharedHandsComponent? hands) &&
+        if (EntityManager.TryGetComponent(entity, out HandsComponent? hands) &&
             hands.ActiveHandEntity is { } held)
         {
             if (EntityManager.TryGetComponent(held, out melee))
