@@ -98,6 +98,8 @@
       type: InstrumentBoundUserInterface
     - key: enum.HealthAnalyzerUiKey.Key
       type: HealthAnalyzerBoundUserInterface
+    - key: enum.GasAnalyzerUiKey.Key
+      type: GasAnalyzerBoundUserInterface
   - type: CrewManifestViewer
     unsecure: true
   - type: Tag
@@ -588,6 +590,7 @@
     state: pda-atmos
   - type: Icon
     state: pda-atmos
+  - type: GasAnalyzer
 
 - type: entity
   parent: BasePDA

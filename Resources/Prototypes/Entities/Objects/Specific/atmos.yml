@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: gas analyzer
   parent: BaseItem
   id: GasAnalyzer
@@ -30,5 +30,6 @@
   - type: Tag
     tags:
       - DroneUsable
+      - DiscreteGasAnalyzer
   - type: StaticPrice
     price: 80
