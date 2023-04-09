@@ -18,9 +18,7 @@ namespace Content.Client.Administration.UI
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
 
-            var loc = IoCManager.Resolve<ILocalizationManager>();
-            Announcement.Placeholder = new Rope.Leaf(loc.GetString("admin-announce-announcement-placeholder"));
-
+            Announcement.Placeholder = new Rope.Leaf(_localization.GetString("admin-announce-announcement-placeholder"));
             AnnounceMethod.AddItem(_localization.GetString("admin-announce-type-station"));
             AnnounceMethod.SetItemMetadata(0, AdminAnnounceType.Station);
             AnnounceMethod.AddItem(_localization.GetString("admin-announce-type-server"));
