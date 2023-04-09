@@ -1,15 +1,4 @@
 Entries:
-- author: nmajask
-  changes:
-  - {message: added goliath cloaks based on the one from TG that can rarely spawn
-      in maints, type: Add}
-  id: 2859
-  time: '2023-01-12T03:46:48.0000000+00:00'
-- author: nmajask
-  changes:
-  - {message: a sound effect to health analyzers on a successful scan, type: Add}
-  id: 2860
-  time: '2023-01-12T06:38:39.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Eye lerping will reset on map changes., type: Tweak}
@@ -2917,3 +2906,15 @@ Entries:
   - {message: You can now close all open windows with Shift+ESC, type: Add}
   id: 3358
   time: '2023-04-09T02:19:32.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: Clown satchel! More HONK!, type: Add}
+  id: 3359
+  time: '2023-04-09T02:24:45.0000000+00:00'
+- author: Menshin
+  changes:
+  - {message: Air and scrubbers sensors will now be properly detected by air alarms
+      when manually linking them., type: Fix}
+  - {message: Air sensors appearance will now update on power changes., type: Fix}
+  id: 3360
+  time: '2023-04-09T02:25:39.0000000+00:00'
