@@ -1064,8 +1064,8 @@ namespace Content.Shared.CCVar
         /// <summary>
         /// The map to use for the arrivals station.
         /// </summary>
-        public static readonly CVarDef<ResourcePath> ArrivalsMap =
-            CVarDef.Create("shuttle.arrivals_map", new ResourcePath("/Maps/Misc/terminal.yml"), CVar.SERVERONLY);
+        public static readonly CVarDef<string> ArrivalsMap =
+            CVarDef.Create("shuttle.arrivals_map", "/Maps/Misc/terminal.yml", CVar.SERVERONLY);
 
         /// <summary>
         /// Cooldown between arrivals departures. This should be longer than the FTL time or it will double cycle.

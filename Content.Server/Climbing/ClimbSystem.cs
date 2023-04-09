@@ -41,7 +41,6 @@ public sealed class ClimbSystem : SharedClimbSystem
     [Dependency] private readonly InteractionSystem _interactionSystem = default!;
     [Dependency] private readonly StunSystem _stunSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly BonkSystem _bonkSystem = default!;
 
     private const string ClimbingFixtureName = "climb";
     private const int ClimbingCollisionGroup = (int) (CollisionGroup.TableLayer | CollisionGroup.LowImpassable);
@@ -108,9 +107,6 @@ public sealed class ClimbSystem : SharedClimbSystem
         EntityUid climbable)
     {
         if (!TryComp(entityToMove, out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing)
-            return;
-
-        if (_bonkSystem.TryBonk(entityToMove, climbable))
             return;
 
         var args = new DoAfterArgs(user, component.ClimbDelay, new ClimbDoAfterEvent(), entityToMove, target: climbable, used: entityToMove)
