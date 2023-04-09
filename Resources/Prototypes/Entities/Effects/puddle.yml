@@ -15,6 +15,16 @@
 - type: entity
   id: PuddleVomit
   parent: PuddleTemporary
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        puddle:
+          maxVol: 1000
+          reagents:
+            - ReagentId: Nutriment
+              Quantity: 5
+            - ReagentId: Water
+              Quantity: 5
 
 - type: entity
   id: PuddleEgg
