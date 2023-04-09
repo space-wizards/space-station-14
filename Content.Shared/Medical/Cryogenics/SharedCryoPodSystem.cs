@@ -1,6 +1,6 @@
 using Content.Server.Medical.Components;
-using Content.Shared.DoAfter;
 using Content.Shared.Body.Components;
+using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Mobs.Components;
@@ -10,7 +10,6 @@ using Content.Shared.Standing;
 using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Medical.Cryogenics;
@@ -27,11 +26,11 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SharedCryoPodComponent, CanDropTargetEvent>(OnCryoPodCanDropOn);
+        SubscribeLocalEvent<CryoPodComponent, CanDropTargetEvent>(OnCryoPodCanDropOn);
         InitializeInsideCryoPod();
     }
 
-    private void OnCryoPodCanDropOn(EntityUid uid, SharedCryoPodComponent component, ref CanDropTargetEvent args)
+    private void OnCryoPodCanDropOn(EntityUid uid, CryoPodComponent component, ref CanDropTargetEvent args)
     {
         if (args.Handled)
             return;
@@ -40,12 +39,12 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
         args.Handled = true;
     }
 
-    protected void OnComponentInit(EntityUid uid, SharedCryoPodComponent cryoPodComponent, ComponentInit args)
+    protected void OnComponentInit(EntityUid uid, CryoPodComponent cryoPodComponent, ComponentInit args)
     {
         cryoPodComponent.BodyContainer = _containerSystem.EnsureContainer<ContainerSlot>(uid, "scanner-body");
     }
 
-    protected void UpdateAppearance(EntityUid uid, SharedCryoPodComponent? cryoPod = null, AppearanceComponent? appearance = null)
+    protected void UpdateAppearance(EntityUid uid, CryoPodComponent? cryoPod = null, AppearanceComponent? appearance = null)
     {
         if (!Resolve(uid, ref cryoPod))
             return;
@@ -57,11 +56,11 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
 
         if (!Resolve(uid, ref appearance))
             return;
-        _appearanceSystem.SetData(uid, SharedCryoPodComponent.CryoPodVisuals.ContainsEntity, cryoPod.BodyContainer.ContainedEntity == null, appearance);
-        _appearanceSystem.SetData(uid, SharedCryoPodComponent.CryoPodVisuals.IsOn, cryoPodEnabled, appearance);
+        _appearanceSystem.SetData(uid, CryoPodComponent.CryoPodVisuals.ContainsEntity, cryoPod.BodyContainer.ContainedEntity == null, appearance);
+        _appearanceSystem.SetData(uid, CryoPodComponent.CryoPodVisuals.IsOn, cryoPodEnabled, appearance);
     }
 
-    public void InsertBody(EntityUid uid, EntityUid target, SharedCryoPodComponent cryoPodComponent)
+    public void InsertBody(EntityUid uid, EntityUid target, CryoPodComponent cryoPodComponent)
     {
         if (cryoPodComponent.BodyContainer.ContainedEntity != null)
             return;
@@ -78,7 +77,7 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
         UpdateAppearance(uid, cryoPodComponent);
     }
 
-    public void TryEjectBody(EntityUid uid, EntityUid userId, SharedCryoPodComponent? cryoPodComponent)
+    public void TryEjectBody(EntityUid uid, EntityUid userId, CryoPodComponent? cryoPodComponent)
     {
         if (!Resolve(uid, ref cryoPodComponent))
         {
@@ -94,7 +93,7 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
         EjectBody(uid, cryoPodComponent);
     }
 
-    public virtual void EjectBody(EntityUid uid, SharedCryoPodComponent? cryoPodComponent)
+    public virtual void EjectBody(EntityUid uid, CryoPodComponent? cryoPodComponent)
     {
         if (!Resolve(uid, ref cryoPodComponent))
             return;
@@ -119,7 +118,7 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
         UpdateAppearance(uid, cryoPodComponent);
     }
 
-    protected void AddAlternativeVerbs(EntityUid uid, SharedCryoPodComponent cryoPodComponent, GetVerbsEvent<AlternativeVerb> args)
+    protected void AddAlternativeVerbs(EntityUid uid, CryoPodComponent cryoPodComponent, GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
             return;
@@ -137,7 +136,7 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
         }
     }
 
-    protected void OnEmagged(EntityUid uid, SharedCryoPodComponent? cryoPodComponent, ref GotEmaggedEvent args)
+    protected void OnEmagged(EntityUid uid, CryoPodComponent? cryoPodComponent, ref GotEmaggedEvent args)
     {
         if (!Resolve(uid, ref cryoPodComponent))
         {
@@ -149,7 +148,7 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
         args.Handled = true;
     }
 
-    protected void OnCryoPodPryFinished(EntityUid uid, SharedCryoPodComponent cryoPodComponent, CryoPodPryFinished args)
+    protected void OnCryoPodPryFinished(EntityUid uid, CryoPodComponent cryoPodComponent, CryoPodPryFinished args)
     {
         if (args.Cancelled)
             return;
