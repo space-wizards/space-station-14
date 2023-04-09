@@ -186,41 +186,154 @@
     FoodEgg: 2
 
 #Breads & Sandwiches
-- type: microwaveMealRecipe
-  id: RecipeBread
-  name: bread recipe
-  result: FoodBreadPlain
-  time: 15
-  solids:
-    FoodDough: 1
-
-- type: microwaveMealRecipe
-  id: RecipeBaguette
-  name: baguette recipe
-  result: FoodBreadBaguette
-  time: 10
-  reagents:
-    TableSalt: 5
-  solids:
-    FoodDough: 1
-
-- type: microwaveMealRecipe
-  id: RecipeCreamCheeseBread
-  name: cream cheese bread recipe
-  result: FoodBreadCreamcheese
-  time: 20
-  solids:
-    FoodDough: 1
-    FoodCheeseSlice: 2
 
 - type: microwaveMealRecipe
   id: RecipeBananaBread
   name: banana bread recipe
   result: FoodBreadBanana
-  time: 25
+  time: 15
   solids:
     FoodDough: 1
     FoodBanana: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCornbread
+  name: cornbread recipe
+  result: FoodBreadCorn
+  time: 10
+  solids:
+    FoodDoughCornmeal: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCreamCheeseBread
+  name: cream cheese bread recipe
+  result: FoodBreadCreamcheese
+  time: 15
+  reagents:
+    Milk: 5
+  solids:
+    FoodDough: 1
+    FoodCheeseSlice: 2
+
+- type: microwaveMealRecipe
+  id: RecipeMeatBread
+  name: meat bread recipe
+  result: FoodBreadMeat
+  time: 15
+  solids:
+    FoodDough: 1
+    FoodMeatCutlet: 2
+    FoodCheeseSlice: 2
+
+- type: microwaveMealRecipe
+  id: RecipeMimanaBread
+  name: mimana bread recipe
+  result: FoodBreadMimana
+  time: 15
+  reagents:
+    MilkSoy: 5
+    Nothing: 5 #replace with mimana
+  solids:
+    FoodDough: 1
+    FoodTofu: 1
+
+- type: microwaveMealRecipe
+  id: RecipeBread
+  name: bread recipe
+  result: FoodBreadPlain
+  time: 10
+  solids:
+    FoodDough: 1
+
+- type: microwaveMealRecipe
+  id: RecipeSausageBread
+  name: sausage bread recipe
+  result: FoodBreadSausage
+  time: 15
+  solids:
+    FoodDough: 1
+    FoodMeat: 1 #replace with sausage
+
+- type: microwaveMealRecipe
+  id: RecipeSpiderMeatBread
+  name: spider meat bread recipe
+  result: FoodBreadMeatSpider
+  time: 15
+  solids:
+    FoodDough: 1
+    FoodMeatSpiderCutlet: 2
+    FoodCheeseSlice: 2
+
+- type: microwaveMealRecipe
+  id: RecipeTofuBread
+  name: tofu bread recipe
+  result: FoodBreadTofu
+  time: 15
+  solids:
+    FoodDough: 1
+    FoodTofu: 1
+
+- type: microwaveMealRecipe
+  id: RecipeXenoMeatBread
+  name: xeno meat bread recipe
+  result: FoodBreadMeatXeno
+  time: 15
+  solids:
+    FoodDough: 1
+    FoodMeatXenoCutlet: 2
+    FoodCheeseSlice: 2
+
+#Slices Only
+
+- type: microwaveMealRecipe
+  id: RecipeBaguette
+  name: baguette recipe
+  result: FoodBreadBaguette
+  time: 15
+  reagents:
+    TableSalt: 5
+    Blackpepper: 5
+  solids:
+    FoodDough: 1
+
+- type: microwaveMealRecipe
+  id: RecipeButteredToast
+  name: buttered toast recipe
+  result: FoodBreadButteredToast
+  time: 5
+  solids:
+    FoodBreadPlainSlice: 1
+    FoodButter: 1
+
+- type: microwaveMealRecipe
+  id: RecipeFrenchToast
+  name: french toast recipe
+  result: FoodBreadFrenchToast
+  time: 5
+  reagents:
+    Milk: 5
+    Egg: 12
+  solids:
+    FoodBreadPlainSlice: 1
+
+- type: microwaveMealRecipe
+  id: RecipeGarlicBread
+  name: garlic bread slice recipe
+  result: FoodBreadGarlicSlice
+  time: 5
+  solids:
+    FoodBreadPlainSlice: 1
+    FoodGarlic: 1
+    FoodButter: 1
+
+- type: microwaveMealRecipe
+  id: RecipeJellyToast
+  name: jelly toast recipe
+  result: FoodBreadJellySlice
+  time: 5
+  solids:
+    FoodBreadPlainSlice: 1
+    FoodJellyAmanita: 1 #replace with jelly
 
 - type: microwaveMealRecipe
   id: RecipeMoldyBreadSlice
@@ -232,22 +345,14 @@
     FoodFlyAmanita: 1
 
 - type: microwaveMealRecipe
-  id: RecipeTofuBread
-  name: tofu bread recipe
-  result: FoodBreadTofu
-  time: 20
-  solids:
-    FoodDough: 1
-    FoodTofu: 1
-
-- type: microwaveMealRecipe
-  id: RecipeGarlicBread
-  name: garlic bread slice recipe
-  result: FoodBreadGarlicSlice
+  id: RecipeTwoBreadSlice
+  name: two slice recipe
+  result: FoodBreadTwoSlice
   time: 5
+  reagents:
+    Wine: 5
   solids:
-    FoodBreadPlainSlice: 1
-    FoodGarlic: 1
+    FoodBreadPlainSlice: 2
 
 #Pizzas
 - type: microwaveMealRecipe

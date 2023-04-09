@@ -2,6 +2,7 @@
   id: ChefvendInventory
   startingInventory:
     ReagentContainerFlour: 2
+    ReagentContainerCornmeal: 2
     ReagentContainerSugar: 2
     ReagentContainerRice: 2
     FoodCondimentPacketSalt: 4
