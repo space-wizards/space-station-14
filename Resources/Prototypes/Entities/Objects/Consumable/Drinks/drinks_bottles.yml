@@ -351,7 +351,7 @@
 
 - type: entity
   parent: DrinkBottleBaseFull
-  id: DrinkBeer # Needs to be renamed DrinkBeerBottleFull
+  id: DrinkBeerBottleFull
   name: beer  # beer it is. coffee. beer? coff-ee? be-er? c-o... b-e
   description: An alcoholic beverage made from malted grains, hops, yeast, and water.
   components:
@@ -398,11 +398,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/waterbottle.rsi
 
-# Cartons, TODO: this needs to be moved elsewhere eventually, since cartons shouldnt smash into glass shards
-
 - type: entity
   parent: DrinkBottleBaseFull
-  id: DrinkJuiceLimeCarton
+  id: DrinkJuiceLimeBottleFull
   name: lime juice
   description: Sweet-sour goodness.
   components:
@@ -416,87 +414,3 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/limejuice.rsi
-
-- type: entity
-  parent: DrinkBottleBaseFull
-  id: DrinkJuiceOrangeCarton
-  name: orange juice
-  description: Full of vitamins and deliciousness!
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: JuiceOrange
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/orangejuice.rsi
-
-- type: entity
-  parent: DrinkBottleBaseFull
-  id: DrinkJuiceTomatoCarton
-  name: tomato juice
-  description: Well, at least it LOOKS like tomato juice. You can't tell with all that redness.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: JuiceTomato
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/tomatojuice.rsi
-
-- type: entity
-  parent: DrinkBottleBaseFull
-  id: DrinkCreamCarton
-  name: Milk Cream
-  description: It's cream. Made from milk. What else did you think you'd find in there?
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: Cream
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/cream.rsi
-
-- type: entity
-  parent: DrinkBottleBaseFull
-  id: DrinkMilkCarton
-  name: milk
-  description: An opaque white liquid produced by the mammary glands of mammals.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 100
-        reagents:
-        - ReagentId: Milk
-          Quantity: 100
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/milk.rsi
-
-- type: entity
-  parent: DrinkBottleBaseFull
-  id: DrinkSoyMilkCarton
-  name: soy milk
-  description: White and nutritious soy goodness!
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 100
-        reagents:
-        - ReagentId: MilkSoy
-          Quantity: 100
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/soymilk.rsi
