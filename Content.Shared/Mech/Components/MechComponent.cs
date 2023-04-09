@@ -2,8 +2,11 @@
 using Content.Shared.FixedPoint;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Mech.Components;
 
@@ -11,7 +14,8 @@ namespace Content.Shared.Mech.Components;
 /// A large, pilotable machine that has equipment that is
 /// powered via an internal battery.
 /// </summary>
-public abstract class SharedMechComponent : Component
+[RegisterComponent, NetworkedComponent]
+public sealed class MechComponent : Component
 {
     /// <summary>
     /// How much "health" the mech has left.
@@ -98,6 +102,49 @@ public abstract class SharedMechComponent : Component
     [ViewVariables]
     public readonly string EquipmentContainerId = "mech-equipment-container";
 
+    /// <summary>
+    /// How long it takes to enter the mech.
+    /// </summary>
+    [DataField("entryDelay")]
+    public float EntryDelay = 3;
+
+    /// <summary>
+    /// How long it takes to pull *another person*
+    /// outside of the mech. You can exit instantly yourself.
+    /// </summary>
+    [DataField("exitDelay")]
+    public float ExitDelay = 3;
+
+    /// <summary>
+    /// How long it takes to pull out the battery.
+    /// </summary>
+    [DataField("batteryRemovalDelay")]
+    public float BatteryRemovalDelay = 2;
+
+    /// <summary>
+    /// Whether or not the mech is airtight.
+    /// </summary>
+    /// <remarks>
+    /// This needs to be redone
+    /// when mech internals are added
+    /// </remarks>
+    [DataField("airtight"), ViewVariables(VVAccess.ReadWrite)]
+    public bool Airtight;
+
+    /// <summary>
+    /// The equipment that the mech initially has when it spawns.
+    /// Good for things like nukie mechs that start with guns.
+    /// </summary>
+    [DataField("startingEquipment", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
+    public List<string> StartingEquipment = new();
+
+    /// <summary>
+    /// The battery the mech initially has when it spawns
+    /// Good for admemes and nukie mechs.
+    /// </summary>
+    [DataField("startingBattery", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string? StartingBattery;
+
     #region Action Prototypes
     [DataField("mechCycleAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
     public string MechCycleAction = "MechCycleEquipment";
@@ -118,7 +165,7 @@ public abstract class SharedMechComponent : Component
 }
 
 /// <summary>
-/// Contains network state for <see cref="SharedMechComponent"/>.
+/// Contains network state for <see cref="MechComponent"/>.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class MechComponentState : ComponentState
