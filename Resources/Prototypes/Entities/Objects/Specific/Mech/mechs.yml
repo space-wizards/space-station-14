@@ -16,6 +16,7 @@
     baseState: ripley
     openState: ripley-open
     brokenState: ripley-broken
+  - type: MechAir
   - type: DoAfter
   - type: Repairable
     fuelCost: 25
@@ -86,6 +87,7 @@
     openState: ripley-open
     brokenState: ripley-broken
     mechToPilotDamageMultiplier: 0.5
+  - type: MechAir
 
 - type: entity
   id: MechRipleyBattery
@@ -98,3 +100,4 @@
     brokenState: ripley-broken
     startingBattery: PowerCellHigh
     mechToPilotDamageMultiplier: 0.5
+  - type: MechAir
