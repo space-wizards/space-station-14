@@ -12,7 +12,6 @@ public sealed class AbsorbentComponent : Component
 {
     public const string SolutionName = "absorbed";
 
-    [DataField("progress")]
     public Dictionary<Color, float> Progress = new();
 
     /// <summary>
@@ -27,7 +26,11 @@ public sealed class AbsorbentComponent : Component
         Params = AudioParams.Default.WithVariation(0.05f),
     };
 
-    [DataField("transferSound")] public SoundSpecifier TransferSound = DefaultTransferSound;
+    [DataField("transferSound")] public SoundSpecifier TransferSound =
+        new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg")
+        {
+            Params = AudioParams.Default.WithVariation(0.05f).WithVolume(-3f),
+        };
 
     public static readonly SoundSpecifier DefaultTransferSound =
         new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg")

@@ -68,8 +68,6 @@ public sealed class KudzuSystem : EntitySystem
 
     private void SetupKudzu(EntityUid uid, KudzuComponent component, ComponentStartup args)
     {
-        EnsureComp<GrowingKudzuComponent>(uid);
-
         if (!EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearance))
         {
             return;
