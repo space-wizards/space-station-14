@@ -4,6 +4,7 @@
   id: BrokenBottle
   description: In Space Glasgow this is called a conversation starter.
   components:
+  - type: Sharp
   - type: ItemCooldown
   - type: MeleeWeapon
     attackRate: 1.5
