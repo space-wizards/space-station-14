@@ -1,90 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed some unintended examine text on emitters., type: Fix}
-  id: 2847
-  time: '2023-01-10T11:48:06.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Bumped bullet speed from 20m/s to 25m/s, type: Tweak}
-  id: 2848
-  time: '2023-01-10T12:31:26.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: 'Cleaned up random names, players should no longer get names that accidentally
-      break naming rules.', type: Fix}
-  id: 2849
-  time: '2023-01-10T12:45:07.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed AHelp relay to discord not working., type: Fix}
-  id: 2850
-  time: '2023-01-10T16:33:39.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed togglehealthoverlay command not working, type: Fix}
-  id: 2851
-  time: '2023-01-10T21:36:48.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Added showing the player name to admins on the context menu., type: Add}
-  id: 2852
-  time: '2023-01-10T21:39:48.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed admins blowing out your eardrums when playing a global sound.,
-    type: Fix}
-  id: 2853
-  time: '2023-01-10T21:45:09.0000000+00:00'
-- author: Scribbles0
-  changes:
-  - {message: Narcolepsy can now be treated., type: Add}
-  id: 2854
-  time: '2023-01-11T08:14:16.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Phasing artifacts are now scannable again., type: Fix}
-  - {message: 'Artifacts can now be anchored onto the scanner, so wandering artifacts
-      are no longer essentially impossible to scan.', type: Fix}
-  id: 2855
-  time: '2023-01-11T08:16:16.0000000+00:00'
-- author: Theomund
-  changes:
-  - {message: Screaming now emits a popup message that others can see., type: Add}
-  id: 2856
-  time: '2023-01-11T09:06:15.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: You can now withdraw currency from the uplink again., type: Fix}
-  id: 2857
-  time: '2023-01-11T22:03:18.0000000+00:00'
-- author: Chief-Engineer
-  changes:
-  - {message: Rounds will now have 2 minutes between the round ending and returning
-      to the lobby., type: Tweak}
-  id: 2858
-  time: '2023-01-11T23:36:28.0000000+00:00'
-- author: nmajask
-  changes:
-  - {message: added goliath cloaks based on the one from TG that can rarely spawn
-      in maints, type: Add}
-  id: 2859
-  time: '2023-01-12T03:46:48.0000000+00:00'
-- author: nmajask
-  changes:
-  - {message: a sound effect to health analyzers on a successful scan, type: Add}
-  id: 2860
-  time: '2023-01-12T06:38:39.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Eye lerping will reset on map changes., type: Tweak}
-  id: 2861
-  time: '2023-01-12T12:10:52.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: Worn lawyer badge now changes the style of the typing indicator, type: Add}
-  id: 2862
-  time: '2023-01-12T12:33:57.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed solution visuals not working properly, type: Fix}
@@ -2913,3 +2827,95 @@ Entries:
       and ignoring ammo requirements., type: Fix}
   id: 3346
   time: '2023-04-06T05:26:15.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Melee attacking people with spillable containers will now splash some
+      of the solution onto them., type: Add}
+  - {message: Slipping on puddles now has a chance for some of its solution to interact
+      with you., type: Add}
+  - {message: 'Destructively spilling (throwing, breaking) spillable objects will
+      now splash some of its solution onto nearby reactive entities (like players)',
+    type: Add}
+  id: 3347
+  time: '2023-04-06T21:20:49.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Fixed base showcase robot in F5 (just remove it), type: Fix}
+  id: 3348
+  time: '2023-04-06T22:47:53.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: The mop and trash bag can now be inserted and removed from the janitorial
+      trolley by alt-clicking., type: Tweak}
+  id: 3349
+  time: '2023-04-06T22:49:27.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Added the clown recorder to clown's starting gear in attempt to increase
+      their funniness, type: Add}
+  id: 3350
+  time: '2023-04-07T02:06:52.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix even more instances of NPC unintentionally dancing., type: Fix}
+  id: 3351
+  time: '2023-04-07T10:54:20.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: ID Console shows the detective access correctly, type: Fix}
+  id: 3352
+  time: '2023-04-07T20:09:30.0000000+00:00'
+- author: JerryImMouse
+  changes:
+  - {message: Fixed janimaid's jumpskirt sprite, type: Fix}
+  id: 3353
+  time: '2023-04-07T20:10:35.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Broken bottles and glass shards are sharp, type: Tweak}
+  id: 3354
+  time: '2023-04-07T20:10:54.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed computer deconstruction not working., type: Fix}
+  id: 3355
+  time: '2023-04-08T00:54:28.0000000+00:00'
+- author: Mumohan
+  changes:
+  - {message: Gas mixers no longer show weird ratio numbers, type: Fix}
+  id: 3356
+  time: '2023-04-09T01:34:27.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Cargo pallets won't sell alive mobs anymore., type: Fix}
+  id: 3357
+  time: '2023-04-09T01:59:41.0000000+00:00'
+- author: Skyedra
+  changes:
+  - {message: You can now close the most recently opened window with ESC, type: Add}
+  - {message: You can now close all open windows with Shift+ESC, type: Add}
+  id: 3358
+  time: '2023-04-09T02:19:32.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: Clown satchel! More HONK!, type: Add}
+  id: 3359
+  time: '2023-04-09T02:24:45.0000000+00:00'
+- author: Menshin
+  changes:
+  - {message: Air and scrubbers sensors will now be properly detected by air alarms
+      when manually linking them., type: Fix}
+  - {message: Air sensors appearance will now update on power changes., type: Fix}
+  id: 3360
+  time: '2023-04-09T02:25:39.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Head of security's common clothing now has slight armor, type: Tweak}
+  id: 3361
+  time: '2023-04-09T02:32:23.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: Diona can now breathe CO2 and are not poisoned by it. They are still
+      capable of breathing oxygen!, type: Tweak}
+  id: 3362
+  time: '2023-04-09T02:35:07.0000000+00:00'
