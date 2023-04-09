@@ -1,11 +1,13 @@
+using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Hands.Components;
 
-[NetworkedComponent]
-public abstract class SharedHandsComponent : Component
+[RegisterComponent, NetworkedComponent]
+[Access(typeof(SharedHandsSystem))]
+public sealed class HandsComponent : Component
 {
     /// <summary>
     ///     The currently active hand.
@@ -42,6 +44,19 @@ public abstract class SharedHandsComponent : Component
     [DataField("throwRange")]
     [ViewVariables(VVAccess.ReadWrite)]
     public float ThrowRange { get; set; } = 8f;
+
+    /// <summary>
+    ///     Whether or not to add in-hand sprites for held items. Some entities (e.g., drones) don't want these.
+    ///     Used by the client.
+    /// </summary>
+    [DataField("showInHands")]
+    public bool ShowInHands = true;
+
+    /// <summary>
+    ///     Data about the current sprite layers that the hand is contributing to the owner entity. Used for sprite in-hands.
+    ///     Used by the client.
+    /// </summary>
+    public readonly Dictionary<HandLocation, HashSet<string>> RevealedLayers = new();
 }
 
 [Serializable, NetSerializable]
@@ -80,7 +95,7 @@ public sealed class HandsComponentState : ComponentState
     public readonly List<string> HandNames;
     public readonly string? ActiveHand;
 
-    public HandsComponentState(SharedHandsComponent handComp)
+    public HandsComponentState(HandsComponent handComp)
     {
         Hands = new(handComp.Hands.Values);
         HandNames = handComp.SortedHands;
