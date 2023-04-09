@@ -91,13 +91,8 @@
     - weight: 10
       randreagents:
         reagents:
-        - ReagentId: Cryptobiolin
-          Quantity: 15
-    - weight: 10
-      randreagents:
-        reagents:
         - ReagentId: Ipecac
-          Quantity: 10
+          Quantity: 5
     - weight: 10
       randreagents:
         reagents:
@@ -118,38 +113,38 @@
       randreagents:
         reagents:
         - ReagentId: Desoxyephedrine
-          Quantity: 10
+          Quantity: 20
     - weight: 10
       randreagents:
         reagents:
         - ReagentId: Ephedrine
-          Quantity: 10
+          Quantity: 18
     - weight: 15
       randreagents:
         reagents:
         - ReagentId: SpaceDrugs
-          Quantity: 10
+          Quantity: 30
     - weight: 10
       randreagents:
         reagents:
         - ReagentId: Nocturine
-          Quantity: 15
+          Quantity: 20
     - weight: 10
       randreagents:
         reagents:
         - ReagentId: MuteToxin
-          Quantity: 25
+          Quantity: 50
     - weight: 10
       randreagents:
         reagents:
         - ReagentId: NorepinephricAcid
-          Quantity: 25
+          Quantity: 50
     # Toxins
     - weight: 10
       randreagents:
         reagents:
         - ReagentId: ChloralHydrate
-          Quantity: 18
+          Quantity: 30
     - weight: 10
       randreagents:
         reagents:
@@ -164,7 +159,7 @@
       randreagents:
         reagents:
         - ReagentId: Toxin
-          Quantity: 10
+          Quantity: 15
   - type: Sprite
     sprite: Objects/Specific/Chemistry/pills.rsi
     netsync: false
