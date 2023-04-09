@@ -127,6 +127,7 @@ public sealed class DoAfterArgs
     [DataField("blockDuplicate")]
     public bool BlockDuplicate = true;
 
+    //TODO: User perf to not cancel on second use on specific doafters
     /// <summary>
     ///     If true, this will cancel any duplicate DoAfters when attempting to add a new DoAfter. See also
     ///     <see cref="DuplicateConditions"/>.
@@ -145,6 +146,19 @@ public sealed class DoAfterArgs
     [DataField("duplicateCondition")]
     public DuplicateConditions DuplicateCondition = DuplicateConditions.All;
     #endregion
+
+    //TODO: User perf to toggle repeat on specific doafters
+    /// <summary>
+    ///     If true, the doafter will automatically repeat until it's cancelled.
+    /// </summary>
+    [DataField("repeat")]
+    public bool Repeat = false;
+
+    /// <summary>
+    ///     If true, cancels repeated attempts
+    /// </summary>
+    [DataField("cancelRepeat")]
+    public bool CancelRepeat = false;
 
     /// <summary>
     ///     Additional conditions that need to be met. Return false to cancel.
@@ -206,6 +220,7 @@ public sealed class DoAfterArgs
 
     #endregion
 
+    //The almighty pyramid returns.......
     public DoAfterArgs(DoAfterArgs other)
     {
         User = other.User;
@@ -227,6 +242,8 @@ public sealed class DoAfterArgs
         BlockDuplicate = other.BlockDuplicate;
         CancelDuplicate = other.CancelDuplicate;
         DuplicateCondition = other.DuplicateCondition;
+        Repeat = other.Repeat;
+        CancelRepeat = other.CancelRepeat;
 
         Event = other.Event.Clone();
     }

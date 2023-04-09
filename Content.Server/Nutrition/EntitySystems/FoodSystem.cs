@@ -130,7 +130,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(target):target} is eating {ToPrettyString(food):food} {SolutionContainerSystem.ToPrettyString(foodSolution)}");
             }
 
-            var doAfterEventArgs = new DoAfterArgs(
+            var doAfterArgs = new DoAfterArgs(
                 user,
                 forceFeed ? foodComp.ForceFeedDelay : foodComp.Delay,
                 new ConsumeDoAfterEvent(foodSolution.Name, flavors),
@@ -146,10 +146,12 @@ namespace Content.Server.Nutrition.EntitySystems
                 // Mice and the like can eat without hands.
                 // TODO maybe set this based on some CanEatWithoutHands event or component?
                 NeedHand = forceFeed,
+                //Works better with cancel duplicate on because you can just use again to stop
                 CancelDuplicate = false,
+                Repeat = !forceFeed,
             };
 
-            _doAfterSystem.TryStartDoAfter(doAfterEventArgs);
+            _doAfterSystem.TryStartDoAfter(doAfterArgs);
             return true;
         }
 
@@ -170,7 +172,11 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!TryGetRequiredUtensils(args.User, component, out var utensils))
                 return;
 
-            args.Handled = true;
+            var forceFeed = args.User != args.Target;
+
+            //If handled it won't do this again
+            if (!args.Args.Repeat)
+                args.Handled = true;
 
             var transferAmount = component.TransferAmount != null ? FixedPoint2.Min((FixedPoint2) component.TransferAmount, solution.Volume) : solution.Volume;
 
@@ -178,13 +184,17 @@ namespace Content.Server.Nutrition.EntitySystems
             //TODO: Get the stomach UID somehow without nabbing owner
             var firstStomach = stomachs.FirstOrNull(stomach => _stomachSystem.CanTransferSolution(stomach.Comp.Owner, split));
 
-            var forceFeed = args.User != args.Target;
-
             // No stomach so just popup a message that they can't eat.
             if (firstStomach == null)
             {
                 _solutionContainerSystem.TryAddSolution(uid, solution, split);
                 _popupSystem.PopupEntity(forceFeed ? Loc.GetString("food-system-you-cannot-eat-any-more-other") : Loc.GetString("food-system-you-cannot-eat-any-more"), args.Args.Target.Value, args.Args.User);
+                //TODO: See if there is a way to remove the boilerplate here
+                if (args.Args.Repeat)
+                {
+                    args.Args.CancelRepeat = true;
+                    args.Handled = true;
+                }
                 return;
             }
 
@@ -225,10 +235,18 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
 
             if (string.IsNullOrEmpty(component.TrashPrototype))
+            {
                 EntityManager.QueueDeleteEntity(uid);
+                args.Args.CancelRepeat = true;
+                args.Handled = true;
+            }
 
             else
+            {
                 DeleteAndSpawnTrash(component, uid, args.Args.User);
+                args.Args.CancelRepeat = true;
+                args.Handled = true;
+            }
         }
 
         private void DeleteAndSpawnTrash(FoodComponent component, EntityUid food, EntityUid? user = null)
