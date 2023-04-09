@@ -108,45 +108,25 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
     private bool IsSkippedRecord(GeneralStationRecordsFilter filter,
         GeneralStationRecord someRecord)
     {
-        bool isSkipRecord = false;
         bool isFilter = filter.value.Length > 0;
         string filterLowerCaseValue = "";
 
-        if (isFilter) {
+        if (isFilter)
             filterLowerCaseValue = filter.value.ToLower();
-        }
-        
-        switch (filter.type)
-        {
-            case GeneralStationRecordFilterType.Name:
-                if (someRecord.Name != null)
-                {
-                    string loweName = someRecord.Name.ToLower();
-                    isSkipRecord = isFilter && !loweName.Contains(filterLowerCaseValue);
-                }
-                break;
-            case GeneralStationRecordFilterType.Prints:
-                if (someRecord.Fingerprint != null)
-                {
-                    isSkipRecord = isFilter
-                        && IsFilterWithCodeValue(someRecord.Fingerprint, filterLowerCaseValue);
-                }
-                break;
-            case GeneralStationRecordFilterType.DNA:
-                if (someRecord.DNA != null)
-                {
-                    isSkipRecord = isFilter
-                        && IsFilterWithCodeValue(someRecord.DNA,filterLowerCaseValue);
-                }
-                break;
-        }
 
-        return isSkipRecord;
+        return filter.type switch
+        {
+            GeneralStationRecordFilterType.Name => someRecord.Name != null
+                && isFilter && !someRecord.Name.ToLower().Contains(filterLowerCaseValue),
+            GeneralStationRecordFilterType.Prints => someRecord.Fingerprint != null
+                && isFilter && IsFilterWithSomeCodeValue(someRecord.Fingerprint, filterLowerCaseValue),
+            GeneralStationRecordFilterType.DNA => someRecord.DNA != null
+                && isFilter && IsFilterWithSomeCodeValue(someRecord.DNA, filterLowerCaseValue),
+        };
     }
 
-    private bool IsFilterWithCodeValue(string value, string filter)
+    private bool IsFilterWithSomeCodeValue(string value, string filter)
     {
-        string lowerValue = value.ToLower();
-        return !lowerValue.StartsWith(filter);
+        return !value.ToLower().StartsWith(filter);
     }
 }
