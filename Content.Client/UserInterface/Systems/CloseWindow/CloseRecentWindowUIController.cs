@@ -37,15 +37,14 @@ public sealed class CloseRecentWindowUIController : UIController
         // Search backwards through the recency list to find a still open window and close it
         for (int i=recentlyInteractedWindows.Count-1; i>=0; i--)
         {
-            BaseWindow window = recentlyInteractedWindows[i];
+            var window = recentlyInteractedWindows[i];
             recentlyInteractedWindows.RemoveAt(i); // Should always be removed as either the reference is stale or we're closing it
             if (window.IsOpen)
             {
                 window.Close();
                 return;
-            } else {
-                // continue going down the list, hoping to find a still-open window
             }
+            // continue going down the list, hoping to find a still-open window
         }
     }
 
