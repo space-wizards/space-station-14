@@ -90,7 +90,6 @@
   components:
   - type: Item
     size: 2
-  - type: Recyclable
   - type: Tag
     tags:
     - Trash
