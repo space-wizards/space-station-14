@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed solution visuals not working properly, type: Fix}
-  id: 2863
-  time: '2023-01-14T00:21:15.0000000+00:00'
 - author: Morb0
   changes:
   - {message: Added custom diona scream sound, type: Tweak}
@@ -2919,3 +2914,8 @@ Entries:
       capable of breathing oxygen!, type: Tweak}
   id: 3362
   time: '2023-04-09T02:35:07.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: 'Added in hand sprites for: ties, scarves and moth mask.', type: Add}
+  id: 3363
+  time: '2023-04-09T21:42:17.0000000+00:00'
