@@ -11,6 +11,82 @@
   - type: RandomFillSolution
     solution: food
     randomlist:
+    # Elements
+    - weight: 5
+      randreagents:
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 30
+    - weight: 5
+      randreagents:
+        reagents:
+        - ReagentId: Carbon
+          Quantity: 30
+    - weight: 5
+      randreagents:
+        reagents:
+        - ReagentId: Chlorine
+          Quantity: 30
+    - weight: 5
+      randreagents:
+        reagents:
+        - ReagentId: Copper
+          Quantity: 30
+    - weight: 5
+      randreagents:
+        reagents:
+        - ReagentId: Fluorine
+          Quantity: 30
+    - weight: 5
+      randreagents:
+        reagents:
+        - ReagentId: Hydrogen
+          Quantity: 30
+    - weight: 5
+      randreagents:
+        reagents:
+        - ReagentId: Iodine
+          Quantity: 30
+    - weight: 5
+      randreagents:
+        reagents:
+        - ReagentId: Lithium
+          Quantity: 30
+    - weight: 5
+      randreagents:
+        reagents:
+        - ReagentId: Mercury
+          Quantity: 30
+    - weight: 5
+      randreagents:
+        reagents:
+        - ReagentId: Potassium
+          Quantity: 30
+    - weight: 5
+      randreagents:
+        reagents:
+        - ReagentId: Phosphorus
+          Quantity: 30
+    - weight: 5
+      randreagents:
+        reagents:
+        - ReagentId: Radium
+          Quantity: 30
+    - weight: 5
+      randreagents:
+        reagents:
+        - ReagentId: Silicon
+          Quantity: 30
+    - weight: 5
+      randreagents:
+        reagents:
+        - ReagentId: Sulfur
+          Quantity: 30
+    - weight: 5
+      randreagents:
+        reagents:
+        - ReagentId: Sodium
+          Quantity: 30
     # Medicines
     - weight: 10
       randreagents:
