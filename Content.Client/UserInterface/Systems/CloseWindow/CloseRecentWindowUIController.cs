@@ -44,9 +44,8 @@ public sealed class CloseRecentWindowUIController : UIController
             {
                 window.Close();
                 return;
-            } else {
-                // continue going down the list, hoping to find a still-open window
             }
+            // continue going down the list, hoping to find a still-open window
         }
     }
 
