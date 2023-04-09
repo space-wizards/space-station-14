@@ -1,17 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'Resprited sterile swabs, the diagnoser, and the vaccinator.', type: Tweak}
-  id: 2866
-  time: '2023-01-14T03:56:11.0000000+00:00'
-- author: Jezithyr
-  changes:
-  - {message: fixed constant thudding sound playing when in crit, type: Fix}
-  - {message: fixed being able to attack while downed/dead, type: Fix}
-  - {message: fix for health alert not showing properly on spawn, type: Fix}
-  - {message: fixed improper sprite being shown on the hud for full health, type: Fix}
-  id: 2867
-  time: '2023-01-14T09:32:57.0000000+00:00'
 - author: checkraze
   changes:
   - {message: Added textiles crate to cargo, type: Add}
@@ -2919,3 +2906,13 @@ Entries:
   - {message: Changed to scull icon for Pirates spawner., type: Tweak}
   id: 3365
   time: '2023-04-09T21:50:29.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Added motobike spawner!, type: Add}
+  id: 3366
+  time: '2023-04-09T21:57:40.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Fixed chemical bottles are now breaking!, type: Fix}
+  id: 3367
+  time: '2023-04-09T21:58:22.0000000+00:00'
