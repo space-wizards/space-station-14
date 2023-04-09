@@ -1,11 +1,6 @@
 Entries:
 - author: checkraze
   changes:
-  - {message: Added textiles crate to cargo, type: Add}
-  id: 2868
-  time: '2023-01-14T18:32:01.0000000+00:00'
-- author: checkraze
-  changes:
   - {message: Added Dinnerware crate and Bar Supply crate to cargo, type: Add}
   - {message: Moved some items from the Kitchen Supply crate to the Dinnerware Crate,
     type: Tweak}
@@ -2916,3 +2911,9 @@ Entries:
   - {message: Fixed chemical bottles are now breaking!, type: Fix}
   id: 3367
   time: '2023-04-09T21:58:22.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Nanotrasen has updated their ethics policies and have supplied sustenance
+      vendors to perma prisoners., type: Add}
+  id: 3368
+  time: '2023-04-09T22:00:23.0000000+00:00'
