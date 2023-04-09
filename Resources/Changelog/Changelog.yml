@@ -1,11 +1,4 @@
 Entries:
-- author: checkraze
-  changes:
-  - {message: Added Dinnerware crate and Bar Supply crate to cargo, type: Add}
-  - {message: Moved some items from the Kitchen Supply crate to the Dinnerware Crate,
-    type: Tweak}
-  id: 2869
-  time: '2023-01-14T18:37:02.0000000+00:00'
 - author: Jackrost
   changes:
   - {message: Space Villain arcade prizes now limited. Number of prizes are randomized,
@@ -2917,3 +2910,8 @@ Entries:
       vendors to perma prisoners., type: Add}
   id: 3368
   time: '2023-04-09T22:00:23.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: Added MK58 crate, type: Add}
+  id: 3369
+  time: '2023-04-09T22:06:30.0000000+00:00'
