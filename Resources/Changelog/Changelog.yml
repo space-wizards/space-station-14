@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Eye lerping will reset on map changes., type: Tweak}
-  id: 2861
-  time: '2023-01-12T12:10:52.0000000+00:00'
 - author: Morb0
   changes:
   - {message: Worn lawyer badge now changes the style of the typing indicator, type: Add}
@@ -2918,3 +2913,8 @@ Entries:
   - {message: Air sensors appearance will now update on power changes., type: Fix}
   id: 3360
   time: '2023-04-09T02:25:39.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Head of security's common clothing now has slight armor, type: Tweak}
+  id: 3361
+  time: '2023-04-09T02:32:23.0000000+00:00'
