@@ -342,7 +342,7 @@
 - type: entity
   name: sausage bread
   parent: FoodBreadBase
-  id: FoodBreadMeatSausage
+  id: FoodBreadSausage
   description: Dont think too much about it.
   components:
   - type: FlavorProfile
@@ -354,7 +354,7 @@
     layers:
     - state: sausage
   - type: SliceableFood
-    slice: FoodBreadMeatSausageSlice
+    slice: FoodBreadSausageSlice
   - type: SolutionContainerManager
     solutions:
       food:
@@ -370,7 +370,7 @@
 - type: entity
   name: sausage bread slice
   parent: FoodBreadSliceBase
-  id: FoodBreadMeatSausageSlice
+  id: FoodBreadSausageSlice
   description: Dont think too much about it.
   components:
   - type: FlavorProfile
@@ -602,7 +602,7 @@
 # Tastes like bread, butter.
 
 - type: entity
-  name: french toast
+  name: f toast
   parent: FoodBreadSliceBase
   id: FoodBreadFrenchToast
   description: A slice of bread soaked in a beaten egg mixture.
