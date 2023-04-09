@@ -178,6 +178,12 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                     break;
             }
         }
+
+        // Add the remainder back
+        if (_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var puddleSolution))
+        {
+            _solutionContainerSystem.TryAddSolution(uid, puddleSolution, overflow);
+        }
     }
 
     private void OnPuddleSlip(EntityUid uid, PuddleComponent component, ref SlipEvent args)

@@ -70,6 +70,9 @@ public sealed class SpreaderNodeGroup : BaseNodeGroup
     }
 }
 
+/// <summary>
+/// Handles generic spreading logic
+/// </summary>
 public sealed class SpreaderSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -245,6 +248,9 @@ public sealed class SpreaderSystem : EntitySystem
         {
             var direction = (Direction) (i * 2);
             var neighborPos = SharedMapSystem.GetDirection(tile, direction);
+
+            if (!grid.TryGetTileRef(neighborPos, out var tileRef) || tileRef.Tile.IsEmpty)
+                continue;
 
             var directionEnumerator =
                 grid.GetAnchoredEntitiesEnumerator(neighborPos);

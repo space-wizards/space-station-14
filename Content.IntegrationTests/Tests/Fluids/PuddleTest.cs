@@ -76,7 +76,7 @@ namespace Content.IntegrationTests.Tests.Fluids
                 var coordinates = grid.ToCoordinates();
                 var solution = new Solution("Water", FixedPoint2.New(20));
                 var puddle = spillSystem.TrySpillAt(coordinates, solution, out _);
-                Assert.Null(puddle);
+                Assert.False(puddle);
             });
 
             await pairTracker.CleanReturnAsync();

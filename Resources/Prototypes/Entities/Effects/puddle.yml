@@ -1,27 +1,32 @@
 # TODO: Fix - The idea is that blood and vomit is potentially not tile-bound versions of puddles(?)
 - type: entity
-  id: PuddleVomit
+  id: PuddleTemporary
   parent: Puddle
+  abstract: true
   components:
     - type: Transform
       anchored: true
       noRot: false
 
 - type: entity
+  id: PuddleVomit
+  parent: PuddleTemporary
+
+- type: entity
   id: PuddleEgg
-  parent: Puddle
+  parent: PuddleTemporary
 
 - type: entity
   id: PuddleTomato
-  parent: Puddle
+  parent: PuddleTemporary
 
 - type: entity
   id: PuddleWatermelon
-  parent: Puddle
+  parent: PuddleTemporary
 
 - type: entity
   id: PuddleFlour
-  parent: Puddle
+  parent: PuddleTemporary
 
 - type: entity
   id: PuddleSparkle
