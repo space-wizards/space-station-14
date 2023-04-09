@@ -29,6 +29,16 @@
   group: market
 
 - type: cargoProduct
+  id: ServiceTheatre
+  icon:
+    sprite: Clothing/Mask/mime.rsi
+    state: icon
+  product: CrateServiceTheatre
+  cost: 1800
+  category: Service
+  group: market
+
+- type: cargoProduct
   id: ServiceSmokeables
   icon:
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi

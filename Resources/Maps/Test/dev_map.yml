@@ -562,8 +562,6 @@ entities:
     pos: 12.5,17.5
     parent: 179
     type: Transform
-  - bodyType: Static
-    type: Physics
 - uid: 91
   type: ClownPDA
   components:
@@ -1057,8 +1055,6 @@ entities:
   - pos: -2.172831,4.5306726
     parent: 179
     type: Transform
-  - nextAttack: 384.7724706
-    type: MeleeWeapon
 - uid: 148
   type: Ointment
   components:
@@ -1277,7 +1273,7 @@ entities:
 - uid: 179
   components:
   - type: MetaData
-  - parent: invalid
+  - parent: 962
     type: Transform
   - chunks:
       -1,0:
@@ -1689,8 +1685,6 @@ entities:
   - pos: -3.4579864,-1.9811735
     parent: 179
     type: Transform
-  - nextAttack: 582.1216812
-    type: MeleeWeapon
 - uid: 186
   type: PowerCellMedium
   components:
@@ -2619,16 +2613,12 @@ entities:
   - pos: -0.11783123,4.753312
     parent: 179
     type: Transform
-  - nextAttack: 244.2972008
-    type: MeleeWeapon
 - uid: 328
   type: MopItem
   components:
   - pos: 7.6382103,16.08618
     parent: 179
     type: Transform
-  - nextAttack: 3088.5283222
-    type: MeleeWeapon
   - solutions:
       absorbed:
         temperature: 293.15
@@ -2730,8 +2720,6 @@ entities:
   - pos: 0.6895334,4.7183027
     parent: 179
     type: Transform
-  - nextAttack: 247.8805212
-    type: MeleeWeapon
 - uid: 344
   type: ClothingHeadHatWelding
   components:
@@ -2840,8 +2828,6 @@ entities:
   - pos: -1.6207478,4.3951616
     parent: 179
     type: Transform
-  - nextAttack: 232.4472496
-    type: MeleeWeapon
 - uid: 360
   type: PowerCellMedium
   components:
@@ -2975,8 +2961,6 @@ entities:
   - pos: -3.277628,-2.15838
     parent: 179
     type: Transform
-  - nextAttack: 578.7883598
-    type: MeleeWeapon
 - uid: 382
   type: SheetSteel
   components:
@@ -3359,8 +3343,6 @@ entities:
   - pos: -1.235331,4.739151
     parent: 179
     type: Transform
-  - nextAttack: 385.5557994
-    type: MeleeWeapon
 - uid: 432
   type: ChemicalPayload
   components:
@@ -3379,8 +3361,6 @@ entities:
   - pos: -3.1734612,-2.6066077
     parent: 179
     type: Transform
-  - nextAttack: 577.9550312
-    type: MeleeWeapon
 - uid: 435
   type: ModularGrenade
   components:
@@ -4475,8 +4455,6 @@ entities:
     pos: 14.5,6.5
     parent: 179
     type: Transform
-  - bodyType: Static
-    type: Physics
 - uid: 581
   type: Chair
   components:
@@ -4484,8 +4462,6 @@ entities:
     pos: 14.5,8.5
     parent: 179
     type: Transform
-  - bodyType: Static
-    type: Physics
 - uid: 582
   type: Chair
   components:
@@ -4493,8 +4469,6 @@ entities:
     pos: 14.5,7.5
     parent: 179
     type: Transform
-  - bodyType: Static
-    type: Physics
 - uid: 583
   type: chem_dispenser
   components:
@@ -5107,8 +5081,6 @@ entities:
   - pos: 1.1246341,7.500063
     parent: 179
     type: Transform
-  - nextAttack: 669.0197422
-    type: MeleeWeapon
 - uid: 673
   type: Poweredlight
   components:
@@ -7199,13 +7171,11 @@ entities:
     parent: 179
     type: Transform
 - uid: 956
-  type: EmergencyOxygenTank
+  type: EmergencyOxygenTankFilled
   components:
   - pos: -10.505015,6.711994
     parent: 179
     type: Transform
-  - nextAttack: 396.1132382
-    type: MeleeWeapon
 - uid: 957
   type: AlwaysPoweredLightLED
   components:
@@ -7236,6 +7206,134 @@ entities:
   type: SpawnPointLatejoin
   components:
   - pos: -3.5,3.5
+    parent: 179
+    type: Transform
+- uid: 962
+  components:
+  - type: MetaData
+  - type: Transform
+  - type: Map
+  - type: PhysicsMap
+  - type: Broadphase
+  - type: OccluderTree
+- uid: 963
+  type: TelecomServerFilled
+  components:
+  - pos: -3.5,10.5
+    parent: 179
+    type: Transform
+- uid: 964
+  type: TableGlass
+  components:
+  - pos: 9.5,12.5
+    parent: 179
+    type: Transform
+- uid: 965
+  type: TableGlass
+  components:
+  - pos: 11.5,12.5
+    parent: 179
+    type: Transform
+- uid: 966
+  type: TableGlass
+  components:
+  - pos: 13.5,12.5
+    parent: 179
+    type: Transform
+- uid: 967
+  type: FaxMachineCaptain
+  components:
+  - pos: 9.5,12.5
+    parent: 179
+    type: Transform
+- uid: 968
+  type: FaxMachineCentcom
+  components:
+  - pos: 11.5,12.5
+    parent: 179
+    type: Transform
+- uid: 969
+  type: FaxMachineSyndie
+  components:
+  - pos: 13.5,12.5
+    parent: 179
+    type: Transform
+- uid: 970
+  type: CableApcExtension
+  components:
+  - pos: 9.5,12.5
+    parent: 179
+    type: Transform
+- uid: 971
+  type: CableApcExtension
+  components:
+  - pos: 10.5,12.5
+    parent: 179
+    type: Transform
+- uid: 972
+  type: CableApcExtension
+  components:
+  - pos: 11.5,12.5
+    parent: 179
+    type: Transform
+- uid: 973
+  type: CableApcExtension
+  components:
+  - pos: 12.5,12.5
+    parent: 179
+    type: Transform
+- uid: 974
+  type: CableApcExtension
+  components:
+  - pos: 13.5,12.5
+    parent: 179
+    type: Transform
+- uid: 975
+  type: TableGlass
+  components:
+  - pos: 10.5,12.5
+    parent: 179
+    type: Transform
+- uid: 976
+  type: TableGlass
+  components:
+  - pos: 12.5,12.5
+    parent: 179
+    type: Transform
+- uid: 977
+  type: PaperBin10
+  components:
+  - pos: 10.5,12.5
+    parent: 179
+    type: Transform
+- uid: 978
+  type: Pen
+  components:
+  - pos: 10.893699,12.7794075
+    parent: 179
+    type: Transform
+- uid: 979
+  type: Pen
+  components:
+  - pos: 10.862433,12.602201
+    parent: 179
+    type: Transform
+- uid: 980
+  type: RubberStampCentcom
+  components:
+  - pos: 12.186007,12.716865
+    parent: 179
+    type: Transform
+- uid: 981
+  type: RubberStampSyndicate
+  components:
+  - pos: 12.436131,12.550082
+    parent: 179
+    type: Transform
+- uid: 982
+  type: RubberStampCaptain
+  components:
+  - pos: 12.800895,12.664745
     parent: 179
     type: Transform
 ...
