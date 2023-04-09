@@ -1,9 +1,4 @@
 Entries:
-- author: Theomund
-  changes:
-  - {message: Screaming now emits a popup message that others can see., type: Add}
-  id: 2856
-  time: '2023-01-11T09:06:15.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: You can now withdraw currency from the uplink again., type: Fix}
@@ -2917,3 +2912,8 @@ Entries:
   - {message: Fixed computer deconstruction not working., type: Fix}
   id: 3355
   time: '2023-04-08T00:54:28.0000000+00:00'
+- author: Mumohan
+  changes:
+  - {message: Gas mixers no longer show weird ratio numbers, type: Fix}
+  id: 3356
+  time: '2023-04-09T01:34:27.0000000+00:00'
