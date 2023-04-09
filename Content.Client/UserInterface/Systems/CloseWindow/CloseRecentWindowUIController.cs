@@ -24,8 +24,7 @@ public sealed class CloseRecentWindowUIController : UIController
     public override void Initialize()
     {
         // Add listeners to be able to know when windows are opened.
-        // Note -- I am assuming this does not need to be unlistened since UIControllers live
-        // forever(?), but if there's a correct way to unlisten, please let me know :)
+        // (Does not need to be unlistened since UIControllers live forever)
         _uiManager.OnKeyBindDown += OnKeyBindDown;
         _uiManager.WindowRoot.OnChildAdded += OnRootChildAdded;
 
