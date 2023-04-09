@@ -9,6 +9,10 @@
       noRot: false
 
 - type: entity
+  id: PuddleSmear
+  parent: PuddleTemporary
+
+- type: entity
   id: PuddleVomit
   parent: PuddleTemporary
 
