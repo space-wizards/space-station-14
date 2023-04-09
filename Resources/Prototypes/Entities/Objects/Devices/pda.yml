@@ -424,6 +424,7 @@
     accentHColor: "#447987"
   - type: Icon
     state: pda-ce
+  - type: GasAnalyzer
 
 - type: entity
   parent: BasePDA
