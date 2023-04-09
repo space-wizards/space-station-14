@@ -2,6 +2,10 @@
 - type: entity
   id: PuddleVomit
   parent: Puddle
+  components:
+    - type: Transform
+      anchored: true
+      noRot: false
 
 - type: entity
   id: PuddleEgg
