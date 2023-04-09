@@ -148,7 +148,6 @@ namespace Content.Server.Nutrition.EntitySystems
                 NeedHand = forceFeed,
                 //Works better with cancel duplicate on because you can just use again to stop
                 CancelDuplicate = false,
-                Repeat = !forceFeed,
             };
 
             _doAfterSystem.TryStartDoAfter(doAfterArgs);
@@ -174,7 +173,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var forceFeed = args.User != args.Target;
 
-            //If handled it won't do this again
+            //If handled it won't repeat
             if (!args.Args.Repeat)
                 args.Handled = true;
 
@@ -189,12 +188,7 @@ namespace Content.Server.Nutrition.EntitySystems
             {
                 _solutionContainerSystem.TryAddSolution(uid, solution, split);
                 _popupSystem.PopupEntity(forceFeed ? Loc.GetString("food-system-you-cannot-eat-any-more-other") : Loc.GetString("food-system-you-cannot-eat-any-more"), args.Args.Target.Value, args.Args.User);
-                //TODO: See if there is a way to remove the boilerplate here
-                if (args.Args.Repeat)
-                {
-                    args.Args.CancelRepeat = true;
-                    args.Handled = true;
-                }
+                args.Handled = true;
                 return;
             }
 
@@ -232,21 +226,20 @@ namespace Content.Server.Nutrition.EntitySystems
             }
 
             if (component.UsesRemaining > 0)
+            {
+                if (!forceFeed)
+                {
+                    args.Args.Repeat = true;
+                    args.Handled = false;
+                }
                 return;
+            }
 
             if (string.IsNullOrEmpty(component.TrashPrototype))
-            {
                 EntityManager.QueueDeleteEntity(uid);
-                args.Args.CancelRepeat = true;
-                args.Handled = true;
-            }
 
             else
-            {
                 DeleteAndSpawnTrash(component, uid, args.Args.User);
-                args.Args.CancelRepeat = true;
-                args.Handled = true;
-            }
         }
 
         private void DeleteAndSpawnTrash(FoodComponent component, EntityUid food, EntityUid? user = null)

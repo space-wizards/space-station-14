@@ -150,15 +150,10 @@ public sealed class DoAfterArgs
     //TODO: User perf to toggle repeat on specific doafters
     /// <summary>
     ///     If true, the doafter will automatically repeat until it's cancelled.
+    ///     Only set this in a do-after event that you would like repeated.
     /// </summary>
     [DataField("repeat")]
     public bool Repeat = false;
-
-    /// <summary>
-    ///     If true, cancels repeated attempts
-    /// </summary>
-    [DataField("cancelRepeat")]
-    public bool CancelRepeat = false;
 
     /// <summary>
     ///     Additional conditions that need to be met. Return false to cancel.
@@ -243,7 +238,6 @@ public sealed class DoAfterArgs
         CancelDuplicate = other.CancelDuplicate;
         DuplicateCondition = other.DuplicateCondition;
         Repeat = other.Repeat;
-        CancelRepeat = other.CancelRepeat;
 
         Event = other.Event.Clone();
     }

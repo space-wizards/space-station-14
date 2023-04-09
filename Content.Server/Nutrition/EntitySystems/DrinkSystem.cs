@@ -282,7 +282,6 @@ namespace Content.Server.Nutrition.EntitySystems
                 // TODO maybe set this based on some CanEatWithoutHands event or component?
                 NeedHand = forceDrink,
                 CancelDuplicate = false,
-                Repeat = !forceDrink,
             };
 
             _doAfterSystem.TryStartDoAfter(doAfterEventArgs);
@@ -307,9 +306,9 @@ namespace Content.Server.Nutrition.EntitySystems
             var drained = _solutionContainerSystem.Drain(uid, solution, transferAmount);
             var forceDrink = args.User != args.Target;
 
-            if (transferAmount <= 0 && args.Args.Repeat)
+            if (transferAmount <= 0)
             {
-                args.Args.CancelRepeat = true;
+                args.Args.Repeat = false;
                 args.Handled = true;
                 return;
             }
@@ -344,9 +343,6 @@ namespace Content.Server.Nutrition.EntitySystems
                 }
                 else
                     _solutionContainerSystem.TryAddSolution(uid, solution, drained);
-
-                if (args.Args.Repeat)
-                    args.Args.CancelRepeat = true;
 
                 args.Handled = true;
                 return;
@@ -392,6 +388,12 @@ namespace Content.Server.Nutrition.EntitySystems
             var comp = EnsureComp<ForensicsComponent>(uid);
             if (TryComp<DnaComponent>(args.Args.Target, out var dna))
                 comp.DNAs.Add(dna.DNA);
+
+            if (!forceDrink && transferAmount > 0)
+            {
+                args.Args.Repeat = true;
+                args.Handled = false;
+            }
         }
 
         private void AddDrinkVerb(EntityUid uid, DrinkComponent component, GetVerbsEvent<AlternativeVerb> ev)
