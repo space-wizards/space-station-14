@@ -29,14 +29,15 @@
     noRot: true
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.18,-0.48,0.18,0.48"
-      density: 200
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.18,-0.48,0.18,0.48"
+        density: 200
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: InteractionOutline
   - type: ContainerContainer
     containers:
@@ -87,14 +88,15 @@
     noRot: true
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.22,-0.42,0.22,0.34"
-      density: 210
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.22,-0.42,0.22,0.34"
+        density: 210
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: InteractionOutline
   - type: ContainerContainer
     containers:

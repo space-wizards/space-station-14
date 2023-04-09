@@ -21,15 +21,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - id: slipFixture
-      shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
-      mask:
-      - ItemMask
-      layer:
-      - SlipLayer
-      hard: false
+      slipFixture:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        mask:
+        - ItemMask
+        layer:
+        - SlipLayer
+        hard: false
   - type: Appearance
   - type: PuddleVisualizer
     wetFloorEffectThreshold: 0 # non-evaporating puddles don't become sparkles.

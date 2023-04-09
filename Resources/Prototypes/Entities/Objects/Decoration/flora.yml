@@ -11,13 +11,14 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.4
-      density: 1000
-      layer:
-      - HalfWallLayer
-      - Opaque
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.4
+        density: 1000
+        layer:
+        - HalfWallLayer
+        - Opaque
   - type: Climbable
   - type: Damageable
     damageContainer: Inorganic
@@ -49,12 +50,13 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.35,-0.4,0.35,0.4"
-      density: 1000
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.4,0.35,0.4"
+        density: 1000
+        layer:
+        - WallLayer
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Wood
@@ -100,12 +102,13 @@
     offset: 0,0.7
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.1,-0.3,0.1,0.3"
-      density: 4000
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.3,0.1,0.3"
+        density: 4000
+        layer:
+        - WallLayer
 
 - type: entity
   parent: BaseTree
@@ -117,12 +120,13 @@
     offset: 0,1.55
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.18,-0.35,0.18,0.35"
-      density: 2000
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.18,-0.35,0.18,0.35"
+        density: 2000
+        layer:
+        - WallLayer
 
 - type: entity
   parent: BaseTree
@@ -134,12 +138,13 @@
     offset: 0,1.15
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.1,-0.35,0.1,0.35"
-      density: 3500
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.35,0.1,0.35"
+        density: 3500
+        layer:
+        - WallLayer
 
 - type: entity
   parent: BaseRock
@@ -359,12 +364,13 @@
     state: treechristmas02
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.8,-1.5,0.8,-0.8"
-      density: 4500
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.8,-1.5,0.8,-0.8"
+        density: 4500
+        layer:
+        - WallLayer
   - type: LimitedItemGiver
     spawnEntries:
       - id: PresentRandom

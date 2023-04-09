@@ -16,14 +16,15 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.49,-0.49,0.49,-0.25"
-      density: 1000
-      mask:
-      - TableMask
-      layer:
-      - TableLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,-0.25"
+        density: 1000
+        mask:
+        - TableMask
+        layer:
+        - TableLayer
   - type: InteractionOutline
   - type: Repairable
   - type: Damageable
@@ -74,22 +75,24 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.49,-0.49,0.49,-0.25"
-      density: 1000
-      mask:
-      - TableMask
-      layer:
-      - TableLayer
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "0.49,0.49,0.25,-0.49"
-      density: 1000
-      mask:
-      - TableMask
-      layer:
-      - TableLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,-0.25"
+        density: 1000
+        mask:
+        - TableMask
+        layer:
+        - TableLayer
+      fix2:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "0.49,0.49,0.25,-0.49"
+        density: 1000
+        mask:
+        - TableMask
+        layer:
+        - TableLayer
   - type: InteractionOutline
   - type: Repairable
   - type: Damageable
@@ -140,14 +143,15 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.49,0.49,-0.25,0.25"
-      density: 1000
-      mask:
-      - TableMask
-      layer:
-      - TableLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,0.49,-0.25,0.25"
+        density: 1000
+        mask:
+        - TableMask
+        layer:
+        - TableLayer
   - type: InteractionOutline
   - type: Repairable
   - type: Damageable

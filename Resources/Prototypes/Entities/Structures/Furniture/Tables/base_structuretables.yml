@@ -11,14 +11,15 @@
   - type: PlaceableSurface
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.45,-0.45,0.45,0.45"
-      density: 55
-      mask: # tables should collide with other tables
-      - TableMask
-      layer:
-      - TableLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 55
+        mask: # tables should collide with other tables
+        - TableMask
+        layer:
+        - TableLayer
   - type: SpriteFade
   - type: Sprite
     netsync: false
@@ -44,11 +45,12 @@
   components:
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.45,-0.45,0.45,0.45"
-      density: 55
-      mask:
-      - TableMask
-      layer:
-      - TableLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 55
+        mask:
+        - TableMask
+        layer:
+        - TableLayer

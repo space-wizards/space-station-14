@@ -12,14 +12,15 @@
     fixedRotation: false
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.25,0.25,0.25"
-      density: 100
-      mask:
-      - ItemMask
-      restitution: 0.3  # fite me
-      friction: 0.2
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 100
+        mask:
+        - ItemMask
+        restitution: 0.3  # fite me
+        friction: 0.2
   - type: Pullable
   - type: Sprite
     drawdepth: Items
@@ -57,19 +58,19 @@
   - type: ItemMapper
     mapLayers:
       ripley_l_arm+o:
-        whitelist: 
+        whitelist:
           tags:
           - RipleyLArm
       ripley_r_arm+o:
-        whitelist: 
+        whitelist:
           tags:
           - RipleyRArm
       ripley_l_leg+o:
-        whitelist: 
+        whitelist:
           tags:
           - RipleyLLeg
       ripley_r_leg+o:
-        whitelist: 
+        whitelist:
           tags:
           - RipleyRLeg
     sprite: Objects/Specific/Mech/ripley_construction.rsi

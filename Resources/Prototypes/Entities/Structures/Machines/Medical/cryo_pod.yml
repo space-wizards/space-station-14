@@ -28,7 +28,8 @@
     noRot: true
   - type: Fixtures
     fixtures:
-      - shape:
+      fix1:
+        shape:
           !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.90"
         density: 200

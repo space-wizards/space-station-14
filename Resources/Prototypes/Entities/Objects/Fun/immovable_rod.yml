@@ -24,14 +24,15 @@
     energy: 2.0
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.5
-      density: 1
-      hard: false
-      layer:
-      - Impassable
-      - Opaque
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.5
+        density: 1
+        hard: false
+        layer:
+        - Impassable
+        - Opaque
 
 - type: entity
   id: ImmovableRodSlow

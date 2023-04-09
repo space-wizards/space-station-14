@@ -14,14 +14,15 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.3,0.4,0.3"
-      density: 190
-      mask:
-      - TabletopMachineMask
-      layer:
-      - TabletopMachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
+        density: 190
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: ActivatableUI

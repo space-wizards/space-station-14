@@ -28,12 +28,13 @@
     bodyType: KinematicController
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.40
-      density: 80
-      mask:
-      - GhostImpassable
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 80
+        mask:
+        - GhostImpassable
   - type: HeatResistance
   - type: MovementIgnoreGravity
   - type: Damageable

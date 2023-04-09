@@ -35,12 +35,13 @@
     noRot: true
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.4,0.25,0.1"
-      density: 20
-      mask:
-      - Impassable
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.4,0.25,0.1"
+        density: 20
+        mask:
+        - Impassable
   - type: EntityStorage
     capacity: 1
     isCollidableWhenOpen: true

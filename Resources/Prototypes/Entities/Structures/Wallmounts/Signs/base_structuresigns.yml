@@ -15,8 +15,9 @@
     canCollide: false
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
+      fix1:
+        shape:
+          !type:PhysShapeAabb {}
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

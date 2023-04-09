@@ -7,11 +7,12 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.3,-0.3,0.3,0.3"
-      layer:
-      - MidImpassable
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.3,0.3,0.3"
+        layer:
+        - MidImpassable
   - type: Sprite
     layers:
       - state: atmosplaque

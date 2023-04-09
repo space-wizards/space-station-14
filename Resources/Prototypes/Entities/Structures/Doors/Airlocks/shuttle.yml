@@ -6,6 +6,7 @@
   description: Necessary for connecting two space craft together.
   components:
   - type: Docking
+
   - type: Sprite
     netsync: false
     sprite: Structures/Doors/Airlocks/Standard/shuttle.rsi

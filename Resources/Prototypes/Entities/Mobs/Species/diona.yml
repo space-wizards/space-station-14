@@ -28,7 +28,8 @@
     bloodReagent: Water
   - type: Fixtures
     fixtures:
-      - shape:
+      fix1:
+        shape:
           !type:PhysShapeCircle
           radius: 0.35
         density: 300 #weighs more than humans because wood

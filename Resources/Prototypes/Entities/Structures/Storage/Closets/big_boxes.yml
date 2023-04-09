@@ -10,7 +10,8 @@
       bodyType: KinematicController
     - type: Fixtures
       fixtures:
-        - shape:
+        fix1:
+          shape:
             !type:PhysShapeAabb
             bounds: "-0.4,-0.4,0.4,0.4"
           density: 100
@@ -96,7 +97,8 @@
   components:
     - type: Fixtures
       fixtures:
-        - shape:
+        fix1:
+          shape:
             !type:PhysShapeAabb
             bounds: "-0.4,-0.4,0.4,0.4"
           mask:

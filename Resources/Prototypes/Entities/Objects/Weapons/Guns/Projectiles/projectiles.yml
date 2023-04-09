@@ -40,24 +40,23 @@
     angularDamping: 0
   - type: Fixtures
     fixtures:
-    - id: projectile
-      shape:
-        !type:PhysShapeAabb
-        bounds: "-0.1,-0.1,0.1,0.1"
-      hard: false
-      mask:
-      - Impassable
-      - BulletImpassable
-    - &flybyfixture
-      id: fly-by
-      shape: !type:PhysShapeCircle
-        radius: 1.5
-      layer:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      hard: False
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.1,0.1,0.1"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+      fly-by: &flybyfixture
+        shape: !type:PhysShapeCircle
+          radius: 1.5
+        layer:
+        - Impassable
+        - MidImpassable
+        - HighImpassable
+        - LowImpassable
+        hard: False
   - type: Projectile
     impactEffect: BulletImpactEffect
     damage:
@@ -81,15 +80,15 @@
         Blunt: 7 # more damage than a punch.
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.15,-0.45,0.15,0.15"
-      hard: false
-      id: projectile
-      mask:
-      - Impassable
-      - BulletImpassable
-    - *flybyfixture
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.45,0.15,0.15"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+      fly-by: *flybyfixture
 
 - type: entity
   id: BaseBulletHighVelocity
@@ -189,15 +188,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.15,-0.3,0.15,0.3"
-      hard: false
-      id: projectile
-      mask:
-      - Impassable
-      - BulletImpassable
-    - *flybyfixture
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.3,0.15,0.3"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+      fly-by: *flybyfixture
   - type: Ammo
   - type: StaminaDamageOnCollide
     damage: 30
@@ -229,15 +228,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.15,-0.3,0.15,0.3"
-      hard: false
-      id: projectile
-      mask:
-      - Impassable
-      - BulletImpassable
-    - *flybyfixture
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.3,0.15,0.3"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+      fly-by: *flybyfixture
   - type: Ammo
   - type: StaminaDamageOnCollide
     damage: 5
@@ -267,15 +266,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.2,-0.2,0.2,0.2"
-      hard: false
-      id: projectile
-      mask:
-      - Impassable
-      - Opaque
-    - *flybyfixture
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        mask:
+        - Impassable
+        - Opaque
+      fly-by: *flybyfixture
   - type: Projectile
 #   soundHit:  Waiting on serv3
     damage:
@@ -328,15 +327,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.2,-0.2,0.2,0.2"
-      hard: false
-      id: projectile
-      mask:
-      - Impassable
-      - Opaque
-    - *flybyfixture
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        mask:
+        - Impassable
+        - Opaque
+      fly-by: *flybyfixture
   - type: Projectile
     damage:
       types:

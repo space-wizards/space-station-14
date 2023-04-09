@@ -12,15 +12,15 @@
     sprite: /Textures/Effects/portal.rsi
   - type: Fixtures
     fixtures:
-    - id: portalFixture
-      shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.48,0.25,0.48"
-      mask:
-      - FullTileMask
-      layer:
-      - WallLayer
-      hard: false
+      portalFixture:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.48,0.25,0.48"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        hard: false
   - type: Portal
 
 - type: entity

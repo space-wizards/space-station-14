@@ -13959,17 +13959,18 @@ entities:
     parent: 104
     type: Transform
   - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.90000004,-0.90000004
-        - 0.90000004,0.90000004
-        - -0.90000004,0.90000004
-        - -0.90000004,-0.90000004
-      mask:
-      - Impassable
-      - HighImpassable
-      restitution: 0.3
-      friction: 0.2
+      fix1:
+        shape: !type:PolygonShape
+          vertices:
+          - 0.90000004,-0.90000004
+          - 0.90000004,0.90000004
+          - -0.90000004,0.90000004
+          - -0.90000004,-0.90000004
+        mask:
+        - Impassable
+        - HighImpassable
+        restitution: 0.3
+        friction: 0.2
     type: Fixtures
 - uid: 1267
   type: AlwaysPoweredLightExterior

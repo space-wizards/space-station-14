@@ -12,14 +12,15 @@
     canCollide: false
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.4
-      density: 100
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.4
+        density: 100
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: Sprite
     netsync: false
     sprite: Structures/Piping/Atmospherics/Portable/portable_scrubber.rsi

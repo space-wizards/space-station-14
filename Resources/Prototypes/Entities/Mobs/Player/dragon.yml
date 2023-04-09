@@ -53,7 +53,8 @@
       bodyType: KinematicController
     - type: Fixtures
       fixtures:
-        - shape:
+        fix1:
+          shape:
             !type:PhysShapeCircle
             radius: 0.40
           density: 100

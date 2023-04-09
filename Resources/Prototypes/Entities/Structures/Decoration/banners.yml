@@ -14,17 +14,18 @@
     noRot: true
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.2
-      density: 190
-      mask:
-      - MachineMask
-      layer:
-      - Opaque
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - Opaque
+        - MidImpassable
+        - HighImpassable
+        - BulletImpassable
   - type: InteractionOutline
 
 - type: entity
