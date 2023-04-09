@@ -491,10 +491,6 @@
       layer:
       - MobLayer
   - type: Appearance
-  - type: Strippable
-    interfaces:
-    - key: enum.StrippingUiKey.Key
-      type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -508,10 +504,6 @@
     - id: FoodMeatSpider
       amount: 2
   - type: CombatMode
-    disarmAction:
-      enabled: false
-      autoPopulate: false
-      name: action-name-disarm
   - type: MobThresholds
     thresholds:
       0: Alive
