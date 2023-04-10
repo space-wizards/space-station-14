@@ -26,6 +26,11 @@
     damage:
       types:
         Blunt: 0
+  - type: PhysicalComposition
+    materialComposition:
+      Cloth: 100
+  - type: StaticPrice
+    price: 5
 
 - type: entity
   parent: BasePlushie
@@ -243,7 +248,6 @@
   - type: Sprite
     state: narplush
 
-
 - type: entity
   parent: BasePlushie
   id: PlushieCarp
@@ -356,55 +360,66 @@
 
 - type: entity
   parent: BaseItem
+  id: BaseFigurine
+  name: figurine
+  description: A small miniature.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    netsync: false
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 100
+  - type: StaticPrice
+    price: 10
+
+- type: entity
+  parent: BaseFigurine
   id: ToyAi
   name: AI toy
   description: A scaled-down toy AI core.
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: AI
 
 - type: entity
-  parent: BaseItem
+  parent: BaseFigurine
   id: ToyNuke
   name: nuke toy
   description: A plastic model of a Nuclear Fission Explosive. No uranium included... probably.
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: nuketoy
 
 - type: entity
-  parent: BaseItem
+  parent: BaseFigurine
   id: ToyAssistant # TODO rename but needs map changes
   name: passenger toy
   description: Grey tide world wide!
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: doll
   - type: Item
     sprite: Objects/Fun/toys.rsi
     heldPrefix: doll
 
 - type: entity
-  parent: BaseItem
+  parent: BaseFigurine
   id: ToyGriffin
   name: griffin toy
   description: An action figure modeled after 'The Griffin', criminal mastermind.
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: griffinprize
 
 - type: entity
-  parent: BaseItem
+  parent: BaseFigurine
   id: ToyHonk
   name: H.O.N.K. toy
   description: Mini-Mecha action figure! 'Mecha No. 6/12' is written on the back.
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: honkprize
 
 - type: entity
@@ -423,125 +438,111 @@
       path: /Audio/Items/Toys/ian.ogg
 
 - type: entity
-  parent: BaseItem
+  parent: BaseFigurine
   id: ToyMarauder
   name: marauder toy
   description: Mini-Mecha action figure! 'Mecha No. 7/12' is written on the back.
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: marauderprize
 
 - type: entity
-  parent: BaseItem
+  parent: BaseFigurine
   id: ToyMauler
   name: mauler toy
   description: Mini-Mecha action figure! 'Mecha No. 9/12' is written on the back.
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: maulerprize
 
 - type: entity
-  parent: BaseItem
+  parent: BaseFigurine
   id: ToyGygax
   name: gygax toy
   description: Mini-Mecha action figure! 'Mecha No. 4/12' is written on the back.
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: gygaxtoy
 
 - type: entity
-  parent: BaseItem
+  parent: BaseFigurine
   id: ToyOdysseus
   name: odysseus toy
   description: Mini-Mecha action figure! 'Mecha No. 10/12' is written on the back.
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: odysseusprize
 
 - type: entity
-  parent: BaseItem
+  parent: BaseFigurine
   id: ToyOwlman
   name: owl toy
   description: An action figure modeled after 'The Owl', defender of justice.
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: owlprize
 
 - type: entity
-  parent: BaseItem
+  parent: BaseFigurine
   id: ToyDeathRipley
   name: deathripley toy
   description: Mini-Mecha action figure! 'Mecha No. 3/12' is written on the back.
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: deathripleytoy
 
 - type: entity
-  parent: BaseItem
+  parent: BaseFigurine
   id: ToyPhazon
   name: phazon toy
   description: Mini-Mecha action figure! 'Mecha No. 11/12' is written on the back.
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: phazonprize
 
 - type: entity
-  parent: BaseItem
+  parent: BaseFigurine
   id: ToyFireRipley
   name: fire ripley
   description: Mini-Mecha action figure! 'Mecha No. 2/12' is written on the back.
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: fireripleytoy
 
 - type: entity
-  parent: BaseItem
+  parent: BaseFigurine
   id: ToyReticence
   name: reticence toy
   description: Mini-Mecha action figure! 'Mecha No. 12/12' is written on the back.
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: reticenceprize
 
 - type: entity
-  parent: BaseItem
+  parent: BaseFigurine
   id: ToyRipley
   name: ripley toy
   description: Mini-Mecha action figure! 'Mecha No. 1/12' is written on the back.
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: ripleytoy
 
-
 - type: entity
-  parent: BaseItem
+  parent: BaseFigurine
   id: ToySeraph
   name: seraph toy
   description: Mini-Mecha action figure! 'Mecha No. 8/12' is written on the back.
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: seraphprize
 
-
 - type: entity
-  parent: BaseItem
+  parent: BaseFigurine
   id: ToyDurand
   name: durand toy
   description: Mini-Mecha action figure! 'Mecha No. 5/12' is written on the back.
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: durandprize
 
 
@@ -549,13 +550,12 @@
 ### Help i'm sorting these and my previous self let this message here to taunt me aaaaa
 
 - type: entity
-  parent: BaseItem
+  parent: BaseFigurine
   id: ToySkeleton
   name: skeleton toy
   description: Spooked ya!
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
     state: skeletonprize
 
 ## Toyweapons
@@ -843,8 +843,6 @@
     available:
       - enum.DamageStateVisualLayers.Base:
           base: Sixteen
-  - type: StaticPrice
-    price: 3
 
 - type: entity
   parent: BaseItem

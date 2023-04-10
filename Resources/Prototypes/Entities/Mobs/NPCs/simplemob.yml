@@ -139,8 +139,6 @@
   - type: Polymorphable
   - type: Pullable
   - type: Buckle
-  - type: Recyclable
-    safe: false
   - type: StandingState
   - type: Alerts
   - type: NameIdentifier

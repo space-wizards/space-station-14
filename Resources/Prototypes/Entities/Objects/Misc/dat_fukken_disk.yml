@@ -18,6 +18,9 @@
   - type: WarpPoint
     follow: true
     location: nuke disk
+  - type: Tag
+    tags:
+    - HighRiskItem
 
 - type: entity
   name: nuclear authentication disk
