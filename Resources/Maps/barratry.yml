@@ -31272,26 +31272,6 @@ entities:
   - pos: 14.5,-4.5
     parent: 1
     type: Transform
-    - shape: !type:PolygonShape
-        radius: 0.01
-        vertices:
-        - 0.25,-0.48
-        - 0.25,0.48
-        - -0.25,0.48
-        - -0.25,-0.48
-      mask:
-      - Impassable
-      - MidImpassable
-      - LowImpassable
-      layer:
-      - BulletImpassable
-      - Opaque
-      density: 145
-      hard: True
-      restitution: 0
-      friction: 0.4
-      id: null
-    type: Fixtures
   - open: True
     removedMasks: 20
     type: EntityStorage
