@@ -157,10 +157,7 @@ public sealed class SpreaderSystem : EntitySystem
                 // of an edge so we'll let them handle it.
                 if (!groupUpdates.TryGetValue(node.NodeGroup, out var updates))
                 {
-                    var spreadEv = new SpreadGroupUpdateRate()
-                    {
-                        Name = node.Name,
-                    };
+                    var spreadEv = new SpreadGroupUpdateRate(node.Name);
                     RaiseLocalEvent(ref spreadEv);
                     updates = (int) (spreadEv.UpdatesPerSecond * SpreadCooldown / TimeSpan.FromSeconds(1));
                 }

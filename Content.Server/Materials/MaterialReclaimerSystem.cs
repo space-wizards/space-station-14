@@ -32,7 +32,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly SharedBodySystem _body = default!; //bobby
-    [Dependency] private readonly SpillableSystem _spillable = default!;
+    [Dependency] private readonly PuddleSystem _puddle = default!;
     [Dependency] private readonly StackSystem _stack = default!;
 
     /// <inheritdoc/>
@@ -255,7 +255,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
 
         if (overflow.Volume > 0)
         {
-            _spillable.SpillAt(reclaimer, overflow, reclaimerComponent.PuddleId, transformComponent: xform);
+            _puddle.TrySpillAt(reclaimer, overflow, out _, transformComponent: xform);
         }
     }
 }

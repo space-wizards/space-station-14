@@ -85,12 +85,6 @@ public sealed class MaterialReclaimerComponent : Component
     public string SolutionContainerId = "output";
 
     /// <summary>
-    /// The prototype for the puddle
-    /// </summary>
-    [DataField("puddleId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public string PuddleId = "PuddleSmear";
-
-    /// <summary>
     /// The solution itself.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
