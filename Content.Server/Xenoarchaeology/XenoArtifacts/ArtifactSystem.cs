@@ -18,9 +18,13 @@ public sealed partial class ArtifactSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
+    private ISawmill _sawmill = default!;
+
     public override void Initialize()
     {
         base.Initialize();
+
+        _sawmill = Logger.GetSawmill("artifact");
 
         SubscribeLocalEvent<ArtifactComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<ArtifactComponent, PriceCalculationEvent>(GetPrice);
@@ -197,8 +201,8 @@ public sealed partial class ArtifactSystem : EntitySystem
         var currentNode = GetNodeFromId(component.CurrentNodeId.Value, component);
 
         var allNodes = currentNode.Edges;
-        Logger.DebugS("artifact", $"our node: {currentNode.Id}");
-        Logger.DebugS("artifact", $"other nodes: {string.Join(", ", allNodes)}");
+        _sawmill.Debug("artifact", $"our node: {currentNode.Id}");
+        _sawmill.Debug("artifact", $"other nodes: {string.Join(", ", allNodes)}");
 
         if (TryComp<BiasedArtifactComponent>(uid, out var bias) &&
             TryComp<TraversalDistorterComponent>(bias.Provider, out var trav) &&
@@ -221,14 +225,14 @@ public sealed partial class ArtifactSystem : EntitySystem
         }
 
         var undiscoveredNodes = allNodes.Where(x => !GetNodeFromId(x, component).Discovered).ToList();
-        Logger.DebugS("artifact", $"Undiscovered nodes: {string.Join(", ", undiscoveredNodes)}");
+        _sawmill.Debug("artifact", $"Undiscovered nodes: {string.Join(", ", undiscoveredNodes)}");
         var newNode = _random.Pick(allNodes);
         if (undiscoveredNodes.Any() && _random.Prob(0.75f))
         {
             newNode = _random.Pick(undiscoveredNodes);
         }
 
-        Logger.DebugS("artifact", $"Going to node {newNode}");
+        _sawmill.Debug("artifact", $"Going to node {newNode}");
         return GetNodeFromId(newNode, component);
     }
 
