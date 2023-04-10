@@ -477,7 +477,7 @@
   noSpawn: true
   name: deep space EVA helmet
   suffix: Pirate
-  description: A deep space eva helmet, very heavy but provides good protection.
+  description: A deep space EVA helmet, very heavy but provides good protection.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/pirateeva.rsi
