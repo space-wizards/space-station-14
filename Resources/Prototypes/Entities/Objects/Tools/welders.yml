@@ -60,6 +60,9 @@
     color: orange
   - type: Appearance
   - type: RequiresEyeProtection
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 200
   - type: StaticPrice
     price: 40
   - type: IgnitionSource
