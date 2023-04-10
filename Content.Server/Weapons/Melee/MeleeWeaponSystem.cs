@@ -221,9 +221,20 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         return Math.Clamp(chance, 0f, 1f);
     }
 
-    public override void DoLunge(EntityUid user, Angle angle, Vector2 localPos, string? animation)
+    public override void DoLunge(EntityUid user, Angle angle, Vector2 localPos, string? animation, bool predicted = true)
     {
-        RaiseNetworkEvent(new MeleeLungeEvent(user, angle, localPos, animation), Filter.PvsExcept(user, entityManager: EntityManager));
+        Filter filter;
+
+        if (predicted)
+        {
+            filter = Filter.PvsExcept(user, entityManager: EntityManager);
+        }
+        else
+        {
+            filter = Filter.Pvs(user, entityManager: EntityManager);
+        }
+
+        RaiseNetworkEvent(new MeleeLungeEvent(user, angle, localPos, animation), filter);
     }
 
     private void OnChemicalInjectorHit(EntityUid owner, MeleeChemicalInjectorComponent comp, MeleeHitEvent args)
