@@ -1,10 +1,4 @@
 Entries:
-- author: Whisper
-  changes:
-  - {message: Reduced the sizes of all standard boxes to their original size of 30.
-      Enjoy the extra *1* space! (31 ->30), type: Tweak}
-  id: 2871
-  time: '2023-01-15T04:12:31.0000000+00:00'
 - author: Morb0
   changes:
   - {message: Added 23 new markings for diona's, type: Add}
@@ -2915,3 +2909,11 @@ Entries:
   - {message: A new faction for the pet to attack only those worth attacking., type: Tweak}
   id: 3370
   time: '2023-04-10T04:33:23.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added the material reclaimer. Insert junk you don't want to grind it
+      up into its raw material form. Try stuff out!, type: Add}
+  - {message: Fixed a few material exploit methods., type: Fix}
+  - {message: Slightly nerfed lathe material reduction upgrades., type: Tweak}
+  id: 3371
+  time: '2023-04-10T04:38:20.0000000+00:00'
