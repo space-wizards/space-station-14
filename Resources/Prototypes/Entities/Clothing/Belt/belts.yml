@@ -6,6 +6,8 @@
   name: utility belt
   description: Can hold various things.
   components:
+  - type: Storage
+    capacity: 50
   - type: Sprite
     sprite: Clothing/Belt/utility.rsi
   - type: Clothing
