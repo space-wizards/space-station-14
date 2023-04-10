@@ -1,45 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed solution visuals not working properly, type: Fix}
-  id: 2863
-  time: '2023-01-14T00:21:15.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: Added custom diona scream sound, type: Tweak}
-  id: 2864
-  time: '2023-01-14T01:58:17.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug that causes the verb menu to get stuck waiting for the server.,
-    type: Fix}
-  id: 2865
-  time: '2023-01-14T01:59:11.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Resprited sterile swabs, the diagnoser, and the vaccinator.', type: Tweak}
-  id: 2866
-  time: '2023-01-14T03:56:11.0000000+00:00'
-- author: Jezithyr
-  changes:
-  - {message: fixed constant thudding sound playing when in crit, type: Fix}
-  - {message: fixed being able to attack while downed/dead, type: Fix}
-  - {message: fix for health alert not showing properly on spawn, type: Fix}
-  - {message: fixed improper sprite being shown on the hud for full health, type: Fix}
-  id: 2867
-  time: '2023-01-14T09:32:57.0000000+00:00'
-- author: checkraze
-  changes:
-  - {message: Added textiles crate to cargo, type: Add}
-  id: 2868
-  time: '2023-01-14T18:32:01.0000000+00:00'
-- author: checkraze
-  changes:
-  - {message: Added Dinnerware crate and Bar Supply crate to cargo, type: Add}
-  - {message: Moved some items from the Kitchen Supply crate to the Dinnerware Crate,
-    type: Tweak}
-  id: 2869
-  time: '2023-01-14T18:37:02.0000000+00:00'
 - author: Jackrost
   changes:
   - {message: Space Villain arcade prizes now limited. Number of prizes are randomized,
@@ -2919,3 +2878,40 @@ Entries:
       capable of breathing oxygen!, type: Tweak}
   id: 3362
   time: '2023-04-09T02:35:07.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: 'Added in hand sprites for: ties, scarves and moth mask.', type: Add}
+  id: 3363
+  time: '2023-04-09T21:42:17.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Broken cuffs are now marked as trash., type: Add}
+  - {message: Broken makeshift handcuffs are now the correct color., type: Fix}
+  id: 3364
+  time: '2023-04-09T21:44:24.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Changed to scull icon for Pirates spawner., type: Tweak}
+  id: 3365
+  time: '2023-04-09T21:50:29.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Added motobike spawner!, type: Add}
+  id: 3366
+  time: '2023-04-09T21:57:40.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Fixed chemical bottles are now breaking!, type: Fix}
+  id: 3367
+  time: '2023-04-09T21:58:22.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Nanotrasen has updated their ethics policies and have supplied sustenance
+      vendors to perma prisoners., type: Add}
+  id: 3368
+  time: '2023-04-09T22:00:23.0000000+00:00'
+- author: lzk
+  changes:
+  - {message: Added MK58 crate, type: Add}
+  id: 3369
+  time: '2023-04-09T22:06:30.0000000+00:00'
