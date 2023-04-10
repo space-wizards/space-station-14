@@ -142,9 +142,15 @@ public sealed class ClientClothingSystem : ClothingSystem
         var correctedSlot = slot;
         TemporarySlotMap.TryGetValue(correctedSlot, out correctedSlot);
 
-        var state = (clothing.EquippedPrefix == null)
-            ? $"equipped-{correctedSlot}"
-            : $"{clothing.EquippedPrefix}-equipped-{correctedSlot}";
+
+
+        var state = $"equipped-{correctedSlot}";
+
+        if (clothing.EquippedPrefix != null)
+            state = $"{clothing.EquippedPrefix}-equipped-{correctedSlot}";
+
+        if (clothing.EquippedState != null)
+            state = $"{clothing.EquippedState}";
 
         // species specific
         if (speciesId != null && rsi.TryGetState($"{state}-{speciesId}", out _))
