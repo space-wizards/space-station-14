@@ -73,7 +73,7 @@ public sealed partial class ArtifactSystem : EntitySystem
     }
 
     /// <summary>
-    /// Calculates how many research points the artifact is worht
+    /// Calculates how many research points the artifact is worth
     /// </summary>
     /// <remarks>
     /// General balancing (for fully unlocked artifacts):
@@ -197,12 +197,8 @@ public sealed partial class ArtifactSystem : EntitySystem
         var currentNode = GetNodeFromId(component.CurrentNodeId.Value, component);
 
         var allNodes = currentNode.Edges;
-        Logger.Debug($"our node: {currentNode.Id}");
-        Logger.Debug("other nodes:");
-        foreach (var other in allNodes)
-        {
-            Logger.Debug($"{other}");
-        }
+        Logger.DebugS("artifact", $"our node: {currentNode.Id}");
+        Logger.DebugS("artifact", $"other nodes: {string.Join(", ", allNodes)}");
 
         if (TryComp<BiasedArtifactComponent>(uid, out var bias) &&
             TryComp<TraversalDistorterComponent>(bias.Provider, out var trav) &&
@@ -224,13 +220,15 @@ public sealed partial class ArtifactSystem : EntitySystem
             }
         }
 
-        var undiscoveredNodes = allNodes.Where(x => GetNodeFromId(x, component).Discovered).ToList();
+        var undiscoveredNodes = allNodes.Where(x => !GetNodeFromId(x, component).Discovered).ToList();
+        Logger.DebugS("artifact", $"Undiscovered nodes: {string.Join(", ", undiscoveredNodes)}");
         var newNode = _random.Pick(allNodes);
         if (undiscoveredNodes.Any() && _random.Prob(0.75f))
         {
             newNode = _random.Pick(undiscoveredNodes);
         }
 
+        Logger.DebugS("artifact", $"Going to node {newNode}");
         return GetNodeFromId(newNode, component);
     }
 
