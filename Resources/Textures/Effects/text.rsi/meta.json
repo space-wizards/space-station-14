@@ -1,6 +1,7 @@
 {
   "version": 1,
-  "copyright": "Github @Rolfero",
+  "license": "CC0-1.0",
+  "copyright": "Created by rolfero (github) for Space Station 14",
   "size": {
     "x": 4,
     "y": 6

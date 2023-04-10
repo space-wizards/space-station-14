@@ -2,81 +2,80 @@ using Content.Shared.MachineLinking;
 using Robust.Client.GameObjects;
 using Robust.Shared.Timing;
 
-namespace Content.Client.MachineLinking.UI
+namespace Content.Client.MachineLinking.UI;
+
+public sealed class SignalTimerBoundUserInterface : BoundUserInterface
 {
-    public sealed class SignalTimerBoundUserInterface : BoundUserInterface
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+
+    private SignalTimerWindow? _window;
+
+    public SignalTimerBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
+    }
 
-        private SignalTimerWindow? _window;
+    protected override void Open()
+    {
+        base.Open();
 
-        public SignalTimerBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
-        {
-        }
+        _window = new SignalTimerWindow(this);
 
-        protected override void Open()
-        {
-            base.Open();
+        if (State != null)
+            UpdateState(State);
 
-            _window = new SignalTimerWindow(this);
+        _window.OpenCentered();
+        _window.OnClose += Close;
+        _window.OnCurrentTextChanged += OnTextChanged;
+        _window.OnCurrentDelayMinutesChanged += OnDelayChanged;
+        _window.OnCurrentDelaySecondsChanged += OnDelayChanged;
+    }
 
-            if (State != null)
-                UpdateState(State);
+    public void OnStartTimer()
+    {
+        SendMessage(new SignalTimerStartMessage());
+    }
 
-            _window.OpenCentered();
-            _window.OnClose += Close;
-            _window.OnCurrentTextChanged += OnTextChanged;
-            _window.OnCurrentDelayMinutesChanged += OnDelayChanged;
-            _window.OnCurrentDelaySecondsChanged += OnDelayChanged;
-        }
+    private void OnTextChanged(string newText)
+    {
+        SendMessage(new SignalTimerTextChangedMessage(newText));
+    }
 
-        public void OnStartTimer()
-        {
-            SendMessage(new SignalTimerStartMessage(Owner.Owner));
-        }
+    private void OnDelayChanged(string newDelay)
+    {
+        if (_window == null)
+            return;
+        SendMessage(new SignalTimerDelayChangedMessage(_window.GetDelay()));
+    }
 
-        private void OnTextChanged(string newText)
-        {
-            SendMessage(new SignalTimerTextChangedMessage(newText));
-        }
+    public TimeSpan GetCurrentTime()
+    {
+        return _gameTiming.CurTime;
+    }
 
-        private void OnDelayChanged(string newDelay)
-        {
-            if (_window == null)
-                return;
-            SendMessage(new SignalTimerDelayChangedMessage(_window.GetDelay()));
-        }
+    /// <summary>
+    /// Update the UI state based on server-sent info
+    /// </summary>
+    /// <param name="state"></param>
+    protected override void UpdateState(BoundUserInterfaceState state)
+    {
+        base.UpdateState(state);
 
-        public TimeSpan GetCurrentTime()
-        {
-            return _gameTiming.CurTime;
-        }
+        if (_window == null || state is not SignalTimerBoundUserInterfaceState cast)
+            return;
 
-        /// <summary>
-        /// Update the UI state based on server-sent info
-        /// </summary>
-        /// <param name="state"></param>
-        protected override void UpdateState(BoundUserInterfaceState state)
-        {
-            base.UpdateState(state);
+        _window.SetCurrentText(cast.CurrentText);
+        _window.SetCurrentDelayMinutes(cast.CurrentDelayMinutes);
+        _window.SetCurrentDelaySeconds(cast.CurrentDelaySeconds);
+        _window.SetShowText(cast.ShowText);
+        _window.SetTriggerTime(cast.TriggerTime);
+        _window.SetTimerStarted(cast.TimerStarted);
+        _window.SetHasAccess(cast.HasAccess);
+    }
 
-            if (_window == null || state is not SignalTimerBoundUserInterfaceState cast)
-                return;
-
-            _window.SetCurrentText(cast.CurrentText);
-            _window.SetCurrentDelayMinutes(cast.CurrentDelayMinutes);
-            _window.SetCurrentDelaySeconds(cast.CurrentDelaySeconds);
-            _window.SetShowText(cast.ShowText);
-            _window.SetTriggerTime(cast.TriggerTime);
-            _window.SetTimerStarted(cast.TimerStarted);
-            _window.SetHasAccess(cast.HasAccess);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing) return;
-            _window?.Dispose();
-        }
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        if (!disposing) return;
+        _window?.Dispose();
     }
 }

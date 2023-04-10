@@ -10,7 +10,6 @@ using Robust.Server.GameObjects;
 using Content.Shared.Wires;
 using Content.Server.MachineLinking.Events;
 using Content.Server.MachineLinking.System;
-using Content.Server.MachineLinking.Components;
 
 namespace Content.Server.Doors.Systems
 {

@@ -7,14 +7,15 @@
     snap:
     - Wallmount
   components:
+  - type: Transform
+    anchored: true
   - type: WallMount
     arc: 360
   - type: Clickable
   - type: InteractionOutline
-  - type: Physics
-    canCollide: false
   - type: Sprite
     sprite: Structures/Wallmounts/switch.rsi
+    netsync: false
     state: on
   - type: Appearance
   - type: Rotatable
@@ -31,6 +32,13 @@
     interfaces:
     - key: enum.SignalTimerUiKey.Key
       type: SignalTimerBoundUserInterface
+  - type: ApcPowerReceiver
+    powerLoad: 100
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
+  - type: ExtensionCableReceiver
+  - type: ActivatableUIRequiresPower
       
 - type: entity
   id: ScreenTimer
