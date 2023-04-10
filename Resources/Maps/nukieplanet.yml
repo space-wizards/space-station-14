@@ -8435,31 +8435,6 @@ entities:
   - pos: -21.5,1.5
     parent: 104
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-    - shape: !type:PhysShapeCircle
-        radius: 0.2
-        position: 0,-0.5
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 413
   type: Catwalk
   components:
@@ -8558,31 +8533,6 @@ entities:
   - pos: -17.5,1.5
     parent: 104
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-    - shape: !type:PhysShapeCircle
-        radius: 0.2
-        position: 0,-0.5
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 429
   type: CableApcExtension
   components:
@@ -8613,31 +8563,6 @@ entities:
   - pos: -13.5,1.5
     parent: 104
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-    - shape: !type:PhysShapeCircle
-        radius: 0.2
-        position: 0,-0.5
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 434
   type: CableApcExtension
   components:
@@ -10956,31 +10881,6 @@ entities:
     pos: -17.5,-20.5
     parent: 104
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-    - shape: !type:PhysShapeCircle
-        radius: 0.2
-        position: 0,-0.5
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 817
   type: Catwalk
   components:
@@ -11099,31 +10999,6 @@ entities:
     pos: -25.5,-20.5
     parent: 104
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-    - shape: !type:PhysShapeCircle
-        radius: 0.2
-        position: 0,-0.5
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 836
   type: Catwalk
   components:
@@ -11242,31 +11117,6 @@ entities:
   - pos: -33.5,1.5
     parent: 104
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-    - shape: !type:PhysShapeCircle
-        radius: 0.2
-        position: 0,-0.5
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 855
   type: Catwalk
   components:
@@ -11305,31 +11155,6 @@ entities:
   - pos: -29.5,1.5
     parent: 104
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-    - shape: !type:PhysShapeCircle
-        radius: 0.2
-        position: 0,-0.5
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 861
   type: Catwalk
   components:
@@ -11343,62 +11168,12 @@ entities:
     pos: -29.5,-20.5
     parent: 104
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-    - shape: !type:PhysShapeCircle
-        radius: 0.2
-        position: 0,-0.5
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 863
   type: AirlockGlassShuttle
   components:
   - pos: -25.5,1.5
     parent: 104
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-    - shape: !type:PhysShapeCircle
-        radius: 0.2
-        position: 0,-0.5
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 864
   type: Catwalk
   components:
@@ -11688,31 +11463,6 @@ entities:
     pos: -33.5,-20.5
     parent: 104
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-    - shape: !type:PhysShapeCircle
-        radius: 0.2
-        position: 0,-0.5
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 909
   type: Catwalk
   components:
@@ -11754,31 +11504,6 @@ entities:
     pos: -21.5,-20.5
     parent: 104
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-    - shape: !type:PhysShapeCircle
-        radius: 0.2
-        position: 0,-0.5
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 915
   type: Catwalk
   components:
@@ -11907,31 +11632,6 @@ entities:
     pos: -13.5,-20.5
     parent: 104
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-    - shape: !type:PhysShapeCircle
-        radius: 0.2
-        position: 0,-0.5
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 936
   type: Catwalk
   components:
@@ -13956,20 +13656,6 @@ entities:
   - pos: -15.435635,22.055351
     parent: 104
     type: Transform
-  - fixtures:
-      fix1:
-        shape: !type:PolygonShape
-          vertices:
-          - 0.90000004,-0.90000004
-          - 0.90000004,0.90000004
-          - -0.90000004,0.90000004
-          - -0.90000004,-0.90000004
-        mask:
-        - Impassable
-        - HighImpassable
-        restitution: 0.3
-        friction: 0.2
-    type: Fixtures
 - uid: 1267
   type: AlwaysPoweredLightExterior
   components:

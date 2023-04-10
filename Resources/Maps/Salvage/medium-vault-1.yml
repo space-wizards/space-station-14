@@ -1535,22 +1535,6 @@ entities:
     type: Transform
   - locked: False
     type: Lock
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.25,-0.48
-        - 0.25,0.48
-        - -0.25,0.48
-        - -0.25,-0.48
-      mask:
-      - Impassable
-      - MidImpassable
-      - LowImpassable
-      layer:
-      - BulletImpassable
-      - Opaque
-      density: 145
-    type: Fixtures
   - open: True
     removedMasks: 20
     type: EntityStorage
