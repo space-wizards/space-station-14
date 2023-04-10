@@ -1,3 +1,4 @@
+using System.Globalization;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Vehicle.Components;
@@ -107,7 +108,8 @@ public abstract partial class SharedVehicleSystem : EntitySystem
         }
 
         UpdateBuckleOffset(args.Component, component);
-        UpdateDrawDepth(uid, GetDrawDepth(args.Component, component.NorthOnly));
+        if (TryComp<InputMoverComponent>(uid, out var mover))
+            UpdateDrawDepth(uid, GetDrawDepth(args.Component, component, mover.RelativeRotation.Degrees));
     }
 
     private void OnVehicleStartup(EntityUid uid, VehicleComponent component, ComponentStartup args)
@@ -129,24 +131,69 @@ public abstract partial class SharedVehicleSystem : EntitySystem
     /// change its draw depth. Vehicles can choose between special drawdetph
     /// when facing north or south. East and west are easy.
     /// </summary>
-    protected int GetDrawDepth(TransformComponent xform, bool northOnly)
+    protected int GetDrawDepth(TransformComponent xform, VehicleComponent component, double cameraDegrees)
     {
-        // TODO: I can't even
-        if (northOnly)
+        var cameraAngle = GetAngle(cameraDegrees + 90);
+
+        var itemAngle = GetAngle(xform.LocalRotation.Degrees + cameraAngle + 90);
+
+        var itemDirection = string.Empty;
+        var cameraDirection = cameraAngle switch
         {
-            return xform.LocalRotation.Degrees switch
-            {
-                < 135f => (int) DrawDepth.DrawDepth.Doors,
-                <= 225f => (int) DrawDepth.DrawDepth.WallMountedItems,
-                _ => 5
-            };
-        }
-        return xform.LocalRotation.Degrees switch
-        {
-            < 45f =>  (int) DrawDepth.DrawDepth.Doors,
-            <= 315f =>  (int) DrawDepth.DrawDepth.WallMountedItems,
-            _ =>  (int) DrawDepth.DrawDepth.Doors,
+            >= 0 and < 90 => "Right",
+            >= 90 and < 180 => "Down",
+            >= 180 and < 270 => "Left",
+            _ => "Up"
         };
+
+        switch (cameraDirection)
+        {
+            case "Down":
+            case "Up":
+                itemDirection = itemAngle switch
+                {
+                    >= 315 or < 45 => "Up",
+                    >= 45 and < 135 => "Left",
+                    >= 135 and < 225 => "Down",
+                    _ => "Right"
+                };
+                break;
+            case "Right":
+            case "Left":
+                itemDirection = itemAngle switch
+                {
+                    >= 315 or < 45 => "Down",
+                    >= 45 and < 135 => "Right",
+                    >= 135 and < 225 => "Up",
+                    _ => "Left"
+                };
+                break;
+        }
+
+        return itemDirection switch
+        {
+            "Up" => component.NorthOver ? (int) DrawDepth.DrawDepth.Doors : (int) DrawDepth.DrawDepth.WallMountedItems,
+            "Down" => component.SouthOver
+                ? (int) DrawDepth.DrawDepth.Doors
+                : (int) DrawDepth.DrawDepth.WallMountedItems,
+            "Left" => component.WestOver ? (int) DrawDepth.DrawDepth.Doors : (int) DrawDepth.DrawDepth.WallMountedItems,
+            "Right" => component.EastOver
+                ? (int) DrawDepth.DrawDepth.Doors
+                : (int) DrawDepth.DrawDepth.WallMountedItems,
+            _ => (int) DrawDepth.DrawDepth.Doors
+        };
+    }
+
+    private static int GetAngle(double degrees)
+    {
+        var angle = (int)(degrees) % 360;
+
+        if (angle < 0)
+        {
+            angle += 360;
+        }
+
+        return angle;
     }
 
     /// <summary>
