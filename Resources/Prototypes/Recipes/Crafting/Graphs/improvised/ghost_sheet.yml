@@ -8,7 +8,7 @@
           steps:
             - material: Cloth
               amount: 5
-              doAfter: 4
+              doAfter: 8
     - node: ghost_sheet
       entity: ClothingOuterGhostSheet
 
