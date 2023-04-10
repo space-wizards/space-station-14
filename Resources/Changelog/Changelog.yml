@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Added placement preview for decals, type: Add}
-  id: 2876
-  time: '2023-01-15T20:35:36.0000000+00:00'
 - author: Theomund
   changes:
   - {message: Construction and crafting messages now appear above the user instead
@@ -2916,3 +2911,9 @@ Entries:
   - {message: Material reclaimers no longer stack sound effects infinitely., type: Fix}
   id: 3375
   time: '2023-04-10T21:30:34.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed artifacts being biased towards nodes that were already discovered.,
+    type: Fix}
+  id: 3376
+  time: '2023-04-10T22:35:43.0000000+00:00'
