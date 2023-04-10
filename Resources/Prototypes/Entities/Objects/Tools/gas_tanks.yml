@@ -35,6 +35,11 @@
     damage:
       types:
         Blunt: 10
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 400
+  - type: StaticPrice
+    price: 20
 
 - type: entity
   parent: GasTankBase
@@ -109,6 +114,9 @@
     damage:
       types:
         Blunt: 5
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
 
 - type: entity
   parent: EmergencyOxygenTank

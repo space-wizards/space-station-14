@@ -95,8 +95,8 @@ namespace Content.Server.Access.Systems
             {
                 jobTitle = jobTitle.Trim();
 
-                if (jobTitle.Length > SharedIdCardConsoleComponent.MaxJobTitleLength)
-                    jobTitle = jobTitle[..SharedIdCardConsoleComponent.MaxJobTitleLength];
+                if (jobTitle.Length > IdCardConsoleComponent.MaxJobTitleLength)
+                    jobTitle = jobTitle[..IdCardConsoleComponent.MaxJobTitleLength];
             }
             else
             {
@@ -132,8 +132,8 @@ namespace Content.Server.Access.Systems
             if (!string.IsNullOrWhiteSpace(fullName))
             {
                 fullName = fullName.Trim();
-                if (fullName.Length > SharedIdCardConsoleComponent.MaxFullNameLength)
-                    fullName = fullName[..SharedIdCardConsoleComponent.MaxFullNameLength];
+                if (fullName.Length > IdCardConsoleComponent.MaxFullNameLength)
+                    fullName = fullName[..IdCardConsoleComponent.MaxFullNameLength];
             }
             else
             {
