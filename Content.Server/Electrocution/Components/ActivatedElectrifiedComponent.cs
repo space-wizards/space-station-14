@@ -9,6 +9,6 @@ public sealed class ActivatedElectrifiedComponent : Component
     /// <summary>
     /// How long electrified entity will remain active
     /// </summary>
-    [DataField("lifetime")]
-    public float Lifetime = 5f;
+    [ViewVariables]
+    public float TimeLeft = 1f;
 }
