@@ -7,6 +7,9 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shinyflask.rsi
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50
 
 - type: entity
   parent: DrinkBase

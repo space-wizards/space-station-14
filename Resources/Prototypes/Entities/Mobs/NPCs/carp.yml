@@ -20,10 +20,6 @@
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: base
     - type: CombatMode
-      disarmAction:
-        enabled: false
-        autoPopulate: false
-        name: action-name-disarm
     - type: Physics
     - type: Fixtures
       fixtures:
