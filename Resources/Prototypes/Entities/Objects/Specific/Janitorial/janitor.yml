@@ -12,6 +12,8 @@
     damage:
       types:
         Blunt: 10
+  - type: Spillable
+    solution: absorbed
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
@@ -24,7 +26,9 @@
   - type: SolutionContainerManager
     solutions:
       absorbed:
-        maxVol: 50
+        maxVol: 60
+  - type: UseDelay
+    delay: 1.5
   - type: Tag
     tags:
       - DroneUsable #No bucket because it holds chems, they can drag the cart or use a drain
@@ -43,13 +47,15 @@
       damage:
         types:
           Blunt: 10
+    - type: Spillable
+      solution: absorbed
     - type: Item
       size: 15
       sprite: Objects/Specific/Janitorial/advmop.rsi
     - type: Absorbent
-      maxEntities: 3
-      pickupAmount: 25
-      speed: 12.5
+      pickupAmount: 100
+    - type: UseDelay
+      delay: 1.0
     - type: SolutionContainerManager
       solutions:
         absorbed:
@@ -63,11 +69,11 @@
   name: mop bucket
   id: MopBucket
   description: Holds water and the tears of the janitor.
-  suffix: Full
   components:
   - type: Clickable
   - type: Sprite
     sprite: Objects/Specific/Janitorial/janitorial.rsi
+    netsync: false
     noRot: true
     layers:
     - state: mopbucket
@@ -80,9 +86,6 @@
     solutions:
       bucket:
         maxVol: 500
-        reagents:
-        - ReagentId: Water
-          Quantity: 250 # half-full at roundstart to leave room for puddles
   - type: Spillable
     spillDelay: 3.0
   - type: DrainableSolution
@@ -116,6 +119,25 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 3
     fillBaseName: mopbucket_water-
+
+- type: entity
+  name: mop bucket
+  id: MopBucketFull
+  parent: MopBucket
+  suffix: full
+  components:
+    - type: Sprite
+      layers:
+        - state: mopbucket
+        - state: mopbucket_water-3
+          map: [ "enum.SolutionContainerLayers.Fill" ]
+    - type: SolutionContainerManager
+      solutions:
+        bucket:
+          maxVol: 500
+          reagents:
+            - ReagentId: Water
+              Quantity: 500
 
 - type: entity
   name: wet floor sign

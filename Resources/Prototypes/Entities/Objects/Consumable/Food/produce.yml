@@ -502,24 +502,6 @@
         acts: [ "Destruction" ]
 
 - type: entity
-  name: tomato
-  id: PuddleTomato
-  parent: PuddleBase
-  description: Splat.
-  components:
-  - type: Sprite
-    sprite: Fluids/tomato_splat.rsi
-    state: puddle-0
-    netsync: false
-  - type: SolutionContainerManager
-    solutions:
-      puddle:
-        maxVol: 1000
-        reagents:
-        - ReagentId: JuiceTomato
-          Quantity: 10
-
-- type: entity
   name: eggplant
   parent: FoodProduceBase
   id: FoodEggplant
@@ -1096,24 +1078,6 @@
     butcheringType: Knife
     spawned:
     - id: ClothingHeadClothingHeadHatWatermelon
-
-- type: entity
-  name: watermelon
-  id: PuddleWatermelon
-  parent: PuddleBase
-  description: Splat.
-  components:
-  - type: Sprite
-    sprite: Fluids/tomato_splat.rsi
-    state: puddle-0
-    netsync: false
-  - type: SolutionContainerManager
-    solutions:
-      puddle:
-        maxVol: 1000
-        reagents:
-        - ReagentId: JuiceWatermelon
-          Quantity: 20
 
 - type: entity
   name: watermelon slice
