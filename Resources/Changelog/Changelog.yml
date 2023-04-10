@@ -1,10 +1,4 @@
 Entries:
-- author: Jackrost
-  changes:
-  - {message: Space Villain arcade prizes now limited. Number of prizes are randomized,
-    type: Tweak}
-  id: 2870
-  time: '2023-01-15T00:52:06.0000000+00:00'
 - author: Whisper
   changes:
   - {message: Reduced the sizes of all standard boxes to their original size of 30.
@@ -2915,3 +2909,9 @@ Entries:
   - {message: Added MK58 crate, type: Add}
   id: 3369
   time: '2023-04-09T22:06:30.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: 'New pet spider for HoS, can attack tarantulas and rats.', type: Add}
+  - {message: A new faction for the pet to attack only those worth attacking., type: Tweak}
+  id: 3370
+  time: '2023-04-10T04:33:23.0000000+00:00'
