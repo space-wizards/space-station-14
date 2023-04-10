@@ -56,8 +56,6 @@
   - type: Pullable
   - type: Examiner
   - type: Puller
-  - type: Recyclable
-    safe: false
   - type: StandingState
   - type: Alerts
   - type: Tag

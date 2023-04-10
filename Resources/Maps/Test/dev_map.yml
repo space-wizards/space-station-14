@@ -266,12 +266,6 @@ entities:
   - pos: 10.5,25.5
     parent: 179
     type: Transform
-- uid: 42
-  type: PuddleVomit
-  components:
-  - pos: 9.5,16.5
-    parent: 179
-    type: Transform
 - uid: 43
   type: WallSolid
   components:
@@ -536,12 +530,6 @@ entities:
   - pos: 17.5,15.5
     parent: 179
     type: Transform
-- uid: 87
-  type: PuddleVomit
-  components:
-  - pos: 8.5,15.5
-    parent: 179
-    type: Transform
 - uid: 88
   type: ChairOfficeLight
   components:
@@ -685,12 +673,6 @@ entities:
   - pos: 10.5,15.5
     parent: 179
     type: Transform
-- uid: 111
-  type: PuddleVomit
-  components:
-  - pos: 8.5,16.5
-    parent: 179
-    type: Transform
 - uid: 112
   type: WallSolid
   components:
@@ -713,12 +695,6 @@ entities:
   type: WaterTankFull
   components:
   - pos: 4.5,18.5
-    parent: 179
-    type: Transform
-- uid: 116
-  type: PuddleVomit
-  components:
-  - pos: 9.5,15.5
     parent: 179
     type: Transform
 - uid: 117

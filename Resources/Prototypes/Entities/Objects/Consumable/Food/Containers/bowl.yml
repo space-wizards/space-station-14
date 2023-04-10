@@ -69,7 +69,9 @@
   - type: Tag
     tags:
     - Trash
-  - type: Recyclable
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 50
   - type: SpaceGarbage
   - type: StaticPrice
     price: 0
