@@ -455,6 +455,38 @@
         Cold: 0.2
         Radiation: 0.2
 
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitPirateCap
+  noSpawn: true
+  name: ancient hardsuit helmet
+  suffix: Pirate
+  description: Special hardsuit helmet, made for the captain of a pirate ship.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/piratecaptainhelm.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/piratecaptainhelm.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
+
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitPirateEVA
+  noSpawn: true
+  name: deep space EVA helmet
+  suffix: Pirate
+  description: A deep space EVA helmet, very heavy but provides good protection.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/pirateeva.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/pirateeva.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
+
 #ERT
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
