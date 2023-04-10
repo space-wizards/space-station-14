@@ -16,6 +16,7 @@
     - type: Appearance
     - type: ParticleAcceleratorPartVisuals
       stateBase: unlit
+    - type: ParticleAcceleratorPart
     - type: ParticleAcceleratorPowerBox
     - type: PowerConsumer
       voltage: High

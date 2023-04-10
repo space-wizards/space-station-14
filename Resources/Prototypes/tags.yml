@@ -303,6 +303,9 @@
   id: HidesHair # for headwear.
 
 - type: Tag
+  id: HighRiskItem
+
+- type: Tag
   id: Hoe
 
 - type: Tag

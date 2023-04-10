@@ -462,3 +462,69 @@
     tags:
     - CannotSuicide
 
+- type: entity
+  name: Shiva
+  parent: MobGiantSpider
+  id: MobSpiderShiva
+  description: The first defender of the station.
+  components:
+  - type: Faction
+    factions:
+      - PetsNT
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: shiva
+      sprite: Mobs/Pets/shiva.rsi
+  - type: HTN
+    rootTask: SimpleHostileCompound
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      density: 130
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+  - type: Appearance
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: shiva
+      Critical:
+        Base: shiva_dead
+      Dead:
+        Base: shiva_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatSpider
+      amount: 2
+  - type: CombatMode
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      90: Critical
+      150: Dead
+  - type: MeleeWeapon
+    hidden: true
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 8
+        Poison: 8
+  - type: ReplacementAccent
+    accent: xeno
+  - type: NoSlip
+  - type: Spider
+  - type: IgnoreSpiderWeb
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female

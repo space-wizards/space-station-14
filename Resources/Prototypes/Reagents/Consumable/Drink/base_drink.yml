@@ -2,6 +2,7 @@
   id: BaseDrink
   group: Drinks
   abstract: true
+  slippery: true
   metabolisms:
     Drink:
       effects:

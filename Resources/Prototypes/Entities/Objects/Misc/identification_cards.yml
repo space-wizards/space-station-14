@@ -107,6 +107,10 @@
     heldPrefix: gold
   - type: PresetIdCard
     job: Captain
+  - type: Tag
+    tags:
+      - WhitelistChameleon
+      - HighRiskItem
 
 - type: entity
   parent: IDCardStandard
@@ -548,7 +552,7 @@
     - state: idzookeeper
   - type: PresetIdCard
     job: Zookeeper
-    
+
 - type: entity
   parent: IDCardStandard
   id: DetectiveIDCard
@@ -572,7 +576,7 @@
     - state: idcentcom
   - type: Item
     heldPrefix: gold
-    
+
 
 - type: entity
   parent: IDCardStandard
