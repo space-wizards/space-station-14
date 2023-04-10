@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed decal removal not working properly., type: Fix}
-  id: 2875
-  time: '2023-01-15T20:23:32.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Added placement preview for decals, type: Add}
@@ -2916,3 +2911,8 @@ Entries:
   - {message: Added robust nukie drink in EMAGGED sustenance vendor!, type: Add}
   id: 3374
   time: '2023-04-10T21:29:15.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Material reclaimers no longer stack sound effects infinitely., type: Fix}
+  id: 3375
+  time: '2023-04-10T21:30:34.0000000+00:00'
