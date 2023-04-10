@@ -716,3 +716,60 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertjanitor.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTJanitor
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitPirateCap
+  name: ancient armored hardsuit
+  suffix: Pirate
+  description: An ancient armored hardsuit.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/piratecaptain.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/piratecaptain.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.8
+        Piercing: 0.85
+        Heat: 0.4
+        Radiation: 0.2
+  - type: ExplosionResistance
+    damageCoefficient: 0.6
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitPirateCap
+
+- type: entity
+  parent:  ClothingOuterHardsuitBase
+  id:  ClothingOuterHardsuitPirateEVA
+  name: deep space EVA suit
+  suffix: Pirate
+  description: A heavy space suit that provides some basic protection from the cold harsh realities of deep space.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/pirateeva.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/pirateeva.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 0.6
+    sprintModifier: 0.6
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.9
+        Heat: 0.4
+        Radiation: 0.2
+  - type: ExplosionResistance
+    damageCoefficient: 0.7
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitPirateEVA
