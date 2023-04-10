@@ -11,10 +11,10 @@ public abstract class SharedKitchenSpikeSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SharedKitchenSpikeComponent, CanDropTargetEvent>(OnCanDrop);
+        SubscribeLocalEvent<KitchenSpikeComponent, CanDropTargetEvent>(OnCanDrop);
     }
 
-    private void OnCanDrop(EntityUid uid, SharedKitchenSpikeComponent component, ref CanDropTargetEvent args)
+    private void OnCanDrop(EntityUid uid, KitchenSpikeComponent component, ref CanDropTargetEvent args)
     {
         if (args.Handled)
             return;

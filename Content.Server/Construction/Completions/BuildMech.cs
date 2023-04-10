@@ -1,7 +1,7 @@
-using Content.Server.Mech.Components;
 using Content.Server.Mech.Systems;
 using Content.Server.Power.Components;
 using Content.Shared.Construction;
+using Content.Shared.Mech.Components;
 using JetBrains.Annotations;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
