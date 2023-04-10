@@ -125,15 +125,15 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - id: slipFixture
-      shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
-      mask:
-      - ItemMask
-      layer:
-      - SlipLayer
-      hard: false
+      slipFixture:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        mask:
+        - ItemMask
+        layer:
+        - SlipLayer
+        hard: false
   - type: Sprite
     sprite: Fluids/vomit.rsi
     state: vomit-0
