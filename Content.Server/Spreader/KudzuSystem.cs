@@ -10,6 +10,8 @@ public sealed class KudzuSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
+    private const string KudzuGroup = "kudzu";
+
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -56,7 +58,7 @@ public sealed class KudzuSystem : EntitySystem
 
     private void OnKudzuUpdateRate(ref SpreadGroupUpdateRate args)
     {
-        if (args.Name != "kudzu")
+        if (args.Name != KudzuGroup)
             return;
 
         args.UpdatesPerSecond = 1;
