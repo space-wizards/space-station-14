@@ -1,5 +1,4 @@
 using Robust.Shared.Prototypes;
-using Spreader;
 
 namespace Content.Shared.Spreader;
 
