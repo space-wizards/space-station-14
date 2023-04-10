@@ -41,7 +41,6 @@
       highVoltageNode: high
       mediumVoltageNode: medium
       lowVoltageNode: low
-    - type: SyncElectrified
     - type: NodeContainer
       nodes:
         high:

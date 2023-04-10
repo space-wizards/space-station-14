@@ -79,7 +79,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     public override void Update(float frameTime)
     {
         UpdateElectrocutions(frameTime);
-        UpdateState();
+        UpdateState(frameTime);
     }
 
     private void UpdateElectrocutions(float frameTime)
@@ -112,16 +112,15 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         }
     }
 
-    private void UpdateState()
+    private void UpdateState(float frameTime)
     {
-        var query = EntityQueryEnumerator<SyncElectrifiedComponent, ElectrifiedComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var syncElectrified, out var electrified, out var transform))
+        var query = EntityQueryEnumerator<ActivatedElectrifiedComponent, ElectrifiedComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var activated, out var electrified, out var transform))
         {
-            var wasPowered = syncElectrified.Powered;
-            syncElectrified.Powered = IsPowered(uid, electrified, transform);
-            if (wasPowered != syncElectrified.Powered)
-            {
-                UpdateAppearance(uid, syncElectrified);
+            activated.Lifetime -= frameTime;
+            if (activated.Lifetime <= 0 || !IsPowered(uid, electrified, transform)) {
+                _appearance.SetData(uid, ElectrifiedVisuals.IsPowered, false);
+                RemComp<ActivatedElectrifiedComponent>(uid);
             }
         }
     }
@@ -147,11 +146,6 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             return false;
 
         return true;
-    }
-
-    private void UpdateAppearance(EntityUid uid, SyncElectrifiedComponent component)
-    {
-        _appearance.SetData(uid, ElectrifiedVisuals.IsPowered, component.Powered);
     }
 
     private void OnElectrifiedStartCollide(EntityUid uid, ElectrifiedComponent electrified, ref StartCollideEvent args)
@@ -195,6 +189,9 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
         if (!IsPowered(uid, electrified, transform))
             return false;
+
+        EnsureComp<ActivatedElectrifiedComponent>(uid);
+        _appearance.SetData(uid, ElectrifiedVisuals.IsPowered, true);
 
         siemens *= electrified.SiemensCoefficient;
         if (siemens <= 0 || !DoCommonElectrocutionAttempt(targetUid, uid, ref siemens))
