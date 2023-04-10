@@ -34,7 +34,7 @@ namespace Content.Server.Repairable
             else
             {
                 // Repair all damage
-                _damageableSystem.SetAllDamage(damageable, 0);
+                _damageableSystem.SetAllDamage(uid, damageable, 0);
                 _adminLogger.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(uid):target} back to full health");
             }
 

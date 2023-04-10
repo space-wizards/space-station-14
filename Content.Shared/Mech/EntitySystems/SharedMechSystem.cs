@@ -155,7 +155,7 @@ public abstract class SharedMechSystem : EntitySystem
 
         args.Entities.Add(pilot.Value);
         _access.FindAccessItemsInventory(pilot.Value, out var items);
-        args.Entities = args.Entities.Union(items).ToHashSet();
+        args.Entities.UnionWith(items);
     }
 
     private void SetupUser(EntityUid mech, EntityUid pilot, SharedMechComponent? component = null)
