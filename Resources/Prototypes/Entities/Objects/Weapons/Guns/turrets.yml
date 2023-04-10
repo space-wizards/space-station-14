@@ -22,6 +22,16 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Actions
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.45,-0.45,0.45,0.45"
+          density: 60
+          mask:
+            - MachineMask
+          layer:
+            - MachineLayer
     - type: ContainerContainer
       containers:
         ballistic-ammo: !type:Container
@@ -47,6 +57,12 @@
       damageContainer: Inorganic
     - type: Destructible
       thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 600
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
         - trigger:
             !type:DamageTrigger
             damage: 300

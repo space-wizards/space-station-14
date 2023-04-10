@@ -103,14 +103,6 @@
         Heat: 0.95
 
 - type: entity
-  parent: ClothingMaskGas
-  id: ClothingMaskGasVoiceMasker
-  name: gas mask
-  suffix: Voice Mask
-  components:
-    - type: VoiceMasker
-
-- type: entity
   parent: ClothingMaskPullableBase
   id: ClothingMaskBreathMedical
   name: medical mask
@@ -145,7 +137,10 @@
   - type: Tag
     tags:
     - PetWearable
-  - type: Recyclable
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50
+      Plastic: 100
 
 - type: entity
   parent: ClothingMaskBase
@@ -244,6 +239,6 @@
     sprite: Clothing/Mask/cluwne.rsi
   - type: Clothing
     sprite: Clothing/Mask/cluwne.rsi
-  - type: Unremoveable 
+  - type: Unremoveable
   - type: AddAccentClothing
     accent: StutteringAccent

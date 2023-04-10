@@ -1,8 +1,7 @@
-﻿using Content.Server.DoAfter;
-using Content.Server.Mech.Components;
-using Content.Server.Popups;
+﻿using Content.Server.Popups;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
+using Content.Shared.Mech.Components;
 using Content.Shared.Mech.Equipment.Components;
 
 namespace Content.Server.Mech.Systems;
@@ -13,14 +12,14 @@ namespace Content.Server.Mech.Systems;
 public sealed class MechEquipmentSystem : EntitySystem
 {
     [Dependency] private readonly MechSystem _mech = default!;
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         SubscribeLocalEvent<MechEquipmentComponent, AfterInteractEvent>(OnUsed);
-        SubscribeLocalEvent<MechEquipmentComponent, DoAfterEvent<InsertEquipmentEvent>>(OnInsertEquipment);
+        SubscribeLocalEvent<MechEquipmentComponent, InsertEquipmentEvent>(OnInsertEquipment);
     }
 
     private void OnUsed(EntityUid uid, MechEquipmentComponent component, AfterInteractEvent args)
@@ -46,18 +45,16 @@ public sealed class MechEquipmentSystem : EntitySystem
 
         _popup.PopupEntity(Loc.GetString("mech-equipment-begin-install", ("item", uid)), mech);
 
-        var insertEquipment = new InsertEquipmentEvent();
-        var doAfterEventArgs = new DoAfterEventArgs(args.User, component.InstallDuration, target: mech, used: uid)
+        var doAfterEventArgs = new DoAfterArgs(args.User, component.InstallDuration, new InsertEquipmentEvent(), uid, target: mech, used: uid)
         {
-            BreakOnStun = true,
             BreakOnTargetMove = true,
             BreakOnUserMove = true
         };
 
-        _doAfter.DoAfter(doAfterEventArgs, insertEquipment);
+        _doAfter.TryStartDoAfter(doAfterEventArgs);
     }
 
-    private void OnInsertEquipment(EntityUid uid, MechEquipmentComponent component, DoAfterEvent<InsertEquipmentEvent> args)
+    private void OnInsertEquipment(EntityUid uid, MechEquipmentComponent component, InsertEquipmentEvent args)
     {
         if (args.Handled || args.Cancelled || args.Args.Target == null)
             return;
@@ -66,10 +63,5 @@ public sealed class MechEquipmentSystem : EntitySystem
         _mech.InsertEquipment(args.Args.Target.Value, uid);
 
         args.Handled = true;
-    }
-
-    private sealed class InsertEquipmentEvent : EntityEventArgs
-    {
-
     }
 }

@@ -16,6 +16,9 @@
   - type: Tag
     tags:
       - Trash
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 25
 
 - type: entity
   id: LeftArmBorg
@@ -36,7 +39,6 @@
     tags:
     - Trash
     - BorgArm
-  - type: Recyclable
 
 - type: entity
   id: RightArmBorg
@@ -57,4 +59,3 @@
     tags:
     - Trash
     - BorgArm
-  - type: Recyclable
