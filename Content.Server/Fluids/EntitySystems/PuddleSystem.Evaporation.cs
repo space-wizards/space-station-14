@@ -9,11 +9,6 @@ public sealed partial class PuddleSystem
 {
     private static readonly TimeSpan EvaporationCooldown = TimeSpan.FromSeconds(1);
 
-    /// <summary>
-    /// Assuming puddle is 20 units then ~1 minute for it to evaporate.
-    /// </summary>
-    private static readonly FixedPoint2 EvaporationAmount = FixedPoint2.New(0.3);
-
     public const string EvaporationReagent = "Water";
 
     private void OnEvaporationMapInit(EntityUid uid, EvaporationComponent component, MapInitEvent args)
@@ -43,8 +38,6 @@ public sealed partial class PuddleSystem
         var query = EntityQueryEnumerator<EvaporationComponent, PuddleComponent>();
         var xformQuery = GetEntityQuery<TransformComponent>();
         var curTime = _timing.CurTime;
-        var reagentTick = EvaporationAmount * EvaporationCooldown.TotalSeconds;
-
         while (query.MoveNext(out var uid, out var evaporation, out var puddle))
         {
             if (evaporation.NextTick > curTime)
@@ -55,6 +48,7 @@ public sealed partial class PuddleSystem
             if (!_solutionContainerSystem.TryGetSolution(uid, puddle.SolutionName, out var puddleSolution))
                 continue;
 
+            var reagentTick = evaporation.EvaporationAmount * EvaporationCooldown.TotalSeconds;
             puddleSolution.RemoveReagent(EvaporationReagent, reagentTick);
 
             // Despawn if we're done

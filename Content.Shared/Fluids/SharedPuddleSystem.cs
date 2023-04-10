@@ -6,6 +6,9 @@ namespace Content.Shared.Fluids;
 
 public abstract class SharedPuddleSystem : EntitySystem
 {
+    /// <summary>
+    /// The lowest threshold to be considered for puddle sprite states as well as slipperiness of a puddle.
+    /// </summary>
     public const float LowThreshold = 0.3f;
 
     public override void Initialize()

@@ -7,7 +7,7 @@ namespace Content.Shared.Fluids.Components
     /// <summary>
     /// Puddle on a floor
     /// </summary>
-    [RegisterComponent, NetworkedComponent]
+    [RegisterComponent, NetworkedComponent, Access(typeof(SharedPuddleSystem))]
     public sealed class PuddleComponent : Component
     {
         [DataField("spillSound")]

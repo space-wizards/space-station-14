@@ -4,7 +4,7 @@ using Content.Server.DoAfter;
 using Content.Server.Fluids.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reaction;
-using Content.Server.Kudzu;
+using Content.Server.Spreader;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.Examine;
@@ -27,6 +27,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Fluids.EntitySystems;
 
+/// <summary>
+/// Handles solutions on floors. Also handles the spreader logic for where the solution overflows a specified volume.
+/// </summary>
 public sealed partial class PuddleSystem : SharedPuddleSystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger= default!;
@@ -54,6 +57,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
      * This would then evaporate into the puddle tile below
      */
 
+    /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
@@ -209,6 +213,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         _reactive.DoEntityReaction(args.Slipped, splitSol, ReactionMethod.Touch);
     }
 
+    /// <inheritdoc/>
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -348,6 +353,9 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             QueueDel(uid);
     }
 
+    /// <summary>
+    ///     Gets the current volume of the given puddle, which may not necessarily be PuddleVolume.
+    /// </summary>
     public FixedPoint2 CurrentVolume(EntityUid uid, PuddleComponent? puddleComponent = null)
     {
         if (!Resolve(uid, ref puddleComponent))
@@ -424,6 +432,9 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         return CurrentVolume(uid, puddle) > puddle.OverflowVolume;
     }
 
+    /// <summary>
+    /// Gets the solution amount above the overflow threshold for the puddle.
+    /// </summary>
     public Solution GetOverflowSolution(EntityUid uid, PuddleComponent? puddle = null)
     {
         if (!Resolve(uid, ref puddle) || !_solutionContainerSystem.TryGetSolution(uid, puddle.SolutionName,
@@ -480,7 +491,8 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     }
 
     /// <summary>
-    ///     Spills solution at the specified grid coordinates.
+    ///     Spills solution at the specified coordinates.
+    /// Will add to an existing puddle if present or create a new one if not.
     /// </summary>
     public bool TrySpillAt(EntityCoordinates coordinates, Solution solution, out EntityUid puddleUid, bool sound = true)
     {
@@ -500,7 +512,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     }
 
     /// <summary>
-    ///     Spills the specified solution at the entity's location if possible.
+    /// <see cref="TrySpillAt(Robust.Shared.Map.EntityCoordinates,Content.Shared.Chemistry.Components.Solution,out Robust.Shared.GameObjects.EntityUid,bool)"/>
     /// </summary>
     public bool TrySpillAt(EntityUid uid, Solution solution, out EntityUid puddleUid, bool sound = true, TransformComponent? transformComponent = null)
     {
@@ -513,6 +525,9 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         return TrySpillAt(transformComponent.Coordinates, solution, out puddleUid, sound: sound);
     }
 
+    /// <summary>
+    /// <see cref="TrySpillAt(Robust.Shared.Map.EntityCoordinates,Content.Shared.Chemistry.Components.Solution,out Robust.Shared.GameObjects.EntityUid,bool)"/>
+    /// </summary>
     public bool TrySpillAt(TileRef tileRef, Solution solution, out EntityUid puddleUid, bool sound = true, bool tileReact = true)
     {
         if (solution.Volume <= 0)
@@ -597,6 +612,9 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
     #endregion
 
+    /// <summary>
+    /// Tries to get the relevant puddle entity for a tile.
+    /// </summary>
     public bool TryGetPuddle(TileRef tile, out EntityUid puddleUid)
     {
         puddleUid = EntityUid.Invalid;

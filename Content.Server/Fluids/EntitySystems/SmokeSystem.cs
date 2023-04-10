@@ -6,7 +6,7 @@ using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Chemistry.ReactionEffects;
 using Content.Server.Coordinates.Helpers;
-using Content.Server.Kudzu;
+using Content.Server.Spreader;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
@@ -14,11 +14,10 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Smoking;
+using Content.Shared.Spawners;
 using Content.Shared.Spawners.Components;
-using Content.Shared.Spawners.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -41,6 +40,7 @@ public sealed class SmokeSystem : EntitySystem
     [Dependency] private readonly ReactiveSystem _reactive = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
 
+    /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
@@ -177,6 +177,7 @@ public sealed class SmokeSystem : EntitySystem
         component.NextReact += args.PausedTime;
     }
 
+    /// <inheritdoc/>
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -194,7 +195,10 @@ public sealed class SmokeSystem : EntitySystem
         }
     }
 
-    public void SmokeReact(EntityUid uid, float averageExposures, SmokeComponent? component = null, TransformComponent? xform = null)
+    /// <summary>
+    /// Does the relevant smoke reactions for an entity for the specified exposure duration.
+    /// </summary>
+    public void SmokeReact(EntityUid uid, float frameTime, SmokeComponent? component = null, TransformComponent? xform = null)
     {
         if (!Resolve(uid, ref component, ref xform))
             return;
@@ -210,7 +214,7 @@ public sealed class SmokeSystem : EntitySystem
 
         var tile = mapGrid.GetTileRef(xform.Coordinates.ToVector2i(EntityManager, _mapManager));
 
-        var solutionFraction = 1 / Math.Floor(averageExposures);
+        var solutionFraction = 1 / Math.Floor(frameTime);
         var ents = _lookup.GetEntitiesIntersecting(tile, LookupFlags.Uncontained).ToArray();
 
         foreach (var reagentQuantity in solution.Contents.ToArray())
@@ -290,6 +294,9 @@ public sealed class SmokeSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Sets up a smoke component for spreading.
+    /// </summary>
     public void Start(EntityUid uid, SmokeComponent component, Solution solution, float duration)
     {
         TryAddSolution(uid, component, solution);
@@ -298,6 +305,9 @@ public sealed class SmokeSystem : EntitySystem
         timer.Lifetime = duration;
     }
 
+    /// <summary>
+    /// Adds the specified solution to the relevant smoke solution.
+    /// </summary>
     public void TryAddSolution(EntityUid uid, SmokeComponent component, Solution solution)
     {
         if (solution.Volume == FixedPoint2.Zero)

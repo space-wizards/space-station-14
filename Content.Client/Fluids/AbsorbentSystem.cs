@@ -5,6 +5,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Fluids;
 
+/// <inheritdoc/>
 public sealed class AbsorbentSystem : SharedAbsorbentSystem
 {
     public override void Initialize()

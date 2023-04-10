@@ -66,9 +66,3 @@ public abstract class SharedTimedDespawnSystem : EntitySystem
         public float Lifetime;
     }
 }
-
-/// <summary>
-/// Raised directed on an entity when its timed despawn is over.
-/// </summary>
-[ByRefEvent]
-public readonly record struct TimedDespawnEvent;

@@ -1,98 +1,64 @@
-using System.Linq;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.NodeGroups;
-using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
-using Content.Shared.Physics;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Kudzu;
-
-public sealed class SpreaderNode : Node
-{
-    public override IEnumerable<Node> GetReachableNodes(TransformComponent xform, EntityQuery<NodeContainerComponent> nodeQuery, EntityQuery<TransformComponent> xformQuery,
-        MapGridComponent? grid, IEntityManager entMan)
-    {
-        if (grid == null)
-            yield break;
-
-        entMan.System<SpreaderSystem>().GetNeighbors(xform.Owner, Name, out _, out _, out var neighbors);
-
-        foreach (var neighbor in neighbors)
-        {
-            if (!nodeQuery.TryGetComponent(neighbor, out var nodeContainer) ||
-                !nodeContainer.TryGetNode<SpreaderNode>(Name, out var neighborNode))
-            {
-                continue;
-            }
-
-            yield return neighborNode;
-        }
-    }
-}
-
-[RegisterComponent]
-public sealed class EdgeSpreaderComponent : Component
-{
-}
-
-[NodeGroup(NodeGroupID.Spreader)]
-public sealed class SpreaderNodeGroup : BaseNodeGroup
-{
-    private IEntityManager _entManager = default!;
-
-    public override void Initialize(Node sourceNode, IEntityManager entMan)
-    {
-        base.Initialize(sourceNode, entMan);
-        _entManager = entMan;
-    }
-
-    public override void RemoveNode(Node node)
-    {
-        base.RemoveNode(node);
-
-        foreach (var neighborNode in node.ReachableNodes)
-        {
-            if (_entManager.Deleted(neighborNode.Owner))
-                continue;
-
-            _entManager.EnsureComponent<EdgeSpreaderComponent>(neighborNode.Owner);
-        }
-    }
-}
+namespace Content.Server.Spreader;
 
 /// <summary>
-/// Handles generic spreading logic
+/// Handles generic spreading logic, where one anchored entity spreads to neighboring tiles.
 /// </summary>
 public sealed class SpreaderSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
     private static readonly TimeSpan SpreadCooldown = TimeSpan.FromSeconds(1);
 
-    private static readonly List<string> SpreaderGroups = new()
-    {
-        "kudzu",
-        "puddle",
-        "smoke",
-    };
+    private readonly List<string> _spreaderGroups = new();
 
+    /// <inheritdoc/>
     public override void Initialize()
     {
         SubscribeLocalEvent<AirtightChanged>(OnAirtightChanged);
         SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
         SubscribeLocalEvent<SpreaderGridComponent, EntityUnpausedEvent>(OnGridUnpaused);
+
+        SetupPrototypes();
+        _prototype.PrototypesReloaded += OnPrototypeReload;
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _prototype.PrototypesReloaded -= OnPrototypeReload;
+    }
+
+    private void OnPrototypeReload(PrototypesReloadedEventArgs obj)
+    {
+        if (!obj.ByType.ContainsKey(typeof(EdgeSpreaderPrototype)))
+            return;
+
+        SetupPrototypes();
+    }
+
+    private void SetupPrototypes()
+    {
+        _spreaderGroups.Clear();
+
+        foreach (var id in _prototype.EnumeratePrototypes<EdgeSpreaderPrototype>())
+        {
+            _spreaderGroups.Add(id.ID);
+        }
     }
 
     private void OnAirtightChanged(ref AirtightChanged ev)
@@ -121,6 +87,7 @@ public sealed class SpreaderSystem : EntitySystem
             comp.NextUpdate = nextUpdate;
     }
 
+    /// <inheritdoc/>
     public override void Update(float frameTime)
     {
         var curTime = _timing.CurTime;
@@ -167,7 +134,7 @@ public sealed class SpreaderSystem : EntitySystem
                 continue;
             }
 
-            foreach (var sGroup in SpreaderGroups)
+            foreach (var sGroup in _spreaderGroups)
             {
                 // Cleanup
                 if (!nodeQuery.TryGetComponent(uid, out var nodeComponent))
@@ -228,6 +195,9 @@ public sealed class SpreaderSystem : EntitySystem
         updates = ev.Updates;
     }
 
+    /// <summary>
+    /// Gets the neighboring node data for the specified entity and the specified node group.
+    /// </summary>
     public void GetNeighbors(EntityUid uid, string groupName, out ValueList<Vector2i> freeTiles, out ValueList<Vector2i> occupiedTiles, out ValueList<EntityUid> neighbors)
     {
         freeTiles = new ValueList<Vector2i>();
@@ -338,7 +308,7 @@ public sealed class SpreaderSystem : EntitySystem
                 if (!nodeQuery.TryGetComponent(ent, out var nodeContainer))
                     continue;
 
-                foreach (var name in SpreaderGroups)
+                foreach (var name in _spreaderGroups)
                 {
                     if (!nodeContainer.Nodes.ContainsKey(name))
                         continue;
@@ -352,40 +322,3 @@ public sealed class SpreaderSystem : EntitySystem
         return neighbors;
     }
 }
-
-/// <summary>
-/// Raised every tick to determine how many updates a particular spreading node group is allowed.
-/// </summary>
-[ByRefEvent]
-public record struct SpreadGroupUpdateRate()
-{
-    public string Name;
-    public int UpdatesPerSecond = 16;
-}
-
-[RegisterComponent]
-public sealed class SpreaderGridComponent : Component
-{
-    [DataField("nextUpdate", customTypeSerializer:typeof(TimeOffsetSerializer))]
-    public TimeSpan NextUpdate = TimeSpan.Zero;
-}
-
-/// <summary>
-/// Raised when trying to spread to neighboring tiles.
-/// If the spread is no longer able to happen you MUST cancel this event!
-/// </summary>
-[ByRefEvent]
-public record struct SpreadNeighborsEvent
-{
-    public MapGridComponent? Grid;
-    public ValueList<Vector2i> NeighborFreeTiles;
-    public ValueList<Vector2i> NeighborOccupiedTiles;
-    public ValueList<EntityUid> Neighbors;
-
-    /// <summary>
-    /// How many updates allowed are remaining.
-    /// Subscribers can handle as they wish.
-    /// </summary>
-    public int Updates;
-}
-

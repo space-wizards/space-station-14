@@ -4,6 +4,9 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Fluids;
 
+/// <summary>
+/// Mopping logic for interacting with puddle components.
+/// </summary>
 public abstract class SharedAbsorbentSystem : EntitySystem
 {
     public override void Initialize()

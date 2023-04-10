@@ -2,7 +2,7 @@ using Content.Shared.Kudzu;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Kudzu;
+namespace Content.Server.Spreader;
 
 public sealed class KudzuSystem : EntitySystem
 {
@@ -10,6 +10,7 @@ public sealed class KudzuSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
+    /// <inheritdoc/>
     public override void Initialize()
     {
         SubscribeLocalEvent<KudzuComponent, ComponentStartup>(SetupKudzu);
@@ -77,6 +78,7 @@ public sealed class KudzuSystem : EntitySystem
         _appearance.SetData(uid, KudzuVisuals.GrowthLevel, 1, appearance);
     }
 
+    /// <inheritdoc/>
     public override void Update(float frameTime)
     {
         var query = EntityQueryEnumerator<GrowingKudzuComponent, AppearanceComponent>();

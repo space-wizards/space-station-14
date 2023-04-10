@@ -432,6 +432,9 @@ namespace Content.Shared.Chemistry.Components
             _heatCapacity = 0;
         }
 
+        /// <summary>
+        /// Splits a solution without the specified reagent.
+        /// </summary>
         public Solution SplitSolutionWithout(FixedPoint2 toTake, string without)
         {
             TryGetReagent(without, out var existing);

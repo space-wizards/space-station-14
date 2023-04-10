@@ -14,6 +14,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Fluids.EntitySystems;
 
+/// <inheritdoc/>
 public sealed class AbsorbentSystem : SharedAbsorbentSystem
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;

@@ -75,7 +75,6 @@ namespace Content.Server.Chemistry.ReactionEffects
             }
 
             var smoke = args.EntityManager.System<SmokeSystem>();
-            smokeComponent.OverflowThreshold = OverflowThreshold;
             smokeComponent.SpreadAmount = spreadAmount;
             smoke.Start(ent, smokeComponent, splitSolution, _duration);
 
