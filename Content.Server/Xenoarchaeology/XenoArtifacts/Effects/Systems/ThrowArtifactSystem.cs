@@ -1,4 +1,5 @@
-﻿using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
+﻿using Content.Server.Maps;
+using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Shared.Maps;
 using Content.Shared.Throwing;
@@ -13,6 +14,7 @@ public sealed class ThrowArtifactSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
+    [Dependency] private readonly TileSystem _tile = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -33,7 +35,7 @@ public sealed class ThrowArtifactSystem : EntitySystem
                 if (!_random.Prob(component.TilePryChance))
                     continue;
 
-                tile.PryTile();
+                _tile.PryTile(tile);
             }
         }
 

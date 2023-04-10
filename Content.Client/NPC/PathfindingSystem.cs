@@ -18,6 +18,7 @@ namespace Content.Client.NPC
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IResourceCache _cache = default!;
+        [Dependency] private readonly NPCSteeringSystem _steering = default!;
 
         public PathfindingDebugMode Modes
         {
@@ -35,6 +36,15 @@ namespace Content.Client.NPC
                 else if (!overlayManager.HasOverlay<PathfindingOverlay>())
                 {
                     overlayManager.AddOverlay(new PathfindingOverlay(EntityManager, _eyeManager, _inputManager, _mapManager, _cache, this));
+                }
+
+                if ((value & PathfindingDebugMode.Steering) != 0x0)
+                {
+                    _steering.DebugEnabled = true;
+                }
+                else
+                {
+                    _steering.DebugEnabled = false;
                 }
 
                 _modes = value;
@@ -173,7 +183,7 @@ namespace Content.Client.NPC
 
                 foreach (var grid in _mapManager.FindGridsIntersecting(mouseWorldPos.MapId, aabb))
                 {
-                    if (found || !_system.Breadcrumbs.TryGetValue(grid.GridEntityId, out var crumbs) || !xformQuery.TryGetComponent(grid.GridEntityId, out var gridXform))
+                    if (found || !_system.Breadcrumbs.TryGetValue(grid.Owner, out var crumbs) || !xformQuery.TryGetComponent(grid.Owner, out var gridXform))
                         continue;
 
                     var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
@@ -243,12 +253,12 @@ namespace Content.Client.NPC
             if ((_system.Modes & PathfindingDebugMode.Poly) != 0x0 &&
                 mouseWorldPos.MapId == args.MapId)
             {
-                if (!_mapManager.TryFindGridAt(mouseWorldPos, out var grid) || !xformQuery.TryGetComponent(grid.GridEntityId, out var gridXform))
+                if (!_mapManager.TryFindGridAt(mouseWorldPos, out var grid) || !xformQuery.TryGetComponent(grid.Owner, out var gridXform))
                     return;
 
                 var found = false;
 
-                if (!_system.Polys.TryGetValue(grid.GridEntityId, out var data))
+                if (!_system.Polys.TryGetValue(grid.Owner, out var data))
                     return;
 
                 var tileRef = grid.GetTileRef(mouseWorldPos);
@@ -324,8 +334,8 @@ namespace Content.Client.NPC
             {
                 foreach (var grid in _mapManager.FindGridsIntersecting(mouseWorldPos.MapId, aabb))
                 {
-                    if (!_system.Breadcrumbs.TryGetValue(grid.GridEntityId, out var crumbs) ||
-                        !xformQuery.TryGetComponent(grid.GridEntityId, out var gridXform))
+                    if (!_system.Breadcrumbs.TryGetValue(grid.Owner, out var crumbs) ||
+                        !xformQuery.TryGetComponent(grid.Owner, out var gridXform))
                         continue;
 
                     var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
@@ -378,8 +388,8 @@ namespace Content.Client.NPC
             {
                 foreach (var grid in _mapManager.FindGridsIntersecting(args.MapId, aabb))
                 {
-                    if (!_system.Polys.TryGetValue(grid.GridEntityId, out var data) ||
-                        !xformQuery.TryGetComponent(grid.GridEntityId, out var gridXform))
+                    if (!_system.Polys.TryGetValue(grid.Owner, out var data) ||
+                        !xformQuery.TryGetComponent(grid.Owner, out var gridXform))
                         continue;
 
                     var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
@@ -412,8 +422,8 @@ namespace Content.Client.NPC
             {
                 foreach (var grid in _mapManager.FindGridsIntersecting(args.MapId, aabb))
                 {
-                    if (!_system.Polys.TryGetValue(grid.GridEntityId, out var data) ||
-                        !xformQuery.TryGetComponent(grid.GridEntityId, out var gridXform))
+                    if (!_system.Polys.TryGetValue(grid.Owner, out var data) ||
+                        !xformQuery.TryGetComponent(grid.Owner, out var gridXform))
                         continue;
 
                     var (_, _, worldMatrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
@@ -466,8 +476,8 @@ namespace Content.Client.NPC
             {
                 foreach (var grid in _mapManager.FindGridsIntersecting(args.MapId, args.WorldBounds))
                 {
-                    if (!_system.Breadcrumbs.TryGetValue(grid.GridEntityId, out var crumbs) ||
-                        !xformQuery.TryGetComponent(grid.GridEntityId, out var gridXform))
+                    if (!_system.Breadcrumbs.TryGetValue(grid.Owner, out var crumbs) ||
+                        !xformQuery.TryGetComponent(grid.Owner, out var gridXform))
                         continue;
 
                     var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();

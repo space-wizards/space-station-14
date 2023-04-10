@@ -7,7 +7,6 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
-using Robust.Shared.Player;
 
 namespace Content.Server.TraitorDeathMatch;
 
@@ -17,8 +16,6 @@ public sealed class TraitorDeathMatchRedemptionSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
     [Dependency] private readonly StoreSystem _store = default!;
-
-    private const string TcCurrencyPrototype = "Telecrystal";
 
     public override void Initialize()
     {
@@ -34,7 +31,7 @@ public sealed class TraitorDeathMatchRedemptionSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString(
                 "traitor-death-match-redemption-component-interact-using-main-message",
                 ("secondMessage",
-                    Loc.GetString("traitor-death-match-redemption-component-interact-using-no-mind-message"))), uid, Filter.Entities(args.User));
+                    Loc.GetString("traitor-death-match-redemption-component-interact-using-no-mind-message"))), uid, args.User);
             return;
         }
 
@@ -44,7 +41,7 @@ public sealed class TraitorDeathMatchRedemptionSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString(
                 "traitor-death-match-redemption-component-interact-using-main-message",
                 ("secondMessage",
-                    Loc.GetString("traitor-death-match-redemption-component-interact-using-no-user-mind-message"))), uid, Filter.Entities(args.User));
+                    Loc.GetString("traitor-death-match-redemption-component-interact-using-no-user-mind-message"))), uid, args.User);
             return;
         }
 
@@ -53,7 +50,7 @@ public sealed class TraitorDeathMatchRedemptionSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString(
                 "traitor-death-match-redemption-component-interact-using-main-message",
                 ("secondMessage",
-                    Loc.GetString("traitor-death-match-redemption-component-interact-using-no-pda-message"))), uid, Filter.Entities(args.User));
+                    Loc.GetString("traitor-death-match-redemption-component-interact-using-no-pda-message"))), uid, args.User);
             return;
         }
 
@@ -63,7 +60,7 @@ public sealed class TraitorDeathMatchRedemptionSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString(
                 "traitor-death-match-redemption-component-interact-using-main-message",
                 ("secondMessage",
-                    Loc.GetString("traitor-death-match-redemption-component-interact-using-no-pda-owner-message"))), uid, Filter.Entities(args.User));
+                    Loc.GetString("traitor-death-match-redemption-component-interact-using-no-pda-owner-message"))), uid, args.User);
             return;
         }
 
@@ -73,7 +70,7 @@ public sealed class TraitorDeathMatchRedemptionSystem : EntitySystem
                 "traitor-death-match-redemption-component-interact-using-main-message",
                 ("secondMessage",
                     Loc.GetString(
-                        "traitor-death-match-redemption-component-interact-using-pda-different-user-message"))), uid, Filter.Entities(args.User));
+                        "traitor-death-match-redemption-component-interact-using-pda-different-user-message"))), uid, args.User);
             return;
         }
 
@@ -89,7 +86,7 @@ public sealed class TraitorDeathMatchRedemptionSystem : EntitySystem
                 "traitor-death-match-redemption-component-interact-using-main-message",
                 ("secondMessage",
                     Loc.GetString(
-                        "traitor-death-match-redemption-component-interact-using-no-pda-in-pocket-message"))), uid, Filter.Entities(args.User));
+                        "traitor-death-match-redemption-component-interact-using-no-pda-in-pocket-message"))), uid, args.User);
             return;
         }
 
@@ -99,12 +96,12 @@ public sealed class TraitorDeathMatchRedemptionSystem : EntitySystem
         // 4 is the per-PDA bonus amount
         var transferAmount = _uplink.GetTCBalance(victimUplink) + 4;
         victimUplink.Balance.Clear();
-        _store.TryAddCurrency(new Dictionary<string, FixedPoint2>() { {"Telecrystal", FixedPoint2.New(transferAmount)}}, userUplink);
+        _store.TryAddCurrency(new Dictionary<string, FixedPoint2>() { {"Telecrystal", FixedPoint2.New(transferAmount)}}, userUplink.Owner, userUplink);
 
         EntityManager.DeleteEntity(victimUplink.Owner);
 
         _popup.PopupEntity(Loc.GetString("traitor-death-match-redemption-component-interact-using-success-message",
-                ("tcAmount", transferAmount)), uid, Filter.Entities(args.User));
+                ("tcAmount", transferAmount)), uid, args.User);
 
         args.Handled = true;
     }

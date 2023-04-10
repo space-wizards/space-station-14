@@ -31,7 +31,6 @@ namespace Content.Server.RCD.Components
         /// <summary>
         ///     What mode are we on? Can be floors, walls, deconstruct.
         /// </summary>
-        [ViewVariables]
         [DataField("mode")]
         public RcdMode Mode = RcdMode.Floors;
 
@@ -40,7 +39,5 @@ namespace Content.Server.RCD.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)] [DataField("ammo")]
         public int CurrentAmmo = DefaultAmmoCount;
-
-        public CancellationTokenSource? CancelToken = null;
     }
 }

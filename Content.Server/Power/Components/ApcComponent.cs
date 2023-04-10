@@ -1,4 +1,3 @@
-using Content.Server.Power.EntitySystems;
 using Content.Server.Power.NodeGroups;
 using Content.Shared.APC;
 using Robust.Shared.Audio;
@@ -18,7 +17,6 @@ public sealed class ApcComponent : BaseApcNetComponent
     /// <summary>
     ///     Is the panel open for this entity's APC?
     /// </summary>
-    [ViewVariables]
     [DataField("open")]
     public bool IsApcOpen { get; set; }
 
@@ -28,8 +26,7 @@ public sealed class ApcComponent : BaseApcNetComponent
 
     [ViewVariables]
     public bool MainBreakerEnabled = true;
-
-    public bool Emagged = false;
+    public bool HasAccess = false;
 
     public const float HighPowerThreshold = 0.9f;
     public static TimeSpan VisualsChangeDelay = TimeSpan.FromSeconds(1);

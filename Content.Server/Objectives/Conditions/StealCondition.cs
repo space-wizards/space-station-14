@@ -1,4 +1,3 @@
-using Content.Server.Containers;
 using Content.Server.Objectives.Interfaces;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -20,7 +19,6 @@ namespace Content.Server.Objectives.Conditions
         /// Help newer players by saying e.g. "steal the chief engineer's advanced magboots"
         /// instead of "steal advanced magboots. Should be a loc string.
         /// </summary>
-        [ViewVariables]
         [DataField("owner")] private string? _owner = null;
 
         public IObjectiveCondition GetAssigned(Mind.Mind mind)

@@ -1,6 +1,8 @@
 using Content.Server.Labels.Components;
 using Content.Server.UserInterface;
 using Content.Server.Popups;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Labels;
 using Content.Shared.Verbs;
@@ -19,6 +21,7 @@ namespace Content.Server.Labels
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly LabelSystem _labelSystem = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
         public override void Initialize()
         {
@@ -42,9 +45,9 @@ namespace Content.Server.Labels
             {
                 Act = () =>
                 {
-                    AddLabelTo(uid, handLabeler, target, out string? result);
+                    AddLabelTo(uid, handLabeler, target, out var result);
                     if (result != null)
-                        _popupSystem.PopupEntity(result, args.User, Filter.Entities(args.User));
+                        _popupSystem.PopupEntity(result, args.User, args.User);
                 },
                 Text = labelerText
             };
@@ -57,8 +60,13 @@ namespace Content.Server.Labels
                 return;
 
             AddLabelTo(uid, handLabeler, target, out string? result);
-            if (result != null)
-                _popupSystem.PopupEntity(result, args.User, Filter.Entities(args.User));
+            if (result == null)
+                return;
+            _popupSystem.PopupEntity(result, args.User, args.User);
+
+            // Log labeling
+            _adminLogger.Add(LogType.Action, LogImpact.Low,
+                $"{ToPrettyString(args.User):user} labeled {ToPrettyString(target):target} with {ToPrettyString(uid):labeler}");
         }
 
         private void AddLabelTo(EntityUid uid, HandLabelerComponent? handLabeler, EntityUid target, out string? result)
@@ -91,8 +99,16 @@ namespace Content.Server.Labels
 
         private void OnHandLabelerLabelChanged(EntityUid uid, HandLabelerComponent handLabeler, HandLabelerLabelChangedMessage args)
         {
+            if (args.Session.AttachedEntity is not {Valid: true} player)
+                return;
+
             handLabeler.AssignedLabel = args.Label.Trim().Substring(0, Math.Min(handLabeler.MaxLabelChars, args.Label.Length));
             DirtyUI(uid, handLabeler);
+
+            // Log label change
+            _adminLogger.Add(LogType.Action, LogImpact.Low,
+                $"{ToPrettyString(player):user} set {ToPrettyString(uid):labeler} to apply label \"{handLabeler.AssignedLabel}\"");
+
         }
 
         private void DirtyUI(EntityUid uid,

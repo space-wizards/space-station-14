@@ -5,14 +5,16 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 /// </summary>
 public sealed class WaitOperator : HTNOperator
 {
+    [Dependency] private readonly IEntityManager _entManager = default!;
+
     /// <summary>
     /// Blackboard key for the time we'll wait for.
     /// </summary>
-    [ViewVariables, DataField("key", required: true)] public string Key = string.Empty;
+    [DataField("key", required: true)] public string Key = string.Empty;
 
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
     {
-        if (!blackboard.TryGetValue<float>(Key, out var timer))
+        if (!blackboard.TryGetValue<float>(Key, out var timer, _entManager))
         {
             return HTNOperatorStatus.Finished;
         }

@@ -14,25 +14,33 @@
     # TODO: Fill this out more.
     whitelist:
       tags:
+        - Powerdrill
         - Wirecutter
         - Crowbar
         - Screwdriver
         - Flashlight
         - Wrench
-#        - GeigerCounter
+        - GeigerCounter
         - Flare
         - CableCoil
         - CigPack
+        - Radio
+        - HolofanProjector
+        - AppraisalTool
       components:
         - AirlockPainter
         - SignalLinker
         - RCD
         - RCDAmmo
         - Welder
-        - Radio
         - PowerCell
+        - Geiger
   - type: ItemMapper
     mapLayers:
+      drill:
+        whitelist:
+          tags:
+          - Powerdrill
       cutters_red:
         whitelist:
           tags:
@@ -80,12 +88,15 @@
         - Screwdriver
         - Flashlight
         - Wrench
-#        - GeigerCounter
+        - GeigerCounter
         - Flare
         - CableCoil
         - Powerdrill
         - JawsOfLife
         - CigPack
+        - Radio
+        - HolofanProjector
+        - AppraisalTool
       components:
         - AirlockPainter
         - SignalLinker
@@ -93,9 +104,9 @@
         - RCDAmmo
         - Welder
         - Flash
-        - Radio
         - Handcuff
         - PowerCell
+        - Geiger
   - type: ItemMapper
     mapLayers:
       drill:
@@ -188,6 +199,8 @@
         - Flashlight
         - CigPack
         - TrashBag
+        - WetFloorSign
+        - HolosignProjector
       components:
         - LightReplacer
   - type: ItemMapper
@@ -224,14 +237,15 @@
         - Bottle
         - Spray
         - Brutepack
+        - Bloodpack
         - Gauze
         - Ointment
         - CigPack
         - Pill
         - PillCanister
+        - Radio
       components:
         - Hypospray
-        - Radio
         - Injector
   - type: ItemMapper
     mapLayers:
@@ -280,7 +294,6 @@
   - type: Storage
     whitelist:
       tags:
-        - BotanyHoe
         # - PlantAnalyzer
         - PlantSampleTaker
         - BotanyShovel
@@ -338,6 +351,7 @@
         - CigPack
         - Taser
         - SecBeltEquip
+        - Radio
       components:
         - Stunbaton
         - FlashOnTrigger
@@ -442,7 +456,6 @@
     whitelist:
       components:
         - Gun
-        - MeleeWeapon
         - BallisticAmmoProvider
         - CartridgeAmmo
 
@@ -472,7 +485,7 @@
   parent: ClothingBeltStorageBase
   id: ClothingBeltMilitaryWebbingMed
   name: medical chest rig
-  description: A set of tactical webbing worn by Gorlax Marauder medic operatives.
+  description: A set of tactical webbing worn by Gorlex Marauder medic operatives.
   components:
   - type: Sprite
     sprite: Clothing/Belt/militarywebbingmed.rsi

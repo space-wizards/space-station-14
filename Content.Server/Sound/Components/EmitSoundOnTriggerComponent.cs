@@ -1,4 +1,5 @@
 using Content.Server.Explosion.EntitySystems;
+using Content.Shared.Sound.Components;
 
 namespace Content.Server.Sound.Components
 {

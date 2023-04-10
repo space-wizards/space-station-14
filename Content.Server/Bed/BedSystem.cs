@@ -2,8 +2,6 @@ using Content.Server.Actions;
 using Content.Server.Bed.Components;
 using Content.Server.Bed.Sleep;
 using Content.Server.Body.Systems;
-using Content.Server.Buckle.Components;
-using Content.Server.MobState;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Actions.ActionTypes;
@@ -12,9 +10,12 @@ using Content.Shared.Bed.Sleep;
 using Content.Shared.Body.Components;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Damage;
+using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Server.Construction;
+using Content.Shared.Mobs.Systems;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Bed
 {
@@ -26,6 +27,7 @@ namespace Content.Server.Bed
         [Dependency] private readonly SleepingSystem _sleepingSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
 
         public override void Initialize()
         {
@@ -44,6 +46,7 @@ namespace Content.Server.Bed
             if (args.Buckling)
             {
                 AddComp<HealOnBuckleHealingComponent>(uid);
+                component.NextHealTime = _timing.CurTime + TimeSpan.FromSeconds(component.HealTime);
                 if (sleepAction != null)
                     _actionsSystem.AddAction(args.BuckledEntity, new InstantAction(sleepAction), null);
                 return;
@@ -54,7 +57,6 @@ namespace Content.Server.Bed
 
             _sleepingSystem.TryWaking(args.BuckledEntity);
             RemComp<HealOnBuckleHealingComponent>(uid);
-            component.Accumulator = 0;
         }
 
         public override void Update(float frameTime)
@@ -63,12 +65,10 @@ namespace Content.Server.Bed
 
             foreach (var (_, bedComponent, strapComponent) in EntityQuery<HealOnBuckleHealingComponent, HealOnBuckleComponent, StrapComponent>())
             {
-                bedComponent.Accumulator += frameTime;
-
-                if (bedComponent.Accumulator < bedComponent.HealTime)
+                if (_timing.CurTime < bedComponent.NextHealTime)
                     continue;
 
-                bedComponent.Accumulator -= bedComponent.HealTime;
+                bedComponent.NextHealTime += TimeSpan.FromSeconds(bedComponent.HealTime);
 
                 if (strapComponent.BuckledEntities.Count == 0) continue;
 
@@ -113,9 +113,9 @@ namespace Content.Server.Bed
             UpdateMetabolisms(uid, component, args.Powered);
         }
 
-        private void OnEmagged(EntityUid uid, StasisBedComponent component, GotEmaggedEvent args)
+        private void OnEmagged(EntityUid uid, StasisBedComponent component, ref GotEmaggedEvent args)
         {
-            // Repeatable
+            args.Repeatable = true;
             // Reset any metabolisms first so they receive the multiplier correctly
             UpdateMetabolisms(uid, component, false);
             component.Multiplier = 1 / component.Multiplier;
@@ -140,7 +140,7 @@ namespace Content.Server.Bed
         {
             var metabolismRating = args.PartRatings[component.MachinePartMetabolismModifier];
             component.Multiplier = component.BaseMultiplier * metabolismRating; //linear scaling so it's not OP
-            if (component.Emagged)
+            if (HasComp<EmaggedComponent>(uid))
                 component.Multiplier = 1f / component.Multiplier;
         }
 

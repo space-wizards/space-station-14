@@ -107,15 +107,14 @@
     FoodBreadBun: 1
     ClothingHeadHatBeret: 1
 
-# - type: microwaveMealRecipe
-#   id: RecipeTofuBurger
-#   name: tofu burger recipe
-#   result: FoodBurgerTofu
-#   time: 5
-#   reagents:
-#     Flour: 15
-#   solids:
-#     FoodTofu: 1
+- type: microwaveMealRecipe
+  id: RecipeTofuBurger
+  name: tofu burger recipe
+  result: FoodBurgerTofu
+  time: 5
+  solids:
+    FoodBreadBun: 1
+    FoodTofuSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeXenoburger
@@ -143,16 +142,6 @@
   solids:
     FoodBreadBun: 1
     FoodMeatCorgi: 1
-
-- type: microwaveMealRecipe
-  id: RecipeFiletMigrawr
-  name: filet migrawr recipe
-  result: FoodMealBearsteak
-  time: 10
-  solids:
-    FoodMeatBear: 1
-  reagents:
-    Beer: 15
 
 - type: microwaveMealRecipe
   id: RecipeSuperBiteBurger
@@ -241,6 +230,24 @@
   solids:
     FoodBreadPlainSlice: 1
     FoodFlyAmanita: 1
+
+- type: microwaveMealRecipe
+  id: RecipeTofuBread
+  name: tofu bread recipe
+  result: FoodBreadTofu
+  time: 20
+  solids:
+    FoodDough: 1
+    FoodTofu: 1
+
+- type: microwaveMealRecipe
+  id: RecipeGarlicBread
+  name: garlic bread slice recipe
+  result: FoodBreadGarlicSlice
+  time: 5
+  solids:
+    FoodBreadPlainSlice: 1
+    FoodGarlic: 1
 
 #Pizzas
 - type: microwaveMealRecipe
@@ -505,60 +512,6 @@
     FoodFlyAmanita: 3
 
 #Other
-- type: microwaveMealRecipe
-  id: RecipeMeatSteak
-  name: meat steak recipe
-  result: FoodMeatCooked
-  time: 10
-  reagents:
-    TableSalt: 1
-  solids:
-    FoodMeat: 1
-    FoodPlateSmall: 1
-
-- type: microwaveMealRecipe
-  id: RecipeMeatPenguin
-  name: pengin filet recipe
-  result: FoodMeatPenguinCooked
-  time: 10
-  reagents:
-    TableSalt: 1
-  solids:
-    FoodMeatPenguin: 1
-    FoodPlateSmall: 1
-
-- type: microwaveMealRecipe
-  id: RecipeMeatChicken
-  name: cooked chicken recipe
-  result: FoodMeatChickenCooked
-  time: 10
-  reagents:
-    TableSalt: 1
-  solids:
-    FoodMeatChicken: 1
-    FoodPlateSmall: 1
-
-- type: microwaveMealRecipe
-  id: RecipeMeatDuck
-  name: cooked duck recipe
-  result: FoodMeatDuckCooked
-  time: 10
-  reagents:
-    TableSalt: 1
-  solids:
-    FoodMeatDuck: 1
-    FoodPlateSmall: 1
-
-- type: microwaveMealRecipe
-  id: RecipeMeatLizard
-  name: lizard steak recipe
-  result: FoodMeatLizardCooked
-  time: 10
-  reagents:
-    TableSalt: 1
-  solids:
-    FoodMeatLizard: 1
-    FoodPlateSmall: 1
 
 - type: microwaveMealRecipe
   id: RecipeCubanCarp
@@ -790,20 +743,18 @@
   name: orange cake recipe
   result: FoodCakeOrange
   time: 5
-  reagents:
-    JuiceOrange: 30
   solids:
     FoodCakePlain: 1
+    FoodOrange: 3
 
 - type: microwaveMealRecipe
   id: RecipeLimeCake
   name: lime cake recipe
   result: FoodCakeLime
   time: 5
-  reagents:
-    JuiceLime: 30
   solids:
     FoodCakePlain: 1
+    FoodLime: 3
 
 - type: microwaveMealRecipe
   id: RecipeCheeseCake
@@ -873,7 +824,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeAmanitaPie
-  name: amanita pie
+  name: amanita pie recipe
   result: FoodPieAmanita
   time: 15
   solids:
@@ -890,6 +841,18 @@
     Slime: 15
   solids:
     FoodCakePlain: 1
+
+- type: microwaveMealRecipe
+  id: RecipeGrapeTart
+  name: grape tart recipe
+  result: FoodTartGrape
+  time: 15
+  reagents:
+    Sugar: 5
+    Milk: 5
+  solids:
+    FoodDoughPie: 1
+    FoodGrape: 3
 
 #Donks i guess
 - type: microwaveMealRecipe
@@ -1045,6 +1008,93 @@
     FoodAmbrosiaVulgaris: 3
     FoodPotato: 1
     FoodMeatMeatball: 1
+
+- type: microwaveMealRecipe
+  id: RecipeColeslaw
+  name: coleslaw recipe
+  result: FoodSaladColeslaw
+  time: 5
+  reagents:
+    Vinaigrette: 5
+  solids:
+    FoodBowlBig: 1
+    FoodOnionRed: 1
+    FoodCabbage: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCaesarSalad
+  name: caesar salad recipe
+  result: FoodSaladCaesar
+  time: 5
+  reagents:
+    OilOlive: 5
+  solids:
+    FoodBowlBig: 1
+    FoodOnionRedSlice: 1
+    FoodBreadPlainSlice: 1
+    FoodCheeseSlice: 1
+    FoodCabbage: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCitrusSalad
+  name: citrus salad recipe
+  result: FoodSaladCitrus
+  time: 5
+  solids:
+    FoodBowlBig: 1
+    FoodOrange: 1
+    FoodLemon: 1
+    FoodLime: 1
+
+- type: microwaveMealRecipe
+  id: RecipeKimchiSalad
+  name: kimchi salad recipe
+  result: FoodSaladKimchi
+  time: 5
+  reagents:
+    Vinegar: 5
+  solids:
+    FoodBowlBig: 1
+    FoodCarrot: 1
+    FoodCabbage: 1
+    FoodGarlic: 1
+
+- type: microwaveMealRecipe
+  id: RecipeFruitSalad
+  name: fruit salad recipe
+  result: FoodSaladFruit
+  time: 5
+  solids:
+    FoodBowlBig: 1
+    FoodOrange: 1
+    FoodApple: 1
+    FoodGrape: 1
+    FoodWatermelonSlice: 2
+
+- type: microwaveMealRecipe
+  id: RecipeJungleSalad
+  name: jungle salad recipe
+  result: FoodSaladJungle
+  time: 5
+  solids:
+    FoodBowlBig: 1
+    FoodBanana: 1
+    FoodApple: 1
+    FoodGrape: 1
+    FoodWatermelonSlice: 2
+
+- type: microwaveMealRecipe
+  id: RecipeWatermelonFruitBowlSalad
+  name: watermelon fruit bowl recipe
+  result: FoodSaladWatermelonFruitBowl
+  time: 5
+  solids:
+    FoodWatermelon: 1
+    FoodApple: 1
+    FoodBanana: 1
+    FoodLemon: 1
+    FoodOrange: 1
+    FoodAmbrosiaVulgaris: 1
 
 # NOT ACTUAL FOOD
 

@@ -14,7 +14,6 @@ public sealed class CardboardBoxComponent : Component
     /// <summary>
     /// The person in control of this box
     /// </summary>
-    [ViewVariables]
     [DataField("mover")]
     public EntityUid? Mover;
 

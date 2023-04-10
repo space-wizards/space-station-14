@@ -1,4 +1,6 @@
+using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
+using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Physics.Pull;
@@ -10,9 +12,11 @@ namespace Content.Shared.Pulling.Systems
     [UsedImplicitly]
     public sealed class SharedPullerSystem : EntitySystem
     {
+        [Dependency] private readonly SharedPullingStateManagementSystem _why = default!;
         [Dependency] private readonly SharedPullingSystem _pullSystem = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
         public override void Initialize()
         {
@@ -22,6 +26,12 @@ namespace Content.Shared.Pulling.Systems
             SubscribeLocalEvent<SharedPullerComponent, PullStoppedMessage>(PullerHandlePullStopped);
             SubscribeLocalEvent<SharedPullerComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
             SubscribeLocalEvent<SharedPullerComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
+            SubscribeLocalEvent<SharedPullerComponent, ComponentShutdown>(OnPullerShutdown);
+        }
+
+        private void OnPullerShutdown(EntityUid uid, SharedPullerComponent component, ComponentShutdown args)
+        {
+            _why.ForceDisconnectPuller(component);
         }
 
         private void OnVirtualItemDeleted(EntityUid uid, SharedPullerComponent component, VirtualItemDeletedEvent args)
@@ -60,6 +70,8 @@ namespace Content.Shared.Pulling.Systems
                 return;
 
             var euid = component.Owner;
+            if (_alertsSystem.IsShowingAlert(euid, AlertType.Pulling))
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(euid):user} stopped pulling {ToPrettyString(args.Pulled.Owner):target}");
             _alertsSystem.ClearAlert(euid, AlertType.Pulling);
 
             RefreshMovementSpeed(component);

@@ -11,6 +11,7 @@
     - state: "lightning_1"
       shader: unshaded
   - type: Physics
+    canCollide: false
   - type: Electrified
     requirePower: false
   - type: Lightning

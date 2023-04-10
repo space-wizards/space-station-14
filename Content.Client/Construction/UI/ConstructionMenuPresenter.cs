@@ -154,7 +154,7 @@ namespace Content.Client.Construction.UI
                         continue;
                 }
 
-                if (!string.IsNullOrEmpty(category) && category != Loc.GetString("construction-category-all"))
+                if (!string.IsNullOrEmpty(category) && category != "construction-category-all")
                 {
                     if (recipe.Category != category)
                         continue;
@@ -178,7 +178,7 @@ namespace Content.Client.Construction.UI
             var uniqueCategories = new HashSet<string>();
 
             // hard-coded to show all recipes
-            uniqueCategories.Add(Loc.GetString("construction-category-all"));
+            uniqueCategories.Add("construction-category-all");
 
             foreach (var prototype in _prototypeManager.EnumeratePrototypes<ConstructionPrototype>())
             {
@@ -190,13 +190,13 @@ namespace Content.Client.Construction.UI
 
             _constructionView.Category.Clear();
 
-            var array = uniqueCategories.ToArray();
+            var array = uniqueCategories.OrderBy(Loc.GetString).ToArray();
             Array.Sort(array);
 
             for (var i = 0; i < array.Length; i++)
             {
                 var category = array[i];
-                _constructionView.Category.AddItem(category, i);
+                _constructionView.Category.AddItem(Loc.GetString(category), i);
             }
 
             _constructionView.Categories = array;
@@ -286,7 +286,14 @@ namespace Content.Client.Construction.UI
 
         private void UpdateGhostPlacement()
         {
-            if (_selected == null || _selected.Type != ConstructionType.Structure) return;
+            if (_selected == null)
+                return;
+
+            if (_selected.Type != ConstructionType.Structure)
+            {
+                _placementManager.Clear();
+                return;
+            }
 
             var constructSystem = _systemManager.GetEntitySystem<ConstructionSystem>();
 

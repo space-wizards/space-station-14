@@ -8,6 +8,8 @@ namespace Content.Client.UserInterface.Controls
     [Virtual]
     public partial class FancyWindow : BaseWindow
     {
+        private const int DRAG_MARGIN_SIZE = 7;
+
         public FancyWindow()
         {
             RobustXamlLoader.Load(this);
@@ -24,7 +26,30 @@ namespace Content.Client.UserInterface.Controls
 
         protected override DragMode GetDragModeFor(Vector2 relativeMousePos)
         {
-            return DragMode.Move;
+            var mode = DragMode.Move;
+
+            if (Resizable)
+            {
+                if (relativeMousePos.Y < DRAG_MARGIN_SIZE)
+                {
+                    mode = DragMode.Top;
+                }
+                else if (relativeMousePos.Y > Size.Y - DRAG_MARGIN_SIZE)
+                {
+                    mode = DragMode.Bottom;
+                }
+
+                if (relativeMousePos.X < DRAG_MARGIN_SIZE)
+                {
+                    mode |= DragMode.Left;
+                }
+                else if (relativeMousePos.X > Size.X - DRAG_MARGIN_SIZE)
+                {
+                    mode |= DragMode.Right;
+                }
+            }
+
+            return mode;
         }
     }
 }

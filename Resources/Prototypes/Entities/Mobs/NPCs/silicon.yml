@@ -19,7 +19,7 @@
     bloodlossHealDamage:
       types:
         Bloodloss:
-          -0.25
+          -1
   - type: InteractionOutline
   - type: Fixtures
     fixtures:
@@ -38,8 +38,6 @@
     noRot: true
     drawdepth: Mobs
     netsync: false
-  - type: Recyclable
-    safe: false
   - type: Faction
     factions:
     - SimpleNeutral
@@ -73,9 +71,15 @@
     - DoorBumpOpener
     - ShoesRequiredStepTriggerImmune
   - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
     thresholds:
       0: Alive
       120: Dead
+  - type: Stamina
+    excess: 120
   - type: Destructible
     thresholds:
     - trigger:
@@ -108,17 +112,23 @@
     launchForwardsMultiplier: 6.0
   - type: StepTrigger
     intersectRatio: 0.2
+  - type: Physics
+    bodyType: Dynamic
   - type: Fixtures
     fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      id: "slips"
+      hard: false
+      layer:
+        - SlipLayer
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
       density: 20
       mask:
       - MobMask
-      layer:
-      - MobLayer
-      - SlipLayer
   - type: Construction
     graph: HonkBot
     node: bot
@@ -149,7 +159,7 @@
     graph: CleanBot
     node: bot
   - type: SentienceTarget
-    flavorKind: mechanical
+    flavorKind: station-event-random-sentience-flavor-mechanical
   - type: SolutionContainerManager
     solutions:
       drainBuffer:

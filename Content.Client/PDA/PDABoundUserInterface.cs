@@ -1,17 +1,20 @@
-using Content.Client.Message;
+using Content.Client.CartridgeLoader;
+using Content.Shared.CartridgeLoader;
 using Content.Shared.CCVar;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.CrewManifest;
 using Content.Shared.PDA;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 
 namespace Content.Client.PDA
 {
     [UsedImplicitly]
-    public sealed class PDABoundUserInterface : BoundUserInterface
+    public sealed class PDABoundUserInterface : CartridgeLoaderBoundUserInterface
     {
+        [Dependency] private readonly IEntityManager? _entityManager = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
 
         private PDAMenu? _menu;
@@ -67,53 +70,51 @@ namespace Content.Client.PDA
                 SendMessage(new PDAShowRingtoneMessage());
             };
 
+            _menu.OnProgramItemPressed += ActivateCartridge;
+            _menu.OnInstallButtonPressed += InstallCartridge;
+            _menu.OnUninstallButtonPressed += UninstallCartridge;
+            _menu.ProgramCloseButton.OnPressed += _ => DeactivateActiveCartridge();
+
+            var borderColorComponent = GetBorderColorComponent();
+            if (borderColorComponent == null)
+                return;
+
+            _menu.BorderColor = borderColorComponent.BorderColor;
+            _menu.AccentHColor = borderColorComponent.AccentHColor;
+            _menu.AccentVColor = borderColorComponent.AccentVColor;
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
 
-            if (_menu == null)
-            {
+            if (state is not PDAUpdateState updateState)
                 return;
-            }
 
-            switch (state)
-            {
-                case PDAUpdateState msg:
-                {
-                    _menu.FlashLightToggleButton.Pressed = msg.FlashlightEnabled;
-
-                    if (msg.PDAOwnerInfo.ActualOwnerName != null)
-                    {
-                        _menu.PdaOwnerLabel.SetMarkup(Loc.GetString("comp-pda-ui-owner",
-                            ("ActualOwnerName", msg.PDAOwnerInfo.ActualOwnerName)));
-                    }
-
-
-                    if (msg.PDAOwnerInfo.IdOwner != null || msg.PDAOwnerInfo.JobTitle != null)
-                    {
-                        _menu.IdInfoLabel.SetMarkup(Loc.GetString("comp-pda-ui",
-                            ("Owner",msg.PDAOwnerInfo.IdOwner ?? Loc.GetString("comp-pda-ui-unknown")),
-                            ("JobTitle",msg.PDAOwnerInfo.JobTitle ?? Loc.GetString("comp-pda-ui-unassigned"))));
-                    }
-                    else
-                    {
-                        _menu.IdInfoLabel.SetMarkup(Loc.GetString("comp-pda-ui-blank"));
-                    }
-
-                    _menu.StationNameLabel.SetMarkup(Loc.GetString("comp-pda-ui-station", ("Station",msg.StationName ?? Loc.GetString("comp-pda-ui-unknown"))));
-
-                    _menu.EjectIdButton.Visible = msg.PDAOwnerInfo.IdOwner != null || msg.PDAOwnerInfo.JobTitle != null;
-                    _menu.EjectPenButton.Visible = msg.HasPen;
-                    _menu.ActivateUplinkButton.Visible = msg.HasUplink;
-                    _menu.ActivateMusicButton.Visible = msg.CanPlayMusic;
-
-                    break;
-                }
-            }
+            _menu?.UpdateState(updateState);
         }
 
+
+        protected override void AttachCartridgeUI(Control cartridgeUIFragment, string? title)
+        {
+            _menu?.ProgramView.AddChild(cartridgeUIFragment);
+            _menu?.ToProgramView(title ?? Loc.GetString("comp-pda-io-program-fallback-title"));
+        }
+
+        protected override void DetachCartridgeUI(Control cartridgeUIFragment)
+        {
+            if (_menu is null)
+                return;
+
+            _menu.ToHomeScreen();
+            _menu.HideProgramHeader();
+            _menu.ProgramView.RemoveChild(cartridgeUIFragment);
+        }
+
+        protected override void UpdateAvailablePrograms(List<(EntityUid, CartridgeComponent)> programs)
+        {
+            _menu?.UpdateAvailablePrograms(programs);
+        }
 
         protected override void Dispose(bool disposing)
         {
@@ -122,6 +123,11 @@ namespace Content.Client.PDA
                 return;
 
             _menu?.Dispose();
+        }
+
+        private PDABorderColorComponent? GetBorderColorComponent()
+        {
+            return _entityManager?.GetComponentOrNull<PDABorderColorComponent>(Owner.Owner);
         }
     }
 }

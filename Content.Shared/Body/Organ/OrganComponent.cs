@@ -7,11 +7,9 @@ namespace Content.Shared.Body.Organ;
 [Access(typeof(SharedBodySystem))]
 public sealed class OrganComponent : Component
 {
-    [ViewVariables]
     [DataField("body")]
     public EntityUid? Body;
 
-    [ViewVariables]
     [DataField("parent")]
     public OrganSlot? ParentSlot;
 }

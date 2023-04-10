@@ -1,6 +1,5 @@
 using Content.Server.Actions;
 using Content.Server.Administration.Logs;
-using Content.Server.Mind.Components;
 using Content.Server.Store.Components;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.FixedPoint;
@@ -10,13 +9,11 @@ using Content.Shared.Database;
 using Robust.Server.GameObjects;
 using System.Linq;
 using Content.Server.Stack;
-using Content.Shared.Prototypes;
-using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
+using Content.Server.UserInterface;
 
 namespace Content.Server.Store.Systems;
 
-public sealed partial class StoreSystem : EntitySystem
+public sealed partial class StoreSystem
 {
     [Dependency] private readonly IAdminLogManager _admin = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
@@ -27,7 +24,7 @@ public sealed partial class StoreSystem : EntitySystem
 
     private void InitializeUi()
     {
-        SubscribeLocalEvent<StoreComponent, StoreRequestUpdateInterfaceMessage>((_,c,r) => UpdateUserInterface(r.Session.AttachedEntity, c));
+        SubscribeLocalEvent<StoreComponent, StoreRequestUpdateInterfaceMessage>(OnRequestUpdate);
         SubscribeLocalEvent<StoreComponent, StoreBuyListingMessage>(OnBuyRequest);
         SubscribeLocalEvent<StoreComponent, StoreRequestWithdrawMessage>(OnRequestWithdraw);
     }
@@ -36,45 +33,41 @@ public sealed partial class StoreSystem : EntitySystem
     /// Toggles the store Ui open and closed
     /// </summary>
     /// <param name="user">the person doing the toggling</param>
-    /// <param name="component">the store being toggled</param>
-    public void ToggleUi(EntityUid user, StoreComponent component)
+    /// <param name="storeEnt">the store being toggled</param>
+    /// <param name="component"></param>
+    public void ToggleUi(EntityUid user, EntityUid storeEnt, StoreComponent? component = null)
     {
+        if (!Resolve(storeEnt, ref component))
+            return;
+
         if (!TryComp<ActorComponent>(user, out var actor))
             return;
 
-        if (!_ui.TryToggleUi(component.Owner, StoreUiKey.Key, actor.PlayerSession))
+        if (!_ui.TryToggleUi(storeEnt, StoreUiKey.Key, actor.PlayerSession))
             return;
 
-        UpdateUserInterface(user, component);
+        UpdateUserInterface(user, storeEnt, component);
     }
 
     /// <summary>
     /// Updates the user interface for a store and refreshes the listings
     /// </summary>
     /// <param name="user">The person who if opening the store ui. Listings are filtered based on this.</param>
+    /// <param name="store">The store entity itself</param>
     /// <param name="component">The store component being refreshed.</param>
     /// <param name="ui"></param>
-    public void UpdateUserInterface(EntityUid? user, StoreComponent component, BoundUserInterface? ui = null)
+    public void UpdateUserInterface(EntityUid? user, EntityUid store, StoreComponent? component = null, BoundUserInterface? ui = null)
     {
-        if (ui == null)
-        {
-            ui = _ui.GetUiOrNull(component.Owner, StoreUiKey.Key);
-            if (ui == null)
-                return;
-        }
+        if (!Resolve(store, ref component))
+            return;
 
-        //if we haven't opened it before, initialize the shit
-        if (!component.Opened)
-        {
-            RefreshAllListings(component);
-            InitializeFromPreset(component.Preset, component);
-            component.Opened = true;
-        }
+        if (ui == null && !_ui.TryGetUi(store, StoreUiKey.Key, out ui))
+            return;
 
         //this is the person who will be passed into logic for all listing filtering.
         if (user != null) //if we have no "buyer" for this update, then don't update the listings
         {
-            component.LastAvailableListings = GetAvailableListings(component.AccountOwner ?? user.Value, component).ToHashSet();
+            component.LastAvailableListings = GetAvailableListings(component.AccountOwner ?? user.Value, store, component).ToHashSet();
         }
 
         //dictionary for all currencies, including 0 values for currencies on the whitelist
@@ -94,12 +87,22 @@ public sealed partial class StoreSystem : EntitySystem
         _ui.SetUiState(ui, state);
     }
 
+    private void OnRequestUpdate(EntityUid uid, StoreComponent component, StoreRequestUpdateInterfaceMessage args)
+    {
+        UpdateUserInterface(args.Session.AttachedEntity, args.Entity, component);
+    }
+
+    private void BeforeActivatableUiOpen(EntityUid uid, StoreComponent component, BeforeActivatableUIOpenEvent args)
+    {
+        UpdateUserInterface(args.User, uid, component);
+    }
+
     /// <summary>
     /// Handles whenever a purchase was made.
     /// </summary>
     private void OnBuyRequest(EntityUid uid, StoreComponent component, StoreBuyListingMessage msg)
     {
-        ListingData? listing = component.Listings.FirstOrDefault(x => x.Equals(msg.Listing));
+        var listing = component.Listings.FirstOrDefault(x => x.Equals(msg.Listing));
         if (listing == null) //make sure this listing actually exists
         {
             Logger.Debug("listing does not exist");
@@ -116,7 +119,7 @@ public sealed partial class StoreSystem : EntitySystem
         //condition checking because why not
         if (listing.Conditions != null)
         {
-            var args = new ListingConditionArgs(component.AccountOwner ?? buyer, component.Owner, listing, EntityManager);
+            var args = new ListingConditionArgs(component.AccountOwner ?? buyer, uid, listing, EntityManager);
             var conditionsMet = listing.Conditions.All(condition => condition.Condition(args));
 
             if (!conditionsMet)
@@ -133,7 +136,9 @@ public sealed partial class StoreSystem : EntitySystem
         }
         //subtract the cash
         foreach (var currency in listing.Cost)
+        {
             component.Balance[currency.Key] -= currency.Value;
+        }
 
         //spawn entity
         if (listing.ProductEntity != null)
@@ -156,16 +161,13 @@ public sealed partial class StoreSystem : EntitySystem
         }
 
         //log dat shit.
-        if (TryComp<MindComponent>(buyer, out var mind))
-        {
-            _admin.Add(LogType.StorePurchase, LogImpact.Low,
-                $"{ToPrettyString(mind.Owner):player} purchased listing \"{listing.Name}\" from {ToPrettyString(uid)}");
-        }
+        _admin.Add(LogType.StorePurchase, LogImpact.Low,
+            $"{ToPrettyString(buyer):player} purchased listing \"{Loc.GetString(listing.Name)}\" from {ToPrettyString(uid)}");
 
         listing.PurchaseAmount++; //track how many times something has been purchased
-        _audio.Play(component.BuySuccessSound, Filter.SinglePlayer(msg.Session), uid); //cha-ching!
+        _audio.PlayEntity(component.BuySuccessSound, msg.Session, uid); //cha-ching!
 
-        UpdateUserInterface(buyer, component);
+        UpdateUserInterface(buyer, uid, component);
     }
 
     /// <summary>
@@ -191,7 +193,7 @@ public sealed partial class StoreSystem : EntitySystem
 
         if (msg.Session.AttachedEntity is not { Valid: true} buyer)
             return;
-        
+
         FixedPoint2 amountRemaining = msg.Amount;
         var coordinates = Transform(buyer).Coordinates;
 
@@ -199,39 +201,13 @@ public sealed partial class StoreSystem : EntitySystem
         foreach (var value in sortedCashValues)
         {
             var cashId = proto.Cash[value];
-
-            if (!_proto.TryIndex<EntityPrototype>(cashId, out var cashProto))
-                continue;
-
-            //how many times this subdivision fits in the amount remaining
-            var amountToSpawn = (int) Math.Floor((double) (amountRemaining / value));
-            if (cashProto.HasComponent<StackComponent>())
-            {
-                var amountToRemove = amountToSpawn; //we don't want to modify amountToSpawn, as we use it for calculations
-                while (amountToRemove > 0)
-                {
-                    var ent = Spawn(cashId, coordinates);
-                    if (!TryComp<StackComponent>(ent, out var stack))
-                        return; //you really fucked up if you got here
-
-                    var maxAmount = Math.Min(amountToRemove, stack.MaxCount); //limit it based on max stack amount
-                    _stack.SetCount(ent, maxAmount, stack);
-                    _hands.PickupOrDrop(buyer, ent);
-                    amountToRemove -= maxAmount;
-                }
-            }
-            else //please for the love of christ give your currency stack component
-            {
-                for (var i = 0; i < amountToSpawn; i++)
-                {
-                    var ent = Spawn(cashId, coordinates);
-                    _hands.PickupOrDrop(buyer, ent);
-                }
-            }
+            var amountToSpawn = (int) MathF.Floor((float) (amountRemaining / value));
+            var ents = _stack.SpawnMultiple(cashId, amountToSpawn, coordinates);
+            _hands.PickupOrDrop(buyer, ents.First());
             amountRemaining -= value * amountToSpawn;
         }
 
         component.Balance[msg.Currency] -= msg.Amount;
-        UpdateUserInterface(buyer, component);
+        UpdateUserInterface(buyer, uid, component);
     }
 }

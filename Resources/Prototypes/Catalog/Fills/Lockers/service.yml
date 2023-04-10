@@ -82,6 +82,7 @@
     contents:
       - id: BriefcaseBrownFilled
         prob: 0.80
+      - id: ClothingOuterRobesJudge
 
 - type: entity
   id: LockerBotanistFilled

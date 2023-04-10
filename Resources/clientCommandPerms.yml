@@ -28,6 +28,8 @@
     - resetent
     - resetallents
     - cvar
+    - fuckrules
+    - midipanic
 
 - Flags: DEBUG
   Commands:
@@ -69,3 +71,4 @@
   Commands:
     - uploadfile
     - loadprototype
+    - uploadfolder

@@ -7,17 +7,6 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Tools.Components
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(SharedMultipleToolComponent))]
-    public sealed class MultipleToolComponent : SharedMultipleToolComponent
-    {
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool UiUpdateNeeded;
-
-        [DataField("statusShowBehavior")]
-        public bool StatusShowBehavior = true;
-    }
-
     public sealed class MultipleToolStatusControl : Control
     {
         private readonly MultipleToolComponent _parent;

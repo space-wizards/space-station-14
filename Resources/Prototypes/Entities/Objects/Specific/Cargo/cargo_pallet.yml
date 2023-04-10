@@ -9,7 +9,8 @@
     drawdepth: FloorTiles
     netsync: false
     layers:
-    - texture: Structures/catwalk.rsi/catwalk_preview.png
+    - sprite: Structures/catwalk.rsi
+      state: catwalk_preview
   - type: CollideOnAnchor
   - type: Physics
     canCollide: false

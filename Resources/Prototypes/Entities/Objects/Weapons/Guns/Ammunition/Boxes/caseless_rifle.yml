@@ -5,6 +5,7 @@
   name: ammunition box (.25 caseless)
   components:
   - type: BallisticAmmoProvider
+    mayTransfer: true
     whitelist:
       tags:
         - CartridgeCaselessRifle

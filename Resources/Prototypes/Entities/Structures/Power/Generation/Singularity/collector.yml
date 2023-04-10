@@ -54,3 +54,5 @@
   - type: PowerNetworkBattery
     maxSupply: 1000000000
     supplyRampTolerance: 1000000000
+  - type: GuideHelp
+    guides: [ Singularity, Power ]

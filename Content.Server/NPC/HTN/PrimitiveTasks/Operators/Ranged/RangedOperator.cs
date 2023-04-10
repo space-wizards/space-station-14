@@ -1,8 +1,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.NPC.Components;
-using Content.Shared.MobState;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Robust.Shared.Audio;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Ranged;
@@ -14,14 +14,14 @@ public sealed class RangedOperator : HTNOperator
     /// <summary>
     /// Key that contains the target entity.
     /// </summary>
-    [ViewVariables, DataField("targetKey", required: true)]
+    [DataField("targetKey", required: true)]
     public string TargetKey = default!;
 
     /// <summary>
     /// Minimum damage state that the target has to be in for us to consider attacking.
     /// </summary>
-    [ViewVariables, DataField("targetState")]
-    public DamageState TargetState = DamageState.Alive;
+    [DataField("targetState")]
+    public MobState TargetState = MobState.Alive;
 
     // Like movement we add a component and pass it off to the dedicated system.
 
@@ -29,7 +29,7 @@ public sealed class RangedOperator : HTNOperator
         CancellationToken cancelToken)
     {
         // Don't attack if they're already as wounded as we want them.
-        if (!blackboard.TryGetValue<EntityUid>(TargetKey, out var target))
+        if (!blackboard.TryGetValue<EntityUid>(TargetKey, out var target, _entManager))
         {
             return (false, null);
         }
@@ -50,12 +50,12 @@ public sealed class RangedOperator : HTNOperator
         var ranged = _entManager.EnsureComponent<NPCRangedCombatComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
         ranged.Target = blackboard.GetValue<EntityUid>(TargetKey);
 
-        if (blackboard.TryGetValue<float>(NPCBlackboard.RotateSpeed, out var rotSpeed))
+        if (blackboard.TryGetValue<float>(NPCBlackboard.RotateSpeed, out var rotSpeed, _entManager))
         {
             ranged.RotationSpeed = new Angle(rotSpeed);
         }
 
-        if (blackboard.TryGetValue<SoundSpecifier>("SoundTargetInLOS", out var losSound))
+        if (blackboard.TryGetValue<SoundSpecifier>("SoundTargetInLOS", out var losSound, _entManager))
         {
             ranged.SoundTargetInLOS = losSound;
         }

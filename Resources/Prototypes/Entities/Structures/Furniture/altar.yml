@@ -8,6 +8,7 @@
   - type: Anchorable
   - type: Transform
     noRot: true
+  - type: Prayable
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -43,7 +44,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 125
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -368,6 +369,12 @@
     state: full
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 125
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 25

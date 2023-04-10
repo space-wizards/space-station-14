@@ -8,10 +8,10 @@
   },
   "states": [
     {
-      "name": "pneumaticCannon"
+      "name": "icon"
     },
     {
-      "name": "oxygen"
+      "name": "tank"
     },
     {
       "name": "inhand-left",

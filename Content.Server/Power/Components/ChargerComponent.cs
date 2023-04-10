@@ -1,4 +1,3 @@
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Power;
 
 namespace Content.Server.Power.Components
@@ -9,11 +8,9 @@ namespace Content.Server.Power.Components
         [ViewVariables]
         public CellChargerStatus Status;
 
-        [ViewVariables]
         [DataField("chargeRate")]
         public int ChargeRate = 20;
 
-        [ViewVariables]
         [DataField("slotId", required: true)]
         public string SlotId = string.Empty;
     }

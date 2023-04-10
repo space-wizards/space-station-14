@@ -6,7 +6,7 @@ public sealed class SpeakOperator : HTNOperator
 {
     private ChatSystem _chat = default!;
 
-    [ViewVariables, DataField("speech", required: true)]
+    [DataField("speech", required: true)]
     public string Speech = string.Empty;
 
     public override void Initialize(IEntitySystemManager sysManager)

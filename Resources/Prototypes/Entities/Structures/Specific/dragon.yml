@@ -10,6 +10,7 @@
       anchored: true
     - type: Physics
       bodyType: Static
+      canCollide: false
     - type: Fixtures
     - type: Sprite
       netsync: false

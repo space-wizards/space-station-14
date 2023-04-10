@@ -5,6 +5,5 @@
         <Button Name="ReturnToBodyButton" Text="{Loc ghost-gui-return-to-body-button}" />
         <Button Name="GhostWarpButton" Text="{Loc ghost-gui-ghost-warp-button}" />
         <Button Name="GhostRolesButton" />
-        <Button Name="ToggleGhostVisibilityButton" Text="{Loc ghost-gui-toggle-ghost-visibility-button}" />
     </BoxContainer>
 </widgets:GhostGui>

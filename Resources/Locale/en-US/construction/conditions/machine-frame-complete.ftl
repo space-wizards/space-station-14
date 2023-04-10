@@ -1,3 +1,5 @@
+construction-condition-machine-container-empty = Remove the parts from the frame using a [color=cyan]Crowbar[/color].
+
 # MachineFrameComplete
 construction-condition-machine-frame-requirement-label = Requires:
 construction-condition-machine-frame-insert-circuit-board-message = Insert [color=cyan]any machine circuit board[/color].

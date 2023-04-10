@@ -20,19 +20,63 @@
       ]
     },
     {
-      "name": "off-inhand-left",
+      "name": "inhand-left-flame",
+      "directions": 4,
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "inhand-right-flame",
+      "directions": 4,
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "inhand-left",
       "directions": 4
     },
     {
-      "name": "off-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "on-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "on-inhand-right",
+      "name": "inhand-right",
       "directions": 4
     }
   ]

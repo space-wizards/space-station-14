@@ -5,6 +5,7 @@ using Content.Client.Administration.UI.Tabs.PlayerTab;
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Verbs;
+using Content.Client.Verbs.UI;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.Console;
@@ -26,8 +27,7 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
     [Dependency] private readonly IClientConGroupController _conGroups = default!;
     [Dependency] private readonly IClientConsoleHost _conHost = default!;
     [Dependency] private readonly IInputManager _input = default!;
-
-    [UISystemDependency] private readonly VerbSystem _verbs = default!;
+    [Dependency] private readonly VerbMenuUIController _verb = default!;
 
     private AdminMenuWindow? _window;
     private MenuButton? AdminButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.AdminButton;
@@ -135,7 +135,7 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
         if (function == EngineKeyFunctions.UIClick)
             _conHost.ExecuteCommand($"vv {uid}");
         else if (function == EngineKeyFunctions.UseSecondary)
-            _verbs.VerbMenu.OpenVerbMenu(uid, true);
+            _verb.OpenVerbMenu(uid, true);
         else
             return;
 
@@ -153,7 +153,7 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
         if (function == EngineKeyFunctions.UIClick)
             _conHost.ExecuteCommand($"vv {uid}");
         else if (function == EngineKeyFunctions.UseSecondary)
-            _verbs.VerbMenu.OpenVerbMenu(uid, true);
+            _verb.OpenVerbMenu(uid, true);
         else
             return;
 

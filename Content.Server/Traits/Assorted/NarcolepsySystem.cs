@@ -1,4 +1,4 @@
-﻿using Content.Shared.Bed.Sleep;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.StatusEffect;
 using Robust.Shared.Random;
 
@@ -24,6 +24,14 @@ public sealed class NarcolepsySystem : EntitySystem
     {
         component.NextIncidentTime =
             _random.NextFloat(component.TimeBetweenIncidents.X, component.TimeBetweenIncidents.Y);
+    }
+
+    public void AdjustNarcolepsyTimer(EntityUid uid, int TimerReset, NarcolepsyComponent? narcolepsy = null)
+    {
+        if (!Resolve(uid, ref narcolepsy, false))
+            return;
+
+        narcolepsy.NextIncidentTime = TimerReset;
     }
 
     public override void Update(float frameTime)

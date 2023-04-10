@@ -1,5 +1,4 @@
-﻿using Content.Server.Gravity.EntitySystems;
-using Content.Shared.Gravity;
+﻿using Content.Shared.Gravity;
 
 namespace Content.Server.Gravity
 {
@@ -36,11 +35,10 @@ namespace Content.Server.Gravity
         /// <summary>
         /// Is the gravity generator currently "producing" gravity?
         /// </summary>
-        [DataField("active")]
-        public bool GravityActive { get; set; } = true;
+        [ViewVariables]
+        public bool GravityActive { get; set; } = false;
 
         // Do we need a UI update even if the charge doesn't change? Used by power button.
         [ViewVariables] public bool NeedUIUpdate { get; set; }
-        [ViewVariables] public bool NeedGravityUpdate { get; set; }
     }
 }

@@ -1,4 +1,3 @@
-using Content.Server.Doors.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Tools.Components;
@@ -7,8 +6,8 @@ using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction;
-using Content.Shared.Popups;
 using Robust.Server.GameObjects;
+using Content.Shared.Wires;
 using Content.Server.MachineLinking.Events;
 using Content.Server.MachineLinking.System;
 using Content.Server.MachineLinking.Components;
@@ -25,6 +24,7 @@ namespace Content.Server.Doors.Systems
         {
             base.Initialize();
 
+            SubscribeLocalEvent<AirlockComponent, ComponentInit>(OnAirlockInit);
             SubscribeLocalEvent<AirlockComponent, SignalReceivedEvent>(OnSignalReceived);
 
             SubscribeLocalEvent<AirlockComponent, PowerChangedEvent>(OnPowerChanged);
@@ -35,6 +35,14 @@ namespace Content.Server.Doors.Systems
             SubscribeLocalEvent<AirlockComponent, DoorGetPryTimeModifierEvent>(OnGetPryMod);
             SubscribeLocalEvent<AirlockComponent, BeforeDoorPryEvent>(OnDoorPry);
 
+        }
+
+        private void OnAirlockInit(EntityUid uid, AirlockComponent component, ComponentInit args)
+        {
+            if (TryComp<ApcPowerReceiverComponent>(uid, out var receiverComponent))
+            {
+                Appearance.SetData(uid, DoorVisuals.Powered, receiverComponent.Powered);
+            }
         }
 
         private void OnSignalReceived(EntityUid uid, AirlockComponent component, SignalReceivedEvent args)
@@ -49,7 +57,7 @@ namespace Content.Server.Doors.Systems
         {
             if (TryComp<AppearanceComponent>(uid, out var appearanceComponent))
             {
-                appearanceComponent.SetData(DoorVisuals.Powered, args.Powered);
+                Appearance.SetData(uid, DoorVisuals.Powered, args.Powered, appearanceComponent);
             }
 
             if (!TryComp(uid, out DoorComponent? door))
@@ -64,12 +72,13 @@ namespace Content.Server.Doors.Systems
             else
             {
                 if (component.BoltWireCut)
-                    component.SetBoltsWithAudio(true);
+                    SetBoltsWithAudio(uid, component, true);
+
                 UpdateAutoClose(uid, door: door);
             }
 
             // BoltLights also got out
-            component.UpdateBoltLightStatus();
+            UpdateBoltLightStatus(uid, component);
         }
 
         private void OnStateChanged(EntityUid uid, AirlockComponent component, DoorStateChangedEvent args)
@@ -78,15 +87,12 @@ namespace Content.Server.Doors.Systems
             // means that sometimes the panels & bolt lights may be visible despite a door being completely open.
 
             // Only show the maintenance panel if the airlock is closed
-            if (TryComp<WiresComponent>(uid, out var wiresComponent))
+            if (TryComp<WiresPanelComponent>(uid, out var wiresPanel))
             {
-                wiresComponent.IsPanelVisible =
-                    component.OpenPanelVisible
-                    ||  args.State != DoorState.Open;
+                _wiresSystem.ChangePanelVisibility(uid, wiresPanel, component.OpenPanelVisible || args.State != DoorState.Open);
             }
             // If the door is closed, we should look if the bolt was locked while closing
-            component.UpdateBoltLightStatus();
-
+            UpdateBoltLightStatus(uid, component);
             UpdateAutoClose(uid, component);
 
             // Make sure the airlock auto closes again next time it is opened
@@ -108,7 +114,7 @@ namespace Content.Server.Doors.Systems
             if (!airlock.AutoClose)
                 return;
 
-            if (!airlock.CanChangeState())
+            if (!CanChangeState(uid, airlock))
                 return;
 
             var autoev = new BeforeDoorAutoCloseEvent();
@@ -121,11 +127,11 @@ namespace Content.Server.Doors.Systems
 
         private void OnBeforeDoorOpened(EntityUid uid, AirlockComponent component, BeforeDoorOpenedEvent args)
         {
-            if (!component.CanChangeState())
+            if (!CanChangeState(uid, component))
                 args.Cancel();
         }
 
-        protected override void OnBeforeDoorClosed(EntityUid uid, SharedAirlockComponent component, BeforeDoorClosedEvent args)
+        protected override void OnBeforeDoorClosed(EntityUid uid, AirlockComponent component, BeforeDoorClosedEvent args)
         {
             base.OnBeforeDoorClosed(uid, component, args);
 
@@ -138,7 +144,7 @@ namespace Content.Server.Doors.Systems
 
             if (TryComp(uid, out DoorComponent? door)
                 && !door.Partial
-                && !Comp<AirlockComponent>(uid).CanChangeState())
+                && !CanChangeState(uid, component))
             {
                 args.Cancel();
             }
@@ -146,14 +152,14 @@ namespace Content.Server.Doors.Systems
 
         private void OnBeforeDoorDenied(EntityUid uid, AirlockComponent component, BeforeDoorDeniedEvent args)
         {
-            if (!component.CanChangeState())
+            if (!CanChangeState(uid, component))
                 args.Cancel();
         }
 
         private void OnActivate(EntityUid uid, AirlockComponent component, ActivateInWorldEvent args)
         {
-            if (TryComp<WiresComponent>(uid, out var wiresComponent) && wiresComponent.IsPanelOpen &&
-                EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
+            if (TryComp<WiresPanelComponent>(uid, out var panel) && panel.Open &&
+                TryComp<ActorComponent>(args.User, out var actor))
             {
                 _wiresSystem.OpenUserInterface(uid, actor.PlayerSession);
                 args.Handled = true;
@@ -175,18 +181,69 @@ namespace Content.Server.Doors.Systems
 
         private void OnDoorPry(EntityUid uid, AirlockComponent component, BeforeDoorPryEvent args)
         {
-            if (component.IsBolted())
+            if (component.BoltsDown)
             {
-                component.Owner.PopupMessage(args.User, Loc.GetString("airlock-component-cannot-pry-is-bolted-message"));
+                Popup.PopupEntity(Loc.GetString("airlock-component-cannot-pry-is-bolted-message"), uid, args.User);
                 args.Cancel();
             }
-            if (component.IsPowered())
+
+            if (this.IsPowered(uid, EntityManager))
             {
                 if (HasComp<ToolForcePoweredComponent>(args.Tool))
                     return;
-                component.Owner.PopupMessage(args.User, Loc.GetString("airlock-component-cannot-pry-is-powered-message"));
+                Popup.PopupEntity(Loc.GetString("airlock-component-cannot-pry-is-powered-message"), uid, args.User);
                 args.Cancel();
             }
+        }
+
+        public bool CanChangeState(EntityUid uid, AirlockComponent component)
+        {
+            return this.IsPowered(uid, EntityManager) && !component.BoltsDown;
+        }
+
+        public void UpdateBoltLightStatus(EntityUid uid, AirlockComponent component)
+        {
+            if (!TryComp<AppearanceComponent>(uid, out var appearance))
+                return;
+
+            Appearance.SetData(uid, DoorVisuals.BoltLights, GetBoltLightsVisible(uid, component), appearance);
+        }
+
+        public void SetBoltsWithAudio(EntityUid uid, AirlockComponent component, bool newBolts)
+        {
+            if (newBolts == component.BoltsDown)
+                return;
+
+            component.BoltsDown = newBolts;
+            Audio.PlayPvs(newBolts ? component.BoltDownSound : component.BoltUpSound, uid);
+            UpdateBoltLightStatus(uid, component);
+        }
+
+        public bool GetBoltLightsVisible(EntityUid uid, AirlockComponent component)
+        {
+            return component.BoltLightsEnabled &&
+                   component.BoltsDown &&
+                   this.IsPowered(uid, EntityManager) &&
+                   TryComp<DoorComponent>(uid, out var doorComponent) &&
+                   doorComponent.State == DoorState.Closed;
+        }
+
+        public void SetBoltLightsEnabled(EntityUid uid, AirlockComponent component, bool value)
+        {
+            if (component.BoltLightsEnabled == value)
+                return;
+
+            component.BoltLightsEnabled = value;
+            UpdateBoltLightStatus(uid, component);
+        }
+
+        public void SetBoltsDown(EntityUid uid, AirlockComponent component, bool value)
+        {
+            if (component.BoltsDown == value)
+                return;
+
+            component.BoltsDown = value;
+            UpdateBoltLightStatus(uid, component);
         }
     }
 }

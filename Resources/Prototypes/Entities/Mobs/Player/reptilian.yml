@@ -5,7 +5,6 @@
   id: MobReptilian
   components:
     - type: CombatMode
-      disarm: null
     - type: InteractionPopup
       successChance: 1
       interactSuccessString: hugging-success-generic
@@ -17,9 +16,6 @@
       context: "human"
     - type: MobMover
     - type: InputMover
-    - type: Vocal
-      maleScream: /Audio/Voice/Reptilian/reptilian_scream.ogg
-      femaleScream: /Audio/Voice/Reptilian/reptilian_scream.ogg
     - type: Alerts
     - type: Eye
     - type: CameraRecoil

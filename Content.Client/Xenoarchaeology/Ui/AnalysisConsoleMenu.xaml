@@ -15,6 +15,11 @@
                         Text="{Loc 'analysis-console-scan-button'}"
                         ToolTip="{Loc 'analysis-console-scan-tooltip-info'}">
                 </Button>
+                <BoxContainer MinHeight="5"></BoxContainer>
+                <Button Name="PrintButton"
+                        Text="{Loc 'analysis-console-print-button'}"
+                        ToolTip="{Loc 'analysis-console-print-tooltip-info'}">
+                </Button>
                 <BoxContainer MinHeight="10"></BoxContainer>
                 <Button Name="DestroyButton"
                         Text="{Loc 'analysis-console-destroy-button'}"

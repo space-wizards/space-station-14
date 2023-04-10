@@ -8,7 +8,6 @@
     - type: Stack
       stackType: InflatableWall
       count: 10
-      max: 10
     - type: Sprite
       sprite: Objects/Misc/inflatable_wall.rsi
       state: item_wall
@@ -42,7 +41,6 @@
     - type: Stack
       stackType: InflatableDoor
       count: 4
-      max: 4
     - type: Sprite
       sprite: Objects/Misc/inflatable_door.rsi
       state: item_door

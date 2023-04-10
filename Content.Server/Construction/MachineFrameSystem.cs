@@ -1,17 +1,16 @@
 using Content.Server.Construction.Components;
 using Content.Server.Stack;
-using Content.Shared.Construction;
+using Content.Shared.Construction.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Stacks;
 using Content.Shared.Tag;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Construction;
 
 public sealed class MachineFrameSystem : EntitySystem
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly TagSystem _tag = default!;
@@ -57,8 +56,6 @@ public sealed class MachineFrameSystem : EntitySystem
                 // Setup requirements and progress...
                 ResetProgressAndRequirements(component, machineBoard);
 
-                _appearance.SetData(uid, MachineFrameVisuals.State, 2);
-
                 if (TryComp(uid, out ConstructionComponent? construction))
                 {
                     // So prying the components off works correctly.
@@ -85,6 +82,8 @@ public sealed class MachineFrameSystem : EntitySystem
             if (TryComp<StackComponent?>(args.Used, out var stack))
             {
                 var type = stack.StackTypeId;
+                if (type == null)
+                    return;
                 if (!component.MaterialRequirements.ContainsKey(type))
                     return;
 
@@ -221,8 +220,6 @@ public sealed class MachineFrameSystem : EntitySystem
     {
         if (!component.HasBoard)
         {
-            _appearance.SetData(component.Owner, MachineFrameVisuals.State, 1);
-
             component.TagRequirements.Clear();
             component.MaterialRequirements.Clear();
             component.ComponentRequirements.Clear();
@@ -239,8 +236,6 @@ public sealed class MachineFrameSystem : EntitySystem
 
         if (!TryComp<MachineBoardComponent>(board, out var machineBoard))
             return;
-
-        _appearance.SetData(component.Owner, MachineFrameVisuals.State, 2);
 
         ResetProgressAndRequirements(component, machineBoard);
 
@@ -262,6 +257,8 @@ public sealed class MachineFrameSystem : EntitySystem
             {
                 var type = stack.StackTypeId;
                 // Check this is part of the requirements...
+                if (type == null)
+                    continue;
                 if (!component.MaterialRequirements.ContainsKey(type))
                     continue;
 

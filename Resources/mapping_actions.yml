@@ -1051,7 +1051,7 @@
     temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: AlignTileAny
-      tileId: space
+      tileId: Space
   assignments:
   - 0: 8
 ...

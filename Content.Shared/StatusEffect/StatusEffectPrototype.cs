@@ -6,7 +6,7 @@ namespace Content.Shared.StatusEffect
     [Prototype("statusEffect")]
     public sealed class StatusEffectPrototype : IPrototype
     {
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
         [DataField("alert")]

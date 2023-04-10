@@ -51,13 +51,12 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
         var netQ = ncComp.GetNode<Node>("hv").NodeGroup as PowerNet;
         if (netQ != null)
         {
-            var net = netQ!;
-            foreach (PowerConsumerComponent pcc in net.Consumers)
+            foreach (PowerConsumerComponent pcc in netQ.Consumers)
             {
                 loads.Add(LoadOrSource(pcc, pcc.DrawRate, false));
                 totalLoads += pcc.DrawRate;
             }
-            foreach (BatteryChargerComponent pcc in net.Chargers)
+            foreach (BatteryChargerComponent pcc in netQ.Chargers)
             {
                 if (!TryComp(pcc.Owner, out PowerNetworkBatteryComponent? batteryComp))
                 {
@@ -67,12 +66,12 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
                 loads.Add(LoadOrSource(pcc, rate, true));
                 totalLoads += rate;
             }
-            foreach (PowerSupplierComponent pcc in net.Suppliers)
+            foreach (PowerSupplierComponent pcc in netQ.Suppliers)
             {
                 sources.Add(LoadOrSource(pcc, pcc.MaxSupply, false));
                 totalSources += pcc.MaxSupply;
             }
-            foreach (BatteryDischargerComponent pcc in net.Dischargers)
+            foreach (BatteryDischargerComponent pcc in netQ.Dischargers)
             {
                 if (!TryComp(pcc.Owner, out PowerNetworkBatteryComponent? batteryComp))
                 {

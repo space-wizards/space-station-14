@@ -1,7 +1,7 @@
-using JetBrains.Annotations;
 using Content.Server.Nutrition.EntitySystems;
+using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
-using System.Threading;
+using JetBrains.Annotations;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Nutrition.Components
@@ -14,11 +14,9 @@ namespace Content.Server.Nutrition.Components
         public string SolutionName { get; set; } = DefaultSolutionName;
         public const string DefaultSolutionName = "drink";
 
-        [ViewVariables]
         [DataField("useSound")]
         public SoundSpecifier UseSound = new SoundPathSpecifier("/Audio/Items/drink.ogg");
 
-        [ViewVariables]
         [DataField("isOpen")]
         internal bool DefaultToOpened;
 
@@ -48,11 +46,5 @@ namespace Content.Server.Nutrition.Components
         /// </summary>
         [DataField("forceFeedDelay")]
         public float ForceFeedDelay = 3;
-
-        /// <summary>
-        ///     Token for interrupting a do-after action (e.g., force feeding). If not null, implies component is
-        ///     currently "in use".
-        /// </summary>
-        public CancellationTokenSource? CancelToken;
     }
 }

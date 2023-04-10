@@ -26,8 +26,21 @@
   - type: Destructible
     thresholds:
     - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
         !type:DamageTypeTrigger
         damageType: Heat
+        damage: 5
+      behaviors:
+      - !type:SolutionExplosionBehavior
+        solution: tank
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Piercing
         damage: 5
       behaviors:
       - !type:SolutionExplosionBehavior

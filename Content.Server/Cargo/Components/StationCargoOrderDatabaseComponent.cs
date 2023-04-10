@@ -17,19 +17,19 @@ public sealed class StationCargoOrderDatabaseComponent : Component
     public int Capacity = 20;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("orders")]
-    public Dictionary<int, CargoOrderData> Orders = new();
+    public List<CargoOrderData> Orders = new();
 
     /// <summary>
-    /// Tracks the next order index available.
+    /// Used to determine unique order IDs
     /// </summary>
-    public int Index;
+    public int NumOrdersCreated;
 
-    [ViewVariables, DataField("cargoShuttleProto", customTypeSerializer:typeof(PrototypeIdSerializer<CargoShuttlePrototype>))]
+    [DataField("cargoShuttleProto", customTypeSerializer:typeof(PrototypeIdSerializer<CargoShuttlePrototype>))]
     public string? CargoShuttleProto = "CargoShuttle";
 
     /// <summary>
     /// The cargo shuttle assigned to this station.
     /// </summary>
-    [ViewVariables, DataField("shuttle")]
+    [DataField("shuttle")]
     public EntityUid? Shuttle;
 }

@@ -56,7 +56,7 @@ namespace Content.Server.Kitchen.EntitySystems
             SubscribeLocalEvent<MicrowaveComponent, RefreshPartsEvent>(OnRefreshParts);
             SubscribeLocalEvent<MicrowaveComponent, UpgradeExamineEvent>(OnUpgradeExamine);
 
-            SubscribeLocalEvent<MicrowaveComponent, MicrowaveStartCookMessage>((u,c,_) => Wzhzhzh(u,c));
+            SubscribeLocalEvent<MicrowaveComponent, MicrowaveStartCookMessage>((u,c,m) => Wzhzhzh(u,c,m.Session.AttachedEntity));
             SubscribeLocalEvent<MicrowaveComponent, MicrowaveEjectMessage>(OnEjectMessage);
             SubscribeLocalEvent<MicrowaveComponent, MicrowaveEjectSolidIndexedMessage>(OnEjectIndex);
             SubscribeLocalEvent<MicrowaveComponent, MicrowaveSelectCookTimeMessage>(OnSelectTime);
@@ -72,7 +72,7 @@ namespace Content.Server.Kitchen.EntitySystems
             SetAppearance(microwaveComponent, MicrowaveVisualState.Cooking);
 
             microwaveComponent.PlayingStream =
-                _audio.Play(microwaveComponent.LoopingSound, Filter.Pvs(uid), uid, AudioParams.Default.WithLoop(true).WithMaxDistance(5));
+                _audio.PlayPvs(microwaveComponent.LoopingSound, uid, AudioParams.Default.WithLoop(true).WithMaxDistance(5));
         }
 
         private void OnCookStop(EntityUid uid, ActiveMicrowaveComponent component, ComponentShutdown args)
@@ -210,12 +210,12 @@ namespace Content.Server.Kitchen.EntitySystems
                 ? Loc.GetString("microwave-component-suicide-multi-head-message")
                 : Loc.GetString("microwave-component-suicide-message");
 
-            _popupSystem.PopupEntity(othersMessage, victim, Filter.PvsExcept(victim));
-            _popupSystem.PopupEntity(selfMessage, victim, Filter.Entities(victim));
+            _popupSystem.PopupEntity(othersMessage, victim, Filter.PvsExcept(victim), true);
+            _popupSystem.PopupEntity(selfMessage, victim, victim);
 
             _audio.PlayPvs(component.ClickSound, uid, AudioParams.Default.WithVolume(-2));
             component.CurrentCookTimerTime = 10;
-            Wzhzhzh(uid, component);
+            Wzhzhzh(uid, component, args.Victim);
             UpdateUserInterfaceState(uid, component);
         }
 
@@ -230,19 +230,19 @@ namespace Content.Server.Kitchen.EntitySystems
                 return;
             if (!(TryComp<ApcPowerReceiverComponent>(uid, out var apc) && apc.Powered))
             {
-                _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-no-power"), uid, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-no-power"), uid, args.User);
                 return;
             }
 
             if (component.Broken)
             {
-                _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-broken"), uid, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-broken"), uid, args.User);
                 return;
             }
 
             if (!HasComp<ItemComponent>(args.Used))
             {
-                _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-transfer-fail"), uid, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-transfer-fail"), uid, args.User);
                 return;
             }
 
@@ -314,7 +314,7 @@ namespace Content.Server.Kitchen.EntitySystems
         /// It does not make a "wzhzhzh" sound, it makes a "mmmmmmmm" sound!
         /// -emo
         /// </remarks>
-        public void Wzhzhzh(EntityUid uid, MicrowaveComponent component)
+        public void Wzhzhzh(EntityUid uid, MicrowaveComponent component, EntityUid? user)
         {
             if (!HasContents(component) || HasComp<ActiveMicrowaveComponent>(uid))
                 return;
@@ -324,7 +324,7 @@ namespace Content.Server.Kitchen.EntitySystems
             foreach (var item in component.Storage.ContainedEntities)
             {
                 // special behavior when being microwaved ;)
-                var ev = new BeingMicrowavedEvent(uid);
+                var ev = new BeingMicrowavedEvent(uid, user);
                 RaiseLocalEvent(item, ev);
 
                 if (ev.Handled)

@@ -1,6 +1,6 @@
-using System.Threading;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Nutrition.EntitySystems;
+using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -14,15 +14,12 @@ namespace Content.Server.Nutrition.Components
         [DataField("solution")]
         public string SolutionName { get; set; } = "food";
 
-        [ViewVariables]
         [DataField("useSound")]
         public SoundSpecifier UseSound { get; set; } = new SoundPathSpecifier("/Audio/Items/eatfood.ogg");
 
-        [ViewVariables]
         [DataField("trash", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? TrashPrototype { get; set; }
 
-        [ViewVariables]
         [DataField("transferAmount")]
         public FixedPoint2? TransferAmount { get; set; } = FixedPoint2.New(5);
 
@@ -57,12 +54,6 @@ namespace Content.Server.Nutrition.Components
         [DataField("forceFeedDelay")]
         public float ForceFeedDelay = 3;
 
-        /// <summary>
-        ///     Token for interrupting a do-after action (e.g., force feeding). If not null, implies component is
-        ///     currently "in use".
-        /// </summary>
-        public CancellationTokenSource? CancelToken;
-
         [ViewVariables]
         public int UsesRemaining
         {
@@ -74,11 +65,11 @@ namespace Content.Server.Nutrition.Components
                 }
 
                 if (TransferAmount == null)
-                    return solution.CurrentVolume == 0 ? 0 : 1;
+                    return solution.Volume == 0 ? 0 : 1;
 
-                return solution.CurrentVolume == 0
+                return solution.Volume == 0
                     ? 0
-                    : Math.Max(1, (int) Math.Ceiling((solution.CurrentVolume / (FixedPoint2)TransferAmount).Float()));
+                    : Math.Max(1, (int) Math.Ceiling((solution.Volume / (FixedPoint2)TransferAmount).Float()));
             }
         }
     }

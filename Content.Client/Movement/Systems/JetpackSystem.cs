@@ -14,6 +14,7 @@ public sealed class JetpackSystem : SharedJetpackSystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ClothingSystem _clothing = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -29,7 +30,7 @@ public sealed class JetpackSystem : SharedJetpackSystem
 
     private void OnJetpackAppearance(EntityUid uid, JetpackComponent component, ref AppearanceChangeEvent args)
     {
-        args.Component.TryGetData(JetpackVisuals.Enabled, out bool enabled);
+        _appearance.TryGetData<bool>(uid, JetpackVisuals.Enabled, out var enabled, args.Component);
 
         var state = "icon" + (enabled ? "-on" : "");
         args.Sprite?.LayerSetState(0, state);
@@ -46,10 +47,11 @@ public sealed class JetpackSystem : SharedJetpackSystem
 
         foreach (var comp in EntityQuery<ActiveJetpackComponent>())
         {
-            comp.Accumulator += frameTime;
+            if (_timing.CurTime < comp.TargetTime)
+                continue;
 
-            if (comp.Accumulator < comp.EffectCooldown) continue;
-            comp.Accumulator -= comp.EffectCooldown;
+            comp.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(comp.EffectCooldown);
+
             CreateParticles(comp.Owner);
         }
     }
@@ -68,7 +70,7 @@ public sealed class JetpackSystem : SharedJetpackSystem
 
         if (_mapManager.TryGetGrid(gridUid, out var grid))
         {
-            coordinates = new EntityCoordinates(grid.GridEntityId, grid.WorldToLocal(coordinates.ToMapPos(EntityManager)));
+            coordinates = new EntityCoordinates(grid.Owner, grid.WorldToLocal(coordinates.ToMapPos(EntityManager)));
         }
         else if (uidXform.MapUid != null)
         {

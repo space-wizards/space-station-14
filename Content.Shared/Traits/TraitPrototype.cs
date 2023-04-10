@@ -18,13 +18,13 @@ namespace Content.Shared.Traits
         ///     The name of this trait.
         /// </summary>
         [DataField("name")]
-        public string Name { get; } = string.Empty;
+        public string Name { get; private set; } = "";
 
         /// <summary>
         ///     The description of this trait.
         /// </summary>
         [DataField("description")]
-        public string? Description { get; }
+        public string? Description { get; private set; }
 
         /// <summary>
         ///     Don't apply this trait to entities this whitelist IS NOT valid for.

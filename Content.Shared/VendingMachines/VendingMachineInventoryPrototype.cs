@@ -1,5 +1,6 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Shared.VendingMachines
 {
@@ -10,13 +11,13 @@ namespace Content.Shared.VendingMachines
         [IdDataField]
         public string ID { get; } = default!;
 
-        [DataField("startingInventory")]
+        [DataField("startingInventory", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<uint, EntityPrototype>))]
         public Dictionary<string, uint> StartingInventory { get; } = new();
 
-        [DataField("emaggedInventory")]
+        [DataField("emaggedInventory", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<uint, EntityPrototype>))]
         public Dictionary<string, uint>? EmaggedInventory { get; }
 
-        [DataField("contrabandInventory")]
+        [DataField("contrabandInventory", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<uint, EntityPrototype>))]
         public Dictionary<string, uint>? ContrabandInventory { get; }
     }
 }

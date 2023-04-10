@@ -1,7 +1,10 @@
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Roles;
+using Content.Shared.Humanoid;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using static Content.Shared.Humanoid.HumanoidAppearanceState;
 
 namespace Content.Shared.Zombies
 {
@@ -53,12 +56,35 @@ namespace Content.Shared.Zombies
         /// The attack arc of the zombie
         /// </summary>
         [DataField("attackArc", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string AttackAnimation = "WeaponArcClaw";
+        public string AttackAnimation = "WeaponArcBite";
 
         /// <summary>
         /// The role prototype of the zombie antag role
         /// </summary>
-        [ViewVariables, DataField("zombieRoldId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
+        [DataField("zombieRoleId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
         public readonly string ZombieRoleId = "Zombie";
+
+        /// <summary>
+        /// The EntityName of the humanoid to restore in case of cloning
+        /// </summary>
+        [DataField("beforeZombifiedEntityName"), ViewVariables(VVAccess.ReadOnly)]
+        public string BeforeZombifiedEntityName = String.Empty;
+
+        /// <summary>
+        /// The CustomBaseLayers of the humanoid to restore in case of cloning
+        /// </summary>
+        [DataField("beforeZombifiedCustomBaseLayers")]
+        public Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> BeforeZombifiedCustomBaseLayers = new ();
+
+        /// <summary>
+        /// The skin color of the humanoid to restore in case of cloning
+        /// </summary>
+        [DataField("beforeZombifiedSkinColor")]
+        public Color BeforeZombifiedSkinColor;
+
+        [DataField("emoteId", customTypeSerializer: typeof(PrototypeIdSerializer<EmoteSoundsPrototype>))]
+        public string? EmoteSoundsId = "Zombie";
+
+        public EmoteSoundsPrototype? EmoteSounds;
     }
 }

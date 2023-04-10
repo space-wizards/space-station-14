@@ -1,4 +1,4 @@
-﻿using Content.Client.Administration.Managers;
+using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
 using Content.Client.Clickable;
@@ -17,6 +17,8 @@ using Content.Client.Voting;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Module;
+using Content.Client.Guidebook;
+using Content.Shared.Administration.Managers;
 
 namespace Content.Client.IoC
 {
@@ -31,6 +33,7 @@ namespace Content.Client.IoC
             IoCManager.Register<IScreenshotHook, ScreenshotHook>();
             IoCManager.Register<IClickMapManager, ClickMapManager>();
             IoCManager.Register<IClientAdminManager, ClientAdminManager>();
+            IoCManager.Register<ISharedAdminManager, ClientAdminManager>();
             IoCManager.Register<EuiManager, EuiManager>();
             IoCManager.Register<IVoteManager, VoteManager>();
             IoCManager.Register<ChangelogManager, ChangelogManager>();
@@ -42,6 +45,7 @@ namespace Content.Client.IoC
             IoCManager.Register<GhostKickManager>();
             IoCManager.Register<ExtendedDisconnectInformationManager>();
             IoCManager.Register<PlayTimeTrackingManager>();
+            IoCManager.Register<DocumentParsingManager>();
         }
     }
 }

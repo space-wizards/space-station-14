@@ -11,3 +11,9 @@ machine-upgrade-not-upgraded = [color=yellow]{CAPITALIZE($upgraded)}[/color] not
 upgrade-power-draw = power draw
 upgrade-max-charge = max charge
 upgrade-power-supply = power supply
+
+two-way-lever-left = push left
+two-way-lever-right = push right
+two-way-lever-cant = can't push the lever that way!
+
+recycler-count-items = Recycled {$items} objects.

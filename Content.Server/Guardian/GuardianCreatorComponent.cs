@@ -20,7 +20,6 @@ namespace Content.Server.Guardian
         /// <summary>
         /// The prototype of the guardian entity which will be created
         /// </summary>
-        [ViewVariables]
         [DataField("guardianProto", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
         public string GuardianProto { get; set; } = default!;
 
@@ -29,7 +28,5 @@ namespace Content.Server.Guardian
         /// </summary>
         [DataField("delay")]
         public float InjectionDelay = 5f;
-
-        public bool Injecting = false;
     }
 }

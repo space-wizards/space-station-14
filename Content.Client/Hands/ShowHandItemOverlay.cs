@@ -60,7 +60,7 @@ namespace Content.Client.Hands
 
             var handEntity = EntityOverride ?? EntitySystem.Get<HandsSystem>().GetActiveHandEntity();
 
-            if (handEntity == null || !_entMan.HasComponent<ISpriteComponent>(handEntity))
+            if (handEntity == null || !_entMan.HasComponent<SpriteComponent>(handEntity))
                 return;
 
             var halfSize = _renderBackbuffer.Size / 2;

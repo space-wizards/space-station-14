@@ -1,6 +1,8 @@
 ﻿using Content.Shared.MachineLinking;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Xenoarchaeology.Equipment.Components;
 
@@ -28,4 +30,10 @@ public sealed class AnalysisConsoleComponent : Component
     /// </summary>
     [DataField("destroySound")]
     public SoundSpecifier DestroySound = new SoundPathSpecifier("/Audio/Effects/radpulse11.ogg");
+
+    /// <summary>
+    /// The entity spawned by a report.
+    /// </summary>
+    [DataField("reportEntityId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string ReportEntityId = "Paper";
 }

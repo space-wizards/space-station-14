@@ -89,7 +89,7 @@ namespace Content.Shared.Jittering
             var jitter = EnsureComp<JitteringComponent>(uid);
             jitter.Amplitude = amplitude;
             jitter.Frequency = frequency;
-            jitter.Dirty();
+            Dirty(jitter);
         }
     }
 }

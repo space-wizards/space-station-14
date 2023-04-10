@@ -31,9 +31,8 @@ public sealed class BlockingComponent : Component
     /// <summary>
     /// The shape of the blocking fixture that will be dynamically spawned
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("shape")]
-    public IPhysShape Shape = new PhysShapeCircle {Radius = 0.5F};
+    [ViewVariables(VVAccess.ReadWrite)] [DataField("shape")]
+    public IPhysShape Shape = new PhysShapeCircle(0.5f);
 
     /// <summary>
     /// The damage modifer to use while passively blocking
@@ -58,7 +57,6 @@ public sealed class BlockingComponent : Component
     /// <summary>
     /// The sound to be played when you get hit while actively blocking
     /// </summary>
-    [ViewVariables]
     [DataField("blockSound")]
     public SoundSpecifier BlockSound = new SoundPathSpecifier("/Audio/Weapons/block_metal1.ogg");
 }

@@ -22,14 +22,17 @@
     sprite: Objects/Tools/cable-coils.rsi
   - type: CablePlacer
   - type: Clickable
+  - type: StaticPrice
+    price: 0
   - type: StackPrice
-    price: 0.5
+    price: 5
 
 - type: entity
   id: CableHVStack
   parent: CableStack
   name: HV cable coil
   suffix: Full
+  description: HV cables for connecting engines to heavy duty machinery, SMESes, and substations.
   components:
   - type: Stack
     stackType: CableHV
@@ -66,6 +69,7 @@
   id: CableMVStack
   name: MV cable coil
   suffix: Full
+  description: MV cables for connecting substations to APCs, and also powering a select few things like emitters.
   components:
   - type: Stack
     stackType: CableMV

@@ -9,15 +9,9 @@ public sealed class TypingIndicatorVisualizerSystem : VisualizerSystem<TypingInd
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-    public override void Initialize()
+    protected override void OnAppearanceChange(EntityUid uid, TypingIndicatorComponent component, ref AppearanceChangeEvent args)
     {
-        base.Initialize();
-        SubscribeLocalEvent<TypingIndicatorComponent, ComponentInit>(OnInit);
-    }
-
-    private void OnInit(EntityUid uid, TypingIndicatorComponent component, ComponentInit args)
-    {
-        if (!TryComp(uid, out SpriteComponent? sprite))
+        if (args.Sprite == null)
             return;
 
         if (!_prototypeManager.TryIndex<TypingIndicatorPrototype>(component.Prototype, out var proto))
@@ -26,25 +20,15 @@ public sealed class TypingIndicatorVisualizerSystem : VisualizerSystem<TypingInd
             return;
         }
 
-        var layer = sprite.LayerMapReserveBlank(TypingIndicatorLayers.Base);
-        sprite.LayerSetRSI(layer, proto.SpritePath);
-        sprite.LayerSetState(layer, proto.TypingState);
-        sprite.LayerSetShader(layer, proto.Shader);
-        sprite.LayerSetOffset(layer, proto.Offset);
-        sprite.LayerSetVisible(layer, false);
-    }
+        AppearanceSystem.TryGetData<bool>(uid, TypingIndicatorVisuals.IsTyping, out var isTyping, args.Component);
+        var layerExists = args.Sprite.LayerMapTryGet(TypingIndicatorLayers.Base, out var layer);
+        if (!layerExists)
+            layer = args.Sprite.LayerMapReserveBlank(TypingIndicatorLayers.Base);
 
-    protected override void OnAppearanceChange(EntityUid uid, TypingIndicatorComponent component, ref AppearanceChangeEvent args)
-    {
-        base.OnAppearanceChange(uid, component, ref args);
-
-        if (!TryComp(uid, out SpriteComponent? sprite))
-            return;
-
-        args.Component.TryGetData(TypingIndicatorVisuals.IsTyping, out bool isTyping);
-        if (sprite.LayerMapTryGet(TypingIndicatorLayers.Base, out var layer))
-        {
-            sprite.LayerSetVisible(layer, isTyping);
-        }
+        args.Sprite.LayerSetRSI(layer, proto.SpritePath);
+        args.Sprite.LayerSetState(layer, proto.TypingState);
+        args.Sprite.LayerSetShader(layer, proto.Shader);
+        args.Sprite.LayerSetOffset(layer, proto.Offset);
+        args.Sprite.LayerSetVisible(layer, isTyping);
     }
 }

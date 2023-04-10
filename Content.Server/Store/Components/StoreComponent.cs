@@ -1,9 +1,9 @@
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Audio;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Server.Store.Components;
 
@@ -59,16 +59,10 @@ public sealed class StoreComponent : Component
     [ViewVariables]
     public HashSet<ListingData> LastAvailableListings = new();
 
-    /// <summary>
-    /// checks whether or not the store has been opened yet.
-    /// </summary>
-    public bool Opened = false;
-
     #region audio
     /// <summary>
     /// The sound played to the buyer when a purchase is succesfully made.
     /// </summary>
-    [ViewVariables]
     [DataField("buySuccessSound")]
     public SoundSpecifier BuySuccessSound = new SoundPathSpecifier("/Audio/Effects/kaching.ogg");
     #endregion
@@ -77,8 +71,10 @@ public sealed class StoreComponent : Component
 /// <summary>
 /// Event that is broadcast when a store is added to an entity
 /// </summary>
-public sealed class StoreAddedEvent : EntityEventArgs { };
+[ByRefEvent]
+public readonly record struct StoreAddedEvent;
 /// <summary>
 /// Event that is broadcast when a store is removed from an entity
 /// </summary>
-public sealed class StoreRemovedEvent : EntityEventArgs { };
+[ByRefEvent]
+public readonly record struct StoreRemovedEvent;

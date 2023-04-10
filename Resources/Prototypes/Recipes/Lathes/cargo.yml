@@ -1,8 +1,5 @@
 ﻿- type: latheRecipe
   id: ConveyorBeltAssembly
-  icon:
-    sprite: Structures/conveyor.rsi
-    state: conveyor_loose
   result: ConveyorBeltAssembly
   completetime: 4
   materials:
@@ -11,9 +8,6 @@
 
 - type: latheRecipe
   id: AppraisalTool
-  icon:
-    sprite: Objects/Tools/appraisal-tool.rsi
-    state: icon
   result: AppraisalTool
   completetime: 4
   materials:

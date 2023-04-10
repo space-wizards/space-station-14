@@ -23,7 +23,7 @@ public abstract class SharedRgbLightControllerSystem : EntitySystem
             return;
 
         rgb.Layers = layers;
-        rgb.Dirty();
+        Dirty(rgb);
     }
 
     public void SetCycleRate(EntityUid uid, float rate, RgbLightControllerComponent? rgb = null)
@@ -32,6 +32,6 @@ public abstract class SharedRgbLightControllerSystem : EntitySystem
             return;
 
         rgb.CycleRate = Math.Clamp(0.01f, rate, 1); // lets not give people seizures
-        rgb.Dirty();
+        Dirty(rgb);
     }
 }

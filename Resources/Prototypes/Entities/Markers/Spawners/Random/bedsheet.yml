@@ -6,7 +6,8 @@
     - type: Sprite
       layers:
         - state: red
-        - texture: Objects/Misc/bedsheets.rsi/random_bedsheet.png
+        - sprite: Objects/Misc/bedsheets.rsi
+          state: random_bedsheet
     - type: RandomSpawner
       rarePrototypes:
         - BedsheetIan

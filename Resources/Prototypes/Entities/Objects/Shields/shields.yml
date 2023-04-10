@@ -19,13 +19,19 @@
       blockingToggleAction:
         name: action-name-blocking
         description: action-description-blocking
-        icon: Objects/Weapons/Melee/shields.rsi/teleriot-icon.png
+        icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: teleriot-icon }
         iconOn: Objects/Weapons/Melee/shields.rsi/teleriot-on.png
         event: !type:ToggleActionEvent
     - type: Damageable
       damageContainer: Shield
     - type: Destructible
       thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 80
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
         - trigger:
             !type:DamageTrigger
             damage: 40 #This is probably enough damage before it breaks
@@ -37,11 +43,13 @@
             - !type:SpawnEntitiesBehavior
               spawn:
                 SheetSteel:
-                  min: 5
-                  max: 5
+                  min: 2
+                  max: 2
                 SheetGlass:
-                  min: 5
-                  max: 5
+                  min: 2
+                  max: 2
+    - type: StaticPrice
+      price: 50
 
 #Security Shields
 
@@ -104,6 +112,12 @@
       thresholds:
         - trigger:
             !type:DamageTrigger
+            damage: 60
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
             damage: 30 #Weaker shield
           behaviors:
             - !type:DoActsBehavior
@@ -115,6 +129,8 @@
                 MaterialWoodPlank:
                   min: 5
                   max: 5
+    - type: StaticPrice
+      price: 150
 
 - type: entity
   name: makeshift shield
@@ -134,6 +150,12 @@
       node: makeshiftShield
     - type: Destructible
       thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 40
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
         - trigger:
             !type:DamageTrigger
             damage: 20 #Very weak shield

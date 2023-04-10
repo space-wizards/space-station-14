@@ -1,20 +1,20 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.Construction;
 using Content.Server.Lathe.Components;
 using Content.Server.Materials;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Research;
-using Content.Server.Research.Components;
+using Content.Server.Stack;
 using Content.Server.UserInterface;
+using Content.Shared.Database;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -25,46 +25,34 @@ namespace Content.Server.Lathe
     {
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSys = default!;
-        [Dependency] private readonly ResearchSystem _researchSys = default!;
         [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
+        [Dependency] private readonly StackSystem _stack = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<LatheComponent, MaterialEntityInsertedEvent>(OnMaterialEntityInserted);
             SubscribeLocalEvent<LatheComponent, GetMaterialWhitelistEvent>(OnGetWhitelist);
             SubscribeLocalEvent<LatheComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<LatheComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<LatheComponent, RefreshPartsEvent>(OnPartsRefresh);
             SubscribeLocalEvent<LatheComponent, UpgradeExamineEvent>(OnUpgradeExamine);
+            SubscribeLocalEvent<LatheComponent, TechnologyDatabaseModifiedEvent>(OnDatabaseModified);
 
             SubscribeLocalEvent<LatheComponent, LatheQueueRecipeMessage>(OnLatheQueueRecipeMessage);
             SubscribeLocalEvent<LatheComponent, LatheSyncRequestMessage>(OnLatheSyncRequestMessage);
-            SubscribeLocalEvent<LatheComponent, LatheServerSelectionMessage>(OnLatheServerSelectionMessage);
 
             SubscribeLocalEvent<LatheComponent, BeforeActivatableUIOpenEvent>((u,c,_) => UpdateUserInterfaceState(u,c));
-            SubscribeLocalEvent<LatheComponent, MaterialAmountChangedEvent>((u,c,_) => UpdateUserInterfaceState(u,c));
+            SubscribeLocalEvent<LatheComponent, MaterialAmountChangedEvent>(OnMaterialAmountChanged);
 
             SubscribeLocalEvent<TechnologyDatabaseComponent, LatheGetRecipesEvent>(OnGetRecipes);
-            SubscribeLocalEvent<TechnologyDatabaseComponent, LatheServerSyncMessage>(OnLatheServerSyncMessage);
         }
 
         public override void Update(float frameTime)
         {
-            foreach (var comp in EntityQuery<LatheInsertingComponent>())
-            {
-                comp.TimeRemaining -= frameTime;
-
-                if (comp.TimeRemaining > 0)
-                    continue;
-
-                UpdateInsertingAppearance(comp.Owner, false);
-                RemCompDeferred(comp.Owner, comp);
-            }
-
             foreach (var (comp, lathe) in EntityQuery<LatheProducingComponent, LatheComponent>())
             {
                 if (lathe.CurrentRecipe == null)
@@ -75,7 +63,7 @@ namespace Content.Server.Lathe
             }
         }
 
-        private void OnGetWhitelist(EntityUid uid, LatheComponent component, GetMaterialWhitelistEvent args)
+        private void OnGetWhitelist(EntityUid uid, LatheComponent component, ref GetMaterialWhitelistEvent args)
         {
             if (args.Storage != uid)
                 return;
@@ -99,22 +87,22 @@ namespace Content.Server.Lathe
         }
 
         [PublicAPI]
-        public bool TryGetAvailableRecipes(EntityUid uid, [NotNullWhen(true)] out List<string>? recipes, LatheComponent? component = null)
+        public bool TryGetAvailableRecipes(EntityUid uid, [NotNullWhen(true)] out List<string>? recipes, [NotNullWhen(true)] LatheComponent? component = null)
         {
             recipes = null;
             if (!Resolve(uid, ref component))
                 return false;
-            recipes = GetAvailableRecipes(component);
+            recipes = GetAvailableRecipes(uid, component);
             return true;
         }
 
-        public List<string> GetAvailableRecipes(LatheComponent component)
+        public List<string> GetAvailableRecipes(EntityUid uid, LatheComponent component)
         {
-            var ev = new LatheGetRecipesEvent(component.Owner)
+            var ev = new LatheGetRecipesEvent(uid)
             {
                 Recipes = component.StaticRecipes
             };
-            RaiseLocalEvent(component.Owner, ev);
+            RaiseLocalEvent(uid, ev);
             return ev.Recipes;
         }
 
@@ -161,7 +149,7 @@ namespace Content.Server.Lathe
             lathe.ProductionLength = recipe.CompleteTime * component.TimeMultiplier;
             component.CurrentRecipe = recipe;
 
-            _audio.PlayPvs(component.ProducingSound, component.Owner);
+            _audio.PlayPvs(component.ProducingSound, uid);
             UpdateRunningAppearance(uid, true);
             UpdateUserInterfaceState(uid, component);
             return true;
@@ -173,13 +161,17 @@ namespace Content.Server.Lathe
                 return;
 
             if (comp.CurrentRecipe != null)
-                Spawn(comp.CurrentRecipe.Result, Transform(uid).Coordinates);
+            {
+                var result = Spawn(comp.CurrentRecipe.Result, Transform(uid).Coordinates);
+                _stack.TryMergeToContacts(result);
+            }
+
             comp.CurrentRecipe = null;
             prodComp.StartTime = _timing.CurTime;
 
             if (!TryStartProducing(uid, comp))
             {
-                RemCompDeferred(prodComp.Owner, prodComp);
+                RemCompDeferred(uid, prodComp);
                 UpdateUserInterfaceState(uid, comp);
                 UpdateRunningAppearance(uid, false);
             }
@@ -193,7 +185,7 @@ namespace Content.Server.Lathe
             var ui = _uiSys.GetUi(uid, LatheUiKey.Key);
             var producing = component.CurrentRecipe ?? component.Queue.FirstOrDefault();
 
-            var state = new LatheUpdateState(GetAvailableRecipes(component), component.Queue, producing);
+            var state = new LatheUpdateState(GetAvailableRecipes(uid, component), component.Queue, producing);
             _uiSys.SetUiState(ui, state);
         }
 
@@ -202,14 +194,12 @@ namespace Content.Server.Lathe
             if (uid != args.Lathe || !TryComp<LatheComponent>(uid, out var latheComponent) || latheComponent.DynamicRecipes == null)
                 return;
 
-            //gets all of the techs that are unlocked and also in the DynamicRecipes list
-            var allTechs = (from technology in from tech in component.TechnologyIds
-                    select _proto.Index<TechnologyPrototype>(tech)
-                from recipe in technology.UnlockedRecipes
-                where latheComponent.DynamicRecipes.Contains(recipe)
-                select recipe).ToList();
+            args.Recipes = args.Recipes.Union(component.RecipeIds.Where(r => latheComponent.DynamicRecipes.Contains(r))).ToList();
+        }
 
-            args.Recipes = args.Recipes.Union(allTechs).ToList();
+        private void OnMaterialAmountChanged(EntityUid uid, LatheComponent component, ref MaterialAmountChangedEvent args)
+        {
+            UpdateUserInterfaceState(uid, component);
         }
 
         /// <summary>
@@ -224,15 +214,6 @@ namespace Content.Server.Lathe
             _materialStorage.UpdateMaterialWhitelist(uid);
         }
 
-        private void OnMaterialEntityInserted(EntityUid uid, LatheComponent component, MaterialEntityInsertedEvent args)
-        {
-            var lastMat = args.Materials.Keys.Last();
-            // We need the prototype to get the color
-            _proto.TryIndex(lastMat, out MaterialPrototype? matProto);
-            EnsureComp<LatheInsertingComponent>(uid).TimeRemaining = component.InsertionTime;
-            UpdateInsertingAppearance(uid, true, matProto?.Color);
-        }
-
         /// <summary>
         /// Sets the machine sprite to either play the running animation
         /// or stop.
@@ -240,17 +221,6 @@ namespace Content.Server.Lathe
         private void UpdateRunningAppearance(EntityUid uid, bool isRunning)
         {
             _appearance.SetData(uid, LatheVisuals.IsRunning, isRunning);
-        }
-
-        /// <summary>
-        /// Sets the machine sprite to play the inserting animation
-        /// and sets the color of the inserted mat if applicable
-        /// </summary>
-        private void UpdateInsertingAppearance(EntityUid uid, bool isInserting, Color? color = null)
-        {
-            _appearance.SetData(uid, LatheVisuals.IsInserting, isInserting);
-            if (color != null)
-                _appearance.SetData(uid, LatheVisuals.InsertingColor, color);
         }
 
         private void OnPowerChanged(EntityUid uid, LatheComponent component, ref PowerChangedEvent args)
@@ -283,9 +253,14 @@ namespace Content.Server.Lathe
             args.AddPercentageUpgrade("lathe-component-upgrade-material-use", component.MaterialUseMultiplier);
         }
 
+        private void OnDatabaseModified(EntityUid uid, LatheComponent component, ref TechnologyDatabaseModifiedEvent args)
+        {
+            UpdateUserInterfaceState(uid, component);
+        }
+
         protected override bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component)
         {
-            return GetAvailableRecipes(component).Contains(recipe.ID);
+            return GetAvailableRecipes(uid, component).Contains(recipe.ID);
         }
 
         #region UI Messages
@@ -294,9 +269,16 @@ namespace Content.Server.Lathe
         {
             if (_proto.TryIndex(args.ID, out LatheRecipePrototype? recipe))
             {
+                var count = 0;
                 for (var i = 0; i < args.Quantity; i++)
                 {
-                    TryAddToQueue(uid, recipe, component);
+                    if (TryAddToQueue(uid, recipe, component))
+                        count++;
+                }
+                if (count > 0 && args.Session.AttachedEntity != null)
+                {
+                    _adminLogger.Add(LogType.Action, LogImpact.Low,
+                        $"{ToPrettyString(args.Session.AttachedEntity.Value):player} queued {count} {recipe.Name} at {ToPrettyString(uid):lathe}");
                 }
             }
             TryStartProducing(uid, component);
@@ -307,21 +289,6 @@ namespace Content.Server.Lathe
         {
             UpdateUserInterfaceState(uid, component);
         }
-
-        private void OnLatheServerSelectionMessage(EntityUid uid, LatheComponent component, LatheServerSelectionMessage args)
-        {
-            // TODO: one day, when you can open BUIs clientside, do that. Until then, picture Electro seething.
-            if (component.DynamicRecipes != null)
-                _uiSys.TryOpen(uid, ResearchClientUiKey.Key, (IPlayerSession) args.Session);
-        }
-
-        private void OnLatheServerSyncMessage(EntityUid uid, TechnologyDatabaseComponent component, LatheServerSyncMessage args)
-        {
-            Logger.Debug("OnLatheServerSyncMessage");
-            _researchSys.SyncWithServer(component);
-            UpdateUserInterfaceState(uid);
-        }
-
         #endregion
     }
 }

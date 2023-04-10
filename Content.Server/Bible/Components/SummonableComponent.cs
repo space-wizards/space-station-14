@@ -37,10 +37,8 @@ namespace Content.Server.Bible.Components
         };
 
         /// Used for respawning
-        [ViewVariables]
         [DataField("accumulator")]
         public float Accumulator = 0f;
-        [ViewVariables]
         [DataField("respawnTime")]
         public float RespawnTime = 180f;
     }

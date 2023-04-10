@@ -9,10 +9,6 @@
     slots: [innerclothing]
     equipSound:
       path: /Audio/Items/jumpsuit_equip.ogg
-    clothingVisuals:
-      jumpsuit:
-      - state: equipped-INNERCLOTHING
-        shader: StencilDraw
   - type: Butcherable
     butcheringType: Knife
     spawned:
@@ -39,7 +35,8 @@
     deviceNetId: Wireless
     transmitFrequencyId: SuitSensor
   - type: WirelessNetworkConnection
-    range: 500
+    range: 1200
+  - type: StationLimitedNetwork
 
 - type: entity
   abstract: true

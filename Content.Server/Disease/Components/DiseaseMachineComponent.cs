@@ -4,10 +4,10 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Disease.Components
 {
-    [RegisterComponent]
     /// <summary>
     /// For shared behavior between both disease machines
     /// </summary>
+    [RegisterComponent]
     public sealed class DiseaseMachineComponent : Component
     {
         [DataField("delay")]
@@ -15,7 +15,6 @@ namespace Content.Server.Disease.Components
         /// <summary>
         /// How much time we've accumulated processing
         /// </summary>
-        [ViewVariables]
         [DataField("accumulator")]
         public float Accumulator = 0f;
         /// <summary>

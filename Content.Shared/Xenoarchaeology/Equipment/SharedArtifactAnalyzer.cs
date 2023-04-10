@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Xenoarchaeology.Equipment;
 
@@ -19,6 +20,11 @@ public sealed class AnalysisConsoleScanButtonPressedMessage : BoundUserInterface
 }
 
 [Serializable, NetSerializable]
+public sealed class AnalysisConsolePrintButtonPressedMessage : BoundUserInterfaceMessage
+{
+}
+
+[Serializable, NetSerializable]
 public sealed class AnalysisConsoleDestroyButtonPressedMessage : BoundUserInterfaceMessage
 {
 }
@@ -34,19 +40,9 @@ public sealed class AnalysisConsoleScanUpdateState : BoundUserInterfaceState
 
     public bool CanScan;
 
-    public int? Id;
+    public bool CanPrint;
 
-    public int? Depth;
-
-    public int? Edges;
-
-    public bool? Triggered;
-
-    public string? EffectProto;
-
-    public string? TriggerProto;
-
-    public float? Completion;
+    public FormattedMessage? ScanReport;
 
     public bool Scanning;
 
@@ -54,22 +50,16 @@ public sealed class AnalysisConsoleScanUpdateState : BoundUserInterfaceState
 
     public TimeSpan TotalTime;
 
-    public AnalysisConsoleScanUpdateState(EntityUid? artifact, bool analyzerConnected, bool serverConnected, bool canScan,
-        int? id, int? depth, int? edges, bool? triggered, string? effectProto, string? triggerProto, float? completion,
-        bool scanning, TimeSpan timeRemaining, TimeSpan totalTime)
+    public AnalysisConsoleScanUpdateState(EntityUid? artifact, bool analyzerConnected, bool serverConnected, bool canScan, bool canPrint,
+        FormattedMessage? scanReport, bool scanning, TimeSpan timeRemaining, TimeSpan totalTime)
     {
         Artifact = artifact;
         AnalyzerConnected = analyzerConnected;
         ServerConnected = serverConnected;
         CanScan = canScan;
+        CanPrint = canPrint;
 
-        Id = id;
-        Depth = depth;
-        Edges = edges;
-        Triggered = triggered;
-        EffectProto = effectProto;
-        TriggerProto = triggerProto;
-        Completion = completion;
+        ScanReport = scanReport;
 
         Scanning = scanning;
         TimeRemaining = timeRemaining;

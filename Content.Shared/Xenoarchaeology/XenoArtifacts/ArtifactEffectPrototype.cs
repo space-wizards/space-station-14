@@ -1,4 +1,6 @@
-﻿using Robust.Shared.Prototypes;
+﻿using Content.Shared.Item;
+using Content.Shared.Whitelist;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Xenoarchaeology.XenoArtifacts;
@@ -33,4 +35,10 @@ public sealed class ArtifactEffectPrototype : IPrototype
 
     [DataField("effectHint")]
     public string? EffectHint;
+
+    [DataField("whitelist")]
+    public EntityWhitelist? Whitelist;
+
+    [DataField("blacklist")]
+    public EntityWhitelist? Blacklist;
 }

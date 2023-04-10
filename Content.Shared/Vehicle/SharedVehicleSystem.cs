@@ -1,3 +1,5 @@
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Vehicle.Components;
 using Content.Shared.Actions;
 using Content.Shared.Buckle.Components;
@@ -24,6 +26,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
     [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private readonly AccessReaderSystem _access = default!;
 
     private const string KeySlot = "key_slot";
 
@@ -37,6 +40,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
         SubscribeLocalEvent<VehicleComponent, MoveEvent>(OnVehicleRotate);
         SubscribeLocalEvent<VehicleComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
         SubscribeLocalEvent<VehicleComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
+        SubscribeLocalEvent<VehicleComponent, GetAdditionalAccessEvent>(OnGetAdditionalAccess);
     }
 
     /// <summary>
@@ -111,7 +115,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
         UpdateDrawDepth(uid, 2);
 
         // This code should be purged anyway but with that being said this doesn't handle components being changed.
-        if (TryComp<SharedStrapComponent>(uid, out var strap))
+        if (TryComp<StrapComponent>(uid, out var strap))
         {
             component.BaseBuckleOffset = strap.BuckleOffset;
             strap.BuckleOffsetUnclamped = Vector2.Zero;
@@ -152,7 +156,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
     /// </summary>
     protected void UpdateBuckleOffset(TransformComponent xform, VehicleComponent component)
     {
-        if (!TryComp<SharedStrapComponent>(component.Owner, out var strap))
+        if (!TryComp<StrapComponent>(component.Owner, out var strap))
             return;
 
         // TODO: Strap should handle this but buckle E/C moment.
@@ -175,6 +179,17 @@ public abstract partial class SharedVehicleSystem : EntitySystem
             var buckleXform = Transform(buckledEntity);
             _transform.SetLocalPositionNoLerp(buckleXform, strap.BuckleOffset);
         }
+    }
+
+    private void OnGetAdditionalAccess(EntityUid uid, VehicleComponent component, ref GetAdditionalAccessEvent args)
+    {
+        if (component.Rider == null)
+            return;
+        var rider = component.Rider.Value;
+
+        args.Entities.Add(rider);
+        _access.FindAccessItemsInventory(rider, out var items);
+        args.Entities.UnionWith(items);
     }
 
     /// <summary>

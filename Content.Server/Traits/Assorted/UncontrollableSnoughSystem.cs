@@ -1,8 +1,4 @@
 ﻿using Content.Server.Disease;
-using Content.Shared.Audio;
-using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.Traits.Assorted;
@@ -14,7 +10,6 @@ public sealed class UncontrollableSnoughSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly DiseaseSystem _diseaseSystem = default!;
-    [Dependency] private readonly AudioSystem _audioSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -32,7 +27,8 @@ public sealed class UncontrollableSnoughSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var snough in EntityQuery<UncontrollableSnoughComponent>())
+        var query = EntityQueryEnumerator<UncontrollableSnoughComponent>();
+        while (query.MoveNext(out var ent, out var snough))
         {
             snough.NextIncidentTime -= frameTime;
 
@@ -43,10 +39,7 @@ public sealed class UncontrollableSnoughSystem : EntitySystem
             snough.NextIncidentTime +=
                 _random.NextFloat(snough.TimeBetweenIncidents.X, snough.TimeBetweenIncidents.Y);
 
-            if (snough.SnoughSound != null)
-                _audioSystem.PlayPvs(snough.SnoughSound, snough.Owner);
-
-            _diseaseSystem.SneezeCough(snough.Owner, null, snough.SnoughMessage, false);
+            _diseaseSystem.SneezeCough(ent, null, snough.EmoteId, false);
         }
     }
 }

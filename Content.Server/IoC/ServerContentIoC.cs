@@ -16,10 +16,12 @@ using Content.Server.Objectives;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Preferences.Managers;
+using Content.Server.ServerInfo;
 using Content.Server.ServerUpdates;
 using Content.Server.Voting.Managers;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Managers;
 using Content.Shared.Kitchen;
 using Content.Shared.Module;
 
@@ -40,6 +42,7 @@ namespace Content.Server.IoC
             IoCManager.Register<ServerUpdateManager>();
             IoCManager.Register<IObjectivesManager, ObjectivesManager>();
             IoCManager.Register<IAdminManager, AdminManager>();
+            IoCManager.Register<ISharedAdminManager, AdminManager>();
             IoCManager.Register<EuiManager, EuiManager>();
             IoCManager.Register<IVoteManager, VoteManager>();
             IoCManager.Register<IPlayerLocator, PlayerLocator>();
@@ -55,6 +58,7 @@ namespace Content.Server.IoC
             IoCManager.Register<IAdminLogManager, AdminLogManager>();
             IoCManager.Register<PlayTimeTrackingManager>();
             IoCManager.Register<UserDbDataManager>();
+            IoCManager.Register<ServerInfoManager>();
         }
     }
 }

@@ -51,6 +51,9 @@ public sealed class ArtifactAnalyzerComponent : Component
     [ViewVariables]
     public HashSet<EntityUid> Contacts = new();
 
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool ReadyToPrint = false;
+
     [DataField("scanFinishedSound")]
     public readonly SoundSpecifier ScanFinishedSound = new SoundPathSpecifier("/Audio/Machines/scan_finish.ogg");
 
@@ -62,6 +65,6 @@ public sealed class ArtifactAnalyzerComponent : Component
     public ArtifactNode? LastAnalyzedNode;
 
     [ViewVariables(VVAccess.ReadWrite)]
-    public float? LastAnalyzedCompletion;
+    public int? LastAnalyzerPointValue;
     #endregion
 }

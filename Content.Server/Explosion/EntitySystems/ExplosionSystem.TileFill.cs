@@ -48,7 +48,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             candidateGrid.TryGetTileRef(candidateGrid.WorldToTile(epicenter.Position), out var tileRef) &&
             !tileRef.Tile.IsEmpty)
         {
-            epicentreGrid = candidateGrid.GridEntityId;
+            epicentreGrid = candidateGrid.Owner;
             initialTile = tileRef.GridIndices;
         }
         else if (referenceGrid != null)
@@ -85,7 +85,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         var spaceAngle = Angle.Zero;
         if (referenceGrid != null)
         {
-            var xform = Transform(_mapManager.GetGrid(referenceGrid.Value).GridEntityId);
+            var xform = Transform(_mapManager.GetGrid(referenceGrid.Value).Owner);
             spaceMatrix = xform.WorldMatrix;
             spaceAngle = xform.WorldRotation;
         }
@@ -153,7 +153,7 @@ public sealed partial class ExplosionSystem : EntitySystem
                 if (tilesInIteration[i] * intensityIncrease >= remainingIntensity)
                 {
                     // there is not enough intensity left to distribute. add a fractional amount and break.
-                    iterationIntensity[i] += (float) remainingIntensity / tilesInIteration[i];
+                    iterationIntensity[i] += remainingIntensity / tilesInIteration[i];
                     remainingIntensity = 0;
                     break;
                 }
@@ -219,7 +219,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             tilesInIteration.Add(newTileCount);
             if (newTileCount * stepSize >= remainingIntensity)
             {
-                iterationIntensity.Add((float) remainingIntensity / newTileCount);
+                iterationIntensity.Add(remainingIntensity / newTileCount);
                 break;
             }
 
@@ -276,10 +276,10 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         foreach (var grid in _mapManager.FindGridsIntersecting(epicenter.MapId, box))
         {
-            if (TryComp(grid.GridEntityId, out PhysicsComponent? physics) && physics.Mass > mass)
+            if (TryComp(grid.Owner, out PhysicsComponent? physics) && physics.Mass > mass)
             {
                 mass = physics.Mass;
-                referenceGrid = grid.GridEntityId;
+                referenceGrid = grid.Owner;
             }
         }
 
@@ -295,7 +295,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         radius *= 4;
         box = Box2.CenteredAround(epicenter.Position, (radius, radius));
         var mapGrids = _mapManager.FindGridsIntersecting(epicenter.MapId, box).ToList();
-        var grids = mapGrids.Select(x => x.GridEntityId).ToList();
+        var grids = mapGrids.Select(x => x.Owner).ToList();
 
         if (referenceGrid != null)
             return (grids, referenceGrid, radius);
@@ -303,17 +303,17 @@ public sealed partial class ExplosionSystem : EntitySystem
         // We still don't have are reference grid. So lets also look in the enlarged region
         foreach (var grid in mapGrids)
         {
-            if (TryComp(grid.GridEntityId, out PhysicsComponent? physics) && physics.Mass > mass)
+            if (TryComp(grid.Owner, out PhysicsComponent? physics) && physics.Mass > mass)
             {
                 mass = physics.Mass;
-                referenceGrid = grid.GridEntityId;
+                referenceGrid = grid.Owner;
             }
         }
 
         return (grids, referenceGrid, radius);
     }
 
-    public ExplosionEvent? GenerateExplosionPreview(SpawnExplosionEuiMsg.PreviewRequest request)
+    public ExplosionVisualsState? GenerateExplosionPreview(SpawnExplosionEuiMsg.PreviewRequest request)
     {
         var stopwatch = new Stopwatch();
         stopwatch.Start();
@@ -332,7 +332,19 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         Logger.Info($"Generated explosion preview with {area} tiles in {stopwatch.Elapsed.TotalMilliseconds}ms");
 
-        // the explosion event that **would** be sent to all clients, if it were a real explosion.
-        return GetExplosionEvent(request.Epicenter, request.TypeId, spaceMatrix, spaceData, gridData.Values, iterationIntensity);
+        Dictionary<EntityUid, Dictionary<int, List<Vector2i>>> tileLists = new();
+        foreach (var (grid, data) in gridData)
+        {
+            tileLists.Add(grid, data.TileLists);
+        }
+
+        return new ExplosionVisualsState(
+            request.Epicenter,
+            request.TypeId,
+            iterationIntensity,
+            spaceData?.TileLists,
+            tileLists, spaceMatrix,
+            spaceData?.TileSize ?? DefaultTileSize
+            );
     }
 }

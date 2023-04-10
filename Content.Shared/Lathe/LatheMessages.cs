@@ -24,19 +24,10 @@ public sealed class LatheUpdateState : BoundUserInterfaceState
 ///     Sent to the server to sync material storage and the recipe queue.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class LatheSyncRequestMessage : BoundUserInterfaceMessage { }
+public sealed class LatheSyncRequestMessage : BoundUserInterfaceMessage
+{
 
-/// <summary>
-///     Sent to the server to sync the lathe's technology database with the research server.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class LatheServerSyncMessage : BoundUserInterfaceMessage { }
-
-/// <summary>
-///     Sent to the server to open the ResearchClient UI.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class LatheServerSelectionMessage : BoundUserInterfaceMessage { }
+}
 
 /// <summary>
 ///     Sent to the server when a client queues a new recipe.

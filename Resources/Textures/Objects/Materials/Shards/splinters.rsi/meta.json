@@ -8,13 +8,13 @@
   },
   "states": [
     {
-      "name": "splinterslarge",
+      "name": "splinterslarge"
     },
     {
-      "name": "splintersmedium",
+      "name": "splintersmedium"
     },
     {
-      "name": "splinterssmall",
+      "name": "splinterssmall"
     }
   ]
 }

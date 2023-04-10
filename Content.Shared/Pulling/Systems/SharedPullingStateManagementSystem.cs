@@ -146,7 +146,7 @@ namespace Content.Shared.Pulling
                 if (!_timing.ApplyingState)
                 {
                     // Joint startup
-                    var union = _physics.GetHardAABB(pullerPhysics).Union(_physics.GetHardAABB(pullablePhysics));
+                    var union = _physics.GetHardAABB(puller.Owner).Union(_physics.GetHardAABB(pullable.Owner, body: pullablePhysics));
                     var length = Math.Max(union.Size.X, union.Size.Y) * 0.75f;
 
                     var joint = _jointSystem.CreateDistanceJoint(pullablePhysics.Owner, pullerPhysics.Owner, id: pullable.PullJointId);

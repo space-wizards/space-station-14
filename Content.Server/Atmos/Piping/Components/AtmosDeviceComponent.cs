@@ -1,6 +1,3 @@
-using Content.Server.Atmos.Components;
-using Robust.Shared.Map;
-
 namespace Content.Server.Atmos.Piping.Components
 {
     /// <summary>
@@ -19,7 +16,6 @@ namespace Content.Server.Atmos.Piping.Components
         /// <summary>
         ///     Whether this device will join an entity system to process when not in a grid.
         /// </summary>
-        [ViewVariables]
         [DataField("joinSystem")]
         public bool JoinSystem { get; } = false;
 

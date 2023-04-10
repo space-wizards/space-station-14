@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Construction.Components;
 using Content.Shared.Construction;
+using Content.Shared.Construction.Components;
 using JetBrains.Annotations;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;

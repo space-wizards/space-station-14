@@ -6,6 +6,9 @@ using Robust.Shared.Utility;
 using System.Threading;
 using Content.Server.Power.EntitySystems;
 using Timer = Robust.Shared.Timing.Timer;
+using System.Linq;
+using Robust.Shared.Random;
+using Content.Server.Station.Components;
 
 namespace Content.Server.StationEvents.Events
 {
@@ -37,10 +40,14 @@ namespace Content.Server.StationEvents.Events
 
         public override void Started()
         {
-            foreach (var component in EntityManager.EntityQuery<ApcComponent>(true))
+            if (StationSystem.Stations.Count == 0)
+                return;
+            var chosenStation = RobustRandom.Pick(StationSystem.Stations.ToList());
+
+            foreach (var (apc, transform) in EntityQuery<ApcComponent, TransformComponent>(true))
             {
-                if (component.MainBreakerEnabled)
-                    _powered.Add(component.Owner);
+                if (apc.MainBreakerEnabled && CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == chosenStation)
+                    _powered.Add(apc.Owner);
             }
 
             RobustRandom.Shuffle(_powered);
@@ -105,7 +112,7 @@ namespace Content.Server.StationEvents.Events
             _announceCancelToken = new CancellationTokenSource();
             Timer.Spawn(3000, () =>
             {
-                _audioSystem.PlayGlobal("/Audio/Announcements/power_on.ogg", Filter.Broadcast());
+                _audioSystem.PlayGlobal("/Audio/Announcements/power_on.ogg", Filter.Broadcast(), true, AudioParams.Default.WithVolume(-4f));
             }, _announceCancelToken.Token);
             _unpowered.Clear();
 

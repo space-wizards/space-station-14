@@ -51,7 +51,7 @@ namespace Content.Server.Power.EntitySystems
             // If grid deleting no need to update power.
             if (_mapManager.TryGetGrid(xform.GridUid, out var grid))
             {
-                if (MetaData(grid.GridEntityId).EntityLifeStage > EntityLifeStage.MapInitialized) return;
+                if (MetaData(grid.Owner).EntityLifeStage > EntityLifeStage.MapInitialized) return;
             }
 
             Disconnect(uid, provider);

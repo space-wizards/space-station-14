@@ -126,8 +126,8 @@
       ammo:
         reagents:
         - ReagentId: ChloralHydrate
-          Quantity: 15
+          Quantity: 7
   - type: SolutionTransfer
-    maxTransferAmount: 15
+    maxTransferAmount: 7
   - type: SpentAmmoVisuals
     state: "practice"

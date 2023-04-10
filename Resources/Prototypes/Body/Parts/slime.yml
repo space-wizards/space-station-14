@@ -14,6 +14,9 @@
         ents: []
   - type: StaticPrice
     price: 100
+  - type: Tag
+    tags:
+      - Trash
 
 - type: entity
   id: TorsoSlime
@@ -135,6 +138,7 @@
     - type: BodyPart
       partType: Leg
       symmetry: Left
+    - type: MovementSpeedModifier
 
 - type: entity
   id: RightLegSlime
@@ -151,6 +155,7 @@
     - type: BodyPart
       partType: Leg
       symmetry: Right
+    - type: MovementSpeedModifier
 
 - type: entity
   id: LeftFootSlime

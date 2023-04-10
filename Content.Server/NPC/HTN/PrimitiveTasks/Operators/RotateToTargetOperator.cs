@@ -7,14 +7,14 @@ public sealed class RotateToTargetOperator : HTNOperator
     [Dependency] private readonly IEntityManager _entityManager = default!;
     private RotateToFaceSystem _rotate = default!;
 
-    [ViewVariables, DataField("targetKey")]
+    [DataField("targetKey")]
     public string TargetKey = "RotateTarget";
 
-    [ViewVariables, DataField("rotateSpeedKey")]
+    [DataField("rotateSpeedKey")]
     public string RotationSpeedKey = NPCBlackboard.RotateSpeed;
 
     // Didn't use a key because it's likely the same between all NPCs
-    [ViewVariables, DataField("tolerance")]
+    [DataField("tolerance")]
     public Angle Tolerance = Angle.FromDegrees(1);
 
     public override void Initialize(IEntitySystemManager sysManager)

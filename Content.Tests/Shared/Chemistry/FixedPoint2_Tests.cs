@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Shared.FixedPoint;
 using NUnit.Framework;
 
@@ -123,6 +123,42 @@ namespace Content.Tests.Shared.Chemistry
             };
             var min = FixedPoint2.Min(unorderedList);
             Assert.That(min, Is.EqualTo(FixedPoint2.New(1)));
+        }
+
+        [Test]
+        [TestCase(10.1f, 2.5f, "25.25")]
+        public void FloatMultiply (float aFloat, float b, string expected)
+        {
+            var a = FixedPoint2.New(aFloat);
+            var result = a*b;
+            Assert.That($"{result}", Is.EqualTo(expected));
+        }
+
+        [Test]
+        [TestCase(10.1f, 2.5d, "25.25")]
+        public void DoubleMultiply(float aFloat, double b, string expected)
+        {
+            var a = FixedPoint2.New(aFloat);
+            var result = a * b;
+            Assert.That($"{result}", Is.EqualTo(expected));
+        }
+
+        [Test]
+        [TestCase(10.1f, 2.5f, "4.04")]
+        public void FloatDivide(float aFloat, float b, string expected)
+        {
+            var a = FixedPoint2.New(aFloat);
+            var result = a / b;
+            Assert.That($"{result}", Is.EqualTo(expected));
+        }
+
+        [Test]
+        [TestCase(10.1f, 2.5d, "4.04")]
+        public void DoubleDivide(float aFloat, double b, string expected)
+        {
+            var a = FixedPoint2.New(aFloat);
+            var result = a / b;
+            Assert.That($"{result}", Is.EqualTo(expected));
         }
 
         [Test]

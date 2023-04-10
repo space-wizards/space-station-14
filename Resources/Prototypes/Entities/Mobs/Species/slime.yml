@@ -11,7 +11,8 @@
     state: full
   - type: Body
     prototype: Slime
-  - type: Humanoid
+    requiredLegs: 2
+  - type: HumanoidAppearance
     species: SlimePerson
   - type: Speech
     speechSounds: Slime
@@ -20,18 +21,10 @@
     damageModifierSet: Slime
   - type: Bloodstream
     bloodReagent: Slime # TODO Color slime blood based on their slime color or smth
-    bloodlossDamage:
-      types:
-        Bloodloss:
-          1
-    bloodlossHealDamage:
-      types:
-        Bloodloss:
-          -0.25
   - type: Barotrauma
     damage:
       types:
-        Blunt: 0.3 #per second, scales with pressure and other constants. Twice as much as humans.
+        Blunt: 0.45 #per second, scales with pressure and other constants. Slighty more than humans.
   - type: Reactive
     groups:
       Flammable: [ Touch ]
@@ -80,5 +73,5 @@
   noSpawn: true
   description: A dummy slime meant to be used in character setup.
   components:
-    - type: Humanoid
+    - type: HumanoidAppearance
       species: SlimePerson

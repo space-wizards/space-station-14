@@ -1,11 +1,9 @@
-using Content.Client.CombatMode;
-using Content.Client.ContextMenu.UI;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Client.Examine;
 using Content.Client.Gameplay;
 using Content.Client.Popups;
-using Content.Client.Verbs.UI;
 using Content.Shared.Examine;
-using Content.Shared.GameTicking;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
@@ -15,15 +13,12 @@ using Robust.Client.Player;
 using Robust.Client.State;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace Content.Client.Verbs
 {
     [UsedImplicitly]
     public sealed class VerbSystem : SharedVerbSystem
     {
-        [Dependency] private readonly CombatModeSystem _combatMode = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly ExamineSystem _examineSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
@@ -36,9 +31,6 @@ namespace Content.Client.Verbs
         /// </summary>
         public const float EntityMenuLookupSize = 0.25f;
 
-        public EntityMenuPresenter EntityMenu = default!;
-        public VerbMenuPresenter VerbMenu = default!;
-
         [Dependency] private readonly IEyeManager _eyeManager = default!;
 
         /// <summary>
@@ -46,41 +38,13 @@ namespace Content.Client.Verbs
         /// </summary>
         public MenuVisibility Visibility;
 
+        public Action<VerbsResponseEvent>? OnVerbsResponse;
+
         public override void Initialize()
         {
             base.Initialize();
 
-            UpdatesOutsidePrediction = true;
-
-            SubscribeNetworkEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeNetworkEvent<VerbsResponseEvent>(HandleVerbResponse);
-
-            EntityMenu = new(this);
-            VerbMenu = new(_combatMode, this);
-        }
-
-        public void Reset(RoundRestartCleanupEvent ev)
-        {
-            CloseAllMenus();
-        }
-
-        public override void Shutdown()
-        {
-            base.Shutdown();
-            EntityMenu?.Dispose();
-            VerbMenu?.Dispose();
-        }
-
-        public override void FrameUpdate(float frameTime)
-        {
-            base.FrameUpdate(frameTime);
-            EntityMenu?.Update();
-        }
-
-        public void CloseAllMenus()
-        {
-            EntityMenu.Close();
-            VerbMenu.Close();
         }
 
         /// <summary>
@@ -109,7 +73,7 @@ namespace Content.Client.Verbs
             // Do we have to do FoV checks?
             if ((visibility & MenuVisibility.NoFov) == 0)
             {
-                var entitiesUnderMouse = gameScreenBase.GetEntitiesUnderPosition(targetPos);
+                var entitiesUnderMouse = gameScreenBase.GetClickableEntities(targetPos).ToHashSet();
                 bool Predicate(EntityUid e) => e == player || entitiesUnderMouse.Contains(e);
 
                 // first check the general location.
@@ -259,10 +223,7 @@ namespace Content.Client.Verbs
 
         private void HandleVerbResponse(VerbsResponseEvent msg)
         {
-            if (!VerbMenu.RootMenu.Visible || VerbMenu.CurrentTarget != msg.Entity)
-                return;
-
-            VerbMenu.AddServerVerbs(msg.Verbs);
+            OnVerbsResponse?.Invoke(msg);
         }
     }
 

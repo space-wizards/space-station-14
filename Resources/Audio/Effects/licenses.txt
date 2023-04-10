@@ -44,12 +44,10 @@ pop.ogg licensed under CC0 1.0 by mirrorcult
 
 box_deploy.ogg and chime.ogg taken from Citadel Station at commit: https://github.com/Citadel-Station-13/Citadel-Station-13/commit/b604390f334343be80045d955705cf48ee056c61
 
-- files: ["box_deploy.ogg"]
-  license: "CC-BY-NC-SA-3.0"
-  copyright: "box_deploy.ogg taken from Citadel Station."
-  source: "https://github.com/Citadel-Station-13/Citadel-Station-13/commit/b604390f334343be80045d955705cf48ee056c61"
 
-- files: ["chime.ogg"]
-  license: "CC-BY-NC-SA-3.0"
-  copyright: "chime.ogg taken from Citadel Station."
-  source: "https://github.com/Citadel-Station-13/Citadel-Station-13/commit/b604390f334343be80045d955705cf48ee056c61"
+ - files:
+     - "drop.ogg"
+   license: "Royalty free"
+   copyright: "Sonniss.com - GDC 2016 - Game Audio Bundle - Levan Nadashvili - Soldier Footsteps - FS Concrete Soldier Crouch N02, mixed from stereo to mono"
+
+# Do not add to this list, I only did the above because yaml scheme validator doesn't like custom licenses.

@@ -32,6 +32,7 @@ public sealed class EyeLerpingSystem : EntitySystem
         UpdatesAfter.Add(typeof(TransformSystem));
         UpdatesAfter.Add(typeof(PhysicsSystem));
         UpdatesBefore.Add(typeof(EyeUpdateSystem));
+        UpdatesOutsidePrediction = true;
     }
 
     private void OnEyeStartup(EntityUid uid, EyeComponent component, ComponentStartup args)
@@ -98,10 +99,12 @@ public sealed class EyeLerpingSystem : EntitySystem
             return;
 
         // Set all of our eye rotations to the relevant values.
-        foreach (var (lerpInfo, xform) in EntityQuery<LerpingEyeComponent, TransformComponent>())
+        var query = AllEntityQuery<LerpingEyeComponent, TransformComponent>();
+
+        while (query.MoveNext(out var uid, out var lerpInfo, out var xform))
         {
             lerpInfo.LastRotation = lerpInfo.TargetRotation;
-            lerpInfo.TargetRotation = GetRotation(lerpInfo.Owner, xform);
+            lerpInfo.TargetRotation = GetRotation(uid, xform);
         }
     }
 
@@ -142,11 +145,10 @@ public sealed class EyeLerpingSystem : EntitySystem
     {
         var tickFraction = (float) _gameTiming.TickFraction / ushort.MaxValue;
         const double lerpMinimum = 0.00001;
+        var query = AllEntityQuery<LerpingEyeComponent, EyeComponent, TransformComponent>();
 
-        foreach (var (lerpInfo, eye, xform) in EntityQuery<LerpingEyeComponent, EyeComponent, TransformComponent>())
+        while (query.MoveNext(out var entity, out var lerpInfo, out var eye, out var xform))
         {
-            var entity = eye.Owner;
-
             TryComp<InputMoverComponent>(entity, out var mover);
 
             // This needs to be recomputed every frame, as if this is simply the grid rotation, then we need to account for grid angle lerping.

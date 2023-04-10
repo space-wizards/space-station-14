@@ -6,7 +6,8 @@
   - type: Sprite
     layers:
       - state: red
-      - texture: Structures/Wallmounts/paintings.rsi/painting8.png
+      - sprite: Structures/Wallmounts/paintings.rsi
+        state: painting8
   - type: RandomSpawner
     offset: 0
     prototypes:

@@ -53,7 +53,7 @@ namespace Content.Server.Roles
                 return;
             }
 
-            var role = new Job(mind, jobPrototype!);
+            var role = new Job(mind, jobPrototype);
             mind.AddRole(role);
         }
     }

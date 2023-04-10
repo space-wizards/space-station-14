@@ -8,7 +8,7 @@ public sealed class PickRandomRotationOperator : HTNOperator
 {
     [Dependency] private readonly IRobustRandom _random = default!;
 
-    [ViewVariables, DataField("targetKey")]
+    [DataField("targetKey")]
     public string TargetKey = "RotateTarget";
 
     public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,

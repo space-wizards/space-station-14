@@ -1,0 +1,8 @@
+﻿<DefaultWindow xmlns="https://spacestation14.io"
+            xmlns:cc="clr-namespace:Content.Client.Administration.UI.Bwoink"
+            SetSize="900 500"
+            HeaderClass="windowHeaderAlert"
+            TitleClass="windowTitleAlert"
+            Title="{Loc 'bwoink-user-title'}" >
+    <cc:BwoinkControl Name="Bwoink" Access="Public"/>
+</DefaultWindow>

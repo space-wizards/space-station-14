@@ -15,6 +15,7 @@ namespace Content.Server.Bed.Components
 
         [DataField("sleepMultiplier")]
         public float SleepMultiplier = 3f;
-        public float Accumulator = 0f; //Time accumulated
+
+        public TimeSpan NextHealTime = TimeSpan.Zero; //Next heal
     }
 }

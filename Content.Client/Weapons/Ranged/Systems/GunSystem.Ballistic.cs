@@ -16,7 +16,6 @@ public sealed partial class GunSystem
         if (args.Control is DefaultStatusControl control)
         {
             control.Update(GetBallisticShots(component), component.Capacity);
-            return;
         }
     }
 

@@ -6,6 +6,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Maps;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Atmos.EntitySystems;
 
@@ -100,7 +101,7 @@ public sealed partial class AtmosphereSystem
 
                tile.Clear();
                var mixtureId = 0;
-               foreach (var entUid in gridComp.Grid.GetAnchoredEntities(indices))
+               foreach (var entUid in gridComp.GetAnchoredEntities(indices))
                {
                    if (!TryComp(entUid, out AtmosFixMarkerComponent? afm))
                        continue;
@@ -127,12 +128,12 @@ public sealed partial class AtmosphereSystem
         if (playerMap == null)
             return CompletionResult.FromOptions(options);
 
-        foreach (var grid in _mapManager.GetAllMapGrids(playerMap.Value).OrderBy(o => o.GridEntityId))
+        foreach (var grid in _mapManager.GetAllMapGrids(playerMap.Value).OrderBy(o => o.Owner))
         {
-            if (!TryComp<TransformComponent>(grid.GridEntityId, out var gridXform))
+            if (!TryComp<TransformComponent>(grid.Owner, out var gridXform))
                 continue;
 
-            options.Add(new CompletionOption(grid.GridEntityId.ToString(), $"{MetaData(grid.GridEntityId).EntityName} - Map {gridXform.MapID}"));
+            options.Add(new CompletionOption(grid.Owner.ToString(), $"{MetaData(grid.Owner).EntityName} - Map {gridXform.MapID}"));
         }
 
         return CompletionResult.FromOptions(options);

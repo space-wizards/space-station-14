@@ -1,35 +1,37 @@
-using Content.Shared.Damage;
-using Content.Shared.Hands.EntitySystems;
-using Content.Server.Disease.Components;
-using Content.Server.Body.Components;
 using Content.Server.Atmos.Components;
-using Content.Server.Nutrition.Components;
-using Robust.Shared.Player;
-using Content.Server.Popups;
-using Content.Server.Speech.Components;
-using Content.Server.Body.Systems;
-using Content.Server.CombatMode;
-using Content.Server.Inventory;
-using Content.Server.Mind.Components;
-using Content.Server.Chat.Managers;
-using Content.Server.Ghost.Roles.Components;
-using Content.Server.Hands.Components;
-using Content.Server.Mind.Commands;
-using Content.Server.Temperature.Components;
-using Content.Shared.Movement.Components;
-using Content.Shared.MobState;
-using Robust.Shared.Prototypes;
-using Content.Shared.Roles;
-using Content.Server.Traitor;
-using Content.Shared.Zombies;
-using Content.Shared.Popups;
 using Content.Server.Atmos.Miasma;
+using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
+using Content.Server.Chat;
+using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
+using Content.Server.Disease.Components;
+using Content.Server.Ghost.Roles.Components;
 using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
+using Content.Server.Inventory;
+using Content.Server.Mind.Commands;
+using Content.Server.Mind.Components;
+using Content.Server.Nutrition.Components;
+using Content.Server.Popups;
+using Content.Server.Speech.Components;
+using Content.Server.Temperature.Components;
+using Content.Server.Traitor;
+using Content.Shared.CombatMode;
+using Content.Shared.Damage;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Humanoid;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Nutrition.Components;
+using Content.Shared.Popups;
+using Content.Shared.Roles;
 using Content.Shared.Weapons.Melee;
-using Robust.Shared.Audio;
+using Content.Shared.Zombies;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Zombies
 {
@@ -46,9 +48,12 @@ namespace Content.Server.Zombies
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
         [Dependency] private readonly ServerInventorySystem _serverInventory = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
-        [Dependency] private readonly HumanoidSystem _sharedHuApp = default!;
+        [Dependency] private readonly HumanoidAppearanceSystem _sharedHuApp = default!;
         [Dependency] private readonly IdentitySystem _identity = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
+        [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
+        [Dependency] private readonly EmoteOnDamageSystem _emoteOnDamage = default!;
+        [Dependency] private readonly SharedCombatModeSystem _combat = default!;
         [Dependency] private readonly IChatManager _chatMan = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
 
@@ -64,10 +69,10 @@ namespace Content.Server.Zombies
         /// </summary>
         private void OnDamageChanged(EntityUid uid, ZombifyOnDeathComponent component, MobStateChangedEvent args)
         {
-            if (args.CurrentMobState == DamageState.Dead ||
-                args.CurrentMobState == DamageState.Critical)
+            if (args.NewMobState == MobState.Dead ||
+                args.NewMobState == MobState.Critical)
             {
-                ZombifyEntity(uid);
+                ZombifyEntity(uid, args.Component);
             }
         }
 
@@ -83,10 +88,13 @@ namespace Content.Server.Zombies
         ///     rewrite this, but this is how it shall lie eternal. Turn back now.
         ///     -emo
         /// </remarks>
-        public void ZombifyEntity(EntityUid target)
+        public void ZombifyEntity(EntityUid target, MobStateComponent? mobState = null)
         {
             //Don't zombfiy zombies
             if (HasComp<ZombieComponent>(target))
+                return;
+
+            if (!Resolve(target, ref mobState, logMissing: false))
                 return;
 
             //you're a real zombie now, son.
@@ -109,22 +117,34 @@ namespace Content.Server.Zombies
             //in an attempt to make an entity not attack. This is the easiest way to do it.
             RemComp<CombatModeComponent>(target);
             var combat = AddComp<CombatModeComponent>(target);
-            combat.IsInCombatMode = true;
-
-            var vocal = EnsureComp<VocalComponent>(target);
-            var scream = new SoundCollectionSpecifier ("ZombieScreams");
-            vocal.FemaleScream = scream;
-            vocal.MaleScream = scream;
+            _combat.SetInCombatMode(target, true, combat);
 
             //This is the actual damage of the zombie. We assign the visual appearance
             //and range here because of stuff we'll find out later
             var melee = EnsureComp<MeleeWeaponComponent>(target);
-            melee.Animation = zombiecomp.AttackAnimation;
-            melee.Range = 0.75f;
+            melee.ClickAnimation = zombiecomp.AttackAnimation;
+            melee.WideAnimation = zombiecomp.AttackAnimation;
+            melee.Range = 1.5f;
+            Dirty(melee);
+
+            if (mobState.CurrentState == MobState.Alive)
+            {
+                // Groaning when damaged
+                EnsureComp<EmoteOnDamageComponent>(target);
+                _emoteOnDamage.AddEmote(target, "Scream");
+
+                // Random groaning
+                EnsureComp<AutoEmoteComponent>(target);
+                _autoEmote.AddEmote(target, "ZombieGroan");
+            }
 
             //We have specific stuff for humanoid zombies because they matter more
-            if (TryComp<HumanoidComponent>(target, out var huApComp)) //huapcomp
+            if (TryComp<HumanoidAppearanceComponent>(target, out var huApComp)) //huapcomp
             {
+                //store some values before changing them in case the humanoid get cloned later
+                zombiecomp.BeforeZombifiedSkinColor = huApComp.SkinColor;
+                zombiecomp.BeforeZombifiedCustomBaseLayers = new(huApComp.CustomBaseLayers);
+
                 _sharedHuApp.SetSkinColor(target, zombiecomp.SkinColor, humanoid: huApComp);
                 _sharedHuApp.SetBaseLayerColor(target, HumanoidVisualLayers.Eyes, zombiecomp.EyeColor, humanoid: huApComp);
 
@@ -152,9 +172,11 @@ namespace Content.Server.Zombies
 
             //This is specifically here to combat insuls, because frying zombies on grilles is funny as shit.
             _serverInventory.TryUnequip(target, "gloves", true, true);
+            //Should prevent instances of zombies using comms for information they shouldnt be able to have.
+            _serverInventory.TryUnequip(target, "ears", true, true);
 
             //popup
-            _popupSystem.PopupEntity(Loc.GetString("zombie-transform", ("target", target)), target, Filter.Pvs(target), PopupType.LargeCaution);
+            _popupSystem.PopupEntity(Loc.GetString("zombie-transform", ("target", target)), target, PopupType.LargeCaution);
 
             //Make it sentient if it's an animal or something
             if (!HasComp<InputMoverComponent>(target)) //this component is cursed and fucks shit up
@@ -166,11 +188,12 @@ namespace Content.Server.Zombies
 
             //Heals the zombie from all the damage it took while human
             if (TryComp<DamageableComponent>(target, out var damageablecomp))
-                _damageable.SetAllDamage(damageablecomp, 0);
+                _damageable.SetAllDamage(target, damageablecomp, 0);
 
             //gives it the funny "Zombie ___" name.
-            if (TryComp<MetaDataComponent>(target, out var meta))
-                meta.EntityName = Loc.GetString("zombie-name-prefix", ("target", meta.EntityName));
+            var meta = MetaData(target);
+            zombiecomp.BeforeZombifiedEntityName = meta.EntityName;
+            meta.EntityName = Loc.GetString("zombie-name-prefix", ("target", meta.EntityName));
 
             _identity.QueueIdentityUpdate(target);
 

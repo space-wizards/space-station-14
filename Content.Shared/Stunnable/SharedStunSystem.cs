@@ -1,4 +1,5 @@
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
@@ -6,6 +7,11 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Bed.Sleep;
+using Content.Shared.Database;
+using Content.Shared.Hands;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Standing;
@@ -26,6 +32,8 @@ namespace Content.Shared.Stunnable
         [Dependency] private readonly StatusEffectsSystem _statusEffectSystem = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
         /// <summary>
         /// Friction modifier for knocked down players.
@@ -58,6 +66,7 @@ namespace Content.Shared.Stunnable
             SubscribeLocalEvent<KnockedDownComponent, TileFrictionEvent>(OnKnockedTileFriction);
 
             // Attempt event subscriptions.
+            SubscribeLocalEvent<StunnedComponent, ChangeDirectionAttemptEvent>(OnAttempt);
             SubscribeLocalEvent<StunnedComponent, UpdateCanMoveEvent>(OnMoveAttempt);
             SubscribeLocalEvent<StunnedComponent, InteractionAttemptEvent>(OnAttempt);
             SubscribeLocalEvent<StunnedComponent, UseAttemptEvent>(OnAttempt);
@@ -67,6 +76,38 @@ namespace Content.Shared.Stunnable
             SubscribeLocalEvent<StunnedComponent, PickupAttemptEvent>(OnAttempt);
             SubscribeLocalEvent<StunnedComponent, IsEquippingAttemptEvent>(OnEquipAttempt);
             SubscribeLocalEvent<StunnedComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
+            SubscribeLocalEvent<MobStateComponent, MobStateChangedEvent>(OnMobStateChanged);
+        }
+
+
+
+        private void OnMobStateChanged(EntityUid uid, MobStateComponent component, MobStateChangedEvent args)
+        {
+            if (!TryComp<StatusEffectsComponent>(uid, out var status))
+            {
+                return;
+            }
+            switch (args.NewMobState)
+            {
+                case MobState.Alive:
+                {
+                    break;
+                }
+                case MobState.Critical:
+                {
+                    _statusEffectSystem.TryRemoveStatusEffect(uid, "Stun");
+                    break;
+                }
+                case MobState.Dead:
+                {
+                    _statusEffectSystem.TryRemoveStatusEffect(uid, "Stun");
+                    break;
+                }
+                case MobState.Invalid:
+                default:
+                    return;
+            }
+
         }
 
         private void UpdateCanMove(EntityUid uid, StunnedComponent component, EntityEventArgs args)
@@ -149,7 +190,10 @@ namespace Content.Shared.Stunnable
             if (!Resolve(uid, ref status, false))
                 return false;
 
-            return _statusEffectSystem.TryAddStatusEffect<StunnedComponent>(uid, "Stun", time, refresh);
+            if (!_statusEffectSystem.TryAddStatusEffect<StunnedComponent>(uid, "Stun", time, refresh))
+                return false;
+            _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} stunned for {time.Seconds} seconds");
+            return true;
         }
 
         /// <summary>

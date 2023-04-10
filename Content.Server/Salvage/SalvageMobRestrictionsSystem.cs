@@ -1,7 +1,7 @@
 using Content.Server.Body.Systems;
-using Content.Server.MobState;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
+using Content.Shared.Mobs.Systems;
 
 namespace Content.Server.Salvage;
 
@@ -62,7 +62,7 @@ public sealed class SalvageMobRestrictionsSystem : EntitySystem
             }
             else if (damageQuery.TryGetComponent(target, out var damageableComponent))
             {
-                _damageableSystem.SetAllDamage(damageableComponent, 200);
+                _damageableSystem.SetAllDamage(target, damageableComponent, 200);
             }
         }
     }

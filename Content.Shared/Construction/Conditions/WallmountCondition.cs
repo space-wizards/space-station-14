@@ -56,7 +56,7 @@ namespace Content.Shared.Construction.Conditions
             return !adjWallRaycastResults.Any();
         }
 
-        public ConstructionGuideEntry? GenerateGuideEntry()
+        public ConstructionGuideEntry GenerateGuideEntry()
         {
             return new ConstructionGuideEntry()
             {

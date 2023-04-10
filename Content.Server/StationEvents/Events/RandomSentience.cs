@@ -34,7 +34,7 @@ public sealed class RandomSentience : StationEventSystem
             var comp = EntityManager.AddComponent<GhostTakeoverAvailableComponent>(target.Owner);
             comp.RoleName = EntityManager.GetComponent<MetaDataComponent>(target.Owner).EntityName;
             comp.RoleDescription = Loc.GetString("station-event-random-sentience-role-description", ("name", comp.RoleName));
-            groups.Add(target.FlavorKind);
+            groups.Add(Loc.GetString(target.FlavorKind));
         }
 
         if (groups.Count == 0)
@@ -57,7 +57,7 @@ public sealed class RandomSentience : StationEventSystem
         foreach (var station in stationsToNotify)
         {
             chatSystem.DispatchStationAnnouncement(
-                (EntityUid) station,
+                station,
                 Loc.GetString("station-event-random-sentience-announcement",
                     ("kind1", kind1), ("kind2", kind2), ("kind3", kind3), ("amount", groupList.Count),
                     ("data", Loc.GetString($"random-sentience-event-data-{RobustRandom.Next(1, 6)}")),

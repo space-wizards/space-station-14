@@ -14,7 +14,7 @@ namespace Content.Shared.Chemistry.Reaction
     public sealed class ReactionPrototype : IPrototype, IComparable<ReactionPrototype>
     {
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
         [DataField("name")]
@@ -37,6 +37,12 @@ namespace Content.Shared.Chemistry.Reaction
         /// </summary>
         [DataField("maxTemp")]
         public float MaximumTemperature = float.PositiveInfinity;
+
+        /// <summary>
+        ///     The required mixing categories for an entity to mix the solution with for the reaction to occur
+        /// </summary>
+        [DataField("requiredMixerCategories")]
+        public List<string>? MixingCategories = null;
 
         /// <summary>
         /// Reagents created when the reaction occurs.
@@ -88,7 +94,7 @@ namespace Content.Shared.Chemistry.Reaction
             if (Products.Count != other.Products.Count)
                 return Products.Count - other.Products.Count;
 
-            return ID.CompareTo(other.ID);
+            return string.Compare(ID, other.ID, StringComparison.Ordinal);
         }
     }
 

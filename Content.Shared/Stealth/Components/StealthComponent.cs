@@ -34,12 +34,11 @@ public sealed class StealthComponent : Component
     /// <summary>
     /// Last set level of visibility. The visual effect ranges from 1 (fully visible) and -1 (fully hidden). Values
     /// outside of this range simply act as a buffer for the visual effect (i.e., a delay before turning invisible). To
-    /// get the actual current visibility, use <see cref="SharedStealthSystem.GetVisibility(EntityUid,
-    /// StealthComponent?)"/>
+    /// get the actual current visibility, use <see cref="SharedStealthSystem.GetVisibility(EntityUid, StealthComponent?)"/>
     /// If you don't have anything else updating the stealth, this will just stay at a constant value, which can be useful.
     /// </summary>
     [DataField("lastVisibility")]
-    [Access(typeof(SharedStealthSystem),  Other = AccessPermissions.None)]
+    [Access(typeof(SharedStealthSystem), Other = AccessPermissions.None)]
     public float LastVisibility = 1;
 
 
@@ -61,6 +60,12 @@ public sealed class StealthComponent : Component
     /// </summary>
     [DataField("maxVisibility")]
     public readonly float MaxVisibility = 1.5f;
+
+    /// <summary>
+    ///     Localization string for how you'd like to describe this effect.
+    /// </summary>
+    [DataField("examinedDesc")]
+    public string ExaminedDesc = "stealth-visual-effect";
 }
 
 [Serializable, NetSerializable]

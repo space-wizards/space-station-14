@@ -37,7 +37,7 @@ namespace Content.Client.HealthAnalyzer.UI
 
                 text.Append($"{Loc.GetString("health-analyzer-window-entity-health-text", ("entityName", entityName))}\n");
 
-                /// Status Effects / Components
+                // Status Effects / Components
                 if (entities.HasComponent<DiseasedComponent>(msg.TargetEntity))
                 {
                     text.Append($"{Loc.GetString("disease-scanner-diseased")}\n");
@@ -46,7 +46,7 @@ namespace Content.Client.HealthAnalyzer.UI
                     text.Append($"{Loc.GetString("disease-scanner-not-diseased")}\n");
                 }
 
-                /// Damage
+                // Damage
                 text.Append($"\n{Loc.GetString("health-analyzer-window-entity-damage-total-text", ("amount", damageable.TotalDamage))}\n");
 
                 HashSet<string> shownTypes = new();

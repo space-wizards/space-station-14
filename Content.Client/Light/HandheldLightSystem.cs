@@ -10,6 +10,8 @@ namespace Content.Client.Light;
 
 public sealed class HandheldLightSystem : SharedHandheldLightSystem
 {
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -30,13 +32,12 @@ public sealed class HandheldLightSystem : SharedHandheldLightSystem
             return;
         }
 
-        if (!args.Component.TryGetData(ToggleableLightVisuals.Enabled, out bool enabled))
+        if (!_appearance.TryGetData<bool>(uid, ToggleableLightVisuals.Enabled, out var enabled, args.Component))
         {
             return;
         }
 
-        if (!args.Component.TryGetData(HandheldLightVisuals.Power,
-                out HandheldLightPowerStates state))
+        if (!_appearance.TryGetData<HandheldLightPowerStates>(uid, HandheldLightVisuals.Power, out var state, args.Component))
         {
             return;
         }

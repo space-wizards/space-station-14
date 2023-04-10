@@ -51,7 +51,7 @@
   id: BannerEngineering
   parent: BannerBase
   name: engineering banner
-  description: A banner displaying the colors of the engineering deparment. Scrungularty.
+  description: A banner displaying the colors of the engineering department. Scrungularty.
   components:
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
@@ -61,7 +61,7 @@
   id: BannerMedical
   parent: BannerBase
   name: medical banner
-  description: A banner displaying the colors of the medical deparment. How sterile.
+  description: A banner displaying the colors of the medical department. How sterile.
   components:
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi

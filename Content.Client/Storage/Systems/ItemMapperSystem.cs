@@ -8,6 +8,8 @@ namespace Content.Client.Storage.Systems;
 
 public sealed class ItemMapperSystem : SharedItemMapperSystem
 {
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -38,7 +40,7 @@ public sealed class ItemMapperSystem : SharedItemMapperSystem
 
     private void InitLayers(ItemMapperComponent component, SpriteComponent spriteComponent, AppearanceComponent appearance)
     {
-        if (!appearance.TryGetData<ShowLayerData>(StorageMapVisuals.InitLayers, out var wrapper))
+        if (!_appearance.TryGetData<ShowLayerData>(appearance.Owner, StorageMapVisuals.InitLayers, out var wrapper, appearance))
             return;
 
         component.SpriteLayers.AddRange(wrapper.QueuedEntities);
@@ -53,7 +55,7 @@ public sealed class ItemMapperSystem : SharedItemMapperSystem
 
     private void EnableLayers(ItemMapperComponent component, SpriteComponent spriteComponent, AppearanceComponent appearance)
     {
-        if (!appearance.TryGetData<ShowLayerData>(StorageMapVisuals.LayerChanged, out var wrapper))
+        if (!_appearance.TryGetData<ShowLayerData>(appearance.Owner, StorageMapVisuals.LayerChanged, out var wrapper, appearance))
             return;
 
         foreach (var layerName in component.SpriteLayers)

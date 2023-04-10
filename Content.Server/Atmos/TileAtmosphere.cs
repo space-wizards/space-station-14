@@ -88,7 +88,6 @@ namespace Content.Server.Atmos
         [Access(typeof(AtmosphereSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
         public GasMixture? Air { get; set; }
 
-        [ViewVariables]
         [DataField("lastShare")]
         public float LastShare;
 

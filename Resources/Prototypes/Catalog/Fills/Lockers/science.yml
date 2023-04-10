@@ -9,3 +9,5 @@
       - id: ClothingHeadsetScience
       - id: ClothingMaskSterile
       - id: ClothingOuterCoatLab
+      - id: AnomalyScanner
+      - id: NodeScanner

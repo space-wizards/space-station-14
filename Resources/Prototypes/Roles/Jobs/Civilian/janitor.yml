@@ -1,6 +1,7 @@
 - type: job
   id: Janitor
   name: job-name-janitor
+  description: job-description-janitor
   playTimeTracker: JobJanitor
   startingGear: JanitorGear
   icon: "Janitor"

@@ -76,6 +76,8 @@
     sprite: Clothing/OuterClothing/Misc/cardborg.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/cardborg.rsi
+  - type: TypingIndicatorClothing
+    proto: robot
 
 - type: entity
   parent: ClothingOuterBase
@@ -220,3 +222,14 @@
     sprite: Clothing/OuterClothing/Misc/nunrobe.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/nunrobe.rsi
+    
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterGhostSheet
+  name: ghost sheet
+  description: Spooky!!!
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Misc/ghostsheet.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Misc/ghostsheet.rsi

@@ -422,6 +422,7 @@
   description: Just like a lattice. Except it looks better.
   conditions:
     - !type:TileNotBlocked
+      failIfSpace: false
     - !type:TileType
       targets:
         - Lattice
@@ -512,6 +513,23 @@
   description: It opens, it closes, and maybe crushes you.
   icon:
     sprite: Structures/Doors/Airlocks/Standard/basic.rsi
+    state: assembly
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: glass airlock
+  id: AirlockGlass
+  graph: Airlock
+  startNode: start
+  targetNode: glassAirlock
+  category: construction-category-structures
+  description: It opens, it closes, and maybe crushes you.
+  icon:
+    sprite: Structures/Doors/Airlocks/Glass/glass.rsi
     state: assembly
   objectType: Structure
   placementMode: SnapgridCenter

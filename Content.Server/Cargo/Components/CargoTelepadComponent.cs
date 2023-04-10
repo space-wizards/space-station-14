@@ -20,7 +20,6 @@ namespace Content.Server.Cargo.Components
         /// <summary>
         /// How much time we've accumulated until next teleport.
         /// </summary>
-        [ViewVariables]
         [DataField("accumulator")]
         public float Accumulator = 0f;
 
@@ -33,7 +32,7 @@ namespace Content.Server.Cargo.Components
         ///     The paper-type prototype to spawn with the order information.
         /// </summary>
         [DataField("printerOutput", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string PrinterOutput = "Paper";
+        public string PrinterOutput = "PaperCargoInvoice";
 
         [DataField("receiverPort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
         public string ReceiverPort = "OrderReceiver";

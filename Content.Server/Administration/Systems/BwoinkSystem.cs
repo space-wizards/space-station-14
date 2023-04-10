@@ -109,6 +109,8 @@ namespace Content.Server.Administration.Systems
         {
             _webhookUrl = url;
 
+            RaiseNetworkEvent(new BwoinkDiscordRelayUpdated(!string.IsNullOrWhiteSpace(url)));
+
             if (url == string.Empty)
                 return;
 
@@ -295,17 +297,17 @@ namespace Content.Server.Administration.Systems
             return new WebhookPayload
             {
                 Username = username,
-                AvatarUrl = _avatarUrl,
+                AvatarUrl = string.IsNullOrWhiteSpace(_avatarUrl) ? null : _avatarUrl,
                 Embeds = new List<Embed>
                 {
-                    new Embed
+                    new()
                     {
                         Description = messages,
                         Color = color,
                         Footer = new EmbedFooter
                         {
                             Text = $"{serverName} ({round})",
-                            IconUrl = _footerIconUrl,
+                            IconUrl = string.IsNullOrWhiteSpace(_footerIconUrl) ? null : _footerIconUrl
                         },
                     },
                 },
@@ -395,13 +397,11 @@ namespace Content.Server.Administration.Systems
                 _messageQueues[msg.UserId].Enqueue(GenerateAHelpMessage(senderSession.Name, str, !personalChannel, admins.Count == 0));
             }
 
-            if (admins.Count != 0)
+            if (admins.Count != 0 || sendsWebhook)
                 return;
 
             // No admin online, let the player know
-            var systemText = sendsWebhook ?
-                Loc.GetString("bwoink-system-starmute-message-no-other-users-webhook") :
-                Loc.GetString("bwoink-system-starmute-message-no-other-users");
+            var systemText = Loc.GetString("bwoink-system-starmute-message-no-other-users");
             var starMuteMsg = new BwoinkTextMessage(message.UserId, SystemUserId, systemText);
             RaiseNetworkEvent(starMuteMsg, senderSession.ConnectedClient);
         }
@@ -438,7 +438,7 @@ namespace Content.Server.Administration.Systems
             public string Username { get; set; } = "";
 
             [JsonPropertyName("avatar_url")]
-            public string AvatarUrl { get; set; } = "";
+            public string? AvatarUrl { get; set; } = "";
 
             [JsonPropertyName("embeds")]
             public List<Embed>? Embeds { get; set; } = null;
@@ -479,7 +479,7 @@ namespace Content.Server.Administration.Systems
             public string Text { get; set; } = "";
 
             [JsonPropertyName("icon_url")]
-            public string IconUrl { get; set; } = "";
+            public string? IconUrl { get; set; }
 
             public EmbedFooter()
             {

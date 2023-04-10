@@ -12,7 +12,7 @@
       - id: d10Dice
       - id: d12Dice
       - id: d20Dice
-      - id: d100Dice
+      - id: PercentileDie
   - type: Sprite
     netsync: false
     sprite: Objects/Fun/dice.rsi

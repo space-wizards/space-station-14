@@ -22,6 +22,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 200
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:DoActsBehavior
@@ -46,7 +52,7 @@
   components:
   - type: Construction
     graph: LightFixture
-    node: tubeLight
+    node: groundLight
   - type: Sprite
     sprite: Structures/Lighting/LightPosts/small_light_post.rsi
     snapCardinals: true
@@ -91,10 +97,9 @@
     graph: LightFixture
     node: groundLight
   - type: Appearance
-    visuals:
-    - type: PoweredLightVisualizer
-      blinkingSound:
-        path: "/Audio/Machines/light_tube_on.ogg"
+  - type: PoweredLightVisuals
+    blinkingSound:
+      path: "/Audio/Machines/light_tube_on.ogg"
   - type: SignalReceiver
     inputs:
       On: []
@@ -105,7 +110,7 @@
   id: PoweredLightPostSmall
   name: post light
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
-  suffix:
+  suffix: ""
   parent: PoweredLightPostSmallEmpty
   components:
   - type: Sprite
@@ -117,3 +122,5 @@
     damage:
       types:
         Heat: 20
+  - type: StaticPrice
+    price: 25

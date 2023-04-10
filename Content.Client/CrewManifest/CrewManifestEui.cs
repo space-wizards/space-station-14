@@ -1,5 +1,4 @@
 using Content.Client.Eui;
-using Content.Client.GameTicking.Managers;
 using Content.Shared.CrewManifest;
 using Content.Shared.Eui;
 using JetBrains.Annotations;
@@ -9,12 +8,10 @@ namespace Content.Client.CrewManifest;
 [UsedImplicitly]
 public sealed class CrewManifestEui : BaseEui
 {
-    private readonly ClientGameTicker _gameTicker;
     private readonly CrewManifestUi _window;
 
     public CrewManifestEui()
     {
-        _gameTicker = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ClientGameTicker>();
         _window = new();
 
         _window.OnClose += () =>

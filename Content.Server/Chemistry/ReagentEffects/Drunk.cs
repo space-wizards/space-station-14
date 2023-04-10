@@ -9,7 +9,7 @@ public sealed class Drunk : ReagentEffect
     ///     BoozePower is how long each metabolism cycle will make the drunk effect last for.
     /// </summary>
     [DataField("boozePower")]
-    public float BoozePower = 2f;
+    public float BoozePower = 3f;
 
     /// <summary>
     ///     Whether speech should be slurred.
@@ -19,7 +19,11 @@ public sealed class Drunk : ReagentEffect
 
     public override void Effect(ReagentEffectArgs args)
     {
+        var boozePower = BoozePower;
+
+        boozePower *= args.Scale;
+
         var drunkSys = args.EntityManager.EntitySysManager.GetEntitySystem<SharedDrunkSystem>();
-        drunkSys.TryApplyDrunkenness(args.SolutionEntity, BoozePower, SlurSpeech);
+        drunkSys.TryApplyDrunkenness(args.SolutionEntity, boozePower, SlurSpeech);
     }
 }

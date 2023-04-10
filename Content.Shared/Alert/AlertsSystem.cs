@@ -7,7 +7,6 @@ namespace Content.Shared.Alert;
 public abstract class AlertsSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
     private readonly Dictionary<AlertType, AlertPrototype> _typeToAlert = new();
 
     public IReadOnlyDictionary<AlertKey, AlertState>? GetActiveAlerts(EntityUid euid)
@@ -15,6 +14,22 @@ public abstract class AlertsSystem : EntitySystem
         return EntityManager.TryGetComponent(euid, out AlertsComponent? comp)
             ? comp.Alerts
             : null;
+    }
+
+    public short GetSeverityRange(AlertType alertType)
+    {
+        var minSeverity = _typeToAlert[alertType].MinSeverity;
+        return (short)MathF.Max(minSeverity,_typeToAlert[alertType].MaxSeverity - minSeverity);
+    }
+
+    public short GetMaxSeverity(AlertType alertType)
+    {
+        return _typeToAlert[alertType].MaxSeverity;
+    }
+
+    public short GetMinSeverity(AlertType alertType)
+    {
+        return _typeToAlert[alertType].MinSeverity;
     }
 
     public bool IsShowingAlert(EntityUid euid, AlertType alertType)
@@ -108,7 +123,7 @@ public abstract class AlertsSystem : EntitySystem
 
         AfterClearAlert(alertsComponent);
 
-        alertsComponent.Dirty();
+        Dirty(alertsComponent);
     }
 
     /// <summary>
@@ -128,7 +143,7 @@ public abstract class AlertsSystem : EntitySystem
 
             AfterClearAlert(alertsComponent);
 
-            alertsComponent.Dirty();
+            Dirty(alertsComponent);
         }
         else
         {
@@ -210,7 +225,8 @@ public abstract class AlertsSystem : EntitySystem
     private void HandleClickAlert(ClickAlertEvent msg, EntitySessionEventArgs args)
     {
         var player = args.SenderSession.AttachedEntity;
-        if (player is null || !EntityManager.TryGetComponent<AlertsComponent>(player, out var alertComp)) return;
+        if (player is null || !EntityManager.HasComponent<AlertsComponent>(player))
+            return;
 
         if (!IsShowingAlert(player.Value, msg.Type))
         {

@@ -8,6 +8,14 @@ using static Robust.Shared.GameObjects.SharedSpriteComponent;
 namespace Content.Shared.Hands
 {
     /// <summary>
+    /// Raised directed on an entity when attempting to drop its hand items.
+    /// </summary>
+    public sealed class DropAttemptEvent : CancellableEntityEventArgs
+    {
+        public readonly EntityUid Uid;
+    }
+
+    /// <summary>
     ///     Raised directed at an item that needs to update its in-hand sprites/layers.
     /// </summary>
     public sealed class GetInhandVisualsEvent : EntityEventArgs
@@ -273,11 +281,11 @@ namespace Content.Shared.Hands
     [Serializable, NetSerializable]
     public sealed class RequestHandAltInteractEvent : EntityEventArgs
     {
-        public EntityUid Entity { get; }
+        public string HandName { get; }
 
-        public RequestHandAltInteractEvent(EntityUid entity)
+        public RequestHandAltInteractEvent(string handName)
         {
-            Entity = entity;
+            HandName = handName;
         }
     }
 

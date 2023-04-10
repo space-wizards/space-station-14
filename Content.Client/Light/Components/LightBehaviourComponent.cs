@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Content.Shared.Light.Component;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Light.Components
 {
@@ -29,25 +21,24 @@ namespace Content.Client.Light.Components
         protected IEntityManager _entMan = default!;
         protected IRobustRandom _random = default!;
 
-        [DataField("id")] [ViewVariables] public string ID { get; set; } = string.Empty;
+        [DataField("id")] public string ID { get; set; } = string.Empty;
 
         [DataField("property")]
-        [ViewVariables]
         public virtual string Property { get; protected set; } = "Radius";
 
-        [DataField("isLooped")] [ViewVariables] public bool IsLooped { get; set; }
+        [DataField("isLooped")] public bool IsLooped { get; set; }
 
-        [DataField("enabled")] [ViewVariables] public bool Enabled { get; set; }
+        [DataField("enabled")] public bool Enabled { get; set; }
 
-        [DataField("startValue")] [ViewVariables] public float StartValue { get; set; } = 0f;
+        [DataField("startValue")] public float StartValue { get; set; } = 0f;
 
-        [DataField("endValue")] [ViewVariables] public float EndValue { get; set; } = 2f;
+        [DataField("endValue")] public float EndValue { get; set; } = 2f;
 
-        [DataField("minDuration")] [ViewVariables] public float MinDuration { get; set; } = -1f;
+        [DataField("minDuration")] public float MinDuration { get; set; } = -1f;
 
-        [DataField("maxDuration")] [ViewVariables] public float MaxDuration { get; set; } = 2f;
+        [DataField("maxDuration")] public float MaxDuration { get; set; } = 2f;
 
-        [DataField("interpolate")] [ViewVariables] public AnimationInterpolationMode InterpolateMode { get; set; } = AnimationInterpolationMode.Linear;
+        [DataField("interpolate")] public AnimationInterpolationMode InterpolateMode { get; set; } = AnimationInterpolationMode.Linear;
 
         [ViewVariables] protected float MaxTime { get; set; }
 
@@ -182,7 +173,6 @@ namespace Content.Client.Light.Components
         /// time of the full animation, including the reverse interpolation.
         /// </summary>
         [DataField("reverseWhenFinished")]
-        [ViewVariables]
         public bool ReverseWhenFinished { get; set; }
 
         public override (int KeyFrameIndex, float FramePlayingTime) AdvancePlayback(
@@ -308,7 +298,6 @@ namespace Content.Client.Light.Components
     public sealed class ColorCycleBehaviour : LightBehaviourAnimationTrack, ISerializationHooks
     {
         [DataField("property")]
-        [ViewVariables]
         public override string Property { get; protected set; } = "Color";
 
         [DataField("colors")] public List<Color> ColorsToCycle { get; set; } = new();

@@ -50,7 +50,7 @@ internal sealed class ChargerSystem : EntitySystem
             TransferPower(charger.Owner, slot.Item!.Value, charger, frameTime);
         }
     }
-    
+
     private void OnPowerChanged(EntityUid uid, ChargerComponent component, ref PowerChangedEvent args)
     {
         UpdateStatus(uid, component);
@@ -63,7 +63,7 @@ internal sealed class ChargerSystem : EntitySystem
 
         if (args.Container.ID != component.SlotId)
             return;
-        
+
         UpdateStatus(uid, component);
     }
 

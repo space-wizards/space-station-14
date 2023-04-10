@@ -1,4 +1,5 @@
-﻿using Content.Shared.Radiation.Events;
+﻿using Content.Server.Radiation.Components;
+using Content.Shared.Radiation.Events;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 
@@ -42,5 +43,20 @@ public sealed partial class RadiationSystem : EntitySystem
     {
         var msg = new OnIrradiatedEvent(time, radsPerSecond);
         RaiseLocalEvent(uid, msg);
+    }
+
+    /// <summary>
+    ///     Marks entity to receive/ignore radiation rays.
+    /// </summary>
+    public void SetCanReceive(EntityUid uid, bool canReceive)
+    {
+        if (canReceive)
+        {
+            EnsureComp<RadiationReceiverComponent>(uid);
+        }
+        else
+        {
+            RemComp<RadiationReceiverComponent>(uid);
+        }
     }
 }

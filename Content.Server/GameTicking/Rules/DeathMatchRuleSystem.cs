@@ -2,7 +2,8 @@ using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Configurations;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -19,6 +20,7 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem
 
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     private const float RestartDelay = 10f;
@@ -106,7 +108,7 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem
                 || !TryComp(playerEntity, out MobStateComponent? state))
                 continue;
 
-            if (!state.IsAlive())
+            if (!_mobStateSystem.IsAlive(playerEntity, state))
                 continue;
 
             // Found a second person alive, nothing decided yet!

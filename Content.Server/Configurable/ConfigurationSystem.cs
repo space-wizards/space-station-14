@@ -1,8 +1,9 @@
+using Content.Shared.Configurable;
 using Content.Shared.Interaction;
 using Content.Shared.Tools.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using static Content.Shared.Configurable.SharedConfigurationComponent;
+using static Content.Shared.Configurable.ConfigurationComponent;
 
 namespace Content.Server.Configurable;
 

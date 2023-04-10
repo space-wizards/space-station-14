@@ -8,13 +8,19 @@
     size: 3
   - type: Handcuff
     cuffedRSI: Objects/Misc/handcuffs.rsi
-    iconState: body-overlay
+    bodyIconState: body-overlay
   - type: Sprite
     sprite: Objects/Misc/handcuffs.rsi
     state: handcuff
   - type: Tag
     tags:
     - Handcuffs
+  - type: MeleeWeapon
+    resetOnHandSelected: false
+    animation: WeaponArcDisarm
+    damage:
+      types:
+        Blunt: 0
 
 - type: entity
   name: makeshift handcuffs
@@ -28,11 +34,9 @@
     breakoutTime: 15
     cuffedRSI: Objects/Misc/cablecuffs.rsi
     bodyIconState: body-overlay
-    color: red
+    color: forestgreen
     breakOnRemove: true
-    brokenIconState: cuff-broken
-    brokenName: handcuff-broken-cables-name
-    brokenDesc: handcuff-broken-cables-desc
+    brokenPrototype: CablecuffsBroken
     startCuffSound:
       path: /Audio/Items/Handcuffs/rope_start.ogg
     endCuffSound:
@@ -49,7 +53,7 @@
   - type: Sprite
     sprite: Objects/Misc/cablecuffs.rsi
     state: cuff
-    color: red
+    color: forestgreen
 
 - type: entity
   name: zipties
@@ -64,9 +68,7 @@
     cuffedRSI: Objects/Misc/cablecuffs.rsi  # cablecuffs will look fine
     bodyIconState: body-overlay
     breakOnRemove: true
-    brokenIconState: cuff-broken
-    brokenName: handcuff-broken-zipties-name
-    brokenDesc: handcuff-broken-zipties-desc
+    brokenPrototype: ZiptiesBroken
     startCuffSound:
       path: /Audio/Items/Handcuffs/ziptie_start.ogg
     endCuffSound:
@@ -80,3 +82,38 @@
   - type: Sprite
     sprite: Objects/Misc/zipties.rsi
     state: cuff
+
+- type: entity
+  id: BaseHandcuffsBroken
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Item
+    size: 2
+  - type: Tag
+    tags:
+    - Trash
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 25
+
+- type: entity
+  name: broken zipties
+  description: These zipties look like they tried to manage the wrong cables.
+  id: ZiptiesBroken
+  parent: BaseHandcuffsBroken
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/zipties.rsi
+    state: cuff-broken
+
+- type: entity
+  name: broken cables
+  description: These cables are broken in several places and don't seem very useful.
+  id: CablecuffsBroken
+  parent: BaseHandcuffsBroken
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/cablecuffs.rsi
+    state: cuff-broken
+    color: forestgreen
