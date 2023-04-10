@@ -521,8 +521,6 @@ entities:
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
-  - fixtures: []
-    type: Fixtures
   - gravityShakeSound: !type:SoundPathSpecifier
       path: /Audio/Effects/alert.ogg
     type: Gravity
@@ -1874,8 +1872,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 213
   type: CableTerminal
   components:
@@ -1885,8 +1881,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 214
   type: CableHV
   components:

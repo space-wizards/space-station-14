@@ -755,8 +755,6 @@ entities:
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
-  - fixtures: []
-    type: Fixtures
   - id: Bagel
     type: BecomesStation
   - gravityShakeSound: !type:SoundPathSpecifier
@@ -20313,8 +20311,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 1462
   type: ClosetL3SecurityFilled
   components:
@@ -20467,8 +20463,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 1482
   type: VendingMachineSecDrobe
   components:
@@ -23649,8 +23643,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 1873
   type: WeaponDisabler
   components:
@@ -24381,8 +24373,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 1945
   type: GasPipeStraight
   components:
@@ -27878,8 +27868,6 @@ entities:
   - pos: 24.5,-27.5
     parent: 60
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 2377
   type: GasPipeTJunction
   components:
@@ -35386,8 +35374,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 3338
   type: ComputerSolarControl
   components:
@@ -49126,8 +49112,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 5146
   type: WallSolid
   components:
@@ -61998,8 +61982,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 6783
   type: ClothingMaskSterile
   components:
@@ -63731,8 +63713,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 7033
   type: GasPipeBend
   components:
@@ -65089,8 +65069,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 7226
   type: SprayBottleSpaceCleaner
   components:
@@ -67306,8 +67284,6 @@ entities:
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
-  - fixtures: []
-    type: Fixtures
   - type: OccluderTree
   - type: Shuttle
   - nextUpdate: 1984.9758152
@@ -71994,8 +71970,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 8158
   type: NitrousOxideCanister
   components:
@@ -78068,8 +78042,6 @@ entities:
   - pos: -6.5,-27.5
     parent: 60
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 9045
   type: GasPipeStraight
   components:
@@ -103523,8 +103495,6 @@ entities:
   - pos: 39.5,-28.5
     parent: 60
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 12635
   type: WallReinforced
   components:
@@ -103845,8 +103815,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 12685
   type: WallWeaponCapacitorRecharger
   components:
@@ -103855,8 +103823,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 12686
   type: Grille
   components:
@@ -106555,8 +106521,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 13069
   type: AirlockEngineeringGlassLocked
   components:
@@ -107579,42 +107543,6 @@ entities:
     pos: 59.5,12.5
     parent: 60
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        radius: 0.01
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-      density: 1
-      hard: True
-      restitution: 0
-      friction: 0.4
-      id: null
-    - shape: !type:PhysShapeCircle
-        radius: 0.2
-        position: 0,-0.5
-      mask: []
-      layer: []
-      density: 1
-      hard: False
-      restitution: 0
-      friction: 0.4
-      id: docking
-    type: Fixtures
 - uid: 13182
   type: AirlockExternalGlassShuttleLocked
   components:
@@ -107622,42 +107550,6 @@ entities:
     pos: 59.5,14.5
     parent: 60
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        radius: 0.01
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-      density: 1
-      hard: True
-      restitution: 0
-      friction: 0.4
-      id: null
-    - shape: !type:PhysShapeCircle
-        radius: 0.2
-        position: 0,-0.5
-      mask: []
-      layer: []
-      density: 1
-      hard: False
-      restitution: 0
-      friction: 0.4
-      id: docking
-    type: Fixtures
 - uid: 13183
   type: AirlockExternalGlassCargoLocked
   components:
@@ -127524,8 +127416,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 15732
   type: CableTerminal
   components:
@@ -127534,8 +127424,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 15733
   type: CableTerminal
   components:
@@ -127544,8 +127432,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 15734
   type: WindowReinforcedDirectional
   components:
@@ -131732,8 +131618,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 16346
   type: CableHV
   components:
@@ -146044,8 +145928,6 @@ entities:
   - pos: -2.5,-11.5
     parent: 60
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 18255
   type: GasPipeTJunction
   components:
@@ -148535,8 +148417,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 18573
   type: PersonalAI
   components:
@@ -153049,8 +152929,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 19147
   type: CableApcStack
   components:
@@ -158774,8 +158652,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 20032
   type: Table
   components:
@@ -169412,42 +169288,6 @@ entities:
     pos: 44.5,31.5
     parent: 60
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        radius: 0.01
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-      density: 1
-      hard: True
-      restitution: 0
-      friction: 0.4
-      id: null
-    - shape: !type:PhysShapeCircle
-        radius: 0.2
-        position: 0,-0.5
-      mask: []
-      layer: []
-      density: 1
-      hard: False
-      restitution: 0
-      friction: 0.4
-      id: docking
-    type: Fixtures
 - uid: 21533
   type: AirlockExternalGlassShuttleEmergencyLocked
   components:
@@ -169455,42 +169295,6 @@ entities:
     pos: 46.5,31.5
     parent: 60
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        radius: 0.01
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-      density: 1
-      hard: True
-      restitution: 0
-      friction: 0.4
-      id: null
-    - shape: !type:PhysShapeCircle
-        radius: 0.2
-        position: 0,-0.5
-      mask: []
-      layer: []
-      density: 1
-      hard: False
-      restitution: 0
-      friction: 0.4
-      id: docking
-    type: Fixtures
 - uid: 21534
   type: AirlockExternalGlassShuttleEmergencyLocked
   components:
@@ -169498,42 +169302,6 @@ entities:
     pos: 52.5,31.5
     parent: 60
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        radius: 0.01
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-      density: 1
-      hard: True
-      restitution: 0
-      friction: 0.4
-      id: null
-    - shape: !type:PhysShapeCircle
-        radius: 0.2
-        position: 0,-0.5
-      mask: []
-      layer: []
-      density: 1
-      hard: False
-      restitution: 0
-      friction: 0.4
-      id: docking
-    type: Fixtures
 - uid: 21535
   type: AirlockExternalGlassShuttleEmergencyLocked
   components:
@@ -169541,42 +169309,6 @@ entities:
     pos: 54.5,31.5
     parent: 60
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        radius: 0.01
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-      density: 1
-      hard: True
-      restitution: 0
-      friction: 0.4
-      id: null
-    - shape: !type:PhysShapeCircle
-        radius: 0.2
-        position: 0,-0.5
-      mask: []
-      layer: []
-      density: 1
-      hard: False
-      restitution: 0
-      friction: 0.4
-      id: docking
-    type: Fixtures
 - uid: 21536
   type: FireAlarm
   components:
@@ -189410,8 +189142,6 @@ entities:
   - pos: -41.5,-1.5
     parent: 60
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 24159
   type: SinkWide
   components:

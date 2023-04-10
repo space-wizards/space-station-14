@@ -126,8 +126,6 @@ entities:
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
-  - fixtures: []
-    type: Fixtures
   - type: OccluderTree
   - type: Shuttle
   - type: GridPathfinding
@@ -1486,7 +1484,7 @@ entities:
       - 0
     type: GridAtmosphere
   - type: Shuttle
-  - type: GridPathfinding  
+  - type: GridPathfinding
   - type: RadiationGridResistance
 - uid: 2
   type: Grille
@@ -1753,8 +1751,6 @@ entities:
     pos: -6.5,2.5
     parent: 1
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 46
   type: ShuttleWindow
   components:
@@ -5881,8 +5877,6 @@ entities:
   - pos: 2.5,-9.5
     parent: 1
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 645
   type: CableApcExtension
   components:

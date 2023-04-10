@@ -126,8 +126,6 @@ entities:
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
-  - fixtures: []
-    type: Fixtures
   - type: OccluderTree
   - type: Shuttle
   - nextUpdate: 8309.0552128
@@ -4879,8 +4877,6 @@ entities:
   - pos: 4.5,-11.5
     parent: 0
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 580
   type: Bookshelf
   components:

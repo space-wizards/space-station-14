@@ -120,8 +120,6 @@ entities:
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
-  - fixtures: []
-    type: Fixtures
   - gravityShakeSound: !type:SoundPathSpecifier
       path: /Audio/Effects/alert.ogg
     type: Gravity
@@ -262,8 +260,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 22
   type: Grille
   components:
@@ -346,8 +342,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 35
   type: CableApcExtension
   components:
@@ -356,8 +350,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 36
   type: CrateEngineeringSolar
   components:
@@ -372,8 +364,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 38
   type: CableApcExtension
   components:
@@ -382,8 +372,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 39
   type: CableApcExtension
   components:
@@ -392,8 +380,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 40
   type: SignAi
   components:
@@ -414,8 +400,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 43
   type: CableApcExtension
   components:
@@ -424,8 +408,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 44
   type: CableApcExtension
   components:
@@ -434,8 +416,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 45
   type: GrilleBroken
   components:
@@ -452,8 +432,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 47
   type: CableApcExtension
   components:
@@ -462,8 +440,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 48
   type: CableApcExtension
   components:
@@ -472,8 +448,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 49
   type: CableApcExtension
   components:
@@ -482,8 +456,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 50
   type: CableApcExtension
   components:
@@ -492,8 +464,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 51
   type: CableApcExtension
   components:
@@ -502,8 +472,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 52
   type: CrateMaterialPlasteel
   components:
@@ -562,8 +530,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 61
   type: CableHV
   components:
@@ -572,8 +538,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 62
   type: CableHV
   components:
@@ -582,8 +546,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 63
   type: CableHV
   components:
@@ -592,8 +554,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 64
   type: CableHV
   components:
@@ -602,8 +562,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 65
   type: CableHV
   components:
@@ -612,8 +570,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 66
   type: CrateMaterialSteel
   components:

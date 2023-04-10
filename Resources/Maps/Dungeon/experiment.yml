@@ -8581,8 +8581,6 @@ entities:
   - pos: 0.5,47.5
     parent: 0
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 473
   type: WindowTintedDirectional
   components:
@@ -10197,8 +10195,6 @@ entities:
   - pos: 4.5,25.5
     parent: 0
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 719
   type: Rack
   components:
@@ -10691,8 +10687,6 @@ entities:
   - pos: 8.5,24.5
     parent: 0
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 797
   type: WindowTintedDirectional
   components:
@@ -11327,8 +11321,6 @@ entities:
   - pos: 0.5,22.5
     parent: 0
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 897
   type: HospitalCurtainsOpen
   components:

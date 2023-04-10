@@ -146,8 +146,6 @@ entities:
       - 0
       - 0
     type: GridAtmosphere
-  - fixtures: []
-    type: Fixtures
   - type: OccluderTree
   - type: Shuttle
   - type: GridPathfinding

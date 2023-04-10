@@ -115,8 +115,6 @@ entities:
     type: Physics
   - id: Empty
     type: BecomesStation
-  - fixtures: []
-    type: Fixtures
   - type: OccluderTree
   - type: Shuttle
   - type: GridPathfinding

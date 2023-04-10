@@ -1035,8 +1035,6 @@ entities:
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
-  - fixtures: []
-    type: Fixtures
   - gravityShakeSound: !type:SoundPathSpecifier
       path: /Audio/Effects/alert.ogg
     type: Gravity
@@ -15814,8 +15812,6 @@ entities:
   - pos: 5.5,5.5
     parent: 127
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 731
   type: WallReinforced
   components:
@@ -16374,8 +16370,6 @@ entities:
   - pos: 2.5,15.5
     parent: 127
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 822
   type: RandomSpawner
   components:
@@ -30015,8 +30009,6 @@ entities:
   - pos: 6.5,-13.5
     parent: 127
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 2897
   type: MopItem
   components:
@@ -30150,8 +30142,6 @@ entities:
   - pos: 13.5,-10.5
     parent: 127
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 2919
   type: VendingMachineJaniDrobe
   components:

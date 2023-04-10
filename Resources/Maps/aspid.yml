@@ -335,8 +335,6 @@ entities:
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
-  - fixtures: []
-    type: Fixtures
   - type: OccluderTree
   - type: Shuttle
   - nextUpdate: 132705.6201203
@@ -36257,8 +36255,6 @@ entities:
   - pos: 19.5,-4.5
     parent: 1
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 4022
   type: RailingCorner
   components:
@@ -38547,8 +38543,6 @@ entities:
   - pos: -38.5,49.5
     parent: 1
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 4317
   type: Bed
   components:
@@ -54279,8 +54273,6 @@ entities:
   - pos: 11.5,2.5
     parent: 1
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 6632
   type: KitchenSpike
   components:
@@ -55481,8 +55473,6 @@ entities:
   - pos: -7.5,69.5
     parent: 1
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 6817
   type: BedsheetHOS
   components:
@@ -66756,8 +66746,6 @@ entities:
     pos: 15.5,28.5
     parent: 1
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 8426
   type: TableReinforcedGlass
   components:
@@ -69259,8 +69247,6 @@ entities:
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
-  - fixtures: []
-    type: Fixtures
   - type: OccluderTree
   - type: Shuttle
   - nextUpdate: 97465.7475215
@@ -138339,8 +138325,6 @@ entities:
   - pos: -23.5,-12.5
     parent: 1
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 17278
   type: RandomDrinkGlass
   components:
@@ -140409,8 +140393,6 @@ entities:
     pos: 6.5,23.5
     parent: 1
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 17457
   type: AirSensor
   components:

@@ -59,8 +59,6 @@ entities:
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
-  - fixtures: []
-    type: Fixtures
   - type: OccluderTree
   - type: Shuttle
   - nextUpdate: 4321.2844759
@@ -16112,8 +16110,6 @@ entities:
   - pos: 9.5,-13.5
     parent: 1
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 2048
   type: MaterialBiomass
   components:

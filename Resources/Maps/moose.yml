@@ -344,8 +344,6 @@ entities:
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
-  - fixtures: []
-    type: Fixtures
   - type: OccluderTree
   - type: Shuttle
   - nextUpdate: 3754.1875118
@@ -14985,8 +14983,6 @@ entities:
   - pos: 26.5,4.5
     parent: 6
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 1520
   type: WallSolid
   components:
@@ -36779,8 +36775,6 @@ entities:
   - pos: -6.5,-21.5
     parent: 6
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 4638
   type: MonkeyCubeWrapped
   components:
@@ -40657,8 +40651,6 @@ entities:
   - pos: -9.5,-4.5
     parent: 6
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 5162
   type: Mirror
   components:
@@ -42458,8 +42450,6 @@ entities:
     pos: -36.5,-39.5
     parent: 6
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 5418
   type: RandomSoap
   components:
@@ -45809,8 +45799,6 @@ entities:
   - pos: 13.5,23.5
     parent: 6
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 6003
   type: RandomSoap
   components:
@@ -77115,8 +77103,6 @@ entities:
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
-  - fixtures: []
-    type: Fixtures
   - type: OccluderTree
   - type: Shuttle
   - nextUpdate: 0.45
@@ -105810,8 +105796,6 @@ entities:
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
-  - fixtures: []
-    type: Fixtures
   - type: OccluderTree
   - type: Shuttle
   - nextUpdate: 0.45

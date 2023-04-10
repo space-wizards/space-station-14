@@ -837,8 +837,6 @@ entities:
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
-  - fixtures: []
-    type: Fixtures
   - gravityShakeSound: !type:SoundPathSpecifier
       path: /Audio/Effects/alert.ogg
     type: Gravity
@@ -14607,8 +14605,6 @@ entities:
   - pos: -4.5,-2.5
     parent: 104
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 1362
   type: Catwalk
   components:
@@ -21169,8 +21165,6 @@ entities:
   - pos: 10.5,-3.5
     parent: 104
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 2439
   type: CableApcExtension
   components:

@@ -303,8 +303,6 @@ entities:
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
-  - fixtures: []
-    type: Fixtures
   - type: OccluderTree
   - type: Shuttle
   - nextUpdate: 15801.3235625
@@ -24293,8 +24291,6 @@ entities:
   - pos: -2.5,25.5
     parent: 1
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 1982
   type: WallReinforced
   components:
@@ -58674,8 +58670,6 @@ entities:
   - pos: -28.5,46.5
     parent: 1
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 6929
   type: LockerFreezer
   components:
@@ -81564,8 +81558,6 @@ entities:
     pos: -51.5,36.5
     parent: 1
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 10145
   type: CrateEngineeringCableBulk
   components:

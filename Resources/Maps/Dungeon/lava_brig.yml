@@ -8665,8 +8665,6 @@ entities:
     pos: 8.5,28.5
     parent: 0
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 945
   type: FloorDrain
   components:
@@ -8674,8 +8672,6 @@ entities:
     pos: 10.5,28.5
     parent: 0
     type: Transform
-  - fixtures: []
-    type: Fixtures
 - uid: 946
   type: HospitalCurtainsOpen
   components:
