@@ -16,22 +16,6 @@
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
 
-#Pirate Outfit
-- type: startingGear
-  id: PirateGear
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitColorLightBrown
-    back: ClothingBackpackSatchelEngineering
-    head: ClothingHeadHatPirate
-    outerClothing: ClothingOuterCoatPirate
-    shoes: ClothingShoesBootsWork
-    id: PassengerPDA
-    belt: ClothingBeltUtility
-    pocket1: AppraisalTool
-  innerclothingskirt: ClothingUniformJumpskirtColorLightBrown
-  satchel: ClothingBackpackSatchelEngineering
-  duffelbag: ClothingBackpackSatchelEngineering
-
 #Skeleton Biker
 - type: startingGear
   id: SkeletonBiker

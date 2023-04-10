@@ -110,6 +110,7 @@
   name: reagent-name-ethanol
   parent: BaseAlcohol
   desc: reagent-desc-ethanol
+  slippery: true
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#b05b3c"

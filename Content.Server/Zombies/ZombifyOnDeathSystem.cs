@@ -1,37 +1,37 @@
-using Content.Shared.Damage;
-using Content.Shared.Hands.EntitySystems;
-using Content.Server.Disease.Components;
-using Content.Server.Body.Components;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.Miasma;
+using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
+using Content.Server.Chat;
+using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
+using Content.Server.Disease.Components;
+using Content.Server.Ghost.Roles.Components;
+using Content.Server.Humanoid;
+using Content.Server.IdentityManagement;
+using Content.Server.Inventory;
+using Content.Server.Mind.Commands;
+using Content.Server.Mind.Components;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Server.Speech.Components;
-using Content.Server.Body.Systems;
-using Content.Server.CombatMode;
-using Content.Server.Inventory;
-using Content.Server.Mind.Components;
-using Content.Server.Chat.Managers;
-using Content.Server.Ghost.Roles.Components;
-using Content.Server.Hands.Components;
-using Content.Server.Mind.Commands;
 using Content.Server.Temperature.Components;
-using Content.Shared.Movement.Components;
-using Robust.Shared.Prototypes;
-using Content.Shared.Roles;
 using Content.Server.Traitor;
-using Content.Shared.Zombies;
-using Content.Shared.Popups;
-using Content.Server.Atmos.Miasma;
-using Content.Server.Humanoid;
-using Content.Server.IdentityManagement;
+using Content.Shared.CombatMode;
+using Content.Shared.Damage;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
-using Content.Shared.Weapons.Melee;
-using Content.Server.Chat;
-using Content.Server.Chat.Systems;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Popups;
+using Content.Shared.Roles;
+using Content.Shared.Weapons.Melee;
+using Content.Shared.Zombies;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Zombies
 {
@@ -53,6 +53,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
         [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
         [Dependency] private readonly EmoteOnDamageSystem _emoteOnDamage = default!;
+        [Dependency] private readonly SharedCombatModeSystem _combat = default!;
         [Dependency] private readonly IChatManager _chatMan = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
 
@@ -116,7 +117,7 @@ namespace Content.Server.Zombies
             //in an attempt to make an entity not attack. This is the easiest way to do it.
             RemComp<CombatModeComponent>(target);
             var combat = AddComp<CombatModeComponent>(target);
-            combat.IsInCombatMode = true;
+            _combat.SetInCombatMode(target, true, combat);
 
             //This is the actual damage of the zombie. We assign the visual appearance
             //and range here because of stuff we'll find out later
