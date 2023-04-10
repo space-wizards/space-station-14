@@ -4,7 +4,7 @@ namespace Content.Server.Spreader;
 /// Added to entities being considered for spreading via <see cref="SpreaderSystem"/>.
 /// This needs to be manually added and removed.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(SpreaderSystem))]
 public sealed class EdgeSpreaderComponent : Component
 {
 }
