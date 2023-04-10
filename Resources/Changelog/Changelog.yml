@@ -1,15 +1,4 @@
 Entries:
-- author: Jezithyr
-  changes:
-  - {message: Fixing health alerts not properly updating when players are damaged,
-    type: Fix}
-  id: 2873
-  time: '2023-01-15T07:52:20.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix some instances of popup flickering, type: Fix}
-  id: 2874
-  time: '2023-01-15T18:14:21.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed decal removal not working properly., type: Fix}
@@ -2917,3 +2906,13 @@ Entries:
   - {message: Fix spreaders going through air blockers., type: Fix}
   id: 3372
   time: '2023-04-10T06:43:25.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'You can now melee attack yourself, if you like', type: Tweak}
+  id: 3373
+  time: '2023-04-10T21:28:27.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Added robust nukie drink in EMAGGED sustenance vendor!, type: Add}
+  id: 3374
+  time: '2023-04-10T21:29:15.0000000+00:00'
