@@ -846,6 +846,27 @@
 
 - type: entity
   parent: BaseItem
+  id: FoamCutlass
+  name: foam cutlass
+  description: Cosplay as a pirate and force your friends to walk the plank.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/cutlass.rsi
+    state: foam_icon
+  - type: MeleeWeapon
+    attackRate: 1.5
+    range: 2.0
+    angle: 0
+    animation: WeaponArcThrust
+    damage:
+      types:
+        Blunt: 0
+  - type: Item
+    size: 15
+    sprite: Objects/Weapons/Melee/cutlass.rsi
+
+- type: entity
+  parent: BaseItem
   id: ClownRecorder
   name: clown recorder
   description: When you just can't get those laughs coming the natural way!
