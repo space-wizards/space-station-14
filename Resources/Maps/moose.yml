@@ -28147,7 +28147,7 @@ entities:
     parent: 6
     type: Transform
 - uid: 3393
-  type: ReagentContainerMilkOat
+  type: DrinkOatMilkCarton
   components:
   - pos: -37.544178,-15.470403
     parent: 6
@@ -28730,7 +28730,7 @@ entities:
     parent: 6
     type: Transform
 - uid: 3468
-  type: ReagentContainerMilkSoy
+  type: DrinkSoyMilkCarton
   components:
   - pos: -37.356678,-15.241236
     parent: 6

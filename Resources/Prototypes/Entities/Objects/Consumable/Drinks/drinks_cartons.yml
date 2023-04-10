@@ -11,9 +11,12 @@
       drink:
         maxVol: 100
   - type: Sprite
-    state: icon
+    netsync: false
+    sprite: Objects/Consumable/Drinks/drinks_cartons.rsi
   - type: TrashOnEmpty
     solution: drink
+
+# Juices
 
 - type: entity
   parent: DrinkCartonBaseFull
@@ -21,15 +24,15 @@
   name: orange juice
   description: Full of vitamins and deliciousness!
   components:
+  - type: Sprite
+    state: orange-juice
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 50
+        maxVol: 100
         reagents:
         - ReagentId: JuiceOrange
-          Quantity: 50
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/orangejuice.rsi
+          Quantity: 100
 
 - type: entity
   parent: DrinkCartonBaseFull
@@ -37,22 +40,76 @@
   name: tomato juice
   description: Well, at least it LOOKS like tomato juice. You can't tell with all that redness.
   components:
+  - type: Sprite
+    state: tomato-juice
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: JuiceTomato
+          Quantity: 100
+
+# Milks
+
+- type: entity
+  parent: DrinkCartonBaseFull
+  id: DrinkMilkCarton
+  name: milk
+  description: It's milk. White and nutritious goodness!
+  components:
+  - type: Sprite
+    state: milk
   - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 50
         reagents:
-        - ReagentId: JuiceTomato
+        - ReagentId: Milk
           Quantity: 50
+
+- type: entity
+  parent: DrinkCartonBaseFull
+  id: DrinkSoyMilkCarton
+  name: soy milk
+  description: It's soy milk. White and nutritious goodness!
+  components:
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/tomatojuice.rsi
+    state: soy-milk
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol:  50
+        reagents:
+        - ReagentId: MilkSoy
+          Quantity: 50
+
+- type: entity
+  parent: DrinkCartonBaseFull
+  id: DrinkOatMilkCarton
+  name: oat milk
+  description: It's oat milk. Tan and nutritious goodness!
+  components:
+  - type: Sprite
+    state: oat-milk
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: MilkOat
+          Quantity: 50
+
+# Cream
 
 - type: entity
   parent: DrinkCartonBaseFull
   id: DrinkCreamCarton
-  name: Milk Cream
+  name: cream
   description: It's cream. Made from milk. What else did you think you'd find in there?
   components:
+  - type: Sprite
+    state: cream
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -60,37 +117,3 @@
         reagents:
         - ReagentId: Cream
           Quantity: 50
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/cream.rsi
-
-- type: entity
-  parent: DrinkCartonBaseFull
-  id: DrinkMilkCarton
-  name: milk
-  description: An opaque white liquid produced by the mammary glands of mammals.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 100
-        reagents:
-        - ReagentId: Milk
-          Quantity: 100
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/milk.rsi
-
-- type: entity
-  parent: DrinkCartonBaseFull
-  id: DrinkSoyMilkCarton
-  name: soy milk
-  description: White and nutritious soy goodness!
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 100
-        reagents:
-        - ReagentId: MilkSoy
-          Quantity: 100
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/soymilk.rsi

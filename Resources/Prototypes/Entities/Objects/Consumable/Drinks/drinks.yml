@@ -572,22 +572,6 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkCream
-  name: cream
-  description: Ewwww...
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: Cream
-          Quantity: 30
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/cream.rsi
-
-- type: entity
-  parent: DrinkGlassBase
   id: DrinkCubaLibreGlass
   name: cuba libre glass
   description: A classic mix of rum and cola.
@@ -1162,13 +1146,16 @@
   description: It's some sweet-sour lime juice.
   components:
   - type: Drink
+    isOpen: false
+    openSounds:
+      collection: bottleOpenSounds
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 30
+        maxVol: 50
         reagents:
         - ReagentId: JuiceLime
-          Quantity: 30
+          Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/limejuice.rsi
 
@@ -1384,23 +1371,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/nuclear_colaglass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkOrangeJuice
-  name: orange juice
-  description: Vitamins! Yay!
-  components:
-  - type: Drink
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: JuiceOrange
-          Quantity: 30
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/orangejuice.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1875,23 +1845,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/threemileislandglass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkTomatoJuice
-  name: tomato juice
-  description: Are you sure this is tomato juice?
-  components:
-  - type: Drink
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: JuiceTomato
-          Quantity: 30
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/tomatojuice.rsi
 
 - type: entity
   parent: DrinkGlassBase

@@ -31,7 +31,7 @@
       - DrinkWineBottleFull
       - DrinkBeerBottleFull
       - DrinkAleBottleFull
-      - DrinkJuiceLimeBottleFull
+      - DrinkLimeJuice
     chance: 0.8
     offset: 0.0
     #rare

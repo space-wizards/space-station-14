@@ -19297,13 +19297,13 @@ entities:
   - bodyType: Static
     type: Physics
 - uid: 1211
-  type: ReagentContainerMilkSoy
+  type: DrinkSoyMilkCarton
   components:
   - pos: -12.998632,23.692276
     parent: 82
     type: Transform
 - uid: 1212
-  type: ReagentContainerMilkSoy
+  type: DrinkSoyMilkCarton
   components:
   - pos: -12.798634,23.558945
     parent: 82
@@ -39418,13 +39418,13 @@ entities:
     parent: 82
     type: Transform
 - uid: 4064
-  type: ReagentContainerMilkOat
+  type: DrinkOatMilkCarton
   components:
   - pos: -13.154188,23.53672
     parent: 82
     type: Transform
 - uid: 4065
-  type: ReagentContainerMilkOat
+  type: DrinkOatMilkCarton
   components:
   - pos: -13.354187,23.692276
     parent: 82

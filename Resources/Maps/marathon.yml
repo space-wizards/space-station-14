@@ -166097,7 +166097,7 @@ entities:
         uid: 11008
     type: SignalReceiver
 - uid: 21334
-  type: ReagentContainerMilkSoy
+  type: DrinkSoyMilkCarton
   components:
   - pos: -0.68636847,-9.259565
     parent: 30
@@ -166105,7 +166105,7 @@ entities:
   - tags: []
     type: Tag
 - uid: 21335
-  type: ReagentContainerMilkOat
+  type: DrinkOatMilkCarton
   components:
   - pos: -0.70199347,-9.447065
     parent: 30
@@ -166113,7 +166113,7 @@ entities:
   - tags: []
     type: Tag
 - uid: 21336
-  type: ReagentContainerMilk
+  type: DrinkMilkCarton
   components:
   - pos: -0.68636847,-9.05644
     parent: 30

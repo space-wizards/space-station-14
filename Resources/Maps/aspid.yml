@@ -73396,13 +73396,13 @@ entities:
     parent: 1
     type: Transform
 - uid: 9297
-  type: ReagentContainerMilkOat
+  type: DrinkOatMilkCarton
   components:
   - pos: 5.35893,2.077802
     parent: 1
     type: Transform
 - uid: 9298
-  type: ReagentContainerMilkSoy
+  type: DrinkSoyMilkCarton
   components:
   - pos: 5.504763,1.973635
     parent: 1

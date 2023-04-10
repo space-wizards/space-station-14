@@ -46884,7 +46884,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 5276
-  type: ReagentContainerMilk
+  type: DrinkMilkCarton
   components:
   - pos: -52.395008,21.71115
     parent: 1
