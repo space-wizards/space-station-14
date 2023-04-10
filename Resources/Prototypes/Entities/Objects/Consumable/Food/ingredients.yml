@@ -2,28 +2,6 @@
 
 # Powder (For when you throw stuff like flour and it explodes)
 
-- type: entity
-  name: flour
-  id: PuddleFlour
-  parent: PuddleBase
-  description: Call the janitor.
-  components:
-  - type: Sprite
-    sprite: Fluids/powder.rsi
-    state: powder
-    color: white
-    netsync: false
-  - type: Puddle
-  - type: SolutionContainerManager
-    solutions:
-      puddle:
-        maxVol: 1000
-        reagents:
-        - ReagentId: Flour
-          Quantity: 10
-  - type: Appearance
-  - type: PuddleVisualizer
-
 # Reagent Containers
 
 - type: entity

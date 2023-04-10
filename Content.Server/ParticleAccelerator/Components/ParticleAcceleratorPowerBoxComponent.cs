@@ -1,18 +1,16 @@
 ﻿using Content.Server.Power.Components;
 
-namespace Content.Server.ParticleAccelerator.Components
+namespace Content.Server.ParticleAccelerator.Components;
+
+[RegisterComponent]
+public sealed class ParticleAcceleratorPowerBoxComponent : Component
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(ParticleAcceleratorPartComponent))]
-    public sealed class ParticleAcceleratorPowerBoxComponent : ParticleAcceleratorPartComponent
+    [ViewVariables] public PowerConsumerComponent? PowerConsumerComponent;
+
+    protected override void Initialize()
     {
-        [ViewVariables] public PowerConsumerComponent? PowerConsumerComponent;
+        base.Initialize();
 
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            PowerConsumerComponent = Owner.EnsureComponentWarn<PowerConsumerComponent>();
-        }
+        PowerConsumerComponent = Owner.EnsureComponentWarn<PowerConsumerComponent>();
     }
 }

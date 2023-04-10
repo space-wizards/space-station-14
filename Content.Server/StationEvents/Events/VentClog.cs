@@ -1,5 +1,4 @@
 using Content.Server.Atmos.Piping.Unary.Components;
-using Content.Server.Chemistry.ReactionEffects;
 using Content.Server.Station.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -7,6 +6,9 @@ using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Random;
 using System.Linq;
+using Content.Server.Chemistry.Components;
+using Content.Server.Fluids.EntitySystems;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.StationEvents.Events;
 
@@ -43,6 +45,7 @@ public sealed class VentClog : StationEventSystem
             {
                 continue;
             }
+
             var solution = new Solution();
 
             if (!RobustRandom.Prob(Math.Min(0.33f * mod, 1.0f)))
@@ -50,15 +53,18 @@ public sealed class VentClog : StationEventSystem
 
             if (RobustRandom.Prob(Math.Min(0.05f * mod, 1.0f)))
             {
-                solution.AddReagent(RobustRandom.Pick(allReagents), 100);
+                solution.AddReagent(RobustRandom.Pick(allReagents), 200);
             }
             else
             {
-                solution.AddReagent(RobustRandom.Pick(SafeishVentChemicals), 100);
+                solution.AddReagent(RobustRandom.Pick(SafeishVentChemicals), 200);
             }
 
-            FoamAreaReactionEffect.SpawnFoam("Foam", transform.Coordinates, solution, (int) (RobustRandom.Next(2, 6) * mod), 20, 1,
-                1, sound, EntityManager);
+            var foamEnt = Spawn("Foam", transform.Coordinates);
+            var smoke = EnsureComp<SmokeComponent>(foamEnt);
+            smoke.SpreadAmount = 20;
+            EntityManager.System<SmokeSystem>().Start(foamEnt, smoke, solution, 20f);
+            EntityManager.System<AudioSystem>().PlayPvs(sound, transform.Coordinates);
         }
     }
 

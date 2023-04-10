@@ -1,32 +1,4 @@
 Entries:
-- author: Jackrost
-  changes:
-  - {message: Space Villain arcade prizes now limited. Number of prizes are randomized,
-    type: Tweak}
-  id: 2870
-  time: '2023-01-15T00:52:06.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: Reduced the sizes of all standard boxes to their original size of 30.
-      Enjoy the extra *1* space! (31 ->30), type: Tweak}
-  id: 2871
-  time: '2023-01-15T04:12:31.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: Added 23 new markings for diona's, type: Add}
-  id: 2872
-  time: '2023-01-15T04:54:47.0000000+00:00'
-- author: Jezithyr
-  changes:
-  - {message: Fixing health alerts not properly updating when players are damaged,
-    type: Fix}
-  id: 2873
-  time: '2023-01-15T07:52:20.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix some instances of popup flickering, type: Fix}
-  id: 2874
-  time: '2023-01-15T18:14:21.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed decal removal not working properly., type: Fix}
@@ -2915,3 +2887,32 @@ Entries:
   - {message: Added MK58 crate, type: Add}
   id: 3369
   time: '2023-04-09T22:06:30.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: 'New pet spider for HoS, can attack tarantulas and rats.', type: Add}
+  - {message: A new faction for the pet to attack only those worth attacking., type: Tweak}
+  id: 3370
+  time: '2023-04-10T04:33:23.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added the material reclaimer. Insert junk you don't want to grind it
+      up into its raw material form. Try stuff out!, type: Add}
+  - {message: Fixed a few material exploit methods., type: Fix}
+  - {message: Slightly nerfed lathe material reduction upgrades., type: Tweak}
+  id: 3371
+  time: '2023-04-10T04:38:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix spreaders going through air blockers., type: Fix}
+  id: 3372
+  time: '2023-04-10T06:43:25.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'You can now melee attack yourself, if you like', type: Tweak}
+  id: 3373
+  time: '2023-04-10T21:28:27.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Added robust nukie drink in EMAGGED sustenance vendor!, type: Add}
+  id: 3374
+  time: '2023-04-10T21:29:15.0000000+00:00'
