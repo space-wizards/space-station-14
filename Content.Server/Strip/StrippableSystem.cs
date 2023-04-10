@@ -110,7 +110,7 @@ namespace Content.Server.Strip
         {
             base.StartOpeningStripper(user, component, openInCombat);
 
-            if (TryComp<SharedCombatModeComponent>(user, out var mode) && mode.IsInCombatMode && !openInCombat)
+            if (TryComp<CombatModeComponent>(user, out var mode) && mode.IsInCombatMode && !openInCombat)
                 return;
 
             if (TryComp<ActorComponent>(user, out var actor))

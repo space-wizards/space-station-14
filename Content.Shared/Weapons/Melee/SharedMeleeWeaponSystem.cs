@@ -775,5 +775,5 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         DoLunge(user, angle, localPos, animation);
     }
 
-    public abstract void DoLunge(EntityUid user, Angle angle, Vector2 localPos, string? animation);
+    public abstract void DoLunge(EntityUid user, Angle angle, Vector2 localPos, string? animation, bool predicted = true);
 }

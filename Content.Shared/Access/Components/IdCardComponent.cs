@@ -18,6 +18,8 @@ namespace Content.Shared.Access.Components
 
         [DataField("jobTitle")]
         [AutoNetworkedField]
+        [Access(typeof(SharedIdCardSystem), typeof(SharedPDASystem), typeof(SharedAgentIdCardSystem),
+            Other = AccessPermissions.ReadWrite)]
         public string? JobTitle;
     }
 }
