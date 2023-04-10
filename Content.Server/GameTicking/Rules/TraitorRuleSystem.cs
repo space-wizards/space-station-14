@@ -279,8 +279,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem
                 difficulty += objective.Difficulty;
         }
 
-        //give traitors their codewords to keep in their character info menu
-        traitorRole.Mind.Briefing = Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", Codewords)));
+        //give traitors their codewords and uplink code to keep in their character info menu
+        traitorRole.Mind.Briefing = Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", Codewords)))
+            + "\n" + Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("", code)));
 
         _audioSystem.PlayGlobal(_addedSound, Filter.Empty().AddPlayer(traitor), false, AudioParams.Default);
         return true;
