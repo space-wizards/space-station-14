@@ -6,7 +6,7 @@
       edges:
         - to: ghost_sheet
           steps:
-            - material: MaterialCloth
+            - material: Cloth
               amount: 5
               doAfter: 4
     - node: ghost_sheet

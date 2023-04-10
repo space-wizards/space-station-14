@@ -20,7 +20,7 @@
   category: construction-category-misc
   description: Become a spooky ghost. Boo!
   icon:
-    sprite: Clothing/OuterClothing/Misc/ghostsheet.rsi/
+    sprite: Clothing/OuterClothing/Misc/ghostsheet.rsi
     state: icon
   objectType: Item
 
