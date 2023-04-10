@@ -14,13 +14,14 @@ namespace Content.Shared.PDA
         public List<string> AccessLevels;
         public string? StationName;
         public string? StationAlertLevel;
+        public Color StationAlertColor;
         public bool HasUplink;
         public bool CanPlayMusic;
         public string? Address;
 
         public PDAUpdateState(bool flashlightEnabled, bool hasPen, PDAIdInfoText pdaOwnerInfo, List<string> accessLevels,
             StationTimeText stationTime, string? stationName, bool hasUplink = false, bool canPlayMusic = false,
-            string? address = null, string? stationAlertLevel = null)
+            string? address = null, string? stationAlertLevel = null, Color stationAlertColor = default)
         {
             FlashlightEnabled = flashlightEnabled;
             HasPen = hasPen;
@@ -32,6 +33,7 @@ namespace Content.Shared.PDA
             StationAlertLevel = stationAlertLevel;
             StationTime = stationTime;
             AccessLevels = accessLevels;
+            StationAlertColor = stationAlertColor;
         }
     }
 

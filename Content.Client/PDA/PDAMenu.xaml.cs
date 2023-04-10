@@ -119,14 +119,7 @@ namespace Content.Client.PDA
             if (state.StationAlertLevel != null)
             {
                 var alertlevel = state.StationAlertLevel;
-                var color = alertlevel switch
-                {
-                    "epsilon" => "darkviolet",
-                    "gamma" => "palevioletred",
-                    "delta" => "darkred",
-                    "blue" => "dodgerblue",
-                    _ => state.StationAlertLevel
-                };
+                var color = state.StationAlertColor;
                 StationAlertLevelInstructions.SetMarkup(
                     Loc.GetString("comp-pda-ui-station-alert-level-instructions",
                         ("AlertLevelInstructions", Loc.GetString($"alert-level-{alertlevel}-instructions"))));

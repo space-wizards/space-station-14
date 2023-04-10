@@ -36,6 +36,7 @@ namespace Content.Server.PDA
         [Dependency] public readonly GameTicker GameTicker = default!;
         [Dependency] private readonly AccessSystem _access = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly StationSystem _station = default!;
 
         public override void Initialize()
         {
@@ -122,10 +123,13 @@ namespace Content.Server.PDA
                 alertComp.AlertLevels != null)
             {
                 pda.StationAlertLevel = alertComp.CurrentLevel;
+                if (alertComp.AlertLevels.Levels.TryGetValue(alertComp.CurrentLevel, out var details))
+                    pda.StationAlertColor = details.Color;
             }
             else
             {
                 pda.StationAlertLevel = null;
+                pda.StationAlertColor = Color.White;
             }
 
             List<string> accessLevels;
@@ -139,7 +143,7 @@ namespace Content.Server.PDA
                 accessLevels = new List<string>();
             }
 
-            List<string> accessLevelsConvert = new List<string>();
+            var accessLevelsConvert = new List<string>();
             accessLevels.RemoveAll(s => s.Contains("EmergencyShuttleRepealAll"));
             foreach (var access in accessLevels)
             {
@@ -156,7 +160,7 @@ namespace Content.Server.PDA
 
             var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, accessLevelsConvert,
                 stationTime, pda.StationName, false, hasInstrument,
-                address, pda.StationAlertLevel);
+                address, pda.StationAlertLevel, pda.StationAlertColor);
 
             _cartridgeLoaderSystem?.UpdateUiState(pda.Owner, state);
 
@@ -275,10 +279,15 @@ namespace Content.Server.PDA
                 alertComp.AlertLevels != null)
             {
                 pda.StationAlertLevel = alertComp.CurrentLevel;
+                if (!TryComp<AlertLevelComponent>(stationUid, out var alerts))
+                    return;
+                if (alertComp.AlertLevels.Levels.TryGetValue(alerts.CurrentLevel, out var details))
+                    pda.StationAlertColor = details.Color;
             }
             else
             {
                 pda.StationAlertLevel = null;
+                pda.StationAlertColor = Color.White;
             }
 
             List<string> accessLevels;
@@ -308,7 +317,7 @@ namespace Content.Server.PDA
 
             var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, accessLevelsConvert,
                 stationTime, pda.StationName, true, HasComp<InstrumentComponent>(pda.Owner),
-                GetDeviceNetAddress(pda.Owner), pda.StationAlertLevel);
+                GetDeviceNetAddress(pda.Owner), pda.StationAlertLevel, pda.StationAlertColor);
 
             _cartridgeLoaderSystem?.UpdateUiState(uid, state, args.Session);
         }
