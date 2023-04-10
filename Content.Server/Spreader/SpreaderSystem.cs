@@ -236,7 +236,7 @@ public sealed class SpreaderSystem : EntitySystem
                             continue;
 
                         var airDirection = value.ToDirection();
-                        var oppositeDirection = value.ToDirection();
+                        var oppositeDirection = value.ToDirection().GetOpposite();
 
                         if (direction != airDirection && direction != oppositeDirection)
                             continue;
