@@ -81,42 +81,6 @@
 
 
 - type: entity
-  id: Carriage
-  parent: BaseVehicle
-  name: Сarriage
-  description: Сarriage
-  components:
-    - type: Vehicle
-      northOver: true
-      hasKey: true
-      northOverride: -0.1
-      southOverride: 0.1
-    - type: Sprite
-      sprite: Structures/Furniture/chairs.rsi
-      noRot: true
-      netsync: false
-      state: chair
-    - type: MovementSpeedModifier
-      baseWalkSpeed: 1.5
-      baseSprintSpeed: 2
-    - type: Strap
-      position: Stand
-      buckleOffset: "0,0.15"
-      maxBuckleDistance: 1
-    - type: Fixtures
-      fixtures:
-        - shape:
-            !type:PhysShapeCircle
-            radius: 0.2
-          density: 360
-          restitution: 0.0
-          mask:
-            - MobMask
-          layer:
-            - TableLayer
-
-
-- type: entity
   id: VehicleJanicart
   parent: BaseVehicle
   name: janicart
