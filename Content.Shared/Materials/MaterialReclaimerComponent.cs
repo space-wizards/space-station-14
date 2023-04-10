@@ -10,6 +10,10 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Materials;
 
+/// <summary>
+/// This is a machine that handles converting entities
+/// into the raw materials and chemicals that make them up.
+/// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedMaterialReclaimerSystem))]
 public sealed class MaterialReclaimerComponent : Component
 {

@@ -1,7 +1,9 @@
 ﻿namespace Content.Shared.Materials;
 
 /// <summary>
-/// This is used for a <see cref="MaterialReclaimerComponent"/>
+/// Valid items that collide with an entity with this component
+/// will begin to be reclaimed.
+/// <seealso cref="MaterialReclaimerComponent"/>
 /// </summary>
 [RegisterComponent]
 public sealed class CollideMaterialReclaimerComponent : Component

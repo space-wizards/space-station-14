@@ -15,6 +15,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Materials;
 
+/// <summary>
+/// Handles interactions and logic related to <see cref="MaterialReclaimerComponent"/>,
+/// <see cref="CollideMaterialReclaimerComponent"/>, and <see cref="ActiveMaterialReclaimerComponent"/>.
+/// </summary>
 public abstract class SharedMaterialReclaimerSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
@@ -90,6 +94,9 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         component.EndTime += args.PausedTime;
     }
 
+    /// <summary>
+    /// Tries to start processing an item via a <see cref="MaterialReclaimerComponent"/>.
+    /// </summary>
     public bool TryStartProcessItem(EntityUid uid, EntityUid item, MaterialReclaimerComponent? component = null, EntityUid? user = null)
     {
         if (!Resolve(uid, ref component))
@@ -130,6 +137,14 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Finishes processing an item, freeing up the the reclaimer.
+    /// </summary>
+    /// <remarks>
+    /// This doesn't reclaim the entity itself, but rather ends the formal
+    /// process started with <see cref="ActiveMaterialReclaimerComponent"/>.
+    /// The actual reclaiming happens in <see cref="Reclaim"/>
+    /// </remarks>
     public virtual bool TryFinishProcessItem(EntityUid uid, MaterialReclaimerComponent? component = null, ActiveMaterialReclaimerComponent? active = null)
     {
         if (!Resolve(uid, ref component, ref active, false))
@@ -139,6 +154,10 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Spawns the materials and chemicals associated
+    /// with an entity. Also deletes the item.
+    /// </summary>
     public virtual void Reclaim(EntityUid uid,
         EntityUid item,
         float completion = 1f,
@@ -154,6 +173,9 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         Dirty(component);
     }
 
+    /// <summary>
+    /// Sets the Enabled field on the reclaimer.
+    /// </summary>
     public void SetReclaimerEnabled(EntityUid uid, bool enabled, MaterialReclaimerComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))
@@ -163,6 +185,10 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         Dirty(component);
     }
 
+    /// <summary>
+    /// Whether or not the specified reclaimer can currently
+    /// begin reclaiming another entity.
+    /// </summary>
     public bool CanStart(EntityUid uid, MaterialReclaimerComponent component)
     {
         if (HasComp<ActiveMaterialReclaimerComponent>(uid))
@@ -171,6 +197,10 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         return component.Powered && component.Enabled;
     }
 
+    /// <summary>
+    /// Whether or not the reclaimer satisfies the conditions
+    /// allowing it to gib/reclaim a living creature.
+    /// </summary>
     public bool CanGib(EntityUid uid, EntityUid victim, MaterialReclaimerComponent component)
     {
         return component.Powered &&
@@ -184,11 +214,6 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
     /// Processing is calculated from the sum of the materials within the entity.
     /// It does not regard the chemicals within it.
     /// </summary>
-    /// <param name="reclaimer"></param>
-    /// <param name="item"></param>
-    /// <param name="reclaimerComponent"></param>
-    /// <param name="compositionComponent"></param>
-    /// <returns></returns>
     public TimeSpan GetReclaimingDuration(EntityUid reclaimer,
         EntityUid item,
         MaterialReclaimerComponent? reclaimerComponent = null,
@@ -209,6 +234,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         return duration;
     }
 
+    /// <inheritdoc/>
     public override void Update(float frameTime)
     {
         base.Update(frameTime);

@@ -23,6 +23,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Materials;
 
+/// <inheritdoc/>
 public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
 {
     [Dependency] private readonly AppearanceSystem _appearance = default!;
@@ -33,6 +34,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
     [Dependency] private readonly SharedBodySystem _body = default!; //bobby
     [Dependency] private readonly SpillableSystem _spillable = default!;
     [Dependency] private readonly StackSystem _stack = default!;
+
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -126,6 +128,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
             TryFinishProcessItem(uid, null, component);
     }
 
+    /// <inheritdoc/>
     public override bool TryFinishProcessItem(EntityUid uid, MaterialReclaimerComponent? component = null, ActiveMaterialReclaimerComponent? active = null)
     {
         if (!Resolve(uid, ref component, ref active, false))
@@ -148,6 +151,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         return true;
     }
 
+    /// <inheritdoc/>
     public override void Reclaim(EntityUid uid,
         EntityUid item,
         float completion = 1f,
