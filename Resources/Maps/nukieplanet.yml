@@ -6868,7 +6868,7 @@ entities:
     parent: 104
     type: Transform
 - uid: 161
-  type: DrinkBeerBottleFull
+  type: DrinkBeer
   components:
   - pos: 3.5883045,-2.2700634
     parent: 104
