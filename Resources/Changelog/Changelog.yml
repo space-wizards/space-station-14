@@ -1,9 +1,4 @@
 Entries:
-- author: Morb0
-  changes:
-  - {message: Added 23 new markings for diona's, type: Add}
-  id: 2872
-  time: '2023-01-15T04:54:47.0000000+00:00'
 - author: Jezithyr
   changes:
   - {message: Fixing health alerts not properly updating when players are damaged,
@@ -2917,3 +2912,8 @@ Entries:
   - {message: Slightly nerfed lathe material reduction upgrades., type: Tweak}
   id: 3371
   time: '2023-04-10T04:38:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix spreaders going through air blockers., type: Fix}
+  id: 3372
+  time: '2023-04-10T06:43:25.0000000+00:00'
