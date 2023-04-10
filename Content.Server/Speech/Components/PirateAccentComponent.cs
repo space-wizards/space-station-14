@@ -17,15 +17,4 @@ public sealed class PirateAccentComponent : Component
         "accent-pirate-prefix-2",
         "accent-pirate-prefix-3"
     };
-
-    [ViewVariables]
-    public readonly Dictionary<string, string> DirectReplacements = new()
-    {
-        { "accent-pirate-replaced-1", "accent-pirate-replacement-1" },
-        { "accent-pirate-replaced-2", "accent-pirate-replacement-2" },
-        { "accent-pirate-replaced-3", "accent-pirate-replacement-3" },
-        { "accent-pirate-replaced-4", "accent-pirate-replacement-4" },
-        { "accent-pirate-replaced-5", "accent-pirate-replacement-4" },
-        { "accent-pirate-replaced-6", "accent-pirate-replacement-3" },
-    };
 }

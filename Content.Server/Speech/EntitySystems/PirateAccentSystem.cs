@@ -7,6 +7,7 @@ namespace Content.Server.Speech.EntitySystems;
 public sealed class PirateAccentSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
 
     public override void Initialize()
     {
@@ -20,11 +21,7 @@ public sealed class PirateAccentSystem : EntitySystem
     {
         var msg = message;
 
-        foreach (var (first, replace) in component.DirectReplacements)
-        {
-            msg = Regex.Replace(msg, $@"(?<!\w){Loc.GetString(first)}(?!\w)",
-                Loc.GetString(replace), RegexOptions.IgnoreCase);
-        }
+        msg = _replacement.ApplyReplacements(msg, "pirate");
 
         if (!_random.Prob(component.YarrChance))
             return msg;
