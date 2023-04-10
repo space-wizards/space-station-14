@@ -64,13 +64,17 @@ public abstract partial class SharedGunSystem
 
         DebugTools.Assert((component.AvailableModes  & fire) != 0x0);
         component.SelectedMode = fire;
-        var curTime = Timing.CurTime;
-        var cooldown = TimeSpan.FromSeconds(InteractNextFire);
 
-        if (component.NextFire < curTime)
-            component.NextFire = curTime + cooldown;
-        else
-            component.NextFire += cooldown;
+        if (!Paused(uid))
+        {
+            var curTime = Timing.CurTime;
+            var cooldown = TimeSpan.FromSeconds(InteractNextFire);
+
+            if (component.NextFire < curTime)
+                component.NextFire = curTime + cooldown;
+            else
+                component.NextFire += cooldown;
+        }
 
         Audio.PlayPredicted(component.SoundModeToggle, uid, user);
         Popup(Loc.GetString("gun-selected-mode", ("mode", GetLocSelector(fire))), uid, user);

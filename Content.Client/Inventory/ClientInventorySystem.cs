@@ -2,7 +2,6 @@ using Content.Client.Clothing;
 using Content.Client.Examine;
 using Content.Client.Storage;
 using Content.Client.UserInterface.Controls;
-using Content.Client.Verbs;
 using Content.Client.Verbs.UI;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Hands.Components;
@@ -234,7 +233,7 @@ namespace Content.Client.Inventory
 
         // TODO hud refactor This should also live in a UI Controller
         private void HoverInSlotButton(EntityUid uid, string slot, SlotControl control,
-            InventoryComponent? inventoryComponent = null, SharedHandsComponent? hands = null)
+            InventoryComponent? inventoryComponent = null, HandsComponent? hands = null)
         {
             if (!Resolve(uid, ref inventoryComponent))
                 return;

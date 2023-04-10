@@ -39,6 +39,12 @@
     thresholds:
       - trigger:
           !type:DamageTrigger
+          damage: 80
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
           damage: 40
         behaviors:
           - !type:DoActsBehavior
@@ -63,7 +69,7 @@
   - type: SolutionContainerManager
     solutions:
       drainBuffer:
-        maxVol: 100
+        maxVol: 200
       tank:
         reagents:
         - ReagentId: Water

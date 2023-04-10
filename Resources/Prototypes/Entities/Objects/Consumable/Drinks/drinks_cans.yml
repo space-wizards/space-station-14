@@ -44,11 +44,19 @@
           False: {state: "icon"}
   - type: Spillable
     solution: drink
+  - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+    damage:
+      types:
+        Blunt: 0
   - type: ItemCooldown
-  - type: Recyclable
   - type: SpaceGarbage
   - type: TrashOnEmpty
     solution: drink
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50 #reduce, reuse, recycle
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -290,6 +298,31 @@
 
 - type: entity
   parent: DrinkCanBaseFull
+  id: DrinkNukieCan
+  name: robust nukie drink
+  description: An encouraging drink... very encouraging. It is filled with green liquid, after use it is recommended to consult a doctor.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Stimulants
+          Quantity: 10
+        - ReagentId: NuclearCola
+          Quantity: 15
+        - ReagentId: Ice
+          Quantity: 5
+  - type: Tag
+    tags:
+    - Recyclable
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/robustnukie.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/robustnukie.rsi
+
+- type: entity
+  parent: DrinkCanBaseFull
   id: DrinkEnergyDrinkCan
   name: red bool energy drink
   description: A can of Red Bool, with enough caffeine to kill a horse.
@@ -342,3 +375,41 @@
           - 6pack4
           - 6pack5
           - 6pack6
+
+- type: entity
+  parent: DrinkCanBaseFull
+  id: DrinkShamblersJuiceCan
+  name: shamblers juice can
+  description: ~Shake me up some of that Shambler's Juice!~
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: ShamblersJuice
+          Quantity: 30
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/shamblersjuice.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/shamblersjuice.rsi
+
+- type: entity
+  parent: DrinkCanBaseFull
+  id: DrinkPwrGameCan
+  name: pwr game can
+  description: The only drink with the PWR that true gamers crave. When a gamer talks about gamerfuel, this is what they're literally referring to.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: PwrGame
+          Quantity: 30
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/pwrgame.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/pwrgame.rsi

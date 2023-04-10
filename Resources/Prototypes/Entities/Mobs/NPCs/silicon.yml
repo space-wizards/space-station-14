@@ -19,7 +19,7 @@
     bloodlossHealDamage:
       types:
         Bloodloss:
-          -0.25
+          -1
   - type: InteractionOutline
   - type: Fixtures
     fixtures:
@@ -38,8 +38,6 @@
     noRot: true
     drawdepth: Mobs
     netsync: false
-  - type: Recyclable
-    safe: false
   - type: Faction
     factions:
     - SimpleNeutral

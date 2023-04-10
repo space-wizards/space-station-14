@@ -1,5 +1,4 @@
-﻿using Content.Shared.Destructible;
-using Content.Shared.Emag.Systems;
+﻿using Content.Shared.Emag.Systems;
 using Content.Shared.Medical.Cryogenics;
 using Content.Shared.Verbs;
 using Robust.Client.GameObjects;
@@ -19,7 +18,6 @@ public sealed class CryoPodSystem: SharedCryoPodSystem
         SubscribeLocalEvent<CryoPodComponent, GetVerbsEvent<AlternativeVerb>>(AddAlternativeVerbs);
         SubscribeLocalEvent<CryoPodComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<CryoPodComponent, CryoPodPryFinished>(OnCryoPodPryFinished);
-        SubscribeLocalEvent<CryoPodComponent, CryoPodPryInterrupted>(OnCryoPodPryInterrupted);
 
         SubscribeLocalEvent<CryoPodComponent, AppearanceChangeEvent>(OnAppearanceChange);
         SubscribeLocalEvent<InsideCryoPodComponent, ComponentStartup>(OnCryoPodInsertion);
@@ -47,15 +45,15 @@ public sealed class CryoPodSystem: SharedCryoPodSystem
         spriteComponent.Offset = component.PreviousOffset;
     }
 
-    private void OnAppearanceChange(EntityUid uid, SharedCryoPodComponent component, ref AppearanceChangeEvent args)
+    private void OnAppearanceChange(EntityUid uid, CryoPodComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
         {
             return;
         }
 
-        if (!_appearance.TryGetData<bool>(uid, SharedCryoPodComponent.CryoPodVisuals.ContainsEntity, out var isOpen, args.Component)
-            || !_appearance.TryGetData<bool>(uid, SharedCryoPodComponent.CryoPodVisuals.IsOn, out var isOn, args.Component))
+        if (!_appearance.TryGetData<bool>(uid, CryoPodComponent.CryoPodVisuals.ContainsEntity, out var isOpen, args.Component)
+            || !_appearance.TryGetData<bool>(uid, CryoPodComponent.CryoPodVisuals.IsOn, out var isOn, args.Component))
         {
             return;
         }

@@ -4,34 +4,32 @@ using Content.Server.Fluids.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
-using Content.Server.Sprite;
 using Content.Shared.FixedPoint;
 using Content.Shared.Audio;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Coordinates;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
+using Content.Shared.Fluids;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
+using Content.Shared.Fluids.Components;
 using Robust.Shared.Collections;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Fluids.EntitySystems
 {
-    public sealed class DrainSystem : EntitySystem
+    public sealed class DrainSystem : SharedDrainSystem
     {
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly SpillableSystem _spillableSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly PuddleSystem _puddleSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
         public override void Initialize()
@@ -40,7 +38,7 @@ namespace Content.Server.Fluids.EntitySystems
             SubscribeLocalEvent<DrainComponent, GetVerbsEvent<Verb>>(AddEmptyVerb);
             SubscribeLocalEvent<DrainComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<DrainComponent, AfterInteractUsingEvent>(OnInteract);
-            SubscribeLocalEvent<DrainComponent, DoAfterEvent>(OnDoAfter);
+            SubscribeLocalEvent<DrainComponent, DrainDoAfterEvent>(OnDoAfter);
         }
 
         private void AddEmptyVerb(EntityUid uid, DrainComponent component, GetVerbsEvent<Verb> args)
@@ -104,7 +102,7 @@ namespace Content.Server.Fluids.EntitySystems
 
             if (drainSolution.MaxVolume == drainSolution.Volume)
             {
-                _spillableSystem.SpillAt(containerSolution, Transform(target).Coordinates, DrainComponent.PuddlePrototype);
+                _puddleSystem.TrySpillAt(Transform(target).Coordinates, containerSolution, out var puddle);
                 _popupSystem.PopupEntity(
                     Loc.GetString("drain-component-empty-verb-target-is-full-message", ("object", target)),
                     container);
@@ -234,15 +232,16 @@ namespace Content.Server.Fluids.EntitySystems
 
             _audioSystem.PlayPvs(component.PlungerSound, uid);
 
-            var doAfterArgs = new DoAfterEventArgs(args.User, component.UnclogDuration, target: uid, used: args.Used)
+
+            var doAfterArgs = new DoAfterArgs(args.User, component.UnclogDuration, new DrainDoAfterEvent(),uid, args.Used)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 BreakOnDamage = true,
-                BreakOnStun = true
+                BreakOnHandChange = true
             };
 
-            _doAfterSystem.DoAfter(doAfterArgs);
+            _doAfterSystem.TryStartDoAfter(doAfterArgs);
         }
 
         private void OnDoAfter(EntityUid uid, DrainComponent component, DoAfterEvent args)

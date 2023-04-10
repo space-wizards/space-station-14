@@ -2,24 +2,24 @@ using System.Linq;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.Disposal.Unit.EntitySystems;
 using Content.Shared.Construction.Components;
-using Content.Shared.Disposal.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.Physics;
 
 namespace Content.Server.Disposal.Tube.Components
 {
-    public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent
+    [RegisterComponent]
+    [Access(typeof(DisposalTubeSystem), typeof(DisposableSystem))]
+    public sealed class DisposalTubeComponent : Component
     {
-        public virtual string ContainerId => "DisposalTube";
+        [DataField("containerId")] public string ContainerId { get; set; } = "DisposalTube";
 
         [Dependency] private readonly IEntityManager _entMan = default!;
 
         public static readonly TimeSpan ClangDelay = TimeSpan.FromSeconds(0.5);
         public TimeSpan LastClang;
 
-        private bool _connected;
+        public bool Connected;
         [DataField("clangSound")] public SoundSpecifier ClangSound = new SoundPathSpecifier("/Audio/Effects/clang.ogg");
 
         /// <summary>
@@ -28,49 +28,26 @@ namespace Content.Server.Disposal.Tube.Components
         [ViewVariables]
         public Container Contents { get; private set; } = default!;
 
-        /// <summary>
-        ///     The directions that this tube can connect to others from
-        /// </summary>
-        /// <returns>a new array of the directions</returns>
-        protected abstract Direction[] ConnectableDirections();
-
-        public abstract Direction NextDirection(DisposalHolderComponent holder);
-
         // TODO: Make disposal pipes extend the grid
         // ???
         public void Connect()
         {
-            if (_connected)
+            if (Connected)
             {
                 return;
             }
 
-            _connected = true;
-        }
-
-        public bool CanConnect(Direction direction, IDisposalTubeComponent with)
-        {
-            if (!_connected)
-            {
-                return false;
-            }
-
-            if (!ConnectableDirections().Contains(direction))
-            {
-                return false;
-            }
-
-            return true;
+            Connected = true;
         }
 
         public void Disconnect()
         {
-            if (!_connected)
+            if (!Connected)
             {
                 return;
             }
 
-            _connected = false;
+            Connected = false;
 
             foreach (var entity in Contents.ContainedEntities.ToArray())
             {
@@ -81,13 +58,6 @@ namespace Content.Server.Disposal.Tube.Components
 
                 EntitySystem.Get<DisposableSystem>().ExitDisposals((holder).Owner);
             }
-        }
-
-        public void PopupDirections(EntityUid entity)
-        {
-            var directions = string.Join(", ", ConnectableDirections());
-
-            Owner.PopupMessage(entity, Loc.GetString("disposal-tube-component-popup-directions-text", ("directions", directions)));
         }
 
         protected override void Initialize()
