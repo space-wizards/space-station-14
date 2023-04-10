@@ -51,3 +51,6 @@ traitor-role-codewords =
     {$codewords}.
     Codewords can be used in regular conversation to identify yourself discretely to other syndicate agents.
     Listen for them, and keep them secret.
+traitor-role-uplink-code =
+    Set your ringtone to the notes {$code} to open your uplink.
+    Remember to change it back, or the stations crew will easily open it too!
