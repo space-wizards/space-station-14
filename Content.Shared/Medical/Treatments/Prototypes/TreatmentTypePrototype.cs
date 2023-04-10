@@ -1,9 +1,8 @@
-﻿using JetBrains.Annotations;
-using Robust.Shared.Prototypes;
+﻿using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Medical.Treatments.Prototypes;
 
-[UsedImplicitly]
+[Prototype("treatment")]
 public sealed class TreatmentTypePrototype : IPrototype
 {
     [IdDataField] public string ID { get; set; } = "";
