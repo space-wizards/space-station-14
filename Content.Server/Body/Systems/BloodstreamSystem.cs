@@ -90,11 +90,7 @@ public sealed class BloodstreamSystem : EntitySystem
 
             bloodstream.AccumulatedFrametime -= bloodstream.UpdateInterval;
 
-            // this checks if the mob is dead before running the bleed code. It should be moved to check for clotting and blood regen.
-            /*if (TryComp<MobStateComponent>(uid, out var state) && _mobStateSystem.IsDead(uid, state))
-                continue;*/
-
-            // Adds blood to their blood level if it is below the maximum; Blood regeneration.
+            // Adds blood to their blood level if it is below the maximum; Blood regeneration. Must be alive.
             if (bloodstream.BloodSolution.Volume < bloodstream.BloodSolution.MaxVolume && _mobStateSystem.IsAlive(uid))
                 TryModifyBloodLevel(uid, bloodstream.BloodRefreshAmount, bloodstream);
 
