@@ -43,12 +43,23 @@
   - type: SmokeVisuals
   - type: Transform
     anchored: true
-  - type: SmokeSolutionAreaEffect
+  - type: Smoke
+  - type: NodeContainer
+    nodes:
+      smoke:
+        !type:SpreaderNode
+        nodeGroupID: Spreader
+  - type: EdgeSpreader
   - type: SolutionContainerManager
     solutions:
       solutionArea:
         maxVol: 200
         canReact: false
+  - type: TimedDespawn
+    lifetime: 10
+  - type: Tag
+    tags:
+      - HideContextMenu
 
 - type: entity
   id: Foam

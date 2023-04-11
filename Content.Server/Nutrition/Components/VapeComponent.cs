@@ -19,6 +19,10 @@ namespace Content.Server.Nutrition.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public int SmokeAmount { get; set; } = 0;
 
+        [DataField("smokeDuration")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float SmokeDuration { get; set; } = 3f;
+
         [DataField("explosionIntensity")]
         [ViewVariables(VVAccess.ReadWrite)]
         public float ExplosionIntensity { get; set; } = 2.5f;

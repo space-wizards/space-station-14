@@ -12,6 +12,10 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.DoAfter;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Emag.Components;
+using Content.Server.Fluids.EntitySystems;
+using Content.Server.Coordinates.Helpers;
+using Content.Server.Chemistry.Components;
+using Content.Shared.Nutrition;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -23,11 +27,12 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly FlavorProfileSystem _flavorProfileSystem = default!;
+        [Dependency] private readonly SmokeSystem _smokeSystem = default!;
 
         private void InitializeVapes()
         {
             SubscribeLocalEvent<VapeComponent, AfterInteractEvent>(OnVapeInteraction);
-            SubscribeLocalEvent<VapeComponent, DoAfterEvent<VapingData>>(OnVapeDoAfter);
+            SubscribeLocalEvent<VapeComponent, VapeDoAfterEvent>(OnVapeDoAfter);
             SubscribeLocalEvent<VapeComponent, GotEmaggedEvent>(OnEmagged);
         }
 
@@ -42,7 +47,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!args.CanReach
             || solution == null
             || comp.CancelToken != null
-            || !TryComp<BloodstreamComponent>(args.Target, out var bloodstream)
+            || !TryComp<BloodstreamComponent>(args.Target, out var _)
             || _foodSystem.IsMouthBlocked(args.Target.Value, args.User))
                 return;
 
@@ -91,27 +96,23 @@ namespace Content.Server.Nutrition.EntitySystems
                     Loc.GetString("vape-component-try-use-vape"), args.User,
                     args.User);
             }
-            
-            var vapingData = new VapingData(solution, bloodstream, forced);
 
             if (!exploded)
             {
                 comp.CancelToken = new CancellationTokenSource();
 
-                var doAfterArgs = new DoAfterEventArgs(args.User, delay, comp.CancelToken.Token, args.Target, uid)
+                var vapeDoAfterEvent = new VapeDoAfterEvent(solution, forced);
+                _doAfterSystem.TryStartDoAfter(new DoAfterArgs(args.User, delay, vapeDoAfterEvent, uid, target: args.Target, used: uid)
                 {
                     BreakOnTargetMove = true,
                     BreakOnUserMove = false,
-                    BreakOnDamage = true,
-                    BreakOnStun = true
-                };
-
-                _doAfterSystem.DoAfter(doAfterArgs, vapingData);
+                    BreakOnDamage = true
+                });
             }
             args.Handled = true;
 		}
 
-        private void OnVapeDoAfter(EntityUid uid, VapeComponent comp, DoAfterEvent<VapingData> args)
+        private void OnVapeDoAfter(EntityUid uid, VapeComponent comp, VapeDoAfterEvent args)
         {
             if (args.Cancelled)
             {
@@ -124,22 +125,34 @@ namespace Content.Server.Nutrition.EntitySystems
             if (args.Handled || args.Args.Target == null)
                 return;
             
-            var flavors = _flavorProfileSystem.GetLocalizedFlavorsMessage(args.Args.User, args.AdditionalData.Solution);
+            var flavors = _flavorProfileSystem.GetLocalizedFlavorsMessage(args.Args.User, args.Solution);
 
-            if (args.AdditionalData.Solution.Volume != 0)
-                SmokeAreaReactionEffect.SpawnSmoke(comp.SmokePrototype, Transform(args.Args.Target.Value).Coordinates,
-                    args.AdditionalData.Solution, comp.SmokeAmount, 5, 1, 1, entityManager: EntityManager);
+            if (args.Solution.Volume != 0)
+            {
+                args.Solution.ScaleSolution(0.3f);
 
-            args.AdditionalData.Solution.ScaleSolution(0.6f);
+                var ent = EntityManager.SpawnEntity(comp.SmokePrototype, Transform(uid).Coordinates.SnapToGrid(EntityManager));
+                if (EntityManager.TryGetComponent<SmokeComponent>(ent, out var smokeComponent))
+                {
+                    _smokeSystem.Start(ent, smokeComponent, args.Solution, comp.SmokeDuration);
+                }
+                else
+                {
+                    EntityManager.DeleteEntity(ent);
+                }
+            }
 
             //Smoking kills(your lungs, but there is no organ damage yet)
             _damageableSystem.TryChangeDamage(args.Args.Target.Value, comp.Damage, true);
 
-            _bloodstreamSystem.TryAddToChemicals(args.Args.Target.Value, args.AdditionalData.Solution, args.AdditionalData.Bloodstream);
+            if (TryComp<BloodstreamComponent>(args.Target, out var bloodstream))
+            {
+                _bloodstreamSystem.TryAddToChemicals(args.Args.Target.Value, args.Solution, bloodstream);
+            }
 
-            args.AdditionalData.Solution.RemoveAllSolution();
+            args.Solution.RemoveAllSolution();
             
-            if (args.AdditionalData.Forced)
+            if (args.Forced)
             {
                 var targetName = Identity.Entity(args.Args.Target.Value, EntityManager);
                 var userName = Identity.Entity(args.Args.User, EntityManager);
@@ -162,13 +175,6 @@ namespace Content.Server.Nutrition.EntitySystems
         private void OnEmagged(EntityUid uid, VapeComponent component, ref GotEmaggedEvent args)
         {
             args.Handled = true;
-        }
-
-        private record struct VapingData(Solution Solution, BloodstreamComponent Bloodstream, bool Forced)
-        {
-            public readonly Solution Solution = Solution;
-            public readonly bool Forced = Forced;
-            public readonly BloodstreamComponent Bloodstream = Bloodstream;
         }
 	}
 }
