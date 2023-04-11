@@ -2,3 +2,8 @@
   license: "CC0-1.0"
   copyright: "Created by steaq, converted Mono and .ogg by EmoGarbage"
   source: "https://freesound.org/people/steaq/sounds/509249/"
+
+- files: ["crushing.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Created by juskiddink, converted Mono and .ogg by EmoGarbage"
+  source: "https://freesound.org/people/juskiddink/sounds/66956/"

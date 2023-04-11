@@ -23,6 +23,9 @@
   id: BikeHorn
 
 - type: Tag
+  id: Bloodpack
+
+- type: Tag
   id: BodyBag
 
 - type: Tag
@@ -291,6 +294,9 @@
   id: Handcuffs
 
 - type: Tag
+  id: Hardsuit # Prevent melee injectors that can't penetrate hardsuits from injecting the wearer (nettles)
+
+- type: Tag
   id: Head
 
 - type: Tag
@@ -298,6 +304,9 @@
 
 - type: Tag
   id: HidesHair # for headwear.
+
+- type: Tag
+  id: HighRiskItem
 
 - type: Tag
   id: Hoe

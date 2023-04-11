@@ -5,11 +5,8 @@ using Content.Server.Administration.Components;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.Cargo.Components;
-using Content.Server.Cargo.Systems;
 using Content.Server.Damage.Components;
-using Content.Server.Doors.Components;
 using Content.Server.Doors.Systems;
-using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
@@ -21,10 +18,10 @@ using Content.Shared.Access.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
 using Content.Shared.Construction.Components;
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Doors.Components;
+using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Stacks;
@@ -36,7 +33,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Systems;
@@ -696,7 +692,7 @@ public sealed partial class AdminVerbSystem
         {
             if (_adminManager.HasAdminFlag(player, AdminFlags.Mapping))
             {
-                if (_mapManager.IsMapPaused(map.WorldMap))
+                if (_mapManager.IsMapPaused(map.MapId))
                 {
                     Verb unpauseMap = new()
                     {
@@ -705,7 +701,7 @@ public sealed partial class AdminVerbSystem
                         Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/AdminActions/play.png")),
                         Act = () =>
                         {
-                            _mapManager.SetMapPaused(map.WorldMap, false);
+                            _mapManager.SetMapPaused(map.MapId, false);
                         },
                         Impact = LogImpact.Extreme,
                         Message = Loc.GetString("admin-trick-unpause-map-description"),
@@ -722,7 +718,7 @@ public sealed partial class AdminVerbSystem
                         Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/AdminActions/pause.png")),
                         Act = () =>
                         {
-                            _mapManager.SetMapPaused(map.WorldMap, true);
+                            _mapManager.SetMapPaused(map.MapId, true);
                         },
                         Impact = LogImpact.Extreme,
                         Message = Loc.GetString("admin-trick-pause-map-description"),

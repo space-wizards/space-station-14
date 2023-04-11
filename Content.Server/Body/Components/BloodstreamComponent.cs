@@ -35,7 +35,7 @@ namespace Content.Server.Body.Components
         ///     How much should bleeding should be reduced every update interval?
         /// </summary>
         [DataField("bleedReductionAmount")]
-        public float BleedReductionAmount = 1.0f;
+        public float BleedReductionAmount = 0.5f;
 
         /// <summary>
         ///     How high can <see cref="BleedAmount"/> go?

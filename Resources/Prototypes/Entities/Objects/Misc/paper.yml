@@ -31,7 +31,6 @@
     - Trash
   - type: Appearance
   - type: PaperVisuals
-  - type: Recyclable
 
 - type: entity
   name: office paper
@@ -155,8 +154,16 @@
   id: NukeCodePaper
   name: nuclear authentication codes
   components:
-    - type: NukeCodePaper
-    - type: Paper
+  - type: NukeCodePaper
+    allNukesAvailable: true
+  - type: Paper
+
+- type: entity
+  parent: NukeCodePaper
+  id: NukeCodePaperStation
+  suffix: Station Only
+  components:
+  - type: NukeCodePaper
 
 - type: entity
   name: pen
@@ -174,7 +181,9 @@
     sprite: Objects/Misc/bureaucracy.rsi
     heldPrefix: pen
     size: 2
-  - type: Recyclable
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 25
 
 - type: entity
   name: Cybersun pen

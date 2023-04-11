@@ -53,8 +53,6 @@ namespace Content.Server.Atmos.EntitySystems
 
         private int _thresholds;
 
-        private bool _pvsEnabled;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -64,7 +62,6 @@ namespace Content.Server.Atmos.EntitySystems
             _confMan.OnValueChanged(CVars.NetPVS, OnPvsToggle, true);
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-            SubscribeLocalEvent<GasTileOverlayComponent, ComponentGetState>(OnGetState);
             SubscribeLocalEvent<GasTileOverlayComponent, ComponentStartup>(OnStartup);
         }
 
@@ -86,10 +83,10 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnPvsToggle(bool value)
         {
-            if (value == _pvsEnabled)
+            if (value == PvsEnabled)
                 return;
 
-            _pvsEnabled = value;
+            PvsEnabled = value;
 
             if (value)
                 return;
@@ -254,7 +251,7 @@ namespace Content.Server.Atmos.EntitySystems
             // First, update per-chunk visual data for any invalidated tiles.
             UpdateOverlayData(curTick);
 
-            if (!_pvsEnabled)
+            if (!PvsEnabled)
                 return;
 
             // Now we'll go through each player, then through each chunk in range of that player checking if the player is still in range
@@ -354,28 +351,6 @@ namespace Content.Server.Atmos.EntitySystems
 
                 data.Clear();
             }
-        }
-
-        private void OnGetState(EntityUid uid, GasTileOverlayComponent component, ref ComponentGetState args)
-        {
-            if (_pvsEnabled && !args.ReplayState)
-                return;
-
-            // Should this be a full component state or a delta-state?
-            if (args.FromTick <= component.CreationTick || args.FromTick <= component.ForceTick)
-            {
-                args.State = new GasTileOverlayState(component.Chunks);
-                return;
-            }
-
-            var data = new Dictionary<Vector2i, GasOverlayChunk>();
-            foreach (var (index, chunk) in component.Chunks)
-            {
-                if (chunk.LastUpdate >= args.FromTick)
-                    data[index] = chunk;
-            }
-
-            args.State = new GasTileOverlayState(data) { AllChunks = new(component.Chunks.Keys) };
         }
     }
 }
