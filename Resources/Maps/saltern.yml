@@ -489,12 +489,14 @@ entities:
           0: 65535
         -3,6:
           0: 8191
+          1: 57344
         -2,4:
           0: 65535
         -2,5:
           0: 65535
         -2,6:
           0: 36863
+          1: 28672
         -1,4:
           0: 65535
         -1,5:
@@ -577,6 +579,7 @@ entities:
           0: 65535
         10,-4:
           0: 56793
+          1: 8736
         10,-3:
           0: 65485
         11,-4:
@@ -683,10 +686,12 @@ entities:
           0: 65535
         -10,-2:
           0: 65534
+          1: 1
         -10,-1:
           0: 65535
         -10,-3:
           0: 61166
+          1: 4369
         -9,-3:
           0: 65535
         -9,-2:
@@ -695,6 +700,7 @@ entities:
           0: 65535
         -9,-4:
           0: 65056
+          1: 256
         12,-4:
           0: 65522
         12,-3:
@@ -823,15 +829,15 @@ entities:
           0: 65535
         8,5:
           0: 43695
-          1: 4368
-          2: 17472
+          2: 4368
+          3: 17472
         8,6:
           0: 4095
         9,4:
           0: 65535
         9,5:
           0: 43695
-          3: 21840
+          1: 21840
         9,6:
           0: 8191
         10,4:
@@ -839,19 +845,19 @@ entities:
         10,5:
           0: 43695
           4: 4368
-          3: 17472
+          1: 17472
         11,4:
           0: 65535
         11,5:
           0: 43695
-          3: 21840
+          1: 21840
         12,4:
           0: 65535
         12,5:
           0: 4479
         13,4:
           0: 65501
-          3: 34
+          1: 34
         13,5:
           0: 7
         -8,7:
@@ -862,6 +868,7 @@ entities:
           0: 65535
         8,-10:
           0: 12288
+          1: 240
         8,-9:
           0: 17486
         -10,4:
@@ -934,8 +941,10 @@ entities:
           0: 241
         -3,7:
           0: 240
+          1: 12
         -2,7:
           0: 35048
+          1: 23
         -7,7:
           0: 16
         -6,7:
@@ -1110,12 +1119,14 @@ entities:
           0: 61166
         -10,-6:
           0: 254
+          1: 34816
         -9,-8:
           0: 65535
         -9,-7:
           0: 65535
         -9,-6:
           0: 767
+          1: 12544
         -9,-10:
           0: 63728
         -9,-9:
@@ -1146,12 +1157,15 @@ entities:
           0: 65162
         -11,-4:
           0: 43688
+          1: 17472
         -11,-3:
           0: 43690
+          1: 17476
         -11,-2:
           0: 43694
         -10,-4:
           0: 61440
+          1: 3984
         0,-10:
           0: 35056
         1,-10:
@@ -1188,21 +1202,6 @@ entities:
         temperature: 293.15
         moles:
         - 0
-        - 6666.982
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-      - volume: 2500
-        temperature: 293.15
-        moles:
-        - 6666.982
         - 0
         - 0
         - 0
@@ -1218,6 +1217,21 @@ entities:
         temperature: 293.15
         moles:
         - 0
+        - 6666.982
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+      - volume: 2500
+        temperature: 293.15
+        moles:
+        - 6666.982
         - 0
         - 0
         - 0
@@ -1256,15 +1270,15 @@ entities:
           color: '#FFFFFFFF'
           id: Arrows
         decals:
-          625: 20,17
+          622: 20,17
       - node:
           color: '#FFFFFFFF'
           id: Bot
         decals:
-          616: -35,6
-          617: -30,11
-          626: 30,8
-          627: 30,9
+          615: -35,6
+          616: -30,11
+          623: 30,8
+          624: 30,9
       - node:
           color: '#FFFFFFFF'
           id: BotRight
@@ -1365,11 +1379,11 @@ entities:
           599: -37,8
           600: -37,9
           601: -37,10
-          620: -37,-9
-          621: -37,-8
-          622: -37,-7
-          623: -37,-6
-          624: -37,-5
+          617: -37,-9
+          618: -37,-8
+          619: -37,-7
+          620: -37,-6
+          621: -37,-5
       - node:
           color: '#52B4E996'
           id: CheckerNWSE
@@ -1449,13 +1463,13 @@ entities:
           604: -38,7
           605: -40,8
           606: -38,-4
-          608: -36,-8
-          609: -24,-9
-          610: -24,3
-          611: -25,2
-          612: -7,3
-          614: -36,8
-          615: -38,9
+          607: -36,-8
+          608: -24,-9
+          609: -24,3
+          610: -25,2
+          611: -7,3
+          613: -36,8
+          614: -38,9
       - node:
           color: '#FFFFFFFF'
           id: DirtMedium
@@ -1474,7 +1488,7 @@ entities:
           89: 37,6
           152: 53,1
           153: 55,4
-          613: -35,8
+          612: -35,8
       - node:
           color: '#FFFFFFFF'
           id: Flowersbr2
@@ -1702,10 +1716,10 @@ entities:
           466: -2,-14
           467: -3,-14
           471: -5,-13
-          636: -11,-26
-          637: -12,-26
-          638: -10,-26
-          639: -9,-26
+          625: -11,-26
+          626: -12,-26
+          627: -10,-26
+          628: -9,-26
       - node:
           color: '#FFD886FF'
           id: HalfTileOverlayGreyscale
@@ -1969,10 +1983,10 @@ entities:
           225: -14,-20
           226: -14,-19
           227: -14,-18
-          640: -8,-27
-          641: -8,-28
-          642: -8,-29
-          643: -8,-30
+          629: -8,-27
+          630: -8,-28
+          631: -8,-29
+          632: -8,-30
       - node:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale90
@@ -2204,7 +2218,7 @@ entities:
           id: ThreeQuarterTileOverlayGreyscale90
         decals:
           469: -4,-13
-          644: -8,-26
+          633: -8,-26
       - node:
           color: '#52B4E996'
           id: ThreeQuarterTileOverlayGreyscale90
@@ -2219,14 +2233,14 @@ entities:
           color: '#FFFFFFFF'
           id: WarnCornerSmallSW
         decals:
-          645: -38,-9
+          634: -38,-9
       - node:
           color: '#FFFFFFFF'
           id: WarnLineS
         decals:
-          646: -38,-10
-          647: -38,-11
-          648: -38,-12
+          635: -38,-10
+          636: -38,-11
+          637: -38,-12
       - node:
           color: '#FFFFFFFF'
           id: WarningLine
@@ -6441,7 +6455,7 @@ entities:
 - uid: 595
   type: SpawnPointChemist
   components:
-  - pos: 16.5,-0.5
+  - pos: 17.5,-1.5
     parent: 0
     type: Transform
 - uid: 596
@@ -10641,7 +10655,7 @@ entities:
 - uid: 1199
   type: CigarGoldCase
   components:
-  - pos: -3.50686,16.95599
+  - pos: -3.728004,16.448915
     parent: 0
     type: Transform
 - uid: 1200
@@ -43533,6 +43547,8 @@ entities:
     pos: -7.5,13.5
     parent: 0
     type: Transform
+  - color: '#FF1212FF'
+    type: AtmosPipeColor
   - bodyType: Static
     type: Physics
 - uid: 5766
@@ -43557,6 +43573,8 @@ entities:
     pos: -6.5,11.5
     parent: 0
     type: Transform
+  - color: '#0335FCFF'
+    type: AtmosPipeColor
   - bodyType: Static
     type: Physics
 - uid: 5769
@@ -43566,6 +43584,8 @@ entities:
     pos: -8.5,13.5
     parent: 0
     type: Transform
+  - color: '#FF1212FF'
+    type: AtmosPipeColor
   - bodyType: Static
     type: Physics
 - uid: 5770
@@ -49239,6 +49259,8 @@ entities:
     pos: -7.5,10.5
     parent: 0
     type: Transform
+  - color: '#FF1212FF'
+    type: AtmosPipeColor
   - bodyType: Static
     type: Physics
 - uid: 6316
@@ -73626,6 +73648,100 @@ entities:
   type: Flash
   components:
   - pos: -5.614477,13.581995
+    parent: 0
+    type: Transform
+- uid: 9737
+  type: SpawnPointResearchAssistant
+  components:
+  - pos: -3.5,-15.5
+    parent: 0
+    type: Transform
+- uid: 9738
+  type: CableApcExtension
+  components:
+  - pos: -9.5,-27.5
+    parent: 0
+    type: Transform
+- uid: 9739
+  type: ClosetFireFilled
+  components:
+  - pos: 15.5,-22.5
+    parent: 0
+    type: Transform
+- uid: 9740
+  type: ClosetEmergencyFilledRandom
+  components:
+  - pos: 15.5,-21.5
+    parent: 0
+    type: Transform
+- uid: 9741
+  type: SpawnPointChemist
+  components:
+  - pos: 15.5,-0.5
+    parent: 0
+    type: Transform
+- uid: 9742
+  type: CableMV
+  components:
+  - pos: -7.5,28.5
+    parent: 0
+    type: Transform
+- uid: 9743
+  type: CableMV
+  components:
+  - pos: -7.5,29.5
+    parent: 0
+    type: Transform
+  - enabled: True
+    type: AmbientSound
+- uid: 9744
+  type: CableApcExtension
+  components:
+  - pos: -7.5,27.5
+    parent: 0
+    type: Transform
+- uid: 9745
+  type: CableApcExtension
+  components:
+  - pos: -6.5,27.5
+    parent: 0
+    type: Transform
+- uid: 9746
+  type: CableApcExtension
+  components:
+  - pos: -5.5,27.5
+    parent: 0
+    type: Transform
+- uid: 9747
+  type: WarpPoint
+  components:
+  - pos: 60.5,2.5
+    parent: 0
+    type: Transform
+  - location: pa
+    type: WarpPoint
+- uid: 9748
+  type: ClothingNeckCloakTrans
+  components:
+  - pos: -28.4315,17.631725
+    parent: 0
+    type: Transform
+- uid: 9749
+  type: SpawnPointLatejoin
+  components:
+  - pos: -36.5,-9.5
+    parent: 0
+    type: Transform
+- uid: 9750
+  type: SpawnPointLatejoin
+  components:
+  - pos: -36.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 9751
+  type: SpawnPointLatejoin
+  components:
+  - pos: -36.5,-6.5
     parent: 0
     type: Transform
 ...
