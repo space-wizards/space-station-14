@@ -78,14 +78,14 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
     {
         if (state.Filter != null)
         {
-            if (state.Filter.type != _currentFilterType)
+            if (state.Filter.Type != _currentFilterType)
             {
-                _currentFilterType = state.Filter.type;
+                _currentFilterType = state.Filter.Type;
             }
 
-            if (state.Filter.value != StationRecordsFiltersValue.Text)
+            if (state.Filter.Value != StationRecordsFiltersValue.Text)
             {
-                StationRecordsFiltersValue.Text = state.Filter.value;
+                StationRecordsFiltersValue.Text = state.Filter.Value;
             }
         }
 

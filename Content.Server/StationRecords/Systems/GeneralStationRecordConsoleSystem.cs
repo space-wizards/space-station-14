@@ -36,9 +36,9 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
         GeneralStationRecordConsoleComponent component, GeneralStationRecordsFilterMsg msg)
     {
         if (component.Filter == null ||
-            component.Filter.type != msg.type || component.Filter.value != msg.value)
+            component.Filter.Type != msg.Type || component.Filter.Value != msg.Value)
         {
-            component.Filter = new GeneralStationRecordsFilter(msg.type, msg.value);
+            component.Filter = new GeneralStationRecordsFilter(msg.Type, msg.Value);
             UpdateUserInterface(uid, component);
         }
     }
@@ -108,20 +108,22 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
     private bool IsSkippedRecord(GeneralStationRecordsFilter filter,
         GeneralStationRecord someRecord)
     {
-        bool isFilter = filter.value.Length > 0;
+        bool isFilter = filter.Value.Length > 0;
         string filterLowerCaseValue = "";
 
-        if (isFilter)
-            filterLowerCaseValue = filter.value.ToLower();
+        if (!isFilter)
+            return false;
 
-        return filter.type switch
+        filterLowerCaseValue = filter.Value.ToLower();
+
+        return filter.Type switch
         {
             GeneralStationRecordFilterType.Name => someRecord.Name != null
-                && isFilter && !someRecord.Name.ToLower().Contains(filterLowerCaseValue),
+                && !someRecord.Name.ToLower().Contains(filterLowerCaseValue),
             GeneralStationRecordFilterType.Prints => someRecord.Fingerprint != null
-                && isFilter && IsFilterWithSomeCodeValue(someRecord.Fingerprint, filterLowerCaseValue),
+                && IsFilterWithSomeCodeValue(someRecord.Fingerprint, filterLowerCaseValue),
             GeneralStationRecordFilterType.DNA => someRecord.DNA != null
-                && isFilter && IsFilterWithSomeCodeValue(someRecord.DNA, filterLowerCaseValue),
+                && IsFilterWithSomeCodeValue(someRecord.DNA, filterLowerCaseValue),
         };
     }
 

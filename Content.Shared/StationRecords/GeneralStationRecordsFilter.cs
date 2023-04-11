@@ -5,27 +5,27 @@ namespace Content.Shared.StationRecords;
 [Serializable, NetSerializable]
 public sealed class GeneralStationRecordsFilter
 {
-    public GeneralStationRecordFilterType type { get; set; }
+    public GeneralStationRecordFilterType Type { get; set; }
         = GeneralStationRecordFilterType.Name;
-    public string value { get; set; } = "";
+    public string Value { get; set; } = "";
     public GeneralStationRecordsFilter(GeneralStationRecordFilterType filterType, string newValue = "")
     {
-        type = filterType;
-        value = newValue;
+        Type = filterType;
+        Value = newValue;
     }
 }
 
 [Serializable, NetSerializable]
 public sealed class GeneralStationRecordsFilterMsg : BoundUserInterfaceMessage
 {
-    public string value { get; }
-    public GeneralStationRecordFilterType type { get; }
+    public string Value { get; }
+    public GeneralStationRecordFilterType Type { get; }
 
     public GeneralStationRecordsFilterMsg(GeneralStationRecordFilterType filterType,
         string filterValue)
     {
-        type = filterType;
-        value = filterValue;
+        Type = filterType;
+        Value = filterValue;
     }
 }
 
