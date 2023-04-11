@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed chameleon clothing not working., type: Fix}
-  id: 2881
-  time: '2023-01-16T08:21:24.0000000+00:00'
 - author: noudoit
   changes:
   - {message: Added Honk mother communication device - banana phone!, type: Add}
@@ -2915,3 +2910,9 @@ Entries:
       means deathnettles don''t work on nukies anymore.', type: Tweak}
   id: 3380
   time: '2023-04-11T02:19:44.0000000+00:00'
+- author: Skyedra
+  changes:
+  - {message: Ability to bind the menu toggle key directly in the UI, type: Add}
+  - {message: Default menu toggle moved from F12 to F10, type: Tweak}
+  id: 3381
+  time: '2023-04-11T03:40:07.0000000+00:00'
