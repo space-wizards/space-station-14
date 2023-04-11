@@ -782,9 +782,9 @@
     access: [["NuclearOperative"]]
 
 - type: entity
-  parent: AirlockSyndicate
+  parent: AirlockExternal
   id: AirlockSyndicateExternal
   suffix: Syndicate
   components:
   - type: AccessReader
-    access: [["External"]]
+    access: [["NuclearOperative"]]
