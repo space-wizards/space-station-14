@@ -283,7 +283,7 @@
   description: Be an enemy of the corporation, in style.
   components:
     - type: Vehicle
-      northOver: true
+      southOver: true
       westOver: true
       eastOver: true
       northOverride: -0.1
