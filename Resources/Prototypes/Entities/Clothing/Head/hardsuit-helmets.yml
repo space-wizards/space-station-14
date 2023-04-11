@@ -233,6 +233,33 @@
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitBrigmed
+  name: brigmed hardsuit helmet
+  description: The lightweight helmet of the brigmed hardsuit. Protects against viruses, and clowns.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/brigmed.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/brigmed.rsi
+  - type: PointLight
+    color: "#00FFFF"
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+        Heat: 0.95
+        Radiation: 0.90
+        Caustic: 0.90
+  - type: PressureProtection
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 5500
+  - type: DiseaseProtection
+    protection: 0.15
+
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitWarden
   noSpawn: true
   name: warden's hardsuit helmet
