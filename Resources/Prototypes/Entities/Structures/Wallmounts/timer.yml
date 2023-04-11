@@ -61,4 +61,4 @@
   description: It's a timer for brig cells.
   components:
   - type: AccessReader
-    access: [["Brig"]]
+    access: [["Security"]]
