@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Helpful tips will now appear at random in the lobby and occasionally
-      in game., type: Add}
-  id: 2884
-  time: '2023-01-16T16:52:52.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Added a guidebook entry for machine upgrades., type: Add}
@@ -2915,3 +2909,8 @@ Entries:
       per tick from 1 > 3', type: Tweak}
   id: 3383
   time: '2023-04-11T11:21:31.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Tools no longer make sounds if using them fails., type: Fix}
+  id: 3384
+  time: '2023-04-11T17:31:12.0000000+00:00'
