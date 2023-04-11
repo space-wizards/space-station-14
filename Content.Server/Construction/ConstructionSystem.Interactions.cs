@@ -31,18 +31,11 @@ namespace Content.Server.Construction
 
         private void InitializeInteractions()
         {
-            SubscribeLocalEvent<ConstructionComponent, ConstructionInteractDoAfterEvent>(OnDoAfterComplete);
+            SubscribeLocalEvent<ConstructionComponent, ConstructionInteractDoAfterEvent>(EnqueueEvent);
 
             // Event handling. Add your subscriptions here! Just make sure they're all handled by EnqueueEvent.
             SubscribeLocalEvent<ConstructionComponent, InteractUsingEvent>(EnqueueEvent, new []{typeof(AnchorableSystem), typeof(EncryptionKeySystem)});
             SubscribeLocalEvent<ConstructionComponent, OnTemperatureChangeEvent>(EnqueueEvent);
-        }
-
-        private void OnDoAfterComplete(EntityUid uid, ConstructionComponent component, ConstructionInteractDoAfterEvent args)
-        {
-            component.DoAfter = null;
-            if (!args.Cancelled)
-                EnqueueEvent(uid, component, args);
         }
 
         /// <summary>
@@ -231,8 +224,8 @@ namespace Content.Server.Construction
             // The DoAfter events can only perform special logic when we're not validating events.
             if (ev is ConstructionInteractDoAfterEvent interactDoAfter)
             {
-                // cancelled events should not reach this point.
-                DebugTools.Assert(!interactDoAfter.Cancelled);
+                if (interactDoAfter.Cancelled)
+                    return HandleResult.False;
 
                 ev = new InteractUsingEvent(
                     interactDoAfter.User,
@@ -289,7 +282,7 @@ namespace Content.Server.Construction
                             NeedHand = true
                         };
 
-                        var started  = _doAfterSystem.TryStartDoAfter(doAfterEventArgs, out construction.DoAfter);
+                        var started  = _doAfterSystem.TryStartDoAfter(doAfterEventArgs);
 
                         if (!started)
                             return HandleResult.False;
@@ -367,10 +360,10 @@ namespace Content.Server.Construction
                         TimeSpan.FromSeconds(toolInsertStep.DoAfter),
                         new [] { toolInsertStep.Tool },
                         new ConstructionInteractDoAfterEvent(interactUsing),
-                        out construction.DoAfter,
+                        out var doAfter,
                         fuel: toolInsertStep.Fuel);
 
-                    return construction.DoAfter != null ? HandleResult.DoAfter : HandleResult.False;
+                    return result && doAfter != null ? HandleResult.DoAfter : HandleResult.False;
                 }
 
                 case TemperatureConstructionGraphStep temperatureChangeStep:
