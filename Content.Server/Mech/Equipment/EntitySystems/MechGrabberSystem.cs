@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using Content.Server.Interaction;
-using Content.Server.Mech.Components;
 using Content.Server.Mech.Equipment.Components;
 using Content.Server.Mech.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Mech;
+using Content.Shared.Mech.Components;
 using Content.Shared.Mech.Equipment.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Wall;

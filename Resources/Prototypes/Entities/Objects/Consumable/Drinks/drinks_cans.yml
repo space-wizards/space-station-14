@@ -51,10 +51,12 @@
       types:
         Blunt: 0
   - type: ItemCooldown
-  - type: Recyclable
   - type: SpaceGarbage
   - type: TrashOnEmpty
     solution: drink
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50 #reduce, reuse, recycle
 
 - type: entity
   parent: DrinkCanBaseFull

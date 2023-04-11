@@ -1,3 +1,4 @@
+using Content.Client.UserInterface.Controls;
 using Content.Shared.Atmos;
 using Content.Shared.Temperature;
 using Robust.Client.Graphics;
@@ -261,11 +262,9 @@ namespace Content.Client.Atmos.UI
             // This is the gas bar thingy
             var height = 30;
             var minSize = 24; // This basically allows gases which are too small, to be shown properly
-            var gasBar = new BoxContainer
+            var gasBar = new SplitBar()
             {
-                Orientation = BoxContainer.LayoutOrientation.Horizontal,
-                HorizontalExpand = true,
-                MinSize = new Vector2(0, height)
+                MinHeight = height
             };
             // Separator
             dataContainer.AddChild(new Control
@@ -299,25 +298,10 @@ namespace Content.Client.Atmos.UI
                 });
 
                 // Add to the gas bar //TODO: highlight the currently hover one
-                var left = (j == 0) ? 0f : 2f;
-                var right = (j == gasMix.Gases.Length - 1) ? 0f : 2f;
-                gasBar.AddChild(new PanelContainer
-                {
-                    ToolTip = Loc.GetString("gas-analyzer-window-molarity-percentage-text",
-                        ("gasName", gas.Name),
-                        ("amount", $"{gas.Amount:0.##}"),
-                        ("percentage", $"{(gas.Amount / totalGasAmount * 100):0.#}")),
-                    HorizontalExpand = true,
-                    SizeFlagsStretchRatio = gas.Amount,
-                    MouseFilter = MouseFilterMode.Stop,
-                    PanelOverride = new StyleBoxFlat
-                    {
-                        BackgroundColor = color,
-                        PaddingLeft = left,
-                        PaddingRight = right
-                    },
-                    MinSize = new Vector2(minSize, 0)
-                });
+                gasBar.AddEntry(gas.Amount, color, tooltip: Loc.GetString("gas-analyzer-window-molarity-percentage-text",
+                    ("gasName", gas.Name),
+                    ("amount", $"{gas.Amount:0.##}"),
+                    ("percentage", $"{(gas.Amount / totalGasAmount * 100):0.#}")));
             }
 
             dataContainer.AddChild(gasBar);

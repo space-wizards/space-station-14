@@ -250,7 +250,7 @@ namespace Content.Shared.Interaction
             if (target != null && Deleted(target.Value))
                 return;
 
-            if (!altInteract && TryComp(user, out SharedCombatModeComponent? combatMode) && combatMode.IsInCombatMode)
+            if (!altInteract && TryComp(user, out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
             {
                 // Eat the input
                 return;
