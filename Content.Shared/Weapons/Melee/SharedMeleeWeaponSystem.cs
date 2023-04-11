@@ -418,10 +418,8 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     {
         var damage = component.Damage * GetModifier(component, true);
 
-        // Can't attack yourself
         // For consistency with wide attacks stuff needs damageable.
-        if (user == ev.Target ||
-            Deleted(ev.Target) ||
+        if (Deleted(ev.Target) ||
             !HasComp<DamageableComponent>(ev.Target) ||
             !TryComp<TransformComponent>(ev.Target, out var targetXform) ||
             // Not in LOS.
