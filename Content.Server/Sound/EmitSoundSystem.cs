@@ -47,7 +47,7 @@ public sealed class EmitSoundSystem : SharedEmitSoundSystem
 
     private void HandleEmitSoundOnTrigger(EntityUid uid, EmitSoundOnTriggerComponent component, TriggerEvent args)
     {
-        TryEmitSound(component, args.User);
+        TryEmitSound(component);
         args.Handled = true;
     }
 }

@@ -23,6 +23,9 @@
     interfaces:
     - key: enum.StorageUiKey.Key
       type: StorageBoundUserInterface
+  # to prevent bag open/honk spam
+  - type: UseDelay
+    delay: 0.5
 
 - type: entity
   parent: ClothingBackpack
@@ -93,11 +96,11 @@
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackHydroponics
-  name: botany backpack
+  name: hydroponics backpack
   description: It's a backpack made of all-natural fibers.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/botany.rsi
+    sprite: Clothing/Back/Backpacks/hydroponics.rsi
 
 - type: entity
   parent: ClothingBackpack
@@ -116,6 +119,15 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/virology.rsi
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackGenetics
+  name: genetics backpack
+  description: A backpack designed to be super tough, just in case someone hulks out on you.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/genetics.rsi
 
 - type: entity
   parent: ClothingBackpack
@@ -201,3 +213,14 @@
     equippedPrefix: holding
   - type: Storage
     capacity: 9999
+
+- type: entity
+  parent: ClothingBackpackClown
+  id: ClothingBackpackCluwne
+  name: cursed giggles von honkerton
+  suffix: Unremoveable
+  description: Cursed giggles von honkerton backpack.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/cluwne.rsi
+  - type: Unremoveable

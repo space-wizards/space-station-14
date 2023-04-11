@@ -205,6 +205,11 @@
       - HighPowerMicroLaserStockPart
       - NanoManipulatorStockPart
       - AdvancedScanningModuleStockPart
+      - SuperCapacitorStockPart
+      - SuperMatterBinStockPart
+      - UltraHighPowerMicroLaserStockPart
+      - PicoManipulatorStockPart
+      - PhasicScanningModuleStockPart
       - FirelockElectronics
       - DoorElectronics
       - APCElectronics
@@ -214,6 +219,7 @@
       - MailingUnitElectronics
       - Bucket
       - MopItem
+      - AdvMopItem
       - SprayBottle
       - FireExtinguisher
       - KitchenKnife
@@ -227,7 +233,7 @@
       - VoiceTrigger
       - PowerCellSmall
       - PowerCellMedium
-      - PowerCellHigh  
+      - PowerCellHigh
       - SynthesizerInstrument
       - RPED
       - NodeScanner
@@ -300,6 +306,7 @@
       - DawInstrumentMachineCircuitboard
       - CloningConsoleComputerCircuitboard
       - StasisBedMachineCircuitboard
+      - MaterialReclaimerMachineCircuitboard
       - OreProcessorMachineCircuitboard
       - RipleyCentralElectronics
       - RipleyPeripheralsElectronics
@@ -321,6 +328,7 @@
       - TraversalDistorterMachineCircuitboard
       - BoozeDispenserMachineCircuitboard
       - SodaDispenserMachineCircuitboard
+      - TelecomServerCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:

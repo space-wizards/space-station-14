@@ -11,8 +11,7 @@
       probability: 0.025
     - !type:DiseaseSnough
       probability: 0.025
-      snoughSound:
-        collection: Sneezes
+      emote: Sneeze
   cures:
     - !type:DiseaseBedrestCure
       maxLength: 20
@@ -33,13 +32,11 @@
       visualType: Medium
     - !type:DiseaseSnough
       probability: 0.025
-      snoughMessage: disease-cough
-      snoughSound:
-        collection: Coughs
+      emote: Cough
     - !type:DiseaseHealthChange
       probability: 0.015
       damage:
-        groups:
+        types:
           Caustic: 1
   cures:
     - !type:DiseaseBedrestCure
@@ -60,8 +57,7 @@
       probability: 0.025
     - !type:DiseaseSnough
       probability: 0.025
-      snoughSound:
-        collection: Sneezes
+      emote: Sneeze
     - !type:DiseaseHealthChange
       probability: 0.015
       damage:
@@ -82,13 +78,11 @@
       probability: 0.025
     - !type:DiseaseSnough
       probability: 0.025
-      snoughMessage: disease-cough
-      snoughSound:
-        collection: Coughs
+      emote: Cough
     - !type:DiseaseHealthChange
       probability: 0.05
       damage:
-        groups:
+        types:
           Caustic: 1
   cures:
     - !type:DiseaseBedrestCure
@@ -105,9 +99,7 @@
       amount: 0.5
     - !type:DiseaseSnough
       probability: 0.02
-      snoughMessage: disease-beep
-      snoughSound:
-        collection: RobotBeeps
+      emote: RobotBeep
   cures:
     - !type:DiseaseJustWaitCure
       maxLength: 900
@@ -144,23 +136,17 @@
     # Screeches - spreads disease
     - !type:DiseaseSnough
       probability: 0.01
-      snoughMessage: disease-screech
-      snoughSound:
-        collection: MonkeyScreeches
+      emote: MonkeyScreeches
       stages:
         - 0
     - !type:DiseaseSnough
       probability: 0.02
-      snoughMessage: disease-screech
-      snoughSound:
-        collection: MonkeyScreeches
+      emote: MonkeyScreeches
       stages:
         - 1
     - !type:DiseaseSnough
       probability: 0.04
-      snoughMessage: disease-screech
-      snoughSound:
-        collection: MonkeyScreeches
+      emote: MonkeyScreeches
       stages:
         - 2
     # monkey accent chance when speaking
@@ -220,9 +206,7 @@
       type: Add
     - !type:DiseaseSnough
       probability: 0.025
-      snoughMessage: disease-yawn
-      snoughSound:
-        collection: Yawns
+      emote: Yawn
 
 - type: disease
   id: BleedersBite
@@ -259,9 +243,7 @@
       probability: 0.025
     - !type:DiseaseSnough
       probability: 0.025
-      snoughMessage: disease-cough
-      snoughSound:
-        collection: Coughs
+      emote: Cough
     - !type:DiseaseHealthChange
       probability: 0.05
       damage:
@@ -287,14 +269,10 @@
       amount: 1
     - !type:DiseaseSnough
       probability: 0.01
-      snoughMessage: disease-meow
-      snoughSound:
-        collection: CatMeows
+      emote: CatMeow
     - !type:DiseaseSnough
       probability: 0.01
-      snoughMessage: disease-hiss
-      snoughSound:
-        collection: CatHisses
+      emote: CatHisses
   cures:
     - !type:DiseaseBodyTemperatureCure
       min: 420 ## Reachable with a flamer
@@ -312,8 +290,7 @@
       component: ScrambledAccent
     - !type:DiseaseSnough
       probability: 0.01
-      snoughSound:
-        collection: Sneezes
+      emote: Sneeze
     - !type:DiseasePopUp
       probability: 0.02
       message: disease-think

@@ -70,6 +70,16 @@ namespace Content.Server.GameTicking
         public int RoundId { get; private set; }
 
         /// <summary>
+        /// Returns true if the round's map is eligible to be updated.
+        /// </summary>
+        /// <returns></returns>
+        public bool CanUpdateMap()
+        {
+            return RunLevel == GameRunLevel.PreRoundLobby &&
+                   _roundStartTime - RoundPreloadTime > _gameTiming.CurTime;
+        }
+
+        /// <summary>
         ///     Loads all the maps for the given round.
         /// </summary>
         /// <remarks>
@@ -77,11 +87,13 @@ namespace Content.Server.GameTicking
         /// </remarks>
         private void LoadMaps()
         {
+            if (_mapManager.MapExists(DefaultMap))
+                return;
+
             AddGamePresetRules();
 
             DefaultMap = _mapManager.CreateMap();
             _mapManager.AddUninitializedMap(DefaultMap);
-            var startTime = _gameTiming.RealTime;
 
             var maps = new List<GameMapPrototype>();
 
@@ -121,9 +133,6 @@ namespace Content.Server.GameTicking
 
                 LoadGameMap(map, toLoad, null);
             }
-
-            var timeSpan = _gameTiming.RealTime - startTime;
-            _sawmill.Info($"Loaded maps in {timeSpan.TotalMilliseconds:N2}ms.");
         }
 
 
@@ -170,6 +179,7 @@ namespace Content.Server.GameTicking
 
             SendServerMessage(Loc.GetString("game-ticker-start-round"));
 
+            // Just in case it hasn't been loaded previously we'll try loading it.
             LoadMaps();
 
             // map has been selected so update the lobby info text
@@ -180,24 +190,8 @@ namespace Content.Server.GameTicking
 
             RoundLengthMetric.Set(0);
 
-            var playerIds = _playerGameStatuses.Keys.Select(player => player.UserId).ToArray();
-            var serverName = _configurationManager.GetCVar(CCVars.AdminLogsServerName);
-
-            // TODO FIXME AAAAAAAAAAAAAAAAAAAH THIS IS BROKEN
-            // Task.Run as a terrible dirty workaround to avoid synchronization context deadlock from .Result here.
-            // This whole setup logic should be made asynchronous so we can properly wait on the DB AAAAAAAAAAAAAH
-            var task = Task.Run(async () =>
-            {
-                var server = await _db.AddOrGetServer(serverName);
-                return await _db.AddNewRound(server, playerIds);
-            });
-
-            _taskManager.BlockWaitOnTask(task);
-            RoundId = task.GetAwaiter().GetResult();
-
             var startingEvent = new RoundStartingEvent(RoundId);
             RaiseLocalEvent(startingEvent);
-
             var readyPlayers = new List<IPlayerSession>();
             var readyPlayerProfiles = new Dictionary<NetUserId, HumanoidCharacterProfile>();
 
@@ -392,6 +386,7 @@ namespace Content.Server.GameTicking
             LobbySong = _robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString();
             RandomizeLobbyBackground();
             ResettingCleanup();
+            IncrementRoundNumber();
 
             if (!LobbyEnabled)
             {
@@ -405,6 +400,7 @@ namespace Content.Server.GameTicking
                     _roundStartTime = _gameTiming.CurTime + LobbyDuration;
 
                 SendStatusToAll();
+                UpdateInfoText();
 
                 ReqWindowAttentionAll();
             }
@@ -438,7 +434,8 @@ namespace Content.Server.GameTicking
 #endif
                 // TODO: Maybe something less naive here?
                 // FIXME: Actually, definitely.
-                EntityManager.DeleteEntity(entity);
+                if (!Deleted(entity) && !Terminating(entity))
+                    EntityManager.DeleteEntity(entity);
 #if EXCEPTION_TOLERANCE
                 }
                 catch (Exception e)
@@ -500,14 +497,23 @@ namespace Content.Server.GameTicking
                 RoundLengthMetric.Inc(frameTime);
             }
 
-            if (RunLevel != GameRunLevel.PreRoundLobby || Paused ||
-                _roundStartTime > _gameTiming.CurTime ||
+            if (RunLevel != GameRunLevel.PreRoundLobby ||
+                Paused ||
+                _roundStartTime - RoundPreloadTime > _gameTiming.CurTime ||
                 _roundStartCountdownHasNotStartedYetDueToNoPlayers)
             {
                 return;
             }
 
-            StartRound();
+            if (_roundStartTime < _gameTiming.CurTime)
+            {
+                StartRound();
+            }
+            // Preload maps so we can start faster
+            else if (_roundStartTime - RoundPreloadTime < _gameTiming.CurTime)
+            {
+                LoadMaps();
+            }
         }
 
         public TimeSpan RoundDuration()

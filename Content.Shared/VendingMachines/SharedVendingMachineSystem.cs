@@ -1,5 +1,8 @@
+using Content.Shared.Emag.Components;
 using Robust.Shared.Prototypes;
 using System.Linq;
+using Content.Shared.DoAfter;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.VendingMachines;
 
@@ -36,7 +39,7 @@ public abstract class SharedVendingMachineSystem : EntitySystem
 
     /// <summary>
     /// Returns all of the vending machine's inventory. Only includes emagged and contraband inventories if
-    /// <see cref="VendingMachineComponent.Emagged"/> and <see cref="VendingMachineComponent.Contraband"/>
+    /// <see cref="EmaggedComponent"/> exists and <see cref="VendingMachineComponent.Contraband"/> is true
     /// are <c>true</c> respectively.
     /// </summary>
     /// <param name="uid"></param>
@@ -49,7 +52,7 @@ public abstract class SharedVendingMachineSystem : EntitySystem
 
         var inventory = new List<VendingMachineInventoryEntry>(component.Inventory.Values);
 
-        if (component.Emagged)
+        if (HasComp<EmaggedComponent>(uid))
             inventory.AddRange(component.EmaggedInventory.Values);
 
         if (component.Contraband)
@@ -110,3 +113,7 @@ public abstract class SharedVendingMachineSystem : EntitySystem
     }
 }
 
+[Serializable, NetSerializable]
+public sealed class RestockDoAfterEvent : SimpleDoAfterEvent
+{
+}

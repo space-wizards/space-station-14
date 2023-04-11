@@ -193,9 +193,9 @@ namespace Content.IntegrationTests.Tests.Damageable
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
 
                 // Test SetAll function
-                sDamageableSystem.SetAllDamage(sDamageableComponent, 10);
+                sDamageableSystem.SetAllDamage(sDamageableEntity, sDamageableComponent, 10);
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(FixedPoint2.New(10 * sDamageableComponent.Damage.DamageDict.Count())));
-                sDamageableSystem.SetAllDamage(sDamageableComponent, 0);
+                sDamageableSystem.SetAllDamage(sDamageableEntity, sDamageableComponent, 0);
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
 
                 // Test 'wasted' healing

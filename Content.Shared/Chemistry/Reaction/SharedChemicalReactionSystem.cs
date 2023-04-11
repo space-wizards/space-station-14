@@ -250,7 +250,10 @@ namespace Content.Shared.Chemistry.Reaction
                 return false;
 
             // Remove any reactions that were not applicable. Avoids re-iterating over them in future.
-            reactions.Except(toRemove);
+            foreach (var proto in toRemove)
+            {
+                reactions.Remove(proto);
+            }
 
             if (products.Volume <= 0)
                 return true;

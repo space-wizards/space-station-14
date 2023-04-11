@@ -41,3 +41,5 @@
             Level1: {state: particle1}
             Level2: {state: particle2}
             Level3: {state: particle3}
+    - type: GuideHelp
+      guides: [ Singularity, Power ]

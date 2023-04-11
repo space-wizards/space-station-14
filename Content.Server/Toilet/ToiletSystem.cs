@@ -3,16 +3,17 @@ using Content.Server.Buckle.Systems;
 using Content.Server.Popups;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
-using Content.Server.Tools;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Buckle.Components;
+using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Toilet;
+using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -28,7 +29,7 @@ namespace Content.Server.Toilet
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SecretStashSystem _secretStash = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly ToolSystem _toolSystem = default!;
+        [Dependency] private readonly SharedToolSystem _toolSystem = default!;
 
         public override void Initialize()
         {
@@ -39,8 +40,7 @@ namespace Content.Server.Toilet
             SubscribeLocalEvent<ToiletComponent, InteractHandEvent>(OnInteractHand, new []{typeof(BuckleSystem)});
             SubscribeLocalEvent<ToiletComponent, ExaminedEvent>(OnExamine);
             SubscribeLocalEvent<ToiletComponent, SuicideEvent>(OnSuicide);
-            SubscribeLocalEvent<ToiletPryFinished>(OnToiletPried);
-            SubscribeLocalEvent<ToiletPryInterrupted>(OnToiletInterrupt);
+            SubscribeLocalEvent<ToiletComponent, ToiletPryDoAfterEvent>(OnToiletPried);
         }
 
         private void OnSuicide(EntityUid uid, ToiletComponent component, SuicideEvent args)
@@ -94,29 +94,15 @@ namespace Content.Server.Toilet
                 return;
 
             // are player trying place or lift of cistern lid?
-            if (EntityManager.TryGetComponent(args.Used, out ToolComponent? tool)
-                && tool.Qualities.Contains(component.PryingQuality))
+            if (_toolSystem.UseTool(args.Used, args.User, uid, component.PryLidTime, component.PryingQuality, new ToiletPryDoAfterEvent()))
             {
-                // check if someone is already prying this toilet
-                if (component.IsPrying)
-                    return;
-                component.IsPrying = true;
-
-                // try to pry toilet cistern
-                if (!_toolSystem.UseTool(args.Used, args.User, uid, 0f,
-                    component.PryLidTime, component.PryingQuality,
-                    new ToiletPryFinished(uid), new ToiletPryInterrupted(uid)))
-                {
-                    component.IsPrying = false;
-                    return;
-                }
-
                 args.Handled = true;
             }
             // maybe player trying to hide something inside cistern?
             else if (component.LidOpen)
             {
-                args.Handled = _secretStash.TryHideItem(uid, args.User, args.Used);
+                args.Handled = true;
+                _secretStash.TryHideItem(uid, args.User, args.Used);
             }
         }
 
@@ -160,22 +146,13 @@ namespace Content.Server.Toilet
             }
         }
 
-        private void OnToiletInterrupt(ToiletPryInterrupted ev)
+        private void OnToiletPried(EntityUid uid, ToiletComponent toilet, ToiletPryDoAfterEvent args)
         {
-            if (!EntityManager.TryGetComponent(ev.Uid, out ToiletComponent? toilet))
+            if (args.Cancelled)
                 return;
 
-            toilet.IsPrying = false;
-        }
-
-        private void OnToiletPried(ToiletPryFinished ev)
-        {
-            if (!EntityManager.TryGetComponent(ev.Uid, out ToiletComponent? toilet))
-                return;
-
-            toilet.IsPrying = false;
             toilet.LidOpen = !toilet.LidOpen;
-            UpdateSprite(ev.Uid, toilet);
+            UpdateSprite(uid, toilet);
         }
 
         public void ToggleToiletSeat(EntityUid uid, ToiletComponent? component = null)
@@ -195,26 +172,6 @@ namespace Content.Server.Toilet
 
             _appearance.SetData(uid, ToiletVisuals.LidOpen, component.LidOpen, appearance);
             _appearance.SetData(uid, ToiletVisuals.SeatUp, component.IsSeatUp, appearance);
-        }
-    }
-
-    public sealed class ToiletPryFinished : EntityEventArgs
-    {
-        public EntityUid Uid;
-
-        public ToiletPryFinished(EntityUid uid)
-        {
-            Uid = uid;
-        }
-    }
-
-    public sealed class ToiletPryInterrupted : EntityEventArgs
-    {
-        public EntityUid Uid;
-
-        public ToiletPryInterrupted(EntityUid uid)
-        {
-            Uid = uid;
         }
     }
 }

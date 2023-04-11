@@ -76,7 +76,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
             Reset();
         }
 
-        private void OnRotate(object? sender, ValueChangedEventArgs e)
+        private void OnRotate(ValueChangedEventArgs e)
         {
             var newValue = Wraparound(e.Value);
 
