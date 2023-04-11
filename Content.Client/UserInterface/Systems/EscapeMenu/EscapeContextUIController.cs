@@ -1,5 +1,6 @@
 ﻿using Content.Client.UserInterface.Systems.Info;
 using Content.Shared.Input;
+using JetBrains.Annotations;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
@@ -8,29 +9,29 @@ using Robust.Shared.Input.Binding;
 
 namespace Content.Client.UserInterface.Systems.EscapeMenu;
 
+[UsedImplicitly]
 public sealed class EscapeContextUIController : UIController
 {
     [Dependency] private readonly IInputManager _inputManager = default!;
-    [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+
+    [Dependency] private readonly CloseRecentWindowUIController _closeRecentWindowUIController = default!;
+    [Dependency] private readonly EscapeUIController _escapeUIController = default!;
 
     public override void Initialize()
     {
         _inputManager.SetInputCommand(ContentKeyFunctions.EscapeContext,
-            InputCmdHandler.FromDelegate(_ => Esc()));
+            InputCmdHandler.FromDelegate(_ => CloseWindowOrOpenGameMenu()));
     }
 
-    private void Esc()
+    private void CloseWindowOrOpenGameMenu()
     {
-        var closeRecentWindowUIController = _userInterfaceManager.GetUIController<CloseRecentWindowUIController>();
-        var escapeUIController = _userInterfaceManager.GetUIController<EscapeUIController>();
-
-        if (closeRecentWindowUIController.HasClosableWindow())
+        if (_closeRecentWindowUIController.HasClosableWindow())
         {
-            closeRecentWindowUIController.CloseMostRecentWindow();
+            _closeRecentWindowUIController.CloseMostRecentWindow();
         }
         else
         {
-            escapeUIController.ToggleWindow();
+            _escapeUIController.ToggleWindow();
         }
     }
 }
