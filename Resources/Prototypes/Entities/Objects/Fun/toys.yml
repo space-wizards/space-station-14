@@ -313,6 +313,14 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: nuketoy
+  - type: UseDelay
+    delay: 300.0
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Machines/Nuke/nuke_alarm.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Machines/Nuke/nuke_alarm.ogg
 
 - type: entity
   parent: BaseItem
