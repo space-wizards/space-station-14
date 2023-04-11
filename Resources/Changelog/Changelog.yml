@@ -1,10 +1,4 @@
 Entries:
-- author: nmajask
-  changes:
-  - {message: 'added medical lathe recipes for all the medkits, they cost 300 plastic,
-      are locked behind biological tech, and are empty', type: Add}
-  id: 2880
-  time: '2023-01-16T07:44:14.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed chameleon clothing not working., type: Fix}
@@ -2915,3 +2909,9 @@ Entries:
       work properly again, type: Tweak}
   id: 3379
   time: '2023-04-11T01:56:21.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Nettles can no longer inject solutions through hardsuits. Yes, this
+      means deathnettles don''t work on nukies anymore.', type: Tweak}
+  id: 3380
+  time: '2023-04-11T02:19:44.0000000+00:00'
