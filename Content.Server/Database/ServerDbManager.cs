@@ -82,6 +82,21 @@ namespace Content.Server.Database
             ImmutableArray<byte>? hwId,
             bool includeUnbanned=true);
 
+        /// <summary>
+        ///     Counts an user's bans.
+        ///     One of <see cref="address"/> or <see cref="userId"/> need to not be null.
+        /// </summary>
+        /// <param name="address">The ip address of the user.</param>
+        /// <param name="userId">The id of the user.</param>
+        /// <param name="hwId">The HWId of the user.</param>
+        /// <param name="includeUnbanned">If true, bans that have been expired or pardoned are also included.</param>
+        /// <returns>The user's ban history.</returns>
+        Task<int> CountServerBansAsync(
+            IPAddress? address,
+            NetUserId? userId,
+            ImmutableArray<byte>? hwId,
+            bool includeUnbanned=true);
+
         Task AddServerBanAsync(ServerBanDef serverBan);
         Task AddServerUnbanAsync(ServerUnbanDef serverBan);
 
@@ -236,6 +251,7 @@ namespace Content.Server.Database
         Task<int> AddAdminNote(int? roundId, Guid player, string message, Guid createdBy, DateTime createdAt);
         Task<AdminNote?> GetAdminNote(int id);
         Task<List<AdminNote>> GetAdminNotes(Guid player);
+        Task<int> CountAdminNotes(Guid player);
         Task DeleteAdminNote(int id, Guid deletedBy, DateTime deletedAt);
         Task EditAdminNote(int id, string message, Guid editedBy, DateTime editedAt);
 
@@ -356,6 +372,12 @@ namespace Content.Server.Database
         {
             DbReadOpsMetric.Inc();
             return _db.GetServerBansAsync(address, userId, hwId, includeUnbanned);
+        }
+
+        public Task<int> CountServerBansAsync(IPAddress? address, NetUserId? userId, ImmutableArray<byte>? hwId, bool includeUnbanned = true)
+        {
+            DbReadOpsMetric.Inc();
+            return _db.CountServerBansAsync(address, userId, hwId, includeUnbanned);
         }
 
         public Task AddServerBanAsync(ServerBanDef serverBan)
@@ -644,6 +666,12 @@ namespace Content.Server.Database
         {
             DbReadOpsMetric.Inc();
             return _db.GetAdminNotes(player);
+        }
+
+        public Task<int> CountAdminNotes(Guid player)
+        {
+            DbReadOpsMetric.Inc();
+            return _db.CountAdminNotes(player);
         }
 
         public Task DeleteAdminNote(int id, Guid deletedBy, DateTime deletedAt)

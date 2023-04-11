@@ -98,6 +98,21 @@ namespace Content.Server.Database
             return bans;
         }
 
+        public override async Task<int> CountServerBansAsync(IPAddress? address, NetUserId? userId, ImmutableArray<byte>? hwId, bool includeUnbanned)
+        {
+            if (address == null && userId == null && hwId == null)
+            {
+                throw new ArgumentException("Address, userId, and hwId cannot all be null");
+            }
+
+            await using var db = await GetDbImpl();
+
+            var exempt = await GetBanExemptionCore(db, userId);
+            var query = MakeBanLookupQuery(address, userId, hwId, db, includeUnbanned, exempt);
+
+            return await query.CountAsync();
+        }
+
         private static IQueryable<ServerBan> MakeBanLookupQuery(
             IPAddress? address,
             NetUserId? userId,

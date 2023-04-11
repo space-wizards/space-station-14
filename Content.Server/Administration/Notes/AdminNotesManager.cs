@@ -124,6 +124,11 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
         return await _db.GetAdminNotes(player);
     }
 
+    public async Task<int> CountNotes(Guid player)
+    {
+        return await _db.CountAdminNotes(player);
+    }
+
     public async Task<string> GetPlayerName(Guid player)
     {
         return (await _db.GetPlayerRecordByUserId(new NetUserId(player)))?.LastSeenUserName ?? string.Empty;
