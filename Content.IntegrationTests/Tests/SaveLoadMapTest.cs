@@ -29,7 +29,7 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitPost(() =>
             {
-                var dir = new ResourcePath(mapPath).Directory;
+                var dir = new ResPath(mapPath).Directory;
                 resManager.UserData.CreateDir(dir);
 
                 var mapId = mapManager.CreateMap();
