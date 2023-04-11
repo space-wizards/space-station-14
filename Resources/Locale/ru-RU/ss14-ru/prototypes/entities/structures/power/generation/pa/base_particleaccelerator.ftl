@@ -1,3 +1,2 @@
 ent-ParticleAcceleratorBase = { "" }
     .desc = { "" }
-    .suffix = { "" }

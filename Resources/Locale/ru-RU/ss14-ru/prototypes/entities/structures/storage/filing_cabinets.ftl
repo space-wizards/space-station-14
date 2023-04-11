@@ -9,7 +9,6 @@ ent-filingCabinetDrawer = комод
     .suffix = Пустой
 ent-BaseBureaucraticStorageFill = { "" }
     .desc = { "" }
-    .suffix = { "" }
 ent-filingCabinetRandom = { ent-filingCabinet }
     .suffix = Случайный
     .desc = { ent-filingCabinet.desc }

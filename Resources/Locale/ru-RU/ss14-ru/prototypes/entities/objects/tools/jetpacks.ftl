@@ -1,9 +1,7 @@
 ent-JetpackEffect = { "" }
     .desc = { "" }
-    .suffix = { "" }
 ent-BaseJetpack = джетпак
     .desc = Это реактивный ранец - джетпак.
-    .suffix = { "" }
 ent-JetpackBlue = джетпак
     .suffix = Пустой
     .desc = { ent-BaseJetpack.desc }

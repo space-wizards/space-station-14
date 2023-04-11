@@ -1,6 +1,5 @@
 ent-BaseWeaponRifle = BaseWeaponRifle
     .desc = Дерзай — налетай, целься и стреляй.
-    .suffix = { "" }
 ent-WeaponRifleAk = АКМС
     .desc = Культовое оружие всех войн. Использует патроны калибра .30 винтовочный.
     .suffix = Автомат

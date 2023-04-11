@@ -1,6 +1,5 @@
 ent-GasPipeBase = труба
     .desc = Содержит газ.
-    .suffix = { "" }
 ent-GasPipeHalf = { ent-GasPipeBase }
     .suffix = Половинная
     .desc = { ent-GasPipeBase.desc }

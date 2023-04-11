@@ -1,6 +1,5 @@
 ent-BookDemonomicon = демономикон
     .desc = Кто знает, какие темные заклинания могут таиться на этих ужасных страницах?
-    .suffix = { "" }
 ent-BookDemonomiconRandom = демономикон
     .suffix = случайный
     .desc = { ent-BookDemonomicon.desc }

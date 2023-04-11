@@ -1,12 +1,8 @@
 ent-DrinkShaker = шейкер
     .desc = Хэй диджей хэй битмейкер.
-    .suffix = { "" }
 ent-DrinkShotGlass = стопка
     .desc = Идеально подходит для того, чтобы со злостью ударить ей по столу.
-    .suffix = { "" }
 ent-DrinkJar = банка
     .desc = Стакан хипстера.
-    .suffix = { "" }
 ent-DrinkJarWhat = банка чего-то
     .desc = Вы не можете точно сказать, что это такое.
-    .suffix = { "" }

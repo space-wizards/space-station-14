@@ -6,7 +6,5 @@ ent-SprayBottleWater = распылитель
     .desc = { ent-SprayBottle.desc }
 ent-SprayBottleSpaceCleaner = космический очиститель
     .desc = Непенящийся очиститель бренда BLAM!
-    .suffix = { "" }
 ent-Vapor = пар
     .desc = { "" }
-    .suffix = { "" }

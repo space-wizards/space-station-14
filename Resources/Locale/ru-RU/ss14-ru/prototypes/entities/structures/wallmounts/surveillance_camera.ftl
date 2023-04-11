@@ -1,6 +1,5 @@
 ent-SurveillanceCameraBase = камера
     .desc = Камера наблюдения. Она наблюдает за тобой. Вроде как.
-    .suffix = { "" }
 ent-SurveillanceCameraConstructed = камера
     .suffix = Построенный
     .desc = { ent-SurveillanceCameraBase.desc }
@@ -33,4 +32,3 @@ ent-SurveillanceCameraGeneral = камера
     .desc = { ent-SurveillanceCameraBase.desc }
 ent-SurveillanceCameraAssembly = камера
     .desc = Камера наблюдения. Не похоже, что в ближайшее время она будет за кем-то наблюдать. Возможно.
-    .suffix = { "" }

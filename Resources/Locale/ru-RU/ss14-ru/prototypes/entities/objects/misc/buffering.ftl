@@ -1,3 +1,2 @@
 ent-BufferingIcon = { "" }
     .desc = { "" }
-    .suffix = { "" }

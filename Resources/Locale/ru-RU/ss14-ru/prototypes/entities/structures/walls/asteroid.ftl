@@ -6,7 +6,6 @@ ent-AsteroidRockMining = астероидный камень
     .suffix = Высокое содержание руды
 ent-WallRock = камень
     .desc = { ent-BaseStructure.desc }
-    .suffix = { "" }
 ent-WallRockGold = { ent-WallRock }
     .desc = Рудная жила, богатая золотом.
     .suffix = Золото

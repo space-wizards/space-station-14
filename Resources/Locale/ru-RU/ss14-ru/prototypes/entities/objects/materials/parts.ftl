@@ -1,6 +1,5 @@
 ent-PartBase = { ent-BaseItem }
     .desc = { ent-BaseItem.desc }
-    .suffix = { "" }
 ent-PartRodMetal = металлические стержни
     .suffix = Полный
     .desc = { ent-PartBase.desc }

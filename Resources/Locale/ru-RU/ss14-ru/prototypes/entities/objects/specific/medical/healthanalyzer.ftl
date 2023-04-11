@@ -1,6 +1,5 @@
 ent-HandheldHealthAnalyzer = анализатор здоровья
     .desc = Ручной сканер тела, способный определять жизненные показатели пациента.
-    .suffix = { "" }
 ent-HandheldHealthAnalyzerGigacancer = { ent-HandheldHealthAnalyzer }
     .suffix = ультрагигараковый
     .desc = { ent-HandheldHealthAnalyzer.desc }
