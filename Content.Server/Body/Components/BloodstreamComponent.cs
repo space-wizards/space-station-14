@@ -51,12 +51,14 @@ namespace Content.Server.Body.Components
 
         /// <summary>
         ///     The base bloodloss damage to be incurred if below <see cref="BloodlossThreshold"/>
+        ///     The default values are defined per mob/species in YML.
         /// </summary>
         [DataField("bloodlossDamage", required: true)]
         public DamageSpecifier BloodlossDamage = new();
 
         /// <summary>
         ///     The base bloodloss damage to be healed if above <see cref="BloodlossThreshold"/>
+        ///     The default values are defined per mob/species in YML.
         /// </summary>
         [DataField("bloodlossHealDamage", required: true)]
         public DamageSpecifier BloodlossHealDamage = new();

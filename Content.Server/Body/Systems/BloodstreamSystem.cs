@@ -91,14 +91,14 @@ public sealed class BloodstreamSystem : EntitySystem
             bloodstream.AccumulatedFrametime -= bloodstream.UpdateInterval;
 
             // this checks if the mob is dead before running the bleed code. It should be moved to check for clotting and blood regen.
-            if (TryComp<MobStateComponent>(uid, out var state) && _mobStateSystem.IsDead(uid, state))
-                continue;
+            /*if (TryComp<MobStateComponent>(uid, out var state) && _mobStateSystem.IsDead(uid, state))
+                continue;*/
 
-            // First, let's refresh their blood if possible.
-            if (bloodstream.BloodSolution.Volume < bloodstream.BloodSolution.MaxVolume)
+            // Adds blood to their blood level if it is below the maximum; Blood regeneration.
+            if (bloodstream.BloodSolution.Volume < bloodstream.BloodSolution.MaxVolume && _mobStateSystem.IsAlive(uid))
                 TryModifyBloodLevel(uid, bloodstream.BloodRefreshAmount, bloodstream);
 
-            // Next, let's remove some blood from them according to their bleed level.
+            // Removes blood from the bloodstream based on bleed amount (bleed rate)
             // as well as stop their bleeding to a certain extent.
             if (bloodstream.BleedAmount > 0)
             {
@@ -108,11 +108,11 @@ public sealed class BloodstreamSystem : EntitySystem
                 TryModifyBleedAmount(uid, -bloodstream.BleedReductionAmount, bloodstream);
             }
 
-            // Next, we'll deal some bloodloss damage if their blood level is below a threshold.
+            // deal bloodloss damage if their blood level is below a threshold.
             var bloodPercentage = GetBloodLevelPercentage(uid, bloodstream);
-            if (bloodPercentage < bloodstream.BloodlossThreshold)
+            if (bloodPercentage < bloodstream.BloodlossThreshold && _mobStateSystem.IsAlive(uid))
             {
-                // TODO use a better method for determining this.
+                // bloodloss damage is based on the base value, and modified by how low your blood level is.
                 var amt = bloodstream.BloodlossDamage / (0.1f + bloodPercentage);
 
                 _damageableSystem.TryChangeDamage(uid, amt, true, false);
@@ -126,7 +126,7 @@ public sealed class BloodstreamSystem : EntitySystem
                 bloodstream.DrunkTime += bloodstream.UpdateInterval * 2;
 
             }
-            else
+            else if (_mobStateSystem.IsAlive(uid))
             {
                 // If they're healthy, we'll try and heal some bloodloss instead.
                 _damageableSystem.TryChangeDamage(uid, bloodstream.BloodlossHealDamage * bloodPercentage, true, false);
