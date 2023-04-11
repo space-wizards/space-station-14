@@ -1,26 +1,26 @@
 using System.Linq;
-using Content.Server.Access.Systems;
-using Content.Server.AlertLevel;
-using Content.Server.CartridgeLoader;
-using Content.Server.DeviceNetwork.Components;
-using Content.Server.Instruments;
-using Content.Server.Light.Components;
-using Content.Server.Light.EntitySystems;
-using Content.Server.Light.Events;
-using Content.Server.PDA.Ringer;
-using Content.Server.Store.Components;
-using Content.Server.Store.Systems;
-using Content.Server.Station.Systems;
-using Content.Server.UserInterface;
-using Content.Shared.PDA;
 using Robust.Server.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Containers;
-using Content.Server.Mind.Components;
 using Content.Server.Traitor;
+using Content.Server.PDA.Ringer;
+using Content.Server.AlertLevel;
+using Content.Server.Instruments;
 using Content.Server.GameTicking;
+using Content.Server.Light.Events;
+using Content.Server.Store.Systems;
+using Content.Server.UserInterface;
+using Content.Server.Access.Systems;
+using Content.Server.Station.Systems;
+using Content.Server.Mind.Components;
+using Content.Server.CartridgeLoader;
+using Content.Server.Light.Components;
+using Content.Server.Store.Components;
+using Content.Server.Light.EntitySystems;
+using Content.Server.DeviceNetwork.Components;
+using Content.Shared.PDA;
 using Content.Shared.Access;
 using Content.Shared.Access.Systems;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.PDA
 {
@@ -97,7 +97,7 @@ namespace Content.Server.PDA
 
         private void UpdatePDAUserInterface(PDAComponent pda)
         {
-            var ownerInfo = new PDAIdInfoText
+            var ownerInfo = new PdaIdInfoText
             {
                 ActualOwnerName = pda.OwnerName,
                 IdOwner = pda.ContainedID?.FullName,
@@ -118,18 +118,19 @@ namespace Content.Server.PDA
                 Minutes = currentTime.Minutes.ToString(),
             };
 
+            var stationAlert = new StationAlert
+            {
+                Level = null,
+                Color = Color.White
+            };
+
             var stationUid = _stationSystem.GetOwningStation(pda.Owner);
             if (TryComp(stationUid, out AlertLevelComponent? alertComp) &&
                 alertComp.AlertLevels != null)
             {
-                pda.StationAlertLevel = alertComp.CurrentLevel;
+                stationAlert.Level = alertComp.CurrentLevel;
                 if (alertComp.AlertLevels.Levels.TryGetValue(alertComp.CurrentLevel, out var details))
-                    pda.StationAlertColor = details.Color;
-            }
-            else
-            {
-                pda.StationAlertLevel = null;
-                pda.StationAlertColor = Color.White;
+                    stationAlert.Color = details.Color;
             }
 
             List<string> accessLevels;
@@ -158,9 +159,9 @@ namespace Content.Server.PDA
 
             UpdateStationName(pda);
 
-            var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, accessLevelsConvert,
-                stationTime, pda.StationName, false, hasInstrument,
-                address, pda.StationAlertLevel, pda.StationAlertColor);
+            var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo,
+                accessLevelsConvert, stationTime, stationAlert, pda.StationName, false,
+                hasInstrument, address);
 
             _cartridgeLoaderSystem?.UpdateUiState(pda.Owner, state);
 
@@ -172,8 +173,8 @@ namespace Content.Server.PDA
                 return;
 
             var uplinkState = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo,
-                accessLevelsConvert, stationTime, pda.StationName, true, hasInstrument, address,
-                state.StationAlertLevel);
+                accessLevelsConvert, stationTime, stationAlert, pda.StationName, true,
+                hasInstrument, address);
 
             foreach (var session in ui.SubscribedSessions)
             {
@@ -259,35 +260,33 @@ namespace Content.Server.PDA
             if (!_uiSystem.TryGetUi(pda.Owner, PDAUiKey.Key, out var ui))
                 return;
 
-            var ownerInfo = new PDAIdInfoText
+            var ownerInfo = new PdaIdInfoText
             {
                 ActualOwnerName = pda.OwnerName,
                 IdOwner = pda.ContainedID?.FullName,
                 JobTitle = pda.ContainedID?.JobTitle
             };
 
-            TimeSpan currentTime;
-            currentTime = GameTicker.RoundDuration();
+            var currentTime = GameTicker.RoundDuration();
             var stationTime = new StationTimeText
             {
                 Hours = currentTime.Hours.ToString(),
                 Minutes = currentTime.Minutes.ToString(),
             };
 
+            var stationAlert = new StationAlert
+            {
+                Level = null,
+                Color = Color.White
+            };
+
             var stationUid = _stationSystem.GetOwningStation(pda.Owner);
             if (TryComp(stationUid, out AlertLevelComponent? alertComp) &&
                 alertComp.AlertLevels != null)
             {
-                pda.StationAlertLevel = alertComp.CurrentLevel;
-                if (!TryComp<AlertLevelComponent>(stationUid, out var alerts))
-                    return;
-                if (alertComp.AlertLevels.Levels.TryGetValue(alerts.CurrentLevel, out var details))
-                    pda.StationAlertColor = details.Color;
-            }
-            else
-            {
-                pda.StationAlertLevel = null;
-                pda.StationAlertColor = Color.White;
+                stationAlert.Level = alertComp.CurrentLevel;
+                if (alertComp.AlertLevels.Levels.TryGetValue(alertComp.CurrentLevel, out var details))
+                    stationAlert.Color = details.Color;
             }
 
             List<string> accessLevels;
@@ -301,7 +300,7 @@ namespace Content.Server.PDA
                 accessLevels = new List<string>();
             }
 
-            List<string> accessLevelsConvert = new List<string>();
+            var accessLevelsConvert = new List<string>();
             foreach (var access in accessLevels)
             {
                 if (!_prototypeManager.TryIndex<AccessLevelPrototype>(access, out var accessLevel))
@@ -316,8 +315,8 @@ namespace Content.Server.PDA
             UpdateStationName(pda);
 
             var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, accessLevelsConvert,
-                stationTime, pda.StationName, true, HasComp<InstrumentComponent>(pda.Owner),
-                GetDeviceNetAddress(pda.Owner), pda.StationAlertLevel, pda.StationAlertColor);
+                stationTime, stationAlert, pda.StationName, true, HasComp<InstrumentComponent>(pda.Owner),
+                GetDeviceNetAddress(pda.Owner));
 
             _cartridgeLoaderSystem?.UpdateUiState(uid, state, args.Session);
         }
