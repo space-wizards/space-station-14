@@ -67,16 +67,6 @@
   event: !type:ToggleClothingEvent
 
 - type: instantAction
-  id: ToggleHypoPort
-  name: action-name-hardsuit-hypo
-  description: action-description-hardsuit-hypo
-  icon:
-    sprite: Objects/Specific/Medical/hypospray.rsi
-    state: hypo
-  useDelay: 1
-  event: !type:ToggleHypoPort
-
-- type: instantAction
   id: CombatModeToggle
   name: action-name-combat
   description: action-description-combat
