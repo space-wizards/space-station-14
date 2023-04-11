@@ -2,49 +2,48 @@ using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Components;
 using Robust.Shared.Random;
 
-namespace Content.Server.Chemistry.EntitySystems
+namespace Content.Server.Chemistry.EntitySystems;
+
+public sealed class SolutionRandomFillSystem : EntitySystem
 {
-    public sealed class SolutionRandomFillSystem : EntitySystem
+    [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
+        base.Initialize();
 
-        public override void Initialize()
+        SubscribeLocalEvent<RandomFillSolutionComponent, MapInitEvent>(OnRandomSolutionFillMapInit);
+    }
+
+    public void OnRandomSolutionFillMapInit(EntityUid uid, RandomFillSolutionComponent component, MapInitEvent args)
+    {
+
+        var target = _solutionsSystem.EnsureSolution(uid, component.Solution);
+        var sumOfWeights = 0;
+
+        foreach (var picked  in component.RandomList)
         {
-            base.Initialize();
-
-            SubscribeLocalEvent<RandomFillSolutionComponent, MapInitEvent>(OnRandomSolutionFillMapInit);
+            sumOfWeights += (int) picked.Weight;
         }
 
-        public void OnRandomSolutionFillMapInit(EntityUid uid, RandomFillSolutionComponent component, MapInitEvent args)
+        sumOfWeights = _random.Next(sumOfWeights);
+        Solution? randSolution = null;
+
+        foreach (var picked in component.RandomList)
         {
+            sumOfWeights -= (int) picked.Weight;
 
-            var target = _solutionsSystem.EnsureSolution(uid, component.Solution);
-            var sumOfWeights = 0;
-
-            foreach (var picked  in component.RandomList)
+            if (sumOfWeights <= 0)
             {
-                sumOfWeights += (int) picked.Weight;
+                randSolution = picked.RandReagents;
+                break;
             }
+        }
 
-            sumOfWeights = _random.Next(sumOfWeights);
-            Solution? randSolution = null;
-
-            foreach (var picked in component.RandomList)
-            {
-                sumOfWeights -= (int) picked.Weight;
-
-                if (sumOfWeights <= 0)
-                {
-                    randSolution = picked.RandReagents;
-                    break;
-                }
-            }
-
-            if (randSolution != null)
-            {
-                target.AddSolution(randSolution, null);
-            }
+        if (randSolution != null)
+        {
+            target.AddSolution(randSolution, null);
         }
     }
 }
