@@ -60,7 +60,6 @@ namespace Content.Server.PDA.Ringer
                 TryComp<StoreComponent>(uid, out var store))
             {
                 var user = args.Session.AttachedEntity.Value;
-                Logger.Info($"{ToPrettyString(user):player} opened uplink {ToPrettyString(uid):uplink}");
                 _store.ToggleUi(args.Session.AttachedEntity.Value, uid, store);
             }
         }
