@@ -468,6 +468,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         if (!RuleAdded)
             return;
 
+        if (!SpawnMap())
+        {
+            Logger.InfoS("nukies", "Failed to load map for nukeops");
+            return;
+        }
+
         // Basically copied verbatim from traitor code
         var playersPerOperative = _nukeopsRuleConfig.PlayersPerOperative;
         var maxOperatives = _nukeopsRuleConfig.MaxOperatives;
@@ -801,6 +807,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void SpawnOperativesForGhostRoles()
     {
+        if (!SpawnMap())
+        {
+            Logger.InfoS("nukies", "Failed to load map for nukeops");
+            return;
+        }
         // Basically copied verbatim from traitor code
         var playersPerOperative = _nukeopsRuleConfig.PlayersPerOperative;
         var maxOperatives = _nukeopsRuleConfig.MaxOperatives;
@@ -869,13 +880,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         foreach (var proto in new[] { _nukeopsRuleConfig.EliteNames, _nukeopsRuleConfig.NormalNames })
         {
             _operativeNames.Add(proto, new List<string>(_prototypeManager.Index<DatasetPrototype>(proto).Values));
-        }
-
-
-        if (!SpawnMap())
-        {
-            Logger.InfoS("nukies", "Failed to load map for nukeops");
-            return;
         }
 
         // Add pre-existing nuke operatives to the credit list.
