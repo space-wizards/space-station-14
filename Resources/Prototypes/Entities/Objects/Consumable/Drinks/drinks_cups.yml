@@ -66,6 +66,9 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 3
     fillBaseName: icon-
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 25
 
 - type: entity
   parent: DrinkBaseMug
@@ -130,6 +133,9 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_metal.rsi
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 25
 
 - type: entity
   parent: DrinkBaseMug

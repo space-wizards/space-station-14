@@ -72,6 +72,9 @@
     damage:
       types:
         Blunt: 5
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 25
 
 # Transformable container - normal glass
 - type: entity
@@ -2164,7 +2167,6 @@
   - type: Tag
     tags:
     - Trash
-  - type: Recyclable
   - type: SpaceGarbage
 
 - type: entity

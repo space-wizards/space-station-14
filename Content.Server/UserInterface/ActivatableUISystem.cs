@@ -45,7 +45,7 @@ namespace Content.Server.UserInterface
             if (!comp.RequireHands)
                 return;
 
-            if (!TryComp(ev.Sender.AttachedEntity, out SharedHandsComponent? hands) || hands.Hands.Count == 0)
+            if (!TryComp(ev.Sender.AttachedEntity, out HandsComponent? hands) || hands.Hands.Count == 0)
                 ev.Cancel();
         }
 
@@ -111,7 +111,7 @@ namespace Content.Server.UserInterface
             if (!_blockerSystem.CanInteract(user, aui.Owner) && (!aui.AllowSpectator || !HasComp<GhostComponent>(user)))
                 return false;
 
-            if (aui.RequireHands && !HasComp<SharedHandsComponent>(user))
+            if (aui.RequireHands && !HasComp<HandsComponent>(user))
                 return false;
 
             if (!EntityManager.TryGetComponent(user, out ActorComponent? actor)) return false;

@@ -51,8 +51,6 @@
   - type: Material
     materials:
       Glass: 100
-  - type: StackPrice
-    price: 5
   - type: Stack
     stackType: Glass
   - type: Sprite
