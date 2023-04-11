@@ -1,10 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: Contents of pill canisters can now be dumped onto the ground and tables.,
-    type: Tweak}
-  id: 2878
-  time: '2023-01-16T02:37:56.0000000+00:00'
 - author: noudoit
   changes:
   - {message: Added spooky ghost sheet., type: Add}
@@ -2916,3 +2910,8 @@ Entries:
   - {message: Chameleon masks can now mimic breath masks., type: Fix}
   id: 3377
   time: '2023-04-11T00:31:15.0000000+00:00'
+- author: freeman2651
+  changes:
+  - {message: Pill dosage limit reduced to 20u from 50u., type: Tweak}
+  id: 3378
+  time: '2023-04-11T01:23:35.0000000+00:00'
