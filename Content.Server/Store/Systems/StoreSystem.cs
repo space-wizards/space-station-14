@@ -1,6 +1,5 @@
 using Content.Server.Mind.Components;
 using Content.Server.Store.Components;
-using Content.Server.Traitor;
 using Content.Server.UserInterface;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
@@ -8,6 +7,7 @@ using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Store;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using System.Linq;
 
@@ -69,10 +69,10 @@ public sealed partial class StoreSystem : EntitySystem
         if (args.Target == null || !TryComp<StoreComponent>(args.Target, out var store))
             return;
 
-        // prevent valid checking traitors by inserting tc
-        // still lets crew use nukie uplinks since they don't have owners
+        // require the store to be open before inserting currency
         var user = args.User;
-        if (store.Traitor && store.AccountOwner != null && !(TryComp<MindComponent>(user, out var mind) && mind.Mind != null && mind.Mind.HasRole<TraitorRole>()))
+        Logger.DebugS("TEMP_error", $"open: {_ui.SessionHasOpenUi(uid, StoreUiKey.Key, Comp<ActorComponent>(user).PlayerSession)}");
+        if (!TryComp<ActorComponent>(user, out var actor) || !_ui.SessionHasOpenUi(uid, StoreUiKey.Key, actor.PlayerSession))
             return;
 
         args.Handled = TryAddCurrency(GetCurrencyValue(uid, component), args.Target.Value, store);
@@ -171,7 +171,6 @@ public sealed partial class StoreSystem : EntitySystem
         component.Preset = preset.ID;
         component.CurrencyWhitelist.UnionWith(preset.CurrencyWhitelist);
         component.Categories.UnionWith(preset.Categories);
-        component.Traitor = preset.Traitor;
         if (component.Balance == new Dictionary<string, FixedPoint2>() && preset.InitialBalance != null) //if we don't have a value stored, use the preset
             TryAddCurrency(preset.InitialBalance, uid, component);
 
