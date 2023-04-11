@@ -1,10 +1,4 @@
 Entries:
-- author: Theomund
-  changes:
-  - {message: Construction and crafting messages now appear above the user instead
-      of the mouse cursor., type: Fix}
-  id: 2877
-  time: '2023-01-16T02:29:45.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: Contents of pill canisters can now be dumped onto the ground and tables.,
@@ -2917,3 +2911,8 @@ Entries:
     type: Fix}
   id: 3376
   time: '2023-04-10T22:35:43.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Chameleon masks can now mimic breath masks., type: Fix}
+  id: 3377
+  time: '2023-04-11T00:31:15.0000000+00:00'
