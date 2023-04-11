@@ -9111,12 +9111,12 @@ entities:
     type: GridAtmosphere
   - type: OccluderTree
   - type: Shuttle
-  - nextUpdate: 8187.135845
+  - nextUpdate: 0.45
     type: GridPathfinding
+  - nextUpdate: 1
+    type: SpreaderGrid
   - type: RadiationGridResistance
   - type: GasTileOverlay
-  - nextUpdate: 0
-    type: SpreaderGrid
 - uid: 61
   type: GasVentScrubber
   components:
@@ -67312,8 +67312,10 @@ entities:
     type: Fixtures
   - type: OccluderTree
   - type: Shuttle
-  - nextUpdate: 1984.9758152
+  - nextUpdate: 0.45
     type: GridPathfinding
+  - nextUpdate: 1
+    type: SpreaderGrid
   - gravityShakeSound: !type:SoundPathSpecifier
       path: /Audio/Effects/alert.ogg
     type: Gravity
@@ -67526,8 +67528,6 @@ entities:
     type: GridAtmosphere
   - type: GasTileOverlay
   - type: RadiationGridResistance
-  - nextUpdate: 0
-    type: SpreaderGrid
 - uid: 7537
   type: ClothingNeckScarfStripedBlue
   components:
@@ -97141,7 +97141,7 @@ entities:
     type: Transform
   - charge: 100
     type: GravityGenerator
-  - radius: 175.75
+  - radius: 4
     type: PointLight
 - uid: 11695
   type: VendingMachineSciDrobe

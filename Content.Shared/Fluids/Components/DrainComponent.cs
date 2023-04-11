@@ -36,11 +36,11 @@ namespace Content.Server.Fluids.Components
         [DataField("unitsPerSecond")]
         public float UnitsPerSecond = 6f;
 
-        /// <summary>
-        /// How many units are ejected from the buffer per second.
-        /// </summary>
-        [DataField("unitsDestroyedPerSecond")]
-        public float UnitsDestroyedPerSecond = 1f;
+    /// <summary>
+    /// How many units are ejected from the buffer per second.
+    /// </summary>
+    [DataField("unitsDestroyedPerSecond")]
+    public float UnitsDestroyedPerSecond = 3f;
 
         /// <summary>
         /// How many (unobstructed) tiles away the drain will
