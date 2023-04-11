@@ -121,17 +121,23 @@ public sealed class BloodstreamSystem : EntitySystem
                 // The effect is applied in a way that it will never be cleared without being healthy, and progressively gets worse
                 // Multiplying by 2 is arbitrary but works for this case
 
-                /* this value should be added and storeds in the component, so we can easily seperate it from normal bleed
+                /* this value should be added and stored in the component, so we can easily seperate it from normal bleed
                     and then remove only the bleed portion of a drunk effect. */
                 _drunkSystem.TryApplyDrunkenness(uid, bloodstream.UpdateInterval*2, false);
+
+                // storing the drunk time so we can remove it independantly from other effects
+                bloodstream.DrunkTime += bloodstream.UpdateInterval * 2;
+
             }
             else
             {
                 // If they're healthy, we'll try and heal some bloodloss instead.
                 _damageableSystem.TryChangeDamage(uid, bloodstream.BloodlossHealDamage * bloodPercentage, true, false);
 
-                // Remove the drunk effect when healthy.
-                _drunkSystem.TryRemoveDrunkenness(uid);
+                // Remove the drunk effect when healthy. Should only remove the amount of drunk added by low blood level
+                _drunkSystem.TryRemoveDrunkenessTime(uid, bloodstream.DrunkTime);
+                // Reset the drunk time to zero
+                bloodstream.DrunkTime = 0;
 
             }
         }

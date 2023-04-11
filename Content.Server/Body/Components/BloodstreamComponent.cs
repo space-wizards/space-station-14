@@ -146,5 +146,12 @@ namespace Content.Server.Body.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public Solution BloodTemporarySolution = default!;
+
+        //I kind of forgot why I needed this
+        /// <summary>
+        /// Variable that stores the amount of drunk time added by having a low blood level.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float DrunkTime;
     }
 }
