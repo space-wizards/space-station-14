@@ -149,6 +149,9 @@
       "name": "security_officer"
     },
     {
+      "name": "security_cadet"
+    },
+    {
       "name": "miner"
     },
     {
