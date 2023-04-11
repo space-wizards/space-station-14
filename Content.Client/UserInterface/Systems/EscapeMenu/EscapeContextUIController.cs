@@ -24,7 +24,7 @@ public sealed class EscapeContextUIController : UIController
         var closeRecentWindowUIController = _userInterfaceManager.GetUIController<CloseRecentWindowUIController>();
         var escapeUIController = _userInterfaceManager.GetUIController<EscapeUIController>();
 
-        if (closeRecentWindowUIController.HasClosableWindows())
+        if (closeRecentWindowUIController.HasClosableWindow())
         {
             closeRecentWindowUIController.CloseMostRecentWindow();
         }
