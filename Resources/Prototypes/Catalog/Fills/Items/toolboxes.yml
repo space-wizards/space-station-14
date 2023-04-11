@@ -85,3 +85,16 @@
         amount: 1
       - id: DrinkGoldenCup
         prob: 0.05
+
+- type: entity
+  id: ToolboxMechanicalSyndicateFilled
+  name: mechanical toolbox
+  suffix: Filled, Syndicate
+  parent: ToolboxMechanical
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingBeltUtilityFilled
+      - id: ClothingHandsGlovesColorYellow
+      - id: ClothingHeadHatHardhatRed
+        prob: 0.7

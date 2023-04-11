@@ -619,6 +619,42 @@
     whitelist:
     - Clown
 
+- type: listing
+  id: uplinkToolBoxFake
+  name: uplink-toolbox-fake-name
+  description: uplink-toolbox-fake-desc
+  productEntity: ToolboxMechanicalSyndicateFilled
+  cost:
+    Telecrystal: 3
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Mime
+    - Clown
+    - Botanist
+    - Passenger
+    - CargoTechnician
+
+- type: listing
+  id: uplinkBoxPoison
+  name: uplink-box-poison-bottle-name
+  description: uplink-box-poison-bottle-desc
+  productEntity: BoxBottlePoison
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Botanist
+    - Chemist
+    - MedicalDoctor
+    - Bartender
+    - Chef
+    
 # Armor
 
 - type: listing
@@ -886,6 +922,16 @@
   productEntity: ClothingBackpackDuffelSyndicateCostumeClown
   cost:
     Telecrystal: 4
+  categories:
+  - UplinkPointless
+
+- type: listing
+  id: UplinkCostumeCentCom
+  name: uplink-costume-centcom-name
+  description: uplink-costume-centcom-desc
+  productEntity: ClothingBackpackDuffelSyndicateCostumeCentcom
+  cost:
+    Telecrystal: 5
   categories:
   - UplinkPointless
 

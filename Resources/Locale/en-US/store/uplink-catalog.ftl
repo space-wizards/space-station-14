@@ -157,6 +157,12 @@ uplink-revolver-cap-gun-fake-desc = Fool your enemy! It can use both cap and mag
 uplink-banana-peel-explosive-name = Explosive Banana Peel
 uplink-banana-peel-explosive-desc = They will burst into laughter when they slip on it!
 
+uplink-toolbox-fake-name = Syndicate mechanical toolbox
+uplink-toolbox-fake-desc = A blue box full of mechanical tools. But there are insulated gloves in it.
+
+uplink-box-poison-bottle-name = Box of poisons
+uplink-box-poison-bottle-desc = A box containing 3 types of poison for the quiet execution of tasks.
+
 # Armor
 uplink-chameleon-name = Chameleon Kit
 uplink-chameleon-desc = A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!
@@ -232,6 +238,9 @@ uplink-costume-pyjama-desc = Contains 3 pairs of syndicate pyjamas and 3 plushie
 uplink-costume-clown-name = Clown Costume Duffel Bag
 uplink-costume-clown-desc = Contains a complete Clown outfit. Includes PDA and service radio.
 
+uplink-costume-centcom-name = CentCom official costume duffel bag
+uplink-costume-centcom-desc = Contains a complete CentCom outfit. Includes PDA and service radio.
+
 uplink-operative-suit-name = Operative Jumpsuit
 uplink-operative-suit-desc = A suit given to our nuclear operatives with fine fabric to make sure you stand out, no other benefits aside from looking cool.
 
@@ -240,4 +249,3 @@ uplink-operative-skirt-desc = A skirt given to our nuclear operatives with fine 
 
 uplink-balloon-name = Syndie Balloon
 uplink-balloon-desc = Handed out to the bravest souls who survived the "atomic twister" ride at Syndieland.
-

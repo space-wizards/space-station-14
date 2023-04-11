@@ -213,3 +213,54 @@
   - type: Tag
     tags:
     - Bottle
+
+- type: entity
+  id: ToxinChemistryBottle
+  name: toxin bottle
+  description: A weak toxin that can kill.
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
+  id: AmatoxinChemistryBottle
+  name: amatoxin bottle
+  description: An average toxin that can kill.
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Amatoxin
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
+  id: HistamineChemistryBottle
+  name: histamine bottle
+  description: A strong toxin that can kill.
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Histamine
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle

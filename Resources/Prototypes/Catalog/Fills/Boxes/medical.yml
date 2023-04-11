@@ -115,3 +115,23 @@
     whitelist:
       tags:
         - BodyBag
+
+- type: entity
+  name: bottle box
+  parent: BoxCardboard
+  id: BoxBottlePoison
+  description: A box full of bottles.
+  suffix: Poison
+  components:
+  - type: StorageFill
+    contents:
+      - id: ToxinChemistryBottle
+        amount: 2
+      - id: AmatoxinChemistryBottle
+        amount: 2
+      - id: HistamineChemistryBottle
+        amount: 2
+  - type: Sprite
+    layers:
+      - state: box
+      - state: bottle
