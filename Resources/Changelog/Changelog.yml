@@ -1,9 +1,4 @@
 Entries:
-- author: noudoit
-  changes:
-  - {message: Added Honk mother communication device - banana phone!, type: Add}
-  id: 2882
-  time: '2023-01-16T14:06:29.0000000+00:00'
 - author: moony, ElectroSR
   changes:
   - {message: 'An in-game guide has been added. It is accessible via a keybinding
@@ -2916,3 +2911,8 @@ Entries:
   - {message: Default menu toggle moved from F12 to F10, type: Tweak}
   id: 3381
   time: '2023-04-11T03:40:07.0000000+00:00'
+- author: Skyedra
+  changes:
+  - {message: '''Esc Menu'' title renamed to ''Game Menu''', type: Tweak}
+  id: 3382
+  time: '2023-04-11T06:26:39.0000000+00:00'
