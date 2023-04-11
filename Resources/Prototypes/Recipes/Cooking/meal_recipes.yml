@@ -144,6 +144,15 @@
     FoodMeatCorgi: 1
 
 - type: microwaveMealRecipe
+  id: RecipeHamletBurger
+  name: Hamlet burger
+  result: FoodBurgerHamlet
+  time: 5
+  soids:
+    FoodBreadBun: 1
+    MobHamsterHamlet: 1
+
+- type: microwaveMealRecipe
   id: RecipeSuperBiteBurger
   name: super bite burger recipe
   result: FoodBurgerSuper

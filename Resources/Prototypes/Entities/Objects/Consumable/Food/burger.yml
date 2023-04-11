@@ -241,6 +241,20 @@
         - ReagentId: Vitamin
           Quantity: 12
 
+- type: entity
+  name: hamlet burger
+  parent: FoodBurgerBase
+  id: FoodBurgerHamlet
+  description: Poor Hamlet...
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - cheesy
+      - meaty
+  - type: Sprite
+    state: ian
+
 # Note: I would put a bunch of colored burgers here as listed in the tg .dm but
 # I'd rather wait for a custom burger component.
 
