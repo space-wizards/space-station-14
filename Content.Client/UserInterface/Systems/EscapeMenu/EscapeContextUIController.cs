@@ -1,4 +1,5 @@
 ﻿using Content.Client.UserInterface.Systems.Info;
+using Content.Shared.Input;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
@@ -14,7 +15,7 @@ public sealed class EscapeContextUIController : UIController
 
     public override void Initialize()
     {
-        _inputManager.SetInputCommand(EngineKeyFunctions.EscapeContext,
+        _inputManager.SetInputCommand(ContentKeyFunctions.EscapeContext,
             InputCmdHandler.FromDelegate(_ => Esc()));
     }
 
