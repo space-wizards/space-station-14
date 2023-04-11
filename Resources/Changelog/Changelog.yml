@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Added a guidebook entry for machine upgrades., type: Add}
-  id: 2885
-  time: '2023-01-16T16:53:24.0000000+00:00'
 - author: ZoldorfTheWizard
   changes:
   - {message: mechs now do not move if broken or are unpowered., type: Tweak}
@@ -2914,3 +2909,8 @@ Entries:
   - {message: Tools no longer make sounds if using them fails., type: Fix}
   id: 3384
   time: '2023-04-11T17:31:12.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Added Brigmedic job and other things for brigmedic., type: Add}
+  id: 3385
+  time: '2023-04-11T23:11:01.0000000+00:00'
