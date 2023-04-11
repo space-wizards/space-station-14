@@ -8,6 +8,7 @@ ent-SalvagePartsT3Spawner = спавнер деталей устройств 3/4
     .desc = { ent-MarkerBase.desc }
 ent-SalvageMobSpawner = спавнер моб на обломке
     .desc = { ent-MarkerBase.desc }
+    .suffix = 25
 ent-SpaceTickSpawner = спавнер космический клещ
     .suffix = 100
     .desc = { ent-MarkerBase.desc }

@@ -12,3 +12,6 @@ ent-GrenadeFlash = светошумовая граната
     .desc = { ent-BaseGrenade.desc }
 ent-GrenadeFrag = осколочная граната
     .desc = { ent-BaseGrenade.desc }
+ent-CannonBall = cannonball
+    .suffix = Pirate
+    .desc = { ent-BaseGrenade.desc }

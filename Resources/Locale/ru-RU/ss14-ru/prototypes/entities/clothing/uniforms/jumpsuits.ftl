@@ -179,3 +179,5 @@ ent-ClothingUniformJumpsuitCluwne = костюм клувеня
     .suffix = Неснимаемый
 ent-ClothingUniformJumpsuitDameDane = костюм якудзы
     .desc = Какой же я дурак...
+ent-ClothingUniformJumpsuitPirate = pirate slops
+    .desc = A pirate variation of a space sailor's jumpsuit.

@@ -6,3 +6,5 @@ ent-Machete = мачете
     .desc = Большой, зловеще выглядящий клинок.
 ent-Claymore = клеймор
     .desc = Древний воинский меч.
+ent-Cutlass = cutlass
+    .desc = A wickedly curved blade, often seen in the hands of space pirates.

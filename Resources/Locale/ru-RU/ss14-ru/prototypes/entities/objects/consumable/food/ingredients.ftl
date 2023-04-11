@@ -1,5 +1,3 @@
-ent-PuddleFlour = мука
-    .desc = Зовите уборщика.
 ent-ReagentContainerBase = { ent-BaseItem }
     .desc = { ent-BaseItem.desc }
 ent-ReagentContainerFlour = мешок муки

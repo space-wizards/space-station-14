@@ -1,5 +1,6 @@
 ent-BaseXenoArtifact = инопланетный артефакт
     .desc = Странное устройство пришельцев.
+    .suffix = { "" }
 ent-SimpleXenoArtifact = { ent-BaseXenoArtifact }
     .suffix = Простой
     .desc = { ent-BaseXenoArtifact.desc }
