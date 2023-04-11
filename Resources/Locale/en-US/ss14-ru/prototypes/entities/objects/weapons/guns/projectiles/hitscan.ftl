@@ -1,3 +1,2 @@
 ent-HitscanEffect = { "" }
     .desc = { "" }
-    .suffix = { "" }

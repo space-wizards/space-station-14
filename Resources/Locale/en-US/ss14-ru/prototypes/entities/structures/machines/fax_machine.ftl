@@ -1,6 +1,5 @@
 ent-FaxMachineBase = long range fax machine
     .desc = Bluespace technologies on the application of bureaucracy.
-    .suffix = { "" }
 ent-FaxMachineCentcom = centcom long range fax machine
     .suffix = Centcom
     .desc = { ent-FaxMachineBase.desc }

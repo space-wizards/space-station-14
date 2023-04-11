@@ -1,10 +1,9 @@
-
-using Content.Shared.Interaction.Components;
-using Content.Server.Hands.Components;
+using Content.Shared.Destructible;
+using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Storage;
 using Content.Shared.Tag;
-using Content.Shared.Destructible;
 using Robust.Shared.Random;
 
 namespace Content.Server.Tools.Innate

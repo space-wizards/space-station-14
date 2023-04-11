@@ -94,5 +94,7 @@ ent-ClothingHeadHatJesterAlt = { ent-ClothingHeadHatJester }
     .desc = { ent-ClothingHeadHatJester.desc }
 ent-ClothingHeadHatBeretCmo = берет главного врача
     .desc = Бирюзовый берет с крестом на передней части. Его вид успокаивает и внушает надежду, что вас обязательно вылечат.
+ent-ClothingHeadHatPirateTricord = pirate hat
+    .desc = Yo ho ho and a bottle of rum!
 ent-ClothingHeadClothingHeadHatWatermelon = арбузный шлем
     .desc = Небрежно отрезанная половина арбуза, выпотрошенная изнутри, для ношения в качестве шлема. Она способна смягчить удар по голове.

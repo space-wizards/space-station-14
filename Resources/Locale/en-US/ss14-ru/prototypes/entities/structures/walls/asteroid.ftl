@@ -6,7 +6,6 @@ ent-AsteroidRockMining = asteroid rock
     .suffix = higher ore yield
 ent-WallRock = rock
     .desc = { ent-BaseStructure.desc }
-    .suffix = { "" }
 ent-WallRockGold = { ent-WallRock }
     .desc = An ore vein rich with gold
     .suffix = Gold

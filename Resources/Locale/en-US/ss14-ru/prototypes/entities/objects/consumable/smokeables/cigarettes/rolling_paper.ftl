@@ -1,9 +1,7 @@
 ent-PackPaperRolling = pack of rolling paper
     .desc = A pack of thin pieces of paper used to make fine smokeables.
-    .suffix = { "" }
 ent-PackPaperRollingFilters = pack of rolling paper with filters
     .desc = A pack of filters and thin pieces of paper used to make fine smokeables.
-    .suffix = { "" }
 ent-PaperRolling = rolling paper
     .desc = A thin piece of paper used to make fine smokeables.
     .suffix = Full

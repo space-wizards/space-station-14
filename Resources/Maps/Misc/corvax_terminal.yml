@@ -13888,12 +13888,6 @@ entities:
     pos: 4.5031085,23.713804
     parent: 2
     type: Transform
-- uid: 1927
-  type: PuddleVomitToxin
-  components:
-  - pos: -3.5,23.5
-    parent: 2
-    type: Transform
 - uid: 1928
   type: ComfyChair
   components:
@@ -13903,18 +13897,6 @@ entities:
     type: Transform
   - bodyType: Static
     type: Physics
-- uid: 1929
-  type: PuddleVomitToxin
-  components:
-  - pos: 0.5,25.5
-    parent: 2
-    type: Transform
-- uid: 1930
-  type: PuddleVomitToxin
-  components:
-  - pos: 0.5,25.5
-    parent: 2
-    type: Transform
 - uid: 1931
   type: WindowReinforcedDirectional
   components:

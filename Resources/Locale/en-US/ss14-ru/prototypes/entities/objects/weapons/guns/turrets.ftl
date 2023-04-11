@@ -1,9 +1,7 @@
 ent-WeaponTurretSyndicateBroken = ballistic turret (broken)
     .desc = A ballistic machine gun auto-turret.
-    .suffix = { "" }
 ent-BaseWeaponTurret = ballistic turret
     .desc = { ent-BaseStructure.desc }
-    .suffix = { "" }
 ent-WeaponTurretSyndicate = { ent-BaseWeaponTurret }
     .suffix = Syndicate
     .desc = { ent-BaseWeaponTurret.desc }

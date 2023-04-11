@@ -42,3 +42,5 @@ ent-BulletCap = cap bullet
     .desc = { ent-BaseBullet.desc }
 ent-BulletAcid = acid spit
     .desc = { ent-BaseBullet.desc }
+ent-BulletCannonBall = cannonball
+    .desc = { ent-BaseBulletTrigger.desc }

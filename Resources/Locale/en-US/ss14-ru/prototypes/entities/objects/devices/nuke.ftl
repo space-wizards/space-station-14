@@ -1,6 +1,5 @@
 ent-NuclearBomb = nuclear fission explosive
     .desc = You probably shouldn't stick around to see if this is armed.
-    .suffix = { "" }
 ent-NuclearBombUnanchored = { ent-NuclearBomb }
     .suffix = unanchored
     .desc = { ent-NuclearBomb.desc }

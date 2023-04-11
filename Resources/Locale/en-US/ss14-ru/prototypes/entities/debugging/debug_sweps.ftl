@@ -15,7 +15,5 @@ ent-MeleeDebugGib = bang stick gibber
     .suffix = DEBUG
 ent-MeleeDebug100 = bang stick 100dmg
     .desc = { ent-MeleeDebugGib.desc }
-    .suffix = { "" }
 ent-MeleeDebug200 = bang stick 200dmg
     .desc = { ent-MeleeDebugGib.desc }
-    .suffix = { "" }

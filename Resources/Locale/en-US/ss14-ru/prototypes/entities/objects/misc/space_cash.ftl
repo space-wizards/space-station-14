@@ -1,6 +1,5 @@
 ent-SpaceCash = spacebucks
     .desc = You gotta have money.
-    .suffix = { "" }
 ent-SpaceCash10 = { ent-SpaceCash }
     .suffix = 10
     .desc = { ent-SpaceCash.desc }

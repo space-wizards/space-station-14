@@ -48,3 +48,4 @@ ent-LockerSyndicatePersonal = оружейный шкаф
     .desc = Это персональное хранилище для оперативного снаряжения.
 ent-LockerBluespaceStation = блюспейс шкаф
     .desc = Передовая технология шкафчикостроения.
+    .suffix = once to station

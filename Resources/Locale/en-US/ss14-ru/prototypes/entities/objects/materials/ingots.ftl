@@ -1,6 +1,5 @@
 ent-IngotBase = { ent-BaseItem }
     .desc = A heavy metal ingot stamped with the Nanotrasen logo.
-    .suffix = { "" }
 ent-IngotGold = gold bar
     .suffix = Full
     .desc = { ent-IngotBase.desc }

@@ -6,4 +6,3 @@ ent-MachineFrame = machine frame
     .desc = { "" }
 ent-MachineFrameDestroyed = destroyed machine frame
     .desc = { ent-BaseStructureDynamic.desc }
-    .suffix = { "" }

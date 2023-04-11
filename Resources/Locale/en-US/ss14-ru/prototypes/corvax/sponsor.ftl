@@ -36,7 +36,6 @@ ent-ClothingUniformJumpsuitHoSOld = old head of security's jumpsuit
     .suffix = Sponsor
 ent-ClothingHandsWatchDivine = divine watches
     .desc = This watch can only be worn by a divine person
-    .suffix = { "" }
 ent-ClothingHandsGlovesLeatherUSSPBlack = old ussp leather gloves
     .desc = Black leather gloves from USSP
     .suffix = Sponsor

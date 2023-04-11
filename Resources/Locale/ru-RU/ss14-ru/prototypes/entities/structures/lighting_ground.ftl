@@ -1,5 +1,6 @@
 ent-BaseLightStructure = { ent-BaseStructure }
     .desc = { ent-BaseStructure.desc }
+    .suffix = { "" }
 ent-LightPostSmall = фонарный столб
     .desc = Обесточенный осветительный прибор.
     .suffix = Обесточенный

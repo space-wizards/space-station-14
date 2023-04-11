@@ -1,9 +1,7 @@
 ent-Windoor = windoor
     .desc = It's a window and a sliding door. Wow!
-    .suffix = { "" }
 ent-WindoorSecure = secure windoor
     .desc = It's a sturdy window and a sliding door. Wow!
-    .suffix = { "" }
 ent-WindoorBarLocked = { ent-Windoor }
     .suffix = Bar, Locked
     .desc = { ent-Windoor.desc }
