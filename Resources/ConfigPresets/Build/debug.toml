@@ -8,9 +8,3 @@ enabled = false
 
 [shuttle]
 auto_call_time = 0
-
-[net]
-fakelagmin = 0.075
-fakeloss = 0.005
-fakeduplicates = 0.005
-fakelagrand = 0.0 # Net code is not robust.

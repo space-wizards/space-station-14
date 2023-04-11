@@ -140,6 +140,10 @@
     - PetWearable
     - WhitelistChameleon
   - type: Recyclable
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50
+      Plastic: 100
 
 - type: entity
   parent: ClothingMaskBase
