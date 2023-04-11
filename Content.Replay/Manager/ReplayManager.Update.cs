@@ -1,18 +1,15 @@
 using System.Linq;
 using Content.Client.RoundEnd;
 using Content.Client.UserInterface.Systems.Chat;
-using Content.Replay.Observer;
 using Content.Shared.Administration;
 using Content.Shared.Chat;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands;
-using Content.Shared.Movement.Components;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Network.Messages;
-using Robust.Shared.Physics.Systems;
 using Robust.Shared.Replays;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -59,20 +56,6 @@ public sealed partial class ReplayManager
 
         _timing.CurTick += 1;
         _entMan.TickUpdate(args.DeltaSeconds, noPredictions: true);
-
-        // TODO REPLAYS fix this shit.
-        // This is extremely hacky. Seeing as the client isn't actually running physics/predictions while playing back a
-        // replay (noPredictions: true), but we still need the observer/ghost to move somehow.
-        // Maybe I should just add custom mover code that is specific to replays???
-        //
-        // For now: I will just re-use existing movement controllers + physics
-        // by relying on the fact that only the player's currently controlled entity gets predicted:
-        if (_player.LocalPlayer?.ControlledEntity is { } player && player.IsClientSide() && _entMan.HasComponent<ReplayObserverComponent>(player))
-        {
-            _entMan.EntitySysManager.GetEntitySystem<SharedPhysicsSystem>().Update(args.DeltaSeconds);
-            if (_entMan.TryGetComponent(_player.LocalPlayer?.ControlledEntity, out InputMoverComponent? mover))
-                mover.LastInputTick = GameTick.Zero;
-        }
 
         if (!Playing || Steps == null)
             return;

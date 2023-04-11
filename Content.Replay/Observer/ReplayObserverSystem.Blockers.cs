@@ -1,4 +1,3 @@
-using Content.Shared.DragDrop;
 using Content.Shared.Hands;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
@@ -9,7 +8,7 @@ using Content.Shared.Throwing;
 
 namespace Content.Replay.Observer;
 
-public sealed partial class ReplayObserverSystem : EntitySystem
+public sealed partial class ReplayObserverSystem
 {
     private void InitializeBlockers()
     {

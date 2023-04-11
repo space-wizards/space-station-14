@@ -1,26 +1,18 @@
-using Content.Client.Gameplay;
-using Content.Client.UserInterface.Systems.Actions.Widgets;
-using Content.Client.UserInterface.Systems.Alerts.Widgets;
-using Content.Client.UserInterface.Systems.Chat;
-using Content.Client.UserInterface.Systems.Ghost.Widgets;
-using Content.Client.UserInterface.Systems.Hotbar.Widgets;
-using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Replay.UI;
-using Content.Replay.UI.TimeWidget;
 using Content.Shared.Movement.Components;
 using Content.Shared.Verbs;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.State;
 using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Movement.Systems;
+using Robust.Client.Graphics;
+using Robust.Shared.Configuration;
 using Robust.Shared.Utility;
-using static Robust.Client.UserInterface.Controls.LayoutContainer;
 
 namespace Content.Replay.Observer;
 
@@ -36,8 +28,10 @@ public sealed partial class ReplayObserverSystem : EntitySystem
 {
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IConsoleHost _conHost = default!;
-    [Dependency] private readonly IUserInterfaceManager _uiMan = default!;
     [Dependency] private readonly IStateManager _stateMan = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly SharedMoverController _mover = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     public override void Initialize()
     {
@@ -48,6 +42,7 @@ public sealed partial class ReplayObserverSystem : EntitySystem
         SubscribeLocalEvent<ReplayObserverComponent, PlayerDetachedEvent>(OnDetached);
 
         InitializeBlockers();
+        InitializeMovement();
         _conHost.RegisterCommand("observe", ObserveCommand);
     }
 
@@ -55,6 +50,7 @@ public sealed partial class ReplayObserverSystem : EntitySystem
     {
         base.Shutdown();
         _conHost.UnregisterCommand("observe");
+        ShutdownMovement();
     }
     private void OnDetached(EntityUid uid, ReplayObserverComponent component, PlayerDetachedEvent args)
     {
@@ -201,7 +197,7 @@ public sealed partial class ReplayObserverSystem : EntitySystem
         var xform = Transform(ent);
 
         if (gridAttach)
-            xform.AttachToGridOrMap();
+            _transform.AttachToGridOrMap(ent);
 
         _player.LocalPlayer.AttachEntity(ent);
 
