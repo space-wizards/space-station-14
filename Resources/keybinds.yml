@@ -407,6 +407,10 @@ binds:
 - function: EscapeContext
   type: State
   key: Escape
+- function: WindowCloseAll
+  type: State
+  key: Escape
+  mod1: Shift
 - function: Point
   type: State
   key: MouseMiddle
