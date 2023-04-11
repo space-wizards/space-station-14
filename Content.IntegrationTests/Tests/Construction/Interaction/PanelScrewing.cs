@@ -36,7 +36,7 @@ public sealed class PanelScrewing : InteractionTest
         Assert.That(comp.IsApcOpen, Is.False);
     }
 
-    // Test wires panel on both airlocks & tcomms severs. These both use the same component, but comms may have
+    // Test wires panel on both airlocks & tcomms servers. These both use the same component, but comms may have
     // conflicting interactions due to encryption key removal interactions.
     [Test]
     [TestCase("Airlock")]
