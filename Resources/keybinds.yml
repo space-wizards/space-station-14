@@ -404,13 +404,9 @@ binds:
   type: State
   key: Tab
   mod1: Shift
-- function: WindowCloseRecent
+- function: EscapeContext
   type: State
   key: Escape
-- function: WindowCloseAll
-  type: State
-  key: Escape
-  mod1: Shift
 - function: Point
   type: State
   key: MouseMiddle

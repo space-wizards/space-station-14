@@ -32,7 +32,7 @@ public sealed class CloseRecentWindowUIController : UIController
             InputCmdHandler.FromDelegate(session => CloseMostRecentWindow()));
     }
 
-    private void CloseMostRecentWindow()
+    public void CloseMostRecentWindow()
     {
         // Search backwards through the recency list to find a still open window and close it
         for (int i=recentlyInteractedWindows.Count-1; i>=0; i--)
@@ -118,5 +118,9 @@ public sealed class CloseRecentWindowUIController : UIController
             SetMostRecentlyInteractedWindow((BaseWindow) control);
         }
     }
-}
 
+    public bool HasClosableWindows()
+    {
+        return recentlyInteractedWindows.Count > 0;
+    }
+}

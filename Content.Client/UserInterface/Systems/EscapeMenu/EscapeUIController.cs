@@ -133,7 +133,7 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
         _escapeWindow?.Close();
     }
 
-    private void ToggleWindow()
+    public void ToggleWindow()
     {
         if (_escapeWindow == null)
             return;
