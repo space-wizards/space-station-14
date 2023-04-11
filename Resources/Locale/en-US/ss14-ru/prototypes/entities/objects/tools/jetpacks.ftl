@@ -1,9 +1,7 @@
 ent-JetpackEffect = { "" }
     .desc = { "" }
-    .suffix = { "" }
 ent-BaseJetpack = Jetpack
     .desc = It's a jetpack.
-    .suffix = { "" }
 ent-JetpackBlue = jetpack
     .suffix = Empty
     .desc = { ent-BaseJetpack.desc }

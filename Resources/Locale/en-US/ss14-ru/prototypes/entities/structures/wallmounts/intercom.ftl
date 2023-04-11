@@ -1,9 +1,7 @@
 ent-Intercom = intercom
     .desc = An intercom. For when the station just needs to know something.
-    .suffix = { "" }
 ent-IntercomAssesmbly = intercom assembly
     .desc = An intercom. It doesn't seem very helpful right now.
-    .suffix = { "" }
 ent-IntercomCommand = { ent-Intercom }
     .suffix = Command
     .desc = { ent-Intercom.desc }

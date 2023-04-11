@@ -1,15 +1,10 @@
 ent-BaseMagazineMagnumSubMachineGun = Vector magazine (.45 magnum)
     .desc = { ent-BaseItem.desc }
-    .suffix = { "" }
 ent-MagazineMagnumSubMachineGun = Vector magazine (.45 magnum)
     .desc = { ent-BaseMagazineMagnumSubMachineGun.desc }
-    .suffix = { "" }
 ent-MagazineMagnumSubMachineGunHighVelocity = Vector magazine (.45 magnum High-Velocity)
     .desc = { ent-BaseMagazineMagnumSubMachineGun.desc }
-    .suffix = { "" }
 ent-MagazineMagnumSubMachineGunPractice = Vector magazine (.45 magnum practice)
     .desc = { ent-BaseMagazineMagnumSubMachineGun.desc }
-    .suffix = { "" }
 ent-MagazineMagnumSubMachineGunRubber = Vector magazine (.45 magnum rubber)
     .desc = { ent-BaseMagazineMagnumSubMachineGun.desc }
-    .suffix = { "" }

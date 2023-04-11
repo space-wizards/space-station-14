@@ -1,6 +1,5 @@
 ent-SurveillanceWirelessCameraBase = wireless camera
     .desc = A camera. It's watching you. Kinda.
-    .suffix = { "" }
 ent-SurveillanceWirelessCameraAnchoredBase = { ent-SurveillanceWirelessCameraBase }
     .suffix = Anchored
     .desc = { ent-SurveillanceWirelessCameraBase.desc }

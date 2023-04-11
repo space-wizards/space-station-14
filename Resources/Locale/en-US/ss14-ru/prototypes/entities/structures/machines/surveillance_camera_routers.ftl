@@ -1,6 +1,5 @@
 ent-SurveillanceCameraRouterBase = camera router
     .desc = A surveillance camera router. It routes. Perhaps.
-    .suffix = { "" }
 ent-SurveillanceCameraRouterConstructed = { ent-SurveillanceCameraRouterBase }
     .suffix = Constructed
     .desc = { ent-SurveillanceCameraRouterBase.desc }
@@ -30,7 +29,6 @@ ent-SurveillanceCameraRouterGeneral = { ent-SurveillanceCameraRouterBase }
     .desc = { ent-SurveillanceCameraRouterBase.desc }
 ent-SurveillanceCameraWirelessRouterBase = wireless camera router
     .desc = A wireless surveillance camera router. It routes. Perhaps.
-    .suffix = { "" }
 ent-SurveillanceCameraWirelessRouterConstructed = { ent-SurveillanceCameraWirelessRouterBase }
     .suffix = Constructed
     .desc = { ent-SurveillanceCameraWirelessRouterBase.desc }

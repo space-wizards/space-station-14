@@ -3,7 +3,6 @@ ent-PaperWrittenSalvageLoreMedium1PlasmaTrap = { ent-Paper }
     .desc = { ent-Paper.desc }
 ent-SalvageLorePaperGamingSpawner = Salvage Lore Paper Gaming Spawner
     .desc = { ent-MarkerBase.desc }
-    .suffix = { "" }
 ent-PaperWrittenSalvageLoreGaming1 = { ent-Paper }
     .suffix = Salvage: Lore: Gaming 1
     .desc = { ent-Paper.desc }

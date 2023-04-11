@@ -15,7 +15,6 @@ ent-WaterTankFull = { ent-WaterTank }
     .desc = { ent-WaterTank.desc }
 ent-WaterCooler = { ent-WaterTankFull }
     .desc = { ent-WaterTankFull.desc }
-    .suffix = { "" }
 ent-WaterTankHighCapacity = { ent-StorageTank }
     .suffix = Full
     .desc = { ent-StorageTank.desc }
