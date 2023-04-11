@@ -25,7 +25,7 @@ namespace Content.Shared.Placeable
 
         public void SetPlaceable(EntityUid uid, bool isPlaceable, PlaceableSurfaceComponent? surface = null)
         {
-            if (!Resolve(uid, ref surface))
+            if (!Resolve(uid, ref surface, false))
                 return;
 
             surface.IsPlaceable = isPlaceable;

@@ -4,6 +4,9 @@ technologies-basic-research-technology-description = Nanotrasen basic research t
 technologies-cleaning-technology = Cleaning technology
 technologies-cleaning-technology-description = Start to a shiny clean station.
 
+technologies-advanced-cleaning-technology = Advanced cleaning technology
+technologies-advanced-cleaning-technology-description = Advanced mop won't stop people from trashing the station, sadly.
+
 technologies-foodbev-technology = Food and beverage technology
 technologies-food-and-beverage-technology-description = Robust service from better technology.
 
@@ -87,3 +90,6 @@ technologies-ripley-technology-description = The latest and greatest in mechaniz
 
 technologies-adv-parts-technology-description = Like the previous ones, but better!
 technologies-adv-parts-technology = Advanced parts technology
+
+technologies-super-parts-technology = Super parts technology
+technologies-super-parts-technology-description = New heights of machine performance.

@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "snow"
+    },
+    {
+      "name": "snow_corner",
+      "directions": 8
+    },
+    {
+      "name": "snow_surround",
+      "directions": 4
+    },
+    {
+      "name": "gravsnow"
+    },
+    {
+      "name": "gravsnow_corner",
+      "directions": 8
+    },
+    {
+      "name": "gravsnow_surround",
+      "directions": 4
+    },
+    {
+      "name": "plating"
+    },
+    {
+      "name": "platingdrift",
+      "directions": 4
+    },
+    {
+      "name": "ice"
+    },
+    {
+      "name": "snowwhite"
+    },
+    {
+      "name": "snow0"
+    },
+    {
+      "name": "snow1"
+    },
+    {
+      "name": "snow2"
+    },
+    {
+      "name": "snow3"
+    },
+    {
+      "name": "snow4"
+    },
+    {
+      "name": "snow5"
+    },
+    {
+      "name": "snow6"
+    },
+    {
+      "name": "snow7"
+    },
+    {
+      "name": "snow8"
+    },
+    {
+      "name": "snow9"
+    },
+    {
+      "name": "snow10"
+    },
+    {
+      "name": "snow11"
+    },
+    {
+      "name": "snow12"
+    },
+    {
+      "name": "snowplating"
+    },
+    {
+      "name": "permafrost"
+    },
+    {
+      "name": "edge0",
+      "directions": 4
+    },
+    {
+      "name": "edge1",
+      "directions": 4
+    },
+    {
+      "name": "edge2",
+      "directions": 4
+    }
+  ]
+}

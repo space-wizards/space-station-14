@@ -357,3 +357,29 @@
   id: NukeOp
   components:
     - type: NukeOperative
+
+- type: entity
+  id: RandomHumanoidSpawnerCluwne
+  name: Cluwne
+  suffix: spawns a cluwne
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Markers/jobs.rsi
+      state: cluwne
+    - type: RandomHumanoidSpawner
+      settings: Cluwne
+    - type: RandomMetadata
+      nameSegments:
+      - names_first
+      - names_last
+
+
+- type: randomHumanoidSettings
+  id: Cluwne
+  randomizeName: false
+  components:
+    - type: GhostTakeoverAvailable
+      name: Cluwne
+      description: Become a pitiful cluwne, your only goal in life is to find a sweet release from your suffering (usually by being beaten to death). A cluwne is not an antagonist but may defend itself. Crewmembers may murder cluwnes freely.
+    - type: Cluwne

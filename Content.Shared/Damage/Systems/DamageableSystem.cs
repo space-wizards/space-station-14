@@ -99,10 +99,10 @@ namespace Content.Shared.Damage
         ///     Useful for some unfriendly folk. Also ensures that cached values are updated and that a damage changed
         ///     event is raised.
         /// </remarks>
-        public void SetDamage(DamageableComponent damageable, DamageSpecifier damage)
+        public void SetDamage(EntityUid uid, DamageableComponent damageable, DamageSpecifier damage)
         {
             damageable.Damage = damage;
-            DamageChanged(damageable);
+            DamageChanged(uid, damageable);
         }
 
         /// <summary>
@@ -112,19 +112,19 @@ namespace Content.Shared.Damage
         ///     This updates cached damage information, flags the component as dirty, and raises a damage changed event.
         ///     The damage changed event is used by other systems, such as damage thresholds.
         /// </remarks>
-        public void DamageChanged(DamageableComponent component, DamageSpecifier? damageDelta = null,
+        public void DamageChanged(EntityUid uid, DamageableComponent component, DamageSpecifier? damageDelta = null,
             bool interruptsDoAfters = true, EntityUid? origin = null)
         {
             component.DamagePerGroup = component.Damage.GetDamagePerGroup(_prototypeManager);
             component.TotalDamage = component.Damage.Total;
             Dirty(component);
 
-            if (EntityManager.TryGetComponent<AppearanceComponent>(component.Owner, out var appearance) && damageDelta != null)
+            if (EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearance) && damageDelta != null)
             {
                 var data = new DamageVisualizerGroupData(damageDelta.GetDamagePerGroup(_prototypeManager).Keys.ToList());
-                _appearance.SetData(component.Owner, DamageVisualizerKeys.DamageUpdateGroups, data, appearance);
+                _appearance.SetData(uid, DamageVisualizerKeys.DamageUpdateGroups, data, appearance);
             }
-            RaiseLocalEvent(component.Owner, new DamageChangedEvent(component, damageDelta, interruptsDoAfters, origin));
+            RaiseLocalEvent(uid, new DamageChangedEvent(component, damageDelta, interruptsDoAfters, origin));
         }
 
         /// <summary>
@@ -159,6 +159,12 @@ namespace Content.Shared.Damage
                 return damage;
             }
 
+            var before = new BeforeDamageChangedEvent(damage);
+            RaiseLocalEvent(uid.Value, ref before);
+
+            if (before.Cancelled)
+                return null;
+
             // Apply resistances
             if (!ignoreResistances)
             {
@@ -169,7 +175,7 @@ namespace Content.Shared.Damage
                 }
 
                 var ev = new DamageModifyEvent(damage);
-                RaiseLocalEvent(uid.Value, ev, false);
+                RaiseLocalEvent(uid.Value, ev);
                 damage = ev.Damage;
 
                 if (damage.Empty)
@@ -189,7 +195,7 @@ namespace Content.Shared.Damage
 
             if (!delta.Empty)
             {
-                DamageChanged(damageable, delta, interruptsDoAfters, origin);
+                DamageChanged(uid.Value, damageable, delta, interruptsDoAfters, origin);
             }
 
             return delta;
@@ -201,7 +207,7 @@ namespace Content.Shared.Damage
         /// <remakrs>
         ///     Does nothing If the given damage value is negative.
         /// </remakrs>
-        public void SetAllDamage(DamageableComponent component, FixedPoint2 newValue)
+        public void SetAllDamage(EntityUid uid, DamageableComponent component, FixedPoint2 newValue)
         {
             if (newValue < 0)
             {
@@ -216,7 +222,7 @@ namespace Content.Shared.Damage
 
             // Setting damage does not count as 'dealing' damage, even if it is set to a larger value, so we pass an
             // empty damage delta.
-            DamageChanged(component, new DamageSpecifier());
+            DamageChanged(uid, component, new DamageSpecifier());
         }
 
         public void SetDamageModifierSetId(EntityUid uid, string damageModifierSetId, DamageableComponent? comp = null)
@@ -258,7 +264,7 @@ namespace Content.Shared.Damage
 
         private void OnRejuvenate(EntityUid uid, DamageableComponent component, RejuvenateEvent args)
         {
-            SetAllDamage(component, 0);
+            SetAllDamage(uid, component, 0);
         }
 
         private void DamageableHandleState(EntityUid uid, DamageableComponent component, ref ComponentHandleState args)
@@ -278,10 +284,16 @@ namespace Content.Shared.Damage
             if (!delta.Empty)
             {
                 component.Damage = newDamage;
-                DamageChanged(component, delta);
+                DamageChanged(uid, component, delta);
             }
         }
     }
+
+    /// <summary>
+    ///     Raised before damage is done, so stuff can cancel it if necessary.
+    /// </summary>
+    [ByRefEvent]
+    public record struct BeforeDamageChangedEvent(DamageSpecifier Delta, bool Cancelled=false);
 
     /// <summary>
     ///     Raised on an entity when damage is about to be dealt,

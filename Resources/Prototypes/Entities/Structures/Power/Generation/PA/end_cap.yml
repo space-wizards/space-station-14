@@ -7,10 +7,13 @@
     - type: Sprite
       sprite: Structures/Power/Generation/PA/end_cap.rsi
       state: capc
+    - type: ParticleAcceleratorPart
     - type: ParticleAcceleratorEndCap
     - type: Construction
       graph: ParticleAcceleratorEndCap
       node: completed
+    - type: GuideHelp
+      guides: [ Singularity, Power ]
 
 # Unfinished
 
@@ -30,3 +33,5 @@
       graph: ParticleAcceleratorEndCap
       node: start
       defaultTarget: completed
+    - type: GuideHelp
+      guides: [ Singularity, Power ]

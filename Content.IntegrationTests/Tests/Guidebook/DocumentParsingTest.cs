@@ -58,7 +58,7 @@ whitespace before newlines are ignored.
             ctrl = new Control();
             Assert.That(parser.TryAddMarkup(ctrl, TestDocument));
         });
-        
+
         Assert.That(ctrl.ChildCount, Is.EqualTo(7));
 
         var richText1 = ctrl.GetChild(0) as RichTextLabel;
@@ -84,11 +84,11 @@ whitespace before newlines are ignored.
         Assert.NotNull(test4);
         Assert.NotNull(test5);
 
-        Assert.That(test1?.ChildCount, Is.EqualTo(0));
-        Assert.That(test2?.ChildCount, Is.EqualTo(0));
-        Assert.That(test3?.ChildCount, Is.EqualTo(2));
-        Assert.That(test4?.ChildCount, Is.EqualTo(0));
-        Assert.That(test5?.ChildCount, Is.EqualTo(1));
+        Assert.That(test1!.ChildCount, Is.EqualTo(0));
+        Assert.That(test2!.ChildCount, Is.EqualTo(0));
+        Assert.That(test3!.ChildCount, Is.EqualTo(2));
+        Assert.That(test4!.ChildCount, Is.EqualTo(0));
+        Assert.That(test5!.ChildCount, Is.EqualTo(1));
 
         var subText = test3.GetChild(0) as RichTextLabel;
         var subTest = test3.GetChild(1) as TestControl;
@@ -99,27 +99,27 @@ whitespace before newlines are ignored.
 
         var subTest2 = test5.GetChild(0) as TestControl;
         Assert.NotNull(subTest2);
-        Assert.That(subTest2?.ChildCount, Is.EqualTo(0));
+        Assert.That(subTest2!.ChildCount, Is.EqualTo(0));
 
-        Assert.That(test1?.Params?.Count, Is.EqualTo(0));
-        Assert.That(test2?.Params?.Count, Is.EqualTo(0));
-        Assert.That(test3?.Params?.Count, Is.EqualTo(0));
-        Assert.That(test4?.Params?.Count, Is.EqualTo(3));
-        Assert.That(test5?.Params?.Count, Is.EqualTo(0));
-        Assert.That(subTest2?.Params?.Count, Is.EqualTo(1));
+        Assert.That(test1.Params.Count, Is.EqualTo(0));
+        Assert.That(test2.Params.Count, Is.EqualTo(0));
+        Assert.That(test3.Params.Count, Is.EqualTo(0));
+        Assert.That(test4.Params.Count, Is.EqualTo(3));
+        Assert.That(test5.Params.Count, Is.EqualTo(0));
+        Assert.That(subTest2.Params.Count, Is.EqualTo(1));
 
-        string? val = null;
-        test4?.Params?.TryGetValue("key1", out val);
+        string? val;
+        test4.Params.TryGetValue("key1", out val);
         Assert.That(val, Is.EqualTo("value1"));
 
-        test4?.Params?.TryGetValue("key2", out val);
+        test4.Params.TryGetValue("key2", out val);
         Assert.That(val, Is.EqualTo("value2 with spaces"));
 
-        test4?.Params?.TryGetValue("key3", out val);
+        test4.Params.TryGetValue("key3", out val);
         Assert.That(val, Is.EqualTo(@"value3 with a 
   newline"));
 
-        subTest2?.Params?.TryGetValue("k", out val);
+        subTest2.Params.TryGetValue("k", out val);
         Assert.That(val, Is.EqualTo(@"<>\>=""=<-_?*3.0//"));
 
         await pairTracker.CleanReturnAsync();

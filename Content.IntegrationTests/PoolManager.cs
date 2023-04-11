@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -39,18 +40,23 @@ namespace Content.IntegrationTests;
 /// </summary>
 public static class PoolManager
 {
-    private static readonly (string cvar, string value, bool tryAdd)[] ServerTestCvars =
+    private static readonly (string cvar, string value)[] ServerTestCvars =
     {
-        (CCVars.DatabaseSynchronous.Name, "true", false),
-        (CCVars.DatabaseSqliteDelay.Name, "0", false),
-        (CCVars.HolidaysEnabled.Name, "false", false),
-        (CCVars.GameMap.Name, "Empty", true),
-        (CCVars.AdminLogsQueueSendDelay.Name, "0", true),
-        (CCVars.NetPVS.Name, "false", true),
-        (CCVars.NPCMaxUpdates.Name, "999999", true),
-        (CCVars.SysWinTickPeriod.Name, "0", true),
-        (CCVars.ThreadParallelCount.Name, "1", true),
-        (CCVars.GameRoleTimers.Name, "false", false),
+        // @formatter:off
+        (CCVars.DatabaseSynchronous.Name,     "true"),
+        (CCVars.DatabaseSqliteDelay.Name,     "0"),
+        (CCVars.HolidaysEnabled.Name,         "false"),
+        (CCVars.GameMap.Name,                 "Empty"),
+        (CCVars.AdminLogsQueueSendDelay.Name, "0"),
+        (CVars.NetPVS.Name,                   "false"),
+        (CCVars.NPCMaxUpdates.Name,           "999999"),
+        (CVars.ThreadParallelCount.Name,      "1"),
+        (CCVars.GameRoleTimers.Name,          "false"),
+        (CCVars.CargoShuttles.Name,           "false"),
+        (CCVars.ArrivalsShuttles.Name,        "false"),
+        (CCVars.EmergencyShuttleEnabled.Name, "false"),
+        (CCVars.ProcgenPreload.Name,          "false"),
+        // @formatter:on
     };
 
     private static int PairId;
@@ -73,7 +79,9 @@ public static class PoolManager
         });
     }
 
-    private static async Task<RobustIntegrationTest.ServerIntegrationInstance> GenerateServer(PoolSettings poolSettings)
+    private static async Task<(RobustIntegrationTest.ServerIntegrationInstance, PoolTestLogHandler)> GenerateServer(
+        PoolSettings poolSettings,
+        TextWriter testOut)
     {
         var options = new RobustIntegrationTest.ServerIntegrationOptions
         {
@@ -109,11 +117,16 @@ public static class PoolManager
             IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Error;
         };
 
+        var logHandler = new PoolTestLogHandler("SERVER");
+        logHandler.ActivateContext(testOut);
+
+        options.OverrideLogHandler = () => logHandler;
+
         SetupCVars(poolSettings, options);
 
         var server = new RobustIntegrationTest.ServerIntegrationInstance(options);
         await server.WaitIdleAsync();
-        return server;
+        return (server, logHandler);
     }
 
     /// <summary>
@@ -157,7 +170,9 @@ public static class PoolManager
         }
     }
 
-    private static async Task<RobustIntegrationTest.ClientIntegrationInstance> GenerateClient(PoolSettings poolSettings)
+    private static async Task<(RobustIntegrationTest.ClientIntegrationInstance, PoolTestLogHandler)> GenerateClient(
+        PoolSettings poolSettings,
+        TextWriter testOut)
     {
         var options = new RobustIntegrationTest.ClientIntegrationOptions
         {
@@ -199,11 +214,15 @@ public static class PoolManager
             });
         };
 
+        var logHandler = new PoolTestLogHandler("CLIENT");
+        logHandler.ActivateContext(testOut);
+        options.OverrideLogHandler = () => logHandler;
+
         SetupCVars(poolSettings, options);
 
         var client = new RobustIntegrationTest.ClientIntegrationInstance(options);
         await client.WaitIdleAsync();
-        return client;
+        return (client, logHandler);
     }
 
     private static void SetupCVars(PoolSettings poolSettings, RobustIntegrationTest.IntegrationOptions options)
@@ -218,20 +237,19 @@ public static class PoolManager
             options.CVarOverrides[CCVars.GameDummyTicker.Name] = "true";
         }
 
-        if (poolSettings.InLobby)
-        {
-            options.CVarOverrides[CCVars.GameLobbyEnabled.Name] = "true";
-        }
+        options.CVarOverrides[CCVars.GameLobbyEnabled.Name] = poolSettings.InLobby.ToString();
 
         if (poolSettings.DisableInterpolate)
         {
-            options.CVarOverrides[CCVars.NetInterp.Name] = "false";
+            options.CVarOverrides[CVars.NetInterp.Name] = "false";
         }
 
         if (poolSettings.Map != null)
         {
             options.CVarOverrides[CCVars.GameMap.Name] = poolSettings.Map;
         }
+
+        options.CVarOverrides[CCVars.ConfigPresetDevelopment.Name] = "false";
 
         // This breaks some tests.
         // TODO: Figure out which tests this breaks.
@@ -246,51 +264,56 @@ public static class PoolManager
     public static async Task<PairTracker> GetServerClient(PoolSettings poolSettings = null) =>
         await GetServerClientPair(poolSettings ?? new PoolSettings());
 
-    private static string GetDefaultTestName()
+    private static string GetDefaultTestName(TestContext testContext)
     {
-        return TestContext.CurrentContext.Test.FullName
-            .Replace("Content.IntegrationTests.Tests.", "");
+        return testContext.Test.FullName.Replace("Content.IntegrationTests.Tests.", "");
     }
 
     private static async Task<PairTracker> GetServerClientPair(PoolSettings poolSettings)
     {
+        // Trust issues with the AsyncLocal that backs this.
+        var testContext = TestContext.CurrentContext;
+        var testOut = TestContext.Out;
+
         DieIfPoolFailure();
-        var currentTestName = poolSettings.TestName ?? GetDefaultTestName();
+        var currentTestName = poolSettings.TestName ?? GetDefaultTestName(testContext);
         var poolRetrieveTimeWatch = new Stopwatch();
-        await TestContext.Out.WriteLineAsync($"{nameof(GetServerClientPair)}: Called by test {currentTestName}");
+        await testOut.WriteLineAsync($"{nameof(GetServerClientPair)}: Called by test {currentTestName}");
         Pair pair = null;
         try
         {
             poolRetrieveTimeWatch.Start();
             if (poolSettings.MustBeNew)
             {
-                await TestContext.Out.WriteLineAsync(
+                await testOut.WriteLineAsync(
                     $"{nameof(GetServerClientPair)}: Creating pair, because settings of pool settings");
-                pair = await CreateServerClientPair(poolSettings);
+                pair = await CreateServerClientPair(poolSettings, testOut);
             }
             else
             {
-                await TestContext.Out.WriteLineAsync($"{nameof(GetServerClientPair)}: Looking in pool for a suitable pair");
+                await testOut.WriteLineAsync($"{nameof(GetServerClientPair)}: Looking in pool for a suitable pair");
                 pair = GrabOptimalPair(poolSettings);
                 if (pair != null)
                 {
-                    await TestContext.Out.WriteLineAsync($"{nameof(GetServerClientPair)}: Suitable pair found");
+                    pair.ActivateContext(testOut);
+
+                    await testOut.WriteLineAsync($"{nameof(GetServerClientPair)}: Suitable pair found");
                     var canSkip = pair.Settings.CanFastRecycle(poolSettings);
 
                     if (canSkip)
                     {
-                        await TestContext.Out.WriteLineAsync($"{nameof(GetServerClientPair)}: Cleanup not needed, Skipping cleanup of pair");
+                        await testOut.WriteLineAsync($"{nameof(GetServerClientPair)}: Cleanup not needed, Skipping cleanup of pair");
                     }
                     else
                     {
-                        await TestContext.Out.WriteLineAsync($"{nameof(GetServerClientPair)}: Cleaning existing pair");
-                        await CleanPooledPair(poolSettings, pair);
+                        await testOut.WriteLineAsync($"{nameof(GetServerClientPair)}: Cleaning existing pair");
+                        await CleanPooledPair(poolSettings, pair, testOut);
                     }
                 }
                 else
                 {
-                    await TestContext.Out.WriteLineAsync($"{nameof(GetServerClientPair)}: Creating a new pair, no suitable pair found in pool");
-                    pair = await CreateServerClientPair(poolSettings);
+                    await testOut.WriteLineAsync($"{nameof(GetServerClientPair)}: Creating a new pair, no suitable pair found in pool");
+                    pair = await CreateServerClientPair(poolSettings, testOut);
                 }
             }
 
@@ -299,24 +322,25 @@ public static class PoolManager
         {
             if (pair != null && pair.TestHistory.Count > 1)
             {
-                await TestContext.Out.WriteLineAsync($"{nameof(GetServerClientPair)}: Pair {pair.PairId} Test History Start");
+                await testOut.WriteLineAsync($"{nameof(GetServerClientPair)}: Pair {pair.PairId} Test History Start");
                 for (int i = 0; i < pair.TestHistory.Count; i++)
                 {
-                    await TestContext.Out.WriteLineAsync($"- Pair {pair.PairId} Test #{i}: {pair.TestHistory[i]}");
+                    await testOut.WriteLineAsync($"- Pair {pair.PairId} Test #{i}: {pair.TestHistory[i]}");
                 }
-                await TestContext.Out.WriteLineAsync($"{nameof(GetServerClientPair)}: Pair {pair.PairId} Test History End");
+                await testOut.WriteLineAsync($"{nameof(GetServerClientPair)}: Pair {pair.PairId} Test History End");
             }
         }
         var poolRetrieveTime = poolRetrieveTimeWatch.Elapsed;
-        await TestContext.Out.WriteLineAsync(
+        await testOut.WriteLineAsync(
             $"{nameof(GetServerClientPair)}: Retrieving pair {pair.PairId} from pool took {poolRetrieveTime.TotalMilliseconds} ms");
-        await TestContext.Out.WriteLineAsync(
+        await testOut.WriteLineAsync(
             $"{nameof(GetServerClientPair)}: Returning pair {pair.PairId}");
         pair.Settings = poolSettings;
         pair.TestHistory.Add(currentTestName);
         var usageWatch = new Stopwatch();
         usageWatch.Start();
-        return new PairTracker
+
+        return new PairTracker(testOut)
         {
             Pair = pair,
             UsageWatch = usageWatch
@@ -368,11 +392,11 @@ public static class PoolManager
         }
     }
 
-    private static async Task CleanPooledPair(PoolSettings poolSettings, Pair pair)
+    private static async Task CleanPooledPair(PoolSettings poolSettings, Pair pair, TextWriter testOut)
     {
         var methodWatch = new Stopwatch();
         methodWatch.Start();
-        await TestContext.Out.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Setting CVar ");
+        await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Setting CVar ");
         var configManager = pair.Server.ResolveDependency<IConfigurationManager>();
         await pair.Server.WaitPost(() =>
         {
@@ -381,7 +405,7 @@ public static class PoolManager
         var cNetMgr = pair.Client.ResolveDependency<IClientNetManager>();
         if (!cNetMgr.IsConnected)
         {
-            await TestContext.Out.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Connecting client, and restarting server");
+            await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Connecting client, and restarting server");
             pair.Client.SetConnectTarget(pair.Server);
             await pair.Server.WaitPost(() =>
             {
@@ -394,7 +418,7 @@ public static class PoolManager
         }
         await ReallyBeIdle(pair,11);
 
-        await TestContext.Out.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Disconnecting client, and restarting server");
+        await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Disconnecting client, and restarting server");
 
         await pair.Client.WaitPost(() =>
         {
@@ -405,7 +429,7 @@ public static class PoolManager
 
         if (!string.IsNullOrWhiteSpace(pair.Settings.ExtraPrototypes))
         {
-            await TestContext.Out.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Removing prototypes");
+            await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Removing prototypes");
             if (!pair.Settings.NoServer)
             {
                 var serverProtoManager = pair.Server.ResolveDependency<IPrototypeManager>();
@@ -428,7 +452,7 @@ public static class PoolManager
 
         if (poolSettings.ExtraPrototypes != null)
         {
-            await TestContext.Out.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Adding prototypes");
+            await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Adding prototypes");
             if (!poolSettings.NoServer)
             {
                 await ConfigurePrototypes(pair.Server, poolSettings);
@@ -439,7 +463,7 @@ public static class PoolManager
             }
         }
 
-        await TestContext.Out.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Restarting server again");
+        await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Restarting server again");
         await pair.Server.WaitPost(() =>
         {
             EntitySystem.Get<GameTicker>().RestartRound();
@@ -448,7 +472,7 @@ public static class PoolManager
 
         if (!poolSettings.NotConnected)
         {
-            await TestContext.Out.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Connecting client");
+            await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Connecting client");
             await ReallyBeIdle(pair);
             pair.Client.SetConnectTarget(pair.Server);
             await pair.Client.WaitPost(() =>
@@ -461,7 +485,7 @@ public static class PoolManager
             });
         }
         await ReallyBeIdle(pair);
-        await TestContext.Out.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Done recycling");
+        await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Done recycling");
     }
 
     private static void DieIfPoolFailure()
@@ -483,14 +507,21 @@ we are just going to end this here to save a lot of time. This is the exception 
             Assert.Fail("The pool was shut down");
         }
     }
-    private static async Task<Pair> CreateServerClientPair(PoolSettings poolSettings)
+    private static async Task<Pair> CreateServerClientPair(PoolSettings poolSettings, TextWriter testOut)
     {
         Pair pair;
         try
         {
-            var client = await GenerateClient(poolSettings);
-            var server = await GenerateServer(poolSettings);
-            pair = new Pair { Server = server, Client = client, PairId = Interlocked.Increment(ref PairId) };
+            var (client, clientLog) = await GenerateClient(poolSettings, testOut);
+            var (server, serverLog) = await GenerateServer(poolSettings, testOut);
+            pair = new Pair
+            {
+                Server = server,
+                ServerLogHandler = serverLog,
+                Client = client,
+                ClientLogHandler = clientLog,
+                PairId = Interlocked.Increment(ref PairId)
+            };
         }
         catch (Exception ex)
         {
@@ -647,12 +678,12 @@ public sealed class PoolSettings
     /// <summary>
     /// If the returned pair must not be reused
     /// </summary>
-    public bool MustNotBeReused => Destructive || NoLoadContent || DisableInterpolate || DummyTicker;
+    public bool MustNotBeReused => Destructive || NoLoadContent || DisableInterpolate || DummyTicker || NoToolsExtraPrototypes;
 
     /// <summary>
     /// If the given pair must be brand new
     /// </summary>
-    public bool MustBeNew => Fresh || NoLoadContent || DisableInterpolate || DummyTicker;
+    public bool MustBeNew => Fresh || NoLoadContent || DisableInterpolate || DummyTicker || NoToolsExtraPrototypes;
 
     /// <summary>
     /// If the given pair must not be connected
@@ -744,6 +775,14 @@ public sealed class PoolSettings
         if (ExtraPrototypes != nextSettings.ExtraPrototypes) return false;
         return true;
     }
+
+    // Prototype hot reload is not available outside TOOLS builds,
+    // so we can't pool test instances that use ExtraPrototypes without TOOLS.
+#if TOOLS
+    private bool NoToolsExtraPrototypes => false;
+#else
+    private bool NoToolsExtraPrototypes => !string.IsNullOrEmpty(ExtraPrototypes);
+#endif
 }
 
 /// <summary>
@@ -770,11 +809,26 @@ public sealed class Pair
     public RobustIntegrationTest.ServerIntegrationInstance Server { get; init; }
     public RobustIntegrationTest.ClientIntegrationInstance Client { get; init; }
 
+    public PoolTestLogHandler ServerLogHandler { get; init; }
+    public PoolTestLogHandler ClientLogHandler { get; init; }
+
     public void Kill()
     {
         Dead = true;
         Server.Dispose();
         Client.Dispose();
+    }
+
+    public void ClearContext()
+    {
+        ServerLogHandler.ClearContext();
+        ClientLogHandler.ClearContext();
+    }
+
+    public void ActivateContext(TextWriter testOut)
+    {
+        ServerLogHandler.ActivateContext(testOut);
+        ClientLogHandler.ActivateContext(testOut);
     }
 }
 
@@ -783,24 +837,32 @@ public sealed class Pair
 /// </summary>
 public sealed class PairTracker : IAsyncDisposable
 {
+    private readonly TextWriter _testOut;
     private int _disposed;
+    public Stopwatch UsageWatch { get; set; }
+    public Pair Pair { get; init; }
+
+    public PairTracker(TextWriter testOut)
+    {
+        _testOut = testOut;
+    }
 
     private async Task OnDirtyDispose()
     {
         var usageTime = UsageWatch.Elapsed;
-        await TestContext.Out.WriteLineAsync($"{nameof(DisposeAsync)}: Test gave back pair {Pair.PairId} in {usageTime.TotalMilliseconds} ms");
+        await _testOut.WriteLineAsync($"{nameof(DisposeAsync)}: Test gave back pair {Pair.PairId} in {usageTime.TotalMilliseconds} ms");
         var dirtyWatch = new Stopwatch();
         dirtyWatch.Start();
         Pair.Kill();
         PoolManager.NoCheckReturn(Pair);
         var disposeTime = dirtyWatch.Elapsed;
-        await TestContext.Out.WriteLineAsync($"{nameof(DisposeAsync)}: Disposed pair {Pair.PairId} in {disposeTime.TotalMilliseconds} ms");
+        await _testOut.WriteLineAsync($"{nameof(DisposeAsync)}: Disposed pair {Pair.PairId} in {disposeTime.TotalMilliseconds} ms");
     }
 
     private async Task OnCleanDispose()
     {
         var usageTime = UsageWatch.Elapsed;
-        await TestContext.Out.WriteLineAsync($"{nameof(CleanReturnAsync)}: Test borrowed pair {Pair.PairId} for {usageTime.TotalMilliseconds} ms");
+        await _testOut.WriteLineAsync($"{nameof(CleanReturnAsync)}: Test borrowed pair {Pair.PairId} for {usageTime.TotalMilliseconds} ms");
         var cleanWatch = new Stopwatch();
         cleanWatch.Start();
         // Let any last minute failures the test cause happen.
@@ -824,20 +886,22 @@ public sealed class PairTracker : IAsyncDisposable
             PoolManager.NoCheckReturn(Pair);
             await PoolManager.ReallyBeIdle(Pair);
             var returnTime2 = cleanWatch.Elapsed;
-            await TestContext.Out.WriteLineAsync($"{nameof(CleanReturnAsync)}: Clean disposed in {returnTime2.TotalMilliseconds} ms");
+            await _testOut.WriteLineAsync($"{nameof(CleanReturnAsync)}: Clean disposed in {returnTime2.TotalMilliseconds} ms");
             return;
         }
 
         var sRuntimeLog = Pair.Server.ResolveDependency<IRuntimeLog>();
-        if (sRuntimeLog.ExceptionCount > 0) throw new Exception($"{nameof(CleanReturnAsync)}: Server logged exceptions");
+        if (sRuntimeLog.ExceptionCount > 0)
+            throw new Exception($"{nameof(CleanReturnAsync)}: Server logged exceptions");
         var cRuntimeLog = Pair.Client.ResolveDependency<IRuntimeLog>();
-        if (cRuntimeLog.ExceptionCount > 0) throw new Exception($"{nameof(CleanReturnAsync)}: Client logged exceptions");
+        if (cRuntimeLog.ExceptionCount > 0)
+            throw new Exception($"{nameof(CleanReturnAsync)}: Client logged exceptions");
+
+        Pair.ClearContext();
         PoolManager.NoCheckReturn(Pair);
         var returnTime = cleanWatch.Elapsed;
-        await TestContext.Out.WriteLineAsync($"{nameof(CleanReturnAsync)}: PoolManager took {returnTime.TotalMilliseconds} ms to put pair {Pair.PairId} back into the pool");
+        await _testOut.WriteLineAsync($"{nameof(CleanReturnAsync)}: PoolManager took {returnTime.TotalMilliseconds} ms to put pair {Pair.PairId} back into the pool");
     }
-    public Stopwatch UsageWatch { get; set; }
-    public Pair Pair { get; init; }
 
     public async ValueTask CleanReturnAsync()
     {
@@ -845,7 +909,7 @@ public sealed class PairTracker : IAsyncDisposable
         switch (disposed)
         {
             case 0:
-                await TestContext.Out.WriteLineAsync($"{nameof(CleanReturnAsync)}: Return of pair {Pair.PairId} started");
+                await _testOut.WriteLineAsync($"{nameof(CleanReturnAsync)}: Return of pair {Pair.PairId} started");
                 break;
             case 1:
                 throw new Exception($"{nameof(CleanReturnAsync)}: Already clean returned");
@@ -864,10 +928,10 @@ public sealed class PairTracker : IAsyncDisposable
         switch (disposed)
         {
             case 0:
-                await TestContext.Out.WriteLineAsync($"{nameof(DisposeAsync)}: Dirty return of pair {Pair.PairId} started");
+                await _testOut.WriteLineAsync($"{nameof(DisposeAsync)}: Dirty return of pair {Pair.PairId} started");
                 break;
             case 1:
-                await TestContext.Out.WriteLineAsync($"{nameof(DisposeAsync)}: Pair {Pair.PairId} was properly clean disposed");
+                await _testOut.WriteLineAsync($"{nameof(DisposeAsync)}: Pair {Pair.PairId} was properly clean disposed");
                 return;
             case 2:
                 throw new Exception($"{nameof(DisposeAsync)}: Already dirty disposed pair {Pair.PairId}");
