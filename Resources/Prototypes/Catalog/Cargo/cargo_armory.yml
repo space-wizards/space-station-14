@@ -47,3 +47,13 @@
   cost: 1700
   category: Armory
   group: market
+
+- type: cargoProduct
+  id: ArmoryEliteRevolver
+  icon:
+    sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
+    state: base
+  product: CrateEliteRevolver
+  cost: 4000
+  category: Armory
+  group: market
