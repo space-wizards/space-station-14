@@ -1,10 +1,4 @@
 Entries:
-- author: noudoit
-  changes:
-  - {message: Added spooky ghost sheet., type: Add}
-  - {message: Added butcher method to get ghost sheet, type: Add}
-  id: 2879
-  time: '2023-01-16T07:29:45.0000000+00:00'
 - author: nmajask
   changes:
   - {message: 'added medical lathe recipes for all the medkits, they cost 300 plastic,
@@ -2915,3 +2909,9 @@ Entries:
   - {message: Pill dosage limit reduced to 20u from 50u., type: Tweak}
   id: 3378
   time: '2023-04-11T01:23:35.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Splashing reagents using melee attacks & examining spillables should
+      work properly again, type: Tweak}
+  id: 3379
+  time: '2023-04-11T01:56:21.0000000+00:00'
