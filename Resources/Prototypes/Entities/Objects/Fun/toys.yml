@@ -882,3 +882,6 @@
       collection: ClownRecorder
   - type: UseDelay
     delay: 30.0
+  - type: Tag
+    tags:
+    - ClownRecorder
