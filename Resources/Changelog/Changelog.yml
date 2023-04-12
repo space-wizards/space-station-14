@@ -1,16 +1,4 @@
 Entries:
-- author: nikthechampiongr
-  changes:
-  - {message: 'Epinephrine will now be able to stabilize the smallest crew members
-      of the station such as Ian, and other animals.', type: Tweak}
-  id: 2887
-  time: '2023-01-17T01:47:41.0000000+00:00'
-- author: PixelTK
-  changes:
-  - {message: 'Added a new way to express yourself through small, little LGBTQIA+
-      pins', type: Add}
-  id: 2888
-  time: '2023-01-17T01:51:13.0000000+00:00'
 - author: ZoldorfTheWizard
   changes:
   - {message: Fixes syndicate reinforcements getting swisscheesed by ship turrets
@@ -2914,3 +2902,16 @@ Entries:
   - {message: Plushies and other toys no longer conduct electricity, type: Fix}
   id: 3386
   time: '2023-04-12T00:11:55.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Being unable to deconstruct communications servers., type: Fix}
+  - {message: Fixed metal rods sometimes not being consumed when placing down lattice
+      tiles., type: Fix}
+  id: 3387
+  time: '2023-04-12T00:18:30.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed not showing the ahelp relay label unless the relay was changed
+      while connected., type: Fix}
+  id: 3388
+  time: '2023-04-12T00:19:09.0000000+00:00'
