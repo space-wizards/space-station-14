@@ -84,7 +84,7 @@
     interfaces:
     - key: enum.StrippingUiKey.Key
       type: StrippableBoundUserInterface
-  #- type: GhostTakeoverAvailable
+  #- type: GhostRole
   #  makeSentient: true
   #  name: Maintenance Drone
   #  description: Maintain the station. Ignore other beings except drones.
@@ -93,6 +93,7 @@
   #   1. You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.
   #   2. You may not harm any being, regardless of intent or circumstance.
   #   3. Your goals are to build, maintain, repair, improve, and power to the best of your abilities, You must never actively work against these goals.
+  #- type: GhostTakeoverAvailable
   - type: MovementSpeedModifier
     baseWalkSpeed : 5
     baseSprintSpeed : 5
@@ -186,11 +187,12 @@
     interfaces:
     - key: enum.StrippingUiKey.Key
       type: StrippableBoundUserInterface
-  - type: GhostTakeoverAvailable
+  - type: GhostRole
     makeSentient: true
     name: Onestar Mecha
     description: You are an experimental mecha created by who-knows-what, all you know is that you have weapons and you detect fleshy moving targets nearby...
     rules: Use your weapons to cause havoc. You are an antagonist.
+  - type: GhostTakeoverAvailable
   - type: MovementSpeedModifier
     baseWalkSpeed : 3
     baseSprintSpeed : 2
