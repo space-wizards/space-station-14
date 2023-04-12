@@ -9111,7 +9111,7 @@ entities:
     type: GridAtmosphere
   - type: OccluderTree
   - type: Shuttle
-  - nextUpdate: 0.45
+  - nextUpdate: 238.9200166
     type: GridPathfinding
   - nextUpdate: 1
     type: SpreaderGrid
@@ -21685,29 +21685,11 @@ entities:
       - 0
     type: EntityStorage
 - uid: 1641
-  type: LockerMedicineFilled
+  type: LockerBrigmedicFilled
   components:
   - pos: -19.5,-2.5
     parent: 60
     type: Transform
-  - air:
-      volume: 200
-      immutable: False
-      temperature: 293.1496
-      moles:
-      - 1.6495836
-      - 6.2055764
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    type: EntityStorage
 - uid: 1642
   type: ChairOfficeDark
   components:
@@ -24430,9 +24412,10 @@ entities:
   - bodyType: Static
     type: Physics
 - uid: 1949
-  type: Bed
+  type: ChairOfficeLight
   components:
-  - pos: -18.5,-3.5
+  - rot: -1.5707963267948966 rad
+    pos: -18.5,-3.5
     parent: 60
     type: Transform
 - uid: 1950
@@ -25602,9 +25585,9 @@ entities:
     parent: 60
     type: Transform
 - uid: 2089
-  type: Syringe
+  type: TableGlass
   components:
-  - pos: -18.598316,-2.4746413
+  - pos: -18.5,-2.5
     parent: 60
     type: Transform
 - uid: 2090
@@ -69662,9 +69645,9 @@ entities:
     parent: 60
     type: Transform
 - uid: 7835
-  type: TableGlass
+  type: SpawnPointBrigmedic
   components:
-  - pos: -18.5,-2.5
+  - pos: -19.5,-4.5
     parent: 60
     type: Transform
 - uid: 7836
@@ -87644,9 +87627,10 @@ entities:
     parent: 60
     type: Transform
 - uid: 10368
-  type: BedsheetMedical
+  type: Morgue
   components:
-  - pos: -18.5,-3.5
+  - rot: 3.141592653589793 rad
+    pos: -19.5,-5.5
     parent: 60
     type: Transform
 - uid: 10369
@@ -97141,7 +97125,7 @@ entities:
     type: Transform
   - charge: 100
     type: GravityGenerator
-  - radius: 4
+  - radius: 175.75
     type: PointLight
 - uid: 11695
   type: VendingMachineSciDrobe
@@ -189776,31 +189760,6 @@ entities:
   - pos: -25.5,-28.5
     parent: 60
     type: Transform
-- uid: 24174
-  type: Morgue
-  components:
-  - rot: 3.141592653589793 rad
-    pos: -19.5,-5.5
-    parent: 60
-    type: Transform
-  - air:
-      volume: 200
-      immutable: False
-      temperature: 293.1496
-      moles:
-      - 1.6495836
-      - 6.2055764
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    type: EntityStorage
 - uid: 24175
   type: SpawnVehicleSecway
   components:
