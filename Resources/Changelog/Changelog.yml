@@ -1,9 +1,4 @@
 Entries:
-- author: gus
-  changes:
-  - {message: Flashlights have been buffed., type: Tweak}
-  id: 2891
-  time: '2023-01-17T05:32:17.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Anomaly generator now occupies 1x3 space instead of 3x3 and also doesn't
@@ -2897,3 +2892,8 @@ Entries:
   - {message: Cloth can be used as gauze to stop bleeding!, type: Add}
   id: 3390
   time: '2023-04-12T08:53:10.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix emergency shuttles docking at the wrong airlocks., type: Fix}
+  id: 3391
+  time: '2023-04-12T09:05:55.0000000+00:00'
