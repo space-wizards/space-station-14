@@ -130,7 +130,7 @@
   description: A small box containing an e-dagger. Packaging disintegrates when opened, leaving no evidence behind.
   components:
   - type: Sprite
-    sprite: Objects/storage/penbox.rsi
+    sprite: Objects/Storage/penbox.rsi
     state: exploding_pen
     netsync: false
   - type: SpawnItemsOnUse
