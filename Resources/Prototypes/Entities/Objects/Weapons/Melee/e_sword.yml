@@ -131,7 +131,7 @@
   components:
   - type: Sprite
     sprite: Objects/Storage/penbox.rsi
-    state: exploding_pen
+    state: e_dagger
     netsync: false
   - type: SpawnItemsOnUse
     items:
