@@ -687,6 +687,7 @@
     flavorKind: station-event-random-sentience-flavor-primate
   - type: Inventory
     templateId: monkey
+  - type: InventorySlots
   - type: Fixtures
     fixtures:
     - shape:
@@ -824,7 +825,6 @@
     tags:
     - Trash
     - CannotSuicide
-  - type: Recyclable
   - type: Respirator
     damage:
       types:
@@ -1385,6 +1385,7 @@
   - type: Inventory
     speciesId: possum
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -1439,6 +1440,7 @@
   - type: Inventory
     speciesId: possum #close enough
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -1493,6 +1495,7 @@
   - type: Inventory
     speciesId: fox
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -1548,6 +1551,7 @@
   - type: Inventory
     speciesId: dog
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -1660,6 +1664,7 @@
   - type: Inventory
     speciesId: puppy
     templateId: pet
+  - type: InventorySlots
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1699,6 +1704,7 @@
   - type: Inventory
     speciesId: cat
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -1841,6 +1847,7 @@
   - type: Inventory
     speciesId: sloth
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -1895,6 +1902,7 @@
   - type: Inventory
     speciesId: fox #close enough
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -1997,7 +2005,6 @@
     tags:
     - Trash
     - CannotSuicide
-  - type: Recyclable
   - type: Respirator
     damage:
       types:
@@ -2057,6 +2064,7 @@
   - type: Inventory
     speciesId: pig
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
