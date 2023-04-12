@@ -1,0 +1,29 @@
+- type: entity
+  id: BookshelfFilled
+  parent: Bookshelf
+  suffix: random filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BookRandom
+        amount: 4
+        prob: 1
+      - id: BookRandom
+        prob: 0.4
+      - id: BookRandom
+        prob: 0.4
+      - id: BookRandom
+        prob: 0.4
+      - id: BookRandom
+        amount: 8
+        prob: 0.1
+      - id: BookChemistryInsane
+        prob: 0.1
+      - id: BookBotanicalTextbook
+        prob: 0.1
+      - id: BookGnominomicon
+        prob: 0.1
+      - id: BookFishing
+        prob: 0.1
+      - id: BookDetective
+        prob: 0.1
