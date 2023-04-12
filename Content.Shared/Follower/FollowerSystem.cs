@@ -121,6 +121,7 @@ public sealed class FollowerSystem : EntitySystem
 
         RaiseLocalEvent(uid, uidEv, true);
         RaiseLocalEvent(target, targetEv, false);
+        Dirty(followed);
     }
 
     /// <summary>
