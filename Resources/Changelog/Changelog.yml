@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Lava has been added., type: Add}
-  id: 2898
-  time: '2023-01-17T18:25:32.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Added basalt tiles for lava planets., type: Add}
   id: 2899
   time: '2023-01-17T18:28:38.0000000+00:00'
@@ -2897,3 +2892,9 @@ Entries:
     type: Fix}
   id: 3397
   time: '2023-04-12T18:33:19.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: The Syndicate has started packaging its sinister pens in boxes for easier
+      identification by the end user., type: Tweak}
+  id: 3398
+  time: '2023-04-12T18:44:52.0000000+00:00'
