@@ -1,17 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Added basalt tiles for lava planets., type: Add}
-  id: 2899
-  time: '2023-01-17T18:28:38.0000000+00:00'
-- author: Chief-Engineer
-  changes:
-  - {message: The red phone can now be used to leave a message for Central Command,
-    type: Tweak}
-  - {message: The banana phone can now be used to leave a message for the Honkmother,
-    type: Tweak}
-  id: 2900
-  time: '2023-01-17T18:42:20.0000000+00:00'
 - author: ga
   changes:
   - {message: Added chief medical officer's beret., type: Add}
@@ -2898,3 +2885,14 @@ Entries:
       identification by the end user., type: Tweak}
   id: 3398
   time: '2023-04-12T18:44:52.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Increased passive blood recovery from 0.3u to 1u. This is added every
+      5 seconds., type: Tweak}
+  id: 3399
+  time: '2023-04-12T20:14:42.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Vending machines now use the robot typing indicator., type: Tweak}
+  id: 3400
+  time: '2023-04-12T20:15:28.0000000+00:00'
