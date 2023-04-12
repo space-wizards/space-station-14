@@ -532,6 +532,6 @@
     attributes:
       proper: true
       gender: female
- - type: Tag
+  - type: Tag
     tags:
     - CannotSuicide
