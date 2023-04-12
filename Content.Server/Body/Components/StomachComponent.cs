@@ -1,9 +1,11 @@
 ﻿using Content.Server.Body.Systems;
+using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.FixedPoint;
+using Content.Shared.Whitelist;
 
 namespace Content.Server.Body.Components
 {
-    [RegisterComponent, Access(typeof(StomachSystem))]
+    [RegisterComponent, Access(typeof(StomachSystem), typeof(FoodSystem))]
     public sealed class StomachComponent : Component
     {
         public float AccumulatedFrameTime;
@@ -32,6 +34,12 @@ namespace Content.Server.Body.Components
         /// </summary>
         [DataField("digestionDelay")]
         public float DigestionDelay = 20;
+
+        /// <summary>
+        ///
+        /// </summary>
+        [DataField("specialDigestible")]
+        public EntityWhitelist? SpecialDigestible = null;
 
         /// <summary>
         ///     Used to track how long each reagent has been in the stomach
