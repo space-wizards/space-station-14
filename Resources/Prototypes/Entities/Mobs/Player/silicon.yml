@@ -78,6 +78,7 @@
     group: Drone
   - type: Inventory
     templateId: drone
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:

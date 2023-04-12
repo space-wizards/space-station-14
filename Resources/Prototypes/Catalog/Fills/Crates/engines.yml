@@ -25,7 +25,6 @@
   - type: StorageFill
     contents:
       - id: AMEControllerUnanchored
-        amount: 1
 
 # Singularity
 
@@ -36,7 +35,6 @@
   - type: StorageFill
     contents:
       - id: Emitter
-        amount: 1
 
 - type: entity
   id: CrateEngineeringSingularityCollector
@@ -45,7 +43,6 @@
   - type: StorageFill
     contents:
       - id: RadiationCollector
-        amount: 1
 
 - type: entity
   id: CrateEngineeringSingularityContainment
@@ -54,7 +51,6 @@
   - type: StorageFill
     contents:
       - id: ContainmentFieldGenerator
-        amount: 1
 
 - type: entity
   id: CrateEngineeringSingularityGenerator
@@ -63,7 +59,6 @@
   - type: StorageFill
     contents:
       - id: SingularityGenerator
-        amount: 1
 
 # Particle Accelerator
 
@@ -74,19 +69,12 @@
   - type: StorageFill
     contents:
       - id: MachineParticleAcceleratorEndCapCircuitboard
-        amount: 1
       - id: MachineParticleAcceleratorEmitterLeftCircuitboard
-        amount: 1
       - id: MachineParticleAcceleratorEmitterCenterCircuitboard
-        amount: 1
       - id: MachineParticleAcceleratorEmitterRightCircuitboard
-        amount: 1
       - id: MachineParticleAcceleratorFuelChamberCircuitboard
-        amount: 1
       - id: MachineParticleAcceleratorPowerBoxCircuitboard
-        amount: 1
       - id: ParticleAcceleratorComputerCircuitboard
-        amount: 1
 
 # Non-functional for some reason
 
@@ -108,7 +96,6 @@
   - type: StorageFill
     contents:
       - id: DebugGenerator
-        amount: 1
 
 - type: entity
   id: CrateEngineeringSolar
@@ -126,10 +113,6 @@
   - type: StorageFill
     contents:
       - id: WallmountSubstationElectronics
-        amount: 1
       - id: WallmountGeneratorAPUElectronics
-        amount: 1
       - id: HandheldGPSBasic
-        amount: 1
       - id: InflatableDoorStack1
-        amount: 1

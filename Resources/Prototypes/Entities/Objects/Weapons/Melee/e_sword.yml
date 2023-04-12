@@ -123,15 +123,19 @@
     malus: 0
 
 - type: entity
-  parent: FoodSnackChocolate
-  id: EnergyDaggerWrapped
+  parent: BaseItem
+  id: EnergyDaggerBox
+  name: e-dagger box
   suffix: E-Dagger
-  description: Tastes like cardboard. Has "e-dagger" written on the back.
+  description: A small box containing an e-dagger. Packaging disintegrates when opened, leaving no evidence behind.
   components:
+  - type: Sprite
+    sprite: Objects/storage/penbox.rsi
+    state: exploding_pen
+    netsync: false
   - type: SpawnItemsOnUse
     items:
-      - id: FoodPacketChocolateTrash
-      - id: EnergyDagger
+    - id: EnergyDagger
     sound:
       path: /Audio/Effects/unwrap.ogg
 

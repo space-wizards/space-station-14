@@ -359,6 +359,36 @@
 
 - type: entity
   parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitBrigmed
+  name: brigmed hardsuit
+  description: Special hardsuit of the guardian angel of the brig. It is the medical version of the security hardsuit.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/brigmed.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/brigmed.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 5500
+  - type: DiseaseProtection
+    protection: 0.2
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.85
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.75
+        Heat: 0.9
+        Radiation: 0.30
+        Caustic: 0.2
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitBrigmed
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitWarden
   name: warden's hardsuit
   description: A specialized riot suit geared to combat low pressure environments while maintaining agility.

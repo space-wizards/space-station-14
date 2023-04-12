@@ -59,7 +59,7 @@
   name: uplink-edagger-name
   description: uplink-edagger-desc
   icon: { sprite: /Textures/Objects/Weapons/Melee/e_dagger.rsi, state: icon }
-  productEntity: EnergyDaggerWrapped
+  productEntity: EnergyDaggerBox
   cost:
     Telecrystal: 3
   categories:
@@ -157,7 +157,7 @@
   name: uplink-exploding-pen-name
   description: uplink-exploding-pen-desc
   icon: { sprite: /Textures/Objects/Misc/bureaucracy.rsi, state: pen }
-  productEntity: PenExplodingWrapped
+  productEntity: PenExplodingBox
   cost:
     Telecrystal: 5
   categories:
@@ -316,7 +316,7 @@
   name: uplink-hypopen-name
   description: uplink-hypopen-desc
   icon: { sprite: /Textures/Objects/Misc/bureaucracy.rsi, state: pen }
-  productEntity: HypopenWrapped
+  productEntity: HypopenBox
   cost:
     Telecrystal: 6
   categories:
