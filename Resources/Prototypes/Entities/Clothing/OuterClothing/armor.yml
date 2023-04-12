@@ -163,6 +163,9 @@
   - type: ExplosionResistance
     damageCoefficient: 0.8
   - type: GroupExamine
+  - type: Tag
+    tags:
+    - Hardsuit
 
 - type: entity
   parent: ClothingOuterBaseLarge
