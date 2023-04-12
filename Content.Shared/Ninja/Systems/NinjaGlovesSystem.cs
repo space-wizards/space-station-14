@@ -143,7 +143,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
             && gloves.User != null
             && !_combatMode.IsInCombatMode(gloves.User)
             && _timing.IsFirstTimePredicted
-            && TryComp<SharedHandsComponent>(gloves.User, out var hands)
+            && TryComp<HandsComponent>(gloves.User, out var hands)
             && hands.ActiveHandEntity == null)
         {
             user = gloves.User.Value;
