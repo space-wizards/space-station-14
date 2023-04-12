@@ -73,10 +73,10 @@ namespace Content.Server.Power.EntitySystems
             while (enumerator.MoveNext(out var uid, out var netBat, out var bat))
             {
                 var netCharge = netBat.NetworkBattery.CurrentStorage;
-                if (MathHelper.CloseToPercent(bat.CurrentCharge, netCharge))
+                if (MathHelper.CloseTo(bat.CurrentCharge, netCharge))
                     continue;
 
-                bat.CurrentCharge = netBat.NetworkBattery.CurrentStorage;
+                bat.CurrentCharge = netCharge;
             }
         }
 
