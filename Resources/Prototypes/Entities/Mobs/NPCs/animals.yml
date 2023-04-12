@@ -411,7 +411,10 @@
       path: /Audio/Animals/cow_moo.ogg
   - type: Perishable
     molsPerSecondPerUnitMass: 0.0015
-
+  - type: Body
+    prototype: AnimalRuminant
+  - type: HTN
+    rootTask: RuminantCompound
 
 - type: entity
   name: crab
@@ -512,6 +515,10 @@
     interactFailureString: petting-failure-goat
     interactSuccessSound:
       path: /Audio/Animals/goat_bah.ogg
+  - type: Body
+    prototype: AnimalRuminant
+  - type: HTN
+    rootTask: RuminantCompound
 
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity

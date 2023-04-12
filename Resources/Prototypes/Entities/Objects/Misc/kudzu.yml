@@ -90,6 +90,7 @@
           reagents:
           - ReagentId: Nutriment
             Quantity: 2
+    - type: RuminantTarget
 
 - type: entity
   id: WeakKudzu
@@ -169,3 +170,4 @@
           reagents:
           - ReagentId: Protein
             Quantity: 2
+    - type: RuminantTarget
