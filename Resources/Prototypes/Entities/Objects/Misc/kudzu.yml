@@ -81,7 +81,15 @@
         kudzu:
           !type:SpreaderNode
           nodeGroupID: Spreader
-
+    - type: Food
+      requiredStomachs: 2 # ruminants have 4 stomachs but i dont care to give them literally 4 stomachs. 2 is good
+      # TODO make botany plants edible to ruminants as well ...
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          reagents:
+          - ReagentId: Nutriment
+            Quantity: 2
 
 - type: entity
   id: WeakKudzu
@@ -154,3 +162,10 @@
       ignoreWhitelist:
         tags:
         - Flesh
+    - type: Food # delightfully devilish !
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          reagents:
+          - ReagentId: Protein
+            Quantity: 2
