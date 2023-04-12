@@ -1,20 +1,20 @@
-using Content.Shared.Emag.Systems;
+using Content.Server.Charges.Systems;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared.Emag.Components;
+namespace Content.Server.Charges.Components;
 
 /// <summary>
 /// Something with limited charges that can be recharged automatically.
 /// Requires LimitedChargesComponent to function.
 /// </summary>
-[Access(typeof(LimitedChargesSystem))]
 [RegisterComponent]
+[Access(typeof(ChargesSystem))]
 public sealed class AutoRechargeComponent : Component
 {
     /// <summary>
     /// The time it takes to regain a single charge
     /// </summary>
-    [DataField("rechargeDuration")]
+    [DataField("rechargeDuration"), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan RechargeDuration = TimeSpan.FromSeconds(90);
 
     /// <summary>

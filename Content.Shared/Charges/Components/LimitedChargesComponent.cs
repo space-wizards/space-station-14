@@ -1,10 +1,10 @@
-using Content.Shared.Emag.Systems;
+using Content.Shared.Charges.Systems;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Emag.Components;
+namespace Content.Shared.Charges.Components;
 
-[Access(typeof(LimitedChargesSystem))]
 [RegisterComponent, NetworkedComponent]
+[Access(typeof(SharedChargesSystem))]
 [AutoGenerateComponentState]
 public sealed partial class LimitedChargesComponent : Component
 {

@@ -1,4 +1,6 @@
 using Content.Shared.Administration.Logs;
+using Content.Shared.Charges.Components;
+using Content.Shared.Charges.Systems;
 using Content.Shared.Database;
 using Content.Shared.Emag.Components;
 using Content.Shared.IdentityManagement;
@@ -19,7 +21,7 @@ namespace Content.Shared.Emag.Systems;
 public sealed class EmagSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly LimitedChargesSystem _limitedCharges = default!;
+    [Dependency] private readonly SharedChargesSystem _charges = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly TagSystem _tag = default!;
@@ -51,7 +53,7 @@ public sealed class EmagSystem : EntitySystem
         if (_tag.HasTag(target, comp.EmagImmuneTag))
             return false;
 
-        if (_limitedCharges.IsEmpty(uid, out var charges))
+        if (_charges.IsEmpty(uid, out var charges))
         {
             if (_net.IsClient && _timing.IsFirstTimePredicted)
                 _popup.PopupEntity(Loc.GetString("emag-no-charges"), user, user);
@@ -72,7 +74,7 @@ public sealed class EmagSystem : EntitySystem
         _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(user):player} emagged {ToPrettyString(target):target}");
 
         if (charges != null)
-            _limitedCharges.UseCharge(uid, charges);
+            _charges.UseCharge(uid, charges);
         return true;
     }
 
