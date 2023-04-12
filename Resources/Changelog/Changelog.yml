@@ -1,21 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Added 3 unique Anomalies. These strange objects can be harnessed with
-      the power of science to generate a steady stream of points. Make sure they don't
-      go Supercritical!, type: Add}
-  - {message: Added the anomaly generator. This large machine is powered by plasma
-      and can create a random anomaly somewhere on the station. Let's hope it doesn't
-      end up somewhere bad..., type: Add}
-  - {message: 'Added the APE, which can shoot different types of particles at anomalies
-      to manipulate them.', type: Add}
-  - {message: 'Added the anomaly scanner, which can give you various data about anomalies.',
-    type: Add}
-  - {message: Added anomaly vessels. Clicking on these with an anomaly scanner will
-      assign it and produce points based on the danger of the anomaly. Be wary if
-      the vessel's anomaly goes supercritical though..., type: Add}
-  id: 2890
-  time: '2023-01-17T05:05:20.0000000+00:00'
 - author: gus
   changes:
   - {message: Flashlights have been buffed., type: Tweak}
@@ -2909,3 +2892,8 @@ Entries:
   - {message: Added showing ban and note count to admins in the ahelp window., type: Add}
   id: 3389
   time: '2023-04-12T00:34:25.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Cloth can be used as gauze to stop bleeding!, type: Add}
+  id: 3390
+  time: '2023-04-12T08:53:10.0000000+00:00'
