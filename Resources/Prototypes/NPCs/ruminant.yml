@@ -1,0 +1,42 @@
+﻿- type: htnCompound
+  id: RuminantCompound
+  branches:
+  - tasks:
+    - id: EatNearbyKudzuCompound
+  - tasks:
+    - id: IdleCompound
+
+# Finds random kudzu in range and eats it
+- type: htnCompound
+  id: EatNearbyKudzuCompound
+  branches:
+  - tasks:
+    - id: PickRuminantTargetPrimitive
+    - id: MoveToAccessiblePrimitive
+    - id: EatTargetPrimitive
+    - id: SetRuminantIdleTimePrimitive
+    - id: WaitIdleTimePrimitive
+
+- type: htnPrimitive
+  id: MoveToAccessibleRuminantPrimitive
+  operator: !type:MoveToOperator
+    pathfindInPlanning: false
+    removeKeyOnFinish: false
+
+- type: htnPrimitive
+  id: PickRuminantTargetPrimitive
+  operator: !type:PickAccessibleComponentOperator
+    rangeKey: RangedRange
+    targetKey: MovementTarget
+    component: RuminantTarget
+
+- type: htnPrimitive
+  id: EatTargetPrimitive
+  operator: !type:EatTargetOperator
+    targetKey: MovementTarget
+
+- type: htnPrimitive
+  id: SetRuminantIdleTimePrimitive
+  operator: !type:SetFloatOperator
+    targetKey: IdleTime
+    amount: 1.5

@@ -102,17 +102,12 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var forceFeed = user != target;
 
-            if (stomachs.Count < foodComp.RequiredStomachs)
-            {
-
-            }
-
             if (!IsDigestibleBy(food, foodComp, stomachs))
             {
                 _popupSystem.PopupEntity(
                     forceFeed
-                        ? Loc.GetString("food-system-no-cant-digest-other", ("food", food))
-                        : Loc.GetString("food-system-no-cant-digest", ("food", food)), user, user);
+                        ? Loc.GetString("food-system-cant-digest-other", ("food", food))
+                        : Loc.GetString("food-system-cant-digest", ("food", food)), user, user);
                 return false;
             }
 
