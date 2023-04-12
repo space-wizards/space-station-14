@@ -14,20 +14,21 @@ public enum SignalTimerUiKey : byte
 [Serializable, NetSerializable]
 public sealed class SignalTimerBoundUserInterfaceState : BoundUserInterfaceState
 {
-    public string CurrentText { get; }
-    public string CurrentDelayMinutes { get; }
-    public string CurrentDelaySeconds { get; }
-    public bool ShowText { get; }
-    public TimeSpan TriggerTime { get; }
-    public bool TimerStarted { get; }
-    public bool? HasAccess { get; }
+    public string CurrentText;
+    public string CurrentDelayMinutes;
+    public string CurrentDelaySeconds;
+    public bool ShowText;
+    public TimeSpan TriggerTime;
+    public bool TimerStarted;
+    public bool HasAccess;
+
     public SignalTimerBoundUserInterfaceState(string currentText,
         string currentDelayMinutes,
         string currentDelaySeconds,
         bool showText,
         TimeSpan triggerTime,
         bool timerStarted,
-        bool? hasAccess)
+        bool hasAccess)
     {
         CurrentText = currentText;
         CurrentDelayMinutes = currentDelayMinutes;

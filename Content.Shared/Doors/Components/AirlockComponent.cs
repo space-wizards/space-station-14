@@ -87,7 +87,6 @@ public sealed class AirlockComponent : Component
 
     /// <summary>
     ///     The receiver port for turning off automatic closing.
-    ///     Needed for brig timers.
     /// </summary>
     [DataField("autoClosePort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
     public string AutoClosePort = "AutoClose";

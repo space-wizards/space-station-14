@@ -68,7 +68,7 @@ public sealed class SignalTimerSystem : EntitySystem
                 signalTimer.CanEditLabel,
                 TimeSpan.Zero,
                 false,
-                null));
+                true));
         }
     }
 
@@ -102,9 +102,6 @@ public sealed class SignalTimerSystem : EntitySystem
     private bool IsMessageValid(EntityUid uid, BoundUserInterfaceMessage message)
     {
         if (message.Session.AttachedEntity is not { Valid: true } mob)
-            return false;
-
-        if (!_interaction.InRangeUnobstructed(mob, uid))
             return false;
 
         if (!_accessReader.IsAllowed(mob, uid))

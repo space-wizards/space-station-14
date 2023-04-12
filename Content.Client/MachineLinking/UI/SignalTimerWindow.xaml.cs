@@ -170,15 +170,12 @@ public sealed partial class SignalTimerWindow : DefaultWindow
     /// <summary>
     ///     Disables fields and buttons if you don't have the access.
     /// </summary>
-    public void SetHasAccess(bool? hasAccess)
+    public void SetHasAccess(bool hasAccess)
     {
-        if (hasAccess != null)
-        {
-            CurrentTextEdit.Editable = hasAccess.Value;
-            CurrentDelayEditMinutes.Editable = hasAccess.Value;
-            CurrentDelayEditSeconds.Editable = hasAccess.Value;
-            StartTimer.Disabled = !hasAccess.Value;
-        }
+        CurrentTextEdit.Editable = hasAccess;
+        CurrentDelayEditMinutes.Editable = hasAccess;
+        CurrentDelayEditSeconds.Editable = hasAccess;
+        StartTimer.Disabled = !hasAccess;
     }
 
     /// <summary>
