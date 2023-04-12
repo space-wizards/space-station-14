@@ -10,6 +10,11 @@
   - type: Clothing
     slots: [belt]
     quickEquip: false
+  - type: PhysicalComposition
+    materialComposition:
+      Cloth: 50
+  - type: StaticPrice
+    price: 25
 
 - type: entity
   abstract: true

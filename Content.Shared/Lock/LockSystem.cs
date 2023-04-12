@@ -1,6 +1,6 @@
-using Content.Shared.Emag.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
@@ -192,7 +192,7 @@ public sealed class LockSystem : EntitySystem
     /// </summary>
     public bool CanToggleLock(EntityUid uid, EntityUid user, bool quiet = true)
     {
-        if (!HasComp<SharedHandsComponent>(user))
+        if (!HasComp<HandsComponent>(user))
             return false;
 
         var ev = new LockToggleAttemptEvent(user, quiet);

@@ -466,6 +466,11 @@
       materialRequirements:
         CableMV: 5
         CableHV: 5
+    - type: PhysicalComposition
+      materialComposition:
+        Glass: 200
+      chemicalComposition:
+        Silicon: 20
 
 - type: entity
   parent: BaseMachineCircuitboard
@@ -515,6 +520,11 @@
         Capacitor: 1
       materialRequirements:
         CableHV: 5
+    - type: PhysicalComposition
+      materialComposition:
+        Glass: 200
+      chemicalComposition:
+        Silicon: 20
 
 - type: entity
   id: ThrusterMachineCircuitboard
@@ -555,6 +565,11 @@
         Capacitor: 2
       materialRequirements:
         CableHV: 10
+    - type: PhysicalComposition
+      materialComposition:
+        Glass: 200
+      chemicalComposition:
+        Silicon: 20
 
 - type: entity
   id: ReagentGrinderMachineCircuitboard
@@ -610,6 +625,21 @@
           Amount: 2
           DefaultPrototype: CryostasisBeaker
           ExamineName: Cryostasis Beaker
+
+- type: entity
+  id: MaterialReclaimerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: material reclaimer machine board
+  components:
+    - type: Sprite
+      state: supply
+    - type: MachineBoard
+      prototype: MaterialReclaimer
+      requirements:
+        Manipulator: 2
+      materialRequirements:
+        Steel: 5
+        Plastic: 5
 
 - type: entity
   id: OreProcessorMachineCircuitboard
@@ -726,7 +756,7 @@
     materialRequirements:
       Steel: 10
       Plasma: 5
-      
+
 - type: entity
   id: BoozeDispenserMachineCircuitboard
   parent: BaseMachineCircuitboard
@@ -766,7 +796,7 @@
 - type: entity
   id: TelecomServerCircuitboard
   parent: BaseMachineCircuitboard
-  name: telecommunication server machine board 
+  name: telecommunication server machine board
   description: A machine printed circuit board for an telecommunication server.
   components:
     - type: MachineBoard

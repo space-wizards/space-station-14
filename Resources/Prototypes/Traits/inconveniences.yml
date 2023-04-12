@@ -7,10 +7,7 @@
       - DiseaseCarrier
   components:
     - type: UncontrollableSnough
-      snoughSound:
-        collection: Sneezes
-        params:
-          variation: 0.2
+      emote: Sneeze
       timeBetweenIncidents: 0.3, 300
 
 - type: trait
