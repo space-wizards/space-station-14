@@ -146,13 +146,23 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     public TimeSpan _gameruleStartTime;
     public TimeSpan _declarationTime;
-    public ref readonly TimeSpan GameruleStartTime => ref _gameruleStartTime;
-    public ref readonly TimeSpan DeclarationTime => ref _declarationTime;
+    public TimeSpan GameruleStartTime
+    {
+        get { return _gameruleStartTime; }
+    }
+    
+    public TimeSpan DeclarationTime
+    {
+        get { return _declarationTime; }
+    }
 
     public override string Prototype => "Nukeops";
 
     private NukeopsRuleConfiguration _nukeopsRuleConfig = new();
-    public ref readonly NukeopsRuleConfiguration Config => ref _nukeopsRuleConfig;
+    public NukeopsRuleConfiguration Config
+    {
+        get { return _nukeopsRuleConfig; }
+    }
 
     /// <summary>
     ///     Cached starting gear prototypes.
