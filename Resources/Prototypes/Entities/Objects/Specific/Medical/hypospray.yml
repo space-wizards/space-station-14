@@ -250,6 +250,22 @@
     price: 75
 
 - type: entity
+  parent: BaseItem
+  id: HypopenBox
+  name: hypopen box
+  description: A small box containing a hypopen. Packaging disintegrates when opened, leaving no evidence behind.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/penbox.rsi
+    state: hypopen
+    netsync: false
+  - type: SpawnItemsOnUse
+    items:
+    - id: Hypopen
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+- type: entity
   name: brigmedic hypospray
   parent: BaseItem
   description: An injector (most often) of medicines in liquid form, it has a small inscription on it "PROPERTY OF A BRIGMEDIC, HANDS OFF!"
