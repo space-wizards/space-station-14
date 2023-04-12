@@ -1,4 +1,5 @@
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
@@ -12,6 +13,8 @@ namespace Content.Server.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem
 {
+    [Dependency] private readonly BatterySystem _battery = default!;
+
     protected override void InitializeBattery()
     {
         base.InitializeBattery();
@@ -32,9 +35,9 @@ public sealed partial class GunSystem
         UpdateShots(uid, component);
     }
 
-    private void OnBatteryChargeChange(EntityUid uid, BatteryAmmoProviderComponent component, ChargeChangedEvent args)
+    private void OnBatteryChargeChange(EntityUid uid, BatteryAmmoProviderComponent component, ref ChargeChangedEvent args)
     {
-        UpdateShots(uid, component);
+        UpdateShots(uid, component, args.Charge, args.MaxCharge);
     }
 
     private void UpdateShots(EntityUid uid, BatteryAmmoProviderComponent component)
@@ -42,13 +45,13 @@ public sealed partial class GunSystem
         if (!TryComp<BatteryComponent>(uid, out var battery))
             return;
 
-        UpdateShots(uid, component, battery);
+        UpdateShots(uid, component, battery.Charge, battery.MaxCharge);
     }
 
-    private void UpdateShots(EntityUid uid, BatteryAmmoProviderComponent component, BatteryComponent battery)
+    private void UpdateShots(EntityUid uid, BatteryAmmoProviderComponent component, float charge, float maxCharge)
     {
-        var shots = (int) (battery.CurrentCharge / component.FireCost);
-        var maxShots = (int) (battery.MaxCharge / component.FireCost);
+        var shots = (int) (charge / component.FireCost);
+        var maxShots = (int) (maxCharge / component.FireCost);
 
         if (component.Shots != shots || component.Capacity != maxShots)
         {
@@ -128,10 +131,7 @@ public sealed partial class GunSystem
 
     protected override void TakeCharge(EntityUid uid, BatteryAmmoProviderComponent component)
     {
-        if (!TryComp<BatteryComponent>(uid, out var battery))
-            return;
-
-        battery.CurrentCharge -= component.FireCost;
-        UpdateShots(uid, component, battery);
+        // Will raise ChargeChangedEvent
+        _battery.UseCharge(uid, component.FireCost);
     }
 }
