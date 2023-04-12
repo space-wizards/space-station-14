@@ -1,8 +1,7 @@
-
 using Content.Shared.Fluids;
 using Robust.Shared.Audio;
 
-namespace Content.Server.Fluids.Components
+namespace Content.Shared.Fluids.Components
 {
     /// <summary>
     /// A Drain allows an entity to absorb liquid in a disposal goal. Drains can be filled manually (with the Empty verb)
