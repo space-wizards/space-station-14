@@ -17,4 +17,4 @@ materials-plastic = пластик
 materials-wood = дерево
 materials-uranium = уран
 # Material Reclaimer
-material-reclaimer-upgrade-process-rate = process rate
+material-reclaimer-upgrade-process-rate = скорость переработки

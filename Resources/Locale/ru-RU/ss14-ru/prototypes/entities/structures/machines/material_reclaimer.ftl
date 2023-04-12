@@ -1,2 +1,2 @@
-ent-MaterialReclaimer = material reclaimer
-    .desc = Cannot reclaim immaterial things, like motivation.
+ent-MaterialReclaimer = переработчик материалов
+    .desc = Не может переработать обратно нематериальное, например, мотивацию.

@@ -40,5 +40,5 @@ ent-SpawnMobHamsterHamlet = спавнер хомяк Гамлет
     .desc = { ent-MarkerBase.desc }
 ent-SpawnMobAlexander = спавнер свинья Александр
     .desc = { ent-MarkerBase.desc }
-ent-SpawnMobShiva = Shiva Spawner
+ent-SpawnMobShiva = спавнер паук Шива
     .desc = { ent-MarkerBase.desc }

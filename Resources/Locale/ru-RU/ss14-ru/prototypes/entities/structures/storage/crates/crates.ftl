@@ -44,5 +44,5 @@ ent-CrateLivestock = ящик для скота
     .desc = { ent-CrateGeneric.desc }
 ent-CrateRodentCage = хомячья клетка
     .desc = { ent-CrateGeneric.desc }
-ent-CratePirate = pirate chest
-    .desc = A space pirate chest, not for station lubbers.
+ent-CratePirate = пиратский сундук
+    .desc = Сундук космического пирата, не для станционных крыс.

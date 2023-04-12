@@ -30,5 +30,5 @@ ent-MobFoxRenault = Алиса
     .desc = Верная лиса капитана.
 ent-MobHamsterHamlet = Гамлет
     .desc = Ворчливый, милый и пушистый хомяк.
-ent-MobSpiderShiva = Shiva
-    .desc = The first defender of the station.
+ent-MobSpiderShiva = Шива
+    .desc = Первый защитник станции.

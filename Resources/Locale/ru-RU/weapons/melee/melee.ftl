@@ -1,1 +1,1 @@
-melee-inject-failed-hardsuit = Your { $weapon } cannot inject through hardsuits!
+melee-inject-failed-hardsuit = Ваш { $weapon } не может проникнуть сквозь скафандр!

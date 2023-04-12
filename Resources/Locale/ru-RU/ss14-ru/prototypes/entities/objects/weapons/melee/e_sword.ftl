@@ -3,5 +3,5 @@ ent-EnergySword = энергетический меч
 ent-EnergyDagger = ручка
     .desc = Ручка с чёрными чернилами.
     .suffix = Энергокинжал
-ent-EnergyCutlass = energy cutlass
-    .desc = An exotic energy weapon.
+ent-EnergyCutlass = абордажная энергосабля
+    .desc = Экзотическое энергетическое оружие.
