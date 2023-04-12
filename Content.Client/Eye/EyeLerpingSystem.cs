@@ -1,3 +1,4 @@
+using Content.Shared.Follower.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Robust.Client.GameObjects;
@@ -25,14 +26,40 @@ public sealed class EyeLerpingSystem : EntitySystem
 
         SubscribeLocalEvent<EyeComponent, ComponentStartup>(OnEyeStartup);
         SubscribeLocalEvent<EyeComponent, ComponentShutdown>(OnEyeShutdown);
-        SubscribeLocalEvent<LerpingEyeComponent, EntParentChangedMessage>(HandleMapChange);
         SubscribeLocalEvent<EyeComponent, PlayerAttachedEvent>(OnAttached);
+
+        SubscribeLocalEvent<FollowerComponent, ComponentStartup>(OnFollowerStartup);
+        SubscribeLocalEvent<FollowedComponent, EntParentChangedMessage>(OnFollowerParentChange);
+
+        SubscribeLocalEvent<LerpingEyeComponent, EntParentChangedMessage>(HandleMapChange);
         SubscribeLocalEvent<LerpingEyeComponent, PlayerDetachedEvent>(OnDetached);
 
         UpdatesAfter.Add(typeof(TransformSystem));
         UpdatesAfter.Add(typeof(PhysicsSystem));
         UpdatesBefore.Add(typeof(EyeUpdateSystem));
         UpdatesOutsidePrediction = true;
+    }
+
+    private void OnFollowerStartup(EntityUid uid, FollowerComponent component, ComponentStartup args)
+    {
+        if (!TryComp<LerpingEyeComponent>(uid, out var lerping) || !TryComp<TransformComponent>(uid, out var xform))
+            return;
+
+        lerping.LastRotation = GetRotation(uid, xform);
+    }
+
+    private void OnFollowerParentChange(EntityUid uid, FollowedComponent component, ref EntParentChangedMessage args)
+    {
+        foreach (var foll in component.Following)
+        {
+            // Want to make sure eye rotation is correct if our follower changes parents.
+            if (!TryComp<LerpingEyeComponent>(foll, out var lerping))
+                continue;
+
+            // Is this actually a map change? If yes, stop any lerps
+            if (args.OldMapId != args.Transform.MapID)
+                lerping.LastRotation = GetRotation(foll, Transform(foll));
+        }
     }
 
     private void OnEyeStartup(EntityUid uid, EyeComponent component, ComponentStartup args)
