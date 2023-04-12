@@ -1,9 +1,4 @@
 Entries:
-- author: ZoldorfTheWizard
-  changes:
-  - {message: mechs now do not move if broken or are unpowered., type: Tweak}
-  id: 2886
-  time: '2023-01-16T23:58:38.0000000+00:00'
 - author: nikthechampiongr
   changes:
   - {message: 'Epinephrine will now be able to stabilize the smallest crew members
@@ -2914,3 +2909,8 @@ Entries:
   - {message: Added Brigmedic job and other things for brigmedic., type: Add}
   id: 3385
   time: '2023-04-11T23:11:01.0000000+00:00'
+- author: Mumohan
+  changes:
+  - {message: Plushies and other toys no longer conduct electricity, type: Fix}
+  id: 3386
+  time: '2023-04-12T00:11:55.0000000+00:00'
