@@ -38,6 +38,8 @@ public sealed class ChargesSystem : SharedChargesSystem
 
     protected override void OnExamine(EntityUid uid, LimitedChargesComponent comp, ExaminedEvent args)
     {
+        base.OnExamine(uid, comp, args);
+
         // only show the recharging info if it's not full
         if (!args.IsInDetailsRange || comp.Charges == comp.MaxCharges || !TryComp<AutoRechargeComponent>(uid, out var recharge))
             return;
