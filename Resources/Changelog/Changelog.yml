@@ -1,59 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Added a guidebook entry for machine upgrades., type: Add}
-  id: 2885
-  time: '2023-01-16T16:53:24.0000000+00:00'
-- author: ZoldorfTheWizard
-  changes:
-  - {message: mechs now do not move if broken or are unpowered., type: Tweak}
-  id: 2886
-  time: '2023-01-16T23:58:38.0000000+00:00'
-- author: nikthechampiongr
-  changes:
-  - {message: 'Epinephrine will now be able to stabilize the smallest crew members
-      of the station such as Ian, and other animals.', type: Tweak}
-  id: 2887
-  time: '2023-01-17T01:47:41.0000000+00:00'
-- author: PixelTK
-  changes:
-  - {message: 'Added a new way to express yourself through small, little LGBTQIA+
-      pins', type: Add}
-  id: 2888
-  time: '2023-01-17T01:51:13.0000000+00:00'
-- author: ZoldorfTheWizard
-  changes:
-  - {message: Fixes syndicate reinforcements getting swisscheesed by ship turrets
-      due to incorrect faction, type: Fix}
-  - {message: Fixes syndicate reinforcements not being tagged as an antag role, type: Fix}
-  - {message: Renames the syndicate reinforcement teleporter to syndicate reinforcement
-      radio, type: Tweak}
-  - {message: adds sound and cooldown feedback to the syndicate reinforcement radio.,
-    type: Add}
-  id: 2889
-  time: '2023-01-17T02:57:54.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added 3 unique Anomalies. These strange objects can be harnessed with
-      the power of science to generate a steady stream of points. Make sure they don't
-      go Supercritical!, type: Add}
-  - {message: Added the anomaly generator. This large machine is powered by plasma
-      and can create a random anomaly somewhere on the station. Let's hope it doesn't
-      end up somewhere bad..., type: Add}
-  - {message: 'Added the APE, which can shoot different types of particles at anomalies
-      to manipulate them.', type: Add}
-  - {message: 'Added the anomaly scanner, which can give you various data about anomalies.',
-    type: Add}
-  - {message: Added anomaly vessels. Clicking on these with an anomaly scanner will
-      assign it and produce points based on the danger of the anomaly. Be wary if
-      the vessel's anomaly goes supercritical though..., type: Add}
-  id: 2890
-  time: '2023-01-17T05:05:20.0000000+00:00'
-- author: gus
-  changes:
-  - {message: Flashlights have been buffed., type: Tweak}
-  id: 2891
-  time: '2023-01-17T05:32:17.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Anomaly generator now occupies 1x3 space instead of 3x3 and also doesn't
@@ -2914,3 +2859,41 @@ Entries:
   - {message: Tools no longer make sounds if using them fails., type: Fix}
   id: 3384
   time: '2023-04-11T17:31:12.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Added Brigmedic job and other things for brigmedic., type: Add}
+  id: 3385
+  time: '2023-04-11T23:11:01.0000000+00:00'
+- author: Mumohan
+  changes:
+  - {message: Plushies and other toys no longer conduct electricity, type: Fix}
+  id: 3386
+  time: '2023-04-12T00:11:55.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Being unable to deconstruct communications servers., type: Fix}
+  - {message: Fixed metal rods sometimes not being consumed when placing down lattice
+      tiles., type: Fix}
+  id: 3387
+  time: '2023-04-12T00:18:30.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed not showing the ahelp relay label unless the relay was changed
+      while connected., type: Fix}
+  id: 3388
+  time: '2023-04-12T00:19:09.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Added showing ban and note count to admins in the ahelp window., type: Add}
+  id: 3389
+  time: '2023-04-12T00:34:25.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Cloth can be used as gauze to stop bleeding!, type: Add}
+  id: 3390
+  time: '2023-04-12T08:53:10.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix emergency shuttles docking at the wrong airlocks., type: Fix}
+  id: 3391
+  time: '2023-04-12T09:05:55.0000000+00:00'
