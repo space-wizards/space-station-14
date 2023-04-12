@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Anomaly generator now occupies 1x3 space instead of 3x3 and also doesn't
-      snap with camera rotation., type: Tweak}
-  id: 2892
-  time: '2023-01-17T08:07:07.0000000+00:00'
 - author: Cripes
   changes:
   - {message: Nanotrasen has updated the available types of paper in the stationary
@@ -2897,3 +2891,8 @@ Entries:
   - {message: Fix emergency shuttles docking at the wrong airlocks., type: Fix}
   id: 3391
   time: '2023-04-12T09:05:55.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Added show disconnected button to admin player tab., type: Add}
+  id: 3392
+  time: '2023-04-12T13:30:09.0000000+00:00'
