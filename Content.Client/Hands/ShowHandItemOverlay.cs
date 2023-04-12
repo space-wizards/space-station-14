@@ -6,6 +6,7 @@ using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
+using Content.Shared.Weapons.Ranged.Components;
 
 namespace Content.Client.Hands
 {
@@ -38,6 +39,8 @@ namespace Content.Client.Hands
                 {
                     Filter = true
                 }, nameof(ShowHandItemOverlay));
+
+            Logger.Debug("Create object! +++++++++");
         }
 
         protected override void DisposeBehavior()
@@ -60,12 +63,17 @@ namespace Content.Client.Hands
 
             var handEntity = EntityOverride ?? EntitySystem.Get<HandsSystem>().GetActiveHandEntity();
 
-            if (handEntity == null || !_entMan.HasComponent<SpriteComponent>(handEntity))
-                return;
+            bool isHandItemSprite = false;
+            bool isHandGunItem = false;
 
-            // if (handEntity != null) {
-            //     _entMan.TryGetComponent<MetaDataComponent>(handEntity, out var metaDat);
-            // }
+            if (handEntity != null) {
+                isHandItemSprite = _entMan.HasComponent<SpriteComponent>(handEntity);
+                isHandGunItem = _entMan.HasComponent<GunComponent>(handEntity);
+            }
+
+            if (isHandGunItem) {
+                Logger.Debug(" is is gun! ++++++++++++");
+            }
 
             var uiScale = (args.ViewportControl as Control)?.UIScale ?? 1f;
             var bufferCenterOffset = _renderBackbuffer.Size / 2;
@@ -73,7 +81,10 @@ namespace Content.Client.Hands
             screen.RenderInRenderTarget(_renderBackbuffer, () =>
             {
                 DrawWeaponSight(screen, bufferCenterOffset, uiScale);
-                DrawHandEntityIcon(screen, handEntity.Value, bufferCenterOffset, uiScale);
+
+                if (handEntity != null && isHandItemSprite) {
+                    DrawHandEntityIcon(screen, handEntity.Value, bufferCenterOffset, uiScale);
+                }
             }, Color.Transparent);
 
             screen.DrawTexture(_renderBackbuffer.Texture,
