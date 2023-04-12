@@ -1,15 +1,4 @@
 Entries:
-- author: ZoldorfTheWizard
-  changes:
-  - {message: Fixes syndicate reinforcements getting swisscheesed by ship turrets
-      due to incorrect faction, type: Fix}
-  - {message: Fixes syndicate reinforcements not being tagged as an antag role, type: Fix}
-  - {message: Renames the syndicate reinforcement teleporter to syndicate reinforcement
-      radio, type: Tweak}
-  - {message: adds sound and cooldown feedback to the syndicate reinforcement radio.,
-    type: Add}
-  id: 2889
-  time: '2023-01-17T02:57:54.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Added 3 unique Anomalies. These strange objects can be harnessed with
@@ -2915,3 +2904,8 @@ Entries:
       while connected., type: Fix}
   id: 3388
   time: '2023-04-12T00:19:09.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Added showing ban and note count to admins in the ahelp window., type: Add}
+  id: 3389
+  time: '2023-04-12T00:34:25.0000000+00:00'
