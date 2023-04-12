@@ -1,12 +1,4 @@
 Entries:
-- author: Cripes
-  changes:
-  - {message: Nanotrasen has updated the available types of paper in the stationary
-      department, type: Add}
-  - {message: 'Disease diagnoser, artifact analyzer and cargo shuttle produce themed
-      paper', type: Add}
-  id: 2893
-  time: '2023-01-17T08:32:46.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Weather has been added to the game., type: Add}
@@ -2896,3 +2888,9 @@ Entries:
   - {message: Added show disconnected button to admin player tab., type: Add}
   id: 3392
   time: '2023-04-12T13:30:09.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fixed NPCs not properly steering around thindows in some instances.,
+    type: Fix}
+  id: 3393
+  time: '2023-04-12T13:50:08.0000000+00:00'
