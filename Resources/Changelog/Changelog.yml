@@ -1,11 +1,6 @@
 Entries:
 - author: gus
   changes:
-  - {message: Added 360 PDA lights., type: Add}
-  id: 2895
-  time: '2023-01-17T09:28:34.0000000+00:00'
-- author: gus
-  changes:
   - {message: Fixed RPG-7 icon not updating correctly., type: Fix}
   id: 2896
   time: '2023-01-17T09:31:54.0000000+00:00'
@@ -2895,3 +2890,8 @@ Entries:
       computer', type: Add}
   id: 3394
   time: '2023-04-12T14:27:13.0000000+00:00'
+- author: mhamster
+  changes:
+  - {message: Changed sleep action icon from egg to syndie pyjama, type: Tweak}
+  id: 3395
+  time: '2023-04-12T18:26:07.0000000+00:00'
