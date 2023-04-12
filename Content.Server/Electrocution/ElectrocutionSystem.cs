@@ -130,6 +130,13 @@ namespace Content.Server.Electrocution
             if (!electrified.OnAttacked)
                 return;
 
+            //Dont shock if the attacker used a toy
+            if (EntityManager.TryGetComponent<MeleeWeaponComponent>(args.Used, out var meleeWeaponComponent))
+            {
+                if (meleeWeaponComponent.Damage.Total == 0)
+                    return;
+            }
+
             TryDoElectrifiedAct(uid, args.User, 1, electrified);
         }
 

@@ -18,6 +18,9 @@
   - type: ExplosionResistance
     damageCoefficient: 0.65
   - type: GroupExamine
+  - type: Tag
+    tags:
+    - Hardsuit
 
 - type: entity
   parent: ClothingOuterEVASuitBase
