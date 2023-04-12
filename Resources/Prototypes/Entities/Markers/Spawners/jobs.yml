@@ -112,6 +112,10 @@
   components:
   - type: SpawnPoint
     job_id: SecurityCadet
+  - type: Sprite
+    layers:
+      - state: green
+      - state: security_cadet
 
 - type: entity
   id: SpawnPointResearchAssistant
