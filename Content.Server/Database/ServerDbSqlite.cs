@@ -97,22 +97,6 @@ namespace Content.Server.Database
                 .ToList()!;
         }
 
-        public override async Task<int> CountServerBansAsync(IPAddress? address, NetUserId? userId, ImmutableArray<byte>? hwId, bool includeUnbanned)
-        {
-            await using var db = await GetDbImpl();
-
-            var exempt = await GetBanExemptionCore(db, userId);
-
-            // SQLite can't do the net masking stuff we need to match IP address ranges.
-            // So just pull down the whole list into memory.
-            var queryBans = await GetAllBans(db.SqliteDbContext, includeUnbanned, exempt);
-
-            return queryBans
-                .Where(b => BanMatches(b, address, userId, hwId))
-                .Select(ConvertBan)
-                .Count();
-        }
-
         private static async Task<List<ServerBan>> GetAllBans(
             SqliteServerDbContext db,
             bool includeUnbanned,
