@@ -609,9 +609,10 @@ namespace Content.Server.Botany.Systems
 
             if (component.Seed.Sentient)
             {
-                var comp = EnsureComp<GhostTakeoverAvailableComponent>(uid);
-                comp.RoleName = MetaData(uid).EntityName;
-                comp.RoleDescription = Loc.GetString("station-event-random-sentience-role-description", ("name", comp.RoleName));
+                var ghostRole = EnsureComp<GhostRoleComponent>(uid);
+                EnsureComp<GhostTakeoverAvailableComponent>(uid);
+                ghostRole.RoleName = MetaData(uid).EntityName;
+                ghostRole.RoleDescription = Loc.GetString("station-event-random-sentience-role-description", ("name", ghostRole.RoleName));
             }
 
             if (component.UpdateSpriteAfterUpdate)

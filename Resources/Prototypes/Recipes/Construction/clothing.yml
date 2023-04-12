@@ -1,0 +1,10 @@
+- type: construction
+  name: clown hardsuit
+  id: ClownHardsuit
+  graph: ClownHardsuit
+  startNode: start
+  targetNode: clownHardsuit
+  category: construction-category-clothing
+  description: A modified hardsuit fit for a clown.
+  icon: { sprite: Clothing/OuterClothing/Hardsuits/clown.rsi, state: icon }
+  objectType: Item
