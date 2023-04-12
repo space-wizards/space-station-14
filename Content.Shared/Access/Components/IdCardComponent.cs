@@ -7,17 +7,18 @@ namespace Content.Shared.Access.Components
 {
     [RegisterComponent, NetworkedComponent]
     [AutoGenerateComponentState]
-    [Access(typeof(SharedIdCardSystem), typeof(SharedPDASystem), typeof(SharedAgentIdCardSystem))]
+    [Access(typeof(SharedIdCardSystem), typeof(SharedPDASystem), typeof(SharedAgentIdCardSystem), Other = AccessPermissions.ReadWrite)]
     public sealed partial class IdCardComponent : Component
     {
         [DataField("fullName")]
         [AutoNetworkedField]
-        [Access(typeof(SharedIdCardSystem), typeof(SharedPDASystem), typeof(SharedAgentIdCardSystem),
-            Other = AccessPermissions.ReadWrite)] // FIXME Friends
+        // FIXME Friends
         public string? FullName;
 
         [DataField("jobTitle")]
         [AutoNetworkedField]
+        [Access(typeof(SharedIdCardSystem), typeof(SharedPDASystem), typeof(SharedAgentIdCardSystem),
+            Other = AccessPermissions.ReadWrite)]
         public string? JobTitle;
     }
 }

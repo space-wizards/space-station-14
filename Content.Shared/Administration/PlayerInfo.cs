@@ -13,5 +13,7 @@ namespace Content.Shared.Administration
         EntityUid? EntityUid,
         NetUserId SessionId,
         bool Connected,
-        bool ActiveThisRound);
+        bool ActiveThisRound,
+        int Bans,
+        int Notes);
 }

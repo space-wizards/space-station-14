@@ -20,6 +20,7 @@ using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
+using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics.Events;
@@ -154,9 +155,18 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             TryDoElectrifiedAct(uid, args.OtherFixture.Body.Owner, 1, electrified);
     }
 
-    private void OnElectrifiedAttacked(EntityUid uid, ElectrifiedComponent electrified, AttackedEvent args)
-    {
-        if (electrified.OnAttacked)
+        private void OnElectrifiedAttacked(EntityUid uid, ElectrifiedComponent electrified, AttackedEvent args)
+        {
+            if (!electrified.OnAttacked)
+                return;
+
+            //Dont shock if the attacker used a toy
+            if (EntityManager.TryGetComponent<MeleeWeaponComponent>(args.Used, out var meleeWeaponComponent))
+            {
+                if (meleeWeaponComponent.Damage.Total == 0)
+                    return;
+            }
+
             TryDoElectrifiedAct(uid, args.User, 1, electrified);
     }
 

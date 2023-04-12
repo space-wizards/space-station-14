@@ -1,5 +1,5 @@
-admin-player-actions-bans = Ban List
-admin-player-actions-notes = Notes
+admin-player-actions-bans = Ban List ({$count})
+admin-player-actions-notes = Notes ({$count})
 admin-player-actions-kick = Kick
 admin-player-actions-ban = Ban
 admin-player-actions-ahelp = AHelp
