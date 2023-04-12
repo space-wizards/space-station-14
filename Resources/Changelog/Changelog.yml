@@ -1,14 +1,4 @@
 Entries:
-- author: gus
-  changes:
-  - {message: Fixed RPG-7 icon not updating correctly., type: Fix}
-  id: 2896
-  time: '2023-01-17T09:31:54.0000000+00:00'
-- author: gus
-  changes:
-  - {message: Changed golden toolbox to have a reasonable amount of gold, type: Tweak}
-  id: 2897
-  time: '2023-01-17T10:23:48.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Lava has been added., type: Add}
@@ -2895,3 +2885,15 @@ Entries:
   - {message: Changed sleep action icon from egg to syndie pyjama, type: Tweak}
   id: 3395
   time: '2023-04-12T18:26:07.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Added boxer spawnpoint., type: Add}
+  id: 3396
+  time: '2023-04-12T18:32:49.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: 'Fixed now the security cadet''s spawner has an icon not of a passenger,
+      but of a cadet (I just stuck the cadet badge next to the officer''s sprite)',
+    type: Fix}
+  id: 3397
+  time: '2023-04-12T18:33:19.0000000+00:00'
