@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Weather has been added to the game., type: Add}
-  id: 2894
-  time: '2023-01-17T09:26:53.0000000+00:00'
 - author: gus
   changes:
   - {message: Added 360 PDA lights., type: Add}
@@ -2894,3 +2889,9 @@ Entries:
     type: Fix}
   id: 3393
   time: '2023-04-12T13:50:08.0000000+00:00'
+- author: Arteben
+  changes:
+  - {message: 'Added filters of name, fingerprints and DNA for the station records
+      computer', type: Add}
+  id: 3394
+  time: '2023-04-12T14:27:13.0000000+00:00'
