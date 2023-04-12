@@ -249,6 +249,18 @@
         - state: green
         - state: musician
 
+- type: entity
+  id: SpawnPointBoxer
+  parent: SpawnPointJobBase
+  name: boxer
+  components:
+    - type: SpawnPoint
+      job_id: Boxer
+    - type: Sprite
+      layers:
+        - state: green
+        - state: boxer
+
 # Command
 
 - type: entity
