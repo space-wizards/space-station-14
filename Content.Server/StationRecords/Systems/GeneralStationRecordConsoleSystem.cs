@@ -118,8 +118,8 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
         return filter.Type switch
         {
-            GeneralStationRecordFilterType.Name => someRecord.Name != null
-                && !someRecord.Name.ToLower().Contains(filterLowerCaseValue),
+            GeneralStationRecordFilterType.Name =>
+                !someRecord.Name.ToLower().Contains(filterLowerCaseValue),
             GeneralStationRecordFilterType.Prints => someRecord.Fingerprint != null
                 && IsFilterWithSomeCodeValue(someRecord.Fingerprint, filterLowerCaseValue),
             GeneralStationRecordFilterType.DNA => someRecord.DNA != null
