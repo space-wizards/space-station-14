@@ -575,3 +575,23 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertjanitor.rsi
   - type: PointLight
     color: "#cbadff"
+
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSecurity
+  id: ClothingHeadHelmetHardsuitClown
+  noSpawn: true
+  name: clown hardsuit helmet
+  description: A clown hardsuit helmet.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/clown.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/clown.rsi
+    equipSound: /Audio/Mecha/mechmove03.ogg
+    unequipSound: /Audio/Effects/Emotes/parp1.ogg
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
