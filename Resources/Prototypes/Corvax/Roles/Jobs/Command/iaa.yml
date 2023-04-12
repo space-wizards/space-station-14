@@ -30,3 +30,6 @@
     eyes: ClothingEyesGlassesSunglasses
     ears: ClothingHeadsetIAA
     neck: ClothingNeckLawyerbadge
+  innerclothingskirt: ClothingUniformJumpskirtLawyerBlack
+  satchel: ClothingBackpackSatchelIAAFilled
+  duffelbag: ClothingBackpackDuffelIAAFilled
