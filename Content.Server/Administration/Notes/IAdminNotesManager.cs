@@ -20,6 +20,5 @@ public interface IAdminNotesManager
     Task DeleteNote(int noteId, IPlayerSession deletedBy);
     Task ModifyNote(int noteId, IPlayerSession editedBy, string message);
     Task<List<AdminNote>> GetNotes(Guid player);
-    Task<int> CountNotes(Guid player);
     Task<string> GetPlayerName(Guid player);
 }
