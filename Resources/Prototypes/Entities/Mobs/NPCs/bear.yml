@@ -90,20 +90,22 @@
     radius: 1.2
     energy: 2
     color: "#4faffb"
-  - type: GhostTakeoverAvailable
+  - type: GhostRole
     prob: 0.25
     name: space bear
     description: |
       You're a bear! Do bear things.
+  - type: GhostTakeoverAvailable
 
 - type: entity
   id: MobBearSpaceSalvage
   parent: MobBearSpace
   suffix: "Salvage Ruleset"
   components:
-  - type: GhostTakeoverAvailable
+  - type: GhostRole
     prob: 0.25
     name: space bear on salvage wreck
     description: |
       Defend the loot inside the salvage wreck!
+  - type: GhostTakeoverAvailable
   - type: SalvageMobRestrictions

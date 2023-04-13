@@ -182,6 +182,7 @@
   - type: Inventory
     speciesId: cat
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -239,6 +240,7 @@
   - type: Inventory
     speciesId: puppy
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -336,6 +338,7 @@
   - type: Inventory
     speciesId: dog
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -442,12 +445,13 @@
   id: MobHamsterHamlet
   description: A grumpy, cute and fluffy hamster.
   components:
-  - type: GhostTakeoverAvailable
+  - type: GhostRole
     makeSentient: true
     allowSpeech: true
     allowMovement: true
     name: ghost-role-information-hamlet-name
     description: ghost-role-information-hamlet-description
+  - type: GhostTakeoverAvailable
   - type: InteractionPopup
     successChance: 1
   - type: Butcherable
@@ -528,3 +532,6 @@
     attributes:
       proper: true
       gender: female
+  - type: Tag
+    tags:
+    - CannotSuicide
