@@ -6,8 +6,6 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: Machine
-      board: StationMapCircuitboard
     - type: InteractionOutline
     - type: Clickable
     - type: Sprite
