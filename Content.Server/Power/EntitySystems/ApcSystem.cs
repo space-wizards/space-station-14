@@ -54,7 +54,7 @@ namespace Content.Server.Power.EntitySystems
         }
 
         // Change the APC's state only when the battery state changes, or when it's first created.
-        private void OnBatteryChargeChanged(EntityUid uid, ApcComponent component, ChargeChangedEvent args)
+        private void OnBatteryChargeChanged(EntityUid uid, ApcComponent component, ref ChargeChangedEvent args)
         {
             UpdateApcState(uid, component);
         }

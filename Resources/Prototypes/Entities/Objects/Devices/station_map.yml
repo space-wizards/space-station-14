@@ -2,7 +2,9 @@
   id: StationMap
   name: station map
   description: Displays a readout of the current station.
-  parent: BaseItem
+  parent:
+    - BaseItem
+    - PowerCellSlotSmallItem
   suffix: Handheld
   components:
     - type: StationMap
@@ -13,6 +15,8 @@
         - state: tablet
         - state: generic
           shader: unshaded
+    - type: ActivatableUIBattery
+      key: enum.StationMapUiKey.Key
     - type: ActivatableUI
       inHandsOnly: true
       singleUser: true

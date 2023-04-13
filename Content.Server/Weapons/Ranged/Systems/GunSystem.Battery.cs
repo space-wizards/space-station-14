@@ -32,7 +32,7 @@ public sealed partial class GunSystem
         UpdateShots(uid, component);
     }
 
-    private void OnBatteryChargeChange(EntityUid uid, BatteryAmmoProviderComponent component, ChargeChangedEvent args)
+    private void OnBatteryChargeChange(EntityUid uid, BatteryAmmoProviderComponent component, ref ChargeChangedEvent args)
     {
         UpdateShots(uid, component);
     }

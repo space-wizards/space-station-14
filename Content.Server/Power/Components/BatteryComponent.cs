@@ -37,7 +37,7 @@ namespace Content.Server.Power.Components
         public float PricePerJoule = 0.0001f;
 
         /// <summary>
-        ///     If sufficient charge is avaiable on the battery, use it. Otherwise, don't.
+        ///     If sufficient charge is available on the battery, use it. Otherwise, don't.
         /// </summary>
         public virtual bool TryUseCharge(float chargeToUse)
         {
@@ -75,7 +75,8 @@ namespace Content.Server.Power.Components
 
         protected virtual void OnChargeChanged()
         {
-            _entMan.EventBus.RaiseLocalEvent(Owner, new ChargeChangedEvent(), false);
+            var ev = new ChargeChangedEvent();
+            _entMan.EventBus.RaiseLocalEvent(Owner, ref ev);
         }
 
         private void SetMaxCharge(float newMax)
@@ -92,5 +93,6 @@ namespace Content.Server.Power.Components
         }
     }
 
-    public struct ChargeChangedEvent {}
+    [ByRefEvent]
+    public readonly record struct ChargeChangedEvent;
 }
