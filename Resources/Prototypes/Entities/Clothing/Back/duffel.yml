@@ -92,6 +92,15 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/virology.rsi
+    
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelGenetics
+  name: genetics duffel bag
+  description: A large duffel bag for holding extra genetic mutations.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/genetics.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel

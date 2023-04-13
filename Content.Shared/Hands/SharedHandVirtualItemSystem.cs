@@ -27,7 +27,7 @@ public abstract class SharedHandVirtualItemSystem : EntitySystem
 
     public bool TrySpawnVirtualItemInHand(EntityUid blockingEnt, EntityUid user, [NotNullWhen(true)] out EntityUid? virtualItem)
     {
-        if (!_hands.TryGetEmptyHand(user, out var hand))
+        if (_net.IsClient || !_hands.TryGetEmptyHand(user, out var hand))
         {
             virtualItem = null;
             return false;
@@ -48,6 +48,11 @@ public abstract class SharedHandVirtualItemSystem : EntitySystem
     /// </summary>
     public void DeleteInHandsMatching(EntityUid user, EntityUid matching)
     {
+        // Client can't currently predict deleting network entities atm and this might happen due to the
+        // hands leaving PVS for example, in which case we wish to ignore it.
+        if (_net.IsClient)
+            return;
+
         foreach (var hand in _hands.EnumerateHands(user))
         {
             if (TryComp(hand.HeldEntity, out HandVirtualItemComponent? virt) && virt.BlockingEntity == matching)
@@ -76,6 +81,9 @@ public abstract class SharedHandVirtualItemSystem : EntitySystem
     /// </summary>
     public void Delete(HandVirtualItemComponent comp, EntityUid user)
     {
+        if (_net.IsClient)
+            return;
+
         var userEv = new VirtualItemDeletedEvent(comp.BlockingEntity, user);
         RaiseLocalEvent(user, userEv);
         var targEv = new VirtualItemDeletedEvent(comp.BlockingEntity, user);

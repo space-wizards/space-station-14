@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
+using Content.Server.Parallax;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
 using Content.Shared.Gravity;
@@ -62,8 +63,8 @@ public sealed class PlanetCommand : IConsoleCommand
         MetaDataComponent? metadata = null;
 
         var biome = _entManager.EnsureComponent<BiomeComponent>(mapUid);
-        biome.BiomePrototype = args[1];
-        biome.Seed = _random.Next();
+        _entManager.System<BiomeSystem>().SetPrototype(biome, args[1]);
+        _entManager.System<BiomeSystem>().SetSeed(biome, _random.Next());
         _entManager.Dirty(biome);
 
         var gravity = _entManager.EnsureComponent<GravityComponent>(mapUid);
@@ -101,12 +102,7 @@ public sealed class PlanetCommand : IConsoleCommand
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
-        {
-            var options = _entManager.EntityQuery<MapComponent>(true)
-                .Select(o => new CompletionOption(o.WorldMap.ToString(), "MapId"));
-
-            return CompletionResult.FromOptions(options);
-        }
+            return CompletionResult.FromHintOptions(CompletionHelper.MapIds(_entManager), "Map Id");
 
         if (args.Length == 2)
         {

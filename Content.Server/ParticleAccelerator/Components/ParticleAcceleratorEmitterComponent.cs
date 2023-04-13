@@ -3,8 +3,7 @@
 namespace Content.Server.ParticleAccelerator.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(ParticleAcceleratorPartComponent))]
-    public sealed class ParticleAcceleratorEmitterComponent : ParticleAcceleratorPartComponent
+    public sealed class ParticleAcceleratorEmitterComponent : Component
     {
         [DataField("emitterType")]
         public ParticleAcceleratorEmitterType Type = ParticleAcceleratorEmitterType.Center;
