@@ -432,6 +432,18 @@ namespace Content.Shared.Chemistry.Components
             _heatCapacity = 0;
         }
 
+        /// <summary>
+        /// Splits a solution without the specified reagent.
+        /// </summary>
+        public Solution SplitSolutionWithout(FixedPoint2 toTake, string without)
+        {
+            TryGetReagent(without, out var existing);
+            RemoveReagent(without, toTake);
+            var sol = SplitSolution(toTake);
+            AddReagent(without, existing);
+            return sol;
+        }
+
         public Solution SplitSolution(FixedPoint2 toTake)
         {
             if (toTake <= FixedPoint2.Zero)
@@ -599,7 +611,7 @@ namespace Content.Shared.Chemistry.Components
             ValidateSolution();
         }
 
-        public Color GetColor(IPrototypeManager? protoMan)
+        public Color GetColorWithout(IPrototypeManager? protoMan, params string[] without)
         {
             if (Volume == FixedPoint2.Zero)
             {
@@ -614,6 +626,9 @@ namespace Content.Shared.Chemistry.Components
 
             foreach (var reagent in Contents)
             {
+                if (without.Contains(reagent.ReagentId))
+                    continue;
+
                 runningTotalQuantity += reagent.Quantity;
 
                 if (!protoMan.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
@@ -632,6 +647,11 @@ namespace Content.Shared.Chemistry.Components
                 mixColor = Color.InterpolateBetween(mixColor, proto.SubstanceColor, interpolateValue);
             }
             return mixColor;
+        }
+
+        public Color GetColor(IPrototypeManager? protoMan)
+        {
+            return GetColorWithout(protoMan);
         }
 
         [Obsolete("Use ReactiveSystem.DoEntityReaction")]

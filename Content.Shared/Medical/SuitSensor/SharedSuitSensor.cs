@@ -50,7 +50,7 @@ namespace Content.Shared.Medical.SuitSensor
         public const string NET_JOB = "job";
         public const string NET_IS_ALIVE = "alive";
         public const string NET_TOTAL_DAMAGE = "vitals";
-        public const string NET_CORDINATES = "cords";
+        public const string NET_COORDINATES = "coords";
 
         ///Used by the CrewMonitoringServerSystem to send the status of all connected suit sensors to each crew monitor
         public const string NET_STATUS_COLLECTION = "suit-status-collection";

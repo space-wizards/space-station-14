@@ -98,11 +98,13 @@ public sealed class BodySystem : SharedBodySystem
 
     public override bool DropPart(EntityUid? partId, BodyPartComponent? part = null)
     {
-        var oldBody = CompOrNull<BodyPartComponent>(partId)?.Body;
+        if (partId == null || !Resolve(partId.Value, ref part))
+            return false;
 
         if (!base.DropPart(partId, part))
             return false;
 
+        var oldBody = part.Body;
         if (oldBody == null || !TryComp<HumanoidAppearanceComponent>(oldBody, out var humanoid))
             return true;
 
