@@ -5,7 +5,13 @@
   description: Be sure to wear an EOD suit around this damn thing.
   name: bomb
   components:
+    - type: Appearance
+    - type: WiresVisuals
     - type: InteractionOutline
+    - type: UserInterface
+      interfaces:
+        - key: enum.WiresUiKey.Key
+          type: WiresBoundUserInterface
     - type: Wires
       LayoutId: Defusable
     - type: Defusable
@@ -53,15 +59,92 @@
 
 - type: entity
   parent: BaseBomb
+  id: TrainingBomb
   name: training bomb
   description: A bomb for dummies, manual not included.
   components:
     - type: Sprite
       sprite: Structures/Machines/bomb.rsi
       layers:
-        - state: base-bomb
+        - state: training-bomb
+        - state: training-bomb-active
+          visible: false
+          map: [ "active" ]
+        - state: training-bomb-active-wires
+          visible: false
+          map: [ "activeWires" ]
+        - state: training-bomb-inactive
+          visible: false
+          map: [ "inactive" ]
+        - state: training-bomb-inactive-wires
+          visible: false
+          map: [ "inactiveWires" ]
+    - type: GenericVisualizer
+      visuals:
+        enum.DefusableVisuals.Active:
+          active:
+            True: { state: training-bomb-active }
+            False: { state: training-bomb-active, visible: false }
+        enum.DefusableVisuals.ActiveWires:
+          activeWires:
+            True: { state: training-bomb-active-wires }
+            False: { state: training-bomb-active-wires, visible: false }
+        enum.DefusableVisuals.Inactive:
+          inactive:
+            True: { state: training-bomb-inactive }
+            False: { state: training-bomb-inactive, visible: false }
+        enum.DefusableVisuals.InactiveWires:
+          inactiveWires:
+            True: { state: training-bomb-inactive-wires }
+            False: { state: training-bomb-inactive-wires, visible: false }
     - type: Explosive
       explosionType: Default
       totalIntensity: 5.0
       intensitySlope: 5
       maxIntensity: 4
+
+- type: entity
+  parent: BaseBomb
+  id: SyndicateBomb
+  name: syndicate bomb
+  description: A bomb for Syndicate operatives and agents alike. The real deal, no more training, get to it!
+  components:
+    - type: Sprite
+      sprite: Structures/Machines/bomb.rsi
+      layers:
+        - state: syndicate-bomb
+        - state: syndicate-bomb-active
+          visible: false
+          map: [ "active" ]
+        - state: syndicate-bomb-active-wires
+          visible: false
+          map: [ "activeWires" ]
+        - state: syndicate-bomb-inactive
+          visible: false
+          map: [ "inactive" ]
+        - state: syndicate-bomb-inactive-wires
+          visible: false
+          map: [ "inactiveWires" ]
+    - type: GenericVisualizer
+      visuals:
+        enum.DefusableVisuals.Active:
+          active:
+            True: { state: syndicate-bomb-active }
+            False: { state: syndicate-bomb-active, visible: false }
+        enum.DefusableVisuals.ActiveWires:
+          activeWires:
+            True: { state: syndicate-bomb-active-wires }
+            False: { state: syndicate-bomb-active-wires, visible: false }
+        enum.DefusableVisuals.Inactive:
+          inactive:
+            True: { state: syndicate-bomb-inactive }
+            False: { state: syndicate-bomb-inactive, visible: false }
+        enum.DefusableVisuals.InactiveWires:
+          inactiveWires:
+            True: { state: syndicate-bomb-inactive-wires }
+            False: { state: syndicate-bomb-inactive-wires, visible: false }
+    - type: Explosive
+      explosionType: Default
+      totalIntensity: 3000.0
+      intensitySlope: 7
+      maxIntensity: 200

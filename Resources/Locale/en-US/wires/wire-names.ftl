@@ -3,10 +3,15 @@
 
 wire-name-access = ACC
 wire-name-arcade-overflow = LMTR
-wire-name-air-alarm-panic = PANC 
+wire-name-air-alarm-panic = PANC
 wire-name-device-net = NETW
-wire-name-bolt-light = BLIT 
-wire-name-door-bolt = BOLT 
+wire-name-bolt-light = BLIT
+wire-name-bomb-live = LIVE
+wire-name-bomb-delay = DLAY
+wire-name-bomb-proceed = PRCD
+wire-name-bomb-boom = BOOM
+wire-name-bomb-bolt = BOLT
+wire-name-door-bolt = BOLT
 wire-name-door-safety = SAFE
 wire-name-door-timer = TIMR
 wire-name-lock = LOCK

@@ -26,7 +26,7 @@ public sealed class DefusableComponent : Component
     /// <summary>
     /// Is the bomb actually usable? This is different from BombLive because this tracks whether the bomb can even start in the first place.
     /// </summary>
-    [ViewVariables] public bool BombUsable = false;
+    [ViewVariables] public bool BombUsable = true;
 
     /// <summary>
     /// How much time is added when the Activate wire is pulsed?
@@ -37,6 +37,6 @@ public sealed class DefusableComponent : Component
     // wires, this is so that they're one use
     public bool DelayWireUsed = false;
     public bool BoltWireUsed = false;
-    public bool ActivateWireUsed = false;
     public bool ProceedWireUsed = false;
+    public bool ActivatedWireUsed = false;
 }
