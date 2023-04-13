@@ -1,8 +1,9 @@
 ﻿- type: entity
-  name: slime
+  name: blue slime
   id: MobAdultSlimes
   parent: SimpleMobBase
   description: It looks so much like jelly. I wonder what it tastes like?
+  suffix: Good
   components:
   - type: InputMover
   - type: MobMover
@@ -124,7 +125,7 @@
     accent: genericAggressive
 
 - type: entity
-  name: slime blue
+  name: blue slime
   parent: MobAdultSlimes
   id: MobAdultSlimesBlueAngry
   suffix: Angry
@@ -142,7 +143,7 @@
       description: ghost-role-information-slimes-description
 
 - type: entity
-  name: slime green
+  name: green slime
   parent: MobAdultSlimes
   id: MobAdultSlimesGreenGood
   suffix: Good
@@ -178,7 +179,7 @@
           Poison: 4
 
 - type: entity
-  name: slime green
+  name: green slime
   parent: MobAdultSlimes
   id: MobAdultSlimesGreenAngry
   suffix: Angry
@@ -221,7 +222,7 @@
       description: ghost-role-information-slimes-description
 
 - type: entity
-  name: slime yellow
+  name: yellow slime
   parent: MobAdultSlimes
   id: MobAdultSlimesYellowGood
   suffix: Good
@@ -257,7 +258,7 @@
           Cellular: 3
 
 - type: entity
-  name: slime yellow
+  name: yellow slime
   parent: MobAdultSlimes
   id: MobAdultSlimesYellowAngry
   suffix: Angry

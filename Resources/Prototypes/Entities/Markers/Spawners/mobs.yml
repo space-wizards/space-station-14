@@ -302,7 +302,7 @@
       - MobSpiderShiva
 
 - type: entity
-  name: Adult Slimes Spawner
+  name: Slimes Spawner Blue Good
   id: SpawnMobAdultSlimes
   parent: MarkerBase
   components:

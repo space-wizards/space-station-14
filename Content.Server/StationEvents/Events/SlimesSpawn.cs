@@ -28,9 +28,9 @@ public sealed class SlimesSpawn : StationEventSystem
             if (spawnAmount-- == 0)
                 break;
 
-            var coords = EntityManager.GetComponent<TransformComponent>(location.Owner);
+            var transform = Transform(location.Owner);
 
-            EntityManager.SpawnEntity(spawnChoice, coords.Coordinates);
+            Spawn(spawnChoice, transform.Coordinates);
         }
     }
 }
