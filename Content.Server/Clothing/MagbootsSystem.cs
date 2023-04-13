@@ -12,7 +12,7 @@ namespace Content.Server.Clothing;
 
 public sealed class MagbootsSystem : SharedMagbootsSystem
 {
-    [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+    [Dependency] private readonly AlertsSystem _alerts = default!;
 
     public override void Initialize()
     {
@@ -35,11 +35,11 @@ public sealed class MagbootsSystem : SharedMagbootsSystem
 
         if (state)
         {
-            _alertsSystem.ShowAlert(parent, AlertType.Magboots);
+            _alerts.ShowAlert(parent, AlertType.Magboots);
         }
         else
         {
-            _alertsSystem.ClearAlert(parent, AlertType.Magboots);
+            _alerts.ClearAlert(parent, AlertType.Magboots);
         }
     }
 
