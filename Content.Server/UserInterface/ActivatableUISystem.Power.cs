@@ -1,4 +1,6 @@
 using Content.Server.PowerCell;
+using Content.Shared.PowerCell;
+using Robust.Shared.Containers;
 
 namespace Content.Server.UserInterface;
 
@@ -9,6 +11,41 @@ public sealed partial class ActivatableUISystem
     private void InitializePower()
     {
         SubscribeLocalEvent<ActivatableUIRequiresPowerCellComponent, ActivatableUIOpenAttemptEvent>(OnBatteryOpenAttempt);
+        SubscribeLocalEvent<ActivatableUIRequiresPowerCellComponent, BoundUIOpenedEvent>(OnBatteryOpened);
+        SubscribeLocalEvent<ActivatableUIRequiresPowerCellComponent, BoundUIClosedEvent>(OnBatteryClosed);
+
+        SubscribeLocalEvent<PowerCellDrawComponent, EntRemovedFromContainerMessage>(OnPowerCellRemoved);
+    }
+
+    private void OnPowerCellRemoved(EntityUid uid, PowerCellDrawComponent component, EntRemovedFromContainerMessage args)
+    {
+        if (TryComp<PowerCellDrawComponent>(uid, out var draw))
+        {
+            draw.Enabled = false;
+        }
+
+        if (HasComp<ActivatableUIRequiresPowerCellComponent>(uid) &&
+            TryComp<ActivatableUIComponent>(uid, out var activatable) &&
+            activatable.Key != null)
+        {
+            _uiSystem.TryCloseAll(uid, activatable.Key);
+        }
+    }
+
+    private void OnBatteryOpened(EntityUid uid, ActivatableUIRequiresPowerCellComponent component, BoundUIOpenedEvent args)
+    {
+        if (!TryComp<PowerCellDrawComponent>(uid, out var draw))
+            return;
+
+        draw.Enabled = true;
+    }
+
+    private void OnBatteryClosed(EntityUid uid, ActivatableUIRequiresPowerCellComponent component, BoundUIClosedEvent args)
+    {
+        if (!TryComp<PowerCellDrawComponent>(uid, out var draw))
+            return;
+
+        draw.Enabled = false;
     }
 
     /// <summary>
