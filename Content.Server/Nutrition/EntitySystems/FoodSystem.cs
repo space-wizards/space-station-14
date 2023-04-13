@@ -173,10 +173,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var forceFeed = args.User != args.Target;
 
-            //If handled it won't repeat
-            if (!args.Args.Repeat)
-                args.Handled = true;
-
+            args.Handled = true;
             var transferAmount = component.TransferAmount != null ? FixedPoint2.Min((FixedPoint2) component.TransferAmount, solution.Volume) : solution.Volume;
 
             var split = _solutionContainerSystem.SplitSolution(uid, solution, transferAmount);
@@ -188,7 +185,6 @@ namespace Content.Server.Nutrition.EntitySystems
             {
                 _solutionContainerSystem.TryAddSolution(uid, solution, split);
                 _popupSystem.PopupEntity(forceFeed ? Loc.GetString("food-system-you-cannot-eat-any-more-other") : Loc.GetString("food-system-you-cannot-eat-any-more"), args.Args.Target.Value, args.Args.User);
-                args.Handled = true;
                 return;
             }
 
@@ -228,10 +224,8 @@ namespace Content.Server.Nutrition.EntitySystems
             if (component.UsesRemaining > 0)
             {
                 if (!forceFeed)
-                {
-                    args.Args.Repeat = true;
-                    args.Handled = false;
-                }
+                    args.Repeat = true;
+
                 return;
             }
 

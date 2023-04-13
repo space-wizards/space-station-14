@@ -147,14 +147,6 @@ public sealed class DoAfterArgs
     public DuplicateConditions DuplicateCondition = DuplicateConditions.All;
     #endregion
 
-    //TODO: User pref to toggle repeat on specific doafters
-    /// <summary>
-    ///     If true, the doafter will automatically repeat until it's cancelled.
-    ///     Only set this in a do-after event that you would like repeated.
-    /// </summary>
-    [DataField("repeat")]
-    public bool Repeat = false;
-
     /// <summary>
     ///     Additional conditions that need to be met. Return false to cancel.
     /// </summary>
@@ -237,7 +229,6 @@ public sealed class DoAfterArgs
         BlockDuplicate = other.BlockDuplicate;
         CancelDuplicate = other.CancelDuplicate;
         DuplicateCondition = other.DuplicateCondition;
-        Repeat = other.Repeat;
 
         Event = other.Event.Clone();
     }
