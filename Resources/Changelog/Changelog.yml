@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Ahelp window for admins can now pop out into an OS window., type: Add}
-  id: 2902
-  time: '2023-01-17T18:47:52.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: Updated patrons and contributor credits list., type: Tweak}
@@ -2896,3 +2891,8 @@ Entries:
   - {message: Station maps have been added., type: Add}
   id: 3401
   time: '2023-04-13T06:21:24.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Added custom speech bubble for the moth cloak., type: Add}
+  id: 3402
+  time: '2023-04-13T07:21:57.0000000+00:00'
