@@ -151,6 +151,7 @@
   soids:
     FoodBreadBun: 1
     MobHamsterHamlet: 1
+    FoodCheeseSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeSuperBiteBurger
