@@ -253,7 +253,7 @@
       - cheesy
       - meaty
   - type: Sprite
-    state: ian
+    state: hamlet
 
 # Note: I would put a bunch of colored burgers here as listed in the tg .dm but
 # I'd rather wait for a custom burger component.
