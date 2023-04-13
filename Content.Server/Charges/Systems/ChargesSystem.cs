@@ -22,7 +22,7 @@ public sealed class ChargesSystem : SharedChargesSystem
         base.Update(frameTime);
 
         var query = EntityQueryEnumerator<LimitedChargesComponent, AutoRechargeComponent>();
-        while (query.moveNext(out var uid, out var (charges, recharge)))
+        while (query.MoveNext(out var uid, out var charges, out var recharge))
         {
             if (charges.Charges == charges.MaxCharges || _timing.CurTime < recharge.NextChargeTime)
                 continue;
