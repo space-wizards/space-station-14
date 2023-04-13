@@ -1,9 +1,4 @@
 Entries:
-- author: PJB3005
-  changes:
-  - {message: Updated patrons and contributor credits list., type: Tweak}
-  id: 2903
-  time: '2023-01-17T21:42:03.0000000+00:00'
 - author: Nairodian
   changes:
   - {message: Added proper ERT uniforms. You can now kick syndicate ass in style.,
@@ -2896,3 +2891,8 @@ Entries:
   - {message: Added custom speech bubble for the moth cloak., type: Add}
   id: 3402
   time: '2023-04-13T07:21:57.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Nanotrasen no longer makes ice cream with soda., type: Fix}
+  id: 3403
+  time: '2023-04-13T19:51:11.0000000+00:00'
