@@ -1,0 +1,67 @@
+- type: entity
+  abstract: true
+  parent: BaseStructure
+  id: BaseBomb
+  description: Be sure to wear an EOD suit around this damn thing.
+  name: bomb
+  components:
+    - type: InteractionOutline
+    - type: Wires
+      LayoutId: Defusable
+    - type: Defusable
+    - type: Explosive
+      explosionType: Default
+      totalIntensity: 20.0
+      intensitySlope: 5
+      maxIntensity: 4
+    - type: Anchorable
+      delay: 15
+    - type: Physics
+      bodyType: Static
+    - type: Transform
+      noRot: true
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.45,-0.45,0.45,0.45"
+          density: 190
+          mask:
+            - MachineMask
+          layer:
+            - MachineLayer
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 200
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+            - !type:PlaySoundBehavior
+              sound:
+                path: /Audio/Effects/metalbreak.ogg
+
+- type: entity
+  parent: BaseBomb
+  name: training bomb
+  description: A bomb for dummies, manual not included.
+  components:
+    - type: Sprite
+      sprite: Structures/Machines/bomb.rsi
+      layers:
+        - state: base-bomb
+    - type: Explosive
+      explosionType: Default
+      totalIntensity: 5.0
+      intensitySlope: 5
+      maxIntensity: 4
