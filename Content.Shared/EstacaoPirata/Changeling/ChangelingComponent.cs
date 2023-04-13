@@ -43,7 +43,15 @@ public sealed class ChangelingComponent : Component
     #endregion
 
     #region Abilities
+        #region Evolution Menu
 
+        #endregion
+        #region Absorb DNA
+        
+        #endregion
+        #region Arm Blade
+        
+        #endregion
     #endregion
 
 
