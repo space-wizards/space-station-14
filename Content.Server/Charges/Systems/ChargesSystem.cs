@@ -21,13 +21,12 @@ public sealed class ChargesSystem : SharedChargesSystem
     {
         base.Update(frameTime);
 
-        foreach (var (charges, recharge) in EntityQuery<LimitedChargesComponent, AutoRechargeComponent>())
+        foreach (var (uid, charges, recharge) in EntityQueryEnumerator<LimitedChargesComponent, AutoRechargeComponent>())
         {
             if (charges.Charges == charges.MaxCharges || _timing.CurTime < recharge.NextChargeTime)
                 continue;
 
-            // TODO: replace .Owner with getting uid in query when possible
-            AddCharges(charges.Owner, 1, charges);
+            AddCharges(uid, 1, charges);
             recharge.NextChargeTime = _timing.CurTime + recharge.RechargeDuration;
         }
     }
