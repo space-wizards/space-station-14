@@ -1,9 +1,4 @@
 Entries:
-- author: ga
-  changes:
-  - {message: Added chief medical officer's beret., type: Add}
-  id: 2901
-  time: '2023-01-17T18:47:18.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Ahelp window for admins can now pop out into an OS window., type: Add}
@@ -2896,3 +2891,8 @@ Entries:
   - {message: Vending machines now use the robot typing indicator., type: Tweak}
   id: 3400
   time: '2023-04-12T20:15:28.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Station maps have been added., type: Add}
+  id: 3401
+  time: '2023-04-13T06:21:24.0000000+00:00'
