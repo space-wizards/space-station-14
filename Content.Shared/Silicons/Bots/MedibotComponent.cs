@@ -1,4 +1,5 @@
 using Content.Shared.Chemistry.Reagent;
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Silicons.Bots;
@@ -28,6 +29,12 @@ public sealed class MedibotComponent : Component
 
     [DataField("emergencyMedAmount")]
     public float EmergencyMedAmount = 15f;
+
+    /// <summary>
+    /// Sound played after injecting a patient.
+    /// </summary>
+    [DataField("injectSound")]
+    public SoundSpecifier InjectSound = new SoundPathSpecifier("/Audio/Items/hypospray.ogg");
 
     public const float StandardMedDamageThreshold = 50f;
     public const float EmergencyMedDamageThreshold = 100f;
