@@ -1,10 +1,11 @@
 using Content.Server.Chat.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.NPC.Components;
-using Content.Server.Silicons.Bots;
 using Content.Shared.Damage;
+using Content.Shared.Emag.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Silicons.Bots;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
@@ -62,21 +63,28 @@ public sealed class MedibotInjectOperator : HTNOperator
         if (!_interactionSystem.InRangeUnobstructed(owner, target))
             return HTNOperatorStatus.Failed;
 
-        if (damage.TotalDamage == 0)
+        // if emagged, always treat below-crit as injured (give funny juice to healthy people)
+        var total = damage.TotalDamage;
+        if (_entManager.HasComponent<EmaggedComponent>(target) && total < MedibotComponent.EmergencyMedDamageThreshold)
+        {
+            total = MedibotComponent.EmergencyMedDamageThreshold;
+        }
+
+        if (total == 0)
             return HTNOperatorStatus.Failed;
 
-        if (damage.TotalDamage >= MedibotComponent.EmergencyMedDamageThreshold)
+        if (total >= MedibotComponent.EmergencyMedDamageThreshold)
         {
-            _solutionSystem.TryAddReagent(target, injectable, botComp.EmergencyMed, botComp.EmergencyMedInjectAmount, out var accepted);
+            _solutionSystem.TryAddReagent(target, injectable, botComp.EmergencyMed, botComp.EmergencyMedAmount, out var accepted);
             _popupSystem.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target, target);
             SoundSystem.Play("/Audio/Items/hypospray.ogg", Filter.Pvs(target), target);
             _chat.TrySendInGameICMessage(owner, Loc.GetString("medibot-finish-inject"), InGameICChatType.Speak, hideChat: false, hideGlobalGhostChat: true);
             return HTNOperatorStatus.Finished;
         }
 
-        if (damage.TotalDamage >= MedibotComponent.StandardMedDamageThreshold)
+        if (total >= MedibotComponent.StandardMedDamageThreshold)
         {
-            _solutionSystem.TryAddReagent(target, injectable, botComp.StandardMed, botComp.StandardMedInjectAmount, out var accepted);
+            _solutionSystem.TryAddReagent(target, injectable, botComp.StandardMed, botComp.StandardMedAmount, out var accepted);
             _popupSystem.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target, target);
             SoundSystem.Play("/Audio/Items/hypospray.ogg", Filter.Pvs(target), target);
             _chat.TrySendInGameICMessage(owner, Loc.GetString("medibot-finish-inject"), InGameICChatType.Speak, hideChat: false, hideGlobalGhostChat: true);
