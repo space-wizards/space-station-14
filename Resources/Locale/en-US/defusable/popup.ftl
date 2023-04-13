@@ -1,0 +1,3 @@
+defusable-popup-begun = {THE($name)} beeps to life as a light turns on, ready to explode any second now...
+defusable-popup-defuse = {THE($name)} beeps it's final boop, as the light shuts off forever.
+defusable-popup-boom = {THE($name)} roars as the internal bomb explodes!

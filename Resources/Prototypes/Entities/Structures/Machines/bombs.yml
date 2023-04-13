@@ -15,6 +15,7 @@
     - type: Wires
       LayoutId: Defusable
     - type: Defusable
+      timeOptions: [90, 120, 150, 180, 210, 240, 270, 300]
     - type: Explosive
       explosionType: Default
       totalIntensity: 20.0

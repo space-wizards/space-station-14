@@ -23,7 +23,7 @@ public sealed class ActivateBombWireAction : ComponentWireAction<DefusableCompon
     {
         if (comp.BombLive)
         {
-            EntityManager.System<DefusableSystem>().DefuseBomb(wire.Owner, comp);
+            EntityManager.System<DefusableSystem>().TryDefuseBomb(wire.Owner, comp);
         }
         return true;
     }
@@ -42,6 +42,7 @@ public sealed class ActivateBombWireAction : ComponentWireAction<DefusableCompon
             {
                 Logger.Debug("Time delayed");
                 comp.TimeUntilExplosion += comp.DelayTime;
+                Logger.Debug(comp.TimeUntilExplosion.ToString());
                 comp.ActivatedWireUsed = true;
             }
         }
