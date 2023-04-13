@@ -15,6 +15,7 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
 using Content.Shared.UserInterface;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.PowerCell;
 
@@ -42,6 +43,28 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
         // funny
         SubscribeLocalEvent<PowerCellSlotComponent, BeingMicrowavedEvent>(OnSlotMicrowaved);
         SubscribeLocalEvent<BatteryComponent, BeingMicrowavedEvent>(OnMicrowaved);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+        var query = EntityQueryEnumerator<PowerCellDrawComponent, PowerCellSlotComponent>();
+
+        while (query.MoveNext(out var uid, out var comp, out var slot))
+        {
+            if (!comp.Enabled)
+                continue;
+
+            if (!TryGetBatteryFromSlot(uid, out var battery, slot))
+                continue;
+
+            if (battery.TryUseCharge(comp.DrawRate * frameTime))
+                continue;
+
+            comp.Enabled = false;
+            var ev = new PowerCellSlotEmptyEvent();
+            RaiseLocalEvent(uid, ref ev);
+        }
     }
 
     private void OnRejuvenate(EntityUid uid, PowerCellComponent component, RejuvenateEvent args)
@@ -113,10 +136,10 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
     #region Activatable
 
     /// <summary>
-    /// Returns whether the entity has a slotted battery and <see cref="ActivatableUIBatteryComponent.UseRate"/> charge.
+    /// Returns whether the entity has a slotted battery and <see cref="PowerCellDrawComponent.UseRate"/> charge.
     /// </summary>
     /// <param name="user">Popup to this user with the relevant detail if specified.</param>
-    public bool HasActivatableCharge(EntityUid uid, ActivatableUIBatteryComponent? battery = null, PowerCellSlotComponent? cell = null, EntityUid? user = null)
+    public bool HasActivatableCharge(EntityUid uid, PowerCellDrawComponent? battery = null, PowerCellSlotComponent? cell = null, EntityUid? user = null)
     {
         if (!Resolve(uid, ref battery, ref cell, false))
             return false;
@@ -125,10 +148,10 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
     }
 
     /// <summary>
-    /// Tries to use the <see cref="ActivatableUIBatteryComponent.UseRate"/> for this entity.
+    /// Tries to use the <see cref="PowerCellDrawComponent.UseRate"/> for this entity.
     /// </summary>
     /// <param name="user">Popup to this user with the relevant detail if specified.</param>
-    public bool TryUseActivatableCharge(EntityUid uid, ActivatableUIBatteryComponent? battery = null, PowerCellSlotComponent? cell = null, EntityUid? user = null)
+    public bool TryUseActivatableCharge(EntityUid uid, PowerCellDrawComponent? battery = null, PowerCellSlotComponent? cell = null, EntityUid? user = null)
     {
         if (!Resolve(uid, ref battery, ref cell, false))
             return false;

@@ -1,5 +1,5 @@
 - type: entity
-  id: StationMap
+  id: HandheldStationMap
   name: station map
   description: Displays a readout of the current station.
   parent:
@@ -15,8 +15,10 @@
         - state: tablet
         - state: generic
           shader: unshaded
-    - type: ActivatableUIBattery
-      key: enum.StationMapUiKey.Key
+    - type: PowerCellDraw
+      drawRate: 0
+      useRate: 20
+    - type: ActivatableUIPowerCell
     - type: ActivatableUI
       inHandsOnly: true
       singleUser: true

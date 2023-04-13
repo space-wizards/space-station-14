@@ -10,10 +10,10 @@
     sprite: Objects/Specific/Medical/healthanalyzer.rsi
     netsync: false
     state: analyzer
-  - type: ActivatableUIBattery
-    key: enum.HealthAnalyzerUiKey.Key
+  - type: PowerCellDraw
     drawRate: 0
     useRate: 20
+  - type: ActivatableUIPowerCell
   - type: ActivatableUI
     key: enum.HealthAnalyzerUiKey.Key
     closeOnHandDeselect: false

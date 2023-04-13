@@ -34,13 +34,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
         SubscribeLocalEvent<ServerUserInterfaceComponent, OpenUiActionEvent>(OnActionPerform);
 
-        InitializeBattery();
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-        UpdateBattery(frameTime);
+        InitializePower();
     }
 
     private void OnBoundInterfaceInteractAttempt(BoundUserInterfaceMessageAttempt ev)

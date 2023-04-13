@@ -9,8 +9,10 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/handheldcrewmonitor.rsi
     state: scanner
-  - type: ActivatableUIBattery
-    key: enum.CrewMonitoringUIKey.Key
+  - type: PowerCellDraw
+    drawRate: 0
+    useRate: 20
+  - type: ActivatableUIPowerCell
   - type: ActivatableUI
     key: enum.CrewMonitoringUIKey.Key
     closeOnHandDeselect: false

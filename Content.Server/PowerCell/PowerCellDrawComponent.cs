@@ -1,18 +1,13 @@
-using Robust.Shared.GameStates;
-
-namespace Content.Shared.UserInterface;
+namespace Content.Server.PowerCell;
 
 /// <summary>
 /// Indicates that the entity's ActivatableUI requires power or else it closes.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
-public sealed class ActivatableUIBatteryComponent : Component
+[RegisterComponent]
+public sealed class PowerCellDrawComponent : Component
 {
-    /// <summary>
-    /// The key for the UI.
-    /// </summary>
-    [DataField("key", required: true)]
-    public Enum UiKey = default!;
+    [ViewVariables(VVAccess.ReadWrite), DataField("enabled")]
+    public bool Enabled = false;
 
     /// <summary>
     /// How much the entity draws while the UI is open.
