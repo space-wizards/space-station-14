@@ -26,7 +26,8 @@ public sealed class ChargesSystem : SharedChargesSystem
             if (charges.Charges == charges.MaxCharges || _timing.CurTime < recharge.NextChargeTime)
                 continue;
 
-            AddCharges(charges, 1);
+            // TODO: replace .Owner with getting uid in query when possible
+            AddCharges(charges.Owner, 1, charges);
             recharge.NextChargeTime = _timing.CurTime + recharge.RechargeDuration;
         }
     }
@@ -48,8 +49,11 @@ public sealed class ChargesSystem : SharedChargesSystem
         args.PushMarkup(Loc.GetString("limited-charges-recharging", ("seconds", timeRemaining)));
     }
 
-    public override void UseCharge(EntityUid uid, LimitedChargesComponent comp)
+    public override void UseCharge(EntityUid uid, LimitedChargesComponent? comp = null)
     {
+        if (!Resolve(uid, ref comp, false))
+            return;
+
         var startRecharge = comp.Charges == comp.MaxCharges;
         base.UseCharge(uid, comp);
         // start the recharge time after first use at full charge

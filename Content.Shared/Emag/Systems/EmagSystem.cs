@@ -53,7 +53,8 @@ public sealed class EmagSystem : EntitySystem
         if (_tag.HasTag(target, comp.EmagImmuneTag))
             return false;
 
-        if (_charges.IsEmpty(uid, out var charges))
+        TryComp<LimitedChargesComponent>(uid, out var charges);
+        if (_charges.IsEmpty(uid, charges))
         {
             if (_net.IsClient && _timing.IsFirstTimePredicted)
                 _popup.PopupEntity(Loc.GetString("emag-no-charges"), user, user);
