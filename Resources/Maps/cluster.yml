@@ -16612,7 +16612,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 1845
-  type: PottedPlantRD
+  type: LockerResearchDirectorFilled
   components:
   - pos: -21.5,-3.5
     parent: 1
@@ -16638,46 +16638,17 @@ entities:
         uid: 5447
     type: SignalReceiver
 - uid: 1848
-  type: LockerResearchDirectorFilled
+  type: ResearchAndDevelopmentServer
   components:
   - pos: -22.5,-3.5
     parent: 1
     type: Transform
-  - air:
-      volume: 200
-      immutable: False
-      temperature: 93.465614
-      moles:
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    type: EntityStorage
-  - containers:
-      entity_storage: !type:Container
-        showEnts: False
-        occludes: True
-        ents:
-        - 1849
-    type: ContainerContainer
 - uid: 1849
-  type: ClothingOuterWinterRD
+  type: PottedPlantRD
   components:
-  - flags: InContainer
-    type: MetaData
-  - parent: 1848
+  - pos: -22.5,-0.5
+    parent: 1
     type: Transform
-  - canCollide: False
-    type: Physics
-  - type: InsideEntityStorage
 - uid: 1850
   type: BedsheetRD
   components:
