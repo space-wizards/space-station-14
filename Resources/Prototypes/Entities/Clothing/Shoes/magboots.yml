@@ -15,7 +15,7 @@
     - type: Magboots
       toggleAction:
         icon: { sprite: Clothing/Shoes/Boots/magboots.rsi, state: icon }
-        iconOn: Clothing/Shoes/Boots/magboots.rsi/icon-on.png
+        iconOn: { sprite : Clothing/Shoes/Boots/magboots.rsi, state: icon-on }
         name: action-name-magboot-toggle
         description: action-decription-magboot-toggle
         itemIconStyle: NoItem
