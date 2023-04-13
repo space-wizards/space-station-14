@@ -8,19 +8,10 @@ namespace Content.Client.Pinpointer;
 
 public sealed class NavMapSystem : SharedNavMapSystem
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IOverlayManager _overlay = default!;
-
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
         SubscribeLocalEvent<NavMapComponent, ComponentHandleState>(OnHandleState);
-    }
-
-    private void OnGridInit(GridInitializeEvent ev)
-    {
-        EnsureComp<NavMapComponent>(ev.EntityUid);
     }
 
     private void OnHandleState(EntityUid uid, NavMapComponent component, ref ComponentHandleState args)

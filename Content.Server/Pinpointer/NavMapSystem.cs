@@ -4,7 +4,6 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Pinpointer;
 
@@ -13,20 +12,14 @@ namespace Content.Server.Pinpointer;
 /// </summary>
 public sealed class NavMapSystem : SharedNavMapSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly TagSystem _tags = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<AnchorStateChangedEvent>(OnAnchorChange);
-        SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
+        SubscribeLocalEvent<ReAnchorEvent>(OnReAnchor);
         SubscribeLocalEvent<NavMapComponent, ComponentGetState>(OnGetState);
-    }
-
-    private void OnGridInit(GridInitializeEvent ev)
-    {
-        EnsureComp<NavMapComponent>(ev.EntityUid);
     }
 
     private void OnGetState(EntityUid uid, NavMapComponent component, ref ComponentGetState args)
@@ -44,13 +37,34 @@ public sealed class NavMapSystem : SharedNavMapSystem
         };
     }
 
+    private void OnReAnchor(ref ReAnchorEvent ev)
+    {
+        if (TryComp<MapGridComponent>(ev.OldGrid, out var oldGrid) &&
+            TryComp<NavMapComponent>(ev.OldGrid, out var navMap))
+        {
+            var chunkOrigin = SharedMapSystem.GetChunkIndices(ev.TilePos, ChunkSize);
+
+            if (navMap.Chunks.TryGetValue(chunkOrigin, out var chunk))
+            {
+                RefreshTile(oldGrid, navMap, chunk, ev.TilePos);
+            }
+        }
+
+        HandleAnchor(ev.Xform);
+    }
+
     private void OnAnchorChange(ref AnchorStateChangedEvent ev)
     {
-        if (!TryComp<NavMapComponent>(ev.Transform.GridUid, out var navMap) ||
-            !TryComp<MapGridComponent>(ev.Transform.GridUid, out var grid))
+        HandleAnchor(ev.Transform);
+    }
+
+    private void HandleAnchor(TransformComponent xform)
+    {
+        if (!TryComp<NavMapComponent>(xform.GridUid, out var navMap) ||
+            !TryComp<MapGridComponent>(xform.GridUid, out var grid))
             return;
 
-        var tile = grid.LocalToTile(ev.Transform.Coordinates);
+        var tile = grid.LocalToTile(xform.Coordinates);
         var chunkOrigin = SharedMapSystem.GetChunkIndices(tile, ChunkSize);
 
         if (!navMap.Chunks.TryGetValue(chunkOrigin, out var chunk))
@@ -101,6 +115,5 @@ public sealed class NavMapSystem : SharedNavMapSystem
             return;
 
         Dirty(component);
-        chunk.LastUpdate = _timing.CurTick;
     }
 }

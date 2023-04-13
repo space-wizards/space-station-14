@@ -28,6 +28,6 @@
             </GridContainer>
         </ScrollContainer>
         <ui:NavMapControl Name="NavMap"
-                          Margin="5 5 5 5"/>
+                          Margin="5 5"/>
     </BoxContainer>
 </controls:FancyWindow>

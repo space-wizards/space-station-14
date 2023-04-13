@@ -36,6 +36,7 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: StationMap
     - type: Transform
       anchored: true
     - type: Sprite
@@ -47,6 +48,8 @@
     - type: ApcPowerReceiver
       powerLoad: 200
       priority: Low
+    - type: WallMount
+      arc: 360
     - type: ExtensionCableReceiver
     - type: ActivatableUIRequiresPower
     - type: ActivatableUI
