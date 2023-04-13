@@ -15,7 +15,10 @@ using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Inventory;
+using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
+using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
@@ -35,8 +38,10 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
     [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
     [Dependency] private readonly ContestsSystem _contests = default!;
     [Dependency] private readonly ExamineSystem _examine = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly LagCompensationSystem _lag = default!;
     [Dependency] private readonly SolutionContainerSystem _solutions = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
     public override void Initialize()
     {
@@ -253,6 +258,13 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         {
             if (Deleted(entity))
                 continue;
+
+            // prevent deathnettles injecting through hardsuits
+            if (!comp.PierceArmor && _inventory.TryGetSlotEntity(entity, "outerClothing", out var suit) && _tag.HasTag(suit.Value, "Hardsuit"))
+            {
+                PopupSystem.PopupEntity(Loc.GetString("melee-inject-failed-hardsuit", ("weapon", owner)), args.User, args.User, PopupType.SmallCaution);
+                continue;
+            }
 
             if (bloodQuery.TryGetComponent(entity, out var bloodstream))
                 hitBloodstreams.Add((entity, bloodstream));
