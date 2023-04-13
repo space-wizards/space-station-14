@@ -7,6 +7,7 @@ using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Content.Shared.Weapons.Ranged.Components;
+using Content.Client.CombatMode;
 
 namespace Content.Client.Hands
 {
@@ -39,8 +40,6 @@ namespace Content.Client.Hands
                 {
                     Filter = true
                 }, nameof(ShowHandItemOverlay));
-
-            Logger.Debug("Create object! +++++++++");
         }
 
         protected override void DisposeBehavior()
@@ -63,26 +62,36 @@ namespace Content.Client.Hands
 
             var handEntity = EntityOverride ?? EntitySystem.Get<HandsSystem>().GetActiveHandEntity();
 
-            bool isHandItemSprite = false;
-            bool isHandGunItem = false;
+            bool isHandItemSprite = handEntity != null && _entMan.HasComponent<SpriteComponent>(handEntity); ;
 
-            isHandItemSprite = _entMan.HasComponent<SpriteComponent>(handEntity);
-            isHandGunItem = _entMan.HasComponent<GunComponent>(handEntity);
+            var combatSystem = EntitySystem.Get<CombatModeSystem>();
+            bool isCombatMode = combatSystem != null ? combatSystem.IsInCombatMode() : false;
 
-            if (isHandGunItem) {
-                Logger.Debug(" it is gun! ++++++++++++");
-            }
+            if (!isHandItemSprite && !isCombatMode)
+                return;
+
+            bool isHandGunItem = _entMan.HasComponent<GunComponent>(handEntity);
 
             var uiScale = (args.ViewportControl as Control)?.UIScale ?? 1f;
             float limetedScale = uiScale > 1.25f ? 1.25f : uiScale;
-
             var halfBufferSize = _renderBackbuffer.Size / 2;
 
             screen.RenderInRenderTarget(_renderBackbuffer, () =>
             {
-                DrawWeaponSight(screen, halfBufferSize, limetedScale);
+                if (isCombatMode)
+                {
+                    if (isHandGunItem)
+                    {
+                        DrawWeaponSight(screen, halfBufferSize, limetedScale);
+                    }
+                    else
+                    {
+                        DrawMeLeeSight(screen, halfBufferSize, limetedScale);
+                    }
+                }
 
-                if (handEntity != null && isHandItemSprite) {
+                if (handEntity != null && isHandItemSprite)
+                {
                     DrawHandEntityIcon(screen, handEntity.Value, halfBufferSize, limetedScale);
                 }
             }, Color.Transparent);
@@ -121,6 +130,12 @@ namespace Content.Client.Hands
             screen.DrawCircle(centerPos, (circleRadious) + 2, Color.Purple, false);
             screen.DrawCircle(centerPos, (circleRadious) + 3, Color.Purple, false);
             screen.DrawCircle(centerPos, (circleRadious) + 4, Color.Red, false);
+        }
+
+        private void DrawMeLeeSight(DrawingHandleScreen screen, Vector2 centerPos, float scale)
+        {
+            UIBox2 rectCoords = new(centerPos * 0.5f * scale, centerPos * 1.5f * scale);
+            screen.DrawRect(rectCoords, Color.Green.WithAlpha(0.9f));
         }
     }
 }
