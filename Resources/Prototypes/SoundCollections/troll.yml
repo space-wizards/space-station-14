@@ -25,19 +25,19 @@
   - Audio/Animals/snake_hiss.ogg
   - Audio/Animals/space_dragon_roar.ogg
 
-- type: SoundCollection
+- type: soundCollection
   id: TrollBeeping
   files:
   - /Audio/Effects/countdown.ogg
 
-- type: SoundCollection
+- type: soundCollection
   id: TrollEsword
   files:
   - Audio/Weapons/ebladeoff.ogg
   - Audio/Weapons/ebladeon.ogg
   - Audio/Weapons/eblade1.ogg
 
-- type: SoundCollection
+- type: soundCollection
   id: TrollMeeting
   files:
   - /Audio/Misc/emergency_meeting.ogg
