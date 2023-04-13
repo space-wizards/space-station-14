@@ -148,7 +148,7 @@
   name: Hamlet burger
   result: FoodBurgerHamlet
   time: 5
-  soids:
+  solids:
     FoodBreadBun: 1
     MobHamsterHamlet: 1
     FoodCheeseSlice: 1
