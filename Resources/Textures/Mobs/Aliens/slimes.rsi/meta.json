@@ -1,0 +1,770 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from the tgstation at https://github.com/tgstation/tgstation/blob/bb89e65aebb14d6ba0ce7fc43363fbc3f1279e79/icons/mob/simple/slimes.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "blue_slime_extract"
+    },
+    {
+      "name": "blue_adult_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "blue_baby_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "blue_adult_slime_dead"
+    },
+    {
+      "name": "blue_baby_slime_dead"
+    },
+    {
+      "name": "blue_baby_slime_dead-nocore"
+    },
+    {
+      "name": "aslime-pout",
+      "directions": 4
+    },
+    {
+      "name": "aslime-sad",
+      "directions": 4
+    },
+    {
+      "name": "aslime-angry",
+      "directions": 4
+    },
+    {
+      "name": "aslime-mischevous",
+      "directions": 4
+    },
+    {
+      "name": "aslime-_3",
+      "directions": 4
+    },
+    {
+      "name": "aslime-_33",
+      "directions": 4
+    },
+    {
+      "name": "darkblue_slime_extract"
+    },
+    {
+      "name": "darkblue_adult_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "darkblue_baby_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "darkblue_baby_slime_dead"
+    },
+    {
+      "name": "darkblue_baby_slime_dead-nocore"
+    },
+    {
+      "name": "green_slime_extract"
+    },
+    {
+      "name": "green_adult_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "green_baby_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "green_adult_slime_dead"
+    },
+    {
+      "name": "green_baby_slime_dead"
+    },
+    {
+      "name": "green_baby_slime_dead-nocore"
+    },
+    {
+      "name": "grey_slime_extract"
+    },
+    {
+      "name": "grey_adult_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "grey_baby_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "grey_baby_slime_dead"
+    },
+    {
+      "name": "grey_baby_slime_dead-nocore"
+    },
+    {
+      "name": "purple_slime_extract"
+    },
+    {
+      "name": "purple_adult_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "purple_baby_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "purple_baby_slime_dead"
+    },
+    {
+      "name": "purple_baby_slime_dead-nocore"
+    },
+    {
+      "name": "orange_slime_extract"
+    },
+    {
+      "name": "orange_adult_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "orange_baby_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "orange_baby_slime_dead"
+    },
+    {
+      "name": "orange_baby_slime_dead-nocore"
+    },
+    {
+      "name": "pink_slime_extract"
+    },
+    {
+      "name": "pink_adult_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "pink_baby_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "pink_baby_slime_dead"
+    },
+    {
+      "name": "pink_baby_slime_dead-nocore"
+    },
+    {
+      "name": "darkpurple_slime_extract"
+    },
+    {
+      "name": "darkpurple_adult_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "darkpurple_baby_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "darkpurple_baby_slime_dead"
+    },
+    {
+      "name": "darkpurple_baby_slime_dead-nocore"
+    },
+    {
+      "name": "red_slime_extract"
+    },
+    {
+      "name": "red_adult_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "red_baby_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "red_baby_slime_dead"
+    },
+    {
+      "name": "red_baby_slime_dead-nocore"
+    },
+    {
+      "name": "yellow_slime_extract"
+    },
+    {
+      "name": "yellow_adult_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "yellow_baby_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "yellow_adult_slime_dead"
+    },
+    {
+      "name": "yellow_baby_slime_dead"
+    },
+    {
+      "name": "yellow_baby_slime_dead-nocore"
+    },
+    {
+      "name": "gold_slime_extract"
+    },
+    {
+      "name": "gold_adult_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "gold_baby_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "gold_baby_slime_dead"
+    },
+    {
+      "name": "gold_baby_slime_dead-nocore"
+    },
+    {
+      "name": "metal_slime_extract"
+    },
+    {
+      "name": "metal_adult_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "metal_baby_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "metal_baby_slime_dead"
+    },
+    {
+      "name": "metal_baby_slime_dead-nocore"
+    },
+    {
+      "name": "silver_slime_extract"
+    },
+    {
+      "name": "silver_adult_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "silver_baby_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "silver_baby_slime_dead"
+    },
+    {
+      "name": "silver_baby_slime_dead-nocore"
+    },
+    {
+      "name": "lightpink_slime_extract"
+    },
+    {
+      "name": "lightpink_adult_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "lightpink_baby_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "lightpink_baby_slime_dead"
+    },
+    {
+      "name": "lightpink_baby_slime_dead-nocore"
+    },
+    {
+      "name": "black_slime_extract"
+    },
+    {
+      "name": "black_adult_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "black_baby_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "black_baby_slime_dead"
+    },
+    {
+      "name": "black_baby_slime_dead-nocore"
+    },
+    {
+      "name": "rainbow_slime_extract",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "rainbow_adult_slime",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "rainbow_baby_slime",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "rainbow_baby_slime_dead",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "rainbow_baby_slime_dead-nocore"
+    },
+    {
+      "name": "adamantine_slime_extract"
+    },
+    {
+      "name": "adamantine_adult_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "adamantine_baby_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "adamantine_baby_slime_dead"
+    },
+    {
+      "name": "adamantine_baby_slime_dead-nocore"
+    },
+    {
+      "name": "oil_slime_extract"
+    },
+    {
+      "name": "oil_adult_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "oil_baby_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "oil_baby_slime_dead"
+    },
+    {
+      "name": "oil_baby_slime_dead-nocore"
+    },
+    {
+      "name": "bluespace_slime_extract",
+      "delays": [
+        [
+          3,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "bluespace_adult_slime",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "bluespace_baby_slime",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "bluespace_baby_slime_dead"
+    },
+    {
+      "name": "bluespace_baby_slime_dead-nocore"
+    },
+    {
+      "name": "pyrite_slime_extract"
+    },
+    {
+      "name": "pyrite_adult_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "pyrite_baby_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "pyrite_baby_slime_dead"
+    },
+    {
+      "name": "pyrite_baby_slime_dead-nocore"
+    },
+    {
+      "name": "sepia_slime_extract"
+    },
+    {
+      "name": "sepia_adult_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "sepia_baby_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "sepia_baby_slime_dead"
+    },
+    {
+      "name": "sepia_baby_slime_dead-nocore"
+    },
+    {
+      "name": "cerulean_slime_extract"
+    },
+    {
+      "name": "cerulean_adult_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "cerulean_baby_slime",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "cerulean_baby_slime_dead"
+    },
+    {
+      "name": "cerulean_baby_slime_dead-nocore"
+    }
+  ]
+}

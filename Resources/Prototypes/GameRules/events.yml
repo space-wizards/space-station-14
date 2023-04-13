@@ -205,6 +205,16 @@
     endAfter: 60
 
 - type: gameRule
+  id: SlimesSpawn
+  config:
+    !type:StationEventRuleConfiguration
+    id: SlimesSpawn
+    earliestStart: 20
+    minimumPlayers: 15
+    weight: 5
+    endAfter: 60
+
+- type: gameRule
   id: SpiderSpawn
   config:
     !type:StationEventRuleConfiguration

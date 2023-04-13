@@ -6,3 +6,9 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from https://github.com/Citadel-Station-13/Citadel-Station-13-RP"
   source: "https://github.com/Citadel-Station-13/Citadel-Station-13-RP/tree/b7392a25f826d038d35309cf36875f2066c3eb05/sound/effects/footstep"
+  
+  - files:
+  - slime1.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from https://github.com/tgstation/tgstation"
+  source: "https://github.com/tgstation/tgstation/blob/master/sound/effects/footstep/slime1.ogg"
