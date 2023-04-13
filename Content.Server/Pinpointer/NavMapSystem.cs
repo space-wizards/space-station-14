@@ -20,6 +20,41 @@ public sealed class NavMapSystem : SharedNavMapSystem
         SubscribeLocalEvent<AnchorStateChangedEvent>(OnAnchorChange);
         SubscribeLocalEvent<ReAnchorEvent>(OnReAnchor);
         SubscribeLocalEvent<NavMapComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<NavMapComponent, GridSplitEvent>(OnNavMapSplit);
+    }
+
+    private void OnNavMapSplit(EntityUid uid, NavMapComponent component, ref GridSplitEvent args)
+    {
+        var physicsQuery = GetEntityQuery<PhysicsComponent>();
+        var tagQuery = GetEntityQuery<TagComponent>();
+        var gridQuery = GetEntityQuery<MapGridComponent>();
+
+        foreach (var grid in args.NewGrids)
+        {
+            var newComp = EnsureComp<NavMapComponent>(grid);
+            RefreshGrid(newComp, gridQuery.GetComponent(grid), physicsQuery, tagQuery);
+        }
+
+        RefreshGrid(component, gridQuery.GetComponent(uid), physicsQuery, tagQuery);
+    }
+
+    private void RefreshGrid(NavMapComponent component, MapGridComponent grid, EntityQuery<PhysicsComponent> physicsQuery, EntityQuery<TagComponent> tagQuery)
+    {
+        component.Chunks.Clear();
+
+        var tiles = grid.GetAllTilesEnumerator();
+
+        while (tiles.MoveNext(out var tile))
+        {
+            var chunkOrigin = SharedMapSystem.GetChunkIndices(tile.Value.GridIndices, ChunkSize);
+
+            if (!component.Chunks.TryGetValue(chunkOrigin, out var chunk))
+            {
+                chunk = new NavMapChunk(chunkOrigin);
+            }
+
+            RefreshTile(grid, component, chunk, tile.Value.GridIndices, physicsQuery, tagQuery);
+        }
     }
 
     private void OnGetState(EntityUid uid, NavMapComponent component, ref ComponentGetState args)
@@ -46,7 +81,9 @@ public sealed class NavMapSystem : SharedNavMapSystem
 
             if (navMap.Chunks.TryGetValue(chunkOrigin, out var chunk))
             {
-                RefreshTile(oldGrid, navMap, chunk, ev.TilePos);
+                var physicsQuery = GetEntityQuery<PhysicsComponent>();
+                var tagQuery = GetEntityQuery<TagComponent>();
+                RefreshTile(oldGrid, navMap, chunk, ev.TilePos, physicsQuery, tagQuery);
             }
         }
 
@@ -66,6 +103,8 @@ public sealed class NavMapSystem : SharedNavMapSystem
 
         var tile = grid.LocalToTile(xform.Coordinates);
         var chunkOrigin = SharedMapSystem.GetChunkIndices(tile, ChunkSize);
+        var physicsQuery = GetEntityQuery<PhysicsComponent>();
+        var tagQuery = GetEntityQuery<TagComponent>();
 
         if (!navMap.Chunks.TryGetValue(chunkOrigin, out var chunk))
         {
@@ -73,10 +112,12 @@ public sealed class NavMapSystem : SharedNavMapSystem
             navMap.Chunks[chunkOrigin] = chunk;
         }
 
-        RefreshTile(grid, navMap, chunk, tile);
+        RefreshTile(grid, navMap, chunk, tile, physicsQuery, tagQuery);
     }
 
-    private void RefreshTile(MapGridComponent grid, NavMapComponent component, NavMapChunk chunk, Vector2i tile)
+    private void RefreshTile(MapGridComponent grid, NavMapComponent component, NavMapChunk chunk, Vector2i tile,
+        EntityQuery<PhysicsComponent> physicsQuery,
+        EntityQuery<TagComponent> tagQuery)
     {
         var relative = SharedMapSystem.GetChunkRelative(tile, ChunkSize);
 
@@ -87,12 +128,10 @@ public sealed class NavMapSystem : SharedNavMapSystem
 
         var enumerator = grid.GetAnchoredEntitiesEnumerator(tile);
         // TODO: Use something to get convex poly.
-        var bodyQuery = GetEntityQuery<PhysicsComponent>();
-        var tagQuery = GetEntityQuery<TagComponent>();
 
         while (enumerator.MoveNext(out var ent))
         {
-            if (!bodyQuery.TryGetComponent(ent, out var body) ||
+            if (!physicsQuery.TryGetComponent(ent, out var body) ||
                 !body.CanCollide ||
                 !body.Hard ||
                 body.BodyType != BodyType.Static ||
