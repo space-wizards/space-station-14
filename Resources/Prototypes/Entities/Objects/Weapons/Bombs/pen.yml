@@ -16,3 +16,19 @@
     canCreateVacuum: false
   - type: ActivateOnPaperOpened
   - type: ExplodeOnTrigger
+
+- type: entity
+  parent: BaseItem
+  id: PenExplodingBox
+  name: exploding pen box
+  description: A small box containing an exploding pen. Packaging disintegrates when opened, leaving no evidence behind.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/penbox.rsi
+    state: exploding_pen
+    netsync: false
+  - type: SpawnItemsOnUse
+    items:
+    - id: PenExploding
+    sound:
+      path: /Audio/Effects/unwrap.ogg
