@@ -23,7 +23,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
         {
             var solutionContainerSystem = EntitySystem.Get<SolutionContainerSystem>();
-            var spillableSystem = EntitySystem.Get<SpillableSystem>();
+            var spillableSystem = EntitySystem.Get<PuddleSystem>();
 
             var coordinates = system.EntityManager.GetComponent<TransformComponent>(owner).Coordinates;
 
@@ -31,12 +31,12 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 solutionContainerSystem.TryGetSolution(owner, spillableComponent.SolutionName,
                     out var compSolution))
             {
-                spillableSystem.SpillAt(compSolution, coordinates, "PuddleSmear", false);
+                spillableSystem.TrySplashSpillAt(owner, coordinates, compSolution, out _, false, user: cause);
             }
             else if (Solution != null &&
                      solutionContainerSystem.TryGetSolution(owner, Solution, out var behaviorSolution))
             {
-                spillableSystem.SpillAt(behaviorSolution, coordinates, "PuddleSmear");
+                spillableSystem.TrySplashSpillAt(owner, coordinates, behaviorSolution, out _, user: cause);
             }
         }
     }

@@ -128,7 +128,7 @@
     - !type:BiomeEntityLayer
       allowedTiles:
         - FloorPlanetGrass
-        - FloorAsteroidSand
+        - FloorPlanetDirt
       threshold: -0.15
       noise:
         seed: 0
@@ -146,7 +146,7 @@
     - !type:BiomeEntityLayer
       allowedTiles:
         - FloorPlanetGrass
-        - FloorAsteroidSand
+        - FloorPlanetDirt
       threshold: 0.95
       noise:
         seed: 3
@@ -157,10 +157,10 @@
         octaves: 1
       entities:
         - FloorWaterEntity
-    # Fill remainder with sand.
+    # Fill remainder with dirt.
     - !type:BiomeTileLayer
       threshold: -1.0
-      tile: FloorAsteroidSand
+      tile: FloorPlanetDirt
     - !type:BiomeTileLayer
       threshold: -0.90
       tile: FloorPlanetGrass
@@ -170,7 +170,7 @@
         fractalType: None
     # Water sand
     - !type:BiomeTileLayer
-      tile: FloorAsteroidSand
+      tile: FloorPlanetDirt
       threshold: 0.95
       noise:
         seed: 3
@@ -181,7 +181,7 @@
         octaves: 1
     # Rock formation sand
     - !type:BiomeTileLayer
-      tile: FloorAsteroidSand
+      tile: FloorPlanetDirt
       threshold: -0.15
       noise:
         seed: 0
@@ -278,8 +278,8 @@
         frequency: 1
       decals:
         - grasssnowa1
-        - grassnowa2
-        - grassnowa3
+        - grasssnowa2
+        - grasssnowa3
         - grasssnowb1
         - grasssnowb2
         - grasssnowb3

@@ -16,7 +16,6 @@ namespace Content.Shared.SubFloor
     {
         [Dependency] protected readonly IMapManager MapManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
-        [Dependency] private readonly TrayScannerSystem _trayScannerSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
 
@@ -70,7 +69,6 @@ namespace Content.Shared.SubFloor
             if (args.Anchored)
             {
                 var xform = Transform(uid);
-                _trayScannerSystem.OnSubfloorAnchored(uid, component, xform);
                 UpdateFloorCover(uid, component, xform);
             }
             else if (component.IsUnderCover)
@@ -139,37 +137,6 @@ namespace Content.Shared.SubFloor
             }
         }
 
-        /// <summary>
-        ///     This function is used by T-Ray scanners or other sub-floor revealing entities to toggle visibility.
-        /// </summary>
-        public void SetEntitiesRevealed(IEnumerable<EntityUid> entities, EntityUid revealer, bool visible)
-        {
-            foreach (var uid in entities)
-            {
-                SetEntityRevealed(uid, revealer, visible);
-            }
-        }
-
-        /// <summary>
-        ///     This function is used by T-Ray scanners or other sub-floor revealing entities to toggle visibility.
-        /// </summary>
-        public void SetEntityRevealed(EntityUid uid, EntityUid revealer, bool visible, SubFloorHideComponent? hideComp = null)
-        {
-            if (!Resolve(uid, ref hideComp, false))
-                return;
-
-            if (visible)
-            {
-                if (hideComp.RevealedBy.Add(revealer) && hideComp.RevealedBy.Count == 1)
-                    UpdateAppearance(uid, hideComp);
-
-                return;
-            }
-
-            if (hideComp.RevealedBy.Remove(revealer) && hideComp.RevealedBy.Count == 0)
-                UpdateAppearance(uid, hideComp);
-        }
-
         public void UpdateAppearance(
             EntityUid uid,
             SubFloorHideComponent? hideComp = null,
@@ -186,7 +153,6 @@ namespace Content.Shared.SubFloor
             if (Resolve(uid, ref appearance, false))
             {
                 Appearance.SetData(uid, SubFloorVisuals.Covered, hideComp.IsUnderCover, appearance);
-                Appearance.SetData(uid, SubFloorVisuals.ScannerRevealed, hideComp.RevealedBy.Count != 0, appearance);
             }
         }
     }
@@ -194,8 +160,15 @@ namespace Content.Shared.SubFloor
     [Serializable, NetSerializable]
     public enum SubFloorVisuals : byte
     {
-        Covered, // is there a floor tile over this entity
-        ScannerRevealed, // is this entity revealed by a scanner or some other entity?
+        /// <summary>
+        /// Is there a floor tile over this entity
+        /// </summary>
+        Covered,
+
+        /// <summary>
+        /// Is this entity revealed by a scanner or some other entity?
+        /// </summary>
+        ScannerRevealed,
     }
 
     public enum SubfloorLayers : byte

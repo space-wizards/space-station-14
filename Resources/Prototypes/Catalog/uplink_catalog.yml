@@ -50,7 +50,7 @@
   icon: { sprite: /Textures/Objects/Weapons/Melee/e_sword.rsi, state: icon }
   productEntity: EnergySword
   cost:
-    Telecrystal: 6
+    Telecrystal: 8
   categories:
   - UplinkWeapons
 
@@ -59,7 +59,7 @@
   name: uplink-edagger-name
   description: uplink-edagger-desc
   icon: { sprite: /Textures/Objects/Weapons/Melee/e_dagger.rsi, state: icon }
-  productEntity: EnergyDagger
+  productEntity: EnergyDaggerBox
   cost:
     Telecrystal: 3
   categories:
@@ -93,7 +93,7 @@
   description: uplink-flash-grenade-desc
   productEntity: GrenadeFlashBang
   cost:
-    Telecrystal: 2
+    Telecrystal: 1
   categories:
   - UplinkExplosives
 
@@ -128,7 +128,7 @@
   description: uplink-c4-desc
   productEntity: C4
   cost:
-    Telecrystal: 2
+    Telecrystal: 4
   categories:
   - UplinkExplosives
 
@@ -138,7 +138,7 @@
   description: uplink-c4-bundle-desc
   productEntity: ClothingBackpackDuffelSyndicateC4tBundle
   cost:
-    Telecrystal: 12
+    Telecrystal: 20
   categories:
   - UplinkExplosives
 
@@ -152,6 +152,17 @@
   categories:
   - UplinkExplosives
 
+- type: listing
+  id: UplinkExplodingPen
+  name: uplink-exploding-pen-name
+  description: uplink-exploding-pen-desc
+  icon: { sprite: /Textures/Objects/Misc/bureaucracy.rsi, state: pen }
+  productEntity: PenExplodingBox
+  cost:
+    Telecrystal: 5
+  categories:
+  - UplinkExplosives
+
 # Ammo
 
 - type: listing
@@ -161,7 +172,7 @@
   icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag.rsi, state: red-icon }
   productEntity: MagazinePistol
   cost:
-    Telecrystal: 2
+    Telecrystal: 1
   categories:
   - UplinkAmmo
 
@@ -173,7 +184,7 @@
   icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_pistol_mag.rsi, state: red-icon }
   productEntity: MagazinePistolCaselessRifle
   cost:
-    Telecrystal: 2
+    Telecrystal: 1
   categories:
   - UplinkAmmo
 
@@ -185,7 +196,7 @@
   icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi, state: icon }
   productEntity: SpeedLoaderMagnum
   cost:
-    Telecrystal: 2
+    Telecrystal: 1
   categories:
   - UplinkAmmo
 
@@ -252,7 +263,7 @@
   id: UplinkJetpack
   name: uplink-black-jetpack-name
   description: uplink-black-jetpack-desc
-  productEntity: JetpackBlack
+  productEntity: JetpackBlackFilled
   cost:
     Telecrystal: 4
   categories:
@@ -265,7 +276,7 @@
   productEntity: ReinforcementRadioSyndicate
   icon: { sprite: Objects/Devices/communication.rsi, state: old-radio }
   cost:
-    Telecrystal: 20
+    Telecrystal: 16
   categories:
   - UplinkUtility
 
@@ -275,7 +286,7 @@
   description: uplink-stealth-box-desc
   productEntity: StealthBox
   cost:
-    Telecrystal: 10
+    Telecrystal: 5
   categories:
     - UplinkUtility
 
@@ -304,7 +315,8 @@
   id: UplinkHypopen
   name: uplink-hypopen-name
   description: uplink-hypopen-desc
-  productEntity: Hypopen
+  icon: { sprite: /Textures/Objects/Misc/bureaucracy.rsi, state: pen }
+  productEntity: HypopenBox
   cost:
     Telecrystal: 6
   categories:
@@ -314,9 +326,9 @@
   id: UplinkVoiceMask
   name: uplink-voice-mask-name
   description: uplink-voice-mask-desc
-  productEntity: ClothingMaskGasVoiceMasker
+  productEntity: ClothingMaskGasVoiceChameleon
   cost:
-    Telecrystal: 4
+    Telecrystal: 6
   categories:
   - UplinkUtility
 
@@ -486,7 +498,7 @@
   description: uplink-toolbox-desc
   productEntity: ToolboxSyndicateFilled
   cost:
-    Telecrystal: 2
+    Telecrystal: 4
   categories:
   - UplinkTools
 
@@ -506,7 +518,7 @@
   description: uplink-duffel-surgery-desc
   productEntity: ClothingBackpackDuffelSyndicateFilledMedical
   cost:
-    Telecrystal: 5
+    Telecrystal: 4
   categories:
   - UplinkTools
 
@@ -568,7 +580,7 @@
     blacklist:
       components:
       - SurplusBundle
-  
+
 - type: listing
   id: uplinkRevolverCapGunFake
   name: uplink-revolver-cap-gun-fake-name
@@ -582,6 +594,20 @@
   - !type:BuyerJobCondition
     whitelist:
     - Mime
+    - Clown
+
+- type: listing
+  id: uplinkBananaPeelExplosive
+  name: uplink-banana-peel-explosive-name
+  description: uplink-banana-peel-explosive-desc
+  productEntity: TrashBananaPeelExplosive
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
     - Clown
 
 # Armor
@@ -623,7 +649,7 @@
   description: uplink-clothing-outer-vest-web-desc
   productEntity: ClothingOuterVestWeb
   cost:
-    Telecrystal: 4
+    Telecrystal: 3
   categories:
   - UplinkArmor
 
@@ -750,7 +776,7 @@
     Telecrystal: 8
   categories:
   - UplinkMisc
-  
+
 - type: listing
   id: UplinkStimkit
   name: uplink-stimkit-name
@@ -760,7 +786,7 @@
     Telecrystal: 12
   categories:
   - UplinkMisc
-  
+
 - type: listing
   id: UplinkStimpackExperimental
   name: uplink-experimental-stimpack-name

@@ -1,6 +1,7 @@
 using Content.Shared.Maps;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Procedural.PostGeneration;
 
@@ -15,8 +16,11 @@ public sealed class EntrancePostGen : IPostDunGen
     [DataField("count")]
     public int Count = 1;
 
-    [DataField("door", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string Door = "AirlockGlass";
+    [DataField("entities", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
+    public List<string> Entities = new()
+    {
+        "AirlockGlass"
+    };
 
     [DataField("tile", customTypeSerializer:typeof(PrototypeIdSerializer<ContentTileDefinition>))]
     public string Tile = "FloorSteel";

@@ -271,7 +271,7 @@ public sealed partial class DungeonJob
                         {
                             for (var y = roomSize.Bottom; y < roomSize.Top; y++)
                             {
-                                var index = (Vector2i) matty.Transform(new Vector2(x, y) + grid.TileSize / 2f - packCenter);
+                                var index = matty.Transform(new Vector2(x, y) + grid.TileSize / 2f - packCenter).Floored();
                                 tiles.Add((index, new Tile(_tileDefManager["FloorPlanetGrass"].TileId)));
                             }
                         }
@@ -382,14 +382,15 @@ public sealed partial class DungeonJob
                         var angle = (decal.Angle + finalRoomRotation).Reduced();
 
                         // Adjust because 32x32 so we can't rotate cleanly
+                        // Yeah idk about the uhh vectors here but it looked visually okay but they may still be off by 1.
+                        // Also EyeManager.PixelsPerMeter should really be in shared.
                         if (angle.Equals(Math.PI))
                         {
                             position += new Vector2(-1f / 32f, 1f / 32f);
                         }
-                        // Okay this one I didn't actually verify but I think this is it.
                         else if (angle.Equals(Math.PI * 1.5))
                         {
-                            position += new Vector2(1f / 32f, 1f / 32f);
+                            position += new Vector2(-1f / 32f, 0f);
                         }
                         else if (angle.Equals(Math.PI / 2f))
                         {

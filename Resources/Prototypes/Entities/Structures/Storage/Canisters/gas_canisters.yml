@@ -41,6 +41,12 @@
       thresholds:
         - trigger:
             !type:DamageTrigger
+            damage: 600
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
             damage: 300
           behaviors:
             - !type:PlaySoundBehavior
@@ -108,9 +114,18 @@
           - 0 # Plasma
           - 0 # Tritium
           - 0 # Water vapor
+          - 0 # Miasma
+          - 0 # N2O
+          - 0 # Frezon
         temperature: 293.15
     - type: Destructible
       thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
           damage: 300
@@ -147,6 +162,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 600
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 300
       behaviors:
       - !type:PlaySoundBehavior
@@ -176,6 +197,12 @@
       temperature: 293.15
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 300
@@ -210,6 +237,12 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
           damage: 300
         behaviors:
         - !type:PlaySoundBehavior
@@ -241,6 +274,12 @@
         temperature: 293.15
     - type: Destructible
       thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
           damage: 300
@@ -279,6 +318,12 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
           damage: 300
         behaviors:
         - !type:PlaySoundBehavior
@@ -314,6 +359,12 @@
         temperature: 293.15
     - type: Destructible
       thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
           damage: 300
@@ -354,6 +405,12 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
           damage: 300
         behaviors:
         - !type:PlaySoundBehavior
@@ -389,6 +446,12 @@
         temperature: 293.15
     - type: Destructible
       thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
           damage: 300
@@ -431,6 +494,12 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
           damage: 300
         behaviors:
         - !type:PlaySoundBehavior
@@ -463,10 +532,17 @@
       - 0 # Tritium
       - 0 #  Water vapor
       - 0 # Miasma
+      - 0 # N2O
       - 1871.71051 # Frezon
       temperature: 293.15
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 300
@@ -493,6 +569,12 @@
   components:
     - type: Destructible
       thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 200
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
           damage: 100
@@ -526,7 +608,9 @@
         - MachineMask
         layer:
         - MachineLayer
-    - type: Recyclable
+    - type: PhysicalComposition
+      materialComposition:
+        Steel: 500
     - type: StaticPrice
       price: 60
 

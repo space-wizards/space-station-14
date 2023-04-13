@@ -16,51 +16,57 @@ public sealed partial class DockingSystem
         var dockingQuery = GetEntityQuery<DockingComponent>();
         var xformQuery = GetEntityQuery<TransformComponent>();
         var recentQuery = GetEntityQuery<RecentlyDockedComponent>();
+        var query = EntityQueryEnumerator<AutoDockComponent>();
 
-        foreach (var (comp, body) in EntityQuery<AutoDockComponent, PhysicsComponent>())
+        while (query.MoveNext(out var dockUid, out var comp))
         {
-            if (comp.Requesters.Count == 0 || !dockingQuery.TryGetComponent(comp.Owner, out var dock))
+            if (comp.Requesters.Count == 0 || !dockingQuery.TryGetComponent(dockUid, out var dock))
             {
-                RemComp<AutoDockComponent>(comp.Owner);
+                RemComp<AutoDockComponent>(dockUid);
                 continue;
             }
 
             // Don't re-dock if we're already docked or recently were.
-            if (dock.Docked || recentQuery.HasComponent(comp.Owner)) continue;
+            if (dock.Docked || recentQuery.HasComponent(dockUid))
+                continue;
 
-            var dockable = GetDockable(body, xformQuery.GetComponent(comp.Owner));
+            var dockable = GetDockable(dockUid, xformQuery.GetComponent(dockUid));
 
-            if (dockable == null) continue;
+            if (dockable == null)
+                continue;
 
-            TryDock(dock, dockable);
+            TryDock(dockUid, dock, dockable.Owner, dockable);
         }
 
         // Work out recent docks that have gone past their designated threshold.
         var checkedRecent = new HashSet<EntityUid>();
+        var recentQueryEnumerator = EntityQueryEnumerator<RecentlyDockedComponent, TransformComponent>();
 
-        foreach (var (comp, xform) in EntityQuery<RecentlyDockedComponent, TransformComponent>())
+        while (recentQueryEnumerator.MoveNext(out var uid, out var comp, out var xform))
         {
-            if (!checkedRecent.Add(comp.Owner)) continue;
+            if (!checkedRecent.Add(uid))
+                continue;
 
-            if (!dockingQuery.TryGetComponent(comp.Owner, out var dock))
+            if (!dockingQuery.HasComponent(uid))
             {
-                RemComp<RecentlyDockedComponent>(comp.Owner);
+                RemCompDeferred<RecentlyDockedComponent>(uid);
                 continue;
             }
 
             if (!xformQuery.TryGetComponent(comp.LastDocked, out var otherXform))
             {
-                RemComp<RecentlyDockedComponent>(comp.Owner);
+                RemCompDeferred<RecentlyDockedComponent>(uid);
                 continue;
             }
 
-            var worldPos = _transformSystem.GetWorldPosition(xform, xformQuery);
-            var otherWorldPos = _transformSystem.GetWorldPosition(otherXform, xformQuery);
+            var worldPos = _transform.GetWorldPosition(xform, xformQuery);
+            var otherWorldPos = _transform.GetWorldPosition(otherXform, xformQuery);
 
-            if ((worldPos - otherWorldPos).Length < comp.Radius) continue;
+            if ((worldPos - otherWorldPos).Length < comp.Radius)
+                continue;
 
-            _sawmill.Debug($"Removed RecentlyDocked from {ToPrettyString(comp.Owner)} and {ToPrettyString(comp.LastDocked)}");
-            RemComp<RecentlyDockedComponent>(comp.Owner);
+            _sawmill.Debug($"Removed RecentlyDocked from {ToPrettyString(uid)} and {ToPrettyString(comp.LastDocked)}");
+            RemComp<RecentlyDockedComponent>(uid);
             RemComp<RecentlyDockedComponent>(comp.LastDocked);
         }
     }
@@ -71,9 +77,13 @@ public sealed partial class DockingSystem
 
         // TODO: Validation
         if (!TryComp<DockingComponent>(args.DockEntity, out var dock) ||
-            !dock.Docked) return;
+            !dock.Docked ||
+            HasComp<PreventPilotComponent>(Transform(uid).GridUid))
+        {
+            return;
+        }
 
-        Undock(dock);
+        Undock(args.DockEntity, dock);
     }
 
     private void OnRequestAutodock(EntityUid uid, ShuttleConsoleComponent component, AutodockRequestMessage args)
@@ -81,7 +91,12 @@ public sealed partial class DockingSystem
         _sawmill.Debug($"Received autodock request for {ToPrettyString(args.DockEntity)}");
         var player = args.Session.AttachedEntity;
 
-        if (player == null || !HasComp<DockingComponent>(args.DockEntity)) return;
+        if (player == null ||
+            !HasComp<DockingComponent>(args.DockEntity) ||
+            HasComp<PreventPilotComponent>(Transform(uid).GridUid))
+        {
+            return;
+        }
 
         // TODO: Validation
         var comp = EnsureComp<AutoDockComponent>(args.DockEntity);

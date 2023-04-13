@@ -157,7 +157,12 @@ public sealed partial class DungeonJob
                 ClearDoor(dungeon, grid, entrancePos);
                 var gridCoords = grid.GridTileToLocal(entrancePos);
                 // Need to offset the spawn to avoid spawning in the room.
-                _entManager.SpawnEntity(gen.Door, gridCoords);
+
+                foreach (var ent in gen.Entities)
+                {
+                    _entManager.SpawnEntity(ent, gridCoords);
+                }
+
                 count--;
 
                 // Clear out any biome tiles nearby to avoid blocking it
@@ -496,9 +501,11 @@ public sealed partial class DungeonJob
                 if (!dungeon.RoomTiles.Contains(neighbor))
                     continue;
 
-                foreach (var ent in _lookup.GetEntitiesIntersecting(_gridUid, neighbor, flags))
+                // Shrink by 0.01 to avoid polygon overlap from neighboring tiles.
+                foreach (var ent in _lookup.GetEntitiesIntersecting(_gridUid, new Box2(neighbor * grid.TileSize, (neighbor + 1) * grid.TileSize).Enlarged(-0.1f), flags))
                 {
                     if (!physicsQuery.TryGetComponent(ent, out var physics) ||
+                        !physics.Hard ||
                         (CollisionMask & physics.CollisionLayer) == 0x0 &&
                         (CollisionLayer & physics.CollisionMask) == 0x0)
                     {

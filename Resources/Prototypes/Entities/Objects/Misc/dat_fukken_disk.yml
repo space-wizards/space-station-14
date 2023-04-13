@@ -14,9 +14,13 @@
   - type: StaticPrice
     price: 2000
   - type: CargoSellBlacklist
+  - type: ArrivalsBlacklist
   - type: WarpPoint
     follow: true
     location: nuke disk
+  - type: Tag
+    tags:
+    - HighRiskItem
 
 - type: entity
   name: nuclear authentication disk
