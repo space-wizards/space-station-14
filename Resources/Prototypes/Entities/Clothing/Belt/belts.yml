@@ -381,6 +381,9 @@
     state: sheath
   - type: Clothing
     sprite: Clothing/Belt/sheath.rsi
+  - type: ContainerContainer
+    containers:
+      sabreSlot: !type:ContainerSlot
   - type: ItemSlots
     slots:
       sabreSlot:
