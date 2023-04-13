@@ -68,30 +68,6 @@ public sealed class RadarControl : MapGridControl
         _rotation = angle;
     }
 
-    public void UpdateState(RadarConsoleBoundInterfaceState ls)
-    {
-        WorldMaxRange = ls.MaxRange;
-
-        if (WorldMaxRange < WorldRange)
-        {
-            ActualRadarRange = WorldMaxRange;
-        }
-
-        if (WorldMaxRange < WorldMinRange)
-            WorldMinRange = WorldMaxRange;
-
-        _actualRadarRange = Math.Clamp(_actualRadarRange, _radarMinRange, _radarMaxRange);
-
-        _docks.Clear();
-
-        foreach (var state in ls.Docks)
-        {
-            var coordinates = state.Coordinates;
-            var grid = _docks.GetOrNew(coordinates.EntityId);
-            grid.Add(state);
-        }
-    }
-
     protected override void KeyBindUp(GUIBoundKeyEventArgs args)
     {
         base.KeyBindUp(args);
@@ -129,15 +105,28 @@ public sealed class RadarControl : MapGridControl
         return coords;
     }
 
-    protected override void MouseWheel(GUIMouseWheelEventArgs args)
+    public void UpdateState(RadarConsoleBoundInterfaceState ls)
     {
-        base.MouseWheel(args);
-        AddRadarRange(-args.Delta.Y * 1f / ScrollSensitivity * RadarRange);
-    }
+        WorldMaxRange = ls.MaxRange;
 
-    public void AddRadarRange(float value)
-    {
-        _actualRadarRange = Math.Clamp(_actualRadarRange + value, _radarMinRange, _radarMaxRange);
+        if (WorldMaxRange < WorldRange)
+        {
+            ActualRadarRange = WorldMaxRange;
+        }
+
+        if (WorldMaxRange < WorldMinRange)
+            WorldMinRange = WorldMaxRange;
+
+        ActualRadarRange = Math.Clamp(ActualRadarRange, WorldMinRange, WorldMaxRange);
+
+        _docks.Clear();
+
+        foreach (var state in ls.Docks)
+        {
+            var coordinates = state.Coordinates;
+            var grid = _docks.GetOrNew(coordinates.EntityId);
+            grid.Add(state);
+        }
     }
 
     protected override void Draw(DrawingHandleScreen handle)
@@ -420,7 +409,7 @@ public sealed class RadarControl : MapGridControl
                 var adjustedStart = matrix.Transform(start);
                 var adjustedEnd = matrix.Transform(end);
 
-                if (adjustedStart.Length > RadarRange || adjustedEnd.Length > RadarRange)
+                if (adjustedStart.Length > ActualRadarRange || adjustedEnd.Length > ActualRadarRange)
                     continue;
 
                 start = ScalePosition(new Vector2(adjustedStart.X, -adjustedStart.Y));

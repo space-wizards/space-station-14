@@ -54,8 +54,8 @@ namespace Content.Client.Medical.CrewMonitoring
             // add a row for each sensor
             foreach (var sensor in stSensors.OrderBy(a => a.Name))
             {
-                // add users name and job
-                // format: UserName (Job)
+                // add users name
+                // format: UserName
                 var nameLabel = new PanelContainer()
                 {
                     PanelOverride = new StyleBoxFlat()
@@ -71,8 +71,6 @@ namespace Content.Client.Medical.CrewMonitoring
                         }
                     }
                 };
-                SensorsTable.AddChild(nameLabel);
-                _rowsContent.Add(nameLabel);
 
                 // add users job
                 // format: JobName
@@ -81,6 +79,9 @@ namespace Content.Client.Medical.CrewMonitoring
                     Text = sensor.Job,
                     HorizontalExpand = true
                 };
+
+                SensorsTable.AddChild(nameLabel);
+                _rowsContent.Add(nameLabel);
                 SensorsTable.AddChild(jobLabel);
                 _rowsContent.Add(jobLabel);
 

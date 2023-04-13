@@ -56,7 +56,7 @@ public abstract class MapGridControl : Control
     protected override void MouseWheel(GUIMouseWheelEventArgs args)
     {
         base.MouseWheel(args);
-        AddRadarRange(-args.Delta.Y * 1f / ScrollSensitivity * WorldRange);
+        AddRadarRange(-args.Delta.Y * 1f / ScrollSensitivity * ActualRadarRange);
     }
 
     public void AddRadarRange(float value)
