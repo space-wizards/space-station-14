@@ -1,3 +1,5 @@
+using Robust.Shared.Audio;
+
 namespace Content.Server.Defusable.Components;
 
 /// <summary>
@@ -11,7 +13,23 @@ public sealed class DefusableComponent : Component
     /// <summary>
     /// The time set by the player.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)] public int StartingTime = 90;
+    [ViewVariables(VVAccess.ReadWrite), DataField("time")]
+    public int StartingTime = 90;
+
+    /// <summary>
+    ///     A user can use these options to configure how long they want their bomb to be, unless null.
+    /// </summary>
+    [DataField("timeOptions")] public List<float>? StartingTimeOptions = null;
+
+    /// <summary>
+    ///     The bomb will play this sound while live every second, unless null.
+    /// </summary>
+    [DataField("beepSound")] public SoundSpecifier? BeepSound;
+
+    /// <summary>
+    ///     The bomb will play this sound on defusal, unless null.
+    /// </summary>
+    [DataField("defusalSound")] public SoundSpecifier? DefusalSound;
 
     /// <summary>
     /// The actual time until the bomb explodes.
