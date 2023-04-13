@@ -8,13 +8,13 @@ public sealed partial class ActivatableUISystem
 
     private void InitializePower()
     {
-        SubscribeLocalEvent<ActivatableUIPowerCellComponent, ActivatableUIOpenAttemptEvent>(OnBatteryOpenAttempt);
+        SubscribeLocalEvent<ActivatableUIRequiresPowerCellComponent, ActivatableUIOpenAttemptEvent>(OnBatteryOpenAttempt);
     }
 
     /// <summary>
     /// Call if you want to check if the UI should close due to a recent battery usage.
     /// </summary>
-    public void CheckUsage(EntityUid uid, ActivatableUIComponent? active = null, ActivatableUIPowerCellComponent? component = null, PowerCellDrawComponent? draw = null)
+    public void CheckUsage(EntityUid uid, ActivatableUIComponent? active = null, ActivatableUIRequiresPowerCellComponent? component = null, PowerCellDrawComponent? draw = null)
     {
         if (!Resolve(uid, ref component, ref draw, ref active, false) || active.Key == null)
             return;
@@ -25,7 +25,7 @@ public sealed partial class ActivatableUISystem
         _uiSystem.TryCloseAll(uid, active.Key);
     }
 
-    private void OnBatteryOpenAttempt(EntityUid uid, ActivatableUIPowerCellComponent component, ActivatableUIOpenAttemptEvent args)
+    private void OnBatteryOpenAttempt(EntityUid uid, ActivatableUIRequiresPowerCellComponent component, ActivatableUIOpenAttemptEvent args)
     {
         if (!TryComp<PowerCellDrawComponent>(uid, out var draw))
             return;

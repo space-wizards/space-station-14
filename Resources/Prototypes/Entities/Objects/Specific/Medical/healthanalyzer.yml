@@ -13,7 +13,7 @@
   - type: PowerCellDraw
     drawRate: 0
     useRate: 20
-  - type: ActivatableUIPowerCell
+  - type: ActivatableUIRequiresPowerCell
   - type: ActivatableUI
     key: enum.HealthAnalyzerUiKey.Key
     closeOnHandDeselect: false
