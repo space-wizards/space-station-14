@@ -16,5 +16,8 @@ roles-antag-suspicion-suspect-objective = Kill the innocents.
 roles-antag-nuclear-operative-commander-name = Nuclear operative commander
 roles-antag-nuclear-operative-commander-objective = Lead your team to the destruction of the station.
 
+roles-antag-nuclear-operative-medic-name = Nuclear operative medic
+roles-antag-nuclear-operative-medic-objective = Keep your team up, while you blow up the station together.
+
 roles-antag-nuclear-operative-name = Nuclear operative
 roles-antag-nuclear-operative-objective = Find the nuke disk and blow up the station.
