@@ -346,6 +346,12 @@ namespace Content.Shared.StatusEffect
             // don't log since stuff calling this prolly doesn't care if we don't actually have it
             if (!Resolve(uid, ref status, false))
                 return false;
+
+            var ev = new BeforeStatusEffectAddedEvent(key);
+            RaiseLocalEvent(uid, ref ev);
+            if (ev.Cancelled)
+                return false;
+
             if (!_prototypeManager.TryIndex<StatusEffectPrototype>(key, out var proto))
                 return false;
             if (!status.AllowedEffects.Contains(key) && !proto.AlwaysAllowed)
@@ -464,6 +470,12 @@ namespace Content.Shared.StatusEffect
             return true;
         }
     }
+
+    /// <summary>
+    ///     Raised on an entity before a status effect is added to determine if adding it should be cancelled.
+    /// </summary>
+    [ByRefEvent]
+    public record struct BeforeStatusEffectAddedEvent(string Key, bool Cancelled=false);
 
     public readonly struct StatusEffectAddedEvent
     {

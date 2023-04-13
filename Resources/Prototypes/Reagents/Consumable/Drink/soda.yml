@@ -157,3 +157,12 @@
         damage:
           types:
             Poison: 1
+            
+- type: reagent
+  id: ShamblersJuice
+  name: reagent-name-shamblers-juice
+  parent: BaseSoda
+  desc: reagent-desc-shamblers-juice
+  physicalDesc: reagent-physical-desc-fizzy
+  flavor: metallic
+  color: "#66538F"

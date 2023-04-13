@@ -10,12 +10,13 @@ namespace Content.Server.ParticleAccelerator.EntitySystems
             SubscribeLocalEvent<ParticleAcceleratorPowerBoxComponent, PowerConsumerReceivedChanged>(PowerBoxReceivedChanged);
         }
 
-        private static void PowerBoxReceivedChanged(
+        private void PowerBoxReceivedChanged(
             EntityUid uid,
             ParticleAcceleratorPowerBoxComponent component,
             ref PowerConsumerReceivedChanged args)
         {
-            component.Master?.PowerBoxReceivedChanged(args);
+            if (TryComp(uid, out ParticleAcceleratorPartComponent? paPart))
+                paPart.Master?.PowerBoxReceivedChanged(args);
         }
     }
 }

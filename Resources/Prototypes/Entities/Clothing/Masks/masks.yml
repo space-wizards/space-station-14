@@ -119,6 +119,7 @@
   - type: Tag
     tags:
     - PetWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingMaskPullableBase
@@ -137,7 +138,11 @@
   - type: Tag
     tags:
     - PetWearable
-  - type: Recyclable
+    - WhitelistChameleon
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50
+      Plastic: 100
 
 - type: entity
   parent: ClothingMaskBase

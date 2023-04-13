@@ -1,5 +1,4 @@
 using Content.Server.Body.Components;
-using Content.Server.DoAfter;
 using Content.Server.Medical.Components;
 using Content.Server.Popups;
 using Content.Shared.Actions;
@@ -11,6 +10,7 @@ using Content.Shared.Verbs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.DoAfter;
+using Content.Shared.Medical;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Medical
@@ -18,7 +18,7 @@ namespace Content.Server.Medical
     public sealed class StethoscopeSystem : EntitySystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
         public override void Initialize()
@@ -29,7 +29,7 @@ namespace Content.Server.Medical
             SubscribeLocalEvent<WearingStethoscopeComponent, GetVerbsEvent<InnateVerb>>(AddStethoscopeVerb);
             SubscribeLocalEvent<StethoscopeComponent, GetItemActionsEvent>(OnGetActions);
             SubscribeLocalEvent<StethoscopeComponent, StethoscopeActionEvent>(OnStethoscopeAction);
-            SubscribeLocalEvent<StethoscopeComponent, DoAfterEvent>(OnDoAfter);
+            SubscribeLocalEvent<StethoscopeComponent, StethoscopeDoAfterEvent>(OnDoAfter);
         }
 
         /// <summary>
@@ -103,11 +103,10 @@ namespace Content.Server.Medical
         // construct the doafter and start it
         private void StartListening(EntityUid scope, EntityUid user, EntityUid target, StethoscopeComponent comp)
         {
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, comp.Delay, target: target, used:scope)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(user, comp.Delay, new StethoscopeDoAfterEvent(), scope, target: target, used: scope)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
-                BreakOnStun = true,
                 NeedHand = true
             });
         }

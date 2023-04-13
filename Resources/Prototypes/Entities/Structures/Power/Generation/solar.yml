@@ -23,9 +23,9 @@
         bounds: "-0.45,-0.1,0.45,0.1"
       density: 550
       mask:
-      - MachineMask
+      - MachineMask 
       layer:
-      - MachineLayer
+      - MidImpassable, LowImpassable, BulletImpassable
   - type: Sprite
     sprite: Structures/Power/Generation/solar_panel.rsi
     state: normal

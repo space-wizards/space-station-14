@@ -50,6 +50,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 600
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 300
       behaviors:
       - !type:DoActsBehavior
@@ -104,6 +110,12 @@
     autoRot: true
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 250

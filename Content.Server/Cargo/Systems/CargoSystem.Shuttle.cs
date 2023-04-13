@@ -1,12 +1,9 @@
 using System.Linq;
 using Content.Server.Cargo.Components;
-using Content.Server.Labels.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.UserInterface;
-using Content.Server.Paper;
 using Content.Server.Shuttles.Systems;
-using Content.Server.Station.Components;
 using Content.Server.Stack;
 using Content.Shared.Stacks;
 using Content.Shared.Cargo;
@@ -17,20 +14,16 @@ using Content.Shared.Cargo.Prototypes;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.GameTicking;
-using Content.Shared.Mobs.Components;
-using Content.Shared.Mobs.Systems;
+using Content.Shared.Whitelist;
 using Robust.Server.GameObjects;
-using Robust.Server.Maps;
-using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.Prototypes;
 using Content.Shared.Coordinates;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 
 namespace Content.Server.Cargo.Systems;
 
@@ -40,21 +33,18 @@ public sealed partial class CargoSystem
      * Handles cargo shuttle mechanics, including cargo shuttle consoles.
      */
 
+    [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly PricingSystem _pricing = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ShuttleConsoleSystem _console = default!;
-    [Dependency] private readonly ShuttleSystem _shuttle = default!;
     [Dependency] private readonly StackSystem _stack = default!;
     public MapId? CargoMap { get; private set; }
-
-    private const float CallOffset = 50f;
 
     private int _index;
 
@@ -69,10 +59,11 @@ public sealed partial class CargoSystem
         // Don't want to immediately call this as shuttles will get setup in the natural course of things.
         _configManager.OnValueChanged(CCVars.CargoShuttles, SetCargoShuttleEnabled);
 
-        SubscribeLocalEvent<CargoShuttleComponent, MoveEvent>(OnCargoShuttleMove);
+        SubscribeLocalEvent<CargoShuttleComponent, FTLStartedEvent>(OnCargoFTLStarted);
+        SubscribeLocalEvent<CargoShuttleComponent, FTLCompletedEvent>(OnCargoFTLCompleted);
+        SubscribeLocalEvent<CargoShuttleComponent, FTLTagEvent>(OnCargoFTLTag);
+
         SubscribeLocalEvent<CargoShuttleConsoleComponent, ComponentStartup>(OnCargoShuttleConsoleStartup);
-        SubscribeLocalEvent<CargoShuttleConsoleComponent, CargoCallShuttleMessage>(OnCargoShuttleCall);
-        SubscribeLocalEvent<CargoShuttleConsoleComponent, CargoRecallShuttleMessage>(RecallCargoShuttle);
 
         SubscribeLocalEvent<CargoPalletConsoleComponent, CargoPalletSellMessage>(OnPalletSale);
         SubscribeLocalEvent<CargoPalletConsoleComponent, CargoPalletAppraiseMessage>(OnPalletAppraise);
@@ -87,6 +78,16 @@ public sealed partial class CargoSystem
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
     }
 
+    private void OnCargoFTLTag(EntityUid uid, CargoShuttleComponent component, ref FTLTagEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        // Just saves mappers forgetting.
+        args.Handled = true;
+        args.Tag = "DockCargo";
+    }
+
     private void ShutdownShuttle()
     {
         _configManager.UnsubValueChanged(CCVars.CargoShuttles, SetCargoShuttleEnabled);
@@ -94,16 +95,20 @@ public sealed partial class CargoSystem
 
     private void SetCargoShuttleEnabled(bool value)
     {
-        if (_enabled == value) return;
+        if (_enabled == value)
+            return;
+
         _enabled = value;
 
         if (value)
         {
             Setup();
 
-            foreach (var station in EntityQuery<StationCargoOrderDatabaseComponent>(true))
+            var query = AllEntityQuery<StationCargoOrderDatabaseComponent>();
+
+            while (query.MoveNext(out var stationUid, out var station))
             {
-                AddShuttle(station);
+                AddShuttle(stationUid, station);
             }
         }
         else
@@ -116,7 +121,7 @@ public sealed partial class CargoSystem
 
     private void OnCargoPilotConsoleOpen(EntityUid uid, CargoPilotConsoleComponent component, AfterActivatableUIOpenEvent args)
     {
-        component.Entity = GetShuttleConsole(component);
+        component.Entity = GetShuttleConsole(uid);
     }
 
     private void OnCargoPilotConsoleClose(EntityUid uid, CargoPilotConsoleComponent component, BoundUIClosedEvent args)
@@ -126,36 +131,56 @@ public sealed partial class CargoSystem
 
     private void OnCargoGetConsole(EntityUid uid, CargoPilotConsoleComponent component, ref ConsoleShuttleEvent args)
     {
-        args.Console = GetShuttleConsole(component);
+        args.Console = GetShuttleConsole(uid);
     }
 
-    private EntityUid? GetShuttleConsole(CargoPilotConsoleComponent component)
+    private EntityUid? GetShuttleConsole(EntityUid uid)
     {
-        var stationUid = _station.GetOwningStation(component.Owner);
+        var stationUid = _station.GetOwningStation(uid);
 
         if (!TryComp<StationCargoOrderDatabaseComponent>(stationUid, out var orderDatabase) ||
-            !TryComp<CargoShuttleComponent>(orderDatabase.Shuttle, out var shuttle)) return null;
+            !TryComp<CargoShuttleComponent>(orderDatabase.Shuttle, out var shuttle))
+        {
+            return null;
+        }
 
-        return GetShuttleConsole(shuttle);
+        return GetShuttleConsole(orderDatabase.Shuttle.Value, shuttle);
     }
 
     #endregion
 
     #region Console
 
-    private void UpdateShuttleCargoConsoles(CargoShuttleComponent component)
+    private void UpdateCargoShuttleConsoles(CargoShuttleComponent component)
     {
-        foreach (var console in EntityQuery<CargoShuttleConsoleComponent>(true))
+        // Update pilot consoles that are already open.
+        var pilotConsoleQuery = AllEntityQuery<CargoPilotConsoleComponent>();
+
+        while (pilotConsoleQuery.MoveNext(out var uid, out var console))
         {
-            var stationUid = _station.GetOwningStation(console.Owner);
-            if (stationUid != component.Station) continue;
-            UpdateShuttleState(console, stationUid);
+            var stationUid = _station.GetOwningStation(uid);
+            if (stationUid == null || stationUid != component.Station)
+                continue;
+
+            console.Entity = GetShuttleConsole(stationUid.Value);
+        }
+
+        // Update order consoles.
+        var shuttleConsoleQuery = AllEntityQuery<CargoShuttleConsoleComponent>();
+
+        while (shuttleConsoleQuery.MoveNext(out var uid, out var console))
+        {
+            var stationUid = _station.GetOwningStation(uid);
+            if (stationUid != component.Station)
+                continue;
+
+            UpdateShuttleState(uid, stationUid);
         }
     }
 
-    private void UpdatePalletConsoleInterface(EntityUid uid, CargoPalletConsoleComponent component)
+    private void UpdatePalletConsoleInterface(EntityUid uid)
     {
-        var bui = _uiSystem.GetUi(component.Owner, CargoPalletConsoleUiKey.Sale);
+        var bui = _uiSystem.GetUi(uid, CargoPalletConsoleUiKey.Sale);
         if (Transform(uid).GridUid is not EntityUid gridUid)
         {
             _uiSystem.SetUiState(bui,
@@ -174,7 +199,7 @@ public sealed partial class CargoSystem
         if (player == null)
             return;
 
-        UpdatePalletConsoleInterface(uid, component);
+        UpdatePalletConsoleInterface(uid);
     }
 
     /// <summary>
@@ -192,29 +217,27 @@ public sealed partial class CargoSystem
         if (player == null)
             return;
 
-        UpdatePalletConsoleInterface(uid, component);
+        UpdatePalletConsoleInterface(uid);
     }
 
     private void OnCargoShuttleConsoleStartup(EntityUid uid, CargoShuttleConsoleComponent component, ComponentStartup args)
     {
         var station = _station.GetOwningStation(uid);
-        UpdateShuttleState(component, station);
+        UpdateShuttleState(uid, station);
     }
 
-    private void UpdateShuttleState(CargoShuttleConsoleComponent component, EntityUid? station = null)
+    private void UpdateShuttleState(EntityUid uid, EntityUid? station = null)
     {
         TryComp<StationCargoOrderDatabaseComponent>(station, out var orderDatabase);
         TryComp<CargoShuttleComponent>(orderDatabase?.Shuttle, out var shuttle);
 
-        var orders = GetProjectedOrders(orderDatabase, shuttle);
+        var orders = GetProjectedOrders(station ?? EntityUid.Invalid, orderDatabase, shuttle);
         var shuttleName = orderDatabase?.Shuttle != null ? MetaData(orderDatabase.Shuttle.Value).EntityName : string.Empty;
 
-        _uiSystem.GetUiOrNull(component.Owner, CargoConsoleUiKey.Shuttle)?.SetState(
+        _uiSystem.GetUiOrNull(uid, CargoConsoleUiKey.Shuttle)?.SetState(
             new CargoShuttleConsoleBoundUserInterfaceState(
                 station != null ? MetaData(station.Value).EntityName : Loc.GetString("cargo-shuttle-console-station-unknown"),
                 string.IsNullOrEmpty(shuttleName) ? Loc.GetString("cargo-shuttle-console-shuttle-not-found") : shuttleName,
-                _shuttle.CanFTL(shuttle?.Owner, out _),
-                shuttle?.NextCall,
                 orders));
     }
 
@@ -222,36 +245,26 @@ public sealed partial class CargoSystem
 
     #region Shuttle
 
-    public EntityUid? GetShuttleConsole(CargoShuttleComponent component)
+    public EntityUid? GetShuttleConsole(EntityUid uid, CargoShuttleComponent component)
     {
-        foreach (var (comp, xform) in EntityQuery<ShuttleConsoleComponent, TransformComponent>(true))
+        var query = AllEntityQuery<ShuttleConsoleComponent, TransformComponent>();
+
+        while (query.MoveNext(out var cUid, out var comp, out var xform))
         {
-            if (xform.ParentUid != component.Owner) continue;
-            return comp.Owner;
+            if (xform.ParentUid != uid)
+                continue;
+
+            return cUid;
         }
 
         return null;
-    }
-
-    private void OnCargoShuttleMove(EntityUid uid, CargoShuttleComponent component, ref MoveEvent args)
-    {
-        if (component.Station == null) return;
-
-        var oldCanRecall = component.CanRecall;
-
-        // Check if we can update the recall status.
-        var canRecall = _shuttle.CanFTL(uid, out _, args.Component);
-        if (oldCanRecall == canRecall) return;
-
-        component.CanRecall = canRecall;
-        _sawmill.Debug($"Updated CanRecall for {ToPrettyString(uid)}");
-        UpdateShuttleCargoConsoles(component);
     }
 
     /// <summary>
     /// Returns the orders that can fit on the cargo shuttle.
     /// </summary>
     private List<CargoOrderData> GetProjectedOrders(
+        EntityUid shuttleUid,
         StationCargoOrderDatabaseComponent? component = null,
         CargoShuttleComponent? shuttle = null)
     {
@@ -260,7 +273,7 @@ public sealed partial class CargoSystem
         if (component == null || shuttle == null || component.Orders.Count == 0)
             return orders;
 
-        var spaceRemaining = GetCargoSpace(shuttle.Owner);
+        var spaceRemaining = GetCargoSpace(shuttleUid);
         for( var i = 0; i < component.Orders.Count && spaceRemaining > 0; i++)
         {
             var order = component.Orders[i];
@@ -295,16 +308,20 @@ public sealed partial class CargoSystem
         return space;
     }
 
-    private List<CargoPalletComponent> GetCargoPallets(EntityUid gridUid)
+    private List<(EntityUid Entity, CargoPalletComponent Component)> GetCargoPallets(EntityUid gridUid)
     {
-        var pads = new List<CargoPalletComponent>();
+        var pads = new List<(EntityUid, CargoPalletComponent)>();
+        var query = AllEntityQuery<CargoPalletComponent, TransformComponent>();
 
-        foreach (var (comp, compXform) in EntityQuery<CargoPalletComponent, TransformComponent>(true))
+        while (query.MoveNext(out var uid, out var comp, out var compXform))
         {
             if (compXform.ParentUid != gridUid ||
-                !compXform.Anchored) continue;
+                !compXform.Anchored)
+            {
+                continue;
+            }
 
-            pads.Add(comp);
+            pads.Add((uid, comp));
         }
 
         return pads;
@@ -320,16 +337,19 @@ public sealed partial class CargoSystem
             return;
 
         // Stations get created first but if any are added at runtime then do this.
-        AddShuttle(component);
+        AddShuttle(uid, component);
     }
 
-    private void AddShuttle(StationCargoOrderDatabaseComponent component)
+    private void AddShuttle(EntityUid stationUid, StationCargoOrderDatabaseComponent component)
     {
         Setup();
 
         if (CargoMap == null ||
             component.Shuttle != null ||
-            component.CargoShuttleProto == null) return;
+            component.CargoShuttleProto == null)
+        {
+            return;
+        }
 
         var prototype = _protoMan.Index<CargoShuttlePrototype>(component.CargoShuttleProto);
         var possibleNames = _protoMan.Index<DatasetPrototype>(prototype.NameDataset).Values;
@@ -345,14 +365,12 @@ public sealed partial class CargoSystem
         MetaData(shuttleUid).EntityName = name;
 
         // TODO: Something better like a bounds check.
-        xform.LocalPosition += 100 * _index;
+        _transform.SetLocalPosition(xform, xform.LocalPosition + 100 * _index);
         var comp = EnsureComp<CargoShuttleComponent>(shuttleUid);
-        comp.Station = component.Owner;
-        comp.Coordinates = xform.Coordinates;
+        comp.Station = stationUid;
 
         component.Shuttle = shuttleUid;
-        comp.NextCall = _timing.CurTime + TimeSpan.FromSeconds(comp.Cooldown);
-        UpdateShuttleCargoConsoles(comp);
+        UpdateCargoShuttleConsoles(comp);
         _index++;
         _sawmill.Info($"Added cargo shuttle to {ToPrettyString(shuttleUid)}");
     }
@@ -374,19 +392,24 @@ public sealed partial class CargoSystem
         amount = 0;
         var xformQuery = GetEntityQuery<TransformComponent>();
         var blacklistQuery = GetEntityQuery<CargoSellBlacklistComponent>();
+        var mobStateQuery = GetEntityQuery<MobStateComponent>();
         toSell = new HashSet<EntityUid>();
-        foreach (var pallet in GetCargoPallets(gridUid))
+
+        foreach (var (palletUid, _) in GetCargoPallets(gridUid))
         {
             // Containers should already get the sell price of their children so can skip those.
-            foreach (var ent in _lookup.GetEntitiesIntersecting(pallet.Owner, LookupFlags.Dynamic | LookupFlags.Sundries | LookupFlags.Approximate))
+            foreach (var ent in _lookup.GetEntitiesIntersecting(palletUid, LookupFlags.Dynamic | LookupFlags.Sundries | LookupFlags.Approximate))
             {
                 // Dont sell:
                 // - anything already being sold
                 // - anything anchored (e.g. light fixtures)
                 // - anything blacklisted (e.g. players).
                 if (toSell.Contains(ent) ||
-                    (xformQuery.TryGetComponent(ent, out var xform) && xform.Anchored))
+                    (xformQuery.TryGetComponent(ent, out var xform) && xform.Anchored) ||
+                    !CanSell(ent, mobStateQuery))
+                {
                     continue;
+                }
 
                 if (blacklistQuery.HasComponent(ent))
                     continue;
@@ -400,88 +423,25 @@ public sealed partial class CargoSystem
         }
     }
 
-    private void SendToCargoMap(EntityUid uid, CargoShuttleComponent? component = null)
+    private bool CanSell(EntityUid uid, EntityQuery<MobStateComponent> mobStateQuery)
     {
-        if (!Resolve(uid, ref component))
-            return;
+        if (mobStateQuery.TryGetComponent(uid, out var mobState) &&
+            mobState.CurrentState != MobState.Dead)
+        {
+            return false;
+        }
 
-        component.NextCall = _timing.CurTime + TimeSpan.FromSeconds(component.Cooldown);
-        Transform(uid).Coordinates = component.Coordinates;
-        DebugTools.Assert(MetaData(uid).EntityPaused);
-
-        UpdateShuttleCargoConsoles(component);
-        _sawmill.Info($"Stashed cargo shuttle {ToPrettyString(uid)}");
+        return true;
     }
 
-    /// <summary>
-    /// Retrieves a shuttle for delivery.
-    /// </summary>
-    public void CallShuttle(StationCargoOrderDatabaseComponent orderDatabase)
-    {
-        if (!TryComp<CargoShuttleComponent>(orderDatabase.Shuttle, out var shuttle))
-            return;
-
-        // Already called / not available
-        if (shuttle.NextCall == null || _timing.CurTime < shuttle.NextCall)
-            return;
-
-        if (!TryComp<StationDataComponent>(orderDatabase.Owner, out var stationData))
-            return;
-
-        var targetGrid = _station.GetLargestGrid(stationData);
-
-        // Nowhere to warp in to.
-        if (!TryComp<TransformComponent>(targetGrid, out var xform))
-            return;
-
-        shuttle.NextCall = null;
-
-        // Find a valid free area nearby to spawn in on
-        // TODO: Make this use hyperspace now.
-        var center = new Vector2();
-        var minRadius = 0f;
-        Box2? aabb = null;
-        var xformQuery = GetEntityQuery<TransformComponent>();
-
-        foreach (var grid in _mapManager.GetAllMapGrids(xform.MapID))
-        {
-            var worldAABB = xformQuery.GetComponent(grid.Owner).WorldMatrix.TransformBox(grid.LocalAABB);
-            aabb = aabb?.Union(worldAABB) ?? worldAABB;
-        }
-
-        if (aabb != null)
-        {
-            center = aabb.Value.Center;
-            minRadius = MathF.Max(aabb.Value.Width, aabb.Value.Height);
-        }
-
-        var offset = 0f;
-        if (TryComp<MapGridComponent>(orderDatabase.Shuttle, out var shuttleGrid))
-        {
-            var bounds = shuttleGrid.LocalAABB;
-            offset = MathF.Max(bounds.Width, bounds.Height) / 2f;
-        }
-
-        Transform(shuttle.Owner).Coordinates = new EntityCoordinates(xform.ParentUid,
-            center + _random.NextVector2(minRadius + offset, minRadius + CallOffset + offset));
-        DebugTools.Assert(!MetaData(shuttle.Owner).EntityPaused);
-
-        AddCargoContents(shuttle, orderDatabase);
-        UpdateOrders(orderDatabase);
-        UpdateShuttleCargoConsoles(shuttle);
-        _console.RefreshShuttleConsoles();
-
-        _sawmill.Info($"Retrieved cargo shuttle {ToPrettyString(shuttle.Owner)} from {ToPrettyString(orderDatabase.Owner)}");
-    }
-
-    private void AddCargoContents(CargoShuttleComponent shuttle, StationCargoOrderDatabaseComponent orderDatabase)
+    private void AddCargoContents(EntityUid shuttleUid, CargoShuttleComponent shuttle, StationCargoOrderDatabaseComponent orderDatabase)
     {
         var xformQuery = GetEntityQuery<TransformComponent>();
 
-        var pads = GetCargoPallets(shuttle.Owner);
+        var pads = GetCargoPallets(shuttleUid);
         while (pads.Count > 0)
         {
-            var coordinates = new EntityCoordinates(shuttle.Owner, xformQuery.GetComponent(_random.PickAndTake(pads).Owner).LocalPosition);
+            var coordinates = new EntityCoordinates(shuttleUid, xformQuery.GetComponent(_random.PickAndTake(pads).Entity).LocalPosition);
             if(!FulfillOrder(orderDatabase, coordinates, shuttle.PrinterOutput))
             {
                 break;
@@ -496,7 +456,7 @@ public sealed partial class CargoSystem
         if (player == null)
             return;
 
-        var bui = _uiSystem.GetUi(component.Owner, CargoPalletConsoleUiKey.Sale);
+        var bui = _uiSystem.GetUi(uid, CargoPalletConsoleUiKey.Sale);
         if (Transform(uid).GridUid is not EntityUid gridUid)
         {
             _uiSystem.SetUiState(bui,
@@ -507,77 +467,40 @@ public sealed partial class CargoSystem
         SellPallets(gridUid, out var price);
         var stackPrototype = _prototypeManager.Index<StackPrototype>(component.CashType);
         _stack.Spawn((int)price, stackPrototype, uid.ToCoordinates());
-        UpdatePalletConsoleInterface(uid, component);
+        UpdatePalletConsoleInterface(uid);
     }
 
-    private void RecallCargoShuttle(EntityUid uid, CargoShuttleConsoleComponent component, CargoRecallShuttleMessage args)
+    private void OnCargoFTLStarted(EntityUid uid, CargoShuttleComponent component, ref FTLStartedEvent args)
     {
-        var player = args.Session.AttachedEntity;
+        var stationUid = component.Station;
 
-        if (player == null) return;
-
-        var stationUid = _station.GetOwningStation(uid);
-
-        if (!TryComp<StationCargoOrderDatabaseComponent>(stationUid, out var orderDatabase) ||
-            !TryComp<StationBankAccountComponent>(stationUid, out var bank)) return;
-
-        if (!TryComp<CargoShuttleComponent>(orderDatabase.Shuttle, out var shuttle))
+        // Called
+        if (CargoMap == null ||
+            args.FromMapUid != _mapManager.GetMapEntityId(CargoMap.Value) ||
+            !TryComp<StationCargoOrderDatabaseComponent>(stationUid, out var orderDatabase))
         {
-            _popup.PopupEntity(Loc.GetString("cargo-no-shuttle"), args.Entity, args.Entity);
             return;
         }
 
-        if (!_shuttle.CanFTL(shuttle.Owner, out var reason))
-        {
-            _popup.PopupEntity(reason, args.Entity, args.Entity);
+        AddCargoContents(uid, component, orderDatabase);
+        UpdateOrders(orderDatabase);
+        UpdateCargoShuttleConsoles(component);
+    }
+
+    private void OnCargoFTLCompleted(EntityUid uid, CargoShuttleComponent component, ref FTLCompletedEvent args)
+    {
+        var xform = Transform(uid);
+        // Recalled
+        if (xform.MapID != CargoMap)
             return;
-        }
 
-        if (IsBlocked(shuttle))
+        var stationUid = component.Station;
+
+        if (TryComp<StationBankAccountComponent>(stationUid, out var bank))
         {
-            _popup.PopupEntity(Loc.GetString("cargo-shuttle-console-organics"), player.Value, player.Value);
-            _audio.PlayPvs(_audio.GetSound(component.DenySound), uid);
-            return;
+            SellPallets(uid, out var amount);
+            bank.Balance += (int) amount;
         }
-
-        SellPallets((EntityUid) orderDatabase.Shuttle, out double price);
-        bank.Balance += (int) price;
-        _console.RefreshShuttleConsoles();
-        SendToCargoMap(orderDatabase.Shuttle.Value);
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="component"></param>
-    private bool IsBlocked(CargoShuttleComponent component)
-    {
-        // TODO: Would be good to rate-limit this on the console.
-        var mobQuery = GetEntityQuery<MobStateComponent>();
-        var xformQuery = GetEntityQuery<TransformComponent>();
-
-        return FoundOrganics(component.Owner, mobQuery, xformQuery);
-    }
-
-    public bool FoundOrganics(EntityUid uid, EntityQuery<MobStateComponent> mobQuery, EntityQuery<TransformComponent> xformQuery)
-    {
-        var xform = xformQuery.GetComponent(uid);
-        var childEnumerator = xform.ChildEnumerator;
-
-        while (childEnumerator.MoveNext(out var child))
-        {
-            if ((mobQuery.TryGetComponent(child.Value, out var mobState) && !_mobState.IsDead(child.Value, mobState))
-                || FoundOrganics(child.Value, mobQuery, xformQuery)) return true;
-        }
-
-        return false;
-    }
-
-    private void OnCargoShuttleCall(EntityUid uid, CargoShuttleConsoleComponent component, CargoCallShuttleMessage args)
-    {
-        var stationUid = _station.GetOwningStation(args.Entity);
-        if (!TryComp<StationCargoOrderDatabaseComponent>(stationUid, out var orderDatabase)) return;
-        CallShuttle(orderDatabase);
     }
 
     #endregion
@@ -600,13 +523,15 @@ public sealed partial class CargoSystem
         CargoMap = null;
 
         // Shuttle may not have been in the cargo dimension (e.g. on the station map) so need to delete.
-        foreach (var comp in EntityQuery<CargoShuttleComponent>())
+        var query = AllEntityQuery<CargoShuttleComponent>();
+
+        while (query.MoveNext(out var uid, out var comp))
         {
             if (TryComp<StationCargoOrderDatabaseComponent>(comp.Station, out var station))
             {
                 station.Shuttle = null;
             }
-            QueueDel(comp.Owner);
+            QueueDel(uid);
         }
     }
 
@@ -619,11 +544,25 @@ public sealed partial class CargoSystem
 
         // It gets mapinit which is okay... buuutt we still want it paused to avoid power draining.
         CargoMap = _mapManager.CreateMap();
-        _mapManager.SetMapPaused(CargoMap!.Value, true);
-
-        foreach (var comp in EntityQuery<StationCargoOrderDatabaseComponent>(true))
+        var mapUid = _mapManager.GetMapEntityId(CargoMap.Value);
+        var ftl = EnsureComp<FTLDestinationComponent>(_mapManager.GetMapEntityId(CargoMap.Value));
+        ftl.Whitelist = new EntityWhitelist()
         {
-            AddShuttle(comp);
+            Components = new[]
+            {
+                _factory.GetComponentName(typeof(CargoShuttleComponent))
+            }
+        };
+
+        MetaData(mapUid).EntityName = $"Trading post {_random.Next(1000):000}";
+
+        var query = AllEntityQuery<StationCargoOrderDatabaseComponent>();
+
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            AddShuttle(uid, comp);
         }
+
+        _console.RefreshShuttleConsoles();
     }
 }
