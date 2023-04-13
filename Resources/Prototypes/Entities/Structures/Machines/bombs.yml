@@ -1,9 +1,9 @@
 - type: entity
   abstract: true
   parent: BaseStructure
-  id: BaseBomb
+  id: BaseHardbomb
   description: Be sure to wear an EOD suit around this damn thing.
-  name: bomb
+  name: hardbomb
   components:
     - type: Appearance
     - type: WiresVisuals
@@ -43,22 +43,17 @@
       thresholds:
         - trigger:
             !type:DamageTrigger
-            damage: 200
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-        - trigger:
-            !type:DamageTrigger
             damage: 100
           behaviors:
             - !type:DoActsBehavior
               acts: ["Destruction"]
+            - !type:ExplodeBehavior
             - !type:PlaySoundBehavior
               sound:
                 path: /Audio/Effects/metalbreak.ogg
 
 - type: entity
-  parent: BaseBomb
+  parent: BaseHardbomb
   id: TrainingBomb
   name: training bomb
   description: A bomb for dummies, manual not included.
@@ -104,7 +99,7 @@
       maxIntensity: 4
 
 - type: entity
-  parent: BaseBomb
+  parent: BaseHardbomb
   id: SyndicateBomb
   name: syndicate bomb
   description: A bomb for Syndicate operatives and agents alike. The real deal, no more training, get to it!
