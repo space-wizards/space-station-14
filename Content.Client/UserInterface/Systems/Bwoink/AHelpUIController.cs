@@ -39,7 +39,7 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
     {
         base.Initialize();
 
-        SubscribeNetworkEvent<SharedBwoinkSystem.BwoinkDiscordRelayUpdated>(DiscordRelayUpdated);
+        SubscribeNetworkEvent<BwoinkDiscordRelayUpdated>(DiscordRelayUpdated);
     }
 
     public void OnStateEntered(GameplayState state)
@@ -137,7 +137,7 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
         UIHelper!.Receive(message);
     }
 
-    private void DiscordRelayUpdated(SharedBwoinkSystem.BwoinkDiscordRelayUpdated args, EntitySessionEventArgs session)
+    private void DiscordRelayUpdated(BwoinkDiscordRelayUpdated args, EntitySessionEventArgs session)
     {
         _discordRelayActive = args.DiscordRelayEnabled;
         UIHelper?.DiscordRelayChanged(_discordRelayActive);
