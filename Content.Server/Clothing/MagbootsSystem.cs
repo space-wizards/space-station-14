@@ -6,7 +6,6 @@ using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 using static Content.Shared.Clothing.MagbootsComponent;
 
 namespace Content.Server.Clothing;
@@ -21,7 +20,6 @@ public sealed class MagbootsSystem : SharedMagbootsSystem
 
         SubscribeLocalEvent<MagbootsComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<MagbootsComponent, GotUnequippedEvent>(OnGotUnequipped);
-        SubscribeLocalEvent<MagbootsComponent, ComponentGetState>(OnGetState);
     }
 
     protected override void UpdateMagbootEffects(EntityUid parent, EntityUid uid, bool state, MagbootsComponent? component)
@@ -59,10 +57,5 @@ public sealed class MagbootsSystem : SharedMagbootsSystem
         {
             UpdateMagbootEffects(args.Equipee, uid, true, component);
         }
-    }
-
-    private void OnGetState(EntityUid uid, MagbootsComponent component, ref ComponentGetState args)
-    {
-        args.State = new MagbootsComponentState(component.On);
     }
 }
