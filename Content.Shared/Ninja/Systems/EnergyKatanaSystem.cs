@@ -73,7 +73,7 @@ public sealed class EnergyKatanaSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var (uid, comp) in EntityQueryEnumerator<EnergyKatanaComponent>())
+        foreach (var comp in EntityQuery<EnergyKatanaComponent>())
         {
             if (!comp.AutoRecharge)
                 continue;
@@ -84,7 +84,7 @@ public sealed class EnergyKatanaSystem : EntitySystem
             if (_timing.CurTime < comp.NextChargeTime)
                 continue;
 
-            ChangeCharge(uid.Owner, 1, true, comp);
+            ChangeCharge(comp.Owner, 1, true, comp);
         }
     }
 
@@ -120,7 +120,7 @@ public sealed class EnergyKatanaSystem : EntitySystem
         }
 
         _transform.SetCoordinates(user, args.Target);
-        Transform(user).AttachToGridOrMap();
+        _transform.AttachToGridOrMap(user);
         _audio.PlayPvs(katana.BlinkSound, user, AudioParams.Default.WithVolume(katana.BlinkVolume));
         // TODO: show the funny green man thing
         ChangeCharge(uid, -1, false, katana);

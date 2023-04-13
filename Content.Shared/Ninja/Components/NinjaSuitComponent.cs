@@ -9,6 +9,8 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Ninja.Components;
 
+// TODO: ResourcePath -> ResPath when thing gets merged
+
 /// <summary>
 /// Component for ninja suit abilities and power consumption.
 /// As an implementation detail, dashing with katana is a suit action which isn't ideal.

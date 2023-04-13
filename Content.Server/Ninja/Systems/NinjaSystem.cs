@@ -63,7 +63,8 @@ public sealed class NinjaSystem : SharedNinjaSystem
 
     public override void Update(float frameTime)
     {
-        foreach (var (uid, ninja) in EntityQueryEnumerator<NinjaComponent>())
+        var query = EntityQueryEnumerator<NinjaComponent>();
+        while (query.MoveNext(out var uid, out var ninja))
         {
             UpdateNinja(uid, ninja, frameTime);
         }
@@ -226,10 +227,12 @@ public sealed class NinjaSystem : SharedNinjaSystem
         // choose spider charge detonation point
         // currently based on warp points, something better could be done (but would likely require mapping work)
         var warps = new List<EntityUid>();
-        foreach (var (uid, warp) in EntityManager.EntityQueryEnumerator<WarpPointComponent>(true))
+        // will not get paused warp points, probably only the nuke disk warp on CentCom
+        var query = EntityQueryEnumerator<WarpPointComponent>();
+        while (query.MoveNext(out var warpUid, out var warp))
         {
             if (warp.Location != null)
-                warps.Add(uid);
+                warps.Add(warpUid);
         }
 
         if (warps.Count > 0)

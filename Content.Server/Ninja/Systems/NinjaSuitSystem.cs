@@ -57,6 +57,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
 
     private void OnExamined(EntityUid uid, NinjaSuitComponent comp, ExaminedEvent args)
     {
+        // TODO: make this also return the uid of the battery
         if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
             RaiseLocalEvent(battery.Owner, args);
     }
