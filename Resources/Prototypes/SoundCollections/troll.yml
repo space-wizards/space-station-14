@@ -1,5 +1,5 @@
 # various troll sounds for H.O.N.K.
-- type: SoundCollection
+- type: soundCollection
   id: TrollAnimals
   files:
   - Audio/Animals/bear.ogg
