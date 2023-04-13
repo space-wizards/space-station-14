@@ -49,12 +49,6 @@ namespace Content.Server.Medical
             if (args.Handled || args.Cancelled || args.Args.Target == null || !_cell.TryUseActivatableCharge(uid, user: args.User))
                 return;
 
-            // If we don't have power anymore then just close it
-            // This does essentially mean you need a buffer of 2x activatable charge however it would be weird
-            // that you could close the analyzer and not be able to open it again so.
-            if (!_cell.HasActivatableCharge(uid))
-                return;
-
             _audio.PlayPvs(component.ScanningEndSound, args.Args.User);
 
             UpdateScannedUser(uid, args.Args.User, args.Args.Target.Value, component);
