@@ -305,7 +305,7 @@
     impactEffect: BulletImpactEffectKinetic
     damage:
       types:
-        Blunt: 10
+        Blunt: 20
   # Short lifespan
   - type: TimedDespawn
     lifetime: 0.4
@@ -490,3 +490,42 @@
     damage:
       types:
         Piercing: 0
+
+- type: entity
+  id: BulletAcid
+  name: acid spit
+  parent: BaseBullet
+  noSpawn: true
+  components:
+    - type: Projectile
+      damage:
+        types:
+          Caustic: 5
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Projectiles/xeno_toxic.rsi
+      layers:
+        - state: xeno_toxic
+    - type: Ammo
+      muzzleFlash: null
+
+- type: entity
+  id: BulletCannonBall
+  name: cannonball
+  parent: BaseBulletTrigger
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: ball
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: DemolitionCharge
+    maxIntensity: 9
+    intensitySlope: 6
+    totalIntensity: 60
+    maxTileBreak: 0
+  - type: PointLight
+    radius: 1
+    color: orange
+    energy: 0.5

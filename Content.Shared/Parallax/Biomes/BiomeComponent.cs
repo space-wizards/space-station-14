@@ -1,16 +1,21 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Noise;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Parallax.Biomes;
 
-[RegisterComponent, NetworkedComponent]
-public sealed class BiomeComponent : Component
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true), Access(typeof(SharedBiomeSystem))]
+public sealed partial class BiomeComponent : Component
 {
+    public FastNoiseLite Noise = new();
+
     [ViewVariables(VVAccess.ReadWrite), DataField("seed")]
+    [AutoNetworkedField]
     public int Seed;
 
     [ViewVariables(VVAccess.ReadWrite),
      DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<BiomePrototype>))]
+    [AutoNetworkedField]
     public string BiomePrototype = "Grasslands";
 
     // TODO: Need to flag tiles as not requiring custom data anymore, e.g. if we spawn an ent and don't unspawn it.
@@ -36,4 +41,10 @@ public sealed class BiomeComponent : Component
     /// </summary>
     [DataField("loadedChunks")]
     public readonly HashSet<Vector2i> LoadedChunks = new();
+
+    /// <summary>
+    /// Are we currently in the process of generating?
+    /// Used to flag modified tiles without callers having to deal with it.
+    /// </summary>
+    public bool Generating = false;
 }

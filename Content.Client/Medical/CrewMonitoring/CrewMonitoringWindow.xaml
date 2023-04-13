@@ -17,6 +17,8 @@
                 <!-- Table header -->
                 <Label Text="{Loc 'crew-monitoring-user-interface-name'}"
                        StyleClasses="LabelHeading"/>
+                <Label Text="{Loc 'crew-monitoring-user-interface-job'}"
+                       StyleClasses="LabelHeading"/>
                 <Label Text="{Loc 'crew-monitoring-user-interface-status'}"
                        StyleClasses="LabelHeading"/>
                 <Label Text="{Loc 'crew-monitoring-user-interface-location'}"

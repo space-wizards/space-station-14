@@ -154,3 +154,21 @@
         enum.Trigger.TriggerVisualState.Unprimed: complete
   - type: StaticPrice
     price: 25
+
+- type: entity
+  name: emp grenade
+  description: Releases electromagnetic pulses that disrupt or damage many electronic devices or drain power cells.
+  parent: GrenadeBase
+  id: EmpGrenade
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/empgrenade.rsi
+  - type: EmpOnTrigger
+    range: 4
+    energyConsumption: 50000
+  - type: DeleteOnTrigger
+  - type: Appearance
+    visuals:
+    - type: TimerTriggerVisualizer
+      countdown_sound:
+        path: /Audio/Effects/countdown.ogg

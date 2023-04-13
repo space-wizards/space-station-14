@@ -5,11 +5,13 @@ using Content.Server.Pulling;
 using Content.Shared.Construction.Components;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Construction
@@ -39,23 +41,29 @@ namespace Content.Server.Construction
 
         private void OnUnanchorComplete(EntityUid uid, AnchorableComponent component, TryUnanchorCompletedEvent args)
         {
+            if (args.Cancelled || args.Used is not { } used)
+                return;
+
             var xform = Transform(uid);
 
-            RaiseLocalEvent(uid, new BeforeUnanchoredEvent(args.User, args.Using));
+            RaiseLocalEvent(uid, new BeforeUnanchoredEvent(args.User, used));
             xform.Anchored = false;
-            RaiseLocalEvent(uid, new UserUnanchoredEvent(args.User, args.Using));
+            RaiseLocalEvent(uid, new UserUnanchoredEvent(args.User, used));
 
             _popup.PopupEntity(Loc.GetString("anchorable-unanchored"), uid);
 
             _adminLogger.Add(
                 LogType.Unanchor,
                 LogImpact.Low,
-                $"{EntityManager.ToPrettyString(args.User):user} unanchored {EntityManager.ToPrettyString(uid):anchored} using {EntityManager.ToPrettyString(args.Using):using}"
+                $"{EntityManager.ToPrettyString(args.User):user} unanchored {EntityManager.ToPrettyString(uid):anchored} using {EntityManager.ToPrettyString(used):using}"
             );
         }
 
         private void OnAnchorComplete(EntityUid uid, AnchorableComponent component, TryAnchorCompletedEvent args)
         {
+            if (args.Cancelled || args.Used is not { } used)
+                return;
+
             var xform = Transform(uid);
             if (TryComp<PhysicsComponent>(uid, out var anchorBody) &&
                 !TileFree(xform.Coordinates, anchorBody))
@@ -77,16 +85,16 @@ namespace Content.Server.Construction
             if (component.Snap)
                 xform.Coordinates = xform.Coordinates.SnapToGrid(EntityManager, _mapManager);
 
-            RaiseLocalEvent(uid, new BeforeAnchoredEvent(args.User, args.Using));
+            RaiseLocalEvent(uid, new BeforeAnchoredEvent(args.User, used));
             xform.Anchored = true;
-            RaiseLocalEvent(uid, new UserAnchoredEvent(args.User, args.Using));
+            RaiseLocalEvent(uid, new UserAnchoredEvent(args.User, used));
 
             _popup.PopupEntity(Loc.GetString("anchorable-anchored"), uid);
 
             _adminLogger.Add(
                 LogType.Anchor,
                 LogImpact.Low,
-                $"{EntityManager.ToPrettyString(args.User):user} anchored {EntityManager.ToPrettyString(uid):anchored} using {EntityManager.ToPrettyString(args.Using):using}"
+                $"{EntityManager.ToPrettyString(args.User):user} anchored {EntityManager.ToPrettyString(uid):anchored} using {EntityManager.ToPrettyString(used):using}"
             );
         }
 
@@ -99,7 +107,12 @@ namespace Content.Server.Construction
                 return false;
 
             var tileIndices = grid.TileIndicesFor(coordinates);
-            var enumerator = grid.GetAnchoredEntitiesEnumerator(tileIndices);
+            return TileFree(grid, tileIndices, anchorBody.CollisionLayer, anchorBody.CollisionMask);
+        }
+
+        public bool TileFree(MapGridComponent grid, Vector2i gridIndices, int collisionLayer = 0, int collisionMask = 0)
+        {
+            var enumerator = grid.GetAnchoredEntitiesEnumerator(gridIndices);
             var bodyQuery = GetEntityQuery<PhysicsComponent>();
 
             while (enumerator.MoveNext(out var ent))
@@ -111,8 +124,8 @@ namespace Content.Server.Construction
                     continue;
                 }
 
-                if ((body.CollisionMask & anchorBody.CollisionLayer) != 0x0 ||
-                    (body.CollisionLayer & anchorBody.CollisionMask) != 0x0)
+                if ((body.CollisionMask & collisionLayer) != 0x0 ||
+                    (body.CollisionLayer & collisionMask) != 0x0)
                 {
                     return false;
                 }
@@ -176,8 +189,7 @@ namespace Content.Server.Construction
                 return;
             }
 
-            var toolEvData = new ToolEventData(new TryAnchorCompletedEvent(userUid, usingUid), targetEntity:uid);
-            _tool.UseTool(usingUid, userUid, uid, anchorable.Delay, usingTool.Qualities, toolEvData);
+            _tool.UseTool(usingUid, userUid, uid, anchorable.Delay, usingTool.Qualities, new TryAnchorCompletedEvent());
         }
 
         /// <summary>
@@ -198,8 +210,7 @@ namespace Content.Server.Construction
             if (!Valid(uid, userUid, usingUid, false))
                 return;
 
-            var toolEvData = new ToolEventData(new TryUnanchorCompletedEvent(userUid, usingUid), targetEntity:uid);
-            _tool.UseTool(usingUid, userUid, uid, anchorable.Delay, usingTool.Qualities, toolEvData);
+            _tool.UseTool(usingUid, userUid, uid, anchorable.Delay, usingTool.Qualities, new TryUnanchorCompletedEvent());
         }
 
         /// <summary>
@@ -228,33 +239,6 @@ namespace Content.Server.Construction
 
                 // Log anchor attempt
                 _adminLogger.Add(LogType.Anchor, LogImpact.Low, $"{ToPrettyString(userUid):user} is trying to anchor {ToPrettyString(uid):entity} to {transform.Coordinates:targetlocation}");
-            }
-        }
-
-        private abstract class AnchorEvent : EntityEventArgs
-        {
-            public EntityUid User;
-            public EntityUid Using;
-
-            protected AnchorEvent(EntityUid userUid, EntityUid usingUid)
-            {
-                User = userUid;
-                Using = usingUid;
-            }
-        }
-
-        private sealed class TryUnanchorCompletedEvent : AnchorEvent
-        {
-            public TryUnanchorCompletedEvent(EntityUid userUid, EntityUid usingUid) : base(userUid, usingUid)
-            {
-            }
-        }
-
-
-        private sealed class TryAnchorCompletedEvent : AnchorEvent
-        {
-            public TryAnchorCompletedEvent(EntityUid userUid, EntityUid usingUid) : base(userUid, usingUid)
-            {
             }
         }
     }

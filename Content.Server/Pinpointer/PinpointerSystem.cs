@@ -14,7 +14,7 @@ namespace Content.Server.Pinpointer
         {
             base.Initialize();
             SubscribeLocalEvent<PinpointerComponent, ActivateInWorldEvent>(OnActivate);
-            SubscribeLocalEvent<HyperspaceJumpCompletedEvent>(OnLocateTarget);
+            SubscribeLocalEvent<FTLCompletedEvent>(OnLocateTarget);
         }
 
         private void OnActivate(EntityUid uid, PinpointerComponent component, ActivateInWorldEvent args)
@@ -23,7 +23,7 @@ namespace Content.Server.Pinpointer
             LocateTarget(uid, component);
         }
 
-        private void OnLocateTarget(HyperspaceJumpCompletedEvent ev)
+        private void OnLocateTarget(ref FTLCompletedEvent ev)
         {
             // This feels kind of expensive, but it only happens once per hyperspace jump
 

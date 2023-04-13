@@ -8,7 +8,7 @@
     size: 3
   - type: Handcuff
     cuffedRSI: Objects/Misc/handcuffs.rsi
-    iconState: body-overlay
+    bodyIconState: body-overlay
   - type: Sprite
     sprite: Objects/Misc/handcuffs.rsi
     state: handcuff
@@ -34,7 +34,7 @@
     breakoutTime: 15
     cuffedRSI: Objects/Misc/cablecuffs.rsi
     bodyIconState: body-overlay
-    color: red
+    color: forestgreen
     breakOnRemove: true
     brokenPrototype: CablecuffsBroken
     startCuffSound:
@@ -53,7 +53,7 @@
   - type: Sprite
     sprite: Objects/Misc/cablecuffs.rsi
     state: cuff
-    color: red
+    color: forestgreen
 
 - type: entity
   name: zipties
@@ -84,28 +84,36 @@
     state: cuff
 
 - type: entity
+  id: BaseHandcuffsBroken
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Item
+    size: 2
+  - type: Tag
+    tags:
+    - Trash
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 25
+
+- type: entity
   name: broken zipties
   description: These zipties look like they tried to manage the wrong cables.
   id: ZiptiesBroken
-  parent: BaseItem
+  parent: BaseHandcuffsBroken
   components:
   - type: Sprite
     sprite: Objects/Misc/zipties.rsi
     state: cuff-broken
-  - type: Item
-    size: 2
-  - type: Recyclable
 
 - type: entity
   name: broken cables
   description: These cables are broken in several places and don't seem very useful.
   id: CablecuffsBroken
-  parent: BaseItem
+  parent: BaseHandcuffsBroken
   components:
   - type: Sprite
     sprite: Objects/Misc/cablecuffs.rsi
     state: cuff-broken
-    color: red
-  - type: Item
-    size: 2
-  - type: Recyclable
+    color: forestgreen

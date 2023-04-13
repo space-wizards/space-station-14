@@ -177,7 +177,8 @@
     affectedChannels:
     - Common
     - Service
-    lightBreakChance: 0.05
+    lightBreakChancePerSecond: 0.0003
+    doorToggleChancePerSecond: 0.001
 
 - type: gameRule
   id: VentClog

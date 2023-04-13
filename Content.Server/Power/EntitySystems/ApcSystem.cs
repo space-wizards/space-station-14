@@ -1,13 +1,16 @@
+using Content.Server.Emp;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.APC;
+using Content.Shared.DoAfter;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Power;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using JetBrains.Annotations;
@@ -27,6 +30,7 @@ namespace Content.Server.Power.EntitySystems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly SharedToolSystem _toolSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         private const float ScrewTime = 2f;
 
@@ -36,14 +40,17 @@ namespace Content.Server.Power.EntitySystems
 
             UpdatesAfter.Add(typeof(PowerNetSystem));
 
+            SubscribeLocalEvent<ApcComponent, BoundUIOpenedEvent>(OnBoundUiOpen);
             SubscribeLocalEvent<ApcComponent, MapInitEvent>(OnApcInit);
             SubscribeLocalEvent<ApcComponent, ChargeChangedEvent>(OnBatteryChargeChanged);
             SubscribeLocalEvent<ApcComponent, ApcToggleMainBreakerMessage>(OnToggleMainBreaker);
             SubscribeLocalEvent<ApcComponent, GotEmaggedEvent>(OnEmagged);
 
-            SubscribeLocalEvent<ApcToolFinishedEvent>(OnToolFinished);
+            SubscribeLocalEvent<ApcComponent, ApcToolFinishedEvent>(OnToolFinished);
             SubscribeLocalEvent<ApcComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<ApcComponent, ExaminedEvent>(OnExamine);
+
+            SubscribeLocalEvent<ApcComponent, EmpPulseEvent>(OnEmpPulse);
         }
 
         // Change the APC's state only when the battery state changes, or when it's first created.
@@ -55,6 +62,22 @@ namespace Content.Server.Power.EntitySystems
         private void OnApcInit(EntityUid uid, ApcComponent component, MapInitEvent args)
         {
             UpdateApcState(uid, component);
+        }
+        //Update the HasAccess var for UI to read
+        private void OnBoundUiOpen(EntityUid uid, ApcComponent component, BoundUIOpenedEvent args)
+        {
+            TryComp<AccessReaderComponent>(uid, out var access);
+            if (args.Session.AttachedEntity == null)
+                return;
+
+            if (access == null || _accessReader.IsAllowed(args.Session.AttachedEntity.Value, access))
+            {
+                component.HasAccess = true;
+            }
+            else
+            {
+                component.HasAccess = false;
+            }
         }
         private void OnToggleMainBreaker(EntityUid uid, ApcComponent component, ApcToggleMainBreakerMessage args)
         {
@@ -138,7 +161,7 @@ namespace Content.Server.Power.EntitySystems
 
             if (_userInterfaceSystem.GetUiOrNull(uid, ApcUiKey.Key, ui) is { } bui)
             {
-                bui.SetState(new ApcBoundInterfaceState(apc.MainBreakerEnabled, (int)MathF.Ceiling(power), apc.LastExternalState, battery.CurrentCharge / battery.MaxCharge));
+                bui.SetState(new ApcBoundInterfaceState(apc.MainBreakerEnabled, apc.HasAccess, (int)MathF.Ceiling(power), apc.LastExternalState, battery.CurrentCharge / battery.MaxCharge));
             }
         }
 
@@ -200,27 +223,21 @@ namespace Content.Server.Power.EntitySystems
             if (!EntityManager.TryGetComponent(args.Used, out ToolComponent? tool))
                 return;
 
-            var toolEvData = new ToolEventData(new ApcToolFinishedEvent(uid), fuel: 0f);
-
-            if (_toolSystem.UseTool(args.Used, args.User, uid, ScrewTime, new [] { "Screwing" }, toolEvData, toolComponent:tool))
+            if (_toolSystem.UseTool(args.Used, args.User, uid, ScrewTime, "Screwing", new ApcToolFinishedEvent(), toolComponent:tool))
                 args.Handled = true;
         }
 
-        private void OnToolFinished(ApcToolFinishedEvent args)
+        private void OnToolFinished(EntityUid uid, ApcComponent component, ApcToolFinishedEvent args)
         {
-            if (!EntityManager.TryGetComponent(args.Target, out ApcComponent? component))
+            if (args.Cancelled)
                 return;
+
             component.IsApcOpen = !component.IsApcOpen;
+            UpdatePanelAppearance(uid, apc: component);
 
-            if (TryComp(args.Target, out AppearanceComponent? appearance))
-            {
-                UpdatePanelAppearance(args.Target, appearance);
-            }
-
-            if (component.IsApcOpen)
-                SoundSystem.Play(component.ScrewdriverOpenSound.GetSound(), Filter.Pvs(args.Target), args.Target);
-            else
-                SoundSystem.Play(component.ScrewdriverCloseSound.GetSound(), Filter.Pvs(args.Target), args.Target);
+            // this will play on top of the normal screw driver tool sound.
+            var sound = component.IsApcOpen ? component.ScrewdriverOpenSound : component.ScrewdriverCloseSound;
+            _audio.PlayPvs(sound, uid);
         }
 
         private void UpdatePanelAppearance(EntityUid uid, AppearanceComponent? appearance = null, ApcComponent? apc = null)
@@ -231,21 +248,20 @@ namespace Content.Server.Power.EntitySystems
             _appearance.SetData(uid, ApcVisuals.PanelState, GetPanelState(apc), appearance);
         }
 
-        private sealed class ApcToolFinishedEvent : EntityEventArgs
-        {
-            public EntityUid Target { get; }
-
-            public ApcToolFinishedEvent(EntityUid target)
-            {
-                Target = target;
-            }
-        }
-
         private void OnExamine(EntityUid uid, ApcComponent component, ExaminedEvent args)
         {
             args.PushMarkup(Loc.GetString(component.IsApcOpen
                 ? "apc-component-on-examine-panel-open"
                 : "apc-component-on-examine-panel-closed"));
+        }
+
+        private void OnEmpPulse(EntityUid uid, ApcComponent component, ref EmpPulseEvent args)
+        {
+            if (component.MainBreakerEnabled)
+            {
+                args.Affected = true;
+                ApcToggleBreaker(uid, component);
+            }
         }
     }
 }

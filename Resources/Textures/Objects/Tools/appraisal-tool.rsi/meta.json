@@ -8,6 +8,10 @@
    "states" : [
       {
          "name" : "icon"
+      },
+      {
+         "name": "equipped-BELT",
+         "directions": 4
       }
    ],
    "version" : 1

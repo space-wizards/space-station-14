@@ -66,14 +66,23 @@ namespace Content.Client.Medical.CrewMonitoring
                     {
                         new Label()
                         {
-                            Text = $"{sensor.Name} ({sensor.Job})",
+                            Text = sensor.Name,
                             Margin = new Thickness(5f, 5f),
                         }
                     }
                 };
-                nameLabel.HorizontalExpand = true;
                 SensorsTable.AddChild(nameLabel);
                 _rowsContent.Add(nameLabel);
+
+                // add users job
+                // format: JobName
+                var jobLabel = new Label()
+                {
+                    Text = sensor.Job,
+                    HorizontalExpand = true
+                };
+                SensorsTable.AddChild(jobLabel);
+                _rowsContent.Add(jobLabel);
 
                 // add users status and damage
                 // format: IsAlive (TotalDamage)
@@ -174,7 +183,7 @@ namespace Content.Client.Medical.CrewMonitoring
         {
             foreach (var child in _rowsContent)
             {
-               SensorsTable.RemoveChild(child);
+                SensorsTable.RemoveChild(child);
             }
 
             _rowsContent.Clear();
