@@ -27,6 +27,7 @@ using Content.Shared.PowerCell.Components;
 using Content.Shared.Rounding;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -227,11 +228,11 @@ public sealed class NinjaSystem : SharedNinjaSystem
         // choose spider charge detonation point
         // currently based on warp points, something better could be done (but would likely require mapping work)
         var warps = new List<EntityUid>();
-        // will not get paused warp points, probably only the nuke disk warp on CentCom
         var query = EntityQueryEnumerator<WarpPointComponent>();
         while (query.MoveNext(out var warpUid, out var warp))
         {
-            if (warp.Location != null)
+            // won't be asked to detonate the nuke disk or singularity
+            if (warp.Location != null && !HasComp<PhysicsComponent>(warpUid))
                 warps.Add(warpUid);
         }
 
