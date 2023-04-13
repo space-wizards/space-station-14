@@ -68,22 +68,23 @@ public sealed class EnergyKatanaSystem : EntitySystem
         args.PushMarkup(Loc.GetString("emag-recharging", ("seconds", timeRemaining)));
     }
 
+    // TODO: remove and use LimitedCharges+AutoRecharge
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        foreach (var EnergyKatana in EntityQuery<EnergyKatanaComponent>())
+        foreach (var (uid, comp) in EntityQueryEnumerator<EnergyKatanaComponent>())
         {
-            if (!EnergyKatana.AutoRecharge)
+            if (!comp.AutoRecharge)
                 continue;
 
-            if (EnergyKatana.Charges == EnergyKatana.MaxCharges)
+            if (comp.Charges == comp.MaxCharges)
                 continue;
 
-            if (_timing.CurTime < EnergyKatana.NextChargeTime)
+            if (_timing.CurTime < comp.NextChargeTime)
                 continue;
 
-            ChangeCharge(EnergyKatana.Owner, 1, true, EnergyKatana);
+            ChangeCharge(uid.Owner, 1, true, comp);
         }
     }
 

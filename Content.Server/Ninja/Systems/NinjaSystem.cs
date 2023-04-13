@@ -63,9 +63,8 @@ public sealed class NinjaSystem : SharedNinjaSystem
 
     public override void Update(float frameTime)
     {
-        foreach (var ninja in EntityQuery<NinjaComponent>())
+        foreach (var (uid, ninja) in EntityQueryEnumerator<NinjaComponent>())
         {
-            var uid = ninja.Owner;
             UpdateNinja(uid, ninja, frameTime);
         }
     }
@@ -225,12 +224,12 @@ public sealed class NinjaSystem : SharedNinjaSystem
         }
 
         // choose spider charge detonation point
-        // currently based on warp points, something better could be done
+        // currently based on warp points, something better could be done (but would likely require mapping work)
         var warps = new List<EntityUid>();
-        foreach (var warp in EntityManager.EntityQuery<WarpPointComponent>(true))
+        foreach (var (uid, warp) in EntityManager.EntityQueryEnumerator<WarpPointComponent>(true))
         {
             if (warp.Location != null)
-                warps.Add(warp.Owner);
+                warps.Add(uid);
         }
 
         if (warps.Count > 0)
