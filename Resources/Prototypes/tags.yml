@@ -192,6 +192,9 @@
   id: Dice
 
 - type: Tag
+  id: MafiaCard
+
+- type: Tag
   id: DiscreteHealthAnalyzer #So construction recipes don't eat medical PDAs
 
 - type: Tag

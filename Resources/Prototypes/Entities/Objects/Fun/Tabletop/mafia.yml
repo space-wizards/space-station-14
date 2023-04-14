@@ -25,6 +25,11 @@
       - id: CardPassenger
         amount: 6
       - id: BookMafiaManual
+  - type: PickRandom
+  whitelist:
+    tags:
+    - MafiaCard
+  verbText: verb-card-pick
 
 - type: entity
   parent: BookBase
@@ -60,6 +65,9 @@
     size: 1
   - type: Storage
     capacity: -1
+  - type: Tag
+    tags:
+    - MafiaCard
   - type: UserInterface
     interfaces:
     - key: enum.StorageUiKey.Key
