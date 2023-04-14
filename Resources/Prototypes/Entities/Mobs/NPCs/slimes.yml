@@ -123,6 +123,10 @@
     interactFailureString: petting-failure-generic
   - type: ReplacementAccent
     accent: genericAggressive
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: ghost-role-information-slimes-name
+    description: ghost-role-information-slimes-description
 
 - type: entity
   name: blue slime
@@ -133,14 +137,6 @@
     - type: Faction
       factions:
         - SimpleHostile
-    - type: InputMover
-    - type: MobMover
-    - type: HTN
-      rootTask: SimpleHostileCompound
-    - type: GhostTakeoverAvailable
-      makeSentient: true
-      name: ghost-role-information-slimes-name
-      description: ghost-role-information-slimes-description
 
 - type: entity
   name: green slime
@@ -148,14 +144,7 @@
   id: MobAdultSlimesGreenGood
   suffix: Good
   components:
-    - type: InputMover
-    - type: MobMover
-    - type: HTN
-      rootTask: SimpleHostileCompound
     - type: Sprite
-      drawdepth: Mobs
-      netsync: false
-      sprite: Mobs/Aliens/slimes.rsi
       layers:
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: green_adult_slime
@@ -166,11 +155,6 @@
         Dead:
           Base: green_adult_slime_dead
     - type: MeleeWeapon
-      hidden: true
-      soundHit:
-          path: /Audio/Weapons/punch3.ogg
-      angle: 0
-      animation: WeaponArcPunch
       damage:
         types:
           Blunt: 8
@@ -187,14 +171,7 @@
     - type: Faction
       factions:
         - SimpleHostile
-    - type: InputMover
-    - type: MobMover
-    - type: HTN
-      rootTask: SimpleHostileCompound
     - type: Sprite
-      drawdepth: Mobs
-      netsync: false
-      sprite: Mobs/Aliens/slimes.rsi
       layers:
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: green_adult_slime
@@ -205,21 +182,12 @@
         Dead:
           Base: green_adult_slime_dead
     - type: MeleeWeapon
-      hidden: true
-      soundHit:
-          path: /Audio/Weapons/punch3.ogg
-      angle: 0
-      animation: WeaponArcPunch
       damage:
         types:
           Blunt: 8
           Structural: 4
           Caustic: 1
           Poison: 4
-    - type: GhostTakeoverAvailable
-      makeSentient: true
-      name: ghost-role-information-slimes-name
-      description: ghost-role-information-slimes-description
 
 - type: entity
   name: yellow slime
@@ -227,14 +195,7 @@
   id: MobAdultSlimesYellowGood
   suffix: Good
   components:
-    - type: InputMover
-    - type: MobMover
-    - type: HTN
-      rootTask: SimpleHostileCompound
     - type: Sprite
-      drawdepth: Mobs
-      netsync: false
-      sprite: Mobs/Aliens/slimes.rsi
       layers:
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: yellow_adult_slime
@@ -245,11 +206,6 @@
         Dead:
           Base: yellow_adult_slime_dead
     - type: MeleeWeapon
-      hidden: true
-      soundHit:
-          path: /Audio/Weapons/punch3.ogg
-      angle: 0
-      animation: WeaponArcPunch
       damage:
         types:
           Blunt: 8
@@ -266,14 +222,7 @@
     - type: Faction
       factions:
         - SimpleHostile
-    - type: InputMover
-    - type: MobMover
-    - type: HTN
-      rootTask: SimpleHostileCompound
     - type: Sprite
-      drawdepth: Mobs
-      netsync: false
-      sprite: Mobs/Aliens/slimes.rsi
       layers:
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: yellow_adult_slime
@@ -284,18 +233,9 @@
         Dead:
           Base: yellow_adult_slime_dead
     - type: MeleeWeapon
-      hidden: true
-      soundHit:
-          path: /Audio/Weapons/punch3.ogg
-      angle: 0
-      animation: WeaponArcPunch
       damage:
         types:
           Blunt: 8
           Structural: 4
           Caustic: 1
           Cellular: 3
-    - type: GhostTakeoverAvailable
-      makeSentient: true
-      name: ghost-role-information-slimes-name
-      description: ghost-role-information-slimes-description
