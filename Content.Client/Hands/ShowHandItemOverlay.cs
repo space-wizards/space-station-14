@@ -8,6 +8,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Client.CombatMode;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Hands
 {
@@ -17,10 +18,12 @@ namespace Content.Client.Hands
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IClyde _clyde = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
-
         private readonly IRenderTexture _renderBackbuffer;
 
         private float _handIconOffset;
+
+        private Texture? _gunSight;
+        private Texture? _meleeSight;
 
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
@@ -40,6 +43,16 @@ namespace Content.Client.Hands
                 {
                     Filter = true
                 }, nameof(ShowHandItemOverlay));
+
+            _gunSight = GetTextureFromRsi("gun-sight");
+            _meleeSight = GetTextureFromRsi("melee-sight");
+        }
+
+        private Texture GetTextureFromRsi(string _spriteName)
+        {   
+            var sprite = new SpriteSpecifier.Rsi(
+                new ResourcePath("/Textures/Interface/Misc/pointer_sights.rsi"), _spriteName);
+            return _entMan.EntitySysManager.GetEntitySystem<SpriteSystem>().Frame0(sprite);
         }
 
         protected override void DisposeBehavior()
@@ -82,7 +95,7 @@ namespace Content.Client.Hands
                 {
                     if (isHandGunItem)
                     {
-                        DrawWeaponSight(screen, halfBufferSize, limetedScale);
+                        DrawGunSight(screen, halfBufferSize, limetedScale);
                     }
                     else
                     {
@@ -122,20 +135,20 @@ namespace Content.Client.Hands
             screen.DrawEntity(handEntity, offset, new Vector2(1f, 1f) * scale, Direction.South);
         }
 
-        private void DrawWeaponSight(DrawingHandleScreen screen, Vector2 centerPos, float scale)
+        private void DrawGunSight(DrawingHandleScreen screen, Vector2 centerPos, float scale)
         {
-            float circleRadious = centerPos.X / 3f * scale;
-            screen.DrawCircle(centerPos, circleRadious, Color.Purple, false);
-            screen.DrawCircle(centerPos, (circleRadious) + 1, Color.Purple, false);
-            screen.DrawCircle(centerPos, (circleRadious) + 2, Color.Purple, false);
-            screen.DrawCircle(centerPos, (circleRadious) + 3, Color.Purple, false);
-            screen.DrawCircle(centerPos, (circleRadious) + 4, Color.Red, false);
+            if (_gunSight == null)
+                return;
+
+            screen.DrawTexture(_gunSight, centerPos);
         }
 
         private void DrawMeLeeSight(DrawingHandleScreen screen, Vector2 centerPos, float scale)
         {
-            UIBox2 rectCoords = new(centerPos * 0.5f * scale, centerPos * 1.5f * scale);
-            screen.DrawRect(rectCoords, Color.Green.WithAlpha(0.9f));
+            if (_meleeSight == null)
+                return;
+
+            screen.DrawTexture(_meleeSight, centerPos);
         }
     }
 }
