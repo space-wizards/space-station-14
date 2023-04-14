@@ -217,7 +217,7 @@ uplink-syndicate-segway-crate-desc = Be an enemy of the corporation, in style!
 uplink-revolver-cap-gun-name = Cap Gun
 uplink-revolver-cap-gun-desc = Looks almost like the real thing! Ages 8 and up.
 
-uplink-syndicate-stamp-name = Syndicate Rubber Btamp
+uplink-syndicate-stamp-name = Syndicate Rubber Stamp
 uplink-syndicate-stamp-desc = A rubber stamp for stamping important documents.
 
 uplink-cat-ears-name = Cat Ears
