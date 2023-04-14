@@ -1,4 +1,5 @@
-﻿using Content.Server.Administration;
+﻿using System.Linq;
+using Content.Server.Administration;
 using Content.Server.GameTicking.Presets;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
@@ -40,7 +41,8 @@ namespace Content.Server.GameTicking.Commands
         {
             if (args.Length == 1)
             {
-                var gamePresets = _prototype.EnumeratePrototypes<GamePresetPrototype>();
+                var gamePresets = _prototype.EnumeratePrototypes<GamePresetPrototype>()
+                    .OrderBy(p => p.ID);
                 var options = new List<string>();
                 foreach (var preset in gamePresets)
                 {
