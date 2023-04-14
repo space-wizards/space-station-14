@@ -562,7 +562,7 @@
     id: CentcomIDCardSyndie
     state: pda-centcom
     penSlot:
-      startingItem: CyberPen
+      startingItem: PenCentcom
       whitelist:
         tags:
         - Write
