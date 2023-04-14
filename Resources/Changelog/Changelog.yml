@@ -1,9 +1,4 @@
 Entries:
-- author: AJCM-git
-  changes:
-  - {message: Makes mobs visually float when there is no gravity, type: Add}
-  id: 2905
-  time: '2023-01-17T22:01:54.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Buffed containment particles for A.P.E.s, type: Tweak}
@@ -2897,3 +2892,9 @@ Entries:
       the game menu.', type: Fix}
   id: 3404
   time: '2023-04-14T01:10:45.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Dehydrated space carp can now be petted to make them nice to you. Have
+      the whole station pet him and be friends forever!, type: Tweak}
+  id: 3405
+  time: '2023-04-14T01:17:26.0000000+00:00'
