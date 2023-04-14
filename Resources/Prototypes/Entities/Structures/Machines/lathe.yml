@@ -585,6 +585,7 @@
       - ClothingOuterWinterMusician
       - ClothingOuterWinterClown
       - ClothingOuterWinterMime
+      - ClothingNeckMantleHOSShoulder
   - type: MaterialStorage
     whitelist:
       tags:

@@ -37,5 +37,5 @@
       - id: ClothingHeadHatBizarreSoft
   - type: Sprite
     layers:
-      - state: box
+      - state: box_security
       - state: holo

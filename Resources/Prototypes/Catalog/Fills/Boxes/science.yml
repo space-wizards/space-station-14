@@ -12,5 +12,5 @@
         amount: 2
   - type: Sprite
     layers:
-      - state: box
+      - state: box_medical
       - state: beaker
