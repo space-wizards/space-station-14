@@ -11,6 +11,7 @@ rules_header = "ui-rules-header-rp"
 [whitelist]
 enabled = true
 reason = "whitelist-not-whitelisted-rp"
+min_players = 5
 
 [ic]
 flavor_text = true
