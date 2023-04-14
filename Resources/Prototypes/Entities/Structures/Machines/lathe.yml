@@ -6,7 +6,7 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/autolathe.rsi
-    snapCardinals: true
+    snapCardinals: false
     netsync: false
     noRot: false
     layers:
