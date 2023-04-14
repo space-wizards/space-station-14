@@ -7,7 +7,7 @@ namespace Content.Shared.Medical.Treatments.Components;
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(TreatmentSystem))]
 [AutoGenerateComponentState]
-public sealed class TreatSeverityComponent : Component
+public sealed partial class TreatSeverityComponent : Component
 {
     [DataField("isModifier"), AutoNetworkedField]
     public bool IsModifier = false;

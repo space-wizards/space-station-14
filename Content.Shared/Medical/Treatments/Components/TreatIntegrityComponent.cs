@@ -7,7 +7,7 @@ namespace Content.Shared.Medical.Treatments.Components;
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(TreatmentSystem))]
 [AutoGenerateComponentState]
-public sealed class TreatIntegrityComponent : Component
+public sealed partial class TreatIntegrityComponent : Component
 {
     //fully restore the integrity of the part regardless of the restore amount
     [DataField("fullyRestores"), AutoNetworkedField]

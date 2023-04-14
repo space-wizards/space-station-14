@@ -7,7 +7,7 @@ namespace Content.Shared.Medical.Treatments.Components;
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(TreatmentSystem))]
 [AutoGenerateComponentState]
-public sealed class TreatBleedComponent : Component
+public sealed partial class TreatBleedComponent : Component
 {
     [DataField("fullyStopsBleed", required: true), AutoNetworkedField]
     public bool FullyStopsBleed;

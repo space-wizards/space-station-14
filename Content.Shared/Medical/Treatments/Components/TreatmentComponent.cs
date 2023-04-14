@@ -8,7 +8,7 @@ namespace Content.Shared.Medical.Treatments.Components;
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(TreatmentSystem))]
 [AutoGenerateComponentState]
-public sealed class TreatmentComponent : Component
+public sealed partial class TreatmentComponent : Component
 {
     [DataField("treatmentType", required: true,
          customTypeSerializer: typeof(PrototypeIdSerializer<TreatmentTypePrototype>)), AutoNetworkedField]
