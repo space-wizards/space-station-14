@@ -9,7 +9,6 @@ namespace Content.Shared.Light;
 
 public sealed class LightLevelSystem : EntitySystem
 {
-    [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
