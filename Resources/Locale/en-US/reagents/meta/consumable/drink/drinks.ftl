@@ -78,3 +78,6 @@ reagent-desc-posca = Poor warriors' drink from a forgotten era.
 
 reagent-name-kvass = kvass
 reagent-desc-kvass = A cool refreshing drink with a taste of socialism.
+
+reagent-name-david-martinez = David Martinez
+reagent-desc-david-martinez = The edgerunner legend.  Remembered by a drink, Forgotten by a drunk.
