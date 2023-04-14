@@ -1,10 +1,4 @@
 Entries:
-- author: Nairodian
-  changes:
-  - {message: Added proper ERT uniforms. You can now kick syndicate ass in style.,
-    type: Add}
-  id: 2904
-  time: '2023-01-17T22:00:19.0000000+00:00'
 - author: AJCM-git
   changes:
   - {message: Makes mobs visually float when there is no gravity, type: Add}
@@ -2896,3 +2890,10 @@ Entries:
   - {message: Nanotrasen no longer makes ice cream with soda., type: Fix}
   id: 3403
   time: '2023-04-13T19:51:11.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: 'Added a context sensitive EscapeContext keybind that defaults to ESC,
+      which closes the most recently opened window or if there are no windows, opens
+      the game menu.', type: Fix}
+  id: 3404
+  time: '2023-04-14T01:10:45.0000000+00:00'
