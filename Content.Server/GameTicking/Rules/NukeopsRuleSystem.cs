@@ -537,38 +537,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                     Logger.InfoS("preset", "Selected a preferred nukeop commander.");
                 }
             }
-            else
+            else if (i == 1)
             {
-                if (i == 1)
-                {
-                    if (medPrefList.Count == 0)
-                    {
-                        if (prefList.Count == 0)
-                        {
-                            if (everyone.Count == 0)
-                            {
-                                Logger.InfoS("preset", "Insufficient ready players to fill up with nukeops, stopping the selection");
-                                break;
-                            }
-                            nukeOp = _random.PickAndTake(everyone);
-                            Logger.InfoS("preset", "Insufficient preferred nukeop agents or nukies, picking at random.");
-                        }
-                        else
-                        {
-                            nukeOp = _random.PickAndTake(prefList);
-                            everyone.Remove(nukeOp);
-                            Logger.InfoS("preset", "Insufficient preferred nukeop agents, picking at random from regular op list.");
-                        }
-                    }
-                    else
-                    {
-                        nukeOp = _random.PickAndTake(medPrefList);
-                        everyone.Remove(nukeOp);
-                        prefList.Remove(nukeOp);
-                        Logger.InfoS("preset", "Selected a preferred nukeop agent.")
-                    }
-                }
-                else
+                if (medPrefList.Count == 0)
                 {
                     if (prefList.Count == 0)
                     {
@@ -578,17 +549,43 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                             break;
                         }
                         nukeOp = _random.PickAndTake(everyone);
-                        Logger.InfoS("preset", "Insufficient preferred nukeops, picking at random.");
+                        Logger.InfoS("preset", "Insufficient preferred nukeop agents or nukies, picking at random.");
                     }
                     else
                     {
                         nukeOp = _random.PickAndTake(prefList);
                         everyone.Remove(nukeOp);
-                        Logger.InfoS("preset", "Selected a preferred nukeop.");
+                        Logger.InfoS("preset", "Insufficient preferred nukeop agents, picking at random from regular op list.");
                     }
                 }
+                else
+                {
+                    nukeOp = _random.PickAndTake(medPrefList);
+                    everyone.Remove(nukeOp);
+                    prefList.Remove(nukeOp);
+                    Logger.InfoS("preset", "Selected a preferred nukeop agent.")
+                }
             }
-                operatives.Add(nukeOp);
+            else
+            {
+                if (prefList.Count == 0)
+                {
+                    if (everyone.Count == 0)
+                    {
+                        Logger.InfoS("preset", "Insufficient ready players to fill up with nukeops, stopping the selection");
+                        break;
+                    }
+                    nukeOp = _random.PickAndTake(everyone);
+                    Logger.InfoS("preset", "Insufficient preferred nukeops, picking at random.");
+                }
+                else
+                {
+                    nukeOp = _random.PickAndTake(prefList);
+                    everyone.Remove(nukeOp);
+                    Logger.InfoS("preset", "Selected a preferred nukeop.");
+                }
+            }
+                            operatives.Add(nukeOp);
             }
 
         SpawnOperatives(numNukies, operatives, false);
