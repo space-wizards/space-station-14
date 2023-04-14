@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Buffed containment particles for A.P.E.s, type: Tweak}
-  - {message: Fixed some text formatting issues on various anomaly equipment., type: Fix}
-  - {message: 'Fixed anomalies always spawning at 0, 0.', type: Fix}
-  id: 2906
-  time: '2023-01-18T00:38:12.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'Fixed verb menu sometimes not appearing. when using the context menu,',
@@ -2898,3 +2891,10 @@ Entries:
       the whole station pet him and be friends forever!, type: Tweak}
   id: 3405
   time: '2023-04-14T01:17:26.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: 'Changed sprites of the livestock crate, t-ray, fax machine, remote
+      signaller and cell rechargers.', type: Tweak}
+  - {message: Fixed grey mice changing colors on death., type: Fix}
+  id: 3406
+  time: '2023-04-14T19:43:50.0000000+00:00'
