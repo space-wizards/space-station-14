@@ -332,6 +332,16 @@
   categories:
   - UplinkUtility
 
+- type: listing
+  id: UplinkRadioJammer
+  name: uplink-radio-jammer-name
+  description: uplink-radio-jammer-desc
+  productEntity: RadioJammer
+  cost:
+    Telecrystal: 5
+  categories:
+  - UplinkUtility
+
 # Implants
 
 - type: listing
