@@ -6,6 +6,8 @@ using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Chemistry.ReactionEffects;
 using Content.Server.Coordinates.Helpers;
+using Content.Server.Medical.Bloodstream.Components;
+using Content.Server.Medical.Bloodstream.Systems;
 using Content.Server.Spreader;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
