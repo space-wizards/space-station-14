@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix rotation visualizers not lerping properly (bed buckling and knockdown).,
-    type: Fix}
-  id: 2910
-  time: '2023-01-18T09:11:35.0000000+00:00'
 - author: Cripes
   changes:
   - {message: Crew monitor now sorts by character name, type: Tweak}
@@ -2899,3 +2893,9 @@ Entries:
   - {message: Fixed typo in uplink for the syndicate stamp., type: Fix}
   id: 3409
   time: '2023-04-14T19:53:36.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: 'Support multiline text edit for papers, communication console and admin
+      announcements', type: Tweak}
+  id: 3410
+  time: '2023-04-14T19:57:47.0000000+00:00'
