@@ -381,7 +381,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (TryComp<DnaComponent>(args.Args.Target, out var dna))
                 comp.DNAs.Add(dna.DNA);
 
-            if (!forceDrink && transferAmount > 0)
+            if (!forceDrink && solution.Volume > 0)
                 args.Repeat = true;
         }
 
