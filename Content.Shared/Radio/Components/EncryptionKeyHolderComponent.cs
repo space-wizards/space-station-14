@@ -43,12 +43,6 @@ public sealed class EncryptionKeyHolderComponent : Component
     public const string KeyContainerName = "key_slots";
 
     /// <summary>
-    /// Blocks multiple attempts to remove the key
-    /// </summary>
-    [DataField("removing")]
-    public bool Removing;
-
-    /// <summary>
     ///     Combined set of radio channels provided by all contained keys.
     /// </summary>
     [ViewVariables]

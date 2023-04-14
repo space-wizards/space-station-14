@@ -4,7 +4,6 @@
   id: GlowstickBase
   description: Useful for raves and emergencies.
   components:
-    - type: Recyclable
     - type: SpaceGarbage
     - type: ExpendableLight
       spentName: expendable-light-spent-green-glowstick-name

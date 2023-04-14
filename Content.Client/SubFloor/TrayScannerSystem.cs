@@ -1,4 +1,6 @@
 using Content.Client.Hands;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Inventory;
 using Content.Shared.SubFloor;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -14,11 +16,13 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private const string TRayAnimationKey = "trays";
-    private const double AnimationLength = 0.5;
+    private const double AnimationLength = 0.3;
 
     public override void Update(float frameTime)
     {
@@ -37,13 +41,43 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
         var playerPos = _transform.GetWorldPosition(playerXform, xformQuery);
         var playerMap = playerXform.MapID;
         var range = 0f;
+        HashSet<SubFloorHideComponent> inRange;
+        var scannerQuery = GetEntityQuery<TrayScannerComponent>();
 
-        if (TryComp<HandsComponent>(player, out var playerHands) &&
-            TryComp<TrayScannerComponent>(playerHands.ActiveHandEntity, out var scanner) && scanner.Enabled)
+        // TODO: Should probably sub to player attached changes / inventory changes but inventory's
+        // API is extremely skrungly. If this ever shows up on dottrace ping me and laugh.
+        var canSee = false;
+
+        // TODO: Common iterator for both systems.
+        if (_inventory.TryGetContainerSlotEnumerator(player.Value, out var enumerator))
         {
-            range = scanner.Range;
+            while (enumerator.MoveNext(out var slot))
+            {
+                foreach (var ent in slot.ContainedEntities)
+                {
+                    if (!scannerQuery.TryGetComponent(ent, out var sneakScanner) || !sneakScanner.Enabled)
+                        continue;
 
-            foreach (var comp in _lookup.GetComponentsInRange<SubFloorHideComponent>(playerMap, playerPos, range))
+                    canSee = true;
+                    range = MathF.Max(range, sneakScanner.Range);
+                }
+            }
+        }
+
+        foreach (var hand in _hands.EnumerateHands(player.Value))
+        {
+            if (!scannerQuery.TryGetComponent(hand.HeldEntity, out var heldScanner) || !heldScanner.Enabled)
+                continue;
+
+            range = MathF.Max(heldScanner.Range, range);
+            canSee = true;
+        }
+
+        if (canSee)
+        {
+            inRange = _lookup.GetComponentsInRange<SubFloorHideComponent>(playerMap, playerPos, range);
+
+            foreach (var comp in inRange)
             {
                 var uid = comp.Owner;
                 if (!comp.IsUnderCover || !comp.BlockAmbience | !comp.BlockInteractions)
@@ -52,22 +86,23 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
                 EnsureComp<TrayRevealedComponent>(uid);
             }
         }
+        else
+        {
+            inRange = new HashSet<SubFloorHideComponent>();
+        }
 
         var revealedQuery = AllEntityQuery<TrayRevealedComponent, SpriteComponent, TransformComponent>();
         var subfloorQuery = GetEntityQuery<SubFloorHideComponent>();
 
         while (revealedQuery.MoveNext(out var uid, out _, out var sprite, out var xform))
         {
-            var worldPos = _transform.GetWorldPosition(xform, xformQuery);
-
             // Revealing
             // Add buffer range to avoid flickers.
-            if (subfloorQuery.HasComponent(uid) &&
+            if (subfloorQuery.TryGetComponent(uid, out var subfloor) &&
                 xform.MapID != MapId.Nullspace &&
                 xform.MapID == playerMap &&
                 xform.Anchored &&
-                range != 0f &&
-                (playerPos - worldPos).Length <= range + 0.5f)
+                inRange.Contains(subfloor))
             {
                 // Due to the fact client is predicting this server states will reset it constantly
                 if ((!_appearance.TryGetData(uid, SubFloorVisuals.ScannerRevealed, out bool value) || !value) &&

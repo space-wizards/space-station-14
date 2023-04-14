@@ -79,7 +79,7 @@ namespace Content.Shared.Verbs
             var canInteract = force || _actionBlockerSystem.CanInteract(user, target);
 
             EntityUid? @using = null;
-            if (TryComp(user, out SharedHandsComponent? hands) && (force || _actionBlockerSystem.CanUseHeldEntity(user)))
+            if (TryComp(user, out HandsComponent? hands) && (force || _actionBlockerSystem.CanUseHeldEntity(user)))
             {
                 @using = hands.ActiveHandEntity;
 
