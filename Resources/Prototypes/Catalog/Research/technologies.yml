@@ -397,7 +397,7 @@
   description: technologies-electrical-engineering-description
   icon:
     sprite: Structures/Power/Generation/Singularity/emitter.rsi
-    state: emitter1
+    state: emitter
   requiredPoints: 15000
   requiredTechnologies:
   - ElectromagneticTheory
