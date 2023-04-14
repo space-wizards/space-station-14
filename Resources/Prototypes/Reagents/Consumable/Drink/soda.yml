@@ -57,7 +57,7 @@
   parent: BaseSoda
   desc: reagent-desc-ice-cream
   physicalDesc: reagent-physical-desc-creamy
-  flavor: soda
+  flavor: icecream
   color: "#fffbd6"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/icecreamglass.rsi
@@ -157,7 +157,7 @@
         damage:
           types:
             Poison: 1
-            
+
 - type: reagent
   id: ShamblersJuice
   name: reagent-name-shamblers-juice

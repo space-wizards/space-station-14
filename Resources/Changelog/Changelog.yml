@@ -1,194 +1,4 @@
 Entries:
-- author: Jezithyr
-  changes:
-  - {message: Fixing health alerts not properly updating when players are damaged,
-    type: Fix}
-  id: 2873
-  time: '2023-01-15T07:52:20.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix some instances of popup flickering, type: Fix}
-  id: 2874
-  time: '2023-01-15T18:14:21.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed decal removal not working properly., type: Fix}
-  id: 2875
-  time: '2023-01-15T20:23:32.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Added placement preview for decals, type: Add}
-  id: 2876
-  time: '2023-01-15T20:35:36.0000000+00:00'
-- author: Theomund
-  changes:
-  - {message: Construction and crafting messages now appear above the user instead
-      of the mouse cursor., type: Fix}
-  id: 2877
-  time: '2023-01-16T02:29:45.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: Contents of pill canisters can now be dumped onto the ground and tables.,
-    type: Tweak}
-  id: 2878
-  time: '2023-01-16T02:37:56.0000000+00:00'
-- author: noudoit
-  changes:
-  - {message: Added spooky ghost sheet., type: Add}
-  - {message: Added butcher method to get ghost sheet, type: Add}
-  id: 2879
-  time: '2023-01-16T07:29:45.0000000+00:00'
-- author: nmajask
-  changes:
-  - {message: 'added medical lathe recipes for all the medkits, they cost 300 plastic,
-      are locked behind biological tech, and are empty', type: Add}
-  id: 2880
-  time: '2023-01-16T07:44:14.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed chameleon clothing not working., type: Fix}
-  id: 2881
-  time: '2023-01-16T08:21:24.0000000+00:00'
-- author: noudoit
-  changes:
-  - {message: Added Honk mother communication device - banana phone!, type: Add}
-  id: 2882
-  time: '2023-01-16T14:06:29.0000000+00:00'
-- author: moony, ElectroSR
-  changes:
-  - {message: 'An in-game guide has been added. It is accessible via a keybinding
-      (defaults to numpad 0), or via some examine tooltips. Help wanted writing guides!',
-    type: Add}
-  id: 2883
-  time: '2023-01-16T15:29:47.866071+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Helpful tips will now appear at random in the lobby and occasionally
-      in game., type: Add}
-  id: 2884
-  time: '2023-01-16T16:52:52.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added a guidebook entry for machine upgrades., type: Add}
-  id: 2885
-  time: '2023-01-16T16:53:24.0000000+00:00'
-- author: ZoldorfTheWizard
-  changes:
-  - {message: mechs now do not move if broken or are unpowered., type: Tweak}
-  id: 2886
-  time: '2023-01-16T23:58:38.0000000+00:00'
-- author: nikthechampiongr
-  changes:
-  - {message: 'Epinephrine will now be able to stabilize the smallest crew members
-      of the station such as Ian, and other animals.', type: Tweak}
-  id: 2887
-  time: '2023-01-17T01:47:41.0000000+00:00'
-- author: PixelTK
-  changes:
-  - {message: 'Added a new way to express yourself through small, little LGBTQIA+
-      pins', type: Add}
-  id: 2888
-  time: '2023-01-17T01:51:13.0000000+00:00'
-- author: ZoldorfTheWizard
-  changes:
-  - {message: Fixes syndicate reinforcements getting swisscheesed by ship turrets
-      due to incorrect faction, type: Fix}
-  - {message: Fixes syndicate reinforcements not being tagged as an antag role, type: Fix}
-  - {message: Renames the syndicate reinforcement teleporter to syndicate reinforcement
-      radio, type: Tweak}
-  - {message: adds sound and cooldown feedback to the syndicate reinforcement radio.,
-    type: Add}
-  id: 2889
-  time: '2023-01-17T02:57:54.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added 3 unique Anomalies. These strange objects can be harnessed with
-      the power of science to generate a steady stream of points. Make sure they don't
-      go Supercritical!, type: Add}
-  - {message: Added the anomaly generator. This large machine is powered by plasma
-      and can create a random anomaly somewhere on the station. Let's hope it doesn't
-      end up somewhere bad..., type: Add}
-  - {message: 'Added the APE, which can shoot different types of particles at anomalies
-      to manipulate them.', type: Add}
-  - {message: 'Added the anomaly scanner, which can give you various data about anomalies.',
-    type: Add}
-  - {message: Added anomaly vessels. Clicking on these with an anomaly scanner will
-      assign it and produce points based on the danger of the anomaly. Be wary if
-      the vessel's anomaly goes supercritical though..., type: Add}
-  id: 2890
-  time: '2023-01-17T05:05:20.0000000+00:00'
-- author: gus
-  changes:
-  - {message: Flashlights have been buffed., type: Tweak}
-  id: 2891
-  time: '2023-01-17T05:32:17.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Anomaly generator now occupies 1x3 space instead of 3x3 and also doesn't
-      snap with camera rotation., type: Tweak}
-  id: 2892
-  time: '2023-01-17T08:07:07.0000000+00:00'
-- author: Cripes
-  changes:
-  - {message: Nanotrasen has updated the available types of paper in the stationary
-      department, type: Add}
-  - {message: 'Disease diagnoser, artifact analyzer and cargo shuttle produce themed
-      paper', type: Add}
-  id: 2893
-  time: '2023-01-17T08:32:46.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Weather has been added to the game., type: Add}
-  id: 2894
-  time: '2023-01-17T09:26:53.0000000+00:00'
-- author: gus
-  changes:
-  - {message: Added 360 PDA lights., type: Add}
-  id: 2895
-  time: '2023-01-17T09:28:34.0000000+00:00'
-- author: gus
-  changes:
-  - {message: Fixed RPG-7 icon not updating correctly., type: Fix}
-  id: 2896
-  time: '2023-01-17T09:31:54.0000000+00:00'
-- author: gus
-  changes:
-  - {message: Changed golden toolbox to have a reasonable amount of gold, type: Tweak}
-  id: 2897
-  time: '2023-01-17T10:23:48.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Lava has been added., type: Add}
-  id: 2898
-  time: '2023-01-17T18:25:32.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Added basalt tiles for lava planets., type: Add}
-  id: 2899
-  time: '2023-01-17T18:28:38.0000000+00:00'
-- author: Chief-Engineer
-  changes:
-  - {message: The red phone can now be used to leave a message for Central Command,
-    type: Tweak}
-  - {message: The banana phone can now be used to leave a message for the Honkmother,
-    type: Tweak}
-  id: 2900
-  time: '2023-01-17T18:42:20.0000000+00:00'
-- author: ga
-  changes:
-  - {message: Added chief medical officer's beret., type: Add}
-  id: 2901
-  time: '2023-01-17T18:47:18.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Ahelp window for admins can now pop out into an OS window., type: Add}
-  id: 2902
-  time: '2023-01-17T18:47:52.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: Updated patrons and contributor credits list., type: Tweak}
-  id: 2903
-  time: '2023-01-17T21:42:03.0000000+00:00'
 - author: Nairodian
   changes:
   - {message: Added proper ERT uniforms. You can now kick syndicate ass in style.,
@@ -2917,3 +2727,172 @@ Entries:
   - {message: Fix spreaders going through air blockers., type: Fix}
   id: 3372
   time: '2023-04-10T06:43:25.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'You can now melee attack yourself, if you like', type: Tweak}
+  id: 3373
+  time: '2023-04-10T21:28:27.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Added robust nukie drink in EMAGGED sustenance vendor!, type: Add}
+  id: 3374
+  time: '2023-04-10T21:29:15.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Material reclaimers no longer stack sound effects infinitely., type: Fix}
+  id: 3375
+  time: '2023-04-10T21:30:34.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed artifacts being biased towards nodes that were already discovered.,
+    type: Fix}
+  id: 3376
+  time: '2023-04-10T22:35:43.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Chameleon masks can now mimic breath masks., type: Fix}
+  id: 3377
+  time: '2023-04-11T00:31:15.0000000+00:00'
+- author: freeman2651
+  changes:
+  - {message: Pill dosage limit reduced to 20u from 50u., type: Tweak}
+  id: 3378
+  time: '2023-04-11T01:23:35.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Splashing reagents using melee attacks & examining spillables should
+      work properly again, type: Tweak}
+  id: 3379
+  time: '2023-04-11T01:56:21.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Nettles can no longer inject solutions through hardsuits. Yes, this
+      means deathnettles don''t work on nukies anymore.', type: Tweak}
+  id: 3380
+  time: '2023-04-11T02:19:44.0000000+00:00'
+- author: Skyedra
+  changes:
+  - {message: Ability to bind the menu toggle key directly in the UI, type: Add}
+  - {message: Default menu toggle moved from F12 to F10, type: Tweak}
+  id: 3381
+  time: '2023-04-11T03:40:07.0000000+00:00'
+- author: Skyedra
+  changes:
+  - {message: '''Esc Menu'' title renamed to ''Game Menu''', type: Tweak}
+  id: 3382
+  time: '2023-04-11T06:26:39.0000000+00:00'
+- author: EnDecc
+  changes:
+  - {message: 'Doubled drain buffer size from 500u > 1000u, Tripled units deleted
+      per tick from 1 > 3', type: Tweak}
+  id: 3383
+  time: '2023-04-11T11:21:31.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Tools no longer make sounds if using them fails., type: Fix}
+  id: 3384
+  time: '2023-04-11T17:31:12.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Added Brigmedic job and other things for brigmedic., type: Add}
+  id: 3385
+  time: '2023-04-11T23:11:01.0000000+00:00'
+- author: Mumohan
+  changes:
+  - {message: Plushies and other toys no longer conduct electricity, type: Fix}
+  id: 3386
+  time: '2023-04-12T00:11:55.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Being unable to deconstruct communications servers., type: Fix}
+  - {message: Fixed metal rods sometimes not being consumed when placing down lattice
+      tiles., type: Fix}
+  id: 3387
+  time: '2023-04-12T00:18:30.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed not showing the ahelp relay label unless the relay was changed
+      while connected., type: Fix}
+  id: 3388
+  time: '2023-04-12T00:19:09.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Added showing ban and note count to admins in the ahelp window., type: Add}
+  id: 3389
+  time: '2023-04-12T00:34:25.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Cloth can be used as gauze to stop bleeding!, type: Add}
+  id: 3390
+  time: '2023-04-12T08:53:10.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix emergency shuttles docking at the wrong airlocks., type: Fix}
+  id: 3391
+  time: '2023-04-12T09:05:55.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Added show disconnected button to admin player tab., type: Add}
+  id: 3392
+  time: '2023-04-12T13:30:09.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fixed NPCs not properly steering around thindows in some instances.,
+    type: Fix}
+  id: 3393
+  time: '2023-04-12T13:50:08.0000000+00:00'
+- author: Arteben
+  changes:
+  - {message: 'Added filters of name, fingerprints and DNA for the station records
+      computer', type: Add}
+  id: 3394
+  time: '2023-04-12T14:27:13.0000000+00:00'
+- author: mhamster
+  changes:
+  - {message: Changed sleep action icon from egg to syndie pyjama, type: Tweak}
+  id: 3395
+  time: '2023-04-12T18:26:07.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Added boxer spawnpoint., type: Add}
+  id: 3396
+  time: '2023-04-12T18:32:49.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: 'Fixed now the security cadet''s spawner has an icon not of a passenger,
+      but of a cadet (I just stuck the cadet badge next to the officer''s sprite)',
+    type: Fix}
+  id: 3397
+  time: '2023-04-12T18:33:19.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: The Syndicate has started packaging its sinister pens in boxes for easier
+      identification by the end user., type: Tweak}
+  id: 3398
+  time: '2023-04-12T18:44:52.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Increased passive blood recovery from 0.3u to 1u. This is added every
+      5 seconds., type: Tweak}
+  id: 3399
+  time: '2023-04-12T20:14:42.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Vending machines now use the robot typing indicator., type: Tweak}
+  id: 3400
+  time: '2023-04-12T20:15:28.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Station maps have been added., type: Add}
+  id: 3401
+  time: '2023-04-13T06:21:24.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Added custom speech bubble for the moth cloak., type: Add}
+  id: 3402
+  time: '2023-04-13T07:21:57.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Nanotrasen no longer makes ice cream with soda., type: Fix}
+  id: 3403
+  time: '2023-04-13T19:51:11.0000000+00:00'

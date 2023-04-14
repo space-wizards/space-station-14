@@ -44,7 +44,7 @@ namespace Content.Client.Construction
                 .Bind(ContentKeyFunctions.OpenCraftingMenu,
                     new PointerInputCmdHandler(HandleOpenCraftingMenu))
                 .Bind(EngineKeyFunctions.Use,
-                    new PointerInputCmdHandler(HandleUse))
+                    new PointerInputCmdHandler(HandleUse, outsidePrediction: true))
                 .Register<ConstructionSystem>();
 
             SubscribeLocalEvent<ConstructionGhostComponent, ExaminedEvent>(HandleConstructionGhostExamined);

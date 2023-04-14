@@ -210,10 +210,11 @@ namespace Content.Server.Zombies
             if (!HasComp<GhostRoleMobSpawnerComponent>(target) && !mindcomp.HasMind) //this specific component gives build test trouble so pop off, ig
             {
                 //yet more hardcoding. Visit zombie.ftl for more information.
-                EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(target, out var ghostcomp);
-                ghostcomp.RoleName = Loc.GetString("zombie-generic");
-                ghostcomp.RoleDescription = Loc.GetString("zombie-role-desc");
-                ghostcomp.RoleRules = Loc.GetString("zombie-role-rules");
+                var ghostRole = EnsureComp<GhostRoleComponent>(target);
+                EnsureComp<GhostTakeoverAvailableComponent>(target);
+                ghostRole.RoleName = Loc.GetString("zombie-generic");
+                ghostRole.RoleDescription = Loc.GetString("zombie-role-desc");
+                ghostRole.RoleRules = Loc.GetString("zombie-role-rules");
             }
 
             //Goes through every hand, drops the items in it, then removes the hand
