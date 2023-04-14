@@ -32,7 +32,6 @@ public sealed class LightLevelSystem : EntitySystem
         // todo: in the future, this should support light on planet maps.
         var lightLevel = 0f;
 
-        var validLights = new HashSet<(SharedPointLightComponent, TransformComponent)>();
         foreach (var (light, xform) in EntityQuery<SharedPointLightComponent, TransformComponent>(true))
         {
             if (!light.Enabled)
@@ -40,15 +39,7 @@ public sealed class LightLevelSystem : EntitySystem
 
             if (xform.MapID != map)
                 continue;
-            validLights.Add((light, xform));
-        }
 
-        // quit while we're ahead.
-        if (validLights.Count == 0)
-            return lightLevel;
-
-        foreach (var (light, xform) in validLights)
-        {
             var lightRot = _transform.GetWorldRotation(xform);
             var lightPos = _transform.GetWorldPosition(xform) + lightRot.RotateVec(light.Offset);
             var direction = pos - lightPos;
