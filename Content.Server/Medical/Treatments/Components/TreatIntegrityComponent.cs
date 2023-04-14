@@ -1,8 +1,8 @@
-﻿using Content.Shared.FixedPoint;
-using Content.Shared.Medical.Treatments.Systems;
+﻿using Content.Server.Medical.Treatments.Systems;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Medical.Treatments.Components;
+namespace Content.Server.Medical.Treatments.Components;
 
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(TreatmentSystem))]
@@ -14,6 +14,6 @@ public sealed partial class TreatIntegrityComponent : Component
     public bool FullyRestores;
 
     //restore a fixed amount of integrity points to the part
-    [DataField("restoreAmount"), AutoNetworkedField]
-    public FixedPoint2 RestoreAmount;
+    [DataField("increase"), AutoNetworkedField]
+    public FixedPoint2 Increase;
 }

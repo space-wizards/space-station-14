@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Medical.Treatments.Prototypes;
+namespace Content.Server.Medical.Treatments.Prototypes;
 
 [Prototype("treatment")]
 public sealed class TreatmentTypePrototype : IPrototype

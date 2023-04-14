@@ -14,6 +14,7 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.Drunk;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Medical.Wounds.Components;
 using Content.Shared.Medical.Wounds.Systems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -61,12 +62,12 @@ public sealed class BloodstreamSystem : EntitySystem
         if (args.OldState)
         {
             //Add bleeding back if we are reopening a wound
-            TryModifyBleedAmount(uid, bleed.BloodLoss*args.WoundComponent.Severity, component);
+            TryModifyBleedAmount(uid, bleed.Bloodloss*args.WoundComponent.Severity, component);
         }
         else
         {
             //Remove bleeding if we are cauterizing
-            TryModifyBleedAmount(uid, - bleed.BloodLoss*args.WoundComponent.Severity, component);
+            TryModifyBleedAmount(uid, - bleed.Bloodloss*args.WoundComponent.Severity, component);
         }
     }
 
@@ -75,7 +76,7 @@ public sealed class BloodstreamSystem : EntitySystem
         if (!TryComp(args.WoundEntity, out BleedInflicterComponent? bleed) || args.WoundComponent.CanBleed)
             return;
         var severityDelta = args.WoundComponent.Severity - args.OldSeverity;
-        var bleedDelta = severityDelta * bleed.BloodLoss;
+        var bleedDelta = severityDelta * bleed.Bloodloss;
         TryModifyBleedAmount(uid, bleedDelta, component);
     }
 
@@ -83,7 +84,7 @@ public sealed class BloodstreamSystem : EntitySystem
     {
         if (!TryComp(args.WoundEntity, out BleedInflicterComponent? bleed) ||  args.WoundComponent.CanBleed)
             return;
-        TryModifyBleedAmount(uid, bleed.BloodLoss*args.WoundComponent.Severity, component);
+        TryModifyBleedAmount(uid, bleed.Bloodloss*args.WoundComponent.Severity, component);
     }
 
     private void OnReactionAttempt(EntityUid uid, BloodstreamComponent component, ReactionAttemptEvent args)
@@ -386,5 +387,17 @@ public sealed class BloodstreamSystem : EntitySystem
                 comp.DNAs.Add(dna.DNA);
             }
         }
+    }
+
+    public void ModifyBleedInflicter(EntityUid inflicterId, EntityUid bloodstreamId, FixedPoint2 delta, BleedInflicterComponent? inflicter = null, WoundComponent? wound = null, BloodstreamComponent? bloodstream = null)
+    {
+        if (!Resolve(inflicterId, ref inflicter, ref wound))
+            return;
+
+        var oldBleed = inflicter.Bloodloss * wound.Severity;
+
+        inflicter.Bloodloss += delta;
+        var newBleed = inflicter.Bloodloss * wound.Severity;
+        TryModifyBleedAmount(bloodstreamId, newBleed - oldBleed, bloodstream);
     }
 }

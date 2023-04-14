@@ -1,8 +1,8 @@
-﻿using Content.Shared.FixedPoint;
-using Content.Shared.Medical.Treatments.Systems;
+﻿using Content.Server.Medical.Treatments.Systems;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Medical.Treatments.Components;
+namespace Content.Server.Medical.Treatments.Components;
 
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(TreatmentSystem))]
@@ -16,12 +16,12 @@ public sealed partial class TreatHealthComponent : Component
     public bool LeavesScar = true;
 
     //avoid using this when possible. Use modifier instead as it doesn't change the base healing rate.
-    [DataField("baseHealingChange"), AutoNetworkedField]
-    public FixedPoint2 BaseHealingChange;
+    [DataField("baseIncrease"), AutoNetworkedField]
+    public FixedPoint2 BaseIncrease;
 
-    [DataField("healingModifierChange"), AutoNetworkedField]
-    public FixedPoint2 HealingModifier;
+    [DataField("modifierIncrease"), AutoNetworkedField]
+    public FixedPoint2 ModifierIncrease;
 
-    [DataField("healingMultiplierChange"), AutoNetworkedField]
-    public FixedPoint2 HealingMultiplier;
+    [DataField("multiplierIncrease"), AutoNetworkedField]
+    public FixedPoint2 MultiplierIncrease;
 }
