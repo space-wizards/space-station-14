@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts;
 
-[RegisterComponent]
+[RegisterComponent, Access(typeof(ArtifactSystem))]
 public sealed class ArtifactComponent : Component
 {
     /// <summary>
@@ -53,16 +53,23 @@ public sealed class ArtifactComponent : Component
     public TimeSpan LastActivationTime;
 
     /// <summary>
-    /// The base price of each node for an artifact
+    /// A multiplier applied to the calculated point value
+    /// to determine the monetary value of the artifact
     /// </summary>
-    [DataField("pricePerNode")]
-    public int PricePerNode = 500;
+    [DataField("priceMultiplier")]
+    public float PriceMultiplier = 0.2f;
 
     /// <summary>
     /// The base amount of research points for each artifact node.
     /// </summary>
     [DataField("pointsPerNode")]
     public int PointsPerNode = 5000;
+
+    /// <summary>
+    /// Research points which have been "consumed" from the theoretical max value of the artifact.
+    /// </summary>
+    [DataField("consumedPoints")]
+    public int ConsumedPoints;
 
     /// <summary>
     /// A multiplier that is raised to the power of the average depth of a node.
