@@ -26,3 +26,13 @@ book-text-ame-scribbles = I don't know if you're trained already, so I hope this
       The golden rule is 2 injection for every 1 core. You can go lower to save fuel.
       Higher will burn the engine out and eventually make it explode. Don't.
       Don't forget to refuel it, it tends to stop at the worst possible time.
+
+book-text-mafia-manual = The game of Mafia is a social deduction game that requires players to use their wits and powers of persuasion to determine the identity of the mafia members in their midst. The game is played with a standard deck of cards and can accommodate anywhere from 6 to 20 players.
+      The game is divided into two phases: night and day. During the night phase, the Mafia members secretly choose a player to eliminate, while other players with special roles (such as the Medic or Detective) use their abilities to help protect or investigate other players.
+      During the day phase, all players discuss the events of the previous night and vote on who they believe is a member of the Mafia. The player with the most votes is eliminated, and the game continues until either the Mafia is eliminated or they outnumber the remaining players.
+      Roles:
+      Mafia: The mafia is a group of players who work together to eliminate members of the town. They have the ability to kill one player each night, and they must try to remain hidden and blend in with the townspeople to avoid being identified and eliminated.
+      Detective: The detective is a member of the town who has the ability to investigate one player each night to determine if they are a member of the mafia or not. This role is crucial for gathering information and identifying potential threats to the town.
+      Medic: The medic is also a town member who has the ability to protect one player each night from being killed by the mafia. This role is important for keeping key town members alive and increasing the chances of the town winning the game.
+      Passenger: The rest of the players in the game are considered passenger. They do not have any special abilities, but they work together to try to identify and eliminate members of the mafia.
+

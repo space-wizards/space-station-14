@@ -13,24 +13,40 @@
     state: cardbox
   - type: Item
     sprite: Objects\Fun\Tabletop\mafia\mafiacardsbox.rsi
-    size: 10
+    size: 15
+  - type: Storage
+    capacity: 15
   - type: StorageFill
     contents:
       - id: CardAgent
         amount: 2
       - id: CardDetective
-        amount: 1
       - id: CardMedic
-        amount: 1
       - id: CardPassenger
         amount: 6
+      - id: BookMafiaManual
 
 - type: entity
-  name: card
-  suffix: Agent
+  parent: BookBase
+  id: BookMafiaManual
+  name: Mafia Game Instructions
+  description: "0+" is written on the book in small letters.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/books.rsi
+      layers:
+        - state: book_detective
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 6
+    - type: Paper
+      content: book-text-mafia-manual
+
+- type: entity
+  abstract: true
   parent: BaseItem
-  id: CardAgent
-  description: Turn over the card to find out your role.
+  id: BaseCard
   components:
   - type: Sprite
     sprite: Objects\Fun\Tabletop\mafia\mafiacards.rsi
@@ -48,6 +64,14 @@
     interfaces:
     - key: enum.StorageUiKey.Key
       type: StorageBoundUserInterface
+
+- type: entity
+  name: card
+  suffix: Agent
+  parent: BaseCard
+  id: CardAgent
+  description: Turn over the card to find out your role.
+  components:
   - type: Appearance
     visuals:
     - type: StorageVisualizer
@@ -57,26 +81,10 @@
 - type: entity
   name: card
   suffix: Detective
-  parent: BaseItem
+  parent: BaseCard
   id: CardDetective
   description: Turn over the card to find out your role.
   components:
-  - type: Sprite
-    sprite: Objects\Fun\Tabletop\mafia\mafiacards.rsi
-    drawdepth: SmallObjects
-    layers:
-    - state: cardunknown
-      map: ["enum.StorageVisualLayers.Door"]
-    netsync: false
-  - type: Item
-    sprite: Objects\Fun\Tabletop\mafia\mafiacards.rsi
-    size: 1
-  - type: Storage
-    capacity: -1
-  - type: UserInterface
-    interfaces:
-    - key: enum.StorageUiKey.Key
-      type: StorageBoundUserInterface
   - type: Appearance
     visuals:
     - type: StorageVisualizer
@@ -86,26 +94,10 @@
 - type: entity
   name: card
   suffix: Passenger
-  parent: BaseItem
+  parent: BaseCard
   id: CardPassenger
   description: Turn over the card to find out your role.
   components:
-  - type: Sprite
-    sprite: Objects\Fun\Tabletop\mafia\mafiacards.rsi
-    drawdepth: SmallObjects
-    layers:
-    - state: cardunknown
-      map: ["enum.StorageVisualLayers.Door"]
-    netsync: false
-  - type: Item
-    sprite: Objects\Fun\Tabletop\mafia\mafiacards.rsi
-    size: 1
-  - type: Storage
-    capacity: -1
-  - type: UserInterface
-    interfaces:
-    - key: enum.StorageUiKey.Key
-      type: StorageBoundUserInterface
   - type: Appearance
     visuals:
     - type: StorageVisualizer
@@ -115,26 +107,10 @@
 - type: entity
   name: card
   suffix: Medic
-  parent: BaseItem
+  parent: BaseCard
   id: CardMedic
   description: Turn over the card to find out your role.
   components:
-  - type: Sprite
-    sprite: Objects\Fun\Tabletop\mafia\mafiacards.rsi
-    drawdepth: SmallObjects
-    layers:
-    - state: cardunknown
-      map: ["enum.StorageVisualLayers.Door"]
-    netsync: false
-  - type: Item
-    sprite: Objects\Fun\Tabletop\mafia\mafiacards.rsi
-    size: 1
-  - type: Storage
-    capacity: -1
-  - type: UserInterface
-    interfaces:
-    - key: enum.StorageUiKey.Key
-      type: StorageBoundUserInterface
   - type: Appearance
     visuals:
     - type: StorageVisualizer
