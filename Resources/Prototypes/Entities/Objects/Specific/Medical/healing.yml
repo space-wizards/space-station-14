@@ -25,18 +25,16 @@
     state: ointment
   - type: Item
     heldPrefix: ointment
-  - type: Healing
-    damageContainer: Biological
-    damage:
-      types:
-        Heat: -5
-        Cold: -5
-        Shock: -5
-        Caustic: -1.5
+  - type: Treatment
     healingBeginSound:
       path: "/Audio/Items/Medical/ointment_begin.ogg"
     healingEndSound:
       path: "/Audio/Items/Medical/ointment_end.ogg"
+  - type: TreatSeverity
+    decrease: 5
+  - type: TreatHealth
+    modifierIncrease: 0.5
+    multiplierIncrease: 0.1
   - type: Stack
     stackType: Ointment
     count: 10
@@ -54,15 +52,16 @@
     - Brutepack
   - type: Sprite
     state: brutepack
-  - type: Healing
-    damageContainer: Biological
-    damage:
-      groups:
-        Brute: -15 # 5 for each type in the group
+  - type: Treatment
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
     healingEndSound:
       path: "/Audio/Items/Medical/brutepack_end.ogg"
+  - type: TreatSeverity
+    decrease: 5
+  - type: TreatHealth
+    modifierIncrease: 0.5
+    multiplierIncrease: 0.1
   - type: Stack
     stackType: Brutepack
     count: 10
@@ -80,16 +79,13 @@
     - Bloodpack
   - type: Sprite
     state: bloodpack
-  - type: Healing
-    damageContainer: Biological
-    damage:
-      types:
-        bloodloss: -0.5 #for whatever godforsaken reason I cannot touch blood level without healing one of these, so fuck it, bleed rate healing
-    ModifyBloodLevel: 10
+  - type: Treatment
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
     healingEndSound:
       path: "/Audio/Items/Medical/brutepack_end.ogg"
+  - type: BloodPack
+    amount: 10
   - type: Stack
     stackType: Bloodpack
     count: 10
@@ -110,17 +106,15 @@
   - type: Construction
     graph: Gauze
     node: gauze
-  - type: Healing
-    damageContainer: Biological
-    damage:
-      types:
-        Slash: -2.5
-        Piercing: -2.5
-    bloodlossModifier: -10
+  - type: Treatment
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
     healingEndSound:
       path: "/Audio/Items/Medical/brutepack_end.ogg"
+  - type: TreatBleed
+    decrease: 10
+  - type: TreatSeverity
+    decrease: 5
   - type: Stack
     stackType: Gauze
     count: 10

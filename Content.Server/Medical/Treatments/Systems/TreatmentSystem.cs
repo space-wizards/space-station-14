@@ -2,22 +2,24 @@
 using Content.Server.Medical.Bloodstream.Systems;
 using Content.Server.Medical.Treatments.Components;
 using Content.Shared.Body.Part;
+using Content.Shared.Medical.Components;
+using Content.Shared.Medical.Treatments;
 using Content.Shared.Medical.Wounds.Components;
 using Content.Shared.Medical.Wounds.Systems;
 
 namespace Content.Server.Medical.Treatments.Systems;
 
-public sealed partial class TreatmentSystem : EntitySystem
+public sealed partial class TreatmentSystem : SharedTreatmentSystem
 {
-    [Dependency] private BloodstreamSystem _bloodstream = default!;
-    [Dependency] private WoundSystem _wound = default!;
+    [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
+    [Dependency] private readonly WoundSystem _wound = default!;
 
     public override void Initialize()
     {
         SubscribeLocalEvent<TreatBleedComponent, WoundTreatedEvent>(OnBleedTreatment);
         SubscribeLocalEvent<TreatHealthComponent, WoundTreatedEvent>(OnHealTreatment);
-        SubscribeLocalEvent<TreatIntegrityComponent, WoundTreatedEvent>(OnIntegrityTreatment);
         SubscribeLocalEvent<TreatSeverityComponent, WoundTreatedEvent>(OnSeverityTreatment);
+        SubscribeLocalEvent<BloodPackComponent, WoundTreatedEvent>(OnBloodPackTreatment);
     }
 
     private void OnBleedTreatment(EntityUid uid, TreatBleedComponent component, ref WoundTreatedEvent args)
@@ -31,15 +33,24 @@ public sealed partial class TreatmentSystem : EntitySystem
 
     private void OnHealTreatment(EntityUid uid, TreatHealthComponent component, ref WoundTreatedEvent args)
     {
+        // TODO fully heals and scar
+        _wound.AddBaseHealingRate(args.WoundId, component.BaseIncrease, args.Wound);
+        _wound.AddHealingModifier(args.WoundId, component.ModifierIncrease, args.Wound);
+        _wound.AddHealingMultiplier(args.WoundId, component.MultiplierIncrease, args.Wound);
     }
-
-    private void OnIntegrityTreatment(EntityUid uid, TreatIntegrityComponent component, ref WoundTreatedEvent args)
-    {
-    }
-
 
     private void OnSeverityTreatment(EntityUid uid, TreatSeverityComponent component, ref WoundTreatedEvent args)
     {
+        // TODO multiplier
+        _wound.AddWoundSeverity(args.WoundableId, args.WoundId, -component.Decrease, args.Woundable, args.Wound);
+    }
+
+    private void OnBloodPackTreatment(EntityUid uid, BloodPackComponent component, ref WoundTreatedEvent args)
+    {
+        if (args.Part.Body == null)
+            return;
+
+        _bloodstream.TryModifyBloodLevel(args.Part.Body.Value, component.Amount);
     }
 
     public bool CanApplyTreatment(EntityUid woundEntity, string treatmentId, WoundComponent? wound = null)

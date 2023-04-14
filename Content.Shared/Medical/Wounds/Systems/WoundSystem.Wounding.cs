@@ -36,7 +36,7 @@ public sealed partial class WoundSystem
             RaiseLocalEvent(bodyPart.Body.Value, ref ev2, true);
         }
 
-        ApplyRawIntegrityDamage(woundableId, wound.IntegrityDamage, woundable);
+        DamageWoundableIntegrity(woundableId, wound.IntegrityDamage, woundable);
         Dirty(wound);
         return true;
     }
@@ -77,12 +77,15 @@ public sealed partial class WoundSystem
         WoundableComponent? woundable = null,
         WoundComponent? wound = null)
     {
-        if (!Resolve(woundableId, ref woundable, false))
+        if (!Resolve(woundableId, ref woundable, false) ||
+            !Resolve(woundId, ref wound, false))
+        {
             return false;
-        if (!Resolve(woundId, ref wound, false))
-            return false;
+        }
+
         UpdateWoundSeverity(woundableId, woundId, woundable, wound, wound.Severity + severityIncrease,
             CompOrNull<BodyPartComponent>(woundableId)?.Body);
+
         return true;
     }
 
@@ -90,12 +93,15 @@ public sealed partial class WoundSystem
         WoundableComponent? woundable = null,
         WoundComponent? wound = null)
     {
-        if (!Resolve(woundableId, ref woundable, false))
+        if (!Resolve(woundableId, ref woundable, false) ||
+            !Resolve(woundId, ref wound, false))
+        {
             return false;
-        if (!Resolve(woundId, ref wound, false))
-            return false;
+        }
+
         UpdateWoundSeverity(woundableId, woundId, woundable, wound, severityAmount,
             CompOrNull<BodyPartComponent>(woundableId)?.Body);
+
         return true;
     }
 
@@ -117,19 +123,23 @@ public sealed partial class WoundSystem
             return false;
         woundable.HealthCapDamage += woundDamage;
         if (woundable.HealthCapDamage < FixedPoint2.Zero)
-            ApplyRawIntegrityDamage(woundableId, -woundable.HealthCapDamage, woundable);
+            DamageWoundableIntegrity(woundableId, -woundable.HealthCapDamage, woundable);
         woundable.HealthCapDamage = FixedPoint2.Zero;
         return true;
     }
 
-    public bool ApplyRawIntegrityDamage(EntityUid woundableId, FixedPoint2 integrityDamage,
+    public bool DamageWoundableIntegrity(EntityUid woundableId, FixedPoint2 integrityDamage,
         WoundableComponent? woundable = null)
     {
         if (!Resolve(woundableId, ref woundable, false))
             return false;
+
         woundable.Integrity -= integrityDamage;
+        Dirty(woundableId);
+
         if (woundable.Integrity <= FixedPoint2.Zero)
             DestroyWoundable(woundableId);
+
         return true;
     }
 
@@ -227,14 +237,22 @@ public sealed partial class WoundSystem
         var severityDelta = newSeverity - wound.Severity;
         if (severityDelta == 0)
             return;
+
         var healthCapDamageDelta = severityDelta * wound.HealthCapDamage;
         woundable.HealthCapDamage += healthCapDamageDelta;
+        Dirty(woundableId);
+
         var oldSeverity = wound.Severity;
+
         wound.Severity = newSeverity;
+        Dirty(woundId);
+
         var ev = new WoundSeverityChangedEvent(woundableId, woundId, wound, oldSeverity);
         RaiseLocalEvent(woundableId, ref ev, true);
+
         if (!bodyId.HasValue)
             return;
+
         //propagate this event to bodyEntity if we are a bodyPart
         var ev2 = new WoundSeverityChangedEvent(woundableId, woundId, wound, oldSeverity);
         RaiseLocalEvent(bodyId.Value, ref ev2, true);

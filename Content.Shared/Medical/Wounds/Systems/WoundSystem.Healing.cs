@@ -49,17 +49,46 @@ public sealed partial class WoundSystem
     public void FullyHealWound(EntityUid woundableId, EntityUid woundId, WoundableComponent? woundable = null,
         WoundComponent? wound = null)
     {
-        if (!Resolve(woundableId, ref woundable, false) || !Resolve(woundId, ref wound, false))
+        if (!Resolve(woundableId, ref woundable, false) ||
+            !Resolve(woundId, ref wound, false))
+        {
             return;
+        }
+
         Logger.Log(LogLevel.Info, "Wound " + woundId + " Fully Healed!");
         RemoveWound(woundableId, woundId, true, woundable, wound);
+    }
+
+    public bool AddBaseHealingRate(EntityUid woundId, FixedPoint2 additionalHealing, WoundComponent? wound = null)
+    {
+        if (!Resolve(woundId, ref wound, false))
+            return false;
+
+        wound.BaseHealingRate += additionalHealing;
+        Dirty(woundId);
+
+        return true;
+    }
+
+    public bool SetBaseHealingRate(EntityUid woundId, FixedPoint2 newHealingModifier, WoundComponent? wound = null)
+    {
+        if (!Resolve(woundId, ref wound, false))
+            return false;
+
+        wound.BaseHealingRate = newHealingModifier;
+        Dirty(woundId);
+
+        return true;
     }
 
     public bool AddHealingModifier(EntityUid woundId, FixedPoint2 additionalHealing, WoundComponent? wound = null)
     {
         if (!Resolve(woundId, ref wound, false))
             return false;
+
         wound.HealingModifier += additionalHealing;
+        Dirty(woundId);
+
         return true;
     }
 
@@ -67,15 +96,21 @@ public sealed partial class WoundSystem
     {
         if (!Resolve(woundId, ref wound, false))
             return false;
+
         wound.HealingModifier = newHealingModifier;
+        Dirty(woundId);
+
         return true;
     }
 
-    public bool AddHealingMultipler(EntityUid woundId, FixedPoint2 multiplier, WoundComponent? wound = null)
+    public bool AddHealingMultiplier(EntityUid woundId, FixedPoint2 multiplier, WoundComponent? wound = null)
     {
         if (!Resolve(woundId, ref wound, false))
             return false;
+
         wound.HealingMultiplier += multiplier;
+        Dirty(woundId);
+
         return true;
     }
 
@@ -83,7 +118,11 @@ public sealed partial class WoundSystem
     {
         if (!Resolve(woundId, ref wound, false))
             return false;
+
         wound.HealingMultiplier = multiplier;
+
+        Dirty(woundId);
+
         return true;
     }
 
@@ -93,6 +132,7 @@ public sealed partial class WoundSystem
     {
         if (!Resolve(woundableId, ref woundable) || !Resolve(woundId, ref wound))
             return false;
+
         return SetWoundCauterize(woundableId, woundId, woundable, wound, true);
     }
 
@@ -102,6 +142,7 @@ public sealed partial class WoundSystem
     {
         if (!Resolve(woundableId, ref woundable) || !Resolve(woundId, ref wound))
             return false;
+
         return SetWoundCauterize(woundableId, woundId, woundable, wound, false);
     }
 
@@ -133,13 +174,17 @@ public sealed partial class WoundSystem
     {
         if (wound.CanBleed == canBleed)
             return false;
+
         var oldState = wound.CanBleed;
         wound.CanBleed = canBleed;
+
         var ev = new WoundCauterizedEvent(woundableId, woundId, woundable, wound, oldState);
         RaiseLocalEvent(woundableId, ref ev, true);
+
         var bodyId = CompOrNull<BodyPartComponent>(woundableId)?.Body;
         if (!bodyId.HasValue)
             return true;
+
         //propagate this event to bodyEntity if we are a bodyPart
         var ev2 = new WoundCauterizedEvent(woundableId, woundId, woundable, wound, oldState);
         RaiseLocalEvent(bodyId.Value, ref ev2, true);

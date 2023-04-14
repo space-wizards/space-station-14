@@ -1,5 +1,5 @@
-﻿using Content.Server.Medical.Treatments.Prototypes;
-using Content.Server.Medical.Treatments.Systems;
+﻿using Content.Server.Medical.Treatments.Systems;
+using Content.Shared.Medical.Treatments.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;

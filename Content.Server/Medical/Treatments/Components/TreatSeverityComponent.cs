@@ -11,7 +11,4 @@ public sealed partial class TreatSeverityComponent : Component
 {
     [DataField("decrease"), AutoNetworkedField]
     public FixedPoint2 Decrease;
-
-    [DataField("multiplier"), AutoNetworkedField]
-    public FixedPoint2 Multiplier;
 }
