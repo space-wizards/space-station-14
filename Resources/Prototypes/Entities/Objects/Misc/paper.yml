@@ -225,6 +225,35 @@
     state: pen_cap
 
 - type: entity
+  name: Centcom pen
+  parent: BaseItem
+  id: PenCentcom
+  description: In an attempt to keep up with the "power" of the cybersun bureaucracy, NT made a replica of cyber pen, in their corporate style.
+  components:
+  - type: Tag
+    tags:
+    - Write
+    - Pickaxe
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: pen_centcom
+    netsync: false
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 15
+  - type: Tool
+    qualities:
+      - Screwing
+    useSound:
+      collection: Screwdriver
+  - type: Item
+    sprite: Objects/Misc/bureaucracy.rsi
+    heldPrefix: pen_centcom
+    size: 2
+
+- type: entity
   name: hop's fountain pen
   parent: Pen
   id: PenHop
