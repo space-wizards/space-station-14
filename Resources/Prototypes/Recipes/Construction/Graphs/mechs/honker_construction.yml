@@ -90,7 +90,7 @@
           sprite: "Clothing/Mask/clown.rsi"
           state: "icon"
         name: "a clown's mask"
-        doafter: 1
+        doAfter: 1
         completed:
         - !type:VisualizerDataInt
           key: "enum.MechAssemblyVisuals.State"
@@ -101,7 +101,7 @@
           sprite: "Clothing/Shoes/Specific/clown.rsi"
           state: "icon"
         name: "a clown's shoes"
-        doafter: 1
+        doAfter: 1
         completed:
         - !type:VisualizerDataInt
           key: "enum.MechAssemblyVisuals.State"
