@@ -172,6 +172,7 @@
     - type: Construction
       graph: GasUnary
       node: ventscrubber
+    - type: VentScrubberSpawnLocation
     - type: AmbientSound
       enabled: false
       volume: -12

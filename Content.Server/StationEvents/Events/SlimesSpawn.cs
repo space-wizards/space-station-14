@@ -7,7 +7,7 @@ namespace Content.Server.StationEvents.Events;
 
 public sealed class SlimesSpawn : StationEventSystem
 {
-    public static List<string> SpawnedPrototypeChoices = new List<string>()
+    public static string[] SpawnedPrototypeChoices =
         {"MobAdultSlimesBlueAngry", "MobAdultSlimesGreenAngry", "MobAdultSlimesYellowAngry"};
 
     public override string Prototype => "SlimesSpawn";
@@ -15,22 +15,21 @@ public sealed class SlimesSpawn : StationEventSystem
     public override void Started()
     {
         base.Started();
-        var spawnChoice = RobustRandom.Pick(SpawnedPrototypeChoices);
-        var spawnLocations = EntityManager.EntityQuery<VentCritterSpawnLocationComponent>().ToList();
+        var spawnLocations = EntityManager.EntityQuery<VentScrubberSpawnLocationComponent, TransformComponent>().ToList();
         RobustRandom.Shuffle(spawnLocations);
 
         var mod = Math.Sqrt(GetSeverityModifier());
 
-        var spawnAmount = (int) (RobustRandom.Next(4, 8) * mod);
-        Sawmill.Info($"Spawning {spawnAmount} of {spawnChoice}");
-        foreach (var location in spawnLocations)
+        var spawnAmount = (int) (RobustRandom.Next(6, 10) * mod);
+        for (int i = 0; i < spawnAmount && i < spawnLocations.Count - 1; i++)
         {
             if (spawnAmount-- == 0)
                 break;
+            var spawnChoice = RobustRandom.Pick(SpawnedPrototypeChoices.ToList());
+            Sawmill.Info($"Spawning {spawnAmount} of {spawnChoice}");
+            var coords = spawnLocations[i].Item2.Coordinates;
 
-            var transform = Transform(location.Owner);
-
-            Spawn(spawnChoice, transform.Coordinates);
+            Spawn(spawnChoice, coords);
         }
     }
 }

@@ -27,16 +27,10 @@
       layer:
       - MobLayer
   - type: MovementAlwaysTouching
-  - type: MobState
-    allowedStates:
-      - Alive
-      - Dead
   - type: MobThresholds
     thresholds:
       0: Alive
       150: Dead
-  - type: Stamina
-    excess: 150
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
     baseSprintSpeed: 4
