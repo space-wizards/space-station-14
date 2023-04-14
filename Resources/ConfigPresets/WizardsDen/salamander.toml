@@ -13,5 +13,8 @@ enabled = true
 reason = "whitelist-not-whitelisted-rp"
 min_players = 5
 
+[ooc]
+enable_during_round = true
+
 [ic]
 flavor_text = true
