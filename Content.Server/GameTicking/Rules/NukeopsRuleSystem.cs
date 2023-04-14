@@ -524,7 +524,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                         nukeOp = _random.PickAndTake(medPrefList);
                         everyone.Remove(nukeOp);
                         prefList.Remove(nukeOp);
-                        Logger.InfoS("preset", "Insufficient preferred nukeop commanders, picking an agent")
+                        Logger.InfoS("preset", "Insufficient preferred nukeop commanders, picking an agent");
                     }
 
                 }
@@ -563,7 +563,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                     nukeOp = _random.PickAndTake(medPrefList);
                     everyone.Remove(nukeOp);
                     prefList.Remove(nukeOp);
-                    Logger.InfoS("preset", "Selected a preferred nukeop agent.")
+                    Logger.InfoS("preset", "Selected a preferred nukeop agent.");
                 }
             }
             else
