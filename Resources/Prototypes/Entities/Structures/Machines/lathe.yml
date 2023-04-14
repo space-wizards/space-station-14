@@ -8,6 +8,7 @@
     sprite: Structures/Machines/autolathe.rsi
     snapCardinals: true
     netsync: false
+    noRot: false
     layers:
     - state: icon
       map: ["enum.LatheVisualLayers.IsRunning"]
