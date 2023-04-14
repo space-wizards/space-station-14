@@ -39,7 +39,7 @@ public sealed class NukeopsRuleConfiguration : GameRuleConfiguration
     public string CommanderRolePrototype = "NukeopsCommander";
 
     [DataField("medicRoleProto", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
-    public string medicRoleProto = "NukeopsMedic";
+    public string MedicRoleProto = "NukeopsMedic";
 
     [DataField("operativeRoleProto", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
     public string OperativeRoleProto = "Nukeops";
