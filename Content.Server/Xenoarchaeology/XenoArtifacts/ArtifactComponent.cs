@@ -56,26 +56,26 @@ public sealed class ArtifactComponent : Component
     /// A multiplier applied to the calculated point value
     /// to determine the monetary value of the artifact
     /// </summary>
-    [DataField("priceMultiplier")]
-    public float PriceMultiplier = 0.2f;
+    [DataField("priceMultiplier"), ViewVariables(VVAccess.ReadWrite)]
+    public float PriceMultiplier = 0.05f;
 
     /// <summary>
     /// The base amount of research points for each artifact node.
     /// </summary>
-    [DataField("pointsPerNode")]
+    [DataField("pointsPerNode"), ViewVariables(VVAccess.ReadWrite)]
     public int PointsPerNode = 5000;
 
     /// <summary>
     /// Research points which have been "consumed" from the theoretical max value of the artifact.
     /// </summary>
-    [DataField("consumedPoints")]
+    [DataField("consumedPoints"), ViewVariables(VVAccess.ReadWrite)]
     public int ConsumedPoints;
 
     /// <summary>
     /// A multiplier that is raised to the power of the average depth of a node.
     /// Used for calculating the research point value of an artifact node.
     /// </summary>
-    [DataField("pointDangerMultiplier")]
+    [DataField("pointDangerMultiplier"), ViewVariables(VVAccess.ReadWrite)]
     public float PointDangerMultiplier = 1.35f;
 }
 
