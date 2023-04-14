@@ -1,9 +1,4 @@
 Entries:
-- author: gus
-  changes:
-  - {message: Torches and flares are now flammable., type: Add}
-  id: 2909
-  time: '2023-01-18T08:45:55.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix rotation visualizers not lerping properly (bed buckling and knockdown).,
@@ -2899,3 +2894,8 @@ Entries:
       from sending messages., type: Add}
   id: 3408
   time: '2023-04-14T19:50:19.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed typo in uplink for the syndicate stamp., type: Fix}
+  id: 3409
+  time: '2023-04-14T19:53:36.0000000+00:00'
