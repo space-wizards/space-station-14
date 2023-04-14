@@ -1,9 +1,4 @@
 Entries:
-- author: checkraze
-  changes:
-  - {message: Added the Wizard ship, type: Add}
-  id: 2908
-  time: '2023-01-18T08:09:50.0000000+00:00'
 - author: gus
   changes:
   - {message: Torches and flares are now flammable., type: Add}
@@ -2898,3 +2893,9 @@ Entries:
     type: Tweak}
   id: 3407
   time: '2023-04-14T19:48:11.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: added Radio Jammer to uplink (5 TC). When active blocks radios in range
+      from sending messages., type: Add}
+  id: 3408
+  time: '2023-04-14T19:50:19.0000000+00:00'
