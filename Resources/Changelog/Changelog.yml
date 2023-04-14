@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'Fixed verb menu sometimes not appearing. when using the context menu,',
-    type: Fix}
-  id: 2907
-  time: '2023-01-18T06:15:53.0000000+00:00'
 - author: checkraze
   changes:
   - {message: Added the Wizard ship, type: Add}
@@ -2898,3 +2892,9 @@ Entries:
   - {message: Fixed grey mice changing colors on death., type: Fix}
   id: 3406
   time: '2023-04-14T19:43:50.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Nanotrasen has improved the blood pack formula. (now restores 15u blood),
+    type: Tweak}
+  id: 3407
+  time: '2023-04-14T19:48:11.0000000+00:00'
