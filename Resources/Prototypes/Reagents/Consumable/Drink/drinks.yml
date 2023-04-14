@@ -393,3 +393,15 @@
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/kvass.rsi
     state: icon
+
+- type: reagent
+  id: DavidMartinez
+  name: reagent-name-david-martinez
+  parent: BaseDrink
+  desc: reagent-desc-david-martinez
+  physicalDesc: reagent-physical-desc-vibrant
+  flavor: davidmartinez
+  color: "#75b1f0"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/david_martinez.rsi
+    state: icon
