@@ -49,7 +49,7 @@ namespace Content.Client.Hands
         }
 
         private Texture GetTextureFromRsi(string _spriteName)
-        {   
+        {
             var sprite = new SpriteSpecifier.Rsi(
                 new ResourcePath("/Textures/Interface/Misc/pointer_sights.rsi"), _spriteName);
             return _entMan.EntitySysManager.GetEntitySystem<SpriteSystem>().Frame0(sprite);
@@ -110,7 +110,7 @@ namespace Content.Client.Hands
             }, Color.Transparent);
 
             screen.DrawTexture(_renderBackbuffer.Texture,
-                mousePos - halfBufferSize, Color.White.WithAlpha(0.8f));
+                mousePos - halfBufferSize, Color.White.WithAlpha(0.9f));
         }
 
         private bool IsIfDrawIconOverride(DrawingHandleScreen screen, Vector2 mousePos)
@@ -139,16 +139,26 @@ namespace Content.Client.Hands
         {
             if (_gunSight == null)
                 return;
-
-            screen.DrawTexture(_gunSight, centerPos);
+            screen.DrawTextureRect(_gunSight,
+                GetSizesForSights(_gunSight.Size, centerPos, scale), Color.DarkRed);
         }
 
         private void DrawMeLeeSight(DrawingHandleScreen screen, Vector2 centerPos, float scale)
         {
             if (_meleeSight == null)
                 return;
+            screen.DrawTextureRect(_meleeSight,
+                GetSizesForSights(_meleeSight.Size, centerPos, scale), Color.DarkBlue);
+        }
 
-            screen.DrawTexture(_meleeSight, centerPos);
+        private static UIBox2 GetSizesForSights(Vector2i size, Vector2 centerPosBox, float scale, int bitSize = 0)
+        {
+            Vector2 sightSize = size * scale;
+            sightSize = sightSize + bitSize;
+            Vector2 halfSightSize = sightSize / 2;
+
+            Vector2 beginPosSight = centerPosBox - halfSightSize;
+            return UIBox2.FromDimensions(beginPosSight, sightSize);
         }
     }
 }
