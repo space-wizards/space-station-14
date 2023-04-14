@@ -1,0 +1,142 @@
+- type: entity
+  name: mafia card box
+  parent: SmallboxItem
+  id: MafiaCardBox
+  description: A box with cards for playing mafia in the amount of 10 players.
+  components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/matchbox_drop.ogg
+  - type: Sprite
+    netsync: false
+    sprite: Objects\Fun\Tabletop\mafia\mafiacardsbox.rsi
+    state: cardbox
+  - type: Item
+    sprite: Objects\Fun\Tabletop\mafia\mafiacardsbox.rsi
+    size: 10
+  - type: StorageFill
+    contents:
+      - id: CardAgent
+        amount: 2
+      - id: CardDetective
+        amount: 1
+      - id: CardMedic
+        amount: 1
+      - id: CardPassenger
+        amount: 6
+
+- type: entity
+  name: card
+  suffix: Agent
+  parent: BaseItem
+  id: CardAgent
+  description: Turn over the card to find out your role.
+  components:
+  - type: Sprite
+    sprite: Objects\Fun\Tabletop\mafia\mafiacards.rsi
+    drawdepth: SmallObjects
+    layers:
+    - state: cardunknown
+      map: ["enum.StorageVisualLayers.Door"]
+    netsync: false
+  - type: Item
+    sprite: Objects\Fun\Tabletop\mafia\mafiacards.rsi
+    size: 1
+  - type: Storage
+    capacity: -1
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state_open: cardagent
+      state_closed: cardunknown
+
+- type: entity
+  name: card
+  suffix: Detective
+  parent: BaseItem
+  id: CardDetective
+  description: Turn over the card to find out your role.
+  components:
+  - type: Sprite
+    sprite: Objects\Fun\Tabletop\mafia\mafiacards.rsi
+    drawdepth: SmallObjects
+    layers:
+    - state: cardunknown
+      map: ["enum.StorageVisualLayers.Door"]
+    netsync: false
+  - type: Item
+    sprite: Objects\Fun\Tabletop\mafia\mafiacards.rsi
+    size: 1
+  - type: Storage
+    capacity: -1
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state_open: carddetective
+      state_closed: cardunknown
+
+- type: entity
+  name: card
+  suffix: Passenger
+  parent: BaseItem
+  id: CardPassenger
+  description: Turn over the card to find out your role.
+  components:
+  - type: Sprite
+    sprite: Objects\Fun\Tabletop\mafia\mafiacards.rsi
+    drawdepth: SmallObjects
+    layers:
+    - state: cardunknown
+      map: ["enum.StorageVisualLayers.Door"]
+    netsync: false
+  - type: Item
+    sprite: Objects\Fun\Tabletop\mafia\mafiacards.rsi
+    size: 1
+  - type: Storage
+    capacity: -1
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state_open: cardpassenger
+      state_closed: cardunknown
+
+- type: entity
+  name: card
+  suffix: Medic
+  parent: BaseItem
+  id: CardMedic
+  description: Turn over the card to find out your role.
+  components:
+  - type: Sprite
+    sprite: Objects\Fun\Tabletop\mafia\mafiacards.rsi
+    drawdepth: SmallObjects
+    layers:
+    - state: cardunknown
+      map: ["enum.StorageVisualLayers.Door"]
+    netsync: false
+  - type: Item
+    sprite: Objects\Fun\Tabletop\mafia\mafiacards.rsi
+    size: 1
+  - type: Storage
+    capacity: -1
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state_open: cardmedic
+      state_closed: cardunknown
