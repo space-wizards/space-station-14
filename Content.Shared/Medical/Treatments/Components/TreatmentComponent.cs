@@ -1,41 +1,28 @@
 ﻿using Content.Shared.Medical.Treatments.Prototypes;
+using Content.Shared.Medical.Treatments.Systems;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Medical.Treatments.Components;
 
-[NetworkedComponent, RegisterComponent]
+[RegisterComponent, NetworkedComponent]
+[Access(typeof(TreatmentSystem))]
+[AutoGenerateComponentState]
 public sealed class TreatmentComponent : Component
 {
     [DataField("treatmentType", required: true,
-        customTypeSerializer: typeof(PrototypeIdSerializer<TreatmentTypePrototype>))]
+         customTypeSerializer: typeof(PrototypeIdSerializer<TreatmentTypePrototype>)), AutoNetworkedField]
     public string TreatmentType = "";
 
-    [DataField("limitedUses")] public bool LimitedUses = true;
+    [DataField("limitedUses"), AutoNetworkedField]
+    public bool LimitedUses = true;
 
-    [DataField("uses")] public int Uses = 1;
+    [DataField("uses"), AutoNetworkedField]
+    public int Uses = 1;
 
-    [DataField("selfUsable")] public bool SelfUsable = true;
+    [DataField("selfUsable"), AutoNetworkedField]
+    public bool SelfUsable = true;
 
-    [DataField("targetUsable")] public bool TargetUsable = true;
-}
-
-[Serializable, NetSerializable]
-public sealed class TreatmentComponentState : ComponentState
-{
-    public string TreatmentType;
-    public bool LimitedUses;
-    public int Uses;
-    public bool SelfUsable;
-    public bool TargetUsable;
-
-    public TreatmentComponentState(string treatmentType, bool limitedUses, int uses, bool selfUsable, bool targetUsable)
-    {
-        TreatmentType = treatmentType;
-        LimitedUses = limitedUses;
-        Uses = uses;
-        SelfUsable = selfUsable;
-        TargetUsable = targetUsable;
-    }
+    [DataField("targetUsable"), AutoNetworkedField]
+    public bool TargetUsable = true;
 }
