@@ -1,6 +1,8 @@
 namespace Content.Server.ParticleAccelerator.Components
 {
-    public abstract class ParticleAcceleratorPartComponent : Component
+    [RegisterComponent]
+    [Virtual]
+    public class ParticleAcceleratorPartComponent : Component
     {
         [ViewVariables] public ParticleAcceleratorControlBoxComponent? Master;
 
@@ -29,7 +31,7 @@ namespace Content.Server.ParticleAccelerator.Components
             Master?.RescanParts();
         }
 
-        public virtual void Moved()
+        public void Moved()
         {
             RescanIfPossible();
         }

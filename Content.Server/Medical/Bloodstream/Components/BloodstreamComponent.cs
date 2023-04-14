@@ -72,7 +72,7 @@ namespace Content.Server.Medical.Bloodstream.Components
         ///     How much reagent of blood should be restored each update interval?
         /// </summary>
         [DataField("bloodRefreshAmount")]
-        public FixedPoint2 BloodRefreshAmount = 0.1f;
+        public FixedPoint2 BloodRefreshAmount = 1.0f;
 
         /// <summary>
         ///     How much blood needs to be in the temporary solution in order to create a puddle?

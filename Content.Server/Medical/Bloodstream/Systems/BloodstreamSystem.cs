@@ -3,6 +3,7 @@ using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Chemistry.ReactionEffects;
 using Content.Server.Fluids.EntitySystems;
+using Content.Server.Forensics;
 using Content.Server.HealthExaminable;
 using Content.Server.Medical.Bloodstream.Components;
 using Content.Server.Popups;
@@ -26,15 +27,15 @@ namespace Content.Server.Medical.Bloodstream.Systems;
 
 public sealed class BloodstreamSystem : EntitySystem
 {
-    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly SpillableSystem _spillableSystem = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
+    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly PuddleSystem _puddleSystem = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly SharedDrunkSystem _drunkSystem = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
     public override void Initialize()
     {
@@ -329,7 +330,15 @@ public sealed class BloodstreamSystem : EntitySystem
             // Pass some of the chemstream into the spilled blood.
             var temp = component.ChemicalSolution.SplitSolution(component.BloodTemporarySolution.Volume / 10);
             component.BloodTemporarySolution.AddSolution(temp, _prototypeManager);
-            _spillableSystem.SpillAt(uid, component.BloodTemporarySolution, "PuddleBlood", false);
+            if (_puddleSystem.TrySpillAt(uid, component.BloodTemporarySolution, out var puddleUid, false))
+            {
+                if (TryComp<DnaComponent>(uid, out var dna))
+                {
+                    var comp = EnsureComp<ForensicsComponent>(puddleUid);
+                    comp.DNAs.Add(dna.DNA);
+                }
+            }
+
             component.BloodTemporarySolution.RemoveAllSolution();
         }
 
@@ -368,6 +377,14 @@ public sealed class BloodstreamSystem : EntitySystem
         component.BloodTemporarySolution.RemoveAllSolution();
         tempSol.AddSolution(component.ChemicalSolution, _prototypeManager);
         component.ChemicalSolution.RemoveAllSolution();
-        _spillableSystem.SpillAt(uid, tempSol, "PuddleBlood", true);
+
+        if (_puddleSystem.TrySpillAt(uid, tempSol, out var puddleUid))
+        {
+            if (TryComp<DnaComponent>(uid, out var dna))
+            {
+                var comp = EnsureComp<ForensicsComponent>(puddleUid);
+                comp.DNAs.Add(dna.DNA);
+            }
+        }
     }
 }

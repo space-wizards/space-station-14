@@ -13,7 +13,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
         var time = GameTiming.CurTime;
         var xformQuery = GetEntityQuery<TransformComponent>();
-        var handsQuery = GetEntityQuery<SharedHandsComponent>();
+        var handsQuery = GetEntityQuery<HandsComponent>();
 
         var enumerator = EntityQueryEnumerator<ActiveDoAfterComponent, DoAfterComponent>();
         while (enumerator.MoveNext(out var uid, out var active, out var comp))
@@ -28,7 +28,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         DoAfterComponent comp,
         TimeSpan time,
         EntityQuery<TransformComponent> xformQuery,
-        EntityQuery<SharedHandsComponent> handsQuery)
+        EntityQuery<HandsComponent> handsQuery)
     {
         var dirty = false;
 
@@ -87,7 +87,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             // I feel like this is somewhat cursed, but its the only way I can think of without having to just send
             // redundant data over the network and increasing DoAfter boilerplate.
             var evType = typeof(DoAfterAttemptEvent<>).MakeGenericType(args.Event.GetType());
-            doAfter.AttemptEvent = _factory.CreateInstance(evType, new object[] { doAfter, args.Event });
+            doAfter.AttemptEvent = _factory.CreateInstance(evType, new object[] { doAfter, args.Event }, inject: false);
         }
 
         if (args.EventTarget != null)
@@ -122,7 +122,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
     private bool ShouldCancel(DoAfter doAfter,
         EntityQuery<TransformComponent> xformQuery,
-        EntityQuery<SharedHandsComponent> handsQuery)
+        EntityQuery<HandsComponent> handsQuery)
     {
         var args = doAfter.Args;
 

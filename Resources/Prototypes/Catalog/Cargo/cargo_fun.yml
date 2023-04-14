@@ -127,3 +127,13 @@
   cost: 1000
   category: Fun
   group: market
+
+- type: cargoProduct
+  id: FunPirate
+  icon:
+    sprite: Structures/Storage/Crates/piratechest.rsi
+    state: crate_icon
+  product: CrateFunPirate
+  cost: 400
+  category: Fun
+  group: market
