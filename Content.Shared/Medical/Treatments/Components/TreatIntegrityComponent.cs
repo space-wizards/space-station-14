@@ -14,6 +14,6 @@ public sealed partial class TreatIntegrityComponent : Component
     public bool FullyRestores;
 
     //restore a fixed amount of integrity points to the part
-    [DataField("restoreAmount", required: true), AutoNetworkedField]
+    [DataField("restoreAmount"), AutoNetworkedField]
     public FixedPoint2 RestoreAmount;
 }

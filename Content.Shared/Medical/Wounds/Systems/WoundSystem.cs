@@ -7,7 +7,6 @@ using Content.Shared.Medical.Wounds.Components;
 using Content.Shared.Medical.Wounds.Prototypes;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -32,12 +31,7 @@ public sealed partial class WoundSystem : EntitySystem
         CacheWoundData();
         _prototypeManager.PrototypesReloaded += _ => CacheWoundData();
 
-        SubscribeLocalEvent<WoundableComponent, ComponentGetState>(OnWoundableGetState);
-        SubscribeLocalEvent<WoundableComponent, ComponentHandleState>(OnWoundableHandleState);
         SubscribeLocalEvent<WoundableComponent, ComponentInit>(OnWoundableInit);
-
-        SubscribeLocalEvent<WoundComponent, ComponentGetState>(OnWoundGetState);
-        SubscribeLocalEvent<WoundComponent, ComponentHandleState>(OnWoundHandleState);
 
         SubscribeLocalEvent<BodyComponent, DamageChangedEvent>(OnBodyDamaged);
         SubscribeLocalEvent<BodyComponent, RejuvenateEvent>(OnBodyRejuvenate);
@@ -55,74 +49,6 @@ public sealed partial class WoundSystem : EntitySystem
     {
         HealAllWounds(uid, component);
         //TODO: reset bodypart health/structure values
-    }
-
-    private void OnWoundableGetState(EntityUid uid, WoundableComponent woundable, ref ComponentGetState args)
-    {
-        args.State = new WoundableComponentState(
-            woundable.AllowedTraumaTypes,
-            woundable.TraumaResistance,
-            woundable.TraumaPenResistance,
-            woundable.Health,
-            woundable.HealthCap,
-            woundable.HealthCapDamage,
-            woundable.BaseHealingRate,
-            woundable.HealingModifier,
-            woundable.HealingMultiplier,
-            woundable.Integrity,
-            woundable.MaxIntegrity,
-            woundable.DestroyWoundId
-        );
-    }
-
-    private void OnWoundableHandleState(EntityUid uid, WoundableComponent woundable, ref ComponentHandleState args)
-    {
-        if (args.Current is not WoundableComponentState state)
-            return;
-
-        woundable.AllowedTraumaTypes = state.AllowedTraumaTypes;
-        woundable.TraumaResistance = state.TraumaResistance;
-        woundable.TraumaPenResistance = state.TraumaPenResistance;
-        woundable.Health = state.Health;
-        woundable.HealthCap = state.HealthCap;
-        woundable.HealthCapDamage = state.HealthCapDamage;
-        woundable.BaseHealingRate = state.BaseHealingRate;
-        woundable.HealingModifier = state.HealingModifier;
-        woundable.HealingMultiplier = state.HealingMultiplier;
-        woundable.Integrity = state.Integrity;
-        woundable.MaxIntegrity = state.MaxIntegrity;
-        woundable.DestroyWoundId = state.DestroyWoundId;
-    }
-
-    private void OnWoundGetState(EntityUid uid, WoundComponent wound, ref ComponentGetState args)
-    {
-        args.State = new WoundComponentState(
-            wound.ScarWound,
-            wound.HealthCapDamage,
-            wound.IntegrityDamage,
-            wound.Severity,
-            wound.BaseHealingRate,
-            wound.HealingModifier,
-            wound.HealingMultiplier,
-            wound.CanBleed,
-            wound.ValidTreatments
-        );
-    }
-
-    private void OnWoundHandleState(EntityUid uid, WoundComponent wound, ref ComponentHandleState args)
-    {
-        if (args.Current is not WoundComponentState state)
-            return;
-
-        wound.ScarWound = state.ScarWound;
-        wound.HealthCapDamage = state.HealthCapDamage;
-        wound.IntegrityDamage = state.IntegrityDamage;
-        wound.Severity = state.Severity;
-        wound.BaseHealingRate = state.BaseHealingRate;
-        wound.HealingModifier = state.HealingModifier;
-        wound.HealingMultiplier = state.HealingMultiplier;
-        wound.CanBleed = state.CanBleed;
-        wound.ValidTreatments = state.ValidTreatments;
     }
 
     private void CacheWoundData()

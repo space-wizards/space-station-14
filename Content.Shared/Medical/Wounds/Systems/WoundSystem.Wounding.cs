@@ -102,7 +102,7 @@ public sealed partial class WoundSystem
     public bool ApplyTraumaToPart(EntityUid target, string traumaType, FixedPoint2 damage)
     {
         // TODO wounds before merge turn into tryget
-        if (GetValidWoundable(target, traumaType) is not {Target: var woundableId, Woundable: var woundable})
+        if (GetValidWoundable(target, traumaType) is not { Target: var woundableId, Woundable: var woundable })
             return false;
 
         var modifiedDamage = ApplyTraumaModifiers(traumaType, woundable.TraumaResistance, damage);

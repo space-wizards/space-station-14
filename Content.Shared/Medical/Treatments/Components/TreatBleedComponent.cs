@@ -9,9 +9,9 @@ namespace Content.Shared.Medical.Treatments.Components;
 [AutoGenerateComponentState]
 public sealed partial class TreatBleedComponent : Component
 {
-    [DataField("fullyStopsBleed", required: true), AutoNetworkedField]
+    [DataField("fullyStopsBleed"), AutoNetworkedField]
     public bool FullyStopsBleed;
 
-    [DataField("bleedDecrease"), AutoNetworkedField]
-    public FixedPoint2 BleedDecrease = 0;
+    [DataField("decrease"), AutoNetworkedField]
+    public FixedPoint2 Decrease = 0;
 }
