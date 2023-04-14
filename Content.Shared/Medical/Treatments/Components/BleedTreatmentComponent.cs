@@ -12,6 +12,7 @@ public sealed class BleedTreatmentComponent : Component
 
     [DataField("bleedDecrease")] public FixedPoint2 BleedDecrease = 0;
 }
+
 [Serializable, NetSerializable]
 public sealed class BleedTreatmentComponentState : ComponentState
 {

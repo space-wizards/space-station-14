@@ -8,7 +8,6 @@ namespace Content.Shared.Medical.Treatments.Systems;
 
 public sealed partial class TreatmentSystem : EntitySystem
 {
-
     [Dependency] private WoundSystem _woundSystem = default!;
 
     public override void Initialize()
@@ -25,20 +24,23 @@ public sealed partial class TreatmentSystem : EntitySystem
         SubscribeLocalEvent<SeverityTreatmentComponent, ComponentHandleState>(OnSeverityTreatmentHandleState);
         TreatmentListeners();
     }
+
     #region boilerplate
 
-    private void OnSeverityTreatmentGetState(EntityUid uid, SeverityTreatmentComponent treatment, ref ComponentGetState args)
+    private void OnSeverityTreatmentGetState(EntityUid uid, SeverityTreatmentComponent treatment,
+        ref ComponentGetState args)
     {
         args.State = new SeverityTreatmentComponentState(
             treatment.IsModifier, treatment.SeverityChange);
-
     }
-    private void OnIntegrityTreatmentGetState(EntityUid uid, IntegrityTreatmentComponent treatment, ref ComponentGetState args)
+
+    private void OnIntegrityTreatmentGetState(EntityUid uid, IntegrityTreatmentComponent treatment,
+        ref ComponentGetState args)
     {
         args.State = new IntegrityTreatmentComponentState(
             treatment.FullyRestores,
             treatment.RestoreAmount
-            );
+        );
     }
 
     private void OnHealTreatmentGetState(EntityUid uid, HealTreatmentComponent treatment, ref ComponentGetState args)
@@ -49,7 +51,7 @@ public sealed partial class TreatmentSystem : EntitySystem
             treatment.BaseHealingChange,
             treatment.HealingModifier,
             treatment.HealingMultiplier
-            );
+        );
     }
 
     private void OnBleedTreatmentGetState(EntityUid uid, BleedTreatmentComponent treatment, ref ComponentGetState args)
@@ -71,7 +73,8 @@ public sealed partial class TreatmentSystem : EntitySystem
         );
     }
 
-    private void OnSeverityTreatmentHandleState(EntityUid uid, SeverityTreatmentComponent treatment, ref ComponentHandleState args)
+    private void OnSeverityTreatmentHandleState(EntityUid uid, SeverityTreatmentComponent treatment,
+        ref ComponentHandleState args)
     {
         if (args.Current is not SeverityTreatmentComponentState state)
             return;
@@ -79,7 +82,8 @@ public sealed partial class TreatmentSystem : EntitySystem
         treatment.SeverityChange = state.SeverityChange;
     }
 
-    private void OnIntegrityTreatmentHandleState(EntityUid uid, IntegrityTreatmentComponent treatment, ref ComponentHandleState args)
+    private void OnIntegrityTreatmentHandleState(EntityUid uid, IntegrityTreatmentComponent treatment,
+        ref ComponentHandleState args)
     {
         if (args.Current is not IntegrityTreatmentComponentState state)
             return;
@@ -87,7 +91,8 @@ public sealed partial class TreatmentSystem : EntitySystem
         treatment.RestoreAmount = state.RestoreAmount;
     }
 
-    private void OnBleedTreatmentHandleState(EntityUid uid, BleedTreatmentComponent treatment, ref ComponentHandleState args)
+    private void OnBleedTreatmentHandleState(EntityUid uid, BleedTreatmentComponent treatment,
+        ref ComponentHandleState args)
     {
         if (args.Current is not BleedTreatmentComponentState state)
             return;
@@ -95,7 +100,8 @@ public sealed partial class TreatmentSystem : EntitySystem
         treatment.FullyStopsBleed = state.FullyStopsBleed;
     }
 
-    private void OnHealTreatmentHandleState(EntityUid uid, HealTreatmentComponent treatment, ref ComponentHandleState args)
+    private void OnHealTreatmentHandleState(EntityUid uid, HealTreatmentComponent treatment,
+        ref ComponentHandleState args)
     {
         if (args.Current is not HealTreatmentComponentState state)
             return;
@@ -119,15 +125,17 @@ public sealed partial class TreatmentSystem : EntitySystem
 
     #endregion
 
-    public bool CanApplyTreatment(EntityUid woundEntity,  string treatmentId, WoundComponent? wound = null)
+    public bool CanApplyTreatment(EntityUid woundEntity, string treatmentId, WoundComponent? wound = null)
     {
         return Resolve(woundEntity, ref wound) && wound.ValidTreatments.Contains(treatmentId);
     }
 
-    public bool TreatWound(EntityUid woundableEntity, EntityUid woundId, EntityUid treatmentEntity, WoundComponent? wound = null,
+    public bool TreatWound(EntityUid woundableEntity, EntityUid woundId, EntityUid treatmentEntity,
+        WoundComponent? wound = null,
         WoundableComponent? woundable = null, TreatmentComponent? treatment = null)
     {
-        if (!Resolve(woundableEntity, ref woundable) || !Resolve(woundId, ref wound) || !Resolve(treatmentEntity, ref treatment))
+        if (!Resolve(woundableEntity, ref woundable) || !Resolve(woundId, ref wound) ||
+            !Resolve(treatmentEntity, ref treatment))
             return false;
         var ev = new TreatWoundEvent();
         RaiseLocalEvent(treatmentEntity, ref ev, true);
@@ -137,10 +145,9 @@ public sealed partial class TreatmentSystem : EntitySystem
         //Relay the treatment event to the body entity
         if (TryComp<BodyPartComponent>(woundableEntity, out var bodyPart) && bodyPart.Body.HasValue)
         {
-            RaiseLocalEvent(bodyPart.Body.Value , ref ev2, true);
+            RaiseLocalEvent(bodyPart.Body.Value, ref ev2, true);
         }
 
         return false;
     }
-
 }

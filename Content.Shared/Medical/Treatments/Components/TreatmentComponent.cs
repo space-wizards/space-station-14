@@ -2,14 +2,14 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using System;
 
 namespace Content.Shared.Medical.Treatments.Components;
 
 [NetworkedComponent, RegisterComponent]
 public sealed class TreatmentComponent : Component
 {
-    [DataField("treatmentType", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<TreatmentTypePrototype>))]
+    [DataField("treatmentType", required: true,
+        customTypeSerializer: typeof(PrototypeIdSerializer<TreatmentTypePrototype>))]
     public string TreatmentType = "";
 
     [DataField("limitedUses")] public bool LimitedUses = true;
@@ -20,6 +20,7 @@ public sealed class TreatmentComponent : Component
 
     [DataField("targetUsable")] public bool TargetUsable = true;
 }
+
 [Serializable, NetSerializable]
 public sealed class TreatmentComponentState : ComponentState
 {
@@ -28,6 +29,7 @@ public sealed class TreatmentComponentState : ComponentState
     public int Uses;
     public bool SelfUsable;
     public bool TargetUsable;
+
     public TreatmentComponentState(string treatmentType, bool limitedUses, int uses, bool selfUsable, bool targetUsable)
     {
         TreatmentType = treatmentType;

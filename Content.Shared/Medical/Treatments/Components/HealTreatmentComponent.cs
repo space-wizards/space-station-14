@@ -28,7 +28,8 @@ public sealed class HealTreatmentComponentState : ComponentState
     public FixedPoint2 HealingModifier;
     public FixedPoint2 HealingMultiplier;
 
-    public HealTreatmentComponentState(bool fullyHeals, bool leavesScar, FixedPoint2 baseHealingChange, FixedPoint2 healingModifier, FixedPoint2 healingMultiplier)
+    public HealTreatmentComponentState(bool fullyHeals, bool leavesScar, FixedPoint2 baseHealingChange,
+        FixedPoint2 healingModifier, FixedPoint2 healingMultiplier)
     {
         FullyHeals = fullyHeals;
         LeavesScar = leavesScar;

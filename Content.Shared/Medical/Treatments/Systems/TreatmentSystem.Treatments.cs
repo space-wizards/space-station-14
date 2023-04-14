@@ -13,7 +13,6 @@ public sealed partial class TreatmentSystem
 
     private void OnIntegrityTreatment(EntityUid uid, IntegrityTreatmentComponent component, ref WoundTreatedEvent args)
     {
-
     }
 
     private void OnHealTreatment(EntityUid uid, HealTreatmentComponent component, ref WoundTreatedEvent args)
