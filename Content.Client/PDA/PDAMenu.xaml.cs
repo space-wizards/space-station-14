@@ -118,7 +118,8 @@ namespace Content.Client.PDA
                 StationAlertLevelInstructions.SetMarkup(Loc.GetString("comp-pda-ui-station-alert-level-instructions",
                         ("AlertLevelInstructions", Loc.GetString($"alert-level-{state.StationAlert.Level}-instructions"))));
                 StationAlertLevelLabel.SetMarkup(Loc.GetString("comp-pda-ui-station-alert-level",
-                    ("ColorLevel", state.StationAlert.Color), ("AlertLevel", $"alert-level-{state.StationAlert.Level}")));
+                    ("ColorLevel", state.StationAlert.Color),
+                    ("AlertLevel", Loc.GetString($"alert-level-{state.StationAlert.Level}"))));
             }
             else
             {
