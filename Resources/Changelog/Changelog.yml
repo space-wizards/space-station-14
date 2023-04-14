@@ -1,9 +1,4 @@
 Entries:
-- author: Cripes
-  changes:
-  - {message: Crew monitor now sorts by character name, type: Tweak}
-  id: 2911
-  time: '2023-01-19T03:02:45.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Adds guidebook entries for anomalies and anomaly equipment. Read all
@@ -2899,3 +2894,9 @@ Entries:
       announcements', type: Tweak}
   id: 3410
   time: '2023-04-14T19:57:47.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: A second pair of shoes was added to the Autodrobe for the clothing set
+      that was missing shoes., type: Add}
+  id: 3411
+  time: '2023-04-14T22:15:11.0000000+00:00'
