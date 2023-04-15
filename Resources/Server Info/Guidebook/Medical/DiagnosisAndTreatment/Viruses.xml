@@ -1,0 +1,50 @@
+<Document>
+# Viruses
+If you spend long enough in the med bay, you will encounter disease.  You will notice patients with symptoms running from coughing and sneezing all the way up to beating their chest and screaming like monkeys.
+
+While a lot of diseases can be cured by simply having your patients sleep for a short period of time, you will likely want to take a more active role in their recovery in some cases.
+
+All of the tools you need to protect yourself, identify the virus, and manufacture vaccines can be found in med bay's virology department.  Look for green markings on the doors and floors.
+
+## Protect yourself
+The first step is protecting yourself in case of an outbreak.  If you are not already immune to the disease from having recovered from it already or being vaccinated, you will want to don a bio suit. The bio suit will protect you from infection.
+<Box>
+<GuideEntityEmbed Entity="ClothingHeadHatHoodBioVirology" Caption="Bio Hood"/>
+<GuideEntityEmbed Entity="ClothingOuterBioVirology" Caption="Bio Suit"/>
+</Box>
+
+If a bio suit is not available, you can also protect yourself by using 'internals' or put another way, a gas mask and air tank.
+<Box>
+<GuideEntityEmbed Entity="ClothingMaskBreathMedical" Caption="Breathing Mask"/>
+<GuideEntityEmbed Entity="AirTankFilled" Caption="Oxygen/Nitrogen Tank"/>
+</Box>
+
+## Identify the virus
+You will be able to tell right away when you use a health analyzer whether or not someone is diseased.  The next step is identifying the disease itself.  For that, you will require a sterile swab, a sick patient, and a 'Disease Diagnoser Delta Extreme' machine.
+
+<Box>
+<GuideEntityEmbed Entity="DiseaseDiagnoser" Caption="Disease Diagnoser"/>
+<GuideEntityEmbed Entity="DiseaseSwab" Caption="Sterile Swab"/>
+<GuideEntityEmbed Entity="DiagnosisReportPaper" Caption="Diagnosis Report"/>
+</Box>
+Using a sterile swab on a [color=YellowGreen]sick[/color] patient and placing inside the disease diagnoser will produce a report that will tell you exactly what the disease is and what the treatment is. 
+
+Make sure you get this information to the Chief Medical Officer and the rest of the medical department.  If the disease is severe enough, the CMO should make an stationwide announcement regarding the cure and change the alert level to [color=Violet]violet alert[/color].
+
+## Producing a vaccine
+A vaccine will only protect people that have not yet been infected. It is pointless to give a vaccine to someone who already has the infection or has already recovered from the infection.
+
+Vaccines can be manufactured by using a sterile swab on a [color=YellowGreen]sick[/color] patient and placing it inside the vaccinator. 
+<Box>
+<GuideEntityEmbed Entity="Vaccinator" Caption="Vaccinator"/>
+<GuideEntityEmbed Entity="DiseaseSwab" Caption="Sterile Swab"/>
+<GuideEntityEmbed Entity="Vaccine" Caption="Vaccine"/>
+</Box>
+
+## Curing the disease
+As mentioned in "Identify the virus", you can produce a diagnosis report that will tell you the cure.  Usually a short period of sleep is enough to cure most diseases but more exotic diseases may require special methods that may reach even beyond your capability as a doctor to cure.  For example, the AMIV virus can be easily cured by a banana infused cocktail from the bar called Banana Honk.
+
+Alternatively, you can treat diseases with [color=#9942f5]Spaceacillin[/color].  Be careful however, [color=#9942f5]Spaceacillin[/color] causes cellular damage also known as [color=red]space cancer[/color].  See the genetic damage guide to learn more about cellular damage.  If you do choose to administer [color=#9942f5]Spaceacillin[/color], low doses can be given in succession until a disease is cured to minimize cellular damage (sometimes 5 units is all you need).
+
+Once the disease is cured, the patient is immune to catching that disease again.  They can still catch other diseases, but the one you cure is no longer a worry.
+</Document>

@@ -1,0 +1,31 @@
+<Document>
+# Burn
+<Box>
+[color=Gold]Burn[/color]:
+- [color=DeepSkyBlue]Heat[/color]
+- [color=DeepSkyBlue]Shock[/color]
+- [color=DeepSkyBlue]Cold[/color]
+</Box>
+Burn damage is the group of damage your patients take from being lit on fire, frozen in space, or shocked by electrical current.
+
+## Treatment
+Almost all of the current cures to burn damage target the [color=Gold]damage group[/color], but there is one exception.  The most common methods to cure burn damage are Ointment and a chemical called [color=#3688a3]Dermaline[/color].  In a pinch, a chemical called [color=#bf3d19]Kelotane[/color] can be used, however it is several times weaker than [color=#3688a3]Dermaline[/color]. These methods will cure all types of burn damage.
+
+<Box>
+<GuideEntityEmbed Entity="Ointment" Caption="Ointment"/>
+</Box>
+
+The best cure for the Cold [color=DeepSkyBlue]damage type[/color] is a chemical called [color=#ff7db5]Leporazine[/color] because even small doses can have immediate and radically benificial effects.
+
+The most serious type of burn is the caustic burn.  These burns are caused by acid exposure or injestion. The only medicine for these types of burns are [color=#f4dab8]Siderlac[/color], [color=#e0a5b9]Sigynate[/color], or Cryo medicine ([color=#3688a3]Dermaline[/color] will not work).  Ointment is also very weakly effective at healing caustic burns, however you will only want to use it for minor burns.
+
+## Visual Diagnosis
+You can diagnose burn damage with a visual health inspection by refering to the following:
+<Box>[color=DeepSkyBlue]Heat[/color]</Box>
+<Box>25+ [color=DeepSkyBlue]Heat[/color] - [color=orange]They have minor burns across their body.[/color]</Box>
+<Box>50+ [color=DeepSkyBlue]Heat[/color] - [color=orange]They have major burns across their body.[/color]</Box>
+<Box>75+ [color=DeepSkyBlue]Heat[/color] - [color=orange]They have severe third-degree burns across body![/color]</Box>
+<Box>[color=DeepSkyBlue]Shock[/color]</Box>
+<Box>50+ [color=DeepSkyBlue]Shock[/color] - [color=lightgoldenrodyellow]They have electrical shock marks across their body![/color]</Box>
+<Box>There are no inspection messages for [color=DeepSkyBlue]Cold[/color]</Box>
+</Document>

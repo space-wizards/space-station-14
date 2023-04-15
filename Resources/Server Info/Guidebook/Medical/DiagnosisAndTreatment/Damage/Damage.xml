@@ -1,0 +1,34 @@
+<Document>
+# Damage Groups and Types
+This section will cover the different damage groups and types, giving a brief description of them, how to diagnose them without a health analyzer, and their most common cures.
+
+Damage in SS14 is broken down into [color=Gold]Groups[/color] and [color=DeepSkyBlue]Types[/color].
+The damage groups and their types are summarized below:
+<Box>
+[color=Gold]Brute[/color]:
+- [color=DeepSkyBlue]Blunt[/color]
+- [color=DeepSkyBlue]Slash[/color]
+- [color=DeepSkyBlue]Piercing[/color]
+</Box>
+<Box>
+[color=Gold]Burn[/color]:
+- [color=DeepSkyBlue]Heat[/color]
+- [color=DeepSkyBlue]Shock[/color]
+- [color=DeepSkyBlue]Cold[/color]
+- [color=DeepSkyBlue]Caustic[/color]
+</Box>
+<Box>
+[color=Gold]Toxin[/color]:
+- [color=DeepSkyBlue]Poison[/color]
+- [color=DeepSkyBlue]Radiation[/color]
+</Box>
+<Box>
+[color=Gold]Airloss[/color]:
+- [color=DeepSkyBlue]Asphyxiation[/color]
+- [color=DeepSkyBlue]Bloodloss[/color]
+</Box>
+<Box>
+[color=Gold]Genetic[/color]:
+- [color=DeepSkyBlue]Cellular[/color]
+</Box>
+</Document>

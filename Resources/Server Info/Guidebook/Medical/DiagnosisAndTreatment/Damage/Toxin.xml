@@ -1,0 +1,32 @@
+<Document>
+# Toxin
+<Box>
+[color=Gold]Toxin[/color]:
+- [color=DeepSkyBlue]Poison[/color]
+- [color=DeepSkyBlue]Radiation[/color]
+</Box>
+Toxin damage is the group of damage your patients take from injesting poisons, overdosing, and being exposed to radioactive materials.
+
+## Treatment
+All of the cures to toxin damage target the [color=DeepSkyBlue]damage types[/color], not the entire [color=Gold]damage group[/color] .  This means that radiation and poison will have completely different treatments.
+
+- [color=DeepSkyBlue]Poison[/color]
+
+Poison is most commonly treated by a chemical called [color=#6b36ff]Dylovene[/color].  Much stronger alternatives include [color=#4248b8]Stellibinin[/color] and [color=#911955]Ultravasculine[/color]. There is also an anti-poison medical injector, though these are very rare.
+<Box>
+<GuideEntityEmbed Entity="Pill" Caption="Pills"/>
+<GuideEntityEmbed Entity="AntiPoisonMedipen" Caption="Anti-Poison Medipen"/>
+</Box>
+
+- [color=DeepSkyBlue]Radiation[/color]
+
+Radiation is most commonly treated by a chemical called [color=#4cb580]Hyronalin[/color], which is a dreadful medicine because it is weak and causes vomiting. A many times more powerful alternative is [color=#bd5902]Arithrazine[/color]; it has the side effect of causing minor brute damage.
+
+<Box>
+<GuideEntityEmbed Entity="Pill" Caption="Pills"/>
+</Box>
+
+## Visual Diagnosis
+You cannot diagnose toxin damage with a visual health inspection:
+<Box>There are no inspection messages for [color=Gold]Toxins[/color]</Box>
+</Document>

@@ -1,0 +1,21 @@
+<Document>
+# Genetic
+<Box>
+[color=Gold]Genetic[/color]:
+- [color=DeepSkyBlue]Cellular[/color]
+</Box>
+Genetic damage is the group of damage your patients take from injesting [color=#9942f5]Spaceacillin[/color].
+
+## Treatment
+[color=Gold]Genetic[/color] damage (specifically [color=DeepSkyBlue]Cellular[/color] damage) is treated by administering [color=#c8ff75]Phalanximine[/color].  Phalanximine has a side effect of causing radiation damage, so it is usually paired with either [color=#4cb580]Hyronalin[/color] or [color=#bd5902]Arithrazine[/color].  Arithrazine causes a small amount of brute damage as a side effect and Hyronalin causes vomitting, so pick your poison.
+
+<Box>
+<GuideEntityEmbed Entity="Pill" Caption="Pills"/>
+</Box>
+
+Speaking of poison, be careful about how much cellular damage your patient takes.  A dead patient with cellular damage will have an increased risk of failed cloning attempts.  At best, this will waste biomass and at worst, totally ruin their chances of being cloned.
+
+## Visual Diagnosis
+You cannot diagnose genetic damage with a visual health inspection:
+<Box>There are no inspection messages for [color=Gold]Genetic[/color]</Box>
+</Document>

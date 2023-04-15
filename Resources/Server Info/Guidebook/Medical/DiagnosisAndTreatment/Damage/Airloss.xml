@@ -1,0 +1,71 @@
+<Document>
+# Airloss
+<Box>
+[color=Gold]Airloss[/color]:
+- [color=DeepSkyBlue]Asphyxiation[/color]
+- [color=DeepSkyBlue]Bloodloss[/color]
+</Box>
+[color=Gold]Airloss[/color] damage is the group of damage your patients take from lack of air and lack of blood. 
+
+[color=DeepSkyBlue]Asphyxiation[/color] is the damage a person takes continuously when they are in critical condition, gasping for air on the floor.  
+
+[color=DeepSkyBlue]Bloodloss[/color] is one of SS14's most complicated damage mechanics so pay close attention.
+
+## Treatment
+All of the cures to airloss damage target the [color=Gold]damage group[/color], not individual types.  Despite this fact, [color=DeepSkyBlue]Asphyxiation[/color] and [color=DeepSkyBlue]Bloodloss[/color] have radically different treatments.
+
+- [color=DeepSkyBlue]Asphyxiation[/color]
+
+Asphyxiation is a very common damage type and thus has many common treatments, depending on the circumstance.
+
+Most passengers and crew rely on Emergency Medipens when they see someone laying on the ground gasping for air. 
+
+Due to the volume of patients, medical doctor may opt for syringes full of [color=#d2fffa]Epinephrine[/color] or [color=#b31938]Inaprovaline[/color] when the medipens run out or even [color=#4da0bd]Dexalin Plus[/color] in pill form.
+
+<Box>
+<GuideEntityEmbed Entity="EmergencyMedipen" Caption="Emergency Medipen"/>
+<GuideEntityEmbed Entity="Syringe" Caption="Syringe"/>
+<GuideEntityEmbed Entity="EpinephrineChemistryBottle" Caption="Epinephrine"/>
+<GuideEntityEmbed Entity="Pill" Caption="Pills"/>
+</Box>
+
+- [color=DeepSkyBlue]Bloodloss[/color]
+
+Bloodloss is unique in its complexity as a damage type.  To deal with bloodloss, you not only have to reduce the [color=DeepSkyBlue]bloodloss[/color] damage, but you must also stop [color=red]bleeding[/color] and manage [color=red]blood level[/color].
+
+The quickest summary of bloodloss is this:
+- When your patient bleeds, their blood level drops continuously
+- When your patient is low on blood, they begin to take bloodloss damage continuously 
+
+If someone is bleeding heavily there are 3 things to do;
+- Stop the bleeding
+- Restore blood levels
+- Cure bloodloss damage
+
+[color=red]Do not[/color] simply cure the patient of their bloodloss damage and send them on their way. They may appear to be cured on your health analyzer, but if their bleeding has not been stopped and their blood levels restored to normal, they will be back in med bay to be treated again soon.
+
+[color=red]Bleeding[/color] happens when your patient takes brute damage. Slash and pierce cause worst bleeding.  Bleeding is something that will stop on its own over time, however it may not stop quick enough to avoid death. The most common treatments for bleeding are gauze and a chemical called [color=#ba7d7d]Tranexamic Acid[/color]. Emergency medipens contain a small dose of [color=#ba7d7d]Tranexamic Acid[/color], so they can be used in a pinch to try and stop bleeding.  [color=#b31938]Inaprovaline[/color] and [color=#FFE774]pulped banana peel[/color] can be used to fight bleeding but they are significantly weaker than [color=#ba7d7d]Tranexamic Acid[/color] and gauze. If you have [color=red]no other option[/color], you can also apply [color=orange]heat damage[/color] to stop bleeding, but do be careful with this.
+<Box>
+<GuideEntityEmbed Entity="EmergencyMedipen" Caption="Emergency Medipen"/>
+<GuideEntityEmbed Entity="Syringe" Caption="Syringe"/>
+<GuideEntityEmbed Entity="Pill" Caption="Pills"/>
+</Box>
+<Box>
+<GuideEntityEmbed Entity="Gauze" Caption="Gauze"/>
+<GuideEntityEmbed Entity="Bloodpack" Caption="Blood Pack"/>
+<GuideEntityEmbed Entity="Cautery" Caption="Cautery"/>
+</Box>
+[color=red]Blood level[/color] represents the volume of blood inside your patient. If it falls too low, your patient will start taking bloodloss damage until blood levels return to normal.  Patients with low blood level will experience [color=aquamarine]double vision[/color] and will be [color=aquamarine]woozy[/color]. The only treatment for this is a dose of [color=firebrick]Iron[/color] or the use of a blood pack.  The lower the blood level, the more bloodloss damage will occur per second and the more [color=firebrick]Iron[/color] or blood packs they will require.  Finally, blood level does return to normal naturally, however you will most likely find that your patient will not recover quick enough to avoid death without your help.
+
+Your patient may have enough [color=DeepSkyBlue]bloodloss damage[/color] at any point in treatment to warrant curing the damage. To do so, you will want to apply [color=#4da0bd]Dexalin Plus[/color] or [color=#0041a8]Dexalin[/color] to cure the bloodloss damage. [color=#4da0bd]Dexalin Plus[/color] is three times stronger than [color=#0041a8]Dexalin[/color].  Patients have normal blood level will slowly recover from bloodloss damage on their own without medication.
+
+## Visual Diagnosis
+You can assess a patients bleeding status with a visual health inspection by refering to the following:
+
+<Box>[color=white]Bleeding[/color] - [color=red]They are bleeding.[/color]</Box>
+<Box>[color=white]Extreme Bleeding[/color] - [color=crimson]They are profusely bleeding![/color]</Box>
+<Box>[color=white]Low Blood[/color] - [color=bisque]They look pale.[/color]</Box>
+
+<Box>There are no inspection messages for [color=DeepSkyBlue]Bloodloss[/color]</Box>
+<Box>There are no inspection messages for [color=DeepSkyBlue]Asphyxiation[/color], however people will be gasping for air if they are suffering from Asphyxiation</Box>
+</Document>

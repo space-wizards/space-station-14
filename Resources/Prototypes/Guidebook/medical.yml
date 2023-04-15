@@ -1,0 +1,73 @@
+- type: guideEntry
+  id: Medical
+  name: guide-entry-medical
+  text: "/Server Info/Guidebook/Medical/Medical.xml"  
+  children:
+  - DiagnosisAndTreatment
+  - CloningAndMorgue
+
+- type: guideEntry
+  id: DiagnosisAndTreatment
+  name: guide-entry-diagnosis-and-treatment
+  text: "/Server Info/Guidebook/Medical/DiagnosisAndTreatment.xml"
+  children:
+  - Diagnosis
+  - Damage 
+  - Viruses
+  - CryoMedicine
+
+- type: guideEntry
+  id: Diagnosis
+  name: guide-entry-diagnosis
+  text: "/Server Info/Guidebook/Medical/DiagnosisAndTreatment/Diagnosis.xml"
+  
+- type: guideEntry
+  id: Damage
+  name: guide-entry-damage
+  text: "/Server Info/Guidebook/Medical/DiagnosisAndTreatment/Damage/Damage.xml"  
+  children:
+  - Brute
+  - Burn
+  - Toxin
+  - Airloss
+  - Genetic
+
+- type: guideEntry
+  id: Brute
+  name: guide-entry-brute
+  text: "/Server Info/Guidebook/Medical/DiagnosisAndTreatment/Damage/Brute.xml"
+  
+- type: guideEntry
+  id: Burn
+  name: guide-entry-burn
+  text: "/Server Info/Guidebook/Medical/DiagnosisAndTreatment/Damage/Burn.xml"
+  
+- type: guideEntry
+  id: Toxin
+  name: guide-entry-toxin
+  text: "/Server Info/Guidebook/Medical/DiagnosisAndTreatment/Damage/Toxin.xml"
+  
+- type: guideEntry
+  id: Airloss
+  name: guide-entry-airloss
+  text: "/Server Info/Guidebook/Medical/DiagnosisAndTreatment/Damage/Airloss.xml"
+  
+- type: guideEntry
+  id: Genetic
+  name: guide-entry-genetic
+  text: "/Server Info/Guidebook/Medical/DiagnosisAndTreatment/Damage/Genetic.xml"
+  
+- type: guideEntry
+  id: Viruses
+  name: guide-entry-viruses
+  text: "/Server Info/Guidebook/Medical/DiagnosisAndTreatment/Viruses.xml"
+  
+- type: guideEntry
+  id: CryoMedicine
+  name: guide-entry-cryo-medicine
+  text: "/Server Info/Guidebook/Medical/DiagnosisAndTreatment/CryoMedicine.xml"
+
+- type: guideEntry
+  id: CloningAndMorgue
+  name: guide-entry-cloning-and-morgue
+  text: "/Server Info/Guidebook/Medical/CloningAndMorgue.xml"

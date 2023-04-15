@@ -1,0 +1,34 @@
+<Document>
+# Diagnosis
+This section covers the many ways that you can diagnose a patient with or without a health analyzer.
+
+## The Health Analyzer
+By far, the easiest way to diagnose a patient is to scan them with a health analyzer or a doctor's PDA.
+<Box>
+<GuideEntityEmbed Entity="HandheldHealthAnalyzer" Caption="Health Analyzer"/>
+<GuideEntityEmbed Entity="MedicalPDA" Caption="Doctor PDA"/>
+</Box>
+These tools will give you a simple readout that lists the amount of each [color=red]damage[/color] type a patient has taken.  Additionally, this tool will tell you if your patient has one or more [color=YellowGreen]diseases[/color].
+
+To use these tools, you simply hold it in your hand and click on the patient.
+
+The PDA will leave the diagnosis on-screen for you when you put it back in your ID slot, but the health analyzer must remain in hand to achieve the same effect.
+
+## Visual Diagnostics
+For physical injuries you can get a good idea of your patients condition by inspecting their health.  
+
+You can inspect the health of your patient by right clicking on them, selecting Examine, and then selecting Health.
+You will see messages like:
+
+<Box>[color=red]They have minor contusions across their body.[/color]</Box>
+<Box>[color=crimson]They are profusely bleeding![/color]</Box>
+<Box>[color=bisque]They look pale.[/color]</Box>
+
+Details on these messages and how to decode them can be found in the Damage Types section.
+
+## Medical HUD
+<GuideEntityEmbed Entity="ClothingEyesHudMedical" Caption="Medical HUD"/>
+The medical HUD is [color=red]not[/color] yet fully implemented, but when it is, it should provide at-a-glance diagnostic information about the patient's overall health.  
+
+Right now it is just a cosmetic item.
+</Document>

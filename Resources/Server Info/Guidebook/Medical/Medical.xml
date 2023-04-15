@@ -1,0 +1,96 @@
+<Document>
+# Medical
+<Box>
+Isn’t it a bit unnerving that doctors call what they do “practice”?
+― George Carlin
+</Box>
+
+To practice medicine in SS14 is to diagnose patients, treat injuries, treat diseases, and revive the dead.  As such, it is your job to ensure that the crew remains alive and healthy so that they can keep the station functioning.
+
+The medical field requires a multitude of tools; for your convenience, see the glossary of medical equipment below.
+
+##Diagnosis Tools
+<Box>
+<GuideEntityEmbed Entity="HandheldHealthAnalyzer" Caption="Health Analyzer"/>
+<GuideEntityEmbed Entity="ClothingNeckStethoscope" Caption="Stethoscope"/>
+</Box>
+<Box>
+<GuideEntityEmbed Entity="MedicalInternPDA" Caption="Intern PDA"/>
+<GuideEntityEmbed Entity="MedicalPDA" Caption="Doctor PDA"/>
+<GuideEntityEmbed Entity="CMOPDA" Caption="CMO PDA"/>
+</Box>
+##Basic Treatment Tools
+<Box>
+<GuideEntityEmbed Entity="EmergencyMedipen" Caption="Medipen"/>
+<GuideEntityEmbed Entity="Brutepack" Caption="Bruise Pack"/>
+<GuideEntityEmbed Entity="Ointment" Caption="Ointment"/>
+<GuideEntityEmbed Entity="Gauze" Caption="Gauze"/>
+</Box>
+<Box>
+<GuideEntityEmbed Entity="Pill" Caption="Pills"/>
+<GuideEntityEmbed Entity="Syringe" Caption="Syringe"/>
+<GuideEntityEmbed Entity="EpinephrineChemistryBottle" Caption="Epinephrine"/>
+<GuideEntityEmbed Entity="Bloodpack" Caption="Blood Pack"/>
+
+</Box>
+
+##Paramedic Tools
+<Box>
+<GuideEntityEmbed Entity="ComputerCrewMonitoring" Caption="Crew Monitor"/>
+<GuideEntityEmbed Entity="HandheldCrewMonitor" Caption="Crew Monitor"/>
+<GuideEntityEmbed Entity="RollerBed" Caption="Roller Bed"/>
+</Box>
+<Box>
+<GuideEntityEmbed Entity="ClothingHeadHelmetVoidParamed" Caption="Paramedic Helmet"/>
+<GuideEntityEmbed Entity="ClothingOuterHardsuitVoidParamed" Caption="Paramedic Void Suit"/>
+</Box>
+
+##Chemistry Tools
+<Box>
+<GuideEntityEmbed Entity="chem_dispenser" Caption="Chem Dispenser"/>
+<GuideEntityEmbed Entity="chem_master" Caption="Chem Master"/>
+</Box>
+<Box>
+<GuideEntityEmbed Entity="LargeBeaker" Caption="Beaker"/>
+<GuideEntityEmbed Entity="PillCanister" Caption="Pill Canister"/>
+<GuideEntityEmbed Entity="ChemistryEmptyBottle01" Caption="Chem Bottle"/>
+</Box>
+##Cloning Tools
+<Box>
+<GuideEntityEmbed Entity="MedicalScanner" Caption="Medical Scanner"/>
+<GuideEntityEmbed Entity="ComputerCloningConsole" Caption="Cloning Console"/>
+<GuideEntityEmbed Entity="CloningPod" Caption="Cloning Pod"/>
+</Box>
+<Box>
+<GuideEntityEmbed Entity="BiomassReclaimer" Caption="Biomass Reclaimer"/>
+<GuideEntityEmbed Entity="MaterialBiomass" Caption="Biomass"/>
+</Box>
+##Morgue Tools
+<Box>
+<GuideEntityEmbed Entity="Morgue" Caption="Morgue"/>
+<GuideEntityEmbed Entity="BoxBodyBag" Caption="Body bag box"/>
+<GuideEntityEmbed Entity="BodyBag_Container" Caption="Body bag"/>
+<GuideEntityEmbed Entity="BodyBag_Folded" Caption="Body bag"/>
+</Box>
+##Virology Tools
+<Box>
+<GuideEntityEmbed Entity="DiseaseDiagnoser" Caption="Disease Diagnoser"/>
+<GuideEntityEmbed Entity="Vaccinator" Caption="Vaccinator"/>
+</Box>
+<Box>
+<GuideEntityEmbed Entity="DiseaseSwab" Caption="Sterile Swab"/>
+<GuideEntityEmbed Entity="DiagnosisReportPaper" Caption="Diagnosis Report"/>
+<GuideEntityEmbed Entity="Vaccine" Caption="Vaccine"/>
+</Box>
+<Box>
+<GuideEntityEmbed Entity="ClothingHeadHatHoodBioVirology" Caption="Bio Hood"/>
+<GuideEntityEmbed Entity="ClothingOuterBioVirology" Caption="Bio Suit"/>
+</Box>
+##Cryo Tools
+<Box>
+<GuideEntityEmbed Entity="CryoPod" Caption="Cryo Pod" Scale="2"/>
+<GuideEntityEmbed Entity="GasThermoMachineFreezer" Caption="Freezer"/>
+<GuideEntityEmbed Entity="AirCanister" Caption="Air"/>
+<GuideEntityEmbed Entity="GasAnalyzer" Caption="Gas Analyzer"/>
+</Box>
+</Document>

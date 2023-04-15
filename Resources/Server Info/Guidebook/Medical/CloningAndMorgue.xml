@@ -1,0 +1,57 @@
+<Document>
+# Cloning and the Morgue
+It is enevitable that crew and passengers will die onboard the station.  Through the power of cloning, they can be reborn!
+
+## Diagnosing death
+It is obvious when a patient is dead. What is less obvious is whether or not they can be cloned.
+
+If the corpse has an examination message like the one below, they are NOT clonable. This is sometimes refered to as being a husk or being soulless.
+- [color=Yellow]Their soul has departed and moved on. Any recovery is unlikely.[/color]
+
+If the corpse has an examination message like the one below, they ARE still clonable.
+- [color=Red]Their soul has departed.[/color]
+
+If the corpse has no special messages like the ones above, they ARE still clonable.  Their soul is in their body and they are likely judging you.
+
+One final thing to note, the longer a body goes without being cloned, the lower the chance the body can be cloned.  If a body must wait to be cloned, see the Morgue section on how to preserve bodies.
+
+## Cloning
+Cloning a suitable corpse can be accomplished as long your tools are in good working order.
+<Box>
+<GuideEntityEmbed Entity="MedicalScanner" Caption="Medical Scanner"/>
+<GuideEntityEmbed Entity="ComputerCloningConsole" Caption="Cloning Console"/>
+<GuideEntityEmbed Entity="CloningPod" Caption="Cloning Pod"/>
+</Box>
+<Box>
+<GuideEntityEmbed Entity="BiomassReclaimer" Caption="Biomass Reclaimer"/>
+<GuideEntityEmbed Entity="MaterialBiomass" Caption="Biomass"/>
+</Box>
+
+The basic steps of cloning are as follows:
+- Place the clonable corpse into the Medical Scanner
+- Interact with the Cloning Console, click the clone button
+- Wait for the patient to accept the cloning prompt and exit the Cloning Pod
+
+This can only be accomplished if there is enough biomass inside the Cloning Pod.  If the Cloning Console gives you an error, requesting more biomass, you will need to use the Biomass Reclaimer to convert soulless corpses into biomass.  After the reclaimer is done grinding up the body, you can pick up the biomass and put it in the Cloning Pod by clicking on it with the biomass.
+
+This biomass reclamation process usually occures in advance.  You will want to reclaim biomass from any corpse that is unclonable.  The reclaimer is reletively slow and often times you will find your clone room looking more like a corpse pile.  Reclaim early and often.
+
+A final note, do not attempt to reclaim a corpse that is clonable.
+
+## Morgue
+The longer a corpse sits out, the more the corpse will rot.  When a corpse rots, it will produce Miasma, a poisonous gas.  Corpses that are clonable will also begin to take cellular damage, which decreases the chance of successful cloning.
+
+<Box>
+<GuideEntityEmbed Entity="Morgue" Caption="Morgue"/>
+<GuideEntityEmbed Entity="BoxBodyBag" Caption="Body bag box"/>
+<GuideEntityEmbed Entity="BodyBag_Container" Caption="Body bag"/>
+<GuideEntityEmbed Entity="BodyBag_Folded" Caption="Body bag"/>
+</Box>
+
+Morgues and body bags are places for you to store corpses when you need to prevent them from creating Miasma and taking cellular damage. Morgues and body bags requires no power to operate which is great when you cannot clone due to power outages.
+
+The morgue has one benefit over putting corpses in body bags; the morgue will alert you when a soul has returned to the body, giving you an indication that the player yearns for rebirth.
+
+You can fold and unfold a body bag by holding alt clicking the bag.
+
+</Document>

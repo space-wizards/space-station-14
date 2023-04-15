@@ -1,0 +1,30 @@
+<Document>
+# Brute
+<Box>
+[color=Gold]Brute[/color]:
+- [color=DeepSkyBlue]Blunt[/color]
+- [color=DeepSkyBlue]Slash[/color]
+- [color=DeepSkyBlue]Piercing[/color]
+</Box>
+Brute damage is the group of damage your patients take from being hit with melee weapons, shot with bullets, scratched by rats, and any other brutish method of inflicting injuries.
+
+## Treatment
+All of the current cures to brute damage target the [color=Gold]damage group[/color], not individual types.  The most common methods to cure brute damage are Bruise Packs and a chemical called [color=#ffaa00]Bicaridine[/color].
+<Box>
+<GuideEntityEmbed Entity="Brutepack" Caption="Bruise Pack"/>
+</Box>
+## Visual Diagnosis
+You can diagnose brute damage with a visual health inspection by refering to the following:
+
+<Box>[color=DeepSkyBlue]Blunt[/color]</Box>
+<Box>25+ [color=DeepSkyBlue]Blunt[/color] - [color=red]They have minor contusions across their body.[/color]</Box>
+<Box>50+ [color=DeepSkyBlue]Blunt[/color] - [color=crimson]They have major bruises all over their body![/color]</Box>
+<Box>75+ [color=DeepSkyBlue]Blunt[/color] - [color=crimson]Their body is completely covered in lesions![/color]</Box>
+<Box>[color=DeepSkyBlue]Slash[/color]</Box>
+<Box>10+ [color=DeepSkyBlue]Slash[/color] - [color=red]They have some minor cuts.[/color]</Box>
+<Box>25+ [color=DeepSkyBlue]Slash[/color] - [color=red]They have lacerations across their body.[/color]</Box>
+<Box>50+ [color=DeepSkyBlue]Slash[/color] - [color=crimson]They have major gashes all over their body![/color]</Box>
+<Box>75+ [color=DeepSkyBlue]Slash[/color] - [color=crimson]Their body is completely mauled![/color]</Box>
+<Box>[color=DeepSkyBlue]Piercing[/color]</Box>
+<Box>50+ [color=DeepSkyBlue]Piercing[/color] - [color=crimson]They have deep wounds all over their body![/color]</Box>
+</Document>

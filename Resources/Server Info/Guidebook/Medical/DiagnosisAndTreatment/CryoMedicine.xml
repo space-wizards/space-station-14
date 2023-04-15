@@ -1,0 +1,25 @@
+<Document>
+# Cryogenic Medicine
+Cryogenics is the science of healing patients through the use of a cryogenic pod and specialized chemicals.
+
+## Setting up the cryogenic pod
+<GuideEntityEmbed Entity="CryoPod" Caption="Cryo Pod" Scale="2"/>
+The cryogenic pod starts out totally devoid of atmosphere.  Putting a patient inside at this point is as good as spacing them.
+
+In order to set up the pod, you will first need to pump in air at around normal atmospheric pressure (101.325kPa).  A gas analyzer can be helpful to check whether or not you did it right.  Due to waste gases from your patients breathing inside the pod, you will also need to ensure the waste gasses have some way to exit the system.
+
+<GuideEntityEmbed Entity="GasAnalyzer" Caption="Gas Analyzer"/>
+
+You will then want to make sure the air you are pumping into the pod is the right temperature.  For this you will need to connect a freezer to the pod's air line and set its temperature to below 150K. Again, you can use a gas analyzer to check whether or not you did it right.
+
+<GuideEntityEmbed Entity="GasThermoMachineFreezer" Caption="Freezer"/>
+
+## Using the cryogenic pod
+The cryogenic pod is just a very cold tube until you plug in a beaker full of a chemical called [color=#0091ff]Cryoxadone[/color].  Once your patient is situated inside the pod with a beaker full of [color=#0091ff]Cryoxadone[/color], they will begin to rapidly heal their Airloss, Brute, Burn, and Toxin damage.  
+
+As long as the pod has power, it will continuously inject the patient with the [color=#0091ff]Cryoxadone[/color]. If healing stops, you may have run out of medicine. If they are not healing even with [color=#0091ff]Cryoxadone[/color] in the pod, you may need to strip them of any clothing that is keeping them warm in the pod or lower the temperature on your freezer. 
+
+You can monitor their status by clicking on the pod to show a real-time health analyzer.  Alt-clicking the pod will eject the beaker. 
+
+Once your patient is healed, you may eject them from the pod and begin the process of warming them up.  While in the pod, their body temperature will get very low, but the pod protects them.  Once they leave the pod, they will still be cold but no longer be protected by the pod.  To warm them up quickly the application of a low dose of [color=#ff7db5]Leporazine[/color] is reccommended.  If no [color=#ff7db5]Leporazine[/color] is on hand, you may need to rely on a winter jacket and scarf.
+</Document>

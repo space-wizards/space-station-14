@@ -24,3 +24,16 @@ guide-entry-machine-upgrading = Machine Upgrading
 
 guide-entry-security = Security
 guide-entry-dna = DNA
+
+guide-entry-medical = Medical
+guide-entry-diagnosis-and-treatment = Diagnosis and Treatment
+guide-entry-diagnosis = Diagnosis
+guide-entry-damage = Damage
+guide-entry-brute = Brute
+guide-entry-burn = Burn
+guide-entry-toxin = Toxin
+guide-entry-genetic = Genetic
+guide-entry-airloss = Airloss
+guide-entry-viruses = Viruses
+guide-entry-cryo-medicine = Cryo Medicine
+guide-entry-cloning-and-morgue = Cloning and Morgue
