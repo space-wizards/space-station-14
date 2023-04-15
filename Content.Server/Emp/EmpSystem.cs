@@ -45,11 +45,12 @@ public sealed class EmpSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var (comp, transform) in EntityQuery<EmpDisabledComponent, TransformComponent>())
+        var query = EntityQueryEnumerator<EmpDisabledComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var comp, out var transform))
         {
             comp.TimeLeft -= frameTime;
             if (comp.TimeLeft <= 0)
-                RemComp<EmpDisabledComponent>(comp.Owner);
+                RemComp<EmpDisabledComponent>(uid);
 
             if (_timing.CurTime > comp.TargetTime)
             {
