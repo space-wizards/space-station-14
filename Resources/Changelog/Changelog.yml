@@ -1,9 +1,4 @@
 Entries:
-- author: Visne
-  changes:
-  - {message: Fixed the syringe icon in the lathe being displayed incorrectly, type: Fix}
-  id: 2921
-  time: '2023-01-20T13:57:50.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix mechs being able to pickup portals, type: Fix}
@@ -2895,3 +2890,16 @@ Entries:
   - {message: Added use toy mouse like hat!, type: Add}
   id: 3420
   time: '2023-04-15T22:44:00.0000000+00:00'
+- author: EnDecc
+  changes:
+  - {message: 'The Janitorial Trolley now has an exclusive slot for the bucket, which
+      can be utilized the same way as the mop by alt-clicking the cart with the bucket.
+      It also keeps its reagents!', type: Add}
+  - {message: 'Significantly deepened the water container of the Janitorial Trolley
+      from 500u > 800u, to try and make up for its heavyweight nature. Additionally,
+      slightly reduced said heavyweight nature by lowering density from 350 > 250,
+      allowing it to be pulled somewhat faster.', type: Tweak}
+  - {message: 'Slightly deepened the Mop Bucket (the yellow one) from 500u > 600u,
+      requiring a bit less back-and-forth between fills for some QoL.', type: Tweak}
+  id: 3421
+  time: '2023-04-15T22:46:00.0000000+00:00'
