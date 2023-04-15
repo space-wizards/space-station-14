@@ -1,73 +1,4 @@
 Entries:
-- author: Nairodian
-  changes:
-  - {message: Added proper ERT uniforms. You can now kick syndicate ass in style.,
-    type: Add}
-  id: 2904
-  time: '2023-01-17T22:00:19.0000000+00:00'
-- author: AJCM-git
-  changes:
-  - {message: Makes mobs visually float when there is no gravity, type: Add}
-  id: 2905
-  time: '2023-01-17T22:01:54.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Buffed containment particles for A.P.E.s, type: Tweak}
-  - {message: Fixed some text formatting issues on various anomaly equipment., type: Fix}
-  - {message: 'Fixed anomalies always spawning at 0, 0.', type: Fix}
-  id: 2906
-  time: '2023-01-18T00:38:12.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Fixed verb menu sometimes not appearing. when using the context menu,',
-    type: Fix}
-  id: 2907
-  time: '2023-01-18T06:15:53.0000000+00:00'
-- author: checkraze
-  changes:
-  - {message: Added the Wizard ship, type: Add}
-  id: 2908
-  time: '2023-01-18T08:09:50.0000000+00:00'
-- author: gus
-  changes:
-  - {message: Torches and flares are now flammable., type: Add}
-  id: 2909
-  time: '2023-01-18T08:45:55.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix rotation visualizers not lerping properly (bed buckling and knockdown).,
-    type: Fix}
-  id: 2910
-  time: '2023-01-18T09:11:35.0000000+00:00'
-- author: Cripes
-  changes:
-  - {message: Crew monitor now sorts by character name, type: Tweak}
-  id: 2911
-  time: '2023-01-19T03:02:45.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Adds guidebook entries for anomalies and anomaly equipment. Read all
-      about it!, type: Add}
-  id: 2912
-  time: '2023-01-19T11:00:17.0000000+00:00'
-- author: checkraze
-  changes:
-  - {message: minor update to the pirate shuttle, type: Tweak}
-  id: 2913
-  time: '2023-01-19T11:02:48.0000000+00:00'
-- author: AJCM-git
-  changes:
-  - {message: Neither monkeys on the guidebook nor people outside your view float,
-    type: Fix}
-  id: 2914
-  time: '2023-01-19T23:48:29.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Updated engine to 0.85.0.0, type: Tweak}
-  - {message: Slipping should no longer mispredict. The drop sound will still play
-      twice., type: Fix}
-  id: 2915
-  time: '2023-01-20T00:37:34.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Lathes will now automatically stack their output., type: Tweak}
@@ -2896,3 +2827,74 @@ Entries:
   - {message: Nanotrasen no longer makes ice cream with soda., type: Fix}
   id: 3403
   time: '2023-04-13T19:51:11.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: 'Added a context sensitive EscapeContext keybind that defaults to ESC,
+      which closes the most recently opened window or if there are no windows, opens
+      the game menu.', type: Fix}
+  id: 3404
+  time: '2023-04-14T01:10:45.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Dehydrated space carp can now be petted to make them nice to you. Have
+      the whole station pet him and be friends forever!, type: Tweak}
+  id: 3405
+  time: '2023-04-14T01:17:26.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: 'Changed sprites of the livestock crate, t-ray, fax machine, remote
+      signaller and cell rechargers.', type: Tweak}
+  - {message: Fixed grey mice changing colors on death., type: Fix}
+  id: 3406
+  time: '2023-04-14T19:43:50.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Nanotrasen has improved the blood pack formula. (now restores 15u blood),
+    type: Tweak}
+  id: 3407
+  time: '2023-04-14T19:48:11.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: added Radio Jammer to uplink (5 TC). When active blocks radios in range
+      from sending messages., type: Add}
+  id: 3408
+  time: '2023-04-14T19:50:19.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed typo in uplink for the syndicate stamp., type: Fix}
+  id: 3409
+  time: '2023-04-14T19:53:36.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: 'Support multiline text edit for papers, communication console and admin
+      announcements', type: Tweak}
+  id: 3410
+  time: '2023-04-14T19:57:47.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: A second pair of shoes was added to the Autodrobe for the clothing set
+      that was missing shoes., type: Add}
+  id: 3411
+  time: '2023-04-14T22:15:11.0000000+00:00'
+- author: VigersRay
+  changes:
+  - {message: Vehicle display fix!, type: Fix}
+  id: 3412
+  time: '2023-04-15T06:02:03.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The brigmedic no longer has a hypospray., type: Remove}
+  id: 3413
+  time: '2023-04-15T15:07:14.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Changed CBURN Starting Gear., type: Tweak}
+  - {message: Changed Death Squad Starting Gear., type: Tweak}
+  id: 3414
+  time: '2023-04-15T20:05:54.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: The eating & drinking interactions now automatically repeat while there
+      is still something left to consume., type: Add}
+  id: 3415
+  time: '2023-04-15T22:14:26.0000000+00:00'
