@@ -687,6 +687,7 @@
     flavorKind: station-event-random-sentience-flavor-primate
   - type: Inventory
     templateId: monkey
+  - type: InventorySlots
   - type: Fixtures
     fixtures:
     - shape:
@@ -750,12 +751,13 @@
   id: MobMouse
   description: Squeak!
   components:
-  - type: GhostTakeoverAvailable
+  - type: GhostRole
     makeSentient: true
     allowSpeech: true
     allowMovement: true
     name: ghost-role-information-mouse-name
     description: ghost-role-information-mouse-description
+  - type: GhostTakeoverAvailable
   - type: Speech
     speechSounds: Squeak
   - type: Sprite
@@ -900,11 +902,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: mouse-1
+        Base: mouse-2
       Critical:
-        Base: dead-1
+        Base: dead-2
       Dead:
-        Base: splat-1
+        Base: splat-2
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: DiseaseCarrier
@@ -1352,10 +1354,11 @@
     - type: MobMover
     - type: HTN
       rootTask: SimpleHostileCompound
-    - type: GhostTakeoverAvailable
+    - type: GhostRole
       makeSentient: true
       name: ghost-role-information-giant-spider-name
       description: ghost-role-information-giant-spider-description
+    - type: GhostTakeoverAvailable
 
 - type: entity
   name: possum
@@ -1384,6 +1387,7 @@
   - type: Inventory
     speciesId: possum
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -1438,6 +1442,7 @@
   - type: Inventory
     speciesId: possum #close enough
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -1492,6 +1497,7 @@
   - type: Inventory
     speciesId: fox
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -1547,6 +1553,7 @@
   - type: Inventory
     speciesId: dog
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -1659,6 +1666,7 @@
   - type: Inventory
     speciesId: puppy
     templateId: pet
+  - type: InventorySlots
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1698,6 +1706,7 @@
   - type: Inventory
     speciesId: cat
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -1840,6 +1849,7 @@
   - type: Inventory
     speciesId: sloth
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -1894,6 +1904,7 @@
   - type: Inventory
     speciesId: fox #close enough
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -1928,12 +1939,13 @@
   id: MobHamster
   description: A cute, fluffy, robust hamster.
   components:
-  - type: GhostTakeoverAvailable
+  - type: GhostRole
     makeSentient: true
     allowSpeech: true
     allowMovement: true
     name: ghost-role-information-hamster-name
     description: ghost-role-information-hamster-description
+  - type: GhostTakeoverAvailable
   - type: Speech
     speechSounds: Squeak
   - type: Sprite
@@ -2055,6 +2067,7 @@
   - type: Inventory
     speciesId: pig
     templateId: pet
+  - type: InventorySlots
   - type: Strippable
   - type: UserInterface
     interfaces:

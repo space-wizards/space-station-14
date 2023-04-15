@@ -123,7 +123,6 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             EnsureComp<ActiveDoAfterComponent>(uid);
     }
 
-
     #region Creation
     /// <summary>
     ///     Tasks that are delayed until the specified time has passed

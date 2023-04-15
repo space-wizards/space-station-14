@@ -5,7 +5,7 @@
         "y": 64
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c3132671e1cb447b4ebf3ca61d71df5c7d78464e",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c3132671e1cb447b4ebf3ca61d71df5c7d78464e | Moth sprites made by PuroSlavKing (Github)",
     "states": [
         {
             "name": "alien0",
@@ -353,6 +353,54 @@
             ]
         },
         {
+            "name": "moth0",
+            "delays": [
+                [
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.4
+                ]
+            ]
+        },
+        {
+            "name": "moth1",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "moth2",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "moth3",
+            "delays": [
+                [
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.4
+                ]
+            ]
+        },
+        {
             "name": "machine0",
             "delays": [
                 [
@@ -536,7 +584,7 @@
                     0.1,
                     0.1,
                     0.1
-                ] 
+                ]
             ]
         },
         {

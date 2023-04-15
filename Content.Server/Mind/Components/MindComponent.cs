@@ -31,6 +31,7 @@ namespace Content.Server.Mind.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("ghostOnShutdown")]
+        [Access(typeof(MindSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public bool GhostOnShutdown { get; set; } = true;
     }
 

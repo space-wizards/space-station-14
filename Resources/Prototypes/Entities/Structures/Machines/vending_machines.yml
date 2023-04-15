@@ -52,6 +52,8 @@
     BoardName: "Vending Machine"
     LayoutId: Vending
   - type: Anchorable
+  - type: TypingIndicator
+    proto: robot
   - type: Speech
     speechSounds: Vending
   - type: DoAfter
@@ -849,7 +851,7 @@
     radius: 1.5
     energy: 1.6
     color: "#c73434"
-    
+
 - type: entity
   parent: VendingMachineSnack
   id: VendingMachineSustenance
@@ -1734,7 +1736,7 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Medical"]]
-   
+
 - type: entity
   parent: VendingMachine
   id: VendingMachineCentDrobe
@@ -1760,7 +1762,7 @@
     radius: 1.5
     energy: 1.6
     color: "#48CF48"
-    
+
 - type: entity
   parent: VendingMachine
   id: VendingMachineHappyHonk

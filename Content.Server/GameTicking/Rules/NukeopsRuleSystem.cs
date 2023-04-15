@@ -20,6 +20,7 @@ using Content.Server.Traitor;
 using Content.Server.Traits.Assorted;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Dataset;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Nuke;
@@ -33,7 +34,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Content.Shared.Humanoid.Prototypes;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -777,9 +777,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             else if (addSpawnPoints)
             {
                 var spawnPoint = EntityManager.SpawnEntity(_nukeopsRuleConfig.GhostSpawnPointProto, _random.Pick(spawns));
-                var spawner = EnsureComp<GhostRoleMobSpawnerComponent>(spawnPoint);
-                spawner.RoleName = Loc.GetString(nukeOpsAntag.Name);
-                spawner.RoleDescription = Loc.GetString(nukeOpsAntag.Objective);
+                var ghostRole = EnsureComp<GhostRoleComponent>(spawnPoint);
+                EnsureComp<GhostRoleMobSpawnerComponent>(spawnPoint);
+                ghostRole.RoleName = Loc.GetString(nukeOpsAntag.Name);
+                ghostRole.RoleDescription = Loc.GetString(nukeOpsAntag.Objective);
 
                 var nukeOpSpawner = EnsureComp<NukeOperativeSpawnerComponent>(spawnPoint);
                 nukeOpSpawner.OperativeName = spawnDetails.Name;
