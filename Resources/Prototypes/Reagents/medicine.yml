@@ -603,6 +603,10 @@
         key: KnockedDown
         time: 3.0
         type: Remove
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        time: 15.0
+        type: Remove
 
 - type: reagent
   id: TranexamicAcid
