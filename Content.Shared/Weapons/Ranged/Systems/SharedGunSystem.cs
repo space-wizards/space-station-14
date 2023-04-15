@@ -211,7 +211,8 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         if (TagSystem.HasTag(user, "GunsDisabled"))
         {
-            Popup(Loc.GetString("gun-disabled"), user, user);
+            if (Timing.IsFirstTimePredicted)
+                Popup(Loc.GetString("gun-disabled"), user, user);
             return;
         }
 
