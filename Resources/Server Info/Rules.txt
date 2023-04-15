@@ -61,7 +61,7 @@ This is the "short" form of the rules, which has all the information any regular
     - A medical doctor does not need insulated gloves, and the Head of Personnel does not need to give themselves armory access so they can go grab a gun. Have an actual reason for needing these things.
     - Don't manufacture weapons, bombs, or death poisons before you know of any reason you would need them.
     - Don't pre-emptively hide antagonist objectives or pre-emptively secure them with higher security then normally required.
-    - Don't manufacture things for the "end of the round" when the shuttle docks with Central Command.
+    - Don't manufacture or prepare things for the "end of the round" when the shuttle docks with Central Command.
 
 [color=#a4885c]18.[/color] Intentionally making yourself a major problem/annoyance/disruption for the crew or other players at large while not an antagonist is forbidden (referred to as "self-antagging").
     - Don't openly try to cooperate with obvious or known antagonists as a non-antagonist.
