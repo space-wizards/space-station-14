@@ -51,8 +51,6 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
             && TryComp(component.Headset, out EncryptionKeyHolderComponent? keys)
             && keys.Channels.Contains(args.Channel.ID))
         {
-            if (HasComp<EmpDisabledComponent>(uid))
-                return;
             _radio.SendRadioMessage(uid, args.Message, args.Channel, component.Headset);
             args.Channel = null; // prevent duplicate messages from other listeners.
         }
@@ -100,8 +98,6 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
 
     private void OnHeadsetReceive(EntityUid uid, HeadsetComponent component, ref RadioReceiveEvent args)
     {
-        if (HasComp<EmpDisabledComponent>(uid))
-            return;
         if (TryComp(Transform(uid).ParentUid, out ActorComponent? actor))
             _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.ConnectedClient);
     }

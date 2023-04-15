@@ -14,6 +14,7 @@ using Content.Shared.Popups;
 using Robust.Shared.Map;
 using Content.Shared.Radio.Components;
 using Content.Server.Power.Components;
+using Content.Server.Emp;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -78,9 +79,14 @@ public sealed class RadioSystem : EntitySystem
         var chatMsg = new MsgChatMessage { Message = chat };
         var ev = new RadioReceiveEvent(message, messageSource, channel, chatMsg);
 
-        var sendAttemptEv = new RadioSendAttemptEvent(channel, radioSource);
-        RaiseLocalEvent(ref sendAttemptEv);
-        var canSend = !sendAttemptEv.Cancelled;
+        var canSend = !HasComp<EmpDisabledComponent>(radioSource);
+        if (canSend)
+        {
+            var sendAttemptEv = new RadioSendAttemptEvent(channel, radioSource);
+            RaiseLocalEvent(ref sendAttemptEv);
+            RaiseLocalEvent(radioSource, ref sendAttemptEv);
+            canSend = !sendAttemptEv.Cancelled;
+        }
 
         var sourceMapId = Transform(radioSource).MapID;
         var hasActiveServer = HasActiveServer(sourceMapId, channel.ID);
@@ -95,6 +101,9 @@ public sealed class RadioSystem : EntitySystem
                 continue;
 
             if (!channel.LongRange && transform.MapID != sourceMapId && !radio.GlobalReceive)
+                continue;
+
+            if (HasComp<EmpDisabledComponent>(receiver))
                 continue;
 
             // don't need telecom server for long range channels or handheld radios and intercoms
