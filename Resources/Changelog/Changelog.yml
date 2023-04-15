@@ -1,11 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Updated engine to 0.85.0.0, type: Tweak}
-  - {message: Slipping should no longer mispredict. The drop sound will still play
-      twice., type: Fix}
-  id: 2915
-  time: '2023-01-20T00:37:34.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Lathes will now automatically stack their output., type: Tweak}
@@ -2899,3 +2892,9 @@ Entries:
   - {message: Changed Death Squad Starting Gear., type: Tweak}
   id: 3414
   time: '2023-04-15T20:05:54.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: The eating & drinking interactions now automatically repeat while there
+      is still something left to consume., type: Add}
+  id: 3415
+  time: '2023-04-15T22:14:26.0000000+00:00'
