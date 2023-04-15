@@ -1,0 +1,8 @@
+- type: latheRecipe
+  id: ClothingNeckMantleQM
+  result: ClothingNeckMantleQM
+  completetime: 2.8
+  materials:
+    Cloth: 150
+    Durathread: 150
+
