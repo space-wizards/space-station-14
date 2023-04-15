@@ -322,9 +322,9 @@
     access: [["Security"]]
 
 - type: entity
-  id: ShotgunCase
+  id: ShotgunSafe
   parent: LockerBaseSecure
-  name: shotgun case
+  name: shotgun safe
   components:
   - type: Appearance
     visuals:

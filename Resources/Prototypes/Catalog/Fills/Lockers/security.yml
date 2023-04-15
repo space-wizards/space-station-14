@@ -100,9 +100,9 @@
       - id: ClothingMaskGas
 
 - type: entity
-  id: ShotgunCaseDisabler
+  id: ShotgunSafeDisabler
   suffix: Disabler
-  parent: ShotgunCase
+  parent: ShotgunSafe
   components:
   - type: StorageFill
     contents:
@@ -110,9 +110,9 @@
         amount: 5
 
 - type: entity
-  id: ShotgunCasePistolMK58
+  id: ShotgunSafePistolMK58
   suffix: MK58
-  parent: ShotgunCase
+  parent: ShotgunSafe
   components:
   - type: StorageFill
     contents:
@@ -122,9 +122,9 @@
         amount: 8
 
 - type: entity
-  id: ShotgunCaseRifleLecter
+  id: ShotgunSafeRifleLecter
   suffix: Lecter
-  parent: ShotgunCase
+  parent: ShotgunSafe
   components:
   - type: StorageFill
     contents:
@@ -134,9 +134,9 @@
         amount: 4
 
 - type: entity
-  id: ShotgunCaseSubMachineGunVector
+  id: ShotgunSafeSubMachineGunVector
   suffix: Vector
-  parent: ShotgunCase
+  parent: ShotgunSafe
   components:
   - type: StorageFill
     contents:
@@ -146,9 +146,9 @@
         amount: 4
 
 - type: entity
-  id: ShotgunCaseShotgunEnforcer
+  id: ShotgunSafeShotgunEnforcer
   suffix: Enforcer
-  parent: ShotgunCase
+  parent: ShotgunSafe
   components:
   - type: StorageFill
     contents:
@@ -158,9 +158,9 @@
         amount: 4
 
 - type: entity
-  id: ShotgunCaseShotgunKammerer
+  id: ShotgunSafeShotgunKammerer
   suffix: Kammerer
-  parent: ShotgunCase
+  parent: ShotgunSafe
   components:
   - type: StorageFill
     contents:
@@ -170,9 +170,9 @@
         amount: 4
 
 - type: entity
-  id: ShotgunCaseSubMachineGunWt550
+  id: ShotgunSafeSubMachineGunWt550
   suffix: Wt550
-  parent: ShotgunCase
+  parent: ShotgunSafe
   components:
   - type: StorageFill
     contents:
@@ -182,9 +182,9 @@
         amount: 4
 
 - type: entity
-  id: ShotgunCaseLaserCarbine
+  id: ShotgunSafeLaserCarbine
   suffix: Laser Carbine
-  parent: ShotgunCase
+  parent: ShotgunSafe
   components:
   - type: StorageFill
     contents:
