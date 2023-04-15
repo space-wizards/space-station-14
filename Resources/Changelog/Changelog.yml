@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Adds guidebook entries for anomalies and anomaly equipment. Read all
-      about it!, type: Add}
-  id: 2912
-  time: '2023-01-19T11:00:17.0000000+00:00'
 - author: checkraze
   changes:
   - {message: minor update to the pirate shuttle, type: Tweak}
@@ -2900,3 +2894,8 @@ Entries:
       that was missing shoes., type: Add}
   id: 3411
   time: '2023-04-14T22:15:11.0000000+00:00'
+- author: VigersRay
+  changes:
+  - {message: Vehicle display fix!, type: Fix}
+  id: 3412
+  time: '2023-04-15T06:02:03.0000000+00:00'
