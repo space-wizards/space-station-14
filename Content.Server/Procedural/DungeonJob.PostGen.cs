@@ -105,18 +105,16 @@ public sealed partial class DungeonJob
         }
     }
 
-    private async Task PostGen(EntrancePostGen gen, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid, Random random)
+    private async Task PostGen(EntrancePostGen gen, Dungeon dungeon, MapGridComponent grid, Random random)
     {
         var rooms = new List<DungeonRoom>(dungeon.Rooms);
         var roomTiles = new List<Vector2i>();
         var tileData = new Tile(_tileDefManager[gen.Tile].TileId);
-        var count = gen.Count;
 
-        while (count > 0 && rooms.Count > 0)
+        for (var i = 0; i < gen.Count; i++)
         {
             var roomIndex = random.Next(rooms.Count);
             var room = rooms[roomIndex];
-            rooms.RemoveAt(roomIndex);
 
             // Move out 3 tiles in a direction away from center of the room
             // If none of those intersect another tile it's probably external
@@ -126,12 +124,6 @@ public sealed partial class DungeonJob
 
             foreach (var tile in roomTiles)
             {
-                // Check the interior node is at least accessible?
-                // Can't do anchored because it might be a locker or something.
-                // TODO: Better collision mask check
-                if (_lookup.GetEntitiesIntersecting(gridUid, tile, LookupFlags.Dynamic | LookupFlags.Static).Any())
-                    continue;
-
                 var direction = (tile - room.Center).ToAngle().GetCardinalDir().ToAngle().ToVec();
                 var isValid = true;
 
