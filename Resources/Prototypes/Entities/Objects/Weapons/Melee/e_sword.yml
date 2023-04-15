@@ -211,3 +211,8 @@
         Heat: 0
         Structural: 0
         Blunt: 0
+  - type: Reflect
+    enabled: false
+    energeticChance: 0.75
+    kineticChance: 0.5
+    spread: 50
