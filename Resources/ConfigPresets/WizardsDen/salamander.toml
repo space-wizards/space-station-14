@@ -11,6 +11,10 @@ rules_header = "ui-rules-header-rp"
 [whitelist]
 enabled = true
 reason = "whitelist-not-whitelisted-rp"
+min_players = 20
+
+[ooc]
+enable_during_round = true
 
 [ic]
 flavor_text = true
