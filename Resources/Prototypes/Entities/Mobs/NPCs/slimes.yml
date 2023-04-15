@@ -116,7 +116,7 @@
     interactSuccessString: petting-success-slimes
     interactFailureString: petting-failure-generic
   - type: ReplacementAccent
-    accent: genericAggressive
+    accent: slimes
   - type: GhostTakeoverAvailable
     makeSentient: true
     name: ghost-role-information-slimes-name

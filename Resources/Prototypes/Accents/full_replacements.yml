@@ -91,3 +91,12 @@
   - accent-words-pig-2
   - accent-words-pig-3
   - accent-words-pig-4
+
+- type: accent
+  id: slimes
+  fullReplacements:
+  - accent-words-slimes-1
+  - accent-words-slimes-2
+  - accent-words-slimes-3
+  - accent-words-slimes-4
+  - accent-words-slimes-5

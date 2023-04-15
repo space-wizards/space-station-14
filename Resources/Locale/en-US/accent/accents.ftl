@@ -67,3 +67,10 @@ accent-words-pig-1 = Oink.
 accent-words-pig-2 = Oink?
 accent-words-pig-3 = Oink!
 accent-words-pig-4 = Oink oink!
+
+# Slimes
+accent-words-slimes-1 = Blumb.
+accent-words-slimes-2 = Blimb?
+accent-words-slimes-3 = Blumb!
+accent-words-slimes-4 = Bluuumb...
+accent-words-slimes-5 = Bli blumb!
