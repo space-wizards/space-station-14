@@ -1,35 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Lathes will now automatically stack their output., type: Tweak}
-  id: 2916
-  time: '2023-01-20T04:06:02.0000000+00:00'
-- author: lapatison
-  changes:
-  - {message: 'Added vinegar recipe, it can be created by mixing ethanol and oxygen',
-    type: Add}
-  - {message: 'Added mayo recipe, it can be created by mixing eggs, oil, and vinegar
-      or lemon juice', type: Add}
-  - {message: Added ketchunaise recipe, type: Add}
-  - {message: 'Added recipe of Posca - old Roman beverage - that can be created from
-      vinegar, salt, and water', type: Add}
-  id: 2917
-  time: '2023-01-20T13:46:43.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: Remove galoshes from janidrobe, type: Tweak}
-  id: 2918
-  time: '2023-01-20T13:47:14.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed zipties not not being properly removeable., type: Fix}
-  id: 2919
-  time: '2023-01-20T13:48:20.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Tabletops can now fade their sprites like trees., type: Tweak}
-  id: 2920
-  time: '2023-01-20T13:49:22.0000000+00:00'
 - author: Visne
   changes:
   - {message: Fixed the syringe icon in the lathe being displayed incorrectly, type: Fix}
@@ -2898,3 +2867,31 @@ Entries:
       is still something left to consume., type: Add}
   id: 3415
   time: '2023-04-15T22:14:26.0000000+00:00'
+- author: hsagerer
+  changes:
+  - {message: Fixed Cake and Cake Slices from having sizes that do not add to the
+      same value., type: Fix}
+  id: 3416
+  time: '2023-04-15T22:40:51.0000000+00:00'
+- author: BurninDreamer
+  changes:
+  - {message: Syndicate smokes now have 3x the healing chemical., type: Tweak}
+  id: 3417
+  time: '2023-04-15T22:41:33.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: Synaptizine is now a powerful treatment to hallucinations caused by
+      Space Drugs or similar chemicals., type: Tweak}
+  id: 3418
+  time: '2023-04-15T22:42:17.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Added Centcom received an animated PDA with a Centcom pen as a gift!,
+    type: Add}
+  id: 3419
+  time: '2023-04-15T22:43:15.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Added use toy mouse like hat!, type: Add}
+  id: 3420
+  time: '2023-04-15T22:44:00.0000000+00:00'
