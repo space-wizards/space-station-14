@@ -129,13 +129,13 @@
   name: action-name-sleep
   description: action-desc-sleep
   checkCanInteract: false
-  icon: { sprite: Objects/Consumable/Food/egg.rsi, state: icon }
+  icon: { sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi, state: icon }
   event: !type:SleepActionEvent
 
 - type: instantAction
   id: Wake
   name: action-name-wake
   description: action-desc-wake
-  icon: { sprite: Objects/Consumable/Food/egg.rsi, state: icon }
+  icon: { sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi, state: icon }
   checkCanInteract: false
   event: !type:WakeActionEvent

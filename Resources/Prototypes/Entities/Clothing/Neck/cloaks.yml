@@ -133,6 +133,15 @@
 
 - type: entity
   parent: ClothingNeckBase
+  id: ClothingNeckCloakPirateCap
+  name: pirate captain cloak
+  description: A rather fetching black pirate cloak, complete with skull motif.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/piratecap.rsi
+
+- type: entity
+  parent: ClothingNeckBase
   id: ClothingNeckCloakMoth
   name: moth cloak
   description: A cloak in the form of moth wings is an unusual and original element of the wardrobe that can attract the attention of others. It is made of a thin fabric imitating moth wings, with soft and fluffy edges. The raincoat is fastened around the neck with Velcro, and has a hood in the shape of a moths head.
@@ -146,4 +155,5 @@
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
-
+  - type: TypingIndicatorClothing
+    proto: moth
