@@ -207,7 +207,7 @@
       - shape:
           !type:PhysShapeCircle
           radius: 0.3
-        density: 350
+        density: 250
         layer:
         - MobLayer
         mask:
