@@ -138,8 +138,7 @@
   maxDuration: 720
   factions:
     - Xenos
-  dungeonConfig: SandDungeon
-  dungeonRadius: 40
+  dungeonConfig: Experiment
   dungeonPosition: 70,0
   reward: SimpleSalvage
   loot:
@@ -155,8 +154,7 @@
   maxDuration: 720
   factions:
     - Xenos
-  dungeonConfig: SandDungeon
-  dungeonRadius: 40
+  dungeonConfig: Experiment
   dungeonPosition: 70,0
   reward: SimpleSalvage
   loot:

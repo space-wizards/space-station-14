@@ -246,11 +246,11 @@ public sealed partial class SalvageSystem
             var mapUid = _mapManager.GetMapEntityId(mapId);
             _mapManager.AddUninitializedMap(mapId);
             MetaDataComponent? metadata = null;
-            var grid = _entManager.EnsureComponent<MapGridComponent>(_mapManager.GetMapEntityId(mapId));
+            var grid = _entManager.EnsureComponent<MapGridComponent>(mapUid);
 
             // Setup mission configs
             var biome = _entManager.EnsureComponent<BiomeComponent>(mapUid);
-            biome.BiomePrototype = config.Biome;
+            _biome.SetPrototype(biome, config.Biome);
             _prototypeManager.Index<BiomePrototype>(biome.BiomePrototype);
             _entManager.Dirty(biome);
 
@@ -306,7 +306,7 @@ public sealed partial class SalvageSystem
             var dungeonOffset = config.DungeonPosition;
             var dungeonConfig = _prototypeManager.Index<DungeonConfigPrototype>(config.DungeonConfigPrototype);
 
-            var dungeon = await _dungeon.GenerateDungeonAsync(dungeonConfig, mapUid, grid, missionSeed);
+            var dungeon = await _dungeon.GenerateDungeonAsync(dungeonConfig, mapUid, grid, Vector2.Zero, missionSeed);
 
             // Aborty
             if (dungeon.Rooms.Count == 0)

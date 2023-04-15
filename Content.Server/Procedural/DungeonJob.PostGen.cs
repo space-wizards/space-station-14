@@ -105,7 +105,7 @@ public sealed partial class DungeonJob
         }
     }
 
-    private async Task PostGen(EntrancePostGen gen, Dungeon dungeon, MapGridComponent grid, Random random)
+    private async Task PostGen(EntrancePostGen gen, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid, Random random)
     {
         var rooms = new List<DungeonRoom>(dungeon.Rooms);
         var roomTiles = new List<Vector2i>();
@@ -154,8 +154,6 @@ public sealed partial class DungeonJob
                 {
                     _entManager.SpawnEntity(ent, gridCoords);
                 }
-
-                count--;
 
                 // Clear out any biome tiles nearby to avoid blocking it
                 foreach (var nearTile in grid.GetTilesIntersecting(new Circle(gridCoords.Position, 1.5f), false))

@@ -97,7 +97,7 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
                 Text = $"Difficulty:"
             });
 
-            var difficultyColor = StyleNano.NanoGold;
+            Color difficultyColor;
 
             switch (config.DifficultyRating)
             {
