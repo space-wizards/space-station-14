@@ -2,7 +2,7 @@
   abstract: true
   parent: BaseStructure
   id: BaseHardbomb
-  description: Be sure to wear an EOD suit around this damn thing.
+  description: Just keep talking and nobody will explode.
   name: hardbomb
   components:
     - type: Appearance
@@ -15,6 +15,8 @@
     - type: Wires
       LayoutId: Defusable
     - type: Defusable
+      beepSound: /Audio/Machines/Nuke/general_beep.ogg
+      alwaysRandomize: true
       timeOptions: [90, 120, 150, 180, 210, 240, 270, 300]
     - type: Explosive
       explosionType: Default
