@@ -9,8 +9,11 @@ namespace Content.Shared.Light;
 
 public sealed class LightLevelSystem : EntitySystem
 {
+    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+
+    public const float MaxLightRange = 15f;
 
     private bool Ignored(EntityUid ignored)
     {
@@ -32,8 +35,11 @@ public sealed class LightLevelSystem : EntitySystem
         // todo: in the future, this should support light on planet maps.
         var lightLevel = 0f;
 
-        foreach (var (light, xform) in EntityQuery<SharedPointLightComponent, TransformComponent>(true))
+        foreach (var light in _entityLookup.GetComponentsInRange<SharedPointLightComponent>(map, pos, MaxLightRange))
         {
+            // todo mercy until entityLookup supports multiple components
+            var xform = Transform(light.Owner);
+
             if (!light.Enabled)
                 continue;
 
