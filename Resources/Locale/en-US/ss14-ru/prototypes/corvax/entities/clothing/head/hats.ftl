@@ -10,3 +10,5 @@ ent-ClothingHeadHatCapHoS = head of security cap
     .desc = The robust standard-issue cap of the Head of Security. For showing the officers who's in charge.
 ent-ClothingHeadHatCapWardenAlt = warden's police hat
     .desc = It's a special blue hat issued to the Warden of a security force.
+ent-ClothingHeadHatBeretSecurityMedic = security medic beret
+    .desc = A robust beret with the medical insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection.

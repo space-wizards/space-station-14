@@ -8,3 +8,25 @@
       sprite: Corvax/Clothing/OuterClothing/Vests/armor_sec.rsi
     - type: Clothing
       sprite: Corvax/Clothing/OuterClothing/Vests/armor_sec.rsi
+
+- type: entity
+  parent: ClothingOuterVestKevlar
+  id: ClothingOuterVestArmorMedSec
+  name: security medic armor vest
+  description: A security medic's armor vest, with little pockets for little things.
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/OuterClothing/Vests/armor_sec_med.rsi
+    - type: Clothing
+      sprite: Corvax/Clothing/OuterClothing/Vests/armor_sec_med.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterVestSecurityMedic
+  name: security medic vest
+  description: A lightweight vest worn by the Security Medic.
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/OuterClothing/Vests/vest_security_medic.rsi
+    - type: Clothing
+      sprite: Corvax/Clothing/OuterClothing/Vests/vest_security_medic.rsi

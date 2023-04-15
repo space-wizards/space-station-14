@@ -73,3 +73,17 @@
           Piercing: 0.6
           Heat: 0.9
 
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatLabSecurityMedic
+  name: security medic labcoat
+  description: A suit that protects against minor chemical spills.
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/OuterClothing/Coats/labcoat_security_medic.rsi
+    - type: Clothing
+      sprite: Corvax/Clothing/OuterClothing/Coats/labcoat_security_medic.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Caustic: 0.75

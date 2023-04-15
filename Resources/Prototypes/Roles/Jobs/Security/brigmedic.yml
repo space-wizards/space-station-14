@@ -26,10 +26,11 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitBrigmedic
     back: ClothingBackpackSecurityFilled
-    shoes: ClothingShoesColorRed
+    shoes: ClothingShoesBootsJackSec # Corvax-Resprite
     gloves: ClothingHandsGlovesNitrile
     eyes: ClothingEyesHudMedical
-    head: ClothingHeadHatSurgcapBlue
+    head: ClothingHeadHatBeretSecurityMedic # Corvax-Resprite
+    outerClothing: ClothingOuterVestArmorMedSec # Corvax-Resprite
     id: BrigmedPDA
     ears: ClothingHeadsetSecurity
     mask: ClothingMaskSterile

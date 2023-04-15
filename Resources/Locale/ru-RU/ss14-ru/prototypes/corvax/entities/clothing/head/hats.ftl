@@ -10,3 +10,5 @@ ent-ClothingHeadHatCapHoS = фуражка главы службы безопа�
     .desc = Прочная форменная фуражка начальника службы безопасности. Напоминает рядовым офицерам, кто здесь главный.
 ent-ClothingHeadHatCapWardenAlt = полицейская фуражка смотрителя
     .desc = Специальная синяя фуражка, выдаваемая смотрителю отдела службы безопасности.
+ent-ClothingHeadHatBeretSecurityMedic = security medic beret
+    .desc = A robust beret with the medical insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection.

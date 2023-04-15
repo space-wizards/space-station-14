@@ -58,6 +58,11 @@
       - id: Flash
       - id: WeaponDisabler
       - id: ClothingOuterHardsuitBrigmed
+      - id: ClothingHeadHelmetSecurityMedic # Corvax-Resprite
+      - id: ClothingOuterVestSecurityMedic # Corvax-Resprite
+        prob: 0.5
+      - id: ClothingOuterCoatLabSecurityMedic # Corvax-Resprite
+        prob: 0.5
       - id: EncryptionKeyMedical
       - id: BoxSterileMask
       - id: MedkitFilled
