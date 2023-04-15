@@ -46,8 +46,6 @@ namespace Content.Server.Power.Components
         /// </summary>
         [ViewVariables] public bool IsFullyCharged => MathHelper.CloseToPercent(CurrentCharge, MaxCharge);
 
-        public bool IsRecieving;
-
         /// <summary>
         /// The price per one joule. Default is 1 credit for 10kJ.
         /// </summary>

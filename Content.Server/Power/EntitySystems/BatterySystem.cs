@@ -74,7 +74,6 @@ namespace Content.Server.Power.EntitySystems
             var enumerator = AllEntityQuery<PowerNetworkBatteryComponent, BatteryComponent>();
             while (enumerator.MoveNext(out var uid, out var netBat, out var bat))
             {
-                bat.IsRecieving = netBat.NetworkBattery.CurrentReceiving > 0;
                 var netCharge = netBat.NetworkBattery.CurrentStorage;
 
                 bat.Charge = netCharge;
