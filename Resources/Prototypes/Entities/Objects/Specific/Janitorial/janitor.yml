@@ -85,7 +85,7 @@
   - type: SolutionContainerManager
     solutions:
       bucket:
-        maxVol: 500
+        maxVol: 600
   - type: Spillable
     spillDelay: 3.0
   - type: DrainableSolution
@@ -134,10 +134,10 @@
     - type: SolutionContainerManager
       solutions:
         bucket:
-          maxVol: 500
+          maxVol: 600
           reagents:
             - ReagentId: Water
-              Quantity: 500
+              Quantity: 600
 
 - type: entity
   name: wet floor sign
@@ -179,6 +179,7 @@
         tags:
           - Mop
           - TrashBag
+          - Bucket
     - type: ItemSlots
       slots:
         mop_slot:
@@ -187,6 +188,13 @@
             tags:
               - Mop
           insertOnInteract: false # or it conflicts with bucket logic
+          priority: 5 # Higher than bucket slot
+        bucket_slot:
+          name: Bucket
+          whitelist:
+            tags:
+              - Bucket
+          insertOnInteract: false # or it also conflicts with bucket logic
           priority: 4 # Higher than trash bag slot
         trashbag_slot:
           name: Bag
@@ -199,7 +207,7 @@
       - shape:
           !type:PhysShapeCircle
           radius: 0.3
-        density: 350
+        density: 250
         layer:
         - MobLayer
         mask:
@@ -209,10 +217,10 @@
     - type: SolutionContainerManager
       solutions:
         bucket:
-          maxVol: 500
+          maxVol: 800
           reagents:
             - ReagentId: Water
-              Quantity: 250 # half-full at roundstart to leave room for puddles
+              Quantity: 600 # 3 quarters full at roundstart to make it more appealing
     - type: DrainableSolution
       solution: bucket
     - type: RefillableSolution
@@ -243,22 +251,6 @@
                 path: /Audio/Effects/metalbreak.ogg
     - type: ItemMapper
       mapLayers:
-        cart_mop:
-          whitelist:
-            tags:
-              - Mop
-        cart_garbage:
-          whitelist:
-            tags:
-              - TrashBag
-        cart_replacer:
-          whitelist:
-            components:
-              - LightReplacer
-        cart_spray:
-          whitelist:
-            tags:
-              - Spray
         cart_sign1: # this is like stack of floor signs
           minCount: 1
           whitelist:
@@ -279,6 +271,26 @@
           whitelist:
             tags:
               - WetFloorSign
+        cart_spray:
+          whitelist:
+            tags:
+              - Spray
+        cart_garbage:
+          whitelist:
+            tags:
+              - TrashBag
+        cart_replacer:
+          whitelist:
+            components:
+              - LightReplacer
+        cart_bucket:
+          whitelist:
+            tags:
+              - Bucket
+        cart_mop:
+          whitelist:
+            tags:
+              - Mop
       sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
     - type: Appearance
     - type: SolutionContainerVisuals
@@ -297,6 +309,7 @@
           ents: []
         mop_slot: !type:ContainerSlot {}
         trashbag_slot: !type:ContainerSlot {}
+        bucket_slot: !type:ContainerSlot {}
 
 - type: entity
   id: FloorDrain
