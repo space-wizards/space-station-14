@@ -27,3 +27,7 @@
   id: lawyer
   typingState: lawyer0
   idleState: lawyer3 # Corvax-TypingIndicator
+
+- type: typingIndicator
+  id: moth
+  typingState: moth0

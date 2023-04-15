@@ -7,15 +7,25 @@ namespace Content.Client.Medical.CrewMonitoring
 {
     public sealed class CrewMonitoringBoundUserInterface : BoundUserInterface
     {
+        private readonly IEntityManager _entManager;
         private CrewMonitoringWindow? _menu;
 
-        public CrewMonitoringBoundUserInterface([NotNull] ClientUserInterfaceComponent owner, [NotNull] Enum uiKey) : base(owner, uiKey)
+        public CrewMonitoringBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
+            _entManager = IoCManager.Resolve<IEntityManager>();
         }
 
         protected override void Open()
         {
-            _menu = new CrewMonitoringWindow();
+            EntityUid? gridUid = null;
+
+            if (_entManager.TryGetComponent<TransformComponent>(Owner.Owner, out var xform))
+            {
+                gridUid = xform.GridUid;
+            }
+
+            _menu = new CrewMonitoringWindow(gridUid);
+
             _menu.OpenCentered();
             _menu.OnClose += Close;
         }
@@ -27,7 +37,15 @@ namespace Content.Client.Medical.CrewMonitoring
             switch (state)
             {
                 case CrewMonitoringState st:
-                    _menu?.ShowSensors(st.Sensors, st.WorldPosition, st.Snap, st.Precision);
+                    _entManager.TryGetComponent<TransformComponent>(Owner.Owner, out var xform);
+                    Vector2 localPosition = Vector2.Zero;
+
+                    if (_entManager.TryGetComponent<TransformComponent>(xform?.GridUid, out var gridXform))
+                    {
+                        localPosition = gridXform.InvWorldMatrix.Transform(xform.WorldPosition);
+                    }
+
+                    _menu?.ShowSensors(st.Sensors, localPosition, st.Snap, st.Precision);
                     break;
             }
         }
