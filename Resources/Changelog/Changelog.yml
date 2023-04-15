@@ -1,10 +1,4 @@
 Entries:
-- author: AJCM-git
-  changes:
-  - {message: Neither monkeys on the guidebook nor people outside your view float,
-    type: Fix}
-  id: 2914
-  time: '2023-01-19T23:48:29.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Updated engine to 0.85.0.0, type: Tweak}
@@ -2899,3 +2893,9 @@ Entries:
   - {message: The brigmedic no longer has a hypospray., type: Remove}
   id: 3413
   time: '2023-04-15T15:07:14.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Changed CBURN Starting Gear., type: Tweak}
+  - {message: Changed Death Squad Starting Gear., type: Tweak}
+  id: 3414
+  time: '2023-04-15T20:05:54.0000000+00:00'
