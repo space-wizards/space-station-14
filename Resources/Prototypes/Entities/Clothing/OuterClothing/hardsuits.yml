@@ -172,7 +172,7 @@
 
 - type: entity
   parent: ClothingOuterEVASuitBase
-  id:  ClothingOuterHardsuitEVA
+  id: ClothingOuterHardsuitEVA
   name: EVA suit
   description: A lightweight space suit with the basic ability to protect the wearer from the vacuum of space during emergencies.
   components:
@@ -180,6 +180,9 @@
     sprite: Clothing/OuterClothing/Hardsuits/eva.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/eva.rsi
+  - type: Tag
+    tags:
+    - HardsuitEVA
 
 # Moved to hardsuits because this is where EVA capable suits are apparently.
 # Same stats as normal EVA suit.
@@ -193,6 +196,9 @@
     sprite: Clothing/OuterClothing/Suits/syndicate.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/syndicate.rsi
+  - type: Tag
+    tags:
+    - HardsuitEVA
 
 - type: entity
   parent: ClothingOuterEVASuitBase
@@ -204,6 +210,9 @@
     sprite: Clothing/OuterClothing/Hardsuits/evaprisoner.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/evaprisoner.rsi
+  - type: Tag
+    tags:
+    - HardsuitEVA
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -803,3 +812,33 @@
     damageCoefficient: 0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitPirateEVA
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitClown
+  name: clown hardsuit
+  description: A custom made clown hardsuit.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/clown.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/clown.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 10000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
+  - type: Construction
+    graph: ClownHardsuit
+    node: clownHardsuit
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitClown
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9

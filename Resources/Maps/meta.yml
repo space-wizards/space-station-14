@@ -48879,6 +48879,18 @@ entities:
   - pos: -37.5,22.5
     parent: 0
     type: Transform
+- uid: 5342
+  type: LockerBrigmedicFilled
+  components:
+  - pos: -18.5,30.5
+    parent: 0
+    type: Transform
+- uid: 5343
+  type: SpawnPointBrigmedic
+  components:
+  - pos: -16.5,29.5
+    parent: 0
+    type: Transform
 - uid: 5355
   type: AirlockExternalGlass
   components:
@@ -78158,30 +78170,6 @@ entities:
   - pos: -18.5,29.5
     parent: 0
     type: Transform
-- uid: 9245
-  type: LockerMedicineFilled
-  components:
-  - pos: -18.5,30.5
-    parent: 0
-    type: Transform
-  - air:
-      volume: 200
-      immutable: False
-      temperature: 293.1495
-      moles:
-      - 3.848459
-      - 14.477538
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    type: EntityStorage
 - uid: 9246
   type: HandheldHealthAnalyzer
   components:
@@ -154419,7 +154407,7 @@ entities:
   - pos: 9.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -16586.63
+  - SecondsUntilStateChange: -16613.098
     state: Closing
     type: Door
   - inputs:
@@ -154435,7 +154423,7 @@ entities:
   - pos: 10.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -16586.63
+  - SecondsUntilStateChange: -16613.098
     state: Closing
     type: Door
   - inputs:
@@ -154451,7 +154439,7 @@ entities:
   - pos: 11.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -16586.63
+  - SecondsUntilStateChange: -16613.098
     state: Closing
     type: Door
   - inputs:
@@ -154467,7 +154455,7 @@ entities:
   - pos: 13.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -16586.63
+  - SecondsUntilStateChange: -16613.098
     state: Closing
     type: Door
   - inputs:
@@ -154483,7 +154471,7 @@ entities:
   - pos: 14.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -16586.63
+  - SecondsUntilStateChange: -16613.098
     state: Closing
     type: Door
   - inputs:
@@ -154499,7 +154487,7 @@ entities:
   - pos: 15.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -16586.63
+  - SecondsUntilStateChange: -16613.098
     state: Closing
     type: Door
   - inputs:

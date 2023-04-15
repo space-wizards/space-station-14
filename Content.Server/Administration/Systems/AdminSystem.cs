@@ -1,9 +1,7 @@
 using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
-using Content.Server.Administration.Notes;
-using Content.Server.Database;
+using Content.Server.GameTicking.Events;
 using Content.Server.IdentityManagement;
 using Content.Server.Players;
 using Content.Server.Roles;
@@ -15,7 +13,6 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
-using Job = Content.Server.Roles.Job;
 
 namespace Content.Server.Administration.Systems
 {
@@ -23,8 +20,6 @@ namespace Content.Server.Administration.Systems
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
-        [Dependency] private readonly IServerDbManager _db = default!;
-        [Dependency] private readonly IAdminNotesManager _notes = default!;
 
         private readonly Dictionary<NetUserId, PlayerInfo> _playerList = new();
 
@@ -49,7 +44,7 @@ namespace Content.Server.Administration.Systems
             SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestartCleanup);
         }
 
-        private async void OnRoundRestartCleanup(RoundRestartCleanupEvent ev)
+        private void OnRoundRestartCleanup(RoundRestartCleanupEvent ev)
         {
             _roundActivePlayers.Clear();
 
@@ -62,7 +57,7 @@ namespace Content.Server.Administration.Systems
                     return;
 
                 _playerManager.TryGetSessionById(id, out var session);
-                _playerList[id] = await GetPlayerInfo(playerData, session);
+                _playerList[id] = GetPlayerInfo(playerData, session);
             }
 
             var updateEv = new FullPlayerListEvent() { PlayersInfo = _playerList.Values.ToList() };
@@ -73,9 +68,9 @@ namespace Content.Server.Administration.Systems
             }
         }
 
-        public async void UpdatePlayerList(IPlayerSession player)
+        public void UpdatePlayerList(IPlayerSession player)
         {
-            _playerList[player.UserId] = await GetPlayerInfo(player.Data, player);
+            _playerList[player.UserId] = GetPlayerInfo(player.Data, player);
 
             var playerInfoChangedEvent = new PlayerInfoChangedEvent
             {
@@ -162,7 +157,7 @@ namespace Content.Server.Administration.Systems
             RaiseNetworkEvent(ev, playerSession.ConnectedClient);
         }
 
-        private async Task<PlayerInfo> GetPlayerInfo(IPlayerData data, IPlayerSession? session)
+        private PlayerInfo GetPlayerInfo(IPlayerData data, IPlayerSession? session)
         {
             var name = data.UserName;
             var entityName = string.Empty;
@@ -183,11 +178,8 @@ namespace Content.Server.Administration.Systems
 
             var connected = session != null && session.Status is SessionStatus.Connected or SessionStatus.InGame;
 
-            var bans = await _db.CountServerBansAsync(null, data.UserId, null);
-            var notes = await _notes.CountNotes(data.UserId);
-
             return new PlayerInfo(name, entityName, identityName, startingRole, antag, session?.AttachedEntity, data.UserId,
-                connected, _roundActivePlayers.Contains(data.UserId), bans, notes);
+                connected, _roundActivePlayers.Contains(data.UserId));
         }
     }
 }
