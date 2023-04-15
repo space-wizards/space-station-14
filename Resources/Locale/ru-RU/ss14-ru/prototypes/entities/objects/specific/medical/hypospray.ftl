@@ -19,3 +19,5 @@ ent-StimpackExperimental = экспериментальный стимпак
 ent-Hypopen = ручка
     .desc = Ручка с чёрными чернилами.
     .suffix = Гипоручка
+ent-HypopenBox = hypopen box
+    .desc = A small box containing a hypopen. Packaging disintegrates when opened, leaving no evidence behind.

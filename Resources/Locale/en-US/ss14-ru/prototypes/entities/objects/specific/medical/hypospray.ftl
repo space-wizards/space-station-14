@@ -19,3 +19,5 @@ ent-StimpackExperimental = experimental stimulant injector
 ent-Hypopen = pen
     .desc = A dark ink pen.
     .suffix = Hypopen
+ent-HypopenBox = hypopen box
+    .desc = A small box containing a hypopen. Packaging disintegrates when opened, leaving no evidence behind.
