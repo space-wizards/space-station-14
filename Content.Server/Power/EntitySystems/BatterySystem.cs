@@ -116,7 +116,7 @@ namespace Content.Server.Power.EntitySystems
 
         public float UseCharge(EntityUid uid, float value, BatteryComponent? battery = null)
         {
-            if (!Resolve(uid, ref battery))
+            if (value <= 0 ||  !Resolve(uid, ref battery) || battery.CurrentCharge == 0)
                 return 0;
 
             var newValue = Math.Clamp(0, battery.CurrentCharge - value, battery._maxCharge);
@@ -132,8 +132,12 @@ namespace Content.Server.Power.EntitySystems
             if (!Resolve(uid, ref battery))
                 return;
 
+            var old = battery._maxCharge;
             battery._maxCharge = Math.Max(value, 0);
             battery.Charge = Math.Min(battery.Charge, battery._maxCharge);
+            if (MathHelper.CloseTo(battery._maxCharge, old))
+                return;
+
             var ev = new ChargeChangedEvent(battery.CurrentCharge, battery._maxCharge);
             RaiseLocalEvent(uid, ref ev);
         }
@@ -143,7 +147,11 @@ namespace Content.Server.Power.EntitySystems
             if (!Resolve(uid, ref battery))
                 return;
 
+            var old = battery.Charge;
             battery.Charge = MathHelper.Clamp(value, 0, battery._maxCharge);
+            if (MathHelper.CloseTo(battery.Charge, old))
+                return;
+
             var ev = new ChargeChangedEvent(battery.CurrentCharge, battery._maxCharge);
             RaiseLocalEvent(uid, ref ev);
         }
