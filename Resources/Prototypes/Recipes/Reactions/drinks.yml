@@ -574,3 +574,17 @@
       amount: 1
   products:
     Pilk: 2
+
+- type: reaction
+  id: DavidMartinez
+  reactants:
+    Cola:
+      amount: 2
+    Vodka:
+      amount: 2
+    Ice:
+      ammount: 1
+    JuiceLemon:
+      ammount: 1
+  products:
+    DavidMartinez: 6
