@@ -63,6 +63,14 @@
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: StrongMetallic
+    - type: UserInterface
+      interfaces:
+        - key: enum.SmesUiKey.Key
+          type: SmesBoundUserInterface
+    - type: ActivatableUI
+      inHandsOnly: false
+      singleUser: true
+      key: enum.SmesUiKey.Key
 
 # SMES' in use
 

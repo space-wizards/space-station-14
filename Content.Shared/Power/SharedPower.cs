@@ -23,4 +23,11 @@ namespace Content.Shared.Power
         WireCount,
         CutWires
     }
+
+    public enum ExternalPowerState
+    {
+        None,
+        Low,
+        Good,
+    }
 }

@@ -115,8 +115,8 @@ namespace Content.Server.Power.EntitySystems
         }
 
         public void UpdateApcState(EntityUid uid,
-            ApcComponent? apc=null,
-            BatteryComponent? battery=null)
+            ApcComponent? apc = null,
+            BatteryComponent? battery = null)
         {
             if (!Resolve(uid, ref apc, ref battery))
                 return;
@@ -161,13 +161,13 @@ namespace Content.Server.Power.EntitySystems
 
             if (_userInterfaceSystem.GetUiOrNull(uid, ApcUiKey.Key, ui) is { } bui)
             {
-                bui.SetState(new ApcBoundInterfaceState(apc.MainBreakerEnabled, apc.HasAccess, (int)MathF.Ceiling(power), apc.LastExternalState, battery.CurrentCharge / battery.MaxCharge));
+                bui.SetState(new ApcBoundInterfaceState(apc.MainBreakerEnabled, apc.HasAccess, (int) MathF.Ceiling(power), apc.LastExternalState, battery.CurrentCharge / battery.MaxCharge));
             }
         }
 
         public ApcChargeState CalcChargeState(EntityUid uid,
-            ApcComponent? apc=null,
-            BatteryComponent? battery=null)
+            ApcComponent? apc = null,
+            BatteryComponent? battery = null)
         {
             if (apc != null && HasComp<EmaggedComponent>(uid))
                 return ApcChargeState.Emag;
@@ -188,26 +188,26 @@ namespace Content.Server.Power.EntitySystems
             return delta < 0 ? ApcChargeState.Charging : ApcChargeState.Lack;
         }
 
-        public ApcExternalPowerState CalcExtPowerState(EntityUid uid,
-            ApcComponent? apc=null,
-            BatteryComponent? battery=null)
+        public ExternalPowerState CalcExtPowerState(EntityUid uid,
+            ApcComponent? apc = null,
+            BatteryComponent? battery = null)
         {
             if (!Resolve(uid, ref apc, ref battery))
-                return ApcExternalPowerState.None;
+                return ExternalPowerState.None;
 
             var netBat = Comp<PowerNetworkBatteryComponent>(uid);
             if (netBat.CurrentReceiving == 0 && !MathHelper.CloseTo(battery.CurrentCharge / battery.MaxCharge, 1))
             {
-                return ApcExternalPowerState.None;
+                return ExternalPowerState.None;
             }
 
             var delta = netBat.CurrentReceiving - netBat.CurrentSupply;
             if (!MathHelper.CloseToPercent(delta, 0, 0.1f) && delta < 0)
             {
-                return ApcExternalPowerState.Low;
+                return ExternalPowerState.Low;
             }
 
-            return ApcExternalPowerState.Good;
+            return ExternalPowerState.Good;
         }
 
         public static ApcPanelState GetPanelState(ApcComponent apc)
@@ -223,7 +223,7 @@ namespace Content.Server.Power.EntitySystems
             if (!EntityManager.TryGetComponent(args.Used, out ToolComponent? tool))
                 return;
 
-            if (_toolSystem.UseTool(args.Used, args.User, uid, ScrewTime, "Screwing", new ApcToolFinishedEvent(), toolComponent:tool))
+            if (_toolSystem.UseTool(args.Used, args.User, uid, ScrewTime, "Screwing", new ApcToolFinishedEvent(), toolComponent: tool))
                 args.Handled = true;
         }
 

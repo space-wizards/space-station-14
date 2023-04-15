@@ -24,5 +24,9 @@ public sealed class SmesComponent : Component
     public int LastChargeLevel;
     public TimeSpan LastChargeLevelTime;
 
+    [ViewVariables]
+    public ExternalPowerState LastExternalState;
+    public TimeSpan LastUiUpdate;
+
     public static TimeSpan VisualsChangeDelay = TimeSpan.FromSeconds(1);
 }

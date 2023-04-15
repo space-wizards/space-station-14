@@ -1,0 +1,1 @@
+smes-menu-title = SMES

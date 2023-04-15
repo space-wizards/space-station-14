@@ -1,3 +1,4 @@
+using Content.Shared.Power;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.APC
@@ -59,15 +60,15 @@ namespace Content.Shared.APC
         public readonly bool MainBreaker;
         public readonly bool HasAccess;
         public readonly int Power;
-        public readonly ApcExternalPowerState ApcExternalPower;
+        public readonly ExternalPowerState ExternalPower;
         public readonly float Charge;
 
-        public ApcBoundInterfaceState(bool mainBreaker, bool hasAccess, int power, ApcExternalPowerState apcExternalPower, float charge)
+        public ApcBoundInterfaceState(bool mainBreaker, bool hasAccess, int power, ExternalPowerState externalPower, float charge)
         {
             MainBreaker = mainBreaker;
             HasAccess = hasAccess;
             Power = power;
-            ApcExternalPower = apcExternalPower;
+            ExternalPower = externalPower;
             Charge = charge;
         }
     }
@@ -75,13 +76,6 @@ namespace Content.Shared.APC
     [Serializable, NetSerializable]
     public sealed class ApcToggleMainBreakerMessage : BoundUserInterfaceMessage
     {
-    }
-
-    public enum ApcExternalPowerState
-    {
-        None,
-        Low,
-        Good,
     }
 
     [NetSerializable, Serializable]

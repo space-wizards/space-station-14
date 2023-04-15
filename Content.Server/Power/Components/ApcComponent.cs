@@ -1,5 +1,6 @@
 using Content.Server.Power.NodeGroups;
 using Content.Shared.APC;
+using Content.Shared.Power;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Power.Components;
@@ -21,7 +22,7 @@ public sealed class ApcComponent : BaseApcNetComponent
     public bool IsApcOpen { get; set; }
 
     [ViewVariables]
-    public ApcExternalPowerState LastExternalState;
+    public ExternalPowerState LastExternalState;
     public TimeSpan LastUiUpdate;
 
     [ViewVariables]
