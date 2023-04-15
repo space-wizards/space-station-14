@@ -583,8 +583,8 @@
     Vodka:
       amount: 2
     Ice:
-      ammount: 1
+      amount: 1
     JuiceLemon:
-      ammount: 1
+      amount: 1
   products:
     DavidMartinez: 6
