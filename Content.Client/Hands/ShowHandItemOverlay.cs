@@ -70,15 +70,17 @@ namespace Content.Client.Hands
             var screen = args.ScreenHandle;
             var mousePos = _inputManager.MouseScreenPosition.Position;
 
-            if (IsIfDrawIconOverride(screen, mousePos))
-                return;
+            EntityUid? handEntity = null;
 
-            var handEntity = EntityOverride ?? EntitySystem.Get<HandsSystem>().GetActiveHandEntity();
+            if (IconOverride != null)
+                DrawIconOverride(IconOverride, screen, mousePos);
+            else
+                handEntity = EntityOverride ?? EntitySystem.Get<HandsSystem>().GetActiveHandEntity();
 
-            bool isHandItemSprite = handEntity != null && _entMan.HasComponent<SpriteComponent>(handEntity); ;
+            bool isHandItemSprite = handEntity != null && _entMan.HasComponent<SpriteComponent>(handEntity);
 
             var combatSystem = EntitySystem.Get<CombatModeSystem>();
-            bool isCombatMode = combatSystem != null ? combatSystem.IsInCombatMode() : false;
+            bool isCombatMode = combatSystem != null && combatSystem.IsInCombatMode();
 
             if (!isHandItemSprite && !isCombatMode)
                 return;
@@ -94,71 +96,44 @@ namespace Content.Client.Hands
                 if (isCombatMode)
                 {
                     if (isHandGunItem)
-                    {
-                        DrawGunSight(screen, halfBufferSize, limetedScale);
-                    }
+                        DrawSight(_gunSight, screen, halfBufferSize, limetedScale);
                     else
-                    {
-                        DrawMeLeeSight(screen, halfBufferSize, limetedScale);
-                    }
+                        DrawSight(_meleeSight, screen, halfBufferSize, limetedScale);
                 }
 
-                if (handEntity != null && isHandItemSprite)
-                {
+                if (isHandItemSprite && handEntity != null)
                     DrawHandEntityIcon(screen, handEntity.Value, halfBufferSize, limetedScale);
-                }
+
             }, Color.Transparent);
 
             screen.DrawTexture(_renderBackbuffer.Texture,
-                mousePos - halfBufferSize, Color.White.WithAlpha(0.9f));
+                mousePos - halfBufferSize, Color.White.WithAlpha(0.75f));
         }
 
-        private bool IsIfDrawIconOverride(DrawingHandleScreen screen, Vector2 mousePos)
+        private void DrawIconOverride(Texture icon, DrawingHandleScreen screen, Vector2 mousePos)
         {
-            if (IconOverride != null)
-            {
-                screen.DrawTexture(IconOverride, mousePos - IconOverride.Size / 2 + _handIconOffset,
-                    Color.White.WithAlpha(0.75f));
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            screen.DrawTexture(icon, mousePos - icon.Size / 2 + _handIconOffset,
+                Color.White.WithAlpha(0.75f));
         }
 
         private void DrawHandEntityIcon(DrawingHandleScreen screen, EntityUid handEntity,
             Vector2 centerPos, float scale)
         {
-            Vector2 offset = (centerPos + _handIconOffset);
-            screen.DrawCircle(offset, offset.X / 4.5f * scale, Color.White.WithAlpha(0.02f));
-            screen.DrawEntity(handEntity, offset, new Vector2(1f, 1f) * scale, Direction.South);
+            screen.DrawEntity(handEntity, (centerPos + _handIconOffset),
+                new Vector2(1f, 1f) * scale, Direction.South);
         }
 
-        private void DrawGunSight(DrawingHandleScreen screen, Vector2 centerPos, float scale)
+        private void DrawSight(Texture? sight, DrawingHandleScreen screen, Vector2 centerPos, float scale)
         {
-            if (_gunSight == null)
+            if (sight == null)
                 return;
-            screen.DrawTextureRect(_gunSight,
-                GetSizesForSights(_gunSight.Size, centerPos, scale), Color.DarkRed);
-        }
 
-        private void DrawMeLeeSight(DrawingHandleScreen screen, Vector2 centerPos, float scale)
-        {
-            if (_meleeSight == null)
-                return;
-            screen.DrawTextureRect(_meleeSight,
-                GetSizesForSights(_meleeSight.Size, centerPos, scale), Color.DarkBlue);
-        }
-
-        private static UIBox2 GetSizesForSights(Vector2i size, Vector2 centerPosBox, float scale, int bitSize = 0)
-        {
-            Vector2 sightSize = size * scale;
-            sightSize = sightSize + bitSize;
+            Vector2 sightSize = sight.Size * scale;
             Vector2 halfSightSize = sightSize / 2;
 
-            Vector2 beginPosSight = centerPosBox - halfSightSize;
-            return UIBox2.FromDimensions(beginPosSight, sightSize);
+            Vector2 beginPosSight = centerPos - halfSightSize;
+            UIBox2 coordsRect = UIBox2.FromDimensions(beginPosSight, sightSize);
+            screen.DrawTextureRect(sight, coordsRect, Color.DarkBlue);
         }
     }
 }
