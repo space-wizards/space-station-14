@@ -79,8 +79,8 @@ If you regularly play Security or Command roles and got this far, we applaud you
 
 [color=#a4885c]20.[/color] Security/Command should try to remain non-lethal and effect arrests, except in the following special circumstances, where they may choose to use lethal force:
     - Lethal force is used against you (ex: firearms, lasers, disabling/stunning weapons with intent to kill, deadly melee weapons)
-    - Suspect is wearing clothing or showing immediately dangerous equipment only used by enemy agents/antagonists (ex: Syndicate EVA Suit, Bloodred Hardsuit, Holoparasite, C-20R, etc.)
-    - You determine that your life or the life of an innocent is in immediate danger
+    - Suspect is wearing clothing or showing immediately dangerous equipment only used by enemy agents/antagonists (ex: Syndicate EVA Suit, Bloodred Hardsuit, Holoparasite, C-20R, etc.).
+    - You determine that your life or the life of an innocent is in immediate danger.
     - The suspect is unable to be safely detained by less-lethal means. This includes suspects who continually resist efforts to be cuffed or continually manages to escape.
     - If no other reasonable options are readily available and allowing the suspect to continue would be an unreasonable danger to the station/crew.
 
