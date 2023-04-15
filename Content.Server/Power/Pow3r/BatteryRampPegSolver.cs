@@ -33,7 +33,7 @@ namespace Content.Server.Power.Pow3r
             foreach (var group in state.GroupedNets)
             {
                 // Note that many net-layers only have a handful of networks.
-                // E.g., the number of nets from lowest to heights for box and saltern are:
+                // E.g., the number of nets from lowest to highest for box and saltern are:
                 // Saltern: 1477, 11, 2, 2, 3.
                 // Box:     3308, 20, 1, 5.
                 //
@@ -164,7 +164,7 @@ namespace Content.Server.Power.Pow3r
                     battery.AvailableSupply = Math.Min(scaledSpace, supplyAndPassthrough);
                     battery.LoadingNetworkDemand = unmet;
 
-                    battery.MaxEffectiveSupply = Math.Min(battery.CurrentStorage / frameTime, battery.MaxSupply + battery.CurrentReceiving * battery.Efficiency); 
+                    battery.MaxEffectiveSupply = Math.Min(battery.CurrentStorage / frameTime, battery.MaxSupply + battery.CurrentReceiving * battery.Efficiency);
                     totalBatterySupply += battery.AvailableSupply;
                     totalMaxBatterySupply += battery.MaxEffectiveSupply;
                 }
@@ -174,7 +174,7 @@ namespace Content.Server.Power.Pow3r
             network.LastCombinedMaxSupply = totalMaxSupply + totalMaxBatterySupply;
 
             var met = Math.Min(demand, network.LastCombinedSupply);
-            if (met == 0) 
+            if (met == 0)
                 return;
 
             var supplyRatio = met / demand;
@@ -228,7 +228,7 @@ namespace Content.Server.Power.Pow3r
                     supply.SupplyRampTarget = supply.MaxSupply * targetRelativeSupplyOutput;
                 }
             }
-            
+
             if (unmet <= 0 || totalBatterySupply <= 0)
                 return;
 
