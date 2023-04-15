@@ -81,8 +81,8 @@ If you regularly play Security or Command roles and got this far, we applaud you
     - Lethal force is used against you (ex: firearms, lasers, disabling/stunning weapons with intent to kill, deadly melee weapons)
     - Suspect is wearing clothing or showing immediately dangerous equipment only used by enemy agents/antagonists (ex: Syndicate EVA Suit, Bloodred Hardsuit, Holoparasite, C-20R, etc.)
     - You determine that your life or the life of an innocent is in immediate danger
-    - The suspect is unable to be safely detained by less-lethal means. This includes suspects who continually resist efforts to be cuffed or continually manages to escape
-    - If no other reasonable options are readily available and allowing the suspect to continue would be an unreasonable danger to the station/crew
+    - The suspect is unable to be safely detained by less-lethal means. This includes suspects who continually resist efforts to be cuffed or continually manages to escape.
+    - If no other reasonable options are readily available and allowing the suspect to continue would be an unreasonable danger to the station/crew.
 
 Security/Command will be expected to answer for use of lethal force. Security/Command will be expected to effect arrests on criminals and prevent them from dying while in custody, even if lethal force is used, unless there is strong reason to believe the criminal is an antagonist. Security/Command is strongly encouraged, but not required, to clone antagonists and effect a permabrigging or other sentence as deemed appropriate.
 
