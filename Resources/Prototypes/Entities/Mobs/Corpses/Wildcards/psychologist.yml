@@ -1,0 +1,13 @@
+- type: entity
+  parent: SalvageHumanCorpse
+  id: PsychologistDefaultCorpse
+  suffix: Dead, Default, Psychologist
+  components:
+  - type: Loadout
+    prototypes: [ PsychologistDefaultCorpseGear ]
+
+- type: startingGear
+  id: PsychologistDefaultCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitPsychologist
+    shoes: ClothingShoesLeather

@@ -1,0 +1,60 @@
+- type: entity
+  parent: SalvageHumanCorpse
+  id: ChaplainPlagueCorpse
+  suffix: Dead, Plague, Chaplain
+  components:
+  - type: Loadout
+    prototypes: [ ChaplainPlagueCorpseGear ]
+
+- type: startingGear
+  id: ChaplainPlagueCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChaplain
+    head: ClothingHeadHatPlaguedoctor
+    mask: ClothingMaskPlague
+    outerClothing: ClothingOuterPlagueSuit
+    shoes: ClothingShoesColorBlack
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: ChaplainHoodieCorpse
+  suffix: Dead, Hoodie, Chaplain
+  components:
+  - type: Loadout
+    prototypes: [ ChaplainHoodieCorpseGear ]
+
+- type: startingGear
+  id: ChaplainHoodieCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChaplain
+    head: ClothingHeadHatHoodChaplainHood
+    outerClothing: ClothingOuterHoodieChaplain
+    shoes: ClothingShoesColorBlack
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: ChaplainWhiteCorpse
+  suffix: Dead, White, Chaplain
+  components:
+  - type: Loadout
+    prototypes: [ ChaplainWhiteCorpseGear ]
+
+- type: startingGear
+  id: ChaplainWhiteCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMonasticRobeLight
+    shoes: ClothingShoesColorWhite
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: ChaplainDefaultCorpse
+  suffix: Dead, Default, Chaplain
+  components:
+  - type: Loadout
+    prototypes: [ ChaplainDefaultCorpseGear ]
+
+- type: startingGear
+  id: ChaplainDefaultCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChaplain
+    shoes: ClothingShoesColorBlack

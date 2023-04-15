@@ -1,0 +1,50 @@
+- type: entity
+  parent: SalvageHumanCorpse
+  id: CentcomFilledCorpse
+  suffix: Dead, Filled, Centcom
+  components:
+  - type: Loadout
+    prototypes: [ CentcomFilledCorpseGear ]
+
+- type: startingGear
+  id: CentcomFilledCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCentcomOfficial
+    shoes: ClothingShoesBootsJack
+    head: ClothingHeadHatCentcom
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterVestKevlar
+    pocket1: Paper
+    pocket2: Pen
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: CentcomEmptyCorpse
+  suffix: Dead, Empty, Centcom
+  components:
+  - type: Loadout
+    prototypes: [ CentcomEmptyCorpseGear ]
+
+- type: startingGear
+  id: CentcomEmptyCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCentcomOfficial
+    shoes: ClothingShoesBootsJack
+    pocket1: Paper
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: CentcomEmptyWinterCorpse
+  suffix: Dead, Empty, Winter, Centcom
+  components:
+  - type: Loadout
+    prototypes: [ CentcomEmptyWinterCorpseGear ]
+
+- type: startingGear
+  id: CentcomEmptyWinterCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCentcomOfficial
+    shoes: ClothingShoesBootsJack
+    outerClothing: ClothingOuterWinterCentcom
+    pocket1: Paper

@@ -1,0 +1,45 @@
+- type: entity
+  parent: SalvageHumanCorpse
+  id: HeadOfPersonnelFilledCorpse
+  suffix: Dead, Filled, HOP
+  components:
+  - type: Loadout
+    prototypes: [ HoPFilledCorpseGear ]
+
+- type: startingGear
+  id: HoPFilledCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoP
+    shoes: ClothingShoesColorBrown
+    head: ClothingHeadHatHopcap
+    neck: ClothingNeckCloakHop
+    pocket1: PenHop
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: HeadOfPersonnelEmptyCorpse
+  suffix: Dead, Empty, HOP
+  components:
+  - type: Loadout
+    prototypes: [ HoPEmptyCorpseGear ]
+
+- type: startingGear
+  id: HoPEmptyCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoP
+    shoes: ClothingShoesColorBrown
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: HeadOfPersonnelEmptyWinterCorpse
+  suffix: Dead, Empty, Winter, HOP
+  components:
+  - type: Loadout
+    prototypes: [ HoPEmptyWinterCorpseGear ]
+
+- type: startingGear
+  id: HoPEmptyWinterCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoP
+    shoes: ClothingShoesColorBrown
+    outerClothing: ClothingOuterWinterHoP

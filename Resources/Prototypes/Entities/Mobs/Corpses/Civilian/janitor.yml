@@ -1,0 +1,79 @@
+- type: entity
+  parent: SalvageHumanCorpse
+  id: JanitorFilledCorpse
+  suffix: Dead, Filled, Janitor
+  components:
+  - type: Loadout
+    prototypes: [ JanitorFilledCorpseGear ]
+
+- type: startingGear
+  id: JanitorFilledCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitJanitor
+    shoes: ClothingShoesGaloshes
+    head: ClothingHeadHatPurplesoft
+    gloves: ClothingHandsGlovesColorOrange
+    belt: ClothingBeltJanitorFilled
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: JanitorEmptyCorpse
+  suffix: Dead, Empty, Janitor
+  components:
+  - type: Loadout
+    prototypes: [ JanitorEmptyCorpseGear ]
+
+- type: startingGear
+  id: JanitorEmptyCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitJanitor
+    belt: ClothingBeltJanitor
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: JanitorEmptyWinterCorpse
+  suffix: Dead, Empty, Winter, Janitor
+  components:
+  - type: Loadout
+    prototypes: [ JanitorEmptyWinterCorpseGear ]
+
+- type: startingGear
+  id: JanitorEmptyWinterCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitJanitor
+    belt: ClothingBeltJanitor
+    outerClothing: ClothingOuterWinterJani
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: JanitorFilledBioCorpse
+  suffix: Dead, Filled, Biohazard, Janitor
+  components:
+  - type: Loadout
+    prototypes: [ JanitorFilledBioCorpseGear ]
+
+- type: startingGear
+  id: JanitorFilledBioCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitJanitor
+    shoes: ClothingShoesGaloshes
+    head: ClothingHeadHatHoodBioJanitor
+    outerClothing: ClothingOuterBioJanitor
+    gloves: ClothingHandsGlovesColorOrange
+    belt: ClothingBeltJanitorFilled
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: JanitorMaidCorpse
+  suffix: Dead, Janitor Maid
+  components:
+  - type: Loadout
+    prototypes: [ JanitorMaidCorpseGear ]
+
+- type: startingGear
+  id: JanitorMaidCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtJanimaid
+    gloves: ClothingHandsGlovesLatex
+    head: ClothingHeadHatCatEars
+    belt: ClothingBeltJanitorFilled

@@ -1,0 +1,61 @@
+- type: entity
+  parent: SalvageHumanCorpse
+  id: BartenderFilledCorpse
+  suffix: Dead, Filled, Bartender
+  components:
+  - type: Loadout
+    prototypes: [ BartenderFilledCorpseGear ]
+
+- type: startingGear
+  id: BartenderFilledCorpseGear
+  equipment:
+    head: ClothingHeadHatTophat
+    jumpsuit: ClothingUniformJumpsuitBartender
+    outerClothing: ClothingOuterVestKevlar
+    shoes: ClothingShoesColorBlack
+    eyes: ClothingEyesGlassesBeer
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: BartenderEmptyCorpse
+  suffix: Dead, Empty, Bartender
+  components:
+  - type: Loadout
+    prototypes: [ BartenderEmptyCorpseGear ]
+
+- type: startingGear
+  id: BartenderEmptyCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBartender
+    shoes: ClothingShoesColorBlack
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: BartenderEmptyWinterCorpse
+  suffix: Dead, Empty, Winter, Bartender
+  components:
+  - type: Loadout
+    prototypes: [ BartenderEmptyWinterCorpseGear ]
+
+- type: startingGear
+  id: BartenderEmptyWinterCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBartender
+    shoes: ClothingShoesColorBlack
+    outerClothing: ClothingOuterWinterBar
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: BartenderNormalCorpse
+  suffix: Dead, Normal, Bartender
+  components:
+  - type: Loadout
+    prototypes: [ BartenderNormalCorpseGear ]
+
+- type: startingGear
+  id: BartenderNormalCorpseGear
+  equipment:
+    head: ClothingHeadHatTophat
+    jumpsuit: ClothingUniformJumpsuitBartender
+    shoes: ClothingShoesColorBlack
+    eyes: ClothingEyesGlassesBeer

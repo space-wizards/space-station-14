@@ -1,0 +1,13 @@
+﻿- type: entity
+  parent: SalvageHumanCorpse
+  id: ServiceWorkerDefaultCorpse
+  suffix: Dead, Default, Service Worker
+  components:
+  - type: Loadout
+    prototypes: [ ServiceWorkerDefaultCorpseGear ]
+
+- type: startingGear
+  id: ServiceWorkerDefaultCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBartender
+    shoes: ClothingShoesColorBlack

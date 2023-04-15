@@ -1,0 +1,130 @@
+- type: entity
+  parent: SalvageHumanCorpse
+  id: SyndicateOperativeEmptyCorpse
+  suffix: Dead, Empty, Syndicate Operative
+  components:
+  - type: Loadout
+    prototypes: [ SyndicateOperativeEmptyCorpseGear ]
+
+- type: startingGear
+  id: SyndicateOperativeEmptyCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    shoes: ClothingShoesBootsCombat
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: SyndicateOperativeFilledCorpse
+  suffix: Dead, Filled, Syndicate Operative
+  components:
+  - type: Loadout
+    prototypes: [ SyndicateOperativeFilledCorpseGear ]
+
+- type: startingGear
+  id: SyndicateOperativeFilledCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    gloves: ClothingHandsGlovesCombat
+    shoes: ClothingShoesBootsCombatFilled
+    mask: ClothingMaskGasSyndicate
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: SyndicateNuclearOperativeFilledCorpse
+  suffix: Dead, Filled, Syndicate (Nuclear) Operative
+  components:
+  - type: Loadout
+    prototypes: [ SyndicateNuclearOperativeFilledCorpseGear ]
+
+- type: startingGear
+  id: SyndicateNuclearOperativeFilledCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    mask: ClothingMaskGasSyndicate
+    eyes: ClothingEyesGlassesMeson
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitSyndie
+    head: ClothingHeadHelmetHardsuitSyndie
+    shoes: ClothingShoesBootsCombatFilled
+    pocket1: ExtendedEmergencyOxygenTankFilled
+    belt: ClothingBeltMilitaryWebbing
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: SyndicateNuclearOperativeEmptyCorpse
+  suffix: Dead, Empty, Syndicate (Nuclear) Operative (Commander)
+  components:
+  - type: Loadout
+    prototypes: [ SyndicateNuclearOperativeEmptyCorpseGear ]
+
+- type: startingGear
+  id: SyndicateNuclearOperativeEmptyCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    mask: ClothingMaskGasSyndicate
+    eyes: ClothingEyesGlassesMeson
+    gloves: ClothingHandsGlovesCombat
+    shoes: ClothingShoesBootsCombatFilled
+    pocket1: ExtendedEmergencyOxygenTankFilled
+    belt: ClothingBeltMilitaryWebbing
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: SyndicateNuclearCommanderFilledCorpse
+  suffix: Dead, Filled, Syndicate (Nuclear) Commander
+  components:
+  - type: Loadout
+    prototypes: [ SyndicateNuclearCommanderFilledCorpseGear ]
+
+- type: startingGear
+  id: SyndicateNuclearCommanderFilledCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    mask: ClothingMaskGasSyndicate
+    eyes: ClothingEyesGlassesMeson
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitSyndieCommander
+    head: ClothingHeadHelmetHardsuitSyndieCommander
+    shoes: ClothingShoesBootsCombatFilled
+    pocket1: ExtendedEmergencyOxygenTankFilled
+    belt: ClothingBeltMilitaryWebbing
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: SyndicateNuclearMedicFilledCorpse
+  suffix: Dead, Filled, Syndicate (Nuclear) Medic
+  components:
+  - type: Loadout
+    prototypes: [ SyndicateNuclearMedicFilledCorpseGear ]
+
+- type: startingGear
+  id: SyndicateNuclearMedicFilledCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    mask: ClothingMaskBreathMedical
+    eyes: ClothingEyesHudMedical
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitSyndieElite
+    head: ClothingHeadHelmetHardsuitSyndieElite
+    shoes: ClothingShoesBootsMagSyndie
+    pocket1: DoubleEmergencyOxygenTankFilled
+    belt: ClothingBeltMilitaryWebbingMedFilled #Warning: Hypospray inside
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: SyndicateNuclearMedicEmptyCorpse
+  suffix: Dead, Empty, Syndicate (Nuclear) Medic
+  components:
+  - type: Loadout
+    prototypes: [ SyndicateNuclearMedicEmptyCorpseGear ]
+
+- type: startingGear
+  id: SyndicateNuclearMedicEmptyCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    mask: ClothingMaskBreathMedical
+    eyes: ClothingEyesHudMedical
+    gloves: ClothingHandsGlovesCombat
+    shoes: ClothingShoesBootsMagSyndie
+    pocket1: DoubleEmergencyOxygenTankFilled
+    belt: ClothingBeltMilitaryWebbingMed

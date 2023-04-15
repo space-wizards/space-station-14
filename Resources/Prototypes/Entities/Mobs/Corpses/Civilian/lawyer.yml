@@ -1,0 +1,13 @@
+- type: entity
+  parent: SalvageHumanCorpse
+  id: LawyerDefaultCorpse
+  suffix: Dead, Default, Lawyer
+  components:
+  - type: Loadout
+    prototypes: [ LawyerDefaultCorpseGear ]
+
+- type: startingGear
+  id: LawyerDefaultCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitLawyerBlack
+    shoes: ClothingShoesBootsLaceup

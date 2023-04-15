@@ -1,0 +1,29 @@
+﻿- type: entity
+  parent: SalvageHumanCorpse
+  id: MedicalInternFilledCorpse
+  suffix: Dead, Filled, Medical Intern
+  components:
+  - type: Loadout
+    prototypes: [ MedicalInternFilledCorpseGear ]
+
+- type: startingGear
+  id: MedicalInternFilledCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorWhite
+    shoes: ClothingShoesColorWhite
+    belt: ClothingBeltMedicalFilled
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MedicalInternEmptyCorpse
+  suffix: Dead, Empty, Medical Intern
+  components:
+  - type: Loadout
+    prototypes: [ MedicalInternEmptyCorpseGear ]
+
+- type: startingGear
+  id: MedicalInternEmptyCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorWhite
+    shoes: ClothingShoesColorWhite
+    belt: ClothingBeltMedical

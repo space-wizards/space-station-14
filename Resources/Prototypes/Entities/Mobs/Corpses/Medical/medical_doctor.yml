@@ -1,0 +1,70 @@
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MedicalDoctorFilledCorpse
+  suffix: Dead, Filled, Medical Doctor
+  components:
+  - type: Loadout
+    prototypes: [ MedicalDoctorFilledCorpseGear ]
+
+- type: startingGear
+  id: MedicalDoctorFilledCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMedicalDoctor
+    shoes: ClothingShoesColorWhite
+    outerClothing: ClothingOuterCoatLab
+    belt: ClothingBeltMedicalFilled
+    mask: ClothingMaskSterile
+    gloves: ClothingHandsGlovesLatex
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MedicalDoctorEmptyCorpse
+  suffix: Dead, Empty, Medical Doctor
+  components:
+  - type: Loadout
+    prototypes: [ MedicalDoctorEmptyCorpseGear ]
+
+- type: startingGear
+  id: MedicalDoctorEmptyCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMedicalDoctor
+    shoes: ClothingShoesColorWhite
+    belt: ClothingBeltMedical
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MedicalDoctorFilledBioCorpse
+  suffix: Dead, Filled, Biohazard, Medical Doctor
+  components:
+  - type: Loadout
+    prototypes: [ MedicalDoctorFilledBioCorpseGear ]
+
+- type: startingGear
+  id: MedicalDoctorFilledBioCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMedicalDoctor
+    shoes: ClothingShoesColorWhite
+    outerClothing: ClothingOuterBioGeneral
+    head: ClothingHeadHatHoodBioGeneral
+    belt: ClothingBeltMedicalFilled
+    mask: ClothingMaskSterile
+    gloves: ClothingHandsGlovesLatex
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MedicalDoctorFilledViroCorpse
+  suffix: Dead, Filled, Virology, Medical Doctor
+  components:
+  - type: Loadout
+    prototypes: [ MedicalDoctorFilledViroCorpseGear ]
+
+- type: startingGear
+  id: MedicalDoctorFilledViroCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMedicalDoctor
+    shoes: ClothingShoesColorWhite
+    outerClothing: ClothingOuterBioVirology
+    head: ClothingHeadHatHoodBioVirology
+    belt: ClothingBeltMedicalFilled
+    mask: ClothingMaskSterile
+    gloves: ClothingHandsGlovesLatex

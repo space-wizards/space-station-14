@@ -1,0 +1,69 @@
+- type: entity
+  parent: SalvageHumanCorpse
+  id: ChiefEngineerFilledCorpse
+  suffix: Dead, Filled, Chief Engineer
+  components:
+  - type: Loadout
+    prototypes: [ ChiefEngineerFilledCorpseGear ]
+
+- type: startingGear
+  id: ChiefEngineerFilledCorpseGear
+  equipment:
+    head: ClothingHeadHatHardhatWhite
+    jumpsuit: ClothingUniformJumpsuitChiefEngineer
+    shoes: ClothingShoesColorBrown
+    neck: ClothingNeckCloakCe
+    eyes: ClothingEyesGlassesMeson
+    belt: ClothingBeltChiefEngineerFilled
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: ChiefEngineerEmptyCorpse
+  suffix: Dead, Empty, Chief Engineer
+  components:
+  - type: Loadout
+    prototypes: [ ChiefEngineerEmptyCorpseGear ]
+
+- type: startingGear
+  id: ChiefEngineerEmptyCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChiefEngineer
+    shoes: ClothingShoesColorBrown
+    belt: ClothingBeltChiefEngineer
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: ChiefEngineerEmptyWinterCorpse
+  suffix: Dead, Empty, Winter, Chief Engineer
+  components:
+  - type: Loadout
+    prototypes: [ ChiefEngineerEmptyWinterCorpseGear ]
+
+- type: startingGear
+  id: ChiefEngineerEmptyWinterCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChiefEngineer
+    shoes: ClothingShoesColorBrown
+    belt: ClothingBeltChiefEngineer
+    outerClothing: ClothingOuterWinterCE
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: ChiefEngineerFilledHardCorpse
+  suffix: Dead, Filled, Hardsuit, Chief Engineer
+  components:
+  - type: Loadout
+    prototypes: [ ChiefEngineerFilledHardCorpseGear ]
+
+- type: startingGear
+  id: ChiefEngineerFilledHardCorpseGear
+  equipment:
+    head: ClothingHeadHelmetHardsuitEngineeringWhite
+    jumpsuit: ClothingUniformJumpsuitChiefEngineer
+    shoes: ClothingShoesColorBrown
+    neck: ClothingNeckCloakCe
+    eyes: ClothingEyesGlassesMeson
+    belt: ClothingBeltChiefEngineerFilled
+    mask: ClothingMaskGas
+    outerClothing: ClothingOuterHardsuitEngineeringWhite
+    suitstorage: OxygenTankFilled

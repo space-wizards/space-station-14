@@ -1,0 +1,76 @@
+- type: entity
+  parent: SalvageHumanCorpse
+  id: HeadOfSecurityFilledCorpse
+  suffix: Dead, Filled, HOS
+  components:
+  - type: Loadout
+    prototypes: [ HoSFilledCorpseGear ]
+
+- type: startingGear
+  id: HoSFilledCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoS
+    shoes: ClothingShoesBootsJack
+    outerClothing: ClothingOuterCoatHoSTrench
+    eyes: ClothingEyesGlassesSecurity
+    head: ClothingHeadHatBeretHoS
+    neck: ClothingNeckCloakHos
+    gloves: ClothingHandsGlovesCombat
+    belt: ClothingBeltSecurityFilled
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: HeadOfSecurityEmptyCorpse
+  suffix: Dead, Empty, HOS
+  components:
+  - type: Loadout
+    prototypes: [ HoSEmptyCorpseGear ]
+
+- type: startingGear
+  id: HoSEmptyCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoS
+    shoes: ClothingShoesBootsJack
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesCombat
+    belt: ClothingBeltSecurity
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: HeadOfSecurityEmptyWinterCorpse
+  suffix: Dead, Empty, Winter, HOS
+  components:
+  - type: Loadout
+    prototypes: [ HoSEmptyWinterCorpseGear ]
+
+- type: startingGear
+  id: HoSEmptyWinterCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoS
+    shoes: ClothingShoesBootsJack
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesCombat
+    belt: ClothingBeltSecurity
+    outerClothing: ClothingOuterWinterHoS
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: HeadOfSecurityFilledHardCorpse
+  suffix: Dead, Filled, Hardsuit, HOS
+  components:
+  - type: Loadout
+    prototypes: [ HoSFilledHardCorpseGear ]
+
+- type: startingGear
+  id: HoSFilledHardCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoS
+    shoes: ClothingShoesBootsJack
+    outerClothing: ClothingOuterHardsuitSecurityRed
+    suitstorage: OxygenTankFilled
+    eyes: ClothingEyesGlassesSecurity
+    head: ClothingHeadHelmetHardsuitSecurityRed
+    mask: ClothingMaskGasSecurity
+    neck: ClothingNeckCloakHos
+    gloves: ClothingHandsGlovesCombat
+    belt: ClothingBeltSecurityFilled

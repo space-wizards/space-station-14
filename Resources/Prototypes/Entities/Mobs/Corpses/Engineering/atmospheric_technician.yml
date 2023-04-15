@@ -1,0 +1,91 @@
+- type: entity
+  parent: SalvageHumanCorpse
+  id: AtmosphericTechnicianFilledCorpse
+  suffix: Dead, Filled, Atmospheric Technician
+  components:
+  - type: Loadout
+    prototypes: [ AtmosphericTechnicianFilledCorpseGear ]
+
+- type: startingGear
+  id: AtmosphericTechnicianFilledCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAtmos
+    shoes: ClothingShoesColorWhite
+    eyes: ClothingEyesGlassesMeson
+    belt: ClothingBeltUtilityFilled
+    pocket1: GasAnalyzer
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: AtmosphericTechnicianEmptyCorpse
+  suffix: Dead, Empty, Atmospheric Technician
+  components:
+  - type: Loadout
+    prototypes: [ AtmosphericTechnicianEmptyCorpseGear ]
+
+- type: startingGear
+  id: AtmosphericTechnicianEmptyCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAtmos
+    shoes: ClothingShoesColorWhite
+    pocket1: GasAnalyzer
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: AtmosphericTechnicianEmptyWinterCorpse
+  suffix: Dead, Empty, Winter, Atmospheric Technician
+  components:
+  - type: Loadout
+    prototypes: [ AtmosphericTechnicianEmptyWinterCorpseGear ]
+
+- type: startingGear
+  id: AtmosphericTechnicianEmptyWinterCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAtmos
+    shoes: ClothingShoesColorWhite
+    outerClothing: ClothingOuterWinterAtmos
+    pocket1: GasAnalyzer
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: AtmosphericTechnicianFilledHardCorpse
+  suffix: Dead, Filled, Hardsuit, Atmospheric Technician
+  components:
+  - type: Loadout
+    prototypes: [ AtmosphericTechnicianFilledHardCorpseGear ]
+
+- type: startingGear
+  id: AtmosphericTechnicianFilledHardCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAtmos
+    shoes: ClothingShoesColorWhite
+    eyes: ClothingEyesGlassesMeson
+    belt: ClothingBeltUtilityFilled
+    pocket1: GasAnalyzer
+    pocket2: HolofanProjector
+    head: ClothingHeadHelmetHardsuitAtmos
+    outerClothing: ClothingOuterHardsuitAtmos
+    suitstorage: OxygenTankFilled
+    mask: ClothingMaskGasAtmos
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: AtmosphericTechnicianFilledFireCorpse
+  suffix: Dead, Filled, Firesuit, Atmospheric Technician
+  components:
+  - type: Loadout
+    prototypes: [ AtmosphericTechnicianFilledFireCorpseGear ]
+
+- type: startingGear
+  id: AtmosphericTechnicianFilledFireCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAtmos
+    shoes: ClothingShoesColorWhite
+    eyes: ClothingEyesGlassesMeson
+    belt: ClothingBeltUtilityFilled
+    pocket1: GasAnalyzer
+    pocket2: HolofanProjector
+    head: ClothingHeadHelmetAtmosFire
+    outerClothing: ClothingOuterSuitAtmosFire
+    suitstorage: OxygenTankFilled
+    mask: ClothingMaskGasAtmos

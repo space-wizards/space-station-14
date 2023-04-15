@@ -1,0 +1,15 @@
+﻿- type: entity
+  parent: SalvageHumanCorpse
+  id: ResearchAssistantDefaultCorpse
+  suffix: Dead, Default, Research Assistant
+  components:
+  - type: Loadout
+    prototypes: [ ResearchAssistantDefaultCorpseGear ]
+
+- type: startingGear
+  id: ResearchAssistantDefaultCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorWhite
+    shoes: ClothingShoesColorWhite
+    gloves: ClothingHandsGlovesLatex
+    outerClothing: ClothingOuterCoatLab

@@ -1,0 +1,49 @@
+- type: entity
+  parent: SalvageHumanCorpse
+  id: ChemistFilledCorpse
+  suffix: Dead, Filled, Chemist
+  components:
+  - type: Loadout
+    prototypes: [ ChemistFilledCorpseGear ]
+
+- type: startingGear
+  id: ChemistFilledCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChemistry
+    shoes: ClothingShoesColorWhite
+    outerClothing: ClothingOuterCoatLabChem
+    belt: ChemBag
+    pocket1: HandLabeler
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: ChemistEmptyCorpse
+  suffix: Dead, Empty, Chemist
+  components:
+  - type: Loadout
+    prototypes: [ ChemistEmptyCorpseGear ]
+
+- type: startingGear
+  id: ChemistEmptyCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChemistry
+    shoes: ClothingShoesColorWhite
+    eyes: ClothingEyesGlasses
+    pocket1: Beaker
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: ChemistEmptyWinterCorpse
+  suffix: Dead, Empty, Winter, Chemist
+  components:
+  - type: Loadout
+    prototypes: [ ChemistEmptyWinterCorpseGear ]
+
+- type: startingGear
+  id: ChemistEmptyWinterCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChemistry
+    shoes: ClothingShoesColorWhite
+    outerClothing: ClothingOuterWinterChem
+    eyes: ClothingEyesGlasses
+    pocket1: Beaker

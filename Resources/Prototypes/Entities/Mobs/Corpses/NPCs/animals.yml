@@ -1,0 +1,390 @@
+- type: entity
+  parent: MobBat
+  id: MobBatCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobBee
+  id: MobBeeCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 10
+
+- type: entity
+  parent: MobChicken
+  id: MobChickenCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobDuckMallard
+  id: MobDuckMallardCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobDuckWhite
+  id: MobDuckWhiteCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobDuckBrown
+  id: MobDuckBrownCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobButterfly
+  id: MobButterflyCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 10
+
+- type: entity
+  parent: MobCow
+  id: MobCowCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobCrab
+  id: MobCrabCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobGoat
+  id: MobGoatCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobGoose
+  id: MobGooseCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobGorilla
+  id: MobGorillaCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobKangaroo
+  id: MobKangarooCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobKangarooBoxer
+  id: MobKangarooBoxerCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobMonkey
+  id: MobMonkeyCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobMouse
+  id: MobMouseCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 20
+
+- type: entity
+  parent: MobMouse1
+  id: MobMouse1Corpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 20
+
+
+- type: entity
+  parent: MobMouse2
+  id: MobMouse2Corpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 20
+
+- type: entity
+  parent: MobLizard
+  id: MobLizardCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobSlug
+  id: MobSlugCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobFrog
+  id: MobFrogCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobParrot
+  id: MobParrotCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobPenguin
+  id: MobPenguinCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobSnake
+  id: MobSnakeCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobGiantSpider
+  id: MobGiantSpiderCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 150
+
+- type: entity
+  parent: MobPossum
+  id: MobPossumCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobRaccoon
+  id: MobRaccoonCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobFox
+  id: MobFoxCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobCorgi
+  id: MobCorgiCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobCorgiNarsi
+  id: MobCorgiNarsiCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobCorgiPuppy
+  id: MobCorgiPuppyCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobCat
+  id: MobCatCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobCatCalico
+  id: MobCatCalicoCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobCatSpace
+  id: MobCatSpaceCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobCatCaracal
+  id: MobCatCaracalCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobSloth
+  id: MobSlothCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobFerret
+  id: MobFerretCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobHamster
+  id: MobHamsterCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 60
+
+- type: entity
+  parent: MobPig
+  id: MobPigCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100

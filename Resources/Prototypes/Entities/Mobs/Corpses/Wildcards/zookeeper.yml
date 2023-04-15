@@ -1,0 +1,28 @@
+- type: entity
+  parent: SalvageHumanCorpse
+  id: ZookeeperFilledCorpse
+  suffix: Dead, Filled, Zookeeper
+  components:
+  - type: Loadout
+    prototypes: [ ZookeeperFilledCorpseGear ]
+
+- type: startingGear
+  id: ZookeeperFilledCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSafari
+    head: ClothingHeadSafari
+    shoes: ClothingShoesColorWhite
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: ZookeeperEmptyCorpse
+  suffix: Dead, Empty, Zookeeper
+  components:
+  - type: Loadout
+    prototypes: [ ZookeeperEmptyCorpseGear ]
+
+- type: startingGear
+  id: ZookeeperEmptyCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSafari
+    shoes: ClothingShoesColorWhite

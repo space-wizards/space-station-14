@@ -1,0 +1,65 @@
+- type: entity
+  parent: SalvageHumanCorpse
+  id: ScientistFilledCorpse
+  suffix: Dead, Filled, Scientist
+  components:
+  - type: Loadout
+    prototypes: [ ScientistFilledCorpseGear ]
+
+- type: startingGear
+  id: ScientistFilledCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitScientist
+    shoes: ClothingShoesColorWhite
+    outerClothing: ClothingOuterCoatLab
+    mask: ClothingMaskSterile
+    pocket1: NodeScanner
+    gloves: ClothingHandsGlovesLatex
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: ScientistEmptyCorpse
+  suffix: Dead, Empty, Scientist
+  components:
+  - type: Loadout
+    prototypes: [ ScientistEmptyCorpseGear ]
+
+- type: startingGear
+  id: ScientistEmptyCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitScientist
+    shoes: ClothingShoesColorWhite
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: ScientistEmptyWinterCorpse
+  suffix: Dead, Empty, Winter, Scientist
+  components:
+  - type: Loadout
+    prototypes: [ ScientistEmptyWinterCorpseGear ]
+
+- type: startingGear
+  id: ScientistEmptyWinterCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitScientist
+    shoes: ClothingShoesColorWhite
+    outerClothing: ClothingOuterWinterSci
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: ScientistFilledBioCorpse
+  suffix: Dead, Filled, Biohazard, Scientist
+  components:
+  - type: Loadout
+    prototypes: [ ScientistFilledBioCorpseGear ]
+
+- type: startingGear
+  id: ScientistFilledBioCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitScientist
+    shoes: ClothingShoesColorWhite
+    outerClothing: ClothingOuterBioScientist
+    head: ClothingHeadHatHoodBioScientist
+    mask: ClothingMaskSterile
+    pocket1: NodeScanner
+    gloves: ClothingHandsGlovesLatex

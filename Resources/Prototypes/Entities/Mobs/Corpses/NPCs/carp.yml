@@ -1,0 +1,29 @@
+- type: entity
+  parent: MobCarp
+  id: MobCarpCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobCarpMagic
+  id: MobCarpMagicCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100
+
+- type: entity
+  parent: MobCarpHolo
+  id: MobCarpHoloCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 100

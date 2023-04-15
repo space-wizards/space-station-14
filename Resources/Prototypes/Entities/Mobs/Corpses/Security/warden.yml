@@ -1,0 +1,34 @@
+- type: entity
+  parent: SalvageHumanCorpse
+  id: WardenFilledCorpse
+  suffix: Dead, Filled, Warden
+  components:
+  - type: Loadout
+    prototypes: [ WardenFilledCorpseGear ]
+
+- type: startingGear
+  id: WardenFilledCorpseGear
+  equipment:
+    head: ClothingHeadHatWarden
+    jumpsuit: ClothingUniformJumpsuitWarden
+    shoes: ClothingShoesBootsJack
+    eyes: ClothingEyesGlassesSecurity
+    outerClothing: ClothingOuterCoatWarden
+    belt: ClothingBeltSecurityFilled
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: WardenEmptyCorpse
+  suffix: Dead, Empty, Warden
+  components:
+  - type: Loadout
+    prototypes: [ WardenEmptyCorpseGear ]
+
+- type: startingGear
+  id: WardenEmptyCorpseGear
+  equipment:
+    head: ClothingHeadHatWarden
+    jumpsuit: ClothingUniformJumpsuitWarden
+    shoes: ClothingShoesBootsJack
+    eyes: ClothingEyesGlassesSecurity
+    belt: ClothingBeltSecurity

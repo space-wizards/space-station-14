@@ -1,0 +1,72 @@
+- type: entity
+  parent: SalvageHumanCorpse
+  id: CaptainFilledCorpse
+  suffix: Dead, Filled, Captain
+  components:
+  - type: Loadout
+    prototypes: [ CaptainFilledCorpseGear ]
+
+- type: startingGear
+  id: CaptainFilledCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCaptain
+    shoes: ClothingShoesColorBlack
+    head: ClothingHeadHatCaptain
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesCaptain
+    neck: ClothingNeckCloakCapFormal
+    outerClothing: ClothingOuterArmorCaptainCarapace
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: CaptainFilledHardCorpse
+  suffix: Dead, Filled, HardSuit, Captain
+  components:
+  - type: Loadout
+    prototypes: [ CaptainFilledHardCorpseGear ]
+
+- type: startingGear
+  id: CaptainFilledHardCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCaptain
+    shoes: ClothingShoesColorBlack
+    head: ClothingHeadHelmetHardsuitCap
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesCaptain
+    neck: ClothingNeckCloakCapFormal
+    outerClothing: ClothingOuterHardsuitCap
+    suitstorage: OxygenTankFilled
+    mask: ClothingMaskGasCaptain
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: CaptainFilledWinterCorpse
+  suffix: Dead, Filled, Winter, Captain
+  components:
+  - type: Loadout
+    prototypes: [ CaptainFilledWinterCorpseGear ]
+
+- type: startingGear
+  id: CaptainFilledWinterCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCaptain
+    shoes: ClothingShoesColorBlack
+    head: ClothingHeadHatCaptain
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesCaptain
+    neck: ClothingNeckCloakCapFormal
+    outerClothing: ClothingOuterWinterCap
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: CaptainEmptyCorpse
+  suffix: Dead, Empty, Captain
+  components:
+  - type: Loadout
+    prototypes: [ CaptainEmptyCorpseGear ]
+
+- type: startingGear
+  id: CaptainEmptyCorpseGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCaptain
+    shoes: ClothingShoesColorBlack
