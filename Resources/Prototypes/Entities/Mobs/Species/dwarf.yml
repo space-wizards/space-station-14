@@ -42,7 +42,8 @@
       Male: UnisexDwarf
       Female: UnisexDwarf
       Unsexed: UnisexDwarf
-  - type: DwarfAccent
+  - type: ReplacementAccent
+    accent: dwarf
   - type: Speech
     speechSounds: Bass
 

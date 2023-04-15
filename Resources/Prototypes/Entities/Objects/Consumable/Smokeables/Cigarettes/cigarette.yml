@@ -12,7 +12,6 @@
     tags:
       - Cigarette
       - Trash
-  - type: Recyclable
   - type: SpaceGarbage
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi

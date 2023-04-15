@@ -86,6 +86,7 @@
   - type: Blindable
   # Other
   - type: Inventory
+  - type: InventorySlots
   - type: Clickable
   - type: InteractionOutline
   - type: Icon
@@ -280,8 +281,6 @@
     spawned:
       - id: FoodMeat
         amount: 5
-  #  - type: Recyclable Turns out turning off recycler safeties without considering the instagib is a bad idea
-  #    safe: false
   - type: Speech
     speechSounds: Alto
   - type: Vocal
@@ -311,6 +310,7 @@
   components:
     - type: Hands
     - type: Inventory
+    - type: InventorySlots
     - type: ContainerContainer
     - type: Icon
       sprite: Mobs/Species/Human/parts.rsi

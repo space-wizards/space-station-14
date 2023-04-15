@@ -345,7 +345,7 @@ namespace Content.Server.NodeContainer.EntitySystems
             _mapManager.TryGetGrid(xform.GridUid, out var grid);
 
             if (!node.Connectable(EntityManager, xform))
-                    yield break;
+                yield break;
 
             foreach (var reachable in node.GetReachableNodes(xform, nodeQuery, xformQuery, grid, EntityManager))
             {
