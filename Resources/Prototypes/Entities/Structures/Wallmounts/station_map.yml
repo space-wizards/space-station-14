@@ -1,0 +1,76 @@
+- type: entity
+  id: WallStationMapBroken
+  name: station map
+  description: A virtual map of the surrounding station.
+  suffix: Wall broken
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: InteractionOutline
+    - type: Clickable
+    - type: Sprite
+      netsync: false
+      sprite: Structures/Machines/station_map.rsi
+      drawdepth: WallMountedItems
+      layers:
+        - state: station_map_broken
+    - type: Damageable
+      damageContainer: Inorganic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+
+- type: entity
+  id: WallStationMap
+  name: station map
+  parent: WallStationMapBroken
+  suffix: Wall
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: StationMap
+    - type: Transform
+      anchored: true
+    - type: Sprite
+      layers:
+        - state: station_map0
+        - state: unshaded
+          map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+          shader: unshaded
+    - type: ApcPowerReceiver
+      powerLoad: 200
+      priority: Low
+    - type: WallMount
+      arc: 360
+    - type: ExtensionCableReceiver
+    - type: ActivatableUIRequiresPower
+    - type: ActivatableUI
+      key: enum.StationMapUiKey.Key
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                WallStationMapBroken:
+                  min: 1
+                  max: 1
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+    - type: UserInterface
+      interfaces:
+        - key: enum.StationMapUiKey.Key
+          type: StationMapBoundUserInterface
