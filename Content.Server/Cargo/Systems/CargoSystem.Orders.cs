@@ -281,7 +281,7 @@ namespace Content.Server.Cargo.Systems
                 if (station != component.Owner)
                     continue;
 
-                UpdateShuttleState(uid, comp, station);
+                UpdateShuttleState(uid, station);
             }
         }
 

@@ -523,7 +523,7 @@
   parent: PosterBase
   id: PosterContrabandRise
   name: "Rise Up"
-  description: "A poster depicting a grey shirted man holding a crowbar with the words Rise written above it."
+  description: "A poster depicting a grey shirted man holding a crowbar with the word Rise written below it."
   components:
   - type: Sprite
     state: poster55_contraband

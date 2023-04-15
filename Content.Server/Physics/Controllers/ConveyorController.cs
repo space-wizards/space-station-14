@@ -1,8 +1,9 @@
+
 using Content.Server.DeviceLinking.Events;
 using Content.Server.DeviceLinking.Systems;
+using Content.Server.MachineLinking.System;
+using Content.Server.Materials;
 using Content.Server.Power.Components;
-using Content.Server.Recycling;
-using Content.Server.Recycling.Components;
 using Content.Shared.Conveyor;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
@@ -17,8 +18,8 @@ namespace Content.Server.Physics.Controllers;
 public sealed class ConveyorController : SharedConveyorController
 {
     [Dependency] private readonly FixtureSystem _fixtures = default!;
-    [Dependency] private readonly RecyclerSystem _recycler = default!;
     [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
+    [Dependency] private readonly MaterialReclaimerSystem _materialReclaimer = default!;
     [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
@@ -104,13 +105,7 @@ public sealed class ConveyorController : SharedConveyorController
         if (TryComp<PhysicsComponent>(uid, out var physics))
             _broadphase.RegenerateContacts(physics);
 
-        if (TryComp<RecyclerComponent>(uid, out var recycler))
-        {
-            if (component.State != ConveyorState.Off)
-                _recycler.EnableRecycler(recycler);
-            else
-                _recycler.DisableRecycler(recycler);
-        }
+        _materialReclaimer.SetReclaimerEnabled(uid, component.State != ConveyorState.Off);
 
         UpdateAppearance(uid, component);
         Dirty(component);

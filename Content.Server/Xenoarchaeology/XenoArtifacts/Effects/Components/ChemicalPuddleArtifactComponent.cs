@@ -15,12 +15,6 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 public sealed class ChemicalPuddleArtifactComponent : Component
 {
     /// <summary>
-    /// The prototype id of the puddle
-    /// </summary>
-    [DataField("puddlePrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public string PuddlePrototype = "PuddleSmear";
-
-    /// <summary>
     /// The solution where all the chemicals are stored
     /// </summary>
     [DataField("chemicalSolution", required: true), ViewVariables(VVAccess.ReadWrite)]
