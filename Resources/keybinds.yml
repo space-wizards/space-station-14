@@ -331,10 +331,12 @@ binds:
   type: State
   key: Return
   canRepeat: true
+  mod1: Shift
 - function: TextNewline
   type: State
   key: NumpadEnter
   canRepeat: true
+  mod1: Shift
 - function: TextSubmit
   type: State
   key: Return
