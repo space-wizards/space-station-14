@@ -123,7 +123,6 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             EnsureComp<ActiveDoAfterComponent>(uid);
     }
 
-
     #region Creation
     /// <summary>
     ///     Tasks that are delayed until the specified time has passed
@@ -203,7 +202,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         // (or if there is no item there we need to keep it free).
         if (args.NeedHand && args.BreakOnHandChange)
         {
-            if (!TryComp(args.User, out SharedHandsComponent? handsComponent))
+            if (!TryComp(args.User, out HandsComponent? handsComponent))
                 return false;
 
             doAfter.InitialHand = handsComponent.ActiveHand?.Name;
@@ -211,7 +210,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         }
 
         // Inital checks
-        if (ShouldCancel(doAfter, GetEntityQuery<TransformComponent>(), GetEntityQuery<SharedHandsComponent>()))
+        if (ShouldCancel(doAfter, GetEntityQuery<TransformComponent>(), GetEntityQuery<HandsComponent>()))
             return false;
 
         if (args.AttemptFrequency == AttemptFrequency.StartAndEnd && !TryAttemptEvent(doAfter))

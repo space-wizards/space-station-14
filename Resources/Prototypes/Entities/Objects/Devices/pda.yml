@@ -710,6 +710,26 @@
     state: pda-detective
 
 - type: entity
+  parent: BasePDA
+  id: BrigmedPDA
+  name: brigmed PDA
+  description: I wonder whose pulse is on the screen? I hope he doesnt stop... PDA has a built-in health analyzer.
+  components:
+  - type: PDA
+    id: BrigmedIDCard
+    state: pda-brigmed
+  - type: PDABorderColor
+    borderColor: "#A32D26"
+    accentHColor: "#447987"
+    accentVColor: "#447987"
+  - type: Icon
+    state: pda-brigmed
+  - type: HealthAnalyzer
+    scanDelay: 1
+    scanningEndSound:
+      path: "/Audio/Items/Medical/healthscanner.ogg"
+
+- type: entity
   parent: ClownPDA
   id: CluwnePDA
   name: cluwne PDA
