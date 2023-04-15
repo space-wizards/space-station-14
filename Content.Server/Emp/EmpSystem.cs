@@ -50,7 +50,12 @@ public sealed class EmpSystem : EntitySystem
         {
             comp.TimeLeft -= frameTime;
             if (comp.TimeLeft <= 0)
+            {
                 RemComp<EmpDisabledComponent>(uid);
+                var ev = new EmpDisabledRemoved();
+                RaiseLocalEvent(uid, ref ev);
+                continue;
+            }
 
             if (_timing.CurTime > comp.TargetTime)
             {
@@ -74,3 +79,6 @@ public sealed class EmpSystem : EntitySystem
 
 [ByRefEvent]
 public record struct EmpPulseEvent(float EnergyConsumption, bool Affected, bool Disabled);
+
+[ByRefEvent]
+public record struct EmpDisabledRemoved();
