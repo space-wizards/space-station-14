@@ -27,7 +27,7 @@
         StationEngineer: [ 5, 5 ]
         ChiefMedicalOfficer: [ 1, 1 ]
         MedicalDoctor: [ 5, 5 ]
-        Chemist: [ 3, 3 ]
+        Chemist: [ 2, 3 ]
         ResearchDirector: [ 1, 1 ]
         Scientist: [ 5, 5 ]
         HeadOfSecurity: [ 1, 1 ]
