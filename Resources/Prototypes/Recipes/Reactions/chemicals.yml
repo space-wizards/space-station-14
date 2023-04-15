@@ -1,4 +1,14 @@
 - type: reaction
+  id: Water
+  reactants:
+    Hydrogen:
+      amount: 2
+    Oxygen:
+      amount: 1
+  products:
+    Water: 3
+
+- type: reaction
   id: Ammonia
   reactants:
     Hydrogen:
