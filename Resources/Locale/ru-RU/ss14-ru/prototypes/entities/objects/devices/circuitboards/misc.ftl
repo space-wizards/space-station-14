@@ -1,2 +1,2 @@
-ent-StationMapCircuitboard = station map circuit board
-    .desc = A printed circuit board for a station map.
+ent-StationMapCircuitboard = карта станции (машинная плата)
+    .desc = Машинная плата для станционной карты.

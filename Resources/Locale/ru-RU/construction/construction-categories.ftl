@@ -9,4 +9,4 @@ construction-category-weapons = Оружие
 construction-category-tiles = Плитки
 construction-category-utilities = Утилиты
 construction-category-misc = Разное
-construction-category-clothing = Clothing
+construction-category-clothing = Одежда

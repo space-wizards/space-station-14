@@ -1,2 +1,2 @@
-ent-OreBag = ore bag
-    .desc = A robust bag for salvage specialists and miners alike to carry large amounts of ore.
+ent-OreBag = сумка для руды
+    .desc = Прочная сумка для специалистов по утилизации и шахтеров для переноски больших объемов руды.
