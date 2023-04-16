@@ -1,6 +1,5 @@
 using Content.Shared.Pinpointer;
 using Robust.Client.Graphics;
-using Robust.Shared.GameStates;
 
 namespace Content.Client.Pinpointer;
 
@@ -12,7 +11,6 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<PinpointerComponent, ComponentHandleState>(HandleCompState);
     }
 
     public override void FrameUpdate(float frameTime)
@@ -30,16 +28,6 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             UpdateAppearance(uid, pinpointer, appearance);
             UpdateArrowAngle(uid, pinpointer, appearance);
         }
-    }
-
-    private void HandleCompState(EntityUid uid, PinpointerComponent pinpointer, ref ComponentHandleState args)
-    {
-        if (args.Current is not PinpointerComponentState state)
-            return;
-
-        pinpointer.IsActive = state.IsActive;
-        pinpointer.ArrowAngle = state.ArrowAngle;
-        pinpointer.DistanceToTarget = state.DistanceToTarget;
     }
 
     private void UpdateAppearance(EntityUid uid, PinpointerComponent pinpointer, AppearanceComponent appearance)
