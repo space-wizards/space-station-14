@@ -103,7 +103,7 @@ public abstract partial class InteractionTest
     public float TickPeriod => (float)Timing.TickPeriod.TotalSeconds;
 
     [SetUp]
-    public async Task Setup()
+    public virtual async Task Setup()
     {
         PairTracker = await PoolManager.GetServerClient(new PoolSettings());
 
@@ -192,7 +192,7 @@ public abstract partial class InteractionTest
     }
 
     [TearDown]
-    public async Task Cleanup()
+    public virtual async Task Cleanup()
     {
         await Server.WaitPost(() => MapMan.DeleteMap(MapId));
         await PairTracker.CleanReturnAsync();
