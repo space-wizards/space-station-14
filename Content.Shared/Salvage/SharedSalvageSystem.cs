@@ -51,7 +51,13 @@ public abstract class SharedSalvageSystem : EntitySystem
         var dungeon = GetMod<SalvageDungeonMod>(rand, ref rating);
         var faction = GetMod<SalvageFactionPrototype>(rand, ref rating);
         var biome = GetMod<SalvageBiomeMod>(rand, ref rating);
-        var light = GetMod<SalvageLightMod>(rand, ref rating);
+        SalvageLightMod? light = null;
+
+        if (biome.BiomePrototype != null)
+        {
+            light = GetMod<SalvageLightMod>(rand, ref rating);
+        }
+
         var time = GetMod<SalvageTimeMod>(rand, ref rating);
 
         if (rand.Prob(0.2f))
@@ -64,7 +70,7 @@ public abstract class SharedSalvageSystem : EntitySystem
 
         var duration = TimeSpan.FromSeconds(exactDuration);
 
-        return new SalvageMission(seed, dungeon.ID, faction.ID, config, biome.BiomePrototype, light.Color, duration);
+        return new SalvageMission(seed, dungeon.ID, faction.ID, config, biome.BiomePrototype, light?.Color, duration);
     }
 
     public T GetMod<T>(System.Random rand, ref float rating) where T : class, IPrototype, ISalvageMod

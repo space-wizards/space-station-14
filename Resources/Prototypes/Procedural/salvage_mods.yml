@@ -94,29 +94,28 @@
 # Missions!
 - type: salvageMission
   id: Mining # No objective only loot
-  minDifficulty: 1
 
 - type: salvageMission
   id: StructureDestroy
-  minDifficulty: 2
+  minDifficulty: 1
 
-- type: salvageMission
-  id: BombDefusal
-  minDifficulty: 3
+#- type: salvageMission
+#  id: BombDefusal
+#  minDifficulty: 3
 
-- type: salvageMission
-  id: Retrieval # Two-handed black box to retrieve
-  minDifficulty: 2
+#- type: salvageMission
+#  id: Retrieval # Two-handed black box to retrieve
+#  minDifficulty: 2
 
-- type: salvageMission
-  id: Assassination # Player takeovers
-  minDifficulty: 3
+#- type: salvageMission
+#  id: Assassination # Player takeovers
+#  minDifficulty: 3
 
-- type: salvageMission
-  id: Extraction # Escape
-  minDifficulty: 2
+#- type: salvageMission
+#  id: Extraction # Escape
+#  minDifficulty: 2
 
-- type: salvageMission
-  id: WaveDefense
-  name: A
-  minDifficulty: 3
+#- type: salvageMission
+#  id: WaveDefense
+#  name: A
+#  minDifficulty: 3

@@ -21,6 +21,13 @@ public sealed class SalvageMissionPrototype : IPrototype
     /// </summary>
     [DataField("desc")]
     public string Description = string.Empty;
+
+    /// <summary>
+    /// Minimum cost required for this mission type.
+    /// Innately harder missions won't be available under easier difficulties.
+    /// </summary>
+    [DataField("minDifficulty")]
+    public float MinDifficulty = 0f;
 }
 
 [Serializable, NetSerializable]

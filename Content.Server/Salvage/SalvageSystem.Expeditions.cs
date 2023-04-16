@@ -8,24 +8,19 @@ using Content.Server.CPUJob.JobQueues.Queues;
 using Content.Server.Parallax;
 using Content.Server.Procedural;
 using Content.Server.Salvage.Expeditions;
-using Content.Server.Salvage.Expeditions.Structure;
 using Content.Server.Station.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Dataset;
 using Content.Shared.Gravity;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Procedural;
-using Content.Shared.Procedural.Loot;
 using Content.Shared.Salvage;
-using Content.Shared.Salvage.Expeditions;
-using Content.Shared.Storage;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Noise;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 using Vector2 = Robust.Shared.Maths.Vector2;
 
 namespace Content.Server.Salvage;
@@ -116,11 +111,13 @@ public sealed partial class SalvageSystem
             UpdateConsoles(comp);
         }
 
-        foreach (var comp in EntityQuery<SalvageExpeditionComponent>())
+        var query = EntityQueryEnumerator<SalvageExpeditionComponent>();
+
+        while (query.MoveNext(out var uid, out var comp))
         {
             if (comp.EndTime < currentTime)
             {
-                QueueDel(comp.Owner);
+                QueueDel(uid);
             }
         }
     }
@@ -153,17 +150,26 @@ public sealed partial class SalvageSystem
 
         for (var i = 0; i < MissionLimit; i++)
         {
-            var config = _random.Pick(configs);
+            _random.Shuffle(configs);
+            var rating = (DifficultyRating) i;
 
-            var mission = new SalvageMissionParams()
+            foreach (var config in configs)
             {
-                Index = component.NextIndex,
-                Config = config.ID,
-                Seed = _random.Next(),
-                Difficulty = (DifficultyRating) i,
-            };
+                // Don't offer harder missions under easier tiers.
+                if (config.MinDifficulty > i)
+                    continue;
 
-            component.Missions[component.NextIndex++] = mission;
+                var mission = new SalvageMissionParams()
+                {
+                    Index = component.NextIndex,
+                    Config = config.ID,
+                    Seed = _random.Next(),
+                    Difficulty = rating,
+                };
+
+                component.Missions[component.NextIndex++] = mission;
+                break;
+            }
         }
     }
 
@@ -250,24 +256,13 @@ public sealed partial class SalvageSystem
                 biomeSystem.SetPrototype(biome, mission.Biome);
                 biomeSystem.SetSeed(biome, mission.Seed);
                 _entManager.Dirty(biome);
-            }
 
-            if (mission.Color != null)
-            {
-                var lighting = _entManager.EnsureComponent<MapLightComponent>(mapUid);
-                lighting.AmbientLightColor = mission.Color.Value;
-                _entManager.Dirty(lighting);
-            }
-
-            if (true)//mission.Gravity)
-            {
+                // Gravity
                 var gravity = _entManager.EnsureComponent<GravityComponent>(mapUid);
                 gravity.Enabled = true;
                 _entManager.Dirty(gravity, metadata);
-            }
 
-            if (true)//mission.Atmos)
-            {
+                // Atmos
                 var atmos = _entManager.EnsureComponent<MapAtmosphereComponent>(mapUid);
                 atmos.Space = false;
                 var moles = new float[Atmospherics.AdjustedNumberOfGases];
@@ -279,6 +274,13 @@ public sealed partial class SalvageSystem
                     Temperature = 293.15f,
                     Moles = moles,
                 };
+
+                if (mission.Color != null)
+                {
+                    var lighting = _entManager.EnsureComponent<MapLightComponent>(mapUid);
+                    lighting.AmbientLightColor = mission.Color.Value;
+                    _entManager.Dirty(lighting);
+                }
             }
 
             _mapManager.DoMapInitialize(mapId);
