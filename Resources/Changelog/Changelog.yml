@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix popup flickering., type: Fix}
-  id: 2923
-  time: '2023-01-20T14:19:02.0000000+00:00'
 - author: gus
   changes:
   - {message: Plastic utensils are now trash., type: Tweak}
@@ -2903,3 +2898,8 @@ Entries:
   - {message: Water is no longer slippery., type: Remove}
   id: 3422
   time: '2023-04-16T02:31:53.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: we Lied. Water is slippery still., type: Add}
+  id: 3423
+  time: '2023-04-16T02:42:55.0000000+00:00'
