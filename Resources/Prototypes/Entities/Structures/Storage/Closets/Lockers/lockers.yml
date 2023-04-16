@@ -321,6 +321,20 @@
   - type: AccessReader
     access: [["Security"]]
 
+- type: entity
+  id: ShotgunSafe
+  parent: LockerBaseSecure
+  name: shotgun safe
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: shotguncase
+      state_open: shotguncase_open
+      state_closed: shotguncase_door
+  - type: AccessReader
+    access: [["Security"]]
+
 # Detective
 - type: entity
   id: LockerDetective
