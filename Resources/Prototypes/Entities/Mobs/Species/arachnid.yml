@@ -23,8 +23,8 @@
   - type: Thirst
   # Damage and speed
   - type: Temperature
-    heatDamageThreshold: 400 # Insects like heat
-    coldDamageThreshold: 285 # Spiders don't tolerate the cold too well
+    heatDamageThreshold: 400
+    coldDamageThreshold: 285
     currentTemperature: 310.15
     specificHeat: 46
     coldDamage:
@@ -36,7 +36,7 @@
   - type: Barotrauma
     damage:
       types:
-        Blunt: 0.15 #per second, scales with pressure and other constants.
+        Blunt: 0.20 #per second, scales with pressure and other constants.
   - type: SlowOnDamage
     speedModifierThresholds: # This is an ouch, but it does make up for their extra speed
       50: 0.6
