@@ -40,6 +40,7 @@ public sealed partial class PinpointerComponent : Component
     [AutoNetworkedField]
     public Angle ArrowAngle;
 
+    [ViewVariables]
     [AutoNetworkedField]
     public Distance DistanceToTarget = Distance.Unknown;
 
