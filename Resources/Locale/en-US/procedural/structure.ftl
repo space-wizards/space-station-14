@@ -15,4 +15,4 @@ salvage-expedition-window-next = Next offer
 
 # Expedition descriptions
 salvage-expedition-desc-mining = Collect resources inside the area.
-salvage-expedition-desc-structure = Destroy {$count} {THE($structure)} inside the area.
+salvage-expedition-desc-structure = Destroy {$count} {$structure} inside the area.

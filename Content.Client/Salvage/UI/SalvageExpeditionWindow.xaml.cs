@@ -257,7 +257,7 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
         if (_claimed)
         {
             NextOfferBar.Value = 0f;
-            NextOfferText.Text = Loc.GetString("salvage-expedition-window-remaining");
+            NextOfferText.Text = "00:00";
             return;
         }
 

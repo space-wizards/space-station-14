@@ -12,6 +12,7 @@ namespace Content.Shared.Salvage;
 
 public abstract class SharedSalvageSystem : EntitySystem
 {
+    [Dependency] private readonly ILocalizationManager _loc = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
 
     public static readonly TimeSpan MissionCooldown = TimeSpan.FromMinutes(5);
@@ -27,9 +28,11 @@ public abstract class SharedSalvageSystem : EntitySystem
             case "Mining":
                 return Loc.GetString("salvage-expedition-desc-mining");
             case "StructureDestroy":
+                var proto = _proto.Index<SalvageFactionPrototype>(mission.Faction).Configs["DefenseStructure"];
+
                 return Loc.GetString("salvage-expedition-desc-structure",
                     ("count", GetStructureCount(mission.Difficulty)),
-                    ("structure", _proto.Index<SalvageFactionPrototype>(mission.Faction).Configs["DefenseStructure"]));
+                    ("structure", _loc.GetEntityData(proto).Name));
             default:
                 throw new NotImplementedException();
         }
@@ -101,7 +104,9 @@ public abstract class SharedSalvageSystem : EntitySystem
 
         var duration = TimeSpan.FromSeconds(exactDuration);
 
-        return new SalvageMission(seed, difficulty, rating, dungeon.ID, faction.ID, config, biome.ID, light?.Color, duration);
+        var loots = GetLoot(_proto.EnumeratePrototypes<SalvageLootPrototype>().ToList(), (int) difficulty, seed);
+
+        return new SalvageMission(seed, difficulty, rating, dungeon.ID, faction.ID, config, biome.ID, light?.Color, duration, loots);
     }
 
     public SalvageDungeonMod GetDungeon(string biome, System.Random rand, ref float rating)
@@ -164,16 +169,17 @@ public abstract class SharedSalvageSystem : EntitySystem
         throw new InvalidOperationException();
     }
 
-    public static IEnumerable<SalvageLootPrototype> GetLoot(List<string> loots, int seed, IPrototypeManager protoManager)
+    public List<string> GetLoot(List<SalvageLootPrototype> loots, int count, int seed)
     {
+        var results = new List<string>(count);
         var adjustedSeed = new System.Random(seed + 2);
 
-        for (var i = 0; i < loots.Count; i++)
+        for (var i = 0; i < count; i++)
         {
-            var loot = loots[i];
-            var a = protoManager.Index<WeightedRandomPrototype>(loot);
-            var lootConfig = a.Pick(adjustedSeed);
-            yield return protoManager.Index<SalvageLootPrototype>(lootConfig);
+            var loot = loots[adjustedSeed.Next(loots.Count)];
+            results.Add(loot.ID);
         }
+
+        return results;
     }
 }

@@ -1,30 +1,10 @@
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
-using Content.Server.Atmos;
-using Content.Server.Atmos.Components;
 using Content.Server.CPUJob.JobQueues;
 using Content.Server.CPUJob.JobQueues.Queues;
-using Content.Server.Parallax;
-using Content.Server.Procedural;
 using Content.Server.Salvage.Expeditions;
-using Content.Server.Salvage.Expeditions.Structure;
 using Content.Server.Station.Systems;
-using Content.Shared.Atmos;
-using Content.Shared.Dataset;
-using Content.Shared.Gravity;
-using Content.Shared.Parallax.Biomes;
-using Content.Shared.Procedural;
 using Content.Shared.Salvage;
-using Content.Shared.Salvage.Expeditions;
-using Content.Shared.Storage;
-using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
-using Robust.Shared.Noise;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
-using Robust.Shared.Timing;
-using Vector2 = Robust.Shared.Maths.Vector2;
 
 namespace Content.Server.Salvage;
 
@@ -185,6 +165,7 @@ public sealed partial class SalvageSystem
             _timing,
             _mapManager,
             _prototypeManager,
+            _tileDefManager,
             _biome,
             _dungeon,
             this,
@@ -194,209 +175,5 @@ public sealed partial class SalvageSystem
 
         _salvageJobs.Add((job, cancelToken));
         _salvageQueue.EnqueueJob(job);
-    }
-
-    private sealed class SpawnSalvageMissionJob : Job<bool>
-    {
-        private readonly IEntityManager _entManager;
-        private readonly IGameTiming _timing;
-        private readonly IMapManager _mapManager;
-        private readonly IPrototypeManager _prototypeManager;
-        private readonly BiomeSystem _biome;
-        private readonly DungeonSystem _dungeon;
-        private readonly SalvageSystem _salvage;
-
-        public readonly EntityUid Station;
-        private readonly SalvageMissionParams _missionParams;
-
-        public SpawnSalvageMissionJob(
-            double maxTime,
-            IEntityManager entManager,
-            IGameTiming timing,
-            IMapManager mapManager,
-            IPrototypeManager protoManager,
-            BiomeSystem biome,
-            DungeonSystem dungeon,
-            SalvageSystem salvage,
-            EntityUid station,
-            SalvageMissionParams missionParams,
-            CancellationToken cancellation = default) : base(maxTime, cancellation)
-        {
-            _entManager = entManager;
-            _timing = timing;
-            _mapManager = mapManager;
-            _prototypeManager = protoManager;
-            _biome = biome;
-            _dungeon = dungeon;
-            _salvage = salvage;
-            Station = station;
-            _missionParams = missionParams;
-        }
-
-        protected override async Task<bool> Process()
-        {
-            Logger.DebugS("salvage", $"Spawning salvage mission with seed {_missionParams.Seed}");
-            var config = _prototypeManager.Index<SalvageMissionPrototype>(_missionParams.Config);
-            var mapId = _mapManager.CreateMap();
-            var mapUid = _mapManager.GetMapEntityId(mapId);
-            _mapManager.AddUninitializedMap(mapId);
-            MetaDataComponent? metadata = null;
-            var grid = _entManager.EnsureComponent<MapGridComponent>(mapUid);
-            var random = new Random(_missionParams.Seed);
-
-            // Setup mission configs
-            // As we go through the config the rating will deplete so we'll go for most important to least important.
-
-            var mission = _entManager.System<SharedSalvageSystem>()
-                .GetMission(_missionParams.Config, _missionParams.Difficulty, _missionParams.Seed);
-
-            if (mission.Biome != null)
-            {
-                var biome = _entManager.AddComponent<BiomeComponent>(mapUid);
-                var biomeSystem = _entManager.System<BiomeSystem>();
-                biomeSystem.SetPrototype(biome, mission.Biome);
-                biomeSystem.SetSeed(biome, mission.Seed);
-                _entManager.Dirty(biome);
-
-                // Gravity
-                var gravity = _entManager.EnsureComponent<GravityComponent>(mapUid);
-                gravity.Enabled = true;
-                _entManager.Dirty(gravity, metadata);
-
-                // Atmos
-                var atmos = _entManager.EnsureComponent<MapAtmosphereComponent>(mapUid);
-                atmos.Space = false;
-                var moles = new float[Atmospherics.AdjustedNumberOfGases];
-                moles[(int) Gas.Oxygen] = 21.824779f;
-                moles[(int) Gas.Nitrogen] = 82.10312f;
-
-                atmos.Mixture = new GasMixture(2500)
-                {
-                    Temperature = 293.15f,
-                    Moles = moles,
-                };
-
-                if (mission.Color != null)
-                {
-                    var lighting = _entManager.EnsureComponent<MapLightComponent>(mapUid);
-                    lighting.AmbientLightColor = mission.Color.Value;
-                    _entManager.Dirty(lighting);
-                }
-            }
-
-            _mapManager.DoMapInitialize(mapId);
-            _mapManager.SetMapPaused(mapId, true);
-
-            // Setup expedition
-            var expedition = _entManager.AddComponent<SalvageExpeditionComponent>(mapUid);
-            expedition.Station = Station;
-            expedition.EndTime = _timing.CurTime + mission.Duration;
-            expedition.MissionParams = _missionParams;
-
-            var ftlUid = _entManager.SpawnEntity("FTLPoint", new EntityCoordinates(mapUid, Vector2.Zero));
-            _entManager.GetComponent<MetaDataComponent>(ftlUid).EntityName = GetFTLName(_prototypeManager.Index<DatasetPrototype>(config.NameProto), _missionParams.Seed);
-
-            var landingPadRadius = 24;
-            var minDungeonOffset = landingPadRadius + 32;
-            var maxDungeonOffset = minDungeonOffset + 32;
-
-            var dungeonOffsetDistance = (minDungeonOffset + (maxDungeonOffset - minDungeonOffset) * random.NextFloat());
-            var dungeonOffset = new Vector2(dungeonOffsetDistance, 0f);
-            dungeonOffset = new Angle(random.NextDouble() * Math.Tau).RotateVec(dungeonOffset);
-            var dungeonConfig = _prototypeManager.Index<DungeonConfigPrototype>(mission.Dungeon);
-            var dungeon =
-                await WaitAsyncTask(_dungeon.GenerateDungeonAsync(dungeonConfig, mapUid, grid, (Vector2i) dungeonOffset,
-                    _missionParams.Seed));
-
-            // Aborty
-            if (dungeon.Rooms.Count == 0)
-            {
-                return false;
-            }
-
-            // Handle loot
-            /*
-            foreach (var loot in GetLoot(config.Loots, missionSeed, _prototypeManager))
-            {
-                // await SpawnDungeonLoot(dungeonOffset, dungeon, loot, grid, random, reservedTiles);
-            }
-            */
-
-            // Setup the landing pad
-            var landingPadExtents = new Vector2i(landingPadRadius, landingPadRadius);
-            var tiles = new List<(Vector2i Indices, Tile Tile)>(landingPadExtents.X * landingPadExtents.Y * 2);
-
-            // Set the tiles themselves
-            var seed = new FastNoiseLite(_missionParams.Seed);
-
-            foreach (var tile in grid.GetTilesIntersecting(new Circle(Vector2.Zero, landingPadRadius), false))
-            {
-                if (!_biome.TryGetBiomeTile(mapUid, grid, seed, tile.GridIndices, out var tileRef))
-                    continue;
-
-                // TODO: Force load API or smth
-                tiles.Add((tile.GridIndices, tileRef.Value));
-            }
-
-            grid.SetTiles(tiles);
-
-            await SetupMission(mission.Mission, mission, (Vector2i) dungeonOffset, dungeon, grid, random, seed.GetSeed());
-            return true;
-        }
-
-        #region Mission Specific
-
-        private async Task SetupMission(string missionMod, SalvageMission mission, Vector2i dungeonOffset, Dungeon dungeon, MapGridComponent grid, Random random, int seed)
-        {
-            switch (missionMod)
-            {
-                case "Structure":
-                    await SetupStructure(mission, dungeonOffset, dungeon, grid, random, seed);
-                    return;
-                default:
-                    return;
-            }
-        }
-
-        private async Task SetupStructure(SalvageMission mission, Vector2i dungeonOffset, Dungeon dungeon, MapGridComponent grid, Random random, int seed)
-        {
-            var structureComp = _entManager.GetComponent<SalvageStructureExpeditionComponent>(grid.Owner);
-            var availableRooms = dungeon.Rooms.ToList();
-            var faction = _prototypeManager.Index<SalvageFactionPrototype>(mission.Faction);
-            var groupSpawns = (int) mission.Difficulty + mission.RemainingDifficulty;
-
-            for (var i = 0; i < groupSpawns; i++)
-            {
-                var mobGroupIndex = random.Next(faction.MobGroups.Count);
-                var mobGroup = faction.MobGroups[mobGroupIndex];
-
-                var spawnRoomIndex = random.Next(dungeon.Rooms.Count);
-                var spawnRoom = dungeon.Rooms[spawnRoomIndex];
-                var spawnTile = spawnRoom.Tiles.ElementAt(random.Next(spawnRoom.Tiles.Count));
-                spawnTile += dungeonOffset;
-                var spawnPosition = grid.GridTileToLocal(spawnTile);
-
-                foreach (var entry in EntitySpawnCollection.GetSpawns(mobGroup.Entries, random))
-                {
-                    _entManager.SpawnEntity(entry, spawnPosition);
-                }
-
-                await SuspendIfOutOfTime();
-            }
-
-            var structureCount = _salvage.GetStructureCount(mission.Difficulty);
-            var shaggy = faction.Configs["DefenseStructure"];
-
-            // Spawn the objectives
-            for (var i = 0; i < structureCount; i++)
-            {
-                var structureRoom = availableRooms[random.Next(availableRooms.Count)];
-                var spawnTile = structureRoom.Tiles.ElementAt(random.Next(structureRoom.Tiles.Count)) + dungeonOffset;
-                var uid = _entManager.SpawnEntity(shaggy, grid.GridTileToLocal(spawnTile));
-                structureComp.Structures.Add(uid);
-            }
-        }
-
-        #endregion
     }
 }

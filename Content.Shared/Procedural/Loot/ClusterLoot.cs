@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Procedural.Loot;
 
 /// <summary>
-/// Spawns loot at points in the specified rooms
+/// Spawns loot at points in the specified area.
 /// </summary>
 public sealed class ClusterLoot : IDungeonLoot
 {
