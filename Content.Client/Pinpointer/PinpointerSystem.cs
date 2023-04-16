@@ -24,11 +24,11 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
         // because eye can change it rotation anytime
         // we need to update this arrow in a update loop
-        var query = EntityQueryEnumerator<PinpointerComponent>();
-        while (query.MoveNext(out var uid, out var pinpointer))
+        var query = EntityQueryEnumerator<PinpointerComponent, AppearanceComponent>();
+        while (query.MoveNext(out var uid, out var pinpointer, out var appearance))
         {
-            UpdateAppearance(uid, pinpointer);
-            UpdateEyeDir(uid, pinpointer);
+            UpdateAppearance(uid, pinpointer, appearance);
+            UpdateArrowAngle(uid, pinpointer, appearance);
         }
     }
 
@@ -42,36 +42,22 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         pinpointer.DistanceToTarget = state.DistanceToTarget;
     }
 
-    private void UpdateAppearance(EntityUid uid, PinpointerComponent? pinpointer = null,
-        AppearanceComponent? appearance = null)
+    private void UpdateAppearance(EntityUid uid, PinpointerComponent pinpointer, AppearanceComponent appearance)
     {
-        if (!Resolve(uid, ref pinpointer, ref appearance))
-            return;
-
         _appearance.SetData(uid, PinpointerVisuals.IsActive, pinpointer.IsActive, appearance);
         _appearance.SetData(uid, PinpointerVisuals.TargetDistance, pinpointer.DistanceToTarget, appearance);
-    }
-
-    private void UpdateArrowAngle(EntityUid uid, Angle angle, PinpointerComponent? pinpointer = null,
-        AppearanceComponent? appearance = null)
-    {
-        if (!Resolve(uid, ref pinpointer, ref appearance))
-            return;
-
-        _appearance.SetData(uid, PinpointerVisuals.ArrowAngle, angle, appearance);
     }
 
     /// <summary>
     ///     Transform pinpointer arrow from world space to eye space
     ///     And send it to the appearance component
     /// </summary>
-    private void UpdateEyeDir(EntityUid uid, PinpointerComponent? pinpointer = null)
+    private void UpdateArrowAngle(EntityUid uid, PinpointerComponent pinpointer, AppearanceComponent appearance)
     {
-        if (!Resolve(uid, ref pinpointer) || !pinpointer.HasTarget)
+        if (!pinpointer.HasTarget)
             return;
-
         var eye = _eyeManager.CurrentEye;
         var angle = pinpointer.ArrowAngle + eye.Rotation;
-        UpdateArrowAngle(uid, angle, pinpointer);
+        _appearance.SetData(uid, PinpointerVisuals.ArrowAngle, angle, appearance);
     }
 }
