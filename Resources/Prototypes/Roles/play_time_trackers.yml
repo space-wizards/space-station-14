@@ -90,6 +90,9 @@
 
 - type: playTimeTracker
   id: JobPassenger
+  
+- type: playTimeTracker
+  id: JobParamedic
 
 - type: playTimeTracker
   id: JobPsychologist
