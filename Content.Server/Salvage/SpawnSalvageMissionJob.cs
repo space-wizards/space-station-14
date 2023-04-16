@@ -24,6 +24,7 @@ using Robust.Shared.Noise;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Salvage;
 
@@ -150,12 +151,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             return false;
         }
 
-        // Handle loot
-        foreach (var loot in mission.Loot)
-        {
-            var lootProto = _prototypeManager.Index<SalvageLootPrototype>(loot);
-            await SpawnDungeonLoot(dungeon, lootProto, mapUid, grid, random);
-        }
+        List<Vector2i> reservedTiles = new();
 
         // Setup the landing pad
         var landingPadExtents = new Vector2i(landingPadRadius, landingPadRadius);
@@ -171,15 +167,24 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
                 continue;
 
             tiles.Add((tile.GridIndices, landingTile));
+            reservedTiles.Add(tile.GridIndices);
         }
 
         grid.SetTiles(tiles);
 
         await SetupMission(mission.Mission, mission, (Vector2i) dungeonOffset, dungeon, grid, random, seed.GetSeed());
+
+        // Handle loot
+        foreach (var loot in mission.Loot)
+        {
+            var lootProto = _prototypeManager.Index<SalvageLootPrototype>(loot);
+            await SpawnDungeonLoot(dungeon, lootProto, mapUid, grid, random, reservedTiles);
+
+        }
         return true;
     }
 
-    private async Task SpawnDungeonLoot(Dungeon dungeon, SalvageLootPrototype loot, EntityUid gridUid, MapGridComponent grid, Random random)
+    private async Task SpawnDungeonLoot(Dungeon dungeon, SalvageLootPrototype loot, EntityUid gridUid, MapGridComponent grid, Random random, List<Vector2i> reservedTiles)
     {
         foreach (var rule in loot.LootRules)
         {
@@ -187,11 +192,76 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             {
                 // Spawns a cluster (like an ore vein) nearby.
                 case ClusterLoot cluster:
-                    // TODO: Copy code from old PR.
+                    await SpawnClusterLoot(dungeon, cluster, gridUid, grid, random, reservedTiles);
                     break;
             }
         }
     }
+
+    #region Loot
+
+    private async Task SpawnClusterLoot(
+        Dungeon dungeon,
+        ClusterLoot loot,
+        EntityUid gridUid,
+        MapGridComponent grid,
+        Random random,
+        List<Vector2i> reservedTiles)
+    {
+        var spawnTiles = new HashSet<Vector2i>();
+        var dungeonCenter = dungeon.Center;
+        // TODO: More robust
+        var minRadius = 16f;
+        var maxRadius = 32f;
+
+        for (var i = 0; i < loot.Points; i++)
+        {
+            var distance = minRadius + (maxRadius - minRadius) * random.NextFloat();
+            var angle = new Angle(random.NextDouble() * Math.Tau);
+            var offset = angle.RotateVec(new Vector2(distance, 0f));
+            var spawnOrigin = dungeon.Center + (Vector2i) offset;
+
+            // Spread out from the wall
+            var frontier = new List<Vector2i> {spawnOrigin};
+            var clusterAmount = random.Next(loot.MinClusterAmount, loot.MaxClusterAmount);
+
+            for (var j = 0; j < clusterAmount; j++)
+            {
+                var nodeIndex = random.Next(frontier.Count);
+                var node = frontier[nodeIndex];
+                frontier.RemoveSwap(nodeIndex);
+
+                if (reservedTiles.Contains(node))
+                    continue;
+
+                var anchored = grid.GetAnchoredEntitiesEnumerator(node);
+
+                for (var k = 0; k < 4; k++)
+                {
+                    var direction = (Direction) (k * 2);
+                    var neighbor = node + direction.ToIntVec();
+
+                    frontier.Add(neighbor);
+                }
+
+                if (anchored.MoveNext(out _))
+                    continue;
+
+                spawnTiles.Add(node);
+
+                if (frontier.Count == 0)
+                    break;
+            }
+        }
+
+        foreach (var tile in spawnTiles)
+        {
+            await SuspendIfOutOfTime();
+            _entManager.SpawnEntity(loot.Prototype, grid.GridTileToLocal(tile));
+        }
+    }
+
+    #endregion
 
     #region Mission Specific
 
