@@ -13,7 +13,6 @@ namespace Content.Server.Construction.Completions
     {
         [DataField("container")] public string Container { get; private set; } = string.Empty;
 
-        // TODO use or generalize ConstructionSystem.ChangeEntity();
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
             if (!entityManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager))
@@ -63,12 +62,8 @@ namespace Content.Server.Construction.Completions
             // We only add this container. If some construction needs to take other containers into account, fix this.
             entityManager.EntitySysManager.GetEntitySystem<ConstructionSystem>().AddContainer(computer, Container);
 
-            var entChangeEv = new ConstructionChangeEntityEvent(computer, uid);
-            entityManager.EventBus.RaiseLocalEvent(uid, entChangeEv);
-            entityManager.EventBus.RaiseLocalEvent(computer, entChangeEv, broadcast: true);
-
             // Delete the original entity.
-            entityManager.QueueDeleteEntity(uid);
+            entityManager.DeleteEntity(uid);
         }
     }
 }

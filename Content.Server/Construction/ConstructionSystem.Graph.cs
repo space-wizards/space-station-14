@@ -352,10 +352,6 @@ namespace Content.Server.Construction
                 }
             }
 
-            var entChangeEv = new ConstructionChangeEntityEvent(newUid, uid);
-            RaiseLocalEvent(uid, entChangeEv);
-            RaiseLocalEvent(newUid, entChangeEv, broadcast: true);
-
             QueueDel(uid);
 
             return newUid;
@@ -386,22 +382,6 @@ namespace Content.Server.Construction
 
             construction.Graph = graphId;
             return ChangeNode(uid, userUid, nodeId, performActions, construction);
-        }
-    }
-
-    /// <summary>
-    ///     This event gets raised when an entity changes prototype / uid during construction. The event is raised
-    ///     directed both at the old and new entity.
-    /// </summary>
-    public sealed class ConstructionChangeEntityEvent : EntityEventArgs
-    {
-        public readonly EntityUid New;
-        public readonly EntityUid Old;
-
-        public ConstructionChangeEntityEvent(EntityUid newUid, EntityUid oldUid)
-        {
-            New = newUid;
-            Old = oldUid;
         }
     }
 }

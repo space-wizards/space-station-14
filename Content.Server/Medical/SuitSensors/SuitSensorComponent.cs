@@ -1,5 +1,4 @@
 using Content.Shared.Medical.SuitSensor;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Medical.SuitSensors
 {
@@ -54,10 +53,9 @@ namespace Content.Server.Medical.SuitSensors
         public EntityUid? User = null;
 
         /// <summary>
-        ///     Next time when sensor updated owners status
+        ///     Last time when sensor updated owners status
         /// </summary>
-        [DataField("nextUpdate", customTypeSerializer:typeof(TimeOffsetSerializer))]
-        public TimeSpan NextUpdate = TimeSpan.Zero;
+        public TimeSpan LastUpdate = TimeSpan.Zero;
 
         /// <summary>
         ///     The station this suit sensor belongs to. If it's null the suit didn't spawn on a station and the sensor doesn't work.

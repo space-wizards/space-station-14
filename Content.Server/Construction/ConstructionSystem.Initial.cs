@@ -169,8 +169,6 @@ namespace Content.Server.Construction
                             if (!materialStep.EntityValid(entity, out var stack))
                                 continue;
 
-                            // TODO allow taking from several stacks.
-                            // Also update crafting steps to check if it works.
                             var splitStack = _stackSystem.Split(entity, materialStep.Amount, user.ToCoordinates(0, 0), stack);
 
                             if (splitStack == null)
@@ -290,49 +288,43 @@ namespace Content.Server.Construction
             return newEntity;
         }
 
+        // LEGACY CODE. See warning at the top of the file!
         private async void HandleStartItemConstruction(TryStartItemConstructionMessage ev, EntitySessionEventArgs args)
         {
-            if (args.SenderSession.AttachedEntity is {Valid: true} user)
-                await TryStartItemConstruction(ev.PrototypeName, user);
-        }
-
-        // LEGACY CODE. See warning at the top of the file!
-        public async Task<bool> TryStartItemConstruction(string prototype, EntityUid user)
-        {
-            if (!_prototypeManager.TryIndex(prototype, out ConstructionPrototype? constructionPrototype))
+            if (!_prototypeManager.TryIndex(ev.PrototypeName, out ConstructionPrototype? constructionPrototype))
             {
-                _sawmill.Error($"Tried to start construction of invalid recipe '{prototype}'!");
-                return false;
+                _sawmill.Error($"Tried to start construction of invalid recipe '{ev.PrototypeName}'!");
+                return;
             }
 
             if (!_prototypeManager.TryIndex(constructionPrototype.Graph,
                     out ConstructionGraphPrototype? constructionGraph))
             {
                 _sawmill.Error(
-                    $"Invalid construction graph '{constructionPrototype.Graph}' in recipe '{prototype}'!");
-                return false;
+                    $"Invalid construction graph '{constructionPrototype.Graph}' in recipe '{ev.PrototypeName}'!");
+                return;
             }
 
             var startNode = constructionGraph.Nodes[constructionPrototype.StartNode];
             var targetNode = constructionGraph.Nodes[constructionPrototype.TargetNode];
             var pathFind = constructionGraph.Path(startNode.Name, targetNode.Name);
 
-            if (!_actionBlocker.CanInteract(user, null))
-                return false;
+            if (args.SenderSession.AttachedEntity is not {Valid: true} user || !_actionBlocker.CanInteract(user, null))
+                return;
 
             if (!HasComp<HandsComponent>(user))
-                return false;
+                return;
 
             foreach (var condition in constructionPrototype.Conditions)
             {
                 if (!condition.Condition(user, user.ToCoordinates(0, 0), Direction.South))
-                    return false;
+                    return;
             }
 
             if (pathFind == null)
             {
                 throw new InvalidDataException(
-                    $"Can't find path from starting node to target node in construction! Recipe: {prototype}");
+                    $"Can't find path from starting node to target node in construction! Recipe: {ev.PrototypeName}");
             }
 
             var edge = startNode.GetEdge(pathFind[0].Name);
@@ -340,7 +332,7 @@ namespace Content.Server.Construction
             if (edge == null)
             {
                 throw new InvalidDataException(
-                    $"Can't find edge from starting node to the next node in pathfinding! Recipe: {prototype}");
+                    $"Can't find edge from starting node to the next node in pathfinding! Recipe: {ev.PrototypeName}");
             }
 
             // No support for conditions here!
@@ -355,12 +347,11 @@ namespace Content.Server.Construction
             }
 
             if (await Construct(user, "item_construction", constructionGraph, edge, targetNode) is not { Valid: true } item)
-                return false;
+                return;
 
             // Just in case this is a stack, attempt to merge it. If it isn't a stack, this will just normally pick up
             // or drop the item as normal.
             _stackSystem.TryMergeToHands(item, user);
-            return true;
         }
 
         // LEGACY CODE. See warning at the top of the file!
@@ -499,7 +490,7 @@ namespace Content.Server.Construction
             xform.LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
             xform.Anchored = wasAnchored;
 
-            RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack, structure));
+            RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
             _adminLogger.Add(LogType.Construction, LogImpact.Low, $"{ToPrettyString(user):player} has turned a {ev.PrototypeName} construction ghost into {ToPrettyString(structure)} at {Transform(structure).Coordinates}");
             Cleanup();
         }

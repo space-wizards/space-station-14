@@ -59,14 +59,6 @@ public sealed partial class ConstructionSystem
         args.Verbs.Add(verb);
     }
 
-    public List<MachinePartComponent> GetAllParts(EntityUid uid, MachineComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return new List<MachinePartComponent>();
-
-        return GetAllParts(component);
-    }
-
     public List<MachinePartComponent> GetAllParts(MachineComponent component)
     {
         var parts = new List<MachinePartComponent>();

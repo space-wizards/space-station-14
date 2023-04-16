@@ -58,14 +58,13 @@
     back: ClothingBackpackDuffelSyndicateAmmo
     mask: ClothingMaskBreath
     eyes: ClothingEyesGlassesSecurity
-    ears: ClothingHeadsetAltCommand
+    ears: ClothingHeadsetCentCom
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitDeathsquad
-    suitstorage: YellowOxygenTankFilled
     shoes: ClothingShoesChameleonNoSlips
     id: CentcomPDA
-    pocket1: EnergySword
-    belt: ClothingBeltChiefEngineerFilled
+    pocket1: EmergencyOxygenTankFilled
+    belt: ClothingBeltUtilityFilled
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackDuffelSyndicateAmmo
   duffelbag: ClothingBackpackDuffelSyndicateAmmo
@@ -164,14 +163,14 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorBrown
     back: ClothingBackpackDuffelCBURN
-    mask: ClothingMaskGasExplorer
+    mask: ClothingMaskGas
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetAltCommand
-    gloves: ClothingHandsGlovesCombat
+    gloves: ClothingHandsGlovesFingerless
     outerClothing: ClothingOuterHardsuitCBURN
-    shoes: ClothingShoesBootsCombatFilled
+    shoes: ClothingShoesBootsJack
     id: CBURNPDA
-    pocket1: RadioHandheld
+    pocket1: CombatKnife
     pocket2: WeaponLaserGun
     suitstorage: YellowOxygenTankFilled
     belt: ClothingBeltBandolier

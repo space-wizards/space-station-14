@@ -83,8 +83,6 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     private void RaiseDoAfterEvents(DoAfter doAfter, DoAfterComponent component)
     {
         var ev = doAfter.Args.Event;
-        ev.Handled = false;
-        ev.Repeat = false;
         ev.DoAfter = doAfter;
 
         if (Exists(doAfter.Args.EventTarget))
@@ -124,6 +122,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         else
             EnsureComp<ActiveDoAfterComponent>(uid);
     }
+
 
     #region Creation
     /// <summary>

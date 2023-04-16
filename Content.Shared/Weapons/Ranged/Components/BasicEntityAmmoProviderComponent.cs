@@ -1,5 +1,4 @@
-﻿using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
+﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -9,8 +8,8 @@ namespace Content.Shared.Weapons.Ranged.Components;
 ///     Simply provides a certain capacity of entities that cannot be reloaded through normal means and have
 ///     no special behavior like cycling, magazine
 /// </summary>
-[RegisterComponent, AutoGenerateComponentState]
-public sealed partial class BasicEntityAmmoProviderComponent : AmmoProviderComponent
+[RegisterComponent]
+public sealed class BasicEntityAmmoProviderComponent : AmmoProviderComponent
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("proto", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
@@ -21,7 +20,6 @@ public sealed partial class BasicEntityAmmoProviderComponent : AmmoProviderCompo
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("capacity")]
-    [AutoNetworkedField]
     public int? Capacity = null;
 
     /// <summary>
@@ -29,6 +27,18 @@ public sealed partial class BasicEntityAmmoProviderComponent : AmmoProviderCompo
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("count")]
-    [AutoNetworkedField]
     public int? Count = null;
+}
+
+[Serializable, NetSerializable]
+public sealed class BasicEntityAmmoProviderComponentState : ComponentState
+{
+    public int? Capacity;
+    public int? Count;
+
+    public BasicEntityAmmoProviderComponentState(int? capacity, int? count)
+    {
+        Capacity = capacity;
+        Count = count;
+    }
 }

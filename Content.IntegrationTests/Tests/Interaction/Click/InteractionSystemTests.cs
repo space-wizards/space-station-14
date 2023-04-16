@@ -92,7 +92,6 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactUsing);
             });
 
-            testInteractionSystem.ClearHandlers();
             await pairTracker.CleanReturnAsync();
         }
 
@@ -155,7 +154,6 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactUsing, Is.False);
             });
 
-            testInteractionSystem.ClearHandlers();
             await pairTracker.CleanReturnAsync();
         }
 
@@ -216,7 +214,6 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactUsing);
             });
 
-            testInteractionSystem.ClearHandlers();
             await pairTracker.CleanReturnAsync();
         }
 
@@ -278,7 +275,6 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactUsing, Is.False);
             });
 
-            testInteractionSystem.ClearHandlers();
             await pairTracker.CleanReturnAsync();
         }
 
@@ -356,7 +352,6 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactUsing, Is.True);
             });
 
-            testInteractionSystem.ClearHandlers();
             await pairTracker.CleanReturnAsync();
         }
 
@@ -371,12 +366,6 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 base.Initialize();
                 SubscribeLocalEvent<InteractUsingEvent>((e) => InteractUsingEvent?.Invoke(e));
                 SubscribeLocalEvent<InteractHandEvent>((e) => InteractHandEvent?.Invoke(e));
-            }
-
-            public void ClearHandlers()
-            {
-                InteractUsingEvent = null;
-                InteractHandEvent = null;
             }
         }
 

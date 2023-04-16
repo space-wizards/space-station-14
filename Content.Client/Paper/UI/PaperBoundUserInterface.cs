@@ -1,8 +1,8 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Input;
-using Robust.Shared.Utility;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using static Content.Shared.Paper.SharedPaperComponent;
 
 namespace Content.Client.Paper.UI
@@ -23,15 +23,7 @@ namespace Content.Client.Paper.UI
 
             _window = new PaperWindow();
             _window.OnClose += Close;
-            _window.Input.OnKeyBindDown += args => // Solution while TextEdit don't have events
-            {
-                if (args.Function == EngineKeyFunctions.TextSubmit)
-                {
-                    var text = Rope.Collapse(_window.Input.TextRope);
-                    Input_OnTextEntered(text);
-                    args.Handle();
-                }
-            };
+            _window.Input.OnTextEntered += Input_OnTextEntered;
 
             if (entityMgr.TryGetComponent<PaperVisualsComponent>(Owner.Owner, out var visuals))
             {
@@ -47,16 +39,15 @@ namespace Content.Client.Paper.UI
             _window?.Populate((PaperBoundUserInterfaceState) state);
         }
 
-        private void Input_OnTextEntered(string text)
+        private void Input_OnTextEntered(LineEdit.LineEditEventArgs obj)
         {
-            if (!string.IsNullOrEmpty(text))
+            if (!string.IsNullOrEmpty(obj.Text))
             {
-                SendMessage(new PaperInputTextMessage(text));
+                SendMessage(new PaperInputTextMessage(obj.Text));
 
                 if (_window != null)
                 {
-                    _window.Input.TextRope = Rope.Leaf.Empty;
-                    _window.Input.CursorPosition = new TextEdit.CursorPos(0, TextEdit.LineBreakBias.Top);
+                    _window.Input.Text = string.Empty;
                 }
             }
         }

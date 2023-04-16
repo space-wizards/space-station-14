@@ -46,5 +46,4 @@
         ServiceWorker: [ 4, 4 ]
         SecurityCadet: [ 4, 4 ]
         Detective: [ 1, 1 ]
-        Brigmedic: [ 1, 1 ]
         Zookeeper: [1, 1]

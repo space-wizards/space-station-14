@@ -7,7 +7,6 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Vehicle;
 using Content.Shared.Vehicle.Components;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
@@ -90,8 +89,7 @@ namespace Content.Server.Vehicle
 
                 // Update appearance stuff, add actions
                 UpdateBuckleOffset(Transform(uid), component);
-                if (TryComp<InputMoverComponent>(uid, out var mover))
-                    UpdateDrawDepth(uid, GetDrawDepth(Transform(uid), component, mover.RelativeRotation.Degrees));
+                UpdateDrawDepth(uid, GetDrawDepth(Transform(uid), component.NorthOnly));
 
                 if (TryComp<ActionsComponent>(args.BuckledEntity, out var actions) && TryComp<UnpoweredFlashlightComponent>(uid, out var flashlight))
                 {

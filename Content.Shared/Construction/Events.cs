@@ -64,15 +64,9 @@ public sealed class AckStructureConstructionMessage : EntityEventArgs
 {
     public readonly int GhostId;
 
-    /// <summary>
-    ///     The entity that is now being constructed, if any.
-    /// </summary>
-    public readonly EntityUid? Uid;
-
-    public AckStructureConstructionMessage(int ghostId, EntityUid? uid = null)
+    public AckStructureConstructionMessage(int ghostId)
     {
         GhostId = ghostId;
-        Uid = uid;
     }
 }
 

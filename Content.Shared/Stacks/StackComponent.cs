@@ -9,7 +9,7 @@ namespace Content.Shared.Stacks
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("stackType", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<StackPrototype>))]
-        public string StackTypeId { get; private set; } = default!;
+        public string? StackTypeId { get; private set; }
 
         /// <summary>
         ///     Current stack count.

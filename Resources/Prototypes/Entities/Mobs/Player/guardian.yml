@@ -7,13 +7,12 @@
   save: false
   components:
     - type: LagCompensation
-    - type: GhostRole
+    - type: GhostTakeoverAvailable
       allowMovement: true
       allowSpeech: true
       makeSentient: true
       name: Guardian
       description: Listen to your owner. Don't tank damage. Punch people hard.
-    - type: GhostTakeoverAvailable
     - type: Input
       context: "human"
     - type: MobMover
@@ -105,13 +104,12 @@
   parent: MobGuardianBase
   description: A mesmerising whirl of hard-light patterns weaves a marvelous, yet oddly familiar visage. It stands proud, tuning into its owner's life to sustain itself.
   components:
-    - type: GhostRole
+    - type: GhostTakeoverAvailable
       allowMovement: true
       allowSpeech: true
       makeSentient: true
       name: Holoparasite
       description: Listen to your owner. Don't tank damage. Punch people hard.
-    - type: GhostTakeoverAvailable
     - type: NameIdentifier
       group: Holoparasite
     - type: TypingIndicator
@@ -132,13 +130,12 @@
   id: MobIfritGuardian
   description: A corrupted jinn, ripped from fitra to serve the wizard's petty needs. It stands wicked, tuning into it's owner's life to sustain itself.
   components:
-    - type: GhostRole
+    - type: GhostTakeoverAvailable
       allowMovement: true
       allowSpeech: true
       makeSentient: true
       name: Ifrit
       description: Listen to your owner. Don't tank damage. Punch people hard.
-    - type: GhostTakeoverAvailable
     - type: RandomSprite
       available:
         - enum.DamageStateVisualLayers.BaseUnshaded:

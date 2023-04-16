@@ -1,10 +1,10 @@
 ﻿using Content.Server.Mind.Commands;
+using Robust.Server.Player;
 
 namespace Content.Server.Ghost.Roles.Components
 {
-    [RegisterComponent]
     [Access(typeof(GhostRoleSystem))]
-    public sealed class GhostRoleComponent : Component
+    public abstract class GhostRoleComponent : Component
     {
         [DataField("name")] public string _roleName = "Unknown";
 
@@ -16,7 +16,7 @@ namespace Content.Server.Ghost.Roles.Components
         /// Whether the <see cref="MakeSentientCommand"/> should run on the mob.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)] [DataField("makeSentient")]
-        public bool MakeSentient = true;
+        protected bool MakeSentient = true;
 
         /// <summary>
         ///     The probability that this ghost role will be available after init.
@@ -83,5 +83,7 @@ namespace Content.Server.Ghost.Roles.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("reregister")]
         public bool ReregisterOnGhost { get; set; } = true;
+
+        public abstract bool Take(IPlayerSession session);
     }
 }

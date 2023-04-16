@@ -21,7 +21,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.Examine
 {
     [UsedImplicitly]
-    public sealed class ExamineSystem : ExamineSystemShared
+    internal sealed class ExamineSystem : ExamineSystemShared
     {
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;

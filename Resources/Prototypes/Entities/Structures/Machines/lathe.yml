@@ -461,11 +461,13 @@
     idleState: icon
     runningState: icon
     machinePartPrintSpeed: Laser
-    staticRecipes:
+    dynamicRecipes:
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex
+      - ClothingHandsGlovesNitrile
       - ClothingMaskSterile
       - DiseaseSwab
+      - HandheldCrewMonitor
       - Scalpel
       - Retractor
       - Cautery
@@ -489,9 +491,6 @@
       - MedkitAdvanced
       - MedkitRadiation
       - MedkitCombat
-    dynamicRecipes:
-      - HandheldCrewMonitor
-      - ClothingHandsGlovesNitrile
   - type: Machine
     board: MedicalTechFabCircuitboard
 

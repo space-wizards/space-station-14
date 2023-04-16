@@ -1,26 +1,27 @@
 ﻿using Content.Client.Administration.Managers;
-using Content.Client.Administration.Systems;
 using Content.Client.Administration.UI;
 using Content.Client.Administration.UI.Tabs.ObjectsTab;
 using Content.Client.Administration.UI.Tabs.PlayerTab;
 using Content.Client.Gameplay;
-using Content.Client.Lobby;
 using Content.Client.UserInterface.Controls;
+using Content.Client.Verbs;
 using Content.Client.Verbs.UI;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.Console;
 using Robust.Client.Input;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.Systems.Admin;
 
 [UsedImplicitly]
-public sealed class AdminUIController : UIController, IOnStateEntered<GameplayState>, IOnStateEntered<LobbyState>, IOnSystemChanged<AdminSystem>
+public sealed class AdminUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>
 {
     [Dependency] private readonly IClientAdminManager _admin = default!;
     [Dependency] private readonly IClientConGroupController _conGroups = default!;
@@ -33,42 +34,7 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
 
     public void OnStateEntered(GameplayState state)
     {
-        EnsureWindow();
-        AdminStatusUpdated();
-    }
-
-    public void OnStateEntered(LobbyState state)
-    {
-        EnsureWindow();
-        AdminStatusUpdated();
-    }
-
-    public void OnSystemLoaded(AdminSystem system)
-    {
-        EnsureWindow();
-
-        _admin.AdminStatusUpdated += AdminStatusUpdated;
-        _input.SetInputCommand(ContentKeyFunctions.OpenAdminMenu,
-            InputCmdHandler.FromDelegate(_ => Toggle()));
-    }
-
-    public void OnSystemUnloaded(AdminSystem system)
-    {
-        if (_window != null)
-            _window.Dispose();
-
-        _admin.AdminStatusUpdated -= AdminStatusUpdated;
-
-        CommandBinds.Unregister<AdminUIController>();
-    }
-
-    private void EnsureWindow()
-    {
-        if (_window is { Disposed: false })
-            return;
-
-        if (_window?.Disposed ?? false)
-            OnWindowDisposed();
+        DebugTools.Assert(_window == null);
 
         _window = UIManager.CreateWindow<AdminMenuWindow>();
         LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.Center);
@@ -77,7 +43,12 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
         _window.ObjectsTabControl.OnEntryPressed += ObjectsTabEntryPressed;
         _window.OnOpen += OnWindowOpen;
         _window.OnClose += OnWindowClosed;
-        _window.OnDisposed += OnWindowDisposed;
+        _admin.AdminStatusUpdated += AdminStatusUpdated;
+
+        _input.SetInputCommand(ContentKeyFunctions.OpenAdminMenu,
+            InputCmdHandler.FromDelegate(_ => Toggle()));
+
+        AdminStatusUpdated();
     }
 
     public void UnloadButton()
@@ -112,26 +83,27 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
             AdminButton.Pressed = false;
     }
 
-    private void OnWindowDisposed()
+    public void OnStateExited(GameplayState state)
     {
-        if (AdminButton != null)
-            AdminButton.Pressed = false;
+        if (_window != null)
+        {
+            _window.PlayerTabControl.OnEntryPressed -= PlayerTabEntryPressed;
+            _window.ObjectsTabControl.OnEntryPressed -= ObjectsTabEntryPressed;
+            _window.OnOpen -= OnWindowOpen;
+            _window.OnClose -= OnWindowClosed;
 
-        if (_window == null)
-            return;
+            _window.Dispose();
+            _window = null;
+        }
 
-        _window.PlayerTabControl.OnEntryPressed -= PlayerTabEntryPressed;
-        _window.ObjectsTabControl.OnEntryPressed -= ObjectsTabEntryPressed;
-        _window.OnOpen -= OnWindowOpen;
-        _window.OnClose -= OnWindowClosed;
-        _window.OnDisposed -= OnWindowDisposed;
-        _window = null;
+        _admin.AdminStatusUpdated -= AdminStatusUpdated;
+
+        CommandBinds.Unregister<AdminUIController>();
     }
 
     private void AdminStatusUpdated()
     {
-        if (AdminButton != null)
-            AdminButton.Visible = _conGroups.CanAdminMenu();
+        AdminButton!.Visible = _conGroups.CanAdminMenu();
     }
 
     private void AdminButtonPressed(ButtonEventArgs args)

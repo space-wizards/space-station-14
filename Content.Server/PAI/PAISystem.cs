@@ -1,13 +1,14 @@
-using Content.Server.Ghost.Roles.Components;
-using Content.Server.Instruments;
-using Content.Server.Mind.Components;
-using Content.Server.Popups;
 using Content.Shared.Examine;
-using Content.Shared.Interaction.Events;
 using Content.Shared.PAI;
-using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using Content.Server.Popups;
+using Content.Server.Instruments;
+using Content.Server.Ghost.Roles.Components;
+using Content.Server.Mind.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Player;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Popups;
 
 namespace Content.Server.PAI
 {
@@ -78,11 +79,10 @@ namespace Content.Server.PAI
 
             EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityName = val;
 
-            var ghostRole = AddComp<GhostRoleComponent>(uid);
-            EnsureComp<GhostTakeoverAvailableComponent>(uid);
+            var ghostFinder = EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(uid);
 
-            ghostRole.RoleName = Loc.GetString("pai-system-role-name");
-            ghostRole.RoleDescription = Loc.GetString("pai-system-role-description");
+            ghostFinder.RoleName = Loc.GetString("pai-system-role-name");
+            ghostFinder.RoleDescription = Loc.GetString("pai-system-role-description");
 
             _popupSystem.PopupEntity(Loc.GetString("pai-system-searching"), uid, args.User);
             UpdatePAIAppearance(uid, PAIStatus.Searching);

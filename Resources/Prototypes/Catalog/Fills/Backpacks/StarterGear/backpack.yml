@@ -157,7 +157,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvivalMedical
+      - id: BoxSurvival
 
 - type: entity
   noSpawn: true

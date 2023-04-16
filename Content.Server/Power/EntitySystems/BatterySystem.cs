@@ -57,9 +57,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void PreSync(NetworkBatteryPreSync ev)
         {
-            // Ignoring entity pausing. If the entity was paused, neither component's data should have been changed.
-            var enumerator = AllEntityQuery<PowerNetworkBatteryComponent, BatteryComponent>();
-            while (enumerator.MoveNext(out var netBat, out var bat))
+            foreach (var (netBat, bat) in EntityManager.EntityQuery<PowerNetworkBatteryComponent, BatteryComponent>())
             {
                 netBat.NetworkBattery.Capacity = bat.MaxCharge;
                 netBat.NetworkBattery.CurrentStorage = bat.CurrentCharge;
@@ -68,15 +66,9 @@ namespace Content.Server.Power.EntitySystems
 
         private void PostSync(NetworkBatteryPostSync ev)
         {
-            // Ignoring entity pausing. If the entity was paused, neither component's data should have been changed.
-            var enumerator = AllEntityQuery<PowerNetworkBatteryComponent, BatteryComponent>();
-            while (enumerator.MoveNext(out var uid, out var netBat, out var bat))
+            foreach (var (netBat, bat) in EntityManager.EntityQuery<PowerNetworkBatteryComponent, BatteryComponent>())
             {
-                var netCharge = netBat.NetworkBattery.CurrentStorage;
-                if (MathHelper.CloseTo(bat.CurrentCharge, netCharge))
-                    continue;
-
-                bat.CurrentCharge = netCharge;
+                bat.CurrentCharge = netBat.NetworkBattery.CurrentStorage;
             }
         }
 
@@ -101,7 +93,7 @@ namespace Content.Server.Power.EntitySystems
         private void OnEmpPulse(EntityUid uid, BatteryComponent component, ref EmpPulseEvent args)
         {
             args.Affected = true;
-            component.UseCharge(args.EnergyConsumption);
+            component.UseCharge(args.EnergyConsumption);   
         }
     }
 }
