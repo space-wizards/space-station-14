@@ -1,17 +1,16 @@
 ﻿using Content.Server.Medical.Treatments.Systems;
 using Content.Shared.Medical.Treatments.Prototypes;
 using Robust.Shared.Audio;
-using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Medical.Treatments.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
 [Access(typeof(TreatmentSystem))]
-[AutoGenerateComponentState]
-public sealed partial class TreatmentComponent : Component
+public sealed class TreatmentComponent : Component
 {
-    [DataField("treatmentType", required: true,
+    // TODO wounds make required
+    [DataField("treatmentType",
          customTypeSerializer: typeof(PrototypeIdSerializer<TreatmentTypePrototype>)), AutoNetworkedField]
     public string TreatmentType = "";
 

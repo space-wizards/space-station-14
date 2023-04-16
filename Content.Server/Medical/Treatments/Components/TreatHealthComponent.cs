@@ -1,13 +1,11 @@
 ﻿using Content.Server.Medical.Treatments.Systems;
 using Content.Shared.FixedPoint;
-using Robust.Shared.GameStates;
 
 namespace Content.Server.Medical.Treatments.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
 [Access(typeof(TreatmentSystem))]
-[AutoGenerateComponentState]
-public sealed partial class TreatHealthComponent : Component
+public sealed class TreatHealthComponent : Component
 {
     [DataField("fullyHeals"), AutoNetworkedField]
     public bool FullyHeals;
