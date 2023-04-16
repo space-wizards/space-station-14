@@ -29,9 +29,10 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
         // todo: ideally, you would need to raise this event only on jumped entities
         // this code update ALL pinpointers in game
-        foreach (var pinpointer in EntityQuery<PinpointerComponent>())
+        var query = EntityQueryEnumerator<PinpointerComponent>();
+        while (query.MoveNext(out var uid, out var pinpointer))
         {
-            LocateTarget(pinpointer.Owner, pinpointer);
+            LocateTarget(uid, pinpointer);
         }
     }
 
