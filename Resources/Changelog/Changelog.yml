@@ -1,10 +1,4 @@
 Entries:
-- author: vanx
-  changes:
-  - {message: Increased the book symbol limit so you can fit all your stories in,
-    type: Tweak}
-  id: 2926
-  time: '2023-01-20T15:19:26.0000000+00:00'
 - author: lapatison
   changes:
   - {message: Cardborg outer clothes and cardborg hat now changes the style of the
@@ -2905,3 +2899,9 @@ Entries:
   - {message: SpaceLube is slippery again, type: Fix}
   id: 3425
   time: '2023-04-16T05:53:47.0000000+00:00'
+- author: Nimfar
+  changes:
+  - {message: 'Gun safe for SO, now weapons can be stored in even more security',
+    type: Add}
+  id: 3426
+  time: '2023-04-16T05:55:23.0000000+00:00'
