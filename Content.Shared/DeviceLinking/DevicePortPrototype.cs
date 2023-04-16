@@ -10,6 +10,9 @@ namespace Content.Shared.DeviceLinking;
 [Serializable, NetSerializable]
 public abstract class DevicePortPrototype
 {
+    [IdDataField]
+    public string ID { get; } = default!;
+
     /// <summary>
     ///     Localization string for the port name. Displayed in the linking UI.
     /// </summary>
@@ -28,21 +31,16 @@ public abstract class DevicePortPrototype
 [Serializable, NetSerializable]
 public sealed class SinkPortPrototype : DevicePortPrototype, IPrototype
 {
-    [IdDataField]
-    public string ID { get; } = default!;
 }
 
 [Prototype("sourcePort")]
 [Serializable, NetSerializable]
 public sealed class SourcePortPrototype : DevicePortPrototype, IPrototype
 {
-    [IdDataField]
-    public string ID { get; } = default!;
-
     /// <summary>
     ///     This is a set of sink ports that this source port will attempt to link to when using the
     ///     default-link functionality.
     /// </summary>
     [DataField("defaultLinks", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<SinkPortPrototype>))]
-    public HashSet<string>? DefaultLinks;
+    public readonly HashSet<string>? DefaultLinks;
 }
