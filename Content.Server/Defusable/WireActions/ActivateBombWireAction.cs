@@ -15,7 +15,9 @@ public sealed class ActivateBombWireAction : ComponentWireAction<DefusableCompon
     public override string Name { get; set; } = "wire-name-bomb-live";
 
     public override StatusLightState? GetLightState(Wire wire, DefusableComponent comp)
-        => comp.BombLive ? StatusLightState.Off : StatusLightState.BlinkingFast;
+    {
+        return comp.BombLive ? StatusLightState.Off : StatusLightState.BlinkingFast;
+    }
 
     public override object StatusKey { get; } = DefusableWireStatus.LiveIndicator;
 
@@ -41,8 +43,7 @@ public sealed class ActivateBombWireAction : ComponentWireAction<DefusableCompon
             if (!comp.ActivatedWireUsed)
             {
                 Logger.Debug("Time delayed");
-                comp.TimeUntilExplosion += comp.DelayTime;
-                Logger.Debug(comp.TimeUntilExplosion.ToString());
+                EntityManager.System<DefusableSystem>().TryDelay(wire.Owner, 30f);
                 comp.ActivatedWireUsed = true;
             }
         }
