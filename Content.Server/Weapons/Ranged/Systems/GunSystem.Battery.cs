@@ -1,5 +1,4 @@
 using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
@@ -13,8 +12,6 @@ namespace Content.Server.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem
 {
-    [Dependency] private readonly BatterySystem _battery = default!;
-
     protected override void InitializeBattery()
     {
         base.InitializeBattery();
