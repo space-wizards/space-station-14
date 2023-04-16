@@ -85,7 +85,7 @@ public abstract partial class InteractionTest
     [MemberNotNull(nameof(Target))]
     protected async Task SpawnTarget(string prototype)
     {
-        Target = default;
+        Target = EntityUid.Invalid;
         await Server.WaitPost(() =>
         {
             Target = SEntMan.SpawnEntity(prototype, TargetCoords);
