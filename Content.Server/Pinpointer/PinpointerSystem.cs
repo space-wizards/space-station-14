@@ -58,9 +58,10 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
         // because target or pinpointer can move
         // we need to update pinpointers arrow each frame
-        foreach (var pinpointer in EntityQuery<PinpointerComponent>())
+        var query = EntityQueryEnumerator<PinpointerComponent>();
+        while (query.MoveNext(out var uid, out var pinpointer))
         {
-            UpdateDirectionToTarget(pinpointer.Owner, pinpointer);
+            UpdateDirectionToTarget(uid, pinpointer);
         }
     }
 
