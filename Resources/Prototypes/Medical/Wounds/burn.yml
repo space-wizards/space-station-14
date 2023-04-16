@@ -1,12 +1,4 @@
-﻿- type: trauma
-  id: Burn
-  wounds:
-    10: FirstDegreeBurn
-    30: SecondDegreeBurn
-    65: ThirdDegreeBurn
-    100: FourthDegreeBurn
-
-- type: entity
+﻿- type: entity
   id: FirstDegreeBurn
   components:
     - type: Wound

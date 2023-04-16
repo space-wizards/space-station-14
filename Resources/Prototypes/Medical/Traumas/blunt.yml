@@ -1,0 +1,7 @@
+﻿- type: trauma
+  id: Blunt
+  wounds:
+    10: Bruise
+    35: JointDislocation
+    50: HairlineFracture
+    80: CompoundFracture

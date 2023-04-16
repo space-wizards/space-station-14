@@ -12,5 +12,5 @@ public sealed partial class TraumaInflicterComponent : Component
 {
     [DataField("traumas", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<TraumaDamage, TraumaPrototype>)),
      AutoNetworkedField]
-    public readonly Dictionary<string, TraumaDamage> Traumas = new();
+    public Dictionary<string, TraumaDamage> Traumas = new();
 }

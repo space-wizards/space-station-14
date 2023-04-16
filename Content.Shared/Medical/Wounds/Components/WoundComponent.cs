@@ -1,4 +1,5 @@
 ﻿using Content.Shared.FixedPoint;
+using Content.Shared.Medical.Treatments;
 using Content.Shared.Medical.Treatments.Prototypes;
 using Content.Shared.Medical.Wounds.Systems;
 using Robust.Shared.GameStates;
@@ -9,7 +10,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Medical.Wounds.Components;
 
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(WoundSystem))]
+[Access(typeof(WoundSystem), typeof(SharedTreatmentSystem))]
 [AutoGenerateComponentState]
 public sealed partial class WoundComponent : Component
 {
