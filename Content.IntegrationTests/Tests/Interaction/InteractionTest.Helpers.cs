@@ -3,7 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Threading.Tasks;
+using Content.Client.Chemistry.UI;
 using Content.Client.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Power.Components;
@@ -11,8 +14,13 @@ using Content.Server.Tools.Components;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Item;
 using NUnit.Framework;
+using OpenToolkit.GraphicsLibraryFramework;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Input;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -221,6 +229,8 @@ public abstract partial class InteractionTest
         Assert.IsNull(Hands.ActiveHandEntity);
     }
 
+    #region Interact
+
     /// <summary>
     /// Use the currently held entity.
     /// </summary>
@@ -263,7 +273,14 @@ public abstract partial class InteractionTest
         }
 
         await PlaceInHands(entity);
+        await Interact(shouldSucceed, awaitDoAfters);
+    }
 
+    /// <summary>
+    /// Interact with an entity using the currently held entity.
+    /// </summary>
+    protected async Task Interact(bool shouldSucceed = true, bool awaitDoAfters = true)
+    {
         if (Target == null || !Target.Value.IsClientSide())
         {
             await Server.WaitPost(() => InteractSys.UserInteraction(Player, TargetCoords, Target));
@@ -282,6 +299,22 @@ public abstract partial class InteractionTest
 
         await CheckTargetChange(shouldSucceed && awaitDoAfters);
     }
+
+    /// <summary>
+    /// Variant of <see cref="InteractUsing"/> that performs several interactions using different entities.
+    /// </summary>
+    /// <remarks>
+    /// Empty strings imply empty hands.
+    /// </remarks>
+    protected async Task Interact(params EntitySpecifier[] specifiers)
+    {
+        foreach (var spec in specifiers)
+        {
+            await Interact(spec);
+        }
+    }
+
+    #endregion
 
     /// <summary>
     /// Wait for any currently active DoAfters to finish.
@@ -380,20 +413,6 @@ public abstract partial class InteractionTest
 
         if (Target != target)
             await CheckTargetChange(shouldSucceed);
-    }
-
-    /// <summary>
-    /// Variant of <see cref="InteractUsing"/> that performs several interactions using different entities.
-    /// </summary>
-    /// <remarks>
-    /// Empty strings imply empty hands.
-    /// </remarks>
-    protected async Task Interact(params EntitySpecifier[] specifiers)
-    {
-        foreach (var spec in specifiers)
-        {
-            await Interact(spec);
-        }
     }
 
     #region Asserts
@@ -717,6 +736,135 @@ public abstract partial class InteractionTest
 
         Assert.That(shouldSucceed, Is.True);
         return true;
+    }
+
+    #endregion
+
+    #region UI
+
+    /// <summary>
+    ///     Presses and releases a button on some client-side window. Will fail if the button cannot be found.
+    /// </summary>
+    protected async Task ClickControl<TWindow>(string name) where TWindow : BaseWindow
+    {
+        await ClickControl(GetControl<TWindow, Control>(name));
+    }
+
+    /// <summary>
+    ///     Simulates a click and release at the center of some UI Constrol.
+    /// </summary>
+    protected async Task ClickControl(Control control)
+    {
+        var screenCoords = new ScreenCoordinates(
+            control.GlobalPixelPosition + control.PixelSize/2,
+            control.Window?.Id ?? default);
+
+        var relativePos = screenCoords.Position / control.UIScale - control.GlobalPosition;
+        var relativePixelPos =  screenCoords.Position - control.GlobalPixelPosition;
+
+        var args = new GUIBoundKeyEventArgs(
+            EngineKeyFunctions.UIClick,
+            BoundKeyState.Down,
+            screenCoords,
+            default,
+            relativePos,
+            relativePixelPos);
+
+        await Client.DoGuiEvent(control, args);
+        await RunTicks(1);
+
+        args = new GUIBoundKeyEventArgs(
+            EngineKeyFunctions.UIClick,
+            BoundKeyState.Up,
+            screenCoords,
+            default,
+            relativePos,
+            relativePixelPos);
+
+        await Client.DoGuiEvent(control, args);
+        await RunTicks(1);
+    }
+
+    /// <summary>
+    ///     Attempts to find a control on some client-side window. Will fail if the control cannot be found.
+    /// </summary>
+    protected TControl GetControl<TWindow, TControl>(string name)
+        where TWindow : BaseWindow
+        where TControl : Control
+    {
+        var control = GetControl<TWindow>(name);
+        Assert.That(control.GetType().IsAssignableTo(typeof(TControl)));
+        return (TControl) control;
+    }
+
+    protected Control GetControl<TWindow>(string name) where TWindow : BaseWindow
+    {
+        const BindingFlags flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+        var field = typeof(TWindow).GetField(name, flags);
+        var prop = typeof(TWindow).GetProperty(name, flags);
+
+        if (field == null && prop == null)
+        {
+            Assert.Fail($"Window {typeof(TWindow).Name} does not have a field or property named {name}");
+            return default!;
+        }
+
+        var window = GetWindow<TWindow>();
+        var control = (field?.GetValue(window) ?? prop?.GetValue(window)) as Control;
+
+        if (control == null)
+        {
+            Assert.Fail($"{name} was null or was not a control.");
+            return default!;
+        }
+
+        return control;
+    }
+
+    /// <summary>
+    /// Attempts to find a currently open client-side window. Will fail if the window cannot be found.
+    /// </summary>
+    /// <remarks>
+    /// Note that this just returns the very first open window of this type that is found.
+    /// </remarks>
+    protected TWindow GetWindow<TWindow>() where TWindow : BaseWindow
+    {
+        if (TryFindWindow(out TWindow? window))
+            return window;
+
+        Assert.Fail($"Could not find a window assignable to {nameof(TWindow)}");
+        return default!;
+    }
+
+    /// <summary>
+    /// Attempts to find a currently open client-side window.
+    /// </summary>
+    /// <remarks>
+    /// Note that this just returns the very first open window of this type that is found.
+    /// </remarks>
+    protected bool TryFindWindow<TWindow>([NotNullWhen(true)] out TWindow? window) where TWindow : BaseWindow
+    {
+        TryFindWindow(typeof(TWindow), out var control);
+        window = control as TWindow;
+        return window != null;
+    }
+
+
+    /// <summary>
+    /// Attempts to find a currently open client-side window.
+    /// </summary>
+    /// <remarks>
+    /// Note that this just returns the very first open window of this type that is found.
+    /// </remarks>
+    protected bool TryFindWindow(Type type, [NotNullWhen(true)] out BaseWindow? window)
+    {
+        Assert.That(type.IsAssignableTo(typeof(BaseWindow)));
+        window = UiMan.WindowRoot.Children
+            .OfType<BaseWindow>()
+            .Where(x => x.IsOpen)
+            .FirstOrDefault(x => x.GetType().IsAssignableTo(type));
+
+        return window != null;
     }
 
     #endregion
