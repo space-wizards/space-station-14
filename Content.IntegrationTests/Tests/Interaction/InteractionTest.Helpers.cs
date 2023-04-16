@@ -85,13 +85,12 @@ public abstract partial class InteractionTest
     [MemberNotNull(nameof(Target))]
     protected async Task SpawnTarget(string prototype)
     {
-        EntityUid target = default;
+        Target = default;
         await Server.WaitPost(() =>
         {
-            target = SEntMan.SpawnEntity(prototype, TargetCoords);
+            Target = SEntMan.SpawnEntity(prototype, TargetCoords);
         });
 
-        Target = target;
         await RunTicks(5);
         AssertPrototype(prototype);
     }
