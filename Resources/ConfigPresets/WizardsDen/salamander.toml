@@ -13,6 +13,12 @@ enabled = true
 reason = "whitelist-not-whitelisted-rp"
 min_players = 20
 
+[shuttle]
+emergency_early_launch_allowed = true
+
+[biomass]
+easy_mode = true
+
 [ooc]
 enable_during_round = true
 
