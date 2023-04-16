@@ -388,7 +388,7 @@ public abstract partial class InteractionTest
     /// <remarks>
     /// Empty strings imply empty hands.
     /// </remarks>
-    protected async Task Interact(params EntitySpecifier?[] specifiers)
+    protected async Task Interact(params EntitySpecifier[] specifiers)
     {
         foreach (var spec in specifiers)
         {

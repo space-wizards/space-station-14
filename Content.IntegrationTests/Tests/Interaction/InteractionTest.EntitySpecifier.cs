@@ -62,6 +62,10 @@ public abstract partial class InteractionTest
                 return;
 
             Converted = true;
+
+            if (string.IsNullOrWhiteSpace(Prototype))
+                return;
+
             if (protoMan.HasIndex<StackPrototype>(Prototype))
                 return;
 
