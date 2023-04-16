@@ -13,6 +13,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using NUnit.Framework;
+using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -97,6 +98,7 @@ public abstract partial class InteractionTest
     // player components
     protected HandsComponent Hands = default!;
     protected DoAfterComponent DoAfters = default!;
+    protected UserInterfaceSystem CUISystem = default!;
 
     public float TickPeriod => (float)Timing.TickPeriod.TotalSeconds;
 
@@ -126,6 +128,7 @@ public abstract partial class InteractionTest
         CTestSystem = CEntMan.System<InteractionTestSystem>();
         CConSys = CEntMan.System<ConstructionSystem>();
         ExamineSys = CEntMan.System<ExamineSystem>();
+        CUISystem = CEntMan.System<UserInterfaceSystem>();
 
         // Setup map.
         MapData = await PoolManager.CreateTestMap(PairTracker);
