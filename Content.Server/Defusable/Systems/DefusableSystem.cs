@@ -67,7 +67,9 @@ public sealed class DefusableSystem : SharedDefusableSystem
         }
         else if (comp.BombLive)
         {
-            args.PushMarkup(Loc.GetString("defusable-examine-live", ("name", uid)));
+            if (TryComp<ActiveTimerTriggerComponent>(uid, out var activeComp))
+
+            args.PushMarkup(Loc.GetString("defusable-examine-live", ("name", uid), ("time", MathF.Floor(activeComp.TimeRemaining))));
         }
         else
         {
