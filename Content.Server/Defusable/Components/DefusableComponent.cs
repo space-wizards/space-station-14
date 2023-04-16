@@ -11,30 +11,14 @@ public sealed class DefusableComponent : Component
     // most of the actual explosion stuff is handled by ExplosiveComponent
 
     /// <summary>
-    /// The time set by the player.
+    ///     The bomb will play this sound on bolt.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("time")]
-    public int StartingTime = 90;
+    [DataField("defusalSound")] public SoundSpecifier DefusalSound = new SoundPathSpecifier("/Audio/Misc/notice2.ogg");
 
     /// <summary>
-    ///     A user can use these options to configure how long they want their bomb to be, unless null.
+    ///     The bomb will play this sound on bolt.
     /// </summary>
-    [DataField("timeOptions")] public List<int>? StartingTimeOptions = null;
-
-    /// <summary>
-    ///     The bomb will play this sound while live every second, unless null.
-    /// </summary>
-    [DataField("beepSound")] public SoundSpecifier? BeepSound;
-
-    /// <summary>
-    ///     The bomb will play this sound on defusal, unless null.
-    /// </summary>
-    [DataField("defusalSound")] public SoundSpecifier? DefusalSound;
-
-    [DataField("beepParams")] public AudioParams BeepParams = AudioParams.Default.WithVolume(-2f);
-    [DataField("beepInterval")] public float BeepInterval = 1;
-    public float TimeUntilExplosion = 90;
-    public float TimeUntilNextBeep = 90;
+    [DataField("boltSound")] public SoundSpecifier BoltSound = new SoundPathSpecifier("/Audio/Machines/boltsdown.ogg");
 
     /// <summary>
     /// Is the bomb live? This is different from BombUsable because this tracks whether the bomb is ticking down or not.
@@ -45,6 +29,11 @@ public sealed class DefusableComponent : Component
     /// Is the bomb actually usable? This is different from BombLive because this tracks whether the bomb can even start in the first place.
     /// </summary>
     [ViewVariables] public bool BombUsable = true;
+
+    /// <summary>
+    /// Is this bomb supposed to be stuck to the ground?
+    /// </summary>
+    public bool Bolted = false;
 
     /// <summary>
     /// How much time is added when the Activate wire is pulsed?

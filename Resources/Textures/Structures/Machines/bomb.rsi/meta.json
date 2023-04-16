@@ -11,10 +11,7 @@
             "name": "base-bomb"
         },
         {
-            "name": "base-bomb-inactive"
-        },
-        {
-            "name": "base-bomb-inactive-wires"
+            "name": "base-bomb-wires"
         },
         {
             "name": "base-bomb-active",
@@ -27,23 +24,10 @@
             ]
         },
         {
-            "name": "base-bomb-active-wires",
-            "delays": [
-                [
-                    0.25,
-                    0.25,
-                    0.25
-                ]
-            ]
-        },
-        {
             "name": "syndicate-bomb"
         },
         {
-            "name": "syndicate-bomb-inactive"
-        },
-        {
-            "name": "syndicate-bomb-inactive-wires"
+            "name": "syndicate-bomb-wires"
         },
         {
             "name": "syndicate-bomb-active",
@@ -56,36 +40,13 @@
             ]
         },
         {
-            "name": "syndicate-bomb-active-wires",
-            "delays": [
-                [
-                    0.25,
-                    0.25,
-                    0.25
-                ]
-            ]
-        },
-        {
             "name": "training-bomb"
         },
         {
-            "name": "training-bomb-inactive"
-        },
-        {
-            "name": "training-bomb-inactive-wires"
+            "name": "training-bomb-wires"
         },
         {
             "name": "training-bomb-active",
-            "delays": [
-                [
-                    0.25,
-                    0.25,
-                    0.25
-                ]
-            ]
-        },
-        {
-            "name": "training-bomb-active-wires",
             "delays": [
                 [
                     0.25,

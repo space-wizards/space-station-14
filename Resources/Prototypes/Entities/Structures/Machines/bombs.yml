@@ -14,17 +14,21 @@
           type: WiresBoundUserInterface
     - type: Wires
       LayoutId: Defusable
-    - type: Defusable
-      beepSound: /Audio/Machines/Nuke/general_beep.ogg
       alwaysRandomize: true
-      timeOptions: [90, 120, 150, 180, 210, 240, 270, 300]
+    - type: Defusable
     - type: Explosive
       explosionType: Default
       totalIntensity: 20.0
       intensitySlope: 5
       maxIntensity: 4
+    - type: ExplodeOnTrigger
+    - type: OnUseTimerTrigger
+      delay: 90
+      delayOptions: [10, 90, 120, 150, 180, 210, 240, 270, 300] #10 for debug purposes
+      initialBeepDelay: 0
+      beepSound: /Audio/Machines/Nuke/general_beep.ogg
     - type: Anchorable
-      delay: 15
+      delay: 5
     - type: Physics
       bodyType: Static
     - type: Transform
@@ -67,34 +71,20 @@
         - state: training-bomb
         - state: training-bomb-active
           visible: false
-          map: [ "active" ]
-        - state: training-bomb-active-wires
+          map: [ "primed" ]
+        - state: training-bomb-wires
           visible: false
-          map: [ "activeWires" ]
-        - state: training-bomb-inactive
-          visible: false
-          map: [ "inactive" ]
-        - state: training-bomb-inactive-wires
-          visible: false
-          map: [ "inactiveWires" ]
+          map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
     - type: GenericVisualizer
       visuals:
         enum.DefusableVisuals.Active:
-          active:
-            True: { state: training-bomb-active }
-            False: { state: training-bomb-active, visible: false }
-        enum.DefusableVisuals.ActiveWires:
-          activeWires:
-            True: { state: training-bomb-active-wires }
-            False: { state: training-bomb-active-wires, visible: false }
-        enum.DefusableVisuals.Inactive:
-          inactive:
-            True: { state: training-bomb-inactive }
-            False: { state: training-bomb-inactive, visible: false }
-        enum.DefusableVisuals.InactiveWires:
-          inactiveWires:
-            True: { state: training-bomb-inactive-wires }
-            False: { state: training-bomb-inactive-wires, visible: false }
+          primed:
+            True: { visible: true }
+            False: { visible: false }
+        enum.WiresVisualLayers.MaintenancePanel:
+          enum.WiresVisualLayers.MaintenancePanel:
+            True: { visible: true }
+            False: { visible: false }
     - type: Explosive
       explosionType: Default
       totalIntensity: 5.0

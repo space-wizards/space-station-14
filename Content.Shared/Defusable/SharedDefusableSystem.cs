@@ -11,10 +11,7 @@ public abstract class SharedDefusableSystem : EntitySystem { }
 [NetSerializable, Serializable]
 public enum DefusableVisuals
 {
-    Active,
-    ActiveWires,
-    Inactive,
-    InactiveWires,
+    Active
 }
 
 [NetSerializable, Serializable]

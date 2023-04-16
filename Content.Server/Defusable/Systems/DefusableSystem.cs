@@ -1,9 +1,13 @@
 using Content.Server.Defusable.Components;
+using Content.Server.Explosion.Components;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.Salvage;
+using Content.Shared.Construction.Components;
 using Content.Shared.Defusable;
 using Content.Shared.Examine;
+using Content.Shared.Interaction.Helpers;
+using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -16,6 +20,8 @@ public sealed class DefusableSystem : SharedDefusableSystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly ExplosionSystem _explosion = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly TriggerSystem _trigger = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -26,7 +32,7 @@ public sealed class DefusableSystem : SharedDefusableSystem
     }
 
     /// <summary>
-    ///     Add an alt-click interaction that cycles through delays.
+    ///     Adds a verb allowing for the bomb to be started easily.
     /// </summary>
     private void OnGetAltVerbs(EntityUid uid, DefusableComponent comp, GetVerbsEvent<AlternativeVerb> args)
     {
@@ -36,59 +42,53 @@ public sealed class DefusableSystem : SharedDefusableSystem
         args.Verbs.Add(new AlternativeVerb()
         {
             Text = Loc.GetString("defusable-verb-begin"),
-            Disabled = false,
+            Disabled = comp.BombLive && comp.BombUsable,
             Priority = 10,
             Act = () =>
             {
                 TryStartCountdown(uid, comp);
             }
         });
+    }
 
-        if (comp.StartingTimeOptions == null || comp.StartingTimeOptions.Count == 1)
-            return;
+    #region Anchorable
 
+    private void OnAnchorAttempt(EntityUid uid, DefusableComponent component, AnchorAttemptEvent args)
+    {
+        CheckAnchorAttempt(uid, component, args);
+    }
 
-        foreach (var option in comp.StartingTimeOptions)
+    private void OnUnanchorAttempt(EntityUid uid, DefusableComponent component, UnanchorAttemptEvent args)
+    {
+        CheckAnchorAttempt(uid, component, args);
+    }
+
+    private void CheckAnchorAttempt(EntityUid uid, DefusableComponent component, BaseAnchoredAttemptEvent args)
+    {
+        // Don't allow the thing to be anchored if bolted
+        if (component.Bolted)
         {
-            if (MathHelper.CloseTo(option, comp.StartingTime))
-            {
-                args.Verbs.Add(new AlternativeVerb()
-                {
-                    Category = TimerOptions,
-                    Text = Loc.GetString("verb-trigger-timer-set-current", ("time", option)),
-                    Disabled = true,
-                    Priority = (int) (-100 * option)
-                });
-                continue;
-            }
+            var msg = Loc.GetString("defusable-popup-cant-anchor");
+            _popup.PopupEntity(msg, uid, args.User);
 
-            args.Verbs.Add(new AlternativeVerb()
-            {
-                Category = TimerOptions,
-                Text = Loc.GetString("verb-trigger-timer-set", ("time", option)),
-                Priority = (int) (-100 * option),
-
-                Act = () =>
-                {
-                    comp.StartingTime = option;
-                    _popup.PopupEntity(Loc.GetString("popup-trigger-timer-set", ("time", option)), args.User,
-                        args.User);
-                },
-            });
+            args.Cancel();
         }
     }
+
+    #endregion
 
     private void OnExamine(EntityUid uid, DefusableComponent comp, ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
             return;
 
-        if (!comp.BombUsable) {
+        if (!comp.BombUsable)
+        {
             args.PushMarkup(Loc.GetString("defusable-examine-defused", ("name", uid)));
         }
         else if (comp.BombLive)
         {
-            args.PushMarkup(Loc.GetString("defusable-examine-live", ("name", uid), ("time", comp.TimeUntilExplosion.ToString())));
+            args.PushMarkup(Loc.GetString("defusable-examine-live", ("name", uid)));
         }
         else
         {
@@ -96,15 +96,38 @@ public sealed class DefusableSystem : SharedDefusableSystem
         }
     }
 
+    #region Public
+
+    public void TryDelay(EntityUid uid, float amount, ActiveTimerTriggerComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp, false))
+            return;
+
+        comp.TimeRemaining += amount;
+    }
+
     public void TryStartCountdown(EntityUid uid, DefusableComponent comp)
     {
         if (!comp.BombUsable)
+        {
+            _popup.PopupEntity(Loc.GetString("defusable-popup-fried", ("name", uid)), uid);
             return;
+        }
 
         comp.BombLive = true;
-        comp.TimeUntilExplosion = comp.StartingTime;
         _popup.PopupEntity(Loc.GetString("defusable-popup-begun", ("name", uid)), uid);
-        AddComp<ActiveDefusableComponent>(uid);
+        if (TryComp<OnUseTimerTriggerComponent>(uid, out var timerTrigger))
+        {
+            _trigger.HandleTimerTrigger(
+                uid,
+                null,
+                timerTrigger.Delay,
+                timerTrigger.BeepInterval,
+                timerTrigger.InitialBeepDelay,
+                timerTrigger.BeepSound,
+                timerTrigger.BeepParams
+            );
+        }
 
         Logger.Debug("it begins");
 
@@ -113,15 +136,13 @@ public sealed class DefusableSystem : SharedDefusableSystem
 
     public void TryDetonateBomb(EntityUid uid, DefusableComponent comp)
     {
-        // todo: boom??? lol?
         // also might want to have admin logs
         if (!comp.BombLive)
             return;
 
-        _popup.PopupEntity(Loc.GetString("defusable-popup-boom", ("name", uid)), uid);
+        _popup.PopupEntity(Loc.GetString("defusable-popup-boom", ("name", uid)), uid, PopupType.LargeCaution);
 
         _explosion.TriggerExplosive(uid);
-        RemComp<ActiveDefusableComponent>(uid);
         QueueDel(uid);
 
         UpdateAppearance(uid, comp);
@@ -135,51 +156,28 @@ public sealed class DefusableSystem : SharedDefusableSystem
         _popup.PopupEntity(Loc.GetString("defusable-popup-defuse", ("name", uid)), uid);
         comp.BombLive = false;
         comp.BombUsable = false; // fry the circuitry
-        RemComp<ActiveDefusableComponent>(uid);
+
+        if (TryComp<ExplodeOnTriggerComponent>(uid, out var explodeComp))
+            RemComp<ExplodeOnTriggerComponent>(uid);
+
+        if (TryComp<ActiveTimerTriggerComponent>(uid, out var activeComp))
+            RemComp<ActiveTimerTriggerComponent>(uid);
+
+        if (TryComp<OnUseTimerTriggerComponent>(uid, out var timerComp))
+            RemComp<OnUseTimerTriggerComponent>(uid);
+
+        _audio.PlayPvs(comp.DefusalSound, uid);
 
         UpdateAppearance(uid, comp);
     }
 
-    public override void Update(float frameTime)
+    #endregion
+
+    private void UpdateAppearance(EntityUid uid, DefusableComponent? comp = null)
     {
-        base.Update(frameTime);
-
-        foreach (var activeComp in EntityQuery<ActiveDefusableComponent>())
-        {
-            if (!EntityManager.TryGetComponent<DefusableComponent>(activeComp.Owner, out var comp))
-                continue;
-
-            comp.TimeUntilExplosion -= frameTime;
-            comp.TimeUntilNextBeep -= frameTime;
-
-            Logger.Debug("woo!");
-
-            if (comp.TimeUntilExplosion <= 0)
-            {
-                // i don't know any other way
-                TryDetonateBomb(comp.Owner, comp);
-                continue;
-            }
-
-            if (comp.BeepSound == null || comp.TimeUntilNextBeep > 0)
-                continue;
-
-            comp.TimeUntilNextBeep += comp.BeepInterval;
-            var filter = Filter.Pvs(comp.Owner, entityManager: EntityManager);
-            SoundSystem.Play(comp.BeepSound.GetSound(), filter, comp.Owner, comp.BeepParams);
-        }
-    }
-
-    private void UpdateAppearance(EntityUid uid, DefusableComponent? component = null)
-    {
-        if (!Resolve(uid, ref component, false))
+        if (!Resolve(uid, ref comp, false))
             return;
 
-        // _appearance.SetData(uid, DefusableVisuals.Active, comp.Wires == MagnetStateType.Attaching);
-        // _appearance.SetData(uid, DefusableVisuals.ActiveWires, comp.Wires == MagnetStateType.Holding);
-        // _appearance.SetData(uid, DefusableVisuals.Inactive, comp.Wires == MagnetStateType.CoolingDown);
-        // _appearance.SetData(uid, DefusableVisuals.InactiveWires, comp.Wires == MagnetStateType.Detaching);
+        _appearance.SetData(uid, DefusableVisuals.Active, comp.BombLive);
     }
-
-    public static VerbCategory TimerOptions = new("verb-categories-timer", "/Textures/Interface/VerbIcons/clock.svg.192dpi.png");
 }
