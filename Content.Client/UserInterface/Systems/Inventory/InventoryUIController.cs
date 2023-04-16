@@ -1,11 +1,11 @@
 using Content.Client.Gameplay;
-using Content.Client.Hands;
 using Content.Client.Hands.Systems;
 using Content.Client.Inventory;
 using Content.Client.Storage;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Inventory.Controls;
 using Content.Client.UserInterface.Systems.Inventory.Windows;
+using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
@@ -28,7 +28,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
     [UISystemDependency] private readonly ClientInventorySystem _inventorySystem = default!;
     [UISystemDependency] private readonly HandsSystem _handsSystem = default!;
 
-    private ClientInventoryComponent? _playerInventory;
+    private InventorySlotsComponent? _playerInventory;
     private readonly Dictionary<string, ItemSlotButtonContainer> _slotGroups = new();
 
     private StrippingWindow? _strippingWindow;
@@ -105,7 +105,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         ToggleInventoryBar();
     }
 
-    private void UpdateInventoryHotbar(ClientInventoryComponent? clientInv)
+    private void UpdateInventoryHotbar(InventorySlotsComponent? clientInv)
     {
         if (clientInv == null)
         {
@@ -131,7 +131,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         }
     }
 
-    private void UpdateStrippingWindow(ClientInventoryComponent? clientInv)
+    private void UpdateStrippingWindow(InventorySlotsComponent? clientInv)
     {
         if (clientInv == null)
         {
@@ -197,7 +197,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
     {
         _inventorySystem.OnSlotAdded += AddSlot;
         _inventorySystem.OnSlotRemoved += RemoveSlot;
-        _inventorySystem.OnLinkInventory += LoadSlots;
+        _inventorySystem.OnLinkInventorySlots += LoadSlots;
         _inventorySystem.OnUnlinkInventory += UnloadSlots;
         _inventorySystem.OnSpriteUpdate += SpriteUpdated;
     }
@@ -207,7 +207,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
     {
         _inventorySystem.OnSlotAdded -= AddSlot;
         _inventorySystem.OnSlotRemoved -= RemoveSlot;
-        _inventorySystem.OnLinkInventory -= LoadSlots;
+        _inventorySystem.OnLinkInventorySlots -= LoadSlots;
         _inventorySystem.OnUnlinkInventory -= UnloadSlots;
         _inventorySystem.OnSpriteUpdate -= SpriteUpdated;
     }
@@ -265,7 +265,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
             !_entities.TryGetComponent<HandsComponent>(player, out var hands) ||
             hands.ActiveHandEntity is not { } held ||
             !_entities.TryGetComponent(held, out SpriteComponent? sprite) ||
-            !_inventorySystem.TryGetSlotContainer(player.Value, control.SlotName, out var container, out var slotDef, _playerInventory))
+            !_inventorySystem.TryGetSlotContainer(player.Value, control.SlotName, out var container, out var slotDef))
         {
             control.ClearHover();
             return;
@@ -274,7 +274,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         // Set green / red overlay at 50% transparency
         var hoverEntity = _entities.SpawnEntity("hoverentity", MapCoordinates.Nullspace);
         var hoverSprite = _entities.GetComponent<SpriteComponent>(hoverEntity);
-        var fits = _inventorySystem.CanEquip(player.Value, held, control.SlotName, out _, slotDef, _playerInventory) &&
+        var fits = _inventorySystem.CanEquip(player.Value, held, control.SlotName, out _, slotDef) &&
                    container.CanInsert(held, _entities);
 
         hoverSprite.CopyFrom(sprite);
@@ -305,7 +305,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         _inventorySystem.ReloadInventory();
     }
 
-    private void LoadSlots(ClientInventoryComponent clientInv)
+    private void LoadSlots(InventorySlotsComponent clientInv)
     {
         UnloadSlots();
         _playerInventory = clientInv;

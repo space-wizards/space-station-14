@@ -7,15 +7,15 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.UserInterface;
 using Content.Shared.Database;
-// using Content.Server.WireHacking;
 using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
-// using static Content.Shared.Wires.SharedWiresComponent;
 using Timer = Robust.Shared.Timing.Timer;
+// using Content.Server.WireHacking;
+// using static Content.Shared.Wires.SharedWiresComponent;
 
 namespace Content.Server.ParticleAccelerator.Components
 {
@@ -191,7 +191,8 @@ namespace Content.Server.ParticleAccelerator.Components
             Master = null;
             foreach (var part in AllParts())
             {
-                part.Master = null;
+                if (_entMan.TryGetComponent(part.Owner, out ParticleAcceleratorPartComponent? paPart))
+                    paPart.Master = null;
             }
 
             base.OnRemove();
@@ -322,7 +323,8 @@ namespace Content.Server.ParticleAccelerator.Components
             SwitchOff(playerSession, true);
             foreach (var part in AllParts())
             {
-                part.Master = null;
+                if (_entMan.TryGetComponent(part.Owner, out ParticleAcceleratorPartComponent? paPart))
+                    paPart.Master = null;
             }
 
             _isAssembled = false;
@@ -395,7 +397,8 @@ namespace Content.Server.ParticleAccelerator.Components
 
             foreach (var part in AllParts())
             {
-                part.Master = this;
+                if (_entMan.TryGetComponent(part.Owner, out ParticleAcceleratorPartComponent? paPart))
+                    paPart.Master = this;
             }
 
             UpdateUI();
@@ -408,7 +411,7 @@ namespace Content.Server.ParticleAccelerator.Components
         }
 
         private bool ScanPart<T>(Vector2i offset, [NotNullWhen(true)] out T? part)
-            where T : ParticleAcceleratorPartComponent
+            where T : Component
         {
             var xform = _entMan.GetComponent<TransformComponent>(Owner);
             if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
@@ -430,7 +433,7 @@ namespace Content.Server.ParticleAccelerator.Components
             return false;
         }
 
-        private IEnumerable<ParticleAcceleratorPartComponent> AllParts()
+        private IEnumerable<Component> AllParts()
         {
             if (_partFuelChamber != null)
                 yield return _partFuelChamber;
@@ -668,7 +671,7 @@ namespace Content.Server.ParticleAccelerator.Components
             //no endcap because it has no powerlevel-sprites
         }
 
-        private void UpdatePartVisualState(ParticleAcceleratorPartComponent? component)
+        private void UpdatePartVisualState(Component? component)
         {
             if (component == null || !_entMan.TryGetComponent<AppearanceComponent?>(component.Owner, out var appearanceComponent))
             {
@@ -679,12 +682,6 @@ namespace Content.Server.ParticleAccelerator.Components
                 ? (ParticleAcceleratorVisualState) _selectedStrength
                 : ParticleAcceleratorVisualState.Unpowered;
             appearanceComponent.SetData(ParticleAcceleratorVisuals.VisualState, state);
-        }
-
-        public override void Moved()
-        {
-            // We rotate OURSELVES when scanning for parts, so don't actually run rescan on rotate.
-            // That would be silly.
         }
 
         public enum ParticleAcceleratorControlBoxWires

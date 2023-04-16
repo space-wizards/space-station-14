@@ -22,6 +22,8 @@
           Quantity: 20
         - ReagentId: Vitamin
           Quantity: 5
+  - type: Item
+    size: 25
 
 - type: entity
   parent: FoodCakeBase
@@ -43,6 +45,8 @@
           Quantity: 4
         - ReagentId: Vitamin
           Quantity: 1
+  - type: Item
+    size: 5
 
 # Custom Cake Example
 
@@ -89,6 +93,8 @@
     - state: plain
   - type: SliceableFood
     slice: FoodCakePlainSlice
+
+# Added in type lines above
 
 - type: entity
   name: slice of cake

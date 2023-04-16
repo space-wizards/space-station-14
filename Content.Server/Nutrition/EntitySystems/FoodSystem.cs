@@ -1,7 +1,6 @@
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Hands.Components;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Administration.Logs;
@@ -11,6 +10,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
+using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -130,7 +130,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(target):target} is eating {ToPrettyString(food):food} {SolutionContainerSystem.ToPrettyString(foodSolution)}");
             }
 
-            var doAfterEventArgs = new DoAfterArgs(
+            var doAfterArgs = new DoAfterArgs(
                 user,
                 forceFeed ? foodComp.ForceFeedDelay : foodComp.Delay,
                 new ConsumeDoAfterEvent(foodSolution.Name, flavors),
@@ -146,9 +146,11 @@ namespace Content.Server.Nutrition.EntitySystems
                 // Mice and the like can eat without hands.
                 // TODO maybe set this based on some CanEatWithoutHands event or component?
                 NeedHand = forceFeed,
+                //Works better with cancel duplicate on because you can just use again to stop
+                CancelDuplicate = false,
             };
 
-            _doAfterSystem.TryStartDoAfter(doAfterEventArgs);
+            _doAfterSystem.TryStartDoAfter(doAfterArgs);
             return true;
         }
 
@@ -169,15 +171,14 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!TryGetRequiredUtensils(args.User, component, out var utensils))
                 return;
 
-            args.Handled = true;
+            var forceFeed = args.User != args.Target;
 
+            args.Handled = true;
             var transferAmount = component.TransferAmount != null ? FixedPoint2.Min((FixedPoint2) component.TransferAmount, solution.Volume) : solution.Volume;
 
             var split = _solutionContainerSystem.SplitSolution(uid, solution, transferAmount);
             //TODO: Get the stomach UID somehow without nabbing owner
             var firstStomach = stomachs.FirstOrNull(stomach => _stomachSystem.CanTransferSolution(stomach.Comp.Owner, split));
-
-            var forceFeed = args.User != args.Target;
 
             // No stomach so just popup a message that they can't eat.
             if (firstStomach == null)
@@ -221,7 +222,12 @@ namespace Content.Server.Nutrition.EntitySystems
             }
 
             if (component.UsesRemaining > 0)
+            {
+                if (!forceFeed)
+                    args.Repeat = true;
+
                 return;
+            }
 
             if (string.IsNullOrEmpty(component.TrashPrototype))
                 EntityManager.QueueDeleteEntity(uid);

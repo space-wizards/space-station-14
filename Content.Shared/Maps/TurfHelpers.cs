@@ -37,12 +37,10 @@ namespace Content.Shared.Maps
             if (!coordinates.IsValid(entityManager))
                 return null;
 
-
             mapManager ??= IoCManager.Resolve<IMapManager>();
-
-            if (!mapManager.TryGetGrid(coordinates.GetGridUid(entityManager), out var grid))
+            var pos = coordinates.ToMap(entityManager, entityManager.System<SharedTransformSystem>());
+            if (!mapManager.TryFindGridAt(pos, out var grid))
                 return null;
-
 
             if (!grid.TryGetTileRef(coordinates, out var tile))
                 return null;

@@ -50,6 +50,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 600
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 300
       behaviors:
       - !type:DoActsBehavior
@@ -73,6 +79,7 @@
   - type: StaticPrice
     price: 750 # Grand Theft Auto.
 
+
 - type: entity
   id: VehicleJanicart
   parent: BaseVehicle
@@ -80,6 +87,9 @@
   description: The janitor's trusty steed.
   components:
   - type: Vehicle
+    southOver: true
+    westOver: true
+    eastOver: true
     northOverride: -0.15
     southOverride: 0.22
   - type: Sprite
@@ -104,6 +114,12 @@
     autoRot: true
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 250
@@ -163,7 +179,9 @@
   description: The future of transportation. Popularized by St. James, the patron saint of security officers and internet forum moderators.
   components:
   - type: Vehicle
-    northOnly: true
+    northOver: true
+    westOver: true
+    eastOver: true
     northOverride: -0.1
     southOverride: 0.1
     hornSound:
@@ -210,6 +228,8 @@
   description: All-Tile Vehicle.
   components:
   - type: Vehicle
+    southOver: true
+    northOver: true
     northOverride: -0.1
     southOverride: 0.1
   - type: Sprite
@@ -263,7 +283,9 @@
   description: Be an enemy of the corporation, in style.
   components:
     - type: Vehicle
-      northOnly: true
+      southOver: true
+      westOver: true
+      eastOver: true
       northOverride: -0.1
       southOverride: 0.1
       hornSound:
@@ -305,6 +327,8 @@
   description: Bad to the Bone.
   components:
     - type: Vehicle
+      southOver: true
+      northOver: true
       northOverride: -0.1
       southOverride: 0.1
     - type: Sprite

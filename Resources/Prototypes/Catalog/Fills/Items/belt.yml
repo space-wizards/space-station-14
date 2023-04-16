@@ -65,7 +65,6 @@
       - id: Bloodpack
         amount: 2
       - id: Gauze
-        amount: 1
       - id: EmergencyMedipen #You never know what people are going to latejoin into
 
 - type: entity
@@ -101,7 +100,6 @@
       - id: EphedrineChemistryBottle
         amount: 2
       - id: OmnizineChemistryBottle
-        amount: 1
       - id: MedkitCombatFilled
 
 - type: entity
