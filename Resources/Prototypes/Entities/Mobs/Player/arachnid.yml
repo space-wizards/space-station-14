@@ -5,7 +5,7 @@
   id: MobArachnid
   components:
   - type: CombatMode
-    disarm: null
+    canDisarm: true
   - type: InteractionPopup
     successChance: 1
     interactSuccessString: hugging-success-generic
