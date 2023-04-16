@@ -131,9 +131,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                         ("machineName", thermoMachine.Mode == ThermoMachineMode.Freezer ? "freezer" : "heater"),
                         ("tempColor", thermoMachine.Mode == ThermoMachineMode.Freezer ? "deepskyblue" : "red"),
                         ("temp", Math.Round(thermoMachine.TargetTemperature,2))
-            ))
+               ))
+
                 args.PushMarkup(str);
         }
-
     }
 }
