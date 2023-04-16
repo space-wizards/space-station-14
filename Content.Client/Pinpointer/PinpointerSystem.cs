@@ -8,9 +8,9 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
-    public override void FrameUpdate(float frameTime)
+    public override void Update(float frameTime)
     {
-        base.FrameUpdate(frameTime);
+        base.Update(frameTime);
 
         // we want to show pinpointers arrow direction relative
         // to players eye rotation (like it was in SS13)
