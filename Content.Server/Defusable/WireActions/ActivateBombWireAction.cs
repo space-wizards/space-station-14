@@ -1,6 +1,7 @@
 using Content.Server.Defusable.Components;
 using Content.Server.Defusable.Systems;
 using Content.Server.Doors.Systems;
+using Content.Server.Popups;
 using Content.Server.Wires;
 using Content.Shared.Defusable;
 using Content.Shared.Doors;
@@ -51,5 +52,6 @@ public sealed class ActivateBombWireAction : ComponentWireAction<DefusableCompon
         {
             EntityManager.System<DefusableSystem>().TryStartCountdown(wire.Owner, comp);
         }
+        EntityManager.System<PopupSystem>().PopupEntity(Loc.GetString("defusable-popup-wire-activate-pulse", ("name", wire.Owner)), wire.Owner);
     }
 }
