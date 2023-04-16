@@ -14,10 +14,10 @@ namespace Content.Server.Defusable.WireActions;
 public sealed class DelayWireAction : ComponentWireAction<DefusableComponent>
 {
     public override Color Color { get; set; } = Color.Red;
-    public override string Name { get; set; } = "wire-name-bomb-bolt";
+    public override string Name { get; set; } = "wire-name-bomb-delay";
 
     public override StatusLightState? GetLightState(Wire wire, DefusableComponent comp)
-        => comp.Bolted ? StatusLightState.On : StatusLightState.Off;
+        => comp.DelayWireUsed ? StatusLightState.On : StatusLightState.Off;
 
     public override object StatusKey { get; } = DefusableWireStatus.BoomIndicator;
 
