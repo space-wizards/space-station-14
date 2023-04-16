@@ -5,7 +5,6 @@ using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.CPUJob.JobQueues;
 using Content.Server.CPUJob.JobQueues.Queues;
-using Content.Server.NPC.Pathfinding;
 using Content.Server.Parallax;
 using Content.Server.Procedural;
 using Content.Server.Salvage.Expeditions;
@@ -19,8 +18,6 @@ using Content.Shared.Procedural;
 using Content.Shared.Procedural.Loot;
 using Content.Shared.Salvage;
 using Content.Shared.Salvage.Expeditions;
-using Content.Shared.Salvage.Expeditions.Extraction;
-using Content.Shared.Salvage.Expeditions.Structure;
 using Content.Shared.Storage;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -133,12 +130,12 @@ public sealed partial class SalvageSystem
         // Payout already handled elsewhere.
         if (expedition.Completed)
         {
-            _sawmill.Debug($"Completed mission {expedition.Mission.Config} with seed {expedition.Mission.Seed}");
+            _sawmill.Debug($"Completed mission {expedition.MissionParams.Config} with seed {expedition.MissionParams.Seed}");
             component.NextOffer = _timing.CurTime + MissionCooldown;
         }
         else
         {
-            _sawmill.Debug($"Failed mission {expedition.Mission.Config} with seed {expedition.Mission.Seed}");
+            _sawmill.Debug($"Failed mission {expedition.MissionParams.Config} with seed {expedition.MissionParams.Seed}");
             component.NextOffer = _timing.CurTime + MissionFailedCooldown;
         }
 
@@ -149,26 +146,21 @@ public sealed partial class SalvageSystem
     private void GenerateMissions(SalvageExpeditionDataComponent component)
     {
         component.Missions.Clear();
-        const int timeBlock = 30;
-        var configs = _prototypeManager.EnumeratePrototypes<SalvageExpeditionPrototype>().ToArray();
+        var configs = _prototypeManager.EnumeratePrototypes<SalvageMissionPrototype>().ToArray();
 
         if (configs.Length == 0)
             return;
 
-        // TODO: sealed record
         for (var i = 0; i < MissionLimit; i++)
         {
             var config = _random.Pick(configs);
-            var minTime = config.MinDuration.TotalSeconds;
-            var maxTime = config.MaxDuration.TotalSeconds;
 
-            var mission = new SalvageMission()
+            var mission = new SalvageMissionParams()
             {
                 Index = component.NextIndex,
                 Config = config.ID,
                 Seed = _random.Next(),
-                // TODO: Just use seed for this you goob.
-                Duration = TimeSpan.FromSeconds(Math.Round((_random.NextDouble() * (maxTime - minTime) + minTime) / timeBlock) * timeBlock),
+                Difficulty = (DifficultyRating) i,
             };
 
             component.Missions[component.NextIndex++] = mission;
@@ -181,7 +173,7 @@ public sealed partial class SalvageSystem
         return new SalvageExpeditionConsoleState(component.NextOffer, component.Claimed, component.ActiveMission, missions);
     }
 
-    private void SpawnMission(SalvageMission mission, EntityUid station)
+    private void SpawnMission(SalvageMissionParams missionParams, EntityUid station)
     {
         var cancelToken = new CancellationTokenSource();
         var job = new SpawnSalvageMissionJob(
@@ -192,9 +184,8 @@ public sealed partial class SalvageSystem
             _prototypeManager,
             _biome,
             _dungeon,
-            _pathfinding,
             station,
-            mission,
+            missionParams,
             cancelToken.Token);
 
         _salvageJobs.Add((job, cancelToken));
@@ -209,10 +200,9 @@ public sealed partial class SalvageSystem
         private readonly IPrototypeManager _prototypeManager;
         private readonly BiomeSystem _biome;
         private readonly DungeonSystem _dungeon;
-        private readonly PathfindingSystem _pathfinding;
 
         public readonly EntityUid Station;
-        private readonly SalvageMission _mission;
+        private readonly SalvageMissionParams _missionParams;
 
         public SpawnSalvageMissionJob(
             double maxTime,
@@ -222,9 +212,8 @@ public sealed partial class SalvageSystem
             IPrototypeManager protoManager,
             BiomeSystem biome,
             DungeonSystem dungeon,
-            PathfindingSystem pathfinding,
             EntityUid station,
-            SalvageMission mission,
+            SalvageMissionParams missionParams,
             CancellationToken cancellation = default) : base(maxTime, cancellation)
         {
             _entManager = entManager;
@@ -233,80 +222,86 @@ public sealed partial class SalvageSystem
             _prototypeManager = protoManager;
             _biome = biome;
             _dungeon = dungeon;
-            _pathfinding = pathfinding;
             Station = station;
-            _mission = mission;
+            _missionParams = missionParams;
         }
 
         protected override async Task<bool> Process()
         {
-            Logger.DebugS("salvage", $"Spawning salvage mission with seed {_mission.Seed}");
-            var config = _prototypeManager.Index<SalvageExpeditionPrototype>(_mission.Config);
+            Logger.DebugS("salvage", $"Spawning salvage mission with seed {_missionParams.Seed}");
+            var config = _prototypeManager.Index<SalvageMissionPrototype>(_missionParams.Config);
             var mapId = _mapManager.CreateMap();
             var mapUid = _mapManager.GetMapEntityId(mapId);
             _mapManager.AddUninitializedMap(mapId);
             MetaDataComponent? metadata = null;
             var grid = _entManager.EnsureComponent<MapGridComponent>(mapUid);
+            var random = new Random(_missionParams.Seed);
 
             // Setup mission configs
-            var biome = _entManager.EnsureComponent<BiomeComponent>(mapUid);
-            _biome.SetPrototype(biome, config.Biome);
-            _prototypeManager.Index<BiomePrototype>(biome.BiomePrototype);
-            _entManager.Dirty(biome);
+            // As we go through the config the rating will deplete so we'll go for most important to least important.
 
-            var gravity = _entManager.EnsureComponent<GravityComponent>(mapUid);
-            gravity.Enabled = true;
-            _entManager.Dirty(gravity, metadata);
+            var mission = _entManager.System<SharedSalvageSystem>()
+                .GetMission(_missionParams.Config, _missionParams.Difficulty, _missionParams.Seed);
 
-            var lighting = _entManager.EnsureComponent<MapLightComponent>(mapUid);
-            lighting.AmbientLightColor = config.Light;
-            _entManager.Dirty(lighting);
-
-            var atmos = _entManager.EnsureComponent<MapAtmosphereComponent>(mapUid);
-            atmos.Space = false;
-            var moles = new float[Atmospherics.AdjustedNumberOfGases];
-            moles[(int) Gas.Oxygen] = 21.824779f;
-            moles[(int) Gas.Nitrogen] = 82.10312f;
-
-            atmos.Mixture = new GasMixture(2500)
+            if (mission.Biome != null)
             {
-                Temperature = config.Temperature,
-                Moles = moles,
-            };
+                var biome = _entManager.AddComponent<BiomeComponent>(mapUid);
+                var biomeSystem = _entManager.System<BiomeSystem>();
+                biomeSystem.SetPrototype(biome, mission.Biome);
+                biomeSystem.SetSeed(biome, mission.Seed);
+                _entManager.Dirty(biome);
+            }
+
+            if (mission.Color != null)
+            {
+                var lighting = _entManager.EnsureComponent<MapLightComponent>(mapUid);
+                lighting.AmbientLightColor = mission.Color.Value;
+                _entManager.Dirty(lighting);
+            }
+
+            if (true)//mission.Gravity)
+            {
+                var gravity = _entManager.EnsureComponent<GravityComponent>(mapUid);
+                gravity.Enabled = true;
+                _entManager.Dirty(gravity, metadata);
+            }
+
+            if (true)//mission.Atmos)
+            {
+                var atmos = _entManager.EnsureComponent<MapAtmosphereComponent>(mapUid);
+                atmos.Space = false;
+                var moles = new float[Atmospherics.AdjustedNumberOfGases];
+                moles[(int) Gas.Oxygen] = 21.824779f;
+                moles[(int) Gas.Nitrogen] = 82.10312f;
+
+                atmos.Mixture = new GasMixture(2500)
+                {
+                    Temperature = 293.15f,
+                    Moles = moles,
+                };
+            }
 
             _mapManager.DoMapInitialize(mapId);
             _mapManager.SetMapPaused(mapId, true);
 
-            // No point raising an event for this when it's 1-1.
-            // TODO: Fix the landingfloor radius shenanigans
-            var missionSeed = _mission.Seed;
-            var random = new Random(missionSeed);
-
             // Setup expedition
             var expedition = _entManager.AddComponent<SalvageExpeditionComponent>(mapUid);
             expedition.Station = Station;
-            expedition.EndTime = _timing.CurTime + _mission.Duration;
-            expedition.Mission = _mission;
+            expedition.EndTime = _timing.CurTime + mission.Duration;
+            expedition.MissionParams = _missionParams;
 
             var ftlUid = _entManager.SpawnEntity("FTLPoint", new EntityCoordinates(mapUid, Vector2.Zero));
-            _entManager.GetComponent<MetaDataComponent>(ftlUid).EntityName = GetFTLName(_prototypeManager.Index<DatasetPrototype>(config.NameProto), missionSeed);
-
-            switch (config.Mission)
-            {
-                case SalvageExtraction:
-                    break;
-                case SalvageStructure:
-                    _entManager.EnsureComponent<SalvageStructureExpeditionComponent>(mapUid);
-                    break;
-                default:
-                    return false;
-            }
+            _entManager.GetComponent<MetaDataComponent>(ftlUid).EntityName = GetFTLName(_prototypeManager.Index<DatasetPrototype>(config.NameProto), _missionParams.Seed);
 
             var landingPadRadius = 24;
-            var dungeonOffset = config.DungeonPosition;
-            var dungeonConfig = _prototypeManager.Index<DungeonConfigPrototype>(config.DungeonConfigPrototype);
+            var minDungeonOffset = landingPadRadius + 32;
+            var maxDungeonOffset = minDungeonOffset + 32;
 
-            var dungeon = await _dungeon.GenerateDungeonAsync(dungeonConfig, mapUid, grid, Vector2.Zero, missionSeed);
+            var dungeonOffsetDistance = (minDungeonOffset + (maxDungeonOffset - minDungeonOffset) * random.NextFloat());
+            var dungeonOffset = new Vector2(dungeonOffsetDistance, 0f);
+            dungeonOffset = new Angle(random.NextDouble() * Math.Tau).RotateVec(dungeonOffset);
+            var dungeonConfig = _prototypeManager.Index<DungeonConfigPrototype>(mission.Dungeon);
+            var dungeon = await _dungeon.GenerateDungeonAsync(dungeonConfig, mapUid, grid, Vector2.Zero, _missionParams.Seed);
 
             // Aborty
             if (dungeon.Rooms.Count == 0)
@@ -315,17 +310,19 @@ public sealed partial class SalvageSystem
             }
 
             // Handle loot
+            /*
             foreach (var loot in GetLoot(config.Loots, missionSeed, _prototypeManager))
             {
                 // await SpawnDungeonLoot(dungeonOffset, dungeon, loot, grid, random, reservedTiles);
             }
+            */
 
             // Setup the landing pad
             var landingPadExtents = new Vector2i(landingPadRadius, landingPadRadius);
             var tiles = new List<(Vector2i Indices, Tile Tile)>(landingPadExtents.X * landingPadExtents.Y * 2);
 
             // Set the tiles themselves
-            var seed = new FastNoiseLite(_mission.Seed);
+            var seed = new FastNoiseLite(_missionParams.Seed);
 
             foreach (var tile in grid.GetTilesIntersecting(new Circle(Vector2.Zero, landingPadRadius), false))
             {
@@ -338,26 +335,24 @@ public sealed partial class SalvageSystem
 
             grid.SetTiles(tiles);
 
-            await SetupMission(config, dungeonOffset, dungeon, grid, random, seed.GetSeed());
+            await SetupMission(mission.Mission, mission, (Vector2i) dungeonOffset, dungeon, grid, random, seed.GetSeed());
             return true;
         }
 
         #region Mission Specific
 
-        private async Task SetupMission(SalvageExpeditionPrototype config, Vector2i dungeonOffset, Dungeon dungeon, MapGridComponent grid, Random random, int seed)
+        private async Task SetupMission(string missionMod, SalvageMission mission, Vector2i dungeonOffset, Dungeon dungeon, MapGridComponent grid, Random random, int seed)
         {
-            // TODO: Move this to the main method
-            switch (config.Mission)
+            switch (missionMod)
             {
-                case SalvageStructure structure:
-                    await SetupMission(config, structure, dungeonOffset, dungeon, grid, random, seed);
-                    break;
+                // TODO:
                 default:
-                    throw new NotImplementedException();
+                    return;
             }
         }
 
-        private async Task SetupMission(SalvageExpeditionPrototype config, SalvageStructure structure, Vector2i dungeonOffset, Dungeon dungeon, MapGridComponent grid, Random random, int seed)
+        /*
+        private async Task SetupMission(SalvageMissionPrototype config, SalvageStructure structure, Vector2i dungeonOffset, Dungeon dungeon, MapGridComponent grid, Random random, int seed)
         {
             var structureComp = _entManager.GetComponent<SalvageStructureExpeditionComponent>(grid.Owner);
             // TODO: Uhh difficulty selection
@@ -399,6 +394,7 @@ public sealed partial class SalvageSystem
                 structureComp.Structures.Add(uid);
             }
         }
+        */
 
         #endregion
     }

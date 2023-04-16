@@ -18,7 +18,7 @@ public sealed partial class SalvageSystem
         SpawnMission(mission, station.Value);
 
         data.ActiveMission = args.Index;
-        data.NextOffer = _timing.CurTime + mission.Duration;
+        data.NextOffer = _timing.CurTime;
         UpdateConsoles(data);
     }
 
@@ -58,7 +58,7 @@ public sealed partial class SalvageSystem
         }
         else
         {
-            state = new SalvageExpeditionConsoleState(TimeSpan.Zero, false, 0, new List<SalvageMission>());
+            state = new SalvageExpeditionConsoleState(TimeSpan.Zero, false, 0, new List<SalvageMissionParams>());
         }
 
         _ui.TrySetUiState(component.Owner, SalvageConsoleUiKey.Expedition, state);

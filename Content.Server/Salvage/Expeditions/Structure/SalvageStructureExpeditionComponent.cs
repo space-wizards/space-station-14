@@ -1,5 +1,3 @@
-using Content.Shared.Salvage.Expeditions.Structure;
-
 namespace Content.Server.Salvage.Expeditions.Structure;
 
 /// <summary>

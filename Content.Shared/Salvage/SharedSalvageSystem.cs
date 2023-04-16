@@ -1,35 +1,38 @@
+using System.Linq;
 using Content.Shared.Dataset;
 using Content.Shared.Procedural.Loot;
-using Content.Shared.Procedural.Rewards;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
-using Content.Shared.Salvage.Expeditions.Structure;
+using Content.Shared.Salvage.Expeditions;
+using Content.Shared.Salvage.Expeditions.Modifiers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Salvage;
 
 public abstract class SharedSalvageSystem : EntitySystem
 {
-    public static readonly TimeSpan MissionCooldown = TimeSpan.FromMinutes(5);
-    public static readonly TimeSpan MissionFailedCooldown = TimeSpan.FromMinutes(10);
+    [Dependency] private readonly IPrototypeManager _proto = default!;
 
-    public static float GetDifficultyModifier(DifficultyRating difficulty)
+    public static readonly TimeSpan MissionCooldown = TimeSpan.FromMinutes(5);
+    public static readonly TimeSpan MissionFailedCooldown = TimeSpan.FromMinutes(15);
+
+    public int GetDifficulty(DifficultyRating rating)
     {
-        // These should reflect how many salvage staff are expected to be required for the mission.
-        switch (difficulty)
+        switch (rating)
         {
             case DifficultyRating.None:
-                return 1f;
+                return 1;
             case DifficultyRating.Minor:
-                return 1.5f;
+                return 2;
             case DifficultyRating.Moderate:
-                return 3f;
+                return 4;
             case DifficultyRating.Hazardous:
-                return 6f;
+                return 7;
             case DifficultyRating.Extreme:
-                return 10f;
+                return 11;
             default:
-                throw new ArgumentOutOfRangeException(nameof(difficulty), difficulty, null);
+                throw new ArgumentOutOfRangeException(nameof(rating), rating, null);
         }
     }
 
@@ -39,10 +42,48 @@ public abstract class SharedSalvageSystem : EntitySystem
         return $"{dataset.Values[random.Next(dataset.Values.Count)]}-{random.Next(10, 100)}-{(char) (65 + random.Next(26))}";
     }
 
-    public static string GetFaction(List<string> factions, int seed)
+    public SalvageMission GetMission(string config, DifficultyRating difficulty, int seed)
     {
-        var adjustedSeed = new System.Random(seed + 1);
-        return factions[adjustedSeed.Next(factions.Count)];
+        // This is on shared to ensure the client display for missions and what the server generates are consistent
+        var rating = (float) GetDifficulty(difficulty);
+        var rand = new System.Random(seed);
+
+        var dungeon = GetMod<SalvageDungeonMod>(rand, ref rating);
+        var faction = GetMod<SalvageFactionPrototype>(rand, ref rating);
+        var biome = GetMod<SalvageBiomeMod>(rand, ref rating);
+        var light = GetMod<SalvageLightMod>(rand, ref rating);
+        var time = GetMod<SalvageTimeMod>(rand, ref rating);
+
+        if (rand.Prob(0.2f))
+        {
+            var weather = GetMod<SalvageWeatherMod>(rand, ref rating);
+        }
+
+        var exactDuration = time.MinDuration + (time.MaxDuration - time.MinDuration) * rand.NextFloat();
+        exactDuration = MathF.Round(exactDuration / 15f) * 15f;
+
+        var duration = TimeSpan.FromSeconds(exactDuration);
+
+        return new SalvageMission(seed, dungeon.ID, faction.ID, config, biome.BiomePrototype, light.Color, duration);
+    }
+
+    public T GetMod<T>(System.Random rand, ref float rating) where T : class, IPrototype, ISalvageMod
+    {
+        var mods = _proto.EnumeratePrototypes<T>().ToList();
+        mods.Sort((x, y) => string.Compare(x.ID, y.ID, StringComparison.Ordinal));
+        rand.Shuffle(mods);
+
+        foreach (var mod in mods)
+        {
+            if (mod.Cost > rating)
+                continue;
+
+            rating -= (int) mod.Cost;
+
+            return mod;
+        }
+
+        throw new InvalidOperationException();
     }
 
     public static IEnumerable<SalvageLootPrototype> GetLoot(List<string> loots, int seed, IPrototypeManager protoManager)
@@ -57,21 +98,4 @@ public abstract class SharedSalvageSystem : EntitySystem
             yield return protoManager.Index<SalvageLootPrototype>(lootConfig);
         }
     }
-
-    public static ISalvageReward GetReward(WeightedRandomPrototype proto, int seed, IPrototypeManager protoManager)
-    {
-        var adjustedSeed = new System.Random(seed + 3);
-        var rewardProto = proto.Pick(adjustedSeed);
-        return protoManager.Index<SalvageRewardPrototype>(rewardProto).Reward;
-    }
-
-    #region Structure
-
-    public static int GetStructureCount(SalvageStructure structure, int seed)
-    {
-        var adjustedSeed = new System.Random(seed + 4);
-        return adjustedSeed.Next(structure.MinStructures, structure.MaxStructures + 1);
-    }
-
-    #endregion
 }

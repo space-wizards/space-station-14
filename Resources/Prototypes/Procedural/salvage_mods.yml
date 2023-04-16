@@ -1,0 +1,122 @@
+# Biome mods -> at least 1 required
+# TODO: Add a cave biome you bottom
+- type: salvageBiomeMod
+  id: Grasslands
+  biome: Grasslands
+
+- type: salvageBiomeMod
+  id: LowDesert
+  biome: LowDesert
+
+- type: salvageBiomeMod
+  id: Lava
+  cost: 1
+  biome: Lava
+
+- type: salvageBiomeMod
+  id: Snow
+  biome: "Snow"
+
+- type: salvageBiomeMod
+  id: Space
+  cost: 1
+  weather: false
+  biome: null
+
+# Temperature mods -> not required
+# Also whitelist it
+
+# Weather mods -> not required
+- type: salvageWeatherMod
+  id: SnowfallHeavy
+  weather: SnowfallHeavy
+  cost: 1
+
+- type: salvageWeatherMod
+  id: Rain
+  weather: Rain
+
+#- type: salvageWeatherMod
+#  id: Sandstorm
+  #biomes:
+  #  - A
+  #  - B
+#  cost: 1
+
+# Light mods -> required
+# At some stage with sub-biomes this will probably be moved onto the biome itself
+- type: salvageLightMod
+  id: Daylight
+  color: "#D8B059"
+
+- type: salvageLightMod
+  id: Evening
+  color: "#2b3143"
+
+- type: salvageLightMod
+  id: Night
+  color: null
+  cost: 1
+
+# Time mods -> at least 1 required
+- type: salvageTimeMod
+  id: StandardTime
+  minDuration: 540
+  maxDuration: 720
+
+- type: salvageTimeMod
+  id: RushTime
+  minDuration: 420
+  maxDuration: 540
+  cost: 1
+
+# Misc mods
+- type: salvageMod
+  id: LongDistance
+
+# Dungeons
+#  For now just simple 1-dungeon setups
+- type: salvageDungeonMod
+  id: Experiment
+  config: Experiment
+  biomeMods:
+    - Grass
+    - LowDesert
+    - Space
+    - Grasslands
+
+- type: salvageDungeonMod
+  id: LavaBrig
+  config: LavaBrig
+  biomeMods:
+    - Lava
+
+# Missions!
+- type: salvageMission
+  id: Mining # No objective only loot
+  minDifficulty: 1
+
+- type: salvageMission
+  id: StructureDestroy
+  minDifficulty: 2
+
+- type: salvageMission
+  id: BombDefusal
+  minDifficulty: 3
+
+- type: salvageMission
+  id: Retrieval # Two-handed black box to retrieve
+  minDifficulty: 2
+
+- type: salvageMission
+  id: Assassination # Player takeovers
+  minDifficulty: 3
+
+- type: salvageMission
+  id: Extraction # Escape
+  minDifficulty: 2
+
+- type: salvageMission
+  id: WaveDefense
+  name: A
+  minDifficulty: 3

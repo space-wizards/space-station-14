@@ -9,7 +9,7 @@ namespace Content.Server.Salvage.Expeditions;
 [RegisterComponent]
 public sealed class SalvageExpeditionComponent : Component
 {
-    public SalvageMission Mission = default!;
+    public SalvageMissionParams MissionParams = default!;
 
     /// <summary>
     /// When the expeditions ends.

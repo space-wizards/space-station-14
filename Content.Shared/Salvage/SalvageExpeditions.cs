@@ -1,3 +1,4 @@
+using Content.Shared.Parallax.Biomes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -11,9 +12,9 @@ public sealed class SalvageExpeditionConsoleState : BoundUserInterfaceState
     public TimeSpan NextOffer;
     public bool Claimed;
     public ushort ActiveMission;
-    public List<SalvageMission> Missions;
+    public List<SalvageMissionParams> Missions;
 
-    public SalvageExpeditionConsoleState(TimeSpan nextOffer, bool claimed, ushort activeMission, List<SalvageMission> missions)
+    public SalvageExpeditionConsoleState(TimeSpan nextOffer, bool claimed, ushort activeMission, List<SalvageMissionParams> missions)
     {
         NextOffer = nextOffer;
         Claimed = claimed;
@@ -56,7 +57,7 @@ public sealed class SalvageExpeditionDataComponent : Component
     public TimeSpan NextOffer;
 
     [ViewVariables]
-    public readonly Dictionary<ushort, SalvageMission> Missions = new();
+    public readonly Dictionary<ushort, SalvageMissionParams> Missions = new();
 
     [ViewVariables] public ushort ActiveMission;
 
@@ -64,17 +65,45 @@ public sealed class SalvageExpeditionDataComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed record SalvageMission
+public sealed record SalvageMissionParams
 {
     [ViewVariables]
     public ushort Index;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("config", required: true, customTypeSerializer:typeof(SalvageExpeditionPrototype))]
+    [ViewVariables(VVAccess.ReadWrite), DataField("config", required: true, customTypeSerializer:typeof(SalvageMissionPrototype))]
     public string Config = default!;
 
-    [ViewVariables] public TimeSpan Duration;
+    [ViewVariables(VVAccess.ReadWrite)] public int Seed;
 
-    [ViewVariables] public int Seed;
+    [ViewVariables(VVAccess.ReadWrite)] public DifficultyRating Difficulty;
+}
+
+/// <summary>
+/// Created from <see cref="SalvageMissionParams"/>. Only needed for data the client also needs for mission
+/// display.
+/// </summary>
+public sealed record SalvageMission(
+    int Seed,
+    string Dungeon,
+    string Faction,
+    string Mission,
+    string? Biome,
+    Color? Color,
+    TimeSpan Duration)
+{
+    public readonly int Seed = Seed;
+
+    public readonly string Dungeon = Dungeon;
+
+    public readonly string Faction = Faction;
+
+    public readonly string Mission = Mission;
+
+    public readonly string? Biome = Biome;
+
+    public readonly Color? Color = Color;
+
+    public TimeSpan Duration = Duration;
 }
 
 [Serializable, NetSerializable]

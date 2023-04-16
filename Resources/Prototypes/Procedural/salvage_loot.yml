@@ -1,0 +1,96 @@
+# Loot configs
+- type: weightedRandom
+  id: CaveLoot
+  weights:
+    OreGold: 0.5
+    OreGoldSilver: 0.5
+    OrePlasma: 0.25
+    OreSilver: 0.5
+    OreTin: 1.0
+    OreUranium: 0.25
+
+# Ore droprates already affect these so you should keep the vein counts consistent between them.
+# Just vary points / cluster size.
+# - Low value
+- type: salvageLoot
+  id: OreTin
+  desc: Veins of steel
+  loots:
+    - !type:ClusterLoot
+      proto: WallRockTin
+      minCluster: 10
+      maxCluster: 15
+      points: 3
+
+# - Medium value
+- type: salvageLoot
+  id: OreGold
+  desc: Veins of gold ore
+  loots:
+    - !type:ClusterLoot
+      proto: WallRockGold
+      minCluster: 5
+      maxCluster: 8
+      points: 6
+
+- type: salvageLoot
+  id: OreSilver
+  desc: Veins of silver ore
+  loots:
+    - !type:ClusterLoot
+      proto: WallRockSilver
+      minCluster: 5
+      maxCluster: 8
+      points: 6
+
+- type: salvageLoot
+  id: OreGoldSilver
+  desc: Veins of gold and silver ore
+  loots:
+    - !type:ClusterLoot
+      proto: WallRockSilver
+      minCluster: 5
+      maxCluster: 8
+      points: 3
+    - !type:ClusterLoot
+      proto: WallRockGold
+      minCluster: 5
+      maxCluster: 8
+      points: 3
+
+# - High value
+- type: salvageLoot
+  id: OrePlasma
+  desc: Veins of plasma ore
+  loots:
+    - !type:ClusterLoot
+      proto: WallRockPlasma
+      minCluster: 3
+      maxCluster: 5
+      points: 10
+
+- type: salvageLoot
+  id: OreUranium
+  desc: Veins of uranium ore
+  loots:
+    - !type:ClusterLoot
+      proto: WallRockUranium
+      minCluster: 3
+      maxCluster: 5
+      points: 10
+
+
+# Markers
+- type: entity
+  id: SalvageSpawnMarker
+  parent: MarkerBase
+  name: Salvage spawn marker
+  components:
+    - type: SalvageSpawnMarker
+    - type: Sprite
+      sprite: Markers/cross.rsi
+      state: blue
+
+- type: entity
+  id: SalvageShuttleMarker
+  parent: FTLPoint
