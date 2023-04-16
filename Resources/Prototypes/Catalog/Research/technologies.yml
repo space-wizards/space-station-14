@@ -28,7 +28,6 @@
   - Bucket
   - MopItem
   - SprayBottle
-  - BodyBag
 - type: technology
   name: technologies-advanced-cleaning-technology
   id: AdvancedCleaningTechnology
@@ -84,14 +83,6 @@
   - ButchCleaver
   - KitchenKnife
   - MicrowaveMachineCircuitboard
-  - Medkit
-  - MedkitBurn
-  - MedkitToxin
-  - MedkitO2
-  - MedkitBrute
-  - MedkitAdvanced
-  - MedkitRadiation
-  - MedkitCombat
 
 - type: technology
   name: technologies-advanced-botany
@@ -106,8 +97,6 @@
   unlockedRecipes:
   - SeedExtractorMachineCircuitboard
   - HydroponicsTrayMachineCircuitboard
-  - HandheldHealthAnalyzer
-  - Implanter
 
 - type: technology
   name: technologies-virology
@@ -120,10 +109,6 @@
   requiredTechnologies:
   - BiologicalTechnology
   unlockedRecipes:
-  - ClothingHandsGlovesLatex
-  - ClothingHandsGlovesNitrile
-  - ClothingMaskSterile
-  - DiseaseSwab
   - VaccinatorMachineCircuitboard
   - DiagnoserMachineCircuitboard
 
