@@ -11,7 +11,7 @@ public sealed class PinpointerVisualizerSystem : VisualizerSystem<PinpointerComp
     {
         base.OnAppearanceChange(uid, component, ref args);
 
-        if (!TryComp(component.Owner, out SpriteComponent? sprite))
+        if (!TryComp(uid, out SpriteComponent? sprite))
             return;
 
         // check if pinpointer screen is active
