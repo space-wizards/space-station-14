@@ -2,11 +2,6 @@ namespace Content.Shared.Pinpointer;
 
 public abstract class SharedPinpointerSystem : EntitySystem
 {
-    public override void Initialize()
-    {
-        base.Initialize();
-    }
-
     /// <summary>
     ///     Manually set distance from pinpointer to target
     /// </summary>

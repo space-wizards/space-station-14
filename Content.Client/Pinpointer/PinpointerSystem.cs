@@ -8,11 +8,6 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-    }
-
     public override void FrameUpdate(float frameTime)
     {
         base.FrameUpdate(frameTime);
