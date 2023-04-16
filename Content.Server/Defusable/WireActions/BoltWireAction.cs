@@ -11,7 +11,7 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Defusable.WireActions;
 
-public sealed class BoltireAction : ComponentWireAction<DefusableComponent>
+public sealed class BoltWireAction : ComponentWireAction<DefusableComponent>
 {
     public override Color Color { get; set; } = Color.Red;
     public override string Name { get; set; } = "wire-name-bomb-bolt";
