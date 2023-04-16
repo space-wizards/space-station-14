@@ -33,7 +33,6 @@ namespace Content.Server.Salvage
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly BiomeSystem _biome = default!;
-        [Dependency] private readonly CargoSystem _cargo = default!;
         [Dependency] private readonly DungeonSystem _dungeon = default!;
         [Dependency] private readonly MapLoaderSystem _map = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
@@ -64,7 +63,6 @@ namespace Content.Server.Salvage
 
             InitializeExpeditions();
             InitializeRunner();
-            InitializeStructure();
         }
 
         private void OnRoundEnd(GameRunLevelChangedEvent ev)

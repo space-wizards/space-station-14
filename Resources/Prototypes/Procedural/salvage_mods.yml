@@ -1,3 +1,8 @@
+# Markers
+- type: entity
+  id: SalvageShuttleMarker
+  parent: FTLPoint
+
 # Biome mods -> at least 1 required
 # TODO: Add a cave biome you bottom
 - type: salvageBiomeMod

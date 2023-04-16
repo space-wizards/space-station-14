@@ -28,7 +28,7 @@ public abstract class SharedSalvageSystem : EntitySystem
                 return Loc.GetString("salvage-expedition-desc-mining");
             case "StructureDestroy":
                 return Loc.GetString("salvage-expedition-desc-structure",
-                    ("count", GetStructureCount(mission.Difficulty, mission.AdditionalDifficulty)),
+                    ("count", GetStructureCount(mission.Difficulty)),
                     ("structure", _proto.Index<SalvageFactionPrototype>(mission.Faction).Configs["DefenseStructure"]));
             default:
                 throw new NotImplementedException();
@@ -38,10 +38,9 @@ public abstract class SharedSalvageSystem : EntitySystem
     /// <summary>
     /// Gets the amount of structures to destroy.
     /// </summary>
-    public int GetStructureCount(DifficultyRating baseRating, int rating)
+    public int GetStructureCount(DifficultyRating baseRating)
     {
-        // Yes I know this is just 1-5, that's fine
-        return Math.Max(3, 3 + (int) baseRating);
+        return 1 + (int) baseRating * 2;
     }
 
     #endregion
@@ -74,8 +73,6 @@ public abstract class SharedSalvageSystem : EntitySystem
     public SalvageMission GetMission(string config, DifficultyRating difficulty, int seed)
     {
         // This is on shared to ensure the client display for missions and what the server generates are consistent
-
-        // Any leftover difficulty rating gets funneled into whatever the mission dictates is additional difficulty.
         var rating = (float) GetDifficulty(difficulty);
         var rand = new System.Random(seed);
         var faction = GetMod<SalvageFactionPrototype>(rand, ref rating);
@@ -97,12 +94,14 @@ public abstract class SharedSalvageSystem : EntitySystem
             var weather = GetMod<SalvageWeatherMod>(rand, ref rating);
         }
 
+        // TODO: Dump additional mods into text format for the thingo.
+
         var exactDuration = time.MinDuration + (time.MaxDuration - time.MinDuration) * rand.NextFloat();
         exactDuration = MathF.Round(exactDuration / 15f) * 15f;
 
         var duration = TimeSpan.FromSeconds(exactDuration);
 
-        return new SalvageMission(seed, difficulty, (int) rating, dungeon.ID, faction.ID, config, biome.ID, light?.Color, duration);
+        return new SalvageMission(seed, difficulty, rating, dungeon.ID, faction.ID, config, biome.ID, light?.Color, duration);
     }
 
     public SalvageDungeonMod GetDungeon(string biome, System.Random rand, ref float rating)

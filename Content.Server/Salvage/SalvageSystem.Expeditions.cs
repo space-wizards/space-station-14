@@ -8,6 +8,7 @@ using Content.Server.CPUJob.JobQueues.Queues;
 using Content.Server.Parallax;
 using Content.Server.Procedural;
 using Content.Server.Salvage.Expeditions;
+using Content.Server.Salvage.Expeditions.Structure;
 using Content.Server.Station.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Dataset;
@@ -15,6 +16,8 @@ using Content.Shared.Gravity;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Procedural;
 using Content.Shared.Salvage;
+using Content.Shared.Salvage.Expeditions;
+using Content.Shared.Storage;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Noise;
@@ -150,7 +153,7 @@ public sealed partial class SalvageSystem
             foreach (var config in configs)
             {
                 // Don't offer harder missions under easier tiers.
-                if (config.MinDifficulty > i)
+                if (config.MinDifficulty > i || config.MaxDifficulty < i)
                     continue;
 
                 var mission = new SalvageMissionParams()
@@ -184,6 +187,7 @@ public sealed partial class SalvageSystem
             _prototypeManager,
             _biome,
             _dungeon,
+            this,
             station,
             missionParams,
             cancelToken.Token);
@@ -200,6 +204,7 @@ public sealed partial class SalvageSystem
         private readonly IPrototypeManager _prototypeManager;
         private readonly BiomeSystem _biome;
         private readonly DungeonSystem _dungeon;
+        private readonly SalvageSystem _salvage;
 
         public readonly EntityUid Station;
         private readonly SalvageMissionParams _missionParams;
@@ -212,6 +217,7 @@ public sealed partial class SalvageSystem
             IPrototypeManager protoManager,
             BiomeSystem biome,
             DungeonSystem dungeon,
+            SalvageSystem salvage,
             EntityUid station,
             SalvageMissionParams missionParams,
             CancellationToken cancellation = default) : base(maxTime, cancellation)
@@ -222,6 +228,7 @@ public sealed partial class SalvageSystem
             _prototypeManager = protoManager;
             _biome = biome;
             _dungeon = dungeon;
+            _salvage = salvage;
             Station = station;
             _missionParams = missionParams;
         }
@@ -343,26 +350,22 @@ public sealed partial class SalvageSystem
         {
             switch (missionMod)
             {
-                // TODO:
+                case "Structure":
+                    await SetupStructure(mission, dungeonOffset, dungeon, grid, random, seed);
+                    return;
                 default:
                     return;
             }
         }
 
-        /*
-        private async Task SetupMission(SalvageMissionPrototype config, SalvageStructure structure, Vector2i dungeonOffset, Dungeon dungeon, MapGridComponent grid, Random random, int seed)
+        private async Task SetupStructure(SalvageMission mission, Vector2i dungeonOffset, Dungeon dungeon, MapGridComponent grid, Random random, int seed)
         {
             var structureComp = _entManager.GetComponent<SalvageStructureExpeditionComponent>(grid.Owner);
-            // TODO: Uhh difficulty selection
-            // TODO: Hardcoding
-            var structureCount = GetStructureCount(structure, seed);
             var availableRooms = dungeon.Rooms.ToList();
-            var faction = _prototypeManager.Index<SalvageFactionPrototype>(GetFaction(config.Factions, seed));
-            // TODO: DETERMINE DEEZ NUTS
-            var robusty = IoCManager.Resolve<IRobustRandom>();
+            var faction = _prototypeManager.Index<SalvageFactionPrototype>(mission.Faction);
+            var groupSpawns = (int) mission.Difficulty + mission.RemainingDifficulty;
 
-            // TODO: More spawn config shit
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < groupSpawns; i++)
             {
                 var mobGroupIndex = random.Next(faction.MobGroups.Count);
                 var mobGroup = faction.MobGroups[mobGroupIndex];
@@ -373,26 +376,26 @@ public sealed partial class SalvageSystem
                 spawnTile += dungeonOffset;
                 var spawnPosition = grid.GridTileToLocal(spawnTile);
 
-                foreach (var entry in EntitySpawnCollection.GetSpawns(mobGroup.Entries, robusty))
+                foreach (var entry in EntitySpawnCollection.GetSpawns(mobGroup.Entries, random))
                 {
-                    await SuspendIfOutOfTime();
                     _entManager.SpawnEntity(entry, spawnPosition);
                 }
+
+                await SuspendIfOutOfTime();
             }
 
-            var shaggy = (SalvageStructureFaction) faction.Configs[config.ID];
+            var structureCount = _salvage.GetStructureCount(mission.Difficulty);
+            var shaggy = faction.Configs["DefenseStructure"];
 
             // Spawn the objectives
             for (var i = 0; i < structureCount; i++)
             {
                 var structureRoom = availableRooms[random.Next(availableRooms.Count)];
                 var spawnTile = structureRoom.Tiles.ElementAt(random.Next(structureRoom.Tiles.Count)) + dungeonOffset;
-                await SuspendIfOutOfTime();
-                var uid = _entManager.SpawnEntity(shaggy.Spawn, grid.GridTileToLocal(spawnTile));
+                var uid = _entManager.SpawnEntity(shaggy, grid.GridTileToLocal(spawnTile));
                 structureComp.Structures.Add(uid);
             }
         }
-        */
 
         #endregion
     }

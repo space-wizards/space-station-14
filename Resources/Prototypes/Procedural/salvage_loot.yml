@@ -78,19 +78,3 @@
       minCluster: 3
       maxCluster: 5
       points: 10
-
-
-# Markers
-- type: entity
-  id: SalvageSpawnMarker
-  parent: MarkerBase
-  name: Salvage spawn marker
-  components:
-    - type: SalvageSpawnMarker
-    - type: Sprite
-      sprite: Markers/cross.rsi
-      state: blue
-
-- type: entity
-  id: SalvageShuttleMarker
-  parent: FTLPoint

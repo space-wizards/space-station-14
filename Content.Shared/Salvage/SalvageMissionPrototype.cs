@@ -5,6 +5,10 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Salvage;
 
+/// <summary>
+/// Contains data for a salvage mission type.
+/// Most of the logic is handled via code due to specifics of how each mission type is setup.
+/// </summary>
 [Prototype("salvageMission")]
 public sealed class SalvageMissionPrototype : IPrototype
 {
@@ -23,11 +27,16 @@ public sealed class SalvageMissionPrototype : IPrototype
     public string Description = string.Empty;
 
     /// <summary>
-    /// Minimum cost required for this mission type.
-    /// Innately harder missions won't be available under easier difficulties.
+    /// Minimum tier at which this mission can appear.
     /// </summary>
     [DataField("minDifficulty")]
-    public float MinDifficulty = 0f;
+    public int MinDifficulty;
+
+    /// <summary>
+    /// Maximum tier at which this mission can appear.
+    /// </summary>
+    [DataField("maxDifficulty")]
+    public int MaxDifficulty = int.MaxValue;
 }
 
 [Serializable, NetSerializable]
