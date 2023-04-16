@@ -123,6 +123,7 @@ public sealed class DefusableSystem : SharedDefusableSystem
 
         var xform = Transform(uid);
         xform.Anchored = true;
+        comp.Bolted = true;
 
         comp.BombLive = true;
         _popup.PopupEntity(Loc.GetString("defusable-popup-begun", ("name", uid)), uid);
