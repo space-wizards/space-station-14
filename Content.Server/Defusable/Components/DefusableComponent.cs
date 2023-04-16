@@ -31,6 +31,11 @@ public sealed class DefusableComponent : Component
     [ViewVariables] public bool BombUsable = true;
 
     /// <summary>
+    /// Does the bomb show how much remains?
+    /// </summary>
+    [ViewVariables] public bool BombDisplayTime = true;
+
+    /// <summary>
     /// Is this bomb supposed to be stuck to the ground?
     /// </summary>
     public bool Bolted = false;
@@ -42,8 +47,8 @@ public sealed class DefusableComponent : Component
     public int DelayTime = 30;
 
     // wires, this is so that they're one use
-    public bool DelayWireCut = false;
-    public bool BoltWireCut = false;
+    public bool DelayWireUsed = false;
     public bool ProceedWireCut = false;
+    public bool ProceedWireUsed = false;
     public bool ActivatedWireCut = false;
 }

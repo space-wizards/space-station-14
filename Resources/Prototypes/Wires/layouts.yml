@@ -81,8 +81,8 @@
   dummyWires: 2
   wires:
     - !type:ActivateBombWireAction
-#    - !type:BoltBombWireAction
-#    - !type:DelayBombWireAction
-#    - !type:ProceedBombWireAction
+    - !type:BoltBombWireAction
+    - !type:DelayBombWireAction
+    - !type:ProceedBombWireAction
     - !type:BoomWireAction
     - !type:BoomWireAction
