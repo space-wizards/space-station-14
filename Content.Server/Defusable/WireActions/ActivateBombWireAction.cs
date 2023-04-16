@@ -40,11 +40,11 @@ public sealed class ActivateBombWireAction : ComponentWireAction<DefusableCompon
     {
         if (comp.BombLive)
         {
-            if (!comp.ActivatedWireUsed)
+            if (!comp.ActivatedWireCut)
             {
                 Logger.Debug("Time delayed");
                 EntityManager.System<DefusableSystem>().TryDelay(wire.Owner, 30f);
-                comp.ActivatedWireUsed = true;
+                comp.ActivatedWireCut = true;
             }
         }
         else

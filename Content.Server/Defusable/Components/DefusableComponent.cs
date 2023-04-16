@@ -42,8 +42,8 @@ public sealed class DefusableComponent : Component
     public int DelayTime = 30;
 
     // wires, this is so that they're one use
-    public bool DelayWireUsed = false;
-    public bool BoltWireUsed = false;
-    public bool ProceedWireUsed = false;
-    public bool ActivatedWireUsed = false;
+    public bool DelayWireCut = false;
+    public bool BoltWireCut = false;
+    public bool ProceedWireCut = false;
+    public bool ActivatedWireCut = false;
 }
