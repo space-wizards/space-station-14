@@ -3,6 +3,7 @@ using Content.Shared.DeviceNetwork.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.DeviceNetwork.Components;
 
@@ -15,6 +16,7 @@ public sealed class NetworkConfiguratorComponent : Component
     /// Determines whether the configurator is in linking mode or list mode
     /// </summary>
     [DataField("linkModeActive")]
+    [ViewVariables(VVAccess.ReadWrite)]
     public bool LinkModeActive = false;
 
     /// <summary>
@@ -43,16 +45,15 @@ public sealed class NetworkConfiguratorComponent : Component
     public Dictionary<string, EntityUid> Devices = new();
 
     [DataField("useDelay")]
+    [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan UseDelay = TimeSpan.FromSeconds(0.5);
 
-    [DataField("lastUseAttempt")]
+    [DataField("lastUseAttempt", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan LastUseAttempt;
 
     [DataField("soundNoAccess")]
     public SoundSpecifier SoundNoAccess = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
-
-    [DataField("soundLinkStart")]
-    public SoundSpecifier SoundLinkStart = new SoundPathSpecifier("/Audio/Machines/beep.ogg");
 
     [DataField("soundSwitchMode")]
     public SoundSpecifier SoundSwitchMode = new SoundPathSpecifier("/Audio/Machines/beep.ogg");

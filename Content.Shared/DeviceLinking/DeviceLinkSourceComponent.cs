@@ -1,8 +1,10 @@
-﻿using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
+﻿using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Shared.DeviceLinking;
 
 [RegisterComponent]
+[NetworkedComponent] // for interactions. Actual state isn't currently synced.
 [Access(typeof(SharedDeviceLinkSystem))]
 public sealed class DeviceLinkSourceComponent : Component
 {
