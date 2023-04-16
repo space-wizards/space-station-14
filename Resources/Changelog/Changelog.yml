@@ -1,37 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix mechs being able to pickup portals, type: Fix}
-  id: 2922
-  time: '2023-01-20T14:14:00.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix popup flickering., type: Fix}
-  id: 2923
-  time: '2023-01-20T14:19:02.0000000+00:00'
-- author: gus
-  changes:
-  - {message: Plastic utensils are now trash., type: Tweak}
-  id: 2924
-  time: '2023-01-20T14:48:53.0000000+00:00'
-- author: liltenhead
-  changes:
-  - {message: Changed barotrauma damage to be much more deadly. Keep your survival
-      box close., type: Tweak}
-  id: 2925
-  time: '2023-01-20T15:07:02.0000000+00:00'
-- author: vanx
-  changes:
-  - {message: Increased the book symbol limit so you can fit all your stories in,
-    type: Tweak}
-  id: 2926
-  time: '2023-01-20T15:19:26.0000000+00:00'
-- author: lapatison
-  changes:
-  - {message: Cardborg outer clothes and cardborg hat now changes the style of the
-      typing indicator, type: Add}
-  id: 2927
-  time: '2023-01-20T15:23:10.0000000+00:00'
 - author: Rane
   changes:
   - {message: Fixed not being able to attack people who picked you up or attack lockers
@@ -2903,3 +2870,37 @@ Entries:
       requiring a bit less back-and-forth between fills for some QoL.', type: Tweak}
   id: 3421
   time: '2023-04-15T22:46:00.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Water is no longer slippery., type: Remove}
+  id: 3422
+  time: '2023-04-16T02:31:53.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: we Lied. Water is slippery still., type: Add}
+  id: 3423
+  time: '2023-04-16T02:42:55.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: Chemists now get a medical survival box instead of a normal survival
+      box., type: Tweak}
+  - {message: 'Most medical techfab recipes have been changed to be available immediately,
+      rather than relying on science.', type: Tweak}
+  id: 3424
+  time: '2023-04-16T05:52:46.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: SpaceLube is slippery again, type: Fix}
+  id: 3425
+  time: '2023-04-16T05:53:47.0000000+00:00'
+- author: Nimfar
+  changes:
+  - {message: 'Gun safe for SO, now weapons can be stored in even more security',
+    type: Add}
+  id: 3426
+  time: '2023-04-16T05:55:23.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed the admin menu not being openable in the lobby., type: Fix}
+  id: 3427
+  time: '2023-04-16T06:06:01.0000000+00:00'
