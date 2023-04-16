@@ -1,7 +1,7 @@
 ent-AltarBase = алтарь
     .desc = Алтарь богов.
     .suffix = { "" }
-ent-AltarNanotrasen = алтарь нанотрейзен
+ent-AltarNanotrasen = алтарь NanoTrasen
     .desc = { ent-AltarBase.desc }
     .suffix = { "" }
 ent-AltarChaos = алтарь хаоса
