@@ -17,20 +17,34 @@ public abstract class SharedSalvageSystem : EntitySystem
     public static readonly TimeSpan MissionCooldown = TimeSpan.FromMinutes(5);
     public static readonly TimeSpan MissionFailedCooldown = TimeSpan.FromMinutes(15);
 
-    public string GetMissionDescription(string mission, DifficultyRating baseRating, int rating)
+    #region Descriptions
+
+    public string GetMissionDescription(SalvageMission mission)
     {
         // Hardcoded in coooooz it's dynamic based on difficulty and I'm lazy.
-        switch (mission)
+        switch (mission.Mission)
         {
             case "Mining":
                 return Loc.GetString("salvage-expedition-desc-mining");
             case "StructureDestroy":
-                // TODO: Faction setup stuff
-                return Loc.GetString("salvage-expedition-desc-structure", ("count", 5), ("structure", "A"));
+                return Loc.GetString("salvage-expedition-desc-structure",
+                    ("count", GetStructureCount(mission.Difficulty, mission.AdditionalDifficulty)),
+                    ("structure", _proto.Index<SalvageFactionPrototype>(mission.Faction).Configs["DefenseStructure"]));
             default:
                 throw new NotImplementedException();
         }
     }
+
+    /// <summary>
+    /// Gets the amount of structures to destroy.
+    /// </summary>
+    public int GetStructureCount(DifficultyRating baseRating, int rating)
+    {
+        // Yes I know this is just 1-5, that's fine
+        return Math.Max(3, 3 + (int) baseRating);
+    }
+
+    #endregion
 
     public int GetDifficulty(DifficultyRating rating)
     {
@@ -60,6 +74,8 @@ public abstract class SharedSalvageSystem : EntitySystem
     public SalvageMission GetMission(string config, DifficultyRating difficulty, int seed)
     {
         // This is on shared to ensure the client display for missions and what the server generates are consistent
+
+        // Any leftover difficulty rating gets funneled into whatever the mission dictates is additional difficulty.
         var rating = (float) GetDifficulty(difficulty);
         var rand = new System.Random(seed);
         var faction = GetMod<SalvageFactionPrototype>(rand, ref rating);
@@ -86,7 +102,7 @@ public abstract class SharedSalvageSystem : EntitySystem
 
         var duration = TimeSpan.FromSeconds(exactDuration);
 
-        return new SalvageMission(seed, (int) rating, dungeon.ID, faction.ID, config, biome.ID, light?.Color, duration);
+        return new SalvageMission(seed, difficulty, (int) rating, dungeon.ID, faction.ID, config, biome.ID, light?.Color, duration);
     }
 
     public SalvageDungeonMod GetDungeon(string biome, System.Random rand, ref float rating)

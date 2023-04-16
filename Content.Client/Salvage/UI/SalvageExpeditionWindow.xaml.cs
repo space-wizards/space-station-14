@@ -105,8 +105,7 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
             });
 
             // Details
-            var details =
-                _salvage.GetMissionDescription(missionParams.Config, missionParams.Difficulty, mission.Difficulty);
+            var details = _salvage.GetMissionDescription(mission);
 
             lBox.AddChild(new Label
             {
@@ -258,7 +257,7 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
         if (_claimed)
         {
             NextOfferBar.Value = 0f;
-            NextOfferText.Text = "N/A";
+            NextOfferText.Text = Loc.GetString("salvage-expedition-window-remaining");
             return;
         }
 

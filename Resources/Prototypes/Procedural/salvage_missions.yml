@@ -1,9 +1,11 @@
 - type: salvageMission
   id: Mining # No objective only loot
+  desc: Mining
 
 - type: salvageMission
   id: StructureDestroy
   minDifficulty: 1
+  desc: Destruction
 
 #- type: salvageMission
 #  id: BombDefusal

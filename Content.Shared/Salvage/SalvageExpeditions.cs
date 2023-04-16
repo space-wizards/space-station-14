@@ -87,7 +87,8 @@ public sealed record SalvageMissionParams
 /// </summary>
 public sealed record SalvageMission(
     int Seed,
-    int Difficulty,
+    DifficultyRating Difficulty,
+    int AdditionalDifficulty,
     string Dungeon,
     string Faction,
     string Mission,
@@ -101,9 +102,14 @@ public sealed record SalvageMission(
     public readonly int Seed = Seed;
 
     /// <summary>
+    /// Base difficulty rating.
+    /// </summary>
+    public DifficultyRating Difficulty = Difficulty;
+
+    /// <summary>
     /// Remaining difficulty after applying other modifiers.
     /// </summary>
-    public int Difficulty = Difficulty;
+    public int AdditionalDifficulty = AdditionalDifficulty;
 
     /// <summary>
     /// <see cref="SalvageDungeonMod"/> to be used.

@@ -13,8 +13,12 @@ public sealed partial class SalvageSystem
     // Runs the expedition
     private void UpdateRunner()
     {
+        // Mining missions: NOOP
+
         // Structure missions
-        foreach (var (structure, comp) in EntityQuery<SalvageStructureExpeditionComponent, SalvageExpeditionComponent>())
+        var structureQuery = EntityQueryEnumerator<SalvageStructureExpeditionComponent, SalvageExpeditionComponent>();
+
+        while (structureQuery.MoveNext(out var uid, out var structure, out var comp))
         {
             if (comp.Completed)
                 continue;
@@ -26,6 +30,7 @@ public sealed partial class SalvageSystem
                 if (Deleted(objective))
                 {
                     structure.Structures.RemoveSwap(i);
+                    // TODO: Announce.
                 }
             }
 
