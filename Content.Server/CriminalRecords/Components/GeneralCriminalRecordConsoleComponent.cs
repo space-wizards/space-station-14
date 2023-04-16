@@ -1,6 +1,6 @@
 using Content.Shared.StationRecords;
 
-namespace Content.Server.CriminalnRecords;
+namespace Content.Server.CriminalRecords;
 
 [RegisterComponent]
 public sealed class GeneralCriminalRecordConsoleComponent : Component

@@ -1,4 +1,6 @@
 using System.Security.AccessControl;
+using System.Threading.Tasks;
+using Content.Server.Administration.Logs;
 using Content.Server.Database;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Station.Systems;
@@ -8,6 +10,9 @@ using Content.Shared.Security;
 using Content.Server.Security.Components;
 using Content.Server.StationRecords;
 using Content.Server.StationRecords.Systems;
+using Content.Shared.Administration.Logs;
+using Content.Shared.CriminalRecords;
+using Content.Shared.Database;
 using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
@@ -21,31 +26,32 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
     [Dependency] private readonly StationRecordsSystem _stationRecordsSystem = default!;
     [Dependency] private readonly RadioSystem _radioSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<GeneralStationRecordConsoleComponent, BoundUIOpenedEvent>(UpdateUserInterface);
-        SubscribeLocalEvent<GeneralStationRecordConsoleComponent, SelectGeneralStationRecord>(OnKeySelected);
-        SubscribeLocalEvent<GeneralStationRecordConsoleComponent, RecordModifiedEvent>(UpdateUserInterface);
-        SubscribeLocalEvent<GeneralStationRecordConsoleComponent, AfterGeneralRecordCreatedEvent>(UpdateUserInterface);
-        SubscribeLocalEvent<GeneralStationRecordConsoleComponent, StationRecordArrestButtonPressed>(OnButtonPressed);
-        SubscribeLocalEvent<GeneralStationRecordConsoleComponent, StatusOptionButtonSelected>(OnStatusSelected);
+        SubscribeLocalEvent<GeneralCriminalRecordConsoleComponent, BoundUIOpenedEvent>(UpdateUserInterface);
+        SubscribeLocalEvent<GeneralCriminalRecordConsoleComponent, SelectGeneralCriminalRecord>(OnKeySelected);
+        SubscribeLocalEvent<GeneralCriminalRecordConsoleComponent, RecordModifiedEvent>(UpdateUserInterface);
+        SubscribeLocalEvent<GeneralCriminalRecordConsoleComponent, AfterGeneralRecordCreatedEvent>(UpdateUserInterface);
+        SubscribeLocalEvent<GeneralCriminalRecordConsoleComponent, CriminalRecordArrestButtonPressed>(OnButtonPressed);
+        SubscribeLocalEvent<GeneralCriminalRecordConsoleComponent, CriminalStatusOptionButtonSelected>(OnStatusSelected);
     }
 
-    private void UpdateUserInterface<T>(EntityUid uid, GeneralStationRecordConsoleComponent component, T ev)
+    private void UpdateUserInterface<T>(EntityUid uid, GeneralCriminalRecordConsoleComponent component, T ev)
     {
         UpdateUserInterface(uid, component);
     }
 
-    private void OnKeySelected(EntityUid uid, GeneralStationRecordConsoleComponent component,
-        SelectGeneralStationRecord msg)
+    private void OnKeySelected(EntityUid uid, GeneralCriminalRecordConsoleComponent component,
+        SelectGeneralCriminalRecord msg)
     {
         component.ActiveKey = msg.SelectedKey;
         UpdateUserInterface(uid, component);
     }
 
-    private void OnButtonPressed(EntityUid uid, GeneralStationRecordConsoleComponent component,
-        StationRecordArrestButtonPressed msg)
+    private void OnButtonPressed(EntityUid uid, GeneralCriminalRecordConsoleComponent component,
+        CriminalRecordArrestButtonPressed msg)
     {
         TryComp<SecurityInfoComponent>(msg.Session.AttachedEntity, out var secInfo);
 
@@ -80,8 +86,8 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
         UpdateUserInterface(uid, component);
     }
 
-    private void OnStatusSelected(EntityUid uid, GeneralStationRecordConsoleComponent component,
-        StatusOptionButtonSelected msg)
+    private void OnStatusSelected(EntityUid uid, GeneralCriminalRecordConsoleComponent component,
+        CriminalStatusOptionButtonSelected msg)
     {
         TryComp<SecurityInfoComponent>(msg.Session.AttachedEntity, out var secInfo);
 
@@ -121,7 +127,7 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
         }
     }
 
-    private void UpdateUserInterface(EntityUid uid, GeneralStationRecordConsoleComponent? console = null)
+    private void UpdateUserInterface(EntityUid uid, GeneralCriminalRecordConsoleComponent? console = null)
     {
         if (!Resolve(uid, ref console))
         {
@@ -134,7 +140,7 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
 
         if (!TryComp<StationRecordsComponent>(owningStation, out var stationRecordsComponent))
         {
-            _userInterface.GetUiOrNull(uid, GeneralStationRecordConsoleKey.Key)?.SetState(new GeneralStationRecordConsoleState(null, null, null));
+            _userInterface.GetUiOrNull(uid, GeneralCriminalRecordConsoleKey.Key)?.SetState(new GeneralCriminalRecordConsoleState(null, null, null));
             return;
         }
 
@@ -143,12 +149,13 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
         var listing = new Dictionary<StationRecordKey, string>();
         foreach (var pair in enumerator)
         {
-            listing.Add(pair.Item1, pair.Item2.Name);
+            if (pair.Item2.Status.HasValue)
+                listing.Add(pair.Item1, pair.Item2.Name);
         }
 
         if (listing.Count == 0)
         {
-            _userInterface.GetUiOrNull(uid, GeneralStationRecordConsoleKey.Key)?.SetState(new GeneralStationRecordConsoleState(null, null, null));
+            _userInterface.GetUiOrNull(uid, GeneralCriminalRecordConsoleKey.Key)?.SetState(new GeneralCriminalRecordConsoleState(null, null, null));
             return;
         }
 
@@ -160,7 +167,7 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
         }
 
         _userInterface
-            .GetUiOrNull(uid, GeneralStationRecordConsoleKey.Key)?
-            .SetState(new GeneralStationRecordConsoleState(console.ActiveKey, record, listing));
+            .GetUiOrNull(uid, GeneralCriminalRecordConsoleKey.Key)?
+            .SetState(new GeneralCriminalRecordConsoleState(console.ActiveKey, record, listing));
     }
 }

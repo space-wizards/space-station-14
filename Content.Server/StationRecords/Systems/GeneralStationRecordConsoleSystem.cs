@@ -1,4 +1,6 @@
 using System.Security.AccessControl;
+using System.Threading.Tasks;
+using Content.Server.Administration.Logs;
 using Content.Server.Database;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Station.Systems;
@@ -6,9 +8,12 @@ using Content.Shared.Preferences;
 using Content.Shared.Radio;
 using Content.Shared.Security;
 using Content.Server.Security.Components;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
+using Serilog;
 
 namespace Content.Server.StationRecords.Systems;
 
@@ -19,6 +24,7 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
     [Dependency] private readonly StationRecordsSystem _stationRecordsSystem = default!;
     [Dependency] private readonly RadioSystem _radioSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
     {
@@ -51,26 +57,52 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
         {
             secInfo.Status = secInfo.Status == SecurityStatus.Detained ? SecurityStatus.None : SecurityStatus.Detained;
 
-            var messages = new Dictionary<SecurityStatus, string>()
+            var message = secInfo.Status switch
             {
-                { SecurityStatus.Detained, $"{msg.Name} has been detained for {msg.Reason} by {Name(msg.Session.AttachedEntity.Value)}" },
-                { SecurityStatus.None, $"{msg.Name} has been released from the detention for {msg.Reason} by {Name(msg.Session.AttachedEntity.Value)}" }
+                SecurityStatus.Detained => $"{msg.Name} has been detained for {msg.Reason} by {Name(msg.Session.AttachedEntity.Value)}",
+                SecurityStatus.None => $"{msg.Name} has been released from the detention for {msg.Reason} by {Name(msg.Session.AttachedEntity.Value)}"
             };
 
-            _radioSystem.SendRadioMessage(uid, messages[secInfo.Status], _prototypeManager.Index<RadioChannelPrototype>("Security"));
+            _radioSystem.SendRadioMessage(uid, message, _prototypeManager.Index<RadioChannelPrototype>("Security"));
+
+            if (secInfo.Status == SecurityStatus.Detained)
+            {
+                _adminLogger.Add(LogType.CriminalRecords, LogImpact.Medium,
+                    $"{msg.Name} has been detained for {msg.Reason} by {ToPrettyString(msg.Session.AttachedEntity.Value):msg.Session.AttachedEntity.Value}");
+            }
+            else
+            {
+                _adminLogger.Add(LogType.CriminalRecords, LogImpact.Medium,
+                    $"{msg.Name} has been released from the detention for {msg.Reason} by {ToPrettyString(msg.Session.AttachedEntity.Value):msg.Session.AttachedEntity.Value}");
+            }
+
+            UpdateUserInterface(uid, component);
         }
 
         else if (msg.Reason == string.Empty && msg.Name != null && msg.Session.AttachedEntity != null && secInfo != null)
         {
             secInfo.Status = secInfo.Status == SecurityStatus.Detained ? SecurityStatus.None : SecurityStatus.Detained;
 
-            var messages = new Dictionary<SecurityStatus, string>()
+            var message = secInfo.Status switch
             {
-                { SecurityStatus.Detained, $"{msg.Name} has been detained for by {Name(msg.Session.AttachedEntity.Value)}" },
-                { SecurityStatus.None, $"{msg.Name} has been released from the detention by {Name(msg.Session.AttachedEntity.Value)}" }
+                SecurityStatus.Detained => $"{msg.Name} has been detained for by {Name(msg.Session.AttachedEntity.Value)}",
+                SecurityStatus.None => $"{msg.Name} has been released from the detention by {Name(msg.Session.AttachedEntity.Value)}"
             };
 
-            _radioSystem.SendRadioMessage(uid, messages[secInfo.Status], _prototypeManager.Index<RadioChannelPrototype>("Security"));
+            _radioSystem.SendRadioMessage(uid, message, _prototypeManager.Index<RadioChannelPrototype>("Security"));
+
+            if (secInfo.Status == SecurityStatus.Detained)
+            {
+                _adminLogger.Add(LogType.CriminalRecords, LogImpact.Medium,
+                    $"{msg.Name} has been detained by {ToPrettyString(msg.Session.AttachedEntity.Value):msg.Session.AttachedEntity.Value}");
+            }
+            else
+            {
+                _adminLogger.Add(LogType.CriminalRecords, LogImpact.Medium,
+                    $"{msg.Name} has been released from the detention by {ToPrettyString(msg.Session.AttachedEntity.Value):msg.Session.AttachedEntity.Value}");
+            }
+
+            UpdateUserInterface(uid, component);
         }
 
         var station = _stationSystem.GetOwningStation(msg.Session.AttachedEntity!.Value);
@@ -85,19 +117,33 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
         if (msg.Reason != string.Empty && secInfo != null && msg.Session.AttachedEntity != null)
         {
+            if (secInfo.Status == msg.Status)
+                return;
+
             secInfo.Status = secInfo.Status == SecurityStatus.None ? SecurityStatus.Wanted : SecurityStatus.None;
 
-            var messages = new Dictionary<SecurityStatus, string>()
+            var message = secInfo.Status switch
             {
-                { SecurityStatus.Wanted, $"{msg.Name} is wanted for {msg.Reason} by {Name(msg.Session.AttachedEntity.Value)}" },
-                { SecurityStatus.None, $"{msg.Name} is not wanted anymore for {msg.Reason} by {Name(msg.Session.AttachedEntity.Value)}" }
+                SecurityStatus.Wanted => $"{msg.Name} is wanted for {msg.Reason} by {Name(msg.Session.AttachedEntity.Value)}",
+                SecurityStatus.None => $"{msg.Name} is not wanted anymore for {msg.Reason} by {Name(msg.Session.AttachedEntity.Value)}"
             };
 
-            _radioSystem.SendRadioMessage(uid, messages[secInfo.Status],
-                _prototypeManager.Index<RadioChannelPrototype>("Security"));
+            _radioSystem.SendRadioMessage(uid, message, _prototypeManager.Index<RadioChannelPrototype>("Security"));
 
             var station = _stationSystem.GetOwningStation(msg.Session.AttachedEntity!.Value);
             _stationRecordsSystem.Synchronize(station!.Value);
+
+            if (secInfo.Status == SecurityStatus.Wanted)
+            {
+                _adminLogger.Add(LogType.CriminalRecords, LogImpact.Medium,
+                    $"{msg.Name} is wanted for {msg.Reason} by {ToPrettyString(msg.Session.AttachedEntity.Value):msg.Session.AttachedEntity.Value}");
+            }
+            else
+            {
+                _adminLogger.Add(LogType.CriminalRecords, LogImpact.Medium,
+                    $"{msg.Name} is not wanted anymore for {msg.Reason} by {ToPrettyString(msg.Session.AttachedEntity.Value):msg.Session.AttachedEntity.Value}");
+            }
+
             UpdateUserInterface(uid, component);
         }
 
@@ -105,21 +151,32 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
         {
             secInfo.Status = secInfo.Status == SecurityStatus.None ? SecurityStatus.Wanted : SecurityStatus.None;
 
-            var messages = new Dictionary<SecurityStatus, string>()
+            var message = secInfo.Status switch
             {
-                { SecurityStatus.Wanted, $"{msg.Name} is wanted by {Name(msg.Session.AttachedEntity.Value)}" },
-                { SecurityStatus.None, $"{msg.Name} is not wanted anymore by {Name(msg.Session.AttachedEntity.Value)}" }
+                SecurityStatus.Wanted => $"{msg.Name} is wanted by {Name(msg.Session.AttachedEntity.Value)}",
+                SecurityStatus.None => $"{msg.Name} is not wanted anymore by {Name(msg.Session.AttachedEntity.Value)}"
             };
 
-            _radioSystem.SendRadioMessage(uid, messages[secInfo.Status],
-                _prototypeManager.Index<RadioChannelPrototype>("Security"));
+            _radioSystem.SendRadioMessage(uid, message, _prototypeManager.Index<RadioChannelPrototype>("Security"));
             var station = _stationSystem.GetOwningStation(msg.Session.AttachedEntity!.Value);
             _stationRecordsSystem.Synchronize(station!.Value);
+
+            if (secInfo.Status == SecurityStatus.Wanted)
+            {
+                _adminLogger.Add(LogType.CriminalRecords, LogImpact.Medium,
+                    $"{msg.Name} is wanted by {ToPrettyString(msg.Session.AttachedEntity.Value):msg.Session.AttachedEntity.Value}");
+            }
+            else
+            {
+                _adminLogger.Add(LogType.CriminalRecords, LogImpact.Medium,
+                    $"{msg.Name} is not wanted anymore by {ToPrettyString(msg.Session.AttachedEntity.Value):msg.Session.AttachedEntity.Value}");
+            }
+
             UpdateUserInterface(uid, component);
         }
     }
 
-    private void UpdateUserInterface(EntityUid uid, GeneralStationRecordConsoleComponent? console = null)
+    private async void UpdateUserInterface(EntityUid uid, GeneralStationRecordConsoleComponent? console = null)
     {
         if (!Resolve(uid, ref console))
         {
@@ -156,6 +213,8 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
             _stationRecordsSystem.TryGetRecord(owningStation.Value, console.ActiveKey.Value, out record,
                 stationRecordsComponent);
         }
+
+        var logs = await _adminLogger.CurrentRoundLogs(new LogFilter {Types = new HashSet<LogType> { LogType.CriminalRecords }});
 
         _userInterface
             .GetUiOrNull(uid, GeneralStationRecordConsoleKey.Key)?

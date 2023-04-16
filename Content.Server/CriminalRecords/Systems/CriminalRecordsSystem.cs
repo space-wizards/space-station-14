@@ -1,33 +1,16 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using Content.Server.GameTicking;
-using Content.Server.Station.Systems;
-using Content.Shared.Access.Components;
-using Content.Server.Forensics;
-using Content.Server.Security.Components;
-using Content.Server.StationRecords;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.Inventory;
-using Content.Shared.Nuke;
-using Content.Shared.PDA;
-using Content.Shared.Preferences;
-using Content.Shared.Roles;
 using Content.Shared.StationRecords;
 using Content.Shared.Security;
-using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
-using Content.Shared.Security;
 
 namespace Content.Server.CriminalnRecords.Systems;
 
 /// <summary>
-///     Criminal recordsss puke
+///     Criminal records
 /// </summary>
 public sealed class CriminalRecordsSystem : EntitySystem
 {
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly StationRecordKeyStorageSystem _keyStorageSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly StationRecordsSystem _stationRecordsSystem = default!;
 
     public override void Initialize()

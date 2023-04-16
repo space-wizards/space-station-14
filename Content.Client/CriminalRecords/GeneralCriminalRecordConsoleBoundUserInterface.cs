@@ -1,5 +1,5 @@
+using Content.Shared.CriminalRecords;
 using Content.Shared.StationRecords;
-// using Content.Shared.CriminalRecords;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.CriminalRecords;
@@ -21,20 +21,20 @@ public sealed class GeneralCriminalRecordConsoleBoundUserInterface : BoundUserIn
 
         _window.OpenCentered();
 
-        _window.OnArrestButtonPressed += (_, reason, name) => SendMessage(new StationRecordArrestButtonPressed(reason, name));
-        _window.OnStatusOptionButtonSelected += (_, status, reason, name) => SendMessage(new StatusOptionButtonSelected(status, reason, name));
+        _window.OnArrestButtonPressed += (_, reason, name) => SendMessage(new CriminalRecordArrestButtonPressed(reason, name));
+        _window.OnStatusOptionButtonSelected += (_, status, reason, name) => SendMessage(new CriminalStatusOptionButtonSelected(status, reason, name));
     }
 
     private void OnKeySelected(StationRecordKey? key)
     {
-        SendMessage(new SelectGeneralStationRecord(key));
+        SendMessage(new SelectGeneralCriminalRecord(key));
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         base.UpdateState(state);
 
-        if (state is not GeneralStationRecordConsoleState cast)
+        if (state is not GeneralCriminalRecordConsoleState cast)
         {
             return;
         }
