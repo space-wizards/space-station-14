@@ -39,7 +39,7 @@ public sealed class DispenserTest : InteractionTest
 
         // Re-eject using the button directly instead of sending a BUI event. This test is really just a test of the
         // bui/window helper methods.
-        await ClickButton<ReagentDispenserWindow>(nameof(ReagentDispenserWindow.EjectButton));
+        await ClickControl<ReagentDispenserWindow>(nameof(ReagentDispenserWindow.EjectButton));
         await RunTicks(5);
         Assert.IsNotNull(Hands.ActiveHandEntity);
         AssertPrototype("Beaker", Hands.ActiveHandEntity);

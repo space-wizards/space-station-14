@@ -743,17 +743,24 @@ public abstract partial class InteractionTest
     #region UI
 
     /// <summary>
-    ///     Toggles presses and releases a button on some client-side window. Will fail if the button cannot be found.
+    ///     Presses and releases a button on some client-side window. Will fail if the button cannot be found.
     /// </summary>
-    protected async Task ClickButton<TWindow>(string name) where TWindow : BaseWindow
+    protected async Task ClickControl<TWindow>(string name) where TWindow : BaseWindow
     {
-        var button = GetControl<TWindow, BaseButton>(name);
-        var screenCoords = new ScreenCoordinates(
-            button.GlobalPixelPosition + button.PixelSize/2,
-            button.Window?.Id ?? default);
+        await ClickControl(GetControl<TWindow, Control>(name));
+    }
 
-        var relativePos = screenCoords.Position / button.UIScale - button.GlobalPosition;
-        var relativePixelPos =  screenCoords.Position - button.GlobalPixelPosition;
+    /// <summary>
+    ///     Simulates a click and release at the center of some UI Constrol.
+    /// </summary>
+    protected async Task ClickControl(Control control)
+    {
+        var screenCoords = new ScreenCoordinates(
+            control.GlobalPixelPosition + control.PixelSize/2,
+            control.Window?.Id ?? default);
+
+        var relativePos = screenCoords.Position / control.UIScale - control.GlobalPosition;
+        var relativePixelPos =  screenCoords.Position - control.GlobalPixelPosition;
 
         var args = new GUIBoundKeyEventArgs(
             EngineKeyFunctions.UIClick,
@@ -763,7 +770,7 @@ public abstract partial class InteractionTest
             relativePos,
             relativePixelPos);
 
-        await Client.DoGuiEvent(button, args);
+        await Client.DoGuiEvent(control, args);
         await RunTicks(1);
 
         args = new GUIBoundKeyEventArgs(
@@ -774,7 +781,7 @@ public abstract partial class InteractionTest
             relativePos,
             relativePixelPos);
 
-        await Client.DoGuiEvent(button, args);
+        await Client.DoGuiEvent(control, args);
         await RunTicks(1);
     }
 
