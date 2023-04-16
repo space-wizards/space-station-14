@@ -8,7 +8,7 @@ namespace Content.Shared.Medical.Wounds.Components;
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(WoundSystem))]
 [AutoGenerateComponentState]
-public sealed class TraumaInflicterComponent : Component
+public sealed partial class TraumaInflicterComponent : Component
 {
     [DataField("traumas", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<TraumaDamage, TraumaPrototype>)),
      AutoNetworkedField]

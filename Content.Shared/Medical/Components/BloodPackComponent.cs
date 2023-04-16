@@ -7,7 +7,7 @@ namespace Content.Shared.Medical.Components;
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedTreatmentSystem))]
 [AutoGenerateComponentState]
-public sealed class BloodPackComponent : Component
+public sealed partial class BloodPackComponent : Component
 {
     [DataField("amount"), AutoNetworkedField]
     public FixedPoint2 Amount;

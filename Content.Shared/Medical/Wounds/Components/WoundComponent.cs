@@ -11,7 +11,7 @@ namespace Content.Shared.Medical.Wounds.Components;
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(WoundSystem))]
 [AutoGenerateComponentState]
-public sealed class WoundComponent : Component
+public sealed partial class WoundComponent : Component
 {
     //what wound should be created if this wound is healed normally?
     [DataField("scarWound", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), AutoNetworkedField]
