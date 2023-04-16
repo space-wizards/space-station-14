@@ -1,10 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: Cardborg outer clothes and cardborg hat now changes the style of the
-      typing indicator, type: Add}
-  id: 2927
-  time: '2023-01-20T15:23:10.0000000+00:00'
 - author: Rane
   changes:
   - {message: Fixed not being able to attack people who picked you up or attack lockers
@@ -2905,3 +2899,8 @@ Entries:
     type: Add}
   id: 3426
   time: '2023-04-16T05:55:23.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed the admin menu not being openable in the lobby., type: Fix}
+  id: 3427
+  time: '2023-04-16T06:06:01.0000000+00:00'
