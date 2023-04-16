@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Fix mechs being able to pickup portals, type: Fix}
-  id: 2922
-  time: '2023-01-20T14:14:00.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Fix popup flickering., type: Fix}
   id: 2923
   time: '2023-01-20T14:19:02.0000000+00:00'
@@ -2903,3 +2898,8 @@ Entries:
       requiring a bit less back-and-forth between fills for some QoL.', type: Tweak}
   id: 3421
   time: '2023-04-15T22:46:00.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Water is no longer slippery., type: Remove}
+  id: 3422
+  time: '2023-04-16T02:31:53.0000000+00:00'
