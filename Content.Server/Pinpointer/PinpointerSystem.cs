@@ -166,11 +166,8 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         return dir;
     }
 
-    private Distance CalculateDistance(EntityUid uid, Vector2 vec, PinpointerComponent? pinpointer = null)
+    private Distance CalculateDistance(EntityUid uid, Vector2 vec, PinpointerComponent pinpointer)
     {
-        if (!Resolve(uid, ref pinpointer))
-            return Distance.Unknown;
-
         var dist = vec.Length;
         if (dist <= pinpointer.ReachedDistance)
             return Distance.Reached;
