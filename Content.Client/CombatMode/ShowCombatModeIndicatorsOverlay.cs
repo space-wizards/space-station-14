@@ -20,10 +20,16 @@ namespace Content.Client.CombatMode
         private readonly IRenderTexture _renderBackbuffer;
         private Texture? _gunSight;
         private Texture? _meleeSight;
+        private CombatModeSystem _combatSystem;
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
-        public ShowCombatModeIndicatorsOverlay()
+        public ShowCombatModeIndicatorsOverlay(CombatModeSystem combatSys)
         {
             IoCManager.InjectDependencies(this);
+
+            _combatSystem = combatSys;
+
+            _gunSight = GetTextureFromRsi("gun-sight");
+            _meleeSight = GetTextureFromRsi("melee-sight");
 
             _renderBackbuffer = _clyde.CreateRenderTarget(
                 (100, 100),
@@ -32,9 +38,6 @@ namespace Content.Client.CombatMode
                 {
                     Filter = true
                 }, nameof(ShowCombatModeIndicatorsOverlay));
-
-            _gunSight = GetTextureFromRsi("gun-sight");
-            _meleeSight = GetTextureFromRsi("melee-sight");
         }
 
         private Texture GetTextureFromRsi(string _spriteName)
@@ -56,8 +59,7 @@ namespace Content.Client.CombatMode
             if (!_cfg.GetCVar(CCVars.HudHeldItemShow))
                 return;
 
-            var combatSystem = EntitySystem.Get<CombatModeSystem>();
-            bool isCombatMode = combatSystem != null && combatSystem.IsInCombatMode();
+            bool isCombatMode = _combatSystem.IsInCombatMode();
 
             if (!isCombatMode)
                 return;
@@ -92,6 +94,7 @@ namespace Content.Client.CombatMode
 
             Vector2 beginPosSight = centerPos - halfSightSize;
             UIBox2 coordsRect = UIBox2.FromDimensions(beginPosSight, sightSize);
+
             screen.DrawTextureRect(sight, coordsRect, Color.DarkBlue);
         }
     }
