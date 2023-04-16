@@ -16,7 +16,7 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: 'recursive'
-        
+
     # Corvax-Secrets-Start
     - name: Setup secrets
       env:
@@ -29,9 +29,9 @@ jobs:
         echo "HOST *" > ~/.ssh/config
         echo "StrictHostKeyChecking no" >> ~/.ssh/config
         git -c submodule.Secrets.update=checkout submodule update --init
-        .\Tools\setup_secrets.ps1
+        ./Tools/corvax/setup_secrets.sh
     # Corvax-Secrets-End
-        
+
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v3
       with:
