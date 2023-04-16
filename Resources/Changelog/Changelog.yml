@@ -1,9 +1,4 @@
 Entries:
-- author: gus
-  changes:
-  - {message: Plastic utensils are now trash., type: Tweak}
-  id: 2924
-  time: '2023-01-20T14:48:53.0000000+00:00'
 - author: liltenhead
   changes:
   - {message: Changed barotrauma damage to be much more deadly. Keep your survival
@@ -2903,3 +2898,11 @@ Entries:
   - {message: we Lied. Water is slippery still., type: Add}
   id: 3423
   time: '2023-04-16T02:42:55.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: Chemists now get a medical survival box instead of a normal survival
+      box., type: Tweak}
+  - {message: 'Most medical techfab recipes have been changed to be available immediately,
+      rather than relying on science.', type: Tweak}
+  id: 3424
+  time: '2023-04-16T05:52:46.0000000+00:00'
