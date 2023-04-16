@@ -1,3 +1,4 @@
+using Content.Server.Construction;
 using Content.Server.Defusable.Components;
 using Content.Server.Explosion.Components;
 using Content.Server.Explosion.EntitySystems;
@@ -29,7 +30,11 @@ public sealed class DefusableSystem : SharedDefusableSystem
         base.Initialize();
         SubscribeLocalEvent<DefusableComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<DefusableComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerbs);
+        SubscribeLocalEvent<DefusableComponent, AnchorAttemptEvent>(OnAnchorAttempt);
+        SubscribeLocalEvent<DefusableComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
     }
+
+    #region Subscribed Events
 
     /// <summary>
     ///     Adds a verb allowing for the bomb to be started easily.
@@ -50,6 +55,27 @@ public sealed class DefusableSystem : SharedDefusableSystem
             }
         });
     }
+
+    private void OnExamine(EntityUid uid, DefusableComponent comp, ExaminedEvent args)
+    {
+        if (!args.IsInDetailsRange)
+            return;
+
+        if (!comp.BombUsable)
+        {
+            args.PushMarkup(Loc.GetString("defusable-examine-defused", ("name", uid)));
+        }
+        else if (comp.BombLive)
+        {
+            args.PushMarkup(Loc.GetString("defusable-examine-live", ("name", uid)));
+        }
+        else
+        {
+            args.PushMarkup(Loc.GetString("defusable-examine-inactive", ("name", uid)));
+        }
+    }
+
+    #endregion
 
     #region Anchorable
 
@@ -74,27 +100,8 @@ public sealed class DefusableSystem : SharedDefusableSystem
             args.Cancel();
         }
     }
-
     #endregion
 
-    private void OnExamine(EntityUid uid, DefusableComponent comp, ExaminedEvent args)
-    {
-        if (!args.IsInDetailsRange)
-            return;
-
-        if (!comp.BombUsable)
-        {
-            args.PushMarkup(Loc.GetString("defusable-examine-defused", ("name", uid)));
-        }
-        else if (comp.BombLive)
-        {
-            args.PushMarkup(Loc.GetString("defusable-examine-live", ("name", uid)));
-        }
-        else
-        {
-            args.PushMarkup(Loc.GetString("defusable-examine-inactive", ("name", uid)));
-        }
-    }
 
     #region Public
 
@@ -113,6 +120,9 @@ public sealed class DefusableSystem : SharedDefusableSystem
             _popup.PopupEntity(Loc.GetString("defusable-popup-fried", ("name", uid)), uid);
             return;
         }
+
+        var xform = Transform(uid);
+        xform.Anchored = true;
 
         comp.BombLive = true;
         _popup.PopupEntity(Loc.GetString("defusable-popup-begun", ("name", uid)), uid);
