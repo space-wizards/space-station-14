@@ -34,14 +34,14 @@
 - type: guideEntry
   id: Networking
   name: guide-entry-networking
-  text: "/Server Info/Guidebook/Networking.xml"
+  text: "/ServerInfo/Guidebook/Networking.xml"
   children:
   - NetworkConfigurator
 
 - type: guideEntry
   id: NetworkConfigurator
   name: guide-entry-network-configurator
-  text: "/Server Info/Guidebook/Network_Configurator.xml"
+  text: "/ServerInfo/Guidebook/Network_Configurator.xml"
 
 
 - type: guideEntry
