@@ -1,4 +1,5 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Salvage.Expeditions.Modifiers;
 
@@ -14,4 +15,10 @@ public sealed class SalvageLightMod : IPrototype, ISalvageMod
     public float Cost { get; } = 0f;
 
     [DataField("color", required: true)] public Color? Color;
+
+    /// <summary>
+    /// Biomes that this color applies to.
+    /// </summary>
+    [DataField("biomes", customTypeSerializer: typeof(PrototypeIdListSerializer<SalvageBiomeMod>))]
+    public List<string>? Biomes;
 }

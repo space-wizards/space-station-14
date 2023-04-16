@@ -303,7 +303,9 @@ public sealed partial class SalvageSystem
             var dungeonOffset = new Vector2(dungeonOffsetDistance, 0f);
             dungeonOffset = new Angle(random.NextDouble() * Math.Tau).RotateVec(dungeonOffset);
             var dungeonConfig = _prototypeManager.Index<DungeonConfigPrototype>(mission.Dungeon);
-            var dungeon = await _dungeon.GenerateDungeonAsync(dungeonConfig, mapUid, grid, Vector2.Zero, _missionParams.Seed);
+            var dungeon =
+                await WaitAsyncTask(_dungeon.GenerateDungeonAsync(dungeonConfig, mapUid, grid, (Vector2i) dungeonOffset,
+                    _missionParams.Seed));
 
             // Aborty
             if (dungeon.Rooms.Count == 0)

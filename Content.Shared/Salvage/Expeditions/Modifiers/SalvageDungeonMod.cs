@@ -1,4 +1,5 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Salvage.Expeditions.Modifiers;
 
@@ -12,4 +13,10 @@ public sealed class SalvageDungeonMod : IPrototype, ISalvageMod
     /// </summary>
     [DataField("cost")]
     public float Cost { get; } = 0f;
+
+    /// <summary>
+    /// Biomes this dungeon can occur in.
+    /// </summary>
+    [DataField("biomeMods", customTypeSerializer:typeof(PrototypeIdListSerializer<SalvageBiomeMod>))]
+    public List<string>? BiomeMods;
 }

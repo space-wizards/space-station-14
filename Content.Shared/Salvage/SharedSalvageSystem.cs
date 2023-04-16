@@ -47,15 +47,16 @@ public abstract class SharedSalvageSystem : EntitySystem
         // This is on shared to ensure the client display for missions and what the server generates are consistent
         var rating = (float) GetDifficulty(difficulty);
         var rand = new System.Random(seed);
-
-        var dungeon = GetMod<SalvageDungeonMod>(rand, ref rating);
         var faction = GetMod<SalvageFactionPrototype>(rand, ref rating);
         var biome = GetMod<SalvageBiomeMod>(rand, ref rating);
+
+        var dungeon = GetDungeon(biome.ID, rand, ref rating);
+
         SalvageLightMod? light = null;
 
         if (biome.BiomePrototype != null)
         {
-            light = GetMod<SalvageLightMod>(rand, ref rating);
+            light = GetLight(biome.ID, rand, ref rating);
         }
 
         var time = GetMod<SalvageTimeMod>(rand, ref rating);
@@ -71,6 +72,47 @@ public abstract class SharedSalvageSystem : EntitySystem
         var duration = TimeSpan.FromSeconds(exactDuration);
 
         return new SalvageMission(seed, dungeon.ID, faction.ID, config, biome.BiomePrototype, light?.Color, duration);
+    }
+
+    public SalvageDungeonMod GetDungeon(string biome, System.Random rand, ref float rating)
+    {
+        var mods = _proto.EnumeratePrototypes<SalvageDungeonMod>().ToList();
+        mods.Sort((x, y) => string.Compare(x.ID, y.ID, StringComparison.Ordinal));
+        rand.Shuffle(mods);
+
+        foreach (var mod in mods)
+        {
+            if (mod.BiomeMods?.Contains(biome) == false ||
+                mod.Cost > rating)
+            {
+                continue;
+            }
+
+            rating -= (int) mod.Cost;
+
+            return mod;
+        }
+
+        throw new InvalidOperationException();
+    }
+
+    public SalvageLightMod GetLight(string biome, System.Random rand, ref float rating)
+    {
+        var mods = _proto.EnumeratePrototypes<SalvageLightMod>().ToList();
+        mods.Sort((x, y) => string.Compare(x.ID, y.ID, StringComparison.Ordinal));
+        rand.Shuffle(mods);
+
+        foreach (var mod in mods)
+        {
+            if (mod.Biomes?.Contains(biome) == false || mod.Cost > rating)
+                continue;
+
+            rating -= (int) mod.Cost;
+
+            return mod;
+        }
+
+        throw new InvalidOperationException();
     }
 
     public T GetMod<T>(System.Random rand, ref float rating) where T : class, IPrototype, ISalvageMod

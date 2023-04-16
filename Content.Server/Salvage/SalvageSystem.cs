@@ -36,7 +36,6 @@ namespace Content.Server.Salvage
         [Dependency] private readonly CargoSystem _cargo = default!;
         [Dependency] private readonly DungeonSystem _dungeon = default!;
         [Dependency] private readonly MapLoaderSystem _map = default!;
-        [Dependency] private readonly PathfindingSystem _pathfinding = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly RadioSystem _radioSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
@@ -65,6 +64,7 @@ namespace Content.Server.Salvage
 
             InitializeExpeditions();
             InitializeRunner();
+            InitializeStructure();
         }
 
         private void OnRoundEnd(GameRunLevelChangedEvent ev)

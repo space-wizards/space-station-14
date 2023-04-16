@@ -1,0 +1,1 @@
+salvage-expedition-structure-examine = This is a [color=#B02E26]destruction[/color] objective

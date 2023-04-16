@@ -5,23 +5,19 @@
   biome: Grasslands
 
 - type: salvageBiomeMod
-  id: LowDesert
-  biome: LowDesert
-
-- type: salvageBiomeMod
   id: Lava
   cost: 1
   biome: Lava
 
 - type: salvageBiomeMod
   id: Snow
-  biome: "Snow"
+  biome: Snow
 
-- type: salvageBiomeMod
-  id: Space
-  cost: 1
-  weather: false
-  biome: null
+#- type: salvageBiomeMod
+#  id: Space
+#  cost: 1
+#  weather: false
+#  biome: null
 
 # Temperature mods -> not required
 # Also whitelist it
@@ -36,18 +32,19 @@
   id: Rain
   weather: Rain
 
-#- type: salvageWeatherMod
-#  id: Sandstorm
-  #biomes:
-  #  - A
-  #  - B
-#  cost: 1
-
 # Light mods -> required
 # At some stage with sub-biomes this will probably be moved onto the biome itself
 - type: salvageLightMod
   id: Daylight
   color: "#D8B059"
+  biomes:
+    - Grasslands
+
+- type: salvageLightMod
+  id: Lavalight
+  color: "#A34931"
+  biomes:
+    - Lava
 
 - type: salvageLightMod
   id: Evening
@@ -82,7 +79,7 @@
   biomeMods:
     - Grass
     - LowDesert
-    - Space
+    - Snow
     - Grasslands
 
 - type: salvageDungeonMod

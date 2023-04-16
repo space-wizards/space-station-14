@@ -45,7 +45,7 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
             // TODO: Make this XAML
             var missionParams = state.Missions[i];
             var config = _prototype.Index<SalvageMissionPrototype>(missionParams.Config);
-            var mission = _salvage.GetMission(missionParams.Config, missionParams.Difficulty, missionParams.Index);
+            var mission = _salvage.GetMission(missionParams.Config, missionParams.Difficulty, missionParams.Seed);
 
             // If we ever need this on server then move it
             var missionDesc = config.ID;
