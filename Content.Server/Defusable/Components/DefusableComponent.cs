@@ -23,7 +23,7 @@ public sealed class DefusableComponent : Component
     /// <summary>
     /// Is the bomb live? This is different from BombUsable because this tracks whether the bomb is ticking down or not.
     /// </summary>
-    [DataField("live")] public bool BombLive = false;
+    [ViewVariables, DataField("live")] public bool BombLive = false;
 
     /// <summary>
     /// Is the bomb actually usable? This is different from BombLive because this tracks whether the bomb can even start in the first place.
@@ -38,7 +38,7 @@ public sealed class DefusableComponent : Component
     /// <summary>
     /// How much time is added when the Activate wire is pulsed?
     /// </summary>
-    [ViewVariables, DataField("delayTime")]
+    [DataField("delayTime")]
     public int DelayTime = 30;
 
     // wires, this is so that they're one use
