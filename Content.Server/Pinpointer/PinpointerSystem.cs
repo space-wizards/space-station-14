@@ -116,11 +116,8 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     /// <summary>
     ///     Update direction from pinpointer to selected target (if it was set)
     /// </summary>
-    private void UpdateDirectionToTarget(EntityUid uid, PinpointerComponent? pinpointer = null)
+    private void UpdateDirectionToTarget(EntityUid uid, PinpointerComponent pinpointer)
     {
-        if (!Resolve(uid, ref pinpointer))
-            return;
-
         if (!pinpointer.IsActive)
             return;
 
