@@ -17,6 +17,21 @@ public abstract class SharedSalvageSystem : EntitySystem
     public static readonly TimeSpan MissionCooldown = TimeSpan.FromMinutes(5);
     public static readonly TimeSpan MissionFailedCooldown = TimeSpan.FromMinutes(15);
 
+    public string GetMissionDescription(string mission, DifficultyRating baseRating, int rating)
+    {
+        // Hardcoded in coooooz it's dynamic based on difficulty and I'm lazy.
+        switch (mission)
+        {
+            case "Mining":
+                return Loc.GetString("salvage-expedition-desc-mining");
+            case "StructureDestroy":
+                // TODO: Faction setup stuff
+                return Loc.GetString("salvage-expedition-desc-structure", ("count", 5), ("structure", "A"));
+            default:
+                throw new NotImplementedException();
+        }
+    }
+
     public int GetDifficulty(DifficultyRating rating)
     {
         switch (rating)
@@ -71,7 +86,7 @@ public abstract class SharedSalvageSystem : EntitySystem
 
         var duration = TimeSpan.FromSeconds(exactDuration);
 
-        return new SalvageMission(seed, dungeon.ID, faction.ID, config, biome.BiomePrototype, light?.Color, duration);
+        return new SalvageMission(seed, (int) rating, dungeon.ID, faction.ID, config, biome.ID, light?.Color, duration);
     }
 
     public SalvageDungeonMod GetDungeon(string biome, System.Random rand, ref float rating)
@@ -107,7 +122,7 @@ public abstract class SharedSalvageSystem : EntitySystem
             if (mod.Biomes?.Contains(biome) == false || mod.Cost > rating)
                 continue;
 
-            rating -= (int) mod.Cost;
+            rating -= mod.Cost;
 
             return mod;
         }
@@ -126,7 +141,7 @@ public abstract class SharedSalvageSystem : EntitySystem
             if (mod.Cost > rating)
                 continue;
 
-            rating -= (int) mod.Cost;
+            rating -= mod.Cost;
 
             return mod;
         }

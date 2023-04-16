@@ -1,8 +1,8 @@
-using Content.Shared.Parallax.Biomes;
+using Content.Shared.Salvage.Expeditions;
+using Content.Shared.Salvage.Expeditions.Modifiers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Salvage;
 
@@ -75,6 +75,9 @@ public sealed record SalvageMissionParams
 
     [ViewVariables(VVAccess.ReadWrite)] public int Seed;
 
+    /// <summary>
+    /// Base difficulty for this mission.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite)] public DifficultyRating Difficulty;
 }
 
@@ -84,25 +87,52 @@ public sealed record SalvageMissionParams
 /// </summary>
 public sealed record SalvageMission(
     int Seed,
+    int Difficulty,
     string Dungeon,
     string Faction,
     string Mission,
-    string? Biome,
+    string Biome,
     Color? Color,
     TimeSpan Duration)
 {
+    /// <summary>
+    /// Seed used for the mission.
+    /// </summary>
     public readonly int Seed = Seed;
 
+    /// <summary>
+    /// Remaining difficulty after applying other modifiers.
+    /// </summary>
+    public int Difficulty = Difficulty;
+
+    /// <summary>
+    /// <see cref="SalvageDungeonMod"/> to be used.
+    /// </summary>
     public readonly string Dungeon = Dungeon;
 
+    /// <summary>
+    /// <see cref="SalvageFactionPrototype"/> to be used.
+    /// </summary>
     public readonly string Faction = Faction;
 
+    /// <summary>
+    /// Underlying mission params that generated this.
+    /// </summary>
     public readonly string Mission = Mission;
 
-    public readonly string? Biome = Biome;
+    /// <summary>
+    /// Biome to be used for the mission.
+    /// </summary>
+    public readonly string Biome = Biome;
 
+    /// <summary>
+    /// Lighting color to be used (AKA outdoor lighting).
+    /// </summary>
     public readonly Color? Color = Color;
 
+    /// <summary>
+    /// Mission duration.
+    /// </summary>
     public TimeSpan Duration = Duration;
 }
 

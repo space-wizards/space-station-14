@@ -31,7 +31,7 @@ public sealed partial class SalvageSystem
 
     private readonly JobQueue _salvageQueue = new();
     private List<(SpawnSalvageMissionJob Job, CancellationTokenSource CancelToken)> _salvageJobs = new();
-    private const double SalvageJobTime = 0.002;
+    private const double SalvageJobTime = 0.005;
 
     private void InitializeExpeditions()
     {

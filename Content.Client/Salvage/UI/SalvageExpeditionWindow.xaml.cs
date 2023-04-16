@@ -42,32 +42,13 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
 
         for (var i = 0; i < state.Missions.Count; i++)
         {
-            // TODO: Make this XAML
             var missionParams = state.Missions[i];
             var config = _prototype.Index<SalvageMissionPrototype>(missionParams.Config);
             var mission = _salvage.GetMission(missionParams.Config, missionParams.Difficulty, missionParams.Seed);
 
-            // If we ever need this on server then move it
-            var missionDesc = config.ID;
-            // TODO: Desc
-            var missionDetails = "weh";
+            var missionDesc = config.Description;
 
-            // Hardcoded in coooooz it's dynamic based on difficulty and I'm lazy.
-            /*
-            switch (config.ID)
-            {
-                case "Mining":
-                    var structureConfig = (SalvageStructureFaction) factionConfig.Configs[mission.Config];
-                    missionDesc = "Demolition";
-                    // TODO:
-                    missionDetails = $"Destroy {SharedSalvageSystem.GetStructureCount(structure, mission.Seed)} {_prototype.Index<EntityPrototype>(structureConfig.Spawn).Name} structures.";
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
-            */
-
-            // Mission
+            // Mission title
             var missionStripe = new StripeBack()
             {
                 Margin = new Thickness(0f, -5f, 0f, 0f)
@@ -89,7 +70,7 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
             // Details
             lBox.AddChild(new Label()
             {
-                Text = $"Difficulty:"
+                Text = Loc.GetString("salvage-expedition-window-difficulty")
             });
 
             Color difficultyColor;
@@ -124,14 +105,17 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
             });
 
             // Details
+            var details =
+                _salvage.GetMissionDescription(missionParams.Config, missionParams.Difficulty, mission.Difficulty);
+
             lBox.AddChild(new Label
             {
-                Text = $"Details:"
+                Text = Loc.GetString("salvage-expedition-window-details")
             });
 
             lBox.AddChild(new Label
             {
-                Text = missionDetails,
+                Text = details,
                 FontColorOverride = StyleNano.NanoGold,
                 HorizontalAlignment = HAlignment.Left,
                 Margin = new Thickness(0f, 0f, 0f, 5f),
@@ -140,7 +124,7 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
             // Details
             lBox.AddChild(new Label
             {
-                Text = $"Hostiles:"
+                Text = Loc.GetString("salvage-expedition-window-hostiles")
             });
 
             var faction = mission.Faction;
@@ -156,7 +140,7 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
             // Duration
             lBox.AddChild(new Label
             {
-                Text = $"Duration:"
+                Text = Loc.GetString("salvage-expedition-window-duration")
             });
 
             lBox.AddChild(new Label
@@ -170,52 +154,29 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
             // Biome
             lBox.AddChild(new Label
             {
-                Text = "Biome:"
+                Text = Loc.GetString("salvage-expedition-window-biome")
             });
 
             var biome = mission.Biome;
 
             lBox.AddChild(new Label
             {
-                Text = biome != null ? _prototype.Index<SalvageBiomeMod>(biome).ID : "Space",
+                Text = Loc.GetString(_prototype.Index<SalvageBiomeMod>(biome).ID),
                 FontColorOverride = StyleNano.NanoGold,
                 HorizontalAlignment = HAlignment.Left,
                 Margin = new Thickness(0f, 0f, 0f, 5f),
             });
 
-            // Environment
-            lBox.AddChild(new Label
-            {
-                Text = "Environment:"
-            });
-
-            lBox.AddChild(new Label
-            {
-                Text = config.Description,
-                FontColorOverride = StyleNano.NanoGold,
-                HorizontalAlignment = HAlignment.Left,
-                Margin = new Thickness(0f, 0f, 0f, 5f),
-            });
-
-            // Modifiers
-            // TODO
-
-            // Rewards
             lBox.AddChild(new Label()
             {
-                Text = $"Reward:"
-            });
-
-            lBox.AddChild(new Label()
-            {
-                Text = $"Loot:"
+                Text = Loc.GetString("salvage-expedition-window-loot")
             });
 
             if (true)//config.Loots.Count == 0)
             {
                 lBox.AddChild(new Label()
                 {
-                    Text = "N/A",
+                    Text = Loc.GetString("salvage-expedition-window-none"),
                     FontColorOverride = StyleNano.ConcerningOrangeFore,
                     HorizontalAlignment = HAlignment.Left,
                     Margin = new Thickness(0f, 0f, 0f, 5f),
@@ -255,24 +216,22 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
 
             if (state.ActiveMission == missionParams.Index)
             {
-                claimButton.Text = "Claimed";
+                claimButton.Text = Loc.GetString("salvage-expedition-window-claimed");
                 claimButton.AddStyleClass(StyleBase.ButtonCaution);
             }
             else
             {
-                claimButton.Text = "Claim";
+                claimButton.Text = Loc.GetString("salvage-expedition-window-claim");
             }
 
-            // TODO: Fix this copypaste bullshit
-
-            var box = new PanelContainer()
+            var box = new PanelContainer
             {
                 PanelOverride = new StyleBoxFlat(new Color(30, 30, 34)),
                 HorizontalExpand = true,
                 Margin = new Thickness(5f, 0f),
                 Children =
                 {
-                    new BoxContainer()
+                    new BoxContainer
                     {
                         Orientation = BoxContainer.LayoutOrientation.Vertical,
                         Children =
