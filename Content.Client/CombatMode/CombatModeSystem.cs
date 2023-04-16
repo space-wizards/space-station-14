@@ -4,12 +4,14 @@ using JetBrains.Annotations;
 using Robust.Client.Player;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
+using Robust.Client.Graphics;
 
 namespace Content.Client.CombatMode
 {
     [UsedImplicitly]
     public sealed class CombatModeSystem : SharedCombatModeSystem
     {
+        [Dependency] private readonly IOverlayManager _overlayManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         public event Action? LocalPlayerCombatModeUpdated;
@@ -19,6 +21,7 @@ namespace Content.Client.CombatMode
             base.Initialize();
 
             SubscribeLocalEvent<CombatModeComponent, ComponentHandleState>(OnHandleState);
+            _overlayManager.AddOverlay(new ShowCombatModeIndicatorsOverlay());
         }
 
         private void OnHandleState(EntityUid uid, CombatModeComponent component, ref ComponentHandleState args)
@@ -34,6 +37,8 @@ namespace Content.Client.CombatMode
         public override void Shutdown()
         {
             CommandBinds.Unregister<CombatModeSystem>();
+            _overlayManager.RemoveOverlay<ShowCombatModeIndicatorsOverlay>();
+
             base.Shutdown();
         }
 
