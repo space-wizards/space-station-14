@@ -1,5 +1,4 @@
 using Content.Shared.Pinpointer;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.GameStates;
 
@@ -25,10 +24,11 @@ namespace Content.Client.Pinpointer
 
             // because eye can change it rotation anytime
             // we need to update this arrow in a update loop
-            foreach (var pinpointer in EntityQuery<PinpointerComponent>())
+            var query = EntityQueryEnumerator<PinpointerComponent>();
+            while (query.MoveNext(out var uid, out var pinpointer))
             {
-                UpdateAppearance(pinpointer.Owner, pinpointer);
-                UpdateEyeDir(pinpointer.Owner, pinpointer);
+                UpdateAppearance(uid, pinpointer);
+                UpdateEyeDir(uid, pinpointer);
             }
         }
 
