@@ -1,10 +1,4 @@
 Entries:
-- author: liltenhead
-  changes:
-  - {message: Changed barotrauma damage to be much more deadly. Keep your survival
-      box close., type: Tweak}
-  id: 2925
-  time: '2023-01-20T15:07:02.0000000+00:00'
 - author: vanx
   changes:
   - {message: Increased the book symbol limit so you can fit all your stories in,
@@ -2906,3 +2900,8 @@ Entries:
       rather than relying on science.', type: Tweak}
   id: 3424
   time: '2023-04-16T05:52:46.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: SpaceLube is slippery again, type: Fix}
+  id: 3425
+  time: '2023-04-16T05:53:47.0000000+00:00'
