@@ -84,14 +84,6 @@
   - ButchCleaver
   - KitchenKnife
   - MicrowaveMachineCircuitboard
-  - Medkit
-  - MedkitBurn
-  - MedkitToxin
-  - MedkitO2
-  - MedkitBrute
-  - MedkitAdvanced
-  - MedkitRadiation
-  - MedkitCombat
 
 - type: technology
   name: technologies-advanced-botany
