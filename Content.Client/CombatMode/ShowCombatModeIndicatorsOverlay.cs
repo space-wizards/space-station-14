@@ -28,8 +28,8 @@ namespace Content.Client.CombatMode
 
             _combatSystem = combatSys;
 
-            _gunSight = GetTextureFromRsi("gun-sight");
-            _meleeSight = GetTextureFromRsi("melee-sight");
+            _gunSight = GetTextureFromRsi("gunsight");
+            _meleeSight = GetTextureFromRsi("meleesight");
 
             _renderBackbuffer = _clyde.CreateRenderTarget(
                 (100, 100),
