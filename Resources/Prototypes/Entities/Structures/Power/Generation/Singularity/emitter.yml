@@ -26,14 +26,14 @@
     sprite: Structures/Power/Generation/Singularity/emitter.rsi
     netsync: false
     layers:
-    - state: emitter2
+    - state: emitter # Corvax-Resprite
     - state: beam
       shader: unshaded
       visible: false
       map: ["enum.EmitterVisualLayers.Lights"]
-    - state: lock
+    - state: unlock # Corvax-Resprite
       shader: unshaded
-      visible: false
+#      visible: false # Corvax-Resprite
       map: ["enum.StorageVisualLayers.Lock"]
   - type: Emitter
   - type: Gun
@@ -57,6 +57,12 @@
     damageModifierSet: StrongMetallic
   - type: Destructible
     thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 400
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
           damage: 200

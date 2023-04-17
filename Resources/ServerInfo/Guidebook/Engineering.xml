@@ -1,0 +1,21 @@
+<Document>
+# Engineering
+
+Engineering is a combination of construction work, repair work, maintaining a death machine that happens to produce power, and making sure the station contains breathable air.
+
+## Tools
+<Box>
+<GuideEntityEmbed Entity="Wrench"/>
+<GuideEntityEmbed Entity="Crowbar"/>
+<GuideEntityEmbed Entity="Screwdriver"/>
+<GuideEntityEmbed Entity="Wirecutter"/>
+</Box>
+<Box>
+<GuideEntityEmbed Entity="Welder"/>
+<GuideEntityEmbed Entity="Multitool"/>
+</Box>
+Your core toolset is a small variety of tools. If you're an engineer, then you should have a belt on your waist containing one of each, if not you can likely find them in maintenance and tool storage within assorted toolboxes and vending machines.
+
+Most tasks will have explainers for how to perform them on examination, for example if you're constructing a wall, it'll tell you the next step if you look at it a bit closer.
+
+</Document>

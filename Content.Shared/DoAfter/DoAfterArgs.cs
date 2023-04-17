@@ -127,6 +127,7 @@ public sealed class DoAfterArgs
     [DataField("blockDuplicate")]
     public bool BlockDuplicate = true;
 
+    //TODO: User pref to not cancel on second use on specific doafters
     /// <summary>
     ///     If true, this will cancel any duplicate DoAfters when attempting to add a new DoAfter. See also
     ///     <see cref="DuplicateConditions"/>.
@@ -206,6 +207,7 @@ public sealed class DoAfterArgs
 
     #endregion
 
+    //The almighty pyramid returns.......
     public DoAfterArgs(DoAfterArgs other)
     {
         User = other.User;

@@ -1,32 +1,17 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/d0d81185f09ca30d3b0856d476544240dba0de53",
+  "copyright": "Taken from TauCetiStation at https://github.com/TauCetiStation/TauCetiClassic/commit/afc73216e6a893d5f2fc3caa6bdd2adb06c113e3",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "extinguisher_closed"
-    },
-    {
-      "name": "extinguisher_empty"
-    },
-    {
-      "name": "extinguisher_full"
-    },
-    {
-      "name": "extinguisher_mini"
-    },
-    {
       "name": "closed"
     },
     {
       "name": "extinguisher"
-    },
-    {
-      "name": "extinguisher-mini"
     },
     {
       "name": "frame"
