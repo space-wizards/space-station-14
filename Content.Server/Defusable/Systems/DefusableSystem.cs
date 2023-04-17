@@ -176,14 +176,9 @@ public sealed class DefusableSystem : SharedDefusableSystem
         comp.BombLive = false;
         comp.BombUsable = false; // fry the circuitry
 
-        if (TryComp<ExplodeOnTriggerComponent>(uid, out var explodeComp))
-            RemComp<ExplodeOnTriggerComponent>(uid);
-
-        if (TryComp<ActiveTimerTriggerComponent>(uid, out var activeComp))
-            RemComp<ActiveTimerTriggerComponent>(uid);
-
-        if (TryComp<OnUseTimerTriggerComponent>(uid, out var timerComp))
-            RemComp<OnUseTimerTriggerComponent>(uid);
+        RemComp<ExplodeOnTriggerComponent>(uid);
+        RemComp<ActiveTimerTriggerComponent>(uid);
+        RemComp<OnUseTimerTriggerComponent>(uid);
 
         _audio.PlayPvs(comp.DefusalSound, uid);
 
