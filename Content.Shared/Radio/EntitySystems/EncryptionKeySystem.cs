@@ -62,6 +62,7 @@ public sealed class EncryptionKeySystem : EntitySystem
         // TODO add predicted pop-up overrides.
         if (_net.IsServer)
             _popup.PopupEntity(Loc.GetString("encryption-keys-all-extracted"), uid, args.User);
+        
         _audio.PlayPredicted(component.KeyExtractionSound, uid, args.User);
     }
 

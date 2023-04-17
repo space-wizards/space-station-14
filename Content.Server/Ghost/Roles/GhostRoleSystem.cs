@@ -2,7 +2,9 @@ using Content.Server.Administration.Logs;
 using Content.Server.EUI;
 using Content.Server.Ghost.Components;
 using Content.Server.Ghost.Roles.Components;
+using Content.Server.Ghost.Roles.Events;
 using Content.Server.Ghost.Roles.UI;
+using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Shared.Administration;
@@ -30,6 +32,7 @@ namespace Content.Server.Ghost.Roles
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
+        [Dependency] private readonly TransformSystem _transform = default!;
 
         private uint _nextRoleIdentifier;
         private bool _needsUpdateGhostRoleCount = true;
@@ -51,22 +54,27 @@ namespace Content.Server.Ghost.Roles
             SubscribeLocalEvent<GhostTakeoverAvailableComponent, MobStateChangedEvent>(OnMobStateChanged);
             SubscribeLocalEvent<GhostRoleComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<GhostRoleComponent, ComponentShutdown>(OnShutdown);
+            SubscribeLocalEvent<GhostRoleMobSpawnerComponent, TakeGhostRoleEvent>(OnSpawnerTakeRole);
+            SubscribeLocalEvent<GhostTakeoverAvailableComponent, TakeGhostRoleEvent>(OnTakeoverTakeRole);
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
         }
 
-        private void OnMobStateChanged(EntityUid uid, GhostRoleComponent component, MobStateChangedEvent args)
+        private void OnMobStateChanged(EntityUid uid, GhostTakeoverAvailableComponent component, MobStateChangedEvent args)
         {
+            if (!TryComp(uid, out GhostRoleComponent? ghostRole))
+                return;
+
             switch (args.NewMobState)
             {
                 case MobState.Alive:
                 {
-                    if (!component.Taken)
-                        RegisterGhostRole(component);
+                    if (!ghostRole.Taken)
+                        RegisterGhostRole(ghostRole);
                     break;
                 }
                 case MobState.Critical:
                 case MobState.Dead:
-                    UnregisterGhostRole(component);
+                    UnregisterGhostRole(ghostRole);
                     break;
             }
         }
@@ -180,7 +188,11 @@ namespace Content.Server.Ghost.Roles
         public void Takeover(IPlayerSession player, uint identifier)
         {
             if (!_ghostRoles.TryGetValue(identifier, out var role)) return;
-            if (!role.Take(player)) return;
+
+            var ev = new TakeGhostRoleEvent(player);
+            RaiseLocalEvent(role.Owner, ref ev);
+
+            if (!ev.TookRole) return;
 
             if (player.AttachedEntity != null)
                 _adminLogger.Add(LogType.GhostRoleTaken, LogImpact.Low, $"{player:player} took the {role.RoleName:roleName} ghost role {ToPrettyString(player.AttachedEntity.Value):entity}");
@@ -239,18 +251,24 @@ namespace Content.Server.Ghost.Roles
 
         private void OnMindAdded(EntityUid uid, GhostTakeoverAvailableComponent component, MindAddedMessage args)
         {
-            component.Taken = true;
-            UnregisterGhostRole(component);
-        }
-
-        private void OnMindRemoved(EntityUid uid, GhostRoleComponent component, MindRemovedMessage args)
-        {
-            // Avoid re-registering it for duplicate entries and potential exceptions.
-            if (!component.ReregisterOnGhost || component.LifeStage > ComponentLifeStage.Running)
+            if (!TryComp(uid, out GhostRoleComponent? ghostRole))
                 return;
 
-            component.Taken = false;
-            RegisterGhostRole(component);
+            ghostRole.Taken = true;
+            UnregisterGhostRole(ghostRole);
+        }
+
+        private void OnMindRemoved(EntityUid uid, GhostTakeoverAvailableComponent component, MindRemovedMessage args)
+        {
+            if (!TryComp(uid, out GhostRoleComponent? ghostRole))
+                return;
+
+            // Avoid re-registering it for duplicate entries and potential exceptions.
+            if (!ghostRole.ReregisterOnGhost || component.LifeStage > ComponentLifeStage.Running)
+                return;
+
+            ghostRole.Taken = false;
+            RegisterGhostRole(ghostRole);
         }
 
         public void Reset(RoundRestartCleanupEvent ev)
@@ -281,6 +299,73 @@ namespace Content.Server.Ghost.Roles
         private void OnShutdown(EntityUid uid, GhostRoleComponent role, ComponentShutdown args)
         {
             UnregisterGhostRole(role);
+        }
+
+        private void OnSpawnerTakeRole(EntityUid uid, GhostRoleMobSpawnerComponent component, ref TakeGhostRoleEvent args)
+        {
+            if (!TryComp(uid, out GhostRoleComponent? ghostRole) ||
+                ghostRole.Taken)
+            {
+                args.TookRole = false;
+                return;
+            }
+
+            if (string.IsNullOrEmpty(component.Prototype))
+                throw new NullReferenceException("Prototype string cannot be null or empty!");
+
+            var mob = Spawn(component.Prototype, Transform(uid).Coordinates);
+            _transform.AttachToGridOrMap(mob);
+
+            var spawnedEvent = new GhostRoleSpawnerUsedEvent(uid, mob);
+            RaiseLocalEvent(mob, spawnedEvent);
+
+            if (ghostRole.MakeSentient)
+                MakeSentientCommand.MakeSentient(mob, EntityManager, ghostRole.AllowMovement, ghostRole.AllowSpeech);
+
+            mob.EnsureComponent<MindComponent>();
+
+            GhostRoleInternalCreateMindAndTransfer(args.Player, uid, mob, ghostRole);
+
+            if (++component.CurrentTakeovers < component.AvailableTakeovers)
+            {
+                args.TookRole = true;
+                return;
+            }
+
+            ghostRole.Taken = true;
+
+            if (component.DeleteOnSpawn)
+                QueueDel(uid);
+
+            args.TookRole = true;
+        }
+
+        private void OnTakeoverTakeRole(EntityUid uid, GhostTakeoverAvailableComponent component, ref TakeGhostRoleEvent args)
+        {
+            if (!TryComp(uid, out GhostRoleComponent? ghostRole) ||
+                ghostRole.Taken)
+            {
+                args.TookRole = false;
+                return;
+            }
+
+            ghostRole.Taken = true;
+
+            var mind = EnsureComp<MindComponent>(uid);
+
+            if (mind.HasMind)
+            {
+                args.TookRole = false;
+                return;
+            }
+
+            if (ghostRole.MakeSentient)
+                MakeSentientCommand.MakeSentient(uid, EntityManager, ghostRole.AllowMovement, ghostRole.AllowSpeech);
+
+            GhostRoleInternalCreateMindAndTransfer(args.Player, uid, uid, ghostRole);
+            UnregisterGhostRole(ghostRole);
+
+            args.TookRole = true;
         }
     }
 

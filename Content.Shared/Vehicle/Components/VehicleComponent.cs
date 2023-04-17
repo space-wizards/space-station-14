@@ -58,15 +58,24 @@ namespace Content.Shared.Vehicle.Components
         /// <summary>
         /// Whether the vehicle has a key currently inside it or not.
         /// </summary>
-        [ViewVariables]
+        [DataField("hasKey")]
         public bool HasKey = false;
 
-        // TODO: Fix this
         /// <summary>
-        /// Whether the vehicle should treat north as its unique direction in its visualizer
+        /// Determines from which side the vehicle will be displayed on top of the player.
         /// </summary>
-        [DataField("northOnly")]
-        public bool NorthOnly = false;
+
+        [DataField("southOver")]
+        public bool SouthOver = false;
+
+        [DataField("northOver")]
+        public bool NorthOver = false;
+
+        [DataField("westOver")]
+        public bool WestOver = false;
+
+        [DataField("eastOver")]
+        public bool EastOver = false;
 
         /// <summary>
         /// What the y buckle offset should be in north / south
