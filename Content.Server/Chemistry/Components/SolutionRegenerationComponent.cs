@@ -41,5 +41,5 @@ public sealed class SolutionRegenerationComponent : Component
     /// The time when the next regeneration will occur.
     /// </summary>
     [DataField("nextChargeTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan NextRegenTime = TimeSpan.MaxValue;
+    public TimeSpan NextRegenTime = TimeSpan.FromSeconds(0);
 }
