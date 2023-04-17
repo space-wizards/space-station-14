@@ -1,0 +1,39 @@
+- type: objective
+  id: DownloadObjective
+  issuer: spiderclan
+  requirements:
+  - !type:TraitorRequirement {}
+  conditions:
+  - !type:DownloadCondition {}
+
+- type: objective
+  id: DoorjackObjective
+  issuer: spiderclan
+  requirements:
+  - !type:TraitorRequirement {}
+  conditions:
+  - !type:DoorjackCondition {}
+
+- type: objective
+  id: SpiderChargeObjective
+  issuer: spiderclan
+  requirements:
+  - !type:TraitorRequirement {}
+  conditions:
+  - !type:SpiderChargeCondition {}
+
+- type: objective
+  id: TerrorObjective
+  issuer: spiderclan
+  requirements:
+  - !type:TraitorRequirement {}
+  conditions:
+  - !type:TerrorCondition {}
+
+- type: objective
+  id: SurviveObjective
+  issuer: spiderclan
+  requirements:
+  - !type:TraitorRequirement {}
+  conditions:
+  - !type:SurviveCondition {}

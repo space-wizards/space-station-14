@@ -53,3 +53,9 @@
   - Chi
   - Psi
   - Omega
+
+- type: dataset
+  id: SyndicateNamesPrefix
+  values:
+  - Operative
+  - Agent
