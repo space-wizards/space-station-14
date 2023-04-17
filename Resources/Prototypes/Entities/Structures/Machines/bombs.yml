@@ -24,7 +24,7 @@
     - type: ExplodeOnTrigger
     - type: OnUseTimerTrigger
       delay: 90
-      delayOptions: [10, 90, 120, 150, 180, 210, 240, 270, 300] #10 for debug purposes
+      delayOptions: [90, 120, 150, 180, 210, 240, 270, 300] #10 for debug purposes
       initialBeepDelay: 0
       beepSound: /Audio/Machines/Nuke/general_beep.ogg
     - type: Anchorable
