@@ -1,17 +1,4 @@
 Entries:
-- author: Jack Rost
-  changes:
-  - {message: 'Spiders have more damage and hp, cant slip and can pull stuff around
-      now', type: Tweak}
-  - {message: Critters spawn now doesn't depend on the chaos level, type: Tweak}
-  - {message: Spiders can make web that slows down everyone but them now, type: Add}
-  id: 2944
-  time: '2023-01-22T22:50:05.0000000+00:00'
-- author: corentt
-  changes:
-  - {message: The cloning machine now handles better cloning zombies., type: Fix}
-  id: 2945
-  time: '2023-01-22T23:36:03.0000000+00:00'
 - author: juliangiebel
   changes:
   - {message: The crew monitoring server. It relays the status of suit sensors to
@@ -2890,3 +2877,14 @@ Entries:
   - {message: Fixed non-appearing ERT equipment., type: Fix}
   id: 3443
   time: '2023-04-17T22:28:09.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed being able to remove powercells from ninja suits., type: Fix}
+  id: 3444
+  time: '2023-04-17T22:30:41.0000000+00:00'
+- author: Nimfar
+  changes:
+  - {message: 'Renamed Gun Safes as well as their prototypes. On each safe of the
+      spawn, it is now written what weapons are inside', type: Tweak}
+  id: 3445
+  time: '2023-04-17T22:31:40.0000000+00:00'
