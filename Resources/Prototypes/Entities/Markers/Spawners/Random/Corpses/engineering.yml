@@ -1,0 +1,98 @@
+- type: entity
+  name: random atmospheric technician corpse spawner #RANDOM ATMOSPHERIC TECHNICIAN
+  id: RandomSpawnAtmosphericTechnicianCorpse
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Markers/jobs.rsi
+        state: atmospherics
+      - state: dead
+  - type: RandomSpawner
+    prototypes:
+      - AtmosphericTechnicianFilledCorpse
+      - AtmosphericTechnicianEmptyCorpse
+      - AtmosphericTechnicianEmptyWinterCorpse
+      - AtmosphericTechnicianFilledFireCorpse
+    chance: 1
+
+- type: entity
+  name: random engineering hardsuit corpse spawner #RANDOM ENGINEERING HARDSUIT
+  id: RandomSpawnHardsuitEngineeringCorpse
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Markers/jobs.rsi
+        state: engineer
+      - state: dead
+  - type: RandomSpawner
+    prototypes:
+      - StationEngineerFilledHardCorpse
+      - AtmosphericTechnicianFilledHardCorpse
+    chance: 1
+
+- type: entity
+  name: random station engineer corpse spawner #RANDOM STATION ENGINEER 
+  id: RandomSpawnStationEngineerCorpse
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Markers/jobs.rsi
+        state: engineer
+      - state: dead
+  - type: RandomSpawner
+    prototypes:
+      - StationEngineerFilledCorpse
+      - StationEngineerEmptyCorpse
+      - StationEngineerEmptyWinterCorpse
+      - StationEngineerFilledRadCorpse
+    chance: 1
+
+- type: entity
+  name: random technical assistant corpse spawner #RANDOM TECHNICAL ASSISTANT
+  id: RandomSpawnTechnicalAssistantCorpse
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Markers/jobs.rsi
+        state: engineer
+      - state: dead
+  - type: RandomSpawner
+    prototypes:
+      - TechnicalAssistantFilledCorpse
+      - TechnicalAssistantEmptyCorpse
+      - TechnicalAssistantEmptyWinterCorpse
+    chance: 1
+
+- type: entity
+  name: random engineering corpse spawner #RANDOM ENGINEERING
+  id: RandomSpawnEngineeringCorpse
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Markers/jobs.rsi
+        state: engineer
+      - state: dead
+  - type: RandomSpawner
+    prototypes:
+      - AtmosphericTechnicianFilledCorpse
+      - AtmosphericTechnicianEmptyCorpse
+      - AtmosphericTechnicianEmptyWinterCorpse
+      - AtmosphericTechnicianFilledFireCorpse
+      - StationEngineerFilledCorpse
+      - StationEngineerEmptyCorpse
+      - StationEngineerEmptyWinterCorpse
+      - StationEngineerFilledRadCorpse
+      - TechnicalAssistantFilledCorpse
+      - TechnicalAssistantEmptyCorpse
+      - TechnicalAssistantEmptyWinterCorpse
+    chance: 1

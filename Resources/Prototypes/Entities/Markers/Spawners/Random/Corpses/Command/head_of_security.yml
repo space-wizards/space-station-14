@@ -1,0 +1,17 @@
+- type: entity
+  name: random head of security corpse spawner #RANDOM HOS
+  id: RandomSpawnHeadOfSecurityCorpse
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Markers/jobs.rsi
+        state: hos
+      - state: dead
+  - type: RandomSpawner
+    prototypes:
+      - HeadOfSecurityFilledCorpse
+      - HeadOfSecurityEmptyCorpse
+      - HeadOfSecurityEmptyWinterCorpse
+    chance: 1

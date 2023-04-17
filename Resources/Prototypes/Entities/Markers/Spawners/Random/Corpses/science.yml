@@ -1,0 +1,19 @@
+- type: entity
+  name: random science corpse spawner #RANDOM SCIENCE
+  id: RandomSpawnScienceCorpse
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Markers/jobs.rsi
+        state: scientist
+      - state: dead
+  - type: RandomSpawner
+    prototypes:
+      - ScientistFilledCorpse
+      - ScientistEmptyCorpse
+      - ScientistEmptyWinterCorpse
+      - ScientistFilledBioCorpse
+      - ResearchAssistantDefaultCorpse
+    chance: 1

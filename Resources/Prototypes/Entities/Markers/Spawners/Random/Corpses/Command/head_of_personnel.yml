@@ -1,0 +1,17 @@
+- type: entity
+  name: random head of personnel corpse spawner #RANDOM HOP
+  id: RandomSpawnHeadOfPersonnelCorpse
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Markers/jobs.rsi
+        state: hop
+      - state: dead
+  - type: RandomSpawner
+    prototypes:
+      - HeadOfPersonnelFilledCorpse
+      - HeadOfPersonnelEmptyCorpse
+      - HeadOfPersonnelEmptyWinterCorpse
+    chance: 1

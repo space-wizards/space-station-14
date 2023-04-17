@@ -1,0 +1,17 @@
+- type: entity
+  name: random centcom corpse spawner #RANDOM CENTCOM
+  id: RandomSpawnCentcomCorpse
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Markers/jobs.rsi
+        state: centcom
+      - state: dead
+  - type: RandomSpawner
+    prototypes:
+      - CentcomFilledCorpse
+      - CentcomEmptyCorpse
+      - CentcomEmptyWinterCorpse
+    chance: 1

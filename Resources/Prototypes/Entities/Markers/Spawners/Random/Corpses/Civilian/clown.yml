@@ -1,0 +1,19 @@
+- type: entity
+  name: random clown corpse spawner #RANDOM CLOWN
+  id: RandomSpawnClownCorpse
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Markers/jobs.rsi
+        state: clown
+      - state: dead
+  - type: RandomSpawner
+    prototypes:
+      - ClownDefaultCorpse
+      - ClownJesterCorpse
+      - ClownAltJesterCorpse
+      - ClownPriestCorpse
+      - ClownPonchoCorpse
+    chance: 1

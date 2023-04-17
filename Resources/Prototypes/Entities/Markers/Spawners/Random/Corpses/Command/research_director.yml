@@ -1,0 +1,17 @@
+- type: entity
+  name: random research director corpse spawner #RANDOM RD
+  id: RandomSpawnResearchDirectorCorpse
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Markers/jobs.rsi
+        state: rd
+      - state: dead
+  - type: RandomSpawner
+    prototypes:
+      - ResearchDirectorFilledCorpse
+      - ResearchDirectorEmptyCorpse
+      - ResearchDirectorEmptyWinterCorpse
+    chance: 1

@@ -1,0 +1,34 @@
+- type: entity
+  name: random ERT corpse spawner #RANDOM ERT
+  id: RandomSpawnERTCorpse
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Markers/jobs.rsi
+        state: ertleader
+      - state: dead
+  - type: RandomSpawner
+    prototypes:
+      - ERTLeaderFilledCorpse
+      - ERTLeaderEmptyCorpse
+      - ERTLeaderEVAFilledCorpse
+      - ERTLeaderEVAEmptyCorpse
+      - ERTEngineerFilledCorpse
+      - ERTEngineerEmptyCorpse
+      - ERTEngineerEVAFilledCorpse
+      - ERTEngineerEVAEmptyCorpse
+      - ERTMedicalFilledCorpse
+      - ERTMedicalEmptyCorpse
+      - ERTMedicalEVAFilledCorpse
+      - ERTMedicalEVAEmptyCorpse
+      - ERTSecurityFilledCorpse
+      - ERTSecurityEmptyCorpse
+      - ERTSecurityEVAFilledCorpse
+      - ERTSecurityEVAEmptyCorpse
+      - ERTJanitorFilledCorpse
+      - ERTJanitorEmptyCorpse
+      - ERTJanitorEVAFilledCorpse
+      - ERTJanitorEVAEmptyCorpse
+    chance: 1

@@ -1,0 +1,18 @@
+- type: entity
+  name: random boxer corpse spawner #RANDOM BOXER
+  id: RandomSpawnBoxerCorpse
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Markers/jobs.rsi
+        state: boxer
+      - state: dead
+  - type: RandomSpawner
+    prototypes:
+      - BoxerRedCorpse
+      - BoxerYellowCorpse
+      - BoxerGreenCorpse
+      - BoxerBlueCorpse
+    chance: 1

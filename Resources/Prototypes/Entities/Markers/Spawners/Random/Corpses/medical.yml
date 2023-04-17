@@ -1,0 +1,77 @@
+- type: entity
+  name: random chemist corpse spawner #RANDOM CHEMIST
+  id: RandomSpawnChemistCorpse
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Markers/jobs.rsi
+        state: chemist
+      - state: dead
+  - type: RandomSpawner
+    prototypes:
+      - ChemistFilledCorpse
+      - ChemistEmptyCorpse
+      - ChemistEmptyWinterCorpse
+    chance: 1
+
+- type: entity
+  name: random medical doctor corpse spawner #RANDOM MEDICAL DOCTOR
+  id: RandomSpawnMedicalDoctorCorpse
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Markers/jobs.rsi
+        state: doctor
+      - state: dead
+  - type: RandomSpawner
+    prototypes:
+      - MedicalDoctorFilledCorpse
+      - MedicalDoctorEmptyCorpse
+      - MedicalDoctorFilledBioCorpse
+      - MedicalDoctorFilledViroCorpse
+    chance: 1
+
+- type: entity
+  name: random medical intern corpse spawner #RANDOM MEDICAL INTERN
+  id: RandomSpawnMedicalInternCorpse
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Markers/jobs.rsi
+        state: doctor
+      - state: dead
+  - type: RandomSpawner
+    prototypes:
+      - MedicalInternFilledCorpse
+      - MedicalInternEmptyCorpse
+    chance: 1
+
+- type: entity
+  name: random medical corpse spawner #RANDOM MEDICAL
+  id: RandomSpawnMedicalCorpse
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Markers/jobs.rsi
+        state: doctor
+      - state: dead
+  - type: RandomSpawner
+    prototypes:
+      - ChemistFilledCorpse
+      - ChemistEmptyCorpse
+      - ChemistEmptyWinterCorpse
+      - MedicalDoctorFilledCorpse
+      - MedicalDoctorEmptyCorpse
+      - MedicalDoctorFilledBioCorpse
+      - MedicalDoctorFilledViroCorpse
+      - MedicalInternFilledCorpse
+      - MedicalInternEmptyCorpse
+    chance: 1

@@ -1,0 +1,17 @@
+- type: entity
+  name: random botanist corpse spawner #RANDOM BOTANIST
+  id: RandomSpawnBotanistCorpse
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Markers/jobs.rsi
+        state: botanist
+      - state: dead
+  - type: RandomSpawner
+    prototypes:
+      - BotanistFilledCorpse
+      - BotanistEmptyCorpse
+      - BotanistEmptyWinterCorpse
+    chance: 1

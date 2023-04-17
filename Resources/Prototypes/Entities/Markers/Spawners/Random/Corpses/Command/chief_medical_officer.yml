@@ -1,0 +1,18 @@
+- type: entity
+  name: random chief medical officer corpse spawner #RANDOM CMO
+  id: RandomSpawnChiefMedicalOfficerCorpse
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Markers/jobs.rsi
+        state: cmo
+      - state: dead
+  - type: RandomSpawner
+    prototypes:
+      - ChiefMedicalOfficerFilledCorpse
+      - ChiefMedicalOfficerEmptyCorpse
+      - ChiefMedicalOfficerEmptyWinterCorpse
+      - ChiefMedicalOfficerFilledBioCorpse
+    chance: 1

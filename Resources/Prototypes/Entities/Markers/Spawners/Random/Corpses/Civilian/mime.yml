@@ -1,0 +1,17 @@
+- type: entity
+  name: random mime corpse spawner #RANDOM MIME
+  id: RandomSpawnMimeCorpse
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Markers/jobs.rsi
+        state: mime
+      - state: dead
+  - type: RandomSpawner
+    prototypes:
+      - MimeFilledCorpse
+      - MimeWinterCorpse
+      - MimeEmptyCorpse
+    chance: 1

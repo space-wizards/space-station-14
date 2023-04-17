@@ -1,0 +1,89 @@
+- type: entity
+  name: random passenger corpse spawner #RANDOM PASSENGER
+  id: RandomSpawnPassengerCorpse
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Markers/jobs.rsi
+        state: passenger
+      - state: dead
+  - type: RandomSpawner
+    prototypes:
+      - PassengerDefaultCorpse
+      - PassengerRedCorpse
+      - PassengerBlueCorpse
+      - PassengerDarkBlueCorpse
+      - PassengerBlackCorpse
+      - PassengerPurpleCorpse
+      - PassengerOrangeCorpse
+      - PassengerGreenCorpse
+      - PassengerDarkGreenCorpse
+      - PassengerTealCorpse
+      - PassengerWhiteCorpse
+      - PassengerYellowCorpse
+      - PassengerPinkCorpse
+      - PassengerMaroonCorpse
+      - PassengerLightBrownCorpse
+      - PassengerBrownCorpse
+      - PassengerGraytideCorpse
+      - PassengerBorgCorpse
+      - PassengerMexicaCorpse
+      - PassengerJudgeCorpse
+      - PassengerSantaCorpse
+      - PassengerMaidenCorpse
+      - PassengerDameDaneCorpse
+      - PassengerSkubCorpse
+      - PassengerChickenCorpse
+      - PassengerMonkeyCorpse
+      - PassengerWinterCorpse
+    chance: 1
+
+- type: entity
+  name: random passenger hardsuit corpse spawner #RANDOM PASSENGER HARDSUIT
+  id: RandomSpawnHardsuitPassengerCorpse
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Markers/jobs.rsi
+        state: passenger
+      - state: dead
+  - type: RandomSpawner
+    prototypes:
+      - PassengerEVACorpse
+      - PassengerEmergencyCorpse
+    chance: 1
+
+- type: entity
+  name: random passenger colored corpse spawner #RANDOM PASSENGER COLORED SET
+  id: RandomSpawnColoredPassengerCorpse
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Markers/jobs.rsi
+        state: passenger
+      - state: dead
+  - type: RandomSpawner
+    prototypes:
+      - PassengerDefaultCorpse
+      - PassengerRedCorpse
+      - PassengerBlueCorpse
+      - PassengerDarkBlueCorpse
+      - PassengerBlackCorpse
+      - PassengerPurpleCorpse
+      - PassengerOrangeCorpse
+      - PassengerGreenCorpse
+      - PassengerDarkGreenCorpse
+      - PassengerTealCorpse
+      - PassengerWhiteCorpse
+      - PassengerYellowCorpse
+      - PassengerPinkCorpse
+      - PassengerMaroonCorpse
+      - PassengerLightBrownCorpse
+      - PassengerBrownCorpse
+    chance: 1

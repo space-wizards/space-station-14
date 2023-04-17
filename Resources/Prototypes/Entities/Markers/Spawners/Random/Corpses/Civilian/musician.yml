@@ -1,0 +1,17 @@
+- type: entity
+  name: random musician corpse spawner #RANDOM MUSICIAN
+  id: RandomSpawnMusicianCorpse
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Markers/jobs.rsi
+        state: musician
+      - state: dead
+  - type: RandomSpawner
+    prototypes:
+      - MusicianDefaultCorpse
+      - MusicianWinterCorpse
+      - MusicianEmptyCorpse
+    chance: 1

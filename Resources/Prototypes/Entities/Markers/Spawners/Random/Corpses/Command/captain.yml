@@ -1,0 +1,17 @@
+- type: entity
+  name: random captain corpse spawner #RANDOM CAPTAIN
+  id: RandomSpawnCaptainCorpse
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Markers/jobs.rsi
+        state: captain
+      - state: dead
+  - type: RandomSpawner
+    prototypes:
+      - CaptainFilledCorpse
+      - CaptainFilledWinterCorpse
+      - CaptainEmptyCorpse
+    chance: 1
