@@ -11,13 +11,15 @@ public sealed class SalvageExpeditionConsoleState : BoundUserInterfaceState
 {
     public TimeSpan NextOffer;
     public bool Claimed;
+    public bool Cooldown;
     public ushort ActiveMission;
     public List<SalvageMissionParams> Missions;
 
-    public SalvageExpeditionConsoleState(TimeSpan nextOffer, bool claimed, ushort activeMission, List<SalvageMissionParams> missions)
+    public SalvageExpeditionConsoleState(TimeSpan nextOffer, bool claimed, bool cooldown, ushort activeMission, List<SalvageMissionParams> missions)
     {
         NextOffer = nextOffer;
         Claimed = claimed;
+        Cooldown = cooldown;
         ActiveMission = activeMission;
         Missions = missions;
     }
@@ -49,6 +51,12 @@ public sealed class SalvageExpeditionDataComponent : Component
     /// </summary>
     [ViewVariables]
     public bool Claimed => ActiveMission != 0;
+
+    /// <summary>
+    /// Are we actively cooling down from the last salvage mission.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("cooldown")]
+    public bool Cooldown = false;
 
     /// <summary>
     /// Nexy time salvage missions are offered.

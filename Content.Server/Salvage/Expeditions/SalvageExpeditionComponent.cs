@@ -24,4 +24,15 @@ public sealed class SalvageExpeditionComponent : Component
     public EntityUid Station;
 
     [ViewVariables] public bool Completed = false;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("stage")]
+    public ExpeditionStage Stage = ExpeditionStage.Added;
+}
+
+public enum ExpeditionStage : byte
+{
+    Added,
+    Running,
+    Countdown,
+    FinalCountdown,
 }

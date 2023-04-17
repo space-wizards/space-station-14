@@ -130,16 +130,28 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         expedition.EndTime = _timing.CurTime + mission.Duration;
         expedition.MissionParams = _missionParams;
 
-        var ftlUid = _entManager.SpawnEntity("FTLPoint", new EntityCoordinates(mapUid, Vector2.Zero));
+        // Don't want consoles to have the incorrect name until refreshed.
+        var ftlUid = _entManager.CreateEntityUninitialized("FTLPoint", new EntityCoordinates(mapUid, Vector2.Zero));
         _entManager.GetComponent<MetaDataComponent>(ftlUid).EntityName = SharedSalvageSystem.GetFTLName(_prototypeManager.Index<DatasetPrototype>(config.NameProto), _missionParams.Seed);
+        _entManager.InitializeAndStartEntity(ftlUid);
 
         var landingPadRadius = 24;
-        var minDungeonOffset = landingPadRadius + 32;
-        var maxDungeonOffset = minDungeonOffset + 32;
+        var minDungeonOffset = landingPadRadius + 12;
 
-        var dungeonOffsetDistance = (minDungeonOffset + (maxDungeonOffset - minDungeonOffset) * random.NextFloat());
+        var dungeonRotation = _dungeon.GetDungeonRotation(_missionParams.Seed);
+        var dungeonSpawnRotation = new Angle(random.NextDouble() * Math.Tau);
+
+        // If the dungeon were to spawn facing the landing pad then bump the offset a bit
+        // This isn't robust but fine for now.
+        if ((dungeonRotation - dungeonSpawnRotation).Reduced() > Math.PI / 2)
+        {
+            minDungeonOffset += 16;
+        }
+
+        var maxDungeonOffset = minDungeonOffset + 24;
+        var dungeonOffsetDistance = minDungeonOffset + (maxDungeonOffset - minDungeonOffset) * random.NextFloat();
         var dungeonOffset = new Vector2(dungeonOffsetDistance, 0f);
-        dungeonOffset = new Angle(random.NextDouble() * Math.Tau).RotateVec(dungeonOffset);
+        dungeonOffset = dungeonSpawnRotation.RotateVec(dungeonOffset);
         var dungeonConfig = _prototypeManager.Index<DungeonConfigPrototype>(mission.Dungeon);
         var dungeon =
             await WaitAsyncTask(_dungeon.GenerateDungeonAsync(dungeonConfig, mapUid, grid, (Vector2i) dungeonOffset,
@@ -172,7 +184,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
         grid.SetTiles(tiles);
 
-        await SetupMission(mission.Mission, mission, (Vector2i) dungeonOffset, dungeon, grid, random, seed.GetSeed());
+        await SetupMission(mission.Mission, mission, (Vector2i) dungeonOffset, dungeon, mapUid, grid, random);
 
         // Handle loot
         foreach (var loot in mission.Loot)
@@ -190,6 +202,8 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         {
             switch (rule)
             {
+                case BiomeLoot biome:
+                    break;
                 // Spawns a cluster (like an ore vein) nearby.
                 case ClusterLoot cluster:
                     await SpawnClusterLoot(dungeon, cluster, gridUid, grid, random, reservedTiles);
@@ -227,6 +241,9 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
             for (var j = 0; j < clusterAmount; j++)
             {
+                if (frontier.Count == 0)
+                    break;
+
                 var nodeIndex = random.Next(frontier.Count);
                 var node = frontier[nodeIndex];
                 frontier.RemoveSwap(nodeIndex);
@@ -244,13 +261,10 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
                     frontier.Add(neighbor);
                 }
 
-                if (anchored.MoveNext(out _))
-                    continue;
-
-                spawnTiles.Add(node);
-
-                if (frontier.Count == 0)
-                    break;
+                if (!anchored.MoveNext(out _))
+                {
+                    spawnTiles.Add(node);
+                }
             }
         }
 
@@ -265,43 +279,42 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
     #region Mission Specific
 
-    private async Task SetupMission(string missionMod, SalvageMission mission, Vector2i dungeonOffset, Dungeon dungeon, MapGridComponent grid, Random random, int seed)
+    private async Task SetupMission(string missionMod, SalvageMission mission, Vector2i dungeonOffset, Dungeon dungeon, EntityUid gridUid, MapGridComponent grid, Random random)
     {
         switch (missionMod)
         {
-            case "Structure":
-                await SetupStructure(mission, dungeonOffset, dungeon, grid, random, seed);
-                return;
-            default:
-                return;
+        case "Mining":
+            await SetupMining(mission, dungeon, gridUid, grid, random);
+            return;
+        case "StructureDestroy":
+            await SetupStructure(mission, dungeon, gridUid, grid, random);
+            return;
+        default:
+            throw new NotImplementedException();
         }
     }
 
-    private async Task SetupStructure(SalvageMission mission, Vector2i dungeonOffset, Dungeon dungeon, MapGridComponent grid, Random random, int seed)
+    private async Task SetupMining(
+        SalvageMission mission,
+        Dungeon dungeon,
+        EntityUid gridUid,
+        MapGridComponent grid,
+        Random random)
     {
-        var structureComp = _entManager.GetComponent<SalvageStructureExpeditionComponent>(grid.Owner);
+
+    }
+
+    private async Task SetupStructure(
+        SalvageMission mission,
+        Dungeon dungeon,
+        EntityUid gridUid,
+        MapGridComponent grid,
+        Random random)
+    {
+        var structureComp = _entManager.EnsureComponent<SalvageStructureExpeditionComponent>(gridUid);
         var availableRooms = dungeon.Rooms.ToList();
         var faction = _prototypeManager.Index<SalvageFactionPrototype>(mission.Faction);
-        var groupSpawns = (int) mission.Difficulty + mission.RemainingDifficulty;
-
-        for (var i = 0; i < groupSpawns; i++)
-        {
-            var mobGroupIndex = random.Next(faction.MobGroups.Count);
-            var mobGroup = faction.MobGroups[mobGroupIndex];
-
-            var spawnRoomIndex = random.Next(dungeon.Rooms.Count);
-            var spawnRoom = dungeon.Rooms[spawnRoomIndex];
-            var spawnTile = spawnRoom.Tiles.ElementAt(random.Next(spawnRoom.Tiles.Count));
-            spawnTile += dungeonOffset;
-            var spawnPosition = grid.GridTileToLocal(spawnTile);
-
-            foreach (var entry in EntitySpawnCollection.GetSpawns(mobGroup.Entries, random))
-            {
-                _entManager.SpawnEntity(entry, spawnPosition);
-            }
-
-            await SuspendIfOutOfTime();
-        }
+        await SpawnMobsRandomRooms(mission, dungeon, faction, grid, random);
 
         var structureCount = _salvage.GetStructureCount(mission.Difficulty);
         var shaggy = faction.Configs["DefenseStructure"];
@@ -310,9 +323,46 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         for (var i = 0; i < structureCount; i++)
         {
             var structureRoom = availableRooms[random.Next(availableRooms.Count)];
-            var spawnTile = structureRoom.Tiles.ElementAt(random.Next(structureRoom.Tiles.Count)) + dungeonOffset;
+            var spawnTile = structureRoom.Tiles.ElementAt(random.Next(structureRoom.Tiles.Count));
             var uid = _entManager.SpawnEntity(shaggy, grid.GridTileToLocal(spawnTile));
+            _entManager.AddComponent<SalvageStructureComponent>(uid);
             structureComp.Structures.Add(uid);
+        }
+    }
+
+    private async Task SpawnMobsRandomRooms(SalvageMission mission, Dungeon dungeon, SalvageFactionPrototype faction, MapGridComponent grid, Random random)
+    {
+        var groupSpawns = _salvage.GetSpawnCount(mission.Difficulty, mission.RemainingDifficulty);
+        var groupSum = faction.MobGroups.Sum(o => o.Prob);
+
+        for (var i = 0; i < groupSpawns; i++)
+        {
+            var roll = random.NextFloat() * groupSum;
+            var value = 0f;
+
+            foreach (var group in faction.MobGroups)
+            {
+                value += group.Prob;
+
+                if (value < roll)
+                    continue;
+
+                var mobGroupIndex = random.Next(faction.MobGroups.Count);
+                var mobGroup = faction.MobGroups[mobGroupIndex];
+
+                var spawnRoomIndex = random.Next(dungeon.Rooms.Count);
+                var spawnRoom = dungeon.Rooms[spawnRoomIndex];
+                var spawnTile = spawnRoom.Tiles.ElementAt(random.Next(spawnRoom.Tiles.Count));
+                var spawnPosition = grid.GridTileToLocal(spawnTile);
+
+                foreach (var entry in EntitySpawnCollection.GetSpawns(mobGroup.Entries, random))
+                {
+                    _entManager.SpawnEntity(entry, spawnPosition);
+                }
+
+                await SuspendIfOutOfTime();
+                break;
+            }
         }
     }
 

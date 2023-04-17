@@ -53,18 +53,26 @@ public abstract class SharedSalvageSystem : EntitySystem
         switch (rating)
         {
             case DifficultyRating.None:
-                return 1;
+                return 0;
             case DifficultyRating.Minor:
-                return 2;
+                return 1;
             case DifficultyRating.Moderate:
-                return 4;
+                return 3;
             case DifficultyRating.Hazardous:
-                return 7;
+                return 6;
             case DifficultyRating.Extreme:
-                return 11;
+                return 10;
             default:
                 throw new ArgumentOutOfRangeException(nameof(rating), rating, null);
         }
+    }
+
+    /// <summary>
+    /// How many groups of mobs to spawn for a mission.
+    /// </summary>
+    public float GetSpawnCount(DifficultyRating difficulty, float remaining)
+    {
+        return (int) difficulty * 2 + remaining + 1;
     }
 
     public static string GetFTLName(DatasetPrototype dataset, int seed)
@@ -104,7 +112,8 @@ public abstract class SharedSalvageSystem : EntitySystem
 
         var duration = TimeSpan.FromSeconds(exactDuration);
 
-        var loots = GetLoot(_proto.EnumeratePrototypes<SalvageLootPrototype>().ToList(), (int) difficulty, seed);
+        var loots = GetLoot(_proto.EnumeratePrototypes<SalvageLootPrototype>().ToList(), GetDifficulty(difficulty), seed);
+        rating = MathF.Max(0f, rating);
 
         return new SalvageMission(seed, difficulty, rating, dungeon.ID, faction.ID, config, biome.ID, light?.Color, duration, loots);
     }

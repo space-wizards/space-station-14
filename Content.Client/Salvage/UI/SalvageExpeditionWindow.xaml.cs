@@ -24,6 +24,7 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
 
     public event Action<ushort>? ClaimMission;
     private bool _claimed;
+    private bool _cooldown;
     private TimeSpan _nextOffer;
 
     public SalvageExpeditionWindow()
@@ -37,6 +38,7 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
     public void UpdateState(SalvageExpeditionConsoleState state)
     {
         _claimed = state.Claimed;
+        _cooldown = state.Cooldown;
         _nextOffer = state.NextOffer;
         Container.DisposeAllChildren();
 
@@ -203,7 +205,7 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
                 HorizontalExpand = true,
                 Pressed = state.ActiveMission == missionParams.Index,
                 ToggleMode = true,
-                Disabled = state.Claimed,
+                Disabled = state.Claimed || state.Cooldown,
             };
 
             claimButton.Label.Margin = new Thickness(0f, 5f);

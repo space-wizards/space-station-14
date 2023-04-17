@@ -20,12 +20,6 @@ public sealed class ClusterLoot : IDungeonLoot
     [DataField("maxCluster")] public int MaxClusterAmount;
 
     /// <summary>
-    /// Amount to spawn for the entire loot.
-    /// </summary>
-    [DataField("max")]
-    public int Amount;
-
-    /// <summary>
     /// Number of points to spawn.
     /// </summary>
     [DataField("points")] public int Points;
