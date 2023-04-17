@@ -148,7 +148,7 @@ public sealed class DefusableSystem : SharedDefusableSystem
             );
         }
 
-        Logger.Debug("it begins");
+        RaiseLocalEvent(uid, new BombArmedEvent(uid), false);
 
         UpdateAppearance(uid, comp);
     }
@@ -160,6 +160,8 @@ public sealed class DefusableSystem : SharedDefusableSystem
             return;
 
         _popup.PopupEntity(Loc.GetString("defusable-popup-boom", ("name", uid)), uid, PopupType.LargeCaution);
+
+        RaiseLocalEvent(uid, new BombDetonatedEvent(uid), false);
 
         _explosion.TriggerExplosive(uid);
         QueueDel(uid);
@@ -182,6 +184,8 @@ public sealed class DefusableSystem : SharedDefusableSystem
 
         _audio.PlayPvs(comp.DefusalSound, uid);
 
+        RaiseLocalEvent(uid, new BombDefusedEvent(uid), false);
+
         UpdateAppearance(uid, comp);
     }
 
@@ -193,5 +197,33 @@ public sealed class DefusableSystem : SharedDefusableSystem
             return;
 
         _appearance.SetData(uid, DefusableVisuals.Active, comp.BombLive);
+    }
+}
+
+public sealed class BombDefusedEvent : EntityEventArgs
+{
+    public EntityUid Entity;
+
+    public BombDefusedEvent(EntityUid entity)
+    {
+        Entity = entity;
+    }
+}
+public sealed class BombArmedEvent : EntityEventArgs
+{
+    public EntityUid Entity;
+
+    public BombArmedEvent(EntityUid entity)
+    {
+        Entity = entity;
+    }
+}
+public sealed class BombDetonatedEvent : EntityEventArgs
+{
+    public EntityUid Entity;
+
+    public BombDetonatedEvent(EntityUid entity)
+    {
+        Entity = entity;
     }
 }
