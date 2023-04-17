@@ -1,9 +1,4 @@
 Entries:
-- author: Morb0
-  changes:
-  - {message: Correct bolts light state display, type: Fix}
-  id: 2941
-  time: '2023-01-21T16:33:12.0000000+00:00'
 - author: lapatison
   changes:
   - {message: Over 50 new fortunes can be found in fortune cookie, type: Add}
@@ -2890,3 +2885,8 @@ Entries:
   - {message: Fixed being able to eat and drink despite wearing a mask., type: Fix}
   id: 3440
   time: '2023-04-17T07:56:42.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Added InHand sprites for cloaks!, type: Add}
+  id: 3441
+  time: '2023-04-17T22:21:49.0000000+00:00'
