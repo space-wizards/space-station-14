@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Machines with power buttons in their UI can also be turned on or off
-      from the context menu., type: Add}
-  id: 2931
-  time: '2023-01-20T16:05:54.0000000+00:00'
 - author: BurninDreamer
   changes:
   - {message: 'Fake nuke disks are no longer a cheap painted plastic copy, now they
@@ -2902,3 +2896,8 @@ Entries:
   - {message: moved bowler hat to bardrobe, type: Tweak}
   id: 3430
   time: '2023-04-17T05:43:42.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Fix displaying tracking implanted person on crew monitor systems, type: Fix}
+  id: 3431
+  time: '2023-04-17T05:51:13.0000000+00:00'
