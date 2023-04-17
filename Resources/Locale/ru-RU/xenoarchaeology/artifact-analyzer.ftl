@@ -26,6 +26,7 @@ analysis-console-progress-text =
     }
 analysis-destroy-window-title = Подтвердить разрушение
 analysis-destroy-window-text = Разрушить артефакт, превратив его в очки исследований?
+analyzer-artifact-extract-popup = На поверхности артефакта мерцает энергия!
 analysis-destroy-window-yes = Да
 analysis-destroy-window-no = Нет
 analyzer-artifact-component-upgrade-analysis = Длительность анализа

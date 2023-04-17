@@ -15,6 +15,7 @@ traitor-user-was-a-traitor-with-objectives = [color=gray]{ $user }[/color] бы�
 traitor-user-was-a-traitor-with-objectives-named = [color=White]{ $name }[/color] ([color=gray]{ $user }[/color]) был(а) предателем, у которого(-ой) были следующие цели:
 traitor-was-a-traitor-with-objectives-named = [color=White]{ $name }[/color] был(а) предателем, у которого(-ой) были следующие цели:
 preset-traitor-objective-issuer-syndicate = [color=#87cefa]Синдикат[/color]
+preset-traitor-objective-issuer-spiderclan = [color=#33cc00]Клан пауков[/color]
 # Shown at the end of a round of Traitor
 traitor-objective-condition-success = { $condition } | [color={ $markupColor }]Успех![/color]
 # Shown at the end of a round of Traitor
