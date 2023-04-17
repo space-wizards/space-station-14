@@ -595,8 +595,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         var mind = mindComponent.Mind;
 
-        if (_operativeMindPendingData.TryGetValue(uid, out var role))
+        if (_operativeMindPendingData.TryGetValue(uid, out var role) || !_nukeopsRuleConfig.SpawnOutpost || !_nukeopsRuleConfig.EndsRound)
         {
+            if (role == null)
+                role = _nukeopsRuleConfig.OperativeRoleProto;
+
             mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(role)));
             _operativeMindPendingData.Remove(uid);
         }

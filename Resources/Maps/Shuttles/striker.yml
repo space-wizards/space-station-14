@@ -1,102 +1,15 @@
 meta:
   format: 3
-  name: Striker
-  author: checkraze7501
+  name: DemoStation
+  author: Space-Wizards
   postmapinit: false
 tilemap:
   0: Space
-  1: FloorArcadeBlue
-  2: FloorArcadeBlue2
-  3: FloorArcadeRed
-  4: FloorAsteroidCoarseSand0
-  5: FloorAsteroidCoarseSandDug
-  6: FloorAsteroidIronsand1
-  7: FloorAsteroidIronsand2
-  8: FloorAsteroidIronsand3
-  9: FloorAsteroidIronsand4
-  10: FloorAsteroidSand
-  11: FloorAsteroidTile
-  12: FloorBar
-  13: FloorBasalt
-  14: FloorBlue
-  15: FloorBlueCircuit
-  16: FloorBoxing
-  17: FloorCarpetClown
-  18: FloorCarpetOffice
-  19: FloorCave
-  20: FloorCaveDrought
-  21: FloorClown
   22: FloorDark
-  23: FloorDarkDiagonal
-  24: FloorDarkDiagonalMini
-  25: FloorDarkHerringbone
-  26: FloorDarkMini
-  27: FloorDarkMono
-  28: FloorDarkOffset
-  29: FloorDarkPavement
-  30: FloorDarkPavementVertical
-  31: FloorDarkPlastic
-  32: FloorDesert
-  33: FloorDirt
-  34: FloorEighties
-  35: FloorElevatorShaft
-  36: FloorFlesh
-  37: FloorFreezer
-  38: FloorGlass
-  39: FloorGold
-  40: FloorGrass
-  41: FloorGrassDark
-  42: FloorGrassJungle
-  43: FloorGrassLight
-  44: FloorGreenCircuit
-  45: FloorGym
-  46: FloorHydro
-  47: FloorKitchen
-  48: FloorLaundry
-  49: FloorLino
-  50: FloorLowDesert
-  51: FloorMetalDiamond
-  52: FloorMime
-  53: FloorMono
-  54: FloorPlanetDirt
-  55: FloorPlanetGrass
-  56: FloorPlastic
-  57: FloorRGlass
-  58: FloorReinforced
-  59: FloorRockVault
-  60: FloorShowroom
-  61: FloorShuttleBlue
-  62: FloorShuttleOrange
-  63: FloorShuttlePurple
   64: FloorShuttleRed
-  65: FloorShuttleWhite
-  66: FloorSilver
-  67: FloorSnow
-  68: FloorSteel
-  69: FloorSteelDiagonal
-  70: FloorSteelDiagonalMini
-  71: FloorSteelDirty
-  72: FloorSteelHerringbone
-  73: FloorSteelMini
-  74: FloorSteelMono
-  75: FloorSteelOffset
-  76: FloorSteelPavement
-  77: FloorSteelPavementVertical
   78: FloorTechMaint
   79: FloorTechMaint2
-  80: FloorTechMaint3
-  81: FloorWhite
-  82: FloorWhiteDiagonal
-  83: FloorWhiteDiagonalMini
-  84: FloorWhiteHerringbone
-  85: FloorWhiteMini
-  86: FloorWhiteMono
-  87: FloorWhiteOffset
-  88: FloorWhitePavement
-  89: FloorWhitePavementVertical
-  90: FloorWhitePlastic
   91: FloorWood
-  92: FloorWoodTile
   93: Lattice
   94: Plating
 entities:
@@ -140,9 +53,24 @@ entities:
       nodes:
       - node:
           color: '#FFFFFFFF'
-          id: WarnBox
+          id: BrickTileDarkCornerNe
         decals:
-          0: -1,-2
+          12: 1,-1
+      - node:
+          color: '#FFFFFFFF'
+          id: BrickTileDarkCornerNw
+        decals:
+          6: -3,-1
+      - node:
+          color: '#FFFFFFFF'
+          id: BrickTileDarkCornerSe
+        decals:
+          5: 1,-3
+      - node:
+          color: '#FFFFFFFF'
+          id: BrickTileDarkCornerSw
+        decals:
+          4: -3,-3
       - node:
           color: '#FFFFFFFF'
           id: BrickTileDarkLineS
@@ -151,15 +79,25 @@ entities:
           2: -2,-3
           3: 0,-3
       - node:
-          color: '#FFFFFFFF'
-          id: BrickTileDarkCornerSw
+          color: '#7F1C1FFF'
+          id: BrickTileWhiteCornerNe
         decals:
-          4: -3,-3
+          14: 1,-1
       - node:
-          color: '#FFFFFFFF'
-          id: BrickTileDarkCornerNw
+          color: '#7F1C1FFF'
+          id: BrickTileWhiteCornerNw
         decals:
-          6: -3,-1
+          13: -3,-1
+      - node:
+          color: '#7F1C1FFF'
+          id: BrickTileWhiteCornerSe
+        decals:
+          10: 1,-3
+      - node:
+          color: '#7F1C1FFF'
+          id: BrickTileWhiteCornerSw
+        decals:
+          11: -3,-3
       - node:
           color: '#7F1C1FFF'
           id: BrickTileWhiteLineS
@@ -168,25 +106,25 @@ entities:
           8: -1,-3
           9: 0,-3
       - node:
-          color: '#7F1C1FFF'
-          id: BrickTileWhiteCornerSw
+          color: '#FFFFFFFF'
+          id: WarnBox
         decals:
-          11: -3,-3
-      - node:
-          color: '#7F1C1FFF'
-          id: BrickTileWhiteCornerNw
-        decals:
-          13: -3,-1
+          0: -1,-2
       - node:
           color: '#FFFFFFFF'
-          id: WarnLineW
+          id: WarnLineE
         decals:
-          16: -1,-1
+          15: 1,-2
       - node:
           color: '#FFFFFFFF'
           id: WarnLineS
         decals:
           17: -3,-2
+      - node:
+          color: '#FFFFFFFF'
+          id: WarnLineW
+        decals:
+          16: -1,-1
       - node:
           color: '#FFFFFFFF'
           id: WoodTrimThinLineN
@@ -201,31 +139,6 @@ entities:
           21: -2,-6
           22: -1,-6
           23: 0,-6
-      - node:
-          color: '#FFFFFFFF'
-          id: BrickTileDarkCornerSe
-        decals:
-          5: 1,-3
-      - node:
-          color: '#7F1C1FFF'
-          id: BrickTileWhiteCornerSe
-        decals:
-          10: 1,-3
-      - node:
-          color: '#FFFFFFFF'
-          id: BrickTileDarkCornerNe
-        decals:
-          12: 1,-1
-      - node:
-          color: '#7F1C1FFF'
-          id: BrickTileWhiteCornerNe
-        decals:
-          14: 1,-1
-      - node:
-          color: '#FFFFFFFF'
-          id: WarnLineE
-        decals:
-          15: 1,-2
     type: DecalGrid
   - version: 2
     data:
@@ -320,6 +233,7 @@ entities:
   - nextShake: 0
     shakeTimes: 10
     type: GravityShake
+  - type: SpreaderGrid
 - uid: 1
   type: Grille
   components:
@@ -586,9 +500,13 @@ entities:
     type: PowerSupplier
   - containers:
       machine_board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 232
       machine_parts: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 233
         - 234
@@ -703,9 +621,13 @@ entities:
     type: PowerSupplier
   - containers:
       machine_board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 236
       machine_parts: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 237
         - 238
@@ -726,11 +648,17 @@ entities:
     type: Transform
   - enabled: False
     type: Thruster
+  - bodyType: Static
+    type: Physics
   - containers:
       machine_board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 240
       machine_parts: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 241
         - 242
@@ -744,6 +672,8 @@ entities:
     pos: -0.5,-8.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 60
   type: WallPlastitanium
   components:
@@ -783,6 +713,8 @@ entities:
     type: Construction
   - containers:
       board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 245
     type: ContainerContainer
@@ -798,6 +730,8 @@ entities:
     type: Construction
   - containers:
       board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 246
     type: ContainerContainer
@@ -818,6 +752,8 @@ entities:
     type: ToggleableClothing
   - containers:
       toggleable-clothing: !type:ContainerSlot
+        showEnts: False
+        occludes: True
         ent: 247
     type: ContainerContainer
   - canCollide: False
@@ -1002,6 +938,8 @@ entities:
     type: Transform
   - containers:
       board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 248
     type: ContainerContainer
@@ -1028,8 +966,11 @@ entities:
     pos: -3.5,-9.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
   - fixtures:
     - shape: !type:PolygonShape
+        radius: 0.01
         vertices:
         - 0.45,-0.45
         - 0.45,0.45
@@ -1043,26 +984,39 @@ entities:
       - MidImpassable
       - LowImpassable
       density: 60
+      hard: True
+      restitution: 0
+      friction: 0.4
+      id: null
     - shape: !type:PolygonShape
+        radius: 0.01
         vertices:
         - 0.4,0.5
         - 0.1,1.2
         - -0.1,1.2
         - -0.4,0.5
+      mask: []
       layer:
       - Impassable
       - MidImpassable
       - HighImpassable
       - LowImpassable
       - InteractImpassable
+      density: 1
       hard: False
+      restitution: 0
+      friction: 0.4
       id: thruster-burn
     type: Fixtures
   - containers:
       machine_board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 249
       machine_parts: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 250
         - 251
@@ -1078,8 +1032,11 @@ entities:
     pos: 2.5,-9.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
   - fixtures:
     - shape: !type:PolygonShape
+        radius: 0.01
         vertices:
         - 0.45,-0.45
         - 0.45,0.45
@@ -1093,26 +1050,39 @@ entities:
       - MidImpassable
       - LowImpassable
       density: 60
+      hard: True
+      restitution: 0
+      friction: 0.4
+      id: null
     - shape: !type:PolygonShape
+        radius: 0.01
         vertices:
         - 0.4,0.5
         - 0.1,1.2
         - -0.1,1.2
         - -0.4,0.5
+      mask: []
       layer:
       - Impassable
       - MidImpassable
       - HighImpassable
       - LowImpassable
       - InteractImpassable
+      density: 1
       hard: False
+      restitution: 0
+      friction: 0.4
       id: thruster-burn
     type: Fixtures
   - containers:
       machine_board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 256
       machine_parts: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 257
         - 258
@@ -1128,8 +1098,11 @@ entities:
     pos: 2.5,-4.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
   - fixtures:
     - shape: !type:PolygonShape
+        radius: 0.01
         vertices:
         - 0.45,-0.45
         - 0.45,0.45
@@ -1143,26 +1116,39 @@ entities:
       - MidImpassable
       - LowImpassable
       density: 60
+      hard: True
+      restitution: 0
+      friction: 0.4
+      id: null
     - shape: !type:PolygonShape
+        radius: 0.01
         vertices:
         - 0.4,0.5
         - 0.1,1.2
         - -0.1,1.2
         - -0.4,0.5
+      mask: []
       layer:
       - Impassable
       - MidImpassable
       - HighImpassable
       - LowImpassable
       - InteractImpassable
+      density: 1
       hard: False
+      restitution: 0
+      friction: 0.4
       id: thruster-burn
     type: Fixtures
   - containers:
       machine_board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 263
       machine_parts: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 264
         - 265
@@ -1178,8 +1164,11 @@ entities:
     pos: 2.5,-5.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
   - fixtures:
     - shape: !type:PolygonShape
+        radius: 0.01
         vertices:
         - 0.45,-0.45
         - 0.45,0.45
@@ -1193,26 +1182,39 @@ entities:
       - MidImpassable
       - LowImpassable
       density: 60
+      hard: True
+      restitution: 0
+      friction: 0.4
+      id: null
     - shape: !type:PolygonShape
+        radius: 0.01
         vertices:
         - 0.4,0.5
         - 0.1,1.2
         - -0.1,1.2
         - -0.4,0.5
+      mask: []
       layer:
       - Impassable
       - MidImpassable
       - HighImpassable
       - LowImpassable
       - InteractImpassable
+      density: 1
       hard: False
+      restitution: 0
+      friction: 0.4
       id: thruster-burn
     type: Fixtures
   - containers:
       machine_board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 270
       machine_parts: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 271
         - 272
@@ -1228,8 +1230,11 @@ entities:
     pos: -3.5,-4.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
   - fixtures:
     - shape: !type:PolygonShape
+        radius: 0.01
         vertices:
         - 0.45,-0.45
         - 0.45,0.45
@@ -1243,26 +1248,39 @@ entities:
       - MidImpassable
       - LowImpassable
       density: 60
+      hard: True
+      restitution: 0
+      friction: 0.4
+      id: null
     - shape: !type:PolygonShape
+        radius: 0.01
         vertices:
         - 0.4,0.5
         - 0.1,1.2
         - -0.1,1.2
         - -0.4,0.5
+      mask: []
       layer:
       - Impassable
       - MidImpassable
       - HighImpassable
       - LowImpassable
       - InteractImpassable
+      density: 1
       hard: False
+      restitution: 0
+      friction: 0.4
       id: thruster-burn
     type: Fixtures
   - containers:
       machine_board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 277
       machine_parts: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 278
         - 279
@@ -1278,8 +1296,11 @@ entities:
     pos: -3.5,-5.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
   - fixtures:
     - shape: !type:PolygonShape
+        radius: 0.01
         vertices:
         - 0.45,-0.45
         - 0.45,0.45
@@ -1293,26 +1314,39 @@ entities:
       - MidImpassable
       - LowImpassable
       density: 60
+      hard: True
+      restitution: 0
+      friction: 0.4
+      id: null
     - shape: !type:PolygonShape
+        radius: 0.01
         vertices:
         - 0.4,0.5
         - 0.1,1.2
         - -0.1,1.2
         - -0.4,0.5
+      mask: []
       layer:
       - Impassable
       - MidImpassable
       - HighImpassable
       - LowImpassable
       - InteractImpassable
+      density: 1
       hard: False
+      restitution: 0
+      friction: 0.4
       id: thruster-burn
     type: Fixtures
   - containers:
       machine_board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 284
       machine_parts: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 285
         - 286
@@ -1327,8 +1361,11 @@ entities:
   - pos: -3.5,1.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
   - fixtures:
     - shape: !type:PolygonShape
+        radius: 0.01
         vertices:
         - 0.45,-0.45
         - 0.45,0.45
@@ -1342,26 +1379,39 @@ entities:
       - MidImpassable
       - LowImpassable
       density: 60
+      hard: True
+      restitution: 0
+      friction: 0.4
+      id: null
     - shape: !type:PolygonShape
+        radius: 0.01
         vertices:
         - 0.4,0.5
         - 0.1,1.2
         - -0.1,1.2
         - -0.4,0.5
+      mask: []
       layer:
       - Impassable
       - MidImpassable
       - HighImpassable
       - LowImpassable
       - InteractImpassable
+      density: 1
       hard: False
+      restitution: 0
+      friction: 0.4
       id: thruster-burn
     type: Fixtures
   - containers:
       machine_board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 291
       machine_parts: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 292
         - 293
@@ -1376,8 +1426,11 @@ entities:
   - pos: 2.5,1.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
   - fixtures:
     - shape: !type:PolygonShape
+        radius: 0.01
         vertices:
         - 0.45,-0.45
         - 0.45,0.45
@@ -1391,26 +1444,39 @@ entities:
       - MidImpassable
       - LowImpassable
       density: 60
+      hard: True
+      restitution: 0
+      friction: 0.4
+      id: null
     - shape: !type:PolygonShape
+        radius: 0.01
         vertices:
         - 0.4,0.5
         - 0.1,1.2
         - -0.1,1.2
         - -0.4,0.5
+      mask: []
       layer:
       - Impassable
       - MidImpassable
       - HighImpassable
       - LowImpassable
       - InteractImpassable
+      density: 1
       hard: False
+      restitution: 0
+      friction: 0.4
       id: thruster-burn
     type: Fixtures
   - containers:
       machine_board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 298
       machine_parts: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 299
         - 300
@@ -1494,18 +1560,24 @@ entities:
   - pos: 0.5,-7.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 113
   type: CableHV
   components:
   - pos: -0.5,-7.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 114
   type: CableHV
   components:
   - pos: -1.5,-7.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 115
   type: CableHV
   components:
@@ -1518,12 +1590,16 @@ entities:
   - pos: -1.5,-6.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 117
   type: CableMV
   components:
   - pos: -1.5,-6.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 118
   type: CableMV
   components:
@@ -1536,12 +1612,16 @@ entities:
   - pos: 0.5,-6.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 120
   type: CableApcExtension
   components:
   - pos: 0.5,-6.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 121
   type: CableApcExtension
   components:
@@ -1554,6 +1634,8 @@ entities:
   - pos: -0.5,-7.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 123
   type: CableApcExtension
   components:
@@ -1578,36 +1660,48 @@ entities:
   - pos: 1.5,-8.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 127
   type: CableApcExtension
   components:
   - pos: -2.5,-8.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 128
   type: CableApcExtension
   components:
   - pos: -3.5,-8.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 129
   type: CableApcExtension
   components:
   - pos: -3.5,-7.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 130
   type: CableApcExtension
   components:
   - pos: 2.5,-8.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 131
   type: CableApcExtension
   components:
   - pos: 2.5,-7.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 132
   type: CableApcExtension
   components:
@@ -1662,30 +1756,40 @@ entities:
   - pos: -0.5,2.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 141
   type: CableApcExtension
   components:
   - pos: -1.5,1.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 142
   type: CableApcExtension
   components:
   - pos: -2.5,1.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 143
   type: CableApcExtension
   components:
   - pos: 0.5,1.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 144
   type: CableApcExtension
   components:
   - pos: 1.5,1.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 145
   type: CableApcExtension
   components:
@@ -1734,6 +1838,8 @@ entities:
   - pos: 3.5,-1.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 153
   type: CableApcExtension
   components:
@@ -1746,12 +1852,16 @@ entities:
   - pos: 1.5,-4.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 155
   type: CableApcExtension
   components:
   - pos: 1.5,-5.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 156
   type: CableApcExtension
   components:
@@ -1764,12 +1874,16 @@ entities:
   - pos: -2.5,-4.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 158
   type: CableApcExtension
   components:
   - pos: -2.5,-5.5
     parent: 0
     type: Transform
+  - enabled: True
+    type: AmbientSound
 - uid: 159
   type: Catwalk
   components:
@@ -1860,6 +1974,8 @@ entities:
     type: Transform
   - containers:
       storagebase: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 305
         - 306
@@ -1905,6 +2021,8 @@ entities:
     type: Transform
   - containers:
       storagebase: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 310
         - 311
@@ -1927,6 +2045,7 @@ entities:
     type: Transform
   - fixtures:
     - shape: !type:PolygonShape
+        radius: 0.01
         vertices:
         - 0.49,-0.49
         - 0.49,0.49
@@ -1945,14 +2064,25 @@ entities:
       - InteractImpassable
       - Opaque
       density: 100
+      hard: True
+      restitution: 0
+      friction: 0.4
+      id: null
     - shape: !type:PhysShapeCircle
         radius: 0.2
         position: 0,-0.5
+      mask: []
+      layer: []
+      density: 1
       hard: False
+      restitution: 0
+      friction: 0.4
       id: docking
     type: Fixtures
   - containers:
       board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 319
     type: ContainerContainer
@@ -2017,6 +2147,8 @@ entities:
     type: Transform
   - containers:
       board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 326
     type: ContainerContainer
@@ -2035,6 +2167,8 @@ entities:
     type: Transform
   - containers:
       board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 327
     type: ContainerContainer
@@ -2053,6 +2187,8 @@ entities:
     type: Transform
   - containers:
       board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 328
     type: ContainerContainer
@@ -2071,6 +2207,8 @@ entities:
     type: Transform
   - containers:
       board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 329
     type: ContainerContainer
@@ -2089,6 +2227,8 @@ entities:
     type: Transform
   - containers:
       board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 330
     type: ContainerContainer
@@ -2107,6 +2247,8 @@ entities:
     type: Transform
   - containers:
       board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 331
     type: ContainerContainer
@@ -2125,6 +2267,8 @@ entities:
     type: Transform
   - containers:
       board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 332
     type: ContainerContainer
@@ -2143,6 +2287,8 @@ entities:
     type: Transform
   - containers:
       board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 333
     type: ContainerContainer
@@ -2161,6 +2307,8 @@ entities:
     type: Transform
   - containers:
       board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 334
     type: ContainerContainer
@@ -2179,6 +2327,8 @@ entities:
     type: Transform
   - containers:
       board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 335
     type: ContainerContainer
@@ -2197,6 +2347,8 @@ entities:
     type: Transform
   - containers:
       board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 336
     type: ContainerContainer
@@ -2215,6 +2367,8 @@ entities:
     type: Transform
   - containers:
       board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 337
     type: ContainerContainer
@@ -2233,6 +2387,8 @@ entities:
     type: Transform
   - containers:
       board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 338
     type: ContainerContainer
@@ -2251,6 +2407,8 @@ entities:
     type: Transform
   - containers:
       board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 339
     type: ContainerContainer
@@ -2269,6 +2427,8 @@ entities:
     type: Transform
   - containers:
       board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 340
     type: ContainerContainer
@@ -2287,6 +2447,8 @@ entities:
     type: Transform
   - containers:
       board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 341
     type: ContainerContainer
@@ -2305,6 +2467,8 @@ entities:
     type: Transform
   - containers:
       board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 342
     type: ContainerContainer
@@ -2323,6 +2487,8 @@ entities:
     type: Transform
   - containers:
       board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 343
     type: ContainerContainer
@@ -2341,6 +2507,8 @@ entities:
     type: Transform
   - containers:
       board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 344
     type: ContainerContainer
@@ -2417,6 +2585,8 @@ entities:
     type: Transform
   - containers:
       board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 346
     type: ContainerContainer
@@ -2429,6 +2599,8 @@ entities:
     type: Transform
   - containers:
       board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 347
     type: ContainerContainer
@@ -2443,6 +2615,8 @@ entities:
     type: Transform
   - containers:
       board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 348
     type: ContainerContainer
@@ -2457,6 +2631,8 @@ entities:
     type: Transform
   - containers:
       board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 349
     type: ContainerContainer
@@ -2467,6 +2643,10 @@ entities:
     pos: -0.5,-7.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
+  - enabled: True
+    type: AmbientSound
 - uid: 211
   type: GasPipeStraight
   components:
@@ -2474,6 +2654,8 @@ entities:
     pos: -0.5,-6.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 212
   type: GasPipeTJunction
   components:
@@ -2481,30 +2663,40 @@ entities:
     pos: -0.5,-5.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 213
   type: GasPipeStraight
   components:
   - pos: -0.5,-4.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 214
   type: GasPipeStraight
   components:
   - pos: -0.5,-3.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 215
   type: GasPipeStraight
   components:
   - pos: -0.5,-2.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 216
   type: GasPipeFourway
   components:
   - pos: -0.5,-1.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 217
   type: GasPipeStraight
   components:
@@ -2512,6 +2704,8 @@ entities:
     pos: -0.5,-0.5
     parent: 0
     type: Transform
+  - bodyType: Static
+    type: Physics
 - uid: 218
   type: GasVentPump
   components:
@@ -2522,6 +2716,8 @@ entities:
     transmitFrequency: 1621
     receiveFrequency: 1621
     type: DeviceNetwork
+  - bodyType: Static
+    type: Physics
 - uid: 219
   type: GasVentPump
   components:
@@ -2533,6 +2729,8 @@ entities:
     transmitFrequency: 1621
     receiveFrequency: 1621
     type: DeviceNetwork
+  - bodyType: Static
+    type: Physics
 - uid: 220
   type: GasVentPump
   components:
@@ -2544,6 +2742,8 @@ entities:
     transmitFrequency: 1621
     receiveFrequency: 1621
     type: DeviceNetwork
+  - bodyType: Static
+    type: Physics
 - uid: 221
   type: GasVentPump
   components:
@@ -2555,6 +2755,8 @@ entities:
     transmitFrequency: 1621
     receiveFrequency: 1621
     type: DeviceNetwork
+  - bodyType: Static
+    type: Physics
 - uid: 222
   type: GasVentPump
   components:
@@ -2566,6 +2768,8 @@ entities:
     transmitFrequency: 1621
     receiveFrequency: 1621
     type: DeviceNetwork
+  - bodyType: Static
+    type: Physics
 - uid: 223
   type: AtmosDeviceFanTiny
   components:
@@ -2581,6 +2785,8 @@ entities:
     type: Transform
   - containers:
       board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 350
     type: ContainerContainer
@@ -2595,6 +2801,8 @@ entities:
     type: Transform
   - containers:
       board: !type:Container
+        showEnts: False
+        occludes: True
         ents:
         - 351
     type: ContainerContainer
@@ -3482,6 +3690,12 @@ entities:
   type: NukeCodePaper
   components:
   - pos: 1.561105,-2.5567772
+    parent: 0
+    type: Transform
+- uid: 324
+  type: SyndicateIDCard
+  components:
+  - pos: 1.57673,-2.3849022
     parent: 0
     type: Transform
 - uid: 326
