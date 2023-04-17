@@ -227,11 +227,3 @@
   materials:
     Steel: 350
     Plastic: 600
-
-- type: latheRecipe
-  id: ClothingShoesBootsMagSecurity
-  result: ClothingShoesBootsMagSecurity
-  completetime: 12
-  materials:
-    Steel: 1300
-    Plastic: 650
