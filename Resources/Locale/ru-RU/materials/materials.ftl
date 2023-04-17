@@ -16,3 +16,5 @@ materials-plasma = плазма
 materials-plastic = пластик
 materials-wood = дерево
 materials-uranium = уран
+# Material Reclaimer
+material-reclaimer-upgrade-process-rate = Скорость процесса

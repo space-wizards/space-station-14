@@ -19,3 +19,6 @@ ent-WeaponShotgunSawn = обрез
 ent-WeaponShotgunHandmade = пистолет ручного изготовления
     .desc = Выглядит ненадежно. Использует патроны калибра .50 ружейный.
     .suffix = { "" }
+ent-WeaponShotgunBlunderbuss = мушкетерский дробовик
+    .desc = Смертелен на близком расстоянии.
+    .suffix = Пиратский

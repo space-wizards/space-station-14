@@ -1,6 +1,3 @@
-ent-PuddleFlour = мука
-    .desc = Зовите уборщика.
-    .suffix = { "" }
 ent-ReagentContainerBase = { ent-BaseItem }
     .desc = { ent-BaseItem.desc }
     .suffix = { "" }

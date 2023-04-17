@@ -5,6 +5,7 @@ id-card-access-level-head-of-security = Глава службы безопасн
 id-card-access-level-security = Служба безопасности
 id-card-access-level-armory = Оружейная
 id-card-access-level-brig = Бриг
+id-card-access-level-detective = Детектив
 id-card-access-level-chief-engineer = Старший инженер
 id-card-access-level-engineering = Инженерный
 id-card-access-level-atmospherics = Атмосферный

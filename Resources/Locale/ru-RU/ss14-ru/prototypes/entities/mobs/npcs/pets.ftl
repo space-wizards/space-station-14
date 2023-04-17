@@ -46,3 +46,6 @@ ent-MobFoxRenault = Алиса
 ent-MobHamsterHamlet = Гамлет
     .desc = Сварливый маленький комочек шерсти.
     .suffix = { "" }
+ent-MobSpiderShiva = Шива
+    .desc = Первый защитник станции.
+    .suffix = { "" }
