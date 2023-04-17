@@ -16,3 +16,6 @@ ent-SoapHomemade = soap
 ent-SoapOmega = omega soap
     .desc = The most advanced soap known to mankind. Smells of bluespace.
     .suffix = { "" }
+ent-SoapNinja = ninja soap
+    .desc = The most important soap in the entire universe, as without it we would all cease to exist. Smells of honor.
+    .suffix = { "" }
