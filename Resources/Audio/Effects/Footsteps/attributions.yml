@@ -6,3 +6,10 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from https://github.com/Citadel-Station-13/Citadel-Station-13-RP"
   source: "https://github.com/Citadel-Station-13/Citadel-Station-13-RP/tree/b7392a25f826d038d35309cf36875f2066c3eb05/sound/effects/footstep"
+  
+- files:
+  - jesterstep1.ogg
+  - jesterstep2.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Made and posted by GentleJester#8754 on the SS14 discord."
+  source: "https://discord.com/channels/310555209753690112/311537926376783886/1097222920813674527"
