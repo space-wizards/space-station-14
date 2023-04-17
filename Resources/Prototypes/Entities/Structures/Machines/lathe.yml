@@ -422,6 +422,8 @@
       - TargetHuman
       - TargetSyndicate
       - TargetClown
+      - ClothingShoesBootsMag
+      - ClothingShoesBootsMagSecurity
       - MagazineBoxPistol
       - MagazineBoxPistolRubber
       - MagazineBoxMagnum
