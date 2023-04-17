@@ -234,6 +234,7 @@
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitBrigmed
+  noSpawn: true
   name: brigmed hardsuit helmet
   description: The lightweight helmet of the brigmed hardsuit. Protects against viruses, and clowns.
   components:
@@ -518,6 +519,7 @@
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitERTLeader
+  noSpawn: true
   name: ERT leader hardsuit helmet
   description: A special hardsuit helmet worn by members of an emergency response team.
   components:
@@ -531,6 +533,7 @@
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTLeader
   id: ClothingHeadHelmetHardsuitERTEngineer
+  noSpawn: true
   name: ERT engineer hardsuit helmet
   components:
   - type: Sprite
@@ -543,6 +546,7 @@
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTLeader
   id: ClothingHeadHelmetHardsuitERTMedical
+  noSpawn: true
   name: ERT medic hardsuit helmet
   components:
   - type: Sprite
@@ -555,6 +559,7 @@
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTLeader
   id: ClothingHeadHelmetHardsuitERTSecurity
+  noSpawn: true
   name: ERT security hardsuit helmet
   components:
   - type: Sprite
@@ -567,6 +572,7 @@
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTLeader
   id: ClothingHeadHelmetHardsuitERTJanitor
+  noSpawn: true
   name: ERT janitor hardsuit helmet
   components:
   - type: Sprite

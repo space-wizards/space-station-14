@@ -62,6 +62,10 @@ public abstract partial class InteractionTest
                 return;
 
             Converted = true;
+
+            if (string.IsNullOrWhiteSpace(Prototype))
+                return;
+
             if (protoMan.HasIndex<StackPrototype>(Prototype))
                 return;
 
@@ -121,6 +125,6 @@ public abstract partial class InteractionTest
         var meta = SEntMan.GetComponent<MetaDataComponent>(uid);
         Assert.NotNull(meta.EntityPrototype);
 
-        return new (meta.EntityPrototype.ID, 1) { Converted = true };
+        return new (meta.EntityPrototype!.ID, 1) { Converted = true };
     }
 }
