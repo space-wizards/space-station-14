@@ -1,0 +1,21 @@
+- type: alert
+  id: SuitPower
+  icons:
+  - sprite: /Textures/Interface/Alerts/stamina.rsi
+    state: stamina0
+  - sprite: /Textures/Interface/Alerts/stamina.rsi
+    state: stamina1
+  - sprite: /Textures/Interface/Alerts/stamina.rsi
+    state: stamina2
+  - sprite: /Textures/Interface/Alerts/stamina.rsi
+    state: stamina3
+  - sprite: /Textures/Interface/Alerts/stamina.rsi
+    state: stamina4
+  - sprite: /Textures/Interface/Alerts/stamina.rsi
+    state: stamina5
+  - sprite: /Textures/Interface/Alerts/stamina.rsi
+    state: stamina6
+  name: alerts-suit-power-name
+  description: alerts-suit-power-desc
+  minSeverity: 0
+  maxSeverity: 6
