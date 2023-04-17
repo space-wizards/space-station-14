@@ -1,19 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Reduced point output for both anomalies and artifacts, type: Tweak}
-  - {message: Added a station event for anomalies to spawn., type: Tweak}
-  - {message: 'The superheated anomalous surface of an anomaly imparts nasty burns,
-      even through protective covering.', type: Tweak}
-  - {message: The bluespace artifact station event now scales properly with survival
-      rounds., type: Fix}
-  - {message: Fixed missing upgrade examine text on the anomaly vessel., type: Fix}
-  - {message: Anomalies now slightly fluctuate in stability on each pulse. Better
-      hope you don't push it over the edge., type: Add}
-  id: 2939
-  time: '2023-01-21T00:42:38.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: The lesbian flag pin is no longer upside down., type: Fix}
   id: 2940
   time: '2023-01-21T03:16:34.0000000+00:00'
@@ -2897,3 +2884,9 @@ Entries:
   - {message: added sound to jackboots and combat boots, type: Add}
   id: 3438
   time: '2023-04-17T06:19:03.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Security has reported sightings of Space Ninja in long shifts, be on
+      the look out for moving shadows or doors opening by themselves.', type: Add}
+  id: 3439
+  time: '2023-04-17T07:33:28.0000000+00:00'
