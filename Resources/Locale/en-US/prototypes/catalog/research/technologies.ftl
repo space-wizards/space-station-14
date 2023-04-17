@@ -97,5 +97,3 @@ technologies-super-parts-technology-description = New heights of machine perform
 technologies-magboots-technology = Magboots technology
 technologies-magboots-technology-description = Magboots for a space escape from the assistant.
 
-technologies-magboots-security-technology = Security service magboots technology
-technologies-magboots-security-technology-description = Advanced magboots for security services, have a low level of foot protection.
