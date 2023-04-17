@@ -27083,7 +27083,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 3275
-  type: AirlockCommandGlass
+  type: AirlockCommandGlassLocked
   components:
   - rot: 1.5707963267948966 rad
     pos: 4.5,20.5
@@ -27091,7 +27091,7 @@ entities:
     type: Transform
   - type: Followed
 - uid: 3276
-  type: AirlockCommandGlass
+  type: AirlockCommandGlassLocked
   components:
   - rot: 1.5707963267948966 rad
     pos: 4.5,17.5
@@ -27099,21 +27099,21 @@ entities:
     type: Transform
   - type: Followed
 - uid: 3277
-  type: AirlockCommandGlass
+  type: AirlockCommandGlassLocked
   components:
   - rot: 1.5707963267948966 rad
     pos: -6.5,29.5
     parent: 1
     type: Transform
 - uid: 3278
-  type: AirlockCommandGlass
+  type: AirlockCommandGlassLocked
   components:
   - rot: 1.5707963267948966 rad
     pos: -12.5,30.5
     parent: 1
     type: Transform
 - uid: 3279
-  type: AirlockCommandGlass
+  type: AirlockCommandGlassLocked
   components:
   - rot: 1.5707963267948966 rad
     pos: -15.5,30.5
