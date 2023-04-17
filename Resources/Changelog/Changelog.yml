@@ -1,9 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: Over 50 new fortunes can be found in fortune cookie, type: Add}
-  id: 2942
-  time: '2023-01-22T13:20:17.0000000+00:00'
 - author: Nairodian
   changes:
   - {message: Changed most hardsuit light colors to be unique., type: Tweak}
@@ -2890,3 +2885,8 @@ Entries:
   - {message: Added InHand sprites for cloaks!, type: Add}
   id: 3441
   time: '2023-04-17T22:21:49.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: Added research magboots in RND!, type: Add}
+  id: 3442
+  time: '2023-04-17T22:26:31.0000000+00:00'
