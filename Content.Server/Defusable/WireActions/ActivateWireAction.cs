@@ -41,17 +41,16 @@ public sealed class ActivateWireAction : ComponentWireAction<DefusableComponent>
     {
         if (comp.BombLive)
         {
-            if (!comp.ActivatedWireCut)
+            if (!comp.ActivatedWireUsed)
             {
-                Logger.Debug("Time delayed");
                 EntityManager.System<DefusableSystem>().TryDelay(wire.Owner, 30f);
-                comp.ActivatedWireCut = true;
+                comp.ActivatedWireUsed = true;
             }
+            EntityManager.System<PopupSystem>().PopupEntity(Loc.GetString("defusable-popup-wire-chirp", ("name", wire.Owner)), wire.Owner);
         }
         else
         {
             EntityManager.System<DefusableSystem>().TryStartCountdown(wire.Owner, comp);
         }
-        EntityManager.System<PopupSystem>().PopupEntity(Loc.GetString("defusable-popup-wire-activate-pulse", ("name", wire.Owner)), wire.Owner);
     }
 }

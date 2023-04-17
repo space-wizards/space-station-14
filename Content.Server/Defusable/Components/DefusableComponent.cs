@@ -50,5 +50,5 @@ public sealed class DefusableComponent : Component
     public bool DelayWireUsed = false;
     public bool ProceedWireCut = false;
     public bool ProceedWireUsed = false;
-    public bool ActivatedWireCut = false;
+    public bool ActivatedWireUsed = false;
 }

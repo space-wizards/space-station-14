@@ -7,5 +7,4 @@ defusable-popup-cant-anchor = {CAPITALIZE(THE($name))} seems to be bolted to the
 defusable-popup-wire-bolt-pulse = The bolts spin in place for a moment.
 defusable-popup-wire-proceed-pulse = {CAPITALIZE(THE($name))} buzzes ominously!
 defusable-popup-wire-proceed-cut = The digital display on {CAPITALIZE(THE($name))} deactivates.
-defusable-popup-wire-delay-pulse = {CAPITALIZE(THE($name))} chirps.
-defusable-popup-wire-activate-pulse = {CAPITALIZE(THE($name))} chirps.
+defusable-popup-wire-chirp = {CAPITALIZE(THE($name))} chirps.

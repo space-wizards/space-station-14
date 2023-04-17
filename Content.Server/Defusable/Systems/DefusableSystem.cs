@@ -102,7 +102,7 @@ public sealed class DefusableSystem : SharedDefusableSystem
         // Don't allow the thing to be anchored if bolted
         if (component.Bolted)
         {
-            var msg = Loc.GetString("defusable-popup-cant-anchor");
+            var msg = Loc.GetString("defusable-popup-cant-anchor", ("name", uid));
             _popup.PopupEntity(msg, uid, args.User);
 
             args.Cancel();

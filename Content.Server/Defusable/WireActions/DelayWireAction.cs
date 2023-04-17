@@ -13,7 +13,7 @@ namespace Content.Server.Defusable.WireActions;
 
 public sealed class DelayWireAction : ComponentWireAction<DefusableComponent>
 {
-    public override Color Color { get; set; } = Color.Red;
+    public override Color Color { get; set; } = Color.Yellow;
     public override string Name { get; set; } = "wire-name-bomb-delay";
 
     public override StatusLightState? GetLightState(Wire wire, DefusableComponent comp)
@@ -38,6 +38,6 @@ public sealed class DelayWireAction : ComponentWireAction<DefusableComponent>
             EntityManager.System<DefusableSystem>().TryDelay(wire.Owner, 30f);
             comp.DelayWireUsed = true;
         }
-        EntityManager.System<PopupSystem>().PopupEntity(Loc.GetString("defusable-popup-wire-delay-pulse", ("name", wire.Owner)), wire.Owner);
+        EntityManager.System<PopupSystem>().PopupEntity(Loc.GetString("defusable-popup-wire-chirp", ("name", wire.Owner)), wire.Owner);
     }
 }

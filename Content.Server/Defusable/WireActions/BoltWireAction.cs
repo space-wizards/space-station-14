@@ -28,6 +28,7 @@ public sealed class BoltWireAction : ComponentWireAction<DefusableComponent>
             comp.Bolted = false;
             EntityManager.System<AudioSystem>().PlayPvs(comp.BoltSound, wire.Owner);
         }
+        EntityManager.System<PopupSystem>().PopupEntity(Loc.GetString("defusable-popup-wire-bolt-pulse", ("name", wire.Owner)), wire.Owner);
         return true;
     }
 
@@ -38,9 +39,6 @@ public sealed class BoltWireAction : ComponentWireAction<DefusableComponent>
 
     public override void Pulse(EntityUid user, Wire wire, DefusableComponent comp)
     {
-        if (comp.BombLive)
-        {
-            EntityManager.System<PopupSystem>().PopupEntity(Loc.GetString("defusable-popup-wire-bolt-pulse", ("name", wire.Owner)), wire.Owner);
-        }
+        EntityManager.System<PopupSystem>().PopupEntity(Loc.GetString("defusable-popup-wire-bolt-pulse", ("name", wire.Owner)), wire.Owner);
     }
 }
