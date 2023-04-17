@@ -112,7 +112,7 @@ public abstract class SharedBiomeSystem : EntitySystem
 
             SetNoise(noise, oldSeed, layer.Noise);
 
-            if (TryGetTile(indices, noise, tileLayer.Threshold, ProtoManager.Index<ContentTileDefinition>(tileLayer.Tile), tileLayer.Variants, out tile))
+            if (TryGetTile(indices, noise, tileLayer.Invert, tileLayer.Threshold, ProtoManager.Index<ContentTileDefinition>(tileLayer.Tile), tileLayer.Variants, out tile))
             {
                 noise.SetSeed(oldSeed);
                 return true;
@@ -127,9 +127,10 @@ public abstract class SharedBiomeSystem : EntitySystem
     /// <summary>
     /// Gets the underlying biome tile, ignoring any existing tile that may be there.
     /// </summary>
-    private bool TryGetTile(Vector2i indices, FastNoiseLite seed, float threshold, ContentTileDefinition tileDef, List<byte>? variants, [NotNullWhen(true)] out Tile? tile)
+    private bool TryGetTile(Vector2i indices, FastNoiseLite seed, bool invert, float threshold, ContentTileDefinition tileDef, List<byte>? variants, [NotNullWhen(true)] out Tile? tile)
     {
         var found = seed.GetNoise(indices.X, indices.Y);
+        found = invert ? found * -1 : found;
 
         if (found < threshold)
         {
@@ -188,7 +189,9 @@ public abstract class SharedBiomeSystem : EntitySystem
             }
 
             SetNoise(noise, oldSeed, layer.Noise);
+            var invert = layer.Invert;
             var value = noise.GetNoise(indices.X, indices.Y);
+            value = invert ? value * -1 : value;
 
             if (value < layer.Threshold)
             {
@@ -244,11 +247,15 @@ public abstract class SharedBiomeSystem : EntitySystem
             }
 
             SetNoise(noise, oldSeed, layer.Noise);
+            var invert = layer.Invert;
 
             // Check if the other layer should even render, if not then keep going.
             if (layer is not BiomeDecalLayer decalLayer)
             {
-                if (noise.GetNoise(indices.X, indices.Y) < layer.Threshold)
+                var value = noise.GetNoise(indices.X, indices.Y);
+                value = invert ? value * -1 : value;
+
+                if (value < layer.Threshold)
                     continue;
 
                 decals = null;
@@ -264,6 +271,7 @@ public abstract class SharedBiomeSystem : EntitySystem
                 {
                     var index = new Vector2(indices.X + x * 1f / decalLayer.Divisions, indices.Y + y * 1f / decalLayer.Divisions);
                     var decalValue = noise.GetNoise(index.X, index.Y);
+                    decalValue = invert ? decalValue * -1 : decalValue;
 
                     if (decalValue < decalLayer.Threshold)
                         continue;

@@ -363,3 +363,27 @@
         seed: 0
         frequency: 0.02
         fractalType: None
+
+# Caves
+- type: biome
+  id: Caves
+  layers:
+    - !type:BiomeEntityLayer
+      threshold: -0.5
+      invert: true
+      noise:
+        seed: 0
+        noiseType: Cellular
+        fractalType: Ridged
+        octaves: 1
+        frequency: 0.02
+        gain: 0
+        cellularDistanceFunction: EuclideanSq
+        cellularReturnType: Distance2Div
+      allowedTiles:
+        - FloorAsteroidSand
+      entities:
+        - WallRock
+    - !type:BiomeTileLayer
+      threshold: -1.0
+      tile: FloorAsteroidSand
