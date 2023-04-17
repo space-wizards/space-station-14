@@ -1,5 +1,5 @@
+using Content.Server.Ninja.Systems;
 using Content.Server.Objectives.Interfaces;
-using Content.Shared.Ninja.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -34,12 +34,10 @@ public sealed class DownloadCondition : IObjectiveCondition
             if (_target == 0)
                 return 1f;
 
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            if (_mind?.OwnedEntity == null
-                || !entMan.TryGetComponent<NinjaComponent>(_mind.OwnedEntity, out var ninja))
+            if (!NinjaSystem.GetNinjaRole(_mind, out var role))
                 return 0f;
 
-            return (float) ninja.DownloadedNodes.Count / (float) _target;
+            return (float) role.DownloadedNodes.Count / (float) _target;
         }
     }
 

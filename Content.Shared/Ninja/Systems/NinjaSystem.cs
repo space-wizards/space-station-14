@@ -48,38 +48,12 @@ public abstract class SharedNinjaSystem : EntitySystem
         comp.Katana = katana;
     }
 
-    // TODO: remove when objective stuff moved into objectives somehow
-    public void DetonateSpiderCharge(NinjaComponent comp)
-    {
-        comp.SpiderChargeDetonated = true;
-    }
-
-    /// <summary>
-    /// Marks the objective as complete.
-    /// On server, makes announcement and adds rule of random threat.
-    /// </summary>
-    public virtual void CallInThreat(NinjaComponent comp)
-    {
-        comp.CalledInThreat = true;
-    }
-
     /// <summary>
     /// Drain power from a target battery into the ninja's suit battery.
     /// Serverside only.
     /// </summary>
     public virtual void TryDrainPower(EntityUid user, NinjaDrainComponent drain, EntityUid target)
     {
-    }
-
-    /// <summary>
-    /// Download the given set of nodes, returning how many new nodes were downloaded.'
-    /// </summary>
-    public int Download(NinjaComponent ninja, List<string> ids)
-    {
-        var oldCount = ninja.DownloadedNodes.Count;
-        ninja.DownloadedNodes.UnionWith(ids);
-        var newCount = ninja.DownloadedNodes.Count;
-        return newCount - oldCount;
     }
 
     /// <summary>

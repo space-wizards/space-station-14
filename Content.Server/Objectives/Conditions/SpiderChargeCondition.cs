@@ -1,6 +1,6 @@
+using Content.Server.Ninja.Systems;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.Warps;
-using Content.Shared.Ninja.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -23,12 +23,11 @@ public sealed class SpiderChargeCondition : IObjectiveCondition
         get
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
-            if (_mind?.OwnedEntity == null
-                || !entMan.TryGetComponent<NinjaComponent>(_mind.OwnedEntity, out var ninja)
-                || ninja.SpiderChargeTarget == null
-                || !entMan.TryGetComponent<WarpPointComponent>(ninja.SpiderChargeTarget, out var warp)
+            if (!NinjaSystem.GetNinjaRole(_mind, out var role)
+                || role.SpiderChargeTarget == null
+                || !entMan.TryGetComponent<WarpPointComponent>(role.SpiderChargeTarget, out var warp)
                 || warp.Location == null)
-                // if you are funny and microbomb then press c, you get this
+                // this should never really happen but eh
                 return Loc.GetString("objective-condition-spider-charge-no-target");
 
             return Loc.GetString("objective-condition-spider-charge-title", ("location", warp.Location));
@@ -43,12 +42,10 @@ public sealed class SpiderChargeCondition : IObjectiveCondition
     {
         get
         {
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            if (_mind?.OwnedEntity == null
-                || !entMan.TryGetComponent<NinjaComponent>(_mind.OwnedEntity, out var ninja))
+            if (!NinjaSystem.GetNinjaRole(_mind, out var role))
                 return 0f;
 
-            return ninja.SpiderChargeDetonated ? 1f : 0f;
+            return role.SpiderChargeDetonated ? 1f : 0f;
         }
     }
 
