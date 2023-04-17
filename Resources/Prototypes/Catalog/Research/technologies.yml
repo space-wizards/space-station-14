@@ -211,6 +211,19 @@
   - SurveillanceWirelessCameraMonitorCircuitboard
   - ComputerTelevisionCircuitboard
 
+- type: technology
+  name: technologies-magboots-security-technology
+  id: MagbootsSecurityTechnology
+  description: technologies-magboots-security-technology-description
+  icon:
+    sprite: Clothing/Shoes/Boots/magboots-security.rsi
+    state: icon
+  requiredPoints: 9000
+  requiredTechnologies:
+    - MagbootsTechnology
+  unlockedRecipes:
+    - ClothingShoesBootsMagSecurity
+
 #- type: technology
 #   name: "ballistic technology"
 #   id: BallisticTechnology
@@ -582,6 +595,19 @@
   - HighPowerMicroLaserStockPart
   - NanoManipulatorStockPart
   - AdvancedScanningModuleStockPart
+
+- type: technology
+  name: technologies-magboots-technology
+  id: MagbootsTechnology
+  description: technologies-magboots-technology-description
+  icon:
+    sprite: Clothing/Shoes/Boots/magboots.rsi
+    state: icon
+  requiredPoints: 8500
+  requiredTechnologies:
+    - ScientificTechnology
+  unlockedRecipes:
+    - ClothingShoesBootsMag
 
 - type: technology
   name: technologies-super-parts-technology
