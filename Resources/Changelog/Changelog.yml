@@ -1,10 +1,4 @@
 Entries:
-- author: Vordenburg
-  changes:
-  - {message: You can now transfer ammunition between magazines and boxes by clicking
-      on one with the other., type: Add}
-  id: 2933
-  time: '2023-01-20T16:08:17.0000000+00:00'
 - author: timothyteakettle
   changes:
   - {message: removed plates from steaks (pending a new plating system), type: Remove}
@@ -2900,3 +2894,9 @@ Entries:
   - {message: Jester shoes now jingle., type: Add}
   id: 3432
   time: '2023-04-17T05:56:19.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The research team in the XenoArcheology lab have discovered how to extract
+      points from artifacts without breaking them., type: Tweak}
+  id: 3433
+  time: '2023-04-17T05:57:21.0000000+00:00'
