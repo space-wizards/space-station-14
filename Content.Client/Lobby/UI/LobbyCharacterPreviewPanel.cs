@@ -74,6 +74,8 @@ namespace Content.Client.Lobby.UI
             AddChild(vBox);
 
             UpdateUI();
+
+            _preferencesManager.OnServerDataLoaded += UpdateUI;
         }
 
         public Button CharacterSetupButton { get; }
