@@ -102,32 +102,3 @@
       walkModifier: 0.85
       sprintModifier: 0.8
       enabled: false
-
-- type: entity
-  parent: ClothingShoesBootsMag
-  id: ClothingShoesBootsMagSecurity
-  name: security service magboots
-  description: Security service magboots are a fortified version of regular magboots.
-  components:
-    - type: Sprite
-      sprite: Clothing/Shoes/Boots/magboots-security.rsi
-      state: icon
-    - type: Clothing
-      sprite: Clothing/Shoes/Boots/magboots-security.rsi
-    - type: Magboots
-      toggleAction:
-        icon: { sprite: Clothing/Shoes/Boots/magboots-security.rsi, state: icon }
-        iconOn: Clothing/Shoes/Boots/magboots-security.rsi/icon-on.png
-        name: action-name-magboot-toggle
-        description: action-decription-magboot-toggle
-        itemIconStyle: NoItem
-        event: !type:ToggleActionEvent
-    - type: ClothingSpeedModifier
-      walkModifier: 0.82
-      sprintModifier: 0.76
-      enabled: false
-    - type: Armor
-      modifiers:
-        coefficients:
-          Blunt: 0.95
-          Piercing: 0.95
