@@ -1,10 +1,4 @@
 Entries:
-- author: BurninDreamer
-  changes:
-  - {message: 'Fake nuke disks are no longer a cheap painted plastic copy, now they
-      look just like the real thing!', type: Tweak}
-  id: 2932
-  time: '2023-01-20T16:06:33.0000000+00:00'
 - author: Vordenburg
   changes:
   - {message: You can now transfer ammunition between magazines and boxes by clicking
@@ -2901,3 +2895,8 @@ Entries:
   - {message: Fix displaying tracking implanted person on crew monitor systems, type: Fix}
   id: 3431
   time: '2023-04-17T05:51:13.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Jester shoes now jingle., type: Add}
+  id: 3432
+  time: '2023-04-17T05:56:19.0000000+00:00'
