@@ -8640,7 +8640,6 @@ entities:
     pos: -17.5,-19.5
     parent: 1
     type: Transform
-  - type: Followed
 - uid: 639
   type: WallSolid
   components:
@@ -25938,6 +25937,7 @@ entities:
   - pos: -16.5,-11.5
     parent: 1
     type: Transform
+  - type: Followed
 - uid: 3108
   type: FirelockGlass
   components:
@@ -27126,6 +27126,7 @@ entities:
     pos: -9.5,25.5
     parent: 1
     type: Transform
+  - type: Followed
 - uid: 3281
   type: AirlockMaintCommandLocked
   components:
@@ -27310,6 +27311,7 @@ entities:
   - pos: -6.5,16.5
     parent: 1
     type: Transform
+  - type: Followed
 - uid: 3310
   type: AirlockSecurityGlassLocked
   components:
@@ -28984,10 +28986,9 @@ entities:
     type: Transform
   - type: Followed
 - uid: 3550
-  type: AirlockMaint
+  type: AirlockExternal
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -39.5,-12.5
+  - pos: -39.5,-12.5
     parent: 1
     type: Transform
 - uid: 3551
@@ -33663,6 +33664,7 @@ entities:
   - pos: -0.5,20.5
     parent: 1
     type: Transform
+  - type: Followed
 - uid: 4217
   type: CableApcExtension
   components:
@@ -39437,6 +39439,7 @@ entities:
     pos: 3.502126,25.59834
     parent: 1
     type: Transform
+  - type: Followed
 - uid: 5059
   type: MedkitFilled
   components:
@@ -42553,6 +42556,7 @@ entities:
     pos: 6.5,25.5
     parent: 1
     type: Transform
+  - type: Followed
 - uid: 5506
   type: ExtinguisherCabinetFilled
   components:
@@ -43381,6 +43385,7 @@ entities:
     pos: -11.5,13.5
     parent: 1
     type: Transform
+  - type: Followed
 - uid: 5617
   type: TableGlass
   components:
@@ -46566,6 +46571,7 @@ entities:
   - pos: -28.475227,-0.46534538
     parent: 1
     type: Transform
+  - type: Followed
 - uid: 6092
   type: PartRodMetal
   components:
@@ -62344,10 +62350,9 @@ entities:
       id: docking
     type: Fixtures
 - uid: 8327
-  type: AirlockMaint
+  type: AirlockExternal
   components:
-  - rot: 3.141592653589793 rad
-    pos: 10.5,31.5
+  - pos: 10.5,31.5
     parent: 1
     type: Transform
 - uid: 8328
@@ -84753,8 +84758,6 @@ entities:
   - pos: -23.5,2.5
     parent: 1
     type: Transform
-  - enabled: True
-    type: AmbientSound
   - color: '#0055CCFF'
     type: AtmosPipeColor
   - bodyType: Static
@@ -98487,4 +98490,43 @@ entities:
   - canCollide: False
     type: Physics
   - type: InsideEntityStorage
+- uid: 12479
+  type: CableApcExtension
+  components:
+  - pos: -26.5,2.5
+    parent: 1
+    type: Transform
+- uid: 12480
+  type: CableApcExtension
+  components:
+  - pos: -25.5,2.5
+    parent: 1
+    type: Transform
+- uid: 12481
+  type: FloorDrain
+  components:
+  - pos: -11.5,15.5
+    parent: 1
+    type: Transform
+  - fixtures: []
+    type: Fixtures
+- uid: 12482
+  type: Sink
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -13.5,14.5
+    parent: 1
+    type: Transform
+- uid: 12483
+  type: ToyIan
+  components:
+  - pos: -1.0943661,19.21257
+    parent: 1
+    type: Transform
+- uid: 12484
+  type: BrbSign
+  components:
+  - pos: 0.4449376,21.546635
+    parent: 1
+    type: Transform
 ...
