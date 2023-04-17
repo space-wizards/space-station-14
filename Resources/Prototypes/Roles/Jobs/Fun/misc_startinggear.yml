@@ -40,12 +40,23 @@
   id: SpaceNinjaGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorBlack
-    back: ClothingBackpackFilled
+    # belt holds katana so satchel has the tools for sabotaging things
+    back: ClothingBackpackSatchelTools
+    mask: ClothingMaskGasSyndicate
     head: ClothingHeadHelmetSpaceNinja
+    # TODO: space ninja mask
+    eyes: ClothingEyesGlassesMeson
     gloves: ClothingHandsGlovesSpaceNinja
     outerClothing: ClothingOuterSuitSpaceninja
     shoes: ClothingShoesSpaceNinja
-    id: PassengerPDA
+    id: AgentIDCard
+    ears: ClothingHeadsetGrey
+    pocket1: SpiderCharge
+    pocket2: HandheldGPSBasic
+    belt: EnergyKatana
+    suitstorage: YellowOxygenTankFilled
+  inhand:
+    left hand: JetpackBlackFilled
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
@@ -58,13 +69,14 @@
     back: ClothingBackpackDuffelSyndicateAmmo
     mask: ClothingMaskBreath
     eyes: ClothingEyesGlassesSecurity
-    ears: ClothingHeadsetCentCom
+    ears: ClothingHeadsetAltCommand
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitDeathsquad
+    suitstorage: YellowOxygenTankFilled
     shoes: ClothingShoesChameleonNoSlips
     id: CentcomPDA
-    pocket1: EmergencyOxygenTankFilled
-    belt: ClothingBeltUtilityFilled
+    pocket1: EnergySword
+    belt: ClothingBeltChiefEngineerFilled
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackDuffelSyndicateAmmo
   duffelbag: ClothingBackpackDuffelSyndicateAmmo
@@ -163,14 +175,14 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorBrown
     back: ClothingBackpackDuffelCBURN
-    mask: ClothingMaskGas
+    mask: ClothingMaskGasExplorer
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetAltCommand
-    gloves: ClothingHandsGlovesFingerless
+    gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitCBURN
-    shoes: ClothingShoesBootsJack
+    shoes: ClothingShoesBootsCombatFilled
     id: CBURNPDA
-    pocket1: CombatKnife
+    pocket1: RadioHandheld
     pocket2: WeaponLaserGun
     suitstorage: YellowOxygenTankFilled
     belt: ClothingBeltBandolier

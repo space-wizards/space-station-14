@@ -92,6 +92,13 @@
     sprite: Clothing/OuterClothing/Suits/spaceninja.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/spaceninja.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 1000
+  - type: DiseaseProtection
+    protection: 0.05
+  - type: TemperatureProtection
+    coefficient: 0.01
   - type: Armor
     modifiers:
       coefficients:
@@ -99,6 +106,22 @@
         Slash: 0.6
         Piercing: 0.6
         Heat: 0.6
+  - type: NinjaSuit
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+    # throwing in a recharger would bypass glove charging mechanic
+    fitsInCharger: false
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellSmall
+  # delay for when attacked while cloaked
+  - type: UseDelay
+    delay: 5
 
 - type: entity
   parent: ClothingOuterBase

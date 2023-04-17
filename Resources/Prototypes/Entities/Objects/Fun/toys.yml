@@ -309,6 +309,12 @@
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/toys.rsi
+    equippedPrefix: mouse
+    slots:
+    - HEAD
 
 - type: entity
   parent: BasePlushie
