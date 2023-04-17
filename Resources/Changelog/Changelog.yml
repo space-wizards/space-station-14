@@ -1,9 +1,4 @@
 Entries:
-- author: Nairodian
-  changes:
-  - {message: Changed most hardsuit light colors to be unique., type: Tweak}
-  id: 2943
-  time: '2023-01-22T18:57:10.0000000+00:00'
 - author: Jack Rost
   changes:
   - {message: 'Spiders have more damage and hp, cant slip and can pull stuff around
@@ -2890,3 +2885,8 @@ Entries:
   - {message: Added research magboots in RND!, type: Add}
   id: 3442
   time: '2023-04-17T22:26:31.0000000+00:00'
+- author: Kit0vras
+  changes:
+  - {message: Fixed non-appearing ERT equipment., type: Fix}
+  id: 3443
+  time: '2023-04-17T22:28:09.0000000+00:00'
