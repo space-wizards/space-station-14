@@ -32,7 +32,6 @@ namespace Content.Server.Disease
     /// </summary>
     public sealed class DiseaseSystem : EntitySystem
     {
-        [Dependency] private readonly AudioSystem _audioSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ISerializationManager _serializationManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -42,6 +41,7 @@ namespace Content.Server.Disease
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+        [Dependency] private readonly ChatSystem _chatSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -265,7 +265,7 @@ namespace Content.Server.Disease
         {
             if (TryComp<DiseaseCarrierComponent>(uid, out var carrier))
             {
-                SneezeCough(uid, _random.Pick(carrier.Diseases), string.Empty, null);
+                SneezeCough(uid, _random.Pick(carrier.Diseases), string.Empty);
             }
         }
 
@@ -418,21 +418,17 @@ namespace Content.Server.Disease
         /// and then tries to infect anyone in range
         /// if the snougher is not wearing a mask.
         /// </summary>
-        public bool SneezeCough(EntityUid uid, DiseasePrototype? disease, string snoughMessage, SoundSpecifier? snoughSound, bool airTransmit = true, TransformComponent? xform = null)
+        public bool SneezeCough(EntityUid uid, DiseasePrototype? disease, string emoteId, bool airTransmit = true, TransformComponent? xform = null)
         {
             if (!Resolve(uid, ref xform)) return false;
 
             if (_mobStateSystem.IsDead(uid)) return false;
 
-            var attemptSneezeCoughEvent = new AttemptSneezeCoughEvent(uid, snoughMessage, snoughSound);
+            var attemptSneezeCoughEvent = new AttemptSneezeCoughEvent(uid, emoteId);
             RaiseLocalEvent(uid, ref attemptSneezeCoughEvent);
             if (attemptSneezeCoughEvent.Cancelled) return false;
 
-            if (!string.IsNullOrEmpty(snoughMessage))
-                _popupSystem.PopupEntity(Loc.GetString(snoughMessage, ("person", Identity.Entity(uid, EntityManager))), uid);
-
-            if (snoughSound != null)
-                _audioSystem.PlayPvs(snoughSound, uid);
+            _chatSystem.TryEmoteWithChat(uid, emoteId);
 
             if (disease is not { Infectious: true } || !airTransmit)
                 return true;

@@ -306,6 +306,7 @@
       - DawInstrumentMachineCircuitboard
       - CloningConsoleComputerCircuitboard
       - StasisBedMachineCircuitboard
+      - MaterialReclaimerMachineCircuitboard
       - OreProcessorMachineCircuitboard
       - RipleyCentralElectronics
       - RipleyPeripheralsElectronics
@@ -460,13 +461,11 @@
     idleState: icon
     runningState: icon
     machinePartPrintSpeed: Laser
-    dynamicRecipes:
+    staticRecipes:
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex
-      - ClothingHandsGlovesNitrile
       - ClothingMaskSterile
       - DiseaseSwab
-      - HandheldCrewMonitor
       - Scalpel
       - Retractor
       - Cautery
@@ -490,6 +489,9 @@
       - MedkitAdvanced
       - MedkitRadiation
       - MedkitCombat
+    dynamicRecipes:
+      - HandheldCrewMonitor
+      - ClothingHandsGlovesNitrile
   - type: Machine
     board: MedicalTechFabCircuitboard
 
@@ -585,6 +587,7 @@
       - ClothingOuterWinterMusician
       - ClothingOuterWinterClown
       - ClothingOuterWinterMime
+      - ClothingNeckMantleHOSShoulder
   - type: MaterialStorage
     whitelist:
       tags:

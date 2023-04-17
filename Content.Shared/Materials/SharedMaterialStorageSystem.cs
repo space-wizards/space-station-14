@@ -252,7 +252,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
 
     private void OnInteractUsing(EntityUid uid, MaterialStorageComponent component, InteractUsingEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !component.InsertOnInteract)
             return;
         args.Handled = TryInsertMaterialEntity(args.User, args.Used, uid, component);
     }

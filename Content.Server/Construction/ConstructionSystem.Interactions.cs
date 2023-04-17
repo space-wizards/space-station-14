@@ -7,6 +7,7 @@ using Content.Shared.Construction;
 using Content.Shared.Construction.Steps;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
+using Content.Shared.Radio.EntitySystems;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -33,7 +34,7 @@ namespace Content.Server.Construction
             SubscribeLocalEvent<ConstructionComponent, ConstructionInteractDoAfterEvent>(EnqueueEvent);
 
             // Event handling. Add your subscriptions here! Just make sure they're all handled by EnqueueEvent.
-            SubscribeLocalEvent<ConstructionComponent, InteractUsingEvent>(EnqueueEvent, new []{typeof(AnchorableSystem)});
+            SubscribeLocalEvent<ConstructionComponent, InteractUsingEvent>(EnqueueEvent, new []{typeof(AnchorableSystem)},  new []{typeof(EncryptionKeySystem)});
             SubscribeLocalEvent<ConstructionComponent, OnTemperatureChangeEvent>(EnqueueEvent);
         }
 
@@ -223,9 +224,6 @@ namespace Content.Server.Construction
             // The DoAfter events can only perform special logic when we're not validating events.
             if (ev is ConstructionInteractDoAfterEvent interactDoAfter)
             {
-                if (!validation)
-                    construction.DoAfter = null;
-
                 if (interactDoAfter.Cancelled)
                     return HandleResult.False;
 
@@ -256,12 +254,6 @@ namespace Content.Server.Construction
                     if (ev is not InteractUsingEvent interactUsing)
                         break;
 
-                    if (construction.DoAfter != null && !validation)
-                    {
-                        _doAfterSystem.Cancel(construction.DoAfter);
-                        return HandleResult.False;
-                    }
-
                     // TODO: Sanity checks.
 
                     user = interactUsing.User;
@@ -290,7 +282,7 @@ namespace Content.Server.Construction
                             NeedHand = true
                         };
 
-                        var started  = _doAfterSystem.TryStartDoAfter(doAfterEventArgs, out construction.DoAfter);
+                        var started  = _doAfterSystem.TryStartDoAfter(doAfterEventArgs);
 
                         if (!started)
                             return HandleResult.False;
@@ -343,12 +335,6 @@ namespace Content.Server.Construction
                     if (ev is not InteractUsingEvent interactUsing)
                         break;
 
-                    if (construction.DoAfter != null && !validation)
-                    {
-                        _doAfterSystem.Cancel(construction.DoAfter);
-                        return HandleResult.False;
-                    }
-
                     // TODO: Sanity checks.
 
                     user = interactUsing.User;
@@ -374,10 +360,10 @@ namespace Content.Server.Construction
                         TimeSpan.FromSeconds(toolInsertStep.DoAfter),
                         new [] { toolInsertStep.Tool },
                         new ConstructionInteractDoAfterEvent(interactUsing),
-                        out construction.DoAfter,
+                        out var doAfter,
                         fuel: toolInsertStep.Fuel);
 
-                    return construction.DoAfter != null ? HandleResult.DoAfter : HandleResult.False;
+                    return result && doAfter != null ? HandleResult.DoAfter : HandleResult.False;
                 }
 
                 case TemperatureConstructionGraphStep temperatureChangeStep:

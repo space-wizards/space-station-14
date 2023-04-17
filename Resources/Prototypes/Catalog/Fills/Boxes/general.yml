@@ -19,7 +19,7 @@
           amount: 6
     - type: Sprite
       layers:
-        - state: box
+        - state: box_service
         - state: mousetraps
 
 - type: entity
@@ -34,7 +34,7 @@
         amount: 12
   - type: Sprite
     layers:
-      - state: box
+      - state: box_engineering
       - state: light
   - type: Storage
     capacity: 60
@@ -57,7 +57,7 @@
         amount: 12
   - type: Sprite
     layers:
-      - state: box
+      - state: box_engineering
       - state: lighttube
   - type: Storage
     capacity: 60
@@ -82,7 +82,7 @@
         amount: 6
   - type: Sprite
     layers:
-      - state: box
+      - state: box_engineering
       - state: lightmixed
   - type: Storage
     capacity: 60
@@ -105,7 +105,7 @@
         amount: 6
   - type: Sprite
     layers:
-      - state: box
+      - state: box_command
       - state: pda
   - type: Storage
     capacity: 60
@@ -125,7 +125,7 @@
         amount: 6
   - type: Sprite
     layers:
-      - state: box
+      - state: box_command
       - state: pda
   - type: Storage
     capacity: 60
@@ -145,7 +145,7 @@
         amount: 6
   - type: Sprite
     layers:
-      - state: box
+      - state: box_command
       - state: headset
   - type: Storage
     capacity: 60
@@ -165,7 +165,7 @@
         amount: 4
   - type: Sprite
     layers:
-      - state: box
+      - state: box_engineering
       - state: meson
 
 - type: entity
@@ -219,7 +219,7 @@
           amount: 2
   - type: Sprite
     layers:
-      - state: box
+      - state: box_engineering
       - state: inflatable
   - type: Tag
     tags:
@@ -238,6 +238,10 @@
       - id: ClothingUniformJumpskirtPerformer
       - id: FoodMealMemoryleek
         amount: 2
+  - type: Sprite
+    layers:
+      - state: box_service
+      - state: miku
 
 - type: entity
   name: flare box
@@ -271,7 +275,7 @@
         - TrashBag
   - type: Sprite
     layers:
-      - state: box
+      - state: box_service
       - state: trashbag
   - type: Tag
     tags:
@@ -289,8 +293,8 @@
         amount: 6
   - type: Sprite
     layers:
-      - state: box
-      - state: encryptokey
+      - state: box_command
+      - state: common_label
   - type: Storage
     capacity: 30
     whitelist:
@@ -306,6 +310,10 @@
     contents:
       - id: EncryptionKeyCargo
         amount: 6
+  - type: Sprite
+    layers:
+      - state: box_command
+      - state: cargo_label
 
 - type: entity
   name: engineering encryption key box
@@ -316,6 +324,10 @@
     contents:
       - id: EncryptionKeyEngineering
         amount: 6
+  - type: Sprite
+    layers:
+      - state: box_command
+      - state: eng_label
 
 - type: entity
   name: med-sci encryption key box
@@ -326,6 +338,10 @@
     contents:
       - id: EncryptionKeyMedicalScience
         amount: 6
+  - type: Sprite
+    layers:
+      - state: box_command
+      - state: medsci_label
 
 - type: entity
   name: medical encryption key box
@@ -336,6 +352,10 @@
     contents:
       - id: EncryptionKeyMedical
         amount: 6
+  - type: Sprite
+    layers:
+      - state: box_command
+      - state: med_label
 
 - type: entity
   name: robotech encryption key box
@@ -346,6 +366,10 @@
     contents:
       - id: EncryptionKeyRobo
         amount: 6
+  - type: Sprite
+    layers:
+      - state: box_command
+      - state: robotics_label
 
 - type: entity
   name: science encryption key box
@@ -356,6 +380,10 @@
     contents:
       - id: EncryptionKeyScience
         amount: 6
+  - type: Sprite
+    layers:
+      - state: box_command
+      - state: sci_label
 
 - type: entity
   name: security encryption key box
@@ -366,6 +394,10 @@
     contents:
       - id: EncryptionKeySecurity
         amount: 6
+  - type: Sprite
+    layers:
+      - state: box_command
+      - state: sec_label
 
 - type: entity
   name: service encryption key box
@@ -376,3 +408,7 @@
     contents:
       - id: EncryptionKeyService
         amount: 6
+  - type: Sprite
+    layers:
+      - state: box_command
+      - state: service_label

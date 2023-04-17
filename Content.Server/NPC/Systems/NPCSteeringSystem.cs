@@ -7,6 +7,7 @@ using Content.Server.NPC.Components;
 using Content.Server.NPC.Events;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.CCVar;
+using Content.Shared.CombatMode;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
@@ -55,6 +56,7 @@ namespace Content.Server.NPC.Systems
         [Dependency] private readonly SharedMoverController _mover = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly SharedCombatModeSystem _combat = default!;
 
         /// <summary>
         /// Enabled antistuck detection so if an NPC is in the same spot for a while it will re-path.

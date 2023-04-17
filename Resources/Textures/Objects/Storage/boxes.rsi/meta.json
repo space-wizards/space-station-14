@@ -190,6 +190,48 @@
         },
         {
             "name": "ziptie"
+        },
+        {
+            "name": "box_medical"
+        },
+        {
+            "name": "common_label"
+        },
+        {
+            "name": "box_command"
+        },
+        {
+            "name": "cargo_label"
+        },
+        {
+            "name": "eng_label"
+        },
+        {
+            "name": "med_label"
+        },
+        {
+            "name": "medsci_label"
+        },
+        {
+            "name": "robotics_label"
+        },
+        {
+            "name": "sci_label"
+        },
+        {
+            "name": "sec_label"
+        },
+        {
+            "name": "service_label"
+        },
+        {
+            "name": "miku"
+        },
+        {
+            "name": "box_service"
+        },
+        {
+            "name": "box_engineering"
         }
     ]
 }
