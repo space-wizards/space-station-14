@@ -1,9 +1,4 @@
 Entries:
-- author: Velcroboy
-  changes:
-  - {message: added Condiment Station, type: Add}
-  id: 2929
-  time: '2023-01-20T15:56:06.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'Digesting most food will take a bit longer, as your body breaks things
@@ -2903,3 +2898,10 @@ Entries:
   - {message: Aspid now requires a minimum of 25 players., type: Tweak}
   id: 3428
   time: '2023-04-16T18:53:26.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'Emergency space suits, emergency fire suits, and O2 will now always
+      spawn in their respective lockers.', type: Tweak}
+  - {message: Maintenance wall lockers no longer contain emergency locker gear., type: Fix}
+  id: 3429
+  time: '2023-04-17T05:38:43.0000000+00:00'
