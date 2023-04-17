@@ -1,21 +1,4 @@
 Entries:
-- author: Vordenburg
-  changes:
-  - {message: Added a delay at the start of Traitor mode before players are selected
-      to be an antagonist., type: Add}
-  id: 2936
-  time: '2023-01-20T16:18:47.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Steaks have to be cooked to something closer to their actual minimum
-      internal temp rather than a hot summer day., type: Tweak}
-  id: 2937
-  time: '2023-01-20T18:03:59.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added guidebook entries for Xenoarchaeology. Read all about it!, type: Add}
-  id: 2938
-  time: '2023-01-21T00:39:25.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Reduced point output for both anomalies and artifacts, type: Tweak}
@@ -2898,3 +2881,19 @@ Entries:
       sure to watch out for them on long, extended shifts.', type: Add}
   id: 3435
   time: '2023-04-17T06:00:44.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed not being able to take over the rat king ghost role., type: Fix}
+  id: 3436
+  time: '2023-04-17T06:18:39.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed admin note updates duplicating visually across all open admin
+      note windows., type: Fix}
+  id: 3437
+  time: '2023-04-17T06:18:54.0000000+00:00'
+- author: Klaypexx
+  changes:
+  - {message: added sound to jackboots and combat boots, type: Add}
+  id: 3438
+  time: '2023-04-17T06:19:03.0000000+00:00'
