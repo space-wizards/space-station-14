@@ -211,19 +211,6 @@
   - SurveillanceWirelessCameraMonitorCircuitboard
   - ComputerTelevisionCircuitboard
 
-- type: technology
-  name: technologies-magboots-security-technology
-  id: MagbootsSecurityTechnology
-  description: technologies-magboots-security-technology-description
-  icon:
-    sprite: Clothing/Shoes/Boots/magboots-security.rsi
-    state: icon
-  requiredPoints: 9000
-  requiredTechnologies:
-    - MagbootsTechnology
-  unlockedRecipes:
-    - ClothingShoesBootsMagSecurity
-
 #- type: technology
 #   name: "ballistic technology"
 #   id: BallisticTechnology
