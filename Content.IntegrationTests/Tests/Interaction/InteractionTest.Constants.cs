@@ -5,8 +5,6 @@ namespace Content.IntegrationTests.Tests.Interaction;
 // Should make it easier to mass-change hard coded strings if prototypes get renamed.
 public abstract partial class InteractionTest
 {
-    protected const string PlayerEntity = "AdminObserver";
-
     // Tiles
     protected const string Floor = "FloorSteel";
     protected const string FloorItem = "FloorTileItemSteel";
