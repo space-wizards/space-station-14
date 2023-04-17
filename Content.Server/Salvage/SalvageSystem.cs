@@ -16,10 +16,10 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
-using Content.Server.Cargo.Systems;
-using Content.Server.NPC.Pathfinding;
+using Content.Server.Chat.Systems;
 using Content.Server.Parallax;
 using Content.Server.Procedural;
+using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Systems;
 using Robust.Shared.Timing;
 
@@ -34,11 +34,13 @@ namespace Content.Server.Salvage
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
         [Dependency] private readonly BiomeSystem _biome = default!;
+        [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly DungeonSystem _dungeon = default!;
         [Dependency] private readonly MapLoaderSystem _map = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly RadioSystem _radioSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+        [Dependency] private readonly ShuttleConsoleSystem _shuttleConsoles = default!;
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
 

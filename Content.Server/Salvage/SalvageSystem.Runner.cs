@@ -1,3 +1,4 @@
+using Content.Server.Chat.Systems;
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Structure;
 using Content.Server.Shuttles.Components;
@@ -11,8 +12,27 @@ public sealed partial class SalvageSystem
 {
     private void InitializeRunner()
     {
+        SubscribeLocalEvent<FTLRequestEvent>(OnFTLRequest);
         SubscribeLocalEvent<FTLStartedEvent>(OnFTLStarted);
         SubscribeLocalEvent<FTLCompletedEvent>(OnFTLCompleted);
+    }
+
+    private void Announce(EntityUid uid, string text)
+    {
+        _chat.TrySendInGameICMessage(uid, text, InGameICChatType.Speak, false);
+    }
+
+    private void OnFTLRequest(ref FTLRequestEvent ev)
+    {
+        if (!TryComp<SalvageExpeditionComponent>(ev.MapUid, out var comp) ||
+            !TryComp<FTLDestinationComponent>(ev.MapUid, out var dest))
+        {
+            return;
+        }
+
+        // Only one shuttle can occupy an expedition.
+        dest.Enabled = false;
+        _shuttleConsoles.RefreshShuttleConsoles();
     }
 
     private void OnFTLCompleted(ref FTLCompletedEvent args)
@@ -24,7 +44,7 @@ public sealed partial class SalvageSystem
         if (component.Stage != ExpeditionStage.Added)
             return;
 
-        Report(args.Entity, "Supply", "salvage-expedition-announcement-added", ("duration", component.EndTime - _timing.CurTime));
+        Announce(args.MapUid, Loc.GetString("salvage-expedition-announcement-countdown-minutes", ("duration", (component.EndTime - _timing.CurTime).Minutes)));
         component.Stage = ExpeditionStage.Running;
     }
 
@@ -52,6 +72,29 @@ public sealed partial class SalvageSystem
     // Runs the expedition
     private void UpdateRunner()
     {
+        // Generic missions
+        var query = EntityQueryEnumerator<SalvageExpeditionComponent>();
+
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if (comp.Completed)
+                continue;
+
+            var remaining = comp.EndTime = _timing.CurTime;
+
+            if (comp.Stage < ExpeditionStage.FinalCountdown && remaining < TimeSpan.FromSeconds(30))
+            {
+                comp.Stage = ExpeditionStage.FinalCountdown;
+                Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-seconds", ("duration", (comp.EndTime - _timing.CurTime).Minutes)));
+            }
+            // TODO: Play song.
+            else if (comp.Stage < ExpeditionStage.Countdown && remaining < TimeSpan.FromMinutes(2))
+            {
+                comp.Stage = ExpeditionStage.Countdown;
+                Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-minutes", ("duration", (comp.EndTime - _timing.CurTime).Minutes)));
+            }
+        }
+
         // Mining missions: NOOP
 
         // Structure missions
@@ -62,6 +105,8 @@ public sealed partial class SalvageSystem
             if (comp.Completed)
                 continue;
 
+            var structureAnnounce = false;
+
             for (var i = 0; i < structure.Structures.Count; i++)
             {
                 var objective = structure.Structures[i];
@@ -69,16 +114,13 @@ public sealed partial class SalvageSystem
                 if (Deleted(objective))
                 {
                     structure.Structures.RemoveSwap(i);
-                    // TODO: Announce.
+                    structureAnnounce = true;
                 }
             }
 
-            if (structure.Structures.Count == 0)
+            if (structureAnnounce)
             {
-                var mission = comp.MissionParams;
-                comp.Completed = true;
-
-                // TODO: Announce completion
+                Announce(uid, Loc.GetString("salvage-expedition-structures-remaining", ("count", structure.Structures.Count)));
             }
         }
     }

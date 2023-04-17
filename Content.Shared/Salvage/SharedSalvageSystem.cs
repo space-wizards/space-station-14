@@ -88,34 +88,38 @@ public abstract class SharedSalvageSystem : EntitySystem
         var rand = new System.Random(seed);
         var faction = GetMod<SalvageFactionPrototype>(rand, ref rating);
         var biome = GetMod<SalvageBiomeMod>(rand, ref rating);
-
         var dungeon = GetDungeon(biome.ID, rand, ref rating);
+        var mods = new List<string>();
 
         SalvageLightMod? light = null;
 
         if (biome.BiomePrototype != null)
         {
             light = GetLight(biome.ID, rand, ref rating);
+            mods.Add(light.Description);
         }
 
         var time = GetMod<SalvageTimeMod>(rand, ref rating);
+        // Round the duration to nearest 15 seconds.
+        var exactDuration = time.MinDuration + (time.MaxDuration - time.MinDuration) * rand.NextFloat();
+        exactDuration = MathF.Round(exactDuration / 15f) * 15f;
+        var duration = TimeSpan.FromSeconds(exactDuration);
+
+        if (time.ID != "StandardTime")
+        {
+            mods.Add(time.Description);
+        }
 
         if (rand.Prob(0.2f))
         {
             var weather = GetMod<SalvageWeatherMod>(rand, ref rating);
+            // mods.Add(weather.Description);
         }
-
-        // TODO: Dump additional mods into text format for the thingo.
-
-        var exactDuration = time.MinDuration + (time.MaxDuration - time.MinDuration) * rand.NextFloat();
-        exactDuration = MathF.Round(exactDuration / 15f) * 15f;
-
-        var duration = TimeSpan.FromSeconds(exactDuration);
 
         var loots = GetLoot(_proto.EnumeratePrototypes<SalvageLootPrototype>().ToList(), GetDifficulty(difficulty), seed);
         rating = MathF.Max(0f, rating);
 
-        return new SalvageMission(seed, difficulty, rating, dungeon.ID, faction.ID, config, biome.ID, light?.Color, duration, loots);
+        return new SalvageMission(seed, difficulty, rating, dungeon.ID, faction.ID, config, biome.ID, light?.Color, duration, loots, mods);
     }
 
     public SalvageDungeonMod GetDungeon(string biome, System.Random rand, ref float rating)

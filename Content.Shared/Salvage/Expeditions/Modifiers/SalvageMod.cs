@@ -10,6 +10,8 @@ public sealed class SalvageMod : IPrototype, ISalvageMod
 {
     [IdDataField] public string ID { get; } = default!;
 
+    [DataField("desc")] public string Description { get; } = string.Empty;
+
     /// <summary>
     /// Cost for difficulty modifiers.
     /// </summary>

@@ -44,6 +44,9 @@ public sealed partial class SalvageSystem
             }
         }
 
+        if (Deleted(component.Station))
+            return;
+
         // Finish mission
         if (TryComp<SalvageExpeditionDataComponent>(component.Station, out var data))
         {
@@ -111,11 +114,13 @@ public sealed partial class SalvageSystem
         {
             _sawmill.Debug($"Completed mission {expedition.MissionParams.Config} with seed {expedition.MissionParams.Seed}");
             component.NextOffer = _timing.CurTime + MissionCooldown;
+            Announce(expedition.Owner, Loc.GetString("salvage-expedition-mission-completed"));
         }
         else
         {
             _sawmill.Debug($"Failed mission {expedition.MissionParams.Config} with seed {expedition.MissionParams.Seed}");
             component.NextOffer = _timing.CurTime + MissionFailedCooldown;
+            Announce(expedition.Owner, Loc.GetString("salvage-expedition-mission-failed"));
         }
 
         // TODO: Report failure / success

@@ -103,7 +103,8 @@ public sealed record SalvageMission(
     string Biome,
     Color? Color,
     TimeSpan Duration,
-    List<string> Loot)
+    List<string> Loot,
+    List<string> Modifiers)
 {
     /// <summary>
     /// Seed used for the mission.
@@ -148,6 +149,11 @@ public sealed record SalvageMission(
     public TimeSpan Duration = Duration;
 
     public List<string> Loot = Loot;
+
+    /// <summary>
+    /// Modifiers (outside of the above) applied to the mission.
+    /// </summary>
+    public List<string> Modifiers = Modifiers;
 }
 
 [Serializable, NetSerializable]

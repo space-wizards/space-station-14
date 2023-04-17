@@ -150,6 +150,8 @@ public sealed partial class ShuttleSystem
         hyperspace.Dock = false;
         hyperspace.PriorityTag = priorityTag;
         _console.RefreshShuttleConsoles();
+        var ev = new FTLRequestEvent(_mapManager.GetMapEntityId(coordinates.ToMap(EntityManager, _transform).MapId));
+        RaiseLocalEvent(shuttleUid, ref ev, true);
     }
 
     /// <summary>
@@ -250,7 +252,7 @@ public sealed partial class ShuttleSystem
                     SetDockBolts(uid, true);
                     _console.RefreshShuttleConsoles(uid);
                     var ev = new FTLStartedEvent(fromMapUid, fromMatrix, fromRotation);
-                    RaiseLocalEvent(uid, ref ev);
+                    RaiseLocalEvent(uid, ref ev, true);
 
                     if (comp.TravelSound != null)
                     {

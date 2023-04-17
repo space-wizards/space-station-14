@@ -6,6 +6,7 @@ salvage-expedition-window-details = Details:
 salvage-expedition-window-hostiles = Hostiles:
 salvage-expedition-window-duration = Duration:
 salvage-expedition-window-biome = Biome:
+salvage-expedition-window-modifiers = Modifiers:
 salvage-expedition-window-loot = Loot:
 salvage-expedition-window-none = N/A
 salvage-expedition-window-claimed = Claimed
@@ -16,3 +17,7 @@ salvage-expedition-window-next = Next offer
 # Expedition descriptions
 salvage-expedition-desc-mining = Collect resources inside the area.
 salvage-expedition-desc-structure = Destroy {$count} {$structure} inside the area.
+
+# Runner
+salvage-expedition-announcement-countdown-minutes = {$duration} minutes remaining to complete the expedition.
+salvage-expedition-announcement-countdown-seconds = {$duration} seconds remaining to complete the expedition.

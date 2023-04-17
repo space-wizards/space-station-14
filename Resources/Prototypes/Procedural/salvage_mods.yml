@@ -41,40 +41,44 @@
 # At some stage with sub-biomes this will probably be moved onto the biome itself
 - type: salvageLightMod
   id: Daylight
+  desc: Daylight
   color: "#D8B059"
   biomes:
     - Grasslands
 
 - type: salvageLightMod
   id: Lavalight
+  desc: Daylight
   color: "#A34931"
   biomes:
     - Lava
 
 - type: salvageLightMod
   id: Evening
+  desc: Evening
   color: "#2b3143"
 
 - type: salvageLightMod
   id: Night
+  desc: Night time
   color: null
   cost: 1
 
 # Time mods -> at least 1 required
 - type: salvageTimeMod
   id: StandardTime
-  minDuration: 540
-  maxDuration: 720
 
 - type: salvageTimeMod
   id: RushTime
-  minDuration: 420
+  desc: Rush
+  minDuration: 480
   maxDuration: 540
   cost: 1
 
 # Misc mods
 - type: salvageMod
   id: LongDistance
+  desc: Long distance
 
 # Dungeons
 #  For now just simple 1-dungeon setups
