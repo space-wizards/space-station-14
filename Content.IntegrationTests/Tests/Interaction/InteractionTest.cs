@@ -15,6 +15,7 @@ using Content.Shared.Interaction;
 using NUnit.Framework;
 using Robust.Client.GameObjects;
 using Robust.Client.Input;
+using Robust.Client.UserInterface;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -100,6 +101,7 @@ public abstract partial class InteractionTest
     // CLIENT dependencies
     protected IEntityManager CEntMan = default!;
     protected IGameTiming CTiming = default!;
+    protected IUserInterfaceManager UiMan = default!;
     protected IInputManager InputManager = default!;
     protected InputSystem InputSystem = default!;
     protected ConstructionSystem CConSys = default!;
@@ -136,13 +138,13 @@ public abstract partial class InteractionTest
 
         // client dependencies
         CEntMan = Client.ResolveDependency<IEntityManager>();
+        UiMan = Client.ResolveDependency<IUserInterfaceManager>();
         CTiming = Client.ResolveDependency<IGameTiming>();
         InputManager = Client.ResolveDependency<IInputManager>();
         InputSystem = CEntMan.System<InputSystem>();
         CTestSystem = CEntMan.System<InteractionTestSystem>();
         CConSys = CEntMan.System<ConstructionSystem>();
         ExamineSys = CEntMan.System<ExamineSystem>();
-        CUISystem = CEntMan.System<UserInterfaceSystem>();
 
         // Setup map.
         MapData = await PoolManager.CreateTestMap(PairTracker);
