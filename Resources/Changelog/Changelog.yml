@@ -1,11 +1,4 @@
 Entries:
-- author: Prentor
-  changes:
-  - {message: 'energy sword is cheaper and stronger, energy pen is stealthier and
-      weaker', type: Tweak}
-  - {message: hypopen now has size of normal pen, type: Tweak}
-  id: 2935
-  time: '2023-01-20T16:11:24.0000000+00:00'
 - author: Vordenburg
   changes:
   - {message: Added a delay at the start of Traitor mode before players are selected
@@ -2899,3 +2892,9 @@ Entries:
     type: Fix}
   id: 3434
   time: '2023-04-17T05:58:54.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: 'Lone nuclear operatives have recently started attacking stations. Make
+      sure to watch out for them on long, extended shifts.', type: Add}
+  id: 3435
+  time: '2023-04-17T06:00:44.0000000+00:00'
