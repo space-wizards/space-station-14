@@ -10,6 +10,10 @@ namespace Content.Server.Salvage;
 
 public sealed partial class SalvageSystem
 {
+    /*
+     * Handles actively running a salvage expedition.
+     */
+
     private void InitializeRunner()
     {
         SubscribeLocalEvent<FTLRequestEvent>(OnFTLRequest);
@@ -17,6 +21,9 @@ public sealed partial class SalvageSystem
         SubscribeLocalEvent<FTLCompletedEvent>(OnFTLCompleted);
     }
 
+    /// <summary>
+    /// Announces status updates to salvage crewmembers on the state of the expedition.
+    /// </summary>
     private void Announce(EntityUid uid, string text)
     {
         _chat.TrySendInGameICMessage(uid, text, InGameICChatType.Speak, false);
@@ -24,7 +31,7 @@ public sealed partial class SalvageSystem
 
     private void OnFTLRequest(ref FTLRequestEvent ev)
     {
-        if (!TryComp<SalvageExpeditionComponent>(ev.MapUid, out var comp) ||
+        if (!HasComp<SalvageExpeditionComponent>(ev.MapUid) ||
             !TryComp<FTLDestinationComponent>(ev.MapUid, out var dest))
         {
             return;

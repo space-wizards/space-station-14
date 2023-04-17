@@ -20,7 +20,7 @@
 
 - type: salvageBiomeMod
   id: Caves
-  cost: 2
+  cost: 1
   biome: Caves
 
 #- type: salvageBiomeMod
@@ -91,6 +91,7 @@
   id: Experiment
   config: Experiment
   biomeMods:
+    - Caves
     - Grass
     - LowDesert
     - Snow

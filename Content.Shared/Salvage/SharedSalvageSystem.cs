@@ -26,7 +26,7 @@ public abstract class SharedSalvageSystem : EntitySystem
         switch (mission.Mission)
         {
             case "Mining":
-                return Loc.GetString("salvage-expedition-desc-mining");
+                return Loc.GetString("salvage-expedition-desc-mining", ("tax", $"{GetMiningTax(mission.Difficulty) * 100f:0}"));
             case "StructureDestroy":
                 var proto = _proto.Index<SalvageFactionPrototype>(mission.Faction).Configs["DefenseStructure"];
 
@@ -36,6 +36,11 @@ public abstract class SharedSalvageSystem : EntitySystem
             default:
                 throw new NotImplementedException();
         }
+    }
+
+    public float GetMiningTax(DifficultyRating baseRating)
+    {
+        return 0.6f + (int) baseRating * 0.05f;
     }
 
     /// <summary>

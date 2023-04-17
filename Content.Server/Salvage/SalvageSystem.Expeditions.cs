@@ -12,10 +12,14 @@ namespace Content.Server.Salvage;
 
 public sealed partial class SalvageSystem
 {
+    /*
+     * Handles setup / teardown of salvage expeditions.
+     */
+
     private const int MissionLimit = 5;
 
     private readonly JobQueue _salvageQueue = new();
-    private List<(SpawnSalvageMissionJob Job, CancellationTokenSource CancelToken)> _salvageJobs = new();
+    private readonly List<(SpawnSalvageMissionJob Job, CancellationTokenSource CancelToken)> _salvageJobs = new();
     private const double SalvageJobTime = 0.005;
 
     private void InitializeExpeditions()
@@ -123,7 +127,6 @@ public sealed partial class SalvageSystem
             Announce(expedition.Owner, Loc.GetString("salvage-expedition-mission-failed"));
         }
 
-        // TODO: Report failure / success
         component.ActiveMission = 0;
         component.Cooldown = true;
         UpdateConsoles(component);

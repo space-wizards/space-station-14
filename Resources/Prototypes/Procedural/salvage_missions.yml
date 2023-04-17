@@ -1,7 +1,6 @@
 - type: salvageMission
   id: Mining # No objective only loot
   desc: Mining
-  maxDifficulty: 1
 
 - type: salvageMission
   id: StructureDestroy

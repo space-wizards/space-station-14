@@ -31,12 +31,6 @@ public sealed class SalvageMissionPrototype : IPrototype
     /// </summary>
     [DataField("minDifficulty")]
     public int MinDifficulty;
-
-    /// <summary>
-    /// Maximum tier at which this mission can appear.
-    /// </summary>
-    [DataField("maxDifficulty")]
-    public int MaxDifficulty = int.MaxValue;
 }
 
 [Serializable, NetSerializable]
