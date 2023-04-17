@@ -8,7 +8,7 @@
   - sprite: Mobs/Customization/arachnid.rsi
     state: web
   - sprite: Mobs/Customization/arachnid.rsi
-    state: spikes
+    state: long
 
 - type: marking
   id: ArachnidAppendagesSharp
