@@ -18,10 +18,10 @@
   id: Snow
   biome: Snow
 
-#- type: salvageBiomeMod
-#  id: Caves
-#  cost: 2
-#  biome: Caves
+- type: salvageBiomeMod
+  id: Caves
+  cost: 2
+  biome: Caves
 
 #- type: salvageBiomeMod
 #  id: Space

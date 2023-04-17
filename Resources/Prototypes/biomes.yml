@@ -373,13 +373,11 @@
       invert: true
       noise:
         seed: 0
-        noiseType: Cellular
+        noiseType: Perlin
         fractalType: Ridged
         octaves: 1
-        frequency: 0.02
+        frequency: 0.1
         gain: 0
-        cellularDistanceFunction: EuclideanSq
-        cellularReturnType: Distance2Div
       allowedTiles:
         - FloorAsteroidSand
       entities:
