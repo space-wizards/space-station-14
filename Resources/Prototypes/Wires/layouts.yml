@@ -83,6 +83,6 @@
     - !type:ActivateBombWireAction
     - !type:BoltBombWireAction
     - !type:DelayBombWireAction
-    - !type:ProceedBombWireAction
+    - !type:ProceedWireAction
     - !type:BoomWireAction
     - !type:BoomWireAction
