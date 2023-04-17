@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Fixed not being able to attack people who picked you up or attack lockers
-      and crates from the inside., type: Fix}
-  id: 2928
-  time: '2023-01-20T15:48:28.0000000+00:00'
 - author: Velcroboy
   changes:
   - {message: added Condiment Station, type: Add}
@@ -2904,3 +2898,8 @@ Entries:
   - {message: Fixed the admin menu not being openable in the lobby., type: Fix}
   id: 3427
   time: '2023-04-16T06:06:01.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Aspid now requires a minimum of 25 players., type: Tweak}
+  id: 3428
+  time: '2023-04-16T18:53:26.0000000+00:00'

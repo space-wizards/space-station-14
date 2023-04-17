@@ -13,6 +13,8 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using NUnit.Framework;
+using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -90,6 +92,7 @@ public abstract partial class InteractionTest
 
     // CLIENT dependencies
     protected IEntityManager CEntMan = default!;
+    protected IUserInterfaceManager UiMan = default!;
     protected ConstructionSystem CConSys = default!;
     protected ExamineSystem ExamineSys = default!;
     protected InteractionTestSystem CTestSystem = default!;
@@ -101,7 +104,7 @@ public abstract partial class InteractionTest
     public float TickPeriod => (float)Timing.TickPeriod.TotalSeconds;
 
     [SetUp]
-    public async Task Setup()
+    public virtual async Task Setup()
     {
         PairTracker = await PoolManager.GetServerClient(new PoolSettings());
 
@@ -123,6 +126,7 @@ public abstract partial class InteractionTest
 
         // client dependencies
         CEntMan = Client.ResolveDependency<IEntityManager>();
+        UiMan = Client.ResolveDependency<IUserInterfaceManager>();
         CTestSystem = CEntMan.System<InteractionTestSystem>();
         CConSys = CEntMan.System<ConstructionSystem>();
         ExamineSys = CEntMan.System<ExamineSystem>();
@@ -189,7 +193,7 @@ public abstract partial class InteractionTest
     }
 
     [TearDown]
-    public async Task Cleanup()
+    public virtual async Task Cleanup()
     {
         await Server.WaitPost(() => MapMan.DeleteMap(MapId));
         await PairTracker.CleanReturnAsync();
