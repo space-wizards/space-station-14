@@ -4,11 +4,11 @@
   description: job-description-boxer
   playTimeTracker: JobBoxer
   startingGear: BoxerGear
-  setPreference: false
   icon: "Boxer"
   supervisors: job-supervisors-hop
   access:
   - Service
+
 - type: startingGear
   id: BoxerGear
   equipment:
