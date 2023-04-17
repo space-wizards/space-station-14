@@ -1,15 +1,6 @@
 Entries:
 - author: Rane
   changes:
-  - {message: 'Digesting most food will take a bit longer, as your body breaks things
-      down. This also means OwOnavirus is easier to cure.', type: Tweak}
-  - {message: 'Creatures with animal metabolisms will build up allicin and theobromine
-      more rapidly, making the intended toxin behavior actually work.', type: Fix}
-  - {message: Sugar pills don't satiate anymore. Foods with sugar still do., type: Fix}
-  id: 2930
-  time: '2023-01-20T16:01:11.0000000+00:00'
-- author: Rane
-  changes:
   - {message: Machines with power buttons in their UI can also be turned on or off
       from the context menu., type: Add}
   id: 2931
@@ -2905,3 +2896,9 @@ Entries:
   - {message: Maintenance wall lockers no longer contain emergency locker gear., type: Fix}
   id: 3429
   time: '2023-04-17T05:38:43.0000000+00:00'
+- author: Owai-Seek
+  changes:
+  - {message: added bomber jackets to clothesmate vendor, type: Add}
+  - {message: moved bowler hat to bardrobe, type: Tweak}
+  id: 3430
+  time: '2023-04-17T05:43:42.0000000+00:00'
