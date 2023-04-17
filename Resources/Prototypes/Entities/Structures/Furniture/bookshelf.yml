@@ -32,7 +32,7 @@
         spawn:
           MaterialWoodPlank:
             min: 2
-            max: 4
+            max: 3
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Tag
@@ -53,6 +53,7 @@
         - Folder
         - Write
         - Book
+        - Spellbook
   - type: UserInterface
     interfaces:
     - key: enum.StorageUiKey.Key
