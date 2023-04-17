@@ -162,7 +162,7 @@
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatRnd
   name: scientist lab coat
-  description: A suit that protects against minor chemical spills. Has an purple stripe on the shoulder.
+  description: A suit that protects against minor chemical spills. Has a purple stripe on the shoulder.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Coats/rndcoat.rsi
