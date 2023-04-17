@@ -1,11 +1,4 @@
 Entries:
-- author: timothyteakettle
-  changes:
-  - {message: removed plates from steaks (pending a new plating system), type: Remove}
-  - {message: 'steaks use construction graphs to be cooked now, requiring a temperature
-      of 305K to be cooked', type: Add}
-  id: 2934
-  time: '2023-01-20T16:09:13.0000000+00:00'
 - author: Prentor
   changes:
   - {message: 'energy sword is cheaper and stronger, energy pen is stealthier and
@@ -2900,3 +2893,9 @@ Entries:
       points from artifacts without breaking them., type: Tweak}
   id: 3433
   time: '2023-04-17T05:57:21.0000000+00:00'
+- author: PuroSlavKing
+  changes:
+  - {message: 'Fixed now the chameleon not only mimics hardsuits, but also their helmet!',
+    type: Fix}
+  id: 3434
+  time: '2023-04-17T05:58:54.0000000+00:00'
