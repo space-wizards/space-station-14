@@ -67,3 +67,6 @@ ent-CrateLivestock = livestock crate
 ent-CrateRodentCage = hamster cage
     .desc = { ent-CrateGeneric.desc }
     .suffix = { "" }
+ent-CratePirate = pirate chest
+    .desc = A space pirate chest, not for station lubbers.
+    .suffix = { "" }

@@ -19,3 +19,6 @@ ent-WeaponShotgunSawn = sawn-off shotgun
 ent-WeaponShotgunHandmade = handmade pistol
     .desc = Looks unreliable. Uses .50 shotgun shells.
     .suffix = { "" }
+ent-WeaponShotgunBlunderbuss = blunderbuss
+    .desc = Deadly at close range.
+    .suffix = Pirate

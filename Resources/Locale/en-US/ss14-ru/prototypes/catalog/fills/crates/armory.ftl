@@ -10,3 +10,6 @@ ent-CrateTrackingImplants = { ent-CrateWeaponSecure }
 ent-CrateArmoryLaser = { ent-CrateWeaponSecure }
     .desc = { ent-CrateWeaponSecure.desc }
     .suffix = { "" }
+ent-CrateArmoryPistols = { ent-CrateWeaponSecure }
+    .desc = { ent-CrateWeaponSecure.desc }
+    .suffix = { "" }

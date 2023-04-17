@@ -7,3 +7,6 @@ ent-SpawnVehicleJanicart = Janicart Spawner
 ent-SpawnVehicleATV = ATV Spawner
     .desc = { ent-MarkerBase.desc }
     .suffix = { "" }
+ent-SpawnVehicleMotobike = Motobike Spawner
+    .desc = { ent-MarkerBase.desc }
+    .suffix = { "" }

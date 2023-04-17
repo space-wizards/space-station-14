@@ -61,3 +61,6 @@ ent-SpawnMobHamsterHamlet = Hamster Hamlet Spawner
 ent-SpawnMobAlexander = Alexander Spawner
     .desc = { ent-MarkerBase.desc }
     .suffix = { "" }
+ent-SpawnMobShiva = Shiva Spawner
+    .desc = { ent-MarkerBase.desc }
+    .suffix = { "" }

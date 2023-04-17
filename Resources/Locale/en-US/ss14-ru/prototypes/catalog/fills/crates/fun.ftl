@@ -40,3 +40,6 @@ ent-CrateFunParty = { ent-CrateGenericSteel }
 ent-CrateFunSyndicateSegway = { ent-CrateLivestock }
     .desc = { ent-CrateLivestock.desc }
     .suffix = { "" }
+ent-CrateFunPirate = { ent-CratePirate }
+    .desc = { ent-CratePirate.desc }
+    .suffix = { "" }

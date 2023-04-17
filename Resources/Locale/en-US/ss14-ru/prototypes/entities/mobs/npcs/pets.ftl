@@ -46,3 +46,6 @@ ent-MobFoxRenault = Renault
 ent-MobHamsterHamlet = Hamlet
     .desc = A grumpy, cute and fluffy hamster.
     .suffix = { "" }
+ent-MobSpiderShiva = Shiva
+    .desc = The first defender of the station.
+    .suffix = { "" }

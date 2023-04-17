@@ -1,6 +1,3 @@
-ent-PuddleFlour = flour
-    .desc = Call the janitor.
-    .suffix = { "" }
 ent-ReagentContainerBase = { ent-BaseItem }
     .desc = { ent-BaseItem.desc }
     .suffix = { "" }

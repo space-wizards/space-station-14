@@ -19,3 +19,6 @@ ent-GrenadeFlash = flash grenade
 ent-GrenadeFrag = frag grenade
     .desc = { ent-BaseGrenade.desc }
     .suffix = { "" }
+ent-CannonBall = cannonball
+    .suffix = Pirate
+    .desc = { ent-BaseGrenade.desc }
