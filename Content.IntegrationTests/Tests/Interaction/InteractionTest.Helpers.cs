@@ -8,10 +8,15 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Content.Client.Chemistry.UI;
 using Content.Client.Construction;
+using Content.Server.Atmos;
+using Content.Server.Atmos.Components;
 using Content.Server.Construction.Components;
+using Content.Server.Gravity;
 using Content.Server.Power.Components;
 using Content.Server.Tools.Components;
+using Content.Shared.Atmos;
 using Content.Shared.Construction.Prototypes;
+using Content.Shared.Gravity;
 using Content.Shared.Item;
 using NUnit.Framework;
 using OpenToolkit.GraphicsLibraryFramework;
@@ -84,8 +89,10 @@ public abstract partial class InteractionTest
     /// <summary>
     /// Spawn an entity entity and set it as the target.
     /// </summary>
+    [MemberNotNull(nameof(Target))]
     protected async Task SpawnTarget(string prototype)
     {
+        Target = EntityUid.Invalid;
         await Server.WaitPost(() =>
         {
             Target = SEntMan.SpawnEntity(prototype, TargetCoords);
@@ -493,6 +500,19 @@ public abstract partial class InteractionTest
         Assert.That(tile.TypeId, Is.EqualTo(targetTile.TypeId));
     }
 
+    protected void AssertGridCount(int value)
+    {
+        var count = 0;
+        var query = SEntMan.AllEntityQueryEnumerator<MapGridComponent, TransformComponent>();
+        while (query.MoveNext(out _, out var xform))
+        {
+            if (xform.MapUid == MapData.MapUid)
+                count++;
+        }
+
+        Assert.That(count, Is.EqualTo(value));
+    }
+
     #endregion
 
     #region Entity lookups
@@ -669,13 +689,20 @@ public abstract partial class InteractionTest
         await RunTicks(5);
     }
 
+    #region Time/Tick managment
+
     protected async Task RunTicks(int ticks)
     {
         await PoolManager.RunTicksSync(PairTracker.Pair, ticks);
     }
 
+    protected int SecondsToTicks(float seconds)
+        => (int) Math.Ceiling(seconds / TickPeriod);
+
     protected async Task RunSeconds(float seconds)
-        => await RunTicks((int) Math.Ceiling(seconds / TickPeriod));
+        => await RunTicks(SecondsToTicks(seconds));
+
+    #endregion
 
     #region BUI
     /// <summary>
@@ -722,9 +749,6 @@ public abstract partial class InteractionTest
                 Assert.Fail($"Entity {SEntMan.ToPrettyString(target.Value)} does not have a bui component");
             return false;
         }
-
-        var first = ui.Interfaces.First();
-
 
         bui = ui.Interfaces.FirstOrDefault(x => x.UiKey.Equals(key));
         if (bui == null)
@@ -875,6 +899,112 @@ public abstract partial class InteractionTest
     {
         var comp = Comp<ApcPowerReceiverComponent>(target);
         comp.NeedsPower = !comp.NeedsPower;
+    }
+
+    #endregion
+
+    #region Map Setup
+
+    /// <summary>
+    /// Adds gravity to a given entity. Defaults to the grid if no entity is specified.
+    /// </summary>
+    protected async Task AddGravity(EntityUid? uid = null)
+    {
+        var target = uid ?? MapData.GridUid;
+        await Server.WaitPost(() =>
+        {
+            var gravity = SEntMan.EnsureComponent<GravityComponent>(target);
+            SEntMan.System<GravitySystem>().EnableGravity(target, gravity);
+        });
+    }
+
+    /// <summary>
+    /// Adds a default atmosphere to the test map.
+    /// </summary>
+    protected async Task AddAtmosphere(EntityUid? uid = null)
+    {
+        var target = uid ?? MapData.MapUid;
+        await Server.WaitPost(() =>
+        {
+            var atmos = SEntMan.EnsureComponent<MapAtmosphereComponent>(target);
+            atmos.Space = false;
+            var moles = new float[Atmospherics.AdjustedNumberOfGases];
+            moles[(int) Gas.Oxygen] = 21.824779f;
+            moles[(int) Gas.Nitrogen] = 82.10312f;
+
+            atmos.Mixture = new GasMixture(2500)
+            {
+                Temperature = 293.15f,
+                Moles = moles,
+            };
+        });
+    }
+
+    #endregion
+
+    #region Inputs
+
+    /// <summary>
+    ///     Make the client press and then release a key. This assumes the key is currently released.
+    /// </summary>
+    protected async Task PressKey(
+        BoundKeyFunction key,
+        int ticks = 1,
+        EntityCoordinates? coordinates = null,
+        EntityUid cursorEntity = default)
+    {
+        await SetKey(key, BoundKeyState.Down, coordinates, cursorEntity);
+        await RunTicks(ticks);
+        await SetKey(key, BoundKeyState.Up, coordinates, cursorEntity);
+        await RunTicks(1);
+    }
+
+    /// <summary>
+    ///     Make the client press or release a key
+    /// </summary>
+    protected async Task SetKey(
+        BoundKeyFunction key,
+        BoundKeyState state,
+        EntityCoordinates? coordinates = null,
+        EntityUid cursorEntity = default)
+    {
+        var coords = coordinates ?? TargetCoords;
+        ScreenCoordinates screen = default;
+
+        var funcId = InputManager.NetworkBindMap.KeyFunctionID(key);
+        var message = new FullInputCmdMessage(CTiming.CurTick, CTiming.TickFraction, funcId, state,
+            coords, screen, cursorEntity);
+
+        await Client.WaitPost(() => InputSystem.HandleInputCommand(ClientSession, key, message));
+    }
+
+    /// <summary>
+    ///     Variant of <see cref="SetKey"/> for setting movement keys.
+    /// </summary>
+    protected async Task SetMovementKey(DirectionFlag dir, BoundKeyState state)
+    {
+        if ((dir & DirectionFlag.South) != 0)
+            await SetKey(EngineKeyFunctions.MoveDown, state);
+
+        if ((dir & DirectionFlag.East) != 0)
+            await SetKey(EngineKeyFunctions.MoveRight, state);
+
+        if ((dir & DirectionFlag.North) != 0)
+            await SetKey(EngineKeyFunctions.MoveUp, state);
+
+        if ((dir & DirectionFlag.West) != 0)
+            await SetKey(EngineKeyFunctions.MoveLeft, state);
+    }
+
+    /// <summary>
+    ///     Make the client hold the move key in some direction for some amount of time.
+    /// </summary>
+    protected async Task Move(DirectionFlag dir, float seconds)
+    {
+        await SetMovementKey(dir, BoundKeyState.Down);
+        await RunSeconds(seconds);
+        await SetMovementKey(dir, BoundKeyState.Up);
+        await RunTicks(1);
     }
 
     #endregion
