@@ -246,12 +246,12 @@
     endAfter: 1
 
 - type: gameRule
-  id: LoneOps
+  id: LoneOpsSpawn
   config:
     !type:StationEventRuleConfiguration
-    id: LoneOps
+    id: LoneOpsSpawn
     earliestStart: 55
     weight: 5
-    minimumPlayers: 20
+    minimumPlayers: 10
     reoccurrenceDelay: 25
     endAfter: 1
