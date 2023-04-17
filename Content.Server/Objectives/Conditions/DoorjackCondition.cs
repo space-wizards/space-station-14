@@ -1,5 +1,5 @@
+using Content.Server.Ninja.Systems;
 using Content.Server.Objectives.Interfaces;
-using Content.Shared.Ninja.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -30,16 +30,14 @@ public sealed class DoorjackCondition : IObjectiveCondition
     {
         get
         {
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            if (_mind?.OwnedEntity == null
-                || !entMan.TryGetComponent<NinjaComponent>(_mind.OwnedEntity, out var ninja))
-                return 0f;
-
             // prevent divide-by-zero
             if (_target == 0)
                 return 1f;
 
-            return (float) ninja.DoorsJacked / (float) _target;
+            if (!NinjaSystem.GetNinjaRole(_mind, out var role))
+                return 0f;
+
+            return (float) role.DoorsJacked / (float) _target;
         }
     }
 
