@@ -34,7 +34,7 @@
 
 - type: entity
   parent: SalvageHumanCorpse
-  id: QuartermasterEmptyWInterCorpse
+  id: QuartermasterEmptyWinterCorpse
   suffix: Dead, Empty, Winter, QM
   components:
   - type: Loadout
