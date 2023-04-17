@@ -1,0 +1,5 @@
+- type: entity
+  parent: BaseElectronics
+  id: StationMapCircuitboard
+  name: station map circuit board
+  description: A printed circuit board for a station map.
