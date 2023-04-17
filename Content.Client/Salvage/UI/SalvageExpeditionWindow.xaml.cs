@@ -272,7 +272,11 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
         }
         else
         {
-            NextOfferBar.Value = 1f - (float) (remaining / SharedSalvageSystem.MissionCooldown);
+            var cooldown = _cooldown
+                ? SharedSalvageSystem.MissionFailedCooldown
+                : SharedSalvageSystem.MissionCooldown;
+
+            NextOfferBar.Value = 1f - (float) (remaining / cooldown);
             NextOfferText.Text = $"{remaining.Minutes:00}:{remaining.Seconds:00}";
         }
     }

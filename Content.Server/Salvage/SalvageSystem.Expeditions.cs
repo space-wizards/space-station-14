@@ -118,6 +118,7 @@ public sealed partial class SalvageSystem
             component.NextOffer = _timing.CurTime + MissionFailedCooldown;
         }
 
+        // TODO: Report failure / success
         component.ActiveMission = 0;
         component.Cooldown = true;
         UpdateConsoles(component);
