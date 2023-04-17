@@ -191,7 +191,7 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
                 Text = Loc.GetString("salvage-expedition-window-loot")
             });
 
-            if (true)//config.Loots.Count == 0)
+            if (mission.Loot.Count == 0)
             {
                 lBox.AddChild(new Label()
                 {
@@ -201,21 +201,16 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
                     Margin = new Thickness(0f, 0f, 0f, 5f),
                 });
             }
-            /*
             else
             {
-                foreach (var lootProto in SharedSalvageSystem.GetLoot(config.Loots, mission.Seed, _prototype))
+                lBox.AddChild(new Label()
                 {
-                    lBox.AddChild(new Label()
-                    {
-                        Text = lootProto.Description,
-                        FontColorOverride = StyleNano.ConcerningOrangeFore,
-                        HorizontalAlignment = HAlignment.Left,
-                        Margin = new Thickness(0f, 0f, 0f, 5f),
-                    });
-                }
+                    Text = string.Join("\n", mission.Loot.Select(o => "- " + o)).TrimEnd(),
+                    FontColorOverride = StyleNano.ConcerningOrangeFore,
+                    HorizontalAlignment = HAlignment.Left,
+                    Margin = new Thickness(0f, 0f, 0f, 5f),
+                });
             }
-            */
 
             // Claim
             var claimButton = new Button()
