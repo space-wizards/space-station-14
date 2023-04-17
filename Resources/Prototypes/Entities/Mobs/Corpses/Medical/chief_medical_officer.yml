@@ -1,0 +1,7 @@
+- type: entity
+  parent: SalvageHumanCorpse
+  id: ChiefMedicalOfficerCorpse
+  suffix: Dead, Chief medical officer
+  components:
+  - type: Loadout
+    prototypes: [ CMOGear ]

@@ -1,0 +1,79 @@
+- type: entity
+  parent: SalvageHumanCorpse
+  id: ERTLeaderCorpse
+  suffix: Dead, ERT Leader
+  components:
+  - type: Loadout
+    prototypes: [ ERTLeaderGear ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: ERTLeaderEVACorpse
+  suffix: Dead, EVA, ERT Leader
+  components:
+  - type: Loadout
+    prototypes: [ ERTLeaderGearEVA ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: ERTEngineerCorpse
+  suffix: Dead, ERT Engineer
+  components:
+  - type: Loadout
+    prototypes: [ ERTEngineerGear ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: ERTEngineerEVACorpse
+  suffix: Dead, EVA, ERT Engineer
+  components:
+  - type: Loadout
+    prototypes: [ ERTEngineerGearEVA ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: ERTSecurityCorpse
+  suffix: Dead, ERT Security
+  components:
+  - type: Loadout
+    prototypes: [ ERTSecurityGear ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: ERTSecurityEVACorpse
+  suffix: Dead, EVA, ERT Security
+  components:
+  - type: Loadout
+    prototypes: [ ERTSecurityGearEVA ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: ERTMedicalCorpse
+  suffix: Dead, ERT Medical
+  components:
+  - type: Loadout
+    prototypes: [ ERTMedicalGear ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: ERTMedicalEVACorpse
+  suffix: Dead, EVA, ERT Medical
+  components:
+  - type: Loadout
+    prototypes: [ ERTMedicalGearEVA ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: ERTJanitorCorpse
+  suffix: Dead, ERT Medical
+  components:
+  - type: Loadout
+    prototypes: [ ERTJanitorGear ]
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: ERTJanitorEVACorpse
+  suffix: Dead, EVA, ERT Medical
+  components:
+  - type: Loadout
+    prototypes: [ ERTJanitorGearEVA ]

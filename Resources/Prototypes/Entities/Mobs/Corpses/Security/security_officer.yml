@@ -1,0 +1,7 @@
+- type: entity
+  parent: SalvageHumanCorpse
+  id: SecurityOfficerCorpse
+  suffix: Dead, Security Officer
+  components:
+  - type: Loadout
+    prototypes: [ SecurityOfficerGear ]

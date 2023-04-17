@@ -40,6 +40,8 @@
     damage:
       types:
         Blunt: 200
+  - type: Inventory
+    templateId: corpse
 
 - type: entity
   parent: MobHuman

@@ -1,0 +1,7 @@
+- type: entity
+  parent: SalvageHumanCorpse
+  id: CaptainCorpse
+  suffix: Dead, Captain
+  components:
+  - type: Loadout
+    prototypes: [ CaptainGear ]

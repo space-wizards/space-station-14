@@ -1,0 +1,9 @@
+﻿- type: entity
+  parent: MobFleshJared
+  id: MobFleshJaredCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 75

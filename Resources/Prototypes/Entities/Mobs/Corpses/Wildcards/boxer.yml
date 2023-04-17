@@ -1,0 +1,7 @@
+- type: entity
+  parent: SalvageHumanCorpse
+  id: BoxerCorpse
+  suffix: Dead, Boxer
+  components:
+  - type: Loadout
+    prototypes: [ BoxerGear ]

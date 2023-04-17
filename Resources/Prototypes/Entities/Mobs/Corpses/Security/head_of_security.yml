@@ -1,0 +1,7 @@
+- type: entity
+  parent: SalvageHumanCorpse
+  id: HeadOfSecurityCorpse
+  suffix: Dead, Head of security
+  components:
+  - type: Loadout
+    prototypes: [ HoSGear ]

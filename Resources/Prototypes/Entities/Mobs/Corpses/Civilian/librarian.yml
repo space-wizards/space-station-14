@@ -1,0 +1,7 @@
+- type: entity
+  parent: SalvageHumanCorpse
+  id: LibrarianCorpse
+  suffix: Dead, Librarian
+  components:
+  - type: Loadout
+    prototypes: [ LibrarianGear ]

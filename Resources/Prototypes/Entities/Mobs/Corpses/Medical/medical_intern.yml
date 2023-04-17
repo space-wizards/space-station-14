@@ -1,0 +1,7 @@
+﻿- type: entity
+  parent: SalvageHumanCorpse
+  id: MedicalInternCorpse
+  suffix: Dead, Medical Intern
+  components:
+  - type: Loadout
+    prototypes: [ MedicalInternGear ]

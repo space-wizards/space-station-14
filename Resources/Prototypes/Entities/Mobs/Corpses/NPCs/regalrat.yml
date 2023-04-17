@@ -1,0 +1,29 @@
+- type: entity
+  parent: MobRatKing
+  id: MobRatKingCoprse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 200
+
+- type: entity
+  parent: MobRatKingBuff
+  id: MobRatKingBuffCorpse
+  suffix: Buff, Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 350
+
+- type: entity
+  parent: MobRatServant
+  id: MobRatServantCorpse
+  suffix: Dead
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Blunt: 30

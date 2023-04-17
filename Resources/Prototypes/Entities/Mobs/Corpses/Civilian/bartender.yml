@@ -1,0 +1,7 @@
+- type: entity
+  parent: SalvageHumanCorpse
+  id: BartenderCorpse
+  suffix: Dead, Bartender
+  components:
+  - type: Loadout
+    prototypes: [ BartenderGear ]

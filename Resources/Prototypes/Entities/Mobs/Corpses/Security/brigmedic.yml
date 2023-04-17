@@ -1,0 +1,7 @@
+- type: entity
+  parent: SalvageHumanCorpse
+  id: BrigmedicCorpse
+  suffix: Dead, Brig Medic
+  components:
+  - type: Loadout
+    prototypes: [ BrigmedicGear ]

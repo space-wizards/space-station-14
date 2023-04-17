@@ -1,0 +1,7 @@
+﻿- type: entity
+  parent: SalvageHumanCorpse
+  id: ResearchAssistantCorpse
+  suffix: Dead, Research Assistant
+  components:
+  - type: Loadout
+    prototypes: [ ResearchAssistantGear ]

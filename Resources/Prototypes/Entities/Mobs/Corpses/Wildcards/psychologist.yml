@@ -1,0 +1,7 @@
+- type: entity
+  parent: SalvageHumanCorpse
+  id: PsychologistCorpse
+  suffix: Dead, Psychologist
+  components:
+  - type: Loadout
+    prototypes: [ PsychologistGear ]

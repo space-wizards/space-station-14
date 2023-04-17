@@ -1,0 +1,7 @@
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MusicianCorpse
+  suffix: Dead, Musician
+  components:
+  - type: Loadout
+    prototypes: [ MusicianGear ]
