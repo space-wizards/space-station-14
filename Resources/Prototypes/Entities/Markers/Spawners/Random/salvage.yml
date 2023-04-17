@@ -12,15 +12,6 @@
         - sprite: Structures/Storage/Crates/generic.rsi
           state: icon
     - type: RandomSpawner
-      rarePrototypes:
-        - SalvageHumanCorpse
-        - CrateMaterialPlasteel
-        - CrateMaterialWood
-        - CrateMaterialPlastic
-        - CrateSalvageEquipment
-        - CrateMaterialSteel
-        - CrateMaterialGlass
-      rareChance: 0.4
       prototypes:
         - CrateSalvageAssortedGoodies
       chance: 0.9

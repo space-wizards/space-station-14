@@ -30,21 +30,132 @@
   - type: StorageFill
     contents:
         # Normal (10%)
-      - id: ToolboxEmergencyFilled
-        prob: 0.1
-      - id: ClothingMaskBreath
-        prob: 0.1
       - id: OxygenTankFilled
-        prob: 0.1
-      - id: SheetPlasma
-        prob: 0.1
-      - id: WelderIndustrialAdvanced
-        prob: 0.1
+        prob: 0.05
+      - id: PlasmaTankFilled
+        prob: 0.05
       - id: ResearchDisk
         prob: 0.1
       - id: ClothingBeltStorageWaistbag
         prob: 0.1
-        #  - Service
+      - id: CigPackBlue
+        prob: 0.1
+      - id: WeaponMakeshiftLaser
+        prob: 0.0005
+      - id: ClothingHandsGlovesCombat
+        prob: 0.001
+      - id: ResearchDisk
+        prob: 0.10
+      - id: ResearchDisk5000
+        prob: 0.05
+      - id: BoxMRE
+        prob: 0.005
+      - id: FoodTinPeachesMaint
+        prob: 0.1
+      - id: KitchenKnife
+        prob: 0.1
+      - id: DrinkCanPack
+        prob: 0.1
+      - id: ClothingShoesBootsJack
+        prob: 0.1
+      - id: ClothingEyesGlassesThermal
+        prob: 0.1
+      - id: ClothingEyesBlindfold
+        prob: 0.1
+      - id: Paper
+        prob: 0.025
+      - id: CigarCase
+        prob: 0.025
+      - id: Cigarette
+        prob: 0.025
+      - id: CigarGoldCase
+        prob: 0.01
+      - id: CigarGold
+        prob: 0.01
+      - id: Cigar
+        prob: 0.01
+      - id: SmokingPipe
+        prob: 0.015
+      - id: SmokingPipeFilledTobacco
+        prob: 0.005
+      - id: SmokingPipeFilledCannabis
+        prob: 0.005
+      - id: HandheldHealthAnalyzer
+        prob: 0.025
+      - id: AMEJar
+        prob: 0.010
+      - id: Lighter
+        prob: 0.025
+      - id: CheapLighter
+        prob: 0.05
+      - id: SurvivalKnife
+        prob: 0.05
+        #  - Tools
+      - id: Wirecutter
+        prob: 0.075
+      - id: Wrench
+        prob: 0.075
+      - id: Welder
+        prob: 0.075
+      - id: Screwdriver
+        prob: 0.075
+      - id: Multitool
+        prob: 0.075
+      - id: trayScanner
+        prob: 0.075
+      - id: WelderMini
+        prob: 0.075
+      - id: WelderIndustrialAdvanced
+        prob: 0.075
+        #  - Materials
+      - id: SheetPlasteel
+        prob: 0.010
+      - id: SheetRGlass
+        prob: 0.010
+      - id: SheetPGlass
+        prob: 0.005
+      - id: SheetRPGlass
+        prob: 0.001
+      - id: SheetPlasma1
+        prob: 0.025
+      - id: SheetUranium1
+        prob: 0.010
+      - id: SheetSteel
+        prob: 0.050
+      - id: SheetGlass
+        prob: 0.050
+      - id: SheetPlastic
+        prob: 0.050
+      #  - Artifacts
+      - id: SimpleXenoArtifactItem
+        prob: 0.06
+      - id: MediumXenoArtifactItem
+        prob: 0.02
+        #  - Donkpockets
+      - id: FoodBoxDonkpocket
+        prob: 0.01
+      - id: FoodBoxDonkpocketPizza
+        prob: 0.01
+      - id: FoodBoxDonkpocketHonk
+        prob: 0.01
+      - id: FoodBoxDonkpocketBerry
+        prob: 0.01
+      - id: FoodBoxDonkpocketSpicy
+        prob: 0.01
+      - id: FoodBoxDonkpocketTeriyaki
+        prob: 0.01
+      - id: FoodBoxDonkpocketYink
+        prob: 0.01
+      - id: FoodBoxDonkpocketGondola
+        prob: 0.01
+        #  - Powercells
+      - id: PowerCellSmall
+        prob: 0.1
+      - id: PowerCellMedium
+        prob: 0.1
+      - id: PowerCellHigh
+        prob: 0.1
+    #  - Service
       - id: CrayonBox
         prob: 0.1
         #  - Medical
@@ -54,17 +165,20 @@
         prob: 0.1
       - id: BoxBeaker
         prob: 0.1
-        #  - Scaf
-      - id: ClothingHeadHelmetScaf
-        prob: 0.1
-      - id: ClothingOuterArmorScaf
-        prob: 0.1
         #  - Heh
       - id: SalvageHumanCorpse
         prob: 0.1
-      - id: LidSalami
-        prob: 0.1
         # Interesting (1%)
+      - id: ClothingShoesBootsCombat
+        prob: 0.01
+      - id: ClothingShoesBootsCombatFilled
+        prob: 0.01
+      - id: ClothingHandsGlovesCombat
+        prob: 0.01
+      - id: WeaponMakeshiftLaser
+        prob: 0.01
+      - id: Machete
+        prob: 0.01
         #  - Ammo
       - id: MagazineBoxMagnum
         prob: 0.01
@@ -85,26 +199,6 @@
         prob: 0.001
       - id: ClothingHeadHatCatEars
         prob: 0.01
-        #  - Pins
-      - id: ClothingNeckLGBTPin
-        prob: 0.025
-        orGroup: LGBTQIAPlusPins
-      - id: ClothingNeckAromanticPin
-        orGroup: LGBTQIAPlusPins
-      - id: ClothingNeckAsexualPin
-        orGroup: LGBTQIAPlusPins
-      - id: ClothingNeckBisexualPin
-        orGroup: LGBTQIAPlusPins
-      - id: ClothingNeckIntersexPin
-        orGroup: LGBTQIAPlusPins
-      - id: ClothingNeckLesbianPin
-        orGroup: LGBTQIAPlusPins
-      - id: ClothingNeckNonBinaryPin
-        orGroup: LGBTQIAPlusPins
-      - id: ClothingNeckPansexualPin
-        orGroup: LGBTQIAPlusPins
-      - id: ClothingNeckTransPin
-        orGroup: LGBTQIAPlusPins
         # TRAITOR EQUIPMENT (0.01%)
       - id: Telecrystal10
         prob: 0.0001
