@@ -53,6 +53,8 @@
     contents:
       - id: Flash
       - id: WeaponDisabler
+      - id: TrackingImplanter
+        amount: 2
       - id: ClothingOuterHardsuitBrigmed
       - id: BoxSterileMask
       - id: ClothingUniformJumpsuitBrigmedic
