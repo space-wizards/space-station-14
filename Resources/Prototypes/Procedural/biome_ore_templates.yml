@@ -6,11 +6,11 @@
       allowedTiles:
         - FloorPlanetGrass
         - FloorPlanetDirt
-      threshold: -0.15
+      threshold: -0.05
       noise:
         seed: 100
         noiseType: Cellular
-        frequency: 0.05
+        frequency: 0.06
         lacunarity: 2
         fractalType: FBm
         octaves: 5
@@ -21,11 +21,11 @@
         - WallRockTin
     - !type:BiomeTileLayer
       tile: FloorPlanetDirt
-      threshold: -0.15
+      threshold: -0.05
       noise:
-        seed: 0
+        seed: 100
         noiseType: Cellular
-        frequency: 0.05
+        frequency: 0.06
         lacunarity: 2
         fractalType: FBm
         octaves: 5

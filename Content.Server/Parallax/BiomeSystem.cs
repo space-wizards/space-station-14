@@ -94,10 +94,6 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     private void OnBiomeStartup(EntityUid uid, BiomeComponent component, ComponentStartup args)
     {
         component.Noise.SetSeed(component.Seed);
-        // TODO: SHITCODE FIX
-        // Also make it so the biomeprototype is just a template to use
-        // Any templates based off of it should be dynamically reloaded too
-        component.MarkerLayers.Add("Lizards");
     }
 
     private void OnBiomeMapInit(EntityUid uid, BiomeComponent component, MapInitEvent args)
