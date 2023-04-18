@@ -29,7 +29,7 @@ public sealed class SolutionRegenerationSystem : EntitySystem
             // timer ignores if its full, it's just a fixed cycle
             regen.NextRegenTime = _timing.CurTime + regen.Duration;
             if (_solutionContainer.TryGetSolution(uid, regen.Solution, out var solution, manager))
-                _solutionContainer.TryAddSolution(uid, solution, regen.Added);
+                _solutionContainer.TryAddSolution(uid, solution, regen.Generated);
         }
     }
 

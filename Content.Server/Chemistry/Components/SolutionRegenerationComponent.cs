@@ -22,8 +22,8 @@ public sealed class SolutionRegenerationComponent : Component
     /// <summary>
     /// The reagent(s) to be regenerated in the solution.
     /// </summary>
-    [DataField("added", required: true), ViewVariables(VVAccess.ReadWrite)]
-    public Solution Added = default!;
+    [DataField("generated", required: true), ViewVariables(VVAccess.ReadWrite)]
+    public Solution Generated = default!;
 
     /// <summary>
     /// How long it takes to regenerate once.
