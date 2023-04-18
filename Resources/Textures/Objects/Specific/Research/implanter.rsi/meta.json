@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "tgstation at 986af32e22a88dae14fd147d812a5a4d27c1bc30 / modified for sprite by LinkUyx#6557",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "implanter_empty"
+    },
+    {
+      "name": "implanter_full"
+    },
+    {
+      "name": "implanter"
+    }
+  ]
+}
