@@ -148,7 +148,7 @@ public sealed partial class SalvageSystem
             foreach (var config in configs)
             {
                 // Don't offer harder missions under easier tiers.
-                if (config.MinDifficulty > i || config.MaxDifficulty < i)
+                if (config.MinDifficulty > i)
                     continue;
 
                 var mission = new SalvageMissionParams()

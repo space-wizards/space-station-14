@@ -1,6 +1,9 @@
+using Content.Shared.Parallax.Biomes.Markers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Noise;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Parallax.Biomes;
 
@@ -42,9 +45,28 @@ public sealed partial class BiomeComponent : Component
     [DataField("loadedChunks")]
     public readonly HashSet<Vector2i> LoadedChunks = new();
 
+    #region Markers
+
     /// <summary>
-    /// Are we currently in the process of generating?
-    /// Used to flag modified tiles without callers having to deal with it.
+    /// Track what markers we've loaded already to avoid double-loading.
     /// </summary>
-    public bool Generating = false;
+    [DataField("loadedMobMarkers", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<HashSet<Vector2i>, BiomeMobMarkerLayerPrototype>))]
+    public readonly Dictionary<string, HashSet<Vector2i>> LoadedMobMarkers = new();
+
+    // Alas I cannot use interfaces for indexing, alternatively I could just store types alongside these but that seems
+    // subject to issues.
+
+    [DataField("mobMarkerLayers", customTypeSerializer: typeof(PrototypeIdListSerializer<BiomeMobMarkerLayerPrototype>))]
+    public List<string> MobMarkerLayers = new();
+
+    /// <summary>
+    /// Track what markers we've loaded already to avoid double-loading.
+    /// </summary>
+    [DataField("loadedDungeonMarkers", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<HashSet<Vector2i>, BiomeDungeonMarkerLayerPrototype>))]
+    public readonly Dictionary<string, HashSet<Vector2i>> LoadedDungeonMarkers = new();
+
+    [DataField("dungeonMarkerLayers", customTypeSerializer: typeof(PrototypeIdListSerializer<BiomeDungeonMarkerLayerPrototype>))]
+    public List<string> DungeonMarkerLayers = new();
+
+    #endregion
 }

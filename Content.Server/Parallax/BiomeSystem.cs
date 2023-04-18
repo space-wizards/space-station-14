@@ -1,6 +1,11 @@
 using Content.Server.Decals;
+using Content.Server.Procedural;
+using Content.Server.Shuttles.Events;
 using Content.Shared.Decals;
 using Content.Shared.Parallax.Biomes;
+using Content.Shared.Parallax.Biomes.Markers;
+using Content.Shared.Parallax.Biomes.Points;
+using Content.Shared.Procedural;
 using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Configuration;
@@ -8,21 +13,30 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Noise;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Parallax;
 
-public sealed class BiomeSystem : SharedBiomeSystem
+public sealed partial class BiomeSystem : SharedBiomeSystem
 {
     [Dependency] private readonly IConfigurationManager _configManager = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly DecalSystem _decals = default!;
+    [Dependency] private readonly DungeonSystem _dungeon = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private readonly HashSet<EntityUid> _handledEntities = new();
     private const float DefaultLoadRange = 16f;
     private float _loadRange = DefaultLoadRange;
+
+    /// <summary>
+    /// Load area for chunks containing tiles, decals etc.
+    /// </summary>
     private Box2 _loadArea = new(-DefaultLoadRange, -DefaultLoadRange, DefaultLoadRange, DefaultLoadRange);
 
     /// <summary>
@@ -30,12 +44,18 @@ public sealed class BiomeSystem : SharedBiomeSystem
     /// </summary>
     private readonly Dictionary<BiomeComponent, HashSet<Vector2i>> _activeChunks = new();
 
+    private readonly Dictionary<BiomeComponent,
+        Dictionary<IBiomeMarkerLayer,
+        Dictionary<string, HashSet<Vector2i>>>> _markerChunks = new();
+
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<BiomeComponent, ComponentStartup>(OnBiomeStartup);
         SubscribeLocalEvent<BiomeComponent, MapInitEvent>(OnBiomeMapInit);
+        SubscribeLocalEvent<FTLStartedEvent>(OnFTLStarted);
         _configManager.OnValueChanged(CVars.NetMaxUpdateRange, SetLoadRange, true);
+        InitializePoints();
     }
 
     public override void Shutdown()
@@ -54,6 +74,11 @@ public sealed class BiomeSystem : SharedBiomeSystem
     private void OnBiomeStartup(EntityUid uid, BiomeComponent component, ComponentStartup args)
     {
         component.Noise.SetSeed(component.Seed);
+        // TODO: SHITCODE FIX
+        // Also make it so the biomeprototype is just a template to use
+        // Any templates based off of it should be dynamically reloaded too
+        component.MobMarkerLayers.Add("Lizards");
+        component.DungeonMarkerLayers.Add("Experiment");
     }
 
     private void OnBiomeMapInit(EntityUid uid, BiomeComponent component, MapInitEvent args)
@@ -77,6 +102,56 @@ public sealed class BiomeSystem : SharedBiomeSystem
         Dirty(component);
     }
 
+    private void OnFTLStarted(ref FTLStartedEvent ev)
+    {
+        var targetMap = ev.TargetCoordinates.ToMap(EntityManager, _transform);
+        var targetMapUid = _mapManager.GetMapEntityId(targetMap.MapId);
+
+        if (!TryComp<BiomeComponent>(targetMapUid, out var biome))
+            return;
+
+        var targetArea = new Box2(targetMap.Position - 64f, targetMap.Position + 64f);
+        Preload(targetMapUid, biome, targetArea);
+    }
+
+    /// <summary>
+    /// Preloads biome for the specified area.
+    /// </summary>
+    public void Preload(EntityUid uid, BiomeComponent component, Box2 area)
+    {
+        var mobs = component.MobMarkerLayers;
+        var goobers = _markerChunks.GetOrNew(component);
+
+        foreach (var layer in mobs)
+        {
+            var proto = _proto.Index<BiomeMobMarkerLayerPrototype>(layer);
+            var enumerator = new ChunkIndicesEnumerator(area, proto.Size);
+
+            while (enumerator.MoveNext(out var chunk))
+            {
+                var chunkOrigin = chunk * proto.Size;
+                var lay = goobers.GetOrNew(proto);
+                var layerChunks = lay.GetOrNew(proto.ID);
+                layerChunks.Add(chunkOrigin.Value * proto.Size);
+            }
+        }
+
+        var dungeons = component.DungeonMarkerLayers;
+        foreach (var layer in dungeons)
+        {
+            var proto = _proto.Index<BiomeDungeonMarkerLayerPrototype>(layer);
+            var enumerator = new ChunkIndicesEnumerator(area, proto.Size);
+
+            while (enumerator.MoveNext(out var chunk))
+            {
+                var chunkOrigin = chunk * proto.Size;
+                var lay = goobers.GetOrNew(proto);
+                var layerChunks = lay.GetOrNew(proto.ID);
+                layerChunks.Add(chunkOrigin.Value * proto.Size);
+            }
+        }
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -87,6 +162,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
         while (biomes.MoveNext(out var biome))
         {
             _activeChunks.Add(biome, new HashSet<Vector2i>());
+            _markerChunks.GetOrNew(biome);
         }
 
         // Get chunks in range
@@ -98,7 +174,20 @@ public sealed class BiomeSystem : SharedBiomeSystem
                 _handledEntities.Add(pSession.AttachedEntity.Value) &&
                  biomeQuery.TryGetComponent(xform.MapUid, out var biome))
             {
-                AddChunksInRange(biome, _transform.GetWorldPosition(xform, xformQuery));
+                var worldPos = _transform.GetWorldPosition(xform, xformQuery);
+                AddChunksInRange(biome, worldPos);
+
+                foreach (var layer in biome.MobMarkerLayers)
+                {
+                    var layerProto = _proto.Index<BiomeMobMarkerLayerPrototype>(layer);
+                    AddMarkerChunksInRange(biome, worldPos, layerProto);
+                }
+
+                foreach (var layer in biome.DungeonMarkerLayers)
+                {
+                    var layerProto = _proto.Index<BiomeDungeonMarkerLayerPrototype>(layer);
+                    AddMarkerChunksInRange(biome, worldPos, layerProto);
+                }
             }
 
             foreach (var viewer in pSession.ViewSubscriptions)
@@ -110,16 +199,28 @@ public sealed class BiomeSystem : SharedBiomeSystem
                     continue;
                 }
 
-                AddChunksInRange(biome, _transform.GetWorldPosition(xform, xformQuery));
+                var worldPos = _transform.GetWorldPosition(xform, xformQuery);
+                AddChunksInRange(biome, worldPos);
+
+                foreach (var layer in biome.MobMarkerLayers)
+                {
+                    var layerProto = _proto.Index<BiomeMobMarkerLayerPrototype>(layer);
+                    AddMarkerChunksInRange(biome, worldPos, layerProto);
+                }
+
+                foreach (var layer in biome.DungeonMarkerLayers)
+                {
+                    var layerProto = _proto.Index<BiomeDungeonMarkerLayerPrototype>(layer);
+                    AddMarkerChunksInRange(biome, worldPos, layerProto);
+                }
             }
         }
 
         var loadBiomes = AllEntityQuery<BiomeComponent, MapGridComponent>();
 
-        while (loadBiomes.MoveNext(out var biome, out var grid))
+        while (loadBiomes.MoveNext(out var gridUid, out var biome, out var grid))
         {
             var noise = biome.Noise;
-            var gridUid = grid.Owner;
 
             // Load new chunks
             LoadChunks(biome, gridUid, grid, noise, xformQuery);
@@ -129,6 +230,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
 
         _handledEntities.Clear();
         _activeChunks.Clear();
+        _markerChunks.Clear();
     }
 
     private void AddChunksInRange(BiomeComponent biome, Vector2 worldPos)
@@ -141,6 +243,20 @@ public sealed class BiomeSystem : SharedBiomeSystem
         }
     }
 
+    private void AddMarkerChunksInRange(BiomeComponent biome, Vector2 worldPos, IBiomeMarkerLayer layer)
+    {
+        // Offset the load area so it's centralised.
+        var loadArea = new Box2(0, 0, layer.Size, layer.Size);
+        var enumerator = new ChunkIndicesEnumerator(loadArea.Translated(worldPos - layer.Size / 2f), layer.Size);
+
+        while (enumerator.MoveNext(out var chunkOrigin))
+        {
+            var lay = _markerChunks[biome].GetOrNew(layer);
+            var layerChunks = lay.GetOrNew(layer.ID);
+            layerChunks.Add(chunkOrigin.Value * layer.Size);
+        }
+    }
+
     private void LoadChunks(
         BiomeComponent component,
         EntityUid gridUid,
@@ -148,6 +264,63 @@ public sealed class BiomeSystem : SharedBiomeSystem
         FastNoiseLite noise,
         EntityQuery<TransformComponent> xformQuery)
     {
+        var markers = _markerChunks[component];
+
+        foreach (var (layerType, mark) in markers)
+        {
+            Dictionary<string, HashSet<Vector2i>> loadedMarkers;
+
+            switch (layerType)
+            {
+                case BiomeDungeonMarkerLayerPrototype:
+                    loadedMarkers = component.LoadedDungeonMarkers;
+                    break;
+                case BiomeMobMarkerLayerPrototype:
+                    loadedMarkers = component.LoadedMobMarkers;
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+
+            foreach (var (layer, chunks) in mark)
+            {
+                foreach (var chunk in chunks)
+                {
+                    if (loadedMarkers.TryGetValue(layer, out var mobChunks) && mobChunks.Contains(chunk))
+                        continue;
+
+                    // TODO: Need buffer region for dungeons around chunks.
+                    var layerProto = (IBiomeMarkerLayer) _proto.Index(layerType.GetType(), layer);
+                    mobChunks ??= new HashSet<Vector2i>();
+                    mobChunks.Add(chunk);
+                    loadedMarkers[layer] = mobChunks;
+
+                    // Load the lizzers NOW
+                    // TODO: Poisson disk
+
+                    switch (layerProto)
+                    {
+                        case BiomeDungeonMarkerLayerPrototype dunProto:
+                            for (var i = 0; i < layerProto.Count; i++)
+                            {
+                                var point = new Vector2i(_random.Next(chunk.X, layerProto.Size), _random.Next(chunk.Y, layerProto.Size));
+                                _dungeon.GenerateDungeon(_proto.Index<DungeonConfigPrototype>(dunProto.Prototype), gridUid, grid, point, _random.Next());
+                            }
+                            break;
+                        case BiomeMobMarkerLayerPrototype mobProto:
+                            for (var i = 0; i < layerProto.Count; i++)
+                            {
+                                var point = new Vector2(_random.Next(chunk.X, layerProto.Size), _random.Next(chunk.Y, layerProto.Size));
+                                Spawn(mobProto.Prototype, new EntityCoordinates(gridUid, point));
+                            }
+                            break;
+                        default:
+                            throw new NotImplementedException();
+                    }
+                }
+            }
+        }
+
         var active = _activeChunks[component];
         var prototype = ProtoManager.Index<BiomePrototype>(component.BiomePrototype);
         List<(Vector2i, Tile)>? tiles = null;

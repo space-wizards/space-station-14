@@ -4,14 +4,13 @@
   parent: FTLPoint
 
 # Biome mods -> at least 1 required
-# TODO: Add a cave biome you bottom
 - type: salvageBiomeMod
   id: Grasslands
   biome: Grasslands
 
 - type: salvageBiomeMod
   id: Lava
-  cost: 1
+  cost: 2
   biome: Lava
 
 - type: salvageBiomeMod

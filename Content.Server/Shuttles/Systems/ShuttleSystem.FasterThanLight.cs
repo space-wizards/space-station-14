@@ -251,7 +251,9 @@ public sealed partial class ShuttleSystem
 
                     SetDockBolts(uid, true);
                     _console.RefreshShuttleConsoles(uid);
-                    var ev = new FTLStartedEvent(fromMapUid, fromMatrix, fromRotation);
+                    var target = comp.TargetUid != null ? new EntityCoordinates(comp.TargetUid.Value, Vector2.Zero) : comp.TargetCoordinates;
+
+                    var ev = new FTLStartedEvent(target, fromMapUid, fromMatrix, fromRotation);
                     RaiseLocalEvent(uid, ref ev, true);
 
                     if (comp.TravelSound != null)
