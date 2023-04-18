@@ -54,7 +54,6 @@
       - id: Flash
       - id: WeaponDisabler
       - id: ClothingOuterHardsuitBrigmed
-      - id: EncryptionKeyMedical
       - id: BoxSterileMask
       - id: ClothingUniformJumpsuitBrigmedic
       - id: ClothingUniformJumpskirtBrigmedic
