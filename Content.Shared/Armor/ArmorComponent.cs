@@ -7,7 +7,5 @@ namespace Content.Shared.Armor
     {
         [DataField("modifiers", required: true)]
         public DamageModifierSet Modifiers = default!;
-
     }
-    
 }
