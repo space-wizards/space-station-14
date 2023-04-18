@@ -230,7 +230,7 @@
       state_open: paramed_open
       state_closed: paramed_door
   - type: AccessReader
-    access: [ [ "Paramedic" ] ]
+    access: [ [ "Medical" ] ]
 
 
 # Chemical

@@ -16,7 +16,6 @@
   - Medical
   - Maintenance
   - External
-  - Paramedic
   extendedAccess:
   - Chemistry
 
@@ -28,7 +27,6 @@
     shoes: ClothingShoesColorWhite
     id: ParamedicPDA
     ears: ClothingHeadsetMedical
-    pocket1: HandheldCrewMonitor
     belt: ClothingBeltParamedicFilled
   innerclothingskirt: ClothingUniformJumpskirtParamedic
   satchel: ClothingBackpackSatchelMedicalFilled
