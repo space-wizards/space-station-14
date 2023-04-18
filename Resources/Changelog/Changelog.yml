@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix flipflopping between buckle and crit rotations., type: Fix}
-  id: 2947
-  time: '2023-01-23T20:50:35.0000000+00:00'
 - author: Visne
   changes:
   - {message: Fixed a bug where the happy honk meal could not spawn with the foamblade,
@@ -2887,3 +2882,9 @@ Entries:
   - {message: Changed brigmed hardsuit sprites!, type: Tweak}
   id: 3446
   time: '2023-04-17T22:47:09.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Debuff of delay per 5u reduced from 1s to 0.5s, type: Tweak}
+  - {message: Delay on crit patients reduced by 25%, type: Tweak}
+  id: 3447
+  time: '2023-04-18T14:23:54.0000000+00:00'
