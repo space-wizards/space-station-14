@@ -2873,8 +2873,8 @@ Entries:
   time: '2023-04-17T22:47:09.0000000+00:00'
 - author: Whisper
   changes:
-  - {message: Debuff of delay per 5u reduced from 1s to 0.5s, type: Tweak}
-  - {message: Delay on crit patients reduced by 25%, type: Tweak}
+  - {message: Syringe debuff of delay per 5u reduced from 1s to 0.5s, type: Tweak}
+  - {message: Syringe delay on crit patients reduced by 25%, type: Tweak}
   id: 3447
   time: '2023-04-18T14:23:54.0000000+00:00'
 - author: deltanedas
