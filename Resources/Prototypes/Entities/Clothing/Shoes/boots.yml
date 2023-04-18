@@ -57,7 +57,7 @@
     sprite: Clothing/Shoes/Boots/combatboots.rsi
   - type: FootstepModifier
     footstepSoundCollection:
-      collection: FootstepHeavy
+      collection: FootstepCombat
   - type: Storage
     whitelist:
       tags:
