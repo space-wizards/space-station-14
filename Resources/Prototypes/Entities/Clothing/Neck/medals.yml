@@ -24,7 +24,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckEngineerMedal
-  name: Enginer medal
+  name: engineer medal
   description: Given to engineers for the best work in the engineering department.
   components:
   - type: Sprite
