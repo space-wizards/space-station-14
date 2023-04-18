@@ -1,5 +1,5 @@
+using Content.Server.Ninja.Systems;
 using Content.Server.Objectives.Interfaces;
-using Content.Shared.Ninja.Components;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Conditions;
@@ -24,12 +24,10 @@ public sealed class TerrorCondition : IObjectiveCondition
     {
         get
         {
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            if (_mind?.OwnedEntity == null
-                || !entMan.TryGetComponent<NinjaComponent>(_mind.OwnedEntity, out var ninja))
+            if (!NinjaSystem.GetNinjaRole(_mind, out var role))
                 return 0f;
 
-            return ninja.CalledInThreat ? 1f : 0f;
+            return role.CalledInThreat ? 1f : 0f;
         }
     }
 
