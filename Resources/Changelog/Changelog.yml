@@ -1,20 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix flipflopping between buckle and crit rotations., type: Fix}
-  id: 2947
-  time: '2023-01-23T20:50:35.0000000+00:00'
-- author: Visne
-  changes:
-  - {message: Fixed a bug where the happy honk meal could not spawn with the foamblade,
-    type: Fix}
-  id: 2948
-  time: '2023-01-24T00:35:55.0000000+00:00'
-- author: Visne
-  changes:
-  - {message: Emergency pizza delivery now costs 450 spacebucks instead of 550, type: Tweak}
-  id: 2949
-  time: '2023-01-24T00:36:50.0000000+00:00'
 - author: sephtasm
   changes:
   - {message: Client-side placement mode crash while placing random humanoid mobs,
@@ -2887,3 +2871,20 @@ Entries:
   - {message: Changed brigmed hardsuit sprites!, type: Tweak}
   id: 3446
   time: '2023-04-17T22:47:09.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Debuff of delay per 5u reduced from 1s to 0.5s, type: Tweak}
+  - {message: Delay on crit patients reduced by 25%, type: Tweak}
+  id: 3447
+  time: '2023-04-18T14:23:54.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'NanoTrasen lost a lawsuit regarding the false claims of fuel regeneration,
+      experimental welding tools now regenerate 1u of fuel every second.', type: Fix}
+  id: 3448
+  time: '2023-04-18T14:27:05.0000000+00:00'
+- author: EnDecc
+  changes:
+  - {message: Sinks now replenish 1u of water per second, type: Add}
+  id: 3449
+  time: '2023-04-18T20:49:17.0000000+00:00'
