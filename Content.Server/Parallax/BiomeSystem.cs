@@ -3,6 +3,7 @@ using Content.Server.Procedural;
 using Content.Server.Shuttles.Events;
 using Content.Shared.Decals;
 using Content.Shared.Parallax.Biomes;
+using Content.Shared.Parallax.Biomes.Layers;
 using Content.Shared.Parallax.Biomes.Markers;
 using Content.Shared.Parallax.Biomes.Points;
 using Content.Shared.Procedural;
@@ -56,12 +57,30 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         SubscribeLocalEvent<FTLStartedEvent>(OnFTLStarted);
         _configManager.OnValueChanged(CVars.NetMaxUpdateRange, SetLoadRange, true);
         InitializePoints();
+        _proto.PrototypesReloaded += ProtoReload;
     }
 
     public override void Shutdown()
     {
         base.Shutdown();
         _configManager.UnsubValueChanged(CVars.NetMaxUpdateRange, SetLoadRange);
+        _proto.PrototypesReloaded -= ProtoReload;
+    }
+
+    private void ProtoReload(PrototypesReloadedEventArgs obj)
+    {
+        if (!obj.ByType.TryGetValue(typeof(BiomeTemplatePrototype), out var reloads))
+            return;
+
+        var query = AllEntityQuery<BiomeComponent>();
+
+        while (query.MoveNext(out var biome))
+        {
+            if (biome.Template == null || !reloads.Modified.TryGetValue(biome.Template, out var proto))
+                continue;
+
+            SetTemplate(biome, (BiomeTemplatePrototype) proto);
+        }
     }
 
     private void SetLoadRange(float obj)
@@ -78,7 +97,6 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         // Also make it so the biomeprototype is just a template to use
         // Any templates based off of it should be dynamically reloaded too
         component.MobMarkerLayers.Add("Lizards");
-        component.DungeonMarkerLayers.Add("Experiment");
     }
 
     private void OnBiomeMapInit(EntityUid uid, BiomeComponent component, MapInitEvent args)
@@ -88,10 +106,10 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
     public void SetPrototype(BiomeComponent component, string proto)
     {
-        if (component.BiomePrototype == proto)
+        if (component.Template == proto)
             return;
 
-        component.BiomePrototype = proto;
+        component.Template = proto;
         Dirty(component);
     }
 
@@ -99,6 +117,22 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     {
         component.Seed = seed;
         component.Noise.SetSeed(seed);
+        Dirty(component);
+    }
+
+    /// <summary>
+    /// Sets the <see cref="BiomeComponent.Template"/> and refreshes layers.
+    /// </summary>
+    public void SetTemplate(BiomeComponent component, BiomeTemplatePrototype template)
+    {
+        component.Layers.Clear();
+        component.Template = template.ID;
+
+        foreach (var layer in template.Layers)
+        {
+            component.Layers.Add(layer);
+        }
+
         Dirty(component);
     }
 
@@ -326,7 +360,6 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         }
 
         var active = _activeChunks[component];
-        var prototype = ProtoManager.Index<BiomePrototype>(component.BiomePrototype);
         List<(Vector2i, Tile)>? tiles = null;
 
         foreach (var chunk in active)
@@ -336,7 +369,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
             tiles ??= new List<(Vector2i, Tile)>(ChunkSize * ChunkSize);
             // Load NOW!
-            LoadChunk(component, gridUid, grid, chunk, noise, prototype, tiles, xformQuery);
+            LoadChunk(component, gridUid, grid, chunk, noise, tiles, xformQuery);
         }
     }
 
@@ -346,7 +379,6 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         MapGridComponent grid,
         Vector2i chunk,
         FastNoiseLite noise,
-        BiomePrototype prototype,
         List<(Vector2i, Tile)> tiles,
         EntityQuery<TransformComponent> xformQuery)
     {
@@ -368,7 +400,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                     continue;
 
                 // Pass in null so we don't try to get the tileref.
-                if (!TryGetBiomeTile(indices, prototype, noise, null, out var biomeTile) || biomeTile.Value == tileRef.Tile)
+                if (!TryGetBiomeTile(indices, component.Layers, noise, null, out var biomeTile) || biomeTile.Value == tileRef.Tile)
                     continue;
 
                 tiles.Add((indices, biomeTile.Value));
@@ -394,7 +426,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 // Don't mess with anything that's potentially anchored.
                 var anchored = grid.GetAnchoredEntitiesEnumerator(indices);
 
-                if (anchored.MoveNext(out _) || !TryGetEntity(indices, prototype, noise, grid, out var entPrototype))
+                if (anchored.MoveNext(out _) || !TryGetEntity(indices, component.Layers, noise, grid, out var entPrototype))
                     continue;
 
                 // TODO: Fix non-anchored ents spawning.
@@ -404,7 +436,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 // At least for now unless we do lookups or smth, only work with anchoring.
                 if (xformQuery.TryGetComponent(ent, out var xform) && !xform.Anchored)
                 {
-                    _transform.AnchorEntity(ent, xform, grid, indices);
+                    _transform.AnchorEntity(ent, xform, gridUid, grid, indices);
                 }
 
                 loadedEntities.Add(ent);
@@ -427,7 +459,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 // Don't mess with anything that's potentially anchored.
                 var anchored = grid.GetAnchoredEntitiesEnumerator(indices);
 
-                if (anchored.MoveNext(out _) || !TryGetDecals(indices, prototype, noise, grid, out var decals))
+                if (anchored.MoveNext(out _) || !TryGetDecals(indices, component.Layers, noise, grid, out var decals))
                     continue;
 
                 foreach (var decal in decals)
@@ -469,7 +501,6 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     private void UnloadChunk(BiomeComponent component, EntityUid gridUid, MapGridComponent grid, Vector2i chunk, FastNoiseLite noise, List<(Vector2i, Tile)> tiles)
     {
         // Reverse order to loading
-        var prototype = ProtoManager.Index<BiomePrototype>(component.BiomePrototype);
         component.ModifiedTiles.TryGetValue(chunk, out var modified);
         modified ??= new HashSet<Vector2i>();
 
@@ -515,7 +546,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 }
 
                 // If it's default data unload the tile.
-                if (!TryGetBiomeTile(indices, prototype, noise, null, out var biomeTile) ||
+                if (!TryGetBiomeTile(indices, component.Layers, noise, null, out var biomeTile) ||
                     grid.TryGetTileRef(indices, out var tileRef) && tileRef.Tile != biomeTile.Value)
                 {
                     modified.Add(indices);

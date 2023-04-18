@@ -26,6 +26,6 @@ public sealed class SalvageBiomeMod : IPrototype, ISalvageMod
     [DataField("weather")]
     public bool Weather = true;
 
-    [DataField("biome", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<BiomePrototype>))]
+    [DataField("biome", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<BiomeTemplatePrototype>))]
     public string? BiomePrototype;
 }

@@ -4,8 +4,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Parallax.Biomes;
 
-[Prototype("biome")]
-public sealed class BiomePrototype : IPrototype
+/// <summary>
+/// A preset group of biome layers to be used for a <see cref="BiomeComponent"/>
+/// </summary>
+[Prototype("biomeTemplate")]
+public sealed class BiomeTemplatePrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = default!;
 

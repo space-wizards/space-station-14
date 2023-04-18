@@ -73,7 +73,7 @@ public abstract class SharedBiomeSystem : EntitySystem
         throw new ArgumentOutOfRangeException();
     }
 
-    public bool TryGetBiomeTile(EntityUid uid, MapGridComponent grid, FastNoiseLite noise, Vector2i indices, [NotNullWhen(true)] out Tile? tile)
+    public bool TryGetBiomeTile(EntityUid uid, MapGridComponent grid, Vector2i indices, [NotNullWhen(true)] out Tile? tile)
     {
         if (grid.TryGetTileRef(indices, out var tileRef) && !tileRef.Tile.IsEmpty)
         {
@@ -87,14 +87,13 @@ public abstract class SharedBiomeSystem : EntitySystem
             return false;
         }
 
-        return TryGetBiomeTile(indices, ProtoManager.Index<BiomePrototype>(biome.BiomePrototype),
-            biome.Noise, grid, out tile);
+        return TryGetBiomeTile(indices, biome.Layers, biome.Noise, grid, out tile);
     }
 
     /// <summary>
     /// Tries to get the tile, real or otherwise, for the specified indices.
     /// </summary>
-    public bool TryGetBiomeTile(Vector2i indices, BiomePrototype prototype, FastNoiseLite noise, MapGridComponent? grid, [NotNullWhen(true)] out Tile? tile)
+    public bool TryGetBiomeTile(Vector2i indices, List<IBiomeLayer> layers, FastNoiseLite noise, MapGridComponent? grid, [NotNullWhen(true)] out Tile? tile)
     {
         if (grid?.TryGetTileRef(indices, out var tileRef) == true && !tileRef.Tile.IsEmpty)
         {
@@ -104,9 +103,9 @@ public abstract class SharedBiomeSystem : EntitySystem
 
         var oldSeed = noise.GetSeed();
 
-        for (var i = prototype.Layers.Count - 1; i >= 0; i--)
+        for (var i = layers.Count - 1; i >= 0; i--)
         {
-            var layer = prototype.Layers[i];
+            var layer = layers[i];
 
             if (layer is not BiomeTileLayer tileLayer)
                 continue;
@@ -161,10 +160,10 @@ public abstract class SharedBiomeSystem : EntitySystem
     /// <summary>
     /// Tries to get the relevant entity for this tile.
     /// </summary>
-    protected bool TryGetEntity(Vector2i indices, BiomePrototype prototype, FastNoiseLite noise, MapGridComponent grid,
+    protected bool TryGetEntity(Vector2i indices, List<IBiomeLayer> layers, FastNoiseLite noise, MapGridComponent grid,
         [NotNullWhen(true)] out string? entity)
     {
-        if (!TryGetBiomeTile(indices, prototype, noise, grid, out var tileRef))
+        if (!TryGetBiomeTile(indices, layers, noise, grid, out var tileRef))
         {
             entity = null;
             return false;
@@ -173,9 +172,9 @@ public abstract class SharedBiomeSystem : EntitySystem
         var tileId = TileDefManager[tileRef.Value.TypeId].ID;
         var oldSeed = noise.GetSeed();
 
-        for (var i = prototype.Layers.Count - 1; i >= 0; i--)
+        for (var i = layers.Count - 1; i >= 0; i--)
         {
-            var layer = prototype.Layers[i];
+            var layer = layers[i];
 
             // Decals might block entity so need to check if there's one in front of us.
             switch (layer)
@@ -219,10 +218,10 @@ public abstract class SharedBiomeSystem : EntitySystem
     /// <summary>
     /// Tries to get the relevant decals for this tile.
     /// </summary>
-    public bool TryGetDecals(Vector2i indices, BiomePrototype prototype, FastNoiseLite noise, MapGridComponent grid,
+    public bool TryGetDecals(Vector2i indices, List<IBiomeLayer> layers, FastNoiseLite noise, MapGridComponent grid,
         [NotNullWhen(true)] out List<(string ID, Vector2 Position)>? decals)
     {
-        if (!TryGetBiomeTile(indices, prototype, noise, grid, out var tileRef))
+        if (!TryGetBiomeTile(indices, layers, noise, grid, out var tileRef))
         {
             decals = null;
             return false;
@@ -231,9 +230,9 @@ public abstract class SharedBiomeSystem : EntitySystem
         var tileId = TileDefManager[tileRef.Value.TypeId].ID;
         var oldSeed = noise.GetSeed();
 
-        for (var i = prototype.Layers.Count - 1; i >= 0; i--)
+        for (var i = layers.Count - 1; i >= 0; i--)
         {
-            var layer = prototype.Layers[i];
+            var layer = layers[i];
 
             // Entities might block decal so need to check if there's one in front of us.
             switch (layer)

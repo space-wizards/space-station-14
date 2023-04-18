@@ -1,10 +1,12 @@
 using Content.Shared.Maps;
 using Robust.Shared.Noise;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Parallax.Biomes.Layers;
 
+[Serializable, NetSerializable]
 public sealed class BiomeEntityLayer : IBiomeWorldLayer
 {
     /// <inheritdoc/>

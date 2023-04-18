@@ -1,6 +1,6 @@
 # Desert
 # TODO: Water in desert
-- type: biome
+- type: biomeTemplate
   id: LowDesert
   desc: Desert
   layers:
@@ -48,7 +48,7 @@
         frequency: 0.1
 
 # Grass
-- type: biome
+- type: biomeTemplate
   id: Grasslands
   desc: Grasslands
   layers:
@@ -195,7 +195,7 @@
         cellularReturnType: Distance2
 
 # Lava
-- type: biome
+- type: biomeTemplate
   id: Lava
   desc: Lava
   layers:
@@ -263,7 +263,7 @@
       tile: FloorBasalt
 
 # Snow
-- type: biome
+- type: biomeTemplate
   id: Snow # Similar to Grasslands... but snow
   layers:
     # Sparse vegetation
@@ -365,7 +365,7 @@
         fractalType: None
 
 # Caves
-- type: biome
+- type: biomeTemplate
   id: Caves
   layers:
     - !type:BiomeEntityLayer

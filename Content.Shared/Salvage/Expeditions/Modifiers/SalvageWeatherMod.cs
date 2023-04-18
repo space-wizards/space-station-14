@@ -25,6 +25,6 @@ public sealed class SalvageWeatherMod : IPrototype, ISalvageMod
     /// <summary>
     /// Whitelist for biomes. If empty assumed any allowed.
     /// </summary>
-    [DataField("biomes", customTypeSerializer:typeof(PrototypeIdListSerializer<BiomePrototype>))]
+    [DataField("biomes", customTypeSerializer:typeof(PrototypeIdListSerializer<BiomeTemplatePrototype>))]
     public List<string> Biomes = new();
 }

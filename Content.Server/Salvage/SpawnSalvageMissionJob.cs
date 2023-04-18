@@ -175,7 +175,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
         foreach (var tile in grid.GetTilesIntersecting(new Circle(Vector2.Zero, landingPadRadius), false))
         {
-            if (!_biome.TryGetBiomeTile(mapUid, grid, seed, tile.GridIndices, out _))
+            if (!_biome.TryGetBiomeTile(mapUid, grid, tile.GridIndices, out _))
                 continue;
 
             tiles.Add((tile.GridIndices, landingTile));
