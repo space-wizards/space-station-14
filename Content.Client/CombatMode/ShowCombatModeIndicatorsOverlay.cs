@@ -82,7 +82,7 @@ namespace Content.Client.CombatMode
             }, Color.Transparent);
 
             screen.DrawTexture(_renderBackbuffer.Texture,
-                mousePos - halfBufferSize, Color.White.WithAlpha(0.75f));
+                mousePos - halfBufferSize, Color.White.WithAlpha(0.95f));
         }
         private void DrawSight(Texture? sight, DrawingHandleScreen screen, Vector2 centerPos, float scale)
         {
@@ -95,7 +95,7 @@ namespace Content.Client.CombatMode
             Vector2 beginPosSight = centerPos - halfSightSize;
             UIBox2 coordsRect = UIBox2.FromDimensions(beginPosSight, sightSize);
 
-            screen.DrawTextureRect(sight, coordsRect, Color.DarkBlue);
+            screen.DrawTextureRect(sight, coordsRect, Color.Black);
         }
     }
 }
