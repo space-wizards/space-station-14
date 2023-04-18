@@ -303,15 +303,19 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                         case BiomeDungeonMarkerLayerPrototype dunProto:
                             for (var i = 0; i < layerProto.Count; i++)
                             {
-                                var point = new Vector2i(_random.Next(chunk.X, layerProto.Size), _random.Next(chunk.Y, layerProto.Size));
+                                var point = new Vector2i(_random.Next(chunk.X, chunk.X + layerProto.Size), _random.Next(chunk.Y, chunk.Y + layerProto.Size));
                                 _dungeon.GenerateDungeon(_proto.Index<DungeonConfigPrototype>(dunProto.Prototype), gridUid, grid, point, _random.Next());
                             }
                             break;
                         case BiomeMobMarkerLayerPrototype mobProto:
                             for (var i = 0; i < layerProto.Count; i++)
                             {
-                                var point = new Vector2(_random.Next(chunk.X, layerProto.Size), _random.Next(chunk.Y, layerProto.Size));
-                                Spawn(mobProto.Prototype, new EntityCoordinates(gridUid, point));
+                                var point = new Vector2(_random.Next(chunk.X, chunk.X + layerProto.Size), _random.Next(chunk.Y, chunk.Y + layerProto.Size));
+
+                                for (var j = 0; j < mobProto.GroupCount; j++)
+                                {
+                                    Spawn(mobProto.Prototype, new EntityCoordinates(gridUid, point));
+                                }
                             }
                             break;
                         default:
