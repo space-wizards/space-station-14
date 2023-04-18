@@ -31,7 +31,7 @@
     eyes: ClothingEyesHudMedical
     head: ClothingHeadHatSurgcapBlue
     id: BrigmedPDA
-    ears: ClothingHeadsetSecurity
+    ears: ClothingHeadsetBrigmedic
     mask: ClothingMaskSterile
     belt: ClothingBeltMedicalFilled
   innerclothingskirt: ClothingUniformJumpskirtBrigmedic
