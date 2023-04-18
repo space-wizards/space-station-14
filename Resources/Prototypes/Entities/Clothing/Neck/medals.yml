@@ -3,13 +3,13 @@
   parent: ClothingNeckBase
   id: ClothingNeckBronzeheart
   name: bronzeheart medal
-  description: Given to crewmates for exemplary bravery in the face of danger. 
+  description: Given to crewmates for exemplary bravery in the face of danger.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Medals/bronzeheart.rsi
   - type: Clothing
     sprite: Clothing/Neck/Medals/bronzeheart.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckGoldmedal
@@ -19,4 +19,15 @@
   - type: Sprite
     sprite: Clothing/Neck/Medals/gold.rsi
   - type: Clothing
-    sprite: Clothing/Neck/Medals/gold.rsi  
+    sprite: Clothing/Neck/Medals/gold.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckEngineerMedal
+  name: Enginer medal
+  description: Given to engineers for the best work in the engineering department.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Medals/engineer_medal.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Medals/engineer_medal.rsi

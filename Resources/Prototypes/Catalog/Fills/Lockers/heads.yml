@@ -114,6 +114,7 @@
       - id: JetpackVoidFilled
       - id: ClothingHeadsetAltEngineering
       - id: BoxEncryptionKeyEngineering
+      id: ClothingNeckEngineerMedal
 
 - type: entity
   id: LockerChiefMedicalOfficerFilled
