@@ -262,8 +262,8 @@ public sealed partial class ChemistrySystem
         }
         else
         {
-            // Self-injections take twice as long, to go in line with brute pack changes. //
-            actualDelay *= 2;
+            // Self-injections take half as long.
+            actualDelay /= 2;
 
             if (component.ToggleState == SharedInjectorComponent.InjectorToggleMode.Inject)
                 _adminLogger.Add(LogType.Ingestion, $"{EntityManager.ToPrettyString(user):user} is attempting to inject themselves with a solution {SolutionContainerSystem.ToPrettyString(solution):solution}.");
