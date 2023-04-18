@@ -1,12 +1,6 @@
 Entries:
 - author: Visne
   changes:
-  - {message: Fixed a bug where the happy honk meal could not spawn with the foamblade,
-    type: Fix}
-  id: 2948
-  time: '2023-01-24T00:35:55.0000000+00:00'
-- author: Visne
-  changes:
   - {message: Emergency pizza delivery now costs 450 spacebucks instead of 550, type: Tweak}
   id: 2949
   time: '2023-01-24T00:36:50.0000000+00:00'
@@ -2888,3 +2882,9 @@ Entries:
   - {message: Delay on crit patients reduced by 25%, type: Tweak}
   id: 3447
   time: '2023-04-18T14:23:54.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'NanoTrasen lost a lawsuit regarding the false claims of fuel regeneration,
+      experimental welding tools now regenerate 1u of fuel every second.', type: Fix}
+  id: 3448
+  time: '2023-04-18T14:27:05.0000000+00:00'
