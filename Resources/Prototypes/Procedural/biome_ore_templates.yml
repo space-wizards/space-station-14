@@ -6,32 +6,22 @@
       allowedTiles:
         - FloorPlanetGrass
         - FloorPlanetDirt
-      threshold: -0.05
+      threshold: 0.95
       noise:
         seed: 100
-        noiseType: Cellular
-        frequency: 0.06
-        lacunarity: 2
-        fractalType: FBm
-        octaves: 5
-        gain: 1
-        cellularDistanceFunction: Euclidean
-        cellularReturnType: Distance2
+        noiseType: OpenSimplex2
+        frequency: 0.04
+        fractalType: None
       entities:
         - WallRockTin
     - !type:BiomeTileLayer
       tile: FloorPlanetDirt
-      threshold: -0.05
+      threshold: 0.95
       noise:
         seed: 100
-        noiseType: Cellular
-        frequency: 0.06
-        lacunarity: 2
-        fractalType: FBm
-        octaves: 5
-        gain: 1
-        cellularDistanceFunction: Euclidean
-        cellularReturnType: Distance2
+        noiseType: OpenSimplex2
+        frequency: 0.04
+        fractalType: None
 
 # Gold
 # Silver
