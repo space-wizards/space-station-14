@@ -1,9 +1,4 @@
 Entries:
-- author: Visne
-  changes:
-  - {message: Emergency pizza delivery now costs 450 spacebucks instead of 550, type: Tweak}
-  id: 2949
-  time: '2023-01-24T00:36:50.0000000+00:00'
 - author: sephtasm
   changes:
   - {message: Client-side placement mode crash while placing random humanoid mobs,
@@ -2888,3 +2883,8 @@ Entries:
       experimental welding tools now regenerate 1u of fuel every second.', type: Fix}
   id: 3448
   time: '2023-04-18T14:27:05.0000000+00:00'
+- author: EnDecc
+  changes:
+  - {message: Sinks now replenish 1u of water per second, type: Add}
+  id: 3449
+  time: '2023-04-18T20:49:17.0000000+00:00'
