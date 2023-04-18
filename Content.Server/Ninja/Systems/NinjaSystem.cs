@@ -5,7 +5,6 @@ using Content.Server.Chat.Systems;
 using Content.Server.Doors.Systems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
-using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Mind.Components;
 using Content.Server.Ninja;
@@ -33,6 +32,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.GameTicking.Rules.Components;
 
 namespace Content.Server.Ninja.Systems;
 
@@ -116,8 +116,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
         }
 
         role = (NinjaRole?) mind.AllRoles
-            .Where(r => r is NinjaRole)
-            .FirstOrDefault();
+            .FirstOrDefault(r => r is NinjaRole);
         return role != null;
     }
 
@@ -136,9 +135,10 @@ public sealed class NinjaSystem : SharedNinjaSystem
     /// <summary>
     /// Returns the space ninja spawn gamerule's config
     /// </summary>
-    public NinjaRuleConfiguration RuleConfig()
+    /// todo give me a fuckin break
+    public NinjaRuleComponent? RuleConfig()
     {
-        return (NinjaRuleConfiguration) _proto.Index<GameRulePrototype>("SpaceNinjaSpawn").Configuration;
+        return EntityQuery<NinjaRuleComponent>().FirstOrDefault();
     }
 
     /// <summary>
@@ -200,21 +200,16 @@ public sealed class NinjaSystem : SharedNinjaSystem
     public void CallInThreat(EntityUid uid)
     {
         var config = RuleConfig();
+        if (config == null)
+            return;
         if (config.Threats.Count == 0 || !GetNinjaRole(uid, out var role) || role.CalledInThreat)
             return;
 
         role.CalledInThreat = true;
 
         var threat = _random.Pick(config.Threats);
-        if (_proto.TryIndex<GameRulePrototype>(threat.Rule, out var rule))
-        {
-            _gameTicker.AddGameRule(rule);
-            _chat.DispatchGlobalAnnouncement(Loc.GetString(threat.Announcement), playSound: false, colorOverride: Color.Red);
-        }
-        else
-        {
-            Logger.Error($"Threat gamerule does not exist: {threat.Rule}");
-        }
+        _gameTicker.AddGameRule(threat.Rule);
+        _chat.DispatchGlobalAnnouncement(Loc.GetString(threat.Announcement), playSound: false, colorOverride: Color.Red);
     }
 
     public override void TryDrainPower(EntityUid user, NinjaDrainComponent drain, EntityUid target)
@@ -256,6 +251,8 @@ public sealed class NinjaSystem : SharedNinjaSystem
     private void OnNinjaStartup(EntityUid uid, NinjaComponent comp, ComponentStartup args)
     {
         var config = RuleConfig();
+        if (config == null)
+            return;
 
         // start with internals on, only when spawned by event. antag control ninja won't do this due to component add order.
         _internals.ToggleInternals(uid, uid, true);
@@ -294,9 +291,14 @@ public sealed class NinjaSystem : SharedNinjaSystem
             return;
 
         var config = RuleConfig();
+        if (config == null)
+            return;
+
         var role = new NinjaRole(mind, _proto.Index<AntagPrototype>("SpaceNinja"));
         mind.AddRole(role);
-        _traitorRule.Traitors.Add(role);
+
+        //todo brokey
+        //_traitorRule.Traitors.Add(role);
         foreach (var objective in config.Objectives)
         {
             AddObjective(mind, objective);
@@ -344,7 +346,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
         if (ninja.Suit == null || !TryComp<NinjaSuitComponent>(ninja.Suit, out var suit))
             return;
 
-        float wattage = _suit.SuitWattage(suit);
+        var wattage = _suit.SuitWattage(suit);
 
         SetSuitPowerAlert(uid, ninja);
         if (!TryUseCharge(uid, wattage * frameTime))

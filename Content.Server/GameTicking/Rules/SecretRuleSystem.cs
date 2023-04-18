@@ -1,6 +1,6 @@
 using System.Linq;
 using Content.Server.GameTicking.Presets;
-using Content.Server.GameTicking.Rules.Configurations;
+using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
@@ -8,22 +8,16 @@ using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules;
 
-public sealed class SecretRuleSystem : GameRuleSystem
+public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
 
-    public override string Prototype => "Secret";
-
-    public override void Started()
+    protected override void Started(EntityUid uid, SecretRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
+        base.Started(uid, component, gameRule, args);
         PickRule();
-    }
-
-    public override void Ended()
-    {
-        // Preset should already handle it.
     }
 
     private void PickRule()
@@ -35,7 +29,7 @@ public sealed class SecretRuleSystem : GameRuleSystem
 
         foreach (var rule in _prototypeManager.Index<GamePresetPrototype>(preset).Rules)
         {
-            _ticker.StartGameRule(_prototypeManager.Index<GameRulePrototype>(rule));
+            _ticker.StartGameRule(rule);
         }
     }
 }

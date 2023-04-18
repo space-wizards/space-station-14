@@ -1,9 +1,6 @@
-using System.Linq;
 using Content.Server.Administration.Commands;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.GameTicking.Rules.Configurations;
-using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Humanoid;
 using Content.Server.Mind.Components;
@@ -11,14 +8,9 @@ using Content.Server.NPC.Systems;
 using Content.Server.Nuke;
 using Content.Server.Preferences.Managers;
 using Content.Server.RoundEnd;
-using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
-using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
-using Content.Server.Traitor;
-using Content.Shared.Dataset;
-using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Nuke;
@@ -35,8 +27,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Rules;
 
-public sealed class NukeopsRuleSystem : GameRuleSystem
+public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 {
+
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
@@ -122,9 +115,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     private EntityUid? _nukieShuttle;
     private EntityUid? _targetStation;
 
-    public override string Prototype => "Nukeops";
-
-    private NukeopsRuleConfiguration _nukeopsRuleConfig = new();
+    //private NukeopsRuleConfiguration _nukeopsRuleConfig = new();
 
     /// <summary>
     ///     Cached starting gear prototypes.
@@ -167,6 +158,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void OnComponentInit(EntityUid uid, NukeOperativeComponent component, ComponentInit args)
     {
+        /*
         // If entity has a prior mind attached, add them to the players list.
         if (!TryComp<MindComponent>(uid, out var mindComponent) || !RuleAdded)
             return;
@@ -174,7 +166,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         var session = mindComponent.Mind?.Session;
         var name = MetaData(uid).EntityName;
         if (session != null)
-            _operativePlayers.Add(name, session);
+            _operativePlayers.Add(name, session);*/
     }
 
     private void OnComponentRemove(EntityUid uid, NukeOperativeComponent component, ComponentRemove args)
@@ -184,6 +176,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void OnNukeExploded(NukeExplodedEvent ev)
     {
+        /*
     	if (!RuleAdded)
             return;
 
@@ -218,7 +211,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             _winConditions.Add(WinCondition.NukeExplodedOnIncorrectLocation);
         }
 
-        _roundEndSystem.EndRound();
+        _roundEndSystem.EndRound();*/
     }
 
     private void OnRunLevelChanged(GameRunLevelChangedEvent ev)
@@ -236,17 +229,18 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     public void LoadLoneOpsConfig()
     {
-        _nukeopsRuleConfig.SpawnOutpost = false;
-        _nukeopsRuleConfig.EndsRound = false;
+        //_nukeopsRuleConfig.SpawnOutpost = false;
+        //_nukeopsRuleConfig.EndsRound = false;
     }
 
     public bool CheckLoneOpsSpawn()
     {
-        return _nukeopsRuleConfig.CanLoneOpsSpawn;
+        return true; //_nukeopsRuleConfig.CanLoneOpsSpawn;
     }
 
     private void OnRoundStart()
     {
+        /*
         // TODO: This needs to try and target a Nanotrasen station. At the very least,
         // we can only currently guarantee that NT stations are the only station to
         // exist in the base game.
@@ -270,7 +264,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             filter.AddPlayer(actor.PlayerSession);
         }
 
-        _audioSystem.PlayGlobal(_nukeopsRuleConfig.GreetSound, filter, recordReplay: false);
+        _audioSystem.PlayGlobal(_nukeopsRuleConfig.GreetSound, filter, recordReplay: false);*/
     }
 
     private void OnRoundEnd()
@@ -370,6 +364,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
+        /*
         if (!RuleAdded)
             return;
 
@@ -389,11 +384,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         {
             var listing = Loc.GetString("nukeops-list-name", ("name", name), ("user", session.Name));
             ev.AddLine(listing);
-        }
+        }*/
     }
 
     private void CheckRoundShouldEnd()
     {
+        /*
         if (!RuleAdded || !_nukeopsRuleConfig.EndsRound || RuleWinType == WinType.CrewMajor || RuleWinType == WinType.OpsMajor)
             return;
 
@@ -448,7 +444,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             _winConditions.Add(WinCondition.AllNukiesDead);
         }
 
-        RuleWinType = WinType.CrewMajor;
+        RuleWinType = WinType.CrewMajor;*/
     }
 
     private void OnNukeDisarm(NukeDisarmSuccessEvent ev)
@@ -464,6 +460,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void OnPlayersSpawning(RulePlayerSpawningEvent ev)
     {
+        /*
         if (!RuleAdded)
             return;
 
@@ -569,7 +566,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                 : MetaData(session.AttachedEntity.Value).EntityName;
             // TODO: Fix this being able to have duplicates
             _operativePlayers[name] = session;
-        }
+        }*/
     }
 
     private void OnPlayersGhostSpawning(EntityUid uid, NukeOperativeComponent component, GhostRoleSpawnerUsedEvent args)
@@ -590,6 +587,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void OnMindAdded(EntityUid uid, NukeOperativeComponent component, MindAddedMessage args)
     {
+        /*
         if (!TryComp<MindComponent>(uid, out var mindComponent) || mindComponent.Mind == null)
             return;
 
@@ -620,11 +618,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             _audioSystem.PlayGlobal(_nukeopsRuleConfig.GreetSound, playerSession);
 
         if (_targetStation != null && !string.IsNullOrEmpty(Name(_targetStation.Value)))
-            _chatManager.DispatchServerMessage(playerSession, Loc.GetString("nukeops-welcome", ("station", _targetStation.Value)));
+            _chatManager.DispatchServerMessage(playerSession, Loc.GetString("nukeops-welcome", ("station", _targetStation.Value)));*/
     }
 
     private bool SpawnMap()
     {
+        /*
         if (_nukiePlanet != null)
             return true; // Map is already loaded.
 
@@ -686,12 +685,13 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         _nukiePlanet = mapId;
         _nukieShuttle = shuttleId;
-
+*/
         return true;
     }
 
     private (string Name, string Role, string Gear) GetOperativeSpawnDetails(int spawnNumber)
     {
+        /*
         string name;
         string role;
         string gear;
@@ -716,7 +716,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                 break;
         }
 
-        return (name, role, gear);
+        return (name, role, gear);*/
+        return ("fuck", "you", "bitch");
     }
 
     /// <summary>
@@ -741,6 +742,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void SpawnOperatives(int spawnCount, List<IPlayerSession> sessions, bool addSpawnPoints)
     {
+        /*
         if (_nukieOutpost == null)
             return;
 
@@ -805,11 +807,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                 nukeOpSpawner.OperativeRolePrototype = spawnDetails.Role;
                 nukeOpSpawner.OperativeStartingGear = spawnDetails.Gear;
             }
-        }
+        }*/
     }
 
     private void SpawnOperativesForGhostRoles()
     {
+        /*
         if (!SpawnMap())
         {
             Logger.InfoS("nukies", "Failed to load map for nukeops");
@@ -823,7 +826,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         var numNukies = MathHelper.Clamp(playerPool.Count / playersPerOperative, 1, maxOperatives);
 
         var operatives = new List<IPlayerSession>();
-        SpawnOperatives(numNukies, operatives, true);
+        SpawnOperatives(numNukies, operatives, true);*/
     }
 
     //For admins forcing someone to nukeOps.
@@ -832,12 +835,13 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         if (!mind.OwnedEntity.HasValue)
             return;
 
-        mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(_nukeopsRuleConfig.OperativeRoleProto)));
+        //mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(_nukeopsRuleConfig.OperativeRoleProto)));
         SetOutfitCommand.SetOutfit(mind.OwnedEntity.Value, "SyndicateOperativeGearFull", EntityManager);
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
     {
+        /*
         if (!RuleAdded || Configuration is not NukeopsRuleConfiguration nukeOpsConfig)
             return;
 
@@ -854,11 +858,13 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             return;
 
         _chatManager.DispatchServerAnnouncement(Loc.GetString("nukeops-no-one-ready"));
-        ev.Cancel();
+        ev.Cancel();*/
     }
 
-    public override void Started()
+    protected override void Started(EntityUid uid, NukeopsRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
+        base.Started(uid, component, gameRule, args);
+        /*
         RuleWinType = WinType.Neutral;
         _winConditions.Clear();
         _nukieOutpost = null;
@@ -896,13 +902,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
 
         if (GameTicker.RunLevel == GameRunLevel.InRound)
-            SpawnOperativesForGhostRoles();
+            SpawnOperativesForGhostRoles();*/
     }
 
-    public override void Ended()
-    {
-        _nukeopsRuleConfig.EndsRound = true;
-        _nukeopsRuleConfig.SpawnOutpost = true;
-        _nukeopsRuleConfig.CanLoneOpsSpawn = true;
-    }
 }
