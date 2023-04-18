@@ -729,8 +729,8 @@
     state: pda-brigmed
   - type: PDABorderColor
     borderColor: "#A32D26"
-    accentHColor: "#447987"
-    accentVColor: "#447987"
+    accentHColor: "#d7d7d0"
+    accentVColor: "#d7d7d0"
   - type: Icon
     state: pda-brigmed
   - type: HealthAnalyzer
