@@ -6,6 +6,7 @@ using Content.Server.Cargo.Systems;
 using Robust.Shared.Prototypes;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Inventory;
+using Content.Shared.Armor;
 
 namespace Content.Server.Armor
 {
@@ -21,7 +22,6 @@ namespace Content.Server.Armor
         {
             base.Initialize();
 
-            SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<DamageModifyEvent>>(OnDamageModify);
             SubscribeLocalEvent<ArmorComponent, GetVerbsEvent<ExamineVerb>>(OnArmorVerbExamine);
             SubscribeLocalEvent<ArmorComponent, PriceCalculationEvent>(GetArmorPrice);
         }
@@ -62,10 +62,6 @@ namespace Content.Server.Armor
             args.Price += price;
         }
 
-        private void OnDamageModify(EntityUid uid, ArmorComponent component, InventoryRelayedEvent<DamageModifyEvent> args)
-        {
-            args.Args.Damage = DamageSpecifier.ApplyModifierSet(args.Args.Damage, component.Modifiers);
-        }
 
         private void OnArmorVerbExamine(EntityUid uid, ArmorComponent component, GetVerbsEvent<ExamineVerb> args)
         {
