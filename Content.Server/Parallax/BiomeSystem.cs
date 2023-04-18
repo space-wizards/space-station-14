@@ -10,6 +10,7 @@ using Content.Shared.Procedural;
 using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Configuration;
+using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Noise;
@@ -23,6 +24,7 @@ namespace Content.Server.Parallax;
 public sealed partial class BiomeSystem : SharedBiomeSystem
 {
     [Dependency] private readonly IConfigurationManager _configManager = default!;
+    [Dependency] private readonly IConsoleHost _console = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
@@ -56,7 +58,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         SubscribeLocalEvent<BiomeComponent, MapInitEvent>(OnBiomeMapInit);
         SubscribeLocalEvent<FTLStartedEvent>(OnFTLStarted);
         _configManager.OnValueChanged(CVars.NetMaxUpdateRange, SetLoadRange, true);
-        InitializePoints();
+        InitializeCommands();
         _proto.PrototypesReloaded += ProtoReload;
     }
 
@@ -131,6 +133,51 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         foreach (var layer in template.Layers)
         {
             component.Layers.Add(layer);
+        }
+
+        Dirty(component);
+    }
+
+    /// <summary>
+    /// Adds the specified layer at the specified marker if it exists.
+    /// </summary>
+    public void AddLayer(BiomeComponent component, string id, IBiomeLayer addedLayer, int seedOffset = 0)
+    {
+        for (var i = 0; i < component.Layers.Count; i++)
+        {
+            var layer = component.Layers[i];
+
+            if (layer is not BiomeDummyLayer dummy || dummy.ID != id)
+                continue;
+
+            addedLayer.Noise.SetSeed(addedLayer.Noise.GetSeed() + seedOffset);
+            component.Layers.Insert(i, addedLayer);
+            break;
+        }
+
+        Dirty(component);
+    }
+
+    /// <summary>
+    /// Adds the specified template at the specified marker if it exists, withour overriding every layer.
+    /// </summary>
+    public void AddTemplate(BiomeComponent component, string id, BiomeTemplatePrototype template, int seedOffset = 0)
+    {
+        for (var i = 0; i < component.Layers.Count; i++)
+        {
+            var layer = component.Layers[i];
+
+            if (layer is not BiomeDummyLayer dummy || dummy.ID != id)
+                continue;
+
+            for (var j = template.Layers.Count - 1; j >= 0; j--)
+            {
+                var addedLayer = template.Layers[j];
+                addedLayer.Noise.SetSeed(addedLayer.Noise.GetSeed() + seedOffset);
+                component.Layers.Insert(i, addedLayer);
+            }
+
+            break;
         }
 
         Dirty(component);

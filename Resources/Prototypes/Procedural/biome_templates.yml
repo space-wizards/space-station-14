@@ -142,6 +142,8 @@
         cellularReturnType: Distance2
       entities:
         - WallRock
+    - !type:BiomeDummyLayer
+      id: Loot
     # Water
     - !type:BiomeEntityLayer
       allowedTiles:

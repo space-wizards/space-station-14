@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Parallax.Biomes.Layers;
 
 [Serializable, NetSerializable]
-public sealed class BiomeTileLayer : IBiomeLayer
+public sealed class  BiomeTileLayer : IBiomeLayer
 {
     [DataField("noise")] public FastNoiseLite Noise { get; } = new(0);
 

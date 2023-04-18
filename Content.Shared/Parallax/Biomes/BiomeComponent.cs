@@ -27,6 +27,9 @@ public sealed partial class BiomeComponent : Component
     /// <summary>
     /// Templates to use for <see cref="Layers"/>. Optional as this can be set elsewhere.
     /// </summary>
+    /// <remarks>
+    /// This is really just here for prototype reload support.
+    /// </remarks>
     [ViewVariables(VVAccess.ReadWrite),
      DataField("template", customTypeSerializer: typeof(PrototypeIdSerializer<BiomeTemplatePrototype>))]
     public string? Template;

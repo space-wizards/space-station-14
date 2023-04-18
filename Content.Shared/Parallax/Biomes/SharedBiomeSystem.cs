@@ -1,12 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Maps;
 using Content.Shared.Parallax.Biomes.Layers;
-using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Noise;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Parallax.Biomes;
@@ -179,6 +177,8 @@ public abstract class SharedBiomeSystem : EntitySystem
             // Decals might block entity so need to check if there's one in front of us.
             switch (layer)
             {
+                case BiomeDummyLayer:
+                    continue;
                 case IBiomeWorldLayer worldLayer:
                     if (!worldLayer.AllowedTiles.Contains(tileId))
                         continue;
@@ -237,6 +237,8 @@ public abstract class SharedBiomeSystem : EntitySystem
             // Entities might block decal so need to check if there's one in front of us.
             switch (layer)
             {
+                case BiomeDummyLayer:
+                    continue;
                 case IBiomeWorldLayer worldLayer:
                     if (!worldLayer.AllowedTiles.Contains(tileId))
                         continue;
