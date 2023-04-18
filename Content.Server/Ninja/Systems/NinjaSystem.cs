@@ -8,12 +8,12 @@ using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Mind.Components;
+using Content.Server.Ninja;
 using Content.Server.Ninja.Components;
 using Content.Server.Objectives;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.PowerCell;
-using Content.Server.Traitor;
 using Content.Server.Warps;
 using Content.Shared.Alert;
 using Content.Shared.Doors.Components;
@@ -32,6 +32,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Content.Server.Ninja.Systems;
 
@@ -87,6 +88,49 @@ public sealed class NinjaSystem : SharedNinjaSystem
         AddComp<NinjaComponent>(user);
         SetOutfitCommand.SetOutfit(user, "SpaceNinjaGear", EntityManager);
         GreetNinja(mind);
+    }
+
+    /// <summary>
+    /// Download the given set of nodes, returning how many new nodes were downloaded.'
+    /// </summary>
+    public int Download(EntityUid uid, List<string> ids)
+    {
+        if (!GetNinjaRole(uid, out var role))
+            return 0;
+
+        var oldCount = role.DownloadedNodes.Count;
+        role.DownloadedNodes.UnionWith(ids);
+        var newCount = role.DownloadedNodes.Count;
+        return newCount - oldCount;
+    }
+
+    /// <summary>
+    /// Gets a ninja's role using the player's mind
+    /// </summary>
+    public static bool GetNinjaRole(Mind.Mind? mind, [NotNullWhen(true)] out NinjaRole? role)
+    {
+        if (mind == null)
+        {
+            role = null;
+            return false;
+        }
+
+        role = (NinjaRole?) mind.AllRoles
+            .Where(r => r is NinjaRole)
+            .FirstOrDefault();
+        return role != null;
+    }
+
+    /// <summary>
+    /// Gets a ninja's role using the player's entity id
+    /// </summary>
+    public bool GetNinjaRole(EntityUid uid, [NotNullWhen(true)] out NinjaRole? role)
+    {
+        role = null;
+        if (!TryComp<MindComponent>(uid, out var mind))
+            return false;
+
+        return GetNinjaRole(mind.Mind, out role);
     }
 
     /// <summary>
@@ -150,13 +194,16 @@ public sealed class NinjaSystem : SharedNinjaSystem
         return GetNinjaBattery(user, out var battery) && battery.TryUseCharge(charge);
     }
 
-    public override void CallInThreat(NinjaComponent comp)
+    /// <summary>
+    /// Completes the objective, makes announcement and adds rule of a random threat.
+    /// </summary>
+    public void CallInThreat(EntityUid uid)
     {
-        base.CallInThreat(comp);
-
         var config = RuleConfig();
-        if (config.Threats.Count == 0)
+        if (config.Threats.Count == 0 || !GetNinjaRole(uid, out var role) || role.CalledInThreat)
             return;
+
+        role.CalledInThreat = true;
 
         var threat = _random.Pick(config.Threats);
         if (_proto.TryIndex<GameRulePrototype>(threat.Rule, out var rule))
@@ -224,7 +271,38 @@ public sealed class NinjaSystem : SharedNinjaSystem
 
             _implants.ForceImplant(uid, implant, implantComp);
         }
+    }
 
+    private void OnNinjaSpawned(EntityUid uid, NinjaComponent comp, GhostRoleSpawnerUsedEvent args)
+    {
+        // inherit spawner's station grid
+        if (TryComp<NinjaStationGridComponent>(args.Spawner, out var station))
+            SetNinjaStationGrid(uid, station.Grid);
+    }
+
+    private void OnNinjaMindAdded(EntityUid uid, NinjaComponent comp, MindAddedMessage args)
+    {
+        Logger.ErrorS("ninja_testing", "AMONG US 2 RELASED");
+        if (TryComp<MindComponent>(uid, out var mind) && mind.Mind != null)
+            GreetNinja(mind.Mind);
+    }
+
+    private void GreetNinja(Mind.Mind mind)
+    {
+        Logger.ErrorS("ninja_testing", "GREETING");
+        if (!mind.TryGetSession(out var session))
+            return;
+
+        var config = RuleConfig();
+        var role = new NinjaRole(mind, _proto.Index<AntagPrototype>("SpaceNinja"));
+        mind.AddRole(role);
+        _traitorRule.Traitors.Add(role);
+        foreach (var objective in config.Objectives)
+        {
+            AddObjective(mind, objective);
+        }
+
+        Logger.ErrorS("ninja_testing", "added role");
         // choose spider charge detonation point
         // currently based on warp points, something better could be done (but would likely require mapping work)
         var warps = new List<EntityUid>();
@@ -237,35 +315,7 @@ public sealed class NinjaSystem : SharedNinjaSystem
         }
 
         if (warps.Count > 0)
-            comp.SpiderChargeTarget = _random.Pick(warps);
-    }
-
-    private void OnNinjaSpawned(EntityUid uid, NinjaComponent comp, GhostRoleSpawnerUsedEvent args)
-    {
-        // inherit spawner's station grid
-        if (TryComp<NinjaStationGridComponent>(args.Spawner, out var station))
-            SetNinjaStationGrid(uid, station.Grid);
-    }
-
-    private void OnNinjaMindAdded(EntityUid uid, NinjaComponent comp, MindAddedMessage args)
-    {
-        if (TryComp<MindComponent>(uid, out var mind) && mind.Mind != null)
-            GreetNinja(mind.Mind);
-    }
-
-    private void GreetNinja(Mind.Mind mind)
-    {
-        if (!mind.TryGetSession(out var session))
-            return;
-
-        var config = RuleConfig();
-        var role = new TraitorRole(mind, _proto.Index<AntagPrototype>("SpaceNinja"));
-        mind.AddRole(role);
-        _traitorRule.Traitors.Add(role);
-        foreach (var objective in config.Objectives)
-        {
-            AddObjective(mind, objective);
-        }
+            role.SpiderChargeTarget = _random.Pick(warps);
 
         _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);
         _chatMan.DispatchServerMessage(session, Loc.GetString("ninja-role-greeting"));
@@ -285,8 +335,8 @@ public sealed class NinjaSystem : SharedNinjaSystem
     private void OnDoorEmagged(EntityUid uid, DoorComponent door, ref DoorEmaggedEvent args)
     {
         // make sure it's a ninja doorjacking it
-        if (TryComp<NinjaComponent>(args.UserUid, out var ninja))
-            ninja.DoorsJacked++;
+        if (GetNinjaRole(args.UserUid, out var role))
+            role.DoorsJacked++;
     }
 
     private void UpdateNinja(EntityUid uid, NinjaComponent ninja, float frameTime)

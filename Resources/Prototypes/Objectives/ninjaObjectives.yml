@@ -2,7 +2,7 @@
   id: DownloadObjective
   issuer: spiderclan
   requirements:
-  - !type:TraitorRequirement {}
+  - !type:NinjaRequirement {}
   conditions:
   - !type:DownloadCondition {}
 
@@ -10,7 +10,7 @@
   id: DoorjackObjective
   issuer: spiderclan
   requirements:
-  - !type:TraitorRequirement {}
+  - !type:NinjaRequirement {}
   conditions:
   - !type:DoorjackCondition {}
 
@@ -18,7 +18,7 @@
   id: SpiderChargeObjective
   issuer: spiderclan
   requirements:
-  - !type:TraitorRequirement {}
+  - !type:NinjaRequirement {}
   conditions:
   - !type:SpiderChargeCondition {}
 
@@ -26,7 +26,7 @@
   id: TerrorObjective
   issuer: spiderclan
   requirements:
-  - !type:TraitorRequirement {}
+  - !type:NinjaRequirement {}
   conditions:
   - !type:TerrorCondition {}
 
@@ -34,6 +34,6 @@
   id: SurviveObjective
   issuer: spiderclan
   requirements:
-  - !type:TraitorRequirement {}
+  - !type:NinjaRequirement {}
   conditions:
   - !type:SurviveCondition {}
