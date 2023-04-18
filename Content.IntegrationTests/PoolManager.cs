@@ -564,7 +564,8 @@ we are just going to end this here to save a lot of time. This is the exception 
             mapData.MapId = mapManager.CreateMap();
             mapData.MapUid = mapManager.GetMapEntityId(mapData.MapId);
             mapData.MapGrid = mapManager.CreateGrid(mapData.MapId);
-            mapData.GridCoords = new EntityCoordinates(mapData.MapGrid.Owner, 0, 0);
+            mapData.GridUid = mapData.MapGrid.Owner;
+            mapData.GridCoords = new EntityCoordinates(mapData.GridUid, 0, 0);
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
             var plating = tileDefinitionManager["Plating"];
             var platingTile = new Tile(plating.TileId);
@@ -793,6 +794,7 @@ public sealed class PoolSettings
 public sealed class TestMapData
 {
     public EntityUid MapUid { get; set; }
+    public EntityUid GridUid { get; set; }
     public MapId MapId { get; set; }
     public MapGridComponent MapGrid { get; set; }
     public EntityCoordinates GridCoords { get; set; }

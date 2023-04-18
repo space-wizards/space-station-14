@@ -78,6 +78,28 @@
     minimumPlayers: 15
 
 - type: gameRule
+  id: SpaceNinjaSpawn
+  config:
+    !type:NinjaRuleConfiguration
+    id: SpaceNinjaSpawn
+    weight: 10
+    endAfter: 1
+    earliestStart: 60
+    minimumPlayers: 15
+    objectives:
+    - DownloadObjective
+    - DoorjackObjective
+    - SpiderChargeObjective
+    - TerrorObjective
+    - SurviveObjective
+    implants: [ MicroBombImplant ]
+    threats:
+    - announcement: terror-dragon
+      rule: Dragon
+    - announcement: terror-revenant
+      rule: RevenantSpawn
+
+- type: gameRule
   id: RevenantSpawn
   config:
     !type:StationEventRuleConfiguration
@@ -245,4 +267,15 @@
     id: Zombie
     earliestStart: 50
     weight: 2.5
+    endAfter: 1
+
+- type: gameRule
+  id: LoneOpsSpawn
+  config:
+    !type:StationEventRuleConfiguration
+    id: LoneOpsSpawn
+    earliestStart: 55
+    weight: 5
+    minimumPlayers: 10
+    reoccurrenceDelay: 25
     endAfter: 1

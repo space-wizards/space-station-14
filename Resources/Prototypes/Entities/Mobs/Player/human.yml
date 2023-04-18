@@ -57,3 +57,46 @@
   components:
     - type: NukeOperative
     - type: RandomHumanoidAppearance
+
+- type: entity
+  noSpawn: true
+  parent: MobHuman
+  id: MobHumanLoneNuclearOperative
+  name: Lone Operative
+  components:
+    - type: RandomHumanoidAppearance
+      randomizeName: false
+    - type: NukeOperative
+    - type: Loadout
+      prototype: SyndicateOperativeGearFull
+      prototypes: [SyndicateOperativeGearFull]
+    - type: RandomMetadata
+      nameSegments:
+      - SyndicateNamesPrefix
+      - SyndicateNamesNormal
+    - type: Faction
+      factions:
+      - Syndicate
+
+# Space Ninja
+- type: entity
+  noSpawn: true
+  name: Space Ninja
+  parent: MobHuman
+  id: MobHumanSpaceNinja
+  components:
+  - type: Loadout
+    prototype: SpaceNinjaGear
+    prototypes: [SpaceNinjaGear]
+  - type: Faction
+    factions:
+    - Syndicate
+  - type: Ninja
+  - type: RandomMetadata
+    nameSegments:
+    - names_ninja_title
+    - names_ninja
+  - type: Tag
+    tags:
+    # fight with honor!
+    - GunsDisabled

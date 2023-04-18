@@ -53,3 +53,9 @@
   - Хи
   - Пси
   - Омега
+
+- type: dataset
+  id: SyndicateNamesPrefix
+  values:
+  - Оперативник
+  - Агент

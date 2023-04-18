@@ -18,3 +18,6 @@ roles-antag-nuclear-operative-commander-objective = Lead your team to the destru
 
 roles-antag-nuclear-operative-name = Nuclear operative
 roles-antag-nuclear-operative-objective = Find the nuke disk and blow up the station.
+
+roles-antag-space-ninja-name = Space Ninja
+roles-antag-space-ninja-objective = Energy sword everything, nom on electrical wires.
