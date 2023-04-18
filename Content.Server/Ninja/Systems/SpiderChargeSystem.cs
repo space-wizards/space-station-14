@@ -26,7 +26,7 @@ public sealed class SpiderChargeSystem : EntitySystem
     {
         var user = args.User;
 
-        if (!TryComp<NinjaComponent>(user, out var ninja))
+        if (!_ninja.GetNinjaRole(user, out var role))
         {
             _popups.PopupEntity(Loc.GetString("spider-charge-not-ninja"), user, user);
             args.Handled = true;
@@ -34,17 +34,16 @@ public sealed class SpiderChargeSystem : EntitySystem
         }
 
         // allow planting anywhere if there is no target, which should never happen
-        if (ninja.SpiderChargeTarget != null)
+        if (role.SpiderChargeTarget == null)
+            return;
+
+        // assumes warp point still exists
+        var target = Transform(role.SpiderChargeTarget.Value).MapPosition;
+        var coords = args.ClickLocation.ToMap(EntityManager, _transform);
+        if (!coords.InRange(target, comp.Range))
         {
-            // assumes warp point still exists
-            var target = Transform(ninja.SpiderChargeTarget.Value).MapPosition;
-            var coords = args.ClickLocation.ToMap(EntityManager, _transform);
-            if (!coords.InRange(target, comp.Range))
-            {
-                _popups.PopupEntity(Loc.GetString("spider-charge-too-far"), user, user);
-                args.Handled = true;
-                return;
-            }
+            _popups.PopupEntity(Loc.GetString("spider-charge-too-far"), user, user);
+            args.Handled = true;
         }
     }
 
@@ -55,10 +54,10 @@ public sealed class SpiderChargeSystem : EntitySystem
 
     private void OnExplode(EntityUid uid, SpiderChargeComponent comp, TriggerEvent args)
     {
-        if (comp.Planter == null || !TryComp<NinjaComponent>(comp.Planter, out var ninja))
+        if (comp.Planter == null || !_ninja.GetNinjaRole(comp.Planter.Value, out var role))
             return;
 
         // assumes the target was destroyed, that the charge wasn't moved somehow
-        _ninja.DetonateSpiderCharge(ninja);
+        role.SpiderChargeDetonated = true;
     }
 }

@@ -36,7 +36,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedNinjaSystem _ninja = default!;
-    [Dependency] private readonly SharedPopupSystem _popups = default!;
+    [Dependency] protected readonly SharedPopupSystem Popups = default!;
     [Dependency] private readonly TagSystem _tags = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
@@ -72,7 +72,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         if (comp.User != null)
         {
             comp.User = null;
-            _popups.PopupEntity(Loc.GetString("ninja-gloves-off"), user, user);
+            Popups.PopupEntity(Loc.GetString("ninja-gloves-off"), user, user);
         }
     }
 
@@ -191,7 +191,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         // take charge from battery
         if (!_ninja.TryUseCharge(user, comp.StunCharge))
         {
-            _popups.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
+            Popups.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
             return;
         }
 
@@ -239,76 +239,18 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         args.Cancel();
     }
 
-    private void OnDownloadDoAfter(EntityUid uid, NinjaDownloadComponent comp, DownloadDoAfterEvent args)
-    {
-        if (args.Cancelled || args.Handled)
-            return;
+    // can't predict roles so only done on server.
+    protected virtual void OnDownloadDoAfter(EntityUid uid, NinjaDownloadComponent comp, DownloadDoAfterEvent args) { }
 
-        var user = args.User;
-        var target = args.Target;
+    // cant predict roles for checking if already called
+    protected virtual void OnTerror(EntityUid uid, NinjaTerrorComponent comp, InteractionAttemptEvent args) { }
 
-        if (!TryComp<NinjaComponent>(user, out var ninja)
-            || !TryComp<TechnologyDatabaseComponent>(target, out var database))
-            return;
-
-        var gained = _ninja.Download(ninja, database.TechnologyIds);
-        var str = gained == 0
-            ? Loc.GetString("ninja-download-fail")
-            : Loc.GetString("ninja-download-success", ("count", gained), ("server", target));
-
-        _popups.PopupEntity(str, user, user, PopupType.Medium);
-    }
-
-    private void OnTerror(EntityUid uid, NinjaTerrorComponent comp, InteractionAttemptEvent args)
-    {
-        if (!GloveCheck(uid, args, out var gloves, out var user, out var target)
-            || !TryComp<NinjaComponent>(user, out var ninja))
-            return;
-
-        if (!IsCommsConsole(target))
-            return;
-
-        // can only do it once
-        if (ninja.CalledInThreat)
-        {
-            _popups.PopupEntity(Loc.GetString("ninja-terror-already-called"), user, user);
-            return;
-        }
-
-        var doAfterArgs = new DoAfterArgs(user, comp.TerrorTime, new TerrorDoAfterEvent(), target: target, used: uid, eventTarget: uid)
-        {
-            BreakOnDamage = true,
-            BreakOnUserMove = true,
-            MovementThreshold = 0.5f,
-            CancelDuplicate = false
-        };
-
-        _doAfter.TryStartDoAfter(doAfterArgs);
-        // FIXME: doesnt work, don't show the console popup
-        args.Cancel();
-    }
-
-    //for some reason shared comms console component isn't a component, so this has to be done server-side
-    protected virtual bool IsCommsConsole(EntityUid uid)
-    {
-        return false;
-    }
-
-    private void OnTerrorDoAfter(EntityUid uid, NinjaTerrorComponent comp, TerrorDoAfterEvent args)
-    {
-        if (args.Cancelled || args.Handled)
-            return;
-
-        var user = args.User;
-        if (!TryComp<NinjaComponent>(user, out var ninja) || ninja.CalledInThreat)
-            return;
-
-        _ninja.CallInThreat(ninja);
-    }
+    // can't predict roles or anything announcements related so only done on server.
+    protected virtual void OnTerrorDoAfter(EntityUid uid, NinjaTerrorComponent comp, TerrorDoAfterEvent args) { }
 
     private void ClientPopup(string msg, EntityUid user, PopupType type = PopupType.Small)
     {
         if (_net.IsClient)
-            _popups.PopupEntity(msg, user, user, type);
+            Popups.PopupEntity(msg, user, user, type);
     }
 }
